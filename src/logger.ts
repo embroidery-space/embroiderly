@@ -10,30 +10,24 @@ declare global {
 }
 
 export function initLogger() {
-  // In development mode, capture all logs and forward them to Tauri's log plugin.
-  if (import.meta.env.DEV) {
-    function forwardConsole(
-      fnName: "log" | "debug" | "info" | "warn" | "error",
-      logger: (message: string) => Promise<void>,
-    ) {
-      const original = console[fnName];
-      console[fnName] = (message) => {
-        original(message);
-        logger(message);
-      };
-    }
-
-    forwardConsole("error", error);
-    forwardConsole("warn", warn);
-    forwardConsole("info", info);
-    forwardConsole("debug", debug);
-    forwardConsole("log", trace);
-  }
-
-  // Put the logger functions on the global scope.
-  globalThis.error = error;
-  globalThis.warn = warn;
-  globalThis.info = info;
-  globalThis.debug = debug;
-  globalThis.trace = trace;
+  globalThis.error = (message, options) => {
+    console.error(message);
+    return error(message, options);
+  };
+  globalThis.warn = (message, options) => {
+    console.warn(message);
+    return warn(message, options);
+  };
+  globalThis.info = (message, options) => {
+    console.info(message);
+    return info(message, options);
+  };
+  globalThis.debug = (message, options) => {
+    console.debug(message);
+    return debug(message, options);
+  };
+  globalThis.trace = (message, options) => {
+    console.trace(message);
+    return trace(message, options);
+  };
 }
