@@ -25,8 +25,8 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
         .decorations(false)
         .additional_browser_args("--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,ElasticOverscroll");
 
-      // We are using a custom `debug` feature to enable browser extensions only for development and not in debug builds.
-      #[cfg(all(target_os = "windows", feature = "debug"))]
+      // We enable browser extensions only for development.
+      #[cfg(all(debug_assertions, target_os = "windows"))]
       {
         // Enable and setup browser extensions for development.
         webview_window_builder = webview_window_builder
@@ -63,7 +63,7 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
       HashMap::<state::PatternKey, core::pattern::PatternProject>::new(),
     ))
     .manage(RwLock::new(HistoryStateInner::<R>::default()))
-    .plugin(logger::setup_logger().build())
+    .plugin(logger::init())
     .plugin(tauri_plugin_dialog::init())
     .plugin(tauri_plugin_fs::init())
     .plugin(tauri_plugin_opener::init())
