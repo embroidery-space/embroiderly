@@ -1,23 +1,26 @@
-use std::str::FromStr;
-
-use log::Level;
 use tauri_plugin_log::{Target, TargetKind};
 
-pub fn setup_logger() -> tauri_plugin_log::Builder {
-  let log_level = std::env::var("RUST_LOG").unwrap_or(String::from("INFO"));
-  let log_level = Level::from_str(&log_level).unwrap_or(Level::Info);
-  let max_file_size = match log_level {
-    Level::Error | Level::Warn | Level::Info => 48 * 1024, // 48 KiB
-    _ => 256 * 1024,                                       // 256 KiB
-  };
+const DEFAULT_LOG_LEVEL: log::Level = log::Level::Info;
+const APPLICATION_LOG_LEVEL: log::Level = log::Level::Trace;
+
+pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
+  log_panics::init();
   tauri_plugin_log::Builder::default()
     .clear_targets()
     .targets([
+      // In debug mode, log to `stderr` and to `src-tauri/logs/debug.log` file.
       #[cfg(debug_assertions)]
       Target::new(TargetKind::Stderr),
+      #[cfg(debug_assertions)]
+      Target::new(TargetKind::Folder {
+        path: std::path::PathBuf::from("logs"),
+        file_name: Some(String::from("debug")),
+      }),
+      // In release mode, log to an application log dir.
       #[cfg(not(debug_assertions))]
       Target::new(TargetKind::LogDir { file_name: None }),
     ])
-    .level_for("embroidery_studio", log_level.to_level_filter())
-    .max_file_size(max_file_size)
+    .level(DEFAULT_LOG_LEVEL.to_level_filter())
+    .level_for("embroidery_studio", APPLICATION_LOG_LEVEL.to_level_filter())
+    .build()
 }

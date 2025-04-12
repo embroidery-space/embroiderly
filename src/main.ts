@@ -8,7 +8,10 @@ import "uno.css";
 import { NordTheme } from "./assets/theme";
 
 import { fluent } from "./fluent";
+import { initLogger } from "./logger";
 import App from "./App.vue";
+
+initLogger();
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedState);
@@ -32,5 +35,12 @@ app.use(PrimeVue, {
 app.use(ConfirmationService);
 app.use(DialogService);
 app.directive("tooltip", Tooltip);
+
+app.config.errorHandler = (err, _instance, info) => {
+  error(`Error (${info}): ${err}`);
+};
+app.config.warnHandler = (msg, _instance, trace) => {
+  warn(`Warning: ${msg}.\nTrace: ${trace}`);
+};
 
 app.mount("#app");
