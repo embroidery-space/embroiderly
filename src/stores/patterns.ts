@@ -39,11 +39,10 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   const loading = ref(false);
   const pattern = shallowRef<PatternView>();
 
-  let lastOpenedFolder: string | undefined;
   async function loadPattern() {
-    lastOpenedFolder ??= await PathApi.getAppDocumentDir();
+    appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
     const path = await open({
-      defaultPath: lastOpenedFolder,
+      defaultPath: appStateStore.lastOpenedFolder,
       multiple: false,
       filters: [
         { name: "Cross-Stitch Patterns", extensions: ["xsd", "oxs", "xml", "embproj"] },
@@ -51,7 +50,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
       ],
     });
     if (path === null || Array.isArray(path)) return;
-    lastOpenedFolder = path.substring(0, path.lastIndexOf(sep()));
+    appStateStore.lastOpenedFolder = path.substring(0, path.lastIndexOf(sep()));
     await openPattern(path);
   }
 
@@ -82,20 +81,19 @@ export const usePatternsStore = defineStore("pattern-project", () => {
     });
   }
 
-  let lastSavedFolder: string | undefined;
   async function savePattern(as = false) {
     if (!pattern.value) return;
     try {
       let path = await PatternApi.getPatternFilePath(pattern.value.key);
       if (as) {
-        lastSavedFolder ??= path.substring(0, path.lastIndexOf(sep()));
+        appStateStore.lastSavedFolder ??= path.substring(0, path.lastIndexOf(sep()));
         const selectedPath = await save({
-          defaultPath: await join(lastSavedFolder, await basename(path)),
+          defaultPath: await join(appStateStore.lastSavedFolder, await basename(path)),
           filters: SAVE_AS_FILTERS,
         });
         if (selectedPath === null) return;
         path = selectedPath;
-        lastSavedFolder = path.substring(0, path.lastIndexOf(sep()));
+        appStateStore.lastSavedFolder = path.substring(0, path.lastIndexOf(sep()));
       }
       loading.value = true;
       await PatternApi.savePattern(pattern.value.key, path);
