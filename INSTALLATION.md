@@ -1,6 +1,6 @@
-# Installing Embroidery Studio
+# Installing Embroiderly
 
-Download the latest release from the [GitHub Releases](https://github.com/niusia-ua/embroidery-studio/releases) page to install Embroidery Studio.
+Download the latest release from the [GitHub Releases](https://github.com/embroidery-space/embroiderly/releases) page to install Embroiderly.
 
 > [!IMPORTANT]
 > None of the packages are currently signed, so you may see alerts provided by your OS/AntiVirus that the package is unsafe.
@@ -10,12 +10,12 @@ Download the latest release from the [GitHub Releases](https://github.com/niusia
 
 ## Windows
 
-You can install Embroidery Studio on Windows 10/11 via the `.msi` installer.
+You can install Embroiderly on Windows 10/11 via the `.msi` installer.
 There are English and Ukrainian installer editions available.
 
 ## Linux
 
-You can install Embroidery Studio on Linux using the `.deb` package for Debiadn-based distros and the `.rpm` package for distros that support `rpm` packages.
+You can install Embroiderly on Linux using the `.deb` package for Debiadn-based distros and the `.rpm` package for distros that support `rpm` packages.
 
 ## Building From Source Code
 

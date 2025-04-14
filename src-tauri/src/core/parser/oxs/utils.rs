@@ -22,7 +22,7 @@ impl From<&str> for OxsVersion {
 #[derive(Debug, Clone, PartialEq, Default)]
 pub enum Software {
   #[default]
-  EmbroideryStudio,
+  Embroiderly,
   UrsaSoftware,
   Unknown(String),
 }
@@ -30,7 +30,7 @@ pub enum Software {
 impl From<&str> for Software {
   fn from(s: &str) -> Self {
     match s {
-      "Embroidery Studio" => Software::EmbroideryStudio,
+      "Embroidery Studio" | "Embroiderly" => Software::Embroiderly,
       "Ursa Software" | "MiniStitch by Ursa Software" => Software::UrsaSoftware,
       _ => Software::Unknown(s.to_owned()),
     }

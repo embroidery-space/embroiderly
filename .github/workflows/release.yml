@@ -37,7 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: v__VERSION__
-          releaseName: Embroidery Studio v__VERSION__
+          releaseName: Embroiderly v__VERSION__
           releaseDraft: true
           includeUpdaterJson: false
           tauriScript: npx tauri

@@ -7,6 +7,6 @@
 )]
 
 fn main() {
-  let app = embroidery_studio::setup_app(tauri::Builder::default());
+  let app = embroiderly::setup_app(tauri::Builder::default());
   app.run(|_, _| {});
 }
