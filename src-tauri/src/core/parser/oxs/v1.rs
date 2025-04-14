@@ -65,7 +65,7 @@ pub fn parse_pattern(file_path: std::path::PathBuf, software: Software) -> Resul
             pattern.nodes.extend(nodes);
             pattern.specialstitches.extend(specialstitches);
           }
-          b"special_stitch_models" if software == Software::EmbroideryStudio => pattern
+          b"special_stitch_models" if software == Software::Embroiderly => pattern
             .special_stitch_models
             .extend(read_special_stitch_models(&mut reader)?),
           _ => {}
@@ -264,7 +264,7 @@ fn read_palette<R: io::BufRead>(
         palitem_formats.font.font_name = Some(font_name.to_owned());
       }
 
-      if software == Software::EmbroideryStudio {
+      if software == Software::Embroiderly {
         let mut buf = Vec::new();
         let blendscount: usize = attributes.get("blendscount").unwrap().parse()?;
         for _ in 0..blendscount {

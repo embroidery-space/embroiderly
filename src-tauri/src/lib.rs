@@ -43,7 +43,7 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
 
       let app_document_dir = utils::path::app_document_dir(app.handle())?;
       if !cfg!(test) && !app_document_dir.exists() {
-        // Create the Embroidery Studio directory in the user's document directory
+        // Create the Embroiderly directory in the user's document directory
         // and copy the sample patterns there if it doesn't exist.
         log::debug!("Creating an app document directory",);
         std::fs::create_dir(&app_document_dir)?;
@@ -89,5 +89,5 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
       commands::fonts::load_stitch_font,
     ])
     .build(tauri::generate_context!())
-    .expect("Failed to build Embroidery Studio")
+    .expect("Failed to build Embroiderly")
 }

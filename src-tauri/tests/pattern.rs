@@ -1,5 +1,5 @@
-use embroidery_studio::state::{PatternKey, PatternsState};
-use embroidery_studio::{Fabric, setup_app};
+use embroiderly::state::{PatternKey, PatternsState};
+use embroiderly::{Fabric, setup_app};
 use tauri::Manager;
 use tauri::http::{HeaderMap, HeaderValue};
 use tauri::test::{INVOKE_KEY, MockRuntime, get_ipc_response, mock_builder};

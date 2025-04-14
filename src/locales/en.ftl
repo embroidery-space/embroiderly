@@ -1,4 +1,4 @@
--app-name = Embroidery Studio
+-app-name = Embroiderly
 
 ## Common labels usually used in the menu items, buttons and its tooltip.
 

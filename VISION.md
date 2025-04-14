@@ -1,6 +1,6 @@
 # Vision
 
-This document describes our initial ideas and roadmap for developing Embroidery Studio.
+This document describes our initial ideas and roadmap for developing Embroiderly.
 
 If you have any ideas, don't hesitate to contact the author via [email](mailto:nazarantoniuk18@gmail.com) or in [Telegram chat](https://t.me/embroidery_space).
 We are open to any contributions.

@@ -1,5 +1,5 @@
 [package]
-name = "embroidery-studio"
+name = "embroiderly"
 edition = "2024"
 
 [features]
