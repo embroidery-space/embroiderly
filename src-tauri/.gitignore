@@ -5,3 +5,6 @@ target/
 # Browser extenions
 extensions/*
 !extensions/README.md
+
+# Debug logs
+logs/

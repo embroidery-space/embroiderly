@@ -20,7 +20,7 @@ export const StitchFontsLoader: LoaderParser = {
       const fontFace = new FontFace(name, content);
       DOMAdapter.get().getFontFaceSet()!.add(fontFace);
     } catch {
-      console.warn("Unsupported stitch font:", name);
+      warn(`Unsupported stitch font: ${name}`);
     }
   },
 };

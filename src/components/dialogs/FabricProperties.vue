@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-  import { path } from "@tauri-apps/api";
+  import { resolveResource } from "@tauri-apps/api/path";
   import { readTextFile } from "@tauri-apps/plugin-fs";
   import { inject, onMounted, reactive, ref, watch, type Ref } from "vue";
   import { useFluent } from "fluent-vue";
@@ -199,7 +199,7 @@
   });
 
   onMounted(async () => {
-    const fabricColorsPath = await path.resolveResource("resources/fabric-colors.json");
+    const fabricColorsPath = await resolveResource("resources/fabric-colors.json");
     const content = await readTextFile(fabricColorsPath);
     fabricColors.value = JSON.parse(content);
   });

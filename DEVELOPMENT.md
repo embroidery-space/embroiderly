@@ -1,6 +1,6 @@
 # Development Process
 
-This document describes the process of how we are working on Embroidery Studio.
+This document describes the process of how we are working on Embroiderly.
 
 You can follow it to start working on your ideas, improvements, fixes, etc.
 
@@ -43,7 +43,7 @@ src-tauri/ # Everything related to the backend.
 
 ## Prerequisites
 
-To get started working on Embroidery Studio, you will first need to install a few dependencies:
+To get started working on Embroiderly, you will first need to install a few dependencies:
 
 1. [System Dependencies](https://tauri.app/start/prerequisites/#system-dependencies).
 

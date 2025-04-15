@@ -1,13 +1,14 @@
 {
   "$schema": "https://schema.tauri.app/config/2.0.0",
-  "productName": "Embroidery Studio",
-  "identifier": "studio.embroidery",
+  "productName": "Embroiderly",
+  "identifier": "me.niusia.embroiderly",
   "version": "0.3.0",
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist",
-    "devUrl": "http://localhost:1420"
+    "devUrl": "http://localhost:1420",
+    "removeUnusedCommands": true
   },
   "bundle": {
     "active": true,
@@ -18,11 +19,7 @@
     "licenseFile": "../LICENSE",
     "category": "GraphicsAndDesign",
     "shortDescription": "A free and open-source desktop application for designing cross-stitch patterns.",
-    "fileAssociations": [
-      { "ext": ["xsd"], "description": "Cross-Stitch Desing (Pattern Maker)" },
-      { "ext": ["oxs"], "description": "Open Cross-Stitch Desing (WinStitch/MacStitch)" },
-      { "ext": ["embproj"], "description": "Embroidery Project (Embroidery Studio)" }
-    ],
+    "fileAssociations": [{ "ext": ["embproj"], "description": "Embroidery Project (Embroiderly)" }],
     "windows": {
       "wix": { "language": ["en-US", "uk-UA"] },
       "nsis": {

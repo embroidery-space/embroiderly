@@ -1,18 +1,19 @@
 [package]
-name = "embroidery-studio"
+name = "embroiderly"
 edition = "2024"
 
 [features]
 test = []
-debug = []
 
 [profile.release]
 opt-level = "s"
 lto = true
-strip = true
+debug = "limited"
+strip = "debuginfo"
+split-debuginfo = "packed"
 
 [build-dependencies]
-tauri-build = { version = "2.0.6", features = [] }
+tauri-build = { version = "2.1.1", features = [] }
 
 [dependencies]
 # Tauri
@@ -27,11 +28,11 @@ xsp-parsers = { git = "https://github.com/embroidery-space/xsp-parsers.git" }
 quick-xml = "0.37.3"
 
 # Archiving
-zip = { version = "2.5.0", features = [
+zip = { version = "2.6.1", features = [
   "zstd",
   "time",
 ], default-features = false }
-zip-extract = { version = "0.2.1", features = [
+zip-extract = { version = "0.2.2", features = [
   "zstd",
   "time",
 ], default-features = false }
@@ -43,10 +44,11 @@ borsh = { version = "1.5.7", features = ["derive"] }
 base64 = "0.22.1"
 
 # Error handling
-anyhow = "1.0.97"
+anyhow = "1.0.98"
 
 # Logging
 log = "0.4.27"
+log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 
 # Other
 ordered-float = { version = "5.0.0", features = ["borsh"] }

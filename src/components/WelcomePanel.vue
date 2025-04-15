@@ -94,13 +94,13 @@
         {
           title: fluent.$t("label-learn-more-documentation"),
           text: fluent.$t("message-learn-more-documentation"),
-          url: "https://embroidery-studio.niusia.me",
+          url: "https://embroiderly.niusia.me",
         },
       ],
     },
     {
       title: fluent.$t("label-get-help"),
-      items: [{ title: fluent.$t("label-get-help-telegram"), url: "https://t.me/embroidery_space" }],
+      items: [{ title: fluent.$t("label-get-help-telegram"), url: "https://t.me/embroiderly" }],
     },
   ]);
 
