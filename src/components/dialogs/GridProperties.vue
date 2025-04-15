@@ -16,7 +16,7 @@
     <FloatLabel variant="over">
       <InputNumber
         id="minor-thickness"
-        v-model="grid.minorScreenLines.thickness"
+        v-model="grid.minorLines.thickness"
         suffix=" pt"
         :allow-empty="false"
         :min="0.001"
@@ -27,7 +27,7 @@
 
     <label class="flex items-center gap-2">
       {{ $t("label-color") }}:
-      <ColorPicker v-model="grid.minorScreenLines.color" format="hex" />
+      <ColorPicker v-model="grid.minorLines.color" format="hex" />
     </label>
   </Fieldset>
 
@@ -35,7 +35,7 @@
     <FloatLabel variant="over">
       <InputNumber
         id="major-thickness"
-        v-model="grid.majorScreenLines.thickness"
+        v-model="grid.majorLines.thickness"
         suffix=" pt"
         :allow-empty="false"
         :min="0.001"
@@ -46,7 +46,7 @@
 
     <label class="flex items-center gap-2">
       {{ $t("label-color") }}:
-      <ColorPicker v-model="grid.majorScreenLines.color" format="hex" />
+      <ColorPicker v-model="grid.majorLines.color" format="hex" />
     </label>
   </Fieldset>
 
@@ -58,7 +58,7 @@
   import { ColorPicker, Fieldset, FloatLabel, InputNumber } from "primevue";
   import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
   import DialogFooter from "./DialogFooter.vue";
-  import { Grid } from "#/schemas/pattern";
+  import { Grid } from "#/schemas/index.ts";
 
   const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef")!;
 

@@ -21,6 +21,7 @@ pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
       Target::new(TargetKind::LogDir { file_name: None }),
     ])
     .level(DEFAULT_LOG_LEVEL.to_level_filter())
-    .level_for("embroidery_studio", APPLICATION_LOG_LEVEL.to_level_filter())
+    .level_for("embroiderly", APPLICATION_LOG_LEVEL.to_level_filter())
+    .level_for("xsp_parsers", APPLICATION_LOG_LEVEL.to_level_filter())
     .build()
 }

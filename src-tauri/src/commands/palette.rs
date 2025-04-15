@@ -33,7 +33,7 @@ pub fn add_palette_item<R: tauri::Runtime>(
 
 #[tauri::command]
 pub fn remove_palette_items<R: tauri::Runtime>(
-  palette_item_indexes: Vec<u8>,
+  palette_item_indexes: Vec<u32>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,

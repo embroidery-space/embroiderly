@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
-import type { PatternKey } from "#/schemas/pattern";
+import type { PatternKey } from "#/schemas/index.ts";
 
 export function undo(patternKey: PatternKey) {
   return invoke<void>("undo", { patternKey });

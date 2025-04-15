@@ -1,9 +1,8 @@
 import { invoke } from "@tauri-apps/api/core";
-import { serialize } from "@dao-xyz/borsh";
-import { type PatternKey, PaletteItem, PaletteSettings } from "#/schemas/pattern";
+import { type PatternKey, PaletteItem, PaletteSettings } from "#/schemas/index.ts";
 
 export function addPaletteItem(patternKey: PatternKey, paletteItem: PaletteItem) {
-  return invoke<void>("add_palette_item", serialize(paletteItem), { headers: { patternKey } });
+  return invoke<void>("add_palette_item", PaletteItem.serialize(paletteItem), { headers: { patternKey } });
 }
 
 export function removePaletteItems(patternKey: PatternKey, paletteItemIndexes: number[]) {
@@ -11,5 +10,7 @@ export function removePaletteItems(patternKey: PatternKey, paletteItemIndexes: n
 }
 
 export function updatePaletteDisplaySettings(patternKey: PatternKey, displaySettings: PaletteSettings) {
-  return invoke<void>("update_palette_display_settings", serialize(displaySettings), { headers: { patternKey } });
+  return invoke<void>("update_palette_display_settings", PaletteSettings.serialize(displaySettings), {
+    headers: { patternKey },
+  });
 }

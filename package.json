@@ -10,7 +10,6 @@
     "test": "vitest --run"
   },
   "dependencies": {
-    "@dao-xyz/borsh": "^5.2.3",
     "@fluent/bundle": "^0.19.1",
     "@primeuix/themes": "^1.0.3",
     "@stdlib/math-base-special-roundn": "^0.2.2",
@@ -21,6 +20,7 @@
     "@tauri-apps/plugin-opener": "^2.2.6",
     "@vueuse/components": "^13.1.0",
     "@vueuse/core": "^13.0.0",
+    "@zorsh/zorsh": "^0.3.3",
     "base64-js": "^1.5.1",
     "dequal": "^2.0.3",
     "fluent-vue": "^3.7.1",

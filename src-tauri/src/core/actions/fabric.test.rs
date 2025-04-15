@@ -1,10 +1,9 @@
-use base64::Engine;
-use base64::engine::general_purpose::STANDARD;
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
 use super::{Action, UpdateFabricPropertiesAction};
 use crate::core::pattern::{Fabric, PatternProject};
+use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {
   mock_builder().build(generate_context!()).unwrap()
@@ -32,7 +31,7 @@ fn test_update_fabric() {
   {
     let event_id = window.listen("fabric:update", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: Fabric = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let expected: Fabric = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, fabric);
     });
 
@@ -44,7 +43,7 @@ fn test_update_fabric() {
   {
     window.listen("fabric:update", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: Fabric = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let expected: Fabric = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, Fabric::default());
     });
 

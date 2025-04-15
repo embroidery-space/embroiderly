@@ -3,7 +3,7 @@ import { GraphicsContext, type Renderer, type RenderOptions, type TextureSourceO
 import { GRAPHICS_STROKE, TEXTURE_STROKE } from "./constants";
 import { ObjectedMap } from "#/utils/map";
 import { mm2px } from "#/utils/measurement";
-import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "#/schemas/pattern";
+import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "#/schemas/index.ts";
 
 const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
   resolution: window.devicePixelRatio,

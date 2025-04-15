@@ -1,4 +1,4 @@
 pub mod actions;
 pub mod history;
-pub mod parser;
+pub mod parsers;
 pub mod pattern;

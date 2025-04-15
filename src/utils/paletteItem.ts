@@ -1,4 +1,4 @@
-import { Blend, PaletteItem, PaletteSettings } from "#/schemas/pattern";
+import { Blend, PaletteItem, PaletteSettings } from "#/schemas/index.ts";
 
 /**
  * Composes a title for a palette item based on the provided display options.

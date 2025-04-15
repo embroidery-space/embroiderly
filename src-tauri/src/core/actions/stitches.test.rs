@@ -1,11 +1,10 @@
-use base64::Engine;
-use base64::engine::general_purpose::STANDARD;
 use ordered_float::NotNan;
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
 use super::{Action, AddStitchAction, RemoveStitchAction};
 use crate::core::pattern::*;
+use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {
   mock_builder().build(generate_context!()).unwrap()
@@ -68,12 +67,12 @@ fn test_add_stitch() {
   {
     window.listen("stitches:add_one", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: Stitch = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let expected: Stitch = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, stitch);
     });
     window.listen("stitches:remove_many", |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let conflicts: Vec<Stitch> = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(conflicts.len(), 4);
     });
 
@@ -86,12 +85,12 @@ fn test_add_stitch() {
   {
     window.listen("stitches:remove_one", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: Stitch = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let expected: Stitch = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, stitch);
     });
     window.listen("stitches:add_many", |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let conflicts: Vec<Stitch> = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(conflicts.len(), 4);
     });
 
@@ -121,7 +120,7 @@ fn test_remove_stitch() {
   {
     window.listen("stitches:remove_one", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: Stitch = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let expected: Stitch = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, stitch);
     });
 
@@ -134,7 +133,7 @@ fn test_remove_stitch() {
   {
     window.listen("stitches:add_one", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: Stitch = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let expected: Stitch = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, stitch);
     });
 

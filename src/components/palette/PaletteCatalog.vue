@@ -38,8 +38,7 @@
   import { computedAsync } from "@vueuse/core";
   import { dt } from "@primeuix/themes";
   import { Select } from "primevue";
-  import { Color } from "pixi.js";
-  import { PaletteItem, PaletteSettings } from "#/schemas/pattern";
+  import { PaletteItem, PaletteSettings } from "#/schemas/index.ts";
   import PaletteList from "./PaletteList.vue";
   import PaletteItemComponent from "./PaletteItem.vue";
   import PaletteSection from "./PaletteSection.vue";
@@ -73,7 +72,9 @@
       if (palette === undefined) {
         const path = [paletteCatalogDirPath.value, `${brand}.json`].join(sep());
         const content = await readTextFile(path);
-        palette = JSON.parse(content).map((pi: PaletteItem) => new PaletteItem({ ...pi, color: new Color(pi.color) }));
+        // @ts-expect-error Here, palitems have `brand`, `number`, `name`, and `color` properties which is enough to create an instance of the `PaletteItem`.
+        // The rest of the properties are optional.
+        palette = JSON.parse(content).map((pi) => new PaletteItem(pi));
         paletteCatalog.value.set(brand, palette);
       }
       loadingPalette.value = false;
