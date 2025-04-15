@@ -31,11 +31,11 @@ hex = "0.4.3"
 quick-xml = "0.37.3"
 
 # Zipping
-zip = { version = "2.5.0", features = [
+zip = { version = "2.6.1", features = [
   "zstd",
   "time",
 ], default-features = false }
-zip-extract = { version = "0.2.1", features = [
+zip-extract = { version = "0.2.2", features = [
   "zstd",
   "time",
 ], default-features = false }
@@ -47,7 +47,7 @@ borsh = { version = "1.5.7", features = ["derive"] }
 base64 = "0.22.1"
 
 # Error handling
-anyhow = "1.0.97"
+anyhow = "1.0.98"
 
 # Logging
 log = "0.4.27"
