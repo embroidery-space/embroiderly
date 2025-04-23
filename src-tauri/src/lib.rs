@@ -67,6 +67,7 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
     .plugin(tauri_plugin_dialog::init())
     .plugin(tauri_plugin_fs::init())
     .plugin(tauri_plugin_opener::init())
+    .plugin(tauri_plugin_prevent_default::debug())
     .invoke_handler(tauri::generate_handler![
       commands::path::get_app_document_dir,
       commands::pattern::load_pattern,
