@@ -37,6 +37,15 @@ impl AttributesMap {
     }
   }
 
+  fn get_color(&self, key: &str) -> Option<&str> {
+    let color = self.get(key);
+    if color.is_some_and(|c| c.is_empty() || c == "nil") {
+      None
+    } else {
+      color
+    }
+  }
+
   fn get_objecttype(&self, key: &str) -> Option<String> {
     self
       .get(key)
@@ -170,9 +179,14 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
         ),
         b"ornaments_inc_knots_and_beads" => {
-          let (fullstitches, nodestitches, specialstitches) = read_ornaments(reader)?;
+          let (fullstitches, partstitches, nodestitches, specialstitches) = read_ornaments(reader)?;
           pattern.fullstitches.extend(
             fullstitches
+              .into_iter()
+              .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
+          );
+          pattern.partstitches.extend(
+            partstitches
               .into_iter()
               .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
           );
@@ -248,6 +262,7 @@ fn save_pattern_inner<W: io::Write>(
     write_ornaments(
       writer,
       &pattern.fullstitches,
+      &pattern.partstitches,
       &pattern.nodestitches,
       &pattern.specialstitches,
     )?;
@@ -360,7 +375,7 @@ fn read_palette<R: io::BufRead>(
           // The element with index 0 (usually, the first one) is the fabric color.
           fabric = Fabric {
             name: attributes.get("name").unwrap_or(&fabric.name).to_owned(),
-            color: attributes.get("color").unwrap_or(&fabric.color).to_owned(),
+            color: attributes.get_color("color").unwrap_or(&fabric.color).to_owned(),
             kind: attributes.get("kind").unwrap_or(&fabric.kind).to_owned(),
             ..Fabric::default()
           };
@@ -381,7 +396,7 @@ fn read_palette<R: io::BufRead>(
             brand,
             number,
             name: attributes.get("name").unwrap_or_default().to_owned(),
-            color: attributes.get("color").unwrap_or("FF00FF").to_owned(),
+            color: attributes.get_color("color").unwrap_or("FF00FF").to_owned(),
             blends: None,
             bead: None,
             symbol: attributes.get_parsed("symbol"),
@@ -726,10 +741,12 @@ fn write_line_stitch<W: io::Write>(writer: &mut Writer<W>, stitch: OxsLineStitch
   Ok(())
 }
 
+#[allow(clippy::type_complexity)]
 fn read_ornaments<R: io::BufRead>(
   reader: &mut Reader<R>,
-) -> Result<(Vec<FullStitch>, Vec<NodeStitch>, Vec<SpecialStitch>)> {
+) -> Result<(Vec<FullStitch>, Vec<PartStitch>, Vec<NodeStitch>, Vec<SpecialStitch>)> {
   let mut fullstitches = Vec::new();
+  let mut partstitches = Vec::new();
   let mut nodestitches = Vec::new();
   let mut specialstitches = Vec::new();
 
@@ -740,6 +757,7 @@ fn read_ornaments<R: io::BufRead>(
         let attributes = AttributesMap::try_from(e.attributes())?;
         match read_ornament(attributes)? {
           Some(OxsOrnament::Full(stitch)) => fullstitches.push(stitch),
+          Some(OxsOrnament::Part(stitch)) => partstitches.push(stitch),
           Some(OxsOrnament::Node(stitch)) => nodestitches.push(stitch),
           Some(OxsOrnament::Special(stitch)) => specialstitches.push(stitch),
           None => {}
@@ -751,11 +769,12 @@ fn read_ornaments<R: io::BufRead>(
     buf.clear();
   }
 
-  Ok((fullstitches, nodestitches, specialstitches))
+  Ok((fullstitches, partstitches, nodestitches, specialstitches))
 }
 
 enum OxsOrnament {
   Full(FullStitch),
+  Part(PartStitch),
   Node(NodeStitch),
   Special(SpecialStitch),
 }
@@ -768,11 +787,43 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
   let kind = unwrap_or_continue!(attributes.get_objecttype("objecttype"), Ok(None));
 
   if kind == "quarter" {
-    return Ok(Some(OxsOrnament::Full(FullStitch {
+    let is_petit = attributes.get_bool("petit");
+    if is_petit.is_none_or(|v| v) {
+      return Ok(Some(OxsOrnament::Full(FullStitch {
+        x,
+        y,
+        palindex,
+        kind: FullStitchKind::Petite,
+      })));
+    } else {
+      let (x_fract, y_fract) = (x.fract(), y.fract());
+      let direction = if x_fract == 0.0 && y_fract == 0.0 || x_fract == 0.5 && y_fract == 0.5 {
+        PartStitchDirection::Backward
+      } else {
+        PartStitchDirection::Forward
+      };
+      return Ok(Some(OxsOrnament::Part(PartStitch {
+        x,
+        y,
+        palindex,
+        direction,
+        kind: PartStitchKind::Quarter,
+      })));
+    }
+  }
+
+  if kind == "tent" {
+    let direction = match attributes.get_parsed("direction") {
+      Some(1) => PartStitchDirection::Backward,
+      Some(2) => PartStitchDirection::Forward,
+      _ => PartStitchDirection::Forward,
+    };
+    return Ok(Some(OxsOrnament::Part(PartStitch {
       x,
       y,
       palindex,
-      kind: FullStitchKind::Petite,
+      direction,
+      kind: PartStitchKind::Half,
     })));
   }
 
@@ -808,6 +859,7 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
 fn write_ornaments<W: io::Write>(
   writer: &mut Writer<W>,
   fullstitches: &Stitches<FullStitch>,
+  partstitches: &Stitches<PartStitch>,
   nodestitches: &Stitches<NodeStitch>,
   specialstitches: &Stitches<SpecialStitch>,
 ) -> io::Result<()> {
@@ -820,6 +872,10 @@ fn write_ornaments<W: io::Write>(
         .cloned()
       {
         write_ornament(writer, OxsOrnament::Full(fullstitch))?;
+      }
+
+      for partstitch in partstitches.iter().cloned() {
+        write_ornament(writer, OxsOrnament::Part(partstitch))?;
       }
 
       for nodestitch in nodestitches.iter().cloned() {
@@ -846,18 +902,49 @@ fn write_ornament<W: io::Write>(writer: &mut Writer<W>, stitch: OxsOrnament) -> 
           ("y1", stitch.y.to_string().as_str()),
           ("palindex", (stitch.palindex + 1).to_string().as_str()),
           ("objecttype", "quarter"),
+          ("petit", "true"),
         ])
         .write_empty()?;
     }
+    OxsOrnament::Part(stitch) => match stitch.kind {
+      PartStitchKind::Half => {
+        let direction = match stitch.direction {
+          PartStitchDirection::Forward => 2,
+          PartStitchDirection::Backward => 1,
+        };
+        writer
+          .create_element("object")
+          .with_attributes([
+            ("x1", stitch.x.to_string().as_str()),
+            ("y1", stitch.y.to_string().as_str()),
+            ("palindex", (stitch.palindex + 1).to_string().as_str()),
+            ("objecttype", "tent"),
+            ("direction", direction.to_string().as_str()),
+          ])
+          .write_empty()?;
+      }
+      PartStitchKind::Quarter => {
+        writer
+          .create_element("object")
+          .with_attributes([
+            ("x1", stitch.x.to_string().as_str()),
+            ("y1", stitch.y.to_string().as_str()),
+            ("palindex", (stitch.palindex + 1).to_string().as_str()),
+            ("objecttype", "quarter"),
+            ("petit", "false"),
+          ])
+          .write_empty()?;
+      }
+    },
     OxsOrnament::Node(stitch) => {
       writer
         .create_element("object")
         .with_attributes([
           ("x1", stitch.x.to_string().as_str()),
           ("y1", stitch.y.to_string().as_str()),
-          ("rotated", stitch.rotated.to_string().as_str()),
           ("palindex", (stitch.palindex + 1).to_string().as_str()),
           ("objecttype", stitch.kind.to_string().as_str()),
+          ("rotated", stitch.rotated.to_string().as_str()),
         ])
         .write_empty()?;
     }
@@ -868,11 +955,11 @@ fn write_ornament<W: io::Write>(writer: &mut Writer<W>, stitch: OxsOrnament) -> 
           ("x1", stitch.x.to_string().as_str()),
           ("y1", stitch.y.to_string().as_str()),
           ("palindex", (stitch.palindex + 1).to_string().as_str()),
+          ("objecttype", "specialstitch"),
           ("modindex", stitch.modindex.to_string().as_str()),
           ("rotation", stitch.rotation.to_string().as_str()),
           ("flip_x", stitch.flip.0.to_string().as_str()),
           ("flip_y", stitch.flip.1.to_string().as_str()),
-          ("objecttype", "specialstitch"),
         ])
         .write_empty()?;
     }

@@ -354,10 +354,8 @@ fn reads_and_writes_part_stitches() {
   let stitches = read_part_stitches(&mut reader).unwrap();
   assert_eq!(stitches, expected_stitches);
 
-  // TODO: Fix writing part stitches.
-  // let mut writer = create_writer();
-  // write_part_stitches(&mut writer, &Stitches::from_iter(stitches)).unwrap();
-  // assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+  // We do not support writing part stitches in the way the Ursa does it.
+  // Instead, we write them as `object`s with the `quarter` or `tent` object type.
 }
 
 #[test]
@@ -409,25 +407,58 @@ fn reads_and_writes_line_stitches() {
 #[test]
 fn reads_and_writes_ornaments() {
   let xml = r#"<ornaments_inc_knots_and_beads>
-  <object x1="11.6875" y1="10.3125" rotated="false" palindex="6" objecttype="bead"/>
-  <object x1="8" y1="45.1875" rotated="false" palindex="3" objecttype="knot"/>
-  <object x1="10" y1="5.5" palindex="1" modindex="0" rotation="90" flip_x="true" flip_y="false" objecttype="specialstitch"/>
+  <object x1="2" y1="4" palindex="1" objecttype="quarter" petit="true"/>
+  <object x1="4" y1="4" palindex="1" objecttype="quarter" petit="false"/>
+  <object x1="5" y1="5" palindex="2" objecttype="tent" direction="2"/>
+  <object x1="5" y1="5" palindex="2" objecttype="tent" direction="1"/>
+  <object x1="1" y1="1" palindex="2" objecttype="knot" rotated="false"/>
+  <object x1="3.5" y1="1.5" palindex="1" objecttype="bead" rotated="false"/>
+  <object x1="10" y1="5.5" palindex="1" objecttype="specialstitch" modindex="0" rotation="90" flip_x="true" flip_y="false"/>
 </ornaments_inc_knots_and_beads>"#;
 
+  let expected_fullstitches = vec![FullStitch {
+    x: NotNan::new(2.0).unwrap(),
+    y: NotNan::new(4.0).unwrap(),
+    palindex: 0,
+    kind: FullStitchKind::Petite,
+  }];
+  let expected_partstitches = vec![
+    PartStitch {
+      x: NotNan::new(4.0).unwrap(),
+      y: NotNan::new(4.0).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Backward,
+      kind: PartStitchKind::Quarter,
+    },
+    PartStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 1,
+      direction: PartStitchDirection::Forward,
+      kind: PartStitchKind::Half,
+    },
+    PartStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 1,
+      direction: PartStitchDirection::Backward,
+      kind: PartStitchKind::Half,
+    },
+  ];
   let expected_nodestitches = vec![
     NodeStitch {
-      x: NotNan::new(11.6875).unwrap(),
-      y: NotNan::new(10.3125).unwrap(),
+      x: NotNan::new(1.0).unwrap(),
+      y: NotNan::new(1.0).unwrap(),
       rotated: false,
-      palindex: 5,
-      kind: NodeStitchKind::Bead,
+      palindex: 1,
+      kind: NodeStitchKind::FrenchKnot,
     },
     NodeStitch {
-      x: NotNan::new(8.0).unwrap(),
-      y: NotNan::new(45.1875).unwrap(),
+      x: NotNan::new(3.5).unwrap(),
+      y: NotNan::new(1.5).unwrap(),
       rotated: false,
-      palindex: 2,
-      kind: NodeStitchKind::FrenchKnot,
+      palindex: 0,
+      kind: NodeStitchKind::Bead,
     },
   ];
   let expected_specialstitches = vec![SpecialStitch {
@@ -441,7 +472,9 @@ fn reads_and_writes_ornaments() {
 
   let mut reader = create_reader(xml);
   reader.read_event().unwrap(); // Consume the start `ornaments` tag.
-  let (fullstitches, nodestitches, specialstitches) = read_ornaments(&mut reader).unwrap();
+  let (fullstitches, partstitches, nodestitches, specialstitches) = read_ornaments(&mut reader).unwrap();
+  assert_eq!(fullstitches, expected_fullstitches);
+  assert_eq!(partstitches, expected_partstitches);
   assert_eq!(nodestitches, expected_nodestitches);
   assert_eq!(specialstitches, expected_specialstitches);
 
@@ -449,6 +482,7 @@ fn reads_and_writes_ornaments() {
   write_ornaments(
     &mut writer,
     &Stitches::from_iter(fullstitches),
+    &Stitches::from_iter(partstitches),
     &Stitches::from_iter(nodestitches),
     &Stitches::from_iter(specialstitches),
   )
