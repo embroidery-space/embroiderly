@@ -3083,13 +3083,14 @@ dependencies = [
 [[package]]
 name = "pmaker"
 version = "0.0.0"
-source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
+source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=35519da49ecdefa720581db97849dca52e3200e0#35519da49ecdefa720581db97849dca52e3200e0"
 dependencies = [
  "anyhow",
  "byteorder",
  "encoding_rs",
  "hex",
  "itertools",
+ "log",
 ]
 
 [[package]]
@@ -4880,15 +4881,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ursa"
-version = "0.0.0"
-source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
-dependencies = [
- "anyhow",
- "quick-xml 0.37.4",
-]
-
-[[package]]
 name = "utf-8"
 version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5797,10 +5789,9 @@ dependencies = [
 [[package]]
 name = "xsp-parsers"
 version = "0.0.0"
-source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
+source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=35519da49ecdefa720581db97849dca52e3200e0#35519da49ecdefa720581db97849dca52e3200e0"
 dependencies = [
  "pmaker",
- "ursa",
 ]
 
 [[package]]
