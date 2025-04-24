@@ -4,9 +4,12 @@ use xsp_parsers::xsd;
 use crate::core::pattern::*;
 
 pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
+  log::debug!("Parsing XSD file");
+
   let file_path = file_path.as_ref();
   let xsd_pattern = xsd::parse_xsd_pattern(file_path)?;
 
+  log::debug!("XSD file parsed");
   Ok(PatternProject {
     file_path: file_path.to_owned(),
     pattern: Pattern {

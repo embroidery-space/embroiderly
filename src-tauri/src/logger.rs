@@ -22,6 +22,6 @@ pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
     ])
     .level(DEFAULT_LOG_LEVEL.to_level_filter())
     .level_for("embroiderly", APPLICATION_LOG_LEVEL.to_level_filter())
-    .level_for("xsp_parsers", APPLICATION_LOG_LEVEL.to_level_filter())
+    .level_for("pmaker", APPLICATION_LOG_LEVEL.to_level_filter())
     .build()
 }
