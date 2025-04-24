@@ -113,7 +113,7 @@ fn reads_and_writes_default_pattern_properties() {
 #[test]
 fn reads_and_writes_palette() {
   let xml = r#"<palette>
-  <palette_item index="0" number="cloth" name="cloth" color="FFFFFF" kind="Aida"/>
+  <palette_item index="0" name="cloth" color="FFFFFF" kind="Aida"/>
   <palette_item index="1" number="DMC 310" name="Black" color="2C3225"/>
   <palette_item index="2" number="Anchor Marlitt 815" name="Fuschia" color="9B2759" symbol="131"/>
   <palette_item index="3" number="Madeira1206" name="Jade-MD" color="007F49" symbol="k"/>
@@ -166,6 +166,89 @@ fn reads_and_writes_palette() {
   let mut writer = create_writer();
   write_palette(&mut writer, &fabric, &palette).unwrap();
   assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+}
+
+#[test]
+fn reads_and_writes_blends() {
+  let xml = r#"<palette>
+  <palette_item index="0" name="cloth" color="FFFFFF" kind="Aida"/>
+  <palette_item index="1" number="Blend 1" name="Crimson Red" color="CB3B41">
+    <blend number="DMC 326"/>
+    <blend number="DMC 309"/>
+    <blend number="DMC 606"/>
+    <blend number="DMC 3801"/>
+  </palette_item>
+</palette>"#;
+
+  let expected_palette = vec![PaletteItem {
+    brand: String::from("Blend"),
+    number: String::from("1"),
+    name: String::from("Crimson Red"),
+    color: String::from("CB3B41"),
+    blends: Some(vec![
+      Blend {
+        brand: String::from("DMC"),
+        number: String::from("326"),
+      },
+      Blend {
+        brand: String::from("DMC"),
+        number: String::from("309"),
+      },
+      Blend {
+        brand: String::from("DMC"),
+        number: String::from("606"),
+      },
+      Blend {
+        brand: String::from("DMC"),
+        number: String::from("3801"),
+      },
+    ]),
+    bead: None,
+    symbol: None,
+    symbol_font: None,
+  }];
+
+  let mut reader = create_reader(xml);
+  reader.read_event().unwrap(); // Consume the start `palette` tag.
+  let (fabric, palette) = read_palette(&mut reader, Some(1)).unwrap();
+  assert_eq!(palette, expected_palette);
+
+  let mut writer = create_writer();
+  write_palette(&mut writer, &fabric, &palette).unwrap();
+  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+}
+
+#[test]
+fn reads_ursa_blends() {
+  let xml = r#"<palette>
+  <palette_item index="0" name="cloth" color="FFFFFF" kind="Aida"/>
+  <palette_item index="1" number="DMC 158 [+]" name="DMC 158 [+] DMC 208" color="303065" blendcolor="824596"/>
+</palette>"#;
+
+  let expected_palette = vec![PaletteItem {
+    brand: String::from("DMC"),
+    number: String::from("158"),
+    name: String::from("DMC 158 [+] DMC 208"),
+    color: String::from("303065"),
+    blends: Some(vec![
+      Blend {
+        brand: String::from("DMC"),
+        number: String::from("158"),
+      },
+      Blend {
+        brand: String::from("DMC"),
+        number: String::from("208"),
+      },
+    ]),
+    bead: None,
+    symbol: None,
+    symbol_font: None,
+  }];
+
+  let mut reader = create_reader(xml);
+  reader.read_event().unwrap(); // Consume the start `palette` tag.
+  let (_fabric, palette) = read_palette(&mut reader, Some(1)).unwrap();
+  assert_eq!(palette, expected_palette);
 }
 
 #[test]

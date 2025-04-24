@@ -2,7 +2,6 @@ use std::io;
 
 use anyhow::Result;
 use ordered_float::NotNan;
-// use ordered_float::NotNan;
 use quick_xml::events::{BytesDecl, BytesStart, Event};
 use quick_xml::{Reader, Writer};
 
@@ -356,6 +355,19 @@ fn read_palette<R: io::BufRead>(
   reader: &mut Reader<R>,
   palette_size: Option<usize>,
 ) -> Result<(Fabric, Vec<PaletteItem>)> {
+  fn parse_palette_item_number(value: Option<&str>) -> (String, String) {
+    if let Some(value) = value {
+      // If `number` is specified, try to split it into `brand` and `number`.
+      // If it fails, keep `brand` empty and use the whole string as `number`.
+      let normalized = value.replace("[+]", "").trim_end().to_owned();
+      let (brand, number) = normalized.rsplit_once(' ').unwrap_or(("", &normalized));
+      (brand.trim().to_owned(), number.to_owned())
+    } else {
+      // If `number` is not specified, keep both `brand` and `number` empty.
+      (String::new(), String::new())
+    }
+  }
+
   let mut fabric = Fabric::default();
   let mut palette = if let Some(size) = palette_size {
     Vec::with_capacity(size)
@@ -380,24 +392,46 @@ fn read_palette<R: io::BufRead>(
             ..Fabric::default()
           };
         } else {
-          // If `number` is specified, try to split it into `brand` and `number`.
-          // If it fails, keep `brand` empty and use the whole string as `number`.
-          // If `number` is not specified, keep both `brand` and `number` empty.
-          let (brand, number) = attributes
-            .get("number")
-            .map(|s| {
-              let normalized = s.replace("[+]", "").trim_end().to_owned();
-              let (brand, number) = normalized.rsplit_once(' ').unwrap_or(("", &normalized));
-              (brand.trim_end().to_owned(), number.to_owned())
-            })
-            .unwrap_or_default();
+          let (brand, number) = parse_palette_item_number(attributes.get("number"));
+          let name = attributes.get("name").unwrap_or_default().to_owned();
+
+          let mut blends = Vec::new();
+
+          // Read Embroiderly-like blends.
+          loop {
+            buf.clear();
+            match reader.read_event_into(&mut buf)? {
+              Event::Start(ref e) if e.name().as_ref() == b"blend" => {
+                let attributes = AttributesMap::try_from(e.attributes())?;
+                let (brand, number) = parse_palette_item_number(attributes.get("number"));
+                blends.push(Blend { brand, number });
+              }
+              Event::End(ref e) if e.name().as_ref() == b"palette_item" => break,
+              _ => {}
+            }
+          }
+
+          // Read Ursa-like blends.
+          let blendcolor = attributes.get_color("blendcolor");
+          if name.contains("[+]") && blendcolor.is_some() {
+            let (number1, number2) = name
+              .split_once("[+]")
+              .map(|(a, b)| (Some(a), Some(b)))
+              .unwrap_or_default();
+
+            let (brand, number) = parse_palette_item_number(number1);
+            blends.push(Blend { brand, number });
+
+            let (brand, number) = parse_palette_item_number(number2);
+            blends.push(Blend { brand, number });
+          }
 
           palette.push(PaletteItem {
             brand,
             number,
-            name: attributes.get("name").unwrap_or_default().to_owned(),
+            name,
             color: attributes.get_color("color").unwrap_or("FF00FF").to_owned(),
-            blends: None,
+            blends: if blends.is_empty() { None } else { Some(blends) },
             bead: None,
             symbol: attributes.get_parsed("symbol"),
             symbol_font: attributes.get("fontname").map(|s| s.to_owned()),
@@ -424,7 +458,6 @@ fn write_palette<W: io::Write>(writer: &mut Writer<W>, fabric: &Fabric, palette:
       .create_element("palette_item")
       .with_attributes([
         ("index", "0"),
-        ("number", "cloth"),
         ("name", fabric.name.as_str()),
         ("color", fabric.color.as_str()),
         ("kind", fabric.kind.as_str()),
@@ -448,10 +481,22 @@ fn write_palette<W: io::Write>(writer: &mut Writer<W>, fabric: &Fabric, palette:
         attributes.push(("symbol", symbol.as_str()));
       }
 
-      writer
-        .create_element("palette_item")
-        .with_attributes(attributes)
-        .write_empty()?;
+      let element = writer.create_element("palette_item").with_attributes(attributes);
+
+      if let Some(blends) = &palitem.blends {
+        element.write_inner_content(|writer| {
+          for blend in blends.iter() {
+            let number = format!("{} {}", blend.brand, blend.number);
+            writer
+              .create_element("blend")
+              .with_attributes([("number", number.trim())])
+              .write_empty()?;
+          }
+          Ok(())
+        })?;
+      } else {
+        element.write_empty()?;
+      }
     }
 
     Ok(())
