@@ -3083,7 +3083,7 @@ dependencies = [
 [[package]]
 name = "pmaker"
 version = "0.0.0"
-source = "git+https://github.com/embroidery-space/xsp-parsers.git#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
+source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -4882,7 +4882,7 @@ dependencies = [
 [[package]]
 name = "ursa"
 version = "0.0.0"
-source = "git+https://github.com/embroidery-space/xsp-parsers.git#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
+source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
 dependencies = [
  "anyhow",
  "quick-xml 0.37.4",
@@ -5797,7 +5797,7 @@ dependencies = [
 [[package]]
 name = "xsp-parsers"
 version = "0.0.0"
-source = "git+https://github.com/embroidery-space/xsp-parsers.git#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
+source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c#e3fa30c2ebe535f866cffb6f7a94dfbfdd268d8c"
 dependencies = [
  "pmaker",
  "ursa",
