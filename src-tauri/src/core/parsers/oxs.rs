@@ -134,77 +134,88 @@ pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
 }
 
 fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern> {
+  log::trace!("Parsing OXS file");
+
   let mut pattern = Pattern::default();
   let mut palette_size = None;
 
   let mut buf = Vec::new();
   loop {
     match reader.read_event_into(&mut buf)? {
-      Event::Start(ref e) => match e.name().as_ref() {
-        b"properties" => {
-          let attributes = AttributesMap::try_from(e.attributes())?;
-          let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes)?;
+      Event::Start(ref e) => {
+        let name = e.name();
+        log::trace!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
 
-          pattern.info = pattern_info;
-          pattern.fabric.width = pattern_width;
-          pattern.fabric.height = pattern_height;
-          pattern.fabric.spi = spi;
+        match name.as_ref() {
+          b"properties" => {
+            let attributes = AttributesMap::try_from(e.attributes())?;
 
-          palette_size = palsize;
+            let oxs_version = attributes.get("oxsversion").unwrap_or("1.0");
+            let software = attributes.get("software").unwrap_or("Unknown");
+            let software_version = attributes.get("software_version").unwrap_or("Unknown");
+            log::trace!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
+
+            let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes)?;
+            pattern.info = pattern_info;
+            pattern.fabric.width = pattern_width;
+            pattern.fabric.height = pattern_height;
+            pattern.fabric.spi = spi;
+            palette_size = palsize;
+          }
+          b"palette" => {
+            let (fabric, palette) = read_palette(reader, palette_size)?;
+            pattern.fabric = Fabric {
+              name: fabric.name,
+              color: fabric.color,
+              kind: fabric.kind,
+              ..pattern.fabric
+            };
+            pattern.palette = palette;
+          }
+          b"fullstitches" => pattern.fullstitches.extend(
+            read_full_stitches(reader)?
+              .into_iter()
+              .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
+          ),
+          b"partstitches" => pattern.partstitches.extend(
+            read_part_stitches(reader)?
+              .into_iter()
+              .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
+          ),
+          b"backstitches" => pattern.linestitches.extend(
+            read_line_stitches(reader)?
+              .into_iter()
+              .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
+          ),
+          b"ornaments_inc_knots_and_beads" => {
+            let (fullstitches, partstitches, nodestitches, specialstitches) = read_ornaments(reader)?;
+            pattern.fullstitches.extend(
+              fullstitches
+                .into_iter()
+                .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
+            );
+            pattern.partstitches.extend(
+              partstitches
+                .into_iter()
+                .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
+            );
+            pattern.nodestitches.extend(
+              nodestitches
+                .into_iter()
+                .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
+            );
+            pattern.specialstitches.extend(
+              specialstitches
+                .into_iter()
+                .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
+            );
+          }
+          b"special_stitch_models" => pattern
+            .special_stitch_models
+            .extend(read_special_stitch_models(reader)?),
+          _ => {}
         }
-        b"palette" => {
-          let (fabric, palette) = read_palette(reader, palette_size)?;
-          pattern.fabric = Fabric {
-            name: fabric.name,
-            color: fabric.color,
-            kind: fabric.kind,
-            ..pattern.fabric
-          };
-          pattern.palette = palette;
-        }
-        b"fullstitches" => pattern.fullstitches.extend(
-          read_full_stitches(reader)?
-            .into_iter()
-            .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
-        ),
-        b"partstitches" => pattern.partstitches.extend(
-          read_part_stitches(reader)?
-            .into_iter()
-            .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
-        ),
-        b"backstitches" => pattern.linestitches.extend(
-          read_line_stitches(reader)?
-            .into_iter()
-            .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
-        ),
-        b"ornaments_inc_knots_and_beads" => {
-          let (fullstitches, partstitches, nodestitches, specialstitches) = read_ornaments(reader)?;
-          pattern.fullstitches.extend(
-            fullstitches
-              .into_iter()
-              .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
-          );
-          pattern.partstitches.extend(
-            partstitches
-              .into_iter()
-              .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
-          );
-          pattern.nodestitches.extend(
-            nodestitches
-              .into_iter()
-              .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
-          );
-          pattern.specialstitches.extend(
-            specialstitches
-              .into_iter()
-              .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
-          );
-        }
-        b"special_stitch_models" => pattern
-          .special_stitch_models
-          .extend(read_special_stitch_models(reader)?),
-        _ => {}
-      },
+      }
       Event::End(ref e) if e.name().as_ref() == b"chart" => break,
       Event::Eof => anyhow::bail!("Unexpected EOF. The end of the `chart` tag is not found."),
       _ => {}
@@ -212,6 +223,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
     buf.clear();
   }
 
+  log::trace!("OXS file parsed");
   Ok(pattern)
 }
 
@@ -235,6 +247,8 @@ fn save_pattern_inner<W: io::Write>(
   patproj: &PatternProject,
   package_info: &tauri::PackageInfo,
 ) -> io::Result<()> {
+  log::trace!("Saving OXS file");
+
   let pattern = &patproj.pattern;
 
   // In the development mode, we want to have a pretty-printed XML file for easy debugging.
@@ -269,6 +283,7 @@ fn save_pattern_inner<W: io::Write>(
     Ok(())
   })?;
 
+  log::trace!("OXS file saved");
   Ok(())
 }
 

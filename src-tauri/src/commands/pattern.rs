@@ -9,13 +9,13 @@ pub fn load_pattern(
   request: tauri::ipc::Request<'_>,
   patterns: tauri::State<PatternsState>,
 ) -> CommandResult<tauri::ipc::Response> {
-  log::trace!("Loading pattern");
+  log::debug!("Loading pattern");
   let file_path: std::path::PathBuf = request.headers().get("filePath").unwrap().to_str().unwrap().into();
 
   let mut patterns = patterns.write().unwrap();
   let pattern_key = PatternKey::from(&file_path);
   if let Some(pattern) = patterns.get(&pattern_key) {
-    log::trace!("Pattern loaded");
+    log::debug!("Pattern loaded");
     return Ok(tauri::ipc::Response::new(borsh::to_vec(&(pattern_key, pattern))?));
   }
 
@@ -33,7 +33,7 @@ pub fn load_pattern(
   let result = borsh::to_vec(&(&pattern_key, &pattern))?;
   patterns.insert(pattern_key, pattern);
 
-  log::trace!("Pattern loaded");
+  log::debug!("Pattern loaded");
   Ok(tauri::ipc::Response::new(result))
 }
 
@@ -44,7 +44,7 @@ pub fn create_pattern<R: tauri::Runtime>(
   patterns: tauri::State<PatternsState>,
 ) -> CommandResult<tauri::ipc::Response> {
   if let tauri::ipc::InvokeBody::Raw(data) = request.body() {
-    log::trace!("Creating new pattern");
+    log::debug!("Creating new pattern");
 
     let fabric: Fabric = borsh::from_slice(data)?;
     let pattern = Pattern::new(fabric);
@@ -60,7 +60,7 @@ pub fn create_pattern<R: tauri::Runtime>(
     let mut patterns = patterns.write().unwrap();
     patterns.insert(pattern_key, patproj);
 
-    log::trace!("Pattern has been created");
+    log::debug!("Pattern has been created");
     Ok(tauri::ipc::Response::new(result))
   } else {
     Err(anyhow::anyhow!("Invalid request body").into())
@@ -73,7 +73,7 @@ pub fn save_pattern<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
   patterns: tauri::State<PatternsState>,
 ) -> CommandResult<()> {
-  log::trace!("Saving pattern");
+  log::debug!("Saving pattern");
 
   let pattern_key = request.headers().get("patternKey").unwrap().to_str().unwrap().into();
   let file_path = request.headers().get("filePath").unwrap().to_str().unwrap().into();
@@ -87,16 +87,16 @@ pub fn save_pattern<R: tauri::Runtime>(
     PatternFormat::EmbProj => parsers::embproj::save_pattern(patproj, app_handle.package_info()),
   }?;
 
-  log::trace!("Pattern saved");
+  log::debug!("Pattern saved");
   Ok(())
 }
 
 #[tauri::command]
 pub fn close_pattern(request: tauri::ipc::Request<'_>, patterns: tauri::State<PatternsState>) {
-  log::trace!("Closing pattern");
+  log::debug!("Closing pattern");
   let pattern_key = request.headers().get("patternKey").unwrap().to_str().unwrap().into();
   patterns.write().unwrap().remove(&pattern_key);
-  log::trace!("Pattern closed");
+  log::debug!("Pattern closed");
 }
 
 #[tauri::command]
