@@ -332,8 +332,8 @@ pub enum Symbol {
 impl std::fmt::Display for Symbol {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
-      Symbol::Code(code) => write!(f, "{}", code),
-      Symbol::Char(ch) => write!(f, "{}", ch),
+      Symbol::Code(code) => write!(f, "{code}"),
+      Symbol::Char(ch) => write!(f, "{ch}"),
     }
   }
 }
