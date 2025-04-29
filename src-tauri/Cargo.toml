@@ -17,7 +17,7 @@ tauri-build = { version = "2.2.0", features = [] }
 
 [dependencies]
 # Tauri
-tauri = { version = "2.4.0", features = ["test"] }
+tauri = { version = "2.5.1", features = ["test"] }
 ## Official plugins
 tauri-plugin-dialog = "2.0.5"
 tauri-plugin-fs = "2.0.3"
@@ -31,7 +31,7 @@ byteorder = "1.5.0"
 encoding_rs = "0.8.35"
 memchr = "2.7.4"
 hex = "0.4.3"
-quick-xml = "0.37.3"
+quick-xml = "0.37.5"
 
 # Zipping
 zip = { version = "2.6.1", features = [
