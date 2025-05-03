@@ -12,8 +12,10 @@ jobs:
       - uses: github/combine-prs@v5.2.0
         with:
           combine_branch_name: dependency-updates
-          pr_title: "Combined Dependabot PRs"
+          pr_title: "chore: update dependencies"
+          pr_body_header: Combined Dependabot PRs
           min_combine_number: 1
+          labels: dependencies
           ci_required: false # If anything, we will resolve conflicts manually.
           # Create a new branch for the combined PRs.
           update_branch: false
