@@ -2,7 +2,6 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
-import { useMagicKeys, whenever } from "@vueuse/core";
 import { useFluent } from "fluent-vue";
 import { useDialog } from "primevue";
 import { defineStore } from "pinia";
@@ -10,6 +9,7 @@ import { deserialize } from "@dao-xyz/borsh";
 import { toByteArray } from "base64-js";
 import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
+import { useShortcuts } from "#/composables";
 import { PatternView } from "#/plugins/pixi";
 import {
   AddedPaletteItemData,
@@ -247,19 +247,18 @@ export const usePatternsStore = defineStore("pattern-project", () => {
     triggerRef(pattern);
   });
 
-  const keys = useMagicKeys();
+  const shortcut = useShortcuts();
 
-  whenever(keys["Ctrl+KeyO"]!, loadPattern);
-  whenever(keys["Ctrl+KeyN"]!, createPattern);
-  whenever(keys["Ctrl+KeyS"]!, () => savePattern());
-  whenever(keys["Ctrl+Shift+KeyS"]!, () => savePattern(true));
-  whenever(keys["Ctrl+KeyW"]!, closePattern);
-
-  whenever(keys["Ctrl+KeyZ"]!, async () => {
+  shortcut.on("Ctrl+KeyO", loadPattern);
+  shortcut.on("Ctrl+KeyN", createPattern);
+  shortcut.on("Ctrl+KeyS", () => savePattern());
+  shortcut.on("Ctrl+Shift+KeyS", () => savePattern(true));
+  shortcut.on("Ctrl+KeyW", closePattern);
+  shortcut.on("Ctrl+KeyZ", async () => {
     if (!pattern.value) return;
     await HistoryApi.undo(pattern.value.key);
   });
-  whenever(keys["Ctrl+KeyY"]!, async () => {
+  shortcut.on("Ctrl+KeyY", async () => {
     if (!pattern.value) return;
     await HistoryApi.redo(pattern.value.key);
   });
