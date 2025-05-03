@@ -7,6 +7,7 @@ import { Tooltip, ConfirmationService, DialogService } from "primevue";
 import "uno.css";
 import { NordTheme } from "./assets/theme";
 
+import { ShortcutsDirective } from "./directives";
 import { fluent } from "./fluent";
 import { initLogger } from "./logger";
 import App from "./App.vue";
@@ -35,6 +36,7 @@ app.use(PrimeVue, {
 app.use(ConfirmationService);
 app.use(DialogService);
 app.directive("tooltip", Tooltip);
+app.directive("shortcuts", ShortcutsDirective);
 
 app.config.errorHandler = (err, _instance, info) => {
   error(`Error (${info}): ${err}`);
