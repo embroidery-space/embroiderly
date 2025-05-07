@@ -447,7 +447,6 @@ fn read_palette<R: io::BufRead>(
             name,
             color: attributes.get_color("color").unwrap_or("FF00FF").to_owned(),
             blends: if blends.is_empty() { None } else { Some(blends) },
-            bead: None,
             symbol: attributes.get_parsed("symbol"),
             symbol_font: attributes.get("fontname").map(|s| s.to_owned()),
           });

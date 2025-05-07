@@ -306,7 +306,6 @@ pub struct PaletteItem {
   pub name: String,
   pub color: String,
   pub blends: Option<Vec<Blend>>,
-  pub bead: Option<Bead>,
   pub symbol_font: Option<String>,
   pub symbol: Option<Symbol>,
 }

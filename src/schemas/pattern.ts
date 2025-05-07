@@ -112,7 +112,6 @@ export class PaletteItem {
   name: string;
   color: Color;
   blends?: Blend[];
-  bead?: Bead;
   symbolFont?: string;
   private symbolCode?: number;
 
@@ -123,7 +122,6 @@ export class PaletteItem {
     this.color = new Color(data.color);
 
     if (data.blends) this.blends = data.blends.map((blend) => new Blend(blend));
-    if (data.bead) this.bead = new Bead(data.bead);
 
     if (data.symbolFont) this.symbolFont = data.symbolFont;
     if (data.symbol) {
@@ -138,7 +136,6 @@ export class PaletteItem {
     name: b.string(),
     color: b.string(),
     blends: b.option(b.vec(Blend.schema)),
-    bead: b.option(Bead.schema),
     symbolFont: b.option(b.string()),
     symbol: b.option(b.enum({ code: b.u16(), char: b.string() })),
   });
@@ -154,7 +151,6 @@ export class PaletteItem {
       name: data.name,
       color: data.color.toHex().slice(1).toUpperCase(),
       blends: data.blends ?? null,
-      bead: data.bead ?? null,
       symbolFont: data.symbolFont ?? null,
       symbol: data.symbolCode ? { code: data.symbolCode } : null,
     });

@@ -32,7 +32,6 @@ fn test_add_palette_item() {
     name: String::from("Pumpkin-Pale"),
     color: String::from("F5BA82"),
     blends: None,
-    bead: None,
     symbol_font: None,
     symbol: None,
   };

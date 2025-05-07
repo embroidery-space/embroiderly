@@ -117,7 +117,6 @@ impl From<xsd::PaletteItem> for PaletteItem {
       blends: palette_item
         .blends
         .map(|blends| blends.into_iter().map(Blend::from).collect()),
-      bead: palette_item.bead.map(Bead::from),
       symbol_font: None,
       symbol: None,
     }

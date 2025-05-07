@@ -343,7 +343,7 @@ export class PatternView {
   addNodeStitch(node: NodeStitch) {
     const { x, y, palindex, kind, rotated } = node;
     const palitem = this.#palette[palindex]!;
-    const graphics = new StitchGraphics(node, TextureManager.shared.getNodeTexture(kind, palitem.bead));
+    const graphics = new StitchGraphics(node, TextureManager.shared.getNodeTexture(kind));
     graphics.eventMode = "static";
     graphics.tint = palitem.color;
     graphics.pivot.set(graphics.width / 2, graphics.height / 2);
