@@ -113,7 +113,7 @@
   import { Color } from "pixi.js";
   import DialogFooter from "./DialogFooter.vue";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#/utils/measurement";
-  import { Fabric, PaletteSettings } from "#/schemas/pattern";
+  import { Fabric, PaletteSettings } from "#/schemas/index.ts";
   import PaletteList from "../palette/PaletteList.vue";
 
   const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef")!;

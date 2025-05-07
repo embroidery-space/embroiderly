@@ -1,17 +1,17 @@
 import { describe, expect, test } from "vitest";
-import { Color } from "pixi.js";
 import { blendTitle, paletteItemTitle } from "./paletteItem";
-import { Blend, PaletteItem, PaletteSettings } from "#/schemas/pattern";
+import { Blend, PaletteItem, PaletteSettings } from "#/schemas/index.ts";
 
-const BLENDS = [
-  new Blend({ brand: "Anchor", number: "9159", strands: 1 }),
-  new Blend({ brand: "Madeira", number: "0705", strands: 1 }),
-];
+const BLENDS = [new Blend({ brand: "Anchor", number: "9159" }), new Blend({ brand: "Madeira", number: "0705" })];
 const PALETTE = [
-  new PaletteItem({ brand: "DMC", number: "310", name: "Black", color: new Color("2C3225") }),
-  new PaletteItem({ brand: "Anchor", number: "9159", name: "Glacier Blue", color: new Color("B2D8E5") }),
-  new PaletteItem({ brand: "Madeira", number: "0705", name: "Plum-DK", color: new Color("901b6b") }),
-  new PaletteItem({ brand: "Blends", number: "", name: "", color: new Color("A382AE"), blends: BLENDS }),
+  // @ts-expect-error ...
+  new PaletteItem({ brand: "DMC", number: "310", name: "Black", color: "2C3225" }),
+  // @ts-expect-error ...
+  new PaletteItem({ brand: "Anchor", number: "9159", name: "Glacier Blue", color: "B2D8E5" }),
+  // @ts-expect-error ...
+  new PaletteItem({ brand: "Madeira", number: "0705", name: "Plum-DK", color: "901b6b" }),
+  // @ts-expect-error ...
+  new PaletteItem({ brand: "Blends", number: "", name: "", color: "A382AE", blends: BLENDS }),
 ];
 
 describe("paletteItemTitle", () => {

@@ -121,7 +121,7 @@
         if (stage === AddStitchEventStage.End) await patternsStore.addStitch(node);
         else {
           const palitem = patternsStore.pattern!.palette[palindex]!;
-          patternCanvas.drawNodeHint(node, palitem.color, palitem.bead);
+          patternCanvas.drawNodeHint(node, palitem.color);
         }
         break;
       }

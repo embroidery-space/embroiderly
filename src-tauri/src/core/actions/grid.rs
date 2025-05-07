@@ -1,13 +1,11 @@
 use std::sync::OnceLock;
 
 use anyhow::Result;
-use base64::Engine;
-use base64::engine::general_purpose::STANDARD;
 use tauri::{Emitter, WebviewWindow};
 
 use super::Action;
-use crate::core::pattern::PatternProject;
-use crate::core::pattern::display::Grid;
+use crate::core::pattern::{Grid, PatternProject};
+use crate::utils::base64;
 
 #[cfg(test)]
 #[path = "grid.test.rs"]
@@ -31,7 +29,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateGridPropertiesAction {
   /// **Emits:**
   /// - `grid:update` with the updated grid properties.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    window.emit("grid:update", STANDARD.encode(borsh::to_vec(&self.grid)?))?;
+    window.emit("grid:update", base64::encode(borsh::to_vec(&self.grid)?))?;
     let old_grid = std::mem::replace(&mut patproj.display_settings.grid, self.grid.clone());
     if self.old_grid.get().is_none() {
       self.old_grid.set(old_grid).unwrap();
@@ -45,7 +43,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateGridPropertiesAction {
   /// - `grid:update` with the previous grid properties.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_grid = self.old_grid.get().unwrap();
-    window.emit("grid:update", STANDARD.encode(borsh::to_vec(&old_grid)?))?;
+    window.emit("grid:update", base64::encode(borsh::to_vec(&old_grid)?))?;
     patproj.display_settings.grid = old_grid.clone();
     Ok(())
   }

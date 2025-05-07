@@ -6,8 +6,8 @@
   >
     <PaletteList
       :model-value="appStateStore.selectedPaletteItemIndexes"
-      :options="patternsStore.pattern?.palette.map((pi) => pi.palitem)"
-      :option-value="(pi) => patternsStore.pattern?.palette.findIndex((cmp) => dequal(cmp.palitem, pi))"
+      :options="patternsStore.pattern?.palette"
+      :option-value="(pi) => patternsStore.pattern?.palette.findIndex((cmp) => dequal(cmp, pi))"
       :display-settings="paletteDisplaySettings"
       :disabled="paletteIsDisabled"
       :meta-key-selection="paletteIsBeingEdited"
@@ -125,7 +125,7 @@
   import { usePatternsStore } from "#/stores/patterns";
   import { useAppStateStore } from "#/stores/state";
   import { usePreferencesStore } from "#/stores/preferences";
-  import { FullStitchKind, LineStitchKind, NodeStitchKind, PaletteSettings, PartStitchKind } from "#/schemas/pattern";
+  import { FullStitchKind, LineStitchKind, NodeStitchKind, PaletteSettings, PartStitchKind } from "#/schemas/index.ts";
   import PaletteList from "./palette/PaletteList.vue";
   import ToolSelector from "./toolbar/ToolSelector.vue";
 

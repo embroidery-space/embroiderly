@@ -5,7 +5,6 @@ import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { useFluent } from "fluent-vue";
 import { useDialog } from "primevue";
 import { defineStore } from "pinia";
-import { deserialize } from "@dao-xyz/borsh";
 import { toByteArray } from "base64-js";
 import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
@@ -17,8 +16,11 @@ import {
   deserializeStitches,
   DisplayMode,
   PaletteSettings,
-} from "#/schemas/pattern";
-import { PaletteItem, Fabric, Grid, type Stitch } from "#/schemas/pattern";
+  PaletteItem,
+  Fabric,
+  Grid,
+  type Stitch,
+} from "#/schemas/index.ts";
 
 const SAVE_AS_FILTERS: DialogFilter[] = [
   { name: "Embroidery Project", extensions: ["embproj"] },
@@ -142,7 +144,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("fabric:update", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.setFabric(deserialize(toByteArray(payload), Fabric));
+    pattern.value.setFabric(Fabric.deserialize(toByteArray(payload)));
   });
 
   function updateGrid() {
@@ -159,7 +161,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("grid:update", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.setGrid(deserialize(toByteArray(payload), Grid));
+    pattern.value.setGrid(Grid.deserialize(toByteArray(payload)));
   });
 
   async function addPaletteItem(palitem: PaletteItem) {
@@ -168,7 +170,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("palette:add_palette_item", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.addPaletteItem(deserialize(toByteArray(payload), AddedPaletteItemData));
+    pattern.value.addPaletteItem(AddedPaletteItemData.deserialize(toByteArray(payload)));
     triggerRef(pattern);
   });
 
@@ -194,7 +196,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("palette:update_display_settings", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.paletteDisplaySettings = deserialize(toByteArray(payload), PaletteSettings);
+    pattern.value.paletteDisplaySettings = PaletteSettings.deserialize(toByteArray(payload));
     triggerRef(pattern);
   });
 

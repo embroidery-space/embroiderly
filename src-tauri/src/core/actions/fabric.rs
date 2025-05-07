@@ -1,13 +1,12 @@
 use std::sync::OnceLock;
 
 use anyhow::Result;
-use base64::Engine;
-use base64::engine::general_purpose::STANDARD;
 use tauri::{Emitter, WebviewWindow};
 
 use super::Action;
 use crate::Stitch;
 use crate::core::pattern::{Fabric, PatternProject};
+use crate::utils::base64;
 
 #[cfg(test)]
 #[path = "fabric.test.rs"]
@@ -38,13 +37,13 @@ impl<R: tauri::Runtime> Action<R> for UpdateFabricPropertiesAction {
   /// - `stitches:remove_many` with the stitches that are outside the new fabric bounds.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_fabric = std::mem::replace(&mut patproj.pattern.fabric, self.fabric.clone());
-    window.emit("fabric:update", STANDARD.encode(borsh::to_vec(&self.fabric)?))?;
+    window.emit("fabric:update", base64::encode(borsh::to_vec(&self.fabric)?))?;
 
     if self.fabric.width < old_fabric.width || self.fabric.height < old_fabric.height {
       let extra_stitches = patproj
         .pattern
         .remove_stitches_outside_bounds(0, 0, self.fabric.width, self.fabric.height);
-      window.emit("stitches:remove_many", STANDARD.encode(borsh::to_vec(&extra_stitches)?))?;
+      window.emit("stitches:remove_many", base64::encode(borsh::to_vec(&extra_stitches)?))?;
       if self.extra_stitches.get().is_none() {
         self.extra_stitches.set(extra_stitches).unwrap();
       }
@@ -65,11 +64,11 @@ impl<R: tauri::Runtime> Action<R> for UpdateFabricPropertiesAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_fabric = self.old_fabric.get().unwrap();
     patproj.pattern.fabric = old_fabric.clone();
-    window.emit("fabric:update", STANDARD.encode(borsh::to_vec(old_fabric)?))?;
+    window.emit("fabric:update", base64::encode(borsh::to_vec(old_fabric)?))?;
 
     if let Some(extra_stitches) = self.extra_stitches.get() {
       patproj.pattern.add_stitches(extra_stitches.clone());
-      window.emit("stitches:add_many", STANDARD.encode(borsh::to_vec(extra_stitches)?))?;
+      window.emit("stitches:add_many", base64::encode(borsh::to_vec(extra_stitches)?))?;
     }
 
     Ok(())

@@ -656,15 +656,6 @@ checksum = "6245d59a3e82a7fc217c5828a6692dbc6dfb63a0c8c90495621f7b9d79704a0e"
 
 [[package]]
 name = "convert_case"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec182b0ca2f35d8fc196cf3404988fd8b8c739a4d270ff118a398feb0cbec1ca"
-dependencies = [
- "unicode-segmentation",
-]
-
-[[package]]
-name = "convert_case"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baaaa0ecca5b51987b9423ccdc971514dd8b0bb7b4060b983d3664dad3f1f89f"
@@ -1111,16 +1102,11 @@ dependencies = [
  "anyhow",
  "base64 0.22.1",
  "borsh",
- "byteorder",
  "convert_case 0.8.0",
  "dyn-clone",
- "encoding_rs",
  "font-kit",
- "hex",
  "log",
  "log-panics",
- "memchr",
- "nutype",
  "ordered-float",
  "quick-xml 0.37.5",
  "rand 0.9.1",
@@ -1134,6 +1120,7 @@ dependencies = [
  "tauri-plugin-opener",
  "tauri-plugin-prevent-default",
  "tempfile",
+ "xsp-parsers",
  "zip",
  "zip-extract",
 ]
@@ -2253,27 +2240,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "kinded"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce4bdbb2f423660b19f0e9f7115182214732d8dd5f840cd0a3aee3e22562f34c"
-dependencies = [
- "kinded_macros",
-]
-
-[[package]]
-name = "kinded_macros"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a13b4ddc5dcb32f45dac3d6f606da2a52fdb9964a18427e63cd5ef6c0d13288d"
-dependencies = [
- "convert_case 0.6.0",
- "proc-macro2",
- "quote",
- "syn 2.0.100",
-]
-
-[[package]]
 name = "kuchikiki"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2586,28 +2552,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5c7398b9c8b70908f6371f47ed36737907c87c52af34c268fed0bf0ceb92ead9"
 dependencies = [
  "libc",
-]
-
-[[package]]
-name = "nutype"
-version = "0.6.1"
-source = "git+https://github.com/niusia-ua/nutype.git?branch=feat%2Fborsh#d1cfe03d9c435f8da87b5784edc2cea3e3cfa758"
-dependencies = [
- "nutype_macros",
-]
-
-[[package]]
-name = "nutype_macros"
-version = "0.6.1"
-source = "git+https://github.com/niusia-ua/nutype.git?branch=feat%2Fborsh#d1cfe03d9c435f8da87b5784edc2cea3e3cfa758"
-dependencies = [
- "cfg-if",
- "kinded",
- "proc-macro2",
- "quote",
- "rustc_version",
- "syn 2.0.100",
- "urlencoding",
 ]
 
 [[package]]
@@ -3134,6 +3078,19 @@ dependencies = [
  "quick-xml 0.32.0",
  "serde",
  "time",
+]
+
+[[package]]
+name = "pmaker"
+version = "0.0.0"
+source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=35519da49ecdefa720581db97849dca52e3200e0#35519da49ecdefa720581db97849dca52e3200e0"
+dependencies = [
+ "anyhow",
+ "byteorder",
+ "encoding_rs",
+ "hex",
+ "itertools",
+ "log",
 ]
 
 [[package]]
@@ -4915,12 +4872,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "urlencoding"
-version = "2.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "daf8dba3b7eb870caf1ddeed7bc9d2a049f3cfdfae7cb521b087cc33ae4c49da"
-
-[[package]]
 name = "urlpattern"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5878,6 +5829,14 @@ checksum = "ec1cdab258fb55c0da61328dc52c8764709b249011b2cad0454c72f0bf10a1f6"
 dependencies = [
  "libc",
  "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "xsp-parsers"
+version = "0.0.0"
+source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=35519da49ecdefa720581db97849dca52e3200e0#35519da49ecdefa720581db97849dca52e3200e0"
+dependencies = [
+ "pmaker",
 ]
 
 [[package]]

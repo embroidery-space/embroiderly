@@ -86,38 +86,38 @@ static TEST_PARTSTITCHES: LazyLock<Stitches<PartStitch>> = LazyLock::new(|| {
   ])
 });
 
-static TEST_LINES: LazyLock<Stitches<Line>> = LazyLock::new(|| {
+static TEST_LINES: LazyLock<Stitches<LineStitch>> = LazyLock::new(|| {
   Stitches::from_iter([
-    Line {
+    LineStitch {
       x: (NotNan::new(0.0).unwrap(), NotNan::new(1.0).unwrap()),
       y: (NotNan::new(0.0).unwrap(), NotNan::new(1.0).unwrap()),
       palindex: 0,
-      kind: LineKind::Back,
+      kind: LineStitchKind::Back,
     },
-    Line {
+    LineStitch {
       x: (NotNan::new(1.0).unwrap(), NotNan::new(2.0).unwrap()),
       y: (NotNan::new(1.0).unwrap(), NotNan::new(2.0).unwrap()),
       palindex: 0,
-      kind: LineKind::Straight,
+      kind: LineStitchKind::Straight,
     },
   ])
 });
 
-static TEST_NODES: LazyLock<Stitches<Node>> = LazyLock::new(|| {
+static TEST_NODES: LazyLock<Stitches<NodeStitch>> = LazyLock::new(|| {
   Stitches::from_iter([
-    Node {
+    NodeStitch {
       x: NotNan::new(0.0).unwrap(),
       y: NotNan::new(0.0).unwrap(),
       rotated: false,
       palindex: 0,
-      kind: NodeKind::FrenchKnot,
+      kind: NodeStitchKind::FrenchKnot,
     },
-    Node {
+    NodeStitch {
       x: NotNan::new(1.0).unwrap(),
       y: NotNan::new(1.0).unwrap(),
       rotated: false,
       palindex: 0,
-      kind: NodeKind::Bead,
+      kind: NodeStitchKind::Bead,
     },
   ])
 });
@@ -212,8 +212,8 @@ fn quarters(base: NotNan<f32>) -> [PartStitch; 4] {
   ]
 }
 
-fn line(base: NotNan<f32>, kind: LineKind) -> Line {
-  Line {
+fn line(base: NotNan<f32>, kind: LineStitchKind) -> LineStitch {
+  LineStitch {
     x: (base, NotNan::new(base + 1.0).unwrap()),
     y: (base, NotNan::new(base + 1.0).unwrap()),
     palindex: 0,
@@ -221,8 +221,8 @@ fn line(base: NotNan<f32>, kind: LineKind) -> Line {
   }
 }
 
-fn node(base: NotNan<f32>, kind: NodeKind) -> Node {
-  Node {
+fn node(base: NotNan<f32>, kind: NodeStitchKind) -> NodeStitch {
+  NodeStitch {
     x: base,
     y: base,
     rotated: false,
@@ -298,16 +298,16 @@ fn new_stitches_should_not_conflict() {
     );
   }
 
-  let back = line(NotNan::new(10.0).unwrap(), LineKind::Back);
+  let back = line(NotNan::new(10.0).unwrap(), LineStitchKind::Back);
   assert!(TEST_LINES.get(&back).is_none());
 
-  let straight = line(NotNan::new(10.0).unwrap(), LineKind::Straight);
+  let straight = line(NotNan::new(10.0).unwrap(), LineStitchKind::Straight);
   assert!(TEST_LINES.get(&straight).is_none());
 
-  let frenchknot = node(NotNan::new(10.0).unwrap(), NodeKind::FrenchKnot);
+  let frenchknot = node(NotNan::new(10.0).unwrap(), NodeStitchKind::FrenchKnot);
   assert!(TEST_NODES.get(&frenchknot).is_none());
 
-  let bead = node(NotNan::new(10.0).unwrap(), NodeKind::Bead);
+  let bead = node(NotNan::new(10.0).unwrap(), NodeStitchKind::Bead);
   assert!(TEST_NODES.get(&bead).is_none());
 }
 
@@ -499,26 +499,112 @@ fn quarter_stitches_conflict_with_quarter_stitches() {
 
 #[test]
 fn line_conflicts_with_line() {
-  let back = line(NotNan::new(0.0).unwrap(), LineKind::Back);
+  let back = line(NotNan::new(0.0).unwrap(), LineStitchKind::Back);
   assert!(TEST_LINES.get(&back).is_some());
-  let back = line(NotNan::new(1.0).unwrap(), LineKind::Back);
+  let back = line(NotNan::new(1.0).unwrap(), LineStitchKind::Back);
   assert!(TEST_LINES.get(&back).is_some());
 
-  let straight = line(NotNan::new(0.0).unwrap(), LineKind::Straight);
+  let straight = line(NotNan::new(0.0).unwrap(), LineStitchKind::Straight);
   assert!(TEST_LINES.get(&straight).is_some());
-  let straight = line(NotNan::new(1.0).unwrap(), LineKind::Straight);
+  let straight = line(NotNan::new(1.0).unwrap(), LineStitchKind::Straight);
   assert!(TEST_LINES.get(&straight).is_some());
 }
 
 #[test]
 fn node_conflicts_with_node() {
-  let frenchknot = node(NotNan::new(0.0).unwrap(), NodeKind::FrenchKnot);
+  let frenchknot = node(NotNan::new(0.0).unwrap(), NodeStitchKind::FrenchKnot);
   assert!(TEST_NODES.get(&frenchknot).is_some());
-  let frenchknot = node(NotNan::new(1.0).unwrap(), NodeKind::FrenchKnot);
+  let frenchknot = node(NotNan::new(1.0).unwrap(), NodeStitchKind::FrenchKnot);
   assert!(TEST_NODES.get(&frenchknot).is_some());
 
-  let bead = node(NotNan::new(0.0).unwrap(), NodeKind::Bead);
+  let bead = node(NotNan::new(0.0).unwrap(), NodeStitchKind::Bead);
   assert!(TEST_NODES.get(&bead).is_some());
-  let bead = node(NotNan::new(1.0).unwrap(), NodeKind::Bead);
+  let bead = node(NotNan::new(1.0).unwrap(), NodeStitchKind::Bead);
   assert!(TEST_NODES.get(&bead).is_some());
+}
+
+#[test]
+fn test_remove_stitches_by_palindexes() {
+  let mut stitches = Stitches::from_iter([
+    FullStitch {
+      x: NotNan::new(0.0).unwrap(),
+      y: NotNan::new(0.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(1.0).unwrap(),
+      y: NotNan::new(1.0).unwrap(),
+      palindex: 1,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(2.0).unwrap(),
+      y: NotNan::new(2.0).unwrap(),
+      palindex: 2,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(3.0).unwrap(),
+      y: NotNan::new(3.0).unwrap(),
+      palindex: 3,
+      kind: FullStitchKind::Full,
+    },
+  ]);
+
+  let removed = stitches.remove_stitches_by_palindexes(&[1, 2]);
+
+  // Check that the correct stitches were removed.
+  assert_eq!(removed.len(), 2);
+  assert!(removed.iter().any(|s| s.palindex == 1));
+  assert!(removed.iter().any(|s| s.palindex == 2));
+
+  // Check that the remaining stitches have updated palindex values.
+  assert_eq!(stitches.len(), 2);
+  let remaining: Vec<_> = stitches.iter().collect();
+  assert_eq!(remaining[0].palindex, 0); // palindex 0 stays as 0.
+  assert_eq!(remaining[1].palindex, 1); // palindex 3 becomes 1.
+}
+
+#[test]
+fn test_restore_stitches() {
+  let mut stitches = Stitches::from_iter([
+    FullStitch {
+      x: NotNan::new(0.0).unwrap(),
+      y: NotNan::new(0.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(3.0).unwrap(),
+      y: NotNan::new(3.0).unwrap(),
+      palindex: 1,
+      kind: FullStitchKind::Full,
+    },
+  ]);
+
+  let stitches_to_restore = vec![
+    FullStitch {
+      x: NotNan::new(1.0).unwrap(),
+      y: NotNan::new(1.0).unwrap(),
+      palindex: 1,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(2.0).unwrap(),
+      y: NotNan::new(2.0).unwrap(),
+      palindex: 2,
+      kind: FullStitchKind::Full,
+    },
+  ];
+
+  stitches.restore_stitches(stitches_to_restore, &[1, 2], 4);
+
+  // Check that all stitches are present with correct palindex values.
+  assert_eq!(stitches.len(), 4);
+  let all_stitches: Vec<_> = stitches.iter().collect();
+  assert_eq!(all_stitches[0].palindex, 0);
+  assert_eq!(all_stitches[1].palindex, 1);
+  assert_eq!(all_stitches[2].palindex, 2);
+  assert_eq!(all_stitches[3].palindex, 3);
 }

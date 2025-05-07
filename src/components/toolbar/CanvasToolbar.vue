@@ -22,7 +22,7 @@
   import { computed, ref } from "vue";
   import { useFluent } from "fluent-vue";
   import { Divider } from "primevue";
-  import { DisplayMode } from "#/schemas/pattern";
+  import { DisplayMode } from "#/schemas/index.ts";
   import { usePatternsStore } from "#/stores/patterns";
   import ToolSelector from "./ToolSelector.vue";
   import ToolToggle from "./ToolToggle.vue";

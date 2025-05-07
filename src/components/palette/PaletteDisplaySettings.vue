@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
   import { Checkbox, FloatLabel, InputNumber, ToggleSwitch } from "primevue";
-  import { PaletteSettings } from "#/schemas/pattern";
+  import { PaletteSettings } from "#/schemas/index.ts";
   import PaletteSection from "./PaletteSection.vue";
 
   const props = defineProps<{ settings: PaletteSettings }>();

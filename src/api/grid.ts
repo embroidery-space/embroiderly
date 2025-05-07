@@ -1,7 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
-import { serialize } from "@dao-xyz/borsh";
-import type { PatternKey, Grid } from "#/schemas/pattern";
+import { type PatternKey, Grid } from "#/schemas/index.ts";
 
 export function updateGrid(patternKey: PatternKey, grid: Grid) {
-  return invoke<void>("update_grid", serialize(grid), { headers: { patternKey } });
+  return invoke<void>("update_grid", Grid.serialize(grid), { headers: { patternKey } });
 }

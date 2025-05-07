@@ -36,7 +36,7 @@
   import { computed } from "vue";
   import { type PassThrough } from "@primevue/core";
   import { Listbox, type ListboxOptionDblClickEvent, type ListboxPassThroughOptions } from "primevue";
-  import type { PaletteSettings } from "#/schemas/pattern";
+  import type { PaletteSettings } from "#/schemas/index.ts";
   import PaletteItem from "./PaletteItem.vue";
 
   const props = defineProps<{

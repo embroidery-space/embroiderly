@@ -5,8 +5,8 @@ pub use pattern::*;
 mod stitches;
 pub use stitches::*;
 
-pub mod display;
-pub mod print;
+mod display;
+pub use display::*;
 
 mod project;
 pub use project::*;

@@ -4,8 +4,7 @@ use anyhow::Result;
 use tauri::{Emitter, WebviewWindow};
 
 use super::Action;
-use crate::PatternProject;
-use crate::display::DisplayMode;
+use crate::core::pattern::{DisplayMode, PatternProject};
 
 #[cfg(test)]
 #[path = "display.test.rs"]

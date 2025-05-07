@@ -19,7 +19,7 @@
   import { Color } from "pixi.js";
   import { contrastColor } from "#/utils/color";
   import { paletteItemTitle } from "#/utils/paletteItem";
-  import type { PaletteItem, PaletteSettings } from "#/schemas/pattern";
+  import type { PaletteItem, PaletteSettings } from "#/schemas/index.ts";
 
   interface PaletteItemProps {
     paletteItem: PaletteItem & { color: Color | string };

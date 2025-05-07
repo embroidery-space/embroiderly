@@ -1,6 +1,5 @@
 use borsh::{BorshDeserialize, BorshSerialize};
 
-use super::PaletteIndex;
 use super::partstitch::*;
 use crate::core::pattern::Coord;
 
@@ -8,7 +7,7 @@ use crate::core::pattern::Coord;
 pub struct FullStitch {
   pub x: Coord,
   pub y: Coord,
-  pub palindex: u8,
+  pub palindex: u32,
   pub kind: FullStitchKind,
 }
 
@@ -39,21 +38,10 @@ impl From<PartStitch> for FullStitch {
   }
 }
 
-impl PaletteIndex for FullStitch {
-  fn palindex(&self) -> u8 {
-    self.palindex
-  }
-
-  fn set_palindex(&mut self, palindex: u8) {
-    self.palindex = palindex;
-  }
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, BorshSerialize, BorshDeserialize)]
-#[borsh(use_discriminant = true)]
 pub enum FullStitchKind {
-  Full = 0,
-  Petite = 1,
+  Full,
+  Petite,
 }
 
 impl From<PartStitchKind> for FullStitchKind {

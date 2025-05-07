@@ -9,8 +9,8 @@ pub struct Pattern {
   pub palette: Vec<PaletteItem>,
   pub fullstitches: Stitches<FullStitch>,
   pub partstitches: Stitches<PartStitch>,
-  pub nodes: Stitches<Node>,
-  pub lines: Stitches<Line>,
+  pub linestitches: Stitches<LineStitch>,
+  pub nodestitches: Stitches<NodeStitch>,
   pub specialstitches: Stitches<SpecialStitch>,
   pub special_stitch_models: Vec<SpecialStitchModel>,
 }
@@ -41,14 +41,14 @@ impl Pattern {
         }
       }
       Stitch::Node(node) => {
-        if let Some(&node) = self.nodes.get(node) {
+        if let Some(&node) = self.nodestitches.get(node) {
           Some(Stitch::Node(node))
         } else {
           None
         }
       }
       Stitch::Line(line) => {
-        if let Some(&line) = self.lines.get(line) {
+        if let Some(&line) = self.linestitches.get(line) {
           Some(Stitch::Line(line))
         } else {
           None
@@ -62,8 +62,8 @@ impl Pattern {
     match stitch {
       Stitch::Full(fullstitch) => self.fullstitches.contains(fullstitch),
       Stitch::Part(partstitch) => self.partstitches.contains(partstitch),
-      Stitch::Node(node) => self.nodes.contains(node),
-      Stitch::Line(line) => self.lines.contains(line),
+      Stitch::Node(node) => self.nodestitches.contains(node),
+      Stitch::Line(line) => self.linestitches.contains(line),
     }
   }
 
@@ -158,12 +158,12 @@ impl Pattern {
         }
       }
       Stitch::Node(node) => {
-        if let Some(node) = self.nodes.insert(node) {
+        if let Some(node) = self.nodestitches.insert(node) {
           conflicts.push(Stitch::Node(node));
         }
       }
       Stitch::Line(line) => {
-        if let Some(line) = self.lines.insert(line) {
+        if let Some(line) = self.linestitches.insert(line) {
           conflicts.push(Stitch::Line(line));
         }
       }
@@ -184,13 +184,13 @@ impl Pattern {
     match stitch {
       Stitch::Full(fullstitch) => self.fullstitches.remove(&fullstitch).map(|fs| fs.into()),
       Stitch::Part(partstitch) => self.partstitches.remove(&partstitch).map(|ps| ps.into()),
-      Stitch::Node(node) => self.nodes.remove(&node).map(|node| node.into()),
-      Stitch::Line(line) => self.lines.remove(&line).map(|line| line.into()),
+      Stitch::Node(node) => self.nodestitches.remove(&node).map(|node| node.into()),
+      Stitch::Line(line) => self.linestitches.remove(&line).map(|line| line.into()),
     }
   }
 
   /// Removes and returns all stitches with a given palette index from the pattern.
-  pub fn remove_stitches_by_palindexes(&mut self, palindexes: &[u8]) -> Vec<Stitch> {
+  pub fn remove_stitches_by_palindexes(&mut self, palindexes: &[u32]) -> Vec<Stitch> {
     log::trace!("Removing stitches by palette index");
     let mut conflicts = Vec::new();
     conflicts.extend(
@@ -209,14 +209,14 @@ impl Pattern {
     );
     conflicts.extend(
       self
-        .lines
+        .linestitches
         .remove_stitches_by_palindexes(palindexes)
         .into_iter()
         .map(Stitch::Line),
     );
     conflicts.extend(
       self
-        .nodes
+        .nodestitches
         .remove_stitches_by_palindexes(palindexes)
         .into_iter()
         .map(Stitch::Node),
@@ -244,14 +244,14 @@ impl Pattern {
     );
     conflicts.extend(
       self
-        .lines
+        .linestitches
         .remove_stitches_outside_bounds(x, y, width, height)
         .into_iter()
         .map(Stitch::Line),
     );
     conflicts.extend(
       self
-        .nodes
+        .nodestitches
         .remove_stitches_outside_bounds(x, y, width, height)
         .into_iter()
         .map(Stitch::Node),
@@ -259,24 +259,24 @@ impl Pattern {
     conflicts
   }
 
-  pub fn restore_stitches(&mut self, stitches: Vec<Stitch>, palindexes: &[u8], palsize: u8) {
+  pub fn restore_stitches(&mut self, stitches: Vec<Stitch>, palindexes: &[u32], palsize: u32) {
     let mut fullstitches = Vec::new();
     let mut partstitches = Vec::new();
-    let mut lines = Vec::new();
-    let mut nodes = Vec::new();
+    let mut linestitches = Vec::new();
+    let mut nodestitches = Vec::new();
     for stitch in stitches.into_iter() {
       match stitch {
         Stitch::Full(fullstitch) => fullstitches.push(fullstitch),
         Stitch::Part(partstitch) => partstitches.push(partstitch),
-        Stitch::Line(line) => lines.push(line),
-        Stitch::Node(node) => nodes.push(node),
+        Stitch::Line(line) => linestitches.push(line),
+        Stitch::Node(node) => nodestitches.push(node),
       }
     }
 
     self.fullstitches.restore_stitches(fullstitches, palindexes, palsize);
     self.partstitches.restore_stitches(partstitches, palindexes, palsize);
-    self.lines.restore_stitches(lines, palindexes, palsize);
-    self.nodes.restore_stitches(nodes, palindexes, palsize);
+    self.linestitches.restore_stitches(linestitches, palindexes, palsize);
+    self.nodestitches.restore_stitches(nodestitches, palindexes, palsize);
   }
 }
 
@@ -284,7 +284,6 @@ impl Pattern {
 pub struct PatternInfo {
   pub title: String,
   pub author: String,
-  pub company: String,
   pub copyright: String,
   pub description: String,
 }
@@ -294,7 +293,6 @@ impl Default for PatternInfo {
     Self {
       title: String::from("Untitled"),
       author: String::new(),
-      company: String::new(),
       copyright: String::new(),
       description: String::new(),
     }
@@ -308,22 +306,15 @@ pub struct PaletteItem {
   pub name: String,
   pub color: String,
   pub blends: Option<Vec<Blend>>,
-  pub bead: Option<Bead>,
-  pub strands: Option<PaletteItemStitchStrands>,
+  pub symbol_font: Option<String>,
+  pub symbol: Option<Symbol>,
 }
 
 #[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
 pub struct Blend {
   pub brand: String,
   pub number: String,
-  pub strands: BlendStrands,
 }
-
-#[nutype::nutype(
-  sanitize(with = |raw| raw.clamp(1, 6)),
-  derive(Debug, Clone, Copy, PartialEq, BorshSerialize, BorshDeserialize)
-)]
-pub struct BlendStrands(u8);
 
 #[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
 pub struct Bead {
@@ -331,41 +322,40 @@ pub struct Bead {
   pub diameter: f32,
 }
 
-#[derive(Debug, Default, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
-pub struct StitchStrandsStruct<T> {
-  pub full: T,
-  pub petite: T,
-  pub half: T,
-  pub quarter: T,
-  pub back: T,
-  pub straight: T,
-  pub french_knot: T,
-  pub special: T,
+#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+pub enum Symbol {
+  Code(u16),
+  Char(String),
 }
 
-#[nutype::nutype(
-  sanitize(with = |raw| raw.clamp(1, 12)),
-  derive(Debug, Clone, Copy, PartialEq, BorshSerialize, BorshDeserialize)
-)]
-pub struct StitchStrands(u8);
-
-pub type PaletteItemStitchStrands = StitchStrandsStruct<Option<StitchStrands>>;
-pub type DefaultStitchStrands = StitchStrandsStruct<StitchStrands>;
-
-impl Default for DefaultStitchStrands {
-  fn default() -> Self {
-    Self {
-      full: StitchStrands::new(2),
-      petite: StitchStrands::new(2),
-      half: StitchStrands::new(2),
-      quarter: StitchStrands::new(2),
-      back: StitchStrands::new(1),
-      straight: StitchStrands::new(1),
-      french_knot: StitchStrands::new(2),
-      special: StitchStrands::new(2),
+impl std::fmt::Display for Symbol {
+  fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    match self {
+      Symbol::Code(code) => write!(f, "{code}"),
+      Symbol::Char(ch) => write!(f, "{ch}"),
     }
   }
 }
+
+impl std::str::FromStr for Symbol {
+  type Err = anyhow::Error;
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    if let Ok(code) = s.parse::<u16>() {
+      return Ok(Symbol::Code(code));
+    }
+
+    if s.len() == 1 {
+      return Ok(Symbol::Char(s.to_string()));
+    }
+
+    Err(anyhow::anyhow!(
+      "Invalid symbol: {s}. Must be a single character or a number"
+    ))
+  }
+}
+
+pub type StitchesPerInch = (u8, u8);
 
 #[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
 pub struct Fabric {
@@ -377,17 +367,24 @@ pub struct Fabric {
   pub color: String,
 }
 
+impl Fabric {
+  pub const DEFAULT_WIDTH: u16 = 100;
+  pub const DEFAULT_HEIGHT: u16 = 100;
+  pub const DEFAULT_SPI: u8 = 14;
+  pub const DEFAULT_KIND: &'static str = "Aida";
+  pub const DEFAULT_NAME: &'static str = "White";
+  pub const DEFAULT_COLOR: &'static str = "FFFFFF";
+}
+
 impl Default for Fabric {
   fn default() -> Self {
     Self {
-      width: 60,
-      height: 80,
-      spi: (14, 14),
-      kind: String::from("Aida"),
-      name: String::from("White"),
-      color: String::from("FFFFFF"),
+      width: Fabric::DEFAULT_WIDTH,
+      height: Fabric::DEFAULT_HEIGHT,
+      spi: (Fabric::DEFAULT_SPI, Fabric::DEFAULT_SPI),
+      kind: String::from(Fabric::DEFAULT_KIND),
+      name: String::from(Fabric::DEFAULT_NAME),
+      color: String::from(Fabric::DEFAULT_COLOR),
     }
   }
 }
-
-pub type StitchesPerInch = (u16, u16);

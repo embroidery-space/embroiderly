@@ -1,5 +1,3 @@
-use base64::Engine;
-use base64::engine::general_purpose::STANDARD;
 use rand::seq::SliceRandom;
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder, generate_context};
@@ -7,10 +5,9 @@ use tauri::{App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder, gene
 use super::{
   Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
 };
-use crate::core::parser::oxs;
-use crate::core::pattern::display::{Formats, Symbols};
-use crate::core::pattern::{PaletteItem, PatternProject, Stitch};
-use crate::display::PaletteSettings;
+use crate::core::parsers::oxs;
+use crate::core::pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch};
+use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {
   mock_builder().build(generate_context!()).unwrap()
@@ -35,8 +32,8 @@ fn test_add_palette_item() {
     name: String::from("Pumpkin-Pale"),
     color: String::from("F5BA82"),
     blends: None,
-    bead: None,
-    strands: None,
+    symbol_font: None,
+    symbol: None,
   };
   let action = AddPaletteItemAction::new(palitem.clone());
 
@@ -44,14 +41,12 @@ fn test_add_palette_item() {
   {
     window.listen("palette:add_palette_item", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: AddedPaletteItemData = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let expected: AddedPaletteItemData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(
         expected,
         AddedPaletteItemData {
           palitem: palitem.clone(),
           palindex: 7,
-          symbols: Symbols::default(),
-          formats: Formats::default(),
         }
       );
     });
@@ -77,17 +72,17 @@ fn assert_executing_remove_palette_items_action(
   action: &RemovePaletteItemsAction,
   window: &WebviewWindow<tauri::test::MockRuntime>,
   patproj: &mut PatternProject,
-  expected_palindexes: Vec<u8>,
+  expected_palindexes: Vec<u32>,
   initial_palsize: usize,
   expected_palsize: usize,
 ) {
   let remove_palette_items_event_id = window.listen("palette:remove_palette_items", move |e| {
-    let received_palindexes = serde_json::from_str::<Vec<u8>>(e.payload()).unwrap();
+    let received_palindexes = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
     assert_eq!(received_palindexes, expected_palindexes);
   });
   let remove_many_stitches_event_id = window.listen("stitches:remove_many", move |e| {
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
-    let conflicts: Vec<Stitch> = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+    let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
     assert_eq!(conflicts.is_empty(), false);
   });
 
@@ -103,18 +98,18 @@ fn assert_revoking_remove_palette_items_action(
   action: &RemovePaletteItemsAction,
   window: &WebviewWindow<tauri::test::MockRuntime>,
   patproj: &mut PatternProject,
-  expected_palindexes: Vec<u8>,
+  expected_palindexes: Vec<u32>,
   initial_palsize: usize,
   expected_palsize: usize,
 ) {
   let add_palette_item_event_id = window.listen("palette:add_palette_item", move |e| {
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
-    let expected: AddedPaletteItemData = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+    let expected: AddedPaletteItemData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
     assert!(expected_palindexes.contains(&expected.palindex));
   });
   let add_many_stitches_event_id = window.listen("stitches:add_many", move |e| {
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
-    let conflicts: Vec<Stitch> = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+    let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
     assert_eq!(conflicts.is_empty(), false);
   });
 
@@ -175,7 +170,7 @@ fn test_remove_random_palette_items() {
   let palette_size = patproj.pattern.palette.len();
 
   let mut rng = rand::rng();
-  let palindexes: Vec<u8> = (0..(palette_size as u8)).collect();
+  let palindexes: Vec<u32> = (0..(palette_size as u32)).collect();
   for size in 1..(palette_size + 1) {
     let mut selected_palindixes = palindexes.clone();
     selected_palindixes.shuffle(&mut rng);
@@ -184,7 +179,6 @@ fn test_remove_random_palette_items() {
     let action = RemovePaletteItemsAction::new(selected_palindixes.clone());
 
     // Test executing the command.
-
     assert_executing_remove_palette_items_action(
       &action,
       &window,
@@ -232,7 +226,7 @@ fn test_update_palette_display_settings() {
   {
     let update_display_settings_event_id = window.listen("palette:update_display_settings", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let received_settings: PaletteSettings = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let received_settings: PaletteSettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(received_settings, new_settings);
     });
     action.perform(&window, &mut patproj).unwrap();
@@ -243,7 +237,7 @@ fn test_update_palette_display_settings() {
   {
     let update_display_settings_event_id = window.listen("palette:update_display_settings", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let received_settings: PaletteSettings = borsh::from_slice(&STANDARD.decode(base64).unwrap()).unwrap();
+      let received_settings: PaletteSettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(received_settings, old_settings);
     });
     action.revoke(&window, &mut patproj).unwrap();
