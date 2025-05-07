@@ -571,7 +571,7 @@ fn reads_and_writes_ornaments() {
 #[test]
 fn reads_and_writes_special_stitch_models() {
   let xml = r#"<special_stitch_models>
-  <model unique_name="Rhodes Heart - over 6" name="Rhodes Heart" width="3" height="2.5">
+  <model index="0" unique_name="Rhodes Heart - over 6" name="Rhodes Heart" width="3" height="2.5">
     <backstitch x1="1" x2="2" y1="2" y2="0" palindex="1" objecttype="straightstitch"/>
     <backstitch x1="0.5" x2="2.5" y1="1.5" y2="0" palindex="1" objecttype="straightstitch"/>
     <backstitch x1="0" x2="3" y1="1" y2="0.5" palindex="1" objecttype="straightstitch"/>
@@ -580,7 +580,7 @@ fn reads_and_writes_special_stitch_models() {
     <backstitch x1="1" x2="2" y1="0" y2="2" palindex="1" objecttype="straightstitch"/>
     <backstitch x1="1.5" x2="1.5" y1="0.5" y2="2.5" palindex="1" objecttype="straightstitch"/>
   </model>
-  <model unique_name="Lazy Daisy" name="Lazy Daisy" width="1" height="1.5">
+  <model index="1" unique_name="Lazy Daisy" name="Lazy Daisy" width="1" height="1.5">
     <backstitch x1="1" y1="0" x2="0.43" y2="0.26" x3="0.06" y3="0.66" x4="0.06" y4="1.03" x5="0.5" y5="1.06" x6="0.89" y6="0.66" x7="1.1" y7="0.1" palindex="1" objecttype="curvedstitch"/>
     <backstitch x1="0.03" y1="1.13" x2="0.23" y2="0.93" palindex="1" objecttype="curvedstitch"/>
   </model>

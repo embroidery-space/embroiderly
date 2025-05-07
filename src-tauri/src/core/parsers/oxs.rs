@@ -1086,10 +1086,11 @@ fn write_special_stitch_models<W: io::Write>(
   writer
     .create_element("special_stitch_models")
     .write_inner_content(|writer| {
-      for spsmodel in special_stitch_models.iter() {
+      for (index, spsmodel) in special_stitch_models.iter().enumerate() {
         writer
           .create_element("model")
           .with_attributes([
+            ("index", (index).to_string().as_str()),
             ("unique_name", spsmodel.unique_name.as_str()),
             ("name", spsmodel.name.as_str()),
             ("width", spsmodel.width.to_string().as_str()),
