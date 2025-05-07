@@ -11,8 +11,8 @@
   import { useDebounceFn } from "@vueuse/core";
   import { vElementSize } from "@vueuse/components";
   import { Assets, Point } from "pixi.js";
-  import { AddStitchEventStage, PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX } from "#/plugins/pixi";
-  import type { AddStitchData, CanvasSize, RemoveStitchData } from "#/plugins/pixi";
+  import { AddStitchEventStage, PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX } from "#/pixi";
+  import type { AddStitchData, CanvasSize, RemoveStitchData } from "#/pixi";
   import { useAppStateStore } from "#/stores/state";
   import { usePatternsStore } from "#/stores/patterns";
   import {

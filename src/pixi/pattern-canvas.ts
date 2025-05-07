@@ -2,7 +2,7 @@ import { Application, Graphics } from "pixi.js";
 import type { ApplicationOptions, ColorSource, FederatedPointerEvent, Point } from "pixi.js";
 import { Viewport } from "pixi-viewport";
 import { PatternView } from "./pattern-view";
-import { TextureManager, StitchGraphics, STITCH_SCALE_FACTOR, StitchParticleContainer } from "#/plugins/pixi";
+import { TextureManager, StitchGraphics, STITCH_SCALE_FACTOR, StitchParticleContainer } from "#/pixi";
 import type { Bead, LineStitch, NodeStitch, Stitch, StitchKind } from "#/schemas/pattern";
 
 const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
