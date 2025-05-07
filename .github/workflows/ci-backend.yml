@@ -1,32 +1,39 @@
-name: CI
+name: CI (backend)
 on:
   pull_request:
     branches: ["main"]
     types: ["opened", "reopened", "edited", "synchronize"]
+    paths:
+      - "src-tauri/**"
+      - ".github/workflows/ci-backend.yml"
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  frontend:
+  check:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src-tauri/
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Install system dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - uses: dtolnay/rust-toolchain@nightly
         with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - name: Check types
-        run: npm run check-types
+          components: rustfmt, clippy
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
       - name: Check formatting
-        run: npm run fmt
+        run: cargo +nightly fmt --check
       - name: Lint
-        run: npm run lint
-      - name: Test
-        run: npm run test
-  backend:
+        run: cargo clippy --locked -- -D warnings
+  test:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -44,9 +51,5 @@ jobs:
         with:
           workspaces: "./src-tauri -> target"
       - uses: taiki-e/install-action@nextest
-      - name: Check formatting
-        run: cargo +nightly fmt --check
-      - name: Lint
-        run: cargo clippy --locked -- -D warnings
       - name: Test
         run: cargo nextest run --locked

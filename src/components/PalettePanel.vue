@@ -1,12 +1,8 @@
 <template>
   <div
+    v-shortcuts.escape="() => (paletteIsBeingEdited = false)"
     class="h-full flex"
     :class="{ 'border-primary border-2': paletteIsBeingEdited }"
-    @keydown="
-      ({ key }) => {
-        if (key === 'Escape') paletteIsBeingEdited = false;
-      }
-    "
   >
     <PaletteList
       :model-value="appStateStore.selectedPaletteItemIndexes"
