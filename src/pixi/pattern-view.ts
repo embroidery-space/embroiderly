@@ -1,5 +1,5 @@
 import { Container, Graphics, Particle } from "pixi.js";
-import { TextureManager, StitchGraphics, STITCH_SCALE_FACTOR, StitchParticleContainer, Symbol } from "#/pixi";
+import { TextureManager, StitchGraphics, StitchParticleContainer, Symbol, STITCH_SCALE_FACTOR } from "#/pixi";
 import { ObjectedMap } from "#/utils/map";
 import {
   AddedPaletteItemData,

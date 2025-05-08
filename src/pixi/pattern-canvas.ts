@@ -1,9 +1,11 @@
-import { Application, Graphics } from "pixi.js";
-import type { ApplicationOptions, ColorSource, FederatedPointerEvent, Point } from "pixi.js";
-import { Viewport } from "pixi-viewport";
+import { Application, Point } from "pixi.js";
+import type { ApplicationOptions, ColorSource } from "pixi.js";
 import { PatternView } from "./pattern-view";
-import { TextureManager, StitchGraphics, STITCH_SCALE_FACTOR, StitchParticleContainer } from "#/pixi";
-import type { Bead, LineStitch, NodeStitch, Stitch, StitchKind } from "#/schemas/pattern";
+import { TextureManager } from "#/pixi";
+import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
+import { InputManager } from "./plugins/input-manager";
+import { Viewport } from "./plugins/viewport";
+import { Hint } from "./hint";
 
 const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
   eventFeatures: { globalMove: false },
@@ -11,157 +13,79 @@ const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
   backgroundAlpha: 0,
 };
 
-export class PatternCanvas extends EventTarget {
-  #pixi = new Application();
-  #viewport!: Viewport;
+const DEFAULT_MODIFIERS: Modifiers = { mod1: (e) => e.ctrlKey, mod2: (e) => e.shiftKey, mod3: (e) => e.altKey };
 
-  #startPoint: Point | undefined = undefined;
-  #hint = new Graphics();
+// We use a native `EventTarget` instead of an `EventEmitter` from Pixi.js here,
+// because this class will be used in a Vue.js environment where it is more convenient to use native events.
+export class PatternCanvas extends EventTarget {
+  private pixi = new Application();
+  private stages = {
+    // lowest
+    viewport: new Viewport(),
+    hint: new Hint(), // Actually, it will be put into the viewport to follow its transformations (a local position and scale).
+    // highest
+  };
+
+  private inputManager: InputManager;
+  private modifiers = DEFAULT_MODIFIERS;
 
   constructor() {
     super();
+    this.inputManager = new InputManager(this, this.stages.viewport, { modifiers: this.modifiers });
   }
 
   async init({ width, height }: CanvasSize, options?: Partial<Omit<ApplicationOptions, "width" | "height">>) {
-    await this.#pixi.init(Object.assign({ width, height }, DEFAULT_INIT_OPTIONS, options));
-    this.#viewport = this.#pixi.stage.addChild(
-      new Viewport({ screenWidth: width, screenHeight: height, events: this.#pixi.renderer.events }),
-    );
+    await this.pixi.init(Object.assign({ width, height }, DEFAULT_INIT_OPTIONS, options));
+    this.stages.viewport.init({
+      events: this.pixi.renderer.events,
+      screenWidth: width,
+      screenHeight: height,
+      modifiers: this.modifiers,
+    });
+    this.inputManager.init();
 
-    TextureManager.shared.init(this.#pixi.renderer);
+    TextureManager.shared.init(this.pixi.renderer);
 
-    // Configure the viewport.
-    this.#viewport
-      .drag({ keyToPress: ["ShiftLeft", "ShiftRight"], mouseButtons: "right", factor: 2 })
-      .pinch({ factor: 2 })
-      .wheel({ smooth: 2, trackpadPinch: true, wheelZoom: false })
-      .clampZoom({ minScale: 1, maxScale: 100 });
-
-    // Set up event listeners.
-    this.#viewport.on("pointerdown", this.#onPointerDown, this);
-    this.#viewport.on("pointermove", this.#onPointerMove, this);
-    this.#viewport.on("pointerup", this.#onPointerUp, this);
+    this.pixi.stage.addChild(this.stages.viewport);
+    this.stages.viewport.addChild(this.stages.hint);
   }
 
   setPatternView(pattern: PatternView) {
     this.clear();
 
     pattern.render();
-    this.#viewport.addChild(...pattern.stages);
+    this.stages.viewport.addChild(...pattern.stages, this.stages.hint);
 
     const { width, height } = pattern.fabric;
-    this.#viewport.worldWidth = width;
-    this.#viewport.worldHeight = height;
-
-    this.#viewport.fitHeight();
-    this.#viewport.moveCenter(width / 2, height / 2);
+    this.stages.viewport.resizeWorld(width, height);
+    this.stages.viewport.fit();
+    this.stages.viewport.moveCenter(new Point(width / 2, height / 2));
   }
 
   clear() {
-    this.#viewport.removeChildren();
+    this.stages.viewport.removeChildren();
+  }
+
+  destroy() {
+    this.inputManager.destroy();
+    this.pixi.destroy();
   }
 
   resize({ width, height }: CanvasSize) {
-    this.#pixi.renderer.resize(width, height);
-    this.#viewport.resize(width, height);
+    this.pixi.renderer.resize(width, height);
+    this.stages.viewport.resizeScreen(width, height);
   }
 
   drawLineHint(line: LineStitch, color: ColorSource) {
-    const { x, y } = line;
-    const start = { x: x[0], y: y[0] };
-    const end = { x: x[1], y: y[1] };
-    this.#clearHint()
-      .moveTo(start.x, start.y)
-      .lineTo(end.x, end.y)
-      // Draw a line with a larger width to make it look like a border.
-      .stroke({ width: 0.225, color: 0x000000, cap: "round" })
-      .moveTo(start.x, start.y)
-      .lineTo(end.x, end.y)
-      // Draw a line with a smaller width to make it look like a fill.
-      .stroke({ width: 0.2, color, cap: "round" });
+    this.stages.hint.drawLineHint(line, color);
   }
 
   drawNodeHint(node: NodeStitch, color: ColorSource, bead?: Bead) {
-    const { x, y, kind, rotated } = node;
-    const graphics = this.#clearHint();
-    graphics.context = TextureManager.shared.getNodeTexture(kind, bead);
-    graphics.pivot.set(graphics.width / 2, graphics.height / 2);
-    graphics.scale.set(STITCH_SCALE_FACTOR);
-    graphics.position.set(x, y);
-    graphics.tint = color;
-    if (rotated) graphics.angle = 90;
+    this.stages.hint.drawNodeHint(node, color, bead);
   }
 
-  #clearHint() {
-    this.#hint.destroy();
-    this.#hint = new Graphics();
-    this.#hint.angle = 0;
-    this.#hint.alpha = 0.5;
-    this.#hint.pivot.set(0, 0);
-    this.#hint.scale.set(1, 1);
-    this.#hint.position.set(0, 0);
-    return this.#viewport.addChild(this.#hint);
-  }
-
-  #fireAddStitchEvent(e: FederatedPointerEvent, stage: AddStitchEventStage) {
-    const point = this.#viewport.toWorld(e.global);
-    if (this.#pointIsOutside(point)) return;
-    const detail: AddStitchData = { stage, start: this.#startPoint!, end: point, alt: e.ctrlKey, fixed: e.ctrlKey };
-    this.dispatchEvent(new CustomEvent(EventType.AddStitch, { detail }));
-  }
-
-  #onPointerDown(e: FederatedPointerEvent) {
-    const point = this.#viewport.toWorld(e.global);
-    this.#startPoint = this.#pointIsOutside(point) ? undefined : point;
-    if (this.#startPoint === undefined) {
-      this.#clearHint();
-      return;
-    }
-    if (e.button === 0) this.#fireAddStitchEvent(e, AddStitchEventStage.Start);
-    else if (e.button === 2) this.#onRightClick(e);
-  }
-
-  #onPointerUp(e: FederatedPointerEvent) {
-    // If the start point is not set or the shift key is pressed, do nothing.
-    // Shift key is used to pan the viewport.
-    if (this.#startPoint === undefined) {
-      this.#clearHint();
-      return;
-    }
-    if (e.button === 0) this.#fireAddStitchEvent(e, AddStitchEventStage.End);
-    else if (e.button === 2) this.#onRightClick(e);
-    this.#startPoint = undefined;
-    this.#clearHint();
-  }
-
-  #onPointerMove(e: FederatedPointerEvent) {
-    if (this.#startPoint === undefined) {
-      this.#clearHint();
-      return;
-    }
-    if (e.buttons === 1) this.#fireAddStitchEvent(e, AddStitchEventStage.Continue);
-    else if (e.buttons === 2) this.#onRightClick(e);
-  }
-
-  #onRightClick(e: FederatedPointerEvent) {
-    if (e.shiftKey) return; // Shift key is used to pan the viewport.
-    if (e.target instanceof StitchGraphics) {
-      const detail: RemoveStitchData = { stitch: e.target.stitch };
-      this.dispatchEvent(new CustomEvent(EventType.RemoveStitch, { detail }));
-    } else {
-      const point = this.#viewport.toWorld(e.global);
-      if (this.#pointIsOutside(point)) return;
-      this.#viewport.children.forEach((child) => {
-        if (child instanceof StitchParticleContainer) {
-          const detail: RemoveStitchData = { point, kind: child.kind };
-          this.dispatchEvent(new CustomEvent(EventType.RemoveStitch, { detail }));
-        }
-      });
-    }
-  }
-
-  #pointIsOutside({ x, y }: Point) {
-    return x <= 0 || y <= 0 || x >= this.#viewport.worldWidth || y >= this.#viewport.worldHeight;
+  clearHint() {
+    this.stages.hint.clearHint();
   }
 }
 
@@ -170,39 +94,22 @@ export interface CanvasSize {
   height: number;
 }
 
-export const enum EventType {
-  AddStitch = "add_stitch",
-  RemoveStitch = "remove_stitch",
+/** A function that checks if a modifier key is pressed based on the given event. */
+export type ModifierChecker = (event: MouseEvent) => boolean;
+
+export interface Modifiers {
+  /** Modifier 1. Default is the Ctrl key. */
+  mod1: ModifierChecker;
+
+  /** Modifier 2. Default is the Shift key. */
+  mod2: ModifierChecker;
+
+  /** Modifier 3. Default is the Alt key. */
+  mod3: ModifierChecker;
 }
 
-export const enum AddStitchEventStage {
-  Start = "start",
-  Continue = "continue",
-  End = "end",
+export interface ModifiersState {
+  mod1: boolean;
+  mod2: boolean;
+  mod3: boolean;
 }
-
-/**
- * Represents the data for the `AddStitch` event.
- *
- * It has the `start` and `end` points of the stitch.
- * If the stitch is "single-point" (i.e. cross stitch, petite, bead, etc.) then these points will be the same.
- * If the stitch is "double-point" (i.e. back and straight stitch) then these points will be different.
- */
-export interface AddStitchData {
-  /** The stage of the event. */
-  stage: AddStitchEventStage;
-
-  /** The point where the event started. */
-  start: Point;
-
-  /** The point where the event ended. */
-  end: Point;
-
-  /** Whether the stitch should be drawn in its "alternative" view (e.g. rotated). */
-  alt: boolean;
-
-  /** Whether the stitch should be drawn in its previous view (i.e. in the same direction). */
-  fixed: boolean;
-}
-
-export type RemoveStitchData = { stitch: Stitch } | { point: Point; kind: StitchKind };

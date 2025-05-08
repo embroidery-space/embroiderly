@@ -26,7 +26,6 @@
     "fluent-vue": "^3.7.1",
     "pinia": "^3.0.2",
     "pinia-plugin-persistedstate": "^4.2.0",
-    "pixi-viewport": "^6.0.3",
     "pixi.js": "^8.9.2",
     "primevue": "^4.3.3",
     "vue": "^3.5.13"
