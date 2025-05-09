@@ -1,10 +1,10 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import piniaPluginPersistedState from "pinia-plugin-persistedstate";
-import { PrimeVue } from "@primevue/core";
+import PrimeVue from "primevue/config";
 import { Tooltip, ConfirmationService, DialogService } from "primevue";
 
-import "uno.css";
+import "virtual:uno.css";
 import { NordTheme } from "./assets/theme";
 
 import { ShortcutsDirective } from "./directives";
