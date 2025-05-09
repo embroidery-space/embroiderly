@@ -12,7 +12,7 @@
   import { vElementSize } from "@vueuse/components";
   import { Assets, Point } from "pixi.js";
   import { PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX, StitchGraphics } from "#/pixi";
-  import type { CanvasSize } from "#/pixi";
+  import type { CanvasSize, EventDetail } from "#/pixi";
   import { useAppStateStore } from "#/stores/state";
   import { usePatternsStore } from "#/stores/patterns";
   import {
@@ -127,7 +127,7 @@
       case NodeStitchKind.Bead: {
         const node = new NodeStitch({ x, y, palindex, kind: tool, rotated: modifiers.mod1 });
         const palitem = patternsStore.pattern!.palette[palindex]!;
-        patternCanvas.drawNodeHint(node, palitem.color, palitem.bead);
+        patternCanvas.drawNodeHint(node, palitem.color);
         break;
       }
     }

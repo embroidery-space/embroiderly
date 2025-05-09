@@ -3,8 +3,7 @@ import type { ApplicationOptions, ColorSource } from "pixi.js";
 import { PatternView } from "./pattern-view";
 import { TextureManager } from "#/pixi";
 import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
-import { InputManager } from "./plugins/input-manager";
-import { Viewport } from "./plugins/viewport";
+import { InputManager, Viewport } from "./plugins/viewport";
 import { Hint } from "./hint";
 
 const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
@@ -12,8 +11,6 @@ const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
   antialias: true,
   backgroundAlpha: 0,
 };
-
-const DEFAULT_MODIFIERS: Modifiers = { mod1: (e) => e.ctrlKey, mod2: (e) => e.shiftKey, mod3: (e) => e.altKey };
 
 // We use a native `EventTarget` instead of an `EventEmitter` from Pixi.js here,
 // because this class will be used in a Vue.js environment where it is more convenient to use native events.
@@ -27,11 +24,10 @@ export class PatternCanvas extends EventTarget {
   };
 
   private inputManager: InputManager;
-  private modifiers = DEFAULT_MODIFIERS;
 
   constructor() {
     super();
-    this.inputManager = new InputManager(this, this.stages.viewport, { modifiers: this.modifiers });
+    this.inputManager = new InputManager(this, this.stages.viewport);
   }
 
   async init({ width, height }: CanvasSize, options?: Partial<Omit<ApplicationOptions, "width" | "height">>) {
@@ -40,7 +36,6 @@ export class PatternCanvas extends EventTarget {
       events: this.pixi.renderer.events,
       screenWidth: width,
       screenHeight: height,
-      modifiers: this.modifiers,
     });
     this.inputManager.init();
 
