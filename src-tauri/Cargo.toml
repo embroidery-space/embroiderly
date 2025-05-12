@@ -57,7 +57,6 @@ log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 ordered-float = { version = "5.0.0", features = ["borsh"] }
 dyn-clone = "1.0.19"
 tempfile = "3.19.1"
-font-kit = "0.14.2"
 convert_case = "0.8.0"
 
 [dev-dependencies]

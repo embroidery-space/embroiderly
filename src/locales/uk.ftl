@@ -92,20 +92,19 @@ label-hide-symbols = Сховати символи
 
 title-preferences = Налаштування
 
-label-font-family = Шрифт
-label-font-size = Розмір шрифту (масштабування)
-label-font-size-xx-small = Найменший
-label-font-size-x-small = Менший
-label-font-size-small = Маленький
-label-font-size-medium = Середній
-label-font-size-large = Великий
-label-font-size-x-large = Більший
-label-font-size-xx-large = Найбільший
-
 label-theme = Тема
 label-theme-dark = Темна
 label-theme-light = Світла
 label-theme-system = Системна
+
+label-scale = Масштаб
+label-scale-xx-small = Найменший
+label-scale-x-small = Менший
+label-scale-small = Маленький
+label-scale-medium = Середній
+label-scale-large = Великий
+label-scale-x-large = Більший
+label-scale-xx-large = Найбільший
 
 label-language = Мова
 

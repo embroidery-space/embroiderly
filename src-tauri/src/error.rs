@@ -30,12 +30,6 @@ impl From<tauri::Error> for CommandError {
   }
 }
 
-impl From<font_kit::error::SelectionError> for CommandError {
-  fn from(error: font_kit::error::SelectionError) -> Self {
-    Self(anyhow::Error::from(error))
-  }
-}
-
 impl serde::Serialize for CommandError {
   fn serialize<S: serde::Serializer>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> {
     serializer.serialize_str(&format!("{:#}", self.0))

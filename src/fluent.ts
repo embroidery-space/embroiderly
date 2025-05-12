@@ -12,5 +12,4 @@ uk.addResource(new FluentResource(ukContent));
 
 export const LOCALES = { en, uk } as const;
 
-// Use empty bundles as we will load them in the preferences store dynamically.
-export const fluent = createFluentVue({ bundles: [], componentTag: false });
+export const fluent = createFluentVue({ bundles: [en], componentTag: false });
