@@ -89,20 +89,19 @@ label-hide-symbols = Hide Symbols
 
 title-preferences = Preferences
 
-label-font-family = Font Family
-label-font-size = Font Size (Scaling)
-label-font-size-xx-small = Smallest
-label-font-size-x-small = Smaller
-label-font-size-small = Small
-label-font-size-medium = Medium
-label-font-size-large = Large
-label-font-size-x-large = Larger
-label-font-size-xx-large = Largest
-
 label-theme = Theme
 label-theme-dark = Dark
 label-theme-light = Light
 label-theme-system = System
+
+label-scale = Scale
+label-scale-xx-small = Smallest
+label-scale-x-small = Smaller
+label-scale-small = Small
+label-scale-medium = Medium
+label-scale-large = Large
+label-scale-x-large = Larger
+label-scale-xx-large = Largest
 
 label-language = Language
 

@@ -35,7 +35,6 @@
   import { defineAsyncComponent, onMounted } from "vue";
   import { ConfirmDialog, Splitter, SplitterPanel, DynamicDialog, BlockUI, ProgressSpinner } from "primevue";
   import { useAppStateStore } from "./stores/state";
-  import { usePreferencesStore } from "./stores/preferences";
   import { usePatternsStore } from "./stores/patterns";
 
   const AppHeader = defineAsyncComponent(() => import("./components/AppHeader.vue"));
@@ -45,11 +44,9 @@
   const CanvasToolbar = defineAsyncComponent(() => import("./components/toolbar/CanvasToolbar.vue"));
 
   const appStateStore = useAppStateStore();
-  const preferencesStore = usePreferencesStore();
   const patternsStore = usePatternsStore();
 
   onMounted(async () => {
-    await preferencesStore.setTheme(preferencesStore.theme);
     const currentPattern = appStateStore.currentPattern;
     if (currentPattern) await patternsStore.openPattern(currentPattern.key);
   });
