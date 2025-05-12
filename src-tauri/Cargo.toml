@@ -35,7 +35,7 @@ zip = { version = "2.6.1", features = [
   "zstd",
   "time",
 ], default-features = false }
-zip-extract = { version = "0.2.2", features = [
+zip-extract = { version = "0.2.3", features = [
   "zstd",
   "time",
 ], default-features = false }
@@ -56,7 +56,7 @@ log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 # Other
 ordered-float = { version = "5.0.0", features = ["borsh"] }
 dyn-clone = "1.0.19"
-tempfile = "3.19.1"
+tempfile = "3.20.0"
 convert_case = "0.8.0"
 
 [dev-dependencies]
