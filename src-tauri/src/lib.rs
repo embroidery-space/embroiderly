@@ -86,7 +86,6 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
       commands::stitches::remove_stitch,
       commands::history::undo,
       commands::history::redo,
-      commands::fonts::get_all_text_font_families,
       commands::fonts::load_stitch_font,
     ])
     .build(tauri::generate_context!())
