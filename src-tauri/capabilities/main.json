@@ -20,8 +20,6 @@
     "opener:allow-open-url",
     "opener:allow-default-urls",
     "log:allow-log",
-    "prevent-default:allow-keyboard",
-    "prevent-default:allow-pointer",
     { "identifier": "fs:allow-read-dir", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-text-file", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-file", "allow": [{ "path": "$RESOURCE/**/*" }] }
