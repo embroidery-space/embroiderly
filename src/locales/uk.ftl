@@ -108,6 +108,15 @@ label-scale-xx-large = Найбільший
 
 label-language = Мова
 
+label-viewport = Область перегляду
+message-viewport-hint = Ці налаштування вимагають перезавантаження.
+
+label-viewport-antialias = Згладжування
+
+label-viewport-wheel-action = Дія колеса миші
+label-viewport-wheel-action-zoom = Зум
+label-viewport-wheel-action-scroll = Прокрутка
+
 label-other = Інше
 label-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
 

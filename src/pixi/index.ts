@@ -9,4 +9,4 @@ export * from "./display-objects";
 export * from "./pattern-canvas";
 export * from "./pattern-view";
 export * from "./texture-manager";
-export { EventType, type EventDetail } from "./plugins/viewport";
+export * from "./plugins/viewport";

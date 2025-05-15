@@ -31,6 +31,9 @@ import { contextmenu } from "./contextmenu";
 import { menu } from "./menu";
 import { menubar } from "./menubar";
 
+// Message components.
+import { message } from "./message";
+
 // Misc components.
 import { blockui } from "./blockui";
 import { progressspinner } from "./progressspinner";
@@ -73,6 +76,9 @@ export const NordTheme = {
     contextmenu,
     menu,
     menubar,
+
+    // Message components.
+    message,
 
     // Misc components.
     blockui,

@@ -3,13 +3,19 @@ import type { ApplicationOptions, ColorSource } from "pixi.js";
 import { PatternView } from "./pattern-view";
 import { TextureManager } from "#/pixi";
 import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
-import { InputManager, Viewport } from "./plugins/viewport";
+import { InputManager, Viewport, type ViewportOptions } from "./plugins/viewport";
 import { Hint } from "./hint";
+
+export interface PatternCanvasOptions {
+  render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;
+  viewport?: Pick<ViewportOptions, "wheelAction">;
+}
 
 const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
   eventFeatures: { globalMove: false },
   antialias: true,
   backgroundAlpha: 0,
+  preference: "webgpu",
 };
 
 // We use a native `EventTarget` instead of an `EventEmitter` from Pixi.js here,
@@ -30,12 +36,19 @@ export class PatternCanvas extends EventTarget {
     this.inputManager = new InputManager(this, this.stages.viewport);
   }
 
-  async init({ width, height }: CanvasSize, options?: Partial<Omit<ApplicationOptions, "width" | "height">>) {
-    await this.pixi.init(Object.assign({ width, height }, DEFAULT_INIT_OPTIONS, options));
+  async init(canvas: HTMLCanvasElement, { width, height }: CanvasSize, options?: PatternCanvasOptions) {
+    await this.pixi.init({
+      ...DEFAULT_INIT_OPTIONS,
+      ...options?.render,
+      canvas,
+      width,
+      height,
+    });
     this.stages.viewport.init({
       events: this.pixi.renderer.events,
       screenWidth: width,
       screenHeight: height,
+      ...options?.viewport,
     });
     this.inputManager.init();
 

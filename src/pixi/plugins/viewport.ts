@@ -130,7 +130,7 @@ export interface ViewportOptions {
   worldWidth?: number;
   worldHeight?: number;
 
-  wheelAction?: "zoom" | "scroll";
+  wheelAction?: WheelAction;
 }
 
 export type ZoomState = "fit" | "fit-width" | "fit-height" | number;

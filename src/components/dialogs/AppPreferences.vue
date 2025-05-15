@@ -1,8 +1,8 @@
 <template>
   <Fluid>
-    <div class="grid grid-flow-row grid-cols-2 gap-x-3 gap-y-6">
-      <FloatLabel variant="over">
-        <Select id="theme" v-model="selectedTheme" :options="themeOptions">
+    <div class="grid grid-flow-row grid-cols-2 gap-2">
+      <FormElement id="theme" float :label="$t('label-theme')">
+        <Select v-model="selectedTheme" :options="themeOptions">
           <template #value="{ value }">
             <div v-if="value" class="flex items-center">
               <i class="mr-4" :class="value.icon" />
@@ -17,45 +17,64 @@
             </div>
           </template>
         </Select>
-        <label for="theme">{{ $t("label-theme") }}</label>
-      </FloatLabel>
+      </FormElement>
 
-      <FloatLabel variant="over">
+      <FormElement id="scale" float :label="$t('label-scale')">
         <Select
-          id="scale"
           v-model="preferencesStore.scale"
           :options="scaleOptions"
           :option-label="(value) => $t(`label-scale-${value}`)"
         />
-        <label for="scale">{{ $t("label-scale") }}</label>
-      </FloatLabel>
+      </FormElement>
 
-      <FloatLabel variant="over">
+      <FormElement id="language" float :label="$t('label-language')">
         <Select
-          id="language"
           v-model="preferencesStore.language"
           option-label="label"
           option-value="code"
           :options="languageOptions"
         />
-        <label for="language">{{ $t("label-language") }}</label>
-      </FloatLabel>
+      </FormElement>
     </div>
   </Fluid>
 
-  <Fieldset :legend="$t('label-other')" toggleable>
-    <label class="flex items-center gap-2">
+  <Fieldset toggleable :legend="$t('label-viewport')">
+    <div class="flex flex-col gap-2">
+      <Message severity="secondary" variant="simple" size="small" class="mb-2">
+        {{ $t("message-viewport-hint") }}
+      </Message>
+      <FormElement id="viewport-antialias" :label="$t('label-viewport-antialias')">
+        <Checkbox v-model="preferencesStore.viewport.antialias" binary />
+      </FormElement>
+
+      <Fluid>
+        <div class="grid grid-flow-row grid-cols-2 gap-2">
+          <FormElement id="wheel-action" float :label="$t('label-viewport-wheel-action')">
+            <Select
+              v-model="preferencesStore.viewport.wheelAction"
+              :options="wheelActionOptions"
+              :option-label="(value) => $t(`label-viewport-wheel-action-${value}`)"
+            />
+          </FormElement>
+        </div>
+      </Fluid>
+    </div>
+  </Fieldset>
+
+  <Fieldset toggleable :legend="$t('label-other')">
+    <FormElement id="palitem-color" :label="$t('label-use-palitem-color-for-stitch-tools')">
       <Checkbox v-model="preferencesStore.usePaletteItemColorForStitchTools" binary />
-      <span>{{ $t("label-use-palitem-color-for-stitch-tools") }}</span>
-    </label>
+    </FormElement>
   </Fieldset>
 </template>
 
 <script setup lang="ts">
-  import { Checkbox, Fieldset, FloatLabel, Fluid, Select } from "primevue";
-  import { usePreferencesStore } from "#/stores/preferences";
-  import type { Theme, Language, Scale } from "#/stores/preferences";
   import { computed } from "vue";
+  import { Checkbox, Fieldset, Fluid, Message, Select } from "primevue";
+  import { usePreferencesStore } from "#/stores/preferences";
+  import type { Theme, Language, Scale, WheelAction } from "#/stores/preferences";
+
+  import FormElement from "#/components/form/FormElement.vue";
 
   const preferencesStore = usePreferencesStore();
 
@@ -74,4 +93,6 @@
     { label: "English", code: "en" },
     { label: "Українська", code: "uk" },
   ];
+
+  const wheelActionOptions: WheelAction[] = ["zoom", "scroll"];
 </script>
