@@ -38,5 +38,5 @@ jobs:
           tagName: v__VERSION__
           releaseName: Embroiderly v__VERSION__
           releaseDraft: true
-          includeUpdaterJson: false
+          updaterJsonPreferNsis: true
           tauriScript: cargo tauri
