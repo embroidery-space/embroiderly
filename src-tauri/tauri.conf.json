@@ -12,7 +12,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["msi", "nsis", "rpm", "deb"],
+    "targets": ["nsis", "rpm", "deb"],
     "resources": ["resources/**/*"],
     "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
     "license": "GPL-3.0-or-later",
@@ -21,7 +21,6 @@
     "shortDescription": "A free and open-source desktop application for designing cross-stitch patterns.",
     "fileAssociations": [{ "ext": ["embproj"], "description": "Embroidery Project (Embroiderly)" }],
     "windows": {
-      "wix": { "language": ["en-US", "uk-UA"] },
       "nsis": {
         "displayLanguageSelector": true,
         "languages": ["English", "Ukrainian"],
