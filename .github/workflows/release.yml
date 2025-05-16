@@ -30,7 +30,9 @@ jobs:
         with:
           workspaces: "./src-tauri -> target"
       - run: npm ci
-      - uses: taiki-e/install-action@tauri-cli
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: tauri-cli
       - uses: tauri-apps/tauri-action@dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
