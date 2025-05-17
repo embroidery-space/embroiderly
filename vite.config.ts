@@ -16,5 +16,10 @@ export default defineConfig({
     sourcemap: !!process.env.TAURI_ENV_DEBUG,
     chunkSizeWarningLimit: 1000,
   },
-  test: { environment: "jsdom", globals: true },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    bail: process.env.GITHUB_ACTIONS ? 1 : 0,
+    reporters: process.env.GITHUB_ACTIONS ? ["verbose", "github-actions"] : ["verbose"],
+  },
 });
