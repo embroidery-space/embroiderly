@@ -1,4 +1,5 @@
 import { b } from "@zorsh/zorsh";
+import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 
 export class PatternInfo {
@@ -48,7 +49,8 @@ export class Fabric {
     color: b.string(),
   });
 
-  static deserialize(buffer: Uint8Array) {
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
     return new Fabric(Fabric.schema.deserialize(buffer));
   }
 
@@ -77,7 +79,10 @@ export class Blend {
     this.number = data.number;
   }
 
-  static readonly schema = b.struct({ brand: b.string(), number: b.string() });
+  static readonly schema = b.struct({
+    brand: b.string(),
+    number: b.string(),
+  });
 }
 
 export class Bead {
@@ -89,7 +94,10 @@ export class Bead {
     this.diameter = data.diameter;
   }
 
-  static readonly schema = b.struct({ length: b.f32(), diameter: b.f32() });
+  static readonly schema = b.struct({
+    length: b.f32(),
+    diameter: b.f32(),
+  });
 
   static default() {
     return new Bead({ length: 2.5, diameter: 1.5 });
@@ -103,7 +111,10 @@ export class Symbol {
     this.value = data;
   }
 
-  static readonly schema = b.enum({ code: b.u16(), char: b.string() });
+  static readonly schema = b.enum({
+    code: b.u16(),
+    char: b.string(),
+  });
 }
 
 export class PaletteItem {
@@ -140,7 +151,8 @@ export class PaletteItem {
     symbol: b.option(b.enum({ code: b.u16(), char: b.string() })),
   });
 
-  static deserialize(buffer: Uint8Array) {
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
     return new PaletteItem(PaletteItem.schema.deserialize(buffer));
   }
 
@@ -178,7 +190,12 @@ export class FullStitch {
     this.kind = data.kind;
   }
 
-  static readonly schema = b.struct({ x: b.f32(), y: b.f32(), palindex: b.u32(), kind: b.nativeEnum(FullStitchKind) });
+  static readonly schema = b.struct({
+    x: b.f32(),
+    y: b.f32(),
+    palindex: b.u32(),
+    kind: b.nativeEnum(FullStitchKind),
+  });
 }
 
 export enum PartStitchDirection {
@@ -273,7 +290,9 @@ export class CurvedStitch {
     this.points = data.points;
   }
 
-  static readonly schema = b.struct({ points: b.vec(b.tuple(b.f32(), b.f32())) });
+  static readonly schema = b.struct({
+    points: b.vec(b.tuple(b.f32(), b.f32())),
+  });
 }
 
 export class SpecialStitch {
