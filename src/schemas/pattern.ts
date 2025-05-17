@@ -2,6 +2,8 @@ import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 
+import { PaletteSettings } from "./display.ts";
+
 export class PatternInfo {
   title: string;
   author: string;
@@ -83,6 +85,13 @@ export class Blend {
     brand: b.string(),
     number: b.string(),
   });
+
+  getTitle(options = PaletteSettings.default()) {
+    const components = [];
+    if (options.showColorBrands) components.push(this.brand);
+    if (options.showColorNumbers) components.push(this.number);
+    return components.join(" ").trim();
+  }
 }
 
 export class Bead {
@@ -181,6 +190,26 @@ export class PaletteItem {
     const [r, g, b] = this._color.toUint8RgbArray() as [number, number, number];
     const brightness = r * 0.299 + g * 0.587 + b * 0.114;
     return brightness > 128 ? "black" : "white";
+  }
+
+  getTitle(options = PaletteSettings.default()) {
+    const components = [];
+    if (options.showColorBrands && this.brand) components.push(this.brand);
+    if (this.blends?.length) {
+      components.push(
+        this.blends
+          .map((blend) => blend.getTitle(options))
+          .filter((s) => s.length)
+          .join(", "),
+      );
+      return components.join(": ");
+    }
+    if (options.showColorNumbers && this.number) components.push(this.number);
+    if (options.showColorNames && this.name) {
+      if (!components.length) return this.name;
+      return [components.join(" "), this.name].join(", ");
+    }
+    return components.join(" ");
   }
 
   get symbol() {

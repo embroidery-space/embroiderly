@@ -1,6 +1,6 @@
 <template>
   <div
-    v-tooltip="{ value: paletteItemTitle(paletteItem), showDelay: 200, pt: { root: { class: 'max-w-fit' } } }"
+    v-tooltip="{ value: paletteItem.getTitle(), showDelay: 200, pt: { root: { class: 'max-w-fit' } } }"
     class="h-8 w-full px-2 py-1"
     :style="{
       backgroundColor: paletteItem.hex,
@@ -9,13 +9,12 @@
     }"
   >
     <p v-show="!displaySettings.colorOnly" class="overflow-hidden text-ellipsis whitespace-nowrap">
-      {{ paletteItemTitle(paletteItem, displaySettings) }}
+      {{ paletteItem.getTitle(displaySettings) }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { paletteItemTitle } from "#/utils/paletteItem";
   import type { PaletteItem, PaletteSettings } from "#/schemas/index.ts";
 
   interface PaletteItemProps {
