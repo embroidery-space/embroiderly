@@ -9,7 +9,7 @@ import { toByteArray } from "base64-js";
 import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
 import { useShortcuts } from "#/composables";
-import { PatternView } from "#/plugins/pixi";
+import { PatternView } from "#/pixi";
 import {
   AddedPaletteItemData,
   deserializeStitch,

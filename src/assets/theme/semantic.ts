@@ -128,8 +128,8 @@ export const semantic = {
       text: {
         color: "#2e3440",
         contrastColor: "{surface.400}",
-        hoverColor: "#3b4252",
-        activeColor: "#434c5e",
+        hoverColor: "#434c5e",
+        activeColor: "#3b4252",
         mutedColor: "{text.active.color}",
         hoverMutedColor: "{text.hover.color}",
         activeMutedColor: "{text.color}",

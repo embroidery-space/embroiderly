@@ -105,6 +105,15 @@ label-scale-xx-large = Largest
 
 label-language = Language
 
+label-viewport = Viewport
+message-viewport-hint = These settings require a restart.
+
+label-viewport-antialias = Antialiasing
+
+label-viewport-wheel-action = Mouse Wheel Action
+label-viewport-wheel-action-zoom = Zoom
+label-viewport-wheel-action-scroll = Scroll
+
 label-other = Other
 label-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools
 

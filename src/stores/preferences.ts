@@ -1,13 +1,20 @@
 import { setTheme as setAppTheme } from "@tauri-apps/api/app";
-import { defineAsyncComponent, ref, watch } from "vue";
+import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
 import { useFluent } from "fluent-vue";
 import { useDialog } from "primevue";
 import { LOCALES } from "#/fluent";
+import type { WheelAction } from "#/pixi";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
 export type Language = "en" | "uk";
+
+export interface ViewportOptions {
+  antialias: boolean;
+  wheelAction: WheelAction;
+}
+export type { WheelAction };
 
 export const usePreferencesStore = defineStore(
   "embroidery-studio-preferences",
@@ -45,6 +52,11 @@ export const usePreferencesStore = defineStore(
       { immediate: true },
     );
 
+    const viewport = reactive<ViewportOptions>({
+      antialias: true,
+      wheelAction: "zoom",
+    });
+
     const usePaletteItemColorForStitchTools = ref(true);
 
     function openPreferences() {
@@ -57,6 +69,7 @@ export const usePreferencesStore = defineStore(
       theme,
       scale,
       language,
+      viewport,
       usePaletteItemColorForStitchTools,
       openPreferences,
     };
