@@ -121,23 +121,24 @@ export class PaletteItem {
   brand: string;
   number: string;
   name: string;
-  color: Color;
   blends?: Blend[];
   symbolFont?: string;
-  private symbolCode?: number;
+
+  private _color: Color;
+  private _symbolCode?: number;
 
   constructor(data: b.infer<typeof PaletteItem.schema>) {
     this.brand = data.brand;
     this.number = data.number;
     this.name = data.name;
-    this.color = new Color(data.color);
+    this._color = new Color(data.color);
 
     if (data.blends) this.blends = data.blends.map((blend) => new Blend(blend));
 
     if (data.symbolFont) this.symbolFont = data.symbolFont;
     if (data.symbol) {
-      if ("code" in data.symbol) this.symbolCode = data.symbol.code;
-      else this.symbolCode = data.symbol.char.codePointAt(0);
+      if ("code" in data.symbol) this._symbolCode = data.symbol.code;
+      else this._symbolCode = data.symbol.char.codePointAt(0);
     }
   }
 
@@ -161,15 +162,29 @@ export class PaletteItem {
       brand: data.brand,
       number: data.number,
       name: data.name,
-      color: data.color.toHex().slice(1).toUpperCase(),
+      color: data.color,
       blends: data.blends ?? null,
       symbolFont: data.symbolFont ?? null,
-      symbol: data.symbolCode ? { code: data.symbolCode } : null,
+      symbol: data._symbolCode ? { code: data._symbolCode } : null,
     });
   }
 
+  get hex() {
+    return this._color.toHex().toUpperCase();
+  }
+
+  get color() {
+    return this.hex.slice(1);
+  }
+
+  get contrastColor() {
+    const [r, g, b] = this._color.toUint8RgbArray() as [number, number, number];
+    const brightness = r * 0.299 + g * 0.587 + b * 0.114;
+    return brightness > 128 ? "black" : "white";
+  }
+
   get symbol() {
-    return this.symbolCode ? String.fromCodePoint(this.symbolCode) : "";
+    return this._symbolCode ? String.fromCodePoint(this._symbolCode) : "";
   }
 }
 
