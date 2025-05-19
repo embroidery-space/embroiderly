@@ -24,7 +24,7 @@ tauri-plugin-fs = "2.0.3"
 tauri-plugin-log = "2.4.0"
 tauri-plugin-opener = "2.2.6"
 ## Third-party plugins
-tauri-plugin-prevent-default = "2.0.0"
+tauri-plugin-prevent-default = "2.1.0"
 
 # Parsing
 xsp-parsers = { git = "https://github.com/embroidery-space/xsp-parsers.git", rev = "35519da49ecdefa720581db97849dca52e3200e0" }
@@ -35,7 +35,7 @@ zip = { version = "2.6.1", features = [
   "zstd",
   "time",
 ], default-features = false }
-zip-extract = { version = "0.2.3", features = [
+zip-extract = { version = "0.3.0", features = [
   "zstd",
   "time",
 ], default-features = false }
