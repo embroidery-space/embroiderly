@@ -12,7 +12,7 @@
       severity="secondary"
       :icon="currentOption.icon"
       class="size-[var(--p-button-icon-only-width)] border-none p-1.5"
-      :style="{ color: selected && selectionColor }"
+      :style="{ color: selected ? selectionColor : undefined }"
     />
 
     <Button

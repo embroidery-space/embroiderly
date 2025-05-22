@@ -143,7 +143,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("fabric:update", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.setFabric(Fabric.deserialize(payload));
+    pattern.value.fabric = Fabric.deserialize(payload);
   });
 
   function updateGrid() {
@@ -160,7 +160,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("grid:update", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.setGrid(Grid.deserialize(payload));
+    pattern.value.grid = Grid.deserialize(payload);
   });
 
   async function addPaletteItem(palitem: PaletteItem) {
@@ -227,13 +227,13 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   function setDisplayMode(mode: DisplayMode | undefined) {
     if (!pattern.value) return;
     if (!mode) {
-      pattern.value.setDisplayMode(mode);
+      pattern.value.displayMode = mode;
       return triggerRef(pattern);
     } else return DisplayApi.setDisplayMode(pattern.value.key, mode);
   }
   appWindow.listen<DisplayMode>("display:set_mode", ({ payload: mode }) => {
     if (!pattern.value) return;
-    pattern.value.setDisplayMode(mode);
+    pattern.value.displayMode = mode;
     triggerRef(pattern);
   });
 
@@ -243,8 +243,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<boolean>("display:show_symbols", ({ payload: value }) => {
     if (!pattern.value) return;
-    pattern.value.setShowSymbols(value);
-    pattern.value.setDisplayMode(pattern.value.displayMode);
+    pattern.value.showSymbols = value;
     triggerRef(pattern);
   });
 

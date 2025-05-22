@@ -141,19 +141,22 @@
     if (event.target instanceof StitchGraphics) {
       await patternsStore.removeStitch(event.target.stitch);
     } else {
-      for (const kind of [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter]) {
-        const { x, y } = adjustStitchCoordinate(point, kind);
-        if (kind === FullStitchKind.Full || kind === FullStitchKind.Petite) {
-          await patternsStore.removeStitch(new FullStitch({ x, y, kind, palindex: 0 }));
-        } else if (kind === PartStitchKind.Half || kind === PartStitchKind.Quarter) {
-          const [fractX, fractY] = [point.x - Math.trunc(x), point.y - Math.trunc(y)];
-          const direction =
-            (fractX < 0.5 && fractY > 0.5) || (fractX > 0.5 && fractY < 0.5)
-              ? PartStitchDirection.Forward
-              : PartStitchDirection.Backward;
-          await patternsStore.removeStitch(new PartStitch({ x, y, kind, direction, palindex: 0 }));
-        }
-      }
+      const promises = [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter].map(
+        (kind) => {
+          const { x, y } = adjustStitchCoordinate(point, kind);
+          if (kind === FullStitchKind.Full || kind === FullStitchKind.Petite) {
+            return patternsStore.removeStitch(new FullStitch({ x, y, kind, palindex: 0 }));
+          } else {
+            const [fractX, fractY] = [point.x - Math.trunc(x), point.y - Math.trunc(y)];
+            const direction =
+              (fractX < 0.5 && fractY > 0.5) || (fractX > 0.5 && fractY < 0.5)
+                ? PartStitchDirection.Forward
+                : PartStitchDirection.Backward;
+            return patternsStore.removeStitch(new PartStitch({ x, y, kind, direction, palindex: 0 }));
+          }
+        },
+      );
+      await Promise.all(promises);
     }
   }
 

@@ -1,5 +1,7 @@
-import { Container, Graphics, GraphicsContext, ParticleContainer, Text, type TextStyleOptions } from "pixi.js";
-import { STITCH_SCALE_FACTOR } from "./constants";
+import { Container, Graphics, GraphicsContext, Particle, ParticleContainer, Text, Texture } from "pixi.js";
+import type { ParticleOptions, TextStyleOptions } from "pixi.js";
+import { dequal } from "dequal/lite";
+
 import {
   FullStitch,
   FullStitchKind,
@@ -8,6 +10,23 @@ import {
   PartStitchKind,
   type Stitch,
 } from "#/schemas/pattern";
+
+import { STITCH_SCALE_FACTOR } from "./constants.ts";
+
+/** A wrapper around `Container` that contains a kind of the stitches it holds. */
+export class StitchGraphicsContainer extends Container {
+  addStitch(stitch: Container) {
+    this.addChild(stitch);
+  }
+
+  removeStitch(stitch: Stitch) {
+    const index = this.children.findIndex((item) => {
+      const graphics = item as StitchGraphics;
+      return dequal(graphics.stitch, stitch);
+    });
+    if (index !== -1) this.removeChildAt(index);
+  }
+}
 
 /** A `Graphics` object that contains a reference to the `Stitch` object it represents. */
 export class StitchGraphics extends Graphics {
@@ -21,31 +40,48 @@ export class StitchGraphics extends Graphics {
 
 /** A wrapper around `ParticleContainer` that contains a kind of the stitches it holds. */
 export class StitchParticleContainer extends ParticleContainer {
-  readonly kind: FullStitchKind | PartStitchKind;
+  addStitch(stitch: StitchParticle) {
+    this.addParticle(stitch);
+  }
 
-  constructor(kind: FullStitchKind | PartStitchKind) {
-    super();
-    this.kind = kind;
+  removeStitch(stitch: Stitch) {
+    const index = this.particleChildren.findIndex((item) => {
+      const particle = item as StitchParticle;
+      return dequal(particle.stitch, stitch);
+    });
+    if (index !== -1) this.removeParticleAt(index);
+  }
+}
+
+/** A `Particle` object that contains a reference to the `Stitch` object it represents. */
+export class StitchParticle extends Particle {
+  readonly stitch: Stitch;
+
+  constructor(stitch: Stitch, options: Texture | ParticleOptions) {
+    super(options);
+    this.stitch = stitch;
   }
 }
 
 const DEFAULT_SYMBOL_STYLE_OPTIONS: TextStyleOptions = { fill: 0x000000, fontSize: 64 };
-export class Symbol extends Container {
-  constructor(symbol: string, styleOptions: TextStyleOptions, stitch: FullStitch | PartStitch) {
-    const { x, y, kind } = stitch;
+export class StitchSymbol extends Container {
+  readonly stitch: FullStitch | PartStitch;
 
-    super({ x, y });
+  constructor(stitch: FullStitch | PartStitch, symbol: string, styleOptions: TextStyleOptions) {
+    super({ x: stitch.x, y: stitch.y });
     this.eventMode = "none";
     this.interactive = false;
     this.interactiveChildren = false;
     this.setSize(1);
+
+    this.stitch = stitch;
 
     const style = { ...DEFAULT_SYMBOL_STYLE_OPTIONS, ...styleOptions };
 
     const text = this.addChild(new Text({ text: symbol, style }));
     text.anchor.set(0.5);
 
-    switch (kind) {
+    switch (stitch.kind) {
       case FullStitchKind.Full: {
         text.scale.set(STITCH_SCALE_FACTOR);
         text.position.set(0.5);

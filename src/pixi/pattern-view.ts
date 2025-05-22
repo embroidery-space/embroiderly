@@ -1,6 +1,5 @@
-import { Container, Graphics, Particle } from "pixi.js";
-import { TextureManager, StitchGraphics, StitchParticleContainer, Symbol, STITCH_SCALE_FACTOR } from "#/pixi";
-import { ObjectedMap } from "#/utils/map";
+import { Container, Graphics } from "pixi.js";
+
 import {
   AddedPaletteItemData,
   DisplayMode,
@@ -21,7 +20,17 @@ import {
   SpecialStitchModel,
   type PatternKey,
   type Stitch,
-} from "#/schemas/index.ts";
+} from "#/schemas";
+
+import { STITCH_SCALE_FACTOR } from "./constants.ts";
+import {
+  StitchGraphics,
+  StitchGraphicsContainer,
+  StitchParticle,
+  StitchParticleContainer,
+  StitchSymbol,
+} from "./display-objects.ts";
+import { TextureManager } from "./texture-manager.ts";
 
 /**
  * Represents the view of a pattern.
@@ -37,43 +46,30 @@ export class PatternView {
   #fabric: Fabric;
   #grid: Grid;
 
-  displayMode?: DisplayMode;
+  #showSymbols: boolean;
+  #displayMode?: DisplayMode;
   #previousDisplayMode: DisplayMode;
-
-  showSymbols!: boolean;
-
-  // Simple stitches (fulls, petitestitches, halves and quarterstitches) are rendered using particles.
-  // It allows us to render a large number of stitches very efficiently.
-  // This is especially important because they are the most common stitches.
-  #fullstitches: ObjectedMap<FullStitch, Particle | undefined>;
-  #partstitches: ObjectedMap<PartStitch, Particle | undefined>;
-
-  // Complex stitches (back and straight stitches, french knots, beads and special stitches) are rendered using graphics and sprites.
-  // They are more complex and require more control over their rendering.
-  #lines: ObjectedMap<LineStitch, StitchGraphics | undefined>;
-  #nodes: ObjectedMap<NodeStitch, StitchGraphics | undefined>;
 
   readonly defaultSymbolFont: string;
 
-  #symbols = new ObjectedMap<Stitch, Symbol>();
-
-  #specialstitches: SpecialStitch[];
   #specialStitchModels: SpecialStitchModel[];
 
   #stages = {
     // lowest
     fabric: new Graphics(),
-    fullstitches: new StitchParticleContainer(FullStitchKind.Full),
-    petitestitches: new StitchParticleContainer(FullStitchKind.Petite),
-    halfstitches: new StitchParticleContainer(PartStitchKind.Half),
-    quarterstitches: new StitchParticleContainer(PartStitchKind.Quarter),
-    symbols: new Container({ isRenderGroup: true }),
+    fullstitches: new StitchParticleContainer(),
+    petitestitches: new StitchParticleContainer(),
+    halfstitches: new StitchParticleContainer(),
+    quarterstitches: new StitchParticleContainer(),
+    symbols: new StitchGraphicsContainer(),
     grid: new Graphics(),
     specialstitches: new Container(),
-    lines: new Container(),
-    nodes: new Container(),
+    lines: new StitchGraphicsContainer(),
+    nodes: new StitchGraphicsContainer(),
     // highest
   };
+
+  render?: () => void;
 
   constructor({ key, pattern, displaySettings }: PatternProject) {
     this.#key = key;
@@ -86,39 +82,50 @@ export class PatternView {
     this.#fabric = pattern.fabric;
     this.#grid = displaySettings.grid;
 
-    this.displayMode = displaySettings.displayMode;
+    this.#showSymbols = displaySettings.showSymbols;
+    this.#displayMode = displaySettings.displayMode;
     this.#previousDisplayMode = displaySettings.displayMode;
 
-    this.setShowSymbols(displaySettings.showSymbols);
+    this.defaultSymbolFont = displaySettings.defaultSymbolFont;
 
-    // Save stitches in the state.
-    // They will be replaced with the actual display objects when the view is initialized.
-    this.#fullstitches = ObjectedMap.withKeys(pattern.fullstitches);
-    this.#partstitches = ObjectedMap.withKeys(pattern.partstitches);
-    this.#lines = ObjectedMap.withKeys(pattern.linestitches);
-    this.#nodes = ObjectedMap.withKeys(pattern.nodestitches);
-
-    this.#specialstitches = pattern.specialstitches;
     this.#specialStitchModels = pattern.specialStitchModels;
 
-    this.defaultSymbolFont = displaySettings.defaultSymbolFont;
+    this.render = () => {
+      this.fabric = this.#fabric;
+      this.grid = this.#grid;
+
+      for (const stitch of pattern.fullstitches) {
+        this.addFullStitch(stitch);
+        this.addSymbol(stitch);
+      }
+      for (const stitch of pattern.partstitches) {
+        this.addPartStitch(stitch);
+        this.addSymbol(stitch);
+      }
+      for (const stitch of pattern.linestitches) {
+        this.addLineStitch(stitch);
+        this.addSymbol(stitch);
+      }
+      for (const stitch of pattern.nodestitches) {
+        this.addNodeStitch(stitch);
+        this.addSymbol(stitch);
+      }
+
+      for (const specialstitch of pattern.specialstitches) this.addSpecialStitch(specialstitch);
+
+      this.showSymbols = this.#showSymbols;
+      this.displayMode = this.#displayMode;
+
+      this.render = undefined;
+    };
   }
 
-  render() {
-    // Set the fabric and grid.
-    this.setFabric(this.#fabric);
-    this.setGrid(this.#grid);
-
-    // Add actual stitches to the view.
-    for (const fullstitch of this.#fullstitches.keys()) this.addStitch(fullstitch);
-    for (const partstitch of this.#partstitches.keys()) this.addStitch(partstitch);
-    for (const line of this.#lines.keys()) this.addStitch(line);
-    for (const node of this.#nodes.keys()) this.addStitch(node);
-    for (const specialstitch of this.#specialstitches) this.addSpecialStitch(specialstitch);
+  get displayMode() {
+    return this.#displayMode;
   }
 
-  setDisplayMode(displayMode: DisplayMode | undefined) {
-    this.displayMode = this.showSymbols ? displayMode : (displayMode ?? this.#previousDisplayMode);
+  set displayMode(displayMode: DisplayMode | undefined) {
+    this.#displayMode = this.showSymbols ? displayMode : (displayMode ?? this.#previousDisplayMode);
     if (displayMode) {
       this.#previousDisplayMode = displayMode;
       this.#stages.fullstitches.texture = TextureManager.shared.getFullStitchTexture(displayMode, FullStitchKind.Full);
@@ -133,17 +140,24 @@ export class PatternView {
       );
     }
 
-    const visible = this.displayMode !== undefined;
+    const visible = this.#displayMode !== undefined;
     this.#stages.fullstitches.visible = visible;
     this.#stages.petitestitches.visible = visible;
     this.#stages.halfstitches.visible = visible;
     this.#stages.quarterstitches.visible = visible;
   }
 
-  setShowSymbols(value: boolean) {
-    this.showSymbols = value;
+  get showSymbols() {
+    return this.#showSymbols;
+  }
+
+  set showSymbols(value: boolean) {
+    this.#showSymbols = value;
     this.#stages.symbols.visible = value;
     this.#stages.symbols.renderable = value;
+
+    // Update the display mode since it depends on the `showSymbols` value.
+    this.displayMode = this.#displayMode;
   }
 
   get key() {
@@ -162,20 +176,20 @@ export class PatternView {
     return this.#fabric;
   }
 
-  setFabric(fabric: Fabric) {
+  set fabric(fabric: Fabric) {
     this.#fabric = fabric;
     this.#stages.fabric.clear();
     this.#stages.fabric.rect(0, 0, this.fabric.width, this.fabric.height).fill(this.fabric.color);
 
     // If the grid is set, adjust it to the new fabric.
-    if (this.#grid) this.setGrid(this.#grid);
+    if (this.#grid) this.grid = this.#grid;
   }
 
   get grid() {
     return this.#grid;
   }
 
-  setGrid(grid: Grid) {
+  set grid(grid: Grid) {
     this.#grid = grid;
     const { width, height } = this.fabric;
     this.#stages.grid.clear();
@@ -256,27 +270,23 @@ export class PatternView {
 
   addSymbol(stitch: Stitch) {
     if (stitch instanceof LineStitch || stitch instanceof NodeStitch) return;
+
     const palitem = this.#palette[stitch.palindex]!;
     const symbolFont = palitem.symbolFont;
 
-    const symbol = new Symbol(
-      palitem.symbol,
-      { fontFamily: symbolFont ? [symbolFont, this.defaultSymbolFont] : this.defaultSymbolFont },
-      stitch,
-    );
-
-    this.#symbols.set(stitch, symbol);
-    this.#stages.symbols.addChild(symbol);
+    const symbol = new StitchSymbol(stitch, palitem.symbol, {
+      fontFamily: symbolFont ? [symbolFont, this.defaultSymbolFont] : this.defaultSymbolFont,
+    });
+    this.#stages.symbols.addStitch(symbol);
   }
 
   removeSymbol(stitch: Stitch) {
-    const symbol = this.#symbols.delete(stitch)!;
-    this.#stages.symbols.removeChild(symbol);
+    this.#stages.symbols.removeStitch(stitch);
   }
 
-  addFullStitch(full: FullStitch) {
-    const { x, y, palindex, kind } = full;
-    const particle = new Particle({
+  addFullStitch(stitch: FullStitch) {
+    const { x, y, palindex, kind } = stitch;
+    const particle = new StitchParticle(stitch, {
       texture: TextureManager.shared.getFullStitchTexture(this.displayMode ?? this.#previousDisplayMode, kind),
       x,
       y,
@@ -284,20 +294,18 @@ export class PatternView {
       scaleX: STITCH_SCALE_FACTOR,
       scaleY: STITCH_SCALE_FACTOR,
     });
-    this.#fullstitches.set(full, particle);
-    if (kind === FullStitchKind.Full) this.#stages.fullstitches.addParticle(particle);
-    else this.#stages.petitestitches.addParticle(particle);
+    if (kind === FullStitchKind.Full) this.#stages.fullstitches.addStitch(particle);
+    else this.#stages.petitestitches.addStitch(particle);
   }
 
-  removeFullStitch(fullstitch: FullStitch) {
-    const particle = this.#fullstitches.delete(fullstitch)!;
-    if (fullstitch.kind === FullStitchKind.Full) this.#stages.fullstitches.removeParticle(particle);
-    else this.#stages.petitestitches.removeParticle(particle);
+  removeFullStitch(stitch: FullStitch) {
+    if (stitch.kind === FullStitchKind.Full) this.#stages.fullstitches.removeStitch(stitch);
+    else this.#stages.petitestitches.removeStitch(stitch);
   }
 
-  addPartStitch(part: PartStitch) {
-    const { x, y, palindex, kind, direction } = part;
-    const particle = new Particle({
+  addPartStitch(stitch: PartStitch) {
+    const { x, y, palindex, kind, direction } = stitch;
+    const particle = new StitchParticle(stitch, {
       texture: TextureManager.shared.getPartStitchTexture(this.displayMode ?? this.#previousDisplayMode, kind),
       x,
       y,
@@ -306,22 +314,20 @@ export class PatternView {
       scaleY: STITCH_SCALE_FACTOR,
       anchorX: direction === PartStitchDirection.Forward ? 0 : 1,
     });
-    this.#partstitches.set(part, particle);
-    if (part.kind === PartStitchKind.Half) this.#stages.halfstitches.addParticle(particle);
-    else this.#stages.quarterstitches.addParticle(particle);
+    if (kind === PartStitchKind.Half) this.#stages.halfstitches.addStitch(particle);
+    else this.#stages.quarterstitches.addStitch(particle);
   }
 
-  removePartStitch(partstitch: PartStitch) {
-    const particle = this.#partstitches.delete(partstitch)!;
-    if (partstitch.kind === PartStitchKind.Half) this.#stages.halfstitches.removeParticle(particle);
-    else this.#stages.quarterstitches.removeParticle(particle);
+  removePartStitch(stitch: PartStitch) {
+    if (stitch.kind === PartStitchKind.Half) this.#stages.halfstitches.removeStitch(stitch);
+    else this.#stages.quarterstitches.removeStitch(stitch);
   }
 
-  addLineStitch(line: LineStitch) {
-    const { x, y, palindex } = line;
+  addLineStitch(stitch: LineStitch) {
+    const { x, y, palindex } = stitch;
     const start = { x: x[0], y: y[0] };
     const end = { x: x[1], y: y[1] };
-    const graphics = new StitchGraphics(line)
+    const graphics = new StitchGraphics(stitch)
       .moveTo(start.x, start.y)
       .lineTo(end.x, end.y)
       // Draw a line with a larger width to make it look like a border.
@@ -331,32 +337,28 @@ export class PatternView {
       // Draw a line with a smaller width to make it look like a fill.
       .stroke({ width: 0.2, color: this.#palette[palindex]!.color, cap: "round" });
     graphics.eventMode = "static";
-    this.#lines.set(line, graphics);
-    this.#stages.lines.addChild(graphics);
+    this.#stages.lines.addStitch(graphics);
   }
 
-  removeLineStitch(line: LineStitch) {
-    const graphics = this.#lines.delete(line)!;
-    this.#stages.lines.removeChild(graphics);
+  removeLineStitch(stitch: LineStitch) {
+    this.#stages.lines.removeStitch(stitch);
   }
 
-  addNodeStitch(node: NodeStitch) {
-    const { x, y, palindex, kind, rotated } = node;
+  addNodeStitch(stitch: NodeStitch) {
+    const { x, y, palindex, kind, rotated } = stitch;
     const palitem = this.#palette[palindex]!;
-    const graphics = new StitchGraphics(node, TextureManager.shared.getNodeTexture(kind));
+    const graphics = new StitchGraphics(stitch, TextureManager.shared.getNodeTexture(kind));
     graphics.eventMode = "static";
     graphics.tint = palitem.color;
     graphics.pivot.set(graphics.width / 2, graphics.height / 2);
     graphics.scale.set(STITCH_SCALE_FACTOR);
     graphics.position.set(x, y);
     if (rotated) graphics.angle = 90;
-    this.#nodes.set(node, graphics);
-    this.#stages.nodes.addChild(graphics);
+    this.#stages.nodes.addStitch(graphics);
   }
 
-  removeNodeStitch(node: NodeStitch) {
-    const graphics = this.#nodes.delete(node)!;
-    this.#stages.nodes.removeChild(graphics);
+  removeNodeStitch(stitch: NodeStitch) {
+    this.#stages.nodes.removeStitch(stitch);
   }
 
   addSpecialStitch(specialStitch: SpecialStitch) {
