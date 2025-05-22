@@ -45,9 +45,7 @@ export class PatternCanvas extends EventTarget {
       this.dispatchEvent(new CustomEvent(EventType.ContextMenu, { detail }));
     });
 
-    this.viewport.on(InternalEventType.CanvasClear, () => {
-      this.clearHint();
-    });
+    this.viewport.on(InternalEventType.CanvasClear, () => this.clearHint());
   }
 
   async init(canvas: HTMLCanvasElement, { width, height }: CanvasSize, options?: PatternCanvasOptions) {

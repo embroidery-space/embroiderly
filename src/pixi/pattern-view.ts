@@ -54,7 +54,6 @@ export class PatternView {
 
   #specialStitchModels: SpecialStitchModel[];
 
-  readonly root = new Container({ isRenderGroup: true });
   private stages = {
     // lowest
     fabric: new Graphics(),
@@ -62,19 +61,21 @@ export class PatternView {
     petitestitches: new StitchParticleContainer(),
     halfstitches: new StitchParticleContainer(),
     quarterstitches: new StitchParticleContainer(),
-    symbols: new StitchGraphicsContainer({ eventMode: "none" }),
+    symbols: new StitchGraphicsContainer(),
     grid: new Graphics(),
     specialstitches: new Container(),
-    lines: new StitchGraphicsContainer(),
-    nodes: new StitchGraphicsContainer(),
+    lines: new StitchGraphicsContainer({ eventMode: "passive", interactiveChildren: true }),
+    nodes: new StitchGraphicsContainer({ eventMode: "passive", interactiveChildren: true }),
     // highest
   };
+  readonly root = new Container({
+    isRenderGroup: true,
+    children: Object.values(this.stages),
+  });
 
   render?: () => void;
 
   constructor({ key, pattern, displaySettings }: PatternProject) {
-    this.root.addChild(...Object.values(this.stages));
-
     this.#key = key;
     this.#info = pattern.info;
 

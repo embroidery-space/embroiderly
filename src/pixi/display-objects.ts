@@ -1,5 +1,11 @@
 import { Container, Graphics, GraphicsContext, Particle, ParticleContainer, Text, Texture } from "pixi.js";
-import type { ParticleOptions, TextOptions, TextStyleOptions } from "pixi.js";
+import type {
+  ContainerOptions,
+  ParticleContainerOptions,
+  ParticleOptions,
+  TextOptions,
+  TextStyleOptions,
+} from "pixi.js";
 import { dequal } from "dequal/lite";
 
 import {
@@ -13,8 +19,20 @@ import {
 
 import { STITCH_SCALE_FACTOR } from "./constants.ts";
 
+const DEFAULT_CONTAINER_OPTIONS: ContainerOptions = {
+  eventMode: "none",
+  interactive: false,
+  interactiveChildren: false,
+  cullable: false,
+  cullableChildren: true,
+};
+
 /** A wrapper around `Container` that contains a kind of the stitches it holds. */
 export class StitchGraphicsContainer extends Container {
+  constructor(options?: ContainerOptions) {
+    super({ ...DEFAULT_CONTAINER_OPTIONS, ...options });
+  }
+
   addStitch(stitch: Container) {
     this.addChild(stitch);
   }
@@ -33,17 +51,22 @@ export class StitchGraphics extends Graphics {
   readonly stitch: Stitch;
 
   constructor(stitch: Stitch, context?: GraphicsContext) {
-    super(context);
+    super({ ...DEFAULT_CONTAINER_OPTIONS, context });
     this.stitch = stitch;
   }
 }
 
 /** A wrapper around `ParticleContainer` that contains a kind of the stitches it holds. */
 export class StitchParticleContainer extends ParticleContainer {
-  constructor() {
+  constructor(options?: ParticleContainerOptions) {
     super({
-      // The `position` dynamic property is `true` by default, but we don't need it here.
-      dynamicProperties: { position: false },
+      ...DEFAULT_CONTAINER_OPTIONS,
+      ...options,
+      dynamicProperties: {
+        // The `position` dynamic property is `true` by default, but we don't need it here.
+        position: false,
+        ...options?.dynamicProperties,
+      },
     });
   }
 
@@ -75,7 +98,12 @@ export class StitchSymbol extends Container {
   readonly stitch: FullStitch | PartStitch;
 
   constructor(stitch: FullStitch | PartStitch, symbol: string, styleOptions: TextStyleOptions) {
-    super({ x: stitch.x, y: stitch.y });
+    super({
+      ...DEFAULT_CONTAINER_OPTIONS,
+      x: stitch.x,
+      y: stitch.y,
+      cullable: true,
+    });
     this.setSize(1);
 
     this.stitch = stitch;

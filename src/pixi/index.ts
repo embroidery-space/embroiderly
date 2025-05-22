@@ -1,7 +1,7 @@
-import { extensions } from "pixi.js";
+import { CullerPlugin, extensions } from "pixi.js";
 import { StitchFontsLoader } from "./extensions/stitch-fonts-loader";
 
-extensions.add(StitchFontsLoader);
+extensions.add(CullerPlugin, StitchFontsLoader);
 export { STITCH_FONT_PREFIX } from "./extensions/stitch-fonts-loader";
 
 export * from "./constants.ts";
