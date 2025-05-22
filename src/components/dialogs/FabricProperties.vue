@@ -87,12 +87,15 @@
       <PaletteList
         :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
         :options="fabricColors"
+        :option-value="({ name, color }) => ({ name, color })"
         :display-settings="FABRIC_COLORS_DISPLAY_SETTINGS"
         fluid-options
         @update:model-value="
-          ({ name, color }) => {
-            fabric.name = name;
-            fabric.color = new Color(color);
+          (value) => {
+            if (value) {
+              fabric.name = value.name;
+              fabric.color = new Color(value.color);
+            }
           }
         "
       />
@@ -189,7 +192,7 @@
     { label: fluent.$t("label-kind-evenweave"), value: "Evenweave" },
     { label: fluent.$t("label-kind-linen"), value: "Linen" },
   ]);
-  const fabricColors = ref<{ name: string; color: string }[]>([]);
+  const fabricColors = ref<PaletteItem[]>([]);
   const FABRIC_COLORS_DISPLAY_SETTINGS = new PaletteSettings({
     columnsNumber: 8,
     colorOnly: true,
