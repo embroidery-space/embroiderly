@@ -3,8 +3,8 @@ import type { ApplicationOptions, ColorSource } from "pixi.js";
 import { PatternView } from "./pattern-view";
 import { TextureManager } from "#/pixi";
 import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
-import { InputManager, Viewport, type ViewportOptions } from "./plugins/viewport";
-import { Hint } from "./hint";
+import { EventType, InternalEventType, PatternViewport, type ViewportOptions } from "./pattern-viewport.ts";
+import { Hint } from "./hint.ts";
 
 export interface PatternCanvasOptions {
   render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;
@@ -22,18 +22,32 @@ const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
 // because this class will be used in a Vue.js environment where it is more convenient to use native events.
 export class PatternCanvas extends EventTarget {
   private pixi = new Application();
+  private viewport = new PatternViewport();
   private stages = {
     // lowest
-    viewport: new Viewport(),
-    hint: new Hint(), // Actually, it will be put into the viewport to follow its transformations (a local position and scale).
+    hint: new Hint(),
     // highest
   };
 
-  private inputManager: InputManager;
-
   constructor() {
     super();
-    this.inputManager = new InputManager(this, this.stages.viewport);
+
+    this.viewport.on(EventType.ToolMainAction, (detail) => {
+      this.dispatchEvent(new CustomEvent(EventType.ToolMainAction, { detail }));
+    });
+    this.viewport.on(EventType.ToolAntiAction, (detail) => {
+      this.dispatchEvent(new CustomEvent(EventType.ToolAntiAction, { detail }));
+    });
+    this.viewport.on(EventType.ToolRelease, (detail) => {
+      this.dispatchEvent(new CustomEvent(EventType.ToolRelease, { detail }));
+    });
+    this.viewport.on(EventType.ContextMenu, (detail) => {
+      this.dispatchEvent(new CustomEvent(EventType.ContextMenu, { detail }));
+    });
+
+    this.viewport.on(InternalEventType.CanvasClear, () => {
+      this.clearHint();
+    });
   }
 
   async init(canvas: HTMLCanvasElement, { width, height }: CanvasSize, options?: PatternCanvasOptions) {
@@ -44,44 +58,37 @@ export class PatternCanvas extends EventTarget {
       width,
       height,
     });
-    this.stages.viewport.init({
-      events: this.pixi.renderer.events,
+    this.viewport.init(this.pixi.renderer.events.domElement, {
       screenWidth: width,
       screenHeight: height,
       ...options?.viewport,
     });
-    this.inputManager.init();
 
     TextureManager.shared.init(this.pixi.renderer);
 
-    this.pixi.stage.addChild(this.stages.viewport);
-    this.stages.viewport.addChild(this.stages.hint);
+    this.pixi.stage.addChild(this.viewport);
+    this.viewport.addChild(this.stages.hint);
+  }
+
+  destroy() {
+    this.pixi.destroy();
   }
 
   setPatternView(pattern: PatternView) {
     this.clear();
 
     pattern.render?.();
-    this.stages.viewport.addChild(...pattern.stages, this.stages.hint);
+    this.viewport.addChild(...pattern.stages, this.stages.hint);
 
     const { width, height } = pattern.fabric;
-    this.stages.viewport.resizeWorld(width, height);
-    this.stages.viewport.fit();
-    this.stages.viewport.moveCenter(new Point(width / 2, height / 2));
-  }
-
-  clear() {
-    this.stages.viewport.removeChildren();
-  }
-
-  destroy() {
-    this.inputManager.destroy();
-    this.pixi.destroy();
+    this.viewport.resizeWorld(width, height);
+    this.viewport.fit();
+    this.viewport.moveCenter(new Point(width / 2, height / 2));
   }
 
   resize({ width, height }: CanvasSize) {
     this.pixi.renderer.resize(width, height);
-    this.stages.viewport.resizeScreen(width, height);
+    this.viewport.resizeScreen(width, height);
   }
 
   drawLineHint(line: LineStitch, color: ColorSource) {
@@ -92,6 +99,10 @@ export class PatternCanvas extends EventTarget {
     this.stages.hint.drawNodeHint(node, color, bead);
   }
 
+  clear() {
+    this.viewport.removeChildren();
+  }
+
   clearHint() {
     this.stages.hint.clearHint();
   }
@@ -100,24 +111,4 @@ export class PatternCanvas extends EventTarget {
 export interface CanvasSize {
   width: number;
   height: number;
-}
-
-/** A function that checks if a modifier key is pressed based on the given event. */
-export type ModifierChecker = (event: MouseEvent) => boolean;
-
-export interface Modifiers {
-  /** Modifier 1. Default is the Ctrl key. */
-  mod1: ModifierChecker;
-
-  /** Modifier 2. Default is the Shift key. */
-  mod2: ModifierChecker;
-
-  /** Modifier 3. Default is the Alt key. */
-  mod3: ModifierChecker;
-}
-
-export interface ModifiersState {
-  mod1: boolean;
-  mod2: boolean;
-  mod3: boolean;
 }
