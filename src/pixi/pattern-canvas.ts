@@ -15,7 +15,7 @@ const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
   eventFeatures: { globalMove: false },
   antialias: true,
   backgroundAlpha: 0,
-  preference: "webgpu",
+  preference: "webgl",
 };
 
 // We use a native `EventTarget` instead of an `EventEmitter` from Pixi.js here,
