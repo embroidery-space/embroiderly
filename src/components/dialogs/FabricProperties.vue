@@ -113,7 +113,7 @@
   import { Color } from "pixi.js";
   import DialogFooter from "./DialogFooter.vue";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#/utils/measurement";
-  import { Fabric, PaletteSettings } from "#/schemas/index.ts";
+  import { Fabric, PaletteItem, PaletteSettings } from "#/schemas/index.ts";
   import PaletteList from "../palette/PaletteList.vue";
 
   const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef")!;
@@ -201,6 +201,8 @@
   onMounted(async () => {
     const fabricColorsPath = await resolveResource("resources/fabric-colors.json");
     const content = await readTextFile(fabricColorsPath);
-    fabricColors.value = JSON.parse(content);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fabricColors.value = JSON.parse(content).map((color: any) => new PaletteItem(color));
   });
 </script>
