@@ -54,14 +54,15 @@ export class PatternView {
 
   #specialStitchModels: SpecialStitchModel[];
 
-  #stages = {
+  readonly root = new Container({ isRenderGroup: true });
+  private stages = {
     // lowest
     fabric: new Graphics(),
     fullstitches: new StitchParticleContainer(),
     petitestitches: new StitchParticleContainer(),
     halfstitches: new StitchParticleContainer(),
     quarterstitches: new StitchParticleContainer(),
-    symbols: new StitchGraphicsContainer(),
+    symbols: new StitchGraphicsContainer({ eventMode: "none" }),
     grid: new Graphics(),
     specialstitches: new Container(),
     lines: new StitchGraphicsContainer(),
@@ -72,10 +73,11 @@ export class PatternView {
   render?: () => void;
 
   constructor({ key, pattern, displaySettings }: PatternProject) {
+    this.root.addChild(...Object.values(this.stages));
+
     this.#key = key;
     this.#info = pattern.info;
 
-    // Create a palette with symbols and formats.
     this.#palette = pattern.palette;
     this.paletteDisplaySettings = displaySettings.paletteSettings;
 
@@ -128,23 +130,23 @@ export class PatternView {
     this.#displayMode = this.showSymbols ? displayMode : (displayMode ?? this.#previousDisplayMode);
     if (displayMode) {
       this.#previousDisplayMode = displayMode;
-      this.#stages.fullstitches.texture = TextureManager.shared.getFullStitchTexture(displayMode, FullStitchKind.Full);
-      this.#stages.petitestitches.texture = TextureManager.shared.getFullStitchTexture(
+      this.stages.fullstitches.texture = TextureManager.shared.getFullStitchTexture(displayMode, FullStitchKind.Full);
+      this.stages.petitestitches.texture = TextureManager.shared.getFullStitchTexture(
         displayMode,
         FullStitchKind.Petite,
       );
-      this.#stages.halfstitches.texture = TextureManager.shared.getPartStitchTexture(displayMode, PartStitchKind.Half);
-      this.#stages.quarterstitches.texture = TextureManager.shared.getPartStitchTexture(
+      this.stages.halfstitches.texture = TextureManager.shared.getPartStitchTexture(displayMode, PartStitchKind.Half);
+      this.stages.quarterstitches.texture = TextureManager.shared.getPartStitchTexture(
         displayMode,
         PartStitchKind.Quarter,
       );
     }
 
     const visible = this.#displayMode !== undefined;
-    this.#stages.fullstitches.visible = visible;
-    this.#stages.petitestitches.visible = visible;
-    this.#stages.halfstitches.visible = visible;
-    this.#stages.quarterstitches.visible = visible;
+    this.stages.fullstitches.visible = visible;
+    this.stages.petitestitches.visible = visible;
+    this.stages.halfstitches.visible = visible;
+    this.stages.quarterstitches.visible = visible;
   }
 
   get showSymbols() {
@@ -153,8 +155,8 @@ export class PatternView {
 
   set showSymbols(value: boolean) {
     this.#showSymbols = value;
-    this.#stages.symbols.visible = value;
-    this.#stages.symbols.renderable = value;
+    this.stages.symbols.visible = value;
+    this.stages.symbols.renderable = value;
 
     // Update the display mode since it depends on the `showSymbols` value.
     this.displayMode = this.#displayMode;
@@ -168,18 +170,14 @@ export class PatternView {
     return this.#info;
   }
 
-  get stages() {
-    return Object.values(this.#stages);
-  }
-
   get fabric() {
     return this.#fabric;
   }
 
   set fabric(fabric: Fabric) {
     this.#fabric = fabric;
-    this.#stages.fabric.clear();
-    this.#stages.fabric.rect(0, 0, this.fabric.width, this.fabric.height).fill(this.fabric.color);
+    this.stages.fabric.clear();
+    this.stages.fabric.rect(0, 0, this.fabric.width, this.fabric.height).fill(this.fabric.color);
 
     // If the grid is set, adjust it to the new fabric.
     if (this.#grid) this.grid = this.#grid;
@@ -192,22 +190,22 @@ export class PatternView {
   set grid(grid: Grid) {
     this.#grid = grid;
     const { width, height } = this.fabric;
-    this.#stages.grid.clear();
+    this.stages.grid.clear();
     {
       // Draw horizontal minor lines.
       for (let i = 1; i < width; i++) {
-        this.#stages.grid.moveTo(i, 0);
-        this.#stages.grid.lineTo(i, height);
+        this.stages.grid.moveTo(i, 0);
+        this.stages.grid.lineTo(i, height);
       }
 
       // Draw vertical minor lines.
       for (let i = 1; i < height; i++) {
-        this.#stages.grid.moveTo(0, i);
-        this.#stages.grid.lineTo(width, i);
+        this.stages.grid.moveTo(0, i);
+        this.stages.grid.lineTo(width, i);
       }
 
       const { thickness, color } = this.grid.minorLines;
-      this.#stages.grid.stroke({ width: thickness, color });
+      this.stages.grid.stroke({ width: thickness, color });
     }
     {
       const interval = this.grid.majorLinesInterval;
@@ -215,19 +213,19 @@ export class PatternView {
       // Draw horizontal major lines.
       for (let i = 0; i <= Math.ceil(height / interval); i++) {
         const point = Math.min(i * interval, height);
-        this.#stages.grid.moveTo(0, point);
-        this.#stages.grid.lineTo(width, point);
+        this.stages.grid.moveTo(0, point);
+        this.stages.grid.lineTo(width, point);
       }
 
       // Draw vertical major lines.
       for (let i = 0; i <= Math.ceil(width / interval); i++) {
         const point = Math.min(i * interval, width);
-        this.#stages.grid.moveTo(point, 0);
-        this.#stages.grid.lineTo(point, height);
+        this.stages.grid.moveTo(point, 0);
+        this.stages.grid.lineTo(point, height);
       }
 
       const { thickness, color } = this.grid.majorLines;
-      this.#stages.grid.stroke({ width: thickness, color });
+      this.stages.grid.stroke({ width: thickness, color });
     }
   }
 
@@ -277,11 +275,11 @@ export class PatternView {
     const symbol = new StitchSymbol(stitch, palitem.symbol, {
       fontFamily: symbolFont ? [symbolFont, this.defaultSymbolFont] : this.defaultSymbolFont,
     });
-    this.#stages.symbols.addStitch(symbol);
+    this.stages.symbols.addStitch(symbol);
   }
 
   removeSymbol(stitch: Stitch) {
-    this.#stages.symbols.removeStitch(stitch);
+    this.stages.symbols.removeStitch(stitch);
   }
 
   addFullStitch(stitch: FullStitch) {
@@ -294,13 +292,13 @@ export class PatternView {
       scaleX: STITCH_SCALE_FACTOR,
       scaleY: STITCH_SCALE_FACTOR,
     });
-    if (kind === FullStitchKind.Full) this.#stages.fullstitches.addStitch(particle);
-    else this.#stages.petitestitches.addStitch(particle);
+    if (kind === FullStitchKind.Full) this.stages.fullstitches.addStitch(particle);
+    else this.stages.petitestitches.addStitch(particle);
   }
 
   removeFullStitch(stitch: FullStitch) {
-    if (stitch.kind === FullStitchKind.Full) this.#stages.fullstitches.removeStitch(stitch);
-    else this.#stages.petitestitches.removeStitch(stitch);
+    if (stitch.kind === FullStitchKind.Full) this.stages.fullstitches.removeStitch(stitch);
+    else this.stages.petitestitches.removeStitch(stitch);
   }
 
   addPartStitch(stitch: PartStitch) {
@@ -314,13 +312,13 @@ export class PatternView {
       scaleY: STITCH_SCALE_FACTOR,
       anchorX: direction === PartStitchDirection.Forward ? 0 : 1,
     });
-    if (kind === PartStitchKind.Half) this.#stages.halfstitches.addStitch(particle);
-    else this.#stages.quarterstitches.addStitch(particle);
+    if (kind === PartStitchKind.Half) this.stages.halfstitches.addStitch(particle);
+    else this.stages.quarterstitches.addStitch(particle);
   }
 
   removePartStitch(stitch: PartStitch) {
-    if (stitch.kind === PartStitchKind.Half) this.#stages.halfstitches.removeStitch(stitch);
-    else this.#stages.quarterstitches.removeStitch(stitch);
+    if (stitch.kind === PartStitchKind.Half) this.stages.halfstitches.removeStitch(stitch);
+    else this.stages.quarterstitches.removeStitch(stitch);
   }
 
   addLineStitch(stitch: LineStitch) {
@@ -337,11 +335,11 @@ export class PatternView {
       // Draw a line with a smaller width to make it look like a fill.
       .stroke({ width: 0.2, color: this.#palette[palindex]!.color, cap: "round" });
     graphics.eventMode = "static";
-    this.#stages.lines.addStitch(graphics);
+    this.stages.lines.addStitch(graphics);
   }
 
   removeLineStitch(stitch: LineStitch) {
-    this.#stages.lines.removeStitch(stitch);
+    this.stages.lines.removeStitch(stitch);
   }
 
   addNodeStitch(stitch: NodeStitch) {
@@ -354,11 +352,11 @@ export class PatternView {
     graphics.scale.set(STITCH_SCALE_FACTOR);
     graphics.position.set(x, y);
     if (rotated) graphics.angle = 90;
-    this.#stages.nodes.addStitch(graphics);
+    this.stages.nodes.addStitch(graphics);
   }
 
   removeNodeStitch(stitch: NodeStitch) {
-    this.#stages.nodes.removeStitch(stitch);
+    this.stages.nodes.removeStitch(stitch);
   }
 
   addSpecialStitch(specialStitch: SpecialStitch) {
@@ -406,6 +404,6 @@ export class PatternView {
     if (flip[0]) graphics.scale.x = -1;
     if (flip[1]) graphics.scale.y = -1;
 
-    this.#stages.specialstitches.addChild(graphics);
+    this.stages.specialstitches.addChild(graphics);
   }
 }

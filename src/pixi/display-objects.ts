@@ -1,5 +1,5 @@
 import { Container, Graphics, GraphicsContext, Particle, ParticleContainer, Text, Texture } from "pixi.js";
-import type { ParticleOptions, TextStyleOptions } from "pixi.js";
+import type { ParticleOptions, TextOptions, TextStyleOptions } from "pixi.js";
 import { dequal } from "dequal/lite";
 
 import {
@@ -40,6 +40,13 @@ export class StitchGraphics extends Graphics {
 
 /** A wrapper around `ParticleContainer` that contains a kind of the stitches it holds. */
 export class StitchParticleContainer extends ParticleContainer {
+  constructor() {
+    super({
+      // The `position` dynamic property is `true` by default, but we don't need it here.
+      dynamicProperties: { position: false },
+    });
+  }
+
   addStitch(stitch: StitchParticle) {
     this.addParticle(stitch);
   }
@@ -69,19 +76,15 @@ export class StitchSymbol extends Container {
 
   constructor(stitch: FullStitch | PartStitch, symbol: string, styleOptions: TextStyleOptions) {
     super({ x: stitch.x, y: stitch.y });
-    this.eventMode = "none";
-    this.interactive = false;
-    this.interactiveChildren = false;
     this.setSize(1);
 
     this.stitch = stitch;
 
-    const style = { ...DEFAULT_SYMBOL_STYLE_OPTIONS, ...styleOptions };
+    const textStyle = { ...DEFAULT_SYMBOL_STYLE_OPTIONS, ...styleOptions };
+    const textOptions: TextOptions = { anchor: 0.5 };
+    const text = this.addChild(new Text({ text: symbol, style: textStyle, ...textOptions }));
 
-    const text = this.addChild(new Text({ text: symbol, style }));
-    text.anchor.set(0.5);
-
-    switch (stitch.kind) {
+    switch (this.stitch.kind) {
       case FullStitchKind.Full: {
         text.scale.set(STITCH_SCALE_FACTOR);
         text.position.set(0.5);
@@ -91,11 +94,10 @@ export class StitchSymbol extends Container {
       case PartStitchKind.Half: {
         text.scale.set(STITCH_SCALE_FACTOR / 2);
 
-        const duplicate = this.addChild(new Text({ text: symbol, style }));
-        duplicate.anchor.set(0.5);
+        const duplicate = this.addChild(new Text({ text: symbol, style: textStyle, ...textOptions }));
         duplicate.scale.set(STITCH_SCALE_FACTOR / 2);
 
-        if (stitch.direction === PartStitchDirection.Forward) {
+        if (this.stitch.direction === PartStitchDirection.Forward) {
           text.position.set(0.25, 0.75);
           duplicate.position.set(0.75, 0.25);
         } else {
