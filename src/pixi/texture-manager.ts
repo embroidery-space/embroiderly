@@ -1,7 +1,6 @@
 import { Container, Graphics, RenderTexture } from "pixi.js";
 import { GraphicsContext, type Renderer, type RenderOptions, type TextureSourceOptions } from "pixi.js";
 import { GRAPHICS_STROKE, TEXTURE_STROKE } from "./constants";
-import { ObjectedMap } from "#/utils/map";
 import { mm2px } from "#/utils/measurement";
 import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "#/schemas/index.ts";
 
@@ -25,7 +24,7 @@ export class TextureManager {
   #partstitches = new Map<DisplayMode, Record<PartStitchKind, RenderTexture>>();
 
   #frenchKnot?: GraphicsContext;
-  #beads = new ObjectedMap<Bead, GraphicsContext>();
+  #beads = new Map<string, GraphicsContext>();
 
   init(renderer: Renderer, textureSourceOptions?: TextureSourceOptions) {
     this.#renderer = renderer;
@@ -166,7 +165,15 @@ export class TextureManager {
     if (kind === NodeStitchKind.FrenchKnot) {
       return (this.#frenchKnot ??= this.#createFrenchKnotTexture());
     }
-    return this.#beads.get(bead) ?? this.#beads.set(bead, this.#createBeadTexture(bead));
+
+    const beadKey = `Bead(${bead.diameter}x${bead.length})`;
+    const texture = this.#beads.get(beadKey);
+    if (texture) return texture;
+    else {
+      const texture = this.#createBeadTexture(bead);
+      this.#beads.set(beadKey, texture);
+      return texture;
+    }
   }
 
   #createFrenchKnotTexture() {

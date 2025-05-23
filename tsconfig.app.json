@@ -6,7 +6,6 @@
     "baseUrl": ".",
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
-    "experimentalDecorators": true,
     "paths": { "#/*": ["./src/*"] },
     "types": []
   }

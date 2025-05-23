@@ -26,7 +26,6 @@
     "fluent-vue": "^3.7.1",
     "pinia": "^3.0.2",
     "pinia-plugin-persistedstate": "^4.3.0",
-    "pixi-viewport": "^6.0.3",
     "pixi.js": "^8.9.2",
     "primevue": "^4.3.4",
     "vue": "^3.5.14"
@@ -35,7 +34,7 @@
     "@iconify-json/prime": "^1.2.2",
     "@iconify/utils": "^2.3.0",
     "@pinia/testing": "^1.0.1",
-    "@tsconfig/node20": "^20.1.5",
+    "@tsconfig/node22": "^22.0.1",
     "@tsconfig/strictest": "^2.0.5",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.15.19",

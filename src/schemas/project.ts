@@ -1,4 +1,6 @@
 import { b } from "@zorsh/zorsh";
+import { toByteArray } from "base64-js";
+
 import { Pattern } from "./pattern.ts";
 import { DisplaySettings } from "./display.ts";
 
@@ -20,7 +22,8 @@ export class PatternProject {
     displaySettings: DisplaySettings.schema,
   });
 
-  static deserialize(buffer: Uint8Array) {
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
     return new PatternProject(PatternProject.schema.deserialize(buffer));
   }
 }

@@ -5,11 +5,10 @@ import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { useFluent } from "fluent-vue";
 import { useDialog } from "primevue";
 import { defineStore } from "pinia";
-import { toByteArray } from "base64-js";
 import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
 import { useShortcuts } from "#/composables";
-import { PatternView } from "#/plugins/pixi";
+import { PatternView } from "#/pixi";
 import {
   AddedPaletteItemData,
   deserializeStitch,
@@ -144,7 +143,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("fabric:update", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.setFabric(Fabric.deserialize(toByteArray(payload)));
+    pattern.value.fabric = Fabric.deserialize(payload);
   });
 
   function updateGrid() {
@@ -161,7 +160,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("grid:update", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.setGrid(Grid.deserialize(toByteArray(payload)));
+    pattern.value.grid = Grid.deserialize(payload);
   });
 
   async function addPaletteItem(palitem: PaletteItem) {
@@ -170,7 +169,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("palette:add_palette_item", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.addPaletteItem(AddedPaletteItemData.deserialize(toByteArray(payload)));
+    pattern.value.addPaletteItem(AddedPaletteItemData.deserialize(payload));
     triggerRef(pattern);
   });
 
@@ -196,7 +195,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("palette:update_display_settings", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.paletteDisplaySettings = PaletteSettings.deserialize(toByteArray(payload));
+    pattern.value.paletteDisplaySettings = PaletteSettings.deserialize(payload);
     triggerRef(pattern);
   });
 
@@ -210,31 +209,31 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<string>("stitches:add_one", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.addStitch(deserializeStitch(toByteArray(payload)));
+    pattern.value.addStitch(deserializeStitch(payload));
   });
   appWindow.listen<string>("stitches:add_many", ({ payload }) => {
     if (!pattern.value) return;
-    for (const stitch of deserializeStitches(toByteArray(payload))) pattern.value.addStitch(stitch);
+    for (const stitch of deserializeStitches(payload)) pattern.value.addStitch(stitch);
   });
   appWindow.listen<string>("stitches:remove_one", ({ payload }) => {
     if (!pattern.value) return;
-    pattern.value.removeStitch(deserializeStitch(toByteArray(payload)));
+    pattern.value.removeStitch(deserializeStitch(payload));
   });
   appWindow.listen<string>("stitches:remove_many", ({ payload }) => {
     if (!pattern.value) return;
-    for (const stitch of deserializeStitches(toByteArray(payload))) pattern.value.removeStitch(stitch);
+    for (const stitch of deserializeStitches(payload)) pattern.value.removeStitch(stitch);
   });
 
   function setDisplayMode(mode: DisplayMode | undefined) {
     if (!pattern.value) return;
     if (!mode) {
-      pattern.value.setDisplayMode(mode);
+      pattern.value.displayMode = mode;
       return triggerRef(pattern);
     } else return DisplayApi.setDisplayMode(pattern.value.key, mode);
   }
   appWindow.listen<DisplayMode>("display:set_mode", ({ payload: mode }) => {
     if (!pattern.value) return;
-    pattern.value.setDisplayMode(mode);
+    pattern.value.displayMode = mode;
     triggerRef(pattern);
   });
 
@@ -244,8 +243,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   }
   appWindow.listen<boolean>("display:show_symbols", ({ payload: value }) => {
     if (!pattern.value) return;
-    pattern.value.setShowSymbols(value);
-    pattern.value.setDisplayMode(pattern.value.displayMode);
+    pattern.value.showSymbols = value;
     triggerRef(pattern);
   });
 

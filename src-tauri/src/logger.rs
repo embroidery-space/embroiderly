@@ -1,7 +1,11 @@
 use tauri_plugin_log::{Target, TargetKind};
 
 const DEFAULT_LOG_LEVEL: log::Level = log::Level::Info;
+
+#[cfg(debug_assertions)]
 const APPLICATION_LOG_LEVEL: log::Level = log::Level::Trace;
+#[cfg(not(debug_assertions))]
+const APPLICATION_LOG_LEVEL: log::Level = log::Level::Debug;
 
 pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
   log_panics::init();

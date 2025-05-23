@@ -12,7 +12,7 @@
       severity="secondary"
       :icon="currentOption.icon"
       class="size-[var(--p-button-icon-only-width)] border-none p-1.5"
-      :style="{ color: selected && color ? color.toHex() : dt('text.muted.color') }"
+      :style="{ color: selected ? selectionColor : undefined }"
     />
 
     <Button
@@ -70,12 +70,12 @@
   const currentOption = ref<ToolOption>(
     props.options.find(({ value }) => value === props.modelValue) ?? props.options[0]!,
   );
-  const selected = computed(() => props.modelValue === currentOption.value.value && !props.disabled);
 
-  const color = computed(() => {
+  const selected = computed(() => props.modelValue === currentOption.value.value && !props.disabled);
+  const selectionColor = computed<string>(() => {
     const palindex = appStateStore.selectedPaletteItemIndexes[0];
-    if (!props.usePalitemColor || !patternsStore.pattern || palindex === undefined) return;
-    return patternsStore.pattern.palette[palindex]!.color;
+    if (!props.usePalitemColor || !patternsStore.pattern || palindex === undefined) return dt("text.muted.color");
+    return patternsStore.pattern.palette[palindex]!.hex;
   });
 
   // Suppress the error by casting to `MaybeRefOrGetter`.
