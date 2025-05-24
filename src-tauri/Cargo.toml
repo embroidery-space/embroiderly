@@ -5,6 +5,9 @@ edition = "2024"
 [features]
 test = []
 
+[profile.dev]
+debug = "line-tables-only"
+
 [profile.release]
 opt-level = "s"
 lto = true
