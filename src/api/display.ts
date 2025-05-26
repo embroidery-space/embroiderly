@@ -1,10 +1,10 @@
 import { invoke } from "@tauri-apps/api/core";
-import type { PatternKey, DisplayMode } from "#/schemas/index.ts";
+import { type DisplayMode } from "#/schemas/index.ts";
 
-export function setDisplayMode(patternKey: PatternKey, mode: DisplayMode) {
-  return invoke<void>("set_display_mode", { mode, patternKey });
+export function setDisplayMode(patternId: string, mode: DisplayMode) {
+  return invoke<void>("set_display_mode", { mode }, { headers: { patternId } });
 }
 
-export function showSymbols(patternKey: PatternKey, value: boolean) {
-  return invoke<void>("show_symbols", { value, patternKey });
+export function showSymbols(patternId: string, value: boolean) {
+  return invoke<void>("show_symbols", { value }, { headers: { patternId } });
 }

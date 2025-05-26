@@ -5,7 +5,7 @@
     </template>
 
     <template v-if="appStateStore.openedPatterns?.length" #center>
-      <PatternSelector @switch="(patternPath) => patternsStore.openPattern(patternPath)" />
+      <PatternSelector @switch="(patternId) => patternsStore.loadPattern(patternId)" />
     </template>
 
     <template #end>
@@ -35,7 +35,7 @@
     {
       label: () => fluent.$t("label-file"),
       items: [
-        { label: () => fluent.$t("label-open"), command: patternsStore.loadPattern },
+        { label: () => fluent.$t("label-open"), command: patternsStore.openPattern },
         { label: () => fluent.$t("label-create"), command: patternsStore.createPattern },
         { separator: true },
         {

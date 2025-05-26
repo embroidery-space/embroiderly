@@ -8,7 +8,7 @@
 
       <i18n tag="span" path="message-get-started">
         <template #button-open="{ buttonOpenLabel }">
-          <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="patternsStore.loadPattern" />
+          <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="patternsStore.openPattern" />
         </template>
         <template #button-create="{ buttonCreateLabel }">
           <Button variant="link" :label="buttonCreateLabel" class="p-0" @click="patternsStore.createPattern" />
@@ -31,7 +31,7 @@
               icon="i-prime:file-arrow-up"
               :label="$t('label-start-open')"
               pt:root:class="justify-start"
-              @click="patternsStore.loadPattern"
+              @click="patternsStore.openPattern"
             />
           </div>
         </div>

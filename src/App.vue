@@ -48,6 +48,6 @@
 
   onMounted(async () => {
     const currentPattern = appStateStore.currentPattern;
-    if (currentPattern) await patternsStore.openPattern(currentPattern.key);
+    if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
   });
 </script>

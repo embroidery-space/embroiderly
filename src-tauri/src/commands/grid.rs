@@ -1,5 +1,7 @@
 use crate::core::actions::{Action, UpdateGridPropertiesAction};
+use crate::core::pattern::Grid;
 use crate::error::CommandResult;
+use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
 #[tauri::command]
@@ -9,19 +11,14 @@ pub fn update_grid<R: tauri::Runtime>(
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> CommandResult<()> {
-  if let tauri::ipc::InvokeBody::Raw(data) = request.body() {
-    let pattern_key = request.headers().get("patternKey").unwrap().to_str().unwrap().into();
-    let grid = borsh::from_slice(data)?;
+  let (pattern_id, grid) = parse_command_payload!(request, Grid);
 
-    let mut patterns = patterns.write().unwrap();
-    let action = UpdateGridPropertiesAction::new(grid);
-    action.perform(&window, patterns.get_mut(&pattern_key).unwrap())?;
+  let mut patterns = patterns.write().unwrap();
+  let action = UpdateGridPropertiesAction::new(grid);
+  action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
 
-    let mut history = history.write().unwrap();
-    history.get_mut(&pattern_key).push(Box::new(action));
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).push(Box::new(action));
 
-    Ok(())
-  } else {
-    Err(anyhow::anyhow!("Invalid request body").into())
-  }
+  Ok(())
 }
