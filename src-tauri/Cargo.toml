@@ -34,11 +34,11 @@ xsp-parsers = { git = "https://github.com/embroidery-space/xsp-parsers.git", rev
 quick-xml = "0.37.5"
 
 # Archiving
-zip = { version = "3.0.0", features = [
+zip = { version = "4.0.0", features = [
   "zstd",
   "time",
 ], default-features = false }
-zip-extract = { version = "0.3.0", features = [
+zip-extract = { version = "0.4.0", features = [
   "zstd",
   "time",
 ], default-features = false }
