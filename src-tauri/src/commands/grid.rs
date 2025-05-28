@@ -1,6 +1,6 @@
 use crate::core::actions::{Action, UpdateGridPropertiesAction};
 use crate::core::pattern::Grid;
-use crate::error::CommandResult;
+use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
@@ -10,7 +10,7 @@ pub fn update_grid<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id, grid) = parse_command_payload!(request, Grid);
 
   let mut patterns = patterns.write().unwrap();

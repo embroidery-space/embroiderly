@@ -2,7 +2,7 @@ use crate::core::actions::{
   Action, AddPaletteItemAction, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
 };
 use crate::core::pattern::{PaletteItem, PaletteSettings};
-use crate::error::CommandResult;
+use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
@@ -12,7 +12,7 @@ pub fn add_palette_item<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id, palette_item) = parse_command_payload!(request, PaletteItem);
 
   let mut patterns = patterns.write().unwrap();
@@ -35,7 +35,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id,) = parse_command_payload!(request);
 
   let mut patterns = patterns.write().unwrap();
@@ -54,7 +54,7 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id, palette_settings) = parse_command_payload!(request, PaletteSettings);
 
   let mut patterns = patterns.write().unwrap();

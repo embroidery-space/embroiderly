@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "./index.ts";
 import { PatternProject, Fabric } from "#/schemas/index.ts";
 
 export async function loadPattern(patternId: string) {
@@ -6,8 +6,11 @@ export async function loadPattern(patternId: string) {
   return PatternProject.deserialize(new Uint8Array(buffer));
 }
 
-export async function openPattern(filePath: string) {
-  const buffer = await invoke<ArrayBuffer>("open_pattern", { filePath });
+export interface OpenPatternOptions {
+  restoreFromBackup?: boolean;
+}
+export async function openPattern(filePath: string, options?: OpenPatternOptions) {
+  const buffer = await invoke<ArrayBuffer>("open_pattern", { filePath, ...options });
   return PatternProject.deserialize(new Uint8Array(buffer));
 }
 

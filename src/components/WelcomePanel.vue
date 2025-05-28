@@ -8,10 +8,10 @@
 
       <i18n tag="span" path="message-get-started">
         <template #button-open="{ buttonOpenLabel }">
-          <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="patternsStore.openPattern" />
+          <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="() => patternsStore.openPattern()" />
         </template>
         <template #button-create="{ buttonCreateLabel }">
-          <Button variant="link" :label="buttonCreateLabel" class="p-0" @click="patternsStore.createPattern" />
+          <Button variant="link" :label="buttonCreateLabel" class="p-0" @click="() => patternsStore.createPattern()" />
         </template>
       </i18n>
 
@@ -24,14 +24,14 @@
               icon="i-prime:file-plus"
               :label="$t('label-start-create')"
               pt:root:class="justify-start"
-              @click="patternsStore.createPattern"
+              @click="() => patternsStore.createPattern()"
             />
             <Button
               text
               icon="i-prime:file-arrow-up"
               :label="$t('label-start-open')"
               pt:root:class="justify-start"
-              @click="patternsStore.openPattern"
+              @click="() => patternsStore.openPattern()"
             />
           </div>
         </div>

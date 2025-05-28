@@ -1,6 +1,6 @@
 use crate::core::actions::{Action, UpdateFabricPropertiesAction};
 use crate::core::pattern::Fabric;
-use crate::error::CommandResult;
+use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
@@ -10,7 +10,7 @@ pub fn update_fabric<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id, fabric) = parse_command_payload!(request, Fabric);
 
   let mut patterns = patterns.write().unwrap();

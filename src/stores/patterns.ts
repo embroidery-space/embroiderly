@@ -3,7 +3,7 @@ import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { useFluent } from "fluent-vue";
-import { useDialog } from "primevue";
+import { useConfirm, useDialog } from "primevue";
 import { defineStore } from "pinia";
 import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
@@ -20,17 +20,17 @@ import {
   Grid,
   type Stitch,
 } from "#/schemas/index.ts";
+import { ErrorBackupFileExists, ErrorUnsupportedPatternType, ErrorUnsupportedPatternTypeForSaving } from "#/error.ts";
 
-const SAVE_AS_FILTERS: DialogFilter[] = [
-  { name: "Embroidery Project", extensions: ["embproj"] },
-  { name: "Open Cross-Stitch", extensions: ["oxs", "xml"] },
-];
+const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
 
 export const usePatternsStore = defineStore("pattern-project", () => {
   const appWindow = getCurrentWindow();
 
   const fluent = useFluent();
   const dialog = useDialog();
+  const confirm = useConfirm();
+
   const FabricProperties = defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue"));
   const GridProperties = defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue"));
 
@@ -50,23 +50,46 @@ export const usePatternsStore = defineStore("pattern-project", () => {
     }
   }
 
-  async function openPattern() {
-    appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
-    const path = await open({
-      defaultPath: appStateStore.lastOpenedFolder,
-      multiple: false,
-      filters: [
-        { name: "Cross-Stitch Patterns", extensions: ["xsd", "oxs", "xml", "embproj"] },
-        { name: "All Files", extensions: ["*"] },
-      ],
-    });
-    if (path === null) return;
-    appStateStore.lastOpenedFolder = path.substring(0, path.lastIndexOf(sep()));
+  async function openPattern(filePath?: string, options?: PatternApi.OpenPatternOptions) {
+    let path = filePath;
+    if (!path) {
+      appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
+      const selectedPath = await open({
+        defaultPath: appStateStore.lastOpenedFolder,
+        multiple: false,
+        filters: [
+          { name: "Cross-Stitch Patterns", extensions: ["xsd", "oxs", "xml", "embproj"] },
+          { name: "All Files", extensions: ["*"] },
+        ],
+      });
+      if (selectedPath === null) return;
+      path = selectedPath;
+      appStateStore.lastOpenedFolder = path.substring(0, path.lastIndexOf(sep()));
+    }
 
     try {
       loading.value = true;
-      pattern.value = new PatternView(await PatternApi.openPattern(path));
+      pattern.value = new PatternView(await PatternApi.openPattern(path, options));
       appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+    } catch (error) {
+      if (error instanceof ErrorUnsupportedPatternType) {
+        confirm.require({
+          header: fluent.$t("title-error"),
+          message: fluent.$t("message-error-unsupported-pattern-type"),
+          rejectProps: { style: { display: "none" } },
+        });
+        return;
+      }
+      if (error instanceof ErrorBackupFileExists) {
+        confirm.require({
+          header: fluent.$t("title-error"),
+          message: fluent.$t("message-error-backup-file-exists"),
+          accept: () => openPattern(path, { restoreFromBackup: true }),
+          reject: () => openPattern(path, { restoreFromBackup: false }),
+        });
+        return;
+      }
+      throw error;
     } finally {
       loading.value = false;
     }
@@ -81,7 +104,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
         try {
           loading.value = true;
           pattern.value = new PatternView(await PatternApi.createPattern(fabric));
-          appStateStore.addOpenedPattern(pattern.value.info.title, pattern.value.id);
+          appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
         } finally {
           loading.value = false;
         }
@@ -105,6 +128,16 @@ export const usePatternsStore = defineStore("pattern-project", () => {
       }
       loading.value = true;
       await PatternApi.savePattern(pattern.value.id, path);
+    } catch (error) {
+      if (error instanceof ErrorUnsupportedPatternTypeForSaving) {
+        confirm.require({
+          header: fluent.$t("title-error"),
+          message: fluent.$t("message-error-unsupported-pattern-type-for-saving"),
+          rejectProps: { style: { display: "none" } },
+        });
+        return;
+      }
+      throw error;
     } finally {
       loading.value = false;
     }
@@ -258,7 +291,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
 
   shortcut.on("Ctrl+KeyO", openPattern);
   shortcut.on("Ctrl+KeyN", createPattern);
-  shortcut.on("Ctrl+KeyS", () => savePattern());
+  shortcut.on("Ctrl+KeyS", savePattern);
   shortcut.on("Ctrl+Shift+KeyS", () => savePattern(true));
   shortcut.on("Ctrl+KeyW", closePattern);
   shortcut.on("Ctrl+KeyZ", async () => {

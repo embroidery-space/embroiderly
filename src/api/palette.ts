@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "./index.ts";
 import { PaletteItem, PaletteSettings } from "#/schemas/index.ts";
 
 export function addPaletteItem(patternId: string, paletteItem: PaletteItem) {

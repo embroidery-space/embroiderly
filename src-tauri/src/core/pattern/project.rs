@@ -1,9 +1,7 @@
-use borsh::{BorshDeserialize, BorshSerialize};
-
 use super::Pattern;
 use super::display::DisplaySettings;
 
-#[derive(Debug, Default, Clone, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Default, Clone, borsh::BorshSerialize)]
 pub struct PatternProject {
   pub id: uuid::Uuid,
   #[borsh(skip)]

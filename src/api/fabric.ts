@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "./index.ts";
 import { Fabric } from "#/schemas/index.ts";
 
 export function updateFabric(patternId: string, fabric: Fabric) {

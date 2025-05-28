@@ -154,3 +154,15 @@ label-minor-lines = Малі лінії
 
 label-color = Колір
 label-thickness = Товщина
+
+## Titles, labels and messages related to error messages.
+title-error = Помилка
+
+message-error-unsupported-pattern-type = Цей тип схеми не підтримується.
+message-error-unsupported-pattern-type-for-saving =
+  Цей тип схеми не підтримується для збереження.
+  Будь ласка, збережіть схему, використовуючи опцію "{ label-save-as }" або "{ label-export }".
+
+message-error-backup-file-exists =
+  Для цієї схеми існує файл резервної копії.
+  Чи хочете ви відновити прогрес з нього?

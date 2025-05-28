@@ -1,6 +1,8 @@
 use std::ffi::OsStr;
 
-#[derive(Default)]
+use crate::error::ParsingError;
+
+#[derive(Default, PartialEq, Eq)]
 pub enum PatternFormat {
   /// Probably, stands for `Cross-Stitch Design`.
   /// Only **read-only** mode is currently available.
@@ -19,19 +21,19 @@ pub enum PatternFormat {
 }
 
 impl TryFrom<Option<&OsStr>> for PatternFormat {
-  type Error = anyhow::Error;
+  type Error = ParsingError;
 
-  fn try_from(value: Option<&OsStr>) -> anyhow::Result<Self, Self::Error> {
+  fn try_from(value: Option<&OsStr>) -> std::result::Result<Self, Self::Error> {
     if let Some(extension) = value {
       let extension = extension.to_str().unwrap();
       match extension.to_lowercase().as_str() {
         "xsd" => Ok(Self::Xsd),
         "oxs" | "xml" => Ok(Self::Oxs),
         "embproj" => Ok(Self::EmbProj),
-        _ => anyhow::bail!("Unsupported pattern type: {extension}."),
+        _ => Err(ParsingError::UnsupportedPatternType(extension.to_string())),
       }
     } else {
-      anyhow::bail!("Unsupported pattern type")
+      Err(ParsingError::UnsupportedPatternType("unknown".into()))
     }
   }
 }

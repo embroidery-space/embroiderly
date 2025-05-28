@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "./index.ts";
 import { type DisplayMode } from "#/schemas/index.ts";
 
 export function setDisplayMode(patternId: string, mode: DisplayMode) {

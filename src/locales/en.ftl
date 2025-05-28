@@ -151,3 +151,15 @@ label-minor-lines = Minor Lines
 
 label-color = Color
 label-thickness = Thickness
+
+## Titles, labels and messages related to error messages.
+title-error = Error
+
+message-error-unsupported-pattern-type = This pattern type is not supported.
+message-error-unsupported-pattern-type-for-saving =
+  This pattern type is not supported for saving.
+  Please, save the pattern using the "{ label-save-as }" or "{ label-export }" options.
+
+message-error-backup-file-exists =
+  A backup file for this pattern exists.
+  Do you want to restore the progress from it?

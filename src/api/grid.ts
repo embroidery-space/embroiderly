@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "./index.ts";
 import { Grid } from "#/schemas/index.ts";
 
 export function updateGrid(patternId: string, grid: Grid) {

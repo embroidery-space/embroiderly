@@ -1,5 +1,5 @@
 use crate::core::actions::{Action, AddStitchAction, RemoveStitchAction};
-use crate::error::CommandResult;
+use crate::error::Result;
 use crate::state::{HistoryState, PatternsState};
 use crate::{Stitch, parse_command_payload};
 
@@ -9,7 +9,7 @@ pub fn add_stitch<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id, stitch) = parse_command_payload!(request, Stitch);
 
   let mut patterns = patterns.write().unwrap();
@@ -32,7 +32,7 @@ pub fn remove_stitch<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id, stitch) = parse_command_payload!(request, Stitch);
 
   let mut patterns = patterns.write().unwrap();

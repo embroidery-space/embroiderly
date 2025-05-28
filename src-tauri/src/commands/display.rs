@@ -1,6 +1,6 @@
 use crate::core::actions::{Action, SetDisplayModeAction, ShowSymbolsAction};
 use crate::core::pattern::DisplayMode;
-use crate::error::CommandResult;
+use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
@@ -11,7 +11,7 @@ pub fn set_display_mode<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id,) = parse_command_payload!(request);
   let mode = mode.parse::<DisplayMode>().map_err(|e| anyhow::anyhow!(e))?;
 
@@ -34,7 +34,7 @@ pub fn show_symbols<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id,) = parse_command_payload!(request);
 
   let mut patterns = patterns.write().unwrap();

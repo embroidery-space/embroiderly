@@ -2,8 +2,8 @@ import { setTheme as setAppTheme } from "@tauri-apps/api/app";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
 import { useFluent } from "fluent-vue";
-import { useDialog } from "primevue";
-import { LOCALES } from "#/fluent";
+import { useDialog, usePrimeVue } from "primevue";
+import { LOCALES, PRIMEVUE_LOCALES } from "#/fluent";
 import type { WheelAction } from "#/pixi";
 
 export type Theme = "light" | "dark" | "system";
@@ -21,6 +21,7 @@ export const usePreferencesStore = defineStore(
   () => {
     const AppPreferences = defineAsyncComponent(() => import("#/components/dialogs/AppPreferences.vue"));
 
+    const primevue = usePrimeVue();
     const dialog = useDialog();
     const fluent = useFluent();
 
@@ -46,6 +47,8 @@ export const usePreferencesStore = defineStore(
     watch(
       language,
       (newLanguage) => {
+        primevue.config.locale = PRIMEVUE_LOCALES[newLanguage];
+
         const bundle = LOCALES[newLanguage];
         fluent.bundles.value = [bundle];
       },

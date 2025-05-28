@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "./index.ts";
 import { serializeStitch, type Stitch } from "#/schemas";
 
 export function addStitch(patternId: string, stitch: Stitch) {

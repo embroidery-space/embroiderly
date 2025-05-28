@@ -1,4 +1,4 @@
-use crate::error::CommandResult;
+use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
@@ -8,7 +8,7 @@ pub fn undo<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id,) = parse_command_payload!(request);
 
   let mut history = history.write().unwrap();
@@ -25,7 +25,7 @@ pub fn redo<R: tauri::Runtime>(
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> CommandResult<()> {
+) -> Result<()> {
   let (pattern_id,) = parse_command_payload!(request);
 
   let mut history = history.write().unwrap();
