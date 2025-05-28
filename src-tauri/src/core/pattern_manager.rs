@@ -20,6 +20,14 @@ impl PatternManager {
     }
   }
 
+  pub fn len(&self) -> usize {
+    self.patterns_by_id.len()
+  }
+
+  pub fn is_empty(&self) -> bool {
+    self.patterns_by_id.is_empty()
+  }
+
   pub fn add_pattern(&mut self, pattern: PatternProject) {
     self.id_by_path.insert(pattern.file_path.clone(), pattern.id);
     self.patterns_by_id.insert(pattern.id, pattern);
