@@ -1,4 +1,4 @@
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
@@ -18,8 +18,9 @@ import {
   PaletteItem,
   Fabric,
   Grid,
+  PatternInfo,
   type Stitch,
-} from "#/schemas/index.ts";
+} from "#/schemas";
 
 const SAVE_AS_FILTERS: DialogFilter[] = [
   { name: "Embroidery Project", extensions: ["embproj"] },
@@ -27,10 +28,12 @@ const SAVE_AS_FILTERS: DialogFilter[] = [
 ];
 
 export const usePatternsStore = defineStore("pattern-project", () => {
-  const appWindow = getCurrentWindow();
+  const appWindow = getCurrentWebviewWindow();
 
   const fluent = useFluent();
   const dialog = useDialog();
+
+  const PatternInfoProperties = defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue"));
   const FabricProperties = defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue"));
   const GridProperties = defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue"));
 
@@ -128,6 +131,23 @@ export const usePatternsStore = defineStore("pattern-project", () => {
       loading.value = false;
     }
   }
+
+  function updatePatternInfo() {
+    if (!pattern.value) return;
+    dialog.open(PatternInfoProperties, {
+      props: { header: fluent.$t("title-pattern-info"), modal: true },
+      data: { patternInfo: pattern.value.info },
+      onClose: async (options) => {
+        if (!options?.data) return;
+        const { patternInfo } = options.data;
+        await PatternApi.updatePatternInfo(pattern.value!.key, patternInfo);
+      },
+    });
+  }
+  appWindow.listen<string>("pattern-info:update", ({ payload }) => {
+    if (!pattern.value) return;
+    pattern.value.info = PatternInfo.deserialize(payload);
+  });
 
   function updateFabric() {
     if (!pattern.value) return;
@@ -273,6 +293,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
     savePattern,
     exportPattern,
     closePattern,
+    updatePatternInfo,
     updateFabric,
     updateGrid,
     addPaletteItem,

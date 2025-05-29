@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
-import { type PatternKey, PatternProject, Fabric } from "#/schemas/index.ts";
+import { type PatternKey, PatternProject, Fabric, PatternInfo } from "#/schemas/index.ts";
 
 export async function loadPattern(filePath: string) {
   const buffer = await invoke<ArrayBuffer>("load_pattern", undefined, { headers: { filePath } });
@@ -21,4 +21,8 @@ export function closePattern(patternKey: PatternKey) {
 
 export function getPatternFilePath(patternKey: PatternKey) {
   return invoke<string>("get_pattern_file_path", { patternKey });
+}
+
+export function updatePatternInfo(patternKey: PatternKey, info: PatternInfo) {
+  return invoke<void>("update_pattern_info", PatternInfo.serialize(info), { headers: { patternKey } });
 }

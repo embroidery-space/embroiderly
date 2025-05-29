@@ -120,6 +120,15 @@ label-viewport-wheel-action-scroll = Прокрутка
 label-other = Інше
 label-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
 
+## Titles, labels and messages related to the pattern information dialog.
+
+title-pattern-info = Інформація про схему
+
+label-pattern-title = Назва
+label-pattern-author = Автор
+label-pattern-copyright = Авторські права
+label-pattern-description = Опис
+
 ## Titles, labels and messages related to the fabric properties dialog.
 
 title-fabric-properties = Параметри тканини

@@ -1,4 +1,4 @@
-use crate::core::actions::{Action, UpdateGridPropertiesAction};
+use crate::core::actions::{Action as _, UpdateGridPropertiesAction};
 use crate::error::CommandResult;
 use crate::state::{HistoryState, PatternsState};
 

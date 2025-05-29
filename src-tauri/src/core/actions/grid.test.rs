@@ -37,7 +37,7 @@ fn test_update_fabric() {
 
   // Test revoking the command.
   {
-    window.listen("fabric:update", move |e| {
+    window.listen("grid:update", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: Grid = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, Grid::default());

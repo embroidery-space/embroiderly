@@ -1,7 +1,8 @@
+use crate::core::actions::{Action as _, UpdatePatternInfoAction};
 use crate::core::parsers::{self, PatternFormat};
 use crate::core::pattern::{Fabric, Pattern, PatternProject};
 use crate::error::CommandResult;
-use crate::state::{PatternKey, PatternsState};
+use crate::state::{HistoryState, PatternKey, PatternsState};
 use crate::utils::path::app_document_dir;
 
 #[tauri::command]
@@ -104,4 +105,28 @@ pub fn get_pattern_file_path(pattern_key: PatternKey, patterns: tauri::State<Pat
   let patterns = patterns.read().unwrap();
   let patproj = patterns.get(&pattern_key).unwrap();
   patproj.file_path.to_string_lossy().to_string()
+}
+
+#[tauri::command]
+pub fn update_pattern_info<R: tauri::Runtime>(
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> CommandResult<()> {
+  if let tauri::ipc::InvokeBody::Raw(data) = request.body() {
+    let pattern_key = request.headers().get("patternKey").unwrap().to_str().unwrap().into();
+    let pattern_info = borsh::from_slice(data)?;
+
+    let mut patterns = patterns.write().unwrap();
+    let action = UpdatePatternInfoAction::new(pattern_info);
+    action.perform(&window, patterns.get_mut(&pattern_key).unwrap())?;
+
+    let mut history = history.write().unwrap();
+    history.get_mut(&pattern_key).push(Box::new(action));
+
+    Ok(())
+  } else {
+    Err(anyhow::anyhow!("Invalid request body").into())
+  }
 }

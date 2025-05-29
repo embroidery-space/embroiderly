@@ -76,6 +76,7 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
       commands::pattern::save_pattern,
       commands::pattern::close_pattern,
       commands::pattern::get_pattern_file_path,
+      commands::pattern::update_pattern_info,
       commands::display::set_display_mode,
       commands::display::show_symbols,
       commands::fabric::update_fabric,
