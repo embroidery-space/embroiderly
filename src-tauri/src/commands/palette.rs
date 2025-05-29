@@ -1,5 +1,5 @@
 use crate::core::actions::{
-  Action, AddPaletteItemAction, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
+  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
 };
 use crate::error::CommandResult;
 use crate::state::{HistoryState, PatternsState};

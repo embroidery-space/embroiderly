@@ -1032,7 +1032,7 @@ dependencies = [
  "tauri-plugin-prevent-default",
  "tempfile",
  "xsp-parsers",
- "zip 4.0.0",
+ "zip",
  "zip-extract",
 ]
 
@@ -5727,20 +5727,6 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "3.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12598812502ed0105f607f941c386f43d441e00148fce9dec3ca5ffb0bde9308"
-dependencies = [
- "arbitrary",
- "crc32fast",
- "indexmap 2.9.0",
- "memchr",
- "time",
- "zstd",
-]
-
-[[package]]
-name = "zip"
 version = "4.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "153a6fff49d264c4babdcfa6b4d534747f520e56e8f0f384f3b808c4b64cc1fd"
@@ -5761,7 +5747,7 @@ checksum = "aed5f10c571472911e37d8f7601a8dfba52b4f7f73a344015291b82ab292faf6"
 dependencies = [
  "log",
  "thiserror 2.0.12",
- "zip 4.0.0",
+ "zip",
 ]
 
 [[package]]

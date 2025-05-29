@@ -23,6 +23,15 @@ export class PatternInfo {
     copyright: b.string(),
     description: b.string(),
   });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new PatternInfo(PatternInfo.schema.deserialize(buffer));
+  }
+
+  static serialize(data: PatternInfo) {
+    return PatternInfo.schema.serialize(data);
+  }
 }
 
 export class Fabric {
@@ -57,14 +66,7 @@ export class Fabric {
   }
 
   static serialize(data: Fabric) {
-    return Fabric.schema.serialize({
-      width: data.width,
-      height: data.height,
-      spi: data.spi,
-      kind: data.kind,
-      name: data.name,
-      color: data.color.toHex().slice(1).toUpperCase(),
-    });
+    return Fabric.schema.serialize({ ...data, color: data.color.toHex().slice(1).toUpperCase() });
   }
 
   static default() {

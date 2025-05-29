@@ -1,4 +1,4 @@
-use crate::core::actions::{Action, UpdateFabricPropertiesAction};
+use crate::core::actions::{Action as _, UpdateFabricPropertiesAction};
 use crate::error::CommandResult;
 use crate::state::{HistoryState, PatternsState};
 

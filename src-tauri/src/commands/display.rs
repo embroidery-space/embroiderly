@@ -1,4 +1,4 @@
-use crate::core::actions::{Action, SetDisplayModeAction, ShowSymbolsAction};
+use crate::core::actions::{Action as _, SetDisplayModeAction, ShowSymbolsAction};
 use crate::core::pattern::DisplayMode;
 use crate::error::CommandResult;
 use crate::state::{HistoryState, PatternKey, PatternsState};

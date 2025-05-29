@@ -32,6 +32,9 @@ app.use(PrimeVue, {
       },
     },
   },
+  pt: {
+    dialog: { root: { style: { maxWidth: "90%" } } },
+  },
 });
 app.use(ConfirmationService);
 app.use(DialogService);

@@ -13,6 +13,9 @@ use tauri::WebviewWindow;
 
 use super::pattern::PatternProject;
 
+mod pattern;
+pub use pattern::*;
+
 mod display;
 pub use display::*;
 
