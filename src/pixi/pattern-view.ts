@@ -167,6 +167,10 @@ export class PatternView {
     return this.#info;
   }
 
+  set info(info: PatternInfo) {
+    this.#info = info;
+  }
+
   get fabric() {
     return this.#fabric;
   }

@@ -1,7 +1,9 @@
+use crate::core::actions::{Action as _, UpdatePatternInfoAction};
 use crate::core::parsers::{self, PatternFormat};
-use crate::core::pattern::{Fabric, Pattern, PatternProject};
+use crate::core::pattern::{Fabric, Pattern, PatternInfo, PatternProject};
 use crate::error::{CommandError, Result};
-use crate::state::PatternsState;
+use crate::parse_command_payload;
+use crate::state::{HistoryState, PatternsState};
 use crate::utils::path::{app_document_dir, backup_file_path};
 
 #[tauri::command]
@@ -89,16 +91,16 @@ pub fn create_pattern<R: tauri::Runtime>(
 
 #[tauri::command]
 pub fn save_pattern<R: tauri::Runtime>(
-  id: uuid::Uuid,
+  pattern_id: uuid::Uuid,
   file_path: std::path::PathBuf,
   app_handle: tauri::AppHandle<R>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
-  log::debug!("Saving Pattern({id:?})");
+  log::debug!("Saving Pattern({pattern_id:?})");
 
   let mut patterns = patterns.write().unwrap();
 
-  let patproj = patterns.get_mut_pattern_by_id(&id).unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
   let previous_file_path = patproj.file_path.clone();
 
   // If the file is saved in a different format (e.g. oxs), we just write it down.
@@ -125,28 +127,47 @@ pub fn save_pattern<R: tauri::Runtime>(
     patproj.file_path = file_path;
   }
 
-  log::debug!("Pattern saved {id:?}");
+  log::debug!("Pattern saved {pattern_id:?}");
   Ok(())
 }
 
 #[tauri::command]
-pub fn close_pattern(id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Result<()> {
-  log::debug!("Closing Pattern({id:?})");
+pub fn close_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Result<()> {
+  log::debug!("Closing Pattern({pattern_id:?})");
 
-  let patproj = patterns.write().unwrap().remove_pattern(&id).unwrap();
+  let patproj = patterns.write().unwrap().remove_pattern(&pattern_id).unwrap();
 
   let backup_file_path = backup_file_path(&patproj.file_path, "bak");
   if backup_file_path.exists() {
     std::fs::remove_file(backup_file_path)?;
   }
 
-  log::debug!("Pattern({id:?}) closed");
+  log::debug!("Pattern({pattern_id:?}) closed");
   Ok(())
 }
 
 #[tauri::command]
-pub fn get_pattern_file_path(id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> String {
+pub fn get_pattern_file_path(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> String {
   let patterns = patterns.read().unwrap();
-  let patproj = patterns.get_pattern_by_id(&id).unwrap();
+  let patproj = patterns.get_pattern_by_id(&pattern_id).unwrap();
   patproj.file_path.to_string_lossy().to_string()
+}
+
+#[tauri::command]
+pub fn update_pattern_info<R: tauri::Runtime>(
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  let (pattern_id, pattern_info) = parse_command_payload!(request, PatternInfo);
+
+  let mut patterns = patterns.write().unwrap();
+  let action = UpdatePatternInfoAction::new(pattern_info);
+  action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
+
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).push(Box::new(action));
+
+  Ok(())
 }

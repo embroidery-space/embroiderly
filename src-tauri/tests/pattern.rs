@@ -118,7 +118,7 @@ fn saves_pattern() {
             error: tauri::ipc::CallbackFn(1),
             url: "http://tauri.localhost".parse().unwrap(),
             body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-              "id": patproj.id.to_string(),
+              "patternId": patproj.id.to_string(),
               "filePath": file_path.to_str().unwrap(),
             })),
             headers: Default::default(),
@@ -155,7 +155,7 @@ fn saves_pattern() {
           error: tauri::ipc::CallbackFn(1),
           url: "http://tauri.localhost".parse().unwrap(),
           body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-            "id": patproj.id.to_string(),
+            "patternId": patproj.id.to_string(),
           })),
           headers: Default::default(),
           invoke_key: INVOKE_KEY.to_string(),
@@ -201,7 +201,7 @@ fn closes_pattern() {
       error: tauri::ipc::CallbackFn(1),
       url: "http://tauri.localhost".parse().unwrap(),
       body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-        "id": patproj.id.to_string(),
+        "patternId": patproj.id.to_string(),
       })),
       headers: Default::default(),
       invoke_key: INVOKE_KEY.to_string(),

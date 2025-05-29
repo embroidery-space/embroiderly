@@ -1,4 +1,4 @@
-use crate::core::actions::{Action, AddStitchAction, RemoveStitchAction};
+use crate::core::actions::{Action as _, AddStitchAction, RemoveStitchAction};
 use crate::error::Result;
 use crate::state::{HistoryState, PatternsState};
 use crate::{Stitch, parse_command_payload};

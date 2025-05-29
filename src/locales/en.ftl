@@ -117,6 +117,15 @@ label-viewport-wheel-action-scroll = Scroll
 label-other = Other
 label-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools
 
+## Titles, labels and messages related to the pattern information dialog.
+
+title-pattern-info = Pattern Information
+
+label-pattern-title = Title
+label-pattern-author = Author
+label-pattern-copyright = Copyright
+label-pattern-description = Description
+
 ## Titles, labels and messages related to the fabric properties dialog.
 
 title-fabric-properties = Fabric Properties

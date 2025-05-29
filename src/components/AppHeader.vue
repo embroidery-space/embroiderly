@@ -66,6 +66,7 @@
       label: () => fluent.$t("label-pattern"),
       visible: () => patternsStore.pattern !== undefined,
       items: [
+        { label: () => fluent.$t("title-pattern-info"), command: () => patternsStore.updatePatternInfo() },
         { label: () => fluent.$t("title-fabric-properties"), command: () => patternsStore.updateFabric() },
         { label: () => fluent.$t("title-grid-properties"), command: () => patternsStore.updateGrid() },
       ],
