@@ -3,7 +3,7 @@ use std::io::Write;
 use anyhow::Result;
 
 use crate::core::parsers::oxs;
-use crate::core::pattern::{DisplaySettings, PatternProject};
+use crate::core::pattern::PatternProject;
 
 pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
   log::info!("Parsing the EMBPROJ pattern file");
@@ -16,16 +16,8 @@ pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
   zip_extract::extract(std::fs::File::open(&file_path)?, temp, true)?;
 
   let mut patproj = oxs::parse_pattern(temp.join("pattern.oxs"))?;
-  let DisplaySettings {
-    display_mode,
-    palette_settings,
-    grid,
-    ..
-  } = oxs::parse_display_settings(temp.join("display_settings.xml"))?;
-
-  patproj.display_settings.display_mode = display_mode;
-  patproj.display_settings.palette_settings = palette_settings;
-  patproj.display_settings.grid = grid;
+  patproj.file_path = file_path;
+  patproj.display_settings = oxs::parse_display_settings(temp.join("display_settings.xml"))?;
 
   Ok(patproj)
 }

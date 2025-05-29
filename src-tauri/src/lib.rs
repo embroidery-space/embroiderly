@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::sync::RwLock;
 
 use state::HistoryStateInner;
@@ -60,10 +59,8 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
 
       Ok(())
     })
-    .manage(RwLock::new(
-      HashMap::<state::PatternKey, core::pattern::PatternProject>::new(),
-    ))
-    .manage(RwLock::new(HistoryStateInner::<R>::default()))
+    .manage(RwLock::new(core::pattern_manager::PatternManager::new()))
+    .manage(RwLock::new(HistoryStateInner::<R>::new()))
     .plugin(logger::init())
     .plugin(prevent_default::init())
     .plugin(tauri_plugin_dialog::init())
@@ -72,6 +69,7 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
     .invoke_handler(tauri::generate_handler![
       commands::path::get_app_document_dir,
       commands::pattern::load_pattern,
+      commands::pattern::open_pattern,
       commands::pattern::create_pattern,
       commands::pattern::save_pattern,
       commands::pattern::close_pattern,

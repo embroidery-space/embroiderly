@@ -126,11 +126,7 @@ pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
     pattern.info.title = file_name;
   }
 
-  Ok(PatternProject {
-    file_path,
-    pattern,
-    display_settings: Default::default(),
-  })
+  Ok(PatternProject::new(file_path, pattern, Default::default()))
 }
 
 fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern> {

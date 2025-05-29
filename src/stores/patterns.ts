@@ -3,7 +3,7 @@ import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { useFluent } from "fluent-vue";
-import { useDialog } from "primevue";
+import { useConfirm, useDialog } from "primevue";
 import { defineStore } from "pinia";
 import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
@@ -21,17 +21,16 @@ import {
   PatternInfo,
   type Stitch,
 } from "#/schemas";
+import { ErrorBackupFileExists, ErrorUnsupportedPatternType, ErrorUnsupportedPatternTypeForSaving } from "#/error.ts";
 
-const SAVE_AS_FILTERS: DialogFilter[] = [
-  { name: "Embroidery Project", extensions: ["embproj"] },
-  { name: "Open Cross-Stitch", extensions: ["oxs", "xml"] },
-];
+const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
 
 export const usePatternsStore = defineStore("pattern-project", () => {
   const appWindow = getCurrentWebviewWindow();
 
   const fluent = useFluent();
   const dialog = useDialog();
+  const confirm = useConfirm();
 
   const PatternInfoProperties = defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue"));
   const FabricProperties = defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue"));
@@ -43,26 +42,56 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   const loading = ref(false);
   const pattern = shallowRef<PatternView>();
 
-  async function loadPattern() {
-    appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
-    const path = await open({
-      defaultPath: appStateStore.lastOpenedFolder,
-      multiple: false,
-      filters: [
-        { name: "Cross-Stitch Patterns", extensions: ["xsd", "oxs", "xml", "embproj"] },
-        { name: "All Files", extensions: ["*"] },
-      ],
-    });
-    if (path === null || Array.isArray(path)) return;
-    appStateStore.lastOpenedFolder = path.substring(0, path.lastIndexOf(sep()));
-    await openPattern(path);
-  }
-
-  async function openPattern(pathOrKey: string) {
+  async function loadPattern(id: string) {
     try {
       loading.value = true;
-      pattern.value = new PatternView(await PatternApi.loadPattern(pathOrKey));
-      appStateStore.addOpenedPattern(pattern.value.info.title, pattern.value.key);
+      pattern.value = new PatternView(await PatternApi.loadPattern(id));
+      appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function openPattern(filePath?: string, options?: PatternApi.OpenPatternOptions) {
+    let path = filePath;
+    if (!path) {
+      appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
+      const selectedPath = await open({
+        defaultPath: appStateStore.lastOpenedFolder,
+        multiple: false,
+        filters: [
+          { name: "Cross-Stitch Patterns", extensions: ["xsd", "oxs", "xml", "embproj"] },
+          { name: "All Files", extensions: ["*"] },
+        ],
+      });
+      if (selectedPath === null) return;
+      path = selectedPath;
+      appStateStore.lastOpenedFolder = path.substring(0, path.lastIndexOf(sep()));
+    }
+
+    try {
+      loading.value = true;
+      pattern.value = new PatternView(await PatternApi.openPattern(path, options));
+      appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+    } catch (error) {
+      if (error instanceof ErrorUnsupportedPatternType) {
+        confirm.require({
+          header: fluent.$t("title-error"),
+          message: fluent.$t("message-error-unsupported-pattern-type"),
+          rejectProps: { style: { display: "none" } },
+        });
+        return;
+      }
+      if (error instanceof ErrorBackupFileExists) {
+        confirm.require({
+          header: fluent.$t("title-error"),
+          message: fluent.$t("message-error-backup-file-exists"),
+          accept: () => openPattern(path, { restoreFromBackup: true }),
+          reject: () => openPattern(path, { restoreFromBackup: false }),
+        });
+        return;
+      }
+      throw error;
     } finally {
       loading.value = false;
     }
@@ -77,7 +106,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
         try {
           loading.value = true;
           pattern.value = new PatternView(await PatternApi.createPattern(fabric));
-          appStateStore.addOpenedPattern(pattern.value.info.title, pattern.value.key);
+          appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
         } finally {
           loading.value = false;
         }
@@ -88,7 +117,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   async function savePattern(as = false) {
     if (!pattern.value) return;
     try {
-      let path = await PatternApi.getPatternFilePath(pattern.value.key);
+      let path = await PatternApi.getPatternFilePath(pattern.value.id);
       if (as) {
         appStateStore.lastSavedFolder ??= path.substring(0, path.lastIndexOf(sep()));
         const selectedPath = await save({
@@ -100,7 +129,17 @@ export const usePatternsStore = defineStore("pattern-project", () => {
         appStateStore.lastSavedFolder = path.substring(0, path.lastIndexOf(sep()));
       }
       loading.value = true;
-      await PatternApi.savePattern(pattern.value.key, path);
+      await PatternApi.savePattern(pattern.value.id, path);
+    } catch (error) {
+      if (error instanceof ErrorUnsupportedPatternTypeForSaving) {
+        confirm.require({
+          header: fluent.$t("title-error"),
+          message: fluent.$t("message-error-unsupported-pattern-type-for-saving"),
+          rejectProps: { style: { display: "none" } },
+        });
+        return;
+      }
+      throw error;
     } finally {
       loading.value = false;
     }
@@ -109,11 +148,11 @@ export const usePatternsStore = defineStore("pattern-project", () => {
   async function exportPattern(ext: string) {
     if (!pattern.value) return;
     try {
-      const defaultPath = (await PatternApi.getPatternFilePath(pattern.value.key)).replace(/\.[^.]+$/, `.${ext}`);
+      const defaultPath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
       const path = await save({ defaultPath, filters: SAVE_AS_FILTERS.filter((f) => f.extensions.includes(ext)) });
       if (path === null) return;
       loading.value = true;
-      await PatternApi.savePattern(pattern.value.key, path);
+      await PatternApi.savePattern(pattern.value.id, path);
     } finally {
       loading.value = false;
     }
@@ -123,10 +162,10 @@ export const usePatternsStore = defineStore("pattern-project", () => {
     if (!pattern.value) return;
     try {
       loading.value = true;
-      await PatternApi.closePattern(pattern.value.key);
+      await PatternApi.closePattern(pattern.value.id);
       appStateStore.removeCurrentPattern();
       if (!appStateStore.currentPattern) pattern.value = undefined;
-      else await openPattern(appStateStore.currentPattern.key);
+      else await loadPattern(appStateStore.currentPattern.id);
     } finally {
       loading.value = false;
     }
@@ -140,7 +179,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
       onClose: async (options) => {
         if (!options?.data) return;
         const { patternInfo } = options.data;
-        await PatternApi.updatePatternInfo(pattern.value!.key, patternInfo);
+        await PatternApi.updatePatternInfo(pattern.value!.id, patternInfo);
       },
     });
   }
@@ -157,7 +196,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
       onClose: async (options) => {
         if (!options?.data) return;
         const { fabric } = options.data;
-        await FabricApi.updateFabric(pattern.value!.key, fabric);
+        await FabricApi.updateFabric(pattern.value!.id, fabric);
       },
     });
   }
@@ -174,7 +213,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
       onClose: async (options) => {
         if (!options?.data) return;
         const { grid } = options.data;
-        await GridApi.updateGrid(pattern.value!.key, grid);
+        await GridApi.updateGrid(pattern.value!.id, grid);
       },
     });
   }
@@ -185,7 +224,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
 
   async function addPaletteItem(palitem: PaletteItem) {
     if (!pattern.value) return;
-    await PaletteApi.addPaletteItem(pattern.value.key, palitem);
+    await PaletteApi.addPaletteItem(pattern.value.id, palitem);
   }
   appWindow.listen<string>("palette:add_palette_item", ({ payload }) => {
     if (!pattern.value) return;
@@ -195,7 +234,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
 
   async function removePaletteItem(...paletteItemIndexes: number[]) {
     if (!pattern.value) return;
-    await PaletteApi.removePaletteItems(pattern.value.key, paletteItemIndexes);
+    await PaletteApi.removePaletteItems(pattern.value.id, paletteItemIndexes);
   }
   appWindow.listen<number[]>("palette:remove_palette_items", ({ payload: palindexes }) => {
     if (!pattern.value) return;
@@ -211,7 +250,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
     if (local) {
       pattern.value.paletteDisplaySettings = displaySettings;
       triggerRef(pattern);
-    } else await PaletteApi.updatePaletteDisplaySettings(pattern.value.key, displaySettings);
+    } else await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, displaySettings);
   }
   appWindow.listen<string>("palette:update_display_settings", ({ payload }) => {
     if (!pattern.value) return;
@@ -221,11 +260,11 @@ export const usePatternsStore = defineStore("pattern-project", () => {
 
   function addStitch(stitch: Stitch) {
     if (!pattern.value) return;
-    return StitchesApi.addStitch(pattern.value.key, stitch);
+    return StitchesApi.addStitch(pattern.value.id, stitch);
   }
   function removeStitch(stitch: Stitch) {
     if (!pattern.value) return;
-    return StitchesApi.removeStitch(pattern.value.key, stitch);
+    return StitchesApi.removeStitch(pattern.value.id, stitch);
   }
   appWindow.listen<string>("stitches:add_one", ({ payload }) => {
     if (!pattern.value) return;
@@ -249,7 +288,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
     if (!mode) {
       pattern.value.displayMode = mode;
       return triggerRef(pattern);
-    } else return DisplayApi.setDisplayMode(pattern.value.key, mode);
+    } else return DisplayApi.setDisplayMode(pattern.value.id, mode);
   }
   appWindow.listen<DisplayMode>("display:set_mode", ({ payload: mode }) => {
     if (!pattern.value) return;
@@ -259,7 +298,7 @@ export const usePatternsStore = defineStore("pattern-project", () => {
 
   function showSymbols(value: boolean) {
     if (!pattern.value) return;
-    return DisplayApi.showSymbols(pattern.value.key, value);
+    return DisplayApi.showSymbols(pattern.value.id, value);
   }
   appWindow.listen<boolean>("display:show_symbols", ({ payload: value }) => {
     if (!pattern.value) return;
@@ -269,18 +308,18 @@ export const usePatternsStore = defineStore("pattern-project", () => {
 
   const shortcut = useShortcuts();
 
-  shortcut.on("Ctrl+KeyO", loadPattern);
+  shortcut.on("Ctrl+KeyO", openPattern);
   shortcut.on("Ctrl+KeyN", createPattern);
-  shortcut.on("Ctrl+KeyS", () => savePattern());
+  shortcut.on("Ctrl+KeyS", savePattern);
   shortcut.on("Ctrl+Shift+KeyS", () => savePattern(true));
   shortcut.on("Ctrl+KeyW", closePattern);
   shortcut.on("Ctrl+KeyZ", async () => {
     if (!pattern.value) return;
-    await HistoryApi.undo(pattern.value.key);
+    await HistoryApi.undo(pattern.value.id);
   });
   shortcut.on("Ctrl+KeyY", async () => {
     if (!pattern.value) return;
-    await HistoryApi.redo(pattern.value.key);
+    await HistoryApi.redo(pattern.value.id);
   });
 
   return {

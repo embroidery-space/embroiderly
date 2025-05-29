@@ -1,7 +1,6 @@
-use embroiderly::state::{PatternKey, PatternsState};
-use embroiderly::{Fabric, setup_app};
+use embroiderly::state::PatternsState;
+use embroiderly::{Fabric, PatternProject, setup_app};
 use tauri::Manager;
-use tauri::http::{HeaderMap, HeaderValue};
 use tauri::test::{INVOKE_KEY, MockRuntime, get_ipc_response, mock_builder};
 
 fn get_all_test_patterns() -> Vec<std::io::Result<std::fs::DirEntry>> {
@@ -24,31 +23,27 @@ fn parses_supported_pattern_formats() {
   for file_path in get_all_test_patterns().into_iter() {
     let file_path = file_path.unwrap().path();
 
-    assert!(
-      get_ipc_response(
-        &webview,
-        tauri::webview::InvokeRequest {
-          cmd: "load_pattern".to_string(),
-          callback: tauri::ipc::CallbackFn(0),
-          error: tauri::ipc::CallbackFn(1),
-          url: "http://tauri.localhost".parse().unwrap(),
-          body: tauri::ipc::InvokeBody::default(),
-          headers: {
-            let mut headers = HeaderMap::new();
-            headers.insert("filePath", HeaderValue::from_str(file_path.to_str().unwrap()).unwrap());
-            headers
-          },
-          invoke_key: INVOKE_KEY.to_string(),
-        },
-      )
-      .is_ok()
-    );
-    assert!(
-      patterns_state
-        .read()
-        .unwrap()
-        .contains_key(&PatternKey::from(&file_path))
-    );
+    let tauri::ipc::InvokeResponseBody::Raw(body) = get_ipc_response(
+      &webview,
+      tauri::webview::InvokeRequest {
+        cmd: "open_pattern".to_string(),
+        callback: tauri::ipc::CallbackFn(0),
+        error: tauri::ipc::CallbackFn(1),
+        url: "http://tauri.localhost".parse().unwrap(),
+        body: tauri::ipc::InvokeBody::Json(serde_json::json!({
+          "filePath": file_path.to_str().unwrap(),
+          "restoreFromBackup": None::<bool>,
+        })),
+        headers: Default::default(),
+        invoke_key: INVOKE_KEY.to_string(),
+      },
+    )
+    .unwrap() else {
+      panic!("Expected raw body in IPC response");
+    };
+    let patproj: PatternProject = borsh::from_slice(&body).unwrap();
+
+    assert!(patterns_state.read().unwrap().get_pattern_by_id(&patproj.id).is_some());
   }
 }
 
@@ -70,7 +65,7 @@ fn creates_new_pattern() {
         error: tauri::ipc::CallbackFn(1),
         url: "http://tauri.localhost".parse().unwrap(),
         body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&Fabric::default()).unwrap()),
-        headers: HeaderMap::default(),
+        headers: Default::default(),
         invoke_key: INVOKE_KEY.to_string(),
       },
     )
@@ -90,27 +85,26 @@ fn saves_pattern() {
     let file_path = file_path.unwrap().path();
 
     // Loading the pattern first.
-    assert!(
-      get_ipc_response(
-        &webview,
-        tauri::webview::InvokeRequest {
-          cmd: "load_pattern".to_string(),
-          callback: tauri::ipc::CallbackFn(0),
-          error: tauri::ipc::CallbackFn(1),
-          url: "http://tauri.localhost".parse().unwrap(),
-          body: tauri::ipc::InvokeBody::default(),
-          headers: {
-            let mut headers = HeaderMap::new();
-            headers.insert("filePath", HeaderValue::from_str(file_path.to_str().unwrap()).unwrap());
-            headers
-          },
-          invoke_key: INVOKE_KEY.to_string(),
-        },
-      )
-      .is_ok()
-    );
+    let tauri::ipc::InvokeResponseBody::Raw(body) = get_ipc_response(
+      &webview,
+      tauri::webview::InvokeRequest {
+        cmd: "open_pattern".to_string(),
+        callback: tauri::ipc::CallbackFn(0),
+        error: tauri::ipc::CallbackFn(1),
+        url: "http://tauri.localhost".parse().unwrap(),
+        body: tauri::ipc::InvokeBody::Json(serde_json::json!({
+          "filePath": file_path.to_str().unwrap(),
+          "restoreFromBackup": None::<bool>,
+        })),
+        headers: Default::default(),
+        invoke_key: INVOKE_KEY.to_string(),
+      },
+    )
+    .unwrap() else {
+      panic!("Expected raw body in IPC response");
+    };
+    let patproj: PatternProject = borsh::from_slice(&body).unwrap();
 
-    let pattern_key = PatternKey::from(&file_path);
     for extension in ["oxs", "embproj"] {
       let file_path = std::env::temp_dir().join(format!("pattern.{}", extension));
 
@@ -123,13 +117,11 @@ fn saves_pattern() {
             callback: tauri::ipc::CallbackFn(0),
             error: tauri::ipc::CallbackFn(1),
             url: "http://tauri.localhost".parse().unwrap(),
-            body: tauri::ipc::InvokeBody::default(),
-            headers: {
-              let mut headers = HeaderMap::new();
-              headers.insert("patternKey", HeaderValue::from_str(pattern_key.as_ref()).unwrap());
-              headers.insert("filePath", HeaderValue::from_str(file_path.to_str().unwrap()).unwrap());
-              headers
-            },
+            body: tauri::ipc::InvokeBody::Json(serde_json::json!({
+              "patternId": patproj.id.to_string(),
+              "filePath": file_path.to_str().unwrap(),
+            })),
+            headers: Default::default(),
             invoke_key: INVOKE_KEY.to_string(),
           },
         )
@@ -143,18 +135,34 @@ fn saves_pattern() {
             callback: tauri::ipc::CallbackFn(0),
             error: tauri::ipc::CallbackFn(1),
             url: "http://tauri.localhost".parse().unwrap(),
-            body: tauri::ipc::InvokeBody::default(),
-            headers: {
-              let mut headers = HeaderMap::new();
-              headers.insert("filePath", HeaderValue::from_str(file_path.to_str().unwrap()).unwrap());
-              headers
-            },
+            body: tauri::ipc::InvokeBody::Json(serde_json::json!({
+              "patternId": patproj.id.to_string(),
+            })),
+            headers: Default::default(),
             invoke_key: INVOKE_KEY.to_string(),
           },
         )
         .is_ok()
       );
     }
+
+    assert!(
+      get_ipc_response(
+        &webview,
+        tauri::webview::InvokeRequest {
+          cmd: "close_pattern".to_string(),
+          callback: tauri::ipc::CallbackFn(0),
+          error: tauri::ipc::CallbackFn(1),
+          url: "http://tauri.localhost".parse().unwrap(),
+          body: tauri::ipc::InvokeBody::Json(serde_json::json!({
+            "patternId": patproj.id.to_string(),
+          })),
+          headers: Default::default(),
+          invoke_key: INVOKE_KEY.to_string(),
+        },
+      )
+      .is_ok()
+    );
   }
 }
 
@@ -167,50 +175,38 @@ fn closes_pattern() {
   let patterns_state = app.handle().state::<PatternsState>();
 
   assert!(patterns_state.read().unwrap().is_empty());
-  assert!(
-    get_ipc_response(
-      &webview,
-      tauri::webview::InvokeRequest {
-        cmd: "create_pattern".to_string(),
-        callback: tauri::ipc::CallbackFn(0),
-        error: tauri::ipc::CallbackFn(1),
-        url: "http://tauri.localhost".parse().unwrap(),
-        body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&Fabric::default()).unwrap()),
-        headers: HeaderMap::default(),
-        invoke_key: INVOKE_KEY.to_string(),
-      },
-    )
-    .is_ok()
-  );
+  let tauri::ipc::InvokeResponseBody::Raw(body) = get_ipc_response(
+    &webview,
+    tauri::webview::InvokeRequest {
+      cmd: "create_pattern".to_string(),
+      callback: tauri::ipc::CallbackFn(0),
+      error: tauri::ipc::CallbackFn(1),
+      url: "http://tauri.localhost".parse().unwrap(),
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&Fabric::default()).unwrap()),
+      headers: Default::default(),
+      invoke_key: INVOKE_KEY.to_string(),
+    },
+  )
+  .unwrap() else {
+    panic!("Expected raw body in IPC response");
+  };
+  let patproj: PatternProject = borsh::from_slice(&body).unwrap();
   assert_eq!(patterns_state.read().unwrap().len(), 1);
 
-  let pattern_key = patterns_state
-    .read()
-    .unwrap()
-    .keys()
-    .cloned()
-    .collect::<Vec<PatternKey>>()
-    .first()
-    .unwrap()
-    .to_owned();
-  assert!(
-    get_ipc_response(
-      &webview,
-      tauri::webview::InvokeRequest {
-        cmd: "close_pattern".to_string(),
-        callback: tauri::ipc::CallbackFn(0),
-        error: tauri::ipc::CallbackFn(1),
-        url: "http://tauri.localhost".parse().unwrap(),
-        body: tauri::ipc::InvokeBody::default(),
-        headers: {
-          let mut headers = HeaderMap::new();
-          headers.insert("patternKey", HeaderValue::from_str(pattern_key.as_ref()).unwrap());
-          headers
-        },
-        invoke_key: INVOKE_KEY.to_string(),
-      },
-    )
-    .is_ok()
-  );
+  get_ipc_response(
+    &webview,
+    tauri::webview::InvokeRequest {
+      cmd: "close_pattern".to_string(),
+      callback: tauri::ipc::CallbackFn(0),
+      error: tauri::ipc::CallbackFn(1),
+      url: "http://tauri.localhost".parse().unwrap(),
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({
+        "patternId": patproj.id.to_string(),
+      })),
+      headers: Default::default(),
+      invoke_key: INVOKE_KEY.to_string(),
+    },
+  )
+  .unwrap();
   assert!(patterns_state.read().unwrap().is_empty());
 }

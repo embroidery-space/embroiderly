@@ -1,10 +1,9 @@
-import { invoke } from "@tauri-apps/api/core";
-import type { PatternKey } from "#/schemas/index.ts";
+import { invoke } from "./index.ts";
 
-export function undo(patternKey: PatternKey) {
-  return invoke<void>("undo", { patternKey });
+export function undo(patternId: string) {
+  return invoke<void>("undo", undefined, { headers: { patternId } });
 }
 
-export function redo(patternKey: PatternKey) {
-  return invoke<void>("redo", { patternKey });
+export function redo(patternId: string) {
+  return invoke<void>("redo", undefined, { headers: { patternId } });
 }
