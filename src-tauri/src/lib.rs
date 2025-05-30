@@ -17,7 +17,7 @@ mod utils;
 pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R> {
   builder
     .setup(|app| {
-      #[cfg(any(windows, target_os = "linux"))]
+      #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
         let mut files = Vec::new();
 
