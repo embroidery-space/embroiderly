@@ -1,7 +1,7 @@
 use std::sync::RwLock;
 
 use state::HistoryStateInner;
-use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
+use tauri::Manager as _;
 
 pub mod commands;
 pub mod state;
@@ -17,29 +17,30 @@ mod utils;
 pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R> {
   builder
     .setup(|app| {
-      #[allow(unused_mut)]
-      let mut webview_window_builder = WebviewWindowBuilder::new(app, "main", WebviewUrl::default())
-        .title(app.package_info().name.clone())
-        .min_inner_size(640.0, 480.0)
-        .maximized(true)
-        .decorations(false)
-        .additional_browser_args("--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,ElasticOverscroll");
-
-      // We enable browser extensions only for development.
-      #[cfg(all(debug_assertions, target_os = "windows"))]
+      #[cfg(any(windows, target_os = "linux"))]
       {
-        // Enable and setup browser extensions for development.
-        webview_window_builder = webview_window_builder
-          .browser_extensions_enabled(true)
-          // Load the browser extensions from the `src-tauri/extensions/` directory.
-          .extensions_path(std::env::current_dir()?.join("extensions"));
+        let mut files = Vec::new();
+
+        // NOTICE: `args` may include URL protocol (`file://`) or arguments (`--`).
+        for maybe_file in std::env::args().skip(1) {
+          // skip flags like `-f` or `--flag`
+          if maybe_file.starts_with('-') {
+            continue;
+          }
+
+          if maybe_file.starts_with("file://") {
+            if let Ok(url) = url::Url::parse(&maybe_file) {
+              if let Ok(path) = url.to_file_path() {
+                files.push(path);
+              }
+            }
+          } else {
+            files.push(maybe_file.into());
+          }
+        }
+
+        handle_file_associations(app.handle(), files)?;
       }
-
-      #[allow(unused_variables)]
-      let webview_window = webview_window_builder.build()?;
-
-      #[cfg(debug_assertions)]
-      webview_window.open_devtools();
 
       let app_document_dir = utils::path::app_document_dir(app.handle())?;
       if !cfg!(test) && !app_document_dir.exists() {
@@ -90,4 +91,57 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
     ])
     .build(tauri::generate_context!())
     .expect("Failed to build Embroiderly")
+}
+
+pub fn handle_file_associations<R: tauri::Runtime>(
+  app_handle: &tauri::AppHandle<R>,
+  files: Vec<std::path::PathBuf>,
+) -> anyhow::Result<tauri::WebviewWindow<R>> {
+  let files = files
+    .into_iter()
+    .map(|file| {
+      let file = file.to_string_lossy().replace('\\', "\\\\"); // escape backslash
+      format!("\"{file}\"",) // wrap in quotes for JS array
+    })
+    .collect::<Vec<_>>()
+    .join(",");
+  let init_script = format!("window.openedFiles = [{files}]");
+
+  create_webview_window(app_handle, Some(init_script))
+}
+
+fn create_webview_window<R: tauri::Runtime>(
+  app: &tauri::AppHandle<R>,
+  init_script: Option<String>,
+) -> anyhow::Result<tauri::WebviewWindow<R>> {
+  let webview_window = {
+    #[allow(unused_mut)]
+    let mut webview_window_builder = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
+      .title(app.package_info().name.clone())
+      .min_inner_size(640.0, 480.0)
+      .maximized(true)
+      .decorations(false)
+      .additional_browser_args("--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,ElasticOverscroll");
+
+    if let Some(script) = init_script {
+      webview_window_builder = webview_window_builder.initialization_script(script);
+    }
+
+    // We enable browser extensions only for development.
+    #[cfg(all(debug_assertions, target_os = "windows"))]
+    {
+      // Enable and setup browser extensions for development.
+      webview_window_builder = webview_window_builder
+        .browser_extensions_enabled(true)
+        // Load the browser extensions from the `src-tauri/extensions/` directory.
+        .extensions_path(std::env::current_dir()?.join("extensions"));
+    }
+
+    webview_window_builder.build()?
+  };
+
+  #[cfg(debug_assertions)]
+  webview_window.open_devtools();
+
+  Ok(webview_window)
 }

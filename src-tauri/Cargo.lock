@@ -1032,6 +1032,7 @@ dependencies = [
  "tauri-plugin-prevent-default",
  "tempfile",
  "thiserror 2.0.12",
+ "url",
  "uuid",
  "xsp-parsers",
  "zip",

@@ -47,7 +47,15 @@
   const patternsStore = usePatternsStore();
 
   onMounted(async () => {
-    const currentPattern = appStateStore.currentPattern;
-    if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
+    // @ts-expect-error This property is injected on the Rust side when handling file associations.
+    const openedFiles: string[] = window.openedFiles;
+
+    // Process opened files only if haven't processed them yet.
+    if (openedFiles.length && !appStateStore.openedPatterns.length) {
+      for (const file of openedFiles) await patternsStore.openPattern(file);
+    } else {
+      const currentPattern = appStateStore.currentPattern;
+      if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
+    }
   });
 </script>
