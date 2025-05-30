@@ -29,7 +29,7 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
           }
 
           if maybe_file.starts_with("file://") {
-            if let Ok(url) = url::Url::parse(&maybe_file) {
+            if let Ok(url) = tauri::Url::parse(&maybe_file) {
               if let Ok(path) = url.to_file_path() {
                 files.push(path);
               }

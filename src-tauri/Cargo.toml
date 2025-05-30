@@ -63,7 +63,6 @@ dyn-clone = "1.0.19"
 tempfile = "3.20.0"
 convert_case = "0.8.0"
 uuid = { version = "1.17.0", features = ["v4", "serde", "borsh"] }
-url = "2.5.4"
 
 [dev-dependencies]
 rand = "0.9.1"
