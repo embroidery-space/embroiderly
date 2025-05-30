@@ -105,6 +105,8 @@ pub fn handle_file_associations<R: tauri::Runtime>(
     })
     .collect::<Vec<_>>()
     .join(",");
+
+  // TODO: Discover a better way to pass the files to the frontend.
   let init_script = format!("window.openedFiles = [{files}]");
 
   create_webview_window(app_handle, Some(init_script))
