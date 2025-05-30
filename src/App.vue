@@ -33,9 +33,10 @@
 
 <script lang="ts" setup>
   import { defineAsyncComponent, onMounted } from "vue";
+  import { useSessionStorage } from "@vueuse/core";
   import { ConfirmDialog, Splitter, SplitterPanel, DynamicDialog, BlockUI, ProgressSpinner } from "primevue";
-  import { useAppStateStore } from "./stores/state";
-  import { usePatternsStore } from "./stores/patterns";
+  import { useAppStateStore } from "./stores/state.ts";
+  import { usePatternsStore } from "./stores/patterns.ts";
 
   const AppHeader = defineAsyncComponent(() => import("./components/AppHeader.vue"));
   const WelcomePanel = defineAsyncComponent(() => import("./components/WelcomePanel.vue"));
@@ -46,13 +47,16 @@
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
 
+  const openedFilesWereProcessed = useSessionStorage("openedFilesWereProcessed", false);
+
   onMounted(async () => {
     // @ts-expect-error This property is injected on the Rust side when handling file associations.
     const openedFiles: string[] = window.openedFiles;
 
-    // Process opened files only if haven't processed them yet.
-    if (openedFiles.length && !appStateStore.openedPatterns.length) {
+    // Process opened files only if we haven't processed them yet.
+    if (openedFiles.length && !openedFilesWereProcessed.value) {
       for (const file of openedFiles) await patternsStore.openPattern(file);
+      openedFilesWereProcessed.value = true;
     } else {
       const currentPattern = appStateStore.currentPattern;
       if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
