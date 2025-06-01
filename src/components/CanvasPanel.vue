@@ -15,7 +15,7 @@
   import type { CanvasSize, EventDetail } from "#/pixi";
   import { useAppStateStore } from "#/stores/state";
   import { usePatternsStore } from "#/stores/patterns";
-  import { usePreferencesStore } from "#/stores/preferences";
+  import { useSettingsStore } from "#/stores/settings";
   import {
     FullStitch,
     LineStitch,
@@ -31,7 +31,7 @@
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
-  const preferencesStore = usePreferencesStore();
+  const settingsStore = useSettingsStore();
 
   const canvas = useTemplateRef("canvas");
   const patternCanvas = new PatternCanvas();
@@ -234,10 +234,10 @@
   onMounted(async () => {
     await patternCanvas.init(canvas.value!, canvas.value!.getBoundingClientRect(), {
       render: {
-        antialias: preferencesStore.viewport.antialias,
+        antialias: settingsStore.viewport.antialias,
       },
       viewport: {
-        wheelAction: preferencesStore.viewport.wheelAction,
+        wheelAction: settingsStore.viewport.wheelAction,
       },
     });
 

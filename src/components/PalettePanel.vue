@@ -36,25 +36,25 @@
           <ToolSelector
             v-model="appStateStore.selectedStitchTool"
             :options="fullstitches"
-            :use-palitem-color="preferencesStore.usePaletteItemColorForStitchTools"
+            :use-palitem-color="settingsStore.usePaletteItemColorForStitchTools"
             :disabled="paletteIsDisabled"
           />
           <ToolSelector
             v-model="appStateStore.selectedStitchTool"
             :options="partstitches"
-            :use-palitem-color="preferencesStore.usePaletteItemColorForStitchTools"
+            :use-palitem-color="settingsStore.usePaletteItemColorForStitchTools"
             :disabled="paletteIsDisabled"
           />
           <ToolSelector
             v-model="appStateStore.selectedStitchTool"
             :options="linestitches"
-            :use-palitem-color="preferencesStore.usePaletteItemColorForStitchTools"
+            :use-palitem-color="settingsStore.usePaletteItemColorForStitchTools"
             :disabled="paletteIsDisabled"
           />
           <ToolSelector
             v-model="appStateStore.selectedStitchTool"
             :options="nodestitches"
-            :use-palitem-color="preferencesStore.usePaletteItemColorForStitchTools"
+            :use-palitem-color="settingsStore.usePaletteItemColorForStitchTools"
             :disabled="paletteIsDisabled"
           />
         </div>
@@ -124,7 +124,7 @@
   import { dequal } from "dequal";
   import { usePatternsStore } from "#/stores/patterns";
   import { useAppStateStore } from "#/stores/state";
-  import { usePreferencesStore } from "#/stores/preferences";
+  import { useSettingsStore } from "#/stores/settings";
   import { FullStitchKind, LineStitchKind, NodeStitchKind, PaletteSettings, PartStitchKind } from "#/schemas/index.ts";
   import PaletteList from "./palette/PaletteList.vue";
   import ToolSelector from "./toolbar/ToolSelector.vue";
@@ -133,7 +133,7 @@
   const PaletteDisplaySettings = defineAsyncComponent(() => import("./palette/PaletteDisplaySettings.vue"));
 
   const appStateStore = useAppStateStore();
-  const preferencesStore = usePreferencesStore();
+  const settingsStore = useSettingsStore();
   const patternsStore = usePatternsStore();
 
   const fluent = useFluent();

@@ -16,10 +16,10 @@ export interface ViewportOptions {
 }
 export type { WheelAction };
 
-export const usePreferencesStore = defineStore(
-  "embroiderly-preferences",
+export const useSettingsStore = defineStore(
+  "embroiderly-settings",
   () => {
-    const AppPreferences = defineAsyncComponent(() => import("#/components/dialogs/AppPreferences.vue"));
+    const AppSettings = defineAsyncComponent(() => import("#/components/dialogs/AppSettings.vue"));
 
     const dialog = useDialog();
     const fluent = useFluent();
@@ -59,9 +59,9 @@ export const usePreferencesStore = defineStore(
 
     const usePaletteItemColorForStitchTools = ref(true);
 
-    function openPreferences() {
-      dialog.open(AppPreferences, {
-        props: { header: fluent.$t("title-preferences"), modal: true, dismissableMask: true },
+    function openSettings() {
+      dialog.open(AppSettings, {
+        props: { header: fluent.$t("title-settings"), modal: true, dismissableMask: true },
       });
     }
 
@@ -71,7 +71,7 @@ export const usePreferencesStore = defineStore(
       language,
       viewport,
       usePaletteItemColorForStitchTools,
-      openPreferences,
+      openSettings,
     };
   },
   {

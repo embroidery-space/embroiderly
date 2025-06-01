@@ -7,5 +7,5 @@ pinia.use(piniaPluginPersistedState);
 pinia.use(TauriPluginPinia());
 
 export { usePatternsStore } from "./patterns.ts";
-export { usePreferencesStore } from "./preferences.ts";
+export { useSettingsStore } from "./settings.ts";
 export { useAppStateStore } from "./state.ts";
