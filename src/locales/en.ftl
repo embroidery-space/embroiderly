@@ -14,6 +14,8 @@ label-close = Close
 label-export = Export
 label-cancel = Cancel
 
+title-pattern-saved = Pattern Saved
+
 ## Names of the stitches and other instruments.
 
 label-stitch-full = Full Stitch

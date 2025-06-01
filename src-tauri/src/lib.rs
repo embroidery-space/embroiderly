@@ -126,14 +126,20 @@ fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: tauri::AppHan
       log::debug!("Auto-saving patterns...");
 
       let patterns = app_handle.state::<PatternsState>();
-      for patproj in patterns.read().unwrap().patterns() {
+      let patterns = patterns
+        .read()
+        .unwrap()
+        .patterns()
+        .map(|p| (p.id, p.file_path.clone()))
+        .collect::<Vec<_>>();
+      for (pattern_id, file_path) in patterns {
         if let Err(err) = commands::pattern::save_pattern(
-          patproj.id,
-          patproj.file_path.clone(),
+          pattern_id,
+          file_path,
           app_handle.clone(),
           app_handle.state::<PatternsState>(),
         ) {
-          log::error!("Failed to auto-save Pattern({:?}): {:?}", patproj.id, err);
+          log::error!("Failed to auto-save Pattern({:?}): {:?}", pattern_id, err);
         }
       }
 

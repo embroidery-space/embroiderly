@@ -1,3 +1,5 @@
+use tauri::Emitter as _;
+
 use crate::core::actions::{Action as _, UpdatePatternInfoAction};
 use crate::core::parsers::{self, PatternFormat};
 use crate::core::pattern::{Fabric, Pattern, PatternInfo, PatternProject};
@@ -127,6 +129,7 @@ pub fn save_pattern<R: tauri::Runtime>(
     patproj.file_path = file_path;
   }
 
+  app_handle.emit("app:pattern-saved", &pattern_id)?;
   log::debug!("Pattern saved {pattern_id:?}");
   Ok(())
 }

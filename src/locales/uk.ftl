@@ -14,6 +14,8 @@ label-close = Закрити
 label-export = Експортувати
 label-cancel = Скасувати
 
+title-pattern-saved = Схему збережено
+
 ## Names of the stitches and other instruments.
 
 label-stitch-full = Хрест

@@ -127,8 +127,8 @@ Here is a list of the available PrimeVue components and which ones are used in t
 
 | Component | Is Used |
 | --------- | ------- |
-| `Message` |         |
-| `Toast`   |         |
+| `Message` | ✅      |
+| `Toast`   | ✅      |
 
 ### Media
 
