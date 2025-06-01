@@ -10,47 +10,39 @@ export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
 export type Language = "en" | "uk";
 
+export interface UiOptions {
+  theme: Theme;
+  scale: Scale;
+  language: Language;
+}
+
 export interface ViewportOptions {
   antialias: boolean;
   wheelAction: WheelAction;
 }
 export type { WheelAction };
 
-export const usePreferencesStore = defineStore(
-  "embroidery-studio-preferences",
+export const useSettingsStore = defineStore(
+  "embroiderly-settings",
   () => {
-    const AppPreferences = defineAsyncComponent(() => import("#/components/dialogs/AppPreferences.vue"));
+    const AppSettings = defineAsyncComponent(() => import("#/components/dialogs/AppSettings.vue"));
 
     const primevue = usePrimeVue();
     const dialog = useDialog();
     const fluent = useFluent();
 
-    const theme = ref<Theme>("system");
+    const ui = reactive<UiOptions>({
+      theme: "system",
+      scale: "medium",
+      language: "en",
+    });
     watch(
-      theme,
-      async (newTheme) => {
-        await setAppTheme(newTheme === "system" ? null : newTheme);
-      },
-      { immediate: true },
-    );
-
-    const scale = ref<Scale>("medium");
-    watch(
-      scale,
-      (newScale) => {
-        document.documentElement.style.fontSize = newScale;
-      },
-      { immediate: true },
-    );
-
-    const language = ref<Language>("en");
-    watch(
-      language,
-      (newLanguage) => {
-        primevue.config.locale = PRIMEVUE_LOCALES[newLanguage];
-
-        const bundle = LOCALES[newLanguage];
-        fluent.bundles.value = [bundle];
+      ui,
+      async (newUi) => {
+        await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
+        document.documentElement.style.fontSize = newUi.scale;
+        fluent.bundles.value = [LOCALES[newUi.language]];
+        primevue.config.locale = PRIMEVUE_LOCALES[newUi.language];
       },
       { immediate: true },
     );
@@ -62,20 +54,22 @@ export const usePreferencesStore = defineStore(
 
     const usePaletteItemColorForStitchTools = ref(true);
 
-    function openPreferences() {
-      dialog.open(AppPreferences, {
-        props: { header: fluent.$t("title-preferences"), modal: true, dismissableMask: true },
+    function openSettings() {
+      dialog.open(AppSettings, {
+        props: { header: fluent.$t("title-settings"), modal: true, dismissableMask: true },
       });
     }
 
     return {
-      theme,
-      scale,
-      language,
+      ui,
       viewport,
       usePaletteItemColorForStitchTools,
-      openPreferences,
+      openSettings,
     };
   },
-  { persist: { storage: localStorage } },
+  {
+    tauri: {
+      autoStart: true,
+    },
+  },
 );
