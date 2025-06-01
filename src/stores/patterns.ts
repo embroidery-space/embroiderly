@@ -27,7 +27,7 @@ const SAVE_AS_FILTERS: DialogFilter[] = [
   { name: "Open Cross-Stitch", extensions: ["oxs", "xml"] },
 ];
 
-export const usePatternsStore = defineStore("pattern-project", () => {
+export const usePatternsStore = defineStore("embroiderly-patterns", () => {
   const appWindow = getCurrentWebviewWindow();
 
   const fluent = useFluent();

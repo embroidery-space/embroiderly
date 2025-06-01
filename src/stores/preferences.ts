@@ -17,7 +17,7 @@ export interface ViewportOptions {
 export type { WheelAction };
 
 export const usePreferencesStore = defineStore(
-  "embroidery-studio-preferences",
+  "embroiderly-preferences",
   () => {
     const AppPreferences = defineAsyncComponent(() => import("#/components/dialogs/AppPreferences.vue"));
 
@@ -74,5 +74,9 @@ export const usePreferencesStore = defineStore(
       openPreferences,
     };
   },
-  { persist: { storage: localStorage } },
+  {
+    tauri: {
+      autoStart: true,
+    },
+  },
 );
