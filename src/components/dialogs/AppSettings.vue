@@ -21,14 +21,19 @@
 
       <FormElement id="scale" float :label="$t('label-scale')">
         <Select
-          v-model="settingsStore.scale"
+          v-model="settingsStore.ui.scale"
           :options="scaleOptions"
           :option-label="(value) => $t(`label-scale-${value}`)"
         />
       </FormElement>
 
       <FormElement id="language" float :label="$t('label-language')">
-        <Select v-model="settingsStore.language" option-label="label" option-value="code" :options="languageOptions" />
+        <Select
+          v-model="settingsStore.ui.language"
+          option-label="label"
+          option-value="code"
+          :options="languageOptions"
+        />
       </FormElement>
     </div>
   </Fluid>
@@ -74,8 +79,8 @@
   const settingsStore = useSettingsStore();
 
   const selectedTheme = computed({
-    get: () => themeOptions.find((option) => option.theme === settingsStore.theme)!,
-    set: (option) => (settingsStore.theme = option.theme),
+    get: () => themeOptions.find((option) => option.theme === settingsStore.ui.theme)!,
+    set: (option) => (settingsStore.ui.theme = option.theme),
   });
 
   const themeOptions: { theme: Theme; icon: string }[] = [

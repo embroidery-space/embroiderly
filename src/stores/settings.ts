@@ -10,6 +10,12 @@ export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
 export type Language = "en" | "uk";
 
+export interface UiOptions {
+  theme: Theme;
+  scale: Scale;
+  language: Language;
+}
+
 export interface ViewportOptions {
   antialias: boolean;
   wheelAction: WheelAction;
@@ -24,30 +30,17 @@ export const useSettingsStore = defineStore(
     const dialog = useDialog();
     const fluent = useFluent();
 
-    const theme = ref<Theme>("system");
+    const ui = reactive<UiOptions>({
+      theme: "system",
+      scale: "medium",
+      language: "en",
+    });
     watch(
-      theme,
-      async (newTheme) => {
-        await setAppTheme(newTheme === "system" ? null : newTheme);
-      },
-      { immediate: true },
-    );
-
-    const scale = ref<Scale>("medium");
-    watch(
-      scale,
-      (newScale) => {
-        document.documentElement.style.fontSize = newScale;
-      },
-      { immediate: true },
-    );
-
-    const language = ref<Language>("en");
-    watch(
-      language,
-      (newLanguage) => {
-        const bundle = LOCALES[newLanguage];
-        fluent.bundles.value = [bundle];
+      ui,
+      async (newUi) => {
+        await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
+        document.documentElement.style.fontSize = newUi.scale;
+        fluent.bundles.value = [LOCALES[newUi.language]];
       },
       { immediate: true },
     );
@@ -66,9 +59,7 @@ export const useSettingsStore = defineStore(
     }
 
     return {
-      theme,
-      scale,
-      language,
+      ui,
       viewport,
       usePaletteItemColorForStitchTools,
       openSettings,
