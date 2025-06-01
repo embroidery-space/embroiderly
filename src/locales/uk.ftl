@@ -118,6 +118,10 @@ label-viewport-wheel-action-zoom = Зум
 label-viewport-wheel-action-scroll = Прокрутка
 
 label-other = Інше
+
+label-autosave-interval = Інтервал автозбереження
+message-autosave-interval-hint = Якщо встановлено 0, автозбереження вимкнено. Потребує перезавантаження.
+
 label-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
 
 ## Titles, labels and messages related to the pattern information dialog.
@@ -140,6 +144,7 @@ label-height = Висота
 label-unit-stitches = стібків
 label-unit-inches = дюймів
 label-unit-mm = мм
+label-unit-min = хв
 
 label-count = Каунт
 label-count-and-kind = Каунт і тип

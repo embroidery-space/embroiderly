@@ -115,6 +115,10 @@ label-viewport-wheel-action-zoom = Zoom
 label-viewport-wheel-action-scroll = Scroll
 
 label-other = Other
+
+label-autosave-interval = Autosave Interval
+message-autosave-interval-hint = If set to 0, autosave is disabled. Requires a restart.
+
 label-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools
 
 ## Titles, labels and messages related to the pattern information dialog.
@@ -137,6 +141,7 @@ label-height = Height
 label-unit-stitches = stitches
 label-unit-inches = inches
 label-unit-mm = mm
+label-unit-min = min
 
 label-count = Count
 label-count-and-kind = Count & Kind

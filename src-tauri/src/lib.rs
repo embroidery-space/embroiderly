@@ -1,6 +1,6 @@
 use std::sync::RwLock;
 
-use state::HistoryStateInner;
+use state::{HistoryStateInner, PatternsState};
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 
 pub mod commands;
@@ -57,6 +57,8 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
         }
       }
 
+      run_auto_save_background_process(app.handle().to_owned());
+
       Ok(())
     })
     .manage(RwLock::new(core::pattern_manager::PatternManager::new()))
@@ -96,4 +98,46 @@ pub fn setup_app<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::App<R>
     ])
     .build(tauri::generate_context!())
     .expect("Failed to build Embroiderly")
+}
+
+fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) {
+  use tauri_plugin_pinia::ManagerExt as _;
+
+  let interval = app_handle
+    .pinia()
+    .get("embroiderly-settings", "other")
+    .map(|v| {
+      v.get("autoSaveInterval")
+        .and_then(|v| serde_json::from_value(v.to_owned()).ok())
+        .unwrap_or(0)
+    })
+    .unwrap()
+    .clamp(0, 240);
+  let interval = std::time::Duration::from_secs(interval * 60);
+
+  if interval.is_zero() {
+    log::debug!("Auto-save is disabled.");
+    return;
+  }
+
+  std::thread::spawn(move || {
+    loop {
+      std::thread::sleep(interval);
+      log::debug!("Auto-saving patterns...");
+
+      let patterns = app_handle.state::<PatternsState>();
+      for patproj in patterns.read().unwrap().patterns() {
+        if let Err(err) = commands::pattern::save_pattern(
+          patproj.id,
+          patproj.file_path.clone(),
+          app_handle.clone(),
+          app_handle.state::<PatternsState>(),
+        ) {
+          log::error!("Failed to auto-save Pattern({:?}): {:?}", patproj.id, err);
+        }
+      }
+
+      log::debug!("Auto-save completed.");
+    }
+  });
 }
