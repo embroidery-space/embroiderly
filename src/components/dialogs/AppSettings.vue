@@ -21,7 +21,7 @@
 
       <FormElement id="scale" float :label="$t('label-scale')">
         <Select
-          v-model="preferencesStore.scale"
+          v-model="settingsStore.ui.scale"
           :options="scaleOptions"
           :option-label="(value) => $t(`label-scale-${value}`)"
         />
@@ -29,7 +29,7 @@
 
       <FormElement id="language" float :label="$t('label-language')">
         <Select
-          v-model="preferencesStore.language"
+          v-model="settingsStore.ui.language"
           option-label="label"
           option-value="code"
           :options="languageOptions"
@@ -44,14 +44,14 @@
         {{ $t("message-viewport-hint") }}
       </Message>
       <FormElement id="viewport-antialias" :label="$t('label-viewport-antialias')">
-        <Checkbox v-model="preferencesStore.viewport.antialias" binary />
+        <Checkbox v-model="settingsStore.viewport.antialias" binary />
       </FormElement>
 
       <Fluid>
         <div class="grid grid-flow-row grid-cols-2 gap-2">
           <FormElement id="wheel-action" float :label="$t('label-viewport-wheel-action')">
             <Select
-              v-model="preferencesStore.viewport.wheelAction"
+              v-model="settingsStore.viewport.wheelAction"
               :options="wheelActionOptions"
               :option-label="(value) => $t(`label-viewport-wheel-action-${value}`)"
             />
@@ -63,7 +63,7 @@
 
   <Fieldset toggleable :legend="$t('label-other')">
     <FormElement id="palitem-color" :label="$t('label-use-palitem-color-for-stitch-tools')">
-      <Checkbox v-model="preferencesStore.usePaletteItemColorForStitchTools" binary />
+      <Checkbox v-model="settingsStore.usePaletteItemColorForStitchTools" binary />
     </FormElement>
   </Fieldset>
 </template>
@@ -71,16 +71,16 @@
 <script setup lang="ts">
   import { computed } from "vue";
   import { Checkbox, Fieldset, Fluid, Message, Select } from "primevue";
-  import { usePreferencesStore } from "#/stores/preferences";
-  import type { Theme, Language, Scale, WheelAction } from "#/stores/preferences";
+  import { useSettingsStore } from "#/stores/settings";
+  import type { Theme, Language, Scale, WheelAction } from "#/stores/settings";
 
   import FormElement from "#/components/form/FormElement.vue";
 
-  const preferencesStore = usePreferencesStore();
+  const settingsStore = useSettingsStore();
 
   const selectedTheme = computed({
-    get: () => themeOptions.find((option) => option.theme === preferencesStore.theme)!,
-    set: (option) => (preferencesStore.theme = option.theme),
+    get: () => themeOptions.find((option) => option.theme === settingsStore.ui.theme)!,
+    set: (option) => (settingsStore.ui.theme = option.theme),
   });
 
   const themeOptions: { theme: Theme; icon: string }[] = [

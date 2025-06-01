@@ -88,9 +88,9 @@ label-view-as-stitches = Відображати як стібки
 label-show-symbols = Показати символи
 label-hide-symbols = Сховати символи
 
-## Titles, labels and messages related to the preferences dialog.
+## Titles, labels and messages related to the settings dialog.
 
-title-preferences = Налаштування
+title-settings = Налаштування
 
 label-theme = Тема
 label-theme-dark = Темна

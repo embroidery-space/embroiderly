@@ -85,9 +85,9 @@ label-view-as-stitches = View as Stitches
 label-show-symbols = Show Symbols
 label-hide-symbols = Hide Symbols
 
-## Titles, labels and messages related to the preferences dialog.
+## Titles, labels and messages related to the settings dialog.
 
-title-preferences = Preferences
+title-settings = Settings
 
 label-theme = Theme
 label-theme-dark = Dark

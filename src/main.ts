@@ -1,21 +1,18 @@
 import { createApp } from "vue";
-import { createPinia } from "pinia";
-import piniaPluginPersistedState from "pinia-plugin-persistedstate";
+
 import PrimeVue from "primevue/config";
 import { Tooltip, ConfirmationService, DialogService } from "primevue";
 
 import "virtual:uno.css";
-import { NordTheme } from "./assets/theme";
+import { NordTheme } from "./assets/theme/";
 
-import { ShortcutsDirective } from "./directives";
-import { fluent } from "./fluent";
-import { initLogger } from "./logger";
+import { pinia } from "./stores/";
+import { ShortcutsDirective } from "./directives/";
+import { fluent } from "./fluent.ts";
+import { initLogger } from "./logger.ts";
 import App from "./App.vue";
 
 initLogger();
-
-const pinia = createPinia();
-pinia.use(piniaPluginPersistedState);
 
 const app = createApp(App);
 app.use(pinia);
