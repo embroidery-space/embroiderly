@@ -33,6 +33,7 @@ message-get-started =
   { $button-open } або { $button-create }, щоб розпочати.
   .button-open-label = Відкрийте схему
   .button-create-label = створіть нову
+message-get-started-drag-and-drop = Або перетягніть файли схем сюди.
 
 label-start = Розпочати
 label-start-open = Відкрити схему

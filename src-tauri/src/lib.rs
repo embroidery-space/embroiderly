@@ -106,12 +106,9 @@ fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: tauri::AppHan
   let interval = app_handle
     .pinia()
     .get("embroiderly-settings", "other")
-    .map(|v| {
-      v.get("autoSaveInterval")
-        .and_then(|v| serde_json::from_value(v.to_owned()).ok())
-        .unwrap_or(0)
-    })
-    .unwrap()
+    .and_then(|v| v.get("autoSaveInterval").cloned())
+    .and_then(|v| serde_json::from_value(v).ok())
+    .unwrap_or(15)
     .clamp(0, 240);
   let interval = std::time::Duration::from_secs(interval * 60);
 
