@@ -14,8 +14,6 @@ label-close = Close
 label-export = Export
 label-cancel = Cancel
 
-title-pattern-saved = Pattern Saved
-
 ## Names of the stitches and other instruments.
 
 label-stitch-full = Full Stitch
@@ -167,6 +165,9 @@ label-minor-lines = Minor Lines
 
 label-color = Color
 label-thickness = Thickness
+
+## Titles, labels and messages related to notification messages.
+message-pattern-saved = Pattern Saved
 
 ## Titles, labels and messages related to error messages.
 title-error = Error

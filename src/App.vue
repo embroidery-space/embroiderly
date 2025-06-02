@@ -65,7 +65,7 @@
 
   appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
     if (patternId === patternsStore.pattern?.id) {
-      toast.add({ severity: "success", summary: fluent.$t("title-pattern-saved"), life: 3000 });
+      toast.add({ severity: "success", detail: fluent.$t("message-pattern-saved"), life: 3000 });
     }
   });
 

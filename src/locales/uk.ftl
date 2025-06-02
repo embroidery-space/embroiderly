@@ -14,8 +14,6 @@ label-close = Закрити
 label-export = Експортувати
 label-cancel = Скасувати
 
-title-pattern-saved = Схему збережено
-
 ## Names of the stitches and other instruments.
 
 label-stitch-full = Хрест
@@ -170,6 +168,9 @@ label-minor-lines = Малі лінії
 
 label-color = Колір
 label-thickness = Товщина
+
+## Titles, labels and messages related to notification messages.
+message-pattern-saved = Схему збережено
 
 ## Titles, labels and messages related to error messages.
 title-error = Помилка
