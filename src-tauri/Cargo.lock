@@ -4265,9 +4265,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-prevent-default"
-version = "2.1.0"
+version = "2.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8dbbe4f9038bcdbc035e07c06db4ddaf43672eb1a7c8b076109e9c6635b78368"
+checksum = "d2ca8c73a98409d7faa73e10cfb3a0ef6a4e81e966f86769251c209fb5cc4043"
 dependencies = [
  "bitflags 2.9.1",
  "itertools",
