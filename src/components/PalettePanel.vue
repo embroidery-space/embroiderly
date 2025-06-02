@@ -36,25 +36,25 @@
           <ToolSelector
             v-model="appStateStore.selectedStitchTool"
             :options="fullstitches"
-            :use-palitem-color="settingsStore.usePaletteItemColorForStitchTools"
+            :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
             :disabled="paletteIsDisabled"
           />
           <ToolSelector
             v-model="appStateStore.selectedStitchTool"
             :options="partstitches"
-            :use-palitem-color="settingsStore.usePaletteItemColorForStitchTools"
+            :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
             :disabled="paletteIsDisabled"
           />
           <ToolSelector
             v-model="appStateStore.selectedStitchTool"
             :options="linestitches"
-            :use-palitem-color="settingsStore.usePaletteItemColorForStitchTools"
+            :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
             :disabled="paletteIsDisabled"
           />
           <ToolSelector
             v-model="appStateStore.selectedStitchTool"
             :options="nodestitches"
-            :use-palitem-color="settingsStore.usePaletteItemColorForStitchTools"
+            :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
             :disabled="paletteIsDisabled"
           />
         </div>

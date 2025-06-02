@@ -20,6 +20,10 @@ impl PatternManager {
     }
   }
 
+  pub fn patterns(&self) -> impl Iterator<Item = &PatternProject> {
+    self.patterns_by_id.values()
+  }
+
   pub fn len(&self) -> usize {
     self.patterns_by_id.len()
   }

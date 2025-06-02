@@ -1,5 +1,5 @@
 import { setTheme as setAppTheme } from "@tauri-apps/api/app";
-import { defineAsyncComponent, reactive, ref, watch } from "vue";
+import { defineAsyncComponent, reactive, watch } from "vue";
 import { defineStore } from "pinia";
 import { useFluent } from "fluent-vue";
 import { useDialog, usePrimeVue } from "primevue";
@@ -21,6 +21,11 @@ export interface ViewportOptions {
   wheelAction: WheelAction;
 }
 export type { WheelAction };
+
+export interface OtherOptions {
+  usePaletteItemColorForStitchTools: boolean;
+  autoSaveInterval: number;
+}
 
 export const useSettingsStore = defineStore(
   "embroiderly-settings",
@@ -52,7 +57,10 @@ export const useSettingsStore = defineStore(
       wheelAction: "zoom",
     });
 
-    const usePaletteItemColorForStitchTools = ref(true);
+    const other = reactive<OtherOptions>({
+      usePaletteItemColorForStitchTools: true,
+      autoSaveInterval: 15,
+    });
 
     function openSettings() {
       dialog.open(AppSettings, {
@@ -63,7 +71,7 @@ export const useSettingsStore = defineStore(
     return {
       ui,
       viewport,
-      usePaletteItemColorForStitchTools,
+      other,
       openSettings,
     };
   },

@@ -29,13 +29,24 @@
   </div>
   <DynamicDialog />
   <ConfirmDialog />
+  <Toast position="bottom-right" />
 </template>
 
 <script lang="ts" setup>
+  import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { defineAsyncComponent, onMounted } from "vue";
-  import { ConfirmDialog, Splitter, SplitterPanel, DynamicDialog, BlockUI, ProgressSpinner } from "primevue";
-  import { useAppStateStore } from "./stores/state";
-  import { usePatternsStore } from "./stores/patterns";
+  import {
+    ConfirmDialog,
+    Splitter,
+    SplitterPanel,
+    DynamicDialog,
+    BlockUI,
+    ProgressSpinner,
+    Toast,
+    useToast,
+  } from "primevue";
+  import { useFluent } from "fluent-vue";
+  import { useAppStateStore, usePatternsStore } from "./stores/";
 
   const AppHeader = defineAsyncComponent(() => import("./components/AppHeader.vue"));
   const WelcomePanel = defineAsyncComponent(() => import("./components/WelcomePanel.vue"));
@@ -43,8 +54,20 @@
   const CanvasPanel = defineAsyncComponent(() => import("./components/CanvasPanel.vue"));
   const CanvasToolbar = defineAsyncComponent(() => import("./components/toolbar/CanvasToolbar.vue"));
 
+  const toast = useToast();
+
+  const fluent = useFluent();
+
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
+
+  const appWindow = getCurrentWebviewWindow();
+
+  appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
+    if (patternId === patternsStore.pattern?.id) {
+      toast.add({ severity: "success", detail: fluent.$t("message-pattern-saved"), life: 3000 });
+    }
+  });
 
   onMounted(async () => {
     const currentPattern = appStateStore.currentPattern;
