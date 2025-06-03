@@ -7,6 +7,13 @@ export async function loadPattern(patternId: string) {
 }
 
 export interface OpenPatternOptions {
+  /**
+   * Whether to restore the pattern from a backup file if it exists.
+   *
+   * If set to `true`, the command will attempt to restore the pattern from a backup file.
+   * If set to `false`, it will not attempt to restore from a backup.
+   * If not provided and a backup file exists, it will return an error that the backup file exists and the user must choose how to proceed.
+   */
   restoreFromBackup?: boolean;
 }
 export async function openPattern(filePath: string, options?: OpenPatternOptions) {

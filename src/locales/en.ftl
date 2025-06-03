@@ -33,6 +33,7 @@ message-get-started =
   { $button-open } or { $button-create } to get started.
   .button-open-label = Open a pattern
   .button-create-label = create a new one
+message-get-started-drag-and-drop = Or drag and drop pattern files here.
 
 label-start = Start
 label-start-open = Open Pattern

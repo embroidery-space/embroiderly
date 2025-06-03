@@ -25,6 +25,14 @@ import { ErrorBackupFileExists, ErrorUnsupportedPatternType, ErrorUnsupportedPat
 
 const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
 
+export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
+  /**
+   * Whether to assign the opened pattern to the current pattern in the app state.
+   * @default true
+   */
+  assignToCurrent?: boolean;
+};
+
 export const usePatternsStore = defineStore("embroiderly-patterns", () => {
   const appWindow = getCurrentWebviewWindow();
 
@@ -52,7 +60,7 @@ export const usePatternsStore = defineStore("embroiderly-patterns", () => {
     }
   }
 
-  async function openPattern(filePath?: string, options?: PatternApi.OpenPatternOptions) {
+  async function openPattern(filePath?: string, options?: OpenPatternOptions) {
     let path = filePath;
     if (!path) {
       appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
@@ -71,8 +79,9 @@ export const usePatternsStore = defineStore("embroiderly-patterns", () => {
 
     try {
       loading.value = true;
-      pattern.value = new PatternView(await PatternApi.openPattern(path, options));
-      appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+      const rawPattern = await PatternApi.openPattern(path, options);
+      appStateStore.addOpenedPattern(rawPattern.id, rawPattern.pattern.info.title);
+      if (options?.assignToCurrent ?? true) pattern.value = new PatternView(rawPattern);
     } catch (error) {
       if (error instanceof ErrorUnsupportedPatternType) {
         confirm.require({
