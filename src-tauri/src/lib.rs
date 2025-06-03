@@ -32,7 +32,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     .manage(RwLock::new(HistoryStateInner::<R>::default()))
     .plugin(logger::init());
 
-  #[cfg(not(test))]
+  #[cfg(not(feature = "test"))]
   {
     // We do not need these plugins in tests, so we only add them in non-test builds.
 
