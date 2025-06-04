@@ -23,11 +23,11 @@
   import WindowControls from "./toolbar/WindowControls.vue";
   import { useAppStateStore } from "#/stores/state";
   import { usePatternsStore } from "#/stores/patterns";
-  import { usePreferencesStore } from "#/stores/preferences";
+  import { useSettingsStore } from "#/stores/settings";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
-  const preferencesStore = usePreferencesStore();
+  const settingsStore = useSettingsStore();
 
   const fluent = useFluent();
 
@@ -71,6 +71,6 @@
         { label: () => fluent.$t("title-grid-properties"), command: () => patternsStore.updateGrid() },
       ],
     },
-    { label: () => fluent.$t("title-preferences"), command: () => preferencesStore.openPreferences() },
+    { label: () => fluent.$t("title-settings"), command: () => settingsStore.openSettings() },
   ]);
 </script>

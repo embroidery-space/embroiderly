@@ -8,7 +8,7 @@ interface OpenedPattern {
 }
 
 export const useAppStateStore = defineStore(
-  "embroidery-studio-state",
+  "embroiderly-state",
   () => {
     const lastOpenedFolder = ref<string | null>(null);
     const lastSavedFolder = ref<string | null>(null);

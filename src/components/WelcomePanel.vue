@@ -69,10 +69,10 @@
   import { dt } from "@primeuix/themes";
   import { Button } from "primevue";
   import { useFluent } from "fluent-vue";
-  import { usePreferencesStore } from "#/stores/preferences";
+  import { useSettingsStore } from "#/stores/settings";
   import { usePatternsStore } from "#/stores/patterns";
 
-  const preferencesStore = usePreferencesStore();
+  const settingsStore = useSettingsStore();
   const patternsStore = usePatternsStore();
 
   const fluent = useFluent();
@@ -84,7 +84,7 @@
         {
           title: fluent.$t("label-customize-settings"),
           text: fluent.$t("message-customize-settings"),
-          command: () => preferencesStore.openPreferences(),
+          command: () => settingsStore.openSettings(),
         },
       ],
     },

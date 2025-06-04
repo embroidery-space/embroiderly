@@ -25,7 +25,7 @@ import { ErrorBackupFileExists, ErrorUnsupportedPatternType, ErrorUnsupportedPat
 
 const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
 
-export const usePatternsStore = defineStore("pattern-project", () => {
+export const usePatternsStore = defineStore("embroiderly-patterns", () => {
   const appWindow = getCurrentWebviewWindow();
 
   const fluent = useFluent();
