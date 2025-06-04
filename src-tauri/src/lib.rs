@@ -18,7 +18,11 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     .setup(|app| {
       let app_handle = app.handle();
 
-      create_webview_window(app_handle)?;
+      #[cfg(any(target_os = "windows", target_os = "linux"))]
+      {
+        let files = collect_files_from_args();
+        handle_file_associations(app_handle, files)?;
+      }
 
       #[cfg(not(debug_assertions))]
       copy_sample_patterns(app_handle)?;
@@ -90,7 +94,10 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     .expect("Failed to build Embroiderly")
 }
 
-fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> anyhow::Result<tauri::WebviewWindow<R>> {
+fn create_webview_window<R: tauri::Runtime>(
+  app: &tauri::AppHandle<R>,
+  init_script: Option<String>,
+) -> anyhow::Result<tauri::WebviewWindow<R>> {
   let webview_window = {
     #[allow(unused_mut)]
     let mut webview_window_builder = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
@@ -99,6 +106,10 @@ fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> anyhow
       .maximized(true)
       .decorations(false)
       .additional_browser_args("--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,ElasticOverscroll");
+
+    if let Some(script) = init_script {
+      webview_window_builder = webview_window_builder.initialization_script(script);
+    }
 
     // We enable browser extensions only for development.
     #[cfg(all(debug_assertions, target_os = "windows"))]
@@ -183,4 +194,46 @@ fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHa
       log::debug!("Auto-save completed.");
     }
   });
+}
+
+fn collect_files_from_args() -> Vec<std::path::PathBuf> {
+  let mut files = Vec::new();
+
+  // `args` may include URL protocol (`file://`) or arguments (`--`).
+  for maybe_file in std::env::args().skip(1) {
+    if maybe_file.starts_with('-') {
+      continue;
+    }
+
+    if maybe_file.starts_with("file://") {
+      if let Ok(url) = tauri::Url::parse(&maybe_file) {
+        if let Ok(path) = url.to_file_path() {
+          files.push(path);
+        }
+      }
+    } else {
+      files.push(maybe_file.into());
+    }
+  }
+
+  files
+}
+
+pub fn handle_file_associations<R: tauri::Runtime>(
+  app_handle: &tauri::AppHandle<R>,
+  files: Vec<std::path::PathBuf>,
+) -> anyhow::Result<tauri::WebviewWindow<R>> {
+  let files = files
+    .into_iter()
+    .map(|file| {
+      let file = file.to_string_lossy().replace('\\', "\\\\"); // escape backslash
+      format!("\"{file}\"",) // wrap in quotes for JS array
+    })
+    .collect::<Vec<_>>()
+    .join(",");
+
+  // TODO: Discover a better way to pass the files to the frontend.
+  let init_script = format!("window.openedFiles = [{files}]");
+
+  create_webview_window(app_handle, Some(init_script))
 }

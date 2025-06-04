@@ -41,6 +41,7 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { defineAsyncComponent, onMounted, ref } from "vue";
+  import { useSessionStorage } from "@vueuse/core";
   import {
     ConfirmDialog,
     Splitter,
@@ -101,9 +102,20 @@
     }
   });
 
+  const openedFilesWereProcessed = useSessionStorage("openedFilesWereProcessed", false);
+
   onMounted(async () => {
-    const currentPattern = appStateStore.currentPattern;
-    if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
+    // @ts-expect-error This property is injected on the Rust side when handling file associations.
+    const openedFiles: string[] = window.openedFiles;
+
+    // Process opened files only if we haven't processed them yet.
+    if (openedFiles.length && !openedFilesWereProcessed.value) {
+      for (const file of openedFiles) await patternsStore.openPattern(file);
+      openedFilesWereProcessed.value = true;
+    } else {
+      const currentPattern = appStateStore.currentPattern;
+      if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
+    }
   });
 
   window.onunhandledrejection = (event) => {

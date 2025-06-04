@@ -74,7 +74,7 @@ export const usePatternsStore = defineStore(
           defaultPath: appStateStore.lastOpenedFolder,
           multiple: false,
           filters: [
-            { name: "Cross-Stitch Patterns", extensions: ["xsd", "oxs", "xml", "embproj"] },
+            { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
             { name: "All Files", extensions: ["*"] },
           ],
         });
