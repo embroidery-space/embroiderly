@@ -59,12 +59,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
       .plugin(tauri_plugin_dialog::init())
       .plugin(tauri_plugin_fs::init())
       .plugin(tauri_plugin_opener::init())
-      .plugin(
-        tauri_plugin_pinia::Builder::new()
-          .save_denylist(["embroiderly-patterns", "embroiderly-state"])
-          .sync_denylist(["embroiderly-patterns", "embroiderly-state"])
-          .build(),
-      );
+      .plugin(tauri_plugin_pinia::init());
   }
 
   builder = builder.invoke_handler(tauri::generate_handler![

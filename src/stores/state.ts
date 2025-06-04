@@ -53,6 +53,7 @@ export const useAppStateStore = defineStore(
     };
   },
   {
+    tauri: { save: false, sync: false },
     persist: [
       { storage: sessionStorage, omit: ["lastOpenedFolder", "lastSavedFolder"] },
       { storage: localStorage, pick: ["lastOpenedFolder", "lastSavedFolder"] },
