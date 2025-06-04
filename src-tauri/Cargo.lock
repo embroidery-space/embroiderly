@@ -2964,19 +2964,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "pmaker"
-version = "0.0.0"
-source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=35519da49ecdefa720581db97849dca52e3200e0#35519da49ecdefa720581db97849dca52e3200e0"
-dependencies = [
- "anyhow",
- "byteorder",
- "encoding_rs",
- "hex",
- "itertools",
- "log",
-]
-
-[[package]]
 name = "png"
 version = "0.17.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5570,9 +5557,14 @@ dependencies = [
 [[package]]
 name = "xsp-parsers"
 version = "0.0.0"
-source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=35519da49ecdefa720581db97849dca52e3200e0#35519da49ecdefa720581db97849dca52e3200e0"
+source = "git+https://github.com/embroidery-space/xsp-parsers.git?rev=ae67e88891bade1437daaad1fbaee62600ef5f7e#ae67e88891bade1437daaad1fbaee62600ef5f7e"
 dependencies = [
- "pmaker",
+ "byteorder",
+ "encoding_rs",
+ "hex",
+ "itertools",
+ "log",
+ "thiserror 2.0.12",
 ]
 
 [[package]]

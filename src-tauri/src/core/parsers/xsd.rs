@@ -1,5 +1,5 @@
 use anyhow::Result;
-use xsp_parsers::xsd;
+use xsp_parsers::pmaker;
 
 use crate::core::pattern::*;
 
@@ -7,7 +7,7 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
   log::debug!("Parsing XSD file");
 
   let file_path = file_path.as_ref();
-  let xsd_pattern = xsd::parse_xsd_pattern(file_path)?;
+  let xsd_pattern = pmaker::parse_pattern(file_path)?;
 
   log::debug!("XSD file parsed");
 
@@ -83,8 +83,8 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
   Ok(PatternProject::new(file_path.to_owned(), pattern, display_settings))
 }
 
-impl From<xsd::PatternInfo> for PatternInfo {
-  fn from(pattern_info: xsd::PatternInfo) -> Self {
+impl From<pmaker::PatternInfo> for PatternInfo {
+  fn from(pattern_info: pmaker::PatternInfo) -> Self {
     Self {
       title: pattern_info.title,
       author: pattern_info.author,
@@ -94,8 +94,8 @@ impl From<xsd::PatternInfo> for PatternInfo {
   }
 }
 
-impl From<xsd::Fabric> for Fabric {
-  fn from(fabric: xsd::Fabric) -> Self {
+impl From<pmaker::Fabric> for Fabric {
+  fn from(fabric: pmaker::Fabric) -> Self {
     Self {
       width: fabric.width,
       height: fabric.height,
@@ -107,8 +107,8 @@ impl From<xsd::Fabric> for Fabric {
   }
 }
 
-impl From<xsd::PaletteItem> for PaletteItem {
-  fn from(palette_item: xsd::PaletteItem) -> Self {
+impl From<pmaker::PaletteItem> for PaletteItem {
+  fn from(palette_item: pmaker::PaletteItem) -> Self {
     Self {
       brand: palette_item.brand,
       number: palette_item.number,
@@ -123,8 +123,8 @@ impl From<xsd::PaletteItem> for PaletteItem {
   }
 }
 
-impl From<xsd::Blend> for Blend {
-  fn from(blend: xsd::Blend) -> Self {
+impl From<pmaker::Blend> for Blend {
+  fn from(blend: pmaker::Blend) -> Self {
     Self {
       brand: blend.brand,
       number: blend.number,
@@ -132,8 +132,8 @@ impl From<xsd::Blend> for Blend {
   }
 }
 
-impl From<xsd::Bead> for Bead {
-  fn from(bead: xsd::Bead) -> Self {
+impl From<pmaker::Bead> for Bead {
+  fn from(bead: pmaker::Bead) -> Self {
     Self {
       length: bead.length,
       diameter: bead.diameter,
@@ -141,8 +141,8 @@ impl From<xsd::Bead> for Bead {
   }
 }
 
-impl From<xsd::Grid> for Grid {
-  fn from(grid: xsd::Grid) -> Self {
+impl From<pmaker::Grid> for Grid {
+  fn from(grid: pmaker::Grid) -> Self {
     Self {
       major_lines_interval: grid.major_lines_interval,
       minor_lines: GridLine {
@@ -157,10 +157,10 @@ impl From<xsd::Grid> for Grid {
   }
 }
 
-impl TryFrom<xsd::FullStitch> for FullStitch {
+impl TryFrom<pmaker::FullStitch> for FullStitch {
   type Error = anyhow::Error;
 
-  fn try_from(fullstitch: xsd::FullStitch) -> Result<Self, Self::Error> {
+  fn try_from(fullstitch: pmaker::FullStitch) -> Result<Self, Self::Error> {
     Ok(Self {
       x: Coord::new(fullstitch.x)?,
       y: Coord::new(fullstitch.y)?,
@@ -170,19 +170,19 @@ impl TryFrom<xsd::FullStitch> for FullStitch {
   }
 }
 
-impl From<xsd::FullStitchKind> for FullStitchKind {
-  fn from(kind: xsd::FullStitchKind) -> Self {
+impl From<pmaker::FullStitchKind> for FullStitchKind {
+  fn from(kind: pmaker::FullStitchKind) -> Self {
     match kind {
-      xsd::FullStitchKind::Full => FullStitchKind::Full,
-      xsd::FullStitchKind::Petite => FullStitchKind::Petite,
+      pmaker::FullStitchKind::Full => FullStitchKind::Full,
+      pmaker::FullStitchKind::Petite => FullStitchKind::Petite,
     }
   }
 }
 
-impl TryFrom<xsd::PartStitch> for PartStitch {
+impl TryFrom<pmaker::PartStitch> for PartStitch {
   type Error = anyhow::Error;
 
-  fn try_from(partstitch: xsd::PartStitch) -> Result<Self, Self::Error> {
+  fn try_from(partstitch: pmaker::PartStitch) -> Result<Self, Self::Error> {
     Ok(Self {
       x: Coord::new(partstitch.x)?,
       y: Coord::new(partstitch.y)?,
@@ -193,28 +193,28 @@ impl TryFrom<xsd::PartStitch> for PartStitch {
   }
 }
 
-impl From<xsd::PartStitchDirection> for PartStitchDirection {
-  fn from(direction: xsd::PartStitchDirection) -> Self {
+impl From<pmaker::PartStitchDirection> for PartStitchDirection {
+  fn from(direction: pmaker::PartStitchDirection) -> Self {
     match direction {
-      xsd::PartStitchDirection::Forward => PartStitchDirection::Forward,
-      xsd::PartStitchDirection::Backward => PartStitchDirection::Backward,
+      pmaker::PartStitchDirection::Forward => PartStitchDirection::Forward,
+      pmaker::PartStitchDirection::Backward => PartStitchDirection::Backward,
     }
   }
 }
 
-impl From<xsd::PartStitchKind> for PartStitchKind {
-  fn from(kind: xsd::PartStitchKind) -> Self {
+impl From<pmaker::PartStitchKind> for PartStitchKind {
+  fn from(kind: pmaker::PartStitchKind) -> Self {
     match kind {
-      xsd::PartStitchKind::Half => PartStitchKind::Half,
-      xsd::PartStitchKind::Quarter => PartStitchKind::Quarter,
+      pmaker::PartStitchKind::Half => PartStitchKind::Half,
+      pmaker::PartStitchKind::Quarter => PartStitchKind::Quarter,
     }
   }
 }
 
-impl TryFrom<xsd::LineStitch> for LineStitch {
+impl TryFrom<pmaker::LineStitch> for LineStitch {
   type Error = anyhow::Error;
 
-  fn try_from(linestitch: xsd::LineStitch) -> Result<Self, Self::Error> {
+  fn try_from(linestitch: pmaker::LineStitch) -> Result<Self, Self::Error> {
     Ok(Self {
       x: (Coord::new(linestitch.x.0)?, Coord::new(linestitch.x.1)?),
       y: (Coord::new(linestitch.y.0)?, Coord::new(linestitch.y.1)?),
@@ -224,19 +224,19 @@ impl TryFrom<xsd::LineStitch> for LineStitch {
   }
 }
 
-impl From<xsd::LineStitchKind> for LineStitchKind {
-  fn from(kind: xsd::LineStitchKind) -> Self {
+impl From<pmaker::LineStitchKind> for LineStitchKind {
+  fn from(kind: pmaker::LineStitchKind) -> Self {
     match kind {
-      xsd::LineStitchKind::Back => LineStitchKind::Back,
-      xsd::LineStitchKind::Straight => LineStitchKind::Straight,
+      pmaker::LineStitchKind::Back => LineStitchKind::Back,
+      pmaker::LineStitchKind::Straight => LineStitchKind::Straight,
     }
   }
 }
 
-impl TryFrom<xsd::NodeStitch> for NodeStitch {
+impl TryFrom<pmaker::NodeStitch> for NodeStitch {
   type Error = anyhow::Error;
 
-  fn try_from(nodestitch: xsd::NodeStitch) -> Result<Self, Self::Error> {
+  fn try_from(nodestitch: pmaker::NodeStitch) -> Result<Self, Self::Error> {
     Ok(Self {
       x: Coord::new(nodestitch.x)?,
       y: Coord::new(nodestitch.y)?,
@@ -247,19 +247,19 @@ impl TryFrom<xsd::NodeStitch> for NodeStitch {
   }
 }
 
-impl From<xsd::NodeStitchKind> for NodeStitchKind {
-  fn from(kind: xsd::NodeStitchKind) -> Self {
+impl From<pmaker::NodeStitchKind> for NodeStitchKind {
+  fn from(kind: pmaker::NodeStitchKind) -> Self {
     match kind {
-      xsd::NodeStitchKind::FrenchKnot => NodeStitchKind::FrenchKnot,
-      xsd::NodeStitchKind::Bead => NodeStitchKind::Bead,
+      pmaker::NodeStitchKind::FrenchKnot => NodeStitchKind::FrenchKnot,
+      pmaker::NodeStitchKind::Bead => NodeStitchKind::Bead,
     }
   }
 }
 
-impl TryFrom<xsd::SpecialStitch> for SpecialStitch {
+impl TryFrom<pmaker::SpecialStitch> for SpecialStitch {
   type Error = anyhow::Error;
 
-  fn try_from(special_stitch: xsd::SpecialStitch) -> Result<Self, Self::Error> {
+  fn try_from(special_stitch: pmaker::SpecialStitch) -> Result<Self, Self::Error> {
     Ok(Self {
       x: Coord::new(special_stitch.x)?,
       y: Coord::new(special_stitch.y)?,
@@ -271,10 +271,10 @@ impl TryFrom<xsd::SpecialStitch> for SpecialStitch {
   }
 }
 
-impl TryFrom<xsd::SpecialStitchModel> for SpecialStitchModel {
+impl TryFrom<pmaker::SpecialStitchModel> for SpecialStitchModel {
   type Error = anyhow::Error;
 
-  fn try_from(spsmodel: xsd::SpecialStitchModel) -> Result<Self, Self::Error> {
+  fn try_from(spsmodel: pmaker::SpecialStitchModel) -> Result<Self, Self::Error> {
     Ok(Self {
       unique_name: spsmodel.unique_name,
       name: spsmodel.name,
@@ -299,10 +299,10 @@ impl TryFrom<xsd::SpecialStitchModel> for SpecialStitchModel {
   }
 }
 
-impl TryFrom<xsd::CurvedStitch> for CurvedStitch {
+impl TryFrom<pmaker::CurvedStitch> for CurvedStitch {
   type Error = anyhow::Error;
 
-  fn try_from(curvedstitch: xsd::CurvedStitch) -> Result<Self, Self::Error> {
+  fn try_from(curvedstitch: pmaker::CurvedStitch) -> Result<Self, Self::Error> {
     Ok(Self {
       points: curvedstitch
         .points
