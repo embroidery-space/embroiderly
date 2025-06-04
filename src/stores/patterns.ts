@@ -21,7 +21,11 @@ import {
   PatternInfo,
   type Stitch,
 } from "#/schemas";
-import { ErrorBackupFileExists, ErrorUnsupportedPatternType, ErrorUnsupportedPatternTypeForSaving } from "#/error.ts";
+import {
+  PatternErrorBackupFileExists,
+  PatternErrorUnsupportedPatternType,
+  PatternErrorUnsupportedPatternTypeForSaving,
+} from "#/error.ts";
 
 const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
 
@@ -83,7 +87,7 @@ export const usePatternsStore = defineStore("embroiderly-patterns", () => {
       appStateStore.addOpenedPattern(rawPattern.id, rawPattern.pattern.info.title);
       if (options?.assignToCurrent ?? true) pattern.value = new PatternView(rawPattern);
     } catch (error) {
-      if (error instanceof ErrorUnsupportedPatternType) {
+      if (error instanceof PatternErrorUnsupportedPatternType) {
         confirm.require({
           header: fluent.$t("title-error"),
           message: fluent.$t("message-error-unsupported-pattern-type"),
@@ -91,7 +95,7 @@ export const usePatternsStore = defineStore("embroiderly-patterns", () => {
         });
         return;
       }
-      if (error instanceof ErrorBackupFileExists) {
+      if (error instanceof PatternErrorBackupFileExists) {
         confirm.require({
           header: fluent.$t("title-error"),
           message: fluent.$t("message-error-backup-file-exists"),
@@ -140,7 +144,7 @@ export const usePatternsStore = defineStore("embroiderly-patterns", () => {
       loading.value = true;
       await PatternApi.savePattern(pattern.value.id, path);
     } catch (error) {
-      if (error instanceof ErrorUnsupportedPatternTypeForSaving) {
+      if (error instanceof PatternErrorUnsupportedPatternTypeForSaving) {
         confirm.require({
           header: fluent.$t("title-error"),
           message: fluent.$t("message-error-unsupported-pattern-type-for-saving"),

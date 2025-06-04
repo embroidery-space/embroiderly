@@ -38,6 +38,20 @@ export const toast = {
           },
         },
       },
+      error: {
+        background: "color-mix(in srgb, {danger.50}, transparent 5%)",
+        borderColor: "{danger.200}",
+        color: "{danger.600}",
+        detailColor: "{surface.700}",
+        shadow: "0px 4px 8px 0px color-mix(in srgb, {danger.500}, transparent 96%)",
+        closeButton: {
+          hoverBackground: "{danger.100}",
+          focusRing: {
+            color: "{danger.600}",
+            shadow: "none",
+          },
+        },
+      },
     },
     dark: {
       root: { blur: "10px" },
@@ -51,6 +65,20 @@ export const toast = {
           hoverBackground: "rgba(255, 255, 255, 0.05)",
           focusRing: {
             color: "{success.500}",
+            shadow: "none",
+          },
+        },
+      },
+      error: {
+        background: "color-mix(in srgb, {danger.500}, transparent 84%)",
+        borderColor: "color-mix(in srgb, {danger.700}, transparent 64%)",
+        color: "{danger.500}",
+        detailColor: "{surface.0}",
+        shadow: "0px 4px 8px 0px color-mix(in srgb, {danger.500}, transparent 96%)",
+        closeButton: {
+          hoverBackground: "rgba(255, 255, 255, 0.05)",
+          focusRing: {
+            color: "{danger.500}",
             shadow: "none",
           },
         },

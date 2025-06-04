@@ -5,9 +5,7 @@ export async function invoke<T>(cmd: string, args?: InvokeArgs, options?: Invoke
   try {
     return await invokeTauriCommand<T>(cmd, args, options);
   } catch (e) {
-    const error = toApplicationError(e);
-    globalThis.error(`Error invoking command "${cmd}": ${error.message}`);
-    throw error;
+    throw toApplicationError(e);
   }
 }
 

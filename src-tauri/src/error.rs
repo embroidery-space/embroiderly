@@ -6,7 +6,7 @@ pub enum Error {
   Command(#[from] CommandError),
 
   #[error(transparent)]
-  Parsing(#[from] ParsingError),
+  Pattern(#[from] PatternError),
 
   #[error(transparent)]
   Tauri(#[from] tauri::Error),
@@ -18,7 +18,7 @@ pub enum Error {
   Uuid(#[from] uuid::Error),
 
   #[error(transparent)]
-  Other(#[from] anyhow::Error),
+  Unknown(#[from] anyhow::Error),
 }
 
 #[derive(serde::Serialize)]
@@ -26,11 +26,11 @@ pub enum Error {
 #[serde(rename_all = "camelCase")]
 pub enum ErrorKind {
   Command(String),
-  Parsing(String),
+  Pattern(String),
   Tauri(String),
   Io(String),
   Uuid(String),
-  Other(String),
+  Unknown(String),
 }
 
 impl serde::Serialize for Error {
@@ -38,11 +38,11 @@ impl serde::Serialize for Error {
     let error_message = self.to_string();
     let error_kind = match self {
       Self::Command(_) => ErrorKind::Command(error_message),
-      Self::Parsing(_) => ErrorKind::Parsing(error_message),
+      Self::Pattern(_) => ErrorKind::Pattern(error_message),
       Self::Tauri(_) => ErrorKind::Tauri(error_message),
       Self::Io(_) => ErrorKind::Io(error_message),
       Self::Uuid(_) => ErrorKind::Uuid(error_message),
-      Self::Other(_) => ErrorKind::Other(error_message),
+      Self::Unknown(_) => ErrorKind::Unknown(error_message),
     };
     error_kind.serialize(serializer)
   }
@@ -55,19 +55,22 @@ pub enum CommandError {
 
   #[error("Err02: Missing patternId header.")]
   MissingPatternIdHeader,
-
-  #[error("Err03: Pattern({0}) not found.")]
-  PatternNotFound(uuid::Uuid),
-
-  #[error("Err04: Backup file for pattern exists.")]
-  BackupFileExists,
 }
 
 #[derive(Debug, thiserror::Error)]
-pub enum ParsingError {
-  #[error("Err01: Unsupported pattern type: {0}")]
+pub enum PatternError {
+  #[error("Err01: Pattern({0}) not found.")]
+  PatternNotFound(uuid::Uuid),
+
+  #[error("Err02: Backup file for pattern exists.")]
+  BackupFileExists,
+
+  #[error("Err03: Unsupported pattern type: {0}")]
   UnsupportedPatternType(String),
 
-  #[error("Err02: The {0} pattern type is not supported for saving.")]
+  #[error("Err04: The {0} pattern type is not supported for saving.")]
   UnsupportedPatternTypeForSaving(String),
+
+  #[error("Err05: Failed to parse pattern: {0}")]
+  FailedToParse(#[source] anyhow::Error),
 }

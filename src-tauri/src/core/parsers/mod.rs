@@ -3,11 +3,10 @@ pub mod oxs;
 pub mod xsd;
 
 mod format;
-use anyhow::Result;
 pub use format::PatternFormat;
 
 use crate::core::pattern::PatternProject;
-use crate::error::ParsingError;
+use crate::error::{PatternError, Result};
 
 pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
   match PatternFormat::try_from(file_path.extension())? {
@@ -15,6 +14,7 @@ pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
     PatternFormat::Oxs => oxs::parse_pattern(file_path),
     PatternFormat::EmbProj => embproj::parse_pattern(file_path),
   }
+  .map_err(|e| PatternError::FailedToParse(e).into())
 }
 
 pub fn save_pattern(
@@ -27,8 +27,9 @@ pub fn save_pattern(
     None => patproj.file_path.clone(),
   };
   match PatternFormat::try_from(file_path.extension())? {
-    PatternFormat::Xsd => Err(ParsingError::UnsupportedPatternTypeForSaving(PatternFormat::Xsd.to_string()).into()),
+    PatternFormat::Xsd => Err(PatternError::UnsupportedPatternTypeForSaving(PatternFormat::Xsd.to_string()).into()),
     PatternFormat::Oxs => oxs::save_pattern(patproj, package_info),
     PatternFormat::EmbProj => embproj::save_pattern(patproj, package_info),
   }
+  .map_err(|e| PatternError::FailedToParse(e).into())
 }

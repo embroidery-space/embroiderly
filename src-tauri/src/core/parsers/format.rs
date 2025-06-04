@@ -1,6 +1,6 @@
 use std::ffi::OsStr;
 
-use crate::error::ParsingError;
+use crate::error::PatternError;
 
 #[derive(Default, PartialEq, Eq)]
 pub enum PatternFormat {
@@ -21,7 +21,7 @@ pub enum PatternFormat {
 }
 
 impl TryFrom<Option<&OsStr>> for PatternFormat {
-  type Error = ParsingError;
+  type Error = PatternError;
 
   fn try_from(value: Option<&OsStr>) -> std::result::Result<Self, Self::Error> {
     if let Some(extension) = value {
@@ -30,10 +30,10 @@ impl TryFrom<Option<&OsStr>> for PatternFormat {
         "xsd" => Ok(Self::Xsd),
         "oxs" | "xml" => Ok(Self::Oxs),
         "embproj" => Ok(Self::EmbProj),
-        _ => Err(ParsingError::UnsupportedPatternType(extension.to_string())),
+        _ => Err(PatternError::UnsupportedPatternType(extension.to_string())),
       }
     } else {
-      Err(ParsingError::UnsupportedPatternType("unknown".into()))
+      Err(PatternError::UnsupportedPatternType("No extension".into()))
     }
   }
 }

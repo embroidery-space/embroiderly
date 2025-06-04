@@ -3,7 +3,7 @@ use tauri::Emitter as _;
 use crate::core::actions::{Action as _, UpdatePatternInfoAction};
 use crate::core::parsers::{self, PatternFormat};
 use crate::core::pattern::{Fabric, Pattern, PatternInfo, PatternProject};
-use crate::error::{CommandError, Result};
+use crate::error::{CommandError, PatternError, Result};
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 use crate::utils::path::{app_document_dir, backup_file_path};
@@ -18,7 +18,7 @@ pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState
     Ok(tauri::ipc::Response::new(borsh::to_vec(&pattern)?))
   } else {
     log::error!("Pattern({pattern_id:?}) not found");
-    Err(CommandError::PatternNotFound(pattern_id).into())
+    Err(PatternError::PatternNotFound(pattern_id).into())
   }
 }
 
@@ -49,7 +49,7 @@ pub fn open_pattern(
         return Ok(tauri::ipc::Response::new(result));
       }
       Some(false) => {}
-      None => return Err(CommandError::BackupFileExists.into()),
+      None => return Err(PatternError::BackupFileExists.into()),
     };
   }
 

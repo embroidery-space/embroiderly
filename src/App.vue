@@ -105,4 +105,12 @@
     const currentPattern = appStateStore.currentPattern;
     if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
   });
+
+  window.onunhandledrejection = (event) => {
+    const err = event.reason;
+    if (err instanceof Error) {
+      error(`Error: ${err.message}`);
+      toast.add({ severity: "error", summary: fluent.$t("title-error"), detail: err.message });
+    } else error(`Error: ${err}`);
+  };
 </script>
