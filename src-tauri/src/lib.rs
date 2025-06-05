@@ -136,7 +136,7 @@ fn create_webview_window<R: tauri::Runtime>(
 }
 
 #[allow(dead_code)]
-fn copy_sample_patterns(app_handle: &tauri::AppHandle) -> anyhow::Result<()> {
+fn copy_sample_patterns<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
   let app_document_dir = utils::path::app_document_dir(app_handle)?;
   if !app_document_dir.exists() {
     // Create the Embroiderly directory in the user's document directory
