@@ -23,6 +23,7 @@ import {
 } from "#/schemas";
 import {
   PatternErrorBackupFileExists,
+  PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
   PatternErrorUnsupportedPatternTypeForSaving,
 } from "#/error.ts";
@@ -173,14 +174,32 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function closePattern() {
+    async function closePattern(options?: PatternApi.ClosePatternOptions) {
       if (!pattern.value) return;
       try {
         loading.value = true;
-        await PatternApi.closePattern(pattern.value.id);
+        await PatternApi.closePattern(pattern.value.id, options);
         appStateStore.removeCurrentPattern();
         if (!appStateStore.currentPattern) pattern.value = undefined;
         else await loadPattern(appStateStore.currentPattern.id);
+      } catch (error) {
+        if (error instanceof PatternErrorUnsavedChanges) {
+          confirm.require({
+            header: fluent.$t("title-unsaved-changes"),
+            message: fluent.$t("message-unsaved-changes"),
+            accept: async () => {
+              const patternId = pattern.value!.id;
+              const filePath = await PatternApi.getPatternFilePath(patternId);
+              await PatternApi.savePattern(patternId, filePath);
+              await closePattern();
+            },
+            reject: async () => {
+              await closePattern({ force: true });
+            },
+          });
+          return;
+        }
+        throw error;
       } finally {
         loading.value = false;
       }

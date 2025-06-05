@@ -31,6 +31,14 @@ app.use(PrimeVue, {
   },
   pt: {
     dialog: { root: { style: { maxWidth: "90%" } } },
+    confirmdialog: {
+      message: {
+        style: {
+          // This is needed to allow line breaks (`\n`) in the confirmation dialog message.
+          whiteSpace: "pre-line",
+        },
+      },
+    },
   },
 });
 app.use(ConfirmationService);

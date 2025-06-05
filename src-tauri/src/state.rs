@@ -20,6 +20,10 @@ impl<R: tauri::Runtime> HistoryStateInner<R> {
   pub fn get_mut(&mut self, id: &uuid::Uuid) -> &mut History<R> {
     self.inner.entry(*id).or_default()
   }
+
+  pub fn iter(&self) -> impl Iterator<Item = (&uuid::Uuid, &History<R>)> {
+    self.inner.iter()
+  }
 }
 
 pub type PatternsState = std::sync::RwLock<PatternManager>;

@@ -30,8 +30,27 @@ export function savePattern(patternId: string, filePath: string) {
   return invoke<void>("save_pattern", { patternId, filePath });
 }
 
-export function closePattern(patternId: string) {
-  return invoke<void>("close_pattern", { patternId });
+export function saveAllPatterns() {
+  return invoke<void>("save_all_patterns");
+}
+
+export interface ClosePatternOptions {
+  /**
+   * Whether to bypass unsaved changes check and force close the pattern.
+   * @default false
+   */
+  force?: boolean;
+}
+export function closePattern(patternId: string, options?: ClosePatternOptions) {
+  return invoke<void>("close_pattern", { patternId, ...options });
+}
+
+export function closeAllPatterns() {
+  return invoke<void>("close_all_patterns");
+}
+
+export function getUnsavedPatterns() {
+  return invoke<string[]>("get_unsaved_patterns");
 }
 
 export function getPatternFilePath(patternId: string) {

@@ -9,6 +9,8 @@ pub mod state;
 mod core;
 pub use core::pattern::*;
 
+use crate::state::HistoryState;
+
 mod error;
 mod logger;
 mod utils;
@@ -72,7 +74,10 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::pattern::open_pattern,
     commands::pattern::create_pattern,
     commands::pattern::save_pattern,
+    commands::pattern::save_all_patterns,
     commands::pattern::close_pattern,
+    commands::pattern::close_all_patterns,
+    commands::pattern::get_unsaved_patterns,
     commands::pattern::get_pattern_file_path,
     commands::pattern::update_pattern_info,
     commands::display::set_display_mode,
@@ -185,6 +190,7 @@ fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHa
           pattern_id,
           file_path,
           app_handle.clone(),
+          app_handle.state::<HistoryState<R>>(),
           app_handle.state::<PatternsState>(),
         ) {
           log::error!("Failed to auto-save Pattern({:?}): {:?}", pattern_id, err);
@@ -232,7 +238,7 @@ pub fn handle_file_associations<R: tauri::Runtime>(
     .collect::<Vec<_>>()
     .join(",");
 
-  // TODO: Discover a better way to pass the files to the frontend.
+  // TODO: Find a better way to pass the files to the frontend.
   let init_script = format!("window.openedFiles = [{files}]");
 
   create_webview_window(app_handle, Some(init_script))

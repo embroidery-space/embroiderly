@@ -167,10 +167,18 @@ label-minor-lines = Minor Lines
 label-color = Color
 label-thickness = Thickness
 
-## Titles, labels and messages related to notification messages.
+## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved
 
-## Titles, labels and messages related to error messages.
+title-unsaved-changes = Unsaved Changes
+message-unsaved-changes =
+  The pattern has unsaved changes.
+  Do want to save it before closing?
+message-unsaved-patterns =
+  You have patterns with unsaved changes:
+  { $patterns }.
+  Do you want to save them before closing the application?
+
 title-error = Error
 
 message-error-unsupported-pattern-type = This pattern type is not supported.

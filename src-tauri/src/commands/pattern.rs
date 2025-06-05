@@ -1,6 +1,6 @@
 use tauri::Emitter as _;
 
-use crate::core::actions::{Action as _, UpdatePatternInfoAction};
+use crate::core::actions::{Action as _, CheckpointAction, UpdatePatternInfoAction};
 use crate::core::parsers::{self, PatternFormat};
 use crate::core::pattern::{Fabric, Pattern, PatternInfo, PatternProject};
 use crate::error::{CommandError, PatternError, Result};
@@ -96,6 +96,7 @@ pub fn save_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
   file_path: std::path::PathBuf,
   app_handle: tauri::AppHandle<R>,
+  history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
   log::debug!("Saving Pattern({pattern_id:?})");
@@ -129,14 +130,61 @@ pub fn save_pattern<R: tauri::Runtime>(
     patproj.file_path = file_path;
   }
 
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).push(Box::new(CheckpointAction));
+
   app_handle.emit("app:pattern-saved", &pattern_id)?;
   log::debug!("Pattern saved {pattern_id:?}");
   Ok(())
 }
 
 #[tauri::command]
-pub fn close_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Result<()> {
+pub fn save_all_patterns<R: tauri::Runtime>(
+  app_handle: tauri::AppHandle<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  log::debug!("Saving all patterns");
+
+  let _patterns = patterns
+    .read()
+    .unwrap()
+    .patterns()
+    .map(|p| (p.id, p.file_path.clone()))
+    .collect::<Vec<_>>();
+  for (pattern_id, file_path) in _patterns {
+    save_pattern(
+      pattern_id,
+      file_path,
+      app_handle.clone(),
+      history.clone(),
+      patterns.clone(),
+    )?;
+  }
+
+  log::debug!("All patterns saved");
+  Ok(())
+}
+
+#[tauri::command]
+pub fn close_pattern<R: tauri::Runtime>(
+  pattern_id: uuid::Uuid,
+  force: Option<bool>,
+  // This argument is required to resolve a strange type error.
+  _window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
   log::debug!("Closing Pattern({pattern_id:?})");
+
+  if !force.unwrap_or(false) {
+    let history = history.read().unwrap();
+    if let Some(history) = history.get(&pattern_id) {
+      if history.has_unsaved_changes() {
+        return Err(PatternError::UnsavedChanges(pattern_id).into());
+      }
+    }
+  }
 
   let patproj = patterns.write().unwrap().remove_pattern(&pattern_id).unwrap();
 
@@ -147,6 +195,51 @@ pub fn close_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsStat
 
   log::debug!("Pattern({pattern_id:?}) closed");
   Ok(())
+}
+
+#[tauri::command]
+pub fn close_all_patterns<R: tauri::Runtime>(
+  // This argument is required to resolve a strange type error.
+  _window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  log::debug!("Closing all patterns");
+
+  let _patterns = patterns.read().unwrap().patterns().map(|p| p.id).collect::<Vec<_>>();
+  for pattern_id in _patterns {
+    close_pattern(
+      pattern_id,
+      Some(true),
+      _window.clone(),
+      history.clone(),
+      patterns.clone(),
+    )?;
+  }
+
+  log::debug!("All patterns closed");
+  Ok(())
+}
+
+#[tauri::command]
+pub fn get_unsaved_patterns<R: tauri::Runtime>(
+  // This argument is required to resolve a strange type error.
+  _window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+) -> Vec<uuid::Uuid> {
+  log::debug!("Getting unsaved patterns");
+
+  let history = history.read().unwrap();
+  history
+    .iter()
+    .filter_map(|(pattern_id, history)| {
+      if history.has_unsaved_changes() {
+        Some(*pattern_id)
+      } else {
+        None
+      }
+    })
+    .collect()
 }
 
 #[tauri::command]

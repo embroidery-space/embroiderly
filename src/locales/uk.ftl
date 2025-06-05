@@ -170,10 +170,18 @@ label-minor-lines = Малі лінії
 label-color = Колір
 label-thickness = Товщина
 
-## Titles, labels and messages related to notification messages.
+## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено
 
-## Titles, labels and messages related to error messages.
+title-unsaved-changes = Незбережені зміни
+message-unsaved-changes =
+  У схеми є незбережені зміни.
+  Чи хочете ви зберегти її перед закриттям?
+message-unsaved-patterns =
+  У вас є схеми із незбереженими змінами:
+  { $patterns }
+  Чи хочете ви зберегти їх перед закриттям застосунку?
+
 title-error = Помилка
 
 message-error-unsupported-pattern-type = Цей тип схеми не підтримується.

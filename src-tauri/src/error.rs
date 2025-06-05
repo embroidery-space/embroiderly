@@ -73,4 +73,7 @@ pub enum PatternError {
 
   #[error("Err05: Failed to parse pattern: {0}")]
   FailedToParse(#[source] anyhow::Error),
+
+  #[error("Err06: Pattern({0}) has unsaved changes.")]
+  UnsavedChanges(uuid::Uuid),
 }

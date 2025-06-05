@@ -51,8 +51,10 @@
     ProgressSpinner,
     Toast,
     useToast,
+    useConfirm,
   } from "primevue";
   import { useFluent } from "fluent-vue";
+  import { PatternApi } from "./api/";
   import { useAppStateStore, usePatternsStore } from "./stores/";
 
   const AppHeader = defineAsyncComponent(() => import("./components/AppHeader.vue"));
@@ -61,6 +63,7 @@
   const CanvasPanel = defineAsyncComponent(() => import("./components/CanvasPanel.vue"));
   const CanvasToolbar = defineAsyncComponent(() => import("./components/toolbar/CanvasToolbar.vue"));
 
+  const confirm = useConfirm();
   const toast = useToast();
 
   const fluent = useFluent();
@@ -99,6 +102,30 @@
         isDragging.value = false;
         break;
       }
+    }
+  });
+
+  appWindow.onCloseRequested(async (e) => {
+    e.preventDefault();
+    const unsavedPatterns = await PatternApi.getUnsavedPatterns();
+    if (unsavedPatterns.length) {
+      const patterns = appStateStore.openedPatterns
+        .filter(({ id }) => unsavedPatterns.includes(id))
+        .map(({ title }) => `- ${title}`)
+        .join("\n");
+      confirm.require({
+        header: fluent.$t("title-unsaved-changes"),
+        message: fluent.$t("message-unsaved-patterns", { patterns }),
+        accept: async () => {
+          await PatternApi.saveAllPatterns();
+          await PatternApi.closeAllPatterns();
+          await appWindow.destroy();
+        },
+        reject: async () => {
+          await PatternApi.closeAllPatterns();
+          await appWindow.destroy();
+        },
+      });
     }
   });
 
