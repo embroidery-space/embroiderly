@@ -26,6 +26,10 @@ export interface ViewportOptions {
 }
 export type { WheelAction };
 
+export interface UpdaterOptions {
+  autoCheck: boolean;
+}
+
 export interface OtherOptions {
   usePaletteItemColorForStitchTools: boolean;
   autoSaveInterval: number;
@@ -48,7 +52,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const confirm = useConfirm();
   const fluent = useFluent();
 
-  const loading = ref(false);
+  const loadingUpdate = ref(false);
 
   const ui = reactive<UiOptions>({
     theme: "system",
@@ -69,6 +73,10 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const viewport = reactive<ViewportOptions>({
     antialias: true,
     wheelAction: "zoom",
+  });
+
+  const updater = reactive<UpdaterOptions>({
+    autoCheck: false,
   });
 
   const other = reactive<OtherOptions>({
@@ -92,7 +100,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     }
 
     try {
-      loading.value = true;
+      loadingUpdate.value = true;
       const update = await check();
       if (update) {
         const { currentVersion, version } = update;
@@ -103,11 +111,11 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
           message: fluent.$t("message-update-available", { currentVersion, version, date }),
           accept: async () => {
             try {
-              loading.value = true;
+              loadingUpdate.value = true;
               await update.downloadAndInstall();
               await relaunch();
             } finally {
-              loading.value = false;
+              loadingUpdate.value = false;
             }
           },
         });
@@ -122,7 +130,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
         }
       }
     } finally {
-      loading.value = false;
+      loadingUpdate.value = false;
     }
   }
 
@@ -130,9 +138,10 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   shortcuts.on("Ctrl+Comma", () => openSettings());
 
   return {
-    loading,
+    loadingUpdate,
     ui,
     viewport,
+    updater,
     other,
     openSettings,
     checkForUpdates,

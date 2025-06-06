@@ -4,7 +4,7 @@ import { TauriPluginPinia } from "@tauri-store/pinia";
 
 export const pinia = createPinia();
 pinia.use(piniaPluginPersistedState);
-pinia.use(TauriPluginPinia({ autoStart: true }));
+pinia.use(TauriPluginPinia());
 
 export { usePatternsStore } from "./patterns.ts";
 export { useSettingsStore } from "./settings.ts";

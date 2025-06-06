@@ -1,6 +1,6 @@
 -app-name = Embroiderly
 
-## Common labels usually used in the menu items, buttons and its tooltip.
+## Common labels usually used in the menu items, buttons and their tooltips.
 
 label-file = Файл
 label-pattern = Схема
@@ -34,7 +34,12 @@ label-stitch-bead = Бісер
 
 ## Titles, labels and messages related to the updater.
 
+label-updater = Оновлювач
+
 label-check-for-updates = Перевірити наявність оновлень
+
+label-auto-check-for-updates = Автоматично перевіряти наявність оновлень
+message-auto-check-for-updates-hint = Якщо увімкнено, { -app-name } автоматично перевірятиме наявність оновлень під час запуску. Потребує перезавантаження.
 
 title-update-available = Доступне оновлення
 message-update-available =

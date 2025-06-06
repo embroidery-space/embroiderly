@@ -53,6 +53,26 @@
     </div>
   </Fieldset>
 
+  <Fieldset toggleable :legend="$t('label-updater')">
+    <div class="flex flex-col gap-2">
+      <Fluid class="grid grid-flow-row grid-cols-2 gap-2">
+        <Button
+          :loading="settingsStore.loadingUpdate"
+          :label="$t('label-check-for-updates')"
+          @click="() => settingsStore.checkForUpdates()"
+        />
+      </Fluid>
+
+      <FormElement
+        id="auto-check"
+        :label="$t('label-auto-check-for-updates')"
+        :hint="$t('message-auto-check-for-updates-hint')"
+      >
+        <Checkbox v-model="settingsStore.updater.autoCheck" binary />
+      </FormElement>
+    </div>
+  </Fieldset>
+
   <Fieldset toggleable :legend="$t('label-other')">
     <div class="flex flex-col gap-2">
       <Fluid class="grid grid-flow-row grid-cols-2 gap-2">
@@ -81,7 +101,7 @@
 
 <script setup lang="ts">
   import { computed } from "vue";
-  import { Checkbox, Fieldset, Fluid, InputNumber, Message, Select } from "primevue";
+  import { Button, Checkbox, Fieldset, Fluid, InputNumber, Message, Select } from "primevue";
   import { useSettingsStore } from "#/stores/settings";
   import type { Theme, Language, Scale, WheelAction } from "#/stores/settings";
 

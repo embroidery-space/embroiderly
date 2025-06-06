@@ -55,7 +55,7 @@
   } from "primevue";
   import { useFluent } from "fluent-vue";
   import { PatternApi } from "./api/";
-  import { useAppStateStore, usePatternsStore } from "./stores/";
+  import { useAppStateStore, usePatternsStore, useSettingsStore } from "./stores/";
 
   const AppHeader = defineAsyncComponent(() => import("./components/AppHeader.vue"));
   const WelcomePanel = defineAsyncComponent(() => import("./components/WelcomePanel.vue"));
@@ -70,6 +70,7 @@
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
+  const settingsStore = useSettingsStore();
 
   const appWindow = getCurrentWebviewWindow();
 
@@ -106,9 +107,9 @@
   });
 
   appWindow.onCloseRequested(async (e) => {
-    e.preventDefault();
     const unsavedPatterns = await PatternApi.getUnsavedPatterns();
     if (unsavedPatterns.length) {
+      e.preventDefault();
       const patterns = appStateStore.openedPatterns
         .filter(({ id }) => unsavedPatterns.includes(id))
         .map(({ title }) => `- ${title}`)
@@ -142,6 +143,11 @@
     } else {
       const currentPattern = appStateStore.currentPattern;
       if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
+    }
+
+    await settingsStore.$tauri.start();
+    if (settingsStore.updater.autoCheck) {
+      await settingsStore.checkForUpdates({ auto: true });
     }
   });
 

@@ -14,7 +14,7 @@
         aria-haspopup="true"
         aria-controls="manage-menu"
         text
-        :loading="settingsStore.loading"
+        :loading="settingsStore.loadingUpdate"
         severity="secondary"
         icon="i-prime:cog"
         class="size-6 p-0"
