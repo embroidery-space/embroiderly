@@ -1,7 +1,7 @@
 //! This module contains the definition of actions that can be performed on a pattern project.
 //! These actions include operations like adding or removing stitches or palette items, updating pattern information, etc.
 //!
-//! Actually, the actions implements the `Command` pattern.
+//! Actually, the actions implements the [`Command`](https://refactoring.guru/design-patterns/command) pattern.
 //! Hovewer we named it `Action` to avoid confusion with the `commands` from Tauri.
 //!
 //! Each method of the `Action` accepts a reference to the `WebviewWindow` and a mutable reference to the `PatternProject`.
@@ -32,30 +32,31 @@ mod palette;
 pub use palette::*;
 
 /// An action that can be executed and revoked.
-pub trait Action<R: tauri::Runtime>: Send + Sync + dyn_clone::DynClone {
+#[allow(unused_variables)]
+pub trait Action<R: tauri::Runtime>: Send + Sync + dyn_clone::DynClone + std::any::Any {
   /// Perform the action.
-  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()>;
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    Ok(())
+  }
 
   /// Revoke (undo) the action.
-  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()>;
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    Ok(())
+  }
 }
 
 dyn_clone::clone_trait_object!(<R: tauri::Runtime> Action<R>);
 
-#[cfg(debug_assertions)]
+/// An action that indicates whether the `PatternProject` was saved.
+#[derive(Clone)]
+pub struct CheckpointAction;
+impl<R: tauri::Runtime> Action<R> for CheckpointAction {}
+
+#[cfg(test)]
 pub mod mock {
   use super::*;
 
   #[derive(Clone)]
   pub struct MockAction;
-
-  impl<R: tauri::Runtime> Action<R> for MockAction {
-    fn perform(&self, _window: &WebviewWindow<R>, _patproj: &mut PatternProject) -> Result<()> {
-      Ok(())
-    }
-
-    fn revoke(&self, _window: &WebviewWindow<R>, _patproj: &mut PatternProject) -> Result<()> {
-      Ok(())
-    }
-  }
+  impl<R: tauri::Runtime> Action<R> for MockAction {}
 }

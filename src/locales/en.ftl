@@ -33,6 +33,7 @@ message-get-started =
   { $button-open } or { $button-create } to get started.
   .button-open-label = Open a pattern
   .button-create-label = create a new one
+message-get-started-drag-and-drop = Or drag and drop pattern files here.
 
 label-start = Start
 label-start-open = Open Pattern
@@ -115,6 +116,10 @@ label-viewport-wheel-action-zoom = Zoom
 label-viewport-wheel-action-scroll = Scroll
 
 label-other = Other
+
+label-autosave-interval = Autosave Interval
+message-autosave-interval-hint = If set to 0, autosave is disabled. Requires a restart.
+
 label-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools
 
 ## Titles, labels and messages related to the pattern information dialog.
@@ -137,6 +142,7 @@ label-height = Height
 label-unit-stitches = stitches
 label-unit-inches = inches
 label-unit-mm = mm
+label-unit-min = min
 
 label-count = Count
 label-count-and-kind = Count & Kind
@@ -160,3 +166,26 @@ label-minor-lines = Minor Lines
 
 label-color = Color
 label-thickness = Thickness
+
+## Titles, labels and messages related to notification and error messages.
+message-pattern-saved = Pattern Saved
+
+title-unsaved-changes = Unsaved Changes
+message-unsaved-changes =
+  The pattern has unsaved changes.
+  Do want to save it before closing?
+message-unsaved-patterns =
+  You have patterns with unsaved changes:
+  { $patterns }.
+  Do you want to save them before closing the application?
+
+title-error = Error
+
+message-error-unsupported-pattern-type = This pattern type is not supported.
+message-error-unsupported-pattern-type-for-saving =
+  This pattern type is not supported for saving.
+  Please, save the pattern using the "{ label-save-as }" or "{ label-export }" options.
+
+message-error-backup-file-exists =
+  A backup file for this pattern exists.
+  Do you want to restore the progress from it?

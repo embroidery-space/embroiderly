@@ -8,7 +8,8 @@ export function useShortcuts(target?: MaybeRefOrGetter<EventTarget>) {
   const keys = useMagicKeys({ target });
   return {
     on: (shortcut: string, callback: () => void) => {
-      return whenever(keys[shortcut]!, callback);
+      // Call the callback via an arrow function to prevent passing the `WatchCallback` arguments to it.
+      return whenever(keys[shortcut]!, () => callback());
     },
   };
 }

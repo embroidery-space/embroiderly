@@ -1,7 +1,6 @@
-use std::collections::HashMap;
 use std::sync::RwLock;
 
-use state::HistoryStateInner;
+use state::{HistoryStateInner, PatternsState};
 use tauri::Manager as _;
 
 pub mod commands;
@@ -9,6 +8,8 @@ pub mod state;
 
 mod core;
 pub use core::pattern::*;
+
+use crate::state::HistoryState;
 
 mod error;
 mod logger;
@@ -19,17 +20,21 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     .setup(|app| {
       let app_handle = app.handle();
 
-      create_webview_window(app_handle)?;
+      #[cfg(any(target_os = "windows", target_os = "linux"))]
+      {
+        let files = collect_files_from_args();
+        handle_file_associations(app_handle, files)?;
+      }
 
       #[cfg(not(debug_assertions))]
       copy_sample_patterns(app_handle)?;
 
+      run_auto_save_background_process(app_handle);
+
       Ok(())
     })
-    .manage(RwLock::new(
-      HashMap::<state::PatternKey, core::pattern::PatternProject>::new(),
-    ))
-    .manage(RwLock::new(HistoryStateInner::<R>::default()))
+    .manage(RwLock::new(core::pattern_manager::PatternManager::new()))
+    .manage(RwLock::new(HistoryStateInner::<R>::new()))
     .plugin(logger::init());
 
   #[cfg(not(feature = "test"))]
@@ -60,20 +65,19 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
       .plugin(tauri_plugin_dialog::init())
       .plugin(tauri_plugin_fs::init())
       .plugin(tauri_plugin_opener::init())
-      .plugin(
-        tauri_plugin_pinia::Builder::new()
-          .save_denylist(["embroiderly-patterns", "embroiderly-state"])
-          .sync_denylist(["embroiderly-patterns", "embroiderly-state"])
-          .build(),
-      );
+      .plugin(tauri_plugin_pinia::init());
   }
 
   builder = builder.invoke_handler(tauri::generate_handler![
     commands::path::get_app_document_dir,
     commands::pattern::load_pattern,
+    commands::pattern::open_pattern,
     commands::pattern::create_pattern,
     commands::pattern::save_pattern,
+    commands::pattern::save_all_patterns,
     commands::pattern::close_pattern,
+    commands::pattern::close_all_patterns,
+    commands::pattern::get_unsaved_patterns,
     commands::pattern::get_pattern_file_path,
     commands::pattern::update_pattern_info,
     commands::display::set_display_mode,
@@ -95,7 +99,10 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     .expect("Failed to build Embroiderly")
 }
 
-fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> anyhow::Result<tauri::WebviewWindow<R>> {
+fn create_webview_window<R: tauri::Runtime>(
+  app: &tauri::AppHandle<R>,
+  init_script: Option<String>,
+) -> anyhow::Result<tauri::WebviewWindow<R>> {
   let webview_window = {
     #[allow(unused_mut)]
     let mut webview_window_builder = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
@@ -104,6 +111,10 @@ fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> anyhow
       .maximized(true)
       .decorations(false)
       .additional_browser_args("--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,ElasticOverscroll");
+
+    if let Some(script) = init_script {
+      webview_window_builder = webview_window_builder.initialization_script(script);
+    }
 
     // We enable browser extensions only for development.
     #[cfg(all(debug_assertions, target_os = "windows"))]
@@ -125,7 +136,7 @@ fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> anyhow
 }
 
 #[allow(dead_code)]
-fn copy_sample_patterns(app_handle: &tauri::AppHandle) -> anyhow::Result<()> {
+fn copy_sample_patterns<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
   let app_document_dir = utils::path::app_document_dir(app_handle)?;
   if !app_document_dir.exists() {
     // Create the Embroiderly directory in the user's document directory
@@ -142,4 +153,93 @@ fn copy_sample_patterns(app_handle: &tauri::AppHandle) -> anyhow::Result<()> {
     }
   }
   Ok(())
+}
+
+fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) {
+  use tauri_plugin_pinia::ManagerExt as _;
+
+  let interval = app_handle
+    .pinia()
+    .get("embroiderly-settings", "other")
+    .and_then(|v| v.get("autoSaveInterval").cloned())
+    .and_then(|v| serde_json::from_value(v).ok())
+    .unwrap_or(15)
+    .clamp(0, 240);
+  let interval = std::time::Duration::from_secs(interval * 60);
+
+  if interval.is_zero() {
+    log::debug!("Auto-save is disabled.");
+    return;
+  }
+
+  let app_handle = app_handle.clone();
+  std::thread::spawn(move || {
+    loop {
+      std::thread::sleep(interval);
+      log::debug!("Auto-saving patterns...");
+
+      let patterns = app_handle.state::<PatternsState>();
+      let patterns = patterns
+        .read()
+        .unwrap()
+        .patterns()
+        .map(|p| (p.id, p.file_path.clone()))
+        .collect::<Vec<_>>();
+      for (pattern_id, file_path) in patterns {
+        if let Err(err) = commands::pattern::save_pattern(
+          pattern_id,
+          file_path,
+          app_handle.clone(),
+          app_handle.state::<HistoryState<R>>(),
+          app_handle.state::<PatternsState>(),
+        ) {
+          log::error!("Failed to auto-save Pattern({:?}): {:?}", pattern_id, err);
+        }
+      }
+
+      log::debug!("Auto-save completed.");
+    }
+  });
+}
+
+fn collect_files_from_args() -> Vec<std::path::PathBuf> {
+  let mut files = Vec::new();
+
+  // `args` may include URL protocol (`file://`) or arguments (`--`).
+  for maybe_file in std::env::args().skip(1) {
+    if maybe_file.starts_with('-') {
+      continue;
+    }
+
+    if maybe_file.starts_with("file://") {
+      if let Ok(url) = tauri::Url::parse(&maybe_file) {
+        if let Ok(path) = url.to_file_path() {
+          files.push(path);
+        }
+      }
+    } else {
+      files.push(maybe_file.into());
+    }
+  }
+
+  files
+}
+
+pub fn handle_file_associations<R: tauri::Runtime>(
+  app_handle: &tauri::AppHandle<R>,
+  files: Vec<std::path::PathBuf>,
+) -> anyhow::Result<tauri::WebviewWindow<R>> {
+  let files = files
+    .into_iter()
+    .map(|file| {
+      let file = file.to_string_lossy().replace('\\', "\\\\"); // escape backslash
+      format!("\"{file}\"",) // wrap in quotes for JS array
+    })
+    .collect::<Vec<_>>()
+    .join(",");
+
+  // TODO: Find a better way to pass the files to the frontend.
+  let init_script = format!("window.openedFiles = [{files}]");
+
+  create_webview_window(app_handle, Some(init_script))
 }

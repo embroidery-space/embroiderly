@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 
 import PrimeVue from "primevue/config";
-import { Tooltip, ConfirmationService, DialogService } from "primevue";
+import { Tooltip, ConfirmationService, DialogService, ToastService } from "primevue";
 
 import "virtual:uno.css";
 import { NordTheme } from "./assets/theme/";
@@ -31,10 +31,19 @@ app.use(PrimeVue, {
   },
   pt: {
     dialog: { root: { style: { maxWidth: "90%" } } },
+    confirmdialog: {
+      message: {
+        style: {
+          // This is needed to allow line breaks (`\n`) in the confirmation dialog message.
+          whiteSpace: "pre-line",
+        },
+      },
+    },
   },
 });
 app.use(ConfirmationService);
 app.use(DialogService);
+app.use(ToastService);
 app.directive("tooltip", Tooltip);
 app.directive("shortcuts", ShortcutsDirective);
 

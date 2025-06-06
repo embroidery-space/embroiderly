@@ -6,14 +6,23 @@
     <div class="max-size-full min-w-1/2 flex flex-col gap-6 overflow-auto p-8">
       <span class="text-4xl">{{ $t("title-welcome") }}</span>
 
-      <i18n tag="span" path="message-get-started">
-        <template #button-open="{ buttonOpenLabel }">
-          <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="patternsStore.loadPattern" />
-        </template>
-        <template #button-create="{ buttonCreateLabel }">
-          <Button variant="link" :label="buttonCreateLabel" class="p-0" @click="patternsStore.createPattern" />
-        </template>
-      </i18n>
+      <div>
+        <i18n tag="p" path="message-get-started">
+          <template #button-open="{ buttonOpenLabel }">
+            <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="() => patternsStore.openPattern()" />
+          </template>
+          <template #button-create="{ buttonCreateLabel }">
+            <Button
+              variant="link"
+              :label="buttonCreateLabel"
+              class="p-0"
+              @click="() => patternsStore.createPattern()"
+            />
+          </template>
+          <br />
+        </i18n>
+        <p>{{ $t("message-get-started-drag-and-drop") }}</p>
+      </div>
 
       <div class="flex flex-wrap justify-between gap-4">
         <div class="flex flex-col gap-y-1">
@@ -24,14 +33,14 @@
               icon="i-prime:file-plus"
               :label="$t('label-start-create')"
               pt:root:class="justify-start"
-              @click="patternsStore.createPattern"
+              @click="() => patternsStore.createPattern()"
             />
             <Button
               text
               icon="i-prime:file-arrow-up"
               :label="$t('label-start-open')"
               pt:root:class="justify-start"
-              @click="patternsStore.loadPattern"
+              @click="() => patternsStore.openPattern()"
             />
           </div>
         </div>

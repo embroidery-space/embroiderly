@@ -34,6 +34,7 @@ import { menubar } from "./menubar";
 
 // Message components.
 import { message } from "./message";
+import { toast } from "./toast.ts";
 
 // Misc components.
 import { blockui } from "./blockui";
@@ -81,6 +82,7 @@ export const NordTheme = {
 
     // Message components.
     message,
+    toast,
 
     // Misc components.
     blockui,

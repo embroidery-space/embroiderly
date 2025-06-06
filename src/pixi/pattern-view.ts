@@ -18,7 +18,6 @@ import {
   PatternProject,
   SpecialStitch,
   SpecialStitchModel,
-  type PatternKey,
   type Stitch,
 } from "#/schemas";
 
@@ -37,7 +36,8 @@ import { TextureManager } from "./texture-manager.ts";
  * It contains all the pattern data along with the graphics objects to display them.
  */
 export class PatternView {
-  #key: PatternKey;
+  readonly id: string;
+
   #info: PatternInfo;
 
   #palette: PaletteItem[];
@@ -75,8 +75,8 @@ export class PatternView {
 
   render?: () => void;
 
-  constructor({ key, pattern, displaySettings }: PatternProject) {
-    this.#key = key;
+  constructor({ id, pattern, displaySettings }: PatternProject) {
+    this.id = id;
     this.#info = pattern.info;
 
     this.#palette = pattern.palette;
@@ -161,10 +161,6 @@ export class PatternView {
 
     // Update the display mode since it depends on the `showSymbols` value.
     this.displayMode = this.#displayMode;
-  }
-
-  get key() {
-    return this.#key;
   }
 
   get info() {

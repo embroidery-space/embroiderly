@@ -1,10 +1,10 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { FullStitchKind, type StitchKind, type PatternKey } from "#/schemas/index.ts";
+import { FullStitchKind, type StitchKind } from "#/schemas/index.ts";
 
 interface OpenedPattern {
+  id: string;
   title: string;
-  key: PatternKey;
 }
 
 export const useAppStateStore = defineStore(
@@ -22,12 +22,12 @@ export const useAppStateStore = defineStore(
      * Adds the opened pattern to the app
      * If the pattern is already opened, it will not be added again.
      *
-     * @param title The title of the pattern.
-     * @param key The key of the pattern. Actually, the key is the file path of the pattern.
+     * @param id - The unique identifier of the pattern
+     * @param title - The title of the pattern
      */
-    function addOpenedPattern(title: string, key: PatternKey) {
-      const openedPattern: OpenedPattern = { title, key };
-      if (openedPatterns.value.findIndex((p) => p.key === key) < 0) openedPatterns.value.push(openedPattern);
+    function addOpenedPattern(id: string, title: string) {
+      const openedPattern: OpenedPattern = { id, title };
+      if (openedPatterns.value.findIndex((p) => p.id === id) === -1) openedPatterns.value.push(openedPattern);
       selectedPaletteItemIndexes.value = [];
       currentPattern.value = openedPattern;
     }
@@ -35,8 +35,8 @@ export const useAppStateStore = defineStore(
     function removeCurrentPattern() {
       if (!openedPatterns.value || !currentPattern.value) return;
       selectedPaletteItemIndexes.value = [];
-      const index = openedPatterns.value.findIndex((p) => p.key === currentPattern.value!.key);
-      if (index >= 0) openedPatterns.value.splice(index, 1);
+      const index = openedPatterns.value.findIndex((p) => p.id === currentPattern.value!.id);
+      if (index !== -1) openedPatterns.value.splice(index, 1);
       if (openedPatterns.value.length) currentPattern.value = openedPatterns.value[0];
       else currentPattern.value = undefined;
     }
@@ -53,6 +53,7 @@ export const useAppStateStore = defineStore(
     };
   },
   {
+    tauri: { save: false, sync: false },
     persist: [
       { storage: sessionStorage, omit: ["lastOpenedFolder", "lastSavedFolder"] },
       { storage: localStorage, pick: ["lastOpenedFolder", "lastSavedFolder"] },

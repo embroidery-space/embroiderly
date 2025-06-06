@@ -33,6 +33,7 @@ message-get-started =
   { $button-open } або { $button-create }, щоб розпочати.
   .button-open-label = Відкрийте схему
   .button-create-label = створіть нову
+message-get-started-drag-and-drop = Або перетягніть файли схем сюди.
 
 label-start = Розпочати
 label-start-open = Відкрити схему
@@ -118,6 +119,10 @@ label-viewport-wheel-action-zoom = Зум
 label-viewport-wheel-action-scroll = Прокрутка
 
 label-other = Інше
+
+label-autosave-interval = Інтервал автозбереження
+message-autosave-interval-hint = Якщо встановлено 0, автозбереження вимкнено. Потребує перезавантаження.
+
 label-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
 
 ## Titles, labels and messages related to the pattern information dialog.
@@ -140,6 +145,7 @@ label-height = Висота
 label-unit-stitches = стібків
 label-unit-inches = дюймів
 label-unit-mm = мм
+label-unit-min = хв
 
 label-count = Каунт
 label-count-and-kind = Каунт і тип
@@ -163,3 +169,26 @@ label-minor-lines = Малі лінії
 
 label-color = Колір
 label-thickness = Товщина
+
+## Titles, labels and messages related to notification and error messages.
+message-pattern-saved = Схему збережено
+
+title-unsaved-changes = Незбережені зміни
+message-unsaved-changes =
+  У схеми є незбережені зміни.
+  Чи хочете ви зберегти її перед закриттям?
+message-unsaved-patterns =
+  У вас є схеми із незбереженими змінами:
+  { $patterns }
+  Чи хочете ви зберегти їх перед закриттям застосунку?
+
+title-error = Помилка
+
+message-error-unsupported-pattern-type = Цей тип схеми не підтримується.
+message-error-unsupported-pattern-type-for-saving =
+  Цей тип схеми не підтримується для збереження.
+  Будь ласка, збережіть схему, використовуючи опцію "{ label-save-as }" або "{ label-export }".
+
+message-error-backup-file-exists =
+  Для цієї схеми існує файл резервної копії.
+  Чи хочете ви відновити прогрес з нього?

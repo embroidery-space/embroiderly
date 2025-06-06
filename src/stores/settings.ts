@@ -1,9 +1,9 @@
 import { setTheme as setAppTheme } from "@tauri-apps/api/app";
-import { defineAsyncComponent, reactive, ref, watch } from "vue";
+import { defineAsyncComponent, reactive, watch } from "vue";
 import { defineStore } from "pinia";
 import { useFluent } from "fluent-vue";
-import { useDialog } from "primevue";
-import { LOCALES } from "#/fluent";
+import { useDialog, usePrimeVue } from "primevue";
+import { LOCALES, PRIMEVUE_LOCALES } from "#/fluent";
 import type { WheelAction } from "#/pixi";
 
 export type Theme = "light" | "dark" | "system";
@@ -22,11 +22,17 @@ export interface ViewportOptions {
 }
 export type { WheelAction };
 
+export interface OtherOptions {
+  usePaletteItemColorForStitchTools: boolean;
+  autoSaveInterval: number;
+}
+
 export const useSettingsStore = defineStore(
   "embroiderly-settings",
   () => {
     const AppSettings = defineAsyncComponent(() => import("#/components/dialogs/AppSettings.vue"));
 
+    const primevue = usePrimeVue();
     const dialog = useDialog();
     const fluent = useFluent();
 
@@ -41,6 +47,7 @@ export const useSettingsStore = defineStore(
         await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
         document.documentElement.style.fontSize = newUi.scale;
         fluent.bundles.value = [LOCALES[newUi.language]];
+        primevue.config.locale = PRIMEVUE_LOCALES[newUi.language];
       },
       { immediate: true },
     );
@@ -50,7 +57,10 @@ export const useSettingsStore = defineStore(
       wheelAction: "zoom",
     });
 
-    const usePaletteItemColorForStitchTools = ref(true);
+    const other = reactive<OtherOptions>({
+      usePaletteItemColorForStitchTools: true,
+      autoSaveInterval: 15,
+    });
 
     function openSettings() {
       dialog.open(AppSettings, {
@@ -61,7 +71,7 @@ export const useSettingsStore = defineStore(
     return {
       ui,
       viewport,
-      usePaletteItemColorForStitchTools,
+      other,
       openSettings,
     };
   },

@@ -5,7 +5,7 @@
     </template>
 
     <template v-if="appStateStore.openedPatterns?.length" #center>
-      <PatternSelector @switch="(patternPath) => patternsStore.openPattern(patternPath)" />
+      <PatternSelector @switch="(patternId) => patternsStore.loadPattern(patternId)" />
     </template>
 
     <template #end>
@@ -35,8 +35,8 @@
     {
       label: () => fluent.$t("label-file"),
       items: [
-        { label: () => fluent.$t("label-open"), command: patternsStore.loadPattern },
-        { label: () => fluent.$t("label-create"), command: patternsStore.createPattern },
+        { label: () => fluent.$t("label-open"), command: () => patternsStore.openPattern() },
+        { label: () => fluent.$t("label-create"), command: () => patternsStore.createPattern },
         { separator: true },
         {
           label: () => fluent.$t("label-save"),
@@ -57,7 +57,7 @@
         { separator: true },
         {
           label: () => fluent.$t("label-close"),
-          command: patternsStore.closePattern,
+          command: () => patternsStore.closePattern(),
           disabled: () => !patternsStore.pattern,
         },
       ],
@@ -66,11 +66,11 @@
       label: () => fluent.$t("label-pattern"),
       visible: () => patternsStore.pattern !== undefined,
       items: [
-        { label: () => fluent.$t("title-pattern-info"), command: patternsStore.updatePatternInfo },
-        { label: () => fluent.$t("title-fabric-properties"), command: patternsStore.updateFabric },
-        { label: () => fluent.$t("title-grid-properties"), command: patternsStore.updateGrid },
+        { label: () => fluent.$t("title-pattern-info"), command: () => patternsStore.updatePatternInfo() },
+        { label: () => fluent.$t("title-fabric-properties"), command: () => patternsStore.updateFabric() },
+        { label: () => fluent.$t("title-grid-properties"), command: () => patternsStore.updateGrid() },
       ],
     },
-    { label: () => fluent.$t("title-settings"), command: settingsStore.openSettings },
+    { label: () => fluent.$t("title-settings"), command: () => settingsStore.openSettings() },
   ]);
 </script>

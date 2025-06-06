@@ -1,8 +1,23 @@
-import { invoke } from "@tauri-apps/api/core";
-import { type PatternKey, PatternProject, Fabric, PatternInfo } from "#/schemas/index.ts";
+import { invoke } from "./index.ts";
+import { PatternProject, Fabric, PatternInfo } from "#/schemas";
 
-export async function loadPattern(filePath: string) {
-  const buffer = await invoke<ArrayBuffer>("load_pattern", undefined, { headers: { filePath } });
+export async function loadPattern(patternId: string) {
+  const buffer = await invoke<ArrayBuffer>("load_pattern", { patternId });
+  return PatternProject.deserialize(new Uint8Array(buffer));
+}
+
+export interface OpenPatternOptions {
+  /**
+   * Whether to restore the pattern from a backup file if it exists.
+   *
+   * If set to `true`, the command will attempt to restore the pattern from a backup file.
+   * If set to `false`, it will not attempt to restore from a backup.
+   * If not provided and a backup file exists, it will return an error that the backup file exists and the user must choose how to proceed.
+   */
+  restoreFromBackup?: boolean;
+}
+export async function openPattern(filePath: string, options?: OpenPatternOptions) {
+  const buffer = await invoke<ArrayBuffer>("open_pattern", { filePath, ...options });
   return PatternProject.deserialize(new Uint8Array(buffer));
 }
 
@@ -11,18 +26,37 @@ export async function createPattern(fabric: Fabric) {
   return PatternProject.deserialize(new Uint8Array(buffer));
 }
 
-export function savePattern(patternKey: PatternKey, filePath: string) {
-  return invoke<void>("save_pattern", undefined, { headers: { patternKey, filePath } });
+export function savePattern(patternId: string, filePath: string) {
+  return invoke<void>("save_pattern", { patternId, filePath });
 }
 
-export function closePattern(patternKey: PatternKey) {
-  return invoke<void>("close_pattern", undefined, { headers: { patternKey } });
+export function saveAllPatterns() {
+  return invoke<void>("save_all_patterns");
 }
 
-export function getPatternFilePath(patternKey: PatternKey) {
-  return invoke<string>("get_pattern_file_path", { patternKey });
+export interface ClosePatternOptions {
+  /**
+   * Whether to bypass unsaved changes check and force close the pattern.
+   * @default false
+   */
+  force?: boolean;
+}
+export function closePattern(patternId: string, options?: ClosePatternOptions) {
+  return invoke<void>("close_pattern", { patternId, ...options });
 }
 
-export function updatePatternInfo(patternKey: PatternKey, info: PatternInfo) {
-  return invoke<void>("update_pattern_info", PatternInfo.serialize(info), { headers: { patternKey } });
+export function closeAllPatterns() {
+  return invoke<void>("close_all_patterns");
+}
+
+export function getUnsavedPatterns() {
+  return invoke<string[]>("get_unsaved_patterns");
+}
+
+export function getPatternFilePath(patternId: string) {
+  return invoke<string>("get_pattern_file_path", { patternId });
+}
+
+export function updatePatternInfo(patternId: string, info: PatternInfo) {
+  return invoke<void>("update_pattern_info", PatternInfo.serialize(info), { headers: { patternId } });
 }

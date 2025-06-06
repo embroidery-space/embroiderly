@@ -18,7 +18,7 @@
     "@tauri-apps/plugin-fs": "^2.3.0",
     "@tauri-apps/plugin-log": "^2.4.0",
     "@tauri-apps/plugin-opener": "^2.2.7",
-    "@tauri-store/pinia": "^3.6.0",
+    "@tauri-store/pinia": "^3.7.0",
     "@vueuse/components": "^13.3.0",
     "@vueuse/core": "^13.0.0",
     "@zorsh/zorsh": "^0.3.3",
@@ -28,7 +28,9 @@
     "pinia": "^3.0.2",
     "pinia-plugin-persistedstate": "^4.3.0",
     "pixi.js": "^8.9.2",
+    "primelocale": "^2.1.2",
     "primevue": "^4.3.5",
+    "uuid": "^11.1.0",
     "vue": "^3.5.16"
   },
   "devDependencies": {
