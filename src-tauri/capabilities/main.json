@@ -22,6 +22,7 @@
     "dialog:allow-save",
     "opener:allow-open-url",
     "opener:allow-default-urls",
+    "process:allow-restart",
     "log:allow-log",
     "updater:allow-check",
     "updater:allow-download-and-install",
