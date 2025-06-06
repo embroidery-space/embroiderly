@@ -5,6 +5,10 @@
 label-file = Файл
 label-pattern = Схема
 
+label-help = Допомога
+label-license = Ліцензія
+label-about = Про застосунок
+
 label-open = Відкрити
 label-create = Створити
 label-save = Зберегти
@@ -13,6 +17,7 @@ label-save-changes = Зберегти зміни
 label-close = Закрити
 label-export = Експортувати
 label-cancel = Скасувати
+label-copy = Скопіювати
 
 ## Names of the stitches and other instruments.
 
@@ -181,6 +186,12 @@ message-unsaved-patterns =
   У вас є схеми із незбереженими змінами:
   { $patterns }
   Чи хочете ви зберегти їх перед закриттям застосунку?
+
+title-system-info = Інформація про систему
+message-system-info =
+  Операційна система: { $osType } { $osVersion } { $osArch }
+  Версія { -app-name }: { $appVersion }
+  Версія WebView: { $webviewVersion }
 
 title-error = Помилка
 

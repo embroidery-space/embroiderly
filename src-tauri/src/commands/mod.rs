@@ -7,6 +7,7 @@ pub mod palette;
 pub mod path;
 pub mod pattern;
 pub mod stitches;
+pub mod system;
 
 #[macro_export]
 macro_rules! parse_command_payload {

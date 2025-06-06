@@ -5,6 +5,10 @@
 label-file = File
 label-pattern = Pattern
 
+label-help = Help
+label-license = License
+label-about = About
+
 label-open = Open
 label-create = Create
 label-save = Save
@@ -13,6 +17,7 @@ label-save-changes = Save Changes
 label-close = Close
 label-export = Export
 label-cancel = Cancel
+label-copy = Copy
 
 ## Names of the stitches and other instruments.
 
@@ -178,6 +183,12 @@ message-unsaved-patterns =
   You have patterns with unsaved changes:
   { $patterns }.
   Do you want to save them before closing the application?
+
+title-system-info = System Information
+message-system-info =
+  Operating System: { $osType } { $osVersion } { $osArch }
+  { -app-name } version: { $appVersion }
+  WebView version: { $webviewVersion }
 
 title-error = Error
 

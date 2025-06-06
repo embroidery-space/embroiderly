@@ -62,6 +62,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     }
 
     builder = builder
+      .plugin(tauri_plugin_clipboard_manager::init())
       .plugin(tauri_plugin_dialog::init())
       .plugin(tauri_plugin_fs::init())
       .plugin(tauri_plugin_opener::init())
@@ -92,6 +93,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::history::undo,
     commands::history::redo,
     commands::fonts::load_stitch_font,
+    commands::system::get_system_info,
   ]);
 
   builder

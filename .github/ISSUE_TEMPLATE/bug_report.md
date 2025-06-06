@@ -27,12 +27,15 @@ assignees: niusia-ua
 
 **Screenshots**
 
-<!-- If applicable, add screenshots or videos to help explain your problem. -->
+<!-- If applicable, add screenshots or screenrecordings to help explain your problem. -->
 
 **System Information**
 
-- OS: <!-- e.g. Windows 11 or Ubuntu 22.04 -->
-- App Version: <!-- e.g. 0.3.0 -->
+<!-- You can obtain this information under Help -> About in the application menu. -->
+
+- Operating System: <!-- e.g. Windows 11 or Ubuntu 22.04 -->
+- Embroiderly Version: <!-- e.g. 0.3.0 -->
+- WebView version: <!-- e.g. 136.0.3240.92 -->
 
 **Additional Context**
 
