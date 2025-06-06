@@ -9,6 +9,8 @@ label-help = Help
 label-license = License
 label-about = About
 
+label-manage = Manage
+
 label-open = Open
 label-create = Create
 label-save = Save
@@ -29,6 +31,20 @@ label-stitch-back = Back Stitch
 label-stitch-straight = Straight Stitch
 label-stitch-french-knot = French Knot
 label-stitch-bead = Bead
+
+## Titles, labels and messages related to the updater.
+
+label-check-for-updates = Check for Updates
+
+title-update-available = Update Available
+message-update-available =
+  A new version of { -app-name } is available!
+  Your current version: { $currentVersion }. The latest version: { $version } dated { DATETIME($date, dateStyle: "long") }.
+  Do you want to download and install it now?
+  Please save your patterns before proceeding, because the application will be restarted.
+
+title-no-updates-available = No Update Available
+message-no-updates-available = There are currently no updates available.
 
 ## Titles, labels and messages related to the welcome page.
 

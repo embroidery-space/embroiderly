@@ -1,5 +1,5 @@
 <template>
-  <Toolbar data-tauri-drag-region class="border-0 border-b rounded-none p-0" pt:end:class="h-full">
+  <Toolbar data-tauri-drag-region class="border-0 border-b rounded-none p-0" pt:end:class="h-full gap-2">
     <template #start>
       <Menubar :model="menuOptions" class="border-0 rounded-none" />
     </template>
@@ -9,17 +9,29 @@
     </template>
 
     <template #end>
+      <Button
+        v-tooltip.bottom="$t('label-manage')"
+        aria-haspopup="true"
+        aria-controls="manage-menu"
+        text
+        :loading="settingsStore.loading"
+        severity="secondary"
+        icon="i-prime:cog"
+        class="size-6 p-0"
+        @click="manageMenu?.toggle"
+      />
       <Suspense> <WindowControls /> </Suspense>
     </template>
   </Toolbar>
+  <Menu id="manage-menu" ref="manage-menu" popup :model="manageOptions" />
 </template>
 
 <script setup lang="ts">
   import { writeText } from "@tauri-apps/plugin-clipboard-manager";
   import { openUrl } from "@tauri-apps/plugin-opener";
-  import { ref } from "vue";
+  import { ref, useTemplateRef } from "vue";
   import { useFluent } from "fluent-vue";
-  import { Menubar, Toolbar, useConfirm } from "primevue";
+  import { Button, Menu, Menubar, Toolbar, useConfirm } from "primevue";
   import type { MenuItem } from "primevue/menuitem";
 
   import { SystemApi } from "#/api/";
@@ -88,7 +100,16 @@
         { label: () => fluent.$t("label-about"), command: () => showSystemInfo() },
       ],
     },
+  ]);
+
+  const manageMenu = useTemplateRef("manage-menu");
+  const manageOptions = ref<MenuItem[]>([
     { label: () => fluent.$t("title-settings"), command: () => settingsStore.openSettings() },
+    { separator: true },
+    {
+      label: () => fluent.$t("label-check-for-updates"),
+      command: () => settingsStore.checkForUpdates(),
+    },
   ]);
 
   async function showSystemInfo() {

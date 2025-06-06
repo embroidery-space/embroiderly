@@ -19,6 +19,8 @@
     "@tauri-apps/plugin-fs": "^2.3.0",
     "@tauri-apps/plugin-log": "^2.4.0",
     "@tauri-apps/plugin-opener": "^2.2.7",
+    "@tauri-apps/plugin-process": "^2.2.1",
+    "@tauri-apps/plugin-updater": "^2.7.1",
     "@tauri-store/pinia": "^3.7.0",
     "@vueuse/components": "^13.3.0",
     "@vueuse/core": "^13.0.0",

@@ -9,6 +9,8 @@ label-help = Допомога
 label-license = Ліцензія
 label-about = Про застосунок
 
+label-manage = Керувати
+
 label-open = Відкрити
 label-create = Створити
 label-save = Зберегти
@@ -29,6 +31,20 @@ label-stitch-back = Зворотний стібок
 label-stitch-straight = Прямий стібок
 label-stitch-french-knot = Фр. вузелок
 label-stitch-bead = Бісер
+
+## Titles, labels and messages related to the updater.
+
+label-check-for-updates = Перевірити наявність оновлень
+
+title-update-available = Доступне оновлення
+message-update-available =
+  Доступна нова версія { -app-name }!
+  Ваша поточна версія: { $currentVersion }. Остання версія: { $version } від { DATETIME($date, dateStyle: "long") }.
+  Чи хочете ви завантажити та встановити його зараз?
+  Будь ласка, збережіть свої схеми перед продовженням, оскільки застосунок буде перезапущено.
+
+title-no-updates-available = Оновлень немає
+message-no-updates-available = Наразі немає доступних оновлень.
 
 ## Titles, labels and messages related to the welcome page.
 
