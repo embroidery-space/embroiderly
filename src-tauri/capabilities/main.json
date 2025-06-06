@@ -17,6 +17,7 @@
     "core:window:allow-inner-size",
     "core:window:allow-internal-toggle-maximize",
     "core:webview:allow-internal-toggle-devtools",
+    "clipboard-manager:allow-write-text",
     "dialog:allow-open",
     "dialog:allow-save",
     "opener:allow-open-url",

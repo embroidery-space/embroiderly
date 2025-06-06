@@ -15,15 +15,20 @@
 </template>
 
 <script setup lang="ts">
+  import { writeText } from "@tauri-apps/plugin-clipboard-manager";
+  import { openUrl } from "@tauri-apps/plugin-opener";
   import { ref } from "vue";
   import { useFluent } from "fluent-vue";
-  import { Menubar, Toolbar } from "primevue";
+  import { Menubar, Toolbar, useConfirm } from "primevue";
   import type { MenuItem } from "primevue/menuitem";
+
+  import { SystemApi } from "#/api/";
+  import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
+
   import PatternSelector from "./toolbar/PatternSelector.vue";
   import WindowControls from "./toolbar/WindowControls.vue";
-  import { useAppStateStore } from "#/stores/state";
-  import { usePatternsStore } from "#/stores/patterns";
-  import { useSettingsStore } from "#/stores/settings";
+
+  const confirm = useConfirm();
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -71,6 +76,32 @@
         { label: () => fluent.$t("title-grid-properties"), command: () => patternsStore.updateGrid() },
       ],
     },
+    {
+      label: () => fluent.$t("label-help"),
+      items: [
+        { label: () => fluent.$t("label-learn-more"), command: () => openUrl("https://embroiderly.niusia.me") },
+        {
+          label: () => fluent.$t("label-license"),
+          command: () => openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE"),
+        },
+        { separator: true },
+        { label: () => fluent.$t("label-about"), command: () => showSystemInfo() },
+      ],
+    },
     { label: () => fluent.$t("title-settings"), command: () => settingsStore.openSettings() },
   ]);
+
+  async function showSystemInfo() {
+    const systemInfo = await SystemApi.getSystemInfo();
+    const systemInfoMessage = fluent.$t("message-system-info", { ...systemInfo });
+    confirm.require({
+      header: fluent.$t("title-system-info"),
+      message: systemInfoMessage,
+      acceptLabel: fluent.$t("label-copy"),
+      rejectLabel: fluent.$t("label-close"),
+      accept: async () => {
+        await writeText(systemInfoMessage);
+      },
+    });
+  }
 </script>
