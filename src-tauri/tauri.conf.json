@@ -23,9 +23,9 @@
     // For Windows, we have a custom NSIS installer which allows users to select file associations.
     // Only `embproj` is always associated with the application, while others are optional.
     "fileAssociations": [
-      { "ext": ["embproj"], "description": "Embroidery Project (Embroiderly)" },
-      { "ext": ["xsd"], "description": "Cross-Stitch Design (Pattern Maker)" },
-      { "ext": ["oxs"], "description": "Open Cross-Stitch Pattern (Ursa Win/MacStitch)" }
+      { "ext": ["embproj"], "rank": "Owner", "role": "Editor" },
+      { "ext": ["xsd"], "rank": "Alternate", "role": "Viewer" },
+      { "ext": ["oxs"], "rank": "Alternate", "role": "Editor" }
     ],
     "windows": {
       "nsis": {
