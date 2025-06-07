@@ -25,7 +25,12 @@
       "nsis": {
         "displayLanguageSelector": true,
         "languages": ["English", "Ukrainian"],
-        "installMode": "both"
+        "installMode": "both",
+        "template": "bundle/windows/installer.nsi",
+        "customLanguageFiles": {
+          "English": "bundle/windows/languages/English.nsh",
+          "Ukrainian": "bundle/windows/languages/Ukrainian.nsh"
+        }
       }
     }
   },
