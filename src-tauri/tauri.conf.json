@@ -20,6 +20,8 @@
     "licenseFile": "../LICENSE",
     "category": "GraphicsAndDesign",
     "shortDescription": "A free and open-source desktop application for designing cross-stitch patterns.",
+    // For Windows, we have a custom NSIS installer which allows users to select file associations.
+    // Only `embproj` is always associated with the application, while others are optional.
     "fileAssociations": [
       { "ext": ["embproj"], "description": "Embroidery Project (Embroiderly)" },
       { "ext": ["xsd"], "description": "Cross-Stitch Design (Pattern Maker)" },
