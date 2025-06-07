@@ -20,7 +20,11 @@
     "licenseFile": "../LICENSE",
     "category": "GraphicsAndDesign",
     "shortDescription": "A free and open-source desktop application for designing cross-stitch patterns.",
-    "fileAssociations": [{ "ext": ["embproj"], "description": "Embroidery Project (Embroiderly)" }],
+    "fileAssociations": [
+      { "ext": ["embproj"], "description": "Embroidery Project (Embroiderly)" },
+      { "ext": ["xsd"], "description": "Cross-Stitch Design (Pattern Maker)" },
+      { "ext": ["oxs"], "description": "Open Cross-Stitch Pattern (Ursa Win/MacStitch)" }
+    ],
     "windows": {
       "nsis": {
         "displayLanguageSelector": true,

@@ -25,3 +25,8 @@ LangString webview2Downloading ${LANG_ENGLISH} "Downloading WebView2 bootstrappe
 LangString webview2InstallError ${LANG_ENGLISH} "Error: Installing WebView2 failed with exit code $1"
 LangString webview2InstallSuccess ${LANG_ENGLISH} "WebView2 installed successfully"
 LangString deleteAppData ${LANG_ENGLISH} "Delete the application data"
+
+; CUSTOM: Messages for the File Associations page
+LangString fileAssociationsTitle ${LANG_ENGLISH} "File Associations"
+LangString fileAssociationsSubtitle ${LANG_ENGLISH} "Select the file types you want to associate with ${PRODUCTNAME}."
+LangString fileAssociationsDescription ${LANG_ENGLISH} "This will allow you to open these files by double-clicking them or via the $\"Open With$\" context menu in Windows Explorer.$\nNote that this will affect already associated applications. You can change these settings later in the Windows Settings."

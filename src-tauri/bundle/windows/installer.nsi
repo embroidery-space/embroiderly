@@ -377,7 +377,73 @@ Var AppStartMenuFolder
 ; 7. Installation page
 !insertmacro MUI_PAGE_INSTFILES
 
-; 8. Finish page
+; 8. CUSTOM: File Associations page
+Var FileAssocEmbProjCheckbox
+Var FileAssocXsdCheckbox
+Var FileAssocOxsCheckbox
+Var FileAssocEmbProjState
+Var FileAssocXsdState
+Var FileAssocOxsState
+Page custom PageFileAssociations PageLeaveFileAssociations
+Function PageFileAssociations
+  !insertmacro MUI_HEADER_TEXT "$(fileAssociationsTitle)" "$(fileAssociationsSubtitle)"
+  nsDialogs::Create 1018
+  Pop $0 ; $0 is the dialog HWND
+
+  ${IfThen} $(^RTL) = 1 ${|} nsDialogs::SetRTL $(^RTL) ${|}
+
+  ; Description
+  ${NSD_CreateLabel} 0 12u 100% 32u "$(fileAssociationsDescription)"
+  Pop $1
+
+  ; .embproj checkbox (always checked and disabled)
+  ${NSD_CreateCheckBox} 12u 48u -12u 8u ".embproj"
+  Pop $FileAssocEmbProjCheckbox
+  SendMessage $FileAssocEmbProjCheckbox ${BM_SETCHECK} ${BST_CHECKED} 0
+  EnableWindow $FileAssocEmbProjCheckbox 0
+
+  ; .xsd checkbox
+  ${NSD_CreateCheckBox} 12u 63u -12u 8u ".xsd"
+  Pop $FileAssocXsdCheckbox
+  ${If} $FileAssocXsdState == ${BST_CHECKED}
+    SendMessage $FileAssocXsdCheckbox ${BM_SETCHECK} ${BST_CHECKED} 0
+  ${EndIf}
+
+  ; .oxs checkbox
+  ${NSD_CreateCheckBox} 12u 78u -12u 8u ".oxs"
+  Pop $FileAssocOxsCheckbox
+  ${If} $FileAssocOxsState == ${BST_CHECKED}
+    SendMessage $FileAssocOxsCheckbox ${BM_SETCHECK} ${BST_CHECKED} 0
+  ${EndIf}
+
+  nsDialogs::Show
+FunctionEnd
+Function PageLeaveFileAssociations
+  ${NSD_GetState} $FileAssocEmbProjCheckbox $FileAssocEmbProjState
+  ${NSD_GetState} $FileAssocXsdCheckbox $FileAssocXsdState
+  ${NSD_GetState} $FileAssocOxsCheckbox $FileAssocOxsState
+
+  ; Create file associations based on user selection
+  {{#each file_associations as |association| ~}}
+    {{#each association.ext as |ext| ~}}
+      {{#if (eq ext "embproj")}}
+        ${If} $FileAssocEmbProjState == ${BST_CHECKED}
+          !insertmacro APP_ASSOCIATE "{{ext}}" "{{or association.name ext}}" "{{association-description association.description ext}}" "$INSTDIR\${MAINBINARYNAME}.exe,0" "Open with ${PRODUCTNAME}" "$INSTDIR\${MAINBINARYNAME}.exe $\"%1$\""
+        ${EndIf}
+      {{else if (eq ext "xsd")}}
+        ${If} $FileAssocXsdState == ${BST_CHECKED}
+          !insertmacro APP_ASSOCIATE "{{ext}}" "{{or association.name ext}}" "{{association-description association.description ext}}" "$INSTDIR\${MAINBINARYNAME}.exe,0" "Open with ${PRODUCTNAME}" "$INSTDIR\${MAINBINARYNAME}.exe $\"%1$\""
+        ${EndIf}
+      {{else if (eq ext "oxs")}}
+        ${If} $FileAssocOxsState == ${BST_CHECKED}
+          !insertmacro APP_ASSOCIATE "{{ext}}" "{{or association.name ext}}" "{{association-description association.description ext}}" "$INSTDIR\${MAINBINARYNAME}.exe,0" "Open with ${PRODUCTNAME}" "$INSTDIR\${MAINBINARYNAME}.exe $\"%1$\""
+        ${EndIf}
+      {{/if}}
+    {{/each}}
+  {{/each}}
+FunctionEnd
+
+; 9. Finish page
 ;
 ; Don't auto jump to finish page after installation page,
 ; because the installation page has useful info that can be used debug any issues with the installer.
@@ -493,6 +559,10 @@ Function .onInit
     Call RestorePreviousInstallLocation
   ${EndIf}
 
+  ; CUSTOM: Initialize file association states (embproj is always true/checked, others default to false/unchecked).
+  StrCpy $FileAssocEmbProjState ${BST_CHECKED}
+  StrCpy $FileAssocXsdState ${BST_UNCHECKED}
+  StrCpy $FileAssocOxsState ${BST_UNCHECKED}
 
   !if "${INSTALLMODE}" == "both"
     !insertmacro MULTIUSER_INIT
@@ -636,12 +706,7 @@ Section Install
     File /a "/oname={{this}}" "{{no-escape @key}}"
   {{/each}}
 
-  ; Create file associations
-  {{#each file_associations as |association| ~}}
-    {{#each association.ext as |ext| ~}}
-       !insertmacro APP_ASSOCIATE "{{ext}}" "{{or association.name ext}}" "{{association-description association.description ext}}" "$INSTDIR\${MAINBINARYNAME}.exe,0" "Open with ${PRODUCTNAME}" "$INSTDIR\${MAINBINARYNAME}.exe $\"%1$\""
-    {{/each}}
-  {{/each}}
+  ; CUSTOM: Original file associations setup is moved to the File Associations page.
 
   ; Register deep links
   {{#each deep_link_protocols as |protocol| ~}}

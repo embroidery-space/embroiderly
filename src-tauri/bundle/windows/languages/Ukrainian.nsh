@@ -25,3 +25,8 @@ LangString webview2Downloading ${LANG_UKRAINIAN} "Завантаження WebVi
 LangString webview2InstallError ${LANG_UKRAINIAN} "Помилка: не вдалося встановити WebView2, код виходу - $1"
 LangString webview2InstallSuccess ${LANG_UKRAINIAN} "WebView2 успішно встановлено "
 LangString deleteAppData ${LANG_UKRAINIAN} "Видалити дані програми"
+
+; CUSTOM: Messages for the File Associations page
+LangString fileAssociationsTitle ${LANG_UKRAINIAN} "Асоціації файлів"
+LangString fileAssociationsSubtitle ${LANG_UKRAINIAN} "Виберіть типи файлів, які ви хочете асоціювати з ${PRODUCTNAME}."
+LangString fileAssociationsDescription ${LANG_UKRAINIAN} "Це дозволить вам відкривати ці файли, двічі клацнувши на них або через контекстне меню $\"Відкрити за допомогою$\" в провіднику Windows.$\nЗверніть увагу, що це вплине на вже асоційовані програми. Ви можете змінити ці налаштування пізніше в налаштуваннях Windows."
