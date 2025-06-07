@@ -55,7 +55,7 @@
   } from "primevue";
   import { useFluent } from "fluent-vue";
   import { PatternApi } from "./api/";
-  import { useAppStateStore, usePatternsStore } from "./stores/";
+  import { useAppStateStore, usePatternsStore, useSettingsStore } from "./stores/";
 
   const AppHeader = defineAsyncComponent(() => import("./components/AppHeader.vue"));
   const WelcomePanel = defineAsyncComponent(() => import("./components/WelcomePanel.vue"));
@@ -70,6 +70,7 @@
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
+  const settingsStore = useSettingsStore();
 
   const appWindow = getCurrentWebviewWindow();
 
@@ -106,9 +107,9 @@
   });
 
   appWindow.onCloseRequested(async (e) => {
-    e.preventDefault();
     const unsavedPatterns = await PatternApi.getUnsavedPatterns();
     if (unsavedPatterns.length) {
+      e.preventDefault();
       const patterns = appStateStore.openedPatterns
         .filter(({ id }) => unsavedPatterns.includes(id))
         .map(({ title }) => `- ${title}`)
@@ -129,20 +130,30 @@
     }
   });
 
-  const openedFilesWereProcessed = useSessionStorage("openedFilesWereProcessed", false);
-
-  onMounted(async () => {
+  const openedFilesProcessed = useSessionStorage("openedFilesProcessed", false);
+  async function processOpenedFiles() {
     // @ts-expect-error This property is injected on the Rust side when handling file associations.
     const openedFiles: string[] = window.openedFiles;
 
     // Process opened files only if we haven't processed them yet.
-    if (openedFiles.length && !openedFilesWereProcessed.value) {
+    if (openedFiles.length && !openedFilesProcessed.value) {
       for (const file of openedFiles) await patternsStore.openPattern(file);
-      openedFilesWereProcessed.value = true;
+      openedFilesProcessed.value = true;
     } else {
       const currentPattern = appStateStore.currentPattern;
       if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
     }
+  }
+
+  async function checkForUpdates() {
+    await settingsStore.$tauri.start();
+    if (settingsStore.updater.autoCheck) {
+      await settingsStore.checkForUpdates({ auto: true });
+    }
+  }
+
+  onMounted(async () => {
+    await Promise.all([processOpenedFiles(), checkForUpdates()]);
   });
 
   window.onunhandledrejection = (event) => {
