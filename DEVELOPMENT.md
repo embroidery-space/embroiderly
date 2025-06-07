@@ -52,9 +52,7 @@ To get started working on Embroiderly, you will first need to install a few depe
    We are using the latest stable Rust version and the latest LTS Node.js version.
    Also, we are using the nightly Rust edition for running its tooling with unstable features.
 
-3. [Cargo Tauri CLI](https://tauri.app/reference/cli).
-
-4. NPM and Cargo dependecnies.
+3. NPM and Cargo dependecnies.
 
    Run `npm install` in the porject root.
    Cargo dependencies will be installed during the first run of the project.
@@ -129,11 +127,6 @@ Here is a recommended setup:
    ```
 
 ## Running and Building Application
-
-We prefer using Cargo Tauri CLI to work with the project.
-
-> By default, Tauri installs a `@tauri-apps/cli` NPM dev dependency in a new project.
-> However, this caused some trouble with management lock files when working with different OSs, so we removed it and used Cargo Tauri CLI instead.
 
 Refer to the [reference](https://tauri.app/reference/cli) to see available commands.
 

@@ -30,9 +30,6 @@ jobs:
         with:
           workspaces: "./src-tauri -> target"
       - run: npm ci
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: tauri-cli
       - uses: tauri-apps/tauri-action@dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,6 +38,4 @@ jobs:
         with:
           tagName: v__VERSION__
           releaseName: Embroiderly v__VERSION__
-          releaseDraft: true
           updaterJsonPreferNsis: true
-          tauriScript: cargo tauri
