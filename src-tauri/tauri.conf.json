@@ -19,6 +19,9 @@
     "license": "GPL-3.0-or-later",
     "licenseFile": "../LICENSE",
     "category": "GraphicsAndDesign",
+    "copyright": "Embroiderly",
+    "publisher": "Embroiderly",
+    "homepage": "https://embroiderly.niusia.me",
     "shortDescription": "A free and open-source desktop application for designing cross-stitch patterns.",
     // For Windows, we have a custom NSIS installer which allows users to select file associations.
     // Only `embproj` is always associated with the application, while others are optional.
