@@ -36,6 +36,9 @@
         "languages": ["English", "Ukrainian"],
         "installMode": "both",
         "template": "bundle/windows/installer.nsi",
+        "installerIcon": "icons/icon.ico",
+        "headerImage": "bundle/windows/assets/headerimage.bmp",
+        "sidebarImage": "bundle/windows/assets/sidebarimage.bmp",
         "customLanguageFiles": {
           "English": "bundle/windows/languages/English.nsh",
           "Ukrainian": "bundle/windows/languages/Ukrainian.nsh"
