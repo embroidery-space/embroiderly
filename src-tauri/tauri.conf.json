@@ -19,13 +19,30 @@
     "license": "GPL-3.0-or-later",
     "licenseFile": "../LICENSE",
     "category": "GraphicsAndDesign",
+    "copyright": "Embroiderly",
+    "publisher": "Embroiderly",
+    "homepage": "https://embroiderly.niusia.me",
     "shortDescription": "A free and open-source desktop application for designing cross-stitch patterns.",
-    "fileAssociations": [{ "ext": ["embproj"], "description": "Embroidery Project (Embroiderly)" }],
+    // For Windows, we have a custom NSIS installer which allows users to select file associations.
+    // Only `embproj` is always associated with the application, while others are optional.
+    "fileAssociations": [
+      { "ext": ["embproj"], "rank": "Owner", "role": "Editor" },
+      { "ext": ["xsd"], "rank": "Alternate", "role": "Viewer" },
+      { "ext": ["oxs"], "rank": "Alternate", "role": "Editor" }
+    ],
     "windows": {
       "nsis": {
         "displayLanguageSelector": true,
         "languages": ["English", "Ukrainian"],
-        "installMode": "both"
+        "installMode": "both",
+        "template": "bundle/windows/installer.nsi",
+        "installerIcon": "icons/icon.ico",
+        "headerImage": "bundle/windows/assets/headerimage.bmp",
+        "sidebarImage": "bundle/windows/assets/sidebarimage.bmp",
+        "customLanguageFiles": {
+          "English": "bundle/windows/languages/English.nsh",
+          "Ukrainian": "bundle/windows/languages/Ukrainian.nsh"
+        }
       }
     }
   },
