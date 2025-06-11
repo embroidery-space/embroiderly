@@ -76,4 +76,10 @@ pub enum PatternError {
 
   #[error("Err06: Pattern({0}) has unsaved changes.")]
   UnsavedChanges(uuid::Uuid),
+
+  #[error("Err07: Unsupported pattern export type: {0}")]
+  UnsupportedPatternExportType(String),
+
+  #[error("Err08: Failed to export pattern: {0}")]
+  FailedToExport(#[source] anyhow::Error),
 }

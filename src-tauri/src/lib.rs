@@ -3,14 +3,13 @@ use std::sync::RwLock;
 use state::{HistoryStateInner, PatternsState};
 use tauri::Manager as _;
 
-pub mod commands;
 pub mod state;
+use crate::state::HistoryState;
 
 mod core;
 pub use core::pattern::*;
 
-use crate::state::HistoryState;
-
+mod commands;
 mod error;
 mod logger;
 mod utils;
@@ -78,6 +77,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::pattern::create_pattern,
     commands::pattern::save_pattern,
     commands::pattern::save_all_patterns,
+    commands::pattern::export_pattern,
     commands::pattern::close_pattern,
     commands::pattern::close_all_patterns,
     commands::pattern::get_unsaved_patterns,

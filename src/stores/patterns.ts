@@ -29,6 +29,10 @@ import {
 } from "#/error.ts";
 
 const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
+const EXPORT_FILTERS: DialogFilter[] = [
+  { name: "OXS", extensions: ["oxs"] },
+  { name: "PDF", extensions: ["pdf"] },
+];
 
 export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
   /**
@@ -165,10 +169,11 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       try {
         const defaultPath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
-        const path = await save({ defaultPath, filters: SAVE_AS_FILTERS.filter((f) => f.extensions.includes(ext)) });
+        const path = await save({ defaultPath, filters: EXPORT_FILTERS.filter((f) => f.extensions.includes(ext)) });
         if (path === null) return;
         loading.value = true;
-        await PatternApi.savePattern(pattern.value.id, path);
+        if (ext === "oxs") await PatternApi.savePattern(pattern.value.id, path);
+        else await PatternApi.exportPattern(pattern.value.id, path);
       } finally {
         loading.value = false;
       }

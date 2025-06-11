@@ -34,9 +34,16 @@ tauri-plugin-updater = "2.7.1"
 tauri-plugin-prevent-default = "2.1.1"
 tauri-plugin-pinia = "3.6.0"
 
-# Parsing
+# Templating
+askama = "0.14.0"
+
+# Parsing pattern files
 xsp-parsers = { git = "https://github.com/embroidery-space/xsp-parsers.git", rev = "ae67e88891bade1437daaad1fbaee62600ef5f7e" }
 quick-xml = "0.37.5"
+
+# Exporting patterns to PDF
+typst-pdf = "0.13.1"
+typst-as-lib = "0.14.3"
 
 # Archiving
 zip = { version = "4.0.0", features = [

@@ -69,7 +69,10 @@
         {
           label: () => fluent.$t("label-export"),
           disabled: () => !patternsStore.pattern,
-          items: [{ label: "OXS", command: () => patternsStore.exportPattern("oxs") }],
+          items: [
+            { label: "OXS", command: () => patternsStore.exportPattern("oxs") },
+            { label: "PDF", command: () => patternsStore.exportPattern("pdf") },
+          ],
         },
         { separator: true },
         {
