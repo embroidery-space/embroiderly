@@ -39,6 +39,7 @@
       {% if let Some(symbol_font) = palitem.symbol_font %}
         #set text(font: "{{ symbol_font }}")
       {% endif %}
+      #set align(center)
       {{ palitem.get_symbol() }}
     ],
     [{{ palitem.brand }}],
