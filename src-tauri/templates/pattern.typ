@@ -14,14 +14,20 @@
 )
 #set text(font: "Noto Serif", size: 14pt)
 
-*Pattern name:* {{ info.title }} \
-*Designed by:*
-  {{ info.author }}
-  {%- if !info.copyright.is_empty() %}
-    © {{ info.copyright }}
-  {% endif %} \
-*Fabric:* {{ fabric.kind }} {{ fabric.name }}, {{ fabric.width }}W x {{ fabric.height }}H Stitches \
-*Description:* {{ info.description }}
+#table(
+  stroke: none,
+  columns: 2,
+  [*Pattern name:*], [{{ info.title }}],
+  [*Designed by:*], [
+    {{ info.author }}
+    {%- if !info.copyright.is_empty() %}
+      © {{ info.copyright }}
+    {% endif %}
+  ],
+  [*Fabric:*], [{{ fabric.kind }} {{ fabric.name }}, {{ fabric.width }}W x {{ fabric.height }}H Stitches],
+  table.cell(colspan: 2, [*Description:*]),
+  table.cell(colspan: 2, [{{ info.description }}])
+)
 
 #table(
   stroke: none,
