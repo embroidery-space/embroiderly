@@ -206,6 +206,7 @@ pub fn export_pattern<R: tauri::Runtime>(
     .pattern
     .get_all_symbol_fonts()
     .iter()
+    .chain([&patproj.display_settings.default_symbol_font.clone()])
     .map(|s| resources.join("fonts").join(format!("{}.ttf", s.to_case(Case::Snake))))
     .collect::<Vec<_>>();
 

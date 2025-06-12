@@ -36,9 +36,7 @@
   table.hline(),
   {% for palitem in palette %}
     [
-      {% if let Some(symbol_font) = palitem.symbol_font %}
-        #set text(font: "{{ symbol_font }}")
-      {% endif %}
+      #set text(font: "{{ palitem.symbol_font.as_deref().unwrap_or(default_symbol_font) }}")
       #set align(center)
       {{ palitem.get_symbol() }}
     ],

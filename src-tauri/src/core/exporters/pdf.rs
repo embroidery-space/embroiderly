@@ -12,6 +12,7 @@ struct TypstPatternTemplate<'a> {
   info: &'a PatternInfo,
   fabric: &'a Fabric,
   palette: &'a Vec<PaletteItem>,
+  default_symbol_font: &'a str,
 }
 
 pub fn export_pattern<P: AsRef<std::path::Path>>(
@@ -23,7 +24,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
   log::debug!("Exporting Pattern({:?}) to PDF", patproj.id);
   let file_path = file_path.as_ref();
 
-  let PatternProject { pattern, .. } = patproj;
+  let PatternProject { pattern, display_settings, .. } = patproj;
 
   let text_fonts = text_fonts.iter().map(std::fs::read).collect::<Result<Vec<_>, _>>()?;
   let symbol_fonts = symbol_fonts.iter().map(std::fs::read).collect::<Result<Vec<_>, _>>()?;
@@ -35,6 +36,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
       info: &pattern.info,
       fabric: &pattern.fabric,
       palette: &pattern.palette,
+      default_symbol_font: &display_settings.default_symbol_font,
     };
     let template = template.render()?;
 
