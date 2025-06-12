@@ -38,10 +38,15 @@
     [
       #set text(font: "{{ palitem.symbol_font.as_deref().unwrap_or(default_symbol_font) }}")
       #set align(center)
-      {{ palitem.get_symbol() }}
+      \{{ palitem.get_symbol() }}
     ],
     [{{ palitem.brand }}],
     [{{ palitem.number }}],
     [{{ palitem.name }}],
   {% endfor %}
 )
+
+{% for image in pattern_images %}
+  #pagebreak()
+  #image("{{ image }}")
+{% endfor %}

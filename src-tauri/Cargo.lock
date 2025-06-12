@@ -1414,6 +1414,7 @@ dependencies = [
  "tauri-plugin-updater",
  "tempfile",
  "thiserror 2.0.12",
+ "typst",
  "typst-as-lib",
  "typst-pdf",
  "uuid",

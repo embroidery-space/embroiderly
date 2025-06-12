@@ -322,11 +322,7 @@ pub struct PaletteItem {
 
 impl PaletteItem {
   pub fn get_symbol(&self) -> String {
-    if let Some(symbol) = &self.symbol {
-      symbol.get_symbol()
-    } else {
-      String::new()
-    }
+    self.symbol.as_ref().map(|s| s.get_symbol()).unwrap_or_default()
   }
 }
 
@@ -351,15 +347,11 @@ pub enum Symbol {
 impl Symbol {
   pub fn get_symbol(&self) -> String {
     match self {
-      Symbol::Code(code) => format!("\\u{{{code:04X}}}"),
-      Symbol::Char(ch) => ch.to_owned(),
+      Symbol::Code(code) => std::char::decode_utf16([*code])
+        .map(|r| r.unwrap_or(std::char::REPLACEMENT_CHARACTER))
+        .collect::<String>(),
+      Symbol::Char(char) => char.to_owned(),
     }
-    // match self {
-    //       Symbol::Char(char) => char.to_owned(),
-    //       Symbol::Code(code) => std::char::decode_utf16([*code])
-    //         .map(|r| r.unwrap_or(std::char::REPLACEMENT_CHARACTER))
-    //         .collect::<String>(),
-    //     }
   }
 }
 

@@ -7,12 +7,13 @@ use crate::core::pattern::*;
 mod tests;
 
 #[derive(askama::Template)]
-#[template(path = "pattern.typ", escape = "txt")]
+#[template(path = "pattern.typ", escape = "none")]
 struct TypstPatternTemplate<'a> {
   info: &'a PatternInfo,
   fabric: &'a Fabric,
-  palette: &'a Vec<PaletteItem>,
+  palette: &'a [PaletteItem],
   default_symbol_font: &'a str,
+  pattern_images: &'a [&'a str],
 }
 
 pub fn export_pattern<P: AsRef<std::path::Path>>(
@@ -29,6 +30,14 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
   let text_fonts = text_fonts.iter().map(std::fs::read).collect::<Result<Vec<_>, _>>()?;
   let symbol_fonts = symbol_fonts.iter().map(std::fs::read).collect::<Result<Vec<_>, _>>()?;
 
+  let pattern_images = [super::svg::export_pattern(patproj, 14.0)?];
+  let pattern_images = std::collections::HashMap::<String, Vec<u8>>::from_iter(
+    pattern_images
+      .into_iter()
+      .enumerate()
+      .map(|(i, image)| (format!("image{}.svg", i), image)),
+  );
+
   let typst_template = {
     use askama::Template as _;
 
@@ -37,12 +46,22 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
       fabric: &pattern.fabric,
       palette: &pattern.palette,
       default_symbol_font: &display_settings.default_symbol_font,
+      pattern_images: &pattern_images.keys().map(|s| s.as_str()).collect::<Vec<_>>(),
     };
     let template = template.render()?;
 
     typst_as_lib::TypstEngine::builder()
       .main_file(template)
       .fonts(text_fonts.into_iter().chain(symbol_fonts).collect::<Vec<_>>())
+      .with_static_file_resolver(
+        pattern_images
+          .into_iter()
+          .map(|(name, content)| {
+            use typst::syntax::{FileId, VirtualPath};
+            (FileId::new(None, VirtualPath::new(name)), content)
+          })
+          .collect::<Vec<_>>(),
+      )
       .build()
   };
 
