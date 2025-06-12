@@ -10,7 +10,7 @@ pub fn load_stitch_font<R: tauri::Runtime>(
 ) -> Result<tauri::ipc::Response> {
   let font_family = font_family.to_case(Case::Snake);
   let font_path = app_handle.path().resolve(
-    format!("resources/fonts/{font_family}.ttf"),
+    format!("resources/symbol_fonts/{font_family}.ttf"),
     tauri::path::BaseDirectory::Resource,
   )?;
   let content = std::fs::read(font_path)?;

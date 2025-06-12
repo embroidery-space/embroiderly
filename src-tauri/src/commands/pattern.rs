@@ -207,7 +207,11 @@ pub fn export_pattern<R: tauri::Runtime>(
     .get_all_symbol_fonts()
     .iter()
     .chain([&patproj.display_settings.default_symbol_font.clone()])
-    .map(|s| resources.join("fonts").join(format!("{}.ttf", s.to_case(Case::Snake))))
+    .map(|s| {
+      resources
+        .join("symbol_fonts")
+        .join(format!("{}.ttf", s.to_case(Case::Snake)))
+    })
     .collect::<Vec<_>>();
 
   exporters::export_pattern(patproj, file_path, text_fonts, symbol_fonts)?;
