@@ -42,7 +42,7 @@ quick-xml = "0.37.5"
 typst = "0.13.1"
 typst-pdf = "0.13.1"
 ## Third-party Typst libraries
-typst-as-lib = "0.14.3"
+typst-as-lib = "0.14.4"
 
 # Archiving
 zip = { version = "4.0.0", features = [
