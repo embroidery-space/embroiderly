@@ -65,7 +65,7 @@ pub fn export_pattern(patproj: &PatternProject, cell_size: f32) -> io::Result<Ve
 
 macro_rules! write_stitch_symbol {
   ($writer:expr, $x:expr, $y:expr, $symbol:expr, $symbol_font:expr, $font_size:expr) => {{
-    if let Some(symbol) = $symbol.as_ref().map(|s| s.get_symbol()) {
+    if let Some(symbol) = $symbol.as_ref().map(|s| s.render()) {
       $writer
         .create_element("text")
         .with_attributes([

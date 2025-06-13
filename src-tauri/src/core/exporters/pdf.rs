@@ -6,16 +6,6 @@ use crate::core::pattern::*;
 #[path = "pdf.test.rs"]
 mod tests;
 
-#[derive(askama::Template)]
-#[template(path = "pattern.typ", escape = "none")]
-struct TypstPatternTemplate<'a> {
-  info: &'a PatternInfo,
-  fabric: &'a Fabric,
-  palette: &'a [PaletteItem],
-  default_symbol_font: &'a str,
-  pattern_images: &'a [&'a str],
-}
-
 pub fn export_pattern<P: AsRef<std::path::Path>>(
   patproj: &PatternProject,
   file_path: P,
@@ -38,35 +28,29 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
       .map(|(i, image)| (format!("image{}.svg", i), image)),
   );
 
-  let typst_template = {
-    use askama::Template as _;
-
-    let template = TypstPatternTemplate {
-      info: &pattern.info,
-      fabric: &pattern.fabric,
-      palette: &pattern.palette,
-      default_symbol_font: &display_settings.default_symbol_font,
-      pattern_images: &pattern_images.keys().map(|s| s.as_str()).collect::<Vec<_>>(),
-    };
-    let template = template.render()?;
-
-    typst_as_lib::TypstEngine::builder()
-      .main_file(template)
-      .fonts(text_fonts.into_iter().chain(symbol_fonts).collect::<Vec<_>>())
-      .with_static_file_resolver(
-        pattern_images
-          .into_iter()
-          .map(|(name, content)| {
-            use typst::syntax::{FileId, VirtualPath};
-            (FileId::new(None, VirtualPath::new(name)), content)
-          })
-          .collect::<Vec<_>>(),
-      )
-      .build()
+  let typst_content = TypstContent {
+    info: pattern.info.clone(),
+    fabric: pattern.fabric.clone(),
+    palette: pattern.palette.clone(),
+    default_symbol_font: display_settings.default_symbol_font.clone(),
+    images: pattern_images.keys().cloned().collect(),
   };
+  let typst_template = typst_as_lib::TypstEngine::builder()
+    .main_file(include_str!("./templates/pattern.typ"))
+    .fonts(text_fonts.into_iter().chain(symbol_fonts).collect::<Vec<_>>())
+    .with_static_file_resolver(
+      pattern_images
+        .into_iter()
+        .map(|(name, content)| {
+          use typst::syntax::{FileId, VirtualPath};
+          (FileId::new(None, VirtualPath::new(name)), content)
+        })
+        .collect::<Vec<_>>(),
+    )
+    .build();
 
   let doc = {
-    let result = typst_template.compile();
+    let result = typst_template.compile_with_input(typst_content);
     for warning in &result.warnings {
       log::warn!("Typst compilation warning: {:?}", warning);
     }
@@ -81,4 +65,68 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
 
   log::debug!("Pattern({:?}) exported to PDF", patproj.id);
   Ok(())
+}
+
+#[derive(Debug)]
+struct TypstContent {
+  info: PatternInfo,
+  fabric: Fabric,
+  palette: Vec<PaletteItem>,
+  default_symbol_font: String,
+  images: Vec<String>,
+}
+
+impl From<TypstContent> for typst::foundations::Dict {
+  fn from(content: TypstContent) -> Self {
+    let info: typst::foundations::Dict = content.info.into();
+    let fabric: typst::foundations::Dict = content.fabric.into();
+    let palette: Vec<typst::foundations::Dict> = content.palette.into_iter().map(Into::into).collect();
+
+    // This dictionary will be passed to the Typst template through `sys.inputs`.
+    typst::foundations::dict!(
+      "info" => info,
+      "fabric" => fabric,
+      "palette" => palette,
+      "default_symbol_font" => content.default_symbol_font,
+      "images" => content.images,
+    )
+  }
+}
+
+impl From<PatternInfo> for typst::foundations::Dict {
+  fn from(info: PatternInfo) -> Self {
+    typst::foundations::dict!(
+      "title" => info.title,
+      "author" => info.author,
+      "copyright" => info.copyright,
+      "description" => info.description,
+    )
+  }
+}
+
+impl From<Fabric> for typst::foundations::Dict {
+  fn from(fabric: Fabric) -> Self {
+    typst::foundations::dict!(
+      "width" => fabric.width,
+      "height" => fabric.height,
+      "spi" => vec![fabric.spi.0, fabric.spi.1],
+      "kind" => fabric.kind,
+      "name" => fabric.name,
+      "color" => format!("#{}", fabric.color),
+    )
+  }
+}
+
+impl From<PaletteItem> for typst::foundations::Dict {
+  fn from(palitem: PaletteItem) -> Self {
+    let symbol = palitem.get_symbol();
+    typst::foundations::dict!(
+      "brand" => palitem.brand,
+      "number" => palitem.number,
+      "name" => palitem.name,
+      "color" => format!("#{}", palitem.color),
+      "symbol_font" => palitem.symbol_font,
+      "symbol" => symbol,
+    )
+  }
 }

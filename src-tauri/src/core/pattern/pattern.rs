@@ -321,8 +321,9 @@ pub struct PaletteItem {
 }
 
 impl PaletteItem {
+  /// Returns a printable representation of the `Symbol`.
   pub fn get_symbol(&self) -> String {
-    self.symbol.as_ref().map(|s| s.get_symbol()).unwrap_or_default()
+    self.symbol.as_ref().map(|s| s.render()).unwrap_or_default()
   }
 }
 
@@ -345,7 +346,8 @@ pub enum Symbol {
 }
 
 impl Symbol {
-  pub fn get_symbol(&self) -> String {
+  /// Returns a printable representation of the symbol.
+  pub fn render(&self) -> String {
     match self {
       Symbol::Code(code) => std::char::decode_utf16([*code])
         .map(|r| r.unwrap_or(std::char::REPLACEMENT_CHARACTER))
