@@ -5,10 +5,6 @@ use quick_xml::events::{BytesDecl, BytesText, Event};
 
 use crate::core::pattern::*;
 
-#[cfg(test)]
-#[path = "svg.test.rs"]
-mod tests;
-
 pub fn export_pattern(patproj: &PatternProject, cell_size: f32) -> io::Result<Vec<u8>> {
   let mut buffer = Vec::new();
 

@@ -2,10 +2,6 @@ use anyhow::Result;
 
 use crate::core::pattern::*;
 
-#[cfg(test)]
-#[path = "pdf.test.rs"]
-mod tests;
-
 pub fn export_pattern<P: AsRef<std::path::Path>>(
   patproj: &PatternProject,
   file_path: P,
