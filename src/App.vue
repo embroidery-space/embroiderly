@@ -79,6 +79,11 @@
       toast.add({ severity: "success", detail: fluent.$t("message-pattern-saved"), life: 3000 });
     }
   });
+  appWindow.listen<string>("app:pattern-exported", ({ payload: patternId }) => {
+    if (patternId === patternsStore.pattern?.id) {
+      toast.add({ severity: "success", detail: fluent.$t("message-pattern-exported"), life: 3000 });
+    }
+  });
 
   const isDragging = ref(false);
   appWindow.onDragDropEvent(async ({ payload }) => {

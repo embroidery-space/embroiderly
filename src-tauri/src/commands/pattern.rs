@@ -1,6 +1,8 @@
-use tauri::Emitter as _;
+use convert_case::{Case, Casing as _};
+use tauri::{Emitter as _, Manager as _};
 
 use crate::core::actions::{Action as _, CheckpointAction, UpdatePatternInfoAction};
+use crate::core::exporters;
 use crate::core::parsers::{self, PatternFormat};
 use crate::core::pattern::{Fabric, Pattern, PatternInfo, PatternProject};
 use crate::error::{CommandError, PatternError, Result};
@@ -163,6 +165,59 @@ pub fn save_all_patterns<R: tauri::Runtime>(
   }
 
   log::debug!("All patterns saved");
+  Ok(())
+}
+
+#[tauri::command]
+pub fn export_pattern<R: tauri::Runtime>(
+  pattern_id: uuid::Uuid,
+  file_path: std::path::PathBuf,
+  app_handle: tauri::AppHandle<R>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  log::debug!("Exporting Pattern({pattern_id:?})");
+
+  let patterns = patterns.read().unwrap();
+  let patproj = patterns.get_pattern_by_id(&pattern_id).unwrap();
+
+  let resources = app_handle.path().resource_dir()?.join("resources");
+
+  let text_fonts = {
+    let mut text_fonts = Vec::new();
+    for entry in std::fs::read_dir(resources.join("text_fonts"))? {
+      let entry = entry?;
+      if !entry.path().is_file() {
+        continue;
+      }
+
+      let path = entry.path();
+      if path
+        .file_name()
+        .unwrap_or_default()
+        .to_string_lossy()
+        .starts_with("NotoSerif")
+      {
+        text_fonts.push(path);
+      }
+    }
+    text_fonts
+  };
+  let symbol_fonts = patproj
+    .pattern
+    .get_all_symbol_fonts()
+    .iter()
+    .chain([&patproj.display_settings.default_symbol_font.clone()])
+    .map(|s| {
+      resources
+        .join("symbol_fonts")
+        .join(format!("{}.ttf", s.to_case(Case::Snake)))
+    })
+    .collect::<Vec<_>>();
+
+  exporters::export_pattern(patproj, file_path, text_fonts, symbol_fonts)?;
+  app_handle.emit("app:pattern-exported", &pattern_id)?;
+
+  log::debug!("Pattern({pattern_id:?}) exported");
   Ok(())
 }
 

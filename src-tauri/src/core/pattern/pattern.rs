@@ -278,6 +278,16 @@ impl Pattern {
     self.linestitches.restore_stitches(linestitches, palindexes, palsize);
     self.nodestitches.restore_stitches(nodestitches, palindexes, palsize);
   }
+
+  pub fn get_all_symbol_fonts(&self) -> Vec<String> {
+    let mut fonts = std::collections::HashSet::new();
+    for item in &self.palette {
+      if let Some(symbol_font) = &item.symbol_font {
+        fonts.insert(symbol_font.clone());
+      }
+    }
+    fonts.into_iter().collect()
+  }
 }
 
 #[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
@@ -310,6 +320,13 @@ pub struct PaletteItem {
   pub symbol: Option<Symbol>,
 }
 
+impl PaletteItem {
+  /// Returns a printable representation of the `Symbol`.
+  pub fn get_symbol(&self) -> String {
+    self.symbol.as_ref().map(|s| s.render()).unwrap_or_default()
+  }
+}
+
 #[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
 pub struct Blend {
   pub brand: String,
@@ -326,6 +343,18 @@ pub struct Bead {
 pub enum Symbol {
   Code(u16),
   Char(String),
+}
+
+impl Symbol {
+  /// Returns a printable representation of the symbol.
+  pub fn render(&self) -> String {
+    match self {
+      Symbol::Code(code) => std::char::decode_utf16([*code])
+        .map(|r| r.unwrap_or(std::char::REPLACEMENT_CHARACTER))
+        .collect::<String>(),
+      Symbol::Char(char) => char.to_owned(),
+    }
+  }
 }
 
 impl std::fmt::Display for Symbol {

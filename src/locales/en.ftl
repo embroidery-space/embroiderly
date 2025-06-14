@@ -195,6 +195,7 @@ label-thickness = Thickness
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved
+message-pattern-exported = Pattern Exported
 
 title-unsaved-changes = Unsaved Changes
 message-unsaved-changes =
