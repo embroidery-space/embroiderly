@@ -1,6 +1,5 @@
 # Tauri build output
-gen/schemas/
-target/
+gen/
 
 # Browser extenions
 extensions/*
