@@ -198,6 +198,7 @@ label-thickness = Товщина
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено
+message-pattern-exported = Схему експортовано
 
 title-unsaved-changes = Незбережені зміни
 message-unsaved-changes =

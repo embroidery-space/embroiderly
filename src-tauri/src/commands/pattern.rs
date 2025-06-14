@@ -215,6 +215,7 @@ pub fn export_pattern<R: tauri::Runtime>(
     .collect::<Vec<_>>();
 
   exporters::export_pattern(patproj, file_path, text_fonts, symbol_fonts)?;
+  app_handle.emit("app:pattern-exported", &pattern_id)?;
 
   log::debug!("Pattern({pattern_id:?}) exported");
   Ok(())
