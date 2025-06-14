@@ -17,9 +17,9 @@ export function toApplicationError(error: unknown): Error {
       if (code === "Err01") return new PatternErrorPatternNotFound(message);
       if (code === "Err02") return new PatternErrorBackupFileExists(message);
       if (code === "Err03") return new PatternErrorUnsupportedPatternType(message);
-      if (code === "Err04") return new PatternErrorUnsupportedPatternTypeForSaving(message);
-      if (code === "Err05") return new PatternErrorFailedToParse(message);
-      if (code === "Err06") return new PatternErrorUnsavedChanges(message);
+      if (code === "Err04") return new PatternErrorFailedToParse(message);
+      if (code === "Err05") return new PatternErrorUnsavedChanges(message);
+      if (code === "Err06") return new PatternErrorFailedToExport(message);
     }
 
     return new UnknownError(err.message);
@@ -61,17 +61,17 @@ export class PatternErrorUnsupportedPatternType extends Error {
   }
 }
 
-export class PatternErrorUnsupportedPatternTypeForSaving extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "PatternErrorUnsupportedPatternTypeForSaving";
-  }
-}
-
 export class PatternErrorFailedToParse extends Error {
   constructor(message: string) {
     super(message);
     this.name = "PatternErrorFailedToParse";
+  }
+}
+
+export class PatternErrorFailedToExport extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PatternErrorFailedToExport";
   }
 }
 

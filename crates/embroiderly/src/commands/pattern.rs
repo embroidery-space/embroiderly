@@ -1,10 +1,10 @@
 use convert_case::{Case, Casing as _};
+use embroiderly_parsers::PatternFormat;
 use embroiderly_pattern::{Fabric, Pattern, PatternInfo, PatternProject};
 use tauri::{Emitter as _, Manager as _};
 
 use crate::core::actions::{Action as _, CheckpointAction, UpdatePatternInfoAction};
 use crate::core::exporters;
-use crate::core::parsers::{self, PatternFormat};
 use crate::error::{CommandError, PatternError, Result};
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
@@ -42,7 +42,7 @@ pub fn open_pattern(
   if backup_file_path.exists() {
     match restore_from_backup {
       Some(true) => {
-        let pattern = parsers::parse_pattern(backup_file_path)?;
+        let pattern = embroiderly_parsers::parse_pattern(backup_file_path)?;
         log::debug!("Pattern({:?}) restored from backup", pattern.id);
 
         let result = borsh::to_vec(&pattern)?;
@@ -56,7 +56,7 @@ pub fn open_pattern(
   }
 
   let new_file_path = file_path.with_extension(PatternFormat::default().to_string());
-  let mut pattern = parsers::parse_pattern(file_path)?;
+  let mut pattern = embroiderly_parsers::parse_pattern(file_path)?;
   pattern.file_path = new_file_path;
   log::debug!("Pattern({:?}) opened", pattern.id);
 
@@ -108,11 +108,19 @@ pub fn save_pattern<R: tauri::Runtime>(
   let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
   let previous_file_path = patproj.file_path.clone();
 
+  let package_info = {
+    let package_info = app_handle.package_info();
+    embroiderly_parsers::PackageInfo {
+      name: package_info.name.clone(),
+      version: package_info.version.to_string(),
+    }
+  };
+
   // If the file is saved in a different format (e.g. oxs), we just write it down.
   // Else, we will also back it up.
   if PatternFormat::try_from(file_path.extension())? != PatternFormat::default() {
     patproj.file_path = file_path.clone();
-    parsers::save_pattern(patproj, app_handle.package_info(), None)?;
+    embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
     patproj.file_path = previous_file_path;
   } else {
     let new_file_path = backup_file_path(&file_path, "new");
@@ -120,7 +128,7 @@ pub fn save_pattern<R: tauri::Runtime>(
 
     log::trace!("Saving the pattern to a temporary file.");
     patproj.file_path = new_file_path.clone();
-    parsers::save_pattern(patproj, app_handle.package_info(), None)?;
+    embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
 
     log::trace!("Backing up the previous file.");
     if previous_file_path.exists() {

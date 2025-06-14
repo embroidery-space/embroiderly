@@ -1341,6 +1341,7 @@ dependencies = [
  "borsh",
  "convert_case 0.8.0",
  "dyn-clone",
+ "embroiderly-parsers",
  "embroiderly-pattern",
  "log",
  "log-panics",
@@ -1367,6 +1368,21 @@ dependencies = [
  "typst-as-lib",
  "typst-pdf",
  "uuid",
+ "xsp-parsers",
+ "zip 4.0.0",
+ "zip-extract",
+]
+
+[[package]]
+name = "embroiderly-parsers"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "embroiderly-pattern",
+ "log",
+ "quick-xml 0.37.5",
+ "tempfile",
+ "thiserror 2.0.12",
  "xsp-parsers",
  "zip 4.0.0",
  "zip-extract",

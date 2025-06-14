@@ -2,9 +2,10 @@ use std::io;
 
 use anyhow::Result;
 use embroiderly_pattern::*;
-use ordered_float::NotNan;
 use quick_xml::events::{BytesDecl, BytesStart, Event};
 use quick_xml::{Reader, Writer};
+
+use crate::PackageInfo;
 
 #[cfg(test)]
 #[path = "oxs.test.rs"]
@@ -222,7 +223,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
   Ok(pattern)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &tauri::PackageInfo) -> Result<()> {
+pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<()> {
   let mut file = std::fs::OpenOptions::new()
     .create(true)
     .write(true)
@@ -231,7 +232,7 @@ pub fn save_pattern(patproj: &PatternProject, package_info: &tauri::PackageInfo)
   Ok(save_pattern_inner(&mut file, patproj, package_info)?)
 }
 
-pub fn save_pattern_to_vec(patproj: &PatternProject, package_info: &tauri::PackageInfo) -> Result<Vec<u8>> {
+pub fn save_pattern_to_vec(patproj: &PatternProject, package_info: &PackageInfo) -> Result<Vec<u8>> {
   let mut buf = Vec::new();
   save_pattern_inner(&mut buf, patproj, package_info)?;
   Ok(buf)
@@ -240,7 +241,7 @@ pub fn save_pattern_to_vec(patproj: &PatternProject, package_info: &tauri::Packa
 fn save_pattern_inner<W: io::Write>(
   writer: &mut W,
   patproj: &PatternProject,
-  package_info: &tauri::PackageInfo,
+  package_info: &PackageInfo,
 ) -> io::Result<()> {
   log::trace!("Saving OXS file");
 
@@ -339,14 +340,14 @@ fn write_pattern_properties<W: io::Write>(
   info: &PatternInfo,
   spi: StitchesPerInch,
   palette_size: usize,
-  package_info: &tauri::PackageInfo,
+  package_info: &PackageInfo,
 ) -> io::Result<()> {
   writer
     .create_element("properties")
     .with_attributes([
       ("oxsversion", "1.0"),
       ("software", package_info.name.as_str()),
-      ("software_version", package_info.version.to_string().as_str()),
+      ("software_version", package_info.version.as_str()),
       ("chartwidth", pattern_width.to_string().as_str()),
       ("chartheight", pattern_height.to_string().as_str()),
       ("charttitle", info.title.as_str()),
@@ -607,7 +608,7 @@ fn read_part_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Part
                 let (x, y) = if direction_value == 2 {
                   (x, y) // top-left
                 } else {
-                  (x, NotNan::new(y + 0.5)?) // bottom-left
+                  (x, Coord::new(y + 0.5)?) // bottom-left
                 };
 
                 partstitches.push(PartStitch {
@@ -621,9 +622,9 @@ fn read_part_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Part
 
               if let Some(palindex) = palindex2 {
                 let (x, y) = if direction_value == 1 {
-                  (NotNan::new(x + 0.5)?, y) // top-right
+                  (Coord::new(x + 0.5)?, y) // top-right
                 } else {
-                  (NotNan::new(x + 0.5)?, NotNan::new(y + 0.5)?) // bottom-right
+                  (Coord::new(x + 0.5)?, Coord::new(y + 0.5)?) // bottom-right
                 };
 
                 partstitches.push(PartStitch {

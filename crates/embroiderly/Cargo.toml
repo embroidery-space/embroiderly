@@ -29,6 +29,7 @@ embroiderly-pattern = { path = "../embroiderly-pattern", features = [
   "borsh",
   "serde",
 ] }
+embroiderly-parsers = { path = "../embroiderly-parsers" }
 
 # Parsing pattern files
 xsp-parsers = { git = "https://github.com/embroidery-space/xsp-parsers.git", rev = "ae67e88891bade1437daaad1fbaee62600ef5f7e" }

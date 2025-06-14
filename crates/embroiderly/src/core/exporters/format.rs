@@ -15,10 +15,10 @@ impl TryFrom<Option<&OsStr>> for PatternExportFormat {
       let extension = extension.to_str().unwrap();
       match extension.to_lowercase().as_str() {
         "pdf" => Ok(Self::Pdf),
-        _ => Err(PatternError::UnsupportedPatternExportType(extension.to_string())),
+        _ => Err(PatternError::UnsupportedPatternType(extension.to_string())),
       }
     } else {
-      Err(PatternError::UnsupportedPatternExportType("No extension".into()))
+      Err(PatternError::UnsupportedPatternType("No extension".into()))
     }
   }
 }

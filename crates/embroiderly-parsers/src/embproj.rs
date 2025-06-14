@@ -3,7 +3,7 @@ use std::io::Write;
 use anyhow::Result;
 use embroiderly_pattern::PatternProject;
 
-use crate::core::parsers::oxs;
+use crate::{PackageInfo, oxs};
 
 pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
   log::info!("Parsing the EMBPROJ pattern file");
@@ -22,7 +22,7 @@ pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
   Ok(patproj)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &tauri::PackageInfo) -> Result<()> {
+pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<()> {
   log::info!("Saving the EMBPROJ pattern file");
   let file = std::fs::OpenOptions::new()
     .create(true)

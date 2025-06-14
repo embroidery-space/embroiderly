@@ -21,6 +21,12 @@ pub enum Error {
   Unknown(#[from] anyhow::Error),
 }
 
+impl From<embroiderly_parsers::Error> for Error {
+  fn from(error: embroiderly_parsers::Error) -> Self {
+    Self::Pattern(error.into())
+  }
+}
+
 #[derive(serde::Serialize)]
 #[serde(tag = "kind", content = "message")]
 #[serde(rename_all = "camelCase")]
@@ -68,18 +74,21 @@ pub enum PatternError {
   #[error("Err03: Unsupported pattern type: {0}")]
   UnsupportedPatternType(String),
 
-  #[error("Err04: The {0} pattern type is not supported for saving.")]
-  UnsupportedPatternTypeForSaving(String),
-
-  #[error("Err05: Failed to parse pattern: {0}")]
+  #[error("Err04: Failed to parse pattern: {0}")]
   FailedToParse(#[source] anyhow::Error),
 
-  #[error("Err06: Pattern({0}) has unsaved changes.")]
+  #[error("Err05: Pattern({0}) has unsaved changes.")]
   UnsavedChanges(uuid::Uuid),
 
-  #[error("Err07: Unsupported pattern export type: {0}")]
-  UnsupportedPatternExportType(String),
-
-  #[error("Err08: Failed to export pattern: {0}")]
+  #[error("Err06: Failed to export pattern: {0}")]
   FailedToExport(#[source] anyhow::Error),
+}
+
+impl From<embroiderly_parsers::Error> for PatternError {
+  fn from(error: embroiderly_parsers::Error) -> Self {
+    match error {
+      embroiderly_parsers::Error::UnsupportedPatternType(ext) => Self::UnsupportedPatternType(ext),
+      embroiderly_parsers::Error::FailedToParse(e) => Self::FailedToParse(e),
+    }
+  }
 }

@@ -6,7 +6,6 @@ use tauri::{App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder, gene
 use super::{
   Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
 };
-use crate::core::parsers::oxs;
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {
@@ -15,7 +14,7 @@ fn setup_app() -> App<MockRuntime> {
 
 fn create_pattern_project() -> PatternProject {
   let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/patterns/rainbow.oxs");
-  oxs::parse_pattern(file_path).unwrap()
+  embroiderly_parsers::oxs::parse_pattern(file_path).unwrap()
 }
 
 #[test]
