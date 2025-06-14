@@ -4,16 +4,12 @@ use embroiderly_pattern::*;
 pub fn export_pattern<P: AsRef<std::path::Path>>(
   patproj: &PatternProject,
   file_path: P,
-  text_fonts: Vec<std::path::PathBuf>,
-  symbol_fonts: Vec<std::path::PathBuf>,
+  symbol_fonts_dir: std::path::PathBuf,
 ) -> Result<()> {
   log::debug!("Exporting Pattern({:?}) to PDF", patproj.id);
   let file_path = file_path.as_ref();
 
   let PatternProject { pattern, display_settings, .. } = patproj;
-
-  let text_fonts = text_fonts.iter().map(std::fs::read).collect::<Result<Vec<_>, _>>()?;
-  let symbol_fonts = symbol_fonts.iter().map(std::fs::read).collect::<Result<Vec<_>, _>>()?;
 
   let pattern_images = [super::svg::export_pattern(patproj, 14.0)?];
   let pattern_images = std::collections::HashMap::<String, Vec<u8>>::from_iter(
@@ -31,8 +27,8 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
     images: pattern_images.keys().cloned().collect(),
   };
   let typst_template = typst_as_lib::TypstEngine::builder()
-    .main_file(include_str!("./templates/pattern.typ"))
-    .fonts(text_fonts.into_iter().chain(symbol_fonts).collect::<Vec<_>>())
+    .main_file(include_str!("../templates/pattern.typ"))
+    .search_fonts_with(typst_as_lib::typst_kit_options::TypstKitFontOptions::default().include_dirs([symbol_fonts_dir]))
     .with_static_file_resolver(
       pattern_images
         .into_iter()

@@ -56,7 +56,7 @@
     #emph[#pattern.info.title] #h(1fr) #emph[#pattern.info.author]
   ]
 )
-#set text(font: "Noto Serif", size: 14pt)
+#set text(font: "Times New Roman", size: 14pt)
 
 // Render the pattern information and palette.
 // Example:

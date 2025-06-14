@@ -6,6 +6,7 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
+    "beforeBundleCommand": "node scripts/sidecar-embroiderly-export.js",
     "frontendDist": "../../dist",
     "devUrl": "http://localhost:1420",
     "removeUnusedCommands": true
@@ -14,10 +15,17 @@
     "active": true,
     "createUpdaterArtifacts": true,
     "targets": ["nsis", "rpm", "deb"],
-    "resources": ["resources/**/*"],
-    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+    "resources": ["./resources/**/*"],
+    "externalBin": ["./binaries/embroiderly-export"],
+    "icon": [
+      "./icons/32x32.png",
+      "./icons/128x128.png",
+      "./icons/128x128@2x.png",
+      "./icons/icon.icns",
+      "./icons/icon.ico"
+    ],
     "license": "GPL-3.0-or-later",
-    "licenseFile": "../LICENSE",
+    "licenseFile": "../../LICENSE",
     "category": "GraphicsAndDesign",
     "copyright": "Embroiderly",
     "publisher": "Embroiderly",
@@ -35,13 +43,13 @@
         "displayLanguageSelector": true,
         "languages": ["English", "Ukrainian"],
         "installMode": "both",
-        "template": "bundle/windows/installer.nsi",
-        "installerIcon": "icons/icon.ico",
-        "headerImage": "bundle/windows/assets/headerimage.bmp",
-        "sidebarImage": "bundle/windows/assets/sidebarimage.bmp",
+        "template": "./bundle/windows/installer.nsi",
+        "installerIcon": "./icons/icon.ico",
+        "headerImage": "./bundle/windows/assets/headerimage.bmp",
+        "sidebarImage": "./bundle/windows/assets/sidebarimage.bmp",
         "customLanguageFiles": {
-          "English": "bundle/windows/languages/English.nsh",
-          "Ukrainian": "bundle/windows/languages/Ukrainian.nsh"
+          "English": "./bundle/windows/languages/English.nsh",
+          "Ukrainian": "./bundle/windows/languages/Ukrainian.nsh"
         }
       }
     }

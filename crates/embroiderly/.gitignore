@@ -1,7 +1,11 @@
-# Tauri build output
+# Tauri schemas
 gen/
 
-# Browser extenions
+# Sidecars
+binaries/*
+!binaries/README.md
+
+# Browser extensions
 extensions/*
 !extensions/README.md
 

@@ -1,24 +1,24 @@
 use std::ffi::OsStr;
 
-use crate::error::PatternError;
+use crate::Error;
 
-#[derive(PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PatternExportFormat {
   Pdf,
 }
 
 impl TryFrom<Option<&OsStr>> for PatternExportFormat {
-  type Error = PatternError;
+  type Error = Error;
 
   fn try_from(value: Option<&OsStr>) -> std::result::Result<Self, Self::Error> {
     if let Some(extension) = value {
       let extension = extension.to_str().unwrap();
       match extension.to_lowercase().as_str() {
         "pdf" => Ok(Self::Pdf),
-        _ => Err(PatternError::UnsupportedPatternType(extension.to_string())),
+        _ => Err(Error::UnsupportedExportType(extension.to_string())),
       }
     } else {
-      Err(PatternError::UnsupportedPatternType("No extension".into()))
+      Err(Error::UnsupportedExportType("No extension".into()))
     }
   }
 }

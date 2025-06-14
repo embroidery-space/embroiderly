@@ -1,10 +1,8 @@
-use convert_case::{Case, Casing as _};
 use embroiderly_parsers::PatternFormat;
 use embroiderly_pattern::{Fabric, Pattern, PatternInfo, PatternProject};
-use tauri::{Emitter as _, Manager as _};
+use tauri::Emitter as _;
 
 use crate::core::actions::{Action as _, CheckpointAction, UpdatePatternInfoAction};
-use crate::core::exporters;
 use crate::error::{CommandError, PatternError, Result};
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
@@ -55,9 +53,8 @@ pub fn open_pattern(
     };
   }
 
-  let new_file_path = file_path.with_extension(PatternFormat::default().to_string());
-  let mut pattern = embroiderly_parsers::parse_pattern(file_path)?;
-  pattern.file_path = new_file_path;
+  let mut pattern = embroiderly_parsers::parse_pattern(file_path.clone())?;
+  pattern.file_path = file_path.with_extension(PatternFormat::default().to_string());
   log::debug!("Pattern({:?}) opened", pattern.id);
 
   let result = borsh::to_vec(&pattern)?;
@@ -183,46 +180,57 @@ pub fn export_pattern<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
+  use tauri_plugin_shell::ShellExt;
+
   log::debug!("Exporting Pattern({pattern_id:?})");
 
-  let patterns = patterns.read().unwrap();
-  let patproj = patterns.get_pattern_by_id(&pattern_id).unwrap();
-
-  let resources = app_handle.path().resource_dir()?.join("resources");
-
-  let text_fonts = {
-    let mut text_fonts = Vec::new();
-    for entry in std::fs::read_dir(resources.join("text_fonts"))? {
-      let entry = entry?;
-      if !entry.path().is_file() {
-        continue;
-      }
-
-      let path = entry.path();
-      if path
-        .file_name()
-        .unwrap_or_default()
-        .to_string_lossy()
-        .starts_with("NotoSerif")
-      {
-        text_fonts.push(path);
-      }
+  let package_info = {
+    let package_info = app_handle.package_info();
+    embroiderly_parsers::PackageInfo {
+      name: package_info.name.clone(),
+      version: package_info.version.to_string(),
     }
-    text_fonts
   };
-  let symbol_fonts = patproj
-    .pattern
-    .get_all_symbol_fonts()
-    .iter()
-    .chain([&patproj.display_settings.default_symbol_font.clone()])
-    .map(|s| {
-      resources
-        .join("symbol_fonts")
-        .join(format!("{}.ttf", s.to_case(Case::Snake)))
-    })
-    .collect::<Vec<_>>();
 
-  exporters::export_pattern(patproj, file_path, text_fonts, symbol_fonts)?;
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  // Create a temporary file to not conflict with the existing file.
+  let tempfile_path = tempfile::NamedTempFile::new()?
+    .path()
+    .with_extension(PatternFormat::default().to_string());
+  let previous_file_path = patproj.file_path.clone();
+  patproj.file_path = tempfile_path.to_path_buf().clone();
+  embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
+  patproj.file_path = previous_file_path;
+
+  let sidecar = app_handle
+    .shell()
+    .sidecar("embroiderly-export")
+    .map_err(|e| PatternError::FailedToExport(e.into()))?;
+  let output = tauri::async_runtime::block_on(async move {
+    let result = sidecar
+      .arg("-p")
+      .arg(&tempfile_path)
+      .arg("-o")
+      .arg(&file_path)
+      .output()
+      .await;
+    std::fs::remove_file(tempfile_path).unwrap();
+    result.unwrap()
+  });
+
+  if !output.status.success() {
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    log::error!("Error while exporting pattern: {stderr}");
+    return Err(
+      PatternError::FailedToExport(anyhow::anyhow!(
+        "Process terminated with exit code {:?}: {stderr}",
+        output.status.code()
+      ))
+      .into(),
+    );
+  }
   app_handle.emit("app:pattern-exported", &pattern_id)?;
 
   log::debug!("Pattern({pattern_id:?}) exported");

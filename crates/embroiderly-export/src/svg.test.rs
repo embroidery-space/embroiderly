@@ -1,5 +1,3 @@
-use ordered_float::NotNan;
-
 use super::*;
 
 static SYMBOL_FONT: &str = "CrossStitch3";
@@ -66,26 +64,26 @@ fn writes_full_stitches() {
   let palette = create_palette();
   let fullstitches = Stitches::from_iter([
     FullStitch {
-      x: NotNan::new(0.0).unwrap(),
-      y: NotNan::new(0.0).unwrap(),
+      x: Coord::new(0.0).unwrap(),
+      y: Coord::new(0.0).unwrap(),
       palindex: 0,
       kind: FullStitchKind::Full,
     },
     FullStitch {
-      x: NotNan::new(1.0).unwrap(),
-      y: NotNan::new(0.0).unwrap(),
+      x: Coord::new(1.0).unwrap(),
+      y: Coord::new(0.0).unwrap(),
       palindex: 1,
       kind: FullStitchKind::Full,
     },
     FullStitch {
-      x: NotNan::new(0.0).unwrap(),
-      y: NotNan::new(1.0).unwrap(),
+      x: Coord::new(0.0).unwrap(),
+      y: Coord::new(1.0).unwrap(),
       palindex: 2,
       kind: FullStitchKind::Full,
     },
     FullStitch {
-      x: NotNan::new(1.0).unwrap(),
-      y: NotNan::new(1.0).unwrap(),
+      x: Coord::new(1.0).unwrap(),
+      y: Coord::new(1.0).unwrap(),
       palindex: 1,
       kind: FullStitchKind::Petite,
     },
@@ -125,29 +123,29 @@ fn writes_part_stitches() {
   let palette = create_palette();
   let partstitches = Stitches::from_iter([
     PartStitch {
-      x: NotNan::new(0.0).unwrap(),
-      y: NotNan::new(0.0).unwrap(),
+      x: Coord::new(0.0).unwrap(),
+      y: Coord::new(0.0).unwrap(),
       palindex: 1,
       kind: PartStitchKind::Half,
       direction: PartStitchDirection::Forward,
     },
     PartStitch {
-      x: NotNan::new(1.0).unwrap(),
-      y: NotNan::new(0.0).unwrap(),
+      x: Coord::new(1.0).unwrap(),
+      y: Coord::new(0.0).unwrap(),
       palindex: 2,
       kind: PartStitchKind::Half,
       direction: PartStitchDirection::Backward,
     },
     PartStitch {
-      x: NotNan::new(0.5).unwrap(),
-      y: NotNan::new(1.0).unwrap(),
+      x: Coord::new(0.5).unwrap(),
+      y: Coord::new(1.0).unwrap(),
       palindex: 2,
       kind: PartStitchKind::Quarter,
       direction: PartStitchDirection::Forward,
     },
     PartStitch {
-      x: NotNan::new(1.0).unwrap(),
-      y: NotNan::new(1.0).unwrap(),
+      x: Coord::new(1.0).unwrap(),
+      y: Coord::new(1.0).unwrap(),
       palindex: 1,
       kind: PartStitchKind::Quarter,
       direction: PartStitchDirection::Backward,
@@ -172,14 +170,14 @@ fn writes_line_stitches() {
   let palette = create_palette();
   let linestitches = Stitches::from_iter([
     LineStitch {
-      x: (NotNan::new(0.0).unwrap(), NotNan::new(4.0).unwrap()),
-      y: (NotNan::new(0.0).unwrap(), NotNan::new(1.0).unwrap()),
+      x: (Coord::new(0.0).unwrap(), Coord::new(4.0).unwrap()),
+      y: (Coord::new(0.0).unwrap(), Coord::new(1.0).unwrap()),
       palindex: 0,
       kind: LineStitchKind::Straight,
     },
     LineStitch {
-      x: (NotNan::new(0.0).unwrap(), NotNan::new(4.0).unwrap()),
-      y: (NotNan::new(1.0).unwrap(), NotNan::new(0.0).unwrap()),
+      x: (Coord::new(0.0).unwrap(), Coord::new(4.0).unwrap()),
+      y: (Coord::new(1.0).unwrap(), Coord::new(0.0).unwrap()),
       palindex: 1,
       kind: LineStitchKind::Back,
     },
@@ -203,15 +201,15 @@ fn writes_node_stitches() {
   let palette = create_palette();
   let nodestitches = Stitches::from_iter([
     NodeStitch {
-      x: NotNan::new(0.0).unwrap(),
-      y: NotNan::new(0.0).unwrap(),
+      x: Coord::new(0.0).unwrap(),
+      y: Coord::new(0.0).unwrap(),
       palindex: 0,
       kind: NodeStitchKind::Bead,
       rotated: false,
     },
     NodeStitch {
-      x: NotNan::new(1.0).unwrap(),
-      y: NotNan::new(0.0).unwrap(),
+      x: Coord::new(1.0).unwrap(),
+      y: Coord::new(0.0).unwrap(),
       palindex: 1,
       kind: NodeStitchKind::FrenchKnot,
       rotated: false,
