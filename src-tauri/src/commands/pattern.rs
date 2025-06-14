@@ -180,7 +180,7 @@ pub fn export_pattern<R: tauri::Runtime>(
   let patterns = patterns.read().unwrap();
   let patproj = patterns.get_pattern_by_id(&pattern_id).unwrap();
 
-  let resources = app_handle.path().resource_dir()?;
+  let resources = app_handle.path().resource_dir()?.join("resources");
 
   let text_fonts = {
     let mut text_fonts = Vec::new();
