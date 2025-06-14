@@ -3,9 +3,9 @@ pub mod oxs;
 pub mod xsd;
 
 mod format;
+use embroiderly_pattern::PatternProject;
 pub use format::PatternFormat;
 
-use crate::core::pattern::PatternProject;
 use crate::error::{PatternError, Result};
 
 pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {

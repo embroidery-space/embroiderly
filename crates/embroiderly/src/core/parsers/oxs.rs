@@ -1,11 +1,10 @@
 use std::io;
 
 use anyhow::Result;
+use embroiderly_pattern::*;
 use ordered_float::NotNan;
 use quick_xml::events::{BytesDecl, BytesStart, Event};
 use quick_xml::{Reader, Writer};
-
-use crate::core::pattern::*;
 
 #[cfg(test)]
 #[path = "oxs.test.rs"]

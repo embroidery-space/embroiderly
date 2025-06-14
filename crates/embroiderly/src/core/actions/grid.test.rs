@@ -1,8 +1,8 @@
+use embroiderly_pattern::{Grid, PatternProject};
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
 use super::{Action, UpdateGridPropertiesAction};
-use crate::core::pattern::{Grid, PatternProject};
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {

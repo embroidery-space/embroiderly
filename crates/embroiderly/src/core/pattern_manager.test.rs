@@ -2,8 +2,7 @@ use std::path::PathBuf;
 
 use uuid::Uuid;
 
-use super::super::pattern::PatternProject; // Adjusted path
-use super::super::pattern_manager::PatternManager; // Adjusted path
+use super::*;
 
 fn create_test_pattern(id: Uuid, file_path: PathBuf) -> PatternProject {
   PatternProject {

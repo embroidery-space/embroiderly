@@ -1,5 +1,6 @@
+use embroiderly_pattern::Fabric;
+
 use crate::core::actions::{Action as _, UpdateFabricPropertiesAction};
-use crate::core::pattern::Fabric;
 use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};

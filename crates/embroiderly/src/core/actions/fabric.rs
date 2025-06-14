@@ -1,11 +1,10 @@
 use std::sync::OnceLock;
 
 use anyhow::Result;
+use embroiderly_pattern::{Fabric, PatternProject, Stitch};
 use tauri::{Emitter, WebviewWindow};
 
 use super::Action;
-use crate::Stitch;
-use crate::core::pattern::{Fabric, PatternProject};
 use crate::utils::base64;
 
 #[cfg(test)]

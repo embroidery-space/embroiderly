@@ -1,8 +1,8 @@
+use embroiderly_pattern::{Fabric, PatternProject};
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
 use super::{Action, UpdateFabricPropertiesAction};
-use crate::core::pattern::{Fabric, PatternProject};
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {

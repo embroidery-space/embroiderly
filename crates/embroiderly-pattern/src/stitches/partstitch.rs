@@ -1,9 +1,9 @@
-use borsh::{BorshDeserialize, BorshSerialize};
+use xsp_parsers::pmaker;
 
-use super::fullstitch::*;
-use crate::core::pattern::Coord;
+use super::{Coord, FullStitch, FullStitchKind};
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PartStitch {
   pub x: Coord,
   pub y: Coord,
@@ -59,7 +59,22 @@ impl From<FullStitch> for PartStitch {
   }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, BorshSerialize, BorshDeserialize)]
+impl TryFrom<pmaker::PartStitch> for PartStitch {
+  type Error = anyhow::Error;
+
+  fn try_from(partstitch: pmaker::PartStitch) -> Result<Self, Self::Error> {
+    Ok(Self {
+      x: Coord::new(partstitch.x)?,
+      y: Coord::new(partstitch.y)?,
+      palindex: partstitch.palindex as u32,
+      direction: partstitch.direction.into(),
+      kind: partstitch.kind.into(),
+    })
+  }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum PartStitchDirection {
   Forward,
   Backward,
@@ -75,7 +90,17 @@ impl From<(Coord, Coord)> for PartStitchDirection {
   }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, BorshSerialize, BorshDeserialize)]
+impl From<pmaker::PartStitchDirection> for PartStitchDirection {
+  fn from(direction: pmaker::PartStitchDirection) -> Self {
+    match direction {
+      pmaker::PartStitchDirection::Forward => PartStitchDirection::Forward,
+      pmaker::PartStitchDirection::Backward => PartStitchDirection::Backward,
+    }
+  }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum PartStitchKind {
   Half,
   Quarter,
@@ -86,6 +111,15 @@ impl From<FullStitchKind> for PartStitchKind {
     match kind {
       FullStitchKind::Full => PartStitchKind::Half,
       FullStitchKind::Petite => PartStitchKind::Quarter,
+    }
+  }
+}
+
+impl From<pmaker::PartStitchKind> for PartStitchKind {
+  fn from(kind: pmaker::PartStitchKind) -> Self {
+    match kind {
+      pmaker::PartStitchKind::Half => PartStitchKind::Half,
+      pmaker::PartStitchKind::Quarter => PartStitchKind::Quarter,
     }
   }
 }

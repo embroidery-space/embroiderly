@@ -1,12 +1,11 @@
-use borsh::{BorshDeserialize, BorshSerialize};
-
 use super::Pattern;
 use super::display::DisplaySettings;
 
-#[derive(Debug, Default, Clone, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Default, Clone)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PatternProject {
   pub id: uuid::Uuid,
-  #[borsh(skip)]
+  #[cfg_attr(feature = "borsh", borsh(skip))]
   pub file_path: std::path::PathBuf,
   pub pattern: Pattern,
   pub display_settings: DisplaySettings,

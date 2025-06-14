@@ -1,18 +1,15 @@
 use std::sync::RwLock;
 
-use state::{HistoryStateInner, PatternsState};
 use tauri::Manager as _;
 
-pub mod state;
-use crate::state::HistoryState;
-
-mod core;
-pub use core::pattern::*;
-
 mod commands;
+mod core;
 mod error;
 mod logger;
 mod utils;
+
+pub mod state;
+use state::{HistoryState, HistoryStateInner, PatternsState};
 
 pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R> {
   builder = builder

@@ -1,10 +1,10 @@
 use convert_case::{Case, Casing as _};
+use embroiderly_pattern::{Fabric, Pattern, PatternInfo, PatternProject};
 use tauri::{Emitter as _, Manager as _};
 
 use crate::core::actions::{Action as _, CheckpointAction, UpdatePatternInfoAction};
 use crate::core::exporters;
 use crate::core::parsers::{self, PatternFormat};
-use crate::core::pattern::{Fabric, Pattern, PatternInfo, PatternProject};
 use crate::error::{CommandError, PatternError, Result};
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};

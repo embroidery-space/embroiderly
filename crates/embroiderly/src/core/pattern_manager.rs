@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use super::pattern::PatternProject;
+use embroiderly_pattern::PatternProject;
 
 #[cfg(test)]
 #[path = "pattern_manager.test.rs"]

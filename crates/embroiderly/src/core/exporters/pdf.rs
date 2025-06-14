@@ -1,6 +1,5 @@
 use anyhow::Result;
-
-use crate::core::pattern::*;
+use embroiderly_pattern::*;
 
 pub fn export_pattern<P: AsRef<std::path::Path>>(
   patproj: &PatternProject,
@@ -74,9 +73,13 @@ struct TypstContent {
 
 impl From<TypstContent> for typst::foundations::Dict {
   fn from(content: TypstContent) -> Self {
-    let info: typst::foundations::Dict = content.info.into();
-    let fabric: typst::foundations::Dict = content.fabric.into();
-    let palette: Vec<typst::foundations::Dict> = content.palette.into_iter().map(Into::into).collect();
+    let info = pattern_info_to_dict(content.info);
+    let fabric = fabric_to_dict(content.fabric);
+    let palette = content
+      .palette
+      .into_iter()
+      .map(palette_item_to_dict)
+      .collect::<Vec<_>>();
 
     // This dictionary will be passed to the Typst template through `sys.inputs`.
     typst::foundations::dict!(
@@ -89,40 +92,34 @@ impl From<TypstContent> for typst::foundations::Dict {
   }
 }
 
-impl From<PatternInfo> for typst::foundations::Dict {
-  fn from(info: PatternInfo) -> Self {
-    typst::foundations::dict!(
-      "title" => info.title,
-      "author" => info.author,
-      "copyright" => info.copyright,
-      "description" => info.description,
-    )
-  }
+fn pattern_info_to_dict(info: PatternInfo) -> typst::foundations::Dict {
+  typst::foundations::dict!(
+    "title" => info.title,
+    "author" => info.author,
+    "copyright" => info.copyright,
+    "description" => info.description,
+  )
 }
 
-impl From<Fabric> for typst::foundations::Dict {
-  fn from(fabric: Fabric) -> Self {
-    typst::foundations::dict!(
-      "width" => fabric.width,
-      "height" => fabric.height,
-      "spi" => vec![fabric.spi.0, fabric.spi.1],
-      "kind" => fabric.kind,
-      "name" => fabric.name,
-      "color" => format!("#{}", fabric.color),
-    )
-  }
+fn fabric_to_dict(fabric: Fabric) -> typst::foundations::Dict {
+  typst::foundations::dict!(
+    "width" => fabric.width,
+    "height" => fabric.height,
+    "spi" => vec![fabric.spi.0, fabric.spi.1],
+    "kind" => fabric.kind,
+    "name" => fabric.name,
+    "color" => format!("#{}", fabric.color),
+  )
 }
 
-impl From<PaletteItem> for typst::foundations::Dict {
-  fn from(palitem: PaletteItem) -> Self {
-    let symbol = palitem.get_symbol();
-    typst::foundations::dict!(
-      "brand" => palitem.brand,
-      "number" => palitem.number,
-      "name" => palitem.name,
-      "color" => format!("#{}", palitem.color),
-      "symbol_font" => palitem.symbol_font,
-      "symbol" => symbol,
-    )
-  }
+fn palette_item_to_dict(palitem: PaletteItem) -> typst::foundations::Dict {
+  let symbol = palitem.get_symbol();
+  typst::foundations::dict!(
+    "brand" => palitem.brand,
+    "number" => palitem.number,
+    "name" => palitem.name,
+    "color" => format!("#{}", palitem.color),
+    "symbol_font" => palitem.symbol_font,
+    "symbol" => symbol,
+  )
 }

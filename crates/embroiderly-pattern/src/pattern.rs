@@ -1,8 +1,9 @@
-use borsh::{BorshDeserialize, BorshSerialize};
+use xsp_parsers::pmaker;
 
 use super::stitches::*;
 
-#[derive(Debug, Default, Clone, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Default, Clone)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Pattern {
   pub info: PatternInfo,
   pub fabric: Fabric,
@@ -290,7 +291,8 @@ impl Pattern {
   }
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PatternInfo {
   pub title: String,
   pub author: String,
@@ -309,7 +311,19 @@ impl Default for PatternInfo {
   }
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+impl From<pmaker::PatternInfo> for PatternInfo {
+  fn from(pattern_info: pmaker::PatternInfo) -> Self {
+    Self {
+      title: pattern_info.title,
+      author: pattern_info.author,
+      copyright: pattern_info.copyright,
+      description: pattern_info.description,
+    }
+  }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteItem {
   pub brand: String,
   pub number: String,
@@ -327,19 +341,56 @@ impl PaletteItem {
   }
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+impl From<pmaker::PaletteItem> for PaletteItem {
+  fn from(palette_item: pmaker::PaletteItem) -> Self {
+    Self {
+      brand: palette_item.brand,
+      number: palette_item.number,
+      name: palette_item.name,
+      color: palette_item.color,
+      blends: palette_item
+        .blends
+        .map(|blends| blends.into_iter().map(Blend::from).collect()),
+      symbol_font: None,
+      symbol: None,
+    }
+  }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Blend {
   pub brand: String,
   pub number: String,
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+impl From<pmaker::Blend> for Blend {
+  fn from(blend: pmaker::Blend) -> Self {
+    Self {
+      brand: blend.brand,
+      number: blend.number,
+    }
+  }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Bead {
   pub length: f32,
   pub diameter: f32,
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+impl From<pmaker::Bead> for Bead {
+  fn from(bead: pmaker::Bead) -> Self {
+    Self {
+      length: bead.length,
+      diameter: bead.diameter,
+    }
+  }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum Symbol {
   Code(u16),
   Char(String),
@@ -386,7 +437,8 @@ impl std::str::FromStr for Symbol {
 
 pub type StitchesPerInch = (u8, u8);
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Fabric {
   pub width: u16,
   pub height: u16,
@@ -414,6 +466,19 @@ impl Default for Fabric {
       kind: String::from(Fabric::DEFAULT_KIND),
       name: String::from(Fabric::DEFAULT_NAME),
       color: String::from(Fabric::DEFAULT_COLOR),
+    }
+  }
+}
+
+impl From<pmaker::Fabric> for Fabric {
+  fn from(fabric: pmaker::Fabric) -> Self {
+    Self {
+      width: fabric.width,
+      height: fabric.height,
+      spi: fabric.stitches_per_inch,
+      kind: fabric.kind,
+      name: fabric.name,
+      color: fabric.color,
     }
   }
 }

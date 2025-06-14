@@ -1,9 +1,8 @@
 use std::io;
 
+use embroiderly_pattern::*;
 use quick_xml::Writer;
 use quick_xml::events::{BytesDecl, BytesText, Event};
-
-use crate::core::pattern::*;
 
 #[cfg(test)]
 #[path = "svg.test.rs"]

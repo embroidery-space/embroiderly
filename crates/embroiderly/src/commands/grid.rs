@@ -1,5 +1,6 @@
+use embroiderly_pattern::Grid;
+
 use crate::core::actions::{Action as _, UpdateGridPropertiesAction};
-use crate::core::pattern::Grid;
 use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};

@@ -1,5 +1,6 @@
+use embroiderly_pattern::DisplayMode;
+
 use crate::core::actions::{Action as _, SetDisplayModeAction, ShowSymbolsAction};
-use crate::core::pattern::DisplayMode;
 use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};

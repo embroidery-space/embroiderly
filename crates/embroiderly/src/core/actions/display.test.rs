@@ -1,8 +1,8 @@
+use embroiderly_pattern::{DisplayMode, PatternProject};
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
 use super::{Action, SetDisplayModeAction, ShowSymbolsAction};
-use crate::core::pattern::{DisplayMode, PatternProject};
 
 fn setup_app() -> App<MockRuntime> {
   mock_builder().build(generate_context!()).unwrap()

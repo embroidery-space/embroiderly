@@ -1,5 +1,6 @@
+use embroiderly::setup_app;
 use embroiderly::state::PatternsState;
-use embroiderly::{Fabric, PatternProject, setup_app};
+use embroiderly_pattern::{Fabric, PatternProject};
 use tauri::Manager;
 use tauri::test::{INVOKE_KEY, MockRuntime, get_ipc_response, mock_builder};
 

@@ -2,9 +2,9 @@ pub mod pdf;
 pub mod svg;
 
 mod format;
+use embroiderly_pattern::PatternProject;
 pub use format::PatternExportFormat;
 
-use crate::core::pattern::PatternProject;
 use crate::error::{PatternError, Result};
 
 pub fn export_pattern<P: AsRef<std::path::Path>>(

@@ -1,9 +1,21 @@
 use std::collections::BTreeSet;
 
-use borsh::{BorshDeserialize, BorshSerialize};
 use ordered_float::NotNan;
 
-use super::*;
+mod fullstitch;
+pub use fullstitch::*;
+
+mod partstitch;
+pub use partstitch::*;
+
+mod node;
+pub use node::*;
+
+mod line;
+pub use line::*;
+
+mod special;
+pub use special::*;
 
 #[cfg(test)]
 #[path = "./stitches.test.rs"]
@@ -11,7 +23,8 @@ mod tests;
 
 pub type Coord = ordered_float::NotNan<f32>;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum Stitch {
   Full(FullStitch),
   Part(PartStitch),
@@ -43,7 +56,8 @@ impl From<NodeStitch> for Stitch {
 }
 
 /// A set of stitches.
-#[derive(Debug, Clone, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Stitches<T: Ord> {
   inner: BTreeSet<T>,
 }
@@ -63,9 +77,12 @@ impl<T: Ord> Stitches<T> {
     self.inner.iter()
   }
 
-  #[cfg(test)]
   pub fn len(&self) -> usize {
     self.inner.len()
+  }
+
+  pub fn is_empty(&self) -> bool {
+    self.inner.is_empty()
   }
 
   /// Returns `true` if the set contains a stitch.

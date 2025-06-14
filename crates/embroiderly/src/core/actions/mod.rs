@@ -9,9 +9,8 @@
 //! The reason for this is that the `Action` can affects many aspects of the `PatternProject` so it is easier to emit an event for each change.
 
 use anyhow::Result;
+use embroiderly_pattern::PatternProject;
 use tauri::WebviewWindow;
-
-use super::pattern::PatternProject;
 
 mod pattern;
 pub use pattern::*;

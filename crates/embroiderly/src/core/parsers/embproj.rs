@@ -1,9 +1,9 @@
 use std::io::Write;
 
 use anyhow::Result;
+use embroiderly_pattern::PatternProject;
 
 use crate::core::parsers::oxs;
-use crate::core::pattern::PatternProject;
 
 pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
   log::info!("Parsing the EMBPROJ pattern file");

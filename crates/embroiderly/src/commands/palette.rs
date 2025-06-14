@@ -1,7 +1,8 @@
+use embroiderly_pattern::{PaletteItem, PaletteSettings};
+
 use crate::core::actions::{
   Action as _, AddPaletteItemAction, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
 };
-use crate::core::pattern::{PaletteItem, PaletteSettings};
 use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};

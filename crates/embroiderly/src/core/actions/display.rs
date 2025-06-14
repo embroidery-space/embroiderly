@@ -1,10 +1,10 @@
 use std::sync::OnceLock;
 
 use anyhow::Result;
+use embroiderly_pattern::{DisplayMode, PatternProject};
 use tauri::{Emitter, WebviewWindow};
 
 use super::Action;
-use crate::core::pattern::{DisplayMode, PatternProject};
 
 #[cfg(test)]
 #[path = "display.test.rs"]

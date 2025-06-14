@@ -1,3 +1,4 @@
+use embroiderly_pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch};
 use rand::seq::SliceRandom;
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder, generate_context};
@@ -6,7 +7,6 @@ use super::{
   Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
 };
 use crate::core::parsers::oxs;
-use crate::core::pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch};
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {

@@ -1,9 +1,9 @@
+use embroiderly_pattern::*;
 use ordered_float::NotNan;
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
 use super::{Action, AddStitchAction, RemoveStitchAction};
-use crate::core::pattern::*;
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {

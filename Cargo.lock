@@ -1341,6 +1341,7 @@ dependencies = [
  "borsh",
  "convert_case 0.8.0",
  "dyn-clone",
+ "embroiderly-pattern",
  "log",
  "log-panics",
  "ordered-float",
@@ -1369,6 +1370,18 @@ dependencies = [
  "xsp-parsers",
  "zip 4.0.0",
  "zip-extract",
+]
+
+[[package]]
+name = "embroiderly-pattern"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "borsh",
+ "log",
+ "ordered-float",
+ "uuid",
+ "xsp-parsers",
 ]
 
 [[package]]

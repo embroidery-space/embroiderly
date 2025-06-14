@@ -1,7 +1,9 @@
+use embroiderly_pattern::Stitch;
+
 use crate::core::actions::{Action as _, AddStitchAction, RemoveStitchAction};
 use crate::error::Result;
+use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
-use crate::{Stitch, parse_command_payload};
 
 #[tauri::command]
 pub fn add_stitch<R: tauri::Runtime>(

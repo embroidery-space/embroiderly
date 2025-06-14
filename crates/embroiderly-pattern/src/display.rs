@@ -1,6 +1,7 @@
-use borsh::{BorshDeserialize, BorshSerialize};
+use xsp_parsers::pmaker;
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct DisplaySettings {
   pub default_symbol_font: String,
   pub grid: Grid,
@@ -21,7 +22,8 @@ impl Default for DisplaySettings {
   }
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Grid {
   pub major_lines_interval: u16,
   pub minor_lines: GridLine,
@@ -44,7 +46,18 @@ impl Default for Grid {
   }
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+impl From<pmaker::Grid> for Grid {
+  fn from(grid: pmaker::Grid) -> Self {
+    Self {
+      major_lines_interval: grid.major_lines_interval,
+      minor_lines: grid.minor_screen_lines.into(),
+      major_lines: grid.major_screen_lines.into(),
+    }
+  }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct GridLine {
   pub color: String,
 
@@ -52,7 +65,17 @@ pub struct GridLine {
   pub thickness: f32,
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+impl From<pmaker::GridLineStyle> for GridLine {
+  fn from(line: pmaker::GridLineStyle) -> Self {
+    Self {
+      color: line.color,
+      thickness: line.thickness,
+    }
+  }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum DisplayMode {
   Solid,
   Stitches,
@@ -92,7 +115,8 @@ impl std::str::FromStr for DisplayMode {
   }
 }
 
-#[derive(Debug, Clone, PartialEq, BorshSerialize, BorshDeserialize)]
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteSettings {
   pub columns_number: u8,
   pub color_only: bool,
