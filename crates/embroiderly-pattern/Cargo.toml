@@ -1,0 +1,16 @@
+[package]
+name = "embroiderly-pattern"
+edition = "2024"
+
+[features]
+serde = ["uuid/serde"]
+borsh = ["dep:borsh", "uuid/borsh", "ordered-float/borsh"]
+
+[dependencies]
+anyhow = "1.0.98"
+borsh = { version = "1.5.7", features = ["derive"], optional = true }
+log = "0.4.27"
+ordered-float = { version = "5.0.0" }
+uuid = { version = "1.17.0", features = ["v4"] }
+
+xsp-parsers = { git = "https://github.com/embroidery-space/xsp-parsers.git", rev = "ae67e88891bade1437daaad1fbaee62600ef5f7e" }

@@ -1,0 +1,13 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[profile.dev]
+debug = "line-tables-only"
+
+[profile.release]
+opt-level = "s"
+lto = true
+debug = "limited"
+strip = "debuginfo"
+split-debuginfo = "packed"
