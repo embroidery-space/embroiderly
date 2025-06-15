@@ -52,7 +52,7 @@ typst-pdf = "0.13.1"
 typst-as-lib = "0.14.4"
 
 # Archiving
-zip = { version = "4.0.0", features = [
+zip = { version = "4.1.0", features = [
   "zstd",
   "time",
 ], default-features = false }
