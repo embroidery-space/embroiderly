@@ -1,38 +1,40 @@
 <template>
-  <Toolbar data-tauri-drag-region class="border-0 border-b rounded-none p-0" pt:end:class="h-full gap-2">
-    <template #start>
-      <Menubar :model="menuOptions" class="border-0 rounded-none" />
-    </template>
+  <div class="flex">
+    <div data-tauri-drag-region class="grow flex items-center gap-x-2 p-2">
+      <UDropdownMenu :items="fileOptions" :modal="false">
+        <UButton variant="ghost" color="neutral" :label="$t('label-file')" />
+      </UDropdownMenu>
+      <UDropdownMenu v-if="patternsStore.pattern !== undefined" :items="patternOptions" :modal="false">
+        <UButton variant="ghost" color="neutral" :label="$t('label-pattern')" />
+      </UDropdownMenu>
+      <UDropdownMenu :items="helpOptions" :modal="false">
+        <UButton variant="ghost" color="neutral" :label="$t('label-help')" />
+      </UDropdownMenu>
+    </div>
 
-    <template v-if="appStateStore.openedPatterns?.length" #center>
-      <PatternSelector @switch="(patternId) => patternsStore.loadPattern(patternId)" />
-    </template>
+    <PatternSelector
+      v-if="appStateStore.openedPatterns?.length"
+      @switch="(patternId) => patternsStore.loadPattern(patternId)"
+    />
 
-    <template #end>
-      <Button
-        v-tooltip.bottom="$t('label-manage')"
-        aria-haspopup="true"
-        aria-controls="manage-menu"
-        text
-        :loading="settingsStore.loadingUpdate"
-        severity="secondary"
-        icon="i-prime:cog"
-        class="size-6 p-0"
-        @click="manageMenu?.toggle"
-      />
+    <div class="h-full flex items-center gap-2">
+      <UDropdownMenu :items="manageOptions" :modal="false">
+        <UTooltip :text="$t('label-manage')">
+          <UButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-prime:cog" />
+        </UTooltip>
+      </UDropdownMenu>
       <Suspense> <WindowControls /> </Suspense>
-    </template>
-  </Toolbar>
-  <Menu id="manage-menu" ref="manage-menu" popup :model="manageOptions" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
   import { writeText } from "@tauri-apps/plugin-clipboard-manager";
   import { openUrl } from "@tauri-apps/plugin-opener";
-  import { ref, useTemplateRef } from "vue";
+  import { computed } from "vue";
   import { useFluent } from "fluent-vue";
-  import { Button, Menu, Menubar, Toolbar, useConfirm } from "primevue";
-  import type { MenuItem } from "primevue/menuitem";
+  import { useConfirm } from "primevue";
+  import type { NavigationMenuItem, DropdownMenuItem } from "@nuxt/ui";
 
   import { SystemApi } from "#/api/";
   import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
@@ -48,71 +50,69 @@
 
   const fluent = useFluent();
 
-  const menuOptions = ref<MenuItem[]>([
-    {
-      label: () => fluent.$t("label-file"),
-      items: [
-        { label: () => fluent.$t("label-open"), command: () => patternsStore.openPattern() },
-        { label: () => fluent.$t("label-create"), command: () => patternsStore.createPattern },
-        { separator: true },
-        {
-          label: () => fluent.$t("label-save"),
-          command: () => patternsStore.savePattern(),
-          disabled: () => !patternsStore.pattern,
-        },
-        {
-          label: () => fluent.$t("label-save-as"),
-          command: () => patternsStore.savePattern(true),
-          disabled: () => !patternsStore.pattern,
-        },
-        { separator: true },
-        {
-          label: () => fluent.$t("label-export"),
-          disabled: () => !patternsStore.pattern,
-          items: [
-            { label: "OXS", command: () => patternsStore.exportPattern("oxs") },
-            { label: "PDF", command: () => patternsStore.exportPattern("pdf") },
-          ],
-        },
-        { separator: true },
-        {
-          label: () => fluent.$t("label-close"),
-          command: () => patternsStore.closePattern(),
-          disabled: () => !patternsStore.pattern,
-        },
-      ],
-    },
-    {
-      label: () => fluent.$t("label-pattern"),
-      visible: () => patternsStore.pattern !== undefined,
-      items: [
-        { label: () => fluent.$t("title-pattern-info"), command: () => patternsStore.updatePatternInfo() },
-        { label: () => fluent.$t("title-fabric-properties"), command: () => patternsStore.updateFabric() },
-        { label: () => fluent.$t("title-grid-properties"), command: () => patternsStore.updateGrid() },
-      ],
-    },
-    {
-      label: () => fluent.$t("label-help"),
-      items: [
-        { label: () => fluent.$t("label-learn-more"), command: () => openUrl("https://embroiderly.niusia.me") },
-        {
-          label: () => fluent.$t("label-license"),
-          command: () => openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE"),
-        },
-        { separator: true },
-        { label: () => fluent.$t("label-about"), command: () => showSystemInfo() },
-      ],
-    },
+  const fileOptions = computed<NavigationMenuItem[][]>(() => [
+    [
+      { label: fluent.$t("label-open"), onSelect: () => patternsStore.openPattern() },
+      { label: fluent.$t("label-create"), onSelect: () => patternsStore.createPattern },
+    ],
+
+    [
+      {
+        label: fluent.$t("label-save"),
+        disabled: !patternsStore.pattern,
+        onSelect: () => patternsStore.savePattern(),
+      },
+      {
+        label: fluent.$t("label-save-as"),
+        disabled: !patternsStore.pattern,
+        onSelect: () => patternsStore.savePattern(true),
+      },
+    ],
+    [
+      {
+        label: fluent.$t("label-export"),
+        disabled: !patternsStore.pattern,
+        children: [
+          { label: "OXS", onSelect: () => patternsStore.exportPattern("oxs") },
+          { label: "PDF", onSelect: () => patternsStore.exportPattern("pdf") },
+        ],
+      },
+    ],
+
+    [
+      {
+        label: fluent.$t("label-close"),
+        disabled: !patternsStore.pattern,
+        onSelect: () => patternsStore.closePattern(),
+      },
+    ],
+  ]);
+  const patternOptions = computed<NavigationMenuItem[][]>(() => [
+    [
+      { label: fluent.$t("title-pattern-info"), onSelect: () => patternsStore.updatePatternInfo() },
+      { label: fluent.$t("title-fabric-properties"), onSelect: () => patternsStore.updateFabric() },
+      { label: fluent.$t("title-grid-properties"), onSelect: () => patternsStore.updateGrid() },
+    ],
+  ]);
+  const helpOptions = computed<NavigationMenuItem[][]>(() => [
+    [
+      { label: fluent.$t("label-learn-more"), onSelect: () => openUrl("https://embroiderly.niusia.me") },
+      {
+        label: fluent.$t("label-license"),
+        onSelect: () => openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE"),
+      },
+    ],
+    [{ label: fluent.$t("label-about"), onSelect: () => showSystemInfo() }],
   ]);
 
-  const manageMenu = useTemplateRef("manage-menu");
-  const manageOptions = ref<MenuItem[]>([
-    { label: () => fluent.$t("title-settings"), command: () => settingsStore.openSettings() },
-    { separator: true },
-    {
-      label: () => fluent.$t("label-check-for-updates"),
-      command: () => settingsStore.checkForUpdates(),
-    },
+  const manageOptions = computed<DropdownMenuItem[][]>(() => [
+    [{ label: fluent.$t("title-settings"), onSelect: () => settingsStore.openSettings() }],
+    [
+      {
+        label: fluent.$t("label-check-for-updates"),
+        onSelect: () => settingsStore.checkForUpdates(),
+      },
+    ],
   ]);
 
   async function showSystemInfo() {

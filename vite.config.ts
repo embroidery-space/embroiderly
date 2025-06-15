@@ -6,7 +6,20 @@ import ui from "@nuxt/ui/vite";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [vue(), ui(), tailwindcss()],
+  plugins: [
+    vue(),
+    ui({
+      ui: {
+        colors: {
+          primary: "primary",
+        },
+      },
+      theme: {
+        colors: ["primary"],
+      },
+    }),
+    tailwindcss(),
+  ],
   clearScreen: false,
   resolve: { alias: { "#": fileURLToPath(new URL("./src", import.meta.url)) } },
   envPrefix: ["VITE_", "TAURI_ENV_*"],

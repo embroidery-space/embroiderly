@@ -21,7 +21,6 @@ import { button } from "./button";
 import { divider } from "./divider";
 import { fieldset } from "./fieldset";
 import { splitter } from "./splitter";
-import { toolbar } from "./toolbar";
 
 // Overlay components.
 import { dialog } from "./dialog";
@@ -70,7 +69,6 @@ export const NordTheme = {
     divider,
     fieldset,
     splitter,
-    toolbar,
 
     // Overlay components.
     dialog,
