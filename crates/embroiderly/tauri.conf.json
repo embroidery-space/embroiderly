@@ -6,7 +6,7 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
-    "beforeBundleCommand": "node scripts/sidecar-embroiderly-export.js",
+    "beforeBundleCommand": "node scripts/create-embroiderly-export-sidecar.js",
     "frontendDist": "../../dist",
     "devUrl": "http://localhost:1420",
     "removeUnusedCommands": true
