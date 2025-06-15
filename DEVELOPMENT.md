@@ -8,37 +8,12 @@ You can follow it to start working on your ideas, improvements, fixes, etc.
 
 ```
 src/ # Everything related to the frontend.
-├── api/ # Contains modules to interact with the backend through Tauri commands.
-├── assets/ # Styles, fonts, icons, images, etc.
-├── components/ # Vue.js components.
-├── schemas/ # Schemas and types for parsing borsh-serialized data.
-├── services/ # Modules that encapsulate complex logic.
-├── stores/ # Pinia stores to share some application state through components.
-├── types/ # Type definitions.
-├── utils/ # A set of utility functions.
-├── App.vue # The main application component.
-└── main.ts # An entry point for the entire application.
-src-tauri/ # Everything related to the backend.
-├── capabilities/ # A set of permissions for the application.
-├── icons/ # Desktop icons.
-├── resources/ # Sample patterns, stitch fonts, colour palettes, etc.
-├── src/ # Application source code.
-│   ├── commands/ # A set of Tauri commands exposed to the frontend.
-│   ├── core/ # The core functionality.
-│   │   ├── actions/ # A set of actions for performing changes to patterns.
-│   │   ├── parser/ # Cross-stitch pattern files parsers.
-│   │   │   ├── oxs/ # OXS parser.
-│   │   │   └── xsd.rs # XSD parser.
-│   │   ├── pattern/ # Pattern structure definition that is used internally.
-│   │   │   └── stitches/ # Definitions of the various stitch kinds and their methods.
-│   │   └── history.rs # Defines a structure to save performed action objects.
-│   ├── utils/ # A set of utility functions.
-│   ├── error.rs # Defines custom error type for the command result.
-│   ├── logger.rs # Configures the Tauri logger plugin.
-│   ├── state.rs # Defines the application states.
-│   ├── lib.rs # Composes all modules into the library used in `main.rs` and `tests/`.
-│   └── main.rs # Bundles everything together and runs the application.
-└── tests/ # End-to-end backend tests.
+crates/
+├── embroiderly/ # The main application.
+├── embroiderly-export/ # An additional application for exporting cross-stitch patterns into various formats.
+├── embroiderly-parsers/ # A library that contains parsers of cross-stitch pattern which return the pattern object in our internal representation.
+├── embroiderly-pattern/ # A library that contains our internal representation of cross-stitch patterns.
+└── xsp-parsers/ # A library that contains cross-stitch parsers of different formats from varoius applications.
 ```
 
 ## Prerequisites
@@ -92,8 +67,15 @@ Here is a recommended setup:
        "Cargo.toml": "Cargo.lock, rustfmt.toml",
        // Hide ESLint and Prettier configurations under `.editorconfig`.
        ".editorconfig": "eslint.config.js, .prettierrc.json",
-       // Hide PostCSS and Tailwind configs under Vite config.
-       "vite.config.ts": "postcss.config.js, tailwind.config.ts"
+       // Hide UnoCSS config under Vite config.
+       "vite.config.ts": "uno.config.ts",
+       // Hide app image under index.html.
+       "index.html": "app-icon.png"
+     },
+
+     // Associate tauri.conf.json with the JSON5 format.
+     "files.associations": {
+       "tauri.conf.json": "jsonc"
      },
 
      // Optionally, use enhanced syntax highlighter for TOML files.
@@ -112,17 +94,14 @@ Here is a recommended setup:
      "[rust]": {
        "editor.defaultFormatter": "rust-lang.rust-analyzer"
      },
-     // Exclude build artefacts and frontend sources from being tracked by RustAnalyzer.
-     "rust-analyzer.files.excludeDirs": ["node_modules", "src", "dist"],
      // Force Rustfmt to use the nightly Rust version.
      "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
+     // Store RustAnalyzer's artefacts in a separate directory in `target/` to not block debug builds.
+     "rust-analyzer.cargo.targetDir": true,
 
-     // Exclude build artefacts from being tracked by VS Code.
-     "files.watcherExclude": {
-       "node_modules/**": true,
-       "dist/**": true,
-       "src-tauri/target/**": true
-     }
+     // Automatically specify file extensions when importing JS modules.
+     "javascript.preferences.importModuleSpecifierEnding": "js",
+     "typescript.preferences.importModuleSpecifierEnding": "js"
    }
    ```
 
@@ -132,11 +111,8 @@ Refer to the [reference](https://tauri.app/reference/cli) to see available comma
 
 ## A Few Words About Testing
 
-All unit tests are extracted into separate files titled `[filename].test.{ts,vue}`.
-All end-to-end tests are located under the `tests/` folder (in the root for frontend tests and in the `src-tauri/` for backend tests).
-
-> It may be inconvenient to navigate through the projects.
-> Check out the recommended VS Code setup described above to fix that.
+All unit tests are extracted into separate files titled `[filename].test.{ts,rs}`.
+All end-to-end tests are located under the `tests/` folder.
 
 ## Organization Notes
 
