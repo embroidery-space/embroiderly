@@ -9,10 +9,10 @@
       <div>
         <i18n tag="p" path="message-get-started">
           <template #button-open="{ buttonOpenLabel }">
-            <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="() => patternsStore.openPattern()" />
+            <UButton variant="link" :label="buttonOpenLabel" class="p-0" @click="() => patternsStore.openPattern()" />
           </template>
           <template #button-create="{ buttonCreateLabel }">
-            <Button
+            <UButton
               variant="link"
               :label="buttonCreateLabel"
               class="p-0"
@@ -28,18 +28,18 @@
         <div class="flex flex-col gap-y-1">
           <span class="text-lg">{{ $t("label-start") }}</span>
           <div class="max-w-max flex flex-col gap-y-1">
-            <Button
-              text
+            <UButton
+              variant="ghost"
               icon="i-prime:file-plus"
               :label="$t('label-start-create')"
-              pt:root:class="justify-start"
+              class="justify-start"
               @click="() => patternsStore.createPattern()"
             />
-            <Button
-              text
+            <UButton
+              variant="ghost"
               icon="i-prime:file-arrow-up"
               :label="$t('label-start-open')"
-              pt:root:class="justify-start"
+              class="justify-start"
               @click="() => patternsStore.openPattern()"
             />
           </div>
@@ -52,10 +52,10 @@
               v-for="item in section.items"
               :key="item.title"
               tabindex="0"
-              class="info-item"
+              class="p-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors duration-initial hover:cursor-pointer hover:bg-elevated"
               @click="handleInfoItemClick(item)"
             >
-              <span class="flex items-center gap-2" :style="{ color: dt('primary.text.color') }">
+              <span class="flex items-center gap-2 text-primary">
                 {{ item.title }}
                 <i v-if="item.url" class="i-prime:external-link"></i>
               </span>
@@ -75,8 +75,6 @@
 <script setup lang="ts">
   import { openUrl } from "@tauri-apps/plugin-opener";
   import { computed } from "vue";
-  import { dt } from "@primeuix/themes";
-  import { Button } from "primevue";
   import { useFluent } from "fluent-vue";
   import { useSettingsStore } from "#/stores/settings";
   import { usePatternsStore } from "#/stores/patterns";
@@ -130,23 +128,3 @@
     command?: () => void;
   }
 </script>
-
-<style scoped>
-  .info-item {
-    border-radius: var(--p-content-border-radius);
-    padding-inline: 0.625rem; /* .px-2.5 */
-    padding-block: 0.5rem; /* .py-2 */
-    transition: background-color var(--p-transition-duration);
-  }
-
-  .info-item:hover {
-    cursor: pointer;
-    background-color: var(--p-content-hover-background);
-  }
-
-  .info-item:focus-visible {
-    box-shadow: var(--p-focus-ring-shadow);
-    outline: var(--p-focus-ring-width) var(--p-focus-ring-style) var(--p-primary-color);
-    outline-offset: var(--p-focus-ring-offset);
-  }
-</style>
