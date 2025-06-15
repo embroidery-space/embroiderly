@@ -4,7 +4,9 @@ on:
     branches: ["main"]
     types: ["opened", "reopened", "edited", "synchronize"]
     paths:
-      - "src-tauri/**"
+      - "crates/**"
+      - "Cargo.*"
+      - "rustfmt.toml"
       - ".github/workflows/ci-backend.yml"
 concurrency:
   group: ${{ github.ref }}
@@ -14,15 +16,14 @@ env:
 jobs:
   check:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src-tauri/
     steps:
       - uses: actions/checkout@v4
       - name: Install system dependencies
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - name: Create dummy embroiderly-export sidecar binaries
+        run: sh ./scripts/create-dummy-embroiderly-export-sidecar.sh
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
@@ -30,27 +31,22 @@ jobs:
         with:
           components: clippy
       - uses: swatinem/rust-cache@v2
-        with:
-          workspaces: "./src-tauri -> target"
       - name: Check formatting
         run: cargo +nightly fmt --check
       - name: Lint
         run: cargo clippy --locked -- -D warnings
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src-tauri/
     steps:
       - uses: actions/checkout@v4
       - name: Install system dependencies
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - name: Create dummy embroiderly-export sidecar binaries
+        run: sh ./scripts/create-dummy-embroiderly-export-sidecar.sh
       - uses: dtolnay/rust-toolchain@stable
       - uses: swatinem/rust-cache@v2
-        with:
-          workspaces: "./src-tauri -> target"
       - uses: taiki-e/install-action@nextest
       - name: Test
-        run: cargo nextest run --locked -F test
+        run: cargo nextest run --locked -F embroiderly/test

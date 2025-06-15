@@ -14,7 +14,7 @@ updates:
           - "minor"
           - "patch"
   - package-ecosystem: "cargo"
-    directory: "/src-tauri"
+    directory: "/"
     schedule:
       interval: "weekly"
     groups:

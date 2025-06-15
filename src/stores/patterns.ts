@@ -25,7 +25,6 @@ import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
-  PatternErrorUnsupportedPatternTypeForSaving,
 } from "#/error.ts";
 
 const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
@@ -151,7 +150,7 @@ export const usePatternsStore = defineStore(
         loading.value = true;
         await PatternApi.savePattern(pattern.value.id, path);
       } catch (error) {
-        if (error instanceof PatternErrorUnsupportedPatternTypeForSaving) {
+        if (error instanceof PatternErrorUnsupportedPatternType) {
           confirm.require({
             header: fluent.$t("title-error"),
             message: fluent.$t("message-error-unsupported-pattern-type-for-saving"),

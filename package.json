@@ -6,8 +6,8 @@
     "dev": "vite",
     "build": "npm run check-types && vite build",
     "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
-    "fmt": "prettier --check ./eslint.config.js ./vite.config.ts src/",
-    "lint": "eslint ./eslint.config.js ./vite.config.ts src/",
+    "fmt": "prettier --check ./eslint.config.js ./vite.config.ts scripts/ src/",
+    "lint": "eslint ./eslint.config.js ./vite.config.ts scripts/ src/",
     "test": "vitest --run"
   },
   "dependencies": {

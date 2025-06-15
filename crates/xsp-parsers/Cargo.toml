@@ -1,0 +1,21 @@
+[package]
+name = "xsp-parsers"
+edition = { workspace = true }
+
+[dependencies]
+# Parsing pattern files
+byteorder = { workspace = true }
+encoding_rs = { workspace = true }
+hex = { workspace = true }
+
+# Logging
+log = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+
+# Other
+itertools = { workspace = true }
+
+[dev-dependencies]
+paste = { workspace = true }

@@ -1,0 +1,28 @@
+[package]
+name = "embroiderly-export"
+edition = { workspace = true }
+
+[dependencies]
+# CLI
+clap = { workspace = true }
+
+# Embroiderly Core
+embroiderly-parsers = { workspace = true }
+embroiderly-pattern = { workspace = true }
+
+# Exporting patterns to PDF
+typst = { workspace = true }
+typst-pdf = { workspace = true }
+## Third-party Typst libraries
+typst-as-lib = { workspace = true, features = ["typst-kit-fonts"] }
+
+# Writing SVG files
+quick-xml = { workspace = true }
+
+# Logging
+log = { workspace = true }
+simple_logger = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }

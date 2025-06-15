@@ -1,0 +1,25 @@
+[package]
+name = "embroiderly-parsers"
+edition = { workspace = true }
+
+[dependencies]
+# Embroiderly Core
+embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
+
+# Parsing pattern files
+xsp-parsers = { workspace = true }
+quick-xml = { workspace = true }
+
+# Archiving
+zip = { workspace = true }
+zip-extract = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Logging
+log = { workspace = true }
+
+# Other
+tempfile = { workspace = true }

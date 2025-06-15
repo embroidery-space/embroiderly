@@ -1,0 +1,13 @@
+# Tauri schemas
+gen/
+
+# Sidecars
+binaries/*
+!binaries/README.md
+
+# Browser extensions
+extensions/*
+!extensions/README.md
+
+# Debug logs
+logs/

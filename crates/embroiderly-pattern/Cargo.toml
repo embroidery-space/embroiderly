@@ -1,0 +1,24 @@
+[package]
+name = "embroiderly-pattern"
+edition = { workspace = true }
+
+[features]
+serde = ["uuid/serde"]
+borsh = ["dep:borsh", "uuid/borsh", "ordered-float/borsh"]
+
+[dependencies]
+# De/serialization
+borsh = { workspace = true, optional = true }
+
+# Logging
+log = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+
+# Embroiderly Core
+xsp-parsers = { workspace = true }
+
+# Other
+ordered-float = { workspace = true }
+uuid = { workspace = true }

@@ -1,0 +1,483 @@
+"DMC  B5200","Snow White",16775930
+"DMC  BLANC","White ",16579836
+"DMC  ECRU","Ecru ",12902125
+"DMC     01","White Tin",12961221
+"DMC     02","Tin",11250603
+"DMC     03","Medium Tin",9473936
+"DMC     04","Dark Tin",6579303
+"DMC     05","Light Driftwood",10858427
+"DMC     06","Medium Light Driftwood",9675444
+"DMC     07","Driftwood",5661300
+"DMC     08","Dark Driftwood",5266281
+"DMC     09","Very Dark Cocoa",3618888
+"DMC     10","Very Light Tender Green",12111566
+"DMC     11","Light Tender Green",8707296
+"DMC     12","Tender Green",6473423
+"DMC     13","Medium Light Nile Green",10273432
+"DMC     14","Pale Apple Green",9753038
+"DMC     15","Apple Green",8705741
+"DMC     16","Light Chartreuse",6993328
+"DMC     17","Light Yellow Plum",5359061
+"DMC     18","Yellow Plum",4898777
+"DMC     19","Medium Light Autumn Gold",5414092
+"DMC     20","Shrimp",11784695
+"DMC     21","Light Alizarin",5071296
+"DMC     22","Alizarin",2697874
+"DMC     23","Apple Blossom",14670568
+"DMC     24","White Lavender",14997984
+"DMC     25","Ultra Light Lavender",14404304
+"DMC     26","Pale Lavender",13742267
+"DMC     27","White Violet",14210265
+"DMC     28","Medium Light Eggplant",10516609
+"DMC     29","Eggplant",6175817
+"DMC     30","Medium Light Blueberry",11569546
+"DMC     31","Blueberry",10314341
+"DMC     32","Dark Blueberry",8737622
+"DMC     33","Fuchsia",9325448
+"DMC     34","Dark Fuchsia",7352442
+"DMC     35","Very Dark Fuchsia",4925272
+"DMC    150","Rose Ultra V DK Dusty ",3674769
+"DMC    151","Dusty Rose very light",12232946
+"DMC    152","Shell Pink medium li",8749772
+"DMC    153","Violet very light ",12885713
+"DMC    154","Grape very dark ",2823992
+"DMC    155","Blue Violet medium dk",11232630
+"DMC    156","Blue Violet medium lt",11763059
+"DMC    157","Cornflower Blue very",13282197
+"DMC    158","Cornflower Blue medium",6631472
+"DMC    159","Grey Blue light ",12953239
+"DMC    160","Grey Blue medium ",10253670
+"DMC    161","Grey Blue ",8739919
+"DMC    162","Blue ultra very light",13681058
+"DMC    163","Celadon Green medium",5992772
+"DMC    164","Forest Green light ",7913351
+"DMC    165","Moss Green very light",6670797
+"DMC    166","Moss Green medium light",2138017
+"DMC    167","Yellow Beige very dark",3826829
+"DMC    168","Pewter very light ",12039083
+"DMC    169","Pewter light ",8026736
+"DMC    208","Lavender very dark ",9848194
+"DMC    209","Lavender dark ",11758758
+"DMC    210","Lavender medium ",13472190
+"DMC    211","Lavender light ",14923222
+"DMC    221","Shell Pink very dark",2696045
+"DMC    223","Shell Pink light ",6642867
+"DMC    224","Shell Pink very light",9146324
+"DMC    225","Shell Pink ult vy lt",12436725
+"DMC    300","Mahogany very dark ",2109027
+"DMC    301","Mahogany medium ",2443161
+"DMC    304","Christmas Red medium",2687130
+"DMC    307","Lemon ",1629947
+"DMC    309","Rose deep ",4071597
+"DMC    310","Black",789516
+"DMC    311","Navy Blue medium ",5255200
+"DMC    312","Navy Blue light ",7291427
+"DMC    315","Antique Mauve dark ",4339823
+"DMC    316","Antique Mauve medium",8350383
+"DMC    317","Pewter Grey ",6313039
+"DMC    318","Steel Grey light ",9865088
+"DMC    319","Pistachio Green vy dk",2900005
+"DMC    320","Pistachio Green medium",5930842
+"DMC    321","Christmas Red ",2425004
+"DMC    322","Baby Blue dark ",10184256
+"DMC    326","Rose very deep ",3674790
+"DMC    327","Violet",6172254
+"DMC    333","Blue Violet very dark",8861263
+"DMC    334","Baby Blue medium ",10909002
+"DMC    335","Rose ",6571220
+"DMC    336","Navy Blue ",5188640
+"DMC    340","Blue Violet medium ",12482172
+"DMC    341","Blue Violet light ",13344402
+"DMC    347","Salmon very dark ",3154086
+"DMC    349","Coral dark ",2694333
+"DMC    350","Coral medium ",3421396
+"DMC    351","Coral ",4607456
+"DMC    352","Coral light ",6648818
+"DMC    353","Peach ",9676542
+"DMC    355","Terra Cotta dark ",2895496
+"DMC    356","Terra Cotta medium ",4542381
+"DMC    367","Pistachio Green dark",4679232
+"DMC    368","Pistachio Green light",7775355
+"DMC    369","Pistachio Green vy lt",10343617
+"DMC    370","Mustard medium ",4025986
+"DMC    371","Mustard ",4684431
+"DMC    372","Mustard light ",6394787
+"DMC    400","Mahogany dark ",2175861
+"DMC    402","Mahogany very light ",5999080
+"DMC    407","Clay Brown (3773)",6320817
+"DMC    413","Pewter Grey dark ",4670013
+"DMC    414","Steel Grey dark ",7891812
+"DMC    415","Pearl Grey ",11642527
+"DMC    420","Hazel Nut Brown dark",3432590
+"DMC    422","Hazel Nut Brown ligh",6001596
+"DMC    433","Brown medium ",2308196
+"DMC    434","Brown light ",2442880
+"DMC    435","Brown very light ",3432867
+"DMC    436","Tan ",4881593
+"DMC    437","Tan light ",6986961
+"DMC    444","Lemon dark ",47600
+"DMC    445","Lemon light ",8058359
+"DMC    451","Shell Grey dark ",7105658
+"DMC    452","Shell Grey medium ",9145247
+"DMC    453","Shell Grey light ",10923455
+"DMC    469","Avocado Green ",2318167
+"DMC    470","Avocado Green light ",3176554
+"DMC    471","Avocado Green very lt",5545357
+"DMC    472","Avocado Green ultra ",6339515
+"DMC    498","Christmas Red dark ",2424968
+"DMC    500","Blue Green very dark",3554597
+"DMC    501","Blue Green dark ",4871222
+"DMC    502","Blue Green ",6649172
+"DMC    503","Blue Green medium ",9149571
+"DMC    505","Jade Green ",4350252
+"DMC    517","Wedgewood dark ",9528099
+"DMC    518","Wedgewood light ",10781757
+"DMC    519","Sky Blue ",13152632
+"DMC    520","Fern Green dark ",3426106
+"DMC    522","Fern Green ",6258034
+"DMC    523","Fern Green light ",7575438
+"DMC    524","Fern Green very light",8692378
+"DMC    535","Ash Grey very light ",4606795
+"DMC    543","Beige Brown ultra",11388901
+"DMC    550","Violet very dark",4921415
+"DMC    552","Violet medium ",8468603
+"DMC    553","Violet ",9588626
+"DMC    554","Violet light ",12815300
+"DMC    561","Jade very dark ",4478249
+"DMC    562","Jade medium ",5930042
+"DMC    563","Jade light ",9220461
+"DMC    564","Jade very light ",10733963
+"DMC    580","Moss Green dark ",2121564
+"DMC    581","Moss Green ",2718585
+"DMC    597","Turquoise ",10457677
+"DMC    598","Turquoise light ",11907706
+"DMC    600","Cranberry very dark ",4653231
+"DMC    601","Cranberry dark ",5708742
+"DMC    602","Cranberry medium ",7155927
+"DMC    603","Cranberry ",9195497
+"DMC    604","Cranberry light ",11369206
+"DMC    605","Cranberry very light",12687614
+"DMC    606","Burnt Orange-Red ",2103528
+"DMC    608","Burnt Orange ",2441983
+"DMC    610","Drab Brown dark ",3164768
+"DMC    611","Drab Brown ",4020848
+"DMC    612","Drab Brown light ",5931417
+"DMC    613","Drab Brown very light",7181996
+"DMC    632","Desert Sand ultra ve",3423602
+"DMC    640","Beige Grey very dark",5203058
+"DMC    642","Beige Grey dark ",6520204
+"DMC    644","Beige Grey medium ",9744570
+"DMC    645","Beaver Grey very dark",4675662
+"DMC    646","Beaver Grey dark ",5858153
+"DMC    647","Beaver Grey medium ",7371645
+"DMC    648","Beaver Grey light ",9148568
+"DMC    666","Christmas Red bright",2293961
+"DMC    676","Old Gold light ",6927590
+"DMC    677","Old Gold very light ",9359338
+"DMC    680","Old Gold dark ",3437478
+"DMC    699","Christmas Green ",4022016
+"DMC    700","Christmas Green bright",4091904
+"DMC    701","Christmas Green light",3699469
+"DMC    702","Kelly Green ",4097332
+"DMC    703","Chartreuse ",4630368
+"DMC    704","Chartreuse bright ",4500856
+"DMC    712","Cream ",13822195
+"DMC    718","Plum ",7282855
+"DMC    720","Orange Spice dark ",1786578
+"DMC    721","Orange Spice medium ",2907378
+"DMC    722","Orange Spice light ",4883199
+"DMC    725","Topaz ",4242172
+"DMC    726","Topaz light ",4707583
+"DMC    727","Topaz very light ",7464191
+"DMC    728","Golden Yellow ",4042223
+"DMC    729","Old Gold medium ",4229570
+"DMC    730","Olive Green very dark",2116951
+"DMC    732","Olive Green (731)",2120809
+"DMC    733","Olive Green medium ",3180184
+"DMC    734","Olive Green light ",4693424
+"DMC    738","Tan very light ",7907797
+"DMC    739","Tan ultra very light",10931693
+"DMC    740","Tangerine (971) ",1797375
+"DMC    741","Tangerine medium ",2132223
+"DMC    742","Tangerine light ",2336255
+"DMC    743","Yellow medium ",4704511
+"DMC    744","Yellow pale ",8052479
+"DMC    745","Yellow light pale ",9035775
+"DMC    746","Off White ",13103610
+"DMC    747","Sky Blue very light ",14801837
+"DMC    754","Peach light ",9875700
+"DMC    758","Terra Cotta very light",8032731
+"DMC    760","Salmon ",8354021
+"DMC    761","Salmon light ",11052021
+"DMC    762","Pearl Grey very light",13551044
+"DMC    772","Yellow Green very light",9951938
+"DMC    775","Baby Blue very light",14405556
+"DMC    777","Raspberry very dark ",2887032
+"DMC    778","Antique Mauve very lt",10392777
+"DMC    779","Cocoa dark ",3553364
+"DMC    780","Topaz ultra very dark",2312844
+"DMC    782","Topaz dark (781)",2123180
+"DMC    783","Topaz medium",2917584
+"DMC    791","Cornflower Blue very",6301998
+"DMC    792","Cornflower Blue dark",8535610
+"DMC    793","Cornflower Blue medium",9921620
+"DMC    794","Cornflower Blue light",12094064
+"DMC    796","Royal Blue dark ",7351076
+"DMC    797","Royal Blue ",8141353
+"DMC    798","Delft Blue dark ",10706749
+"DMC    799","Delft Blue medium ",11893587
+"DMC    800","Delft Blue pale ",13939342
+"DMC    801","Coffee Brown dark ",2372439
+"DMC    803","Baby Blue ultra very",6305312
+"DMC    807","Peacock Blue dark",13081965
+"DMC    809","Delft Blue ",12292700
+"DMC    813","Blue - LT",13218453
+"DMC    814","Garnet dark ",2429787
+"DMC    815","Garnet medium ",2297200
+"DMC    816","Garnet ",2888585
+"DMC    817","Coral Red very dark ",1772966
+"DMC    818","Baby Pink ",13816063
+"DMC    819","Baby Pink light ",14343935
+"DMC    820","Royal Blue very dark",6496288
+"DMC    822","Beige Grey light ",12244704
+"DMC    823","Navy Blue dark ",3810080
+"DMC    824","Blue very dark ",7421467
+"DMC    825","Blue dark ",8802075
+"DMC    826","Blue medium ",10578736
+"DMC    827","Blue very light ",13677703
+"DMC    828","Blue ultra very light",13945254
+"DMC    829","Golden Olive very dark",2114143
+"DMC    830","Golden Olive dark ",2313065
+"DMC    831","Golden Olive medium ",2448504
+"DMC    832","Golden Olive ",2913946
+"DMC    833","Golden Olive light ",4099504
+"DMC    834","Golden Olive very light",5285319
+"DMC    838","Beige Brown very dark",2699333
+"DMC    839","Beige Brown dark ",3423573
+"DMC    840","Beige Brown medium ",4873343
+"DMC    841","Beige Brown light ",6518939
+"DMC    842","Beige Brown very light",8888255
+"DMC    844","Beaver Grey ultra dark",3554621
+"DMC    869","Hazel Nut Brown very",2443120
+"DMC    890","Pistachio Green ultra",2307611
+"DMC    891","Carnation dark ",4599023
+"DMC    892","Carnation medium ",5454068
+"DMC    893","Carnation light ",7163387
+"DMC    894","Carnation very light",10124543
+"DMC    895","Hunter Green very dark",2440485
+"DMC    898","Coffee Brown very dark",2305610
+"DMC    899","Rose medium ",8546027
+"DMC    900","Burnt Orange dark ",2307270
+"DMC    902","Garnet very dark ",3022939
+"DMC    904","Parrot Green very dark",2449204
+"DMC    905","Parrot Green dark ",2322749
+"DMC    906","Parrot Green medium ",2329434
+"DMC    907","Parrot Green light ",2336391
+"DMC    909","Emerald Green very dk",4220160
+"DMC    910","Emerald Green dark ",4946432
+"DMC    911","Emerald Green medium",5474304
+"DMC    912","Emerald Green light ",6724656
+"DMC    913","Nile Green medium ",7909197
+"DMC    915","Plum dark ",3997814
+"DMC    917","Plum medium ",5970833
+"DMC    918","Red Copper dark ",2305659
+"DMC    919","Red Copper ",2107793
+"DMC    920","Copper medium ",2440612
+"DMC    921","Copper ",3034556
+"DMC    922","Copper light ",3826647
+"DMC    924","Grey Green very dark",4669993
+"DMC    926","Grey Green medium ",7895137
+"DMC    927","Grey Green light ",9935496
+"DMC    928","Grey Green very light",11646379
+"DMC    930","Antique Blue dark ",5916208
+"DMC    931","Antique Blue medium ",8546899
+"DMC    932","Antique Blue light ",10915701
+"DMC    934","Black Avocado Green ",2438190
+"DMC    935","Avocado Green dark ",2899254
+"DMC    936","Avocado Green very dk",2311234
+"DMC    937","Avocado Green medium",2708550
+"DMC    938","Coffee Brown ultra dk",2304317
+"DMC    939","Navy Blue very dark ",2890523
+"DMC    943","Aquamarine medium ",7966464
+"DMC    945","Tawny medium ",9417454
+"DMC    946","Burnt Orange medium ",1850869
+"DMC    947","Burnt Orange ",1788671
+"DMC    948","Peach very light ",12703229
+"DMC    950","Desert Sand light ",9678047
+"DMC    951","Tawny light ",11128567
+"DMC    954","Nile Green ",8896108
+"DMC    955","Nile Green light ",11066519
+"DMC    956","Geranium ",7488761
+"DMC    957","Geranium pale ",10648831
+"DMC    958","Sea Green dark ",8886272
+"DMC    959","Sea Green medium ",10333488
+"DMC    961","Dusty Rose dark ",7293913
+"DMC    962","Dusty Rose medium ",8807652
+"DMC    963","Dusty Rose ultra",12892927
+"DMC    964","Sea Green light ",12701045
+"DMC    966","Baby Green medium ",9355149
+"DMC    967","Apricot very light ",11124479
+"DMC    970","Pumpkin light ",2385663
+"DMC    972","Canary deep ",42239
+"DMC    973","Canary bright ",53247
+"DMC    975","Golden Brown dark ",2112121
+"DMC    976","Golden Brown medium ",2910916
+"DMC    977","Golden Brown light ",4031462
+"DMC    986","Forest Green very dark",2904101
+"DMC    987","Forest Green dark ",3827266
+"DMC    988","Forest Green medium ",4489306
+"DMC    989","Forest Green ",5542508
+"DMC    991","Aquamarine dark ",5265421
+"DMC    992","Aquamarine medium ",8426294
+"DMC    993","Aquamarine light ",9481045
+"DMC    995","Electric Blue dark ",12349184
+"DMC    996","Electric Blue medium",14784256
+"DMC    3011","Khaki Green dark ",3168348
+"DMC    3012","Khaki Green medium ",4223869
+"DMC    3013","Khaki Green light ",6987683
+"DMC    3021","Brown Grey very dark",3029062
+"DMC    3022","Brown Grey medium ",6255219
+"DMC    3023","Brown Grey light ",7769491
+"DMC    3024","Brown Grey very ligh",10465465
+"DMC    3031","Mocha Brown very dark",2436674
+"DMC    3032","Mocha Brown medium ",6915734
+"DMC    3033","Mocha Brown very lig",10927570
+"DMC    3041","Antique Violet mediu",6640754
+"DMC    3042","Antique Violet light",9272470
+"DMC    3045","Yellow Beige dark ",4617887
+"DMC    3046","Yellow Beige medium ",6728133
+"DMC    3047","Yellow Beige light ",9554395
+"DMC    3051","Green Grey dark ",3034438
+"DMC    3052","Green Grey medium ",5536881
+"DMC    3053","Green Grey ",6919819
+"DMC    3064","Desert Sand ",5862328
+"DMC    3072","Beaver Grey very light",12502722
+"DMC    3078","Golden Yellow very lt",9956346
+"DMC    3325","Baby Blue light ",14203022
+"DMC    3326","Rose light (776)",10916855
+"DMC    3328","Salmon dark ",4932289
+"DMC    3340","Apricot medium ",4679423
+"DMC    3341","Apricot ",6717951
+"DMC    3345","Hunter Green dark ",2443828
+"DMC    3346","Hunter Green ",3170637
+"DMC    3347","Yellow Green medium ",4883307
+"DMC    3348","Yellow Green light ",6994083
+"DMC    3350","Dusty Rose ultra dark",4598174
+"DMC    3354","Dusty Rose light ",10389991
+"DMC    3362","Pine Green dark ",3361346
+"DMC    3363","Pine Green medium ",4877147
+"DMC    3364","Pine Green ",6264457
+"DMC    3371","Black Brown ",2171947
+"DMC    3607","Plum light ",9387455
+"DMC    3608","Plum very light ",11366615
+"DMC    3609","Plum ultra light ",13537765
+"DMC    3685","Mauve dark ",3545194
+"DMC    3687","Mauve ",6569393
+"DMC    3688","Mauve medium ",8874449
+"DMC    3689","Mauve light ",12758261
+"DMC    3705","Melon dark ",5061358
+"DMC    3706","Melon medium ",7692799
+"DMC    3708","Melon light ",10389759
+"DMC    3712","Salmon medium ",6051791
+"DMC    3713","Salmon very light ",13092863
+"DMC    3716","Dusty Rose very light",11507710
+"DMC    3721","Shell Pink dark ",3813509
+"DMC    3722","Shell Pink medium ",5063833
+"DMC    3726","Antique Mauve dark ",5457536
+"DMC    3727","Antique Mauve light ",10258889
+"DMC    3731","Dusty Rose very dark",6242497
+"DMC    3733","Dusty Rose ",8744160
+"DMC    3740","Antique Violet dark ",5062236
+"DMC    3743","Antique Violet very ",12102075
+"DMC    3746","Blue Violet dark ",10440544
+"DMC    3747","Blue Violet very light",14662317
+"DMC    3750","Antique Blue very dark",5191715
+"DMC    3752","Antique Blue very light",12431773
+"DMC    3753","Antique Blue ultra",14141105
+"DMC    3755","Baby Blue ",12884073
+"DMC    3756","Baby Blue ultra",15986141
+"DMC    3760","Wedgewood (806) ",10055468
+"DMC    3761","Sky Blue light ",14206094
+"DMC    3765","Very Dark Peacock Blue ",7952384
+"DMC    3766","Peacock Blue light ",12165720
+"DMC    3768","Grey Green dark ",6380354
+"DMC    3770","Tawny very light ",13231871
+"DMC    3771","Terra Cotta ultra",8100831
+"DMC    3772","Desert Sand very dark",4938387
+"DMC    3774","Desert Sand very light",10927849
+"DMC    3776","Mahogany light ",3563453
+"DMC    3777","Terra Cotta very dark",2696578
+"DMC    3778","Terra Cotta light ",5925313
+"DMC    3779","Terra Cotta ultra",9610472
+"DMC    3781","Mocha Brown dark ",3030352
+"DMC    3782","Mocha Brown light ",7901868
+"DMC    3787","Brown Grey dark ",4015952
+"DMC    3790","Beige Grey ultra dark",4017505
+"DMC    3799","Pewter Grey very dark",3683376
+"DMC    3801","Christmas Red light ",3679200
+"DMC    3802","Antique Mauve very dk",3550304
+"DMC    3803","Mauve medium ",4466043
+"DMC    3804","Cyclamen Pink dark ",6363322
+"DMC    3805","Cyclamen Pink ",7547852
+"DMC    3806","Cyclamen Pink light ",9590244
+"DMC    3807","Cornflower Blue ",9393223
+"DMC    3808","Turquoise ultra very",5719808
+"DMC    3809","Turquoise very dark ",7166995
+"DMC    3810","Turquoise dark ",9206580
+"DMC    3811","Turquoise very light",13026709
+"DMC    3812","Sea Green very dark ",8161280
+"DMC    3813","Blue Green light",10333324
+"DMC    3814","Aquamarine",6517005
+"DMC    3815","Celadon Green dark ",5728824
+"DMC    3816","Celadon Green ",7308115
+"DMC    3817","Celadon Green light ",9874306
+"DMC    3818","Emerald Green ultra ",3559168
+"DMC    3819","Moss Green light ",3717048
+"DMC    3820","Straw dark ",2856662
+"DMC    3821","Straw ",4501731
+"DMC    3822","Straw light ",6276848
+"DMC    3823","Yellow ultra pale ",11857406
+"DMC    3824","Apricot light ",9283071
+"DMC    3825","Pumpkin pale ",6527743
+"DMC    3826","Golden Brown ",2444700
+"DMC    3827","Golden Brown pale ",5806305
+"DMC    3828","Hazel Nut Brown ",4618662
+"DMC    3829","Old Gold very dark ",3042468
+"DMC    3830","Terra Cotta ",3553948
+"DMC    3831","Raspberry dark ",3809448
+"DMC    3832","Raspberry medium ",5257414
+"DMC    3833","Raspberry light ",6968783
+"DMC    3834","Grape dark ",4860251
+"DMC    3835","Grape medium ",6373489
+"DMC    3836","Grape light ",9464994
+"DMC    3837","Lavender ultra dark ",8468076
+"DMC    3838","Lavender Blue dark ",10902602
+"DMC    3839","Lavender Blue medium",11432027
+"DMC    3840","Lavender Blue light ",13542277
+"DMC    3841","Baby Blue pale ",13548703
+"DMC    3842","Wedgewood dark ",7028237
+"DMC    3843","Electric Blue ",13074688
+"DMC    3844","Bright Turquoise dark",11700480
+"DMC    3845","Bright Turquoise med",12491520
+"DMC    3846","Bright Turquoise light",13741824
+"DMC    3847","Teal Green dark ",5066752
+"DMC    3848","Teal Green medium ",6974744
+"DMC    3849","Teal Green light ",9277764
+"DMC    3850","Bright Green dark ",7046400
+"DMC    3851","Bright Green light ",8560384
+"DMC    3852","Straw very dark ",1802435
+"DMC    3853","Autumn Gold dark ",2909393
+"DMC    3854","Autumn Gold medium ",4690930
+"DMC    3855","Autumn Gold light ",7389689
+"DMC    3856","Mahogany ultra very ",7513317
+"DMC    3857","Rosewood dark ",2303319
+"DMC    3858","Rosewood medium ",3554677
+"DMC    3859","Rosewood light ",6057394
+"DMC    3860","Cocoa ",4935535
+"DMC    3861","Cocoa light ",6974605
+"DMC    3862","Mocha Beige dark ",4085116
+"DMC    3863","Mocha Beige medium ",5204370
+"DMC    3864","Mocha Beige light ",7309745
+"DMC    3865","Winter White ",15792119
+"DMC    3866","Mocha Brown ultra",12505565
+"STOP","",0
