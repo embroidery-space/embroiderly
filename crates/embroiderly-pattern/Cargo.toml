@@ -13,4 +13,4 @@ log = "0.4.27"
 ordered-float = { version = "5.0.0" }
 uuid = { version = "1.17.0", features = ["v4"] }
 
-xsp-parsers = { git = "https://github.com/embroidery-space/xsp-parsers.git", rev = "ae67e88891bade1437daaad1fbaee62600ef5f7e" }
+xsp-parsers = { path = "../xsp-parsers" }

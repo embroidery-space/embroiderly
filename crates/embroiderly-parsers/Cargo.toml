@@ -10,7 +10,7 @@ embroiderly-pattern = { path = "../embroiderly-pattern", features = [
 ] }
 
 # Parsing pattern files
-xsp-parsers = { git = "https://github.com/embroidery-space/xsp-parsers.git", rev = "ae67e88891bade1437daaad1fbaee62600ef5f7e" }
+xsp-parsers = { path = "../xsp-parsers" }
 quick-xml = "0.37.5"
 
 # Archiving

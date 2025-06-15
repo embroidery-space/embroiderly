@@ -1,0 +1,14 @@
+[package]
+name = "xsp-parsers"
+edition = "2024"
+
+[dependencies]
+byteorder = "1.5.0"
+encoding_rs = "0.8.35"
+hex = "0.4.3"
+itertools = "0.14.0"
+log = "0.4.27"
+thiserror = "2.0.12"
+
+[dev-dependencies]
+paste = "1.0.15"
