@@ -7,4 +7,7 @@ dist/
 .vscode/*
 !.vscode/extensions.json
 
+# Auto-generated type declarations
+auto-imports.d.ts
+components.d.ts
 *.tsbuildinfo
