@@ -1,34 +1,25 @@
 [package]
 name = "embroiderly-parsers"
-edition = "2024"
+edition = { workspace = true }
 
 [dependencies]
 # Embroiderly Core
-embroiderly-pattern = { path = "../embroiderly-pattern", features = [
-  "borsh",
-  "serde",
-] }
+embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
 
 # Parsing pattern files
-xsp-parsers = { path = "../xsp-parsers" }
-quick-xml = "0.37.5"
+xsp-parsers = { workspace = true }
+quick-xml = { workspace = true }
 
 # Archiving
-zip = { version = "4.0.0", features = [
-  "zstd",
-  "time",
-], default-features = false }
-zip-extract = { version = "0.4.0", features = [
-  "zstd",
-  "time",
-], default-features = false }
+zip = { workspace = true }
+zip-extract = { workspace = true }
 
 # Error handling
-anyhow = "1.0.98"
-thiserror = "2.0.12"
+anyhow = { workspace = true }
+thiserror = { workspace = true }
 
 # Logging
-log = "0.4.27"
+log = { workspace = true }
 
 # Other
-tempfile = "3.20.0"
+tempfile = { workspace = true }

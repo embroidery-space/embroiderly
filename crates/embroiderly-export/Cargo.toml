@@ -1,27 +1,28 @@
 [package]
 name = "embroiderly-export"
-edition = "2024"
+edition = { workspace = true }
 
 [dependencies]
 # CLI
-clap = { version = "4.5.40", features = ["derive"] }
+clap = { workspace = true }
 
 # Embroiderly Core
-embroiderly-parsers = { path = "../embroiderly-parsers" }
-embroiderly-pattern = { path = "../embroiderly-pattern" }
+embroiderly-parsers = { workspace = true }
+embroiderly-pattern = { workspace = true }
 
 # Exporting patterns to PDF
-typst = "0.13.1"
-typst-pdf = "0.13.1"
+typst = { workspace = true }
+typst-pdf = { workspace = true }
 ## Third-party Typst libraries
-typst-as-lib = { version = "0.14.4", features = ["typst-kit-fonts"] }
+typst-as-lib = { workspace = true, features = ["typst-kit-fonts"] }
 
-# Exporting patterns to image formats
-quick-xml = "0.37.5" # For writing SVG.
+# Writing SVG files
+quick-xml = { workspace = true }
 
 # Logging
-log = "0.4.27"
+log = { workspace = true }
+simple_logger = { workspace = true }
 
 # Error handling
-anyhow = "1.0.98"
-thiserror = "2.0.12"
+anyhow = { workspace = true }
+thiserror = { workspace = true }

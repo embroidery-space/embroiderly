@@ -1,5 +1,4 @@
 use embroiderly_pattern::*;
-use ordered_float::NotNan;
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
@@ -15,30 +14,30 @@ fn create_pattern_project() -> PatternProject {
 
   // top-left petite
   patproj.pattern.fullstitches.insert(FullStitch {
-    x: NotNan::new(0.0).unwrap(),
-    y: NotNan::new(0.0).unwrap(),
+    x: Coord::new(0.0).unwrap(),
+    y: Coord::new(0.0).unwrap(),
     palindex: 0,
     kind: FullStitchKind::Petite,
   });
   // top-right quarter
   patproj.pattern.partstitches.insert(PartStitch {
-    x: NotNan::new(0.5).unwrap(),
-    y: NotNan::new(0.0).unwrap(),
+    x: Coord::new(0.5).unwrap(),
+    y: Coord::new(0.0).unwrap(),
     palindex: 0,
     kind: PartStitchKind::Quarter,
     direction: PartStitchDirection::Forward,
   });
   // bottom-left petite
   patproj.pattern.fullstitches.insert(FullStitch {
-    x: NotNan::new(0.0).unwrap(),
-    y: NotNan::new(0.5).unwrap(),
+    x: Coord::new(0.0).unwrap(),
+    y: Coord::new(0.5).unwrap(),
     palindex: 0,
     kind: FullStitchKind::Petite,
   });
   // bottom-right quarter
   patproj.pattern.partstitches.insert(PartStitch {
-    x: NotNan::new(0.5).unwrap(),
-    y: NotNan::new(0.5).unwrap(),
+    x: Coord::new(0.5).unwrap(),
+    y: Coord::new(0.5).unwrap(),
     palindex: 0,
     kind: PartStitchKind::Quarter,
     direction: PartStitchDirection::Backward,
@@ -56,8 +55,8 @@ fn test_add_stitch() {
 
   let mut patproj = create_pattern_project();
   let stitch = Stitch::Full(FullStitch {
-    x: NotNan::new(0.0).unwrap(),
-    y: NotNan::new(0.0).unwrap(),
+    x: Coord::new(0.0).unwrap(),
+    y: Coord::new(0.0).unwrap(),
     palindex: 0,
     kind: FullStitchKind::Full,
   });
@@ -109,8 +108,8 @@ fn test_remove_stitch() {
 
   let mut patproj = create_pattern_project();
   let stitch = Stitch::Full(FullStitch {
-    x: NotNan::new(0.0).unwrap(),
-    y: NotNan::new(0.0).unwrap(),
+    x: Coord::new(0.0).unwrap(),
+    y: Coord::new(0.0).unwrap(),
     palindex: 0,
     kind: FullStitchKind::Petite,
   });

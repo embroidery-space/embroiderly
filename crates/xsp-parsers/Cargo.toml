@@ -1,14 +1,21 @@
 [package]
 name = "xsp-parsers"
-edition = "2024"
+edition = { workspace = true }
 
 [dependencies]
-byteorder = "1.5.0"
-encoding_rs = "0.8.35"
-hex = "0.4.3"
-itertools = "0.14.0"
-log = "0.4.27"
-thiserror = "2.0.12"
+# Parsing pattern files
+byteorder = { workspace = true }
+encoding_rs = { workspace = true }
+hex = { workspace = true }
+
+# Logging
+log = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+
+# Other
+itertools = { workspace = true }
 
 [dev-dependencies]
-paste = "1.0.15"
+paste = { workspace = true }

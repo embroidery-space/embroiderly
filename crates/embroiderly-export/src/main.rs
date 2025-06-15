@@ -18,6 +18,11 @@ struct Args {
 }
 
 fn main() -> anyhow::Result<()> {
+  simple_logger::SimpleLogger::new()
+    .with_level(log::LevelFilter::Debug)
+    .with_module_level("usvg::text::layout", log::LevelFilter::Error)
+    .init()?;
+
   let args = Args::parse();
 
   let patproj = embroiderly_parsers::parse_pattern(args.pattern_path)?;

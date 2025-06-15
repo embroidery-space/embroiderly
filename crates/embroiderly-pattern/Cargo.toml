@@ -1,16 +1,24 @@
 [package]
 name = "embroiderly-pattern"
-edition = "2024"
+edition = { workspace = true }
 
 [features]
 serde = ["uuid/serde"]
 borsh = ["dep:borsh", "uuid/borsh", "ordered-float/borsh"]
 
 [dependencies]
-anyhow = "1.0.98"
-borsh = { version = "1.5.7", features = ["derive"], optional = true }
-log = "0.4.27"
-ordered-float = { version = "5.0.0" }
-uuid = { version = "1.17.0", features = ["v4"] }
+# De/serialization
+borsh = { workspace = true, optional = true }
 
-xsp-parsers = { path = "../xsp-parsers" }
+# Logging
+log = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+
+# Embroiderly Core
+xsp-parsers = { workspace = true }
+
+# Other
+ordered-float = { workspace = true }
+uuid = { workspace = true }
