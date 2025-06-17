@@ -118,5 +118,5 @@
 // Each image will be rendered on a new page.
 #for image_path in pattern.images {
   pagebreak(weak: true)
-  image(image_path)
+  image(image_path, format: "svg", fit: "contain")
 }

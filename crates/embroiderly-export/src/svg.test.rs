@@ -62,7 +62,7 @@ fn writes_full_stitches() {
 
   let mut writer = create_writer();
   let palette = create_palette();
-  let fullstitches = Stitches::from_iter([
+  let fullstitches = [
     FullStitch {
       x: Coord::new(0.0).unwrap(),
       y: Coord::new(0.0).unwrap(),
@@ -87,7 +87,7 @@ fn writes_full_stitches() {
       palindex: 1,
       kind: FullStitchKind::Petite,
     },
-  ]);
+  ];
 
   write_full_stitches(&mut writer, &palette, &fullstitches, SYMBOL_FONT, CELL_SIZE).unwrap();
 
@@ -121,7 +121,7 @@ fn writes_part_stitches() {
 
   let mut writer = create_writer();
   let palette = create_palette();
-  let partstitches = Stitches::from_iter([
+  let partstitches = [
     PartStitch {
       x: Coord::new(0.0).unwrap(),
       y: Coord::new(0.0).unwrap(),
@@ -150,7 +150,7 @@ fn writes_part_stitches() {
       kind: PartStitchKind::Quarter,
       direction: PartStitchDirection::Backward,
     },
-  ]);
+  ];
 
   write_part_stitches(&mut writer, &palette, &partstitches, SYMBOL_FONT, CELL_SIZE).unwrap();
 
@@ -168,7 +168,7 @@ fn writes_line_stitches() {
 
   let mut writer = create_writer();
   let palette = create_palette();
-  let linestitches = Stitches::from_iter([
+  let linestitches = [
     LineStitch {
       x: (Coord::new(0.0).unwrap(), Coord::new(4.0).unwrap()),
       y: (Coord::new(0.0).unwrap(), Coord::new(1.0).unwrap()),
@@ -181,7 +181,7 @@ fn writes_line_stitches() {
       palindex: 1,
       kind: LineStitchKind::Back,
     },
-  ]);
+  ];
 
   write_line_stitches(&mut writer, &palette, &linestitches, CELL_SIZE).unwrap();
 
@@ -199,7 +199,7 @@ fn writes_node_stitches() {
 
   let mut writer = create_writer();
   let palette = create_palette();
-  let nodestitches = Stitches::from_iter([
+  let nodestitches = [
     NodeStitch {
       x: Coord::new(0.0).unwrap(),
       y: Coord::new(0.0).unwrap(),
@@ -214,7 +214,7 @@ fn writes_node_stitches() {
       kind: NodeStitchKind::FrenchKnot,
       rotated: false,
     },
-  ]);
+  ];
 
   write_node_stitches(&mut writer, &palette, &nodestitches, CELL_SIZE).unwrap();
 
@@ -249,7 +249,14 @@ fn writes_grid() {
     },
   };
 
-  write_grid(&mut writer, 2, 2, &grid, CELL_SIZE).unwrap();
+  write_grid(
+    &mut writer,
+    &grid,
+    Bounds { x: 0, y: 0, width: 2, height: 2 },
+    CELL_SIZE,
+    0,
+  )
+  .unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 

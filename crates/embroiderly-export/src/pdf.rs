@@ -11,20 +11,26 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
 
   let PatternProject { pattern, display_settings, .. } = patproj;
 
-  let pattern_images = [super::svg::export_pattern(patproj, 14.0)?];
-  let pattern_images = std::collections::HashMap::<String, Vec<u8>>::from_iter(
-    pattern_images
-      .into_iter()
-      .enumerate()
-      .map(|(i, image)| (format!("image{}.svg", i), image)),
-  );
+  let pattern_images = super::svg::export_pattern(
+    patproj,
+    super::svg::ExportOptions {
+      frame_size: Some((40, 40)),
+      cell_size: 14.0,
+      preserved_overlap: None,
+    },
+  )?;
+  let pattern_images = pattern_images
+    .into_iter()
+    .enumerate()
+    .map(|(i, image)| (format!("image{}.svg", i), image))
+    .collect::<Vec<_>>();
 
   let typst_content = TypstContent {
     info: pattern.info.clone(),
     fabric: pattern.fabric.clone(),
     palette: pattern.palette.clone(),
     default_symbol_font: display_settings.default_symbol_font.clone(),
-    images: pattern_images.keys().cloned().collect(),
+    images: pattern_images.iter().map(|(name, _)| name).cloned().collect(),
   };
   let typst_template = typst_as_lib::TypstEngine::builder()
     .main_file(include_str!("../templates/pattern.typ"))

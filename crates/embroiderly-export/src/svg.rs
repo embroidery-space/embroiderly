@@ -8,7 +8,168 @@ use quick_xml::events::{BytesDecl, BytesText, Event};
 #[path = "svg.test.rs"]
 mod tests;
 
-pub fn export_pattern(patproj: &PatternProject, cell_size: f32) -> io::Result<Vec<u8>> {
+const DEFAULT_PRESERVED_OVERLAP: u16 = 3;
+
+/// Parameters for exporting a pattern to SVG.
+#[derive(Debug, Clone, Copy)]
+pub struct ExportOptions {
+  /// Maximum size of a frame in stitches (width, height).
+  /// If None, the entire pattern is rendered as a single image.
+  pub frame_size: Option<(u16, u16)>,
+  /// Size of a single stitch/cell in pixels.
+  pub cell_size: f32,
+  /// Number of overlapping rows/columns from adjacent frames to include.
+  /// Defaults to 3 if not specified and framing is active.
+  pub preserved_overlap: Option<u16>,
+}
+
+impl ExportOptions {
+  pub fn new(cell_size: f32) -> Self {
+    ExportOptions {
+      cell_size,
+      ..ExportOptions::default()
+    }
+  }
+}
+
+impl Default for ExportOptions {
+  fn default() -> Self {
+    ExportOptions {
+      frame_size: None,
+      cell_size: 14.0,
+      preserved_overlap: Some(DEFAULT_PRESERVED_OVERLAP),
+    }
+  }
+}
+
+pub fn export_pattern(patproj: &PatternProject, options: ExportOptions) -> anyhow::Result<Vec<Vec<u8>>> {
+  log::debug!("Generating SVG frames for the pattern");
+  let mut frames = Vec::new();
+
+  let (pattern_width, pattern_height) = (patproj.pattern.fabric.width, patproj.pattern.fabric.height);
+
+  let cell_size = options.cell_size;
+  let frame_size = options.frame_size.unwrap_or((pattern_width, pattern_height));
+  let preserved_overlap = options.preserved_overlap.unwrap_or(DEFAULT_PRESERVED_OVERLAP);
+
+  // We continiously iterate by frames from the top-left corner of the pattern to the bottom-right corner.
+  // So, if we have exceeded the pattern height, we stop.
+  let mut current_position = (0, 0);
+  while current_position.1 < pattern_height {
+    // Get the current frame's bounds.
+    let bounds = Bounds::new(
+      current_position.0,
+      current_position.1,
+      frame_size.0.min(pattern_width.saturating_sub(current_position.0)),
+      frame_size.1.min(pattern_height.saturating_sub(current_position.1)),
+    );
+
+    let fullstitches = patproj
+      .pattern
+      .fullstitches
+      .get_stitches_in_bounds(bounds)
+      .cloned()
+      .map(|stitch| FullStitch {
+        // Adjust coordinates to be relative to the current frame.
+        x: Coord::new(stitch.x - current_position.0 as f32).unwrap(),
+        y: Coord::new(stitch.y - current_position.1 as f32).unwrap(),
+        ..stitch
+      })
+      .collect::<Vec<_>>();
+    let partstitches = patproj
+      .pattern
+      .partstitches
+      .get_stitches_in_bounds(bounds)
+      .cloned()
+      .map(|stitch| PartStitch {
+        // Adjust coordinates to be relative to the current frame.
+        x: Coord::new(stitch.x - current_position.0 as f32).unwrap(),
+        y: Coord::new(stitch.y - current_position.1 as f32).unwrap(),
+        ..stitch
+      })
+      .collect::<Vec<_>>();
+    let linestitches = patproj
+      .pattern
+      .linestitches
+      .get_stitches_in_bounds(bounds)
+      .cloned()
+      .map(|stitch| LineStitch {
+        // Adjust coordinates to be relative to the current frame.
+        x: (
+          Coord::new(stitch.x.0 - current_position.0 as f32).unwrap(),
+          Coord::new(stitch.x.1 - current_position.0 as f32).unwrap(),
+        ),
+        y: (
+          Coord::new(stitch.y.0 - current_position.1 as f32).unwrap(),
+          Coord::new(stitch.y.1 - current_position.1 as f32).unwrap(),
+        ),
+        ..stitch
+      })
+      .collect::<Vec<_>>();
+    let nodestitches = patproj
+      .pattern
+      .nodestitches
+      .get_stitches_in_bounds(bounds)
+      .cloned()
+      .map(|stitch| NodeStitch {
+        // Adjust coordinates to be relative to the current frame.
+        x: Coord::new(stitch.x - current_position.0 as f32).unwrap(),
+        y: Coord::new(stitch.y - current_position.1 as f32).unwrap(),
+        ..stitch
+      })
+      .collect::<Vec<_>>();
+
+    let context = PatternFrameContext {
+      palette: &patproj.pattern.palette,
+      fullstitches: &fullstitches,
+      partstitches: &partstitches,
+      linestitches: &linestitches,
+      nodestitches: &nodestitches,
+
+      grid: &patproj.display_settings.grid,
+      default_symbol_font: &patproj.display_settings.default_symbol_font,
+
+      bounds,
+      cell_size,
+      preserved_overlap,
+    };
+    frames.push(write_frame(context)?);
+
+    // If we are not framing, we only need one frame.
+    if options.frame_size.is_none() {
+      break;
+    }
+
+    // Move to next frame position.
+    current_position.0 += frame_size.0 - preserved_overlap;
+
+    // If we have exceeded the row width, wrap to next row.
+    if current_position.0 >= pattern_width {
+      current_position.0 = 0;
+      current_position.1 += frame_size.1 - preserved_overlap;
+    }
+  }
+
+  log::debug!("Generated {} frames", frames.len());
+  Ok(frames)
+}
+
+struct PatternFrameContext<'a> {
+  palette: &'a [PaletteItem],
+  fullstitches: &'a [FullStitch],
+  partstitches: &'a [PartStitch],
+  linestitches: &'a [LineStitch],
+  nodestitches: &'a [NodeStitch],
+
+  grid: &'a Grid,
+  default_symbol_font: &'a str,
+
+  bounds: Bounds,
+  cell_size: f32,
+  preserved_overlap: u16,
+}
+
+fn write_frame(pattern: PatternFrameContext) -> io::Result<Vec<u8>> {
   let mut buffer = Vec::new();
 
   // In the development mode, we want to have a pretty-printed XML file for easy debugging.
@@ -17,10 +178,15 @@ pub fn export_pattern(patproj: &PatternProject, cell_size: f32) -> io::Result<Ve
   #[cfg(not(debug_assertions))]
   let mut writer = Writer::new(&mut buffer);
 
-  let PatternProject { pattern, display_settings, .. } = patproj;
+  let PatternFrameContext {
+    bounds,
+    cell_size,
+    preserved_overlap,
+    ..
+  } = pattern;
 
-  let width = (pattern.fabric.width as f32) * cell_size;
-  let height = (pattern.fabric.height as f32) * cell_size;
+  let width = (bounds.width as f32) * cell_size;
+  let height = (bounds.height as f32) * cell_size;
 
   writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None)))?;
   writer
@@ -34,28 +200,22 @@ pub fn export_pattern(patproj: &PatternProject, cell_size: f32) -> io::Result<Ve
     .write_inner_content(|writer| {
       write_full_stitches(
         writer,
-        &pattern.palette,
-        &pattern.fullstitches,
-        &display_settings.default_symbol_font,
+        pattern.palette,
+        pattern.fullstitches,
+        pattern.default_symbol_font,
         cell_size,
       )?;
       write_part_stitches(
         writer,
-        &pattern.palette,
-        &pattern.partstitches,
-        &display_settings.default_symbol_font,
+        pattern.palette,
+        pattern.partstitches,
+        pattern.default_symbol_font,
         cell_size,
       )?;
-      write_grid(
-        writer,
-        pattern.fabric.width,
-        pattern.fabric.height,
-        &display_settings.grid,
-        cell_size,
-      )?;
+      write_grid(writer, pattern.grid, bounds, cell_size, preserved_overlap)?;
       // TODO: special stitches
-      write_line_stitches(writer, &pattern.palette, &pattern.linestitches, cell_size)?;
-      write_node_stitches(writer, &pattern.palette, &pattern.nodestitches, cell_size)?;
+      write_line_stitches(writer, pattern.palette, pattern.linestitches, cell_size)?;
+      write_node_stitches(writer, pattern.palette, pattern.nodestitches, cell_size)?;
       Ok(())
     })?;
 
@@ -83,7 +243,7 @@ macro_rules! write_stitch_symbol {
 fn write_full_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
-  fullstitches: &Stitches<FullStitch>,
+  fullstitches: &[FullStitch],
   default_symbol_font: &str,
   cell_size: f32,
 ) -> io::Result<()> {
@@ -139,7 +299,7 @@ fn write_full_stitches<W: io::Write>(
 fn write_part_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
-  partstitches: &Stitches<PartStitch>,
+  partstitches: &[PartStitch],
   default_symbol_font: &str,
   cell_size: f32,
 ) -> io::Result<()> {
@@ -276,7 +436,7 @@ fn write_part_stitches<W: io::Write>(
 fn write_line_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
-  linestitches: &Stitches<LineStitch>,
+  linestitches: &[LineStitch],
   cell_size: f32,
 ) -> io::Result<()> {
   writer
@@ -306,7 +466,7 @@ fn write_line_stitches<W: io::Write>(
 fn write_node_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
-  nodestitches: &Stitches<NodeStitch>,
+  nodestitches: &[NodeStitch],
   cell_size: f32,
 ) -> io::Result<()> {
   writer
@@ -333,23 +493,23 @@ fn write_node_stitches<W: io::Write>(
 
 fn write_grid<W: io::Write>(
   writer: &mut Writer<W>,
-  pattern_width_stitches: u16,
-  pattern_height_stitches: u16,
   grid: &Grid,
+  bounds: Bounds,
   cell_size: f32,
+  preserved_overlap: u16,
 ) -> io::Result<()> {
   writer
     .create_element("g")
     .with_attribute(("id", "grid"))
     .write_inner_content(|writer| {
-      let pattern_width = pattern_width_stitches as f32 * cell_size;
-      let pattern_height = pattern_height_stitches as f32 * cell_size;
+      let pattern_width = bounds.width as f32 * cell_size;
+      let pattern_height = bounds.height as f32 * cell_size;
 
       let minor_lines_thickness = grid.minor_lines.thickness * cell_size;
       let major_lines_thickness = grid.major_lines.thickness * cell_size;
 
       // Draw horizontal minor lines.
-      for y in 0..=pattern_height_stitches {
+      for y in 0..=bounds.height {
         let y = y as f32 * cell_size;
         writer
           .create_element("line")
@@ -365,7 +525,7 @@ fn write_grid<W: io::Write>(
       }
 
       // Draw vertical minor lines.
-      for x in 0..=pattern_width_stitches {
+      for x in 0..=bounds.width {
         let x = x as f32 * cell_size;
         writer
           .create_element("line")
@@ -381,7 +541,14 @@ fn write_grid<W: io::Write>(
       }
 
       // Draw horizontal major lines.
-      for y in (0..=pattern_height_stitches).step_by(grid.major_lines_interval as usize) {
+      for y in (0..=(bounds.y + bounds.height))
+        .step_by(grid.major_lines_interval as usize)
+        .filter(move |&y| {
+          let treshhold = if bounds.y == 0 { 0 } else { bounds.y + preserved_overlap };
+          y >= treshhold
+        })
+        .map(|y| y - bounds.y)
+      {
         let y = y as f32 * cell_size;
         writer
           .create_element("line")
@@ -397,7 +564,14 @@ fn write_grid<W: io::Write>(
       }
 
       // Draw vertical major lines.
-      for x in (0..=pattern_width_stitches).step_by(grid.major_lines_interval as usize) {
+      for x in (0..=(bounds.x + bounds.width))
+        .step_by(grid.major_lines_interval as usize)
+        .filter(move |&x| {
+          let treshhold = if bounds.x == 0 { 0 } else { bounds.x + preserved_overlap };
+          x >= treshhold
+        })
+        .map(|x| x - bounds.x)
+      {
         let x = x as f32 * cell_size;
         writer
           .create_element("line")
