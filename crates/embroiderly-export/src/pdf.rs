@@ -1,24 +1,42 @@
 use anyhow::Result;
 use embroiderly_pattern::*;
 
+use super::svg::ImageExportOptions;
+
+/// Parameters for exporting a pattern to SVG.
+#[derive(Debug, Clone, Copy)]
+pub struct PdfExportOptions {
+  pub center_frames: bool,
+  pub enumerate_frames: bool,
+  pub image_options: ImageExportOptions,
+}
+
+impl Default for PdfExportOptions {
+  fn default() -> Self {
+    Self {
+      center_frames: false,
+      enumerate_frames: true,
+      image_options: ImageExportOptions {
+        frame_size: Some((40, 40)),
+        cell_size: 14.0,
+        preserved_overlap: Some(3),
+      },
+    }
+  }
+}
+
 pub fn export_pattern<P: AsRef<std::path::Path>>(
   patproj: &PatternProject,
   file_path: P,
   symbol_fonts_dir: std::path::PathBuf,
+  options: PdfExportOptions,
 ) -> Result<()> {
   log::debug!("Exporting Pattern({:?}) to PDF", patproj.id);
   let file_path = file_path.as_ref();
 
   let PatternProject { pattern, display_settings, .. } = patproj;
 
-  let pattern_images = super::svg::export_pattern(
-    patproj,
-    super::svg::ExportOptions {
-      frame_size: Some((40, 40)),
-      cell_size: 14.0,
-      preserved_overlap: None,
-    },
-  )?;
+  let pattern_images = super::svg::export_pattern(patproj, options.image_options)?;
   let pattern_images = pattern_images
     .into_iter()
     .enumerate()
@@ -30,7 +48,8 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
     fabric: pattern.fabric.clone(),
     palette: pattern.palette.clone(),
     default_symbol_font: display_settings.default_symbol_font.clone(),
-    images: pattern_images.iter().map(|(name, _)| name).cloned().collect(),
+    frames: pattern_images.iter().map(|(name, _)| name).cloned().collect(),
+    options: options.clone(),
   };
   let typst_template = typst_as_lib::TypstEngine::builder()
     .main_file(include_str!("../templates/pattern.typ"))
@@ -70,7 +89,8 @@ struct TypstContent {
   fabric: Fabric,
   palette: Vec<PaletteItem>,
   default_symbol_font: String,
-  images: Vec<String>,
+  frames: Vec<String>,
+  options: PdfExportOptions,
 }
 
 impl From<TypstContent> for typst::foundations::Dict {
@@ -82,6 +102,7 @@ impl From<TypstContent> for typst::foundations::Dict {
       .into_iter()
       .map(palette_item_to_dict)
       .collect::<Vec<_>>();
+    let options = pdf_export_options_to_dict(content.options);
 
     // This dictionary will be passed to the Typst template through `sys.inputs`.
     typst::foundations::dict!(
@@ -89,7 +110,8 @@ impl From<TypstContent> for typst::foundations::Dict {
       "fabric" => fabric,
       "palette" => palette,
       "default_symbol_font" => content.default_symbol_font,
-      "images" => content.images,
+      "frames" => content.frames,
+      "options" => options,
     )
   }
 }
@@ -123,5 +145,12 @@ fn palette_item_to_dict(palitem: PaletteItem) -> typst::foundations::Dict {
     "color" => format!("#{}", palitem.color),
     "symbol_font" => palitem.symbol_font,
     "symbol" => symbol,
+  )
+}
+
+fn pdf_export_options_to_dict(options: PdfExportOptions) -> typst::foundations::Dict {
+  typst::foundations::dict!(
+    "center_frames" => options.center_frames,
+    "enumerate_frames" => options.enumerate_frames,
   )
 }

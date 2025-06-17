@@ -12,7 +12,7 @@ const DEFAULT_PRESERVED_OVERLAP: u16 = 3;
 
 /// Parameters for exporting a pattern to SVG.
 #[derive(Debug, Clone, Copy)]
-pub struct ExportOptions {
+pub struct ImageExportOptions {
   /// Maximum size of a frame in stitches (width, height).
   /// If None, the entire pattern is rendered as a single image.
   pub frame_size: Option<(u16, u16)>,
@@ -23,18 +23,18 @@ pub struct ExportOptions {
   pub preserved_overlap: Option<u16>,
 }
 
-impl ExportOptions {
+impl ImageExportOptions {
   pub fn new(cell_size: f32) -> Self {
-    ExportOptions {
+    ImageExportOptions {
       cell_size,
-      ..ExportOptions::default()
+      ..ImageExportOptions::default()
     }
   }
 }
 
-impl Default for ExportOptions {
+impl Default for ImageExportOptions {
   fn default() -> Self {
-    ExportOptions {
+    ImageExportOptions {
       frame_size: None,
       cell_size: 14.0,
       preserved_overlap: Some(DEFAULT_PRESERVED_OVERLAP),
@@ -42,7 +42,7 @@ impl Default for ExportOptions {
   }
 }
 
-pub fn export_pattern(patproj: &PatternProject, options: ExportOptions) -> anyhow::Result<Vec<Vec<u8>>> {
+pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> anyhow::Result<Vec<Vec<u8>>> {
   log::debug!("Generating SVG frames for the pattern");
   let mut frames = Vec::new();
 

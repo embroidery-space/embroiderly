@@ -114,9 +114,12 @@
   }
 )
 
-// Render the pattern images.
+// Render the pattern images (frames).
 // Each image will be rendered on a new page.
-#for image_path in pattern.images {
-  pagebreak(weak: true)
-  image(image_path, format: "svg", fit: "contain")
-}
+#for (i, frame) in pattern.frames.enumerate(start: 1) [
+  #pagebreak(weak: true)
+  #set align(if pattern.options.center_frames { center } else { left })
+
+  #image(frame, format: "svg", fit: "contain")
+  #if pattern.options.enumerate_frames [Frame #i/#pattern.frames.len()]
+]

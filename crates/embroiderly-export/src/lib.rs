@@ -15,7 +15,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
   symbol_fonts_dir: std::path::PathBuf,
 ) -> Result<()> {
   match PatternExportFormat::try_from(file_path.as_ref().extension())? {
-    PatternExportFormat::Pdf => pdf::export_pattern(patproj, file_path, symbol_fonts_dir),
+    PatternExportFormat::Pdf => pdf::export_pattern(patproj, file_path, symbol_fonts_dir, Default::default()),
   }
   .map_err(Error::FailedToExport)
 }
