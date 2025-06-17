@@ -36,7 +36,7 @@ impl TryFrom<pmaker::LineStitch> for LineStitch {
   }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum LineStitchKind {
   Back,
