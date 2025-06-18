@@ -236,6 +236,7 @@ fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u
           // TODO: special stitches
           write_line_stitches(writer, pattern.palette, pattern.linestitches, frame.cell_size)?;
           write_node_stitches(writer, pattern.palette, pattern.nodestitches, frame.cell_size)?;
+          write_overlapping_zones(writer, frame)?;
           Ok(())
         })?;
       Ok(())
@@ -714,6 +715,56 @@ fn write_centering_marks<W: io::Write>(
         .create_element("polygon")
         .with_attributes([("points", points.as_str()), ("fill", "darkgrey")])
         .write_empty()?;
+
+      Ok(())
+    })?;
+
+  Ok(())
+}
+
+fn write_overlapping_zones<W: io::Write>(writer: &mut Writer<W>, frame: FrameContext) -> io::Result<()> {
+  let FrameContext {
+    bounds,
+    cell_size,
+    preserved_overlap,
+    ..
+  } = frame;
+
+  if preserved_overlap == 0 {
+    return Ok(());
+  }
+
+  writer
+    .create_element("g")
+    .with_attribute(("opacity", "0.35"))
+    .write_inner_content(|writer| {
+      // Draw vertical overlapping zone if needed.
+      if bounds.x > 0 {
+        writer
+          .create_element("rect")
+          .with_attributes([
+            ("x", "0"),
+            ("y", "0"),
+            ("width", (preserved_overlap as f32 * cell_size).to_string().as_str()),
+            ("height", (bounds.height as f32 * cell_size).to_string().as_str()),
+            ("fill", "black"),
+          ])
+          .write_empty()?;
+      }
+
+      // Draw horizontal overlapping zone if needed.
+      if bounds.y > 0 {
+        writer
+          .create_element("rect")
+          .with_attributes([
+            ("x", "0"),
+            ("y", "0"),
+            ("width", (bounds.width as f32 * cell_size).to_string().as_str()),
+            ("height", (preserved_overlap as f32 * cell_size).to_string().as_str()),
+            ("fill", "black"),
+          ])
+          .write_empty()?;
+      }
 
       Ok(())
     })?;
