@@ -216,9 +216,14 @@ pub fn export_pattern<R: tauri::Runtime>(
       .arg(&file_path)
       .output()
       .await;
-    std::fs::remove_file(tempfile_path).unwrap();
-    result.unwrap()
-  });
+
+    if let Err(e) = std::fs::remove_file(tempfile_path) {
+      log::error!("Failed to remove temporary file: {e}");
+    }
+
+    result
+  })
+  .map_err(|e| PatternError::FailedToExport(e.into()))?;
 
   if !output.status.success() {
     let stderr = String::from_utf8_lossy(&output.stderr);
