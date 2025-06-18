@@ -49,7 +49,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
     palette: pattern.palette.clone(),
     default_symbol_font: display_settings.default_symbol_font.clone(),
     frames: pattern_images.iter().map(|(name, _)| name).cloned().collect(),
-    options: options.clone(),
+    options,
   };
   let typst_template = typst_as_lib::TypstEngine::builder()
     .main_file(include_str!("../templates/pattern.typ"))
