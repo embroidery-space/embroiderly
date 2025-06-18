@@ -33,6 +33,10 @@
       symbol: string, // the stitch symbol or an empty string if not specified
     }[],
     images: string[], // an array of virtual image paths, e.g., ["image1.png", "image2.png"]
+    options: { // print options
+      center_frames: boolean, // whether to center the frames on the page
+      enumerate_frames: boolean, // whether to enumerate the frames
+    },
   }
   ```
 */
