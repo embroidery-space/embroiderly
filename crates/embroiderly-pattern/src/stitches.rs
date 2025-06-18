@@ -1,5 +1,4 @@
 use std::collections::BTreeSet;
-use std::ops::Bound;
 
 use ordered_float::NotNan;
 
@@ -36,6 +35,10 @@ pub struct Bounds {
 impl Bounds {
   pub fn new(x: u16, y: u16, width: u16, height: u16) -> Self {
     Self { x, y, width, height }
+  }
+
+  pub fn contains_point(&self, x: Coord, y: Coord) -> bool {
+    x >= self.x.into() && x < (self.x + self.width).into() && y >= self.y.into() && y < (self.y + self.height).into()
   }
 }
 
@@ -261,19 +264,10 @@ impl Stitches<FullStitch> {
   }
 
   pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &FullStitch> {
-    let min = FullStitch {
-      x: NotNan::new(bounds.x.into()).unwrap(),
-      y: NotNan::new(bounds.y.into()).unwrap(),
-      palindex: 0,
-      kind: FullStitchKind::Full, // Full stitches are placed first.
-    };
-    let max = FullStitch {
-      x: NotNan::new((bounds.x + bounds.width).into()).unwrap(),
-      y: NotNan::new((bounds.y + bounds.height).into()).unwrap(),
-      palindex: 0,
-      kind: FullStitchKind::Petite, // Petite stitches are placed last.
-    };
-    self.inner.range((Bound::Included(min), Bound::Excluded(max)))
+    self
+      .inner
+      .iter()
+      .filter(move |stitch| bounds.contains_point(stitch.x, stitch.y))
   }
 }
 
@@ -447,23 +441,10 @@ impl Stitches<PartStitch> {
   }
 
   pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &PartStitch> {
-    let min = PartStitch {
-      x: NotNan::new(bounds.x.into()).unwrap(),
-      y: NotNan::new(bounds.y.into()).unwrap(),
-      palindex: 0,
-      // Half forward stitches are placed first.
-      kind: PartStitchKind::Half,
-      direction: PartStitchDirection::Forward,
-    };
-    let max = PartStitch {
-      x: NotNan::new((bounds.x + bounds.width).into()).unwrap(),
-      y: NotNan::new((bounds.y + bounds.height).into()).unwrap(),
-      palindex: 0,
-      // Quarter backward stitches are placed last.
-      kind: PartStitchKind::Quarter,
-      direction: PartStitchDirection::Backward,
-    };
-    self.inner.range((Bound::Included(min), Bound::Excluded(max)))
+    self
+      .inner
+      .iter()
+      .filter(move |stitch| bounds.contains_point(stitch.x, stitch.y))
   }
 }
 
@@ -489,14 +470,8 @@ impl Stitches<LineStitch> {
   }
 
   pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &LineStitch> {
-    fn point_in_bounds(bounds: Bounds, x: Coord, y: Coord) -> bool {
-      x >= bounds.x.into()
-        && x < (bounds.x + bounds.width).into()
-        && y >= bounds.y.into()
-        && y < (bounds.y + bounds.height).into()
-    }
     self.inner.iter().filter(move |stitch| {
-      point_in_bounds(bounds, stitch.x.0, stitch.y.0) || point_in_bounds(bounds, stitch.x.1, stitch.y.1)
+      bounds.contains_point(stitch.x.0, stitch.y.0) || bounds.contains_point(stitch.x.1, stitch.y.1)
     })
   }
 }
@@ -519,21 +494,10 @@ impl Stitches<NodeStitch> {
   }
 
   pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &NodeStitch> {
-    let min = NodeStitch {
-      x: NotNan::new(bounds.x.into()).unwrap(),
-      y: NotNan::new(bounds.y.into()).unwrap(),
-      palindex: 0,
-      rotated: false,
-      kind: NodeStitchKind::Bead,
-    };
-    let max = NodeStitch {
-      x: NotNan::new((bounds.x + bounds.width).into()).unwrap(),
-      y: NotNan::new((bounds.y + bounds.height).into()).unwrap(),
-      palindex: 0,
-      rotated: false,
-      kind: NodeStitchKind::Bead,
-    };
-    self.inner.range((Bound::Included(min), Bound::Excluded(max)))
+    self
+      .inner
+      .iter()
+      .filter(move |stitch| bounds.contains_point(stitch.x, stitch.y))
   }
 }
 

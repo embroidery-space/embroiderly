@@ -21,6 +21,8 @@ pub struct ImageExportOptions {
   /// Number of overlapping rows/columns from adjacent frames to include.
   /// Defaults to 3 if not specified and framing is active.
   pub preserved_overlap: Option<u16>,
+  /// Whether to show grid line numbers in the exported image.
+  pub show_grid_line_numbers: bool,
 }
 
 impl ImageExportOptions {
@@ -38,6 +40,7 @@ impl Default for ImageExportOptions {
       frame_size: None,
       cell_size: 14.0,
       preserved_overlap: Some(DEFAULT_PRESERVED_OVERLAP),
+      show_grid_line_numbers: false,
     }
   }
 }
@@ -119,7 +122,7 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
       })
       .collect::<Vec<_>>();
 
-    let context = PatternFrameContext {
+    let pattern_context = PatternContext {
       palette: &patproj.pattern.palette,
       fullstitches: &fullstitches,
       partstitches: &partstitches,
@@ -128,12 +131,14 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
 
       grid: &patproj.display_settings.grid,
       default_symbol_font: &patproj.display_settings.default_symbol_font,
-
+    };
+    let frame_context = FrameContext {
       bounds,
       cell_size,
       preserved_overlap,
+      show_grid_line_numbers: options.show_grid_line_numbers,
     };
-    frames.push(write_frame(context)?);
+    frames.push(write_frame(pattern_context, frame_context)?);
 
     // If we are not framing, we only need one frame.
     if options.frame_size.is_none() {
@@ -154,7 +159,7 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
   Ok(frames)
 }
 
-struct PatternFrameContext<'a> {
+struct PatternContext<'a> {
   palette: &'a [PaletteItem],
   fullstitches: &'a [FullStitch],
   partstitches: &'a [PartStitch],
@@ -163,13 +168,17 @@ struct PatternFrameContext<'a> {
 
   grid: &'a Grid,
   default_symbol_font: &'a str,
+}
 
+#[derive(Clone, Copy)]
+struct FrameContext {
   bounds: Bounds,
   cell_size: f32,
   preserved_overlap: u16,
+  show_grid_line_numbers: bool,
 }
 
-fn write_frame(pattern: PatternFrameContext) -> io::Result<Vec<u8>> {
+fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8>> {
   let mut buffer = Vec::new();
 
   // In the development mode, we want to have a pretty-printed XML file for easy debugging.
@@ -178,15 +187,9 @@ fn write_frame(pattern: PatternFrameContext) -> io::Result<Vec<u8>> {
   #[cfg(not(debug_assertions))]
   let mut writer = Writer::new(&mut buffer);
 
-  let PatternFrameContext {
-    bounds,
-    cell_size,
-    preserved_overlap,
-    ..
-  } = pattern;
-
-  let width = (bounds.width as f32) * cell_size;
-  let height = (bounds.height as f32) * cell_size;
+  // Add 2 stitches padding to the frame to correctly display edge stitches, grid line numbers and centering marks.
+  let width = ((frame.bounds.width + 2) as f32) * frame.cell_size;
+  let height = ((frame.bounds.height + 2) as f32) * frame.cell_size;
 
   writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None)))?;
   writer
@@ -198,24 +201,36 @@ fn write_frame(pattern: PatternFrameContext) -> io::Result<Vec<u8>> {
       ("xmlns", "http://www.w3.org/2000/svg"),
     ])
     .write_inner_content(|writer| {
-      write_full_stitches(
-        writer,
-        pattern.palette,
-        pattern.fullstitches,
-        pattern.default_symbol_font,
-        cell_size,
-      )?;
-      write_part_stitches(
-        writer,
-        pattern.palette,
-        pattern.partstitches,
-        pattern.default_symbol_font,
-        cell_size,
-      )?;
-      write_grid(writer, pattern.grid, bounds, cell_size, preserved_overlap)?;
-      // TODO: special stitches
-      write_line_stitches(writer, pattern.palette, pattern.linestitches, cell_size)?;
-      write_node_stitches(writer, pattern.palette, pattern.nodestitches, cell_size)?;
+      writer
+        .create_element("g")
+        .with_attributes([
+          ("id", "frame"),
+          (
+            "transform",
+            format!("translate({}, {})", frame.cell_size, frame.cell_size).as_str(),
+          ),
+        ])
+        .write_inner_content(|writer| {
+          write_full_stitches(
+            writer,
+            pattern.palette,
+            pattern.fullstitches,
+            pattern.default_symbol_font,
+            frame.cell_size,
+          )?;
+          write_part_stitches(
+            writer,
+            pattern.palette,
+            pattern.partstitches,
+            pattern.default_symbol_font,
+            frame.cell_size,
+          )?;
+          write_grid(writer, pattern.grid, frame)?;
+          // TODO: special stitches
+          write_line_stitches(writer, pattern.palette, pattern.linestitches, frame.cell_size)?;
+          write_node_stitches(writer, pattern.palette, pattern.nodestitches, frame.cell_size)?;
+          Ok(())
+        })?;
       Ok(())
     })?;
 
@@ -491,13 +506,14 @@ fn write_node_stitches<W: io::Write>(
   Ok(())
 }
 
-fn write_grid<W: io::Write>(
-  writer: &mut Writer<W>,
-  grid: &Grid,
-  bounds: Bounds,
-  cell_size: f32,
-  preserved_overlap: u16,
-) -> io::Result<()> {
+fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid, frame: FrameContext) -> io::Result<()> {
+  let FrameContext {
+    bounds,
+    cell_size,
+    preserved_overlap,
+    show_grid_line_numbers,
+  } = frame;
+
   writer
     .create_element("g")
     .with_attribute(("id", "grid"))
@@ -541,15 +557,16 @@ fn write_grid<W: io::Write>(
       }
 
       // Draw horizontal major lines.
-      for y in (0..=(bounds.y + bounds.height))
+      for i in (0..=(bounds.y + bounds.height))
         .step_by(grid.major_lines_interval as usize)
         .filter(move |&y| {
           let treshhold = if bounds.y == 0 { 0 } else { bounds.y + preserved_overlap };
           y >= treshhold
         })
-        .map(|y| y - bounds.y)
       {
-        let y = y as f32 * cell_size;
+        let y = ((i - bounds.y) as f32) * cell_size;
+
+        // Draw the line.
         writer
           .create_element("line")
           .with_attributes([
@@ -561,18 +578,34 @@ fn write_grid<W: io::Write>(
             ("stroke-width", major_lines_thickness.to_string().as_str()),
           ])
           .write_empty()?;
+
+        // Draw the line number if enabled.
+        if show_grid_line_numbers {
+          writer
+            .create_element("text")
+            .with_attributes([
+              ("x", (-cell_size).to_string().as_str()),
+              ("y", y.to_string().as_str()),
+              ("font-size", (cell_size * 0.8).to_string().as_str()),
+              ("font-weight", "bold"),
+              ("text-anchor", "start"),
+              ("dominant-baseline", "middle"),
+            ])
+            .write_text_content(BytesText::new(&i.to_string()))?;
+        }
       }
 
       // Draw vertical major lines.
-      for x in (0..=(bounds.x + bounds.width))
+      for i in (0..=(bounds.x + bounds.width))
         .step_by(grid.major_lines_interval as usize)
         .filter(move |&x| {
           let treshhold = if bounds.x == 0 { 0 } else { bounds.x + preserved_overlap };
           x >= treshhold
         })
-        .map(|x| x - bounds.x)
       {
-        let x = x as f32 * cell_size;
+        let x = ((i - bounds.x) as f32) * cell_size;
+
+        // Draw the line.
         writer
           .create_element("line")
           .with_attributes([
@@ -584,6 +617,21 @@ fn write_grid<W: io::Write>(
             ("stroke-width", major_lines_thickness.to_string().as_str()),
           ])
           .write_empty()?;
+
+        // Draw the line number if enabled.
+        if show_grid_line_numbers {
+          writer
+            .create_element("text")
+            .with_attributes([
+              ("x", x.to_string().as_str()),
+              ("y", (-cell_size).to_string().as_str()),
+              ("font-size", (cell_size * 0.8).to_string().as_str()),
+              ("font-weight", "bold"),
+              ("text-anchor", "middle"),
+              ("dominant-baseline", "hanging"),
+            ])
+            .write_text_content(BytesText::new(&i.to_string()))?;
+        }
       }
 
       Ok(())

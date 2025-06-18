@@ -249,14 +249,14 @@ fn writes_grid() {
     },
   };
 
-  write_grid(
-    &mut writer,
-    &grid,
-    Bounds { x: 0, y: 0, width: 2, height: 2 },
-    CELL_SIZE,
-    0,
-  )
-  .unwrap();
+  let frame = FrameContext {
+    bounds: Bounds { x: 0, y: 0, width: 2, height: 2 },
+    cell_size: CELL_SIZE,
+    preserved_overlap: 0,
+    show_grid_line_numbers: false,
+  };
+
+  write_grid(&mut writer, &grid, frame).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 

@@ -20,6 +20,7 @@ impl Default for PdfExportOptions {
         frame_size: Some((40, 40)),
         cell_size: 14.0,
         preserved_overlap: Some(3),
+        show_grid_line_numbers: true,
       },
     }
   }
