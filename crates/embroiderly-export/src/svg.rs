@@ -23,6 +23,8 @@ pub struct ImageExportOptions {
   pub preserved_overlap: Option<u16>,
   /// Whether to show grid line numbers in the exported image.
   pub show_grid_line_numbers: bool,
+  /// Whether to show centering marks in the exported image.
+  pub show_centering_marks: bool,
 }
 
 impl ImageExportOptions {
@@ -41,6 +43,7 @@ impl Default for ImageExportOptions {
       cell_size: 14.0,
       preserved_overlap: Some(DEFAULT_PRESERVED_OVERLAP),
       show_grid_line_numbers: false,
+      show_centering_marks: false,
     }
   }
 }
@@ -123,6 +126,7 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
       .collect::<Vec<_>>();
 
     let pattern_context = PatternContext {
+      fabric: &patproj.pattern.fabric,
       palette: &patproj.pattern.palette,
       fullstitches: &fullstitches,
       partstitches: &partstitches,
@@ -137,6 +141,7 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
       cell_size,
       preserved_overlap,
       show_grid_line_numbers: options.show_grid_line_numbers,
+      show_centering_marks: options.show_centering_marks,
     };
     frames.push(write_frame(pattern_context, frame_context)?);
 
@@ -160,6 +165,7 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
 }
 
 struct PatternContext<'a> {
+  fabric: &'a Fabric,
   palette: &'a [PaletteItem],
   fullstitches: &'a [FullStitch],
   partstitches: &'a [PartStitch],
@@ -176,6 +182,7 @@ struct FrameContext {
   cell_size: f32,
   preserved_overlap: u16,
   show_grid_line_numbers: bool,
+  show_centering_marks: bool,
 }
 
 fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8>> {
@@ -225,7 +232,7 @@ fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u
             pattern.default_symbol_font,
             frame.cell_size,
           )?;
-          write_grid(writer, pattern.grid, frame)?;
+          write_grid(writer, pattern.fabric, pattern.grid, frame)?;
           // TODO: special stitches
           write_line_stitches(writer, pattern.palette, pattern.linestitches, frame.cell_size)?;
           write_node_stitches(writer, pattern.palette, pattern.nodestitches, frame.cell_size)?;
@@ -506,12 +513,18 @@ fn write_node_stitches<W: io::Write>(
   Ok(())
 }
 
-fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid, frame: FrameContext) -> io::Result<()> {
+fn write_grid<W: io::Write>(
+  writer: &mut Writer<W>,
+  fabric: &Fabric,
+  grid: &Grid,
+  frame: FrameContext,
+) -> io::Result<()> {
   let FrameContext {
     bounds,
     cell_size,
     preserved_overlap,
     show_grid_line_numbers,
+    show_centering_marks,
   } = frame;
 
   writer
@@ -525,8 +538,10 @@ fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid, frame: FrameCon
       let major_lines_thickness = grid.major_lines.thickness * cell_size;
 
       // Draw horizontal minor lines.
-      for y in 0..=bounds.height {
-        let y = y as f32 * cell_size;
+      for i in 0..=bounds.height {
+        let y = i as f32 * cell_size;
+
+        // Draw the line.
         writer
           .create_element("line")
           .with_attributes([
@@ -538,11 +553,25 @@ fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid, frame: FrameCon
             ("stroke-width", minor_lines_thickness.to_string().as_str()),
           ])
           .write_empty()?;
+
+        // Draw centering marks if enabled.
+        if show_centering_marks && i + bounds.y == fabric.height / 2 {
+          let y = if (i + bounds.y) % 10 == 0 {
+            y - cell_size / 2.0
+          } else {
+            y
+          };
+
+          write_centering_marks(writer, -cell_size, y, CenteringMarkPosition::Left, cell_size)?;
+          write_centering_marks(writer, pattern_width, y, CenteringMarkPosition::Right, cell_size)?;
+        }
       }
 
       // Draw vertical minor lines.
-      for x in 0..=bounds.width {
-        let x = x as f32 * cell_size;
+      for i in 0..=bounds.width {
+        let x = i as f32 * cell_size;
+
+        // Draw the line.
         writer
           .create_element("line")
           .with_attributes([
@@ -554,6 +583,18 @@ fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid, frame: FrameCon
             ("stroke-width", minor_lines_thickness.to_string().as_str()),
           ])
           .write_empty()?;
+
+        // Draw centering marks if enabled.
+        if show_centering_marks && i + bounds.x == fabric.width / 2 {
+          let x = if (i + bounds.x) % 10 == 0 {
+            x - cell_size / 2.0
+          } else {
+            x
+          };
+
+          write_centering_marks(writer, x, -cell_size, CenteringMarkPosition::Top, cell_size)?;
+          write_centering_marks(writer, x, pattern_height, CenteringMarkPosition::Bottom, cell_size)?;
+        }
       }
 
       // Draw horizontal major lines.
@@ -636,5 +677,46 @@ fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid, frame: FrameCon
 
       Ok(())
     })?;
+  Ok(())
+}
+
+enum CenteringMarkPosition {
+  Top,
+  Bottom,
+  Left,
+  Right,
+}
+
+fn write_centering_marks<W: io::Write>(
+  writer: &mut Writer<W>,
+  x: f32,
+  y: f32,
+  position: CenteringMarkPosition,
+  cell_size: f32,
+) -> io::Result<()> {
+  let points = match position {
+    CenteringMarkPosition::Top => [(0.0, 0.0), (1.0, 0.0), (0.5, 1.0)],
+    CenteringMarkPosition::Bottom => [(0.0, 1.0), (0.5, 0.0), (1.0, 1.0)],
+    CenteringMarkPosition::Left => [(0.0, 0.0), (1.0, 0.5), (0.0, 1.0)],
+    CenteringMarkPosition::Right => [(1.0, 0.0), (1.0, 1.0), (0.0, 0.5)],
+  };
+  let points = points
+    .iter()
+    .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size,))
+    .collect::<Vec<_>>()
+    .join(" ");
+
+  writer
+    .create_element("g")
+    .with_attribute(("transform", format!("translate({x}, {y})").as_str()))
+    .write_inner_content(move |writer| {
+      writer
+        .create_element("polygon")
+        .with_attributes([("points", points.as_str()), ("fill", "darkgrey")])
+        .write_empty()?;
+
+      Ok(())
+    })?;
+
   Ok(())
 }

@@ -21,6 +21,7 @@ impl Default for PdfExportOptions {
         cell_size: 14.0,
         preserved_overlap: Some(3),
         show_grid_line_numbers: true,
+        show_centering_marks: true,
       },
     }
   }

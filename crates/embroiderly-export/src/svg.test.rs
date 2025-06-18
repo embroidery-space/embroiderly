@@ -254,9 +254,10 @@ fn writes_grid() {
     cell_size: CELL_SIZE,
     preserved_overlap: 0,
     show_grid_line_numbers: false,
+    show_centering_marks: false,
   };
 
-  write_grid(&mut writer, &grid, frame).unwrap();
+  write_grid(&mut writer, &Fabric::default(), &grid, frame).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
