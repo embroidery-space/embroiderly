@@ -4,11 +4,10 @@ import { check } from "@tauri-apps/plugin-updater";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
 import { useFluent } from "fluent-vue";
-import { useConfirm, useDialog, usePrimeVue } from "primevue";
+import { useConfirm, usePrimeVue } from "primevue";
 import type { ConfirmationOptions } from "primevue/confirmationoptions";
 import { LOCALES, PRIMEVUE_LOCALES } from "#/fluent.ts";
 import type { WheelAction } from "#/pixi/";
-import { useShortcuts } from "#/composables/";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
@@ -47,8 +46,10 @@ export interface CheckForUpdatesOptions {
 export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const AppSettings = defineAsyncComponent(() => import("#/components/dialogs/AppSettings.vue"));
 
+  const overlay = useOverlay();
+  const appSettingModal = overlay.create(AppSettings);
+
   const primevue = usePrimeVue();
-  const dialog = useDialog();
   const confirm = useConfirm();
   const fluent = useFluent();
 
@@ -85,9 +86,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   });
 
   function openSettings() {
-    dialog.open(AppSettings, {
-      props: { header: fluent.$t("title-settings"), modal: true, dismissableMask: true },
-    });
+    appSettingModal.open();
   }
 
   async function checkForUpdates(options?: CheckForUpdatesOptions) {
@@ -134,8 +133,9 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     }
   }
 
-  const shortcuts = useShortcuts();
-  shortcuts.on("Ctrl+Comma", () => openSettings());
+  defineShortcuts({
+    "ctrl_,": () => openSettings(),
+  });
 
   return {
     loadingUpdate,

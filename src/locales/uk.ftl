@@ -119,6 +119,8 @@ label-hide-symbols = Сховати символи
 
 title-settings = Налаштування
 
+label-interface = Інтерфейс
+
 label-theme = Тема
 label-theme-dark = Темна
 label-theme-light = Світла
@@ -147,7 +149,7 @@ label-viewport-wheel-action-scroll = Прокрутка
 label-other = Інше
 
 label-autosave-interval = Інтервал автозбереження
-message-autosave-interval-hint = Якщо встановлено 0, автозбереження вимкнено. Потребує перезавантаження.
+message-autosave-interval-description = Якщо встановлено 0, автозбереження вимкнено.
 
 label-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
 
@@ -171,7 +173,6 @@ label-height = Висота
 label-unit-stitches = стібків
 label-unit-inches = дюймів
 label-unit-mm = мм
-label-unit-min = хв
 
 label-count = Каунт
 label-count-and-kind = Каунт і тип

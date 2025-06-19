@@ -116,6 +116,8 @@ label-hide-symbols = Hide Symbols
 
 title-settings = Settings
 
+label-interface = Interface
+
 label-theme = Theme
 label-theme-dark = Dark
 label-theme-light = Light
@@ -144,7 +146,7 @@ label-viewport-wheel-action-scroll = Scroll
 label-other = Other
 
 label-autosave-interval = Autosave Interval
-message-autosave-interval-hint = If set to 0, autosave is disabled. Requires a restart.
+message-autosave-interval-description = If set to 0, autosave is disabled.
 
 label-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools
 
@@ -168,7 +170,6 @@ label-height = Height
 label-unit-stitches = stitches
 label-unit-inches = inches
 label-unit-mm = mm
-label-unit-min = min
 
 label-count = Count
 label-count-and-kind = Count & Kind

@@ -1,9 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /// <reference types="vitest" />
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import ui from "@nuxt/ui/vite";
 import tailwindcss from "@tailwindcss/vite";
+
+const FORM_FIELD_DEFAULT_VARIANTS: any = {
+  size: "xl",
+  color: "neutral",
+  variant: "subtle",
+  orientation: "vertical", // for input number
+};
+const CHECKBOX_DEFAULT_VARIANTS: any = {
+  size: "xl",
+  color: "neutral",
+  variant: "list",
+  indicator: "start",
+};
 
 export default defineConfig({
   plugins: [
@@ -29,6 +44,14 @@ export default defineConfig({
             },
           },
         },
+        modal: {
+          slots: {
+            overlay: "bg-black/50",
+          },
+        },
+        checkbox: { defaultVariants: CHECKBOX_DEFAULT_VARIANTS },
+        inputNumber: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
+        select: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
       },
     }),
     tailwindcss(),
