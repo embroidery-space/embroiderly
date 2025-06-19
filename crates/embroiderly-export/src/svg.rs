@@ -364,7 +364,7 @@ fn write_part_stitches<W: io::Write>(
           .write_inner_content(|writer| {
             let points = match stitch.kind {
               PartStitchKind::Half => match stitch.direction {
-                PartStitchDirection::Forward => vec![
+                PartStitchDirection::Forward => [
                   (1.0, 0.0),
                   (1.0, 0.35),
                   (0.35, 1.0),
@@ -372,7 +372,7 @@ fn write_part_stitches<W: io::Write>(
                   (0.0, 0.65),
                   (0.65, 0.0),
                 ],
-                PartStitchDirection::Backward => vec![
+                PartStitchDirection::Backward => [
                   (0.0, 0.0),
                   (0.35, 0.0),
                   (1.0, 0.65),
@@ -382,7 +382,7 @@ fn write_part_stitches<W: io::Write>(
                 ],
               },
               PartStitchKind::Quarter => match stitch.direction {
-                PartStitchDirection::Forward => vec![
+                PartStitchDirection::Forward => [
                   (0.5, 0.0),
                   (0.5, 0.25),
                   (0.25, 0.5),
@@ -391,7 +391,7 @@ fn write_part_stitches<W: io::Write>(
                   (0.25, 0.0),
                 ],
 
-                PartStitchDirection::Backward => vec![
+                PartStitchDirection::Backward => [
                   (0.0, 0.0),
                   (0.0, 0.25),
                   (0.25, 0.5),
