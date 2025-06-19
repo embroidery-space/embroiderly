@@ -1,7 +1,7 @@
 <template>
-  <div class="h-full flex items-center justify-center">
+  <div class="flex items-center justify-center">
     <button
-      class="h-full inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-black/[.12] focus-visible:bg-black/[.06] hover:bg-black/[.06] dark:text-white dark:active:bg-white/[.12] dark:hover:bg-white/[.06]"
+      class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-black/[.12] focus-visible:bg-black/[.06] hover:bg-black/[.06] dark:text-white dark:active:bg-white/[.12] dark:hover:bg-white/[.06]"
       :style="{ width: dt('button.icon.only.width') }"
       @click="appWindow.minimize()"
     >
@@ -15,7 +15,7 @@
     </button>
 
     <button
-      class="h-full inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-black/[.12] focus-visible:bg-black/[.06] hover:bg-black/[.06] dark:text-white dark:active:bg-white/[.12] dark:hover:bg-white/[.06]"
+      class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-black/[.12] focus-visible:bg-black/[.06] hover:bg-black/[.06] dark:text-white dark:active:bg-white/[.12] dark:hover:bg-white/[.06]"
       :style="{ width: dt('button.icon.only.width') }"
       @click="appWindow.toggleMaximize()"
     >
@@ -36,7 +36,7 @@
     </button>
 
     <button
-      class="h-full w-8 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-red-700 focus-visible:bg-red-600 hover:bg-red-600 dark:text-white focus-visible:text-white hover:text-white"
+      class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-red-700 focus-visible:bg-red-600 hover:bg-red-600 dark:text-white focus-visible:text-white hover:text-white"
       :style="{ width: dt('button.icon.only.width') }"
       @click="appWindow.close()"
     >

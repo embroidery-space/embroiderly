@@ -1,14 +1,14 @@
 <template>
   <div class="flex">
-    <div data-tauri-drag-region class="grow flex items-center gap-x-2 p-2">
+    <div data-tauri-drag-region class="grow flex items-center gap-x-2 px-2">
       <UDropdownMenu :items="fileOptions" :modal="false">
-        <UButton variant="ghost" color="neutral" :label="$t('label-file')" />
+        <UButton variant="ghost" color="neutral" size="sm" :label="$t('label-file')" />
       </UDropdownMenu>
       <UDropdownMenu v-if="patternsStore.pattern !== undefined" :items="patternOptions" :modal="false">
-        <UButton variant="ghost" color="neutral" :label="$t('label-pattern')" />
+        <UButton variant="ghost" color="neutral" size="sm" :label="$t('label-pattern')" />
       </UDropdownMenu>
       <UDropdownMenu :items="helpOptions" :modal="false">
-        <UButton variant="ghost" color="neutral" :label="$t('label-help')" />
+        <UButton variant="ghost" color="neutral" size="sm" :label="$t('label-help')" />
       </UDropdownMenu>
     </div>
 
@@ -17,7 +17,7 @@
       @switch="(patternId) => patternsStore.loadPattern(patternId)"
     />
 
-    <div class="h-full flex items-center gap-2">
+    <div class="flex items-center gap-2">
       <UDropdownMenu :items="manageOptions" :modal="false">
         <UTooltip :text="$t('label-manage')">
           <UButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-prime:cog" />
