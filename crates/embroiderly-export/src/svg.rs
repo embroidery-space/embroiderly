@@ -736,7 +736,7 @@ fn write_overlapping_zones<W: io::Write>(writer: &mut Writer<W>, frame: FrameCon
 
   writer
     .create_element("g")
-    .with_attribute(("opacity", "0.35"))
+    .with_attribute(("opacity", "0.5"))
     .write_inner_content(|writer| {
       // Draw vertical overlapping zone if needed.
       if bounds.x > 0 {
@@ -747,7 +747,7 @@ fn write_overlapping_zones<W: io::Write>(writer: &mut Writer<W>, frame: FrameCon
             ("y", "0"),
             ("width", (preserved_overlap as f32 * cell_size).to_string().as_str()),
             ("height", (bounds.height as f32 * cell_size).to_string().as_str()),
-            ("fill", "black"),
+            ("fill", "white"),
           ])
           .write_empty()?;
       }
@@ -761,7 +761,7 @@ fn write_overlapping_zones<W: io::Write>(writer: &mut Writer<W>, frame: FrameCon
             ("y", "0"),
             ("width", (bounds.width as f32 * cell_size).to_string().as_str()),
             ("height", (preserved_overlap as f32 * cell_size).to_string().as_str()),
-            ("fill", "black"),
+            ("fill", "white"),
           ])
           .write_empty()?;
       }
