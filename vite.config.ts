@@ -3,6 +3,7 @@
 /// <reference types="vitest" />
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
+import vueDevTools from "vite-plugin-vue-devtools";
 import vue from "@vitejs/plugin-vue";
 import ui from "@nuxt/ui/vite";
 import tailwindcss from "@tailwindcss/vite";
@@ -22,6 +23,7 @@ const CHECKBOX_DEFAULT_VARIANTS: any = {
 
 export default defineConfig({
   plugins: [
+    vueDevTools(),
     vue(),
     ui({
       theme: { colors: ["primary"] },
