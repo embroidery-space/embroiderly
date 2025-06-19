@@ -79,6 +79,6 @@
 
   --ui-border: var(--ui-color-neutral-500);
   --ui-border-muted: var(--ui-color-neutral-600);
-  --ui-border-accented: var(--ui-color-neutral-700);
+  --ui-border-accented: var(--ui-color-neutral-400);
   --ui-border-inverted: var(--ui-text);
 }

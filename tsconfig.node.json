@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node22/tsconfig.json",
-  "files": ["vite.config.ts"],
+  "files": ["vite.config.ts", "ui.config.ts"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

@@ -55,7 +55,7 @@
               class="p-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors duration-initial hover:cursor-pointer hover:bg-elevated"
               @click="handleInfoItemClick(item)"
             >
-              <span class="flex items-center gap-2 text-primary">
+              <span class="flex items-center gap-2 text-primary font-medium">
                 {{ item.title }}
                 <i v-if="item.url" class="i-prime:external-link"></i>
               </span>

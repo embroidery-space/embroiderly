@@ -63,7 +63,7 @@
               :description="$t('message-autosave-interval-description')"
               class="w-full"
             >
-              <UInputNumber v-model="settingsStore.other.autoSaveInterval" class="w-full" />
+              <UInputNumber v-model="settingsStore.other.autoSaveInterval" orientation="vertical" class="w-full" />
             </UFormField>
 
             <UCheckbox
