@@ -89,7 +89,7 @@ fn writes_full_stitches() {
     },
   ];
 
-  write_full_stitches(&mut writer, &palette, &fullstitches, SYMBOL_FONT, CELL_SIZE).unwrap();
+  draw_full_stitches(&mut writer, &palette, &fullstitches, SYMBOL_FONT, CELL_SIZE).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
@@ -152,7 +152,7 @@ fn writes_part_stitches() {
     },
   ];
 
-  write_part_stitches(&mut writer, &palette, &partstitches, SYMBOL_FONT, CELL_SIZE).unwrap();
+  draw_part_stitches(&mut writer, &palette, &partstitches, SYMBOL_FONT, CELL_SIZE).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
@@ -183,7 +183,7 @@ fn writes_line_stitches() {
     },
   ];
 
-  write_line_stitches(&mut writer, &palette, &linestitches, CELL_SIZE).unwrap();
+  draw_line_stitches(&mut writer, &palette, &linestitches, CELL_SIZE).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
@@ -216,7 +216,7 @@ fn writes_node_stitches() {
     },
   ];
 
-  write_node_stitches(&mut writer, &palette, &nodestitches, CELL_SIZE).unwrap();
+  draw_node_stitches(&mut writer, &palette, &nodestitches, CELL_SIZE).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
@@ -257,7 +257,7 @@ fn writes_grid() {
     show_centering_marks: false,
   };
 
-  write_grid(&mut writer, &Fabric::default(), &grid, frame).unwrap();
+  draw_grid(&mut writer, &Fabric::default(), &grid, frame).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 

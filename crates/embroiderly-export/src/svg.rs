@@ -157,7 +157,7 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
       show_grid_line_numbers: options.show_grid_line_numbers,
       show_centering_marks: options.show_centering_marks,
     };
-    frames.push(write_frame(pattern_context, frame_context)?);
+    frames.push(draw_frame(pattern_context, frame_context)?);
 
     // If we are not framing, we only need one frame.
     if options.frame_size.is_none() {
@@ -201,7 +201,7 @@ struct FrameContext {
   show_centering_marks: bool,
 }
 
-fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8>> {
+fn draw_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8>> {
   let mut buffer = Vec::new();
 
   // In the development mode, we want to have a pretty-printed XML file for easy debugging.
@@ -234,21 +234,21 @@ fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u
           ),
         ])
         .write_inner_content(|writer| {
-          write_full_stitches(
+          draw_full_stitches(
             writer,
             pattern.palette,
             pattern.fullstitches,
             pattern.default_symbol_font,
             frame.cell_size,
           )?;
-          write_part_stitches(
+          draw_part_stitches(
             writer,
             pattern.palette,
             pattern.partstitches,
             pattern.default_symbol_font,
             frame.cell_size,
           )?;
-          write_grid(writer, pattern.fabric, pattern.grid, frame)?;
+          draw_grid(writer, pattern.fabric, pattern.grid, frame)?;
           write_special_stitches(
             writer,
             pattern.palette,
@@ -256,9 +256,9 @@ fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u
             pattern.special_stitch_models,
             frame.cell_size,
           )?;
-          write_line_stitches(writer, pattern.palette, pattern.linestitches, frame.cell_size)?;
-          write_node_stitches(writer, pattern.palette, pattern.nodestitches, frame.cell_size)?;
-          write_overlapping_zones(writer, frame)?;
+          draw_line_stitches(writer, pattern.palette, pattern.linestitches, frame.cell_size)?;
+          draw_node_stitches(writer, pattern.palette, pattern.nodestitches, frame.cell_size)?;
+          draw_overlapping_zones(writer, frame)?;
           Ok(())
         })?;
       Ok(())
@@ -267,7 +267,7 @@ fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u
   Ok(buffer)
 }
 
-macro_rules! write_stitch_symbol {
+macro_rules! draw_stitch_symbol {
   ($writer:expr, $x:expr, $y:expr, $symbol:expr, $symbol_font:expr, $font_size:expr) => {{
     if let Some(symbol) = $symbol.as_ref().map(|s| s.render()) {
       $writer
@@ -285,7 +285,7 @@ macro_rules! write_stitch_symbol {
   }};
 }
 
-fn write_full_stitches<W: io::Write>(
+fn draw_full_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
   fullstitches: &[FullStitch],
@@ -324,7 +324,7 @@ fn write_full_stitches<W: io::Write>(
               .write_empty()?;
 
             let font_size = size * 0.8;
-            write_stitch_symbol!(
+            draw_stitch_symbol!(
               writer,
               size / 2.0,
               size / 2.0,
@@ -341,7 +341,7 @@ fn write_full_stitches<W: io::Write>(
   Ok(())
 }
 
-fn write_part_stitches<W: io::Write>(
+fn draw_part_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
   partstitches: &[PartStitch],
@@ -422,7 +422,7 @@ fn write_part_stitches<W: io::Write>(
             match stitch.kind {
               PartStitchKind::Half => match stitch.direction {
                 PartStitchDirection::Forward => {
-                  write_stitch_symbol!(
+                  draw_stitch_symbol!(
                     writer,
                     size + size / 2.0,
                     size / 2.0,
@@ -430,7 +430,7 @@ fn write_part_stitches<W: io::Write>(
                     palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
                     font_size
                   );
-                  write_stitch_symbol!(
+                  draw_stitch_symbol!(
                     writer,
                     size / 2.0,
                     size + size / 2.0,
@@ -440,7 +440,7 @@ fn write_part_stitches<W: io::Write>(
                   );
                 }
                 PartStitchDirection::Backward => {
-                  write_stitch_symbol!(
+                  draw_stitch_symbol!(
                     writer,
                     size / 2.0,
                     size / 2.0,
@@ -448,7 +448,7 @@ fn write_part_stitches<W: io::Write>(
                     palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
                     font_size
                   );
-                  write_stitch_symbol!(
+                  draw_stitch_symbol!(
                     writer,
                     size + size / 2.0,
                     size + size / 2.0,
@@ -459,7 +459,7 @@ fn write_part_stitches<W: io::Write>(
                 }
               },
               PartStitchKind::Quarter => {
-                write_stitch_symbol!(
+                draw_stitch_symbol!(
                   writer,
                   size / 2.0,
                   size / 2.0,
@@ -478,7 +478,7 @@ fn write_part_stitches<W: io::Write>(
   Ok(())
 }
 
-fn write_line_stitches<W: io::Write>(
+fn draw_line_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
   linestitches: &[LineStitch],
@@ -508,7 +508,7 @@ fn write_line_stitches<W: io::Write>(
   Ok(())
 }
 
-fn write_curved_stitches<W: io::Write>(
+fn draw_curved_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
   curvedstitches: &[CurvedStitch],
@@ -542,7 +542,7 @@ fn write_curved_stitches<W: io::Write>(
   Ok(())
 }
 
-fn write_node_stitches<W: io::Write>(
+fn draw_node_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
   nodestitches: &[NodeStitch],
@@ -603,9 +603,9 @@ fn write_special_stitches<W: io::Write>(
             .as_str(),
           )])
           .write_inner_content(|writer| {
-            write_node_stitches(writer, &palette, &model.nodestitches, cell_size)?;
-            write_line_stitches(writer, &palette, &model.linestitches, cell_size)?;
-            write_curved_stitches(writer, &palette, &model.curvedstitches, cell_size)?;
+            draw_node_stitches(writer, &palette, &model.nodestitches, cell_size)?;
+            draw_line_stitches(writer, &palette, &model.linestitches, cell_size)?;
+            draw_curved_stitches(writer, &palette, &model.curvedstitches, cell_size)?;
             Ok(())
           })?;
       }
@@ -614,7 +614,7 @@ fn write_special_stitches<W: io::Write>(
   Ok(())
 }
 
-fn write_grid<W: io::Write>(
+fn draw_grid<W: io::Write>(
   writer: &mut Writer<W>,
   fabric: &Fabric,
   grid: &Grid,
@@ -663,8 +663,8 @@ fn write_grid<W: io::Write>(
             y
           };
 
-          write_centering_marks(writer, -cell_size, y, CenteringMarkPosition::Left, cell_size)?;
-          write_centering_marks(writer, pattern_width, y, CenteringMarkPosition::Right, cell_size)?;
+          draw_centering_marks(writer, -cell_size, y, CenteringMarkPosition::Left, cell_size)?;
+          draw_centering_marks(writer, pattern_width, y, CenteringMarkPosition::Right, cell_size)?;
         }
       }
 
@@ -693,8 +693,8 @@ fn write_grid<W: io::Write>(
             x
           };
 
-          write_centering_marks(writer, x, -cell_size, CenteringMarkPosition::Top, cell_size)?;
-          write_centering_marks(writer, x, pattern_height, CenteringMarkPosition::Bottom, cell_size)?;
+          draw_centering_marks(writer, x, -cell_size, CenteringMarkPosition::Top, cell_size)?;
+          draw_centering_marks(writer, x, pattern_height, CenteringMarkPosition::Bottom, cell_size)?;
         }
       }
 
@@ -788,7 +788,7 @@ enum CenteringMarkPosition {
   Right,
 }
 
-fn write_centering_marks<W: io::Write>(
+fn draw_centering_marks<W: io::Write>(
   writer: &mut Writer<W>,
   x: f32,
   y: f32,
@@ -822,7 +822,7 @@ fn write_centering_marks<W: io::Write>(
   Ok(())
 }
 
-fn write_overlapping_zones<W: io::Write>(writer: &mut Writer<W>, frame: FrameContext) -> io::Result<()> {
+fn draw_overlapping_zones<W: io::Write>(writer: &mut Writer<W>, frame: FrameContext) -> io::Result<()> {
   let FrameContext {
     bounds,
     cell_size,
