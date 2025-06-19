@@ -50,7 +50,7 @@
 }
 
 .dark {
-  --ui-primary: var(--ui-color-primary-400);
+  --ui-primary: var(--ui-color-primary-500);
 
   --ui-color-neutral-50: #e4e7ec;
   --ui-color-neutral-100: #d5d9e1;

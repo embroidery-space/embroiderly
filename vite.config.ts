@@ -9,13 +9,26 @@ export default defineConfig({
   plugins: [
     vue(),
     ui({
+      theme: { colors: ["primary"] },
       ui: {
         colors: {
           primary: "primary",
         },
-      },
-      theme: {
-        colors: ["primary"],
+        button: {
+          slots: {
+            base: "text-base font-normal hover:cursor-pointer",
+          },
+          variants: {
+            variant: {
+              link: "text-base",
+            },
+            size: {
+              md: {
+                base: "text-base",
+              },
+            },
+          },
+        },
       },
     }),
     tailwindcss(),
