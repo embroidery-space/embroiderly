@@ -888,6 +888,8 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
     return Ok(Some(OxsOrnament::Special(SpecialStitch {
       x,
       y,
+      width: attributes.get_parsed("width").unwrap_or_default(),
+      height: attributes.get_parsed("height").unwrap_or_default(),
       palindex,
       modindex,
       rotation: attributes.get_parsed("rotation").unwrap_or_default(),
@@ -1009,6 +1011,8 @@ fn write_ornament<W: io::Write>(writer: &mut Writer<W>, stitch: OxsOrnament) -> 
         .with_attributes([
           ("x1", stitch.x.to_string().as_str()),
           ("y1", stitch.y.to_string().as_str()),
+          ("width", stitch.width.to_string().as_str()),
+          ("height", stitch.height.to_string().as_str()),
           ("palindex", (stitch.palindex + 1).to_string().as_str()),
           ("objecttype", "specialstitch"),
           ("modindex", stitch.modindex.to_string().as_str()),

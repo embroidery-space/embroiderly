@@ -501,6 +501,16 @@ impl Stitches<NodeStitch> {
   }
 }
 
+impl Stitches<SpecialStitch> {
+  pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &SpecialStitch> {
+    self.inner.iter().filter(move |stitch| {
+      // println!("Checking if {:?} is in bounds {:?}", stitch, bounds);
+      bounds.contains_point(stitch.x, stitch.y)
+      // || bounds.contains_point(stitch.x + stitch.width, stitch.y + stitch.height)
+    })
+  }
+}
+
 macro_rules! stitches_with_palindex_impl {
   ($type:ty) => {
     impl Stitches<$type> {

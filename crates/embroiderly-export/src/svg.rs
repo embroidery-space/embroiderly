@@ -124,6 +124,18 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
         ..stitch
       })
       .collect::<Vec<_>>();
+    let specialstitches = patproj
+      .pattern
+      .specialstitches
+      .get_stitches_in_bounds(bounds)
+      .cloned()
+      .map(|stitch| SpecialStitch {
+        // Adjust coordinates to be relative to the current frame.
+        x: Coord::new(stitch.x - current_position.0 as f32).unwrap(),
+        y: Coord::new(stitch.y - current_position.1 as f32).unwrap(),
+        ..stitch
+      })
+      .collect::<Vec<_>>();
 
     let pattern_context = PatternContext {
       fabric: &patproj.pattern.fabric,
@@ -132,6 +144,8 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
       partstitches: &partstitches,
       linestitches: &linestitches,
       nodestitches: &nodestitches,
+      specialstitches: &specialstitches,
+      special_stitch_models: &patproj.pattern.special_stitch_models,
 
       grid: &patproj.display_settings.grid,
       default_symbol_font: &patproj.display_settings.default_symbol_font,
@@ -171,6 +185,8 @@ struct PatternContext<'a> {
   partstitches: &'a [PartStitch],
   linestitches: &'a [LineStitch],
   nodestitches: &'a [NodeStitch],
+  specialstitches: &'a [SpecialStitch],
+  special_stitch_models: &'a [SpecialStitchModel],
 
   grid: &'a Grid,
   default_symbol_font: &'a str,
@@ -233,7 +249,13 @@ fn write_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u
             frame.cell_size,
           )?;
           write_grid(writer, pattern.fabric, pattern.grid, frame)?;
-          // TODO: special stitches
+          write_special_stitches(
+            writer,
+            pattern.palette,
+            pattern.specialstitches,
+            pattern.special_stitch_models,
+            frame.cell_size,
+          )?;
           write_line_stitches(writer, pattern.palette, pattern.linestitches, frame.cell_size)?;
           write_node_stitches(writer, pattern.palette, pattern.nodestitches, frame.cell_size)?;
           write_overlapping_zones(writer, frame)?;
@@ -486,6 +508,40 @@ fn write_line_stitches<W: io::Write>(
   Ok(())
 }
 
+fn write_curved_stitches<W: io::Write>(
+  writer: &mut Writer<W>,
+  palette: &[PaletteItem],
+  curvedstitches: &[CurvedStitch],
+  cell_size: f32,
+) -> io::Result<()> {
+  writer
+    .create_element("g")
+    .with_attribute(("id", "curvedstitches"))
+    .write_inner_content(|writer| {
+      for stitch in curvedstitches.iter() {
+        let palitem = palette.first().unwrap();
+        let points = stitch
+          .points
+          .iter()
+          .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size))
+          .collect::<Vec<_>>()
+          .join(" ");
+        writer
+          .create_element("polyline")
+          .with_attributes([
+            ("points", points.as_str()),
+            ("fill", "none"),
+            ("stroke", format!("#{}", palitem.color).as_str()),
+            ("stroke-width", (0.2 * cell_size).to_string().as_str()),
+            ("stroke-linecap", "round"),
+          ])
+          .write_empty()?;
+      }
+      Ok(())
+    })?;
+  Ok(())
+}
+
 fn write_node_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
@@ -508,6 +564,50 @@ fn write_node_stitches<W: io::Write>(
             ("stroke", "#000000"),
           ])
           .write_empty()?;
+      }
+      Ok(())
+    })?;
+  Ok(())
+}
+
+fn write_special_stitches<W: io::Write>(
+  writer: &mut Writer<W>,
+  palette: &[PaletteItem],
+  specialstitches: &[SpecialStitch],
+  special_stitch_models: &[SpecialStitchModel],
+  cell_size: f32,
+) -> io::Result<()> {
+  writer
+    .create_element("g")
+    .with_attribute(("id", "specialstitches"))
+    .write_inner_content(|writer| {
+      for stitch in specialstitches.iter() {
+        let palette = [palette.get(stitch.palindex as usize).unwrap().clone()];
+        let model = special_stitch_models.get(stitch.modindex as usize).unwrap();
+
+        let scale_x = if stitch.flip.0 { -1.0 } else { 1.0 };
+        let scale_y = if stitch.flip.1 { -1.0 } else { 1.0 };
+
+        writer
+          .create_element("g")
+          .with_attributes([(
+            "transform",
+            format!(
+              "translate({}, {}) rotate({}) scale({}, {})",
+              stitch.x * cell_size,
+              stitch.y * cell_size,
+              stitch.rotation,
+              scale_x,
+              scale_y
+            )
+            .as_str(),
+          )])
+          .write_inner_content(|writer| {
+            write_node_stitches(writer, &palette, &model.nodestitches, cell_size)?;
+            write_line_stitches(writer, &palette, &model.linestitches, cell_size)?;
+            write_curved_stitches(writer, &palette, &model.curvedstitches, cell_size)?;
+            Ok(())
+          })?;
       }
       Ok(())
     })?;

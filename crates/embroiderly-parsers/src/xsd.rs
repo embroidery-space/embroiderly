@@ -63,7 +63,13 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
       xsd_pattern
         .specialstitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(|stitch| {
+          let model = xsd_pattern
+            .special_stitch_models
+            .get(stitch.modindex as usize)
+            .ok_or_else(|| anyhow::anyhow!("Special stitch model not found for index {}", stitch.modindex))?;
+          (stitch, model.width, model.height).try_into()
+        })
         .collect::<Result<Vec<_>, _>>()?,
     ),
     special_stitch_models: xsd_pattern

@@ -344,6 +344,8 @@ export class CurvedStitch {
 export class SpecialStitch {
   x: number;
   y: number;
+  width: number;
+  height: number;
   rotation: number;
   flip: [boolean, boolean];
   palindex: number;
@@ -352,6 +354,8 @@ export class SpecialStitch {
   constructor(data: b.infer<typeof SpecialStitch.schema>) {
     this.x = data.x;
     this.y = data.y;
+    this.width = data.width;
+    this.height = data.height;
     this.palindex = data.palindex;
     this.modindex = data.modindex;
     this.rotation = data.rotation;
@@ -361,6 +365,8 @@ export class SpecialStitch {
   static readonly schema = b.struct({
     x: b.f32(),
     y: b.f32(),
+    width: b.f32(),
+    height: b.f32(),
     rotation: b.u16(),
     flip: b.tuple(b.bool(), b.bool()),
     palindex: b.u32(),
