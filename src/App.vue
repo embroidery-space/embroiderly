@@ -1,5 +1,5 @@
 <template>
-  <UApp>
+  <UApp :locale="locale">
     <RouterView />
   </UApp>
   <DynamicDialog />
@@ -9,10 +9,11 @@
 
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-  import { onMounted } from "vue";
+  import { computed, onMounted } from "vue";
   import { useSessionStorage } from "@vueuse/core";
   import { ConfirmDialog, DynamicDialog, Toast, useToast, useConfirm } from "primevue";
   import { useFluent } from "fluent-vue";
+  import { NUXT_LOCALES } from "./fluent.ts";
   import { PatternApi } from "./api/";
   import { useAppStateStore, usePatternsStore, useSettingsStore } from "./stores/";
 
@@ -20,6 +21,12 @@
   const toast = useToast();
 
   const fluent = useFluent();
+  const locale = computed(() => {
+    const bundles = [...fluent.bundles.value];
+    const locale = bundles[0]!.locales[0]!;
+    // @ts-expect-error The `locale` code is always a valid key in `NUXT_LOCALES`.
+    return NUXT_LOCALES[locale];
+  });
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();

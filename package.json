@@ -33,7 +33,6 @@
     "pinia": "^3.0.2",
     "pinia-plugin-persistedstate": "^4.3.0",
     "pixi.js": "^8.10.1",
-    "primelocale": "^2.1.2",
     "primevue": "^4.3.5",
     "uuid": "^11.1.0",
     "vue": "^3.5.16",

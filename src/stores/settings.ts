@@ -4,9 +4,9 @@ import { check } from "@tauri-apps/plugin-updater";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
 import { useFluent } from "fluent-vue";
-import { useConfirm, usePrimeVue } from "primevue";
+import { useConfirm } from "primevue";
 import type { ConfirmationOptions } from "primevue/confirmationoptions";
-import { LOCALES, PRIMEVUE_LOCALES } from "#/fluent.ts";
+import { LOCALES } from "#/fluent.ts";
 import type { WheelAction } from "#/pixi/";
 
 export type Theme = "light" | "dark" | "system";
@@ -49,7 +49,6 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const overlay = useOverlay();
   const appSettingModal = overlay.create(AppSettings);
 
-  const primevue = usePrimeVue();
   const confirm = useConfirm();
   const fluent = useFluent();
 
@@ -66,7 +65,6 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
       await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
       document.documentElement.style.fontSize = newUi.scale;
       fluent.bundles.value = [LOCALES[newUi.language]];
-      primevue.config.locale = PRIMEVUE_LOCALES[newUi.language];
     },
     { immediate: true },
   );
