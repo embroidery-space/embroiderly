@@ -44,15 +44,18 @@ export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
 export const usePatternsStore = defineStore(
   "embroiderly-patterns",
   () => {
+    const PatternInfoProperties = defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue"));
+    const FabricProperties = defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue"));
+    const GridProperties = defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue"));
+
+    const overlay = useOverlay();
+    const patternInfoModal = overlay.create(PatternInfoProperties);
+
     const appWindow = getCurrentWebviewWindow();
 
     const fluent = useFluent();
     const dialog = useDialog();
     const confirm = useConfirm();
-
-    const PatternInfoProperties = defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue"));
-    const FabricProperties = defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue"));
-    const GridProperties = defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue"));
 
     const appStateStore = useAppStateStore();
 
@@ -209,17 +212,10 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    function updatePatternInfo() {
+    async function updatePatternInfo() {
       if (!pattern.value) return;
-      dialog.open(PatternInfoProperties, {
-        props: { header: fluent.$t("title-pattern-info"), modal: true },
-        data: { patternInfo: pattern.value.info },
-        onClose: async (options) => {
-          if (!options?.data) return;
-          const { patternInfo } = options.data;
-          await PatternApi.updatePatternInfo(pattern.value!.id, patternInfo);
-        },
-      });
+      const patternInfo = await patternInfoModal.open({ patternInfo: pattern.value.info }).result;
+      if (patternInfo) await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
     }
     appWindow.listen<string>("pattern-info:update", ({ payload }) => {
       if (!pattern.value) return;

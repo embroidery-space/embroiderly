@@ -1,33 +1,35 @@
 <template>
-  <Fluid class="w-xl flex flex-col gap-y-2">
-    <FormElement id="title" float :label="$t('label-pattern-title')">
-      <InputText v-model="patternInfo.title" />
-    </FormElement>
-    <FormElement id="author" float :label="$t('label-pattern-author')">
-      <InputText v-model="patternInfo.author" />
-    </FormElement>
-    <FormElement id="copyright" float :label="$t('label-pattern-copyright')">
-      <InputText v-model="patternInfo.copyright" />
-    </FormElement>
-    <FormElement id="description" float :label="$t('label-pattern-description')">
-      <Textarea v-model="patternInfo.description" auto-resize />
-    </FormElement>
-  </Fluid>
-
-  <DialogFooter :save="() => dialogRef.close({ patternInfo })" class="mt-5" />
+  <UModal :title="$t('title-pattern-info')">
+    <template #body>
+      <div class="flex flex-col gap-y-2">
+        <UFormField :label="$t('label-pattern-title')" class="w-full">
+          <UInput v-model="patternInfo.title" class="w-full" />
+        </UFormField>
+        <UFormField :label="$t('label-pattern-author')" class="w-full">
+          <UInput v-model="patternInfo.author" class="w-full" />
+        </UFormField>
+        <UFormField :label="$t('label-pattern-copyright')" class="w-full">
+          <UInput v-model="patternInfo.copyright" class="w-full" />
+        </UFormField>
+        <UFormField :label="$t('label-pattern-description')" class="w-full">
+          <UTextarea v-model="patternInfo.description" autoresize class="w-full" />
+        </UFormField>
+      </div>
+    </template>
+    <template #footer>
+      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('label-save')" @click="emit('close', patternInfo)" />
+    </template>
+  </UModal>
 </template>
 
 <script setup lang="ts">
-  import { inject, reactive, type Ref } from "vue";
-  import { Fluid, InputText, Textarea } from "primevue";
-  import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
-  import { PatternInfo } from "#/schemas";
+  import { reactive } from "vue";
+  import { PatternInfo } from "#/schemas/";
 
-  import FormElement from "../form/FormElement.vue";
-  import DialogFooter from "./DialogFooter.vue";
+  const props = defineProps<{ patternInfo: PatternInfo }>();
+  const emit = defineEmits<{ close: [PatternInfo?] }>();
 
-  const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef")!;
-
-  // Copy the data from the dialog reference to a reactive object.
-  const patternInfo = reactive<PatternInfo>(new PatternInfo(Object.assign({}, dialogRef.value.data!.patternInfo)));
+  // Copy the data from the props to a reactive object.
+  const patternInfo = reactive<PatternInfo>(new PatternInfo(props.patternInfo));
 </script>

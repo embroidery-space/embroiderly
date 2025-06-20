@@ -4,7 +4,7 @@ import RekaResolver from "reka-ui/resolver";
 
 const STANDARD_VARIANTS: any = {
   size: "xl",
-  color: "neutral",
+  color: "primary",
 };
 const FORM_FIELD_DEFAULT_VARIANTS: any = {
   ...STANDARD_VARIANTS,
@@ -43,10 +43,13 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
     modal: {
       slots: {
         overlay: "bg-black/50",
+        footer: "justify-end",
       },
     },
     checkbox: { defaultVariants: CHECKBOX_DEFAULT_VARIANTS },
+    input: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
     inputNumber: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
     select: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
+    textarea: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
   },
 };
