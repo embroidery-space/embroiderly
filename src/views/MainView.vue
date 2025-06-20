@@ -2,50 +2,34 @@
   <div class="h-full flex flex-col">
     <AppHeader />
     <div class="flex grow overflow-y-auto">
-      <Splitter class="size-full border-0 rounded-none" pt:gutter:class="z-auto">
-        <SplitterPanel :size="15" class="overflow-x-visible overflow-y-clip">
+      <USplitterGroup direction="horizontal">
+        <USplitterPanel>
           <PalettePanel />
-        </SplitterPanel>
-
-        <SplitterPanel :size="85">
-          <BlockUI
-            :blocked="patternsStore.loading || patternsStore.blocked || isDragging"
-            :auto-z-index="false"
-            pt:mask:class="z-0"
-            class="size-full"
-          >
-            <ProgressSpinner
-              v-if="patternsStore.loading"
-              class="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
-            />
+        </USplitterPanel>
+        <USplitterResizeHandle />
+        <USplitterPanel class="relative">
+          <BlockUI :blocked="patternsStore.loading || patternsStore.blocked || isDragging" class="size-full">
+            <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
             <div
               v-if="isDragging"
-              class="bg-content absolute left-1/2 top-1/2 z-10 flex items-center justify-center rounded-full p-6 -translate-x-1/2 -translate-y-1/2"
+              class="bg-default absolute left-1/2 top-1/2 z-10 flex items-center justify-center rounded-full p-6 -translate-x-1/2 -translate-y-1/2"
             >
-              <i class="i-prime:upload size-16"></i>
+              <UIcon name="i-prime:upload" class="size-16" />
             </div>
             <Suspense v-if="patternsStore.pattern"><CanvasPanel /></Suspense>
             <WelcomePanel v-else class="size-full" />
           </BlockUI>
-        </SplitterPanel>
-      </Splitter>
-
-      <CanvasToolbar class="border-content h-full border-l" />
+        </USplitterPanel>
+      </USplitterGroup>
+      <CanvasToolbar class="h-full border-l border-default" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-  import { defineAsyncComponent, ref } from "vue";
-  import { Splitter, SplitterPanel, BlockUI, ProgressSpinner } from "primevue";
+  import { ref } from "vue";
   import { usePatternsStore } from "#/stores/";
-
-  const AppHeader = defineAsyncComponent(() => import("#/components/AppHeader.vue"));
-  const WelcomePanel = defineAsyncComponent(() => import("#/components/WelcomePanel.vue"));
-  const PalettePanel = defineAsyncComponent(() => import("#/components/PalettePanel.vue"));
-  const CanvasPanel = defineAsyncComponent(() => import("#/components/CanvasPanel.vue"));
-  const CanvasToolbar = defineAsyncComponent(() => import("#/components/toolbar/CanvasToolbar.vue"));
 
   const patternsStore = usePatternsStore();
 

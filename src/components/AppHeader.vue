@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex border-b border-default">
     <div data-tauri-drag-region class="grow flex items-center gap-x-2 px-2">
       <UDropdownMenu :items="fileOptions" :modal="false">
         <UButton variant="ghost" color="neutral" size="sm" :label="$t('label-file')" />
@@ -38,9 +38,6 @@
 
   import { SystemApi } from "#/api/";
   import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
-
-  import PatternSelector from "./toolbar/PatternSelector.vue";
-  import WindowControls from "./toolbar/WindowControls.vue";
 
   const confirm = useConfirm();
 

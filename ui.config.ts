@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ui from "@nuxt/ui/vite";
+import RekaResolver from "reka-ui/resolver";
 
 const STANDARD_VARIANTS: any = {
   size: "xl",
@@ -16,6 +17,9 @@ const CHECKBOX_DEFAULT_VARIANTS: any = {
 };
 
 export const NuxtUIConfig: Parameters<typeof ui>[0] = {
+  components: {
+    resolvers: [RekaResolver({ prefix: "U" })],
+  },
   theme: { colors: ["primary"] },
   ui: {
     colors: {

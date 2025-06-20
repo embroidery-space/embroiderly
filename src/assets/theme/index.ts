@@ -20,7 +20,6 @@ import { button } from "./button";
 // Panel components.
 import { divider } from "./divider";
 import { fieldset } from "./fieldset";
-import { splitter } from "./splitter";
 
 // Overlay components.
 import { dialog } from "./dialog";
@@ -29,15 +28,10 @@ import { tooltip } from "./tooltip";
 // Menu components.
 import { contextmenu } from "./contextmenu";
 import { menu } from "./menu";
-import { menubar } from "./menubar";
 
 // Message components.
 import { message } from "./message";
 import { toast } from "./toast.ts";
-
-// Misc components.
-import { blockui } from "./blockui";
-import { progressspinner } from "./progressspinner";
 
 /**
  * A Nord Theme based on the [Nord Palette] and [Aura Theme] with customizations.
@@ -68,7 +62,6 @@ export const NordTheme = {
     // Panel components.
     divider,
     fieldset,
-    splitter,
 
     // Overlay components.
     dialog,
@@ -76,14 +69,9 @@ export const NordTheme = {
     // Menu components.
     contextmenu,
     menu,
-    menubar,
 
     // Message components.
     message,
     toast,
-
-    // Misc components.
-    blockui,
-    progressspinner,
   },
 };
