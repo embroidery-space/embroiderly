@@ -1,67 +1,48 @@
 <template>
-  <div class="flex items-center gap-2">
-    <FloatLabel variant="over">
-      <InputNumber
-        id="major-lines-interval"
-        v-model="grid.majorLinesInterval"
-        show-buttons
-        :allow-empty="false"
-        :min="1"
-      />
-      <label for="major-lines-interval">{{ $t("label-major-lines-interval") }}</label>
-    </FloatLabel>
-  </div>
+  <UModal :title="$t('title-grid-properties')">
+    <template #body>
+      <div class="grid grid-cols-2 gap-4">
+        <UFormField :label="$t('label-major-lines-interval')" :hint="$t('message-major-lines-interval-hint')">
+          <UInputNumber v-model="grid.majorLinesInterval" orientation="vertical" :min="1" />
+        </UFormField>
+      </div>
 
-  <Fieldset :legend="$t('label-minor-lines')" pt:content:class="flex items-center gap-4 pt-3">
-    <FloatLabel variant="over">
-      <InputNumber
-        id="minor-thickness"
-        v-model="grid.minorLines.thickness"
-        suffix=" pt"
-        :allow-empty="false"
-        :min="0.001"
-        :step="0.01"
-      />
-      <label for="minor-thickness">{{ $t("label-thickness") }}</label>
-    </FloatLabel>
+      <FormFieldset :legend="$t('label-minor-lines')">
+        <div class="grid grid-cols-2 gap-4">
+          <UFormField :label="$t('label-thickness')" :hint="$t('message-thickness-hint')">
+            <UInputNumber v-model="grid.minorLines.thickness" orientation="vertical" :min="0.001" :step="0.01" />
+          </UFormField>
+          <UFormField :label="$t('label-color')">
+            <ColorPicker v-model="grid.minorLines.color" />
+          </UFormField>
+        </div>
+      </FormFieldset>
 
-    <label class="flex items-center gap-2">
-      {{ $t("label-color") }}:
-      <ColorPicker v-model="grid.minorLines.color" format="hex" />
-    </label>
-  </Fieldset>
-
-  <Fieldset :legend="$t('label-major-lines')" pt:content:class="flex items-center gap-4 pt-3">
-    <FloatLabel variant="over">
-      <InputNumber
-        id="major-thickness"
-        v-model="grid.majorLines.thickness"
-        suffix=" pt"
-        :allow-empty="false"
-        :min="0.001"
-        :step="0.01"
-      />
-      <label for="major-thickness">{{ $t("label-thickness") }}</label>
-    </FloatLabel>
-
-    <label class="flex items-center gap-2">
-      {{ $t("label-color") }}:
-      <ColorPicker v-model="grid.majorLines.color" format="hex" />
-    </label>
-  </Fieldset>
-
-  <DialogFooter :save="() => dialogRef.close({ grid })" class="mt-5" />
+      <FormFieldset :legend="$t('label-major-lines')">
+        <div class="grid grid-cols-2 gap-4">
+          <UFormField :label="$t('label-thickness')" :hint="$t('message-thickness-hint')">
+            <UInputNumber v-model="grid.majorLines.thickness" orientation="vertical" :min="0.001" :step="0.01" />
+          </UFormField>
+          <UFormField :label="$t('label-color')">
+            <ColorPicker v-model="grid.majorLines.color" />
+          </UFormField>
+        </div>
+      </FormFieldset>
+    </template>
+    <template #footer>
+      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('label-save')" @click="emit('close', grid)" />
+    </template>
+  </UModal>
 </template>
 
 <script setup lang="ts">
-  import { inject, reactive, type Ref } from "vue";
-  import { ColorPicker, Fieldset, FloatLabel, InputNumber } from "primevue";
-  import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
-  import DialogFooter from "./DialogFooter.vue";
-  import { Grid } from "#/schemas/index.ts";
+  import { reactive } from "vue";
+  import { Grid } from "#/schemas/";
 
-  const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef")!;
+  const props = defineProps<{ grid: Grid }>();
+  const emit = defineEmits<{ close: [Grid?] }>();
 
-  // Copy the data from the dialog reference to a reactive object.
-  const grid = reactive<Grid>(new Grid(Object.assign({}, dialogRef.value.data!.grid)));
+  // Copy the data from the props to a reactive object.
+  const grid = reactive<Grid>(new Grid(props.grid));
 </script>

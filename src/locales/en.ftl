@@ -188,11 +188,14 @@ message-total-size = Size (WxH): { $width }x{ $height } stitches, { $widthInches
 title-grid-properties = Grid Properties
 
 label-major-lines-interval = Major Lines Interval
+message-major-lines-interval-hint = In stitches
+
 label-major-lines = Major Lines
 label-minor-lines = Minor Lines
 
 label-color = Color
 label-thickness = Thickness
+message-thickness-hint = In points
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved

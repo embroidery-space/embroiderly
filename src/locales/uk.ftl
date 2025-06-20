@@ -191,11 +191,15 @@ message-total-size = Розмір (ШxВ): { $width }x{ $height } стібків
 title-grid-properties = Параметри сітки
 
 label-major-lines-interval = Інтервал головних ліній
+message-major-lines-interval-hint = У стібках
+
 label-major-lines = Головні лінії
 label-minor-lines = Малі лінії
 
 label-color = Колір
 label-thickness = Товщина
+
+message-thickness-hint = У пунктах
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено

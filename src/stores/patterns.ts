@@ -50,6 +50,7 @@ export const usePatternsStore = defineStore(
 
     const overlay = useOverlay();
     const patternInfoModal = overlay.create(PatternInfoProperties);
+    const gridPropertiesModal = overlay.create(GridProperties);
 
     const appWindow = getCurrentWebviewWindow();
 
@@ -239,17 +240,10 @@ export const usePatternsStore = defineStore(
       pattern.value.fabric = Fabric.deserialize(payload);
     });
 
-    function updateGrid() {
+    async function updateGrid() {
       if (!pattern.value) return;
-      dialog.open(GridProperties, {
-        props: { header: fluent.$t("title-grid-properties"), modal: true },
-        data: { grid: pattern.value.grid },
-        onClose: async (options) => {
-          if (!options?.data) return;
-          const { grid } = options.data;
-          await GridApi.updateGrid(pattern.value!.id, grid);
-        },
-      });
+      const grid = await gridPropertiesModal.open({ grid: pattern.value.grid }).result;
+      if (grid) await GridApi.updateGrid(pattern.value!.id, grid);
     }
     appWindow.listen<string>("grid:update", ({ payload }) => {
       if (!pattern.value) return;
