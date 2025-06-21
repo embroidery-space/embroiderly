@@ -9,7 +9,7 @@
     :meta-key-selection="metaKeySelection"
     :empty-message="$t('message-palette-empty')"
     scroll-height="100%"
-    pt:root:class="flex flex-col overflow-y-auto"
+    pt:root:class="flex flex-col overflow-y-auto data-[p=disabled]:cursor-not-allowed"
     pt:list-container:class="grow"
     pt:list:class="grid gap-1 p-1 overflow-hidden outline-none"
     :pt:list:style="{

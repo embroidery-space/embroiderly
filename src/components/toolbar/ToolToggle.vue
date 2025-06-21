@@ -1,27 +1,27 @@
 <template>
-  <Button
-    v-tooltip="{
-      value: typeof props.option.label === 'function' ? props.option.label() : props.option.label,
-      showDelay: 200,
-      disabled: props.disabled,
-    }"
-    :text="!selected"
-    :disabled="props.disabled"
-    severity="secondary"
-    :icon="props.option.icon"
-    class="size-[var(--p-button-icon-only-width)] border-none p-1.5"
-    :style="{ color: dt('text.muted.color') }"
-    @click="onChange"
-  />
+  <UTooltip arrow :text="option.label" :delay-duration="200" :disabled="props.disabled" :content="{ side: 'left' }">
+    <UButton
+      color="neutral"
+      :variant="'ghost'"
+      :disabled="disabled"
+      class="p-1.5 text-dimmed"
+      :class="{ 'bg-elevated hover:bg-accented': selected }"
+      @click="onChange"
+    >
+      <UIcon v-if="typeof option.icon === 'string'" :name="option.icon" />
+      <div v-else class="size-6">
+        <component :is="option.icon"></component></div
+    ></UButton>
+  </UTooltip>
 </template>
 
 <script setup lang="ts">
   import { computed } from "vue";
-  import { Button } from "primevue";
-  import type { MenuItem } from "primevue/menuitem";
-  import { dt } from "@primeuix/themes";
 
-  type ToolOption = Omit<MenuItem, "command" | "value">;
+  interface ToolOption {
+    icon: unknown;
+    label: string;
+  }
 
   const props = defineProps<{ modelValue: unknown; option: ToolOption; disabled?: boolean }>();
   const emit = defineEmits(["update:modelValue"]);

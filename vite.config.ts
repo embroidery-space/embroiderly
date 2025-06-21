@@ -9,7 +9,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { NuxtUIConfig } from "./ui.config";
 
 export default defineConfig({
-  plugins: [vueDevTools(), vue(), ui(NuxtUIConfig), tailwindcss()],
+  plugins: [vue(), ui(NuxtUIConfig), tailwindcss(), vueDevTools()],
   clearScreen: false,
   resolve: { alias: { "#": fileURLToPath(new URL("./src", import.meta.url)) } },
   envPrefix: ["VITE_", "TAURI_ENV_*"],

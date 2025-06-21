@@ -63,6 +63,7 @@
             <UTooltip
               :text="paletteIsBeingEdited ? $t('label-save-changes') : $t('label-palette-edit')"
               :delay-duration="200"
+              :disabled="paletteIsDisabled"
             >
               <UButton
                 variant="ghost"
@@ -102,12 +103,23 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch } from "vue";
+  import { computed, markRaw, ref, watch } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { useFluent } from "fluent-vue";
   import { dequal } from "dequal";
   import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
   import { FullStitchKind, LineStitchKind, NodeStitchKind, PaletteSettings, PartStitchKind } from "#/schemas/";
+
+  import {
+    IconFullStitch,
+    IconPetiteStitch,
+    IconHalfStitch,
+    IconQuarterStitch,
+    IconStraightStitch,
+    IconBackStitch,
+    IconFrenchKnot,
+    IconBead,
+  } from "./icons/stitches/";
 
   const appStateStore = useAppStateStore();
   const settingsStore = useSettingsStore();
@@ -116,20 +128,20 @@
   const fluent = useFluent();
 
   const fullstitches = computed(() => [
-    { icon: "i-stitches:full", label: () => fluent.$t("label-stitch-full"), value: FullStitchKind.Full },
-    { icon: "i-stitches:petite", label: () => fluent.$t("label-stitch-petite"), value: FullStitchKind.Petite },
+    { icon: markRaw(IconFullStitch), label: fluent.$t("label-stitch-full"), value: FullStitchKind.Full },
+    { icon: markRaw(IconPetiteStitch), label: fluent.$t("label-stitch-petite"), value: FullStitchKind.Petite },
   ]);
   const partstitches = computed(() => [
-    { icon: "i-stitches:half", label: () => fluent.$t("label-stitch-half"), value: PartStitchKind.Half },
-    { icon: "i-stitches:quarter", label: () => fluent.$t("label-stitch-quarter"), value: PartStitchKind.Quarter },
+    { icon: markRaw(IconHalfStitch), label: fluent.$t("label-stitch-half"), value: PartStitchKind.Half },
+    { icon: markRaw(IconQuarterStitch), label: fluent.$t("label-stitch-quarter"), value: PartStitchKind.Quarter },
   ]);
   const linestitches = computed(() => [
-    { icon: "i-stitches:back", label: () => fluent.$t("label-stitch-back"), value: LineStitchKind.Back },
-    { icon: "i-stitches:straight", label: () => fluent.$t("label-stitch-straight"), value: LineStitchKind.Straight },
+    { icon: markRaw(IconBackStitch), label: fluent.$t("label-stitch-back"), value: LineStitchKind.Back },
+    { icon: markRaw(IconStraightStitch), label: fluent.$t("label-stitch-straight"), value: LineStitchKind.Straight },
   ]);
   const nodestitches = computed(() => [
-    { icon: "i-stitches:french-knot", label: () => fluent.$t("label-stitch-french-knot"), value: NodeStitchKind.FrenchKnot }, // prettier-ignore
-    { icon: "i-stitches:bead", label: () => fluent.$t("label-stitch-bead"), value: NodeStitchKind.Bead },
+    { icon: markRaw(IconFrenchKnot), label: fluent.$t("label-stitch-french-knot"), value: NodeStitchKind.FrenchKnot },
+    { icon: markRaw(IconBead), label: fluent.$t("label-stitch-bead"), value: NodeStitchKind.Bead },
   ]);
 
   const paletteIsDisabled = computed(() => !patternsStore.pattern);

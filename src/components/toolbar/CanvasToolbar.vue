@@ -9,23 +9,24 @@
     />
     <Divider class="m-0" />
     <ToolToggle
-      v-for="option in layersVisibilityOptions"
-      :key="option.label()"
-      v-model="option.modelValue"
-      :option="{ icon: option.icon, label: option.label }"
+      v-model="showSymbols"
+      :option="{
+        icon: markRaw(IconSymbol),
+        label: showSymbols ? fluent.$t('label-hide-symbols') : fluent.$t('label-show-symbols'),
+      }"
       :disabled="disabled"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from "vue";
+  import { computed, markRaw } from "vue";
   import { useFluent } from "fluent-vue";
   import { Divider } from "primevue";
-  import { DisplayMode } from "#/schemas/index.ts";
+  import { DisplayMode } from "#/schemas/";
   import { usePatternsStore } from "#/stores/patterns";
-  import ToolSelector from "./ToolSelector.vue";
-  import ToolToggle from "./ToolToggle.vue";
+
+  import { IconMix, IconSquare, IconSymbol, IconFullStitch } from "../icons/stitches/";
 
   const fluent = useFluent();
 
@@ -40,22 +41,14 @@
       await patternsStore.setDisplayMode(mode);
     },
   });
-  const displayModeOptions = ref([
-    { icon: "i-stitches:mix", label: () => fluent.$t("label-view-as-mix"), value: DisplayMode.Mixed },
-    { icon: "i-stitches:square", label: () => fluent.$t("label-view-as-solid"), value: DisplayMode.Solid },
-    { icon: "i-stitches:full", label: () => fluent.$t("label-view-as-stitches"), value: DisplayMode.Stitches },
+  const displayModeOptions = computed(() => [
+    { icon: markRaw(IconMix), label: fluent.$t("label-view-as-mix"), value: DisplayMode.Mixed },
+    { icon: markRaw(IconSquare), label: fluent.$t("label-view-as-solid"), value: DisplayMode.Solid },
+    { icon: markRaw(IconFullStitch), label: fluent.$t("label-view-as-stitches"), value: DisplayMode.Stitches },
   ]);
 
   const showSymbols = computed({
     get: () => patternsStore.pattern?.showSymbols ?? false,
     set: patternsStore.showSymbols,
   });
-
-  const layersVisibilityOptions = ref([
-    {
-      modelValue: showSymbols,
-      icon: "i-stitches:symbol",
-      label: () => (showSymbols.value ? fluent.$t("label-hide-symbols") : fluent.$t("label-show-symbols")),
-    },
-  ]);
 </script>
