@@ -3,7 +3,7 @@ import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { useFluent } from "fluent-vue";
-import { useConfirm, useDialog } from "primevue";
+import { useConfirm } from "primevue";
 import { defineStore } from "pinia";
 import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
@@ -44,18 +44,20 @@ export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
 export const usePatternsStore = defineStore(
   "embroiderly-patterns",
   () => {
-    const PatternInfoProperties = defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue"));
-    const FabricProperties = defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue"));
-    const GridProperties = defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue"));
-
     const overlay = useOverlay();
-    const patternInfoModal = overlay.create(PatternInfoProperties);
-    const gridPropertiesModal = overlay.create(GridProperties);
+    const patternInfoModal = overlay.create(
+      defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue")),
+    );
+    const fabricPropertiesModal = overlay.create(
+      defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue")),
+    );
+    const gridPropertiesModal = overlay.create(
+      defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue")),
+    );
 
     const appWindow = getCurrentWebviewWindow();
 
     const fluent = useFluent();
-    const dialog = useDialog();
     const confirm = useConfirm();
 
     const appStateStore = useAppStateStore();
@@ -120,21 +122,17 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    function createPattern() {
-      dialog.open(FabricProperties, {
-        props: { header: fluent.$t("title-fabric-properties"), modal: true },
-        onClose: async (options) => {
-          if (!options?.data) return;
-          const { fabric } = options.data;
-          try {
-            loading.value = true;
-            pattern.value = new PatternView(await PatternApi.createPattern(fabric));
-            appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
-          } finally {
-            loading.value = false;
-          }
-        },
-      });
+    async function createPattern() {
+      const fabric = await fabricPropertiesModal.open().result;
+      if (fabric) {
+        try {
+          loading.value = true;
+          pattern.value = new PatternView(await PatternApi.createPattern(fabric));
+          appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+        } finally {
+          loading.value = false;
+        }
+      }
     }
 
     async function savePattern(as = false) {
@@ -223,17 +221,10 @@ export const usePatternsStore = defineStore(
       pattern.value.info = PatternInfo.deserialize(payload);
     });
 
-    function updateFabric() {
+    async function updateFabric() {
       if (!pattern.value) return;
-      dialog.open(FabricProperties, {
-        props: { header: fluent.$t("title-fabric-properties"), modal: true },
-        data: { fabric: pattern.value.fabric },
-        onClose: async (options) => {
-          if (!options?.data) return;
-          const { fabric } = options.data;
-          await FabricApi.updateFabric(pattern.value!.id, fabric);
-        },
-      });
+      const fabric = await fabricPropertiesModal.open({ fabric: pattern.value.fabric }).result;
+      if (fabric) await FabricApi.updateFabric(pattern.value.id, fabric);
     }
     appWindow.listen<string>("fabric:update", ({ payload }) => {
       if (!pattern.value) return;

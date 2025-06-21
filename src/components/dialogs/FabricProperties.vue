@@ -1,134 +1,112 @@
 <template>
-  <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
-    <Fieldset :legend="$t('label-count-and-kind')" pt:content:class="flex flex-col gap-6 pt-3">
-      <FloatLabel variant="over">
-        <Select
-          id="count"
-          v-model="fabric.spi[0]"
-          editable
-          :options="fabricCounts"
-          @value-change="(value) => (fabric.spi[1] = value)"
-        />
-        <label for="count">{{ $t("label-count") }}</label>
-      </FloatLabel>
-
-      <FloatLabel variant="over">
-        <Select
-          id="kind"
-          v-model="fabric.kind"
-          editable
-          option-label="label"
-          option-value="value"
-          :options="fabricKinds"
-        />
-        <label for="kind">{{ $t("label-kind") }}</label>
-      </FloatLabel>
-    </Fieldset>
-
-    <Fieldset :legend="$t('label-size')">
-      <div class="flex gap-4 py-3">
-        <div class="flex flex-col gap-6">
-          <FloatLabel variant="over">
-            <InputNumber
-              id="size-width"
-              v-model="fabricSizeFinal.width"
-              :allow-empty="false"
-              :min="0.1"
-              :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
+  <UModal :title="$t('title-fabric-properties')" :ui="{ body: '!pt-0' }">
+    <template #body>
+      <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
+        <FormFieldset :legend="$t('label-count-and-kind')">
+          <UFormField :label="$t('label-count')" class="w-full">
+            <USelect
+              v-model="fabric.spi[0]"
+              :items="fabricCounts"
+              class="w-full"
+              @update:model-value="fabric.spi[1] = $event"
             />
-            <label for="size-width">{{ $t("label-width") }}</label>
-          </FloatLabel>
+          </UFormField>
+          <UFormField :label="$t('label-kind')" class="w-full">
+            <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" />
+          </UFormField>
+        </FormFieldset>
 
-          <FloatLabel variant="over">
-            <InputNumber
-              id="size-height"
-              v-model="fabricSizeFinal.height"
-              :allow-empty="false"
-              :min="0.1"
-              :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
-            />
-            <label for="size-height">{{ $t("label-height") }}</label>
-          </FloatLabel>
-        </div>
+        <FormFieldset :legend="$t('label-size')">
+          <div class="flex gap-4 pb-2">
+            <div>
+              <UFormField :label="$t('label-width')" class="w-full">
+                <UInputNumber
+                  v-model="fabricSizeFinal.width"
+                  orientation="vertical"
+                  :min="0.1"
+                  :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
+                />
+              </UFormField>
+              <UFormField :label="$t('label-height')" class="w-full">
+                <UInputNumber
+                  v-model="fabricSizeFinal.height"
+                  orientation="vertical"
+                  :min="0.1"
+                  :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
+                />
+              </UFormField>
+            </div>
+            <URadioGroup v-model="fabricSizeMeasurement" :items="fabricSizeOptions" class="mt-6" />
+          </div>
 
-        <div class="flex flex-col gap-2">
-          <label class="flex items-center gap-2">
-            <RadioButton v-model="fabricSizeMeasurement" value="stitches" />
-            {{ $t("label-unit-stitches") }}
-          </label>
+          <p>
+            {{
+              $t("message-total-size", {
+                width: fabricSizeFinal.width,
+                height: fabricSizeFinal.height,
+                widthInches: stitches2inches(fabricSizeFinal.width, fabric.spi[0]),
+                heightInches: stitches2inches(fabricSizeFinal.height, fabric.spi[1]),
+                widthMm: stitches2mm(fabricSizeFinal.width, fabric.spi[0]),
+                heightMm: stitches2mm(fabricSizeFinal.height, fabric.spi[1]),
+              })
+            }}
+          </p>
+        </FormFieldset>
 
-          <label class="flex items-center gap-2">
-            <RadioButton v-model="fabricSizeMeasurement" value="inches" />
-            {{ $t("label-unit-inches") }}
-          </label>
-
-          <label class="flex items-center gap-2">
-            <RadioButton v-model="fabricSizeMeasurement" value="mm" />
-            {{ $t("label-unit-mm") }}
-          </label>
-        </div>
+        <FormFieldset :legend="$t('label-color')" class="w-md row-start-1 row-end-3">
+          <PaletteList
+            :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
+            :options="fabricColors"
+            :option-value="({ name, color }) => ({ name, color })"
+            :display-settings="FABRIC_COLORS_DISPLAY_SETTINGS"
+            @update:model-value="
+              (value) => {
+                if (value) {
+                  fabric.name = value.name;
+                  fabric.color = new Color(value.color);
+                }
+              }
+            "
+          />
+          <p class="mt-2">{{ $t("message-selected-color", { color: fabric.name }) }}</p>
+        </FormFieldset>
       </div>
-
-      <p>
-        {{
-          $t("message-total-size", {
-            width: fabricSizeFinal.width,
-            height: fabricSizeFinal.height,
-            widthInches: stitches2inches(fabricSizeFinal.width, fabric.spi[0]),
-            heightInches: stitches2inches(fabricSizeFinal.height, fabric.spi[1]),
-            widthMm: stitches2mm(fabricSizeFinal.width, fabric.spi[0]),
-            heightMm: stitches2mm(fabricSizeFinal.height, fabric.spi[1]),
-          })
-        }}
-      </p>
-    </Fieldset>
-
-    <Fieldset :legend="$t('label-color')" class="row-start-1 row-end-3">
-      <PaletteList
-        :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
-        :options="fabricColors"
-        :option-value="({ name, color }) => ({ name, color })"
-        :display-settings="FABRIC_COLORS_DISPLAY_SETTINGS"
-        fluid-options
-        @update:model-value="
-          (value) => {
-            if (value) {
-              fabric.name = value.name;
-              fabric.color = new Color(value.color);
-            }
-          }
-        "
-      />
-      <p class="mt-2">{{ $t("message-selected-color", { color: fabric.name }) }}</p>
-    </Fieldset>
-  </div>
-
-  <DialogFooter :save="() => dialogRef.close({ fabric })" class="mt-5" />
+    </template>
+    <template #footer>
+      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <!-- @vue-expect-error For some reason, TypeScript can't resolve the type of the `Fabric.color` property. -->
+      <UButton :label="$t('label-save')" @click="emit('close', fabric)" />
+    </template>
+  </UModal>
 </template>
 
 <script setup lang="ts">
   import { resolveResource } from "@tauri-apps/api/path";
   import { readTextFile } from "@tauri-apps/plugin-fs";
-  import { inject, onMounted, reactive, ref, watch, type Ref } from "vue";
+  import { computed, onMounted, reactive, ref, watch } from "vue";
   import { useFluent } from "fluent-vue";
-  import { Fieldset, FloatLabel, InputNumber, RadioButton, Select } from "primevue";
-  import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
   import { Color } from "pixi.js";
-  import DialogFooter from "./DialogFooter.vue";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#/utils/measurement";
   import { Fabric, PaletteItem, PaletteSettings } from "#/schemas/index.ts";
-  import PaletteList from "../palette/PaletteList.vue";
 
-  const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef")!;
+  const props = defineProps<{ fabric?: Fabric }>();
+  const emit = defineEmits<{ close: [Fabric?] }>();
+
   const fluent = useFluent();
 
-  // Copy the data from the dialog reference to a reactive object.
-  const fabric = reactive<Fabric>(new Fabric(Object.assign({}, Fabric.default(), dialogRef.value.data?.fabric)));
+  // Copy the data from the props to a reactive object.
+  // @ts-expect-error `Fabric.color` will be resolved correctly.
+  const fabric = reactive<Fabric>(new Fabric(Object.assign({}, Fabric.default(), props.fabric)));
 
   const fabricCounts = ref([14, 16, 18, 20]);
 
   const fabricSizeMeasurement = ref<"stitches" | "inches" | "mm">("stitches");
   const fabricSizeFinal = reactive({ width: fabric.width, height: fabric.height });
+  const fabricSizeOptions = computed(() => [
+    { label: fluent.$t("label-unit-stitches"), value: "stitches" },
+    { label: fluent.$t("label-unit-inches"), value: "inches" },
+    { label: fluent.$t("label-unit-mm"), value: "mm" },
+  ]);
 
   watch(fabricSizeMeasurement, (newMeasurement, oldMeasurement) => {
     const { width, height } = fabricSizeFinal;
@@ -187,7 +165,7 @@
     }
   });
 
-  const fabricKinds = ref([
+  const fabricKinds = computed(() => [
     { label: fluent.$t("label-kind-aida"), value: "Aida" },
     { label: fluent.$t("label-kind-evenweave"), value: "Evenweave" },
     { label: fluent.$t("label-kind-linen"), value: "Linen" },

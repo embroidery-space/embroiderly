@@ -1,27 +1,26 @@
 <template>
-  <PaletteSection :title="$t('label-palette-colors')" @close="emit('close')">
+  <PaletteSection :title="$t('label-palette-colors')">
     <PaletteList
       :model-value="props.palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="selectedPalette"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
       multiple
-      class="w-full border-0 rounded-none"
-      :style="{ backgroundColor: dt('content.background') }"
+      meta-key-selection
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
       <template #header>
-        <Select
+        <USelect
           v-model="selectedPaletteCatalogItem"
-          :options="[...paletteCatalog.keys()]"
+          :items="paletteCatalogOptions"
           :loading="loadingPalette"
-          size="small"
+          size="md"
           class="w-full"
         />
       </template>
 
       <template #option="{ option, displaySettings }">
-        <PaletteItemComponent
+        <PaletteListItem
           :palette-item="option"
           :selected="props.palette.find((pi) => comparePaletteItems(pi, option)) !== undefined"
           :display-settings="displaySettings"
@@ -36,18 +35,13 @@
   import { readDir, readTextFile } from "@tauri-apps/plugin-fs";
   import { onMounted, ref } from "vue";
   import { computedAsync } from "@vueuse/core";
-  import { dt } from "@primeuix/themes";
-  import { Select } from "primevue";
-  import { PaletteItem, PaletteSettings } from "#/schemas/index.ts";
-  import PaletteList from "./PaletteList.vue";
-  import PaletteItemComponent from "./PaletteItem.vue";
-  import PaletteSection from "./PaletteSection.vue";
+  import { dequal } from "dequal";
+  import { PaletteItem, PaletteSettings } from "#/schemas/";
 
   const props = defineProps<{ palette: PaletteItem[] }>();
   const emit = defineEmits<{
-    (event: "close"): void;
-    (event: "addPaletteItem", palitem: PaletteItem): void;
-    (event: "removePaletteItem", palindex: number): void;
+    addPaletteItem: [palitem: PaletteItem];
+    removePaletteItem: [palindex: number];
   }>();
 
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
@@ -58,7 +52,8 @@
     showColorNames: false,
   });
 
-  const paletteCatalog = ref<Map<string, PaletteItem[] | undefined>>(new Map());
+  const paletteCatalog = new Map<string, PaletteItem[] | undefined>();
+  const paletteCatalogOptions = ref<string[]>([]);
   const selectedPaletteCatalogItem = ref("DMC");
 
   const paletteCatalogDirPath = ref<string>();
@@ -68,14 +63,14 @@
     async () => {
       loadingPalette.value = true;
       const brand = selectedPaletteCatalogItem.value;
-      let palette = paletteCatalog.value.get(brand);
+      let palette = paletteCatalog.get(brand);
       if (palette === undefined) {
         const path = [paletteCatalogDirPath.value, `${brand}.json`].join(sep());
         const content = await readTextFile(path);
         // @ts-expect-error Here, palitems have `brand`, `number`, `name`, and `color` properties which is enough to create an instance of the `PaletteItem`.
         // The rest of the properties are optional.
         palette = JSON.parse(content).map((pi) => new PaletteItem(pi));
-        paletteCatalog.value.set(brand, palette);
+        paletteCatalog.set(brand, palette);
       }
       loadingPalette.value = false;
       return palette as PaletteItem[];
@@ -85,13 +80,20 @@
   );
 
   function handlePaletteCatalogOptionDoubleClick(palitem: PaletteItem) {
-    const isAlreadyContained = props.palette.find((pi) => comparePaletteItems(pi, palitem));
+    const isAlreadyContained = props.palette.find((pi) => dequal(pi, palitem));
     if (isAlreadyContained) {
       const palindex = props.palette.indexOf(isAlreadyContained);
       emit("removePaletteItem", palindex);
     } else emit("addPaletteItem", palitem);
   }
 
+  /**
+   * We maintain a separate function to compare palette items because the `pi1` has more properties than the `pi2`.
+   * This function only compares the `brand` and `number` properties.
+   *
+   * @param pi1 - The palette item from the `props.palette`
+   * @param pi2 - The palette item from the catalog.
+   */
   function comparePaletteItems(pi1: PaletteItem, pi2: PaletteItem) {
     return pi1.brand === pi2.brand && pi1.number === pi2.number;
   }
@@ -102,8 +104,9 @@
       if (entry.isFile) {
         // The file name is the brand name.
         const brand = entry.name.split(".")[0]!;
-        paletteCatalog.value.set(brand, undefined);
+        paletteCatalog.set(brand, undefined);
       }
     }
+    paletteCatalogOptions.value = [...paletteCatalog.keys()];
   });
 </script>

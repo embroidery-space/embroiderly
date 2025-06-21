@@ -34,7 +34,7 @@
   import { computed } from "vue";
   import { useFluent } from "fluent-vue";
   import { useConfirm } from "primevue";
-  import type { NavigationMenuItem, DropdownMenuItem } from "@nuxt/ui";
+  import type { DropdownMenuItem } from "@nuxt/ui";
 
   import { SystemApi } from "#/api/";
   import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
@@ -47,12 +47,11 @@
 
   const fluent = useFluent();
 
-  const fileOptions = computed<NavigationMenuItem[][]>(() => [
+  const fileOptions = computed<DropdownMenuItem[][]>(() => [
     [
       { label: fluent.$t("label-open"), onSelect: () => patternsStore.openPattern() },
       { label: fluent.$t("label-create"), onSelect: () => patternsStore.createPattern },
     ],
-
     [
       {
         label: fluent.$t("label-save"),
@@ -75,7 +74,6 @@
         ],
       },
     ],
-
     [
       {
         label: fluent.$t("label-close"),
@@ -84,14 +82,14 @@
       },
     ],
   ]);
-  const patternOptions = computed<NavigationMenuItem[][]>(() => [
+  const patternOptions = computed<DropdownMenuItem[][]>(() => [
     [
       { label: fluent.$t("title-pattern-info"), onSelect: () => patternsStore.updatePatternInfo() },
       { label: fluent.$t("title-fabric-properties"), onSelect: () => patternsStore.updateFabric() },
       { label: fluent.$t("title-grid-properties"), onSelect: () => patternsStore.updateGrid() },
     ],
   ]);
-  const helpOptions = computed<NavigationMenuItem[][]>(() => [
+  const helpOptions = computed<DropdownMenuItem[][]>(() => [
     [
       { label: fluent.$t("label-learn-more"), onSelect: () => openUrl("https://embroiderly.niusia.me") },
       {

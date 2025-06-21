@@ -45,6 +45,13 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
         overlay: "bg-black/50",
         footer: "justify-end",
       },
+      variants: {
+        fullscreen: {
+          false: {
+            content: "max-w-[90%] min-w-md max-h-[90%] w-auto",
+          },
+        },
+      },
     },
     checkbox: { defaultVariants: CHECKBOX_DEFAULT_VARIANTS },
     input: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },

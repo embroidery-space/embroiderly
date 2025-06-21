@@ -1,5 +1,5 @@
 <template>
-  <UModal :title="$t('title-settings')" :ui="{ body: '!px-2' }">
+  <UModal :title="$t('title-settings')" :ui="{ content: 'max-w-lg', body: '!px-2' }">
     <template #body>
       <UTabs
         :items="tabs"

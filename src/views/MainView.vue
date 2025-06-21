@@ -3,10 +3,10 @@
     <AppHeader />
     <div class="flex grow overflow-y-auto">
       <USplitterGroup direction="horizontal">
-        <USplitterPanel>
-          <PalettePanel />
+        <USplitterPanel :default-size="15" :style="{ overflow: 'visible clip' }">
+          <PalettePanel ref="palette-panel" />
         </USplitterPanel>
-        <USplitterResizeHandle />
+        <USplitterResizeHandle class="border-2 border-default" />
         <USplitterPanel class="relative">
           <BlockUI :blocked="patternsStore.loading || patternsStore.blocked || isDragging" class="size-full">
             <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
