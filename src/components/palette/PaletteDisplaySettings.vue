@@ -1,8 +1,8 @@
 <template>
   <PaletteSection :title="$t('label-palette-display-options')">
     <div class="flex flex-col gap-y-2 p-2">
-      <UFormField :label="$t('label-display-options-columns-number')" class="w-full">
-        <UInputNumber
+      <NuxtFormField :label="$t('label-display-options-columns-number')" class="w-full">
+        <NuxtInputNumber
           :model-value="props.settings.columnsNumber"
           orientation="vertical"
           :min="1"
@@ -10,28 +10,28 @@
           class="w-full"
           @update:model-value="(value) => updateSettings('columnsNumber', value)"
         />
-      </UFormField>
+      </NuxtFormField>
 
-      <USwitch
+      <NuxtSwitch
         :model-value="props.settings.colorOnly"
         :label="$t('label-display-options-color-only')"
         @update:model-value="(value) => updateSettings('colorOnly', value)"
       />
 
       <div class="flex flex-col gap-y-1">
-        <UCheckbox
+        <NuxtCheckbox
           :model-value="props.settings.showColorBrands"
           :disabled="props.settings.colorOnly"
           :label="$t('label-display-options-show-brand')"
           @update:model-value="(value) => updateSettings('showColorBrands', value as boolean)"
         />
-        <UCheckbox
+        <NuxtCheckbox
           :model-value="props.settings.showColorNumbers"
           :disabled="props.settings.colorOnly"
           :label="$t('label-display-options-show-number')"
           @update:model-value="(value) => updateSettings('showColorNumbers', value as boolean)"
         />
-        <UCheckbox
+        <NuxtCheckbox
           :model-value="props.settings.showColorNames"
           :disabled="props.settings.colorOnly"
           :label="$t('label-display-options-show-name')"

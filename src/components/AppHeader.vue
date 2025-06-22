@@ -1,41 +1,41 @@
 <template>
   <div class="flex border-b border-default">
     <div data-tauri-drag-region class="grow flex items-center gap-x-2 px-2">
-      <UDropdownMenu :items="fileOptions" :modal="false">
-        <UButton
+      <NuxtDropdownMenu :items="fileOptions" :modal="false">
+        <NuxtButton
           variant="ghost"
           color="neutral"
           trailing-icon="i-prime:angle-down"
           :label="$t('label-file')"
           :ui="{ base: 'px-2 py-1 text-default font-normal' }"
         />
-      </UDropdownMenu>
-      <UDropdownMenu v-if="patternsStore.pattern !== undefined" :items="patternOptions" :modal="false">
-        <UButton
+      </NuxtDropdownMenu>
+      <NuxtDropdownMenu v-if="patternsStore.pattern !== undefined" :items="patternOptions" :modal="false">
+        <NuxtButton
           variant="ghost"
           color="neutral"
           trailing-icon="i-prime:angle-down"
           :label="$t('label-pattern')"
           :ui="{ base: 'px-2 py-1 text-default font-normal' }"
         />
-      </UDropdownMenu>
-      <UDropdownMenu :items="helpOptions" :modal="false">
-        <UButton
+      </NuxtDropdownMenu>
+      <NuxtDropdownMenu :items="helpOptions" :modal="false">
+        <NuxtButton
           variant="ghost"
           color="neutral"
           trailing-icon="i-prime:angle-down"
           :label="$t('label-help')"
           :ui="{ base: 'px-2 py-1 text-default font-normal' }"
         />
-      </UDropdownMenu>
+      </NuxtDropdownMenu>
     </div>
 
     <div class="flex items-center gap-2">
-      <UDropdownMenu :items="manageOptions" :modal="false">
-        <UTooltip :text="$t('label-manage')">
-          <UButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-prime:cog" />
-        </UTooltip>
-      </UDropdownMenu>
+      <NuxtDropdownMenu :items="manageOptions" :modal="false">
+        <NuxtTooltip :text="$t('label-manage')">
+          <NuxtButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-prime:cog" />
+        </NuxtTooltip>
+      </NuxtDropdownMenu>
       <Suspense> <WindowControls /> </Suspense>
     </div>
   </div>

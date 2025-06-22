@@ -1,6 +1,6 @@
 <template>
-  <UTooltip arrow :text="option.label" :delay-duration="200" :disabled="props.disabled" :content="{ side: 'left' }">
-    <UButton
+  <NuxtTooltip arrow :text="option.label" :delay-duration="200" :disabled="props.disabled" :content="{ side: 'left' }">
+    <NuxtButton
       color="neutral"
       :variant="'ghost'"
       :disabled="disabled"
@@ -8,11 +8,11 @@
       :class="{ 'bg-elevated hover:bg-accented': selected }"
       @click="onChange"
     >
-      <UIcon v-if="typeof option.icon === 'string'" :name="option.icon" />
+      <NuxtIcon v-if="typeof option.icon === 'string'" :name="option.icon" />
       <div v-else class="size-6">
         <component :is="option.icon"></component></div
-    ></UButton>
-  </UTooltip>
+    ></NuxtButton>
+  </NuxtTooltip>
 </template>
 
 <script setup lang="ts">

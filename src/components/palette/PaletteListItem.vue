@@ -1,5 +1,5 @@
 <template>
-  <UTooltip
+  <NuxtTooltip
     arrow
     :text="paletteItem.getTitle()"
     :delay-duration="200"
@@ -18,7 +18,7 @@
         {{ paletteItem.getTitle(displaySettings) }}
       </p>
     </div>
-  </UTooltip>
+  </NuxtTooltip>
 </template>
 
 <script setup lang="ts">

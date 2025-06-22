@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-content flex flex-col gap-1 p-1">
+  <div class="flex flex-col gap-1 p-1">
     <ToolSelector
       v-for="option in displayModeOptions"
       :key="option.value"
@@ -7,7 +7,7 @@
       :options="[option]"
       :disabled="disabled"
     />
-    <Divider class="m-0" />
+    <NuxtSeparator />
     <ToolToggle
       v-model="showSymbols"
       :option="{
@@ -22,7 +22,6 @@
 <script setup lang="ts">
   import { computed, markRaw } from "vue";
   import { useFluent } from "fluent-vue";
-  import { Divider } from "primevue";
   import { DisplayMode } from "#/schemas/";
   import { usePatternsStore } from "#/stores/patterns";
 

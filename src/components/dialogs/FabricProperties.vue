@@ -1,42 +1,42 @@
 <template>
-  <UModal :title="$t('title-fabric-properties')" :ui="{ body: '!pt-0' }">
+  <NuxtModal :title="$t('title-fabric-properties')" :ui="{ body: '!pt-0' }">
     <template #body>
       <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
         <FormFieldset :legend="$t('label-count-and-kind')">
-          <UFormField :label="$t('label-count')" class="w-full">
-            <USelect
+          <NuxtFormField :label="$t('label-count')" class="w-full">
+            <NuxtSelect
               v-model="fabric.spi[0]"
               :items="fabricCounts"
               class="w-full"
               @update:model-value="fabric.spi[1] = $event"
             />
-          </UFormField>
-          <UFormField :label="$t('label-kind')" class="w-full">
-            <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" />
-          </UFormField>
+          </NuxtFormField>
+          <NuxtFormField :label="$t('label-kind')" class="w-full">
+            <NuxtSelect v-model="fabric.kind" :items="fabricKinds" class="w-full" />
+          </NuxtFormField>
         </FormFieldset>
 
         <FormFieldset :legend="$t('label-size')">
           <div class="flex gap-4 pb-2">
             <div>
-              <UFormField :label="$t('label-width')" class="w-full">
-                <UInputNumber
+              <NuxtFormField :label="$t('label-width')" class="w-full">
+                <NuxtInputNumber
                   v-model="fabricSizeFinal.width"
                   orientation="vertical"
                   :min="0.1"
                   :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
                 />
-              </UFormField>
-              <UFormField :label="$t('label-height')" class="w-full">
-                <UInputNumber
+              </NuxtFormField>
+              <NuxtFormField :label="$t('label-height')" class="w-full">
+                <NuxtInputNumber
                   v-model="fabricSizeFinal.height"
                   orientation="vertical"
                   :min="0.1"
                   :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
                 />
-              </UFormField>
+              </NuxtFormField>
             </div>
-            <URadioGroup v-model="fabricSizeMeasurement" :items="fabricSizeOptions" class="mt-6" />
+            <NuxtRadioGroup v-model="fabricSizeMeasurement" :items="fabricSizeOptions" class="mt-6" />
           </div>
 
           <p>
@@ -73,11 +73,11 @@
       </div>
     </template>
     <template #footer>
-      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <NuxtButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
       <!-- @vue-expect-error For some reason, TypeScript can't resolve the type of the `Fabric.color` property. -->
-      <UButton :label="$t('label-save')" @click="emit('close', fabric)" />
+      <NuxtButton :label="$t('label-save')" @click="emit('close', fabric)" />
     </template>
-  </UModal>
+  </NuxtModal>
 </template>
 
 <script setup lang="ts">

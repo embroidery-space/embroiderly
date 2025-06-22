@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center justify-between">
     <!-- This div is needed to correctly justify containers. -->
     <div></div>
-    <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
+    <NuxtProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
 
     <div class="max-size-full min-w-1/2 flex flex-col gap-6 overflow-auto p-8">
       <span class="text-4xl">{{ $t("title-welcome") }}</span>
@@ -10,10 +10,15 @@
       <div>
         <i18n tag="p" path="message-get-started">
           <template #button-open="{ buttonOpenLabel }">
-            <UButton variant="link" :label="buttonOpenLabel" class="p-0" @click="() => patternsStore.openPattern()" />
+            <NuxtButton
+              variant="link"
+              :label="buttonOpenLabel"
+              class="p-0"
+              @click="() => patternsStore.openPattern()"
+            />
           </template>
           <template #button-create="{ buttonCreateLabel }">
-            <UButton
+            <NuxtButton
               variant="link"
               :label="buttonCreateLabel"
               class="p-0"
@@ -29,14 +34,14 @@
         <div class="flex flex-col gap-y-1">
           <span class="text-lg">{{ $t("label-start") }}</span>
           <div class="max-w-max flex flex-col gap-y-1">
-            <UButton
+            <NuxtButton
               variant="ghost"
               icon="i-prime:file-plus"
               :label="$t('label-start-create')"
               class="justify-start"
               @click="() => patternsStore.createPattern()"
             />
-            <UButton
+            <NuxtButton
               variant="ghost"
               icon="i-prime:file-arrow-up"
               :label="$t('label-start-open')"

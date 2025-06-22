@@ -1,14 +1,14 @@
 <template>
-  <UInput :model-value="hexColor" :maxlength="7" @update:model-value="emit('update:modelValue', $event!.slice(1))">
+  <NuxtInput :model-value="hexColor" :maxlength="7" @update:model-value="emit('update:modelValue', $event!.slice(1))">
     <template #leading>
-      <UPopover>
-        <UButton size="xl" :style="{ backgroundColor: hexColor }" />
+      <NuxtPopover>
+        <NuxtButton size="xl" :style="{ backgroundColor: hexColor }" />
         <template #content>
-          <UColorPicker :model-value="hexColor" @update:model-value="emit('update:modelValue', $event!.slice(1))" />
+          <NuxtColorPicker :model-value="hexColor" @update:model-value="emit('update:modelValue', $event!.slice(1))" />
         </template>
-      </UPopover>
+      </NuxtPopover>
     </template>
-  </UInput>
+  </NuxtInput>
 </template>
 
 <script lang="ts" setup>

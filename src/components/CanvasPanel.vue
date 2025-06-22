@@ -1,24 +1,29 @@
 <template>
   <div class="size-full">
     <div class="relative">
-      <UTabs
+      <NuxtTabs
         :model-value="appStateStore.currentPattern!.id"
         :items="appStateStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
+        :content="false"
         color="neutral"
+        activation-mode="manual"
         :ui="{
           root: 'block border-b border-default',
           list: 'bg-transparent p-0',
           indicator: [
             'h-full inset-0 rounded-b-none shadow-none z-0',
-            // If the current pattern is the first opened one, remove the top-left border radius.
-            appStateStore.openedPatterns[0]!.id === appStateStore.currentPattern!.id ? 'rounded-tl-none' : '',
+            isFirstTab ? 'rounded-tl-none' : '',
+            isLastTab ? 'rounded-tr-none' : '',
           ],
-          trigger: 'min-w-20 rounded-b-none grow-0 hover:data-[state=inactive]:bg-elevated hover:cursor-pointer',
+          trigger: [
+            'grow-0 min-w-20 hover:data-[state=inactive]:bg-accented hover:cursor-pointer',
+            'data-[state=inactive]:border-r border-default rounded-b-none nth-[2]:rounded-tl-none last:rounded-tr-none',
+          ],
         }"
         @update:model-value="switchPattern($event as string)"
       >
         <template #trailing="{ item }">
-          <UButton
+          <NuxtButton
             size="xs"
             variant="ghost"
             icon="i-prime:times"
@@ -30,8 +35,8 @@
             @click.stop="patternsStore.closePattern(item.value)"
           />
         </template>
-      </UTabs>
-      <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
+      </NuxtTabs>
+      <NuxtProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
     </div>
     <canvas
       ref="canvas"
@@ -42,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, onUnmounted, useTemplateRef, watch } from "vue";
+  import { computed, onMounted, onUnmounted, useTemplateRef, watch } from "vue";
   import { useEventListener, useDebounceFn } from "@vueuse/core";
   import { vElementSize } from "@vueuse/components";
   import { Assets, Point } from "pixi.js";
@@ -68,6 +73,16 @@
 
   const canvas = useTemplateRef("canvas");
   const patternCanvas = new PatternCanvas();
+
+  const isFirstTab = computed(() => {
+    return appStateStore.openedPatterns[0]!.id === appStateStore.currentPattern!.id;
+  });
+  const isLastTab = computed(() => {
+    return (
+      appStateStore.openedPatterns.length > 1 &&
+      appStateStore.openedPatterns[appStateStore.openedPatterns.length - 1]!.id === appStateStore.currentPattern!.id
+    );
+  });
 
   async function switchPattern(id: string) {
     if (appStateStore.currentPattern!.id !== id) {

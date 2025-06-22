@@ -1,7 +1,7 @@
 <template>
-  <UApp :locale="locale">
+  <NuxtApp :locale="locale">
     <RouterView />
-  </UApp>
+  </NuxtApp>
   <DynamicDialog />
   <ConfirmDialog />
   <Toast position="bottom-right" />

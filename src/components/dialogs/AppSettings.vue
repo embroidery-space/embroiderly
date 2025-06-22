@@ -1,7 +1,7 @@
 <template>
-  <UModal :title="$t('title-settings')" :ui="{ content: 'max-w-lg', body: '!px-2' }">
+  <NuxtModal :title="$t('title-settings')" :ui="{ content: 'max-w-lg', body: '!px-2' }">
     <template #body>
-      <UTabs
+      <NuxtTabs
         :items="tabs"
         orientation="vertical"
         color="neutral"
@@ -13,17 +13,17 @@
       >
         <template #ui>
           <div class="flex flex-col gap-y-2">
-            <UFormField :label="$t('label-theme')" class="w-full">
-              <USelect v-model="settingsStore.ui.theme" :items="themeOptions" :icon="themeIcon" class="w-full" />
-            </UFormField>
+            <NuxtFormField :label="$t('label-theme')" class="w-full">
+              <NuxtSelect v-model="settingsStore.ui.theme" :items="themeOptions" :icon="themeIcon" class="w-full" />
+            </NuxtFormField>
 
-            <UFormField :label="$t('label-scale')" class="w-full">
-              <USelect v-model="settingsStore.ui.scale" :items="scaleOptions" class="w-full" />
-            </UFormField>
+            <NuxtFormField :label="$t('label-scale')" class="w-full">
+              <NuxtSelect v-model="settingsStore.ui.scale" :items="scaleOptions" class="w-full" />
+            </NuxtFormField>
 
-            <UFormField :label="$t('label-language')" class="w-full">
-              <USelect v-model="settingsStore.ui.language" :items="languageOptions" class="w-full" />
-            </UFormField>
+            <NuxtFormField :label="$t('label-language')" class="w-full">
+              <NuxtSelect v-model="settingsStore.ui.language" :items="languageOptions" class="w-full" />
+            </NuxtFormField>
           </div>
         </template>
 
@@ -31,24 +31,24 @@
           <div class="flex flex-col gap-y-2">
             <p class="text-sm text-neutral-300">{{ $t("message-viewport-hint") }}</p>
 
-            <UCheckbox v-model="settingsStore.viewport.antialias" :label="$t('label-viewport-antialias')" />
+            <NuxtCheckbox v-model="settingsStore.viewport.antialias" :label="$t('label-viewport-antialias')" />
 
-            <UFormField :label="$t('label-viewport-wheel-action')" class="w-full">
-              <USelect v-model="settingsStore.viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
-            </UFormField>
+            <NuxtFormField :label="$t('label-viewport-wheel-action')" class="w-full">
+              <NuxtSelect v-model="settingsStore.viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
+            </NuxtFormField>
           </div>
         </template>
 
         <template #updater>
           <div class="flex flex-col gap-y-2">
-            <UButton
+            <NuxtButton
               :loading="settingsStore.loadingUpdate"
               :label="$t('label-check-for-updates')"
               class="w-full"
               @click="() => settingsStore.checkForUpdates()"
             />
 
-            <UCheckbox
+            <NuxtCheckbox
               v-model="settingsStore.updater.autoCheck"
               :label="$t('label-auto-check-for-updates')"
               :description="$t('message-auto-check-for-updates-hint')"
@@ -58,23 +58,23 @@
 
         <template #other>
           <div class="flex flex-col gap-y-2">
-            <UFormField
+            <NuxtFormField
               :label="$t('label-autosave-interval')"
               :description="$t('message-autosave-interval-description')"
               class="w-full"
             >
-              <UInputNumber v-model="settingsStore.other.autoSaveInterval" orientation="vertical" class="w-full" />
-            </UFormField>
+              <NuxtInputNumber v-model="settingsStore.other.autoSaveInterval" orientation="vertical" class="w-full" />
+            </NuxtFormField>
 
-            <UCheckbox
+            <NuxtCheckbox
               v-model="settingsStore.other.usePaletteItemColorForStitchTools"
               :label="$t('label-use-palitem-color-for-stitch-tools')"
             />
           </div>
         </template>
-      </UTabs>
+      </NuxtTabs>
     </template>
-  </UModal>
+  </NuxtModal>
 </template>
 
 <script setup lang="ts">

@@ -18,8 +18,9 @@ const CHECKBOX_DEFAULT_VARIANTS: any = {
 
 export const NuxtUIConfig: Parameters<typeof ui>[0] = {
   components: {
-    resolvers: [RekaResolver({ prefix: "U" })],
+    resolvers: [RekaResolver({ prefix: "Reka" })],
   },
+  prefix: "Nuxt",
   theme: { colors: ["primary"] },
   ui: {
     colors: {
