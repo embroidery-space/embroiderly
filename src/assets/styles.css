@@ -1,22 +1,14 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@theme static {
-  --color-primary-50: #e5f2f5;
-  --color-primary-100: #daecf1;
-  --color-primary-200: #c8e2e9;
-  --color-primary-300: #b2d7e1;
-  --color-primary-400: #a0cdd9;
-  --color-primary-500: #88c0d0;
-  --color-primary-600: #69b0c4;
-  --color-primary-700: #479cb3;
-  --color-primary-800: #3b8296;
-  --color-primary-900: #2a5c6a;
-  --color-primary-950: #1e434d;
-}
+@import "./palette.css";
 
 :root {
   --ui-primary: var(--ui-color-primary-500);
+  --ui-error: var(--ui-color-error-500);
+  --ui-success: var(--ui-color-success-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-info: var(--ui-color-info-500);
 
   --ui-color-neutral-50: #f9fafb;
   --ui-color-neutral-100: #f5f7f9;
@@ -51,6 +43,10 @@
 
 .dark {
   --ui-primary: var(--ui-color-primary-500);
+  --ui-error: var(--ui-color-error-500);
+  --ui-success: var(--ui-color-success-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-info: var(--ui-color-info-500);
 
   --ui-color-neutral-50: #e4e7ec;
   --ui-color-neutral-100: #d5d9e1;

@@ -4,8 +4,6 @@ import { check } from "@tauri-apps/plugin-updater";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
 import { useFluent } from "fluent-vue";
-import { useConfirm } from "primevue";
-import type { ConfirmationOptions } from "primevue/confirmationoptions";
 import { LOCALES } from "#/fluent.ts";
 import type { WheelAction } from "#/pixi/";
 
@@ -49,7 +47,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const overlay = useOverlay();
   const appSettingModal = overlay.create(AppSettings);
 
-  const confirm = useConfirm();
+  const toast = useToast();
   const fluent = useFluent();
 
   const loadingUpdate = ref(false);
@@ -88,41 +86,40 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   }
 
   async function checkForUpdates(options?: CheckForUpdatesOptions) {
-    let confirmOptions: ConfirmationOptions = {};
-    if (options?.auto) {
-      confirmOptions = {
-        position: "bottomright",
-        modal: false,
-      };
-    }
-
+    const type = options?.auto ? "background" : "foreground";
     try {
       loadingUpdate.value = true;
       const update = await check();
       if (update) {
         const { currentVersion, version } = update;
         const date = new Date(update.date!);
-        confirm.require({
-          ...confirmOptions,
-          header: fluent.$t("title-update-available"),
-          message: fluent.$t("message-update-available", { currentVersion, version, date }),
-          accept: async () => {
-            try {
-              loadingUpdate.value = true;
-              await update.downloadAndInstall();
-              await relaunch();
-            } finally {
-              loadingUpdate.value = false;
-            }
-          },
+        toast.add({
+          type,
+          color: "info",
+          title: fluent.$t("title-update-available"),
+          description: fluent.$t("message-update-available", { currentVersion, version, date }),
+          actions: [
+            {
+              label: fluent.$t("label-update-now"),
+              onClick: async () => {
+                try {
+                  loadingUpdate.value = true;
+                  await update.downloadAndInstall();
+                  await relaunch();
+                } finally {
+                  loadingUpdate.value = false;
+                }
+              },
+            },
+          ],
         });
       } else {
         if (!options?.auto) {
-          confirm.require({
-            header: fluent.$t("title-no-updates-available"),
-            message: fluent.$t("message-no-updates-available"),
-            acceptProps: { style: { display: "none" } },
-            rejectProps: { style: { display: "none" } },
+          toast.add({
+            type,
+            color: "info",
+            title: fluent.$t("title-no-updates-available"),
+            description: fluent.$t("message-no-updates-available"),
           });
         }
       }

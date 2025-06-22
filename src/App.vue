@@ -2,16 +2,14 @@
   <NuxtApp :locale="locale">
     <RouterView />
   </NuxtApp>
-  <DynamicDialog />
   <ConfirmDialog />
-  <Toast position="bottom-right" />
 </template>
 
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { computed, onMounted } from "vue";
   import { useSessionStorage } from "@vueuse/core";
-  import { ConfirmDialog, DynamicDialog, Toast, useToast, useConfirm } from "primevue";
+  import { ConfirmDialog, useConfirm } from "primevue";
   import { useFluent } from "fluent-vue";
   import { NUXT_LOCALES } from "./fluent.ts";
   import { PatternApi } from "./api/";
@@ -36,12 +34,12 @@
 
   appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
     if (patternId === patternsStore.pattern?.id) {
-      toast.add({ severity: "success", detail: fluent.$t("message-pattern-saved"), life: 3000 });
+      toast.add({ type: "background", color: "success", title: fluent.$t("message-pattern-saved"), duration: 3000 });
     }
   });
   appWindow.listen<string>("app:pattern-exported", ({ payload: patternId }) => {
     if (patternId === patternsStore.pattern?.id) {
-      toast.add({ severity: "success", detail: fluent.$t("message-pattern-exported"), life: 3000 });
+      toast.add({ type: "background", color: "success", title: fluent.$t("message-pattern-exported"), duration: 3000 });
     }
   });
 
@@ -99,7 +97,7 @@
     const err = event.reason;
     if (err instanceof Error) {
       error(`Error: ${err.message}`);
-      toast.add({ severity: "error", summary: fluent.$t("title-error"), detail: err.message });
+      toast.add({ type: "background", color: "error", title: fluent.$t("title-error") });
     } else error(`Error: ${err}`);
   };
 </script>

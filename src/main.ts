@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import ui from "@nuxt/ui/vue-plugin";
 
 import PrimeVue from "primevue/config";
-import { Tooltip, ConfirmationService, DialogService, ToastService } from "primevue";
+import { ConfirmationService } from "primevue";
 
 import "./assets/styles.css";
 import { NordTheme } from "./assets/theme/";
@@ -21,24 +21,8 @@ app.use(router);
 app.use(pinia);
 app.use(fluent);
 app.use(ui);
-app.use(PrimeVue, {
-  theme: { preset: NordTheme },
-  pt: {
-    dialog: { root: { style: { maxWidth: "90%" } } },
-    confirmdialog: {
-      message: {
-        style: {
-          // This is needed to allow line breaks (`\n`) in the confirmation dialog message.
-          whiteSpace: "pre-line",
-        },
-      },
-    },
-  },
-});
+app.use(PrimeVue, { theme: { preset: NordTheme } });
 app.use(ConfirmationService);
-app.use(DialogService);
-app.use(ToastService);
-app.directive("tooltip", Tooltip);
 app.directive("shortcuts", ShortcutsDirective);
 
 app.config.errorHandler = (err, _instance, info) => {

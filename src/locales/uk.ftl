@@ -37,6 +37,7 @@ label-stitch-bead = Бісер
 label-updater = Оновлювач
 
 label-check-for-updates = Перевірити наявність оновлень
+label-update-now = Оновити зараз
 
 label-auto-check-for-updates = Автоматично перевіряти наявність оновлень
 message-auto-check-for-updates-hint = Якщо увімкнено, { -app-name } автоматично перевірятиме наявність оновлень під час запуску. Потребує перезавантаження.

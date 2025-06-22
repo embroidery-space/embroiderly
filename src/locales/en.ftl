@@ -37,6 +37,7 @@ label-stitch-bead = Bead
 label-updater = Updater
 
 label-check-for-updates = Check for Updates
+label-update-now = Update Now
 
 label-auto-check-for-updates = Automatically check for updates
 message-auto-check-for-updates-hint = If enabled, { -app-name } will automatically check for updates on startup. Requires a restart.

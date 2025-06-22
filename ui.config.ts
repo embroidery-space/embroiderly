@@ -21,10 +21,13 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
     resolvers: [RekaResolver({ prefix: "Reka" })],
   },
   prefix: "Nuxt",
-  theme: { colors: ["primary"] },
   ui: {
     colors: {
       primary: "primary",
+      error: "error",
+      success: "success",
+      warning: "warning",
+      info: "info",
     },
     button: {
       slots: {
@@ -59,5 +62,13 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
     inputNumber: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
     select: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
     textarea: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
+    toast: {
+      slots: {
+        description: [
+          // This is needed to allow line breaks (`\n`) in toast messages.
+          "whitespace-pre-line",
+        ],
+      },
+    },
   },
 };
