@@ -61,6 +61,16 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
         },
       },
     },
+    dropdownMenu: {
+      slots: {
+        content: "rounded-sm",
+      },
+    },
+    contextMenu: {
+      slots: {
+        content: "rounded-sm",
+      },
+    },
     checkbox: { defaultVariants: CHECKBOX_DEFAULT_VARIANTS },
     input: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
     inputNumber: { defaultVariants: FORM_FIELD_DEFAULT_VARIANTS },
