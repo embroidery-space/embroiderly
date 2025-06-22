@@ -21,6 +21,9 @@ label-export = Export
 label-cancel = Cancel
 label-copy = Copy
 
+label-undo = Undo
+label-redo = Redo
+
 label-ok = OK
 label-yes = Yes
 label-no = No

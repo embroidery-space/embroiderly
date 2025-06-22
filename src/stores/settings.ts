@@ -127,10 +127,6 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     }
   }
 
-  defineShortcuts({
-    "ctrl_,": () => openSettings(),
-  });
-
   return {
     loadingUpdate,
     ui,

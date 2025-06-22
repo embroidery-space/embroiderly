@@ -4,7 +4,7 @@ import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { defineStore } from "pinia";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
-import { useConfirm, useShortcuts } from "#/composables";
+import { useConfirm } from "#/composables";
 import { PatternView } from "#/pixi";
 import {
   AddedPaletteItemData,
@@ -321,20 +321,19 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
-    const shortcut = useShortcuts();
-
-    shortcut.on("Ctrl+KeyO", openPattern);
-    shortcut.on("Ctrl+KeyN", createPattern);
-    shortcut.on("Ctrl+KeyS", savePattern);
-    shortcut.on("Ctrl+Shift+KeyS", () => savePattern(true));
-    shortcut.on("Ctrl+KeyW", closePattern);
-    shortcut.on("Ctrl+KeyZ", async () => {
+    async function undo() {
       if (!pattern.value) return;
       await HistoryApi.undo(pattern.value.id);
-    });
-    shortcut.on("Ctrl+KeyY", async () => {
+    }
+
+    async function redo() {
       if (!pattern.value) return;
       await HistoryApi.redo(pattern.value.id);
+    }
+
+    defineShortcuts({
+      ctrl_z: undo,
+      ctrl_y: redo,
     });
 
     return {
@@ -357,6 +356,8 @@ export const usePatternsStore = defineStore(
       removeStitch,
       setDisplayMode,
       showSymbols,
+      undo,
+      redo,
     };
   },
   { tauri: { save: false, sync: false } },

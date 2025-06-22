@@ -21,6 +21,9 @@ label-export = Експортувати
 label-cancel = Скасувати
 label-copy = Скопіювати
 
+label-undo = Скасувати
+label-redo = Повторити
+
 label-ok = Гаразд
 label-yes = Так
 label-no = Ні

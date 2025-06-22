@@ -2,31 +2,37 @@
   <div class="flex border-b border-default">
     <div data-tauri-drag-region class="grow flex items-center gap-x-2 px-2">
       <NuxtDropdownMenu :items="fileOptions" :modal="false">
-        <NuxtButton
-          variant="ghost"
-          color="neutral"
-          trailing-icon="i-prime:angle-down"
-          :label="$t('label-file')"
-          :ui="{ base: 'px-2 py-1 text-default font-normal' }"
-        />
+        <template #default="{ open }">
+          <NuxtButton
+            :variant="open ? 'soft' : 'ghost'"
+            color="neutral"
+            trailing-icon="i-prime:angle-down"
+            :label="$t('label-file')"
+            :ui="{ base: 'px-2 py-1 text-default font-normal' }"
+          />
+        </template>
       </NuxtDropdownMenu>
       <NuxtDropdownMenu v-if="patternsStore.pattern !== undefined" :items="patternOptions" :modal="false">
-        <NuxtButton
-          variant="ghost"
-          color="neutral"
-          trailing-icon="i-prime:angle-down"
-          :label="$t('label-pattern')"
-          :ui="{ base: 'px-2 py-1 text-default font-normal' }"
-        />
+        <template #default="{ open }">
+          <NuxtButton
+            :variant="open ? 'soft' : 'ghost'"
+            color="neutral"
+            trailing-icon="i-prime:angle-down"
+            :label="$t('label-pattern')"
+            :ui="{ base: 'px-2 py-1 text-default font-normal' }"
+          />
+        </template>
       </NuxtDropdownMenu>
       <NuxtDropdownMenu :items="helpOptions" :modal="false">
-        <NuxtButton
-          variant="ghost"
-          color="neutral"
-          trailing-icon="i-prime:angle-down"
-          :label="$t('label-help')"
-          :ui="{ base: 'px-2 py-1 text-default font-normal' }"
-        />
+        <template #default="{ open }">
+          <NuxtButton
+            :variant="open ? 'soft' : 'ghost'"
+            color="neutral"
+            trailing-icon="i-prime:angle-down"
+            :label="$t('label-help')"
+            :ui="{ base: 'px-2 py-1 text-default font-normal' }"
+          />
+        </template>
       </NuxtDropdownMenu>
     </div>
 
@@ -57,17 +63,19 @@
 
   const fileOptions = computed<DropdownMenuItem[][]>(() => [
     [
-      { label: fluent.$t("label-open"), onSelect: () => patternsStore.openPattern() },
-      { label: fluent.$t("label-create"), onSelect: () => patternsStore.createPattern },
+      { label: fluent.$t("label-open"), kbds: ["ctrl", "o"], onSelect: () => patternsStore.openPattern() },
+      { label: fluent.$t("label-create"), kbds: ["ctrl", "n"], onSelect: () => patternsStore.createPattern },
     ],
     [
       {
         label: fluent.$t("label-save"),
+        kbds: ["ctrl", "s"],
         disabled: !patternsStore.pattern,
         onSelect: () => patternsStore.savePattern(),
       },
       {
         label: fluent.$t("label-save-as"),
+        kbds: ["ctrl", "shift", "s"],
         disabled: !patternsStore.pattern,
         onSelect: () => patternsStore.savePattern(true),
       },
@@ -85,6 +93,7 @@
     [
       {
         label: fluent.$t("label-close"),
+        kbds: ["ctrl", "w"],
         disabled: !patternsStore.pattern,
         onSelect: () => patternsStore.closePattern(),
       },
@@ -109,7 +118,7 @@
   ]);
 
   const manageOptions = computed<DropdownMenuItem[][]>(() => [
-    [{ label: fluent.$t("title-settings"), onSelect: () => settingsStore.openSettings() }],
+    [{ label: fluent.$t("title-settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettings() }],
     [
       {
         label: fluent.$t("label-check-for-updates"),
@@ -117,6 +126,9 @@
       },
     ],
   ]);
+
+  defineShortcuts(extractShortcuts(fileOptions.value));
+  defineShortcuts(extractShortcuts(manageOptions.value));
 
   async function showSystemInfo() {
     const systemInfo = await SystemApi.getSystemInfo();
