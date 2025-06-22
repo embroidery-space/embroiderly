@@ -80,8 +80,6 @@
 <script setup lang="ts">
   import { computed } from "vue";
   import type { TabsItem } from "@nuxt/ui";
-  import { useFluent } from "fluent-vue";
-  import { useSettingsStore } from "#/stores/settings";
 
   const fluent = useFluent();
 

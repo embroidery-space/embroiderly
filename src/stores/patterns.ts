@@ -2,12 +2,9 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
-import { useFluent } from "fluent-vue";
-import { useConfirm } from "primevue";
 import { defineStore } from "pinia";
-import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
-import { useShortcuts } from "#/composables";
+import { useConfirm, useShortcuts } from "#/composables";
 import { PatternView } from "#/pixi";
 import {
   AddedPaletteItemData,
@@ -100,20 +97,20 @@ export const usePatternsStore = defineStore(
         if (options?.assignToCurrent ?? true) pattern.value = new PatternView(rawPattern);
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
-          confirm.require({
-            header: fluent.$t("title-error"),
+          confirm.open({
+            title: fluent.$t("title-error"),
             message: fluent.$t("message-error-unsupported-pattern-type"),
-            rejectProps: { style: { display: "none" } },
+            acceptLabel: fluent.$t("label-ok"),
+            rejectLabel: null,
           });
           return;
         }
         if (error instanceof PatternErrorBackupFileExists) {
-          confirm.require({
-            header: fluent.$t("title-error"),
+          const accepted = await confirm.open({
+            title: fluent.$t("title-error"),
             message: fluent.$t("message-error-backup-file-exists"),
-            accept: () => openPattern(path, { restoreFromBackup: true }),
-            reject: () => openPattern(path, { restoreFromBackup: false }),
-          });
+          }).result;
+          await openPattern(path, { restoreFromBackup: accepted });
           return;
         }
         throw error;
@@ -153,10 +150,11 @@ export const usePatternsStore = defineStore(
         await PatternApi.savePattern(pattern.value.id, path);
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
-          confirm.require({
-            header: fluent.$t("title-error"),
+          confirm.open({
+            title: fluent.$t("title-error"),
             message: fluent.$t("message-error-unsupported-pattern-type-for-saving"),
-            rejectProps: { style: { display: "none" } },
+            acceptLabel: fluent.$t("label-ok"),
+            rejectLabel: null,
           });
           return;
         }
@@ -191,19 +189,16 @@ export const usePatternsStore = defineStore(
         else await loadPattern(appStateStore.currentPattern.id);
       } catch (error) {
         if (error instanceof PatternErrorUnsavedChanges) {
-          confirm.require({
-            header: fluent.$t("title-unsaved-changes"),
+          const accepted = await confirm.open({
+            title: fluent.$t("title-unsaved-changes"),
             message: fluent.$t("message-unsaved-changes"),
-            accept: async () => {
-              const patternId = pattern.value!.id;
-              const filePath = await PatternApi.getPatternFilePath(patternId);
-              await PatternApi.savePattern(patternId, filePath);
-              await closePattern(patternId);
-            },
-            reject: async () => {
-              await closePattern(patternId, { force: true });
-            },
-          });
+          }).result;
+          if (accepted) {
+            const patternId = pattern.value!.id;
+            const filePath = await PatternApi.getPatternFilePath(patternId);
+            await PatternApi.savePattern(patternId, filePath);
+            await closePattern(patternId);
+          } else await closePattern(patternId, { force: true });
           return;
         }
         throw error;

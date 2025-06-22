@@ -81,9 +81,6 @@
 <script setup lang="ts">
   import { openUrl } from "@tauri-apps/plugin-opener";
   import { computed } from "vue";
-  import { useFluent } from "fluent-vue";
-  import { useSettingsStore } from "#/stores/settings";
-  import { usePatternsStore } from "#/stores/patterns";
 
   const settingsStore = useSettingsStore();
   const patternsStore = usePatternsStore();

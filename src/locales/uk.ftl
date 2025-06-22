@@ -21,6 +21,10 @@ label-export = Експортувати
 label-cancel = Скасувати
 label-copy = Скопіювати
 
+label-ok = Гаразд
+label-yes = Так
+label-no = Ні
+
 ## Names of the stitches and other instruments.
 
 label-stitch-full = Хрест

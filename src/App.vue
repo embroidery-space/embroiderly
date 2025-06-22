@@ -2,18 +2,14 @@
   <NuxtApp :locale="locale">
     <RouterView />
   </NuxtApp>
-  <ConfirmDialog />
 </template>
 
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { computed, onMounted } from "vue";
   import { useSessionStorage } from "@vueuse/core";
-  import { ConfirmDialog, useConfirm } from "primevue";
-  import { useFluent } from "fluent-vue";
   import { NUXT_LOCALES } from "./fluent.ts";
   import { PatternApi } from "./api/";
-  import { useAppStateStore, usePatternsStore, useSettingsStore } from "./stores/";
 
   const confirm = useConfirm();
   const toast = useToast();
@@ -51,19 +47,15 @@
         .filter(({ id }) => unsavedPatterns.includes(id))
         .map(({ title }) => `- ${title}`)
         .join("\n");
-      confirm.require({
-        header: fluent.$t("title-unsaved-changes"),
+
+      const accepted = await confirm.open({
+        title: fluent.$t("title-unsaved-changes"),
         message: fluent.$t("message-unsaved-patterns", { patterns }),
-        accept: async () => {
-          await PatternApi.saveAllPatterns();
-          await PatternApi.closeAllPatterns();
-          await appWindow.destroy();
-        },
-        reject: async () => {
-          await PatternApi.closeAllPatterns();
-          await appWindow.destroy();
-        },
-      });
+      }).result;
+
+      if (accepted) await PatternApi.saveAllPatterns();
+      await PatternApi.closeAllPatterns();
+      await appWindow.destroy();
     }
   });
 

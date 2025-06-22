@@ -84,7 +84,6 @@
   import { resolveResource } from "@tauri-apps/api/path";
   import { readTextFile } from "@tauri-apps/plugin-fs";
   import { computed, onMounted, reactive, ref, watch } from "vue";
-  import { useFluent } from "fluent-vue";
   import { Color } from "pixi.js";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#/utils/measurement";
   import { Fabric, PaletteItem, PaletteSettings } from "#/schemas/index.ts";

@@ -28,7 +28,6 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { ref } from "vue";
-  import { usePatternsStore } from "#/stores/";
 
   const patternsStore = usePatternsStore();
 

@@ -3,7 +3,6 @@ import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
-import { useFluent } from "fluent-vue";
 import { LOCALES } from "#/fluent.ts";
 import type { WheelAction } from "#/pixi/";
 

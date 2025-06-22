@@ -21,6 +21,10 @@ label-export = Export
 label-cancel = Cancel
 label-copy = Copy
 
+label-ok = OK
+label-yes = Yes
+label-no = No
+
 ## Names of the stitches and other instruments.
 
 label-stitch-full = Full Stitch

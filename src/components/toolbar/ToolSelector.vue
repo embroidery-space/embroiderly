@@ -66,8 +66,6 @@
 <script setup lang="ts">
   import { ref, computed, useTemplateRef, type MaybeRefOrGetter } from "vue";
   import { unrefElement } from "@vueuse/core";
-  import { useAppStateStore } from "#/stores/state";
-  import { usePatternsStore } from "#/stores/patterns";
 
   interface ToolOption {
     icon: unknown;

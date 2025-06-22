@@ -105,9 +105,7 @@
 <script setup lang="ts">
   import { computed, markRaw, ref, watch } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
-  import { useFluent } from "fluent-vue";
   import { dequal } from "dequal";
-  import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
   import { FullStitchKind, LineStitchKind, NodeStitchKind, PaletteSettings, PartStitchKind } from "#/schemas/";
 
   import {

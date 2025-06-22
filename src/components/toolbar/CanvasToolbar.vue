@@ -21,9 +21,7 @@
 
 <script setup lang="ts">
   import { computed, markRaw } from "vue";
-  import { useFluent } from "fluent-vue";
   import { DisplayMode } from "#/schemas/";
-  import { usePatternsStore } from "#/stores/patterns";
 
   import { IconMix, IconSquare, IconSymbol, IconFullStitch } from "../icons/stitches/";
 

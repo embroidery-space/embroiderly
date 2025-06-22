@@ -53,7 +53,6 @@
   import { Assets, Point } from "pixi.js";
   import { PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX, StitchGraphics } from "#/pixi";
   import type { CanvasSize, EventDetail } from "#/pixi";
-  import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
   import {
     FullStitch,
     LineStitch,

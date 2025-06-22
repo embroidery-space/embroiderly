@@ -45,12 +45,8 @@
   import { writeText } from "@tauri-apps/plugin-clipboard-manager";
   import { openUrl } from "@tauri-apps/plugin-opener";
   import { computed } from "vue";
-  import { useFluent } from "fluent-vue";
-  import { useConfirm } from "primevue";
   import type { DropdownMenuItem } from "@nuxt/ui";
-
   import { SystemApi } from "#/api/";
-  import { usePatternsStore, useSettingsStore } from "#/stores/";
 
   const confirm = useConfirm();
 
@@ -125,14 +121,13 @@
   async function showSystemInfo() {
     const systemInfo = await SystemApi.getSystemInfo();
     const systemInfoMessage = fluent.$t("message-system-info", { ...systemInfo });
-    confirm.require({
-      header: fluent.$t("title-system-info"),
+
+    const accepted = await confirm.open({
+      title: fluent.$t("title-system-info"),
       message: systemInfoMessage,
       acceptLabel: fluent.$t("label-copy"),
       rejectLabel: fluent.$t("label-close"),
-      accept: async () => {
-        await writeText(systemInfoMessage);
-      },
-    });
+    }).result;
+    if (accepted) await writeText(systemInfoMessage);
   }
 </script>
