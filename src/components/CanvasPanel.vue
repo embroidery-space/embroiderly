@@ -1,9 +1,44 @@
 <template>
-  <canvas
-    ref="canvas"
-    v-element-size="useDebounceFn((size: CanvasSize) => patternCanvas.resize(size), 100)"
-    class="size-full"
-  ></canvas>
+  <div class="size-full">
+    <div class="relative">
+      <UTabs
+        :model-value="appStateStore.currentPattern!.id"
+        :items="appStateStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
+        color="neutral"
+        :ui="{
+          root: 'block border-b border-default',
+          list: 'bg-transparent p-0',
+          indicator: [
+            'h-full inset-0 rounded-b-none shadow-none z-0',
+            // If the current pattern is the first opened one, remove the top-left border radius.
+            appStateStore.openedPatterns[0]!.id === appStateStore.currentPattern!.id ? 'rounded-tl-none' : '',
+          ],
+          trigger: 'min-w-20 rounded-b-none grow-0 hover:data-[state=inactive]:bg-elevated hover:cursor-pointer',
+        }"
+        @update:model-value="switchPattern($event as string)"
+      >
+        <template #trailing="{ item }">
+          <UButton
+            size="xs"
+            variant="ghost"
+            icon="i-prime:times"
+            class="p-0"
+            :class="{
+              'text-inverted': appStateStore.currentPattern!.id === item.value,
+              'text-default': appStateStore.currentPattern!.id !== item.value,
+            }"
+            @click.stop="patternsStore.closePattern(item.value)"
+          />
+        </template>
+      </UTabs>
+      <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
+    </div>
+    <canvas
+      ref="canvas"
+      v-element-size="useDebounceFn((size: CanvasSize) => patternCanvas.resize(size), 100)"
+      class="size-full"
+    ></canvas>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -13,9 +48,7 @@
   import { Assets, Point } from "pixi.js";
   import { PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX, StitchGraphics } from "#/pixi";
   import type { CanvasSize, EventDetail } from "#/pixi";
-  import { useAppStateStore } from "#/stores/state";
-  import { usePatternsStore } from "#/stores/patterns";
-  import { useSettingsStore } from "#/stores/settings";
+  import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
   import {
     FullStitch,
     LineStitch,
@@ -26,8 +59,8 @@
     PartStitchDirection,
     LineStitchKind,
     NodeStitchKind,
-  } from "#/schemas/pattern";
-  import type { Stitch, StitchKind } from "#/schemas/pattern";
+  } from "#/schemas/";
+  import type { Stitch, StitchKind } from "#/schemas/";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -35,6 +68,12 @@
 
   const canvas = useTemplateRef("canvas");
   const patternCanvas = new PatternCanvas();
+
+  async function switchPattern(id: string) {
+    if (appStateStore.currentPattern!.id !== id) {
+      patternsStore.loadPattern(id);
+    }
+  }
 
   watch(
     () => patternsStore.pattern,

@@ -2,20 +2,33 @@
   <div class="flex border-b border-default">
     <div data-tauri-drag-region class="grow flex items-center gap-x-2 px-2">
       <UDropdownMenu :items="fileOptions" :modal="false">
-        <UButton variant="ghost" color="neutral" size="sm" :label="$t('label-file')" />
+        <UButton
+          variant="ghost"
+          color="neutral"
+          trailing-icon="i-prime:angle-down"
+          :label="$t('label-file')"
+          :ui="{ base: 'px-2 py-1 text-default font-normal' }"
+        />
       </UDropdownMenu>
       <UDropdownMenu v-if="patternsStore.pattern !== undefined" :items="patternOptions" :modal="false">
-        <UButton variant="ghost" color="neutral" size="sm" :label="$t('label-pattern')" />
+        <UButton
+          variant="ghost"
+          color="neutral"
+          trailing-icon="i-prime:angle-down"
+          :label="$t('label-pattern')"
+          :ui="{ base: 'px-2 py-1 text-default font-normal' }"
+        />
       </UDropdownMenu>
       <UDropdownMenu :items="helpOptions" :modal="false">
-        <UButton variant="ghost" color="neutral" size="sm" :label="$t('label-help')" />
+        <UButton
+          variant="ghost"
+          color="neutral"
+          trailing-icon="i-prime:angle-down"
+          :label="$t('label-help')"
+          :ui="{ base: 'px-2 py-1 text-default font-normal' }"
+        />
       </UDropdownMenu>
     </div>
-
-    <PatternSelector
-      v-if="appStateStore.openedPatterns?.length"
-      @switch="(patternId) => patternsStore.loadPattern(patternId)"
-    />
 
     <div class="flex items-center gap-2">
       <UDropdownMenu :items="manageOptions" :modal="false">
@@ -37,11 +50,10 @@
   import type { DropdownMenuItem } from "@nuxt/ui";
 
   import { SystemApi } from "#/api/";
-  import { useAppStateStore, usePatternsStore, useSettingsStore } from "#/stores/";
+  import { usePatternsStore, useSettingsStore } from "#/stores/";
 
   const confirm = useConfirm();
 
-  const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
   const settingsStore = useSettingsStore();
 

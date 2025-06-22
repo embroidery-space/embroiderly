@@ -2,6 +2,7 @@
   <div class="flex flex-col items-center justify-between">
     <!-- This div is needed to correctly justify containers. -->
     <div></div>
+    <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
 
     <div class="max-size-full min-w-1/2 flex flex-col gap-6 overflow-auto p-8">
       <span class="text-4xl">{{ $t("title-welcome") }}</span>

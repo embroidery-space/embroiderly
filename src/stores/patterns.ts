@@ -180,11 +180,12 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function closePattern(options?: PatternApi.ClosePatternOptions) {
+    async function closePattern(id?: string, options?: PatternApi.ClosePatternOptions) {
       if (!pattern.value) return;
+      const patternId = id ?? pattern.value.id;
       try {
         loading.value = true;
-        await PatternApi.closePattern(pattern.value.id, options);
+        await PatternApi.closePattern(patternId, options);
         appStateStore.removeCurrentPattern();
         if (!appStateStore.currentPattern) pattern.value = undefined;
         else await loadPattern(appStateStore.currentPattern.id);
@@ -197,10 +198,10 @@ export const usePatternsStore = defineStore(
               const patternId = pattern.value!.id;
               const filePath = await PatternApi.getPatternFilePath(patternId);
               await PatternApi.savePattern(patternId, filePath);
-              await closePattern();
+              await closePattern(patternId);
             },
             reject: async () => {
-              await closePattern({ force: true });
+              await closePattern(patternId, { force: true });
             },
           });
           return;
