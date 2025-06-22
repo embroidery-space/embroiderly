@@ -2,10 +2,8 @@ import { createApp } from "vue";
 import ui from "@nuxt/ui/vue-plugin";
 
 import PrimeVue from "primevue/config";
-import { ConfirmationService } from "primevue";
 
 import "./assets/styles.css";
-import { NordTheme } from "./assets/theme/";
 
 import { router } from "./router.ts";
 import { pinia } from "./stores/";
@@ -21,8 +19,7 @@ app.use(router);
 app.use(pinia);
 app.use(fluent);
 app.use(ui);
-app.use(PrimeVue, { theme: { preset: NordTheme } });
-app.use(ConfirmationService);
+app.use(PrimeVue, { unstyled: true });
 app.directive("shortcuts", ShortcutsDirective);
 
 app.config.errorHandler = (err, _instance, info) => {
