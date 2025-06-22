@@ -27,32 +27,7 @@
               <NuxtButton icon="i-prime:bars" />
             </NuxtDropdownMenu>
           </div>
-          <div v-else class="flex gap-x-2" @contextmenu.stop.prevent>
-            <ToolSelector
-              v-model="appStateStore.selectedStitchTool"
-              :options="fullstitches"
-              :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
-              :disabled="paletteIsDisabled"
-            />
-            <ToolSelector
-              v-model="appStateStore.selectedStitchTool"
-              :options="partstitches"
-              :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
-              :disabled="paletteIsDisabled"
-            />
-            <ToolSelector
-              v-model="appStateStore.selectedStitchTool"
-              :options="linestitches"
-              :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
-              :disabled="paletteIsDisabled"
-            />
-            <ToolSelector
-              v-model="appStateStore.selectedStitchTool"
-              :options="nodestitches"
-              :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
-              :disabled="paletteIsDisabled"
-            />
-          </div>
+          <PaletteToolbar v-else :disabled="paletteIsDisabled" @contextmenu.stop.prevent />
         </template>
 
         <template #footer>
@@ -103,44 +78,15 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, markRaw, ref, watch } from "vue";
+  import { computed, ref, watch } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { dequal } from "dequal";
-  import { FullStitchKind, LineStitchKind, NodeStitchKind, PaletteSettings, PartStitchKind } from "#/schemas/";
-
-  import {
-    IconFullStitch,
-    IconPetiteStitch,
-    IconHalfStitch,
-    IconQuarterStitch,
-    IconStraightStitch,
-    IconBackStitch,
-    IconFrenchKnot,
-    IconBead,
-  } from "./icons/stitches/";
+  import { PaletteSettings } from "#/schemas/";
 
   const appStateStore = useAppStateStore();
-  const settingsStore = useSettingsStore();
   const patternsStore = usePatternsStore();
 
   const fluent = useFluent();
-
-  const fullstitches = computed(() => [
-    { icon: markRaw(IconFullStitch), label: fluent.$t("label-stitch-full"), value: FullStitchKind.Full },
-    { icon: markRaw(IconPetiteStitch), label: fluent.$t("label-stitch-petite"), value: FullStitchKind.Petite },
-  ]);
-  const partstitches = computed(() => [
-    { icon: markRaw(IconHalfStitch), label: fluent.$t("label-stitch-half"), value: PartStitchKind.Half },
-    { icon: markRaw(IconQuarterStitch), label: fluent.$t("label-stitch-quarter"), value: PartStitchKind.Quarter },
-  ]);
-  const linestitches = computed(() => [
-    { icon: markRaw(IconBackStitch), label: fluent.$t("label-stitch-back"), value: LineStitchKind.Back },
-    { icon: markRaw(IconStraightStitch), label: fluent.$t("label-stitch-straight"), value: LineStitchKind.Straight },
-  ]);
-  const nodestitches = computed(() => [
-    { icon: markRaw(IconFrenchKnot), label: fluent.$t("label-stitch-french-knot"), value: NodeStitchKind.FrenchKnot },
-    { icon: markRaw(IconBead), label: fluent.$t("label-stitch-bead"), value: NodeStitchKind.Bead },
-  ]);
 
   const paletteIsDisabled = computed(() => !patternsStore.pattern);
   const paletteIsBeingEdited = ref(false);
