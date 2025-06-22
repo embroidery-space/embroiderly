@@ -1,42 +1,37 @@
 <template>
-  <Listbox
-    unstyled
-    :model-value="modelValue"
-    :options="options"
-    :option-value="optionValue"
-    :disabled="disabled"
-    :multiple="multiple"
-    :meta-key-selection="metaKeySelection"
-    :empty-message="$t('message-palette-empty')"
-    scroll-height="100%"
-    pt:root:class="flex flex-col overflow-y-auto data-[p=disabled]:cursor-not-allowed"
-    pt:list-container:class="grow"
-    pt:list:class="grid gap-1 p-1 overflow-hidden outline-none"
-    :pt:list:style="{
-      gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
-    }"
-    pt:option:class="rounded-md ring-neutral data-[p-focused=true]:ring-2"
-    @update:model-value="(v) => emit('update:modelValue', v)"
-    @option-dblclick="handleOptionDoubleClick"
-  >
-    <template v-if="$slots.header" #header>
-      <div class="px-2 py-1 border-b border-default">
-        <slot name="header"></slot>
-      </div>
-    </template>
-
-    <template #option="{ option, selected }">
-      <slot name="option" v-bind="{ option, selected, displaySettings }">
-        <PaletteListItem :palette-item="option" :selected="selected" :display-settings="displaySettings" />
-      </slot>
-    </template>
-
-    <template v-if="$slots.footer" #footer>
-      <div class="px-2 py-1 border-t border-default">
-        <slot name="footer"></slot>
-      </div>
-    </template>
-  </Listbox>
+  <div class="flex flex-col">
+    <div v-if="$slots.header" class="px-2 py-1 border-b border-default">
+      <slot name="header"></slot>
+    </div>
+    <Listbox
+      unstyled
+      :model-value="modelValue"
+      :options="options"
+      :option-value="optionValue"
+      :disabled="disabled"
+      :multiple="multiple"
+      :meta-key-selection="metaKeySelection"
+      :empty-message="$t('message-palette-empty')"
+      scroll-height="100%"
+      pt:root:class="grow overflow-y-auto data-[p=disabled]:cursor-not-allowed"
+      pt:list:class="grid gap-1 p-1 overflow-hidden outline-none"
+      :pt:list:style="{
+        gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
+      }"
+      pt:option:class="rounded-md ring-neutral data-[p-focused=true]:ring-2"
+      @update:model-value="(v) => emit('update:modelValue', v)"
+      @option-dblclick="handleOptionDoubleClick"
+    >
+      <template #option="{ option, selected }">
+        <slot name="option" v-bind="{ option, selected, displaySettings }">
+          <PaletteListItem :palette-item="option" :selected="selected" :display-settings="displaySettings" />
+        </slot>
+      </template>
+    </Listbox>
+    <div v-if="$slots.footer" class="px-2 py-1 border-t border-default">
+      <slot name="footer"></slot>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts" generic="T, V">

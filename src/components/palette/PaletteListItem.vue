@@ -14,7 +14,7 @@
         color: `${paletteItem.contrastColor} !important`,
       }"
     >
-      <p v-show="!displaySettings.colorOnly" class="overflow-hidden text-ellipsis whitespace-nowrap">
+      <p v-show="!displaySettings.colorOnly" class="truncate">
         {{ paletteItem.getTitle(displaySettings) }}
       </p>
     </div>
