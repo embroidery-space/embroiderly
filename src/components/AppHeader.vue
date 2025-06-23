@@ -37,11 +37,28 @@
     </div>
 
     <div class="flex items-center gap-2">
+      <template v-if="patternsStore.pattern !== undefined">
+        <ToolButton
+          :label="$t('label-undo')"
+          icon="i-lucide:undo"
+          :kbds="['ctrl', 'z']"
+          :on-click="patternsStore.undo"
+        />
+        <ToolButton
+          :label="$t('label-redo')"
+          icon="i-lucide:redo"
+          :kbds="['ctrl', 'y']"
+          :on-click="patternsStore.redo"
+        />
+        <NuxtSeparator orientation="vertical" />
+      </template>
+
       <NuxtDropdownMenu :items="manageOptions" :modal="false">
         <NuxtTooltip :text="$t('label-manage')">
           <NuxtButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-lucide:settings" />
         </NuxtTooltip>
       </NuxtDropdownMenu>
+
       <Suspense> <WindowControls /> </Suspense>
     </div>
   </div>
