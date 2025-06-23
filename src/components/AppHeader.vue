@@ -23,6 +23,17 @@
           />
         </template>
       </NuxtDropdownMenu>
+      <NuxtDropdownMenu :items="toolsOptions" :modal="false">
+        <template #default="{ open }">
+          <NuxtButton
+            :variant="open ? 'soft' : 'ghost'"
+            color="neutral"
+            trailing-icon="i-lucide:chevron-down"
+            :label="$t('label-tools')"
+            :ui="{ base: 'px-2 py-1 text-default font-normal' }"
+          />
+        </template>
+      </NuxtDropdownMenu>
       <NuxtDropdownMenu :items="helpOptions" :modal="false">
         <template #default="{ open }">
           <NuxtButton
@@ -123,6 +134,15 @@
       { label: fluent.$t("title-grid-properties"), onSelect: () => patternsStore.updateGrid() },
     ],
   ]);
+  const toolsOptions = computed<DropdownMenuItem[][]>(() => [
+    [{ label: fluent.$t("title-settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettings() }],
+    [
+      {
+        label: fluent.$t("label-check-for-updates"),
+        onSelect: () => settingsStore.checkForUpdates(),
+      },
+    ],
+  ]);
   const helpOptions = computed<DropdownMenuItem[][]>(() => [
     [
       { label: fluent.$t("label-learn-more"), onSelect: () => openUrl("https://embroiderly.niusia.me") },
@@ -145,7 +165,7 @@
   ]);
 
   defineShortcuts(extractShortcuts(fileOptions.value));
-  defineShortcuts(extractShortcuts(manageOptions.value));
+  defineShortcuts(extractShortcuts(toolsOptions.value));
 
   async function showSystemInfo() {
     const systemInfo = await SystemApi.getSystemInfo();

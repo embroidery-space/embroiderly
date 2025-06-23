@@ -5,6 +5,8 @@
 label-file = File
 label-pattern = Pattern
 
+label-tools = Tools
+
 label-help = Help
 label-license = License
 label-about = About

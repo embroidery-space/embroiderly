@@ -5,6 +5,8 @@
 label-file = Файл
 label-pattern = Схема
 
+label-tools = Інструменти
+
 label-help = Допомога
 label-license = Ліцензія
 label-about = Про застосунок
