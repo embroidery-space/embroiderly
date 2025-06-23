@@ -7,6 +7,7 @@
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
       multiple
       meta-key-selection
+      class="overflow-y-auto"
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
       <template #header>

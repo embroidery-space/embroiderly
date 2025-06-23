@@ -215,6 +215,7 @@ export const usePatternsStore = defineStore(
     appWindow.listen<string>("pattern-info:update", ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.info = PatternInfo.deserialize(payload);
+      appStateStore.updateOpenedPattern(pattern.value.id, pattern.value.info.title);
     });
 
     async function updateFabric() {

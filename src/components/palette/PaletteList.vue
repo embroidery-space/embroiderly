@@ -4,7 +4,6 @@
       <slot name="header"></slot>
     </div>
     <Listbox
-      unstyled
       :model-value="modelValue"
       :options="options"
       :option-value="optionValue"
@@ -19,6 +18,7 @@
         gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
       }"
       pt:option:class="rounded-md ring-neutral data-[p-focused=true]:ring-2"
+      pt:empty-message:class="px-2"
       @update:model-value="(v) => emit('update:modelValue', v)"
       @option-dblclick="handleOptionDoubleClick"
     >

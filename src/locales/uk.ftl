@@ -21,6 +21,10 @@ label-export = Експортувати
 label-cancel = Скасувати
 label-copy = Скопіювати
 
+label-minimize = Згорнути
+label-maximize = Розгорнути
+label-restore = Відновити
+
 label-undo = Скасувати
 label-redo = Повторити
 

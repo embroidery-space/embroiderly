@@ -81,7 +81,7 @@
   const fileOptions = computed<DropdownMenuItem[][]>(() => [
     [
       { label: fluent.$t("label-open"), kbds: ["ctrl", "o"], onSelect: () => patternsStore.openPattern() },
-      { label: fluent.$t("label-create"), kbds: ["ctrl", "n"], onSelect: () => patternsStore.createPattern },
+      { label: fluent.$t("label-create"), kbds: ["ctrl", "n"], onSelect: () => patternsStore.createPattern() },
     ],
     [
       {

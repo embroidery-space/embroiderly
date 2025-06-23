@@ -1,6 +1,7 @@
 <template>
   <div class="flex items-center justify-center">
     <button
+      :title="$t('label-minimize')"
       class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-black/[.12] focus-visible:bg-black/[.06] hover:bg-black/[.06] dark:text-white dark:active:bg-white/[.12] dark:hover:bg-white/[.06]"
       @click="appWindow.minimize()"
     >
@@ -8,6 +9,7 @@
     </button>
 
     <button
+      :title="isMaximized ? $t('label-restore') : $t('label-maximize')"
       class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-black/[.12] focus-visible:bg-black/[.06] hover:bg-black/[.06] dark:text-white dark:active:bg-white/[.12] dark:hover:bg-white/[.06]"
       @click="appWindow.toggleMaximize()"
     >
@@ -16,6 +18,7 @@
     </button>
 
     <button
+      :title="$t('label-close')"
       class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-red-700 focus-visible:bg-red-600 hover:bg-red-600 dark:text-white focus-visible:text-white hover:text-white"
       @click="appWindow.close()"
     >

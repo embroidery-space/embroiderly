@@ -21,6 +21,10 @@ label-export = Export
 label-cancel = Cancel
 label-copy = Copy
 
+label-minimize = Minimize
+label-maximize = Maximize
+label-restore = Restore
+
 label-undo = Undo
 label-redo = Redo
 
