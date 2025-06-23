@@ -1,29 +1,47 @@
 <template>
-  <div class="flex gap-x-2">
-    <ToolSelector
-      v-model="appStateStore.selectedStitchTool"
-      :options="fullstitches"
-      :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
-      :disabled="disabled"
-    />
-    <ToolSelector
-      v-model="appStateStore.selectedStitchTool"
-      :options="partstitches"
-      :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
-      :disabled="disabled"
-    />
-    <ToolSelector
-      v-model="appStateStore.selectedStitchTool"
-      :options="linestitches"
-      :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
-      :disabled="disabled"
-    />
-    <ToolSelector
-      v-model="appStateStore.selectedStitchTool"
-      :options="nodestitches"
-      :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
-      :disabled="disabled"
-    />
+  <div class="flex flex-col gap-y-2">
+    <div class="flex gap-x-2">
+      <ToolSelector
+        v-model="appStateStore.selectedStitchTool"
+        :options="fullstitches"
+        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :disabled="disabled"
+      />
+      <ToolSelector
+        v-model="appStateStore.selectedStitchTool"
+        :options="partstitches"
+        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :disabled="disabled"
+      />
+      <ToolSelector
+        v-model="appStateStore.selectedStitchTool"
+        :options="linestitches"
+        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :disabled="disabled"
+      />
+      <ToolSelector
+        v-model="appStateStore.selectedStitchTool"
+        :options="nodestitches"
+        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :disabled="disabled"
+      />
+    </div>
+    <div class="flex gap-x-2">
+      <ToolButton
+        :label="$t('label-undo')"
+        icon="i-lucide:undo"
+        :kbds="['ctrl', 'z']"
+        :disabled="disabled"
+        :on-click="patternsStore.undo"
+      />
+      <ToolButton
+        :label="$t('label-redo')"
+        icon="i-lucide:redo"
+        :kbds="['ctrl', 'y']"
+        :disabled="disabled"
+        :on-click="patternsStore.redo"
+      />
+    </div>
   </div>
 </template>
 
@@ -45,6 +63,7 @@
   const fluent = useFluent();
 
   const appStateStore = useAppStateStore();
+  const patternsStore = usePatternsStore();
   const settingsStore = useSettingsStore();
 
   const { disabled } = defineProps<{

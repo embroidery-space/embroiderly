@@ -331,11 +331,6 @@ export const usePatternsStore = defineStore(
       await HistoryApi.redo(pattern.value.id);
     }
 
-    defineShortcuts({
-      ctrl_z: undo,
-      ctrl_y: redo,
-    });
-
     return {
       blocked,
       loading,
