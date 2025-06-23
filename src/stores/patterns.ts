@@ -2,12 +2,9 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
-import { useFluent } from "fluent-vue";
-import { useConfirm, useDialog } from "primevue";
 import { defineStore } from "pinia";
-import { useAppStateStore } from "./state";
 import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
-import { useShortcuts } from "#/composables";
+import { useConfirm } from "#/composables";
 import { PatternView } from "#/pixi";
 import {
   AddedPaletteItemData,
@@ -44,15 +41,21 @@ export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
 export const usePatternsStore = defineStore(
   "embroiderly-patterns",
   () => {
+    const overlay = useOverlay();
+    const patternInfoModal = overlay.create(
+      defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue")),
+    );
+    const fabricPropertiesModal = overlay.create(
+      defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue")),
+    );
+    const gridPropertiesModal = overlay.create(
+      defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue")),
+    );
+
     const appWindow = getCurrentWebviewWindow();
 
     const fluent = useFluent();
-    const dialog = useDialog();
     const confirm = useConfirm();
-
-    const PatternInfoProperties = defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue"));
-    const FabricProperties = defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue"));
-    const GridProperties = defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue"));
 
     const appStateStore = useAppStateStore();
 
@@ -94,20 +97,20 @@ export const usePatternsStore = defineStore(
         if (options?.assignToCurrent ?? true) pattern.value = new PatternView(rawPattern);
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
-          confirm.require({
-            header: fluent.$t("title-error"),
+          confirm.open({
+            title: fluent.$t("title-error"),
             message: fluent.$t("message-error-unsupported-pattern-type"),
-            rejectProps: { style: { display: "none" } },
+            acceptLabel: fluent.$t("label-ok"),
+            rejectLabel: null,
           });
           return;
         }
         if (error instanceof PatternErrorBackupFileExists) {
-          confirm.require({
-            header: fluent.$t("title-error"),
+          const accepted = await confirm.open({
+            title: fluent.$t("title-error"),
             message: fluent.$t("message-error-backup-file-exists"),
-            accept: () => openPattern(path, { restoreFromBackup: true }),
-            reject: () => openPattern(path, { restoreFromBackup: false }),
-          });
+          }).result;
+          await openPattern(path, { restoreFromBackup: accepted });
           return;
         }
         throw error;
@@ -116,21 +119,17 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    function createPattern() {
-      dialog.open(FabricProperties, {
-        props: { header: fluent.$t("title-fabric-properties"), modal: true },
-        onClose: async (options) => {
-          if (!options?.data) return;
-          const { fabric } = options.data;
-          try {
-            loading.value = true;
-            pattern.value = new PatternView(await PatternApi.createPattern(fabric));
-            appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
-          } finally {
-            loading.value = false;
-          }
-        },
-      });
+    async function createPattern() {
+      const fabric = await fabricPropertiesModal.open().result;
+      if (fabric) {
+        try {
+          loading.value = true;
+          pattern.value = new PatternView(await PatternApi.createPattern(fabric));
+          appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+        } finally {
+          loading.value = false;
+        }
+      }
     }
 
     async function savePattern(as = false) {
@@ -151,10 +150,11 @@ export const usePatternsStore = defineStore(
         await PatternApi.savePattern(pattern.value.id, path);
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
-          confirm.require({
-            header: fluent.$t("title-error"),
+          confirm.open({
+            title: fluent.$t("title-error"),
             message: fluent.$t("message-error-unsupported-pattern-type-for-saving"),
-            rejectProps: { style: { display: "none" } },
+            acceptLabel: fluent.$t("label-ok"),
+            rejectLabel: null,
           });
           return;
         }
@@ -178,29 +178,27 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function closePattern(options?: PatternApi.ClosePatternOptions) {
+    async function closePattern(id?: string, options?: PatternApi.ClosePatternOptions) {
       if (!pattern.value) return;
+      const patternId = id ?? pattern.value.id;
       try {
         loading.value = true;
-        await PatternApi.closePattern(pattern.value.id, options);
+        await PatternApi.closePattern(patternId, options);
         appStateStore.removeCurrentPattern();
         if (!appStateStore.currentPattern) pattern.value = undefined;
         else await loadPattern(appStateStore.currentPattern.id);
       } catch (error) {
         if (error instanceof PatternErrorUnsavedChanges) {
-          confirm.require({
-            header: fluent.$t("title-unsaved-changes"),
+          const accepted = await confirm.open({
+            title: fluent.$t("title-unsaved-changes"),
             message: fluent.$t("message-unsaved-changes"),
-            accept: async () => {
-              const patternId = pattern.value!.id;
-              const filePath = await PatternApi.getPatternFilePath(patternId);
-              await PatternApi.savePattern(patternId, filePath);
-              await closePattern();
-            },
-            reject: async () => {
-              await closePattern({ force: true });
-            },
-          });
+          }).result;
+          if (accepted) {
+            const patternId = pattern.value!.id;
+            const filePath = await PatternApi.getPatternFilePath(patternId);
+            await PatternApi.savePattern(patternId, filePath);
+            await closePattern(patternId);
+          } else await closePattern(patternId, { force: true });
           return;
         }
         throw error;
@@ -209,51 +207,31 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    function updatePatternInfo() {
+    async function updatePatternInfo() {
       if (!pattern.value) return;
-      dialog.open(PatternInfoProperties, {
-        props: { header: fluent.$t("title-pattern-info"), modal: true },
-        data: { patternInfo: pattern.value.info },
-        onClose: async (options) => {
-          if (!options?.data) return;
-          const { patternInfo } = options.data;
-          await PatternApi.updatePatternInfo(pattern.value!.id, patternInfo);
-        },
-      });
+      const patternInfo = await patternInfoModal.open({ patternInfo: pattern.value.info }).result;
+      if (patternInfo) await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
     }
     appWindow.listen<string>("pattern-info:update", ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.info = PatternInfo.deserialize(payload);
+      appStateStore.updateOpenedPattern(pattern.value.id, pattern.value.info.title);
     });
 
-    function updateFabric() {
+    async function updateFabric() {
       if (!pattern.value) return;
-      dialog.open(FabricProperties, {
-        props: { header: fluent.$t("title-fabric-properties"), modal: true },
-        data: { fabric: pattern.value.fabric },
-        onClose: async (options) => {
-          if (!options?.data) return;
-          const { fabric } = options.data;
-          await FabricApi.updateFabric(pattern.value!.id, fabric);
-        },
-      });
+      const fabric = await fabricPropertiesModal.open({ fabric: pattern.value.fabric }).result;
+      if (fabric) await FabricApi.updateFabric(pattern.value.id, fabric);
     }
     appWindow.listen<string>("fabric:update", ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.fabric = Fabric.deserialize(payload);
     });
 
-    function updateGrid() {
+    async function updateGrid() {
       if (!pattern.value) return;
-      dialog.open(GridProperties, {
-        props: { header: fluent.$t("title-grid-properties"), modal: true },
-        data: { grid: pattern.value.grid },
-        onClose: async (options) => {
-          if (!options?.data) return;
-          const { grid } = options.data;
-          await GridApi.updateGrid(pattern.value!.id, grid);
-        },
-      });
+      const grid = await gridPropertiesModal.open({ grid: pattern.value.grid }).result;
+      if (grid) await GridApi.updateGrid(pattern.value!.id, grid);
     }
     appWindow.listen<string>("grid:update", ({ payload }) => {
       if (!pattern.value) return;
@@ -344,21 +322,15 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
-    const shortcut = useShortcuts();
-
-    shortcut.on("Ctrl+KeyO", openPattern);
-    shortcut.on("Ctrl+KeyN", createPattern);
-    shortcut.on("Ctrl+KeyS", savePattern);
-    shortcut.on("Ctrl+Shift+KeyS", () => savePattern(true));
-    shortcut.on("Ctrl+KeyW", closePattern);
-    shortcut.on("Ctrl+KeyZ", async () => {
+    async function undo() {
       if (!pattern.value) return;
       await HistoryApi.undo(pattern.value.id);
-    });
-    shortcut.on("Ctrl+KeyY", async () => {
+    }
+
+    async function redo() {
       if (!pattern.value) return;
       await HistoryApi.redo(pattern.value.id);
-    });
+    }
 
     return {
       blocked,
@@ -380,6 +352,8 @@ export const usePatternsStore = defineStore(
       removeStitch,
       setDisplayMode,
       showSymbols,
+      undo,
+      redo,
     };
   },
   { tauri: { save: false, sync: false } },

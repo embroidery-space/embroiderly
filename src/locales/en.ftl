@@ -5,6 +5,8 @@
 label-file = File
 label-pattern = Pattern
 
+label-tools = Tools
+
 label-help = Help
 label-license = License
 label-about = About
@@ -20,6 +22,17 @@ label-close = Close
 label-export = Export
 label-cancel = Cancel
 label-copy = Copy
+
+label-minimize = Minimize
+label-maximize = Maximize
+label-restore = Restore
+
+label-undo = Undo
+label-redo = Redo
+
+label-ok = OK
+label-yes = Yes
+label-no = No
 
 ## Names of the stitches and other instruments.
 
@@ -37,6 +50,7 @@ label-stitch-bead = Bead
 label-updater = Updater
 
 label-check-for-updates = Check for Updates
+label-update-now = Update Now
 
 label-auto-check-for-updates = Automatically check for updates
 message-auto-check-for-updates-hint = If enabled, { -app-name } will automatically check for updates on startup. Requires a restart.
@@ -116,6 +130,8 @@ label-hide-symbols = Hide Symbols
 
 title-settings = Settings
 
+label-interface = Interface
+
 label-theme = Theme
 label-theme-dark = Dark
 label-theme-light = Light
@@ -144,7 +160,7 @@ label-viewport-wheel-action-scroll = Scroll
 label-other = Other
 
 label-autosave-interval = Autosave Interval
-message-autosave-interval-hint = If set to 0, autosave is disabled. Requires a restart.
+message-autosave-interval-description = If set to 0, autosave is disabled.
 
 label-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools
 
@@ -168,7 +184,6 @@ label-height = Height
 label-unit-stitches = stitches
 label-unit-inches = inches
 label-unit-mm = mm
-label-unit-min = min
 
 label-count = Count
 label-count-and-kind = Count & Kind
@@ -187,11 +202,14 @@ message-total-size = Size (WxH): { $width }x{ $height } stitches, { $widthInches
 title-grid-properties = Grid Properties
 
 label-major-lines-interval = Major Lines Interval
+message-major-lines-interval-hint = In stitches
+
 label-major-lines = Major Lines
 label-minor-lines = Minor Lines
 
 label-color = Color
 label-thickness = Thickness
+message-thickness-hint = In points
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved

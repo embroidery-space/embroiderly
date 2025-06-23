@@ -1,11 +1,15 @@
 /// <reference types="vitest" />
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
+import vueDevTools from "vite-plugin-vue-devtools";
 import vue from "@vitejs/plugin-vue";
-import UnoCSS from "unocss/vite";
+import ui from "@nuxt/ui/vite";
+import tailwindcss from "@tailwindcss/vite";
+
+import { NuxtUIConfig } from "./ui.config";
 
 export default defineConfig({
-  plugins: [vue(), UnoCSS()],
+  plugins: [vue(), ui(NuxtUIConfig), tailwindcss(), vueDevTools()],
   clearScreen: false,
   resolve: { alias: { "#": fileURLToPath(new URL("./src", import.meta.url)) } },
   envPrefix: ["VITE_", "TAURI_ENV_*"],

@@ -1,10 +1,10 @@
 import type { DirectiveBinding } from "vue";
-import { useShortcuts } from "#/composables";
+import { useMagicKeys, whenever } from "@vueuse/core";
 
 /** Vue.js directive to handle keyboard shortcuts on a specific element. */
 export function ShortcutsDirective<Value extends () => void>(el: HTMLElement, binding: DirectiveBinding<Value>) {
   const { value, modifiers } = binding;
-  const shortcuts = useShortcuts(el);
+  const shortcuts = useMagicKeys({ target: el });
 
   const key = Object.keys(modifiers)
     .map((mod) => {
@@ -24,5 +24,5 @@ export function ShortcutsDirective<Value extends () => void>(el: HTMLElement, bi
     })
     .join("+");
 
-  shortcuts.on(key, value);
+  whenever(shortcuts[key]!, () => value());
 }

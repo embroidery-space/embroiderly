@@ -5,6 +5,8 @@
 label-file = Файл
 label-pattern = Схема
 
+label-tools = Інструменти
+
 label-help = Допомога
 label-license = Ліцензія
 label-about = Про застосунок
@@ -20,6 +22,17 @@ label-close = Закрити
 label-export = Експортувати
 label-cancel = Скасувати
 label-copy = Скопіювати
+
+label-minimize = Згорнути
+label-maximize = Розгорнути
+label-restore = Відновити
+
+label-undo = Скасувати
+label-redo = Повторити
+
+label-ok = Гаразд
+label-yes = Так
+label-no = Ні
 
 ## Names of the stitches and other instruments.
 
@@ -37,6 +50,7 @@ label-stitch-bead = Бісер
 label-updater = Оновлювач
 
 label-check-for-updates = Перевірити наявність оновлень
+label-update-now = Оновити зараз
 
 label-auto-check-for-updates = Автоматично перевіряти наявність оновлень
 message-auto-check-for-updates-hint = Якщо увімкнено, { -app-name } автоматично перевірятиме наявність оновлень під час запуску. Потребує перезавантаження.
@@ -119,6 +133,8 @@ label-hide-symbols = Сховати символи
 
 title-settings = Налаштування
 
+label-interface = Інтерфейс
+
 label-theme = Тема
 label-theme-dark = Темна
 label-theme-light = Світла
@@ -147,7 +163,7 @@ label-viewport-wheel-action-scroll = Прокрутка
 label-other = Інше
 
 label-autosave-interval = Інтервал автозбереження
-message-autosave-interval-hint = Якщо встановлено 0, автозбереження вимкнено. Потребує перезавантаження.
+message-autosave-interval-description = Якщо встановлено 0, автозбереження вимкнено.
 
 label-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
 
@@ -171,7 +187,6 @@ label-height = Висота
 label-unit-stitches = стібків
 label-unit-inches = дюймів
 label-unit-mm = мм
-label-unit-min = хв
 
 label-count = Каунт
 label-count-and-kind = Каунт і тип
@@ -190,11 +205,15 @@ message-total-size = Розмір (ШxВ): { $width }x{ $height } стібків
 title-grid-properties = Параметри сітки
 
 label-major-lines-interval = Інтервал головних ліній
+message-major-lines-interval-hint = У стібках
+
 label-major-lines = Головні лінії
 label-minor-lines = Малі лінії
 
 label-color = Колір
 label-thickness = Товщина
+
+message-thickness-hint = У пунктах
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено

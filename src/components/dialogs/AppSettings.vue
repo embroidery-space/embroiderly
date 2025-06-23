@@ -1,129 +1,119 @@
 <template>
-  <Fluid class="grid grid-flow-row grid-cols-2 gap-2">
-    <FormElement id="theme" float :label="$t('label-theme')">
-      <Select v-model="selectedTheme" :options="themeOptions">
-        <template #value="{ value }">
-          <div v-if="value" class="flex items-center">
-            <i class="mr-4" :class="value.icon" />
-            <span>{{ $t(`label-theme-${value.theme}`) }}</span>
-          </div>
-        </template>
-
-        <template #option="{ option }">
-          <div class="flex items-center">
-            <i class="mr-4" :class="option.icon" />
-            <span>{{ $t(`label-theme-${option.theme}`) }}</span>
-          </div>
-        </template>
-      </Select>
-    </FormElement>
-
-    <FormElement id="scale" float :label="$t('label-scale')">
-      <Select
-        v-model="settingsStore.ui.scale"
-        :options="scaleOptions"
-        :option-label="(value) => $t(`label-scale-${value}`)"
-      />
-    </FormElement>
-
-    <FormElement id="language" float :label="$t('label-language')">
-      <Select v-model="settingsStore.ui.language" option-label="label" option-value="code" :options="languageOptions" />
-    </FormElement>
-  </Fluid>
-
-  <Fieldset toggleable :legend="$t('label-viewport')">
-    <div class="flex flex-col gap-2">
-      <Message severity="secondary" variant="simple" size="small" class="mb-2">
-        {{ $t("message-viewport-hint") }}
-      </Message>
-
-      <FormElement id="viewport-antialias" :label="$t('label-viewport-antialias')">
-        <Checkbox v-model="settingsStore.viewport.antialias" binary />
-      </FormElement>
-
-      <Fluid class="grid grid-flow-row grid-cols-2 gap-2">
-        <FormElement id="wheel-action" float :label="$t('label-viewport-wheel-action')">
-          <Select
-            v-model="settingsStore.viewport.wheelAction"
-            :options="wheelActionOptions"
-            :option-label="(value) => $t(`label-viewport-wheel-action-${value}`)"
-          />
-        </FormElement>
-      </Fluid>
-    </div>
-  </Fieldset>
-
-  <Fieldset toggleable :legend="$t('label-updater')">
-    <div class="flex flex-col gap-2">
-      <Fluid class="grid grid-flow-row grid-cols-2 gap-2">
-        <Button
-          :loading="settingsStore.loadingUpdate"
-          :label="$t('label-check-for-updates')"
-          @click="() => settingsStore.checkForUpdates()"
-        />
-      </Fluid>
-
-      <FormElement
-        id="auto-check"
-        :label="$t('label-auto-check-for-updates')"
-        :hint="$t('message-auto-check-for-updates-hint')"
+  <NuxtModal :title="$t('title-settings')" :ui="{ content: 'max-w-lg', body: '!px-2' }">
+    <template #body>
+      <NuxtTabs
+        :items="tabs"
+        orientation="vertical"
+        color="neutral"
+        size="xl"
+        :ui="{
+          root: 'items-start',
+          list: 'bg-transparent rounded-none',
+        }"
       >
-        <Checkbox v-model="settingsStore.updater.autoCheck" binary />
-      </FormElement>
-    </div>
-  </Fieldset>
+        <template #ui>
+          <div class="flex flex-col gap-y-2">
+            <NuxtFormField :label="$t('label-theme')" class="w-full">
+              <NuxtSelect v-model="settingsStore.ui.theme" :items="themeOptions" :icon="themeIcon" class="w-full" />
+            </NuxtFormField>
 
-  <Fieldset toggleable :legend="$t('label-other')">
-    <div class="flex flex-col gap-2">
-      <Fluid class="grid grid-flow-row grid-cols-2 gap-2">
-        <FormElement
-          id="autosave-interval"
-          float
-          :label="$t('label-autosave-interval')"
-          :hint="$t('message-autosave-interval-hint')"
-        >
-          <InputNumber
-            v-model="settingsStore.other.autoSaveInterval"
-            show-buttons
-            :suffix="` ${$t('label-unit-min')}`"
-            :min="0"
-            :max="240"
-          />
-        </FormElement>
-      </Fluid>
+            <NuxtFormField :label="$t('label-scale')" class="w-full">
+              <NuxtSelect v-model="settingsStore.ui.scale" :items="scaleOptions" class="w-full" />
+            </NuxtFormField>
 
-      <FormElement id="palitem-color" :label="$t('label-use-palitem-color-for-stitch-tools')">
-        <Checkbox v-model="settingsStore.other.usePaletteItemColorForStitchTools" binary />
-      </FormElement>
-    </div>
-  </Fieldset>
+            <NuxtFormField :label="$t('label-language')" class="w-full">
+              <NuxtSelect v-model="settingsStore.ui.language" :items="languageOptions" class="w-full" />
+            </NuxtFormField>
+          </div>
+        </template>
+
+        <template #viewport>
+          <div class="flex flex-col gap-y-2">
+            <p class="text-sm text-neutral-300">{{ $t("message-viewport-hint") }}</p>
+
+            <NuxtCheckbox v-model="settingsStore.viewport.antialias" :label="$t('label-viewport-antialias')" />
+
+            <NuxtFormField :label="$t('label-viewport-wheel-action')" class="w-full">
+              <NuxtSelect v-model="settingsStore.viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
+            </NuxtFormField>
+          </div>
+        </template>
+
+        <template #updater>
+          <div class="flex flex-col gap-y-2">
+            <NuxtButton
+              :loading="settingsStore.loadingUpdate"
+              :label="$t('label-check-for-updates')"
+              class="w-full"
+              @click="() => settingsStore.checkForUpdates()"
+            />
+
+            <NuxtCheckbox
+              v-model="settingsStore.updater.autoCheck"
+              :label="$t('label-auto-check-for-updates')"
+              :description="$t('message-auto-check-for-updates-hint')"
+            />
+          </div>
+        </template>
+
+        <template #other>
+          <div class="flex flex-col gap-y-2">
+            <NuxtFormField
+              :label="$t('label-autosave-interval')"
+              :description="$t('message-autosave-interval-description')"
+              class="w-full"
+            >
+              <NuxtInputNumber v-model="settingsStore.other.autoSaveInterval" orientation="vertical" class="w-full" />
+            </NuxtFormField>
+
+            <NuxtCheckbox
+              v-model="settingsStore.other.usePaletteItemColorForStitchTools"
+              :label="$t('label-use-palitem-color-for-stitch-tools')"
+            />
+          </div>
+        </template>
+      </NuxtTabs>
+    </template>
+  </NuxtModal>
 </template>
 
 <script setup lang="ts">
   import { computed } from "vue";
-  import { Button, Checkbox, Fieldset, Fluid, InputNumber, Message, Select } from "primevue";
-  import { useSettingsStore } from "#/stores/settings";
-  import type { Theme, Language, Scale, WheelAction } from "#/stores/settings";
+  import type { TabsItem } from "@nuxt/ui";
 
-  import FormElement from "#/components/form/FormElement.vue";
+  const fluent = useFluent();
 
   const settingsStore = useSettingsStore();
 
-  const selectedTheme = computed({
-    get: () => themeOptions.find((option) => option.theme === settingsStore.ui.theme)!,
-    set: (option) => (settingsStore.ui.theme = option.theme),
-  });
+  const tabs = computed<TabsItem[]>(() => [
+    { label: fluent.$t("label-interface"), slot: "ui" },
+    { label: fluent.$t("label-viewport"), slot: "viewport" },
+    { label: fluent.$t("label-updater"), slot: "updater" },
+    { label: fluent.$t("label-other"), slot: "other" },
+  ]);
 
-  const themeOptions: { theme: Theme; icon: string }[] = [
-    { theme: "dark", icon: "i-prime:moon" },
-    { theme: "light", icon: "i-prime:sun" },
-    { theme: "system", icon: "i-prime:desktop" },
-  ];
-  const scaleOptions: Scale[] = ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"];
-  const languageOptions: { label: string; code: Language }[] = [
-    { label: "English", code: "en" },
-    { label: "Українська", code: "uk" },
-  ];
+  const themeIcon = computed(() => themeOptions.value.find((item) => item!.value === settingsStore.ui.theme)?.icon);
+  const themeOptions = computed(() => [
+    { label: fluent.$t("label-theme-dark"), value: "dark", icon: "i-lucide:moon" },
+    { label: fluent.$t("label-theme-light"), value: "light", icon: "i-lucide:sun" },
+    { label: fluent.$t("label-theme-system"), value: "system", icon: "i-lucide:laptop-minimal" },
+  ]);
+  const scaleOptions = computed(() => [
+    { label: fluent.$t("label-scale-xx-small"), value: "xx-small" },
+    { label: fluent.$t("label-scale-x-small"), value: "x-small" },
+    { label: fluent.$t("label-scale-small"), value: "small" },
+    { label: fluent.$t("label-scale-medium"), value: "medium" },
+    { label: fluent.$t("label-scale-large"), value: "large" },
+    { label: fluent.$t("label-scale-x-large"), value: "x-large" },
+    { label: fluent.$t("label-scale-xx-large"), value: "xx-large" },
+  ]);
+  const languageOptions = computed(() => [
+    { label: "English", value: "en" },
+    { label: "Українська", value: "uk" },
+  ]);
 
-  const wheelActionOptions: WheelAction[] = ["zoom", "scroll"];
+  const wheelActionOptions = computed(() => [
+    { label: fluent.$t("label-viewport-wheel-action-zoom"), value: "zoom" },
+    { label: fluent.$t("label-viewport-wheel-action-scroll"), value: "scroll" },
+  ]);
 </script>
