@@ -28,19 +28,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, markRaw } from "vue";
+  import { computed } from "vue";
   import { FullStitchKind, LineStitchKind, NodeStitchKind, PartStitchKind } from "#/schemas/pattern.ts";
-
-  import {
-    IconFullStitch,
-    IconPetiteStitch,
-    IconHalfStitch,
-    IconQuarterStitch,
-    IconStraightStitch,
-    IconBackStitch,
-    IconFrenchKnot,
-    IconBead,
-  } from "../icons/stitches/";
 
   const fluent = useFluent();
 
@@ -52,19 +41,19 @@
   }>();
 
   const fullstitches = computed(() => [
-    { icon: markRaw(IconFullStitch), label: fluent.$t("label-stitch-full"), value: FullStitchKind.Full },
-    { icon: markRaw(IconPetiteStitch), label: fluent.$t("label-stitch-petite"), value: FullStitchKind.Petite },
+    { icon: "i-stitches:full", label: fluent.$t("label-stitch-full"), value: FullStitchKind.Full },
+    { icon: "i-stitches:petite", label: fluent.$t("label-stitch-petite"), value: FullStitchKind.Petite },
   ]);
   const partstitches = computed(() => [
-    { icon: markRaw(IconHalfStitch), label: fluent.$t("label-stitch-half"), value: PartStitchKind.Half },
-    { icon: markRaw(IconQuarterStitch), label: fluent.$t("label-stitch-quarter"), value: PartStitchKind.Quarter },
+    { icon: "i-stitches:half", label: fluent.$t("label-stitch-half"), value: PartStitchKind.Half },
+    { icon: "i-stitches:quarter", label: fluent.$t("label-stitch-quarter"), value: PartStitchKind.Quarter },
   ]);
   const linestitches = computed(() => [
-    { icon: markRaw(IconBackStitch), label: fluent.$t("label-stitch-back"), value: LineStitchKind.Back },
-    { icon: markRaw(IconStraightStitch), label: fluent.$t("label-stitch-straight"), value: LineStitchKind.Straight },
+    { icon: "i-stitches:back", label: fluent.$t("label-stitch-back"), value: LineStitchKind.Back },
+    { icon: "i-stitches:straight", label: fluent.$t("label-stitch-straight"), value: LineStitchKind.Straight },
   ]);
   const nodestitches = computed(() => [
-    { icon: markRaw(IconFrenchKnot), label: fluent.$t("label-stitch-french-knot"), value: NodeStitchKind.FrenchKnot },
-    { icon: markRaw(IconBead), label: fluent.$t("label-stitch-bead"), value: NodeStitchKind.Bead },
+    { icon: "i-stitches:french-knot", label: fluent.$t("label-stitch-french-knot"), value: NodeStitchKind.FrenchKnot },
+    { icon: "i-stitches:bead", label: fluent.$t("label-stitch-bead"), value: NodeStitchKind.Bead },
   ]);
 </script>

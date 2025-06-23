@@ -1,9 +1,9 @@
 import { createApp } from "vue";
 import ui from "@nuxt/ui/vue-plugin";
-
 import PrimeVue from "primevue/config";
 
 import "./assets/styles.css";
+import "./assets/icons.ts";
 
 import { router } from "./router.ts";
 import { pinia } from "./stores/";

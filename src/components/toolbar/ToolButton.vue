@@ -1,10 +1,14 @@
 <template>
   <NuxtTooltip arrow :text="label" :kbds="kbds" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
-    <NuxtButton color="neutral" variant="ghost" :disabled="disabled" class="p-1.5" @click="onClick">
-      <NuxtIcon v-if="typeof icon === 'string'" :name="icon" />
-      <div v-else class="size-6">
-        <component :is="icon"></component></div
-    ></NuxtButton>
+    <NuxtButton
+      color="neutral"
+      variant="ghost"
+      :icon="icon"
+      :disabled="disabled"
+      class="p-1.5"
+      :ui="{ leadingIcon: 'size-5' }"
+      @click="onClick"
+    />
   </NuxtTooltip>
 </template>
 
@@ -13,7 +17,7 @@
 
   const props = defineProps<{
     label: string;
-    icon: unknown;
+    icon: string;
     kbds?: KbdProps["value"][];
     disabled?: boolean;
     onClick: () => void; // We use the `onClick` prop to automatically bind a shortcut based on the `kbds` prop.

@@ -3,15 +3,13 @@
     <NuxtButton
       color="neutral"
       :variant="'ghost'"
+      :icon="option.icon"
       :disabled="disabled"
       class="p-1.5 text-dimmed"
       :class="{ 'bg-elevated hover:bg-accented': selected }"
+      :ui="{ leadingIcon: 'size-5' }"
       @click="onChange"
-    >
-      <NuxtIcon v-if="typeof option.icon === 'string'" :name="option.icon" />
-      <div v-else class="size-6">
-        <component :is="option.icon"></component></div
-    ></NuxtButton>
+    />
   </NuxtTooltip>
 </template>
 
@@ -19,8 +17,8 @@
   import { computed } from "vue";
 
   interface ToolOption {
-    icon: unknown;
     label: string;
+    icon: string;
   }
 
   const props = defineProps<{ modelValue: unknown; option: ToolOption; disabled?: boolean }>();

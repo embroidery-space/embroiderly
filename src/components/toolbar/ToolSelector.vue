@@ -10,18 +10,15 @@
       <NuxtButton
         color="neutral"
         :variant="selected ? 'solid' : 'ghost'"
+        :icon="currentOption.icon"
         :disabled="disabled"
         class="p-1.5"
         :class="{ 'bg-elevated hover:bg-accented': selected }"
         :style="{ color: selected ? selectionColor : undefined }"
+        :ui="{ leadingIcon: 'size-5' }"
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
-      >
-        <NuxtIcon v-if="typeof currentOption.icon === 'string'" :name="currentOption.icon" />
-        <div v-else class="size-6">
-          <component :is="currentOption.icon"></component>
-        </div>
-      </NuxtButton>
+      />
     </NuxtTooltip>
 
     <!-- @vue-ignore -->
@@ -68,8 +65,8 @@
   import { unrefElement } from "@vueuse/core";
 
   interface ToolOption {
-    icon: unknown;
     label: string;
+    icon: string;
     value: unknown;
   }
 

@@ -11,7 +11,7 @@
     <ToolToggle
       v-model="showSymbols"
       :option="{
-        icon: markRaw(IconSymbol),
+        icon: 'i-stitches:symbol',
         label: showSymbols ? fluent.$t('label-hide-symbols') : fluent.$t('label-show-symbols'),
       }"
       :disabled="disabled"
@@ -20,10 +20,8 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, markRaw } from "vue";
+  import { computed } from "vue";
   import { DisplayMode } from "#/schemas/";
-
-  import { IconMix, IconSquare, IconSymbol, IconFullStitch } from "../icons/stitches/";
 
   const fluent = useFluent();
 
@@ -39,9 +37,9 @@
     },
   });
   const displayModeOptions = computed(() => [
-    { icon: markRaw(IconMix), label: fluent.$t("label-view-as-mix"), value: DisplayMode.Mixed },
-    { icon: markRaw(IconSquare), label: fluent.$t("label-view-as-solid"), value: DisplayMode.Solid },
-    { icon: markRaw(IconFullStitch), label: fluent.$t("label-view-as-stitches"), value: DisplayMode.Stitches },
+    { icon: "i-stitches:mix", label: fluent.$t("label-view-as-mix"), value: DisplayMode.Mixed },
+    { icon: "i-stitches:square", label: fluent.$t("label-view-as-solid"), value: DisplayMode.Solid },
+    { icon: "i-stitches:full", label: fluent.$t("label-view-as-stitches"), value: DisplayMode.Stitches },
   ]);
 
   const showSymbols = computed({
