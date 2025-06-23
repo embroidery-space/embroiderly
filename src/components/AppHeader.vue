@@ -6,7 +6,7 @@
           <NuxtButton
             :variant="open ? 'soft' : 'ghost'"
             color="neutral"
-            trailing-icon="i-prime:angle-down"
+            trailing-icon="i-lucide:chevron-down"
             :label="$t('label-file')"
             :ui="{ base: 'px-2 py-1 text-default font-normal' }"
           />
@@ -17,7 +17,7 @@
           <NuxtButton
             :variant="open ? 'soft' : 'ghost'"
             color="neutral"
-            trailing-icon="i-prime:angle-down"
+            trailing-icon="i-lucide:chevron-down"
             :label="$t('label-pattern')"
             :ui="{ base: 'px-2 py-1 text-default font-normal' }"
           />
@@ -28,7 +28,7 @@
           <NuxtButton
             :variant="open ? 'soft' : 'ghost'"
             color="neutral"
-            trailing-icon="i-prime:angle-down"
+            trailing-icon="i-lucide:chevron-down"
             :label="$t('label-help')"
             :ui="{ base: 'px-2 py-1 text-default font-normal' }"
           />
@@ -39,7 +39,7 @@
     <div class="flex items-center gap-2">
       <NuxtDropdownMenu :items="manageOptions" :modal="false">
         <NuxtTooltip :text="$t('label-manage')">
-          <NuxtButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-prime:cog" />
+          <NuxtButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-lucide:settings" />
         </NuxtTooltip>
       </NuxtDropdownMenu>
       <Suspense> <WindowControls /> </Suspense>

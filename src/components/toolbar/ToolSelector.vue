@@ -32,10 +32,10 @@
         variant="link"
         color="neutral"
         :disabled="disabled"
-        icon="i-prime:angle-down"
+        icon="i-lucide:chevron-down"
         :ui="{
           base: 'absolute bottom-0 right-0 size-3 rounded-sm border-none p-0',
-          leadingIcon: 'absolute left-1/2 top-1/2 -translate-1/2 -rotate-45',
+          leadingIcon: 'size-3 absolute left-1/2 top-1/2 -translate-1/2 -rotate-45',
         }"
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"

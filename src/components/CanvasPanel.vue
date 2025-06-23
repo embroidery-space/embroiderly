@@ -22,7 +22,7 @@
           <NuxtButton
             size="xs"
             variant="ghost"
-            icon="i-prime:times"
+            icon="i-lucide:x"
             class="p-0"
             :class="{
               'text-inverted': appStateStore.currentPattern!.id === item.value,

@@ -18,13 +18,13 @@
         <template #header>
           <div v-if="paletteIsBeingEdited" class="flex gap-x-1" @contextmenu.stop.prevent>
             <NuxtButton
-              icon="i-prime:check"
+              icon="i-lucide:check"
               :label="$t('label-save-changes')"
               class="grow justify-center text-sm"
               @click="paletteIsBeingEdited = false"
             />
             <NuxtDropdownMenu :items="palettePanelsMenuOptions">
-              <NuxtButton icon="i-prime:bars" />
+              <NuxtButton icon="i-lucide:menu" />
             </NuxtDropdownMenu>
           </div>
           <PaletteToolbar v-else :disabled="paletteIsDisabled" @contextmenu.stop.prevent />
@@ -44,7 +44,7 @@
                 variant="ghost"
                 color="neutral"
                 :disabled="paletteIsDisabled"
-                :icon="paletteIsBeingEdited ? 'i-prime:check' : 'i-prime:pencil'"
+                :icon="paletteIsBeingEdited ? 'i-lucide:check' : 'i-lucide:pen'"
                 @click="
                   () => {
                     paletteIsBeingEdited = !paletteIsBeingEdited;

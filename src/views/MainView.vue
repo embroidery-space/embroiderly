@@ -13,7 +13,7 @@
               v-if="isDragging"
               class="bg-default absolute left-1/2 top-1/2 z-10 flex items-center justify-center rounded-full p-6 -translate-x-1/2 -translate-y-1/2"
             >
-              <NuxtIcon name="i-prime:upload" class="size-16" />
+              <NuxtIcon name="i-lucide:upload" class="size-16" />
             </div>
             <Suspense v-if="patternsStore.pattern"><CanvasPanel /></Suspense>
             <WelcomePanel v-else class="size-full" />

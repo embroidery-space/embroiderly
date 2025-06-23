@@ -94,9 +94,9 @@
 
   const themeIcon = computed(() => themeOptions.value.find((item) => item!.value === settingsStore.ui.theme)?.icon);
   const themeOptions = computed(() => [
-    { label: fluent.$t("label-theme-dark"), value: "dark", icon: "i-prime:moon" },
-    { label: fluent.$t("label-theme-light"), value: "light", icon: "i-prime:sun" },
-    { label: fluent.$t("label-theme-system"), value: "system", icon: "i-prime:desktop" },
+    { label: fluent.$t("label-theme-dark"), value: "dark", icon: "i-lucide:moon" },
+    { label: fluent.$t("label-theme-light"), value: "light", icon: "i-lucide:sun" },
+    { label: fluent.$t("label-theme-system"), value: "system", icon: "i-lucide:laptop-minimal" },
   ]);
   const scaleOptions = computed(() => [
     { label: fluent.$t("label-scale-xx-small"), value: "xx-small" },

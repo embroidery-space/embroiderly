@@ -36,14 +36,14 @@
           <div class="max-w-max flex flex-col gap-y-1">
             <NuxtButton
               variant="ghost"
-              icon="i-prime:file-plus"
+              icon="i-lucide:file-plus"
               :label="$t('label-start-create')"
               class="justify-start"
               @click="() => patternsStore.createPattern()"
             />
             <NuxtButton
               variant="ghost"
-              icon="i-prime:file-arrow-up"
+              icon="i-lucide:file-up"
               :label="$t('label-start-open')"
               class="justify-start"
               @click="() => patternsStore.openPattern()"
@@ -63,7 +63,7 @@
             >
               <span class="flex items-center gap-2 text-primary font-medium">
                 {{ item.title }}
-                <i v-if="item.url" class="i-prime:external-link"></i>
+                <NuxtIcon v-if="item.url" name="i-lucide:external-link" />
               </span>
               <span v-if="item.text">{{ item.text }}</span>
             </div>
