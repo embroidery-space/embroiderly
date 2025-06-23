@@ -4,7 +4,7 @@
   "scripts": {
     "tauri": "tauri",
     "dev": "vite",
-    "build": "npm run check-types && vite build",
+    "build": "vite build && npm run check-types",
     "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
     "fmt": "prettier --check ./eslint.config.js ./vite.config.ts scripts/ src/",
     "lint": "eslint ./eslint.config.js ./vite.config.ts scripts/ src/",
