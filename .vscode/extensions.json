@@ -6,7 +6,7 @@
     "dbaeumer.vscode-eslint",
     "rust-lang.rust-analyzer",
     "tauri-apps.tauri-vscode",
-    "antfu.unocss",
+    "bradlc.vscode-tailwindcss",
     "macabeus.vscode-fluent"
   ]
 }

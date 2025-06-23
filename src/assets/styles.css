@@ -1,0 +1,80 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@import "./palette.css";
+
+:root {
+  --ui-primary: var(--ui-color-primary-500);
+  --ui-error: var(--ui-color-error-500);
+  --ui-success: var(--ui-color-success-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-info: var(--ui-color-info-500);
+
+  --ui-color-neutral-50: #f9fafb;
+  --ui-color-neutral-100: #f5f7f9;
+  --ui-color-neutral-200: #f2f4f8;
+  --ui-color-neutral-300: #eff1f6;
+  --ui-color-neutral-400: #eceff4;
+  --ui-color-neutral-500: #e5e9f0;
+  --ui-color-neutral-600: #d8dee9;
+  --ui-color-neutral-700: #bec8da;
+  --ui-color-neutral-800: #9dacc8;
+  --ui-color-neutral-900: #768bb2;
+  --ui-color-neutral-950: #5c75a3;
+
+  --ui-text-dimmed: #3b4252;
+  --ui-text-muted: #434c5e;
+  --ui-text-toned: #434c5e;
+  --ui-text: #2e3440;
+  --ui-text-highlighted: #2e3440;
+  --ui-text-inverted: var(--ui-bg);
+
+  --ui-bg: var(--ui-color-neutral-400);
+  --ui-bg-muted: var(--ui-color-neutral-500);
+  --ui-bg-elevated: var(--ui-color-neutral-500);
+  --ui-bg-accented: var(--ui-color-neutral-600);
+  --ui-bg-inverted: var(--ui-text);
+
+  --ui-border: var(--ui-color-neutral-600);
+  --ui-border-muted: var(--ui-color-neutral-700);
+  --ui-border-accented: var(--ui-color-neutral-800);
+  --ui-border-inverted: var(--ui-text);
+}
+
+.dark {
+  --ui-primary: var(--ui-color-primary-500);
+  --ui-error: var(--ui-color-error-500);
+  --ui-success: var(--ui-color-success-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-info: var(--ui-color-info-500);
+
+  --ui-color-neutral-50: #e4e7ec;
+  --ui-color-neutral-100: #d5d9e1;
+  --ui-color-neutral-200: #b5bcca;
+  --ui-color-neutral-300: #8893aa;
+  --ui-color-neutral-400: #4c566a;
+  --ui-color-neutral-500: #434c5e;
+  --ui-color-neutral-600: #3b4252;
+  --ui-color-neutral-700: #2e3440;
+  --ui-color-neutral-800: #2b303b;
+  --ui-color-neutral-900: #22272f;
+  --ui-color-neutral-950: #171b21;
+
+  --ui-text-dimmed: #d8dee9;
+  --ui-text-muted: #e5e9f0;
+  --ui-text-toned: #e5e9f0;
+  --ui-text: #eceff4;
+  --ui-text-highlighted: #eceff4;
+  --ui-text-inverted: var(--ui-bg);
+
+  --ui-bg: var(--ui-color-neutral-700);
+  --ui-bg-muted: var(--ui-color-neutral-600);
+  --ui-bg-elevated: var(--ui-color-neutral-600);
+  --ui-bg-accented: var(--ui-color-neutral-500);
+  --ui-bg-inverted: var(--ui-text);
+
+  --ui-border: var(--ui-color-neutral-500);
+  --ui-border-muted: var(--ui-color-neutral-600);
+  --ui-border-accented: var(--ui-color-neutral-400);
+  --ui-border-inverted: var(--ui-text);
+}

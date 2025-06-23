@@ -1,11 +1,11 @@
 import { createApp } from "vue";
-
+import ui from "@nuxt/ui/vue-plugin";
 import PrimeVue from "primevue/config";
-import { Tooltip, ConfirmationService, DialogService, ToastService } from "primevue";
 
-import "virtual:uno.css";
-import { NordTheme } from "./assets/theme/";
+import "./assets/styles.css";
+import "./assets/icons.ts";
 
+import { router } from "./router.ts";
 import { pinia } from "./stores/";
 import { ShortcutsDirective } from "./directives/";
 import { fluent } from "./fluent.ts";
@@ -15,36 +15,11 @@ import App from "./App.vue";
 initLogger();
 
 const app = createApp(App);
+app.use(router);
 app.use(pinia);
 app.use(fluent);
-app.use(PrimeVue, {
-  theme: {
-    preset: NordTheme,
-    options: {
-      cssLayer: {
-        // The name of the CSS layer where the Primevue styles should be injected.
-        name: "components",
-        // The order of the CSS layers injected by UnoCSS.
-        order: "base, icons, shortcuts, components, utilities",
-      },
-    },
-  },
-  pt: {
-    dialog: { root: { style: { maxWidth: "90%" } } },
-    confirmdialog: {
-      message: {
-        style: {
-          // This is needed to allow line breaks (`\n`) in the confirmation dialog message.
-          whiteSpace: "pre-line",
-        },
-      },
-    },
-  },
-});
-app.use(ConfirmationService);
-app.use(DialogService);
-app.use(ToastService);
-app.directive("tooltip", Tooltip);
+app.use(ui);
+app.use(PrimeVue, { unstyled: true });
 app.directive("shortcuts", ShortcutsDirective);
 
 app.config.errorHandler = (err, _instance, info) => {

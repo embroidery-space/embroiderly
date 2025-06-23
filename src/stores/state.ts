@@ -22,8 +22,8 @@ export const useAppStateStore = defineStore(
      * Adds the opened pattern to the app
      * If the pattern is already opened, it will not be added again.
      *
-     * @param id - The unique identifier of the pattern
-     * @param title - The title of the pattern
+     * @param id - The unique identifier of the pattern.
+     * @param title - The title of the pattern.
      */
     function addOpenedPattern(id: string, title: string) {
       const openedPattern: OpenedPattern = { id, title };
@@ -32,6 +32,17 @@ export const useAppStateStore = defineStore(
       currentPattern.value = openedPattern;
     }
 
+    /**
+     * Updates the currently opened pattern.
+     * @param id - The unique identifier of the pattern.
+     * @param title - The new title of the pattern.
+     */
+    function updateOpenedPattern(id: string, title: string) {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
+      if (pattern) pattern.title = title;
+    }
+
+    /** Removes the currently opened pattern. */
     function removeCurrentPattern() {
       if (!openedPatterns.value || !currentPattern.value) return;
       selectedPaletteItemIndexes.value = [];
@@ -49,6 +60,7 @@ export const useAppStateStore = defineStore(
       openedPatterns,
       currentPattern,
       addOpenedPattern,
+      updateOpenedPattern,
       removeCurrentPattern,
     };
   },

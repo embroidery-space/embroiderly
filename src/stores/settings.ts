@@ -3,12 +3,8 @@ import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
-import { useFluent } from "fluent-vue";
-import { useConfirm, useDialog, usePrimeVue } from "primevue";
-import type { ConfirmationOptions } from "primevue/confirmationoptions";
-import { LOCALES, PRIMEVUE_LOCALES } from "#/fluent.ts";
+import { LOCALES } from "#/fluent.ts";
 import type { WheelAction } from "#/pixi/";
-import { useShortcuts } from "#/composables/";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
@@ -47,9 +43,10 @@ export interface CheckForUpdatesOptions {
 export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const AppSettings = defineAsyncComponent(() => import("#/components/dialogs/AppSettings.vue"));
 
-  const primevue = usePrimeVue();
-  const dialog = useDialog();
-  const confirm = useConfirm();
+  const overlay = useOverlay();
+  const appSettingModal = overlay.create(AppSettings);
+
+  const toast = useToast();
   const fluent = useFluent();
 
   const loadingUpdate = ref(false);
@@ -65,7 +62,6 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
       await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
       document.documentElement.style.fontSize = newUi.scale;
       fluent.bundles.value = [LOCALES[newUi.language]];
-      primevue.config.locale = PRIMEVUE_LOCALES[newUi.language];
     },
     { immediate: true },
   );
@@ -85,47 +81,44 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   });
 
   function openSettings() {
-    dialog.open(AppSettings, {
-      props: { header: fluent.$t("title-settings"), modal: true, dismissableMask: true },
-    });
+    appSettingModal.open();
   }
 
   async function checkForUpdates(options?: CheckForUpdatesOptions) {
-    let confirmOptions: ConfirmationOptions = {};
-    if (options?.auto) {
-      confirmOptions = {
-        position: "bottomright",
-        modal: false,
-      };
-    }
-
+    const type = options?.auto ? "background" : "foreground";
     try {
       loadingUpdate.value = true;
       const update = await check();
       if (update) {
         const { currentVersion, version } = update;
         const date = new Date(update.date!);
-        confirm.require({
-          ...confirmOptions,
-          header: fluent.$t("title-update-available"),
-          message: fluent.$t("message-update-available", { currentVersion, version, date }),
-          accept: async () => {
-            try {
-              loadingUpdate.value = true;
-              await update.downloadAndInstall();
-              await relaunch();
-            } finally {
-              loadingUpdate.value = false;
-            }
-          },
+        toast.add({
+          type,
+          color: "info",
+          title: fluent.$t("title-update-available"),
+          description: fluent.$t("message-update-available", { currentVersion, version, date }),
+          actions: [
+            {
+              label: fluent.$t("label-update-now"),
+              onClick: async () => {
+                try {
+                  loadingUpdate.value = true;
+                  await update.downloadAndInstall();
+                  await relaunch();
+                } finally {
+                  loadingUpdate.value = false;
+                }
+              },
+            },
+          ],
         });
       } else {
         if (!options?.auto) {
-          confirm.require({
-            header: fluent.$t("title-no-updates-available"),
-            message: fluent.$t("message-no-updates-available"),
-            acceptProps: { style: { display: "none" } },
-            rejectProps: { style: { display: "none" } },
+          toast.add({
+            type,
+            color: "info",
+            title: fluent.$t("title-no-updates-available"),
+            description: fluent.$t("message-no-updates-available"),
           });
         }
       }
@@ -133,9 +126,6 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
       loadingUpdate.value = false;
     }
   }
-
-  const shortcuts = useShortcuts();
-  shortcuts.on("Ctrl+Comma", () => openSettings());
 
   return {
     loadingUpdate,

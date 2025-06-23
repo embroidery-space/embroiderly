@@ -67,16 +67,17 @@ Here is a recommended setup:
        "Cargo.toml": "Cargo.lock, rustfmt.toml",
        // Hide ESLint and Prettier configurations under `.editorconfig`.
        ".editorconfig": "eslint.config.js, .prettierrc.json",
-       // Hide UnoCSS config under Vite config.
-       "vite.config.ts": "uno.config.ts",
        // Hide app image under index.html.
        "index.html": "app-icon.png"
      },
 
-     // Associate tauri.conf.json with the JSON5 format.
      "files.associations": {
+       "*.css": "tailwindcss",
        "tauri.conf.json": "jsonc"
      },
+     "editor.quickSuggestions": { "strings": "on" },
+     "tailwindCSS.classAttributes": ["class", "ui"],
+     "tailwindCSS.experimental.classRegex": [["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]],
 
      // Optionally, use enhanced syntax highlighter for TOML files.
      // Make sure you have installed a corresponding extension.

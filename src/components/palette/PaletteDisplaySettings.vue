@@ -1,69 +1,52 @@
 <template>
-  <PaletteSection :title="$t('label-palette-display-options')" @close="emit('close')">
-    <div class="flex flex-col gap-y-2 p-2 pt-6">
-      <FloatLabel variant="over">
-        <InputNumber
-          id="columns-number"
+  <PaletteSection :title="$t('label-palette-display-options')">
+    <div class="flex flex-col gap-y-2 p-2">
+      <NuxtFormField :label="$t('label-display-options-columns-number')" class="w-full">
+        <NuxtInputNumber
           :model-value="props.settings.columnsNumber"
-          show-buttons
-          :allow-empty="false"
+          orientation="vertical"
           :min="1"
           :max="8"
+          class="w-full"
           @update:model-value="(value) => updateSettings('columnsNumber', value)"
         />
-        <label for="columns-number">{{ $t("label-display-options-columns-number") }}</label>
-      </FloatLabel>
+      </NuxtFormField>
 
-      <label class="flex items-center gap-x-2">
-        <ToggleSwitch
-          :model-value="props.settings.colorOnly"
-          @update:model-value="(value) => updateSettings('colorOnly', value)"
-        />
-        <span>{{ $t("label-display-options-color-only") }}</span>
-      </label>
+      <NuxtSwitch
+        :model-value="props.settings.colorOnly"
+        :label="$t('label-display-options-color-only')"
+        @update:model-value="(value) => updateSettings('colorOnly', value)"
+      />
 
       <div class="flex flex-col gap-y-1">
-        <label class="flex items-start gap-x-2">
-          <Checkbox
-            :model-value="props.settings.showColorBrands"
-            :disabled="props.settings.colorOnly"
-            binary
-            @update:model-value="(value) => updateSettings('showColorBrands', value)"
-          />
-          <span>{{ $t("label-display-options-show-brand") }}</span>
-        </label>
-
-        <label class="flex items-start gap-x-2">
-          <Checkbox
-            :model-value="props.settings.showColorNumbers"
-            :disabled="props.settings.colorOnly"
-            binary
-            @update:model-value="(value) => updateSettings('showColorNumbers', value)"
-          />
-          <span>{{ $t("label-display-options-show-number") }}</span>
-        </label>
-
-        <label class="flex items-start gap-x-2">
-          <Checkbox
-            :model-value="props.settings.showColorNames"
-            :disabled="props.settings.colorOnly"
-            binary
-            @update:model-value="(value) => updateSettings('showColorNames', value)"
-          />
-          <span>{{ $t("label-display-options-show-name") }}</span>
-        </label>
+        <NuxtCheckbox
+          :model-value="props.settings.showColorBrands"
+          :disabled="props.settings.colorOnly"
+          :label="$t('label-display-options-show-brand')"
+          @update:model-value="(value) => updateSettings('showColorBrands', value as boolean)"
+        />
+        <NuxtCheckbox
+          :model-value="props.settings.showColorNumbers"
+          :disabled="props.settings.colorOnly"
+          :label="$t('label-display-options-show-number')"
+          @update:model-value="(value) => updateSettings('showColorNumbers', value as boolean)"
+        />
+        <NuxtCheckbox
+          :model-value="props.settings.showColorNames"
+          :disabled="props.settings.colorOnly"
+          :label="$t('label-display-options-show-name')"
+          @update:model-value="(value) => updateSettings('showColorNames', value as boolean)"
+        />
       </div>
     </div>
   </PaletteSection>
 </template>
 
 <script setup lang="ts">
-  import { Checkbox, FloatLabel, InputNumber, ToggleSwitch } from "primevue";
-  import { PaletteSettings } from "#/schemas/index.ts";
-  import PaletteSection from "./PaletteSection.vue";
+  import { PaletteSettings } from "#/schemas/";
 
   const props = defineProps<{ settings: PaletteSettings }>();
-  const emit = defineEmits<{ (event: "close"): void; (event: "update:settings", data: PaletteSettings): void }>();
+  const emit = defineEmits<{ (event: "update:settings", data: PaletteSettings): void }>();
 
   function updateSettings<K extends keyof PaletteSettings>(key: K, value: PaletteSettings[K]) {
     emit("update:settings", new PaletteSettings({ ...props.settings, [key]: value }));
