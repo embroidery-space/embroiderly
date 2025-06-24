@@ -8,47 +8,11 @@ use quick_xml::events::{BytesDecl, BytesText, Event};
 #[path = "svg.test.rs"]
 mod tests;
 
-const DEFAULT_PRESERVED_OVERLAP: u16 = 3;
-
-/// Parameters for exporting a pattern to SVG.
-#[derive(Debug, Clone, Copy)]
-pub struct ImageExportOptions {
-  /// Maximum size of a frame in stitches (width, height).
-  /// If None, the entire pattern is rendered as a single image.
-  pub frame_size: Option<(u16, u16)>,
-  /// Size of a single stitch/cell in pixels.
-  pub cell_size: f32,
-  /// Number of overlapping rows/columns from adjacent frames to include.
-  /// Defaults to 3 if not specified and framing is active.
-  pub preserved_overlap: Option<u16>,
-  /// Whether to show grid line numbers in the exported image.
-  pub show_grid_line_numbers: bool,
-  /// Whether to show centering marks in the exported image.
-  pub show_centering_marks: bool,
-}
-
-impl ImageExportOptions {
-  pub fn new(cell_size: f32) -> Self {
-    ImageExportOptions {
-      cell_size,
-      ..ImageExportOptions::default()
-    }
-  }
-}
-
-impl Default for ImageExportOptions {
-  fn default() -> Self {
-    ImageExportOptions {
-      frame_size: None,
-      cell_size: 14.0,
-      preserved_overlap: Some(DEFAULT_PRESERVED_OVERLAP),
-      show_grid_line_numbers: false,
-      show_centering_marks: false,
-    }
-  }
-}
-
-pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> anyhow::Result<Vec<Vec<u8>>> {
+pub fn export_pattern(
+  patproj: &PatternProject,
+  color: bool,
+  options: ImageExportOptions,
+) -> anyhow::Result<Vec<Vec<u8>>> {
   log::debug!("Generating SVG frames for the pattern");
   let mut frames = Vec::new();
 
@@ -56,7 +20,9 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
 
   let cell_size = options.cell_size;
   let frame_size = options.frame_size.unwrap_or((pattern_width, pattern_height));
-  let preserved_overlap = options.preserved_overlap.unwrap_or(DEFAULT_PRESERVED_OVERLAP);
+  let preserved_overlap = options
+    .preserved_overlap
+    .unwrap_or(ImageExportOptions::DEFAULT_PRESERVED_OVERLAP);
 
   // We continiously iterate by frames from the top-left corner of the pattern to the bottom-right corner.
   // So, if we have exceeded the pattern height, we stop.
@@ -151,6 +117,7 @@ pub fn export_pattern(patproj: &PatternProject, options: ImageExportOptions) -> 
       default_symbol_font: &patproj.display_settings.default_symbol_font,
     };
     let frame_context = FrameContext {
+      color,
       bounds,
       cell_size,
       preserved_overlap,
@@ -194,6 +161,7 @@ struct PatternContext<'a> {
 
 #[derive(Clone, Copy)]
 struct FrameContext {
+  color: bool,
   bounds: Bounds,
   cell_size: f32,
   preserved_overlap: u16,
@@ -239,14 +207,14 @@ fn draw_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8
             pattern.palette,
             pattern.fullstitches,
             pattern.default_symbol_font,
-            frame.cell_size,
+            frame,
           )?;
           draw_part_stitches(
             writer,
             pattern.palette,
             pattern.partstitches,
             pattern.default_symbol_font,
-            frame.cell_size,
+            frame,
           )?;
           draw_grid(writer, pattern.fabric, pattern.grid, frame)?;
           write_special_stitches(
@@ -290,8 +258,10 @@ fn draw_full_stitches<W: io::Write>(
   palette: &[PaletteItem],
   fullstitches: &[FullStitch],
   default_symbol_font: &str,
-  cell_size: f32,
+  frame: FrameContext,
 ) -> io::Result<()> {
+  let FrameContext { color, cell_size, .. } = frame;
+
   writer
     .create_element("g")
     .with_attribute(("id", "fullstitches"))
@@ -311,17 +281,19 @@ fn draw_full_stitches<W: io::Write>(
               FullStitchKind::Petite => cell_size / 2.0,
             };
 
-            writer
-              .create_element("rect")
-              .with_attributes([
-                ("x", "0"),
-                ("y", "0"),
-                ("width", size.to_string().as_str()),
-                ("height", size.to_string().as_str()),
-                ("fill", format!("#{}", palitem.color).as_str()),
-                ("stroke", "#000000"),
-              ])
-              .write_empty()?;
+            if color {
+              writer
+                .create_element("rect")
+                .with_attributes([
+                  ("x", "0"),
+                  ("y", "0"),
+                  ("width", size.to_string().as_str()),
+                  ("height", size.to_string().as_str()),
+                  ("fill", format!("#{}", palitem.color).as_str()),
+                  ("stroke", "#000000"),
+                ])
+                .write_empty()?;
+            }
 
             let font_size = size * 0.8;
             draw_stitch_symbol!(
@@ -346,8 +318,10 @@ fn draw_part_stitches<W: io::Write>(
   palette: &[PaletteItem],
   partstitches: &[PartStitch],
   default_symbol_font: &str,
-  cell_size: f32,
+  frame: FrameContext,
 ) -> io::Result<()> {
+  let FrameContext { color, cell_size, .. } = frame;
+
   writer
     .create_element("g")
     .with_attribute(("id", "partstitches"))
@@ -362,59 +336,61 @@ fn draw_part_stitches<W: io::Write>(
           .create_element("g")
           .with_attribute(("transform", format!("translate({}, {})", x, y).as_str()))
           .write_inner_content(|writer| {
-            let points = match stitch.kind {
-              PartStitchKind::Half => match stitch.direction {
-                PartStitchDirection::Forward => [
-                  (1.0, 0.0),
-                  (1.0, 0.35),
-                  (0.35, 1.0),
-                  (0.0, 1.0),
-                  (0.0, 0.65),
-                  (0.65, 0.0),
-                ],
-                PartStitchDirection::Backward => [
-                  (0.0, 0.0),
-                  (0.35, 0.0),
-                  (1.0, 0.65),
-                  (1.0, 1.0),
-                  (0.65, 1.0),
-                  (0.0, 0.35),
-                ],
-              },
-              PartStitchKind::Quarter => match stitch.direction {
-                PartStitchDirection::Forward => [
-                  (0.5, 0.0),
-                  (0.5, 0.25),
-                  (0.25, 0.5),
-                  (0.0, 0.5),
-                  (0.0, 0.25),
-                  (0.25, 0.0),
-                ],
+            if color {
+              let points = match stitch.kind {
+                PartStitchKind::Half => match stitch.direction {
+                  PartStitchDirection::Forward => [
+                    (1.0, 0.0),
+                    (1.0, 0.35),
+                    (0.35, 1.0),
+                    (0.0, 1.0),
+                    (0.0, 0.65),
+                    (0.65, 0.0),
+                  ],
+                  PartStitchDirection::Backward => [
+                    (0.0, 0.0),
+                    (0.35, 0.0),
+                    (1.0, 0.65),
+                    (1.0, 1.0),
+                    (0.65, 1.0),
+                    (0.0, 0.35),
+                  ],
+                },
+                PartStitchKind::Quarter => match stitch.direction {
+                  PartStitchDirection::Forward => [
+                    (0.5, 0.0),
+                    (0.5, 0.25),
+                    (0.25, 0.5),
+                    (0.0, 0.5),
+                    (0.0, 0.25),
+                    (0.25, 0.0),
+                  ],
 
-                PartStitchDirection::Backward => [
-                  (0.0, 0.0),
-                  (0.0, 0.25),
-                  (0.25, 0.5),
-                  (0.5, 0.5),
-                  (0.5, 0.25),
-                  (0.25, 0.0),
-                ],
-              },
-            };
-            let points = points
-              .iter()
-              .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size,))
-              .collect::<Vec<_>>()
-              .join(" ");
+                  PartStitchDirection::Backward => [
+                    (0.0, 0.0),
+                    (0.0, 0.25),
+                    (0.25, 0.5),
+                    (0.5, 0.5),
+                    (0.5, 0.25),
+                    (0.25, 0.0),
+                  ],
+                },
+              };
+              let points = points
+                .iter()
+                .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size,))
+                .collect::<Vec<_>>()
+                .join(" ");
 
-            writer
-              .create_element("polygon")
-              .with_attributes([
-                ("points", points.as_str()),
-                ("fill", format!("#{}", palitem.color).as_str()),
-                ("stroke", "#000000"),
-              ])
-              .write_empty()?;
+              writer
+                .create_element("polygon")
+                .with_attributes([
+                  ("points", points.as_str()),
+                  ("fill", format!("#{}", palitem.color).as_str()),
+                  ("stroke", "#000000"),
+                ])
+                .write_empty()?;
+            }
 
             let size = cell_size / 2.0;
             let font_size = size * 0.8;
@@ -626,6 +602,7 @@ fn draw_grid<W: io::Write>(
     preserved_overlap,
     show_grid_line_numbers,
     show_centering_marks,
+    ..
   } = frame;
 
   writer

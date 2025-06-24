@@ -24,11 +24,13 @@ import {
   PatternErrorUnsupportedPatternType,
 } from "#/error.ts";
 
-const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
-const EXPORT_FILTERS: DialogFilter[] = [
-  { name: "OXS", extensions: ["oxs"] },
-  { name: "PDF", extensions: ["pdf"] },
+export const ANY_PATTERN_FILTER: DialogFilter[] = [
+  { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
+  { name: "All Files", extensions: ["*"] },
 ];
+export const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
+export const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
+export const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
 
 export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
   /**
@@ -51,6 +53,7 @@ export const usePatternsStore = defineStore(
     const gridPropertiesModal = overlay.create(
       defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue")),
     );
+    const pdfExportModal = overlay.create(defineAsyncComponent(() => import("#/components/dialogs/PdfExport.vue")));
 
     const appWindow = getCurrentWebviewWindow();
 
@@ -140,7 +143,7 @@ export const usePatternsStore = defineStore(
           appStateStore.lastSavedFolder ??= path.substring(0, path.lastIndexOf(sep()));
           const selectedPath = await save({
             defaultPath: await join(appStateStore.lastSavedFolder, await basename(path)),
-            filters: SAVE_AS_FILTERS,
+            filters: EMBPROJ_FILTER,
           });
           if (selectedPath === null) return;
           path = selectedPath;
@@ -168,11 +171,20 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       try {
         const defaultPath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
-        const path = await save({ defaultPath, filters: EXPORT_FILTERS.filter((f) => f.extensions.includes(ext)) });
-        if (path === null) return;
-        loading.value = true;
-        if (ext === "oxs") await PatternApi.savePattern(pattern.value.id, path);
-        else await PatternApi.exportPattern(pattern.value.id, path);
+        if (ext === "oxs") {
+          const path = await save({ defaultPath, filters: OXS_FILTER });
+          if (path === null) return;
+          loading.value = true;
+          await PatternApi.savePattern(pattern.value.id, path);
+        } else {
+          const result = await pdfExportModal.open({
+            filePath: defaultPath,
+            options: pattern.value.publishSettings.pdf,
+          }).result;
+          if (!result) return;
+          const { filePath, options } = result;
+          await PatternApi.exportPattern(pattern.value.id, filePath, options);
+        }
       } finally {
         loading.value = false;
       }

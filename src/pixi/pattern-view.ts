@@ -18,6 +18,7 @@ import {
   PatternProject,
   SpecialStitch,
   SpecialStitchModel,
+  PublishSettings,
   type Stitch,
 } from "#/schemas";
 
@@ -54,6 +55,8 @@ export class PatternView {
 
   #specialStitchModels: SpecialStitchModel[];
 
+  publishSettings: PublishSettings;
+
   private stages = {
     // lowest
     fabric: new Graphics(),
@@ -75,7 +78,7 @@ export class PatternView {
 
   render?: () => void;
 
-  constructor({ id, pattern, displaySettings }: PatternProject) {
+  constructor({ id, pattern, displaySettings, publishSettings }: PatternProject) {
     this.id = id;
     this.#info = pattern.info;
 
@@ -92,6 +95,8 @@ export class PatternView {
     this.defaultSymbolFont = displaySettings.defaultSymbolFont;
 
     this.#specialStitchModels = pattern.specialStitchModels;
+
+    this.publishSettings = publishSettings;
 
     this.render = () => {
       this.fabric = this.#fabric;

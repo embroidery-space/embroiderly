@@ -85,5 +85,10 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
     ..Default::default()
   };
 
-  Ok(PatternProject::new(file_path.to_owned(), pattern, display_settings))
+  Ok(PatternProject::new(
+    file_path.to_owned(),
+    pattern,
+    display_settings,
+    Default::default(),
+  ))
 }

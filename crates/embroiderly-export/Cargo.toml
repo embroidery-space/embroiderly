@@ -10,6 +10,9 @@ clap = { workspace = true }
 embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true }
 
+# De/serialization
+serde_json = { workspace = true }
+
 # Exporting patterns to PDF
 typst = { workspace = true }
 typst-pdf = { workspace = true }

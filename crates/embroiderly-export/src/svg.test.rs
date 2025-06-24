@@ -89,7 +89,16 @@ fn writes_full_stitches() {
     },
   ];
 
-  draw_full_stitches(&mut writer, &palette, &fullstitches, SYMBOL_FONT, CELL_SIZE).unwrap();
+  let frame = FrameContext {
+    color: true,
+    bounds: Bounds { x: 0, y: 0, width: 0, height: 0 },
+    cell_size: CELL_SIZE,
+    preserved_overlap: 0,
+    show_grid_line_numbers: false,
+    show_centering_marks: false,
+  };
+
+  draw_full_stitches(&mut writer, &palette, &fullstitches, SYMBOL_FONT, frame).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
@@ -152,7 +161,16 @@ fn writes_part_stitches() {
     },
   ];
 
-  draw_part_stitches(&mut writer, &palette, &partstitches, SYMBOL_FONT, CELL_SIZE).unwrap();
+  let frame = FrameContext {
+    color: true,
+    bounds: Bounds { x: 0, y: 0, width: 0, height: 0 },
+    cell_size: CELL_SIZE,
+    preserved_overlap: 0,
+    show_grid_line_numbers: false,
+    show_centering_marks: false,
+  };
+
+  draw_part_stitches(&mut writer, &palette, &partstitches, SYMBOL_FONT, frame).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
@@ -250,6 +268,7 @@ fn writes_grid() {
   };
 
   let frame = FrameContext {
+    color: true,
     bounds: Bounds { x: 0, y: 0, width: 2, height: 2 },
     cell_size: CELL_SIZE,
     preserved_overlap: 0,

@@ -30,9 +30,14 @@ label-restore = Відновити
 label-undo = Скасувати
 label-redo = Повторити
 
+label-choose-file = Вибрати файл
+
 label-ok = Гаразд
 label-yes = Так
 label-no = Ні
+
+label-hint-counts-in-stitches = У стібках
+label-hint-counts-in-points = У пунктах
 
 ## Names of the stitches and other instruments.
 
@@ -205,7 +210,6 @@ message-total-size = Розмір (ШxВ): { $width }x{ $height } стібків
 title-grid-properties = Параметри сітки
 
 label-major-lines-interval = Інтервал головних ліній
-message-major-lines-interval-hint = У стібках
 
 label-major-lines = Головні лінії
 label-minor-lines = Малі лінії
@@ -213,7 +217,33 @@ label-minor-lines = Малі лінії
 label-color = Колір
 label-thickness = Товщина
 
-message-thickness-hint = У пунктах
+## Titles, labels and messages related to the PDF export dialog.
+
+title-pdf-export = Експорт PDF
+
+label-pdf-export-monochrome = Експортувати чорно-білий документ
+label-pdf-export-color = Експортувати кольоровий документ
+
+label-print-options = Налаштування друку
+label-print-center-frames = Центрувати фрейми
+label-print-enumerate-frames = Нумерувати фрейми
+
+label-frame-options = Параметри фрейма
+message-frame-what-is-this =
+  Фрейм — це частина схеми.
+  Великі схеми можуть бути розділені на кілька фреймів. Кожен фрейм розміщується на окремій сторінці.
+
+label-frame-width = Ширина фрейма
+label-frame-height = Висота фрейма
+
+label-frame-cell-size = Розмір клітинки
+message-frame-cell-size-description = Розмір кожної клітинки/стібка в сітці у пікселях.
+
+label-frame-preserved-overlap = Збережене перекриття
+message-frame-preserved-overlap-description = Розмір перекриття між фреймами у стібках.
+
+label-frame-show-grid-line-numbers = Показати номери ліній сітки
+label-frame-show-centering-marks = Показати центрувальні мітки
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено

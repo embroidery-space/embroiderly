@@ -34,8 +34,8 @@ export function saveAllPatterns() {
   return invoke<void>("save_all_patterns");
 }
 
-export function exportPattern(patternId: string, filePath: string) {
-  return invoke<void>("export_pattern", { patternId, filePath });
+export function exportPattern(patternId: string, filePath: string, options: object) {
+  return invoke<void>("export_pattern", { patternId, filePath, options });
 }
 
 export interface ClosePatternOptions {
