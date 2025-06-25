@@ -35,9 +35,6 @@ import {
   PatternErrorUnsupportedPatternType,
 } from "#/error.ts";
 
-import PdfExportModal from "#/components/modals/PdfExportModal.vue";
-import PublishModal from "#/components/modals/PublishModal.vue";
-
 export const ANY_PATTERN_FILTER: DialogFilter[] = [
   { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
   { name: "All Files", extensions: ["*"] },
@@ -59,16 +56,12 @@ export const usePatternsStore = defineStore(
   () => {
     const overlay = useOverlay();
     const patternInfoModal = overlay.create(
-      defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue")),
+      defineAsyncComponent(() => import("#/components/modals/PatternInfoModal.vue")),
     );
-    const fabricPropertiesModal = overlay.create(
-      defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue")),
-    );
-    const gridPropertiesModal = overlay.create(
-      defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue")),
-    );
-    const publishModal = overlay.create(PublishModal);
-    const pdfExportModal = overlay.create(PdfExportModal);
+    const fabricModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/FabricModal.vue")));
+    const gridModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/GridModal.vue")));
+    const publishModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/PublishModal.vue")));
+    const pdfExportModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/PdfExportModal.vue")));
 
     const appWindow = getCurrentWebviewWindow();
 
@@ -137,16 +130,13 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function createPattern() {
-      const fabric = await fabricPropertiesModal.open().result;
-      if (fabric) {
-        try {
-          loading.value = true;
-          pattern.value = new PatternView(await PatternApi.createPattern(fabric));
-          appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
-        } finally {
-          loading.value = false;
-        }
+    async function createPattern(fabric: Fabric) {
+      try {
+        loading.value = true;
+        pattern.value = new PatternView(await PatternApi.createPattern(fabric));
+        appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+      } finally {
+        loading.value = false;
       }
     }
 
@@ -255,10 +245,13 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function updatePatternInfo() {
+    function openPatternInfoModal() {
       if (!pattern.value) return;
-      const patternInfo = await patternInfoModal.open({ patternInfo: pattern.value.info }).result;
-      if (patternInfo) await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
+      patternInfoModal.open({ patternInfo: pattern.value.info });
+    }
+    async function updatePatternInfo(patternInfo: PatternInfo) {
+      if (!pattern.value) return;
+      await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
     }
     appWindow.listen<string>("pattern-info:update", ({ payload }) => {
       if (!pattern.value) return;
@@ -266,20 +259,25 @@ export const usePatternsStore = defineStore(
       appStateStore.updateOpenedPattern(pattern.value.id, pattern.value.info.title);
     });
 
-    async function updateFabric() {
+    function openFabricModal(fabric?: Fabric) {
+      fabricModal.open({ fabric });
+    }
+    async function updateFabric(fabric: Fabric) {
       if (!pattern.value) return;
-      const fabric = await fabricPropertiesModal.open({ fabric: pattern.value.fabric }).result;
-      if (fabric) await FabricApi.updateFabric(pattern.value.id, fabric);
+      await FabricApi.updateFabric(pattern.value.id, fabric);
     }
     appWindow.listen<string>("fabric:update", ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.fabric = Fabric.deserialize(payload);
     });
 
-    async function updateGrid() {
+    function openGridModal() {
       if (!pattern.value) return;
-      const grid = await gridPropertiesModal.open({ grid: pattern.value.grid }).result;
-      if (grid) await GridApi.updateGrid(pattern.value!.id, grid);
+      gridModal.open({ grid: pattern.value.grid });
+    }
+    async function updateGrid(grid: Grid) {
+      if (!pattern.value) return;
+      await GridApi.updateGrid(pattern.value!.id, grid);
     }
     appWindow.listen<string>("grid:update", ({ payload }) => {
       if (!pattern.value) return;
@@ -405,8 +403,11 @@ export const usePatternsStore = defineStore(
       exportPatternAsOxs,
       exportPatternAsPdf,
       closePattern,
+      openPatternInfoModal,
       updatePatternInfo,
+      openFabricModal,
       updateFabric,
+      openGridModal,
       updateGrid,
       addPaletteItem,
       removePaletteItem,

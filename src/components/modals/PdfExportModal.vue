@@ -29,7 +29,7 @@
             }"
           />
           <template #content>
-            <PdfPublishForm v-model:options="options" />
+            <PdfPublishForm v-model="options" />
           </template>
         </NuxtCollapsible>
       </div>

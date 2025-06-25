@@ -1,30 +1,29 @@
 <template>
-  <NuxtModal :title="$t('title-publish-settings')">
+  <NuxtModal :title="$t('title-pattern-info')">
     <template #body>
-      <PdfPublishForm v-model="options" />
+      <PatternInfoForm v-model="patternInfo" />
     </template>
     <template #footer>
       <NuxtButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <NuxtButton :label="$t('label-save')" @click="updateOptions" />
+      <NuxtButton :label="$t('label-save')" @click="updatePatternInfo" />
     </template>
   </NuxtModal>
 </template>
 
 <script setup lang="ts">
   import { ref } from "vue";
+  import { PatternInfo } from "#/schemas/";
 
-  import { PdfExportOptions } from "#/schemas/";
-
-  const props = defineProps<{ options: PdfExportOptions }>();
+  const props = defineProps<{ patternInfo: PatternInfo }>();
   const emit = defineEmits<{ close: [] }>();
 
   const patternsStore = usePatternsStore();
 
   // Copy the data from the props to a reactive object.
-  const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
+  const patternInfo = ref<PatternInfo>(new PatternInfo(props.patternInfo));
 
-  async function updateOptions() {
-    await patternsStore.updatePdfExportOptions(options.value);
+  async function updatePatternInfo() {
+    await patternsStore.updatePatternInfo(patternInfo.value);
     emit("close");
   }
 </script>

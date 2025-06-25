@@ -54,5 +54,5 @@
 <script lang="ts" setup>
   import type { PdfExportOptions } from "#/schemas/";
 
-  const options = defineModel<PdfExportOptions>("options", { required: true });
+  const options = defineModel<PdfExportOptions>({ required: true });
 </script>

@@ -42,7 +42,7 @@ export class Fabric {
   name: string;
   color: Color;
 
-  constructor(data: b.infer<typeof Fabric.schema>) {
+  constructor(data: Fabric | b.infer<typeof Fabric.schema>) {
     this.width = data.width;
     this.height = data.height;
     this.spi = data.spi;

@@ -41,10 +41,10 @@ export interface CheckForUpdatesOptions {
 }
 
 export const useSettingsStore = defineStore("embroiderly-settings", () => {
-  const AppSettings = defineAsyncComponent(() => import("#/components/dialogs/AppSettings.vue"));
-
   const overlay = useOverlay();
-  const appSettingModal = overlay.create(AppSettings);
+  const appSettingModal = overlay.create(
+    defineAsyncComponent(() => import("#/components/modals/AppSettingsModal.vue")),
+  );
 
   const toast = useToast();
   const fluent = useFluent();
@@ -80,7 +80,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     autoSaveInterval: 15,
   });
 
-  function openSettings() {
+  function openSettingsModal() {
     appSettingModal.open();
   }
 
@@ -133,7 +133,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     viewport,
     updater,
     other,
-    openSettings,
+    openSettingsModal,
     checkForUpdates,
   };
 });
