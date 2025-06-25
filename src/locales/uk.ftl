@@ -15,11 +15,17 @@ label-manage = Керувати
 
 label-open = Відкрити
 label-create = Створити
+
 label-save = Зберегти
 label-save-as = Зберегти як
+label-save-settings = Зберегти налаштування
 label-save-changes = Зберегти зміни
+
 label-close = Закрити
+
 label-export = Експортувати
+label-export-document = Експортувати документ
+
 label-cancel = Скасувати
 label-copy = Скопіювати
 
@@ -217,12 +223,14 @@ label-minor-lines = Малі лінії
 label-color = Колір
 label-thickness = Товщина
 
-## Titles, labels and messages related to the PDF export dialog.
+## Titles, labels and messages related to the publish settings form.
 
 title-pdf-export = Експорт PDF
 
 label-pdf-export-monochrome = Експортувати чорно-білий документ
 label-pdf-export-color = Експортувати кольоровий документ
+
+title-publish-settings = Налаштування публікації
 
 label-print-options = Налаштування друку
 label-print-center-frames = Центрувати фрейми

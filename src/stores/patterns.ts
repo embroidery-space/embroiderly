@@ -3,7 +3,17 @@ import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { defineStore } from "pinia";
-import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
+import {
+  DisplayApi,
+  FabricApi,
+  GridApi,
+  HistoryApi,
+  PaletteApi,
+  PathApi,
+  PatternApi,
+  PublishApi,
+  StitchesApi,
+} from "#/api";
 import { useConfirm } from "#/composables";
 import { PatternView } from "#/pixi";
 import {
@@ -16,6 +26,7 @@ import {
   Fabric,
   Grid,
   PatternInfo,
+  PdfExportOptions,
   type Stitch,
 } from "#/schemas";
 import {
@@ -23,6 +34,9 @@ import {
   PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
 } from "#/error.ts";
+
+import PdfExportModal from "#/components/modals/PdfExportModal.vue";
+import PublishModal from "#/components/modals/PublishModal.vue";
 
 export const ANY_PATTERN_FILTER: DialogFilter[] = [
   { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
@@ -53,7 +67,8 @@ export const usePatternsStore = defineStore(
     const gridPropertiesModal = overlay.create(
       defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue")),
     );
-    const pdfExportModal = overlay.create(defineAsyncComponent(() => import("#/components/dialogs/PdfExport.vue")));
+    const publishModal = overlay.create(PublishModal);
+    const pdfExportModal = overlay.create(PdfExportModal);
 
     const appWindow = getCurrentWebviewWindow();
 
@@ -167,24 +182,45 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function exportPattern(ext: string) {
+    async function openExportModal(ext: "oxs" | "pdf") {
       if (!pattern.value) return;
       try {
-        const defaultPath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
-        if (ext === "oxs") {
-          const path = await save({ defaultPath, filters: OXS_FILTER });
-          if (path === null) return;
-          loading.value = true;
-          await PatternApi.savePattern(pattern.value.id, path);
-        } else {
-          const result = await pdfExportModal.open({
-            filePath: defaultPath,
-            options: pattern.value.publishSettings.pdf,
-          }).result;
-          if (!result) return;
-          const { filePath, options } = result;
-          await PatternApi.exportPattern(pattern.value.id, filePath, options);
+        const filePath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
+        switch (ext) {
+          case "oxs": {
+            await exportPatternAsOxs(filePath);
+            break;
+          }
+          case "pdf": {
+            pdfExportModal.open({
+              filePath,
+              options: pattern.value.publishSettings.pdf,
+            });
+            break;
+          }
         }
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function exportPatternAsOxs(filePath: string) {
+      if (!pattern.value) return;
+      const path = await save({ defaultPath: filePath, filters: OXS_FILTER });
+      if (path === null) return;
+      try {
+        loading.value = true;
+        await PatternApi.savePattern(pattern.value.id, path);
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function exportPatternAsPdf(filePath: string, options: PdfExportOptions) {
+      if (!pattern.value) return;
+      try {
+        loading.value = true;
+        await PatternApi.exportPattern(pattern.value.id, filePath, options);
       } finally {
         loading.value = false;
       }
@@ -334,6 +370,19 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
+    function openPublishModal() {
+      if (!pattern.value) return;
+      publishModal.open({ options: pattern.value.publishSettings.pdf });
+    }
+    async function updatePdfExportOptions(options: PdfExportOptions) {
+      if (!pattern.value) return;
+      await PublishApi.updatePdfExportOptions(pattern.value.id, options);
+    }
+    appWindow.listen<string>("publish:update-pdf", ({ payload }) => {
+      if (!pattern.value) return;
+      pattern.value.publishSettings.pdf = PdfExportOptions.deserialize(payload);
+    });
+
     async function undo() {
       if (!pattern.value) return;
       await HistoryApi.undo(pattern.value.id);
@@ -352,7 +401,9 @@ export const usePatternsStore = defineStore(
       openPattern,
       createPattern,
       savePattern,
-      exportPattern,
+      openExportModal,
+      exportPatternAsOxs,
+      exportPatternAsPdf,
       closePattern,
       updatePatternInfo,
       updateFabric,
@@ -364,6 +415,8 @@ export const usePatternsStore = defineStore(
       removeStitch,
       setDisplayMode,
       showSymbols,
+      openPublishModal,
+      updatePdfExportOptions,
       undo,
       redo,
     };

@@ -1,16 +1,17 @@
 import { b } from "@zorsh/zorsh";
+import { toByteArray } from "base64-js";
 
 export class ImageExportOptions {
-  frameSize?: [number, number];
+  frameSize: [number, number] | null;
   cellSize: number;
-  preservedOverlap?: number;
+  preservedOverlap: number | null;
   showGridLineNumbers: boolean;
   showCenteringMarks: boolean;
 
   constructor(data: b.infer<typeof ImageExportOptions.schema>) {
-    if (data.frameSize) this.frameSize = data.frameSize;
+    this.frameSize = data.frameSize;
     this.cellSize = data.cellSize;
-    if (data.preservedOverlap) this.preservedOverlap = data.preservedOverlap;
+    this.preservedOverlap = data.preservedOverlap;
     this.showGridLineNumbers = data.showGridLineNumbers;
     this.showCenteringMarks = data.showCenteringMarks;
   }
@@ -56,6 +57,15 @@ export class PdfExportOptions {
     enumerateFrames: b.bool(),
     frameOptions: ImageExportOptions.schema,
   });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new PdfExportOptions(PdfExportOptions.schema.deserialize(buffer));
+  }
+
+  static serialize(data: PdfExportOptions) {
+    return PdfExportOptions.schema.serialize(data);
+  }
 
   static default(): PdfExportOptions {
     return new PdfExportOptions({

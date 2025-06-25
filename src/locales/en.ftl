@@ -15,11 +15,17 @@ label-manage = Manage
 
 label-open = Open
 label-create = Create
+
 label-save = Save
 label-save-as = Save As
+label-save-settings = Save Settings
 label-save-changes = Save Changes
+
 label-close = Close
+
 label-export = Export
+label-export-document = Export Document
+
 label-cancel = Cancel
 label-copy = Copy
 
@@ -214,12 +220,14 @@ label-minor-lines = Minor Lines
 label-color = Color
 label-thickness = Thickness
 
-## Titles, labels and messages related to the PDF export dialog.
+## Titles, labels and messages related to the publish settings form.
 
 title-pdf-export = PDF Export
 
 label-pdf-export-monochrome = Export black and white document
 label-pdf-export-color = Export color document
+
+title-publish-settings = Publish Settings
 
 label-print-options = Print Options
 label-print-center-frames = Center frames

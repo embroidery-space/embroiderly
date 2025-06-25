@@ -113,8 +113,8 @@
         label: fluent.$t("label-export"),
         disabled: !patternsStore.pattern,
         children: [
-          { label: "OXS", onSelect: () => patternsStore.exportPattern("oxs") },
-          { label: "PDF", onSelect: () => patternsStore.exportPattern("pdf") },
+          { label: "OXS", onSelect: () => patternsStore.openExportModal("oxs") },
+          { label: "PDF", onSelect: () => patternsStore.openExportModal("pdf") },
         ],
       },
     ],
@@ -133,6 +133,7 @@
       { label: fluent.$t("title-fabric-properties"), onSelect: () => patternsStore.updateFabric() },
       { label: fluent.$t("title-grid-properties"), onSelect: () => patternsStore.updateGrid() },
     ],
+    [{ label: fluent.$t("title-publish-settings"), onSelect: () => patternsStore.openPublishModal() }],
   ]);
   const toolsOptions = computed<DropdownMenuItem[][]>(() => [
     [{ label: fluent.$t("title-settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettings() }],
