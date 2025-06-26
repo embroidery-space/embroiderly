@@ -250,7 +250,7 @@ fn save_pattern_inner<W: io::Write>(
 ) -> io::Result<()> {
   log::trace!("Saving OXS file");
 
-  let pattern = &patproj.pattern;
+  let PatternProject { pattern, display_settings, .. } = patproj;
 
   // In the development mode, we want to have a pretty-printed XML file for easy debugging.
   #[cfg(debug_assertions)]
@@ -270,7 +270,12 @@ fn save_pattern_inner<W: io::Write>(
       pattern.palette.len(),
       package_info,
     )?;
-    write_palette(writer, &pattern.fabric, &pattern.palette)?;
+    write_palette(
+      writer,
+      &pattern.fabric,
+      &pattern.palette,
+      &display_settings.default_symbol_font,
+    )?;
     write_full_stitches(writer, &pattern.fullstitches)?;
     write_line_stitches(writer, &pattern.linestitches)?;
     write_ornaments(
@@ -467,7 +472,12 @@ fn read_palette<R: io::BufRead>(
   Ok((fabric, palette))
 }
 
-fn write_palette<W: io::Write>(writer: &mut Writer<W>, fabric: &Fabric, palette: &[PaletteItem]) -> io::Result<()> {
+fn write_palette<W: io::Write>(
+  writer: &mut Writer<W>,
+  fabric: &Fabric,
+  palette: &[PaletteItem],
+  default_symbol_font: &str,
+) -> io::Result<()> {
   writer.create_element("palette").write_inner_content(|writer| {
     writer
       .create_element("palette_item")
@@ -480,23 +490,27 @@ fn write_palette<W: io::Write>(writer: &mut Writer<W>, fabric: &Fabric, palette:
       .write_empty()?;
 
     for (index, palitem) in palette.iter().enumerate() {
-      let index = (index + 1).to_string();
-      let number = format!("{} {}", palitem.brand, palitem.number);
-
       let mut attributes = vec![
-        ("index", index.as_str()),
-        ("number", number.trim()),
-        ("name", palitem.name.as_str()),
-        ("color", palitem.color.as_str()),
+        ("index", (index + 1).to_string()),
+        (
+          "number",
+          format!("{} {}", palitem.brand, palitem.number).trim().to_owned(),
+        ),
+        ("name", palitem.name.clone()),
+        ("color", palitem.color.clone()),
+        (
+          "fontname",
+          palitem.symbol_font.as_deref().unwrap_or(default_symbol_font).to_owned(),
+        ),
       ];
 
-      let symbol;
       if let Some(s) = &palitem.symbol {
-        symbol = s.to_string();
-        attributes.push(("symbol", symbol.as_str()));
+        attributes.push(("symbol", s.to_string()));
       }
 
-      let element = writer.create_element("palette_item").with_attributes(attributes);
+      let element = writer
+        .create_element("palette_item")
+        .with_attributes(attributes.iter().map(|(key, value)| (*key, value.as_str())));
 
       if let Some(blends) = &palitem.blends {
         element.write_inner_content(|writer| {

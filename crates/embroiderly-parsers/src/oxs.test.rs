@@ -108,9 +108,9 @@ fn reads_and_writes_default_pattern_properties() {
 fn reads_and_writes_palette() {
   let xml = r#"<palette>
   <palette_item index="0" name="cloth" color="FFFFFF" kind="Aida"/>
-  <palette_item index="1" number="DMC 310" name="Black" color="2C3225"/>
-  <palette_item index="2" number="Anchor Marlitt 815" name="Fuschia" color="9B2759" symbol="131"/>
-  <palette_item index="3" number="Madeira1206" name="Jade-MD" color="007F49" symbol="k"/>
+  <palette_item index="1" number="DMC 310" name="Black" color="2C3225" fontname="Ursasoftware"/>
+  <palette_item index="2" number="Anchor Marlitt 815" name="Fuschia" color="9B2759" fontname="CrossStitch3" symbol="131"/>
+  <palette_item index="3" number="Madeira1206" name="Jade-MD" color="007F49" fontname="Ursasoftware" symbol="k"/>
 </palette>"#;
 
   let expected_fabric = Fabric {
@@ -126,7 +126,7 @@ fn reads_and_writes_palette() {
       color: String::from("2C3225"),
       blends: None,
       symbol: None,
-      symbol_font: None,
+      symbol_font: Some(String::from("Ursasoftware")),
     },
     PaletteItem {
       brand: String::from("Anchor Marlitt"),
@@ -135,7 +135,7 @@ fn reads_and_writes_palette() {
       color: String::from("9B2759"),
       blends: None,
       symbol: Some(Symbol::Code(131)),
-      symbol_font: None,
+      symbol_font: Some(String::from("CrossStitch3")),
     },
     PaletteItem {
       brand: String::from(""),
@@ -144,7 +144,7 @@ fn reads_and_writes_palette() {
       color: String::from("007F49"),
       blends: None,
       symbol: Some(Symbol::Char("k".to_string())),
-      symbol_font: None,
+      symbol_font: Some(String::from("Ursasoftware")),
     },
   ];
 
@@ -155,7 +155,7 @@ fn reads_and_writes_palette() {
   assert_eq!(palette, expected_palette);
 
   let mut writer = create_writer();
-  write_palette(&mut writer, &fabric, &palette).unwrap();
+  write_palette(&mut writer, &fabric, &palette, "Ursasoftware").unwrap();
   assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
 }
 
@@ -163,7 +163,7 @@ fn reads_and_writes_palette() {
 fn reads_and_writes_blends() {
   let xml = r#"<palette>
   <palette_item index="0" name="cloth" color="FFFFFF" kind="Aida"/>
-  <palette_item index="1" number="Blend 1" name="Crimson Red" color="CB3B41">
+  <palette_item index="1" number="Blend 1" name="Crimson Red" color="CB3B41" fontname="Ursasoftware">
     <blend number="DMC 326"/>
     <blend number="DMC 309"/>
     <blend number="DMC 606"/>
@@ -195,7 +195,7 @@ fn reads_and_writes_blends() {
       },
     ]),
     symbol: None,
-    symbol_font: None,
+    symbol_font: Some(String::from("Ursasoftware")),
   }];
 
   let mut reader = create_reader(xml);
@@ -204,7 +204,7 @@ fn reads_and_writes_blends() {
   assert_eq!(palette, expected_palette);
 
   let mut writer = create_writer();
-  write_palette(&mut writer, &fabric, &palette).unwrap();
+  write_palette(&mut writer, &fabric, &palette, "Ursasoftware").unwrap();
   assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
 }
 
