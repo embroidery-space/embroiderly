@@ -272,6 +272,7 @@ pub fn close_pattern<R: tauri::Runtime>(
   }
 
   let patproj = patterns.write().unwrap().remove_pattern(&pattern_id).unwrap();
+  let _history = history.write().unwrap().remove(&pattern_id);
 
   let backup_file_path = backup_file_path(&patproj.file_path, "bak");
   if backup_file_path.exists() {
