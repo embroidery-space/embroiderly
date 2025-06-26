@@ -6,7 +6,7 @@
     size="xl"
     :ui="{
       root: 'items-start',
-      list: 'bg-transparent rounded-none',
+      list: 'items-start bg-transparent rounded-none',
     }"
   >
     <template #ui>
