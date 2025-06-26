@@ -87,6 +87,7 @@ ordered-float = { version = "5.0.0" }
 dyn-clone = "1.0.19"
 itertools = "0.14.0"
 paste = "1.0.15"
+prettydiff = { version = "0.8.1", default-features = false }
 tempfile = "3.20.0"
 convert_case = "0.8.0"
 uuid = { version = "1.17.0", features = ["v4"] }

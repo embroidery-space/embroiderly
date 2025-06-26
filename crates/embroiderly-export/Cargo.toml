@@ -29,3 +29,6 @@ simple_logger = { workspace = true }
 # Error handling
 anyhow = { workspace = true }
 thiserror = { workspace = true }
+
+[dev-dependencies]
+prettydiff = { workspace = true }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="238px" height="588px" viewBox="0 0 238 588" xmlns="http://www.w3.org/2000/svg">
+  <g id="frame" transform="translate(14, 14)">
+    <g id="fullstitches">
+    </g>
+    <g id="partstitches">
+    </g>
+    <g id="grid">
+      <line x1="0" y1="0" x2="210" y2="0" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="14" x2="210" y2="14" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="28" x2="210" y2="28" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="42" x2="210" y2="42" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="56" x2="210" y2="56" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="70" x2="210" y2="70" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="84" x2="210" y2="84" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="98" x2="210" y2="98" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="112" x2="210" y2="112" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="126" x2="210" y2="126" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="140" x2="210" y2="140" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="154" x2="210" y2="154" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="168" x2="210" y2="168" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="182" x2="210" y2="182" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="196" x2="210" y2="196" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="210" x2="210" y2="210" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="224" x2="210" y2="224" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="238" x2="210" y2="238" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="252" x2="210" y2="252" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="266" x2="210" y2="266" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="280" x2="210" y2="280" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="294" x2="210" y2="294" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="308" x2="210" y2="308" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="322" x2="210" y2="322" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="336" x2="210" y2="336" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="350" x2="210" y2="350" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="364" x2="210" y2="364" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="378" x2="210" y2="378" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="392" x2="210" y2="392" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="406" x2="210" y2="406" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="420" x2="210" y2="420" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="434" x2="210" y2="434" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="448" x2="210" y2="448" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="462" x2="210" y2="462" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="476" x2="210" y2="476" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="490" x2="210" y2="490" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="504" x2="210" y2="504" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <g transform="translate(-14, 504)">
+        <polygon points="0,0 14,7 0,14" fill="darkgrey"/>
+      </g>
+      <g transform="translate(210, 504)">
+        <polygon points="14,0 14,14 0,7" fill="darkgrey"/>
+      </g>
+      <line x1="0" y1="518" x2="210" y2="518" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="532" x2="210" y2="532" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="546" x2="210" y2="546" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="560" x2="210" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="0" x2="0" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="14" y1="0" x2="14" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="28" y1="0" x2="28" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="42" y1="0" x2="42" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="56" y1="0" x2="56" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="70" y1="0" x2="70" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="84" y1="0" x2="84" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="98" y1="0" x2="98" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="112" y1="0" x2="112" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="126" y1="0" x2="126" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="140" y1="0" x2="140" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="154" y1="0" x2="154" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="168" y1="0" x2="168" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="182" y1="0" x2="182" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="196" y1="0" x2="196" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="210" y1="0" x2="210" y2="560" stroke="#C8C8C8" stroke-width="1.0079999"/>
+      <line x1="0" y1="0" x2="210" y2="0" stroke="#646464" stroke-width="1.0079999"/>
+      <text x="-14" y="0" font-size="11.2" font-weight="bold" text-anchor="start" dominant-baseline="middle">0</text>
+      <line x1="0" y1="140" x2="210" y2="140" stroke="#646464" stroke-width="1.0079999"/>
+      <text x="-14" y="140" font-size="11.2" font-weight="bold" text-anchor="start" dominant-baseline="middle">10</text>
+      <line x1="0" y1="280" x2="210" y2="280" stroke="#646464" stroke-width="1.0079999"/>
+      <text x="-14" y="280" font-size="11.2" font-weight="bold" text-anchor="start" dominant-baseline="middle">20</text>
+      <line x1="0" y1="420" x2="210" y2="420" stroke="#646464" stroke-width="1.0079999"/>
+      <text x="-14" y="420" font-size="11.2" font-weight="bold" text-anchor="start" dominant-baseline="middle">30</text>
+      <line x1="0" y1="560" x2="210" y2="560" stroke="#646464" stroke-width="1.0079999"/>
+      <text x="-14" y="560" font-size="11.2" font-weight="bold" text-anchor="start" dominant-baseline="middle">40</text>
+      <line x1="84" y1="0" x2="84" y2="560" stroke="#646464" stroke-width="1.0079999"/>
+      <text x="84" y="-14" font-size="11.2" font-weight="bold" text-anchor="middle" dominant-baseline="hanging">60</text>
+    </g>
+    <g id="specialstitches">
+    </g>
+    <g id="linestitches">
+      <line x1="-112" y1="546" x2="196" y2="546" stroke="#2C3225" stroke-width="2.8" stroke-linecap="round"/>
+      <line x1="196" y1="546" x2="196" y2="882" stroke="#2C3225" stroke-width="2.8" stroke-linecap="round"/>
+    </g>
+    <g id="nodestitches">
+    </g>
+    <g opacity="0.5">
+      <rect x="0" y="0" width="42" height="560" fill="white"/>
+    </g>
+  </g>
+</svg>
