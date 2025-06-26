@@ -53,6 +53,9 @@
         message: fluent.$t("message-unsaved-patterns", { patterns }),
       }).result;
 
+      // If the user dismisses the dialog, prevent the window from closing.
+      if (accepted === undefined) return;
+
       if (accepted) await PatternApi.saveAllPatterns();
       await PatternApi.closeAllPatterns();
       await appWindow.destroy();

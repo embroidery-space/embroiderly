@@ -231,12 +231,17 @@ export const usePatternsStore = defineStore(
             title: fluent.$t("title-unsaved-changes"),
             message: fluent.$t("message-unsaved-changes"),
           }).result;
+
+          // If the user dismisses the dialog, prevent the window from closing.
+          if (accepted === undefined) return;
+
           if (accepted) {
             const patternId = pattern.value!.id;
             const filePath = await PatternApi.getPatternFilePath(patternId);
             await PatternApi.savePattern(patternId, filePath);
             await closePattern(patternId);
           } else await closePattern(patternId, { force: true });
+
           return;
         }
         throw error;
