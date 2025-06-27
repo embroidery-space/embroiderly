@@ -190,7 +190,8 @@ fn reads_formats() {
 #[test]
 fn reads_symbols() {
   let loaded_symbols = read_symbols(&mut load_fixture("symbols"), 2).unwrap();
-  let expected_symbols = [Symbols {
+  let expected_symbols = [
+    Symbols {
       full: Some(33),
       petite: Some(34),
       half: Some(35),
@@ -205,7 +206,8 @@ fn reads_symbols() {
       quarter: None,
       french_knot: None,
       bead: None,
-    }];
+    },
+  ];
   for (loaded, expected) in loaded_symbols.iter().zip(expected_symbols.iter()) {
     assert_eq!(loaded, expected);
   }
