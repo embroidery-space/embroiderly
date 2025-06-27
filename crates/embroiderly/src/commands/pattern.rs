@@ -207,7 +207,7 @@ pub fn export_pattern<R: tauri::Runtime>(
 
   let sidecar = app_handle
     .shell()
-    .sidecar("embroiderly-export")
+    .sidecar("embroiderly-publish")
     .map_err(|e| PatternError::FailedToExport(e.into()))?;
   let output = tauri::async_runtime::block_on(async move {
     let mut sidecar = sidecar

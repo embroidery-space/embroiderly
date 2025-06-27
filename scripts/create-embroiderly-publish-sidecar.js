@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 import { renameSync } from "fs";
 
-const BINARY_NAME = "embroiderly-export";
+const BINARY_NAME = "embroiderly-publish";
 const EXTENSION = process.platform === "win32" ? ".exe" : "";
 
 console.log("Getting platform target triple.");

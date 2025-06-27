@@ -1421,25 +1421,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "embroiderly-export"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "clap",
- "embroiderly-parsers",
- "embroiderly-pattern",
- "log",
- "prettydiff",
- "quick-xml 0.37.5",
- "serde_json",
- "simple_logger",
- "thiserror 2.0.12",
- "typst",
- "typst-as-lib",
- "typst-pdf",
-]
-
-[[package]]
 name = "embroiderly-parsers"
 version = "0.0.0"
 dependencies = [
@@ -1465,6 +1446,25 @@ dependencies = [
  "serde",
  "uuid",
  "xsp-parsers",
+]
+
+[[package]]
+name = "embroiderly-publish"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "embroiderly-parsers",
+ "embroiderly-pattern",
+ "log",
+ "prettydiff",
+ "quick-xml 0.37.5",
+ "serde_json",
+ "simple_logger",
+ "thiserror 2.0.12",
+ "typst",
+ "typst-as-lib",
+ "typst-pdf",
 ]
 
 [[package]]

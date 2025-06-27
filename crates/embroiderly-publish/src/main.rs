@@ -29,7 +29,7 @@ fn main() -> anyhow::Result<()> {
   let args = Args::parse();
 
   let patproj = embroiderly_parsers::parse_pattern(args.pattern)?;
-  embroiderly_export::export_pattern(
+  embroiderly_publish::export_pattern(
     &patproj,
     args.output,
     serde_json::from_str(&args.options)?,
