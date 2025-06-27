@@ -1427,6 +1427,7 @@ dependencies = [
  "anyhow",
  "embroiderly-pattern",
  "log",
+ "prettydiff",
  "quick-xml 0.37.5",
  "tempfile",
  "thiserror 2.0.12",

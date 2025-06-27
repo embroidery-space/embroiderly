@@ -56,7 +56,10 @@ fn reads_and_writes_pattern_properties() {
     },
   )
   .unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -98,10 +101,11 @@ fn reads_and_writes_default_pattern_properties() {
     },
   )
   .unwrap();
-  assert_eq!(
-    r#"<properties oxsversion="1.0" software="MySoftware" software_version="0.0.0" chartwidth="100" chartheight="100" charttitle="" author="" copyright="" instructions="" stitchesperinch="14" stitchesperinch_y="14" palettecount="0"/>"#,
-    String::from_utf8(writer.into_inner().into_inner()).unwrap()
-  );
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let expected = r#"<properties oxsversion="1.0" software="MySoftware" software_version="0.0.0" chartwidth="100" chartheight="100" charttitle="" author="" copyright="" instructions="" stitchesperinch="14" stitchesperinch_y="14" palettecount="0"/>"#;
+  let diff = prettydiff::diff_lines(&result, expected);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -156,7 +160,10 @@ fn reads_and_writes_palette() {
 
   let mut writer = create_writer();
   write_palette(&mut writer, &fabric, &palette, "Ursasoftware").unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -205,7 +212,10 @@ fn reads_and_writes_blends() {
 
   let mut writer = create_writer();
   write_palette(&mut writer, &fabric, &palette, "Ursasoftware").unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -283,7 +293,10 @@ fn reads_and_writes_full_stitches() {
 
   let mut writer = create_writer();
   write_full_stitches(&mut writer, &Stitches::from_iter(stitches)).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -473,7 +486,10 @@ fn reads_and_writes_line_stitches() {
 
   let mut writer = create_writer();
   write_line_stitches(&mut writer, &Stitches::from_iter(stitches)).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -561,7 +577,10 @@ fn reads_and_writes_ornaments() {
     &Stitches::from_iter(specialstitches),
   )
   .unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -671,7 +690,10 @@ fn reads_and_writes_special_stitch_models() {
 
   let mut writer = create_writer();
   write_special_stitch_models(&mut writer, &models).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -714,7 +736,10 @@ fn reads_and_writes_display_settings() {
   assert_eq!(display_settings, DisplaySettings::default());
 
   let buffer = save_display_settings_to_vec(&display_settings).unwrap();
-  assert_eq!(xml, String::from_utf8(buffer).unwrap());
+
+  let result = String::from_utf8(buffer).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -753,7 +778,10 @@ fn reads_and_writes_grid() {
 
   let mut writer = create_writer();
   write_grid(&mut writer, &grid).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -772,7 +800,10 @@ fn reads_and_writes_publish_settings() {
   assert_eq!(publish_settings, PublishSettings::default());
 
   let buffer = save_publish_settings_to_vec(&publish_settings).unwrap();
-  assert_eq!(xml, String::from_utf8(buffer).unwrap());
+
+  let result = String::from_utf8(buffer).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -806,7 +837,10 @@ fn reads_and_writes_pdf_export_options() {
   );
 
   write_pdf_export_options(&mut writer, &pdf_export_options).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -835,5 +869,8 @@ fn reads_and_writes_image_export_options() {
   );
 
   write_image_export_options(&mut writer, "image", &image_export_options).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
