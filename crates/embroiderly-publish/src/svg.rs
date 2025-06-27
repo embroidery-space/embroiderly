@@ -186,9 +186,9 @@ fn draw_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8
   writer
     .create_element("svg")
     .with_attributes([
-      ("width", format!("{}px", width).as_str()),
-      ("height", format!("{}px", height).as_str()),
-      ("viewBox", format!("0 0 {} {}", width, height).as_str()),
+      ("width", format!("{width}px").as_str()),
+      ("height", format!("{height}px").as_str()),
+      ("viewBox", format!("0 0 {width} {height}").as_str()),
       ("xmlns", "http://www.w3.org/2000/svg"),
     ])
     .write_inner_content(|writer| {
@@ -274,7 +274,7 @@ fn draw_full_stitches<W: io::Write>(
 
         writer
           .create_element("g")
-          .with_attribute(("transform", format!("translate({}, {})", x, y).as_str()))
+          .with_attribute(("transform", format!("translate({x}, {y})").as_str()))
           .write_inner_content(|writer| {
             let size = match stitch.kind {
               FullStitchKind::Full => cell_size,
@@ -334,7 +334,7 @@ fn draw_part_stitches<W: io::Write>(
 
         writer
           .create_element("g")
-          .with_attribute(("transform", format!("translate({}, {})", x, y).as_str()))
+          .with_attribute(("transform", format!("translate({x}, {y})").as_str()))
           .write_inner_content(|writer| {
             if color {
               let points = match stitch.kind {

@@ -100,7 +100,7 @@ fn writes_full_stitches() {
 
     let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
     let diff = prettydiff::diff_lines(&result, xml);
-    assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+    assert!(diff.diff().len() == 1, "Diff:\n{diff}");
   }
 
   // Test color SVG.
@@ -128,7 +128,7 @@ fn writes_full_stitches() {
 
     let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
     let diff = prettydiff::diff_lines(&result, xml);
-    assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+    assert!(diff.diff().len() == 1, "Diff:\n{diff}");
   }
 }
 
@@ -191,7 +191,7 @@ fn writes_part_stitches() {
 
     let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
     let diff = prettydiff::diff_lines(&result, xml);
-    assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+    assert!(diff.diff().len() == 1, "Diff:\n{diff}");
   }
 
   // Test color SVG.
@@ -222,7 +222,7 @@ fn writes_part_stitches() {
 
     let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
     let diff = prettydiff::diff_lines(&result, xml);
-    assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+    assert!(diff.diff().len() == 1, "Diff:\n{diff}");
   }
 }
 
@@ -254,7 +254,7 @@ fn writes_line_stitches() {
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -287,7 +287,7 @@ fn writes_node_stitches() {
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -324,7 +324,7 @@ fn writes_grid() {
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -364,7 +364,7 @@ fn writes_grid_with_line_numbers() {
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -421,7 +421,7 @@ fn writes_grid_with_centering_marks() {
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -445,7 +445,7 @@ fn writes_overlapping_zones_by_x() {
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -469,7 +469,7 @@ fn writes_overlapping_zones_by_y() {
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -494,7 +494,7 @@ fn writes_overlapping_zones_by_xy() {
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{}", diff);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]

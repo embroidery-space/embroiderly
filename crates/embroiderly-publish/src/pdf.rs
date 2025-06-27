@@ -48,7 +48,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   let frames = frames
     .into_iter()
     .enumerate()
-    .map(|(i, image)| (format!("image{}.svg", i), image))
+    .map(|(i, image)| (format!("image{i}.svg"), image))
     .collect::<Vec<_>>();
 
   let typst_content = TypstContent {
@@ -76,7 +76,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   let doc = {
     let result = typst_template.compile_with_input(typst_content);
     for warning in &result.warnings {
-      log::warn!("Typst compilation warning: {:?}", warning);
+      log::warn!("Typst compilation warning: {warning:?}");
     }
     result.output?
   };

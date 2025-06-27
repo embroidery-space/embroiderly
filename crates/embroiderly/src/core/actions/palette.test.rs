@@ -82,7 +82,7 @@ fn assert_executing_remove_palette_items_action(
   let remove_many_stitches_event_id = window.listen("stitches:remove_many", move |e| {
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
     let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
-    assert_eq!(conflicts.is_empty(), false);
+    assert!(!conflicts.is_empty());
   });
 
   assert_eq!(patproj.pattern.palette.len(), initial_palsize);
@@ -109,7 +109,7 @@ fn assert_revoking_remove_palette_items_action(
   let add_many_stitches_event_id = window.listen("stitches:add_many", move |e| {
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
     let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
-    assert_eq!(conflicts.is_empty(), false);
+    assert!(!conflicts.is_empty());
   });
 
   assert_eq!(patproj.pattern.palette.len(), initial_palsize);
@@ -173,7 +173,7 @@ fn test_remove_random_palette_items() {
   for size in 1..(palette_size + 1) {
     let mut selected_palindixes = palindexes.clone();
     selected_palindixes.shuffle(&mut rng);
-    selected_palindixes.truncate(size as usize);
+    selected_palindixes.truncate(size);
 
     let action = RemovePaletteItemsAction::new(selected_palindixes.clone());
 

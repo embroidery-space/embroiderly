@@ -107,7 +107,7 @@ fn saves_pattern() {
     let patproj: PatternProject = borsh::from_slice(&body).unwrap();
 
     for extension in ["oxs", "embproj"] {
-      let file_path = std::env::temp_dir().join(format!("pattern.{}", extension));
+      let file_path = std::env::temp_dir().join(format!("pattern.{extension}"));
 
       // If we can save the pattern and then parse it back, we can consider it a success.
       assert!(

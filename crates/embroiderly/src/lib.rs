@@ -196,7 +196,7 @@ fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHa
           app_handle.state::<HistoryState<R>>(),
           app_handle.state::<PatternsState>(),
         ) {
-          log::error!("Failed to auto-save Pattern({:?}): {:?}", pattern_id, err);
+          log::error!("Failed to auto-save Pattern({pattern_id:?}): {err:?}");
         }
       }
 
