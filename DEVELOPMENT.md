@@ -73,7 +73,7 @@ Here is a recommended setup:
 
      "files.associations": {
        "*.css": "tailwindcss",
-       "tauri.conf.json": "jsonc"
+       "tauri.conf.json5": "jsonc"
      },
      "editor.quickSuggestions": { "strings": "on" },
      "tailwindCSS.classAttributes": ["class", "ui"],
