@@ -56,7 +56,10 @@ fn reads_and_writes_pattern_properties() {
     },
   )
   .unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -98,19 +101,20 @@ fn reads_and_writes_default_pattern_properties() {
     },
   )
   .unwrap();
-  assert_eq!(
-    r#"<properties oxsversion="1.0" software="MySoftware" software_version="0.0.0" chartwidth="100" chartheight="100" charttitle="" author="" copyright="" instructions="" stitchesperinch="14" stitchesperinch_y="14" palettecount="0"/>"#,
-    String::from_utf8(writer.into_inner().into_inner()).unwrap()
-  );
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let expected = r#"<properties oxsversion="1.0" software="MySoftware" software_version="0.0.0" chartwidth="100" chartheight="100" charttitle="" author="" copyright="" instructions="" stitchesperinch="14" stitchesperinch_y="14" palettecount="0"/>"#;
+  let diff = prettydiff::diff_lines(&result, expected);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
 fn reads_and_writes_palette() {
   let xml = r#"<palette>
   <palette_item index="0" name="cloth" color="FFFFFF" kind="Aida"/>
-  <palette_item index="1" number="DMC 310" name="Black" color="2C3225"/>
-  <palette_item index="2" number="Anchor Marlitt 815" name="Fuschia" color="9B2759" symbol="131"/>
-  <palette_item index="3" number="Madeira1206" name="Jade-MD" color="007F49" symbol="k"/>
+  <palette_item index="1" number="DMC 310" name="Black" color="2C3225" fontname="Ursasoftware"/>
+  <palette_item index="2" number="Anchor Marlitt 815" name="Fuschia" color="9B2759" fontname="CrossStitch3" symbol="131"/>
+  <palette_item index="3" number="Madeira1206" name="Jade-MD" color="007F49" fontname="Ursasoftware" symbol="k"/>
 </palette>"#;
 
   let expected_fabric = Fabric {
@@ -126,7 +130,7 @@ fn reads_and_writes_palette() {
       color: String::from("2C3225"),
       blends: None,
       symbol: None,
-      symbol_font: None,
+      symbol_font: Some(String::from("Ursasoftware")),
     },
     PaletteItem {
       brand: String::from("Anchor Marlitt"),
@@ -135,7 +139,7 @@ fn reads_and_writes_palette() {
       color: String::from("9B2759"),
       blends: None,
       symbol: Some(Symbol::Code(131)),
-      symbol_font: None,
+      symbol_font: Some(String::from("CrossStitch3")),
     },
     PaletteItem {
       brand: String::from(""),
@@ -144,7 +148,7 @@ fn reads_and_writes_palette() {
       color: String::from("007F49"),
       blends: None,
       symbol: Some(Symbol::Char("k".to_string())),
-      symbol_font: None,
+      symbol_font: Some(String::from("Ursasoftware")),
     },
   ];
 
@@ -155,15 +159,18 @@ fn reads_and_writes_palette() {
   assert_eq!(palette, expected_palette);
 
   let mut writer = create_writer();
-  write_palette(&mut writer, &fabric, &palette).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+  write_palette(&mut writer, &fabric, &palette, "Ursasoftware").unwrap();
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
 fn reads_and_writes_blends() {
   let xml = r#"<palette>
   <palette_item index="0" name="cloth" color="FFFFFF" kind="Aida"/>
-  <palette_item index="1" number="Blend 1" name="Crimson Red" color="CB3B41">
+  <palette_item index="1" number="Blend 1" name="Crimson Red" color="CB3B41" fontname="Ursasoftware">
     <blend number="DMC 326"/>
     <blend number="DMC 309"/>
     <blend number="DMC 606"/>
@@ -195,7 +202,7 @@ fn reads_and_writes_blends() {
       },
     ]),
     symbol: None,
-    symbol_font: None,
+    symbol_font: Some(String::from("Ursasoftware")),
   }];
 
   let mut reader = create_reader(xml);
@@ -204,8 +211,11 @@ fn reads_and_writes_blends() {
   assert_eq!(palette, expected_palette);
 
   let mut writer = create_writer();
-  write_palette(&mut writer, &fabric, &palette).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+  write_palette(&mut writer, &fabric, &palette, "Ursasoftware").unwrap();
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -283,7 +293,10 @@ fn reads_and_writes_full_stitches() {
 
   let mut writer = create_writer();
   write_full_stitches(&mut writer, &Stitches::from_iter(stitches)).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -473,7 +486,10 @@ fn reads_and_writes_line_stitches() {
 
   let mut writer = create_writer();
   write_line_stitches(&mut writer, &Stitches::from_iter(stitches)).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -485,7 +501,7 @@ fn reads_and_writes_ornaments() {
   <object x1="5" y1="5" palindex="2" objecttype="tent" direction="1"/>
   <object x1="1" y1="1" palindex="2" objecttype="knot" rotated="false"/>
   <object x1="3.5" y1="1.5" palindex="1" objecttype="bead" rotated="false"/>
-  <object x1="10" y1="5.5" palindex="1" objecttype="specialstitch" modindex="0" rotation="90" flip_x="true" flip_y="false"/>
+  <object x1="10" y1="5.5" width="2" height="2" palindex="1" objecttype="specialstitch" modindex="0" rotation="90" flip_x="true" flip_y="false"/>
 </ornaments_inc_knots_and_beads>"#;
 
   let expected_fullstitches = vec![FullStitch {
@@ -536,6 +552,8 @@ fn reads_and_writes_ornaments() {
   let expected_specialstitches = vec![SpecialStitch {
     x: Coord::new(10.0).unwrap(),
     y: Coord::new(5.5).unwrap(),
+    width: Coord::new(2.0).unwrap(),
+    height: Coord::new(2.0).unwrap(),
     palindex: 0,
     modindex: 0,
     rotation: 90,
@@ -559,7 +577,10 @@ fn reads_and_writes_ornaments() {
     &Stitches::from_iter(specialstitches),
   )
   .unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -669,7 +690,10 @@ fn reads_and_writes_special_stitch_models() {
 
   let mut writer = create_writer();
   write_special_stitch_models(&mut writer, &models).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -712,7 +736,10 @@ fn reads_and_writes_display_settings() {
   assert_eq!(display_settings, DisplaySettings::default());
 
   let buffer = save_display_settings_to_vec(&display_settings).unwrap();
-  assert_eq!(xml, String::from_utf8(buffer).unwrap());
+
+  let result = String::from_utf8(buffer).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
 #[test]
@@ -751,5 +778,99 @@ fn reads_and_writes_grid() {
 
   let mut writer = create_writer();
   write_grid(&mut writer, &grid).unwrap();
-  assert_eq!(xml, String::from_utf8(writer.into_inner().into_inner()).unwrap());
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
+}
+
+#[test]
+fn reads_and_writes_publish_settings() {
+  let xml = r#"<?xml version="1.0" encoding="UTF-8"?>
+<publish_settings>
+  <pdf monochrome="true" color="false" center_frames="false" enumerate_frames="true">
+    <frame_options frame_width="30" frame_height="40" cell_size="14" preserved_overlap="3" show_grid_line_numbers="true" show_centering_marks="true"/>
+  </pdf>
+</publish_settings>"#;
+
+  let mut reader = create_reader(xml);
+  reader.read_event().unwrap(); // Consume the XML declaration.
+
+  let publish_settings = parse_publish_settings_inner(&mut reader).unwrap();
+  assert_eq!(publish_settings, PublishSettings::default());
+
+  let buffer = save_publish_settings_to_vec(&publish_settings).unwrap();
+
+  let result = String::from_utf8(buffer).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
+}
+
+#[test]
+fn reads_and_writes_pdf_export_options() {
+  let xml = r#"<pdf monochrome="true" color="false" center_frames="false" enumerate_frames="true">
+  <frame_options frame_width="30" frame_height="40" cell_size="14" show_grid_line_numbers="true" show_centering_marks="true"/>
+</pdf>"#;
+
+  let mut reader = create_reader(xml);
+  let mut writer = create_writer();
+
+  let attributes = if let Event::Start(e) = reader.read_event().unwrap() {
+    AttributesMap::try_from(e.attributes()).unwrap()
+  } else {
+    unreachable!()
+  };
+
+  let pdf_export_options = read_pdf_export_options(&mut reader, attributes).unwrap();
+  assert_eq!(
+    pdf_export_options,
+    PdfExportOptions {
+      frame_options: ImageExportOptions {
+        frame_size: Some((30, 40)),
+        cell_size: 14.0,
+        preserved_overlap: None,
+        show_grid_line_numbers: true,
+        show_centering_marks: true,
+      },
+      ..Default::default()
+    }
+  );
+
+  write_pdf_export_options(&mut writer, &pdf_export_options).unwrap();
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
+}
+
+#[test]
+fn reads_and_writes_image_export_options() {
+  let xml = r#"<image cell_size="20" show_grid_line_numbers="false" show_centering_marks="false"/>"#;
+
+  let mut reader = create_reader(xml);
+  let mut writer = create_writer();
+
+  let attributes = if let Event::Start(e) = reader.read_event().unwrap() {
+    AttributesMap::try_from(e.attributes()).unwrap()
+  } else {
+    unreachable!()
+  };
+
+  let image_export_options = read_image_export_options(attributes).unwrap();
+  assert_eq!(
+    image_export_options,
+    ImageExportOptions {
+      frame_size: None,
+      cell_size: 20.0,
+      preserved_overlap: None,
+      show_grid_line_numbers: false,
+      show_centering_marks: false,
+    }
+  );
+
+  write_image_export_options(&mut writer, "image", &image_export_options).unwrap();
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }

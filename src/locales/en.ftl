@@ -15,11 +15,17 @@ label-manage = Manage
 
 label-open = Open
 label-create = Create
+
 label-save = Save
 label-save-as = Save As
+label-save-settings = Save Settings
 label-save-changes = Save Changes
+
 label-close = Close
+
 label-export = Export
+label-export-document = Export Document
+
 label-cancel = Cancel
 label-copy = Copy
 
@@ -30,9 +36,14 @@ label-restore = Restore
 label-undo = Undo
 label-redo = Redo
 
+label-choose-file = Choose File
+
 label-ok = OK
 label-yes = Yes
 label-no = No
+
+label-hint-counts-in-stitches = In stitches
+label-hint-counts-in-points = In points
 
 ## Names of the stitches and other instruments.
 
@@ -202,14 +213,42 @@ message-total-size = Size (WxH): { $width }x{ $height } stitches, { $widthInches
 title-grid-properties = Grid Properties
 
 label-major-lines-interval = Major Lines Interval
-message-major-lines-interval-hint = In stitches
 
 label-major-lines = Major Lines
 label-minor-lines = Minor Lines
 
 label-color = Color
 label-thickness = Thickness
-message-thickness-hint = In points
+
+## Titles, labels and messages related to the publish settings form.
+
+title-pdf-export = PDF Export
+
+label-pdf-export-monochrome = Export black and white document
+label-pdf-export-color = Export color document
+
+title-publish-settings = Publish Settings
+
+label-print-options = Print Options
+label-print-center-frames = Center frames
+label-print-enumerate-frames = Enumerate frames
+
+label-frame-options = Frame Options
+message-frame-what-is-this =
+  A frame is a part of the pattern.
+  Large patterns can be split into several frames. Each frame is placed on a separate page.
+
+label-frame-width = Frame Width
+label-frame-height = Frame Height
+
+label-frame-cell-size = Cell Size
+message-frame-cell-size-description = The size of each cell/stitch in the grid, in pixels.
+
+label-frame-preserved-overlap = Preserved Overlap
+message-frame-preserved-overlap-description = The size of overlap between frames, in stitches.
+
+label-frame-show-grid-line-numbers = Show grid line numbers
+label-frame-show-centering-marks = Show centering marks
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved

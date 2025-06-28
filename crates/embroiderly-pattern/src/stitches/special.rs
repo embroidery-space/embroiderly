@@ -7,6 +7,8 @@ use super::{Coord, LineStitch, NodeStitch};
 pub struct SpecialStitch {
   pub x: Coord,
   pub y: Coord,
+  pub width: Coord,
+  pub height: Coord,
   pub rotation: u16,
   pub flip: (bool, bool),
   pub palindex: u32,
@@ -25,13 +27,15 @@ impl Ord for SpecialStitch {
   }
 }
 
-impl TryFrom<pmaker::SpecialStitch> for SpecialStitch {
+impl TryFrom<(pmaker::SpecialStitch, f32, f32)> for SpecialStitch {
   type Error = anyhow::Error;
 
-  fn try_from(special_stitch: pmaker::SpecialStitch) -> Result<Self, Self::Error> {
+  fn try_from((special_stitch, width, height): (pmaker::SpecialStitch, f32, f32)) -> Result<Self, Self::Error> {
     Ok(Self {
       x: Coord::new(special_stitch.x)?,
       y: Coord::new(special_stitch.y)?,
+      width: Coord::new(width)?,
+      height: Coord::new(height)?,
       rotation: special_stitch.rotation,
       flip: special_stitch.flip,
       palindex: special_stitch.palindex as u32,

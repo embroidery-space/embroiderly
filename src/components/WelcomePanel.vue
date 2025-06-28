@@ -22,7 +22,7 @@
               variant="link"
               :label="buttonCreateLabel"
               class="p-0"
-              @click="() => patternsStore.createPattern()"
+              @click="() => patternsStore.openFabricModal()"
             />
           </template>
           <br />
@@ -39,7 +39,7 @@
               icon="i-lucide:file-plus"
               :label="$t('label-start-create')"
               class="justify-start"
-              @click="() => patternsStore.createPattern()"
+              @click="() => patternsStore.openFabricModal()"
             />
             <NuxtButton
               variant="ghost"
@@ -94,7 +94,7 @@
         {
           title: fluent.$t("label-customize-settings"),
           text: fluent.$t("message-customize-settings"),
-          command: () => settingsStore.openSettings(),
+          command: () => settingsStore.openSettingsModal(),
         },
       ],
     },

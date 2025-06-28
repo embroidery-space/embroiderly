@@ -15,7 +15,7 @@ pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> std::io::Result
         palette_items.push(palitem);
       }
     } else {
-      log::warn!("Failed to parse line: {}", line);
+      log::warn!("Failed to parse line: {line}");
     }
   }
 

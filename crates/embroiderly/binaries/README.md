@@ -6,4 +6,4 @@ For development, Tauri will automatically build all the necessary sidecars when 
 
 For production, these sidecars will be builded and placed here during bundling.
 
-For testing, you can run `sh scripts/create-dummy-embroiderly-export-sidecar.sh` to create dummy `embroiderly-export` sidecar.
+For testing, you can run `sh scripts/create-dummy-embroiderly-publish-sidecar.sh` to create dummy `embroiderly-publish` sidecar.

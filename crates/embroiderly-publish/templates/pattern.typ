@@ -33,6 +33,10 @@
       symbol: string, // the stitch symbol or an empty string if not specified
     }[],
     images: string[], // an array of virtual image paths, e.g., ["image1.png", "image2.png"]
+    options: { // print options
+      center_frames: boolean, // whether to center the frames on the page
+      enumerate_frames: boolean, // whether to enumerate the frames
+    },
   }
   ```
 */
@@ -114,9 +118,12 @@
   }
 )
 
-// Render the pattern images.
+// Render the pattern images (frames).
 // Each image will be rendered on a new page.
-#for image_path in pattern.images {
-  pagebreak(weak: true)
-  image(image_path)
-}
+#for (i, frame) in pattern.frames.enumerate(start: 1) [
+  #pagebreak(weak: true)
+  #set align(if pattern.options.center_frames { center } else { left })
+
+  #image(frame, format: "svg", fit: "contain")
+  #if pattern.options.enumerate_frames [Frame #i/#pattern.frames.len()]
+]

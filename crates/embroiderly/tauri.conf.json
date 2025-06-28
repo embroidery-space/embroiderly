@@ -6,7 +6,7 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
-    "beforeBundleCommand": "node scripts/create-embroiderly-export-sidecar.js",
+    "beforeBundleCommand": "node scripts/create-embroiderly-publish-sidecar.js",
     "frontendDist": "../../dist",
     "devUrl": "http://localhost:1420",
     "removeUnusedCommands": true
@@ -16,7 +16,7 @@
     "createUpdaterArtifacts": true,
     "targets": ["nsis", "rpm", "deb"],
     "resources": ["./resources/**/*"],
-    "externalBin": ["./binaries/embroiderly-export"],
+    "externalBin": ["./binaries/embroiderly-publish"],
     "icon": [
       "./icons/32x32.png",
       "./icons/128x128.png",

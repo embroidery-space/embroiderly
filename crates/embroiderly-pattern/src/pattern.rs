@@ -226,34 +226,34 @@ impl Pattern {
   }
 
   /// Removes all stitches that are outside the bounds of the pattern.
-  pub fn remove_stitches_outside_bounds(&mut self, x: u16, y: u16, width: u16, height: u16) -> Vec<Stitch> {
+  pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<Stitch> {
     log::trace!("Removing stitches outside bounds");
     let mut conflicts = Vec::new();
     conflicts.extend(
       self
         .fullstitches
-        .remove_stitches_outside_bounds(x, y, width, height)
+        .remove_stitches_outside_bounds(bounds)
         .into_iter()
         .map(Stitch::Full),
     );
     conflicts.extend(
       self
         .partstitches
-        .remove_stitches_outside_bounds(x, y, width, height)
+        .remove_stitches_outside_bounds(bounds)
         .into_iter()
         .map(Stitch::Part),
     );
     conflicts.extend(
       self
         .linestitches
-        .remove_stitches_outside_bounds(x, y, width, height)
+        .remove_stitches_outside_bounds(bounds)
         .into_iter()
         .map(Stitch::Line),
     );
     conflicts.extend(
       self
         .nodestitches
-        .remove_stitches_outside_bounds(x, y, width, height)
+        .remove_stitches_outside_bounds(bounds)
         .into_iter()
         .map(Stitch::Node),
     );

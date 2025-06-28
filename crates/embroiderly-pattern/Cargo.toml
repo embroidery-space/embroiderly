@@ -3,12 +3,13 @@ name = "embroiderly-pattern"
 edition = { workspace = true }
 
 [features]
-serde = ["uuid/serde"]
 borsh = ["dep:borsh", "uuid/borsh", "ordered-float/borsh"]
+serde = ["dep:serde", "uuid/serde"]
 
 [dependencies]
 # De/serialization
 borsh = { workspace = true, optional = true }
+serde = { workspace = true, optional = true }
 
 # Logging
 log = { workspace = true }

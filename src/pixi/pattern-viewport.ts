@@ -202,7 +202,7 @@ export class PatternViewport extends Container {
 
   private handleWheelZoom(e: WheelEvent) {
     if (Math.abs(e.deltaY) < 2) return;
-    const delta = 1 - (e.deltaY < 0 ? WHEEL_ZOOM_FACTOR : -WHEEL_ZOOM_FACTOR);
+    const delta = 1 - (e.deltaY > 0 ? WHEEL_ZOOM_FACTOR : -WHEEL_ZOOM_FACTOR);
 
     const mousePosition = new Point(e.offsetX, e.offsetY);
     const beforeTransform = this.toLocal(mousePosition);

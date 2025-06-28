@@ -190,7 +190,7 @@ fn reads_formats() {
 #[test]
 fn reads_symbols() {
   let loaded_symbols = read_symbols(&mut load_fixture("symbols"), 2).unwrap();
-  let expected_symbols = vec![
+  let expected_symbols = [
     Symbols {
       full: Some(33),
       petite: Some(34),

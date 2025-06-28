@@ -1,3 +1,6 @@
+mod project;
+pub use project::*;
+
 mod pattern;
 pub use pattern::*;
 
@@ -7,5 +10,5 @@ pub use stitches::*;
 mod display;
 pub use display::*;
 
-mod project;
-pub use project::*;
+mod publish;
+pub use publish::*;

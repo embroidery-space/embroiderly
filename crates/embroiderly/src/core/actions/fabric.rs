@@ -1,7 +1,7 @@
 use std::sync::OnceLock;
 
 use anyhow::Result;
-use embroiderly_pattern::{Fabric, PatternProject, Stitch};
+use embroiderly_pattern::{Bounds, Fabric, PatternProject, Stitch};
 use tauri::{Emitter, WebviewWindow};
 
 use super::Action;
@@ -39,9 +39,10 @@ impl<R: tauri::Runtime> Action<R> for UpdateFabricPropertiesAction {
     window.emit("fabric:update", base64::encode(borsh::to_vec(&self.fabric)?))?;
 
     if self.fabric.width < old_fabric.width || self.fabric.height < old_fabric.height {
-      let extra_stitches = patproj
-        .pattern
-        .remove_stitches_outside_bounds(0, 0, self.fabric.width, self.fabric.height);
+      let extra_stitches =
+        patproj
+          .pattern
+          .remove_stitches_outside_bounds(Bounds::new(0, 0, self.fabric.width, self.fabric.height));
       window.emit("stitches:remove_many", base64::encode(borsh::to_vec(&extra_stitches)?))?;
       if self.extra_stitches.get().is_none() {
         self.extra_stitches.set(extra_stitches).unwrap();

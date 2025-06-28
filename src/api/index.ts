@@ -15,6 +15,7 @@ export * as PaletteApi from "./palette.ts";
 export * as FabricApi from "./fabric.ts";
 export * as GridApi from "./grid.ts";
 export * as StitchesApi from "./stitches.ts";
+export * as PublishApi from "./publish.ts";
 export * as HistoryApi from "./history.ts";
 export * as PathApi from "./path.ts";
 export * as FontsApi from "./fonts.ts";

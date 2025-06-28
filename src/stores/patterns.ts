@@ -3,7 +3,17 @@ import { basename, join, sep } from "@tauri-apps/api/path";
 import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { defineStore } from "pinia";
-import { DisplayApi, FabricApi, GridApi, HistoryApi, PaletteApi, PathApi, PatternApi, StitchesApi } from "#/api";
+import {
+  DisplayApi,
+  FabricApi,
+  GridApi,
+  HistoryApi,
+  PaletteApi,
+  PathApi,
+  PatternApi,
+  PublishApi,
+  StitchesApi,
+} from "#/api";
 import { useConfirm } from "#/composables";
 import { PatternView } from "#/pixi";
 import {
@@ -16,6 +26,7 @@ import {
   Fabric,
   Grid,
   PatternInfo,
+  PdfExportOptions,
   type Stitch,
 } from "#/schemas";
 import {
@@ -24,11 +35,13 @@ import {
   PatternErrorUnsupportedPatternType,
 } from "#/error.ts";
 
-const SAVE_AS_FILTERS: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
-const EXPORT_FILTERS: DialogFilter[] = [
-  { name: "OXS", extensions: ["oxs"] },
-  { name: "PDF", extensions: ["pdf"] },
+export const ANY_PATTERN_FILTER: DialogFilter[] = [
+  { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
+  { name: "All Files", extensions: ["*"] },
 ];
+export const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
+export const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
+export const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
 
 export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
   /**
@@ -43,14 +56,12 @@ export const usePatternsStore = defineStore(
   () => {
     const overlay = useOverlay();
     const patternInfoModal = overlay.create(
-      defineAsyncComponent(() => import("#/components/dialogs/PatternInfoProperties.vue")),
+      defineAsyncComponent(() => import("#/components/modals/PatternInfoModal.vue")),
     );
-    const fabricPropertiesModal = overlay.create(
-      defineAsyncComponent(() => import("#/components/dialogs/FabricProperties.vue")),
-    );
-    const gridPropertiesModal = overlay.create(
-      defineAsyncComponent(() => import("#/components/dialogs/GridProperties.vue")),
-    );
+    const fabricModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/FabricModal.vue")));
+    const gridModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/GridModal.vue")));
+    const publishModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/PublishModal.vue")));
+    const pdfExportModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/PdfExportModal.vue")));
 
     const appWindow = getCurrentWebviewWindow();
 
@@ -119,16 +130,13 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function createPattern() {
-      const fabric = await fabricPropertiesModal.open().result;
-      if (fabric) {
-        try {
-          loading.value = true;
-          pattern.value = new PatternView(await PatternApi.createPattern(fabric));
-          appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
-        } finally {
-          loading.value = false;
-        }
+    async function createPattern(fabric: Fabric) {
+      try {
+        loading.value = true;
+        pattern.value = new PatternView(await PatternApi.createPattern(fabric));
+        appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+      } finally {
+        loading.value = false;
       }
     }
 
@@ -140,7 +148,7 @@ export const usePatternsStore = defineStore(
           appStateStore.lastSavedFolder ??= path.substring(0, path.lastIndexOf(sep()));
           const selectedPath = await save({
             defaultPath: await join(appStateStore.lastSavedFolder, await basename(path)),
-            filters: SAVE_AS_FILTERS,
+            filters: EMBPROJ_FILTER,
           });
           if (selectedPath === null) return;
           path = selectedPath;
@@ -164,15 +172,45 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function exportPattern(ext: string) {
+    async function openExportModal(ext: "oxs" | "pdf") {
       if (!pattern.value) return;
       try {
-        const defaultPath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
-        const path = await save({ defaultPath, filters: EXPORT_FILTERS.filter((f) => f.extensions.includes(ext)) });
-        if (path === null) return;
+        const filePath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
+        switch (ext) {
+          case "oxs": {
+            await exportPatternAsOxs(filePath);
+            break;
+          }
+          case "pdf": {
+            pdfExportModal.open({
+              filePath,
+              options: pattern.value.publishSettings.pdf,
+            });
+            break;
+          }
+        }
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function exportPatternAsOxs(filePath: string) {
+      if (!pattern.value) return;
+      const path = await save({ defaultPath: filePath, filters: OXS_FILTER });
+      if (path === null) return;
+      try {
         loading.value = true;
-        if (ext === "oxs") await PatternApi.savePattern(pattern.value.id, path);
-        else await PatternApi.exportPattern(pattern.value.id, path);
+        await PatternApi.savePattern(pattern.value.id, path);
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function exportPatternAsPdf(filePath: string, options: PdfExportOptions) {
+      if (!pattern.value) return;
+      try {
+        loading.value = true;
+        await PatternApi.exportPattern(pattern.value.id, filePath, options);
       } finally {
         loading.value = false;
       }
@@ -193,12 +231,17 @@ export const usePatternsStore = defineStore(
             title: fluent.$t("title-unsaved-changes"),
             message: fluent.$t("message-unsaved-changes"),
           }).result;
+
+          // If the user dismisses the dialog, prevent the window from closing.
+          if (accepted === undefined) return;
+
           if (accepted) {
             const patternId = pattern.value!.id;
             const filePath = await PatternApi.getPatternFilePath(patternId);
             await PatternApi.savePattern(patternId, filePath);
             await closePattern(patternId);
           } else await closePattern(patternId, { force: true });
+
           return;
         }
         throw error;
@@ -207,10 +250,13 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function updatePatternInfo() {
+    function openPatternInfoModal() {
       if (!pattern.value) return;
-      const patternInfo = await patternInfoModal.open({ patternInfo: pattern.value.info }).result;
-      if (patternInfo) await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
+      patternInfoModal.open({ patternInfo: pattern.value.info });
+    }
+    async function updatePatternInfo(patternInfo: PatternInfo) {
+      if (!pattern.value) return;
+      await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
     }
     appWindow.listen<string>("pattern-info:update", ({ payload }) => {
       if (!pattern.value) return;
@@ -218,20 +264,25 @@ export const usePatternsStore = defineStore(
       appStateStore.updateOpenedPattern(pattern.value.id, pattern.value.info.title);
     });
 
-    async function updateFabric() {
+    function openFabricModal(fabric?: Fabric) {
+      fabricModal.open({ fabric });
+    }
+    async function updateFabric(fabric: Fabric) {
       if (!pattern.value) return;
-      const fabric = await fabricPropertiesModal.open({ fabric: pattern.value.fabric }).result;
-      if (fabric) await FabricApi.updateFabric(pattern.value.id, fabric);
+      await FabricApi.updateFabric(pattern.value.id, fabric);
     }
     appWindow.listen<string>("fabric:update", ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.fabric = Fabric.deserialize(payload);
     });
 
-    async function updateGrid() {
+    function openGridModal() {
       if (!pattern.value) return;
-      const grid = await gridPropertiesModal.open({ grid: pattern.value.grid }).result;
-      if (grid) await GridApi.updateGrid(pattern.value!.id, grid);
+      gridModal.open({ grid: pattern.value.grid });
+    }
+    async function updateGrid(grid: Grid) {
+      if (!pattern.value) return;
+      await GridApi.updateGrid(pattern.value!.id, grid);
     }
     appWindow.listen<string>("grid:update", ({ payload }) => {
       if (!pattern.value) return;
@@ -322,6 +373,19 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
+    function openPublishModal() {
+      if (!pattern.value) return;
+      publishModal.open({ options: pattern.value.publishSettings.pdf });
+    }
+    async function updatePdfExportOptions(options: PdfExportOptions) {
+      if (!pattern.value) return;
+      await PublishApi.updatePdfExportOptions(pattern.value.id, options);
+    }
+    appWindow.listen<string>("publish:update-pdf", ({ payload }) => {
+      if (!pattern.value) return;
+      pattern.value.publishSettings.pdf = PdfExportOptions.deserialize(payload);
+    });
+
     async function undo() {
       if (!pattern.value) return;
       await HistoryApi.undo(pattern.value.id);
@@ -340,10 +404,15 @@ export const usePatternsStore = defineStore(
       openPattern,
       createPattern,
       savePattern,
-      exportPattern,
+      openExportModal,
+      exportPatternAsOxs,
+      exportPatternAsPdf,
       closePattern,
+      openPatternInfoModal,
       updatePatternInfo,
+      openFabricModal,
       updateFabric,
+      openGridModal,
       updateGrid,
       addPaletteItem,
       removePaletteItem,
@@ -352,6 +421,8 @@ export const usePatternsStore = defineStore(
       removeStitch,
       setDisplayMode,
       showSymbols,
+      openPublishModal,
+      updatePdfExportOptions,
       undo,
       redo,
     };

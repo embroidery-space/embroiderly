@@ -20,10 +20,10 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
         .map(|palitem| palitem.into())
         .collect::<Vec<_>>();
 
-      for (i, symbols) in xsd_pattern.symbols.iter().enumerate() {
+      for (i, (symbols, formats)) in xsd_pattern.symbols.iter().zip(xsd_pattern.formats.iter()).enumerate() {
         let palitem: &mut PaletteItem = palette.get_mut(i).unwrap();
 
-        palitem.symbol_font = Some(xsd_pattern.pattern_settings.default_stitch_font.clone());
+        palitem.symbol_font = formats.font.font_name.clone();
         if let Some(code) = symbols.full {
           palitem.symbol = Some(Symbol::Code(code));
         }
@@ -63,7 +63,13 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
       xsd_pattern
         .specialstitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(|stitch| {
+          let model = xsd_pattern
+            .special_stitch_models
+            .get(stitch.modindex as usize)
+            .ok_or_else(|| anyhow::anyhow!("Special stitch model not found for index {}", stitch.modindex))?;
+          (stitch, model.width, model.height).try_into()
+        })
         .collect::<Result<Vec<_>, _>>()?,
     ),
     special_stitch_models: xsd_pattern
@@ -79,5 +85,10 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
     ..Default::default()
   };
 
-  Ok(PatternProject::new(file_path.to_owned(), pattern, display_settings))
+  Ok(PatternProject::new(
+    file_path.to_owned(),
+    pattern,
+    display_settings,
+    Default::default(),
+  ))
 }

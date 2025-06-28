@@ -21,6 +21,10 @@ impl<R: tauri::Runtime> HistoryStateInner<R> {
     self.inner.entry(*id).or_default()
   }
 
+  pub fn remove(&mut self, id: &uuid::Uuid) -> Option<History<R>> {
+    self.inner.remove(id)
+  }
+
   pub fn iter(&self) -> impl Iterator<Item = (&uuid::Uuid, &History<R>)> {
     self.inner.iter()
   }

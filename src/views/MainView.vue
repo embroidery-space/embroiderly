@@ -27,7 +27,9 @@
 
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-  import { ref } from "vue";
+  import { defineAsyncComponent, ref } from "vue";
+
+  const CanvasPanel = defineAsyncComponent(() => import("#/components/CanvasPanel.vue"));
 
   const patternsStore = usePatternsStore();
 

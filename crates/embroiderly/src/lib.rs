@@ -90,6 +90,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::palette::update_palette_display_settings,
     commands::stitches::add_stitch,
     commands::stitches::remove_stitch,
+    commands::publish::update_pdf_export_options,
     commands::history::undo,
     commands::history::redo,
     commands::fonts::load_stitch_font,
@@ -195,7 +196,7 @@ fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHa
           app_handle.state::<HistoryState<R>>(),
           app_handle.state::<PatternsState>(),
         ) {
-          log::error!("Failed to auto-save Pattern({:?}): {:?}", pattern_id, err);
+          log::error!("Failed to auto-save Pattern({pattern_id:?}): {err:?}");
         }
       }
 

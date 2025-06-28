@@ -92,7 +92,7 @@
   const fileOptions = computed<DropdownMenuItem[][]>(() => [
     [
       { label: fluent.$t("label-open"), kbds: ["ctrl", "o"], onSelect: () => patternsStore.openPattern() },
-      { label: fluent.$t("label-create"), kbds: ["ctrl", "n"], onSelect: () => patternsStore.createPattern() },
+      { label: fluent.$t("label-create"), kbds: ["ctrl", "n"], onSelect: () => patternsStore.openFabricModal() },
     ],
     [
       {
@@ -113,8 +113,8 @@
         label: fluent.$t("label-export"),
         disabled: !patternsStore.pattern,
         children: [
-          { label: "OXS", onSelect: () => patternsStore.exportPattern("oxs") },
-          { label: "PDF", onSelect: () => patternsStore.exportPattern("pdf") },
+          { label: "OXS", onSelect: () => patternsStore.openExportModal("oxs") },
+          { label: "PDF", onSelect: () => patternsStore.openExportModal("pdf") },
         ],
       },
     ],
@@ -129,13 +129,17 @@
   ]);
   const patternOptions = computed<DropdownMenuItem[][]>(() => [
     [
-      { label: fluent.$t("title-pattern-info"), onSelect: () => patternsStore.updatePatternInfo() },
-      { label: fluent.$t("title-fabric-properties"), onSelect: () => patternsStore.updateFabric() },
-      { label: fluent.$t("title-grid-properties"), onSelect: () => patternsStore.updateGrid() },
+      { label: fluent.$t("title-pattern-info"), onSelect: () => patternsStore.openPatternInfoModal() },
+      {
+        label: fluent.$t("title-fabric-properties"),
+        onSelect: () => patternsStore.openFabricModal(patternsStore.pattern?.fabric),
+      },
+      { label: fluent.$t("title-grid-properties"), onSelect: () => patternsStore.openGridModal() },
     ],
+    [{ label: fluent.$t("title-publish-settings"), onSelect: () => patternsStore.openPublishModal() }],
   ]);
   const toolsOptions = computed<DropdownMenuItem[][]>(() => [
-    [{ label: fluent.$t("title-settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettings() }],
+    [{ label: fluent.$t("title-settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettingsModal() }],
     [
       {
         label: fluent.$t("label-check-for-updates"),
@@ -155,7 +159,7 @@
   ]);
 
   const manageOptions = computed<DropdownMenuItem[][]>(() => [
-    [{ label: fluent.$t("title-settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettings() }],
+    [{ label: fluent.$t("title-settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettingsModal() }],
     [
       {
         label: fluent.$t("label-check-for-updates"),

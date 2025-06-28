@@ -76,7 +76,7 @@ pub fn create_pattern<R: tauri::Runtime>(
     let pattern = Pattern::new(fabric);
     let file_path = app_document_dir(&app_handle)?.join(format!("{}.{}", pattern.info.title, PatternFormat::default()));
 
-    let patproj = PatternProject::new(file_path, pattern, Default::default());
+    let patproj = PatternProject::new(file_path, pattern, Default::default(), Default::default());
     log::debug!("Pattern({:?}) created", patproj.id);
 
     let result = borsh::to_vec(&patproj)?;
@@ -177,6 +177,7 @@ pub fn save_all_patterns<R: tauri::Runtime>(
 pub fn export_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
   file_path: std::path::PathBuf,
+  options: serde_json::Value,
   app_handle: tauri::AppHandle<R>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
@@ -206,19 +207,32 @@ pub fn export_pattern<R: tauri::Runtime>(
 
   let sidecar = app_handle
     .shell()
-    .sidecar("embroiderly-export")
+    .sidecar("embroiderly-publish")
     .map_err(|e| PatternError::FailedToExport(e.into()))?;
   let output = tauri::async_runtime::block_on(async move {
-    let result = sidecar
-      .arg("-p")
+    let mut sidecar = sidecar
+      .arg("--pattern")
       .arg(&tempfile_path)
-      .arg("-o")
-      .arg(&file_path)
-      .output()
-      .await;
-    std::fs::remove_file(tempfile_path).unwrap();
-    result.unwrap()
-  });
+      .arg("--output")
+      .arg(&file_path);
+
+    if let Ok(options) = serde_json::to_string(&options) {
+      sidecar = sidecar.arg("--options").arg(options);
+    } else {
+      log::error!("Failed to serialize options: {options:?}");
+      return Err(PatternError::FailedToExport(anyhow::anyhow!(
+        "Failed to serialize options"
+      )));
+    }
+
+    let result = sidecar.output().await;
+
+    if let Err(e) = std::fs::remove_file(tempfile_path) {
+      log::error!("Failed to remove temporary file: {e}");
+    }
+
+    result.map_err(|e| PatternError::FailedToExport(e.into()))
+  })?;
 
   if !output.status.success() {
     let stderr = String::from_utf8_lossy(&output.stderr);
@@ -258,6 +272,7 @@ pub fn close_pattern<R: tauri::Runtime>(
   }
 
   let patproj = patterns.write().unwrap().remove_pattern(&pattern_id).unwrap();
+  let _history = history.write().unwrap().remove(&pattern_id);
 
   let backup_file_path = backup_file_path(&patproj.file_path, "bak");
   if backup_file_path.exists() {

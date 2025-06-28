@@ -23,6 +23,25 @@ mod tests;
 
 pub type Coord = ordered_float::NotNan<f32>;
 
+/// Represents the bounds of a pattern.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Bounds {
+  pub x: u16,
+  pub y: u16,
+  pub width: u16,
+  pub height: u16,
+}
+
+impl Bounds {
+  pub fn new(x: u16, y: u16, width: u16, height: u16) -> Self {
+    Self { x, y, width, height }
+  }
+
+  pub fn contains_point(&self, x: Coord, y: Coord) -> bool {
+    x >= self.x.into() && x < (self.x + self.width).into() && y >= self.y.into() && y < (self.y + self.height).into()
+  }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum Stitch {
@@ -228,13 +247,13 @@ impl Stitches<FullStitch> {
     conflicts
   }
 
-  pub fn remove_stitches_outside_bounds(&mut self, x: u16, y: u16, width: u16, height: u16) -> Vec<FullStitch> {
+  pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<FullStitch> {
     let mut conflicts = Vec::new();
     for fullstitch in std::mem::take(&mut self.inner).into_iter() {
-      if fullstitch.x < x.into()
-        || fullstitch.x >= (x + width).into()
-        || fullstitch.y < y.into()
-        || fullstitch.y >= (y + height).into()
+      if fullstitch.x < bounds.x.into()
+        || fullstitch.x >= (bounds.x + bounds.width).into()
+        || fullstitch.y < bounds.y.into()
+        || fullstitch.y >= (bounds.y + bounds.height).into()
       {
         conflicts.push(fullstitch);
       } else {
@@ -242,6 +261,13 @@ impl Stitches<FullStitch> {
       }
     }
     conflicts
+  }
+
+  pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &FullStitch> {
+    self
+      .inner
+      .iter()
+      .filter(move |stitch| bounds.contains_point(stitch.x, stitch.y))
   }
 }
 
@@ -398,13 +424,13 @@ impl Stitches<PartStitch> {
     conflicts
   }
 
-  pub fn remove_stitches_outside_bounds(&mut self, x: u16, y: u16, width: u16, height: u16) -> Vec<PartStitch> {
+  pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<PartStitch> {
     let mut conflicts = Vec::new();
     for fullstitch in std::mem::take(&mut self.inner).into_iter() {
-      if fullstitch.x < x.into()
-        || fullstitch.x >= (x + width).into()
-        || fullstitch.y < y.into()
-        || fullstitch.y >= (y + height).into()
+      if fullstitch.x < bounds.x.into()
+        || fullstitch.x >= (bounds.x + bounds.width).into()
+        || fullstitch.y < bounds.y.into()
+        || fullstitch.y >= (bounds.y + bounds.height).into()
       {
         conflicts.push(fullstitch);
       } else {
@@ -413,20 +439,27 @@ impl Stitches<PartStitch> {
     }
     conflicts
   }
+
+  pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &PartStitch> {
+    self
+      .inner
+      .iter()
+      .filter(move |stitch| bounds.contains_point(stitch.x, stitch.y))
+  }
 }
 
 impl Stitches<LineStitch> {
-  pub fn remove_stitches_outside_bounds(&mut self, x: u16, y: u16, width: u16, height: u16) -> Vec<LineStitch> {
+  pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<LineStitch> {
     let mut conflicts = Vec::new();
     for line in std::mem::take(&mut self.inner).into_iter() {
-      if line.x.0 < x.into()
-        || line.x.1 < x.into()
-        || line.x.0 > (x + width).into()
-        || line.x.1 > (x + width).into()
-        || line.y.0 < y.into()
-        || line.y.1 < y.into()
-        || line.y.0 > (y + height).into()
-        || line.y.1 > (y + height).into()
+      if line.x.0 < bounds.x.into()
+        || line.x.1 < bounds.x.into()
+        || line.x.0 > (bounds.x + bounds.width).into()
+        || line.x.1 > (bounds.x + bounds.width).into()
+        || line.y.0 < bounds.y.into()
+        || line.y.1 < bounds.y.into()
+        || line.y.0 > (bounds.y + bounds.height).into()
+        || line.y.1 > (bounds.y + bounds.height).into()
       {
         conflicts.push(line);
       } else {
@@ -435,19 +468,46 @@ impl Stitches<LineStitch> {
     }
     conflicts
   }
+
+  pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &LineStitch> {
+    self.inner.iter().filter(move |stitch| {
+      bounds.contains_point(stitch.x.0, stitch.y.0) || bounds.contains_point(stitch.x.1, stitch.y.1)
+    })
+  }
 }
 
 impl Stitches<NodeStitch> {
-  pub fn remove_stitches_outside_bounds(&mut self, x: u16, y: u16, width: u16, height: u16) -> Vec<NodeStitch> {
+  pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<NodeStitch> {
     let mut conflicts = Vec::new();
     for node in std::mem::take(&mut self.inner).into_iter() {
-      if node.x < x.into() || node.x >= (x + width).into() || node.y < y.into() || node.y >= (y + height).into() {
+      if node.x < bounds.x.into()
+        || node.x >= (bounds.x + bounds.width).into()
+        || node.y < bounds.y.into()
+        || node.y >= (bounds.y + bounds.height).into()
+      {
         conflicts.push(node);
       } else {
         self.inner.insert(node);
       }
     }
     conflicts
+  }
+
+  pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &NodeStitch> {
+    self
+      .inner
+      .iter()
+      .filter(move |stitch| bounds.contains_point(stitch.x, stitch.y))
+  }
+}
+
+impl Stitches<SpecialStitch> {
+  pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &SpecialStitch> {
+    self.inner.iter().filter(move |stitch| {
+      // println!("Checking if {:?} is in bounds {:?}", stitch, bounds);
+      bounds.contains_point(stitch.x, stitch.y)
+      // || bounds.contains_point(stitch.x + stitch.width, stitch.y + stitch.height)
+    })
   }
 }
 

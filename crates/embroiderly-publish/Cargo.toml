@@ -1,5 +1,5 @@
 [package]
-name = "embroiderly-export"
+name = "embroiderly-publish"
 edition = { workspace = true }
 
 [dependencies]
@@ -9,6 +9,9 @@ clap = { workspace = true }
 # Embroiderly Core
 embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true }
+
+# De/serialization
+serde_json = { workspace = true }
 
 # Exporting patterns to PDF
 typst = { workspace = true }
@@ -26,3 +29,6 @@ simple_logger = { workspace = true }
 # Error handling
 anyhow = { workspace = true }
 thiserror = { workspace = true }
+
+[dev-dependencies]
+prettydiff = { workspace = true }
