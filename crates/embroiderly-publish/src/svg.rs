@@ -281,19 +281,22 @@ fn draw_full_stitches<W: io::Write>(
               FullStitchKind::Petite => cell_size / 2.0,
             };
 
-            if color {
-              writer
-                .create_element("rect")
-                .with_attributes([
-                  ("x", "0"),
-                  ("y", "0"),
-                  ("width", size.to_string().as_str()),
-                  ("height", size.to_string().as_str()),
-                  ("fill", format!("#{}", palitem.color).as_str()),
-                  ("stroke", "#000000"),
-                ])
-                .write_empty()?;
-            }
+            let fill = if color {
+              format!("#{}", palitem.color)
+            } else {
+              "none".to_string()
+            };
+            writer
+              .create_element("rect")
+              .with_attributes([
+                ("x", "0"),
+                ("y", "0"),
+                ("width", size.to_string().as_str()),
+                ("height", size.to_string().as_str()),
+                ("fill", fill.as_str()),
+                ("stroke", "#000000"),
+              ])
+              .write_empty()?;
 
             let font_size = size * 0.8;
             draw_stitch_symbol!(
@@ -336,65 +339,67 @@ fn draw_part_stitches<W: io::Write>(
           .create_element("g")
           .with_attribute(("transform", format!("translate({x}, {y})").as_str()))
           .write_inner_content(|writer| {
-            if color {
-              let points = match stitch.kind {
-                PartStitchKind::Half => match stitch.direction {
-                  PartStitchDirection::Forward => [
-                    (1.0, 0.0),
-                    (1.0, 0.35),
-                    (0.35, 1.0),
-                    (0.0, 1.0),
-                    (0.0, 0.65),
-                    (0.65, 0.0),
-                  ],
-                  PartStitchDirection::Backward => [
-                    (0.0, 0.0),
-                    (0.35, 0.0),
-                    (1.0, 0.65),
-                    (1.0, 1.0),
-                    (0.65, 1.0),
-                    (0.0, 0.35),
-                  ],
-                },
-                PartStitchKind::Quarter => match stitch.direction {
-                  PartStitchDirection::Forward => [
-                    (0.5, 0.0),
-                    (0.5, 0.25),
-                    (0.25, 0.5),
-                    (0.0, 0.5),
-                    (0.0, 0.25),
-                    (0.25, 0.0),
-                  ],
+            let points = match stitch.kind {
+              PartStitchKind::Half => match stitch.direction {
+                PartStitchDirection::Forward => [
+                  (1.0, 0.0),
+                  (1.0, 0.35),
+                  (0.35, 1.0),
+                  (0.0, 1.0),
+                  (0.0, 0.65),
+                  (0.65, 0.0),
+                ],
+                PartStitchDirection::Backward => [
+                  (0.0, 0.0),
+                  (0.35, 0.0),
+                  (1.0, 0.65),
+                  (1.0, 1.0),
+                  (0.65, 1.0),
+                  (0.0, 0.35),
+                ],
+              },
+              PartStitchKind::Quarter => match stitch.direction {
+                PartStitchDirection::Forward => [
+                  (0.5, 0.0),
+                  (0.5, 0.25),
+                  (0.25, 0.5),
+                  (0.0, 0.5),
+                  (0.0, 0.25),
+                  (0.25, 0.0),
+                ],
 
-                  PartStitchDirection::Backward => [
-                    (0.0, 0.0),
-                    (0.0, 0.25),
-                    (0.25, 0.5),
-                    (0.5, 0.5),
-                    (0.5, 0.25),
-                    (0.25, 0.0),
-                  ],
-                },
-              };
-              let points = points
-                .iter()
-                .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size,))
-                .collect::<Vec<_>>()
-                .join(" ");
+                PartStitchDirection::Backward => [
+                  (0.0, 0.0),
+                  (0.0, 0.25),
+                  (0.25, 0.5),
+                  (0.5, 0.5),
+                  (0.5, 0.25),
+                  (0.25, 0.0),
+                ],
+              },
+            };
+            let points = points
+              .iter()
+              .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size,))
+              .collect::<Vec<_>>()
+              .join(" ");
+            let fill = if color {
+              format!("#{}", palitem.color)
+            } else {
+              "none".to_string()
+            };
 
-              writer
-                .create_element("polygon")
-                .with_attributes([
-                  ("points", points.as_str()),
-                  ("fill", format!("#{}", palitem.color).as_str()),
-                  ("stroke", "#000000"),
-                ])
-                .write_empty()?;
-            }
+            writer
+              .create_element("polygon")
+              .with_attributes([
+                ("points", points.as_str()),
+                ("fill", fill.as_str()),
+                ("stroke", "#000000"),
+              ])
+              .write_empty()?;
 
             let size = cell_size / 2.0;
             let font_size = size * 0.8;
-
             match stitch.kind {
               PartStitchKind::Half => match stitch.direction {
                 PartStitchDirection::Forward => {

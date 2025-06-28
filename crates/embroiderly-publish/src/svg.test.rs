@@ -82,14 +82,18 @@ fn writes_full_stitches() {
   {
     let xml = r##"<g id="fullstitches">
   <g transform="translate(0, 0)">
+    <rect x="0" y="0" width="14" height="14" fill="none" stroke="#000000"/>
   </g>
   <g transform="translate(14, 0)">
+    <rect x="0" y="0" width="14" height="14" fill="none" stroke="#000000"/>
     <text x="7" y="7" font-size="11.2" font-family="CrossStitch3" text-anchor="middle" dominant-baseline="middle">A</text>
   </g>
   <g transform="translate(0, 14)">
+    <rect x="0" y="0" width="14" height="14" fill="none" stroke="#000000"/>
     <text x="7" y="7" font-size="11.2" font-family="Ursasoftware" text-anchor="middle" dominant-baseline="middle">?</text>
   </g>
   <g transform="translate(14, 14)">
+    <rect x="0" y="0" width="7" height="7" fill="none" stroke="#000000"/>
     <text x="3.5" y="3.5" font-size="5.6" font-family="CrossStitch3" text-anchor="middle" dominant-baseline="middle">A</text>
   </g>
 </g>"##;
@@ -170,17 +174,21 @@ fn writes_part_stitches() {
   {
     let xml = r##"<g id="partstitches">
   <g transform="translate(0, 0)">
+    <polygon points="14,0 14,4.9 4.9,14 0,14 0,9.099999 9.099999,0" fill="none" stroke="#000000"/>
     <text x="10.5" y="3.5" font-size="5.6" font-family="CrossStitch3" text-anchor="middle" dominant-baseline="middle">A</text>
     <text x="3.5" y="10.5" font-size="5.6" font-family="CrossStitch3" text-anchor="middle" dominant-baseline="middle">A</text>
   </g>
   <g transform="translate(14, 0)">
+    <polygon points="0,0 4.9,0 14,9.099999 14,14 9.099999,14 0,4.9" fill="none" stroke="#000000"/>
     <text x="3.5" y="3.5" font-size="5.6" font-family="Ursasoftware" text-anchor="middle" dominant-baseline="middle">?</text>
     <text x="10.5" y="10.5" font-size="5.6" font-family="Ursasoftware" text-anchor="middle" dominant-baseline="middle">?</text>
   </g>
   <g transform="translate(7, 14)">
+    <polygon points="7,0 7,3.5 3.5,7 0,7 0,3.5 3.5,0" fill="none" stroke="#000000"/>
     <text x="3.5" y="3.5" font-size="5.6" font-family="Ursasoftware" text-anchor="middle" dominant-baseline="middle">?</text>
   </g>
   <g transform="translate(14, 14)">
+    <polygon points="0,0 0,3.5 3.5,7 7,7 7,3.5 3.5,0" fill="none" stroke="#000000"/>
     <text x="3.5" y="3.5" font-size="5.6" font-family="CrossStitch3" text-anchor="middle" dominant-baseline="middle">A</text>
   </g>
 </g>"##;
