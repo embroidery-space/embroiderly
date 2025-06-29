@@ -2,7 +2,7 @@
   <div>
     <div class="grid grid-cols-2 gap-4">
       <NuxtFormField :label="$t('label-major-lines-interval')" :hint="$t('label-hint-counts-in-stitches')">
-        <NuxtInputNumber v-model="grid.majorLinesInterval" orientation="vertical" :min="1" />
+        <NuxtInputNumber v-model="grid.majorLinesInterval" orientation="vertical" :min="1" class="w-full" />
       </NuxtFormField>
     </div>
 
