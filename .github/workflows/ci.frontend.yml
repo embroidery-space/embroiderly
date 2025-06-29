@@ -10,10 +10,11 @@ on:
       - "*.config.ts"
       - ".prettierrc.json"
       - ".eslint.config.js"
-      - ".github/workflows/ci-frontend.yml"
+      - ".github/workflows/ci.frontend.yml"
+      - ".github/workflows/audit.frontend.yml"
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 jobs:
   audit:
-    uses: ./.github/workflows/reusable/frontend.yml
+    uses: ./.github/workflows/audit.frontend.yml

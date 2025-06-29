@@ -7,7 +7,8 @@ on:
       - "crates/**"
       - "Cargo.*"
       - "rustfmt.toml"
-      - ".github/workflows/ci-backend.yml"
+      - ".github/workflows/ci.backend.yml"
+      - ".github/workflows/audit.backend.yml"
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -15,4 +16,4 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   audit:
-    uses: ./.github/workflows/reusable/backend.yml
+    uses: ./.github/workflows/audit.backend.yml

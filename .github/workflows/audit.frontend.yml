@@ -1,4 +1,4 @@
-name: Frontend Audit
+name: Audit (frontend)
 on:
   workflow_call:
 jobs:
