@@ -42,7 +42,7 @@
         <NuxtButton
           :loading="settingsStore.loadingUpdate"
           :label="$t('label-check-for-updates')"
-          class="w-full"
+          class="w-full justify-center"
           @click="() => settingsStore.checkForUpdates()"
         />
 

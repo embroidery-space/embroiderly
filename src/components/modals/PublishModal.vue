@@ -1,5 +1,5 @@
 <template>
-  <NuxtModal :title="$t('title-publish-settings')">
+  <NuxtModal :title="$t('title-publish-settings')" :ui="{ content: 'w-xl' }">
     <template #body>
       <PdfPublishForm v-model="options" />
     </template>
