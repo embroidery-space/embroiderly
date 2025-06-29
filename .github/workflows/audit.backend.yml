@@ -1,16 +1,6 @@
-name: CI (backend)
+name: Audit (backend)
 on:
-  pull_request:
-    branches: ["main"]
-    types: ["opened", "reopened", "edited", "synchronize"]
-    paths:
-      - "crates/**"
-      - "Cargo.*"
-      - "rustfmt.toml"
-      - ".github/workflows/ci-backend.yml"
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
+  workflow_call:
 env:
   CARGO_TERM_COLOR: always
 jobs:
@@ -33,13 +23,18 @@ jobs:
       - uses: swatinem/rust-cache@v2
       - name: Check formatting
         run: cargo +nightly fmt --check
-      - name: Lint
+      - name: Check linting
         run: cargo clippy --locked -- -D warnings
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install system dependencies
+      - name: Install system dependencies (Ubuntu-only)
+        if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf

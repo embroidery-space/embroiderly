@@ -1,19 +1,6 @@
-name: CI (frontend)
+name: Audit (frontend)
 on:
-  pull_request:
-    branches: ["main"]
-    types: ["opened", "reopened", "edited", "synchronize"]
-    paths:
-      - "src/**"
-      - "package*.json"
-      - "tsconfig*.json"
-      - "*.config.ts"
-      - ".prettierrc.json"
-      - ".eslint.config.js"
-      - ".github/workflows/ci-frontend.yml"
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
+  workflow_call:
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -28,10 +15,14 @@ jobs:
         run: npm run build
       - name: Check formatting
         run: npm run fmt
-      - name: Lint
+      - name: Check linting
         run: npm run lint
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -39,5 +30,5 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Run tests
+      - name: Test
         run: npm run test
