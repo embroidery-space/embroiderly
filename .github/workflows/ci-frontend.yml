@@ -1,7 +1,7 @@
 name: CI (frontend)
 on:
   pull_request:
-    branches: ["main"]
+    branches: ["dev"]
     types: ["opened", "reopened", "edited", "synchronize"]
     paths:
       - "src/**"
@@ -15,29 +15,5 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - name: Check types
-        run: npm run build
-      - name: Check formatting
-        run: npm run fmt
-      - name: Lint
-        run: npm run lint
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - name: Run tests
-        run: npm run test
+  audit:
+    uses: ./.github/workflows/reusable/frontend.yml

@@ -1,7 +1,7 @@
 name: CI (backend)
 on:
   pull_request:
-    branches: ["main"]
+    branches: ["dev"]
     types: ["opened", "reopened", "edited", "synchronize"]
     paths:
       - "crates/**"
@@ -14,39 +14,5 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install system dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-      - name: Create dummy embroiderly-publish sidecar binaries
-        run: sh ./scripts/create-dummy-embroiderly-publish-sidecar.sh
-      - uses: dtolnay/rust-toolchain@nightly
-        with:
-          components: rustfmt
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: clippy
-      - uses: swatinem/rust-cache@v2
-      - name: Check formatting
-        run: cargo +nightly fmt --check
-      - name: Lint
-        run: cargo clippy --locked -- -D warnings
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install system dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-      - name: Create dummy embroiderly-publish sidecar binaries
-        run: sh ./scripts/create-dummy-embroiderly-publish-sidecar.sh
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: swatinem/rust-cache@v2
-      - uses: taiki-e/install-action@nextest
-      - name: Test
-        run: cargo nextest run --locked -F embroiderly/test
+  audit:
+    uses: ./.github/workflows/reusable/backend.yml
