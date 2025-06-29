@@ -34,7 +34,6 @@ tauri-plugin-prevent-default = "2.1.1"
 tauri-plugin-pinia = "3.6.0"
 
 # Embroiderly Core
-embroiderly-export = { path = "crates/embroiderly-export" }
 embroiderly-parsers = { path = "crates/embroiderly-parsers" }
 embroiderly-pattern = { path = "crates/embroiderly-pattern" }
 xsp-parsers = { path = "crates/xsp-parsers" }
