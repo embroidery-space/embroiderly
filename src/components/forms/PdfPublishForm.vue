@@ -12,11 +12,11 @@
 
       <div class="flex flex-col gap-y-1">
         <div class="flex gap-x-2">
-          <NuxtFormField :label="$t('label-frame-width')">
-            <NuxtInputNumber v-model="options.frameOptions.frameSize![0]" orientation="vertical" />
+          <NuxtFormField :label="$t('label-frame-width')" class="w-full">
+            <NuxtInputNumber v-model="options.frameOptions.frameSize![0]" orientation="vertical" class="w-full" />
           </NuxtFormField>
-          <NuxtFormField :label="$t('label-frame-height')">
-            <NuxtInputNumber v-model="options.frameOptions.frameSize![1]" orientation="vertical" />
+          <NuxtFormField :label="$t('label-frame-height')" class="w-full">
+            <NuxtInputNumber v-model="options.frameOptions.frameSize![1]" orientation="vertical" class="w-full" />
           </NuxtFormField>
         </div>
         <div class="flex gap-x-2">
