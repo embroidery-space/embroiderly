@@ -12,7 +12,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
 
   if options.monochrome {
     log::debug!("Exporting monochrome Pattern({:?})", patproj.id);
-    let frames = super::svg::export_pattern(patproj, false, options.frame_options)?;
+    let frames = embroiderly_image::svg::generate_svg(patproj, false, options.frame_options)?;
     let file_path = file_path.with_file_name(format!(
       "{}.monochrome.{}",
       file_path.file_stem().unwrap_or_default().to_string_lossy(),
@@ -23,7 +23,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
 
   if options.color {
     log::debug!("Exporting color Pattern({:?})", patproj.id);
-    let frames = super::svg::export_pattern(patproj, true, options.frame_options)?;
+    let frames = embroiderly_image::svg::generate_svg(patproj, true, options.frame_options)?;
     let file_path = file_path.with_file_name(format!(
       "{}.color.{}",
       file_path.file_stem().unwrap_or_default().to_string_lossy(),

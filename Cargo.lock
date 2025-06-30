@@ -1421,6 +1421,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "embroiderly-image"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "embroiderly-parsers",
+ "embroiderly-pattern",
+ "log",
+ "prettydiff",
+ "quick-xml 0.37.5",
+ "thiserror 2.0.12",
+]
+
+[[package]]
 name = "embroiderly-parsers"
 version = "0.0.0"
 dependencies = [
@@ -1455,11 +1468,10 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "clap",
+ "embroiderly-image",
  "embroiderly-parsers",
  "embroiderly-pattern",
  "log",
- "prettydiff",
- "quick-xml 0.37.5",
  "serde_json",
  "simple_logger",
  "thiserror 2.0.12",

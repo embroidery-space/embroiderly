@@ -36,6 +36,7 @@ tauri-plugin-pinia = "3.6.0"
 # Embroiderly Core
 embroiderly-parsers = { path = "crates/embroiderly-parsers" }
 embroiderly-pattern = { path = "crates/embroiderly-pattern" }
+embroiderly-image = { path = "crates/embroiderly-image" }
 xsp-parsers = { path = "crates/xsp-parsers" }
 
 # Parsing pattern files

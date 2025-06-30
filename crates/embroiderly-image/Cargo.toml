@@ -1,0 +1,21 @@
+[package]
+name = "embroiderly-image"
+edition = { workspace = true }
+
+[dependencies]
+# Embroiderly Core
+embroiderly-parsers = { workspace = true }
+embroiderly-pattern = { workspace = true }
+
+# Writing SVG files
+quick-xml = { workspace = true }
+
+# Logging
+log = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+prettydiff = { workspace = true }
