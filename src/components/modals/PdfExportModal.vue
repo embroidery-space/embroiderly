@@ -1,5 +1,5 @@
 <template>
-  <NuxtModal :title="$t('title-pdf-export')" :ui="{ content: 'w-md' }">
+  <NuxtModal :title="$t('title-pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
       <div class="flex flex-col gap-y-4">
         <NuxtButtonGroup class="w-full">

@@ -1,5 +1,5 @@
 <template>
-  <NuxtModal :title="$t('title-settings')" :ui="{ content: 'w-md' }">
+  <NuxtModal :title="$t('title-settings')" :ui="{ content: 'w-xl' }">
     <template #body>
       <AppSettingsForm
         v-model:ui="settingsStore.ui"

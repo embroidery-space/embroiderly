@@ -1,0 +1,20 @@
+name: CI (frontend)
+on:
+  pull_request:
+    branches: ["dev"]
+    types: ["opened", "reopened", "edited", "synchronize"]
+    paths:
+      - "src/**"
+      - "package*.json"
+      - "tsconfig*.json"
+      - "*.config.ts"
+      - ".prettierrc.json"
+      - ".eslint.config.js"
+      - ".github/workflows/ci.frontend.yml"
+      - ".github/workflows/audit.frontend.yml"
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    uses: ./.github/workflows/audit.frontend.yml

@@ -1,0 +1,19 @@
+name: CI (backend)
+on:
+  pull_request:
+    branches: ["dev"]
+    types: ["opened", "reopened", "edited", "synchronize"]
+    paths:
+      - "crates/**"
+      - "Cargo.*"
+      - "rustfmt.toml"
+      - ".github/workflows/ci.backend.yml"
+      - ".github/workflows/audit.backend.yml"
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CARGO_TERM_COLOR: always
+jobs:
+  audit:
+    uses: ./.github/workflows/audit.backend.yml
