@@ -15,7 +15,7 @@ import {
   PartStitchDirection,
   PartStitchKind,
   PatternInfo,
-  PatternProject,
+  Pattern,
   SpecialStitch,
   SpecialStitchModel,
   PublishSettings,
@@ -78,25 +78,25 @@ export class PatternView {
 
   render?: () => void;
 
-  constructor({ id, pattern, displaySettings, publishSettings }: PatternProject) {
-    this.id = id;
+  constructor(pattern: Pattern) {
+    this.id = pattern.id;
     this.#info = pattern.info;
 
     this.#palette = pattern.palette;
-    this.paletteDisplaySettings = displaySettings.paletteSettings;
+    this.paletteDisplaySettings = pattern.displaySettings.paletteSettings;
 
     this.#fabric = pattern.fabric;
-    this.#grid = displaySettings.grid;
+    this.#grid = pattern.displaySettings.grid;
 
-    this.#showSymbols = displaySettings.showSymbols;
-    this.#displayMode = displaySettings.displayMode;
-    this.#previousDisplayMode = displaySettings.displayMode;
+    this.#showSymbols = pattern.displaySettings.showSymbols;
+    this.#displayMode = pattern.displaySettings.displayMode;
+    this.#previousDisplayMode = pattern.displaySettings.displayMode;
 
-    this.defaultSymbolFont = displaySettings.defaultSymbolFont;
+    this.defaultSymbolFont = pattern.displaySettings.defaultSymbolFont;
 
     this.#specialStitchModels = pattern.specialStitchModels;
 
-    this.publishSettings = publishSettings;
+    this.publishSettings = pattern.publishSettings;
 
     this.render = () => {
       this.fabric = this.#fabric;
