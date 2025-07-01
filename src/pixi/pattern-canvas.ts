@@ -1,3 +1,4 @@
+import { initDevtools } from "@pixi/devtools";
 import { Application, Point } from "pixi.js";
 import type { ApplicationOptions, ColorSource } from "pixi.js";
 import { PatternView } from "./pattern-view";
@@ -31,6 +32,8 @@ export class PatternCanvas extends EventTarget {
 
   constructor() {
     super();
+
+    initDevtools(this.pixi);
 
     this.viewport.on(EventType.ToolMainAction, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ToolMainAction, { detail }));
