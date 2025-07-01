@@ -59,19 +59,20 @@ export class PatternView {
 
   private stages = {
     // lowest
-    fabric: new Graphics(),
-    fullstitches: new StitchParticleContainer(),
-    petitestitches: new StitchParticleContainer(),
-    halfstitches: new StitchParticleContainer(),
-    quarterstitches: new StitchParticleContainer(),
-    symbols: new StitchGraphicsContainer(),
-    grid: new Graphics(),
-    specialstitches: new Container(),
-    lines: new StitchGraphicsContainer({ eventMode: "passive", interactiveChildren: true }),
-    nodes: new StitchGraphicsContainer({ eventMode: "passive", interactiveChildren: true }),
+    fabric: new Graphics({ label: "Fabric" }),
+    fullstitches: new StitchParticleContainer({ label: "Full Stitches" }),
+    petitestitches: new StitchParticleContainer({ label: "Petite Stitches" }),
+    halfstitches: new StitchParticleContainer({ label: "Half Stitches" }),
+    quarterstitches: new StitchParticleContainer({ label: "Quarter Stitches" }),
+    symbols: new StitchGraphicsContainer({ label: "Symbols" }),
+    grid: new Graphics({ label: "Grid" }),
+    specialstitches: new Container({ label: "Special Stitches" }),
+    lines: new StitchGraphicsContainer({ label: "Lines Stitches", eventMode: "passive", interactiveChildren: true }),
+    nodes: new StitchGraphicsContainer({ label: "Nodes Stitches", eventMode: "passive", interactiveChildren: true }),
     // highest
   };
   readonly root = new Container({
+    label: "Pattern View",
     isRenderGroup: true,
     children: Object.values(this.stages),
   });
