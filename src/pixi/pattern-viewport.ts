@@ -40,9 +40,10 @@ export class PatternViewport extends Container {
   private startPoint?: Point;
 
   constructor() {
-    super();
-    this.label = "Viewport";
-    this.eventMode = "static";
+    super({
+      label: "Pattern Viewport",
+      eventMode: "static",
+    });
   }
 
   init(domElement: HTMLElement, options: ViewportOptions) {
@@ -133,12 +134,12 @@ export class PatternViewport extends Container {
   private handlePointerDown(e: FederatedPointerEvent) {
     const point = this.toWorld(e.global);
     this.startPoint = this.containsPoint(point) ? point : undefined;
-    if (this.startPoint === undefined) return this._emit(InternalEventType.CanvasClear, e);
+    if (this.startPoint === undefined) return this.emitPointerEvent(InternalEventType.CanvasClear, e);
 
     const buttons = getMouseButtons(e);
     if (buttons.left) {
-      if (MODIFIERS.mod3(e)) this._emit(EventType.ToolAntiAction, e);
-      else this._emit(EventType.ToolMainAction, e);
+      if (MODIFIERS.mod3(e)) this.emitPointerEvent(EventType.ToolAntiAction, e);
+      else this.emitPointerEvent(EventType.ToolMainAction, e);
     }
   }
 
@@ -146,10 +147,10 @@ export class PatternViewport extends Container {
     const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (this.startPoint === undefined) return;
-      if (MODIFIERS.mod3(e)) this._emit(EventType.ToolAntiAction, e);
-      else this._emit(EventType.ToolMainAction, e);
+      if (MODIFIERS.mod3(e)) this.emitPointerEvent(EventType.ToolAntiAction, e);
+      else this.emitPointerEvent(EventType.ToolMainAction, e);
     } else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this._emit(EventType.ToolAntiAction, e);
+      if (MODIFIERS.mod1(e)) this.emitPointerEvent(EventType.ToolAntiAction, e);
       else {
         this.startPoint = undefined;
         this.move(e.movement);
@@ -158,18 +159,18 @@ export class PatternViewport extends Container {
   }
 
   private handlePointerUp(e: FederatedPointerEvent) {
-    if (this.startPoint === undefined) return this._emit(InternalEventType.CanvasClear, e);
+    if (this.startPoint === undefined) return this.emitPointerEvent(InternalEventType.CanvasClear, e);
     const buttons = getMouseButtons(e);
-    if (buttons.left) this._emit(EventType.ToolRelease, e);
+    if (buttons.left) this.emitPointerEvent(EventType.ToolRelease, e);
     else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this._emit(EventType.ToolAntiAction, e);
-      else this._emit(EventType.ContextMenu, e);
+      if (MODIFIERS.mod1(e)) this.emitPointerEvent(EventType.ToolAntiAction, e);
+      else this.emitPointerEvent(EventType.ContextMenu, e);
     }
     this.startPoint = undefined;
-    this._emit(InternalEventType.CanvasClear, e);
+    this.emitPointerEvent(InternalEventType.CanvasClear, e);
   }
 
-  private _emit(type: EventType | InternalEventType, event: FederatedPointerEvent) {
+  private emitPointerEvent(type: EventType | InternalEventType, event: FederatedPointerEvent) {
     const point = this.toWorld(event.global);
     if (!this.containsPoint(point) && type !== InternalEventType.CanvasClear) return;
     const modifiers: ModifiersState = {
@@ -226,6 +227,7 @@ export const enum EventType {
   ToolAntiAction = "tool-anti-action",
   ToolRelease = "tool-release",
   ContextMenu = "context-menu",
+  Zoom = "zoom",
 }
 
 export const enum InternalEventType {
