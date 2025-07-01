@@ -18,6 +18,7 @@ import {
   Pattern,
   SpecialStitch,
   SpecialStitchModel,
+  DisplaySettings,
   PublishSettings,
   type Stitch,
 } from "#/schemas";
@@ -39,7 +40,7 @@ import { TextureManager } from "./texture-manager.ts";
 export class PatternView {
   readonly id: string;
 
-  #info: PatternInfo;
+  info: PatternInfo;
 
   #palette: PaletteItem[];
   paletteDisplaySettings: PaletteSettings;
@@ -47,15 +48,13 @@ export class PatternView {
   #fabric: Fabric;
   #grid: Grid;
 
-  #showSymbols: boolean;
-  #displayMode?: DisplayMode;
-  #previousDisplayMode: DisplayMode;
-
-  readonly defaultSymbolFont: string;
-
   #specialStitchModels: SpecialStitchModel[];
 
+  displaySettings: DisplaySettings;
   publishSettings: PublishSettings;
+
+  #displayMode: DisplayMode | undefined;
+  #previousDisplayMode: DisplayMode;
 
   private stages = {
     // lowest
@@ -81,7 +80,7 @@ export class PatternView {
 
   constructor(pattern: Pattern) {
     this.id = pattern.id;
-    this.#info = pattern.info;
+    this.info = pattern.info;
 
     this.#palette = pattern.palette;
     this.paletteDisplaySettings = pattern.displaySettings.paletteSettings;
@@ -89,15 +88,13 @@ export class PatternView {
     this.#fabric = pattern.fabric;
     this.#grid = pattern.displaySettings.grid;
 
-    this.#showSymbols = pattern.displaySettings.showSymbols;
-    this.#displayMode = pattern.displaySettings.displayMode;
-    this.#previousDisplayMode = pattern.displaySettings.displayMode;
-
-    this.defaultSymbolFont = pattern.displaySettings.defaultSymbolFont;
-
     this.#specialStitchModels = pattern.specialStitchModels;
 
+    this.displaySettings = pattern.displaySettings;
     this.publishSettings = pattern.publishSettings;
+
+    this.#displayMode = pattern.displaySettings.displayMode;
+    this.#previousDisplayMode = pattern.displaySettings.displayMode;
 
     this.render = () => {
       this.fabric = this.#fabric;
@@ -122,15 +119,12 @@ export class PatternView {
 
       for (const specialstitch of pattern.specialstitches) this.addSpecialStitch(specialstitch);
 
-      this.showSymbols = this.#showSymbols;
-      this.displayMode = this.#displayMode;
-
       this.render = undefined;
     };
   }
 
   get displayMode() {
-    return this.#displayMode;
+    return this.displaySettings.displayMode;
   }
 
   set displayMode(displayMode: DisplayMode | undefined) {
@@ -157,24 +151,16 @@ export class PatternView {
   }
 
   get showSymbols() {
-    return this.#showSymbols;
+    return this.displaySettings.showSymbols;
   }
 
   set showSymbols(value: boolean) {
-    this.#showSymbols = value;
+    this.displaySettings.showSymbols = value;
     this.stages.symbols.visible = value;
     this.stages.symbols.renderable = value;
 
     // Update the display mode since it depends on the `showSymbols` value.
     this.displayMode = this.#displayMode;
-  }
-
-  get info() {
-    return this.#info;
-  }
-
-  set info(info: PatternInfo) {
-    this.#info = info;
   }
 
   get fabric() {
@@ -196,8 +182,11 @@ export class PatternView {
 
   set grid(grid: Grid) {
     this.#grid = grid;
+
     const { width, height } = this.fabric;
     this.stages.grid.clear();
+
+    // Draw minor lines.
     {
       // Draw horizontal minor lines.
       for (let i = 1; i < width; i++) {
@@ -214,6 +203,8 @@ export class PatternView {
       const { thickness, color } = this.grid.minorLines;
       this.stages.grid.stroke({ width: thickness, color });
     }
+
+    // Draw major lines.
     {
       const interval = this.grid.majorLinesInterval;
 
@@ -250,7 +241,7 @@ export class PatternView {
 
   get allStitchFonts() {
     const fonts = new Set<string>();
-    fonts.add(this.defaultSymbolFont);
+    fonts.add(this.displaySettings.defaultSymbolFont);
     for (const palitem of this.palette) {
       if (palitem.symbolFont) fonts.add(palitem.symbolFont);
     }
@@ -278,9 +269,10 @@ export class PatternView {
 
     const palitem = this.#palette[stitch.palindex]!;
     const symbolFont = palitem.symbolFont;
+    const defaultSymbolFont = this.displaySettings.defaultSymbolFont;
 
     const symbol = new StitchSymbol(stitch, palitem.symbol, {
-      fontFamily: symbolFont ? [symbolFont, this.defaultSymbolFont] : this.defaultSymbolFont,
+      fontFamily: symbolFont ? [symbolFont, defaultSymbolFont] : defaultSymbolFont,
     });
     this.stages.symbols.addStitch(symbol);
   }
