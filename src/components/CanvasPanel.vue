@@ -34,21 +34,16 @@
       </NuxtTabs>
       <NuxtProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
     </div>
-    <canvas
-      ref="canvas"
-      v-element-size="useDebounceFn((size: CanvasSize) => patternCanvas.resize(size), 100)"
-      class="size-full"
-    ></canvas>
+    <canvas ref="canvas" class="size-full"></canvas>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { onMounted, onUnmounted, useTemplateRef, watch } from "vue";
-  import { useEventListener, useDebounceFn } from "@vueuse/core";
-  import { vElementSize } from "@vueuse/components";
+  import { useEventListener } from "@vueuse/core";
   import { Assets, Point } from "pixi.js";
   import { PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX, StitchGraphics } from "#/pixi";
-  import type { CanvasSize, EventDetail } from "#/pixi";
+  import type { EventDetail } from "#/pixi";
   import {
     FullStitch,
     LineStitch,
@@ -271,9 +266,11 @@
   }
 
   onMounted(async () => {
-    await patternCanvas.init(canvas.value!, canvas.value!.getBoundingClientRect(), {
+    const canvasElement = canvas.value!;
+    await patternCanvas.init(canvasElement, canvasElement.getBoundingClientRect(), {
       render: {
         antialias: settingsStore.viewport.antialias,
+        resizeTo: canvasElement,
       },
       viewport: {
         wheelAction: settingsStore.viewport.wheelAction,
