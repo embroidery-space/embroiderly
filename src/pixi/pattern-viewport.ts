@@ -7,8 +7,8 @@ const MODIFIERS: Modifiers = {
   mod3: (e) => e.altKey,
 };
 
-const MIN_SCALE = 1;
-const MAX_SCALE = 100;
+export const MIN_SCALE = 1;
+export const MAX_SCALE = 100;
 
 const WHEEL_ZOOM_FACTOR = 0.1;
 
@@ -207,18 +207,22 @@ export class PatternViewport extends Container {
 
     const mousePosition = new Point(e.offsetX, e.offsetY);
     const beforeTransform = this.toLocal(mousePosition);
-    this.clampZoom(this.scale.x * delta);
+    const scale = this.clampZoom(this.scale.x * delta);
 
     const afterTransform = this.toLocal(mousePosition);
-    this.position.x += (afterTransform.x - beforeTransform.x) * this.scale.x;
-    this.position.y += (afterTransform.y - beforeTransform.y) * this.scale.y;
+    this.position.x += (afterTransform.x - beforeTransform.x) * scale;
+    this.position.y += (afterTransform.y - beforeTransform.y) * scale;
+
+    this.emit(EventType.Zoom, { scale, bounds: this.getBounds() });
   }
 
   private clampZoom(value = this.scale.x, zoom?: ZoomState) {
     const scale = Math.min(Math.max(value, MIN_SCALE), MAX_SCALE);
-    this.scale.set(scale);
 
+    this.scale.set(scale);
     this.zoom = zoom ?? scale;
+
+    return scale;
   }
 }
 

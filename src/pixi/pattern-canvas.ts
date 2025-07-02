@@ -1,6 +1,6 @@
 import { initDevtools } from "@pixi/devtools";
 import { Application, Point } from "pixi.js";
-import type { ApplicationOptions, ColorSource } from "pixi.js";
+import type { ApplicationOptions, Bounds, ColorSource } from "pixi.js";
 import { PatternView } from "./pattern-view";
 import { TextureManager } from "#/pixi";
 import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
@@ -24,6 +24,8 @@ const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
 export class PatternCanvas extends EventTarget {
   private pixi = new Application();
   private viewport = new PatternViewport();
+
+  private pattern?: PatternView;
   private stages = {
     // lowest
     hint: new Hint(),
@@ -32,8 +34,6 @@ export class PatternCanvas extends EventTarget {
 
   constructor() {
     super();
-
-    initDevtools(this.pixi);
 
     this.viewport.on(EventType.ToolMainAction, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ToolMainAction, { detail }));
@@ -46,6 +46,9 @@ export class PatternCanvas extends EventTarget {
     });
     this.viewport.on(EventType.ContextMenu, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ContextMenu, { detail }));
+    });
+    this.viewport.on(EventType.Zoom, ({ scale, bounds }) => {
+      this.handleZoom(scale, bounds);
     });
 
     this.viewport.on(InternalEventType.CanvasClear, () => this.clearHint());
@@ -67,8 +70,11 @@ export class PatternCanvas extends EventTarget {
 
     TextureManager.shared.init(this.pixi.renderer);
 
-    this.pixi.stage.addChild(this.viewport);
-    this.viewport.addChild(this.stages.hint);
+    // Replace the default stage with our viewport.
+    this.pixi.stage = this.viewport;
+
+    // Init devtools last, so it has access to the fully initialized application.
+    initDevtools({ app: this.pixi });
   }
 
   destroy() {
@@ -78,8 +84,9 @@ export class PatternCanvas extends EventTarget {
   setPatternView(pattern: PatternView) {
     this.clear();
 
-    pattern.render?.();
-    this.viewport.addChild(pattern.root, this.stages.hint);
+    this.pattern = pattern;
+    this.pattern.render?.();
+    this.viewport.addChild(this.pattern.root, this.stages.hint);
 
     const { width, height } = pattern.fabric;
     this.viewport.resizeWorld(width, height);
@@ -98,6 +105,11 @@ export class PatternCanvas extends EventTarget {
 
   drawNodeHint(node: NodeStitch, color: ColorSource, bead?: Bead) {
     this.stages.hint.drawNodeHint(node, color, bead);
+  }
+
+  private handleZoom(zoom: number, bounds: Bounds) {
+    if (!this.pattern) return;
+    this.pattern.adjustZoom(zoom, bounds);
   }
 
   clear() {

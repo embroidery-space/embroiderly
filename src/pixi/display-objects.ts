@@ -19,7 +19,7 @@ import {
 
 import { STITCH_SCALE_FACTOR } from "./constants.ts";
 
-const DEFAULT_CONTAINER_OPTIONS: ContainerOptions = {
+export const DEFAULT_CONTAINER_OPTIONS: ContainerOptions = {
   eventMode: "none",
   interactive: false,
   interactiveChildren: false,

@@ -1,4 +1,4 @@
-import { Container, Graphics } from "pixi.js";
+import { Bounds, Container, Graphics, Rectangle } from "pixi.js";
 
 import {
   AddedPaletteItemData,
@@ -24,6 +24,7 @@ import {
 } from "#/schemas";
 
 import { STITCH_SCALE_FACTOR } from "./constants.ts";
+import { PatternGrid } from "./components/";
 import {
   StitchGraphics,
   StitchGraphicsContainer,
@@ -64,7 +65,7 @@ export class PatternView {
     halfstitches: new StitchParticleContainer({ label: "Half Stitches" }),
     quarterstitches: new StitchParticleContainer({ label: "Quarter Stitches" }),
     symbols: new StitchGraphicsContainer({ label: "Symbols" }),
-    grid: new Graphics({ label: "Grid" }),
+    grid: new PatternGrid(),
     specialstitches: new Container({ label: "Special Stitches" }),
     lines: new StitchGraphicsContainer({ label: "Lines Stitches", eventMode: "passive", interactiveChildren: true }),
     nodes: new StitchGraphicsContainer({ label: "Nodes Stitches", eventMode: "passive", interactiveChildren: true }),
@@ -99,6 +100,8 @@ export class PatternView {
     this.render = () => {
       this.fabric = this.#fabric;
       this.grid = this.#grid;
+
+      this.showSymbols = pattern.displaySettings.showSymbols;
 
       for (const stitch of pattern.fullstitches) {
         this.addFullStitch(stitch);
@@ -172,6 +175,9 @@ export class PatternView {
     this.stages.fabric.clear();
     this.stages.fabric.rect(0, 0, this.fabric.width, this.fabric.height).fill(this.fabric.color);
 
+    // Set the container bounds.
+    this.root.boundsArea = new Rectangle(0, 0, this.fabric.width, this.fabric.height);
+
     // If the grid is set, adjust it to the new fabric.
     if (this.#grid) this.grid = this.#grid;
   }
@@ -184,47 +190,7 @@ export class PatternView {
     this.#grid = grid;
 
     const { width, height } = this.fabric;
-    this.stages.grid.clear();
-
-    // Draw minor lines.
-    {
-      // Draw horizontal minor lines.
-      for (let i = 1; i < width; i++) {
-        this.stages.grid.moveTo(i, 0);
-        this.stages.grid.lineTo(i, height);
-      }
-
-      // Draw vertical minor lines.
-      for (let i = 1; i < height; i++) {
-        this.stages.grid.moveTo(0, i);
-        this.stages.grid.lineTo(width, i);
-      }
-
-      const { thickness, color } = this.grid.minorLines;
-      this.stages.grid.stroke({ width: thickness, color });
-    }
-
-    // Draw major lines.
-    {
-      const interval = this.grid.majorLinesInterval;
-
-      // Draw horizontal major lines.
-      for (let i = 0; i <= Math.ceil(height / interval); i++) {
-        const point = Math.min(i * interval, height);
-        this.stages.grid.moveTo(0, point);
-        this.stages.grid.lineTo(width, point);
-      }
-
-      // Draw vertical major lines.
-      for (let i = 0; i <= Math.ceil(width / interval); i++) {
-        const point = Math.min(i * interval, width);
-        this.stages.grid.moveTo(point, 0);
-        this.stages.grid.lineTo(point, height);
-      }
-
-      const { thickness, color } = this.grid.majorLines;
-      this.stages.grid.stroke({ width: thickness, color });
-    }
+    this.stages.grid.setGrid(width, height, grid);
   }
 
   get palette() {
@@ -404,5 +370,13 @@ export class PatternView {
     if (flip[1]) graphics.scale.y = -1;
 
     this.stages.specialstitches.addChild(graphics);
+  }
+
+  /**
+   * Adjusts the zoom level of the pattern view.
+   * @param zoom - The zoom level in range 1 to 100.
+   */
+  adjustZoom(zoom: number, bounds?: Bounds) {
+    this.stages.grid.renderGrid(zoom, bounds);
   }
 }
