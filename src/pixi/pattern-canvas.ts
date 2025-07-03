@@ -1,11 +1,13 @@
 import { initDevtools } from "@pixi/devtools";
 import { Application, Point } from "pixi.js";
 import type { ApplicationOptions, ColorSource } from "pixi.js";
-import { PatternView } from "./pattern-view";
-import { TextureManager } from "#/pixi";
-import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
+
+import { Hint } from "./components/";
+import { PatternView } from "./pattern-view.ts";
 import { EventType, InternalEventType, PatternViewport, type ViewportOptions } from "./pattern-viewport.ts";
-import { Hint } from "./hint.ts";
+import { TextureManager } from "./texture-manager.ts";
+
+import type { Bead, LineStitch, NodeStitch } from "#/schemas/";
 
 export interface PatternCanvasOptions {
   render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;

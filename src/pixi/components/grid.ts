@@ -1,7 +1,7 @@
 import { Graphics } from "pixi.js";
 
+import { DEFAULT_CONTAINER_OPTIONS } from "../constants.ts";
 import type { Grid } from "#/schemas/";
-import { DEFAULT_CONTAINER_OPTIONS } from "../display-objects.ts";
 
 export class PatternGrid extends Graphics {
   #width!: number;

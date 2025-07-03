@@ -1,7 +1,6 @@
 import { Bounds, Container, Graphics, Text } from "pixi.js";
 
-import { STITCH_SCALE_FACTOR } from "../constants.ts";
-import { DEFAULT_CONTAINER_OPTIONS } from "../display-objects.ts";
+import { DEFAULT_CONTAINER_OPTIONS, STITCH_SCALE_FACTOR } from "../constants.ts";
 import { MAX_SCALE } from "../pattern-viewport.ts";
 
 export class Rulers extends Container {

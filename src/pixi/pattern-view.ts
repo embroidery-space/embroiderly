@@ -24,14 +24,15 @@ import {
 } from "#/schemas";
 
 import { STITCH_SCALE_FACTOR } from "./constants.ts";
-import { PatternGrid, Rulers } from "./components/";
 import {
   StitchGraphics,
   StitchGraphicsContainer,
   StitchParticle,
   StitchParticleContainer,
   StitchSymbol,
-} from "./display-objects.ts";
+  PatternGrid,
+  Rulers,
+} from "./components/";
 import { TextureManager } from "./texture-manager.ts";
 
 /**
