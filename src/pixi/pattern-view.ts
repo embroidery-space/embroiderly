@@ -24,7 +24,7 @@ import {
 } from "#/schemas";
 
 import { STITCH_SCALE_FACTOR } from "./constants.ts";
-import { PatternGrid } from "./components/";
+import { PatternGrid, Rulers } from "./components/";
 import {
   StitchGraphics,
   StitchGraphicsContainer,
@@ -69,6 +69,7 @@ export class PatternView {
     specialstitches: new Container({ label: "Special Stitches" }),
     lines: new StitchGraphicsContainer({ label: "Lines Stitches", eventMode: "passive", interactiveChildren: true }),
     nodes: new StitchGraphicsContainer({ label: "Nodes Stitches", eventMode: "passive", interactiveChildren: true }),
+    rulers: new Rulers(),
     // highest
   };
   readonly root = new Container({
@@ -191,6 +192,7 @@ export class PatternView {
 
     const { width, height } = this.fabric;
     this.stages.grid.setGrid(width, height, grid);
+    this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
   }
 
   get palette() {
@@ -377,6 +379,7 @@ export class PatternView {
    * @param zoom - The zoom level in range 1 to 100.
    */
   adjustZoom(zoom: number, bounds?: Bounds) {
-    this.stages.grid.renderGrid(zoom, bounds);
+    this.stages.grid.renderGrid();
+    this.stages.rulers.renderRulers(zoom, bounds);
   }
 }
