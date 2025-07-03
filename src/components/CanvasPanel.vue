@@ -229,6 +229,10 @@
     if (import.meta.env.DEV) console.log("Context menu");
   });
 
+  useEventListener<CustomEvent>(patternCanvas, EventType.Zoom, async ({ detail }) => {
+    patternsStore.pattern!.adjustZoom(detail.scale, detail.bounds);
+  });
+
   function adjustStitchCoordinate({ x, y }: Point, tool: StitchKind): Point {
     const [intX, intY] = [Math.trunc(x), Math.trunc(y)];
     const [fracX, fracY] = [x - intX, y - intY];
