@@ -1,5 +1,5 @@
 import { Container, Point } from "pixi.js";
-import type { DestroyOptions, FederatedPointerEvent } from "pixi.js";
+import type { Bounds, DestroyOptions, FederatedPointerEvent } from "pixi.js";
 
 const MODIFIERS: Modifiers = {
   mod1: (e) => e.ctrlKey,
@@ -134,12 +134,12 @@ export class PatternViewport extends Container {
   private handlePointerDown(e: FederatedPointerEvent) {
     const point = this.toWorld(e.global);
     this.startPoint = this.containsPoint(point) ? point : undefined;
-    if (this.startPoint === undefined) return this.emitPointerEvent(InternalEventType.CanvasClear, e);
+    if (this.startPoint === undefined) return this.emitToolEvent(InternalEventType.CanvasClear, e);
 
     const buttons = getMouseButtons(e);
     if (buttons.left) {
-      if (MODIFIERS.mod3(e)) this.emitPointerEvent(EventType.ToolAntiAction, e);
-      else this.emitPointerEvent(EventType.ToolMainAction, e);
+      if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
+      else this.emitToolEvent(EventType.ToolMainAction, e);
     }
   }
 
@@ -147,30 +147,37 @@ export class PatternViewport extends Container {
     const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (this.startPoint === undefined) return;
-      if (MODIFIERS.mod3(e)) this.emitPointerEvent(EventType.ToolAntiAction, e);
-      else this.emitPointerEvent(EventType.ToolMainAction, e);
+      if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
+      else this.emitToolEvent(EventType.ToolMainAction, e);
     } else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this.emitPointerEvent(EventType.ToolAntiAction, e);
+      if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
       else {
         this.startPoint = undefined;
         this.move(e.movement);
+        this.emitTransformEvent();
       }
     }
   }
 
   private handlePointerUp(e: FederatedPointerEvent) {
-    if (this.startPoint === undefined) return this.emitPointerEvent(InternalEventType.CanvasClear, e);
+    if (this.startPoint === undefined) return this.emitToolEvent(InternalEventType.CanvasClear, e);
     const buttons = getMouseButtons(e);
-    if (buttons.left) this.emitPointerEvent(EventType.ToolRelease, e);
+    if (buttons.left) this.emitToolEvent(EventType.ToolRelease, e);
     else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this.emitPointerEvent(EventType.ToolAntiAction, e);
-      else this.emitPointerEvent(EventType.ContextMenu, e);
+      if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
+      else this.emitToolEvent(EventType.ContextMenu, e);
     }
     this.startPoint = undefined;
-    this.emitPointerEvent(InternalEventType.CanvasClear, e);
+    this.emitToolEvent(InternalEventType.CanvasClear, e);
   }
 
-  private emitPointerEvent(type: EventType | InternalEventType, event: FederatedPointerEvent) {
+  /**
+   * Emits a tool event with the current pointer information.
+   *
+   * @param type - The type of the event to emit.
+   * @param event - The original pointer event.
+   */
+  private emitToolEvent(type: EventType | InternalEventType, event: FederatedPointerEvent) {
     const point = this.toWorld(event.global);
     if (!this.containsPoint(point) && type !== InternalEventType.CanvasClear) return;
     const modifiers: ModifiersState = {
@@ -178,8 +185,14 @@ export class PatternViewport extends Container {
       mod2: MODIFIERS.mod2(event),
       mod3: MODIFIERS.mod3(event),
     };
-    const detail: EventDetail = { event, modifiers, start: this.startPoint!, end: point };
+    const detail: ToolEventDetail = { event, modifiers, start: this.startPoint!, end: point };
     this.emit(type, detail);
+  }
+
+  /** Emits a transform event with the current scale and bounds. */
+  private emitTransformEvent() {
+    const detail: TransformEventDetail = { scale: this.scale.x, bounds: this.getBounds() };
+    this.emit(EventType.Transform, detail);
   }
 
   private handleWheel(e: WheelEvent) {
@@ -199,6 +212,8 @@ export class PatternViewport extends Container {
       if (MODIFIERS.mod2(e)) this.position.x -= e.deltaY;
       else this.position.y -= e.deltaY;
     }
+
+    this.emitTransformEvent();
   }
 
   private handleWheelZoom(e: WheelEvent) {
@@ -207,13 +222,13 @@ export class PatternViewport extends Container {
 
     const mousePosition = new Point(e.offsetX, e.offsetY);
     const beforeTransform = this.toLocal(mousePosition);
-    const scale = this.clampZoom(this.scale.x * delta);
+    this.clampZoom(this.scale.x * delta);
 
     const afterTransform = this.toLocal(mousePosition);
-    this.position.x += (afterTransform.x - beforeTransform.x) * scale;
-    this.position.y += (afterTransform.y - beforeTransform.y) * scale;
+    this.position.x += (afterTransform.x - beforeTransform.x) * this.scale.x;
+    this.position.y += (afterTransform.y - beforeTransform.y) * this.scale.y;
 
-    this.emit(EventType.Zoom, { scale, bounds: this.getBounds() });
+    this.emitTransformEvent();
   }
 
   private clampZoom(value = this.scale.x, zoom?: ZoomState) {
@@ -221,8 +236,6 @@ export class PatternViewport extends Container {
 
     this.scale.set(scale);
     this.zoom = zoom ?? scale;
-
-    return scale;
   }
 }
 
@@ -231,28 +244,41 @@ export const enum EventType {
   ToolAntiAction = "tool-anti-action",
   ToolRelease = "tool-release",
   ContextMenu = "context-menu",
-  Zoom = "zoom",
+  Transform = "transform",
 }
 
 export const enum InternalEventType {
   CanvasClear = "canvas-clear",
 }
 
-export interface EventDetail {
+/** The detail of the tool event. */
+export interface ToolEventDetail {
+  /** The original pointer event. */
   event: FederatedPointerEvent;
+  /** The state of the modifier keys. */
   modifiers: ModifiersState;
+  /** The starting point of the event. */
   start: Point;
+  /** The ending point of the event. */
   end: Point;
 }
 
+/** The detail of the transform event (zoom or move). */
+export interface TransformEventDetail {
+  /** The current scale of the viewport. */
+  scale: number;
+  /** The current bounds of the viewport. */
+  bounds: Bounds;
+}
+
 export interface Modifiers {
-  /** Modifier 1. Default is the Ctrl key. */
+  /** Modifier 1. Default is the `Ctrl` key. */
   mod1: ModifierChecker;
 
-  /** Modifier 2. Default is the Shift key. */
+  /** Modifier 2. Default is the `Shift` key. */
   mod2: ModifierChecker;
 
-  /** Modifier 3. Default is the Alt key. */
+  /** Modifier 3. Default is the `Alt` key. */
   mod3: ModifierChecker;
 }
 

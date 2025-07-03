@@ -45,8 +45,8 @@ export class PatternCanvas extends EventTarget {
     this.viewport.on(EventType.ContextMenu, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ContextMenu, { detail }));
     });
-    this.viewport.on(EventType.Zoom, (detail) => {
-      this.dispatchEvent(new CustomEvent(EventType.Zoom, { detail }));
+    this.viewport.on(EventType.Transform, (detail) => {
+      this.dispatchEvent(new CustomEvent(EventType.Transform, { detail }));
     });
 
     this.viewport.on(InternalEventType.CanvasClear, () => this.clearHint());
