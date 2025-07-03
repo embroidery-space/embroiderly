@@ -74,7 +74,7 @@ export class PatternCanvas extends EventTarget {
     this.pixi.stage = this.viewport;
 
     // Init devtools last, so it has access to the fully initialized application.
-    initDevtools({ app: this.pixi });
+    if (import.meta.env.DEV) initDevtools({ app: this.pixi });
   }
 
   destroy() {
