@@ -12,10 +12,6 @@ export default defineConfigWithVueTs(
     languageOptions: { ecmaVersion: "latest", globals: { ...globals.browser } },
     rules: { "no-console": ["warn"] },
   },
-  {
-    files: ["scripts/**/*.js"],
-    languageOptions: { ecmaVersion: "latest", globals: { ...globals.node } },
-  },
   vuePrettierEslintConfig,
   vueTsConfigs.recommended,
 );
