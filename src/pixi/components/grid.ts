@@ -137,7 +137,7 @@ export class PatternGrid extends Container {
         this.#stages.rulerX.addChildAt(background, 0);
       }
 
-      this.#stages.rulerX.position.y = Math.abs(bounds.y / zoom);
+      this.#stages.rulerX.position.y = Math.abs(Math.min(0, bounds.y / zoom));
       this.#stages.rulerX.pivot.y = -this.#stages.rulerX.height;
     } else {
       if (this.#stages.rulerX.getChildAt(0) instanceof Graphics) {
@@ -162,7 +162,7 @@ export class PatternGrid extends Container {
         this.#stages.rulerY.addChildAt(background, 0);
       }
 
-      this.#stages.rulerY.position.x = Math.abs(bounds.x / zoom);
+      this.#stages.rulerY.position.x = Math.abs(Math.min(0, bounds.x / zoom));
       this.#stages.rulerY.pivot.x = -this.#stages.rulerY.width;
     } else {
       if (this.#stages.rulerY.getChildAt(0) instanceof Graphics) {
