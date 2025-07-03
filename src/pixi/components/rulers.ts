@@ -8,6 +8,8 @@ export class Rulers extends Container {
   #height!: number;
   #interval!: number;
 
+  #previousZoom?: number;
+
   #stages = {
     horizontal: new Container({ ...DEFAULT_CONTAINER_OPTIONS, y: -0.25, label: "Horizontal Rulers" }),
     vertical: new Container({ ...DEFAULT_CONTAINER_OPTIONS, x: -0.25, label: "Vertical Rulers" }),
@@ -40,10 +42,19 @@ export class Rulers extends Container {
    * @param bounds - The bounds of the viewport to adjust the ruler position.
    */
   renderRulers(zoom?: number, bounds?: Bounds) {
-    this.clear();
+    if (zoom && zoom !== this.#previousZoom) {
+      this.#previousZoom = zoom;
+      this.drawRulers(calculateRulersScale(zoom));
+    }
 
-    const scaleCoefficient = zoom ? 4 - (4 - 1) * (Math.log(zoom) / Math.log(MAX_SCALE)) : 1;
-    const scale = STITCH_SCALE_FACTOR * scaleCoefficient;
+    if (bounds) {
+      this.#adjustHorizontalRuler(bounds, zoom);
+      this.#adjustVerticalRuler(bounds, zoom);
+    }
+  }
+
+  private drawRulers(scale: number) {
+    this.clear();
 
     // Draw horizontal ruler.
     for (let i = 0; i <= Math.ceil(this.#width / this.#interval); i++) {
@@ -73,11 +84,6 @@ export class Rulers extends Container {
       label.position.set(-label.width, value);
 
       this.#stages.vertical.addChild(label);
-    }
-
-    if (bounds) {
-      this.#adjustHorizontalRuler(bounds, zoom);
-      this.#adjustVerticalRuler(bounds, zoom);
     }
   }
 
@@ -135,4 +141,14 @@ export class Rulers extends Container {
     this.#stages.horizontal.removeChildren();
     this.#stages.vertical.removeChildren();
   }
+}
+
+function calculateRulersScale(zoom?: number): number {
+  if (zoom) {
+    const [max, min] = [4, 0.3];
+    const normalizedLog = Math.log(zoom) / Math.log(MAX_SCALE);
+    const coefficient = max - (max - min) * normalizedLog;
+
+    return STITCH_SCALE_FACTOR * coefficient;
+  } else return STITCH_SCALE_FACTOR;
 }

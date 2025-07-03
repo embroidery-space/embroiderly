@@ -97,28 +97,38 @@ export class PatternViewport extends Container {
   move(point: Point) {
     this.position.x += point.x;
     this.position.y += point.y;
+
+    this.emitTransformEvent();
   }
 
   moveCenter(point: Point) {
     const x = (this.worldScreenWidth / 2 - point.x) * this.scale.x;
     const y = (this.worldScreenHeight / 2 - point.y) * this.scale.y;
     this.position.set(x, y);
+
+    this.emitTransformEvent();
   }
 
   fit() {
     const scaleX = this.screenWidth / this.worldWidth;
     const scaleY = this.screenHeight / this.worldHeight;
     this.clampZoom(Math.min(scaleX, scaleY), "fit");
+
+    this.emitTransformEvent();
   }
 
   fitWidth() {
     const scale = this.screenWidth / this.worldWidth;
     this.clampZoom(scale, "fit-width");
+
+    this.emitTransformEvent();
   }
 
   fitHeight() {
     const scale = this.screenHeight / this.worldHeight;
     this.clampZoom(scale, "fit-height");
+
+    this.emitTransformEvent();
   }
 
   resizeScreen(width: number, height: number) {
@@ -154,7 +164,6 @@ export class PatternViewport extends Container {
       else {
         this.startPoint = undefined;
         this.move(e.movement);
-        this.emitTransformEvent();
       }
     }
   }
