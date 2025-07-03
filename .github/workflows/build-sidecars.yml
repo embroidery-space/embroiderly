@@ -43,17 +43,17 @@ jobs:
       - name: Prepare binary for upload
         shell: bash
         run: |
-          mkdir -p ./binaries/${{ matrix.sidecar }}
+          mkdir -p binaries/${{ matrix.sidecar }}
 
           SOURCE_FILE="target/release/${{ matrix.sidecar }}${{ steps.target.outputs.EXT }}"
-          DEST_FILE="./binaries/${{ matrix.sidecar }}/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
+          DEST_FILE="binaries/${{ matrix.sidecar }}/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
           mv "$SOURCE_FILE" "$DEST_FILE"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: sidecar-binary-${{ matrix.sidecar }}-${{ matrix.os }}
-          path: ./binaries/
+          path: binaries/
 
   commit:
     permissions:
