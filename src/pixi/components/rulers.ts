@@ -4,8 +4,10 @@ import { DEFAULT_CONTAINER_OPTIONS, STITCH_SCALE_FACTOR } from "../constants.ts"
 import { MAX_SCALE } from "../pattern-viewport.ts";
 
 const RULER_LABEL_TEXT_STYLE_OPTIONS = new TextStyle({
-  fill: 0xffffff,
   fontSize: 64,
+  letterSpacing: 2,
+  fill: "white",
+  stroke: { color: "black", width: 8, join: "round" },
 });
 
 export class Rulers extends Container {
