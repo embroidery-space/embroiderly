@@ -8,6 +8,10 @@ on:
       - crates/embroiderly-publish/**
       - ".github/workflows/build-sidecars.yml"
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
 
@@ -62,6 +66,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.EMBROIDERLY_PAT }}
+
       - run: mkdir -p crates/embroiderly/binaries
       - run: rm -rf crates/embroiderly/binaries/*
 
@@ -71,7 +78,21 @@ jobs:
           path: crates/embroiderly/binaries/
           merge-multiple: true
 
+      - name: Import GPG key
+        id: gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.EMBROIDERLY_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.EMBROIDERLY_GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
       - name: Commit binaries
         uses: stefanzweifel/git-auto-commit-action@v6
         with:
+          file_pattern: crates/embroiderly/binaries/**
           commit_message: "build: update sidecar binaries"
+          commit_author: "${{ steps.gpg.outputs.name }} <${{ steps.gpg.outputs.email }}>"
+          commit_user_name: ${{ steps.gpg.outputs.name }}
+          commit_user_email: ${{ steps.gpg.outputs.email }}
+          push_options: "--force"
