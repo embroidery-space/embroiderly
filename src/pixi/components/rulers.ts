@@ -1,7 +1,12 @@
-import { Bounds, Container, Graphics, Text } from "pixi.js";
+import { Bounds, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import { DEFAULT_CONTAINER_OPTIONS, STITCH_SCALE_FACTOR } from "../constants.ts";
 import { MAX_SCALE } from "../pattern-viewport.ts";
+
+const RULER_LABEL_TEXT_STYLE_OPTIONS = new TextStyle({
+  fill: 0xffffff,
+  fontSize: 64,
+});
 
 export class Rulers extends Container {
   #width!: number;
@@ -64,7 +69,7 @@ export class Rulers extends Container {
         scale,
         anchor: { x: 0.5, y: 0 },
         text: value,
-        style: { fill: 0xffffff, fontSize: 64 },
+        style: RULER_LABEL_TEXT_STYLE_OPTIONS,
       });
       label.position.set(value, -label.height);
 
@@ -79,7 +84,7 @@ export class Rulers extends Container {
         scale,
         anchor: { x: 0, y: 0.5 },
         text: value,
-        style: { fill: 0xffffff, fontSize: 64 },
+        style: RULER_LABEL_TEXT_STYLE_OPTIONS,
       });
       label.position.set(-label.width, value);
 
