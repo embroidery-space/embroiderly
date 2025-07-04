@@ -26,10 +26,6 @@ jobs:
           cache: npm
       - uses: dtolnay/rust-toolchain@stable
       - run: npm ci
-      # This step is necessary to initially build the Embroiderly.
-      # Before bundling, the actual sidecar binary will be created and bundled with the application.
-      - name: Create dummy embroiderly-publish sidecar binaries
-        run: sh ./scripts/create-dummy-embroiderly-publish-sidecar.sh
       - uses: tauri-apps/tauri-action@dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
