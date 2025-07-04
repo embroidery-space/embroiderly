@@ -13,6 +13,7 @@
   "dependencies": {
     "@fluent/bundle": "^0.19.1",
     "@nuxt/ui": "^3.2.0",
+    "@pixi/devtools": "^2.0.1",
     "@stdlib/math-base-special-roundn": "^0.2.2",
     "@tauri-apps/api": "^2.6.0",
     "@tauri-apps/plugin-clipboard-manager": "^2.3.0",
@@ -31,7 +32,7 @@
     "fluent-vue": "^3.7.2",
     "pinia": "^3.0.2",
     "pinia-plugin-persistedstate": "^4.4.0",
-    "pixi.js": "^8.10.2",
+    "pixi.js": "^8.9.2",
     "primevue": "^4.3.5",
     "reka-ui": "^2.3.1",
     "uuid": "^11.1.0",

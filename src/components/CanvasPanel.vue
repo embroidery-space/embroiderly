@@ -34,21 +34,16 @@
       </NuxtTabs>
       <NuxtProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
     </div>
-    <canvas
-      ref="canvas"
-      v-element-size="useDebounceFn((size: CanvasSize) => patternCanvas.resize(size), 100)"
-      class="size-full"
-    ></canvas>
+    <canvas ref="canvas" class="size-full"></canvas>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { onMounted, onUnmounted, useTemplateRef, watch } from "vue";
-  import { useEventListener, useDebounceFn } from "@vueuse/core";
-  import { vElementSize } from "@vueuse/components";
+  import { useEventListener } from "@vueuse/core";
   import { Assets, Point } from "pixi.js";
   import { PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX, StitchGraphics } from "#/pixi";
-  import type { CanvasSize, EventDetail } from "#/pixi";
+  import type { ToolEventDetail, TransformEventDetail } from "#/pixi";
   import {
     FullStitch,
     LineStitch,
@@ -86,10 +81,8 @@
 
   let prevStitchState: Stitch | undefined;
 
-  useEventListener<CustomEvent>(patternCanvas, EventType.ToolMainAction, (e) => handleToolMainAction(e.detail), {
-    passive: true,
-  });
-  async function handleToolMainAction(detail: EventDetail) {
+  useEventListener<CustomEvent>(patternCanvas, EventType.ToolMainAction, (e) => handleToolMainAction(e.detail));
+  async function handleToolMainAction(detail: ToolEventDetail) {
     const tool = appStateStore.selectedStitchTool;
     const palindex = appStateStore.selectedPaletteItemIndexes[0];
     if (palindex === undefined) return;
@@ -175,7 +168,7 @@
   }
 
   useEventListener<CustomEvent>(patternCanvas, EventType.ToolAntiAction, (e) => handleToolAntiAction(e.detail));
-  async function handleToolAntiAction(detail: EventDetail) {
+  async function handleToolAntiAction(detail: ToolEventDetail) {
     const { event, end: point } = detail;
     if (event.target instanceof StitchGraphics) {
       await patternsStore.removeStitch(event.target.stitch);
@@ -203,7 +196,7 @@
     await handleToolReleaseAction(e.detail);
     prevStitchState = undefined;
   });
-  async function handleToolReleaseAction(detail: EventDetail) {
+  async function handleToolReleaseAction(detail: ToolEventDetail) {
     const tool = appStateStore.selectedStitchTool;
     const palindex = appStateStore.selectedPaletteItemIndexes[0];
     if (palindex === undefined) return;
@@ -232,6 +225,10 @@
 
   useEventListener<CustomEvent>(patternCanvas, EventType.ContextMenu, () => {
     if (import.meta.env.DEV) console.log("Context menu");
+  });
+
+  useEventListener<CustomEvent<TransformEventDetail>>(patternCanvas, EventType.Transform, async ({ detail }) => {
+    patternsStore.pattern!.adjustZoom(detail.scale, detail.bounds);
   });
 
   function adjustStitchCoordinate({ x, y }: Point, tool: StitchKind): Point {
@@ -271,9 +268,11 @@
   }
 
   onMounted(async () => {
-    await patternCanvas.init(canvas.value!, canvas.value!.getBoundingClientRect(), {
+    const canvasElement = canvas.value!;
+    await patternCanvas.init(canvasElement, canvasElement.getBoundingClientRect(), {
       render: {
         antialias: settingsStore.viewport.antialias,
+        resizeTo: canvasElement,
       },
       viewport: {
         wheelAction: settingsStore.viewport.wheelAction,

@@ -1,12 +1,5 @@
-import { Container, Graphics, GraphicsContext, Particle, ParticleContainer, Text, Texture } from "pixi.js";
-import type {
-  ContainerOptions,
-  ParticleContainerOptions,
-  ParticleOptions,
-  TextOptions,
-  TextStyleOptions,
-} from "pixi.js";
-import { dequal } from "dequal/lite";
+import { Container, Graphics, GraphicsContext, Particle, Text, Texture } from "pixi.js";
+import type { ParticleOptions, TextOptions, TextStyleOptions } from "pixi.js";
 
 import {
   FullStitch,
@@ -17,34 +10,7 @@ import {
   type Stitch,
 } from "#/schemas/pattern";
 
-import { STITCH_SCALE_FACTOR } from "./constants.ts";
-
-const DEFAULT_CONTAINER_OPTIONS: ContainerOptions = {
-  eventMode: "none",
-  interactive: false,
-  interactiveChildren: false,
-  cullable: false,
-  cullableChildren: true,
-};
-
-/** A wrapper around `Container` that contains a kind of the stitches it holds. */
-export class StitchGraphicsContainer extends Container {
-  constructor(options?: ContainerOptions) {
-    super({ ...DEFAULT_CONTAINER_OPTIONS, ...options });
-  }
-
-  addStitch(stitch: Container) {
-    this.addChild(stitch);
-  }
-
-  removeStitch(stitch: Stitch) {
-    const index = this.children.findIndex((item) => {
-      const graphics = item as StitchGraphics;
-      return dequal(graphics.stitch, stitch);
-    });
-    if (index !== -1) this.removeChildAt(index);
-  }
-}
+import { DEFAULT_CONTAINER_OPTIONS, DEFAULT_TEXT_STYLE_OPTIONS, STITCH_SCALE_FACTOR } from "../constants.ts";
 
 /** A `Graphics` object that contains a reference to the `Stitch` object it represents. */
 export class StitchGraphics extends Graphics {
@@ -53,33 +19,6 @@ export class StitchGraphics extends Graphics {
   constructor(stitch: Stitch, context?: GraphicsContext) {
     super({ ...DEFAULT_CONTAINER_OPTIONS, context });
     this.stitch = stitch;
-  }
-}
-
-/** A wrapper around `ParticleContainer` that contains a kind of the stitches it holds. */
-export class StitchParticleContainer extends ParticleContainer {
-  constructor(options?: ParticleContainerOptions) {
-    super({
-      ...DEFAULT_CONTAINER_OPTIONS,
-      ...options,
-      dynamicProperties: {
-        // The `position` dynamic property is `true` by default, but we don't need it here.
-        position: false,
-        ...options?.dynamicProperties,
-      },
-    });
-  }
-
-  addStitch(stitch: StitchParticle) {
-    this.addParticle(stitch);
-  }
-
-  removeStitch(stitch: Stitch) {
-    const index = this.particleChildren.findIndex((item) => {
-      const particle = item as StitchParticle;
-      return dequal(particle.stitch, stitch);
-    });
-    if (index !== -1) this.removeParticleAt(index);
   }
 }
 
@@ -93,7 +32,6 @@ export class StitchParticle extends Particle {
   }
 }
 
-const DEFAULT_SYMBOL_STYLE_OPTIONS: TextStyleOptions = { fill: 0x000000, fontSize: 64 };
 export class StitchSymbol extends Container {
   readonly stitch: FullStitch | PartStitch;
 
@@ -108,7 +46,7 @@ export class StitchSymbol extends Container {
 
     this.stitch = stitch;
 
-    const textStyle = { ...DEFAULT_SYMBOL_STYLE_OPTIONS, ...styleOptions };
+    const textStyle = { ...DEFAULT_TEXT_STYLE_OPTIONS, ...styleOptions };
     const textOptions: TextOptions = { anchor: 0.5 };
     const text = this.addChild(new Text({ text: symbol, style: textStyle, ...textOptions }));
 

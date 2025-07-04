@@ -104,7 +104,7 @@ export const usePatternsStore = defineStore(
       try {
         loading.value = true;
         const rawPattern = await PatternApi.openPattern(path, options);
-        appStateStore.addOpenedPattern(rawPattern.id, rawPattern.pattern.info.title);
+        appStateStore.addOpenedPattern(rawPattern.id, rawPattern.info.title);
         if (options?.assignToCurrent ?? true) pattern.value = new PatternView(rawPattern);
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {

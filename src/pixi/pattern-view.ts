@@ -1,4 +1,4 @@
-import { Container, Graphics } from "pixi.js";
+import { Bounds, Container, Graphics, Rectangle } from "pixi.js";
 
 import {
   AddedPaletteItemData,
@@ -15,9 +15,10 @@ import {
   PartStitchDirection,
   PartStitchKind,
   PatternInfo,
-  PatternProject,
+  Pattern,
   SpecialStitch,
   SpecialStitchModel,
+  DisplaySettings,
   PublishSettings,
   type Stitch,
 } from "#/schemas";
@@ -29,7 +30,9 @@ import {
   StitchParticle,
   StitchParticleContainer,
   StitchSymbol,
-} from "./display-objects.ts";
+  PatternGrid,
+  Rulers,
+} from "./components/";
 import { TextureManager } from "./texture-manager.ts";
 
 /**
@@ -39,7 +42,7 @@ import { TextureManager } from "./texture-manager.ts";
 export class PatternView {
   readonly id: string;
 
-  #info: PatternInfo;
+  info: PatternInfo;
 
   #palette: PaletteItem[];
   paletteDisplaySettings: PaletteSettings;
@@ -47,60 +50,60 @@ export class PatternView {
   #fabric: Fabric;
   #grid: Grid;
 
-  #showSymbols: boolean;
-  #displayMode?: DisplayMode;
-  #previousDisplayMode: DisplayMode;
-
-  readonly defaultSymbolFont: string;
-
   #specialStitchModels: SpecialStitchModel[];
 
+  displaySettings: DisplaySettings;
   publishSettings: PublishSettings;
+
+  #displayMode: DisplayMode | undefined;
+  #previousDisplayMode: DisplayMode;
 
   private stages = {
     // lowest
-    fabric: new Graphics(),
-    fullstitches: new StitchParticleContainer(),
-    petitestitches: new StitchParticleContainer(),
-    halfstitches: new StitchParticleContainer(),
-    quarterstitches: new StitchParticleContainer(),
-    symbols: new StitchGraphicsContainer(),
-    grid: new Graphics(),
-    specialstitches: new Container(),
-    lines: new StitchGraphicsContainer({ eventMode: "passive", interactiveChildren: true }),
-    nodes: new StitchGraphicsContainer({ eventMode: "passive", interactiveChildren: true }),
+    fabric: new Graphics({ label: "Fabric" }),
+    fullstitches: new StitchParticleContainer({ label: "Full Stitches" }),
+    petitestitches: new StitchParticleContainer({ label: "Petite Stitches" }),
+    halfstitches: new StitchParticleContainer({ label: "Half Stitches" }),
+    quarterstitches: new StitchParticleContainer({ label: "Quarter Stitches" }),
+    symbols: new StitchGraphicsContainer({ label: "Symbols" }),
+    grid: new PatternGrid(),
+    specialstitches: new Container({ label: "Special Stitches" }),
+    lines: new StitchGraphicsContainer({ label: "Lines Stitches", eventMode: "passive", interactiveChildren: true }),
+    nodes: new StitchGraphicsContainer({ label: "Nodes Stitches", eventMode: "passive", interactiveChildren: true }),
+    rulers: new Rulers(),
     // highest
   };
   readonly root = new Container({
+    label: "Pattern View",
     isRenderGroup: true,
     children: Object.values(this.stages),
   });
 
   render?: () => void;
 
-  constructor({ id, pattern, displaySettings, publishSettings }: PatternProject) {
-    this.id = id;
-    this.#info = pattern.info;
+  constructor(pattern: Pattern) {
+    this.id = pattern.id;
+    this.info = pattern.info;
 
     this.#palette = pattern.palette;
-    this.paletteDisplaySettings = displaySettings.paletteSettings;
+    this.paletteDisplaySettings = pattern.displaySettings.paletteSettings;
 
     this.#fabric = pattern.fabric;
-    this.#grid = displaySettings.grid;
-
-    this.#showSymbols = displaySettings.showSymbols;
-    this.#displayMode = displaySettings.displayMode;
-    this.#previousDisplayMode = displaySettings.displayMode;
-
-    this.defaultSymbolFont = displaySettings.defaultSymbolFont;
+    this.#grid = pattern.displaySettings.grid;
 
     this.#specialStitchModels = pattern.specialStitchModels;
 
-    this.publishSettings = publishSettings;
+    this.displaySettings = pattern.displaySettings;
+    this.publishSettings = pattern.publishSettings;
+
+    this.#displayMode = pattern.displaySettings.displayMode;
+    this.#previousDisplayMode = pattern.displaySettings.displayMode;
 
     this.render = () => {
       this.fabric = this.#fabric;
       this.grid = this.#grid;
+
+      this.showSymbols = pattern.displaySettings.showSymbols;
 
       for (const stitch of pattern.fullstitches) {
         this.addFullStitch(stitch);
@@ -121,15 +124,12 @@ export class PatternView {
 
       for (const specialstitch of pattern.specialstitches) this.addSpecialStitch(specialstitch);
 
-      this.showSymbols = this.#showSymbols;
-      this.displayMode = this.#displayMode;
-
       this.render = undefined;
     };
   }
 
   get displayMode() {
-    return this.#displayMode;
+    return this.displaySettings.displayMode;
   }
 
   set displayMode(displayMode: DisplayMode | undefined) {
@@ -156,24 +156,16 @@ export class PatternView {
   }
 
   get showSymbols() {
-    return this.#showSymbols;
+    return this.displaySettings.showSymbols;
   }
 
   set showSymbols(value: boolean) {
-    this.#showSymbols = value;
+    this.displaySettings.showSymbols = value;
     this.stages.symbols.visible = value;
     this.stages.symbols.renderable = value;
 
     // Update the display mode since it depends on the `showSymbols` value.
     this.displayMode = this.#displayMode;
-  }
-
-  get info() {
-    return this.#info;
-  }
-
-  set info(info: PatternInfo) {
-    this.#info = info;
   }
 
   get fabric() {
@@ -185,6 +177,9 @@ export class PatternView {
     this.stages.fabric.clear();
     this.stages.fabric.rect(0, 0, this.fabric.width, this.fabric.height).fill(this.fabric.color);
 
+    // Set the container bounds.
+    this.root.boundsArea = new Rectangle(0, 0, this.fabric.width, this.fabric.height);
+
     // If the grid is set, adjust it to the new fabric.
     if (this.#grid) this.grid = this.#grid;
   }
@@ -195,44 +190,10 @@ export class PatternView {
 
   set grid(grid: Grid) {
     this.#grid = grid;
+
     const { width, height } = this.fabric;
-    this.stages.grid.clear();
-    {
-      // Draw horizontal minor lines.
-      for (let i = 1; i < width; i++) {
-        this.stages.grid.moveTo(i, 0);
-        this.stages.grid.lineTo(i, height);
-      }
-
-      // Draw vertical minor lines.
-      for (let i = 1; i < height; i++) {
-        this.stages.grid.moveTo(0, i);
-        this.stages.grid.lineTo(width, i);
-      }
-
-      const { thickness, color } = this.grid.minorLines;
-      this.stages.grid.stroke({ width: thickness, color });
-    }
-    {
-      const interval = this.grid.majorLinesInterval;
-
-      // Draw horizontal major lines.
-      for (let i = 0; i <= Math.ceil(height / interval); i++) {
-        const point = Math.min(i * interval, height);
-        this.stages.grid.moveTo(0, point);
-        this.stages.grid.lineTo(width, point);
-      }
-
-      // Draw vertical major lines.
-      for (let i = 0; i <= Math.ceil(width / interval); i++) {
-        const point = Math.min(i * interval, width);
-        this.stages.grid.moveTo(point, 0);
-        this.stages.grid.lineTo(point, height);
-      }
-
-      const { thickness, color } = this.grid.majorLines;
-      this.stages.grid.stroke({ width: thickness, color });
-    }
+    this.stages.grid.setGrid(width, height, grid);
+    this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
   }
 
   get palette() {
@@ -249,7 +210,7 @@ export class PatternView {
 
   get allStitchFonts() {
     const fonts = new Set<string>();
-    fonts.add(this.defaultSymbolFont);
+    fonts.add(this.displaySettings.defaultSymbolFont);
     for (const palitem of this.palette) {
       if (palitem.symbolFont) fonts.add(palitem.symbolFont);
     }
@@ -277,9 +238,10 @@ export class PatternView {
 
     const palitem = this.#palette[stitch.palindex]!;
     const symbolFont = palitem.symbolFont;
+    const defaultSymbolFont = this.displaySettings.defaultSymbolFont;
 
     const symbol = new StitchSymbol(stitch, palitem.symbol, {
-      fontFamily: symbolFont ? [symbolFont, this.defaultSymbolFont] : this.defaultSymbolFont,
+      fontFamily: symbolFont ? [symbolFont, defaultSymbolFont] : defaultSymbolFont,
     });
     this.stages.symbols.addStitch(symbol);
   }
@@ -411,5 +373,14 @@ export class PatternView {
     if (flip[1]) graphics.scale.y = -1;
 
     this.stages.specialstitches.addChild(graphics);
+  }
+
+  /**
+   * Adjusts the zoom level of the pattern view.
+   * @param zoom - The zoom level in range 1 to 100.
+   */
+  adjustZoom(zoom: number, bounds?: Bounds) {
+    this.stages.grid.renderGrid();
+    this.stages.rulers.renderRulers(zoom, bounds);
   }
 }

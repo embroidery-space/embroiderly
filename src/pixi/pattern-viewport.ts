@@ -1,5 +1,5 @@
 import { Container, Point } from "pixi.js";
-import type { DestroyOptions, FederatedPointerEvent } from "pixi.js";
+import type { Bounds, DestroyOptions, FederatedPointerEvent } from "pixi.js";
 
 const MODIFIERS: Modifiers = {
   mod1: (e) => e.ctrlKey,
@@ -7,8 +7,8 @@ const MODIFIERS: Modifiers = {
   mod3: (e) => e.altKey,
 };
 
-const MIN_SCALE = 1;
-const MAX_SCALE = 100;
+export const MIN_SCALE = 1;
+export const MAX_SCALE = 100;
 
 const WHEEL_ZOOM_FACTOR = 0.1;
 
@@ -40,9 +40,10 @@ export class PatternViewport extends Container {
   private startPoint?: Point;
 
   constructor() {
-    super();
-    this.label = "Viewport";
-    this.eventMode = "static";
+    super({
+      label: "Pattern Viewport",
+      eventMode: "static",
+    });
   }
 
   init(domElement: HTMLElement, options: ViewportOptions) {
@@ -96,28 +97,38 @@ export class PatternViewport extends Container {
   move(point: Point) {
     this.position.x += point.x;
     this.position.y += point.y;
+
+    this.emitTransformEvent();
   }
 
   moveCenter(point: Point) {
     const x = (this.worldScreenWidth / 2 - point.x) * this.scale.x;
     const y = (this.worldScreenHeight / 2 - point.y) * this.scale.y;
     this.position.set(x, y);
+
+    this.emitTransformEvent();
   }
 
   fit() {
     const scaleX = this.screenWidth / this.worldWidth;
     const scaleY = this.screenHeight / this.worldHeight;
     this.clampZoom(Math.min(scaleX, scaleY), "fit");
+
+    this.emitTransformEvent();
   }
 
   fitWidth() {
     const scale = this.screenWidth / this.worldWidth;
     this.clampZoom(scale, "fit-width");
+
+    this.emitTransformEvent();
   }
 
   fitHeight() {
     const scale = this.screenHeight / this.worldHeight;
     this.clampZoom(scale, "fit-height");
+
+    this.emitTransformEvent();
   }
 
   resizeScreen(width: number, height: number) {
@@ -133,12 +144,12 @@ export class PatternViewport extends Container {
   private handlePointerDown(e: FederatedPointerEvent) {
     const point = this.toWorld(e.global);
     this.startPoint = this.containsPoint(point) ? point : undefined;
-    if (this.startPoint === undefined) return this._emit(InternalEventType.CanvasClear, e);
+    if (this.startPoint === undefined) return this.emitToolEvent(InternalEventType.CanvasClear, e);
 
     const buttons = getMouseButtons(e);
     if (buttons.left) {
-      if (MODIFIERS.mod3(e)) this._emit(EventType.ToolAntiAction, e);
-      else this._emit(EventType.ToolMainAction, e);
+      if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
+      else this.emitToolEvent(EventType.ToolMainAction, e);
     }
   }
 
@@ -146,10 +157,10 @@ export class PatternViewport extends Container {
     const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (this.startPoint === undefined) return;
-      if (MODIFIERS.mod3(e)) this._emit(EventType.ToolAntiAction, e);
-      else this._emit(EventType.ToolMainAction, e);
+      if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
+      else this.emitToolEvent(EventType.ToolMainAction, e);
     } else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this._emit(EventType.ToolAntiAction, e);
+      if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
       else {
         this.startPoint = undefined;
         this.move(e.movement);
@@ -158,18 +169,24 @@ export class PatternViewport extends Container {
   }
 
   private handlePointerUp(e: FederatedPointerEvent) {
-    if (this.startPoint === undefined) return this._emit(InternalEventType.CanvasClear, e);
+    if (this.startPoint === undefined) return this.emitToolEvent(InternalEventType.CanvasClear, e);
     const buttons = getMouseButtons(e);
-    if (buttons.left) this._emit(EventType.ToolRelease, e);
+    if (buttons.left) this.emitToolEvent(EventType.ToolRelease, e);
     else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this._emit(EventType.ToolAntiAction, e);
-      else this._emit(EventType.ContextMenu, e);
+      if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
+      else this.emitToolEvent(EventType.ContextMenu, e);
     }
     this.startPoint = undefined;
-    this._emit(InternalEventType.CanvasClear, e);
+    this.emitToolEvent(InternalEventType.CanvasClear, e);
   }
 
-  private _emit(type: EventType | InternalEventType, event: FederatedPointerEvent) {
+  /**
+   * Emits a tool event with the current pointer information.
+   *
+   * @param type - The type of the event to emit.
+   * @param event - The original pointer event.
+   */
+  private emitToolEvent(type: EventType | InternalEventType, event: FederatedPointerEvent) {
     const point = this.toWorld(event.global);
     if (!this.containsPoint(point) && type !== InternalEventType.CanvasClear) return;
     const modifiers: ModifiersState = {
@@ -177,8 +194,14 @@ export class PatternViewport extends Container {
       mod2: MODIFIERS.mod2(event),
       mod3: MODIFIERS.mod3(event),
     };
-    const detail: EventDetail = { event, modifiers, start: this.startPoint!, end: point };
+    const detail: ToolEventDetail = { event, modifiers, start: this.startPoint!, end: point };
     this.emit(type, detail);
+  }
+
+  /** Emits a transform event with the current scale and bounds. */
+  private emitTransformEvent() {
+    const detail: TransformEventDetail = { scale: this.scale.x, bounds: this.getBounds() };
+    this.emit(EventType.Transform, detail);
   }
 
   private handleWheel(e: WheelEvent) {
@@ -198,6 +221,8 @@ export class PatternViewport extends Container {
       if (MODIFIERS.mod2(e)) this.position.x -= e.deltaY;
       else this.position.y -= e.deltaY;
     }
+
+    this.emitTransformEvent();
   }
 
   private handleWheelZoom(e: WheelEvent) {
@@ -211,12 +236,14 @@ export class PatternViewport extends Container {
     const afterTransform = this.toLocal(mousePosition);
     this.position.x += (afterTransform.x - beforeTransform.x) * this.scale.x;
     this.position.y += (afterTransform.y - beforeTransform.y) * this.scale.y;
+
+    this.emitTransformEvent();
   }
 
   private clampZoom(value = this.scale.x, zoom?: ZoomState) {
     const scale = Math.min(Math.max(value, MIN_SCALE), MAX_SCALE);
-    this.scale.set(scale);
 
+    this.scale.set(scale);
     this.zoom = zoom ?? scale;
   }
 }
@@ -226,27 +253,41 @@ export const enum EventType {
   ToolAntiAction = "tool-anti-action",
   ToolRelease = "tool-release",
   ContextMenu = "context-menu",
+  Transform = "transform",
 }
 
 export const enum InternalEventType {
   CanvasClear = "canvas-clear",
 }
 
-export interface EventDetail {
+/** The detail of the tool event. */
+export interface ToolEventDetail {
+  /** The original pointer event. */
   event: FederatedPointerEvent;
+  /** The state of the modifier keys. */
   modifiers: ModifiersState;
+  /** The starting point of the event. */
   start: Point;
+  /** The ending point of the event. */
   end: Point;
 }
 
+/** The detail of the transform event (zoom or move). */
+export interface TransformEventDetail {
+  /** The current scale of the viewport. */
+  scale: number;
+  /** The current bounds of the viewport. */
+  bounds: Bounds;
+}
+
 export interface Modifiers {
-  /** Modifier 1. Default is the Ctrl key. */
+  /** Modifier 1. Default is the `Ctrl` key. */
   mod1: ModifierChecker;
 
-  /** Modifier 2. Default is the Shift key. */
+  /** Modifier 2. Default is the `Shift` key. */
   mod2: ModifierChecker;
 
-  /** Modifier 3. Default is the Alt key. */
+  /** Modifier 3. Default is the `Alt` key. */
   mod3: ModifierChecker;
 }
 

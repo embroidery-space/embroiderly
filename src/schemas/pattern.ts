@@ -1,8 +1,10 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
+import { stringify as stringifyUuid } from "uuid";
 
-import { PaletteSettings } from "./display.ts";
+import { DisplaySettings, PaletteSettings } from "./display.ts";
+import { PublishSettings } from "./publish.ts";
 
 export class PatternInfo {
   title: string;
@@ -405,6 +407,8 @@ export class SpecialStitchModel {
 }
 
 export class Pattern {
+  id: string;
+
   info: PatternInfo;
   fabric: Fabric;
   palette: PaletteItem[];
@@ -415,7 +419,12 @@ export class Pattern {
   specialstitches: SpecialStitch[];
   specialStitchModels: SpecialStitchModel[];
 
+  displaySettings: DisplaySettings;
+  publishSettings: PublishSettings;
+
   constructor(data: b.infer<typeof Pattern.schema>) {
+    this.id = stringifyUuid(new Uint8Array(data.id));
+
     this.info = new PatternInfo(data.info);
     this.fabric = new Fabric(data.fabric);
     this.palette = data.palette.map((item) => new PaletteItem(item));
@@ -425,9 +434,14 @@ export class Pattern {
     this.nodestitches = data.nodestitches.map((stitch) => new NodeStitch(stitch));
     this.specialstitches = data.specialstitches.map((stitch) => new SpecialStitch(stitch));
     this.specialStitchModels = data.specialStitchModels.map((model) => new SpecialStitchModel(model));
+
+    this.displaySettings = new DisplaySettings(data.displaySettings);
+    this.publishSettings = new PublishSettings(data.publishSettings);
   }
 
   static readonly schema = b.struct({
+    id: b.array(b.u8(), 16),
+
     info: PatternInfo.schema,
     fabric: Fabric.schema,
     palette: b.vec(PaletteItem.schema),
@@ -437,7 +451,15 @@ export class Pattern {
     nodestitches: b.vec(NodeStitch.schema),
     specialstitches: b.vec(SpecialStitch.schema),
     specialStitchModels: b.vec(SpecialStitchModel.schema),
+
+    displaySettings: DisplaySettings.schema,
+    publishSettings: PublishSettings.schema,
   });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new Pattern(Pattern.schema.deserialize(buffer));
+  }
 }
 
 export type Stitch = FullStitch | PartStitch | NodeStitch | LineStitch;

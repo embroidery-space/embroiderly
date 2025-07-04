@@ -1,11 +1,11 @@
 import { Container, Graphics, type ColorSource } from "pixi.js";
 import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
-import { TextureManager } from "./texture-manager";
-import { STITCH_SCALE_FACTOR } from "./constants";
+import { TextureManager } from "../texture-manager";
+import { STITCH_SCALE_FACTOR } from "../constants";
 
 export class Hint extends Container {
-  private _graphics = new Graphics();
-  private _zoom = 1;
+  private graphics = new Graphics();
+  private zoom = 1;
 
   constructor() {
     super();
@@ -13,8 +13,8 @@ export class Hint extends Container {
   }
 
   setZoom(value: number) {
-    this._zoom = value;
-    this._graphics.scale.set(value);
+    this.zoom = value;
+    this.graphics.scale.set(value);
   }
 
   drawLineHint(line: LineStitch, color: ColorSource) {
@@ -44,13 +44,13 @@ export class Hint extends Container {
   }
 
   clearHint() {
-    this._graphics.destroy();
-    this._graphics = new Graphics();
-    this._graphics.angle = 0;
-    this._graphics.alpha = 0.5;
-    this._graphics.pivot.set(0, 0);
-    this._graphics.scale.set(this._zoom);
-    this._graphics.position.set(0, 0);
-    return this.addChild(this._graphics);
+    this.graphics.destroy();
+    this.graphics = new Graphics();
+    this.graphics.angle = 0;
+    this.graphics.alpha = 0.5;
+    this.graphics.pivot.set(0, 0);
+    this.graphics.scale.set(this.zoom);
+    this.graphics.position.set(0, 0);
+    return this.addChild(this.graphics);
   }
 }
