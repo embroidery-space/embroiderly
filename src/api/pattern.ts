@@ -1,9 +1,9 @@
 import { invoke } from "./index.ts";
-import { PatternProject, Fabric, PatternInfo } from "#/schemas";
+import { Pattern, Fabric, PatternInfo } from "#/schemas";
 
 export async function loadPattern(patternId: string) {
   const buffer = await invoke<ArrayBuffer>("load_pattern", { patternId });
-  return PatternProject.deserialize(new Uint8Array(buffer));
+  return Pattern.deserialize(new Uint8Array(buffer));
 }
 
 export interface OpenPatternOptions {
@@ -18,12 +18,12 @@ export interface OpenPatternOptions {
 }
 export async function openPattern(filePath: string, options?: OpenPatternOptions) {
   const buffer = await invoke<ArrayBuffer>("open_pattern", { filePath, ...options });
-  return PatternProject.deserialize(new Uint8Array(buffer));
+  return Pattern.deserialize(new Uint8Array(buffer));
 }
 
 export async function createPattern(fabric: Fabric) {
   const buffer = await invoke<ArrayBuffer>("create_pattern", Fabric.serialize(fabric));
-  return PatternProject.deserialize(new Uint8Array(buffer));
+  return Pattern.deserialize(new Uint8Array(buffer));
 }
 
 export function savePattern(patternId: string, filePath: string) {

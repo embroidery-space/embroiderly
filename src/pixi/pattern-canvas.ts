@@ -1,10 +1,13 @@
+import { initDevtools } from "@pixi/devtools";
 import { Application, Point } from "pixi.js";
 import type { ApplicationOptions, ColorSource } from "pixi.js";
-import { PatternView } from "./pattern-view";
-import { TextureManager } from "#/pixi";
-import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
+
+import { Hint } from "./components/";
+import { PatternView } from "./pattern-view.ts";
 import { EventType, InternalEventType, PatternViewport, type ViewportOptions } from "./pattern-viewport.ts";
-import { Hint } from "./hint.ts";
+import { TextureManager } from "./texture-manager.ts";
+
+import type { Bead, LineStitch, NodeStitch } from "#/schemas/";
 
 export interface PatternCanvasOptions {
   render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;
@@ -44,6 +47,9 @@ export class PatternCanvas extends EventTarget {
     this.viewport.on(EventType.ContextMenu, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ContextMenu, { detail }));
     });
+    this.viewport.on(EventType.Transform, (detail) => {
+      this.dispatchEvent(new CustomEvent(EventType.Transform, { detail }));
+    });
 
     this.viewport.on(InternalEventType.CanvasClear, () => this.clearHint());
   }
@@ -64,8 +70,11 @@ export class PatternCanvas extends EventTarget {
 
     TextureManager.shared.init(this.pixi.renderer);
 
-    this.pixi.stage.addChild(this.viewport);
-    this.viewport.addChild(this.stages.hint);
+    // Replace the default stage with our viewport.
+    this.pixi.stage = this.viewport;
+
+    // Init devtools last, so it has access to the fully initialized application.
+    if (import.meta.env.DEV) initDevtools({ app: this.pixi });
   }
 
   destroy() {

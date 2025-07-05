@@ -1,0 +1,98 @@
+name: Build and Commit Sidecar Binaries
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev]
+    paths:
+      - crates/embroiderly-publish/**
+      - ".github/workflows/build-sidecars.yml"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        sidecar: ["embroiderly-publish"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
+
+      - name: Get target platform triple
+        id: target
+        shell: bash
+        run: |
+          TRIPLE=$(rustc -vV | grep 'host:' | sed 's/host: //')
+          echo "TRIPLE=${TRIPLE}" >> $GITHUB_OUTPUT
+
+          EXT=""
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            EXT=".exe"
+          fi
+          echo "EXT=${EXT}" >> $GITHUB_OUTPUT
+
+      - name: Build sidecar binary
+        run: cargo build -p ${{ matrix.sidecar }} --release
+
+      - name: Prepare binary for upload
+        shell: bash
+        run: |
+          mkdir -p binaries/${{ matrix.sidecar }}
+
+          SOURCE_FILE="target/release/${{ matrix.sidecar }}${{ steps.target.outputs.EXT }}"
+          DEST_FILE="binaries/${{ matrix.sidecar }}/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
+          mv "$SOURCE_FILE" "$DEST_FILE"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sidecar-binary-${{ matrix.sidecar }}-${{ matrix.os }}
+          path: binaries/
+
+  commit:
+    permissions:
+      contents: write
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.EMBROIDERLY_PAT }}
+
+      - run: mkdir -p crates/embroiderly/binaries
+      - run: rm -rf crates/embroiderly/binaries/*
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: crates/embroiderly/binaries/
+          merge-multiple: true
+
+      - name: Import GPG key
+        id: gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.EMBROIDERLY_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.EMBROIDERLY_GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Commit binaries
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          file_pattern: crates/embroiderly/binaries/**
+          commit_message: "build: update sidecar binaries"
+          commit_author: "${{ steps.gpg.outputs.name }} <${{ steps.gpg.outputs.email }}>"
+          commit_user_name: ${{ steps.gpg.outputs.name }}
+          commit_user_email: ${{ steps.gpg.outputs.email }}
+          push_options: "--force"

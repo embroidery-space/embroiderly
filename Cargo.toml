@@ -11,6 +11,7 @@ debug = "line-tables-only"
 [profile.release]
 opt-level = "s"
 lto = true
+codegen-units = 1
 debug = "limited"
 strip = "debuginfo"
 split-debuginfo = "packed"
