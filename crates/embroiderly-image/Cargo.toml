@@ -3,6 +3,9 @@ name = "embroiderly-image"
 edition = { workspace = true }
 
 [dependencies]
+# CLI
+clap = { workspace = true }
+
 # Embroiderly Core
 embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true }
@@ -21,6 +24,7 @@ palette = { workspace = true }
 
 # Logging
 log = { workspace = true }
+simple_logger = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

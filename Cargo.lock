@@ -1486,6 +1486,7 @@ name = "embroiderly-image"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "clap",
  "embroiderly-parsers",
  "embroiderly-pattern",
  "image",
@@ -1499,6 +1500,7 @@ dependencies = [
  "rayon",
  "serde",
  "serde_json",
+ "simple_logger",
  "thiserror 2.0.12",
 ]
 
