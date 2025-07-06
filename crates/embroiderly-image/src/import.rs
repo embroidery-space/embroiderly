@@ -28,17 +28,16 @@ pub fn import_image<P: AsRef<std::path::Path>>(
   let (width, height) = options.pattern_size;
 
   let img = {
-    // Open the image file and convert it to RGB8 format.
     let img = image::open(image_path)?.to_rgb8();
 
-    // Decrease the palette size.
+    log::debug!("Quantizing image with palette size: {}", options.palette_size);
     let quantized = quantette::ImagePipeline::try_from(&img)?
       .palette_size(quantette::PaletteSize::from_clamped(options.palette_size))
       .colorspace(quantette::ColorSpace::Oklab)
       .quantize_method(quantette::QuantizeMethod::kmeans())
       .quantized_rgbimage_par();
 
-    // Resize the image to the specified dimensions using the Nearest Neighbor filter.
+    log::debug!("Resizing image to {width}x{height} dimensions");
     image::DynamicImage::ImageRgb8(quantized)
       .resize_exact(width as u32, height as u32, image::imageops::FilterType::Nearest)
       .to_rgb32f()
@@ -60,6 +59,8 @@ pub fn import_image<P: AsRef<std::path::Path>>(
 
 /// Creates a Gaussian pyramid from an image.
 fn generate_gaussian_pyramid(image: image::Rgb32FImage, levels: usize) -> Vec<image::Rgb32FImage> {
+  log::debug!("Generating Gaussian pyramid with {levels} levels");
+
   let mut pyramid = Vec::with_capacity(levels);
   pyramid.push(image);
 
@@ -74,6 +75,11 @@ fn generate_gaussian_pyramid(image: image::Rgb32FImage, levels: usize) -> Vec<im
 
 /// Creates a Laplacian pyramid from a Gaussian pyramid that contains only image differences.
 pub fn generate_laplacian_pyramid(gaussian_pyramid: &[image::Rgb32FImage]) -> Vec<image::Rgb32FImage> {
+  log::debug!(
+    "Generating Laplacian pyramid from Gaussian pyramid with {} levels",
+    gaussian_pyramid.len()
+  );
+
   let levels = gaussian_pyramid.len();
   if levels == 0 {
     return Vec::new();
@@ -117,6 +123,8 @@ pub fn generate_laplacian_pyramid(gaussian_pyramid: &[image::Rgb32FImage]) -> Ve
 
 /// Reconstructs the image from a Laplacian pyramid.
 pub fn reconstruct_image(laplacian_pyramid: &[image::Rgb32FImage]) -> image::RgbImage {
+  log::debug!("Reconstructing image from Laplacian pyramid");
+
   let levels = laplacian_pyramid.len();
   if levels == 0 {
     return image::RgbImage::new(0, 0);
@@ -163,6 +171,8 @@ fn convert_image_into_pattern(
   height: u16,
   target_palette: &[PaletteItem],
 ) -> anyhow::Result<Pattern> {
+  log::debug!("Converting image into pattern");
+
   let fabric = Fabric {
     width,
     height,
