@@ -7,8 +7,17 @@ edition = { workspace = true }
 embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true }
 
+# De/serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
 # Writing SVG files
 quick-xml = { workspace = true }
+
+# Image processing
+image = { workspace = true }
+quantette = { workspace = true }
+palette = { workspace = true }
 
 # Logging
 log = { workspace = true }
@@ -16,6 +25,11 @@ log = { workspace = true }
 # Error handling
 anyhow = { workspace = true }
 thiserror = { workspace = true }
+
+# Other
+ordered-float = { workspace = true }
+ordermap = { workspace = true }
+rayon = { workspace = true }
 
 [dev-dependencies]
 prettydiff = { workspace = true }

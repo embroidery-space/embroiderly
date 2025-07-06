@@ -324,13 +324,17 @@ impl From<pmaker::PatternInfo> for PatternInfo {
 
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct PaletteItem {
   pub brand: String,
   pub number: String,
   pub name: String,
   pub color: String,
+  #[serde(skip)]
   pub blends: Option<Vec<Blend>>,
+  #[serde(skip)]
   pub symbol_font: Option<String>,
+  #[serde(skip)]
   pub symbol: Option<Symbol>,
 }
 

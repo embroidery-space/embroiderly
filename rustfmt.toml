@@ -1,6 +1,7 @@
 tab_spaces = 2
 max_width = 120
 struct_lit_width = 32
+merge_derives = false
 
 unstable_features = true
 group_imports = "StdExternalCrate"
