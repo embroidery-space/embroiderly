@@ -1,6 +1,7 @@
 use std::str::FromStr as _;
 
 use embroiderly_pattern::*;
+use image::GenericImageView as _;
 use palette::FromColor as _;
 use palette::color_difference::Ciede2000 as _;
 use rayon::prelude::*;
@@ -15,6 +16,7 @@ pub struct ImageImportOptions {
   pattern_size: (u16, u16),
   palette: String,
   palette_size: u16,
+  dither: Option<bool>,
 }
 
 pub fn import_image<P: AsRef<std::path::Path>>(
@@ -26,6 +28,7 @@ pub fn import_image<P: AsRef<std::path::Path>>(
   let palettes_dir = palettes_dir.as_ref();
 
   let (width, height) = options.pattern_size;
+  let dither = options.dither.unwrap_or(true);
 
   let img = {
     let img = image::open(image_path)?.to_rgb8();
@@ -33,6 +36,7 @@ pub fn import_image<P: AsRef<std::path::Path>>(
     log::debug!("Quantizing image with palette size: {}", options.palette_size);
     let quantized = quantette::ImagePipeline::try_from(&img)?
       .palette_size(quantette::PaletteSize::from_clamped(options.palette_size))
+      .dither(dither)
       .colorspace(quantette::ColorSpace::Oklab)
       .quantize_method(quantette::QuantizeMethod::kmeans())
       .quantized_rgbimage_par();
@@ -43,7 +47,34 @@ pub fn import_image<P: AsRef<std::path::Path>>(
       .to_rgb32f()
   };
 
-  let gaussian_pyramid = generate_gaussian_pyramid(img, PYRAMID_LEVELS);
+  let gaussian_pyramid = generate_gaussian_pyramid(img, PYRAMID_LEVELS)
+    .into_iter()
+    .enumerate()
+    .map(|(i, img)| {
+      let mut img = image::DynamicImage::ImageRgb32F(img);
+
+      // Additional blurring for the first level to make the background smoother.
+      if i == 0 {
+        let (width, height) = img.dimensions();
+        img = img.resize_exact(width, height, PYRAMID_BLURRING_ALGORITHM);
+      }
+
+      // Additional quantization for each level to reduce color complexity.
+      let quantized = image::DynamicImage::ImageRgb8(
+        quantette::ImagePipeline::try_from(&img.to_rgb8())
+          .unwrap()
+          .palette_size(quantette::PaletteSize::from_clamped(
+            options.palette_size / (i + 1) as u16,
+          ))
+          .dither(dither)
+          .colorspace(quantette::ColorSpace::Oklab)
+          .quantize_method(quantette::QuantizeMethod::kmeans())
+          .quantized_rgbimage_par(),
+      );
+
+      quantized.to_rgb32f()
+    })
+    .collect::<Vec<_>>();
   let laplacian_pyramid = generate_laplacian_pyramid(&gaussian_pyramid);
   debug_assert!(gaussian_pyramid.len() == laplacian_pyramid.len());
 
