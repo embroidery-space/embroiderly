@@ -259,4 +259,58 @@ mod transactions {
       panic!("Expected a transaction in the undo stack.");
     }
   }
+
+  #[test]
+  fn test_active_transaction_undo() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.start_transaction();
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+    // The transaction is not ended, so it remains active.
+
+    assert!(history.undo().is_some());
+
+    assert_eq!(history.undo_stack.len(), 1);
+    assert_eq!(history.redo_stack.len(), 1);
+    assert!(history.active_transaction.is_none());
+
+    if let Some(HistoryEntry::Transaction(transaction)) = history.undo_stack.first() {
+      assert_eq!(transaction.actions.len(), 1);
+    } else {
+      panic!("Expected a transaction in the undo stack.");
+    }
+
+    if let Some(HistoryEntry::Transaction(transaction)) = history.redo_stack.first() {
+      assert_eq!(transaction.actions.len(), 1);
+    } else {
+      panic!("Expected a transaction in the redo stack.");
+    }
+  }
+
+  #[test]
+  fn test_active_transaction_redo() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.push(Box::new(MockAction));
+    assert!(history.undo().is_some());
+
+    assert_eq!(history.undo_stack.len(), 0);
+    assert_eq!(history.redo_stack.len(), 1);
+
+    history.start_transaction();
+    assert!(history.redo_stack.is_empty());
+
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+    // The transaction is not ended, so it remains active.
+
+    assert!(history.redo().is_none());
+
+    if let Some(actions) = history.active_transaction {
+      assert_eq!(actions.len(), 2);
+    } else {
+      panic!("Expected an active transaction in the history.");
+    }
+  }
 }

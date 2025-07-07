@@ -42,6 +42,7 @@ impl<R: tauri::Runtime> History<R> {
           actions,
         };
         self.undo_stack.push(HistoryEntry::Transaction(transaction));
+        self.redo_stack.clear();
         self.last_transaction_id += 1;
       }
     }
@@ -80,6 +81,12 @@ impl<R: tauri::Runtime> History<R> {
     {
       // If the only action in the undo stack is a `CheckpointAction`, skip undoing it.
       return None;
+    }
+
+    if self.active_transaction.is_some() {
+      // If there is an active transaction, we end the transaction and undo the action.
+      self.end_transaction();
+      return self.undo();
     }
 
     if let Some(entry) = self.undo_stack.last_mut() {
