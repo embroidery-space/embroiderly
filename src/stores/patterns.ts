@@ -396,6 +396,26 @@ export const usePatternsStore = defineStore(
       await HistoryApi.redo(pattern.value.id);
     }
 
+    async function undoTransaction() {
+      if (!pattern.value) return;
+      await HistoryApi.undoTransaction(pattern.value.id);
+    }
+
+    async function redoTransaction() {
+      if (!pattern.value) return;
+      await HistoryApi.redoTransaction(pattern.value.id);
+    }
+
+    async function startTransaction() {
+      if (!pattern.value) return;
+      await HistoryApi.startTransaction(pattern.value.id);
+    }
+
+    async function endTransaction() {
+      if (!pattern.value) return;
+      await HistoryApi.endTransaction(pattern.value.id);
+    }
+
     return {
       blocked,
       loading,
@@ -425,6 +445,10 @@ export const usePatternsStore = defineStore(
       updatePdfExportOptions,
       undo,
       redo,
+      undoTransaction,
+      redoTransaction,
+      startTransaction,
+      endTransaction,
     };
   },
   { tauri: { save: false, sync: false } },

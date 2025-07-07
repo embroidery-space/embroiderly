@@ -28,13 +28,13 @@ struct Transaction<R: tauri::Runtime> {
 
 impl<R: tauri::Runtime> History<R> {
   pub fn start_transaction(&mut self) {
-    debug_assert!(self.active_transaction.is_none(), "A transaction is already active.");
-    self.active_transaction = Some(Vec::new());
-    self.redo_stack.clear();
+    if self.active_transaction.is_none() {
+      self.active_transaction = Some(Vec::new());
+      self.redo_stack.clear();
+    }
   }
 
   pub fn end_transaction(&mut self) {
-    debug_assert!(self.active_transaction.is_some(), "No active transaction to end.");
     if let Some(actions) = self.active_transaction.take() {
       if !actions.is_empty() {
         let transaction = Transaction {
@@ -174,7 +174,7 @@ impl<R: tauri::Runtime> History<R> {
         }
         HistoryEntry::Transaction(transaction) => {
           if let Some(action) = transaction.actions.pop() {
-            match self.undo_stack.last_mut() {
+            match self.undo_stack.first_mut() {
               Some(HistoryEntry::Transaction(last_transaction)) if last_transaction.id == transaction.id => {
                 // If the last action in the undo stack is part of the same transaction, we can push the action to it.
                 last_transaction.actions.push(action.clone());
@@ -218,10 +218,20 @@ impl<R: tauri::Runtime> History<R> {
             unreachable!()
           };
 
-          self.redo_stack.push(HistoryEntry::Transaction(Transaction {
-            id: transaction.id,
-            actions: transaction.actions.clone(),
-          }));
+          match self.redo_stack.last_mut() {
+            Some(HistoryEntry::Transaction(last_transaction)) if last_transaction.id == transaction.id => {
+              // If the last action in the redo stack is part of the same transaction, we can push the actions to it.
+              last_transaction.actions.extend(transaction.actions.clone());
+            }
+            _ => {
+              // Otherwise, we create a new transaction entry with the same id in the redo stack.
+              let new_transaction = Transaction {
+                id: transaction.id,
+                actions: transaction.actions.clone(),
+              };
+              self.redo_stack.push(HistoryEntry::Transaction(new_transaction));
+            }
+          }
 
           return Some(transaction.actions);
         }
