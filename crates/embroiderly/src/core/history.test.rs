@@ -1,6 +1,6 @@
 use tauri::test::MockRuntime;
 
-use super::History;
+use super::{History, HistoryEntry};
 use crate::core::actions::CheckpointAction;
 use crate::core::actions::mock::MockAction;
 
@@ -135,5 +135,128 @@ mod single {
     // After undoing the action, there are no unsaved changes since the last action was a checkpoint.
     history.undo();
     assert!(!history.has_unsaved_changes());
+  }
+}
+
+mod transactions {
+  use super::*;
+
+  #[test]
+  fn test_creating_transaction() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.start_transaction();
+    assert!(history.active_transaction.is_some());
+
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+
+    history.end_transaction();
+    assert!(history.active_transaction.is_none());
+
+    assert_eq!(history.undo_stack.len(), 1);
+    assert_eq!(history.redo_stack.len(), 0);
+
+    if let Some(HistoryEntry::Transaction(transaction)) = history.undo_stack.first() {
+      assert_eq!(transaction.actions.len(), 2);
+    } else {
+      panic!("Expected a transaction in the undo stack.");
+    }
+  }
+
+  #[test]
+  fn test_undo() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.start_transaction();
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+    history.end_transaction();
+
+    assert!(history.undo().is_some());
+
+    assert_eq!(history.undo_stack.len(), 1);
+    assert_eq!(history.redo_stack.len(), 1);
+
+    let undo_transaction_id;
+    if let Some(HistoryEntry::Transaction(transaction)) = history.undo_stack.first() {
+      assert_eq!(transaction.actions.len(), 1);
+      undo_transaction_id = transaction.id;
+    } else {
+      panic!("Expected a transaction in the undo stack.");
+    }
+
+    let redo_transaction_id;
+    if let Some(HistoryEntry::Transaction(transaction)) = history.redo_stack.first() {
+      assert_eq!(transaction.actions.len(), 1);
+      redo_transaction_id = transaction.id;
+    } else {
+      panic!("Expected a transaction in the redo stack.");
+    }
+
+    assert_eq!(undo_transaction_id, redo_transaction_id);
+  }
+
+  #[test]
+  fn test_undo_single_action() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.start_transaction();
+    history.push(Box::new(MockAction));
+    history.end_transaction();
+
+    assert!(history.undo().is_some());
+
+    assert_eq!(history.undo_stack.len(), 0);
+    assert_eq!(history.redo_stack.len(), 1);
+
+    if let Some(HistoryEntry::Transaction(transaction)) = history.redo_stack.first() {
+      assert_eq!(transaction.actions.len(), 1);
+    } else {
+      panic!("Expected a transaction in the redo stack.");
+    }
+  }
+
+  #[test]
+  fn test_redo() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.start_transaction();
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+    history.end_transaction();
+
+    assert!(history.undo().is_some());
+    assert!(history.redo().is_some());
+
+    assert_eq!(history.undo_stack.len(), 1);
+    assert_eq!(history.redo_stack.len(), 0);
+
+    if let Some(HistoryEntry::Transaction(transaction)) = history.undo_stack.first() {
+      assert_eq!(transaction.actions.len(), 2);
+    } else {
+      panic!("Expected a transaction in the undo stack.");
+    }
+  }
+
+  #[test]
+  fn test_redo_single_action() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.start_transaction();
+    history.push(Box::new(MockAction));
+    history.end_transaction();
+
+    assert!(history.undo().is_some());
+    assert!(history.redo().is_some());
+
+    assert_eq!(history.undo_stack.len(), 1);
+    assert_eq!(history.redo_stack.len(), 0);
+
+    if let Some(HistoryEntry::Transaction(transaction)) = history.undo_stack.first() {
+      assert_eq!(transaction.actions.len(), 1);
+    } else {
+      panic!("Expected a transaction in the undo stack.");
+    }
   }
 }
