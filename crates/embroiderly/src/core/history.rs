@@ -204,6 +204,55 @@ impl<R: tauri::Runtime> History<R> {
     None
   }
 
+  /// Get last action objects from the undo stack.
+  /// If the last action is a `Transaction`, it returns all actions in that transaction.
+  /// If the last action is a `Single` action, it returns that action.
+  pub fn undo_transaction(&mut self) -> Option<Vec<Box<dyn Action<R>>>> {
+    if let Some(entry) = self.undo_stack.last() {
+      match entry {
+        HistoryEntry::Single(_) => return Some(vec![self.undo().unwrap()]),
+        HistoryEntry::Transaction(_) => {
+          // Currently, in this branch, we have a pointer to a `Transaction` action.
+          // Pop the last action from the undo stack to get the owned action instance.
+          let HistoryEntry::Transaction(transaction) = self.undo_stack.pop().unwrap() else {
+            unreachable!()
+          };
+
+          self.redo_stack.push(HistoryEntry::Transaction(Transaction {
+            id: transaction.id,
+            actions: transaction.actions.clone(),
+          }));
+
+          return Some(transaction.actions);
+        }
+      }
+    }
+    None
+  }
+
+  pub fn redo_transaction(&mut self) -> Option<Vec<Box<dyn Action<R>>>> {
+    if let Some(entry) = self.redo_stack.last() {
+      match entry {
+        HistoryEntry::Single(_) => return Some(vec![self.redo().unwrap()]),
+        HistoryEntry::Transaction(_) => {
+          // Currently, in this branch, we have a pointer to a `Transaction` action.
+          // Pop the last action from the redo stack to get the owned action instance.
+          let HistoryEntry::Transaction(transaction) = self.redo_stack.pop().unwrap() else {
+            unreachable!()
+          };
+
+          self.undo_stack.push(HistoryEntry::Transaction(Transaction {
+            id: transaction.id,
+            actions: transaction.actions.clone(),
+          }));
+
+          return Some(transaction.actions);
+        }
+      }
+    }
+    None
+  }
+
   /// Identifies if there are any unsaved changes in the history.
   pub fn has_unsaved_changes(&self) -> bool {
     !self.undo_stack.last().is_none_or(|entry| match entry {

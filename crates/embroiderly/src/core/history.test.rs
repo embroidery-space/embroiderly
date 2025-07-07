@@ -313,4 +313,81 @@ mod transactions {
       panic!("Expected an active transaction in the history.");
     }
   }
+
+  #[test]
+  fn test_undo_transaction() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.start_transaction();
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+    history.end_transaction();
+
+    let undone_actions = history.undo_transaction();
+    assert!(undone_actions.is_some_and(|actions| actions.len() == 2));
+
+    assert_eq!(history.undo_stack.len(), 0);
+    assert_eq!(history.redo_stack.len(), 1);
+
+    if let Some(HistoryEntry::Transaction(transaction)) = history.redo_stack.first() {
+      assert_eq!(transaction.actions.len(), 2);
+    } else {
+      panic!("Expected a transaction in the redo stack.");
+    }
+  }
+
+  #[test]
+  fn test_redo_transaction() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.start_transaction();
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+    history.end_transaction();
+
+    history.undo_transaction();
+    let redone_actions = history.redo_transaction();
+    assert!(redone_actions.is_some_and(|actions| actions.len() == 2));
+
+    assert_eq!(history.undo_stack.len(), 1);
+    assert_eq!(history.redo_stack.len(), 0);
+
+    if let Some(HistoryEntry::Transaction(transaction)) = history.undo_stack.first() {
+      assert_eq!(transaction.actions.len(), 2);
+    } else {
+      panic!("Expected a transaction in the undo stack.");
+    }
+  }
+
+  #[test]
+  fn test_undo_transaction_single_action() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.push(Box::new(MockAction));
+
+    let undone_actions = history.undo_transaction();
+    assert!(undone_actions.is_some_and(|actions| actions.len() == 1));
+
+    assert_eq!(history.undo_stack.len(), 0);
+    assert_eq!(history.redo_stack.len(), 1);
+
+    assert!(matches!(history.redo_stack.first(), Some(HistoryEntry::Single(_))));
+  }
+
+  #[test]
+  fn test_redo_transaction_single_action() {
+    let mut history = History::<MockRuntime>::default();
+
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+
+    history.undo_transaction();
+    let redone_actions = history.redo_transaction();
+    assert!(redone_actions.is_some_and(|actions| actions.len() == 1));
+
+    assert_eq!(history.undo_stack.len(), 2);
+    assert_eq!(history.redo_stack.len(), 0);
+
+    assert!(matches!(history.undo_stack.last(), Some(HistoryEntry::Single(_))));
+  }
 }
