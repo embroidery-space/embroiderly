@@ -93,6 +93,8 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::publish::update_pdf_export_options,
     commands::history::undo,
     commands::history::redo,
+    commands::history::start_transaction,
+    commands::history::end_transaction,
     commands::fonts::load_stitch_font,
     commands::system::get_system_info,
   ]);

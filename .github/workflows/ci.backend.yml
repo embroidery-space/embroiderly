@@ -10,7 +10,7 @@ on:
       - ".github/workflows/ci.backend.yml"
       - ".github/workflows/audit.backend.yml"
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref }}-backend
   cancel-in-progress: true
 env:
   CARGO_TERM_COLOR: always
