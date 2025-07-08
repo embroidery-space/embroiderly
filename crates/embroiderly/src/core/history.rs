@@ -27,6 +27,8 @@ struct Transaction<R: tauri::Runtime> {
 }
 
 impl<R: tauri::Runtime> History<R> {
+  /// Creates a new transaction.
+  /// After calling this method, all actions pushed to the history will be part of this transaction until `end_transaction` is called.
   pub fn start_transaction(&mut self) {
     if self.active_transaction.is_none() {
       self.active_transaction = Some(Vec::new());
@@ -34,6 +36,7 @@ impl<R: tauri::Runtime> History<R> {
     }
   }
 
+  /// Ends the current transaction and pushes it to the undo stack.
   pub fn end_transaction(&mut self) {
     if let Some(actions) = self.active_transaction.take() {
       if !actions.is_empty() {
@@ -48,7 +51,8 @@ impl<R: tauri::Runtime> History<R> {
   }
 
   /// Add an action object to the history.
-  /// This pushes the action object to the undo stack and clears the redo stack.
+  /// If there is an active transaction, the action will be added to that transaction.
+  /// Otherwise, it will be added as a single action to the undo stack.
   pub fn push(&mut self, action: Box<dyn Action<R>>) {
     if self.undo_stack.last().is_some_and(|entry| match entry {
       HistoryEntry::Single(action) => self.is_checkpoint_action(action.clone()),
@@ -239,6 +243,9 @@ impl<R: tauri::Runtime> History<R> {
     None
   }
 
+  /// Get last action objects from the redo stack.
+  /// If the last action is a `Transaction`, it returns all actions in that transaction.
+  /// If the last action is a `Single` action, it returns that action.
   pub fn redo_transaction(&mut self) -> Option<Vec<Box<dyn Action<R>>>> {
     if let Some(entry) = self.redo_stack.last() {
       match entry {
