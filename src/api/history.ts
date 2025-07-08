@@ -1,19 +1,16 @@
 import { invoke } from "./index.ts";
 
-export function undo(patternId: string) {
-  return invoke<void>("undo", undefined, { headers: { patternId } });
+export interface UndoRedoOptions {
+  /** Whether to undo/redo a single action or the entire transaction. */
+  single?: boolean;
 }
 
-export function redo(patternId: string) {
-  return invoke<void>("redo", undefined, { headers: { patternId } });
+export function undo(patternId: string, options?: UndoRedoOptions) {
+  return invoke<void>("undo", { ...options }, { headers: { patternId } });
 }
 
-export function undoTransaction(patternId: string) {
-  return invoke<void>("undo_transaction", undefined, { headers: { patternId } });
-}
-
-export function redoTransaction(patternId: string) {
-  return invoke<void>("redo_transaction", undefined, { headers: { patternId } });
+export function redo(patternId: string, options?: UndoRedoOptions) {
+  return invoke<void>("redo", { ...options }, { headers: { patternId } });
 }
 
 export function startTransaction(patternId: string) {

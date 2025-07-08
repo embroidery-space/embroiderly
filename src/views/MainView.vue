@@ -62,7 +62,7 @@
   });
 
   defineShortcuts({
-    ctrl_shift_z: () => patternsStore.undoTransaction(),
-    ctrl_shift_y: () => patternsStore.redoTransaction(),
+    ctrl_shift_z: () => patternsStore.undo({ single: true }),
+    ctrl_shift_y: () => patternsStore.redo({ single: true }),
   });
 </script>

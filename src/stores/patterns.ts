@@ -386,24 +386,14 @@ export const usePatternsStore = defineStore(
       pattern.value.publishSettings.pdf = PdfExportOptions.deserialize(payload);
     });
 
-    async function undo() {
+    async function undo(options?: HistoryApi.UndoRedoOptions) {
       if (!pattern.value) return;
-      await HistoryApi.undo(pattern.value.id);
+      await HistoryApi.undo(pattern.value.id, options);
     }
 
-    async function redo() {
+    async function redo(options?: HistoryApi.UndoRedoOptions) {
       if (!pattern.value) return;
-      await HistoryApi.redo(pattern.value.id);
-    }
-
-    async function undoTransaction() {
-      if (!pattern.value) return;
-      await HistoryApi.undoTransaction(pattern.value.id);
-    }
-
-    async function redoTransaction() {
-      if (!pattern.value) return;
-      await HistoryApi.redoTransaction(pattern.value.id);
+      await HistoryApi.redo(pattern.value.id, options);
     }
 
     async function startTransaction() {
@@ -445,8 +435,6 @@ export const usePatternsStore = defineStore(
       updatePdfExportOptions,
       undo,
       redo,
-      undoTransaction,
-      redoTransaction,
       startTransaction,
       endTransaction,
     };

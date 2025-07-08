@@ -4,40 +4,7 @@ use crate::state::{HistoryState, PatternsState};
 
 #[tauri::command]
 pub fn undo<R: tauri::Runtime>(
-  request: tauri::ipc::Request<'_>,
-  window: tauri::WebviewWindow<R>,
-  history: tauri::State<HistoryState<R>>,
-  patterns: tauri::State<PatternsState>,
-) -> Result<()> {
-  let (pattern_id,) = parse_command_payload!(request);
-
-  let mut history = history.write().unwrap();
-  let mut patterns = patterns.write().unwrap();
-  if let Some(action) = history.get_mut(&pattern_id).undo() {
-    action.revoke(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
-  }
-  Ok(())
-}
-
-#[tauri::command]
-pub fn redo<R: tauri::Runtime>(
-  request: tauri::ipc::Request<'_>,
-  window: tauri::WebviewWindow<R>,
-  history: tauri::State<HistoryState<R>>,
-  patterns: tauri::State<PatternsState>,
-) -> Result<()> {
-  let (pattern_id,) = parse_command_payload!(request);
-
-  let mut history = history.write().unwrap();
-  let mut patterns = patterns.write().unwrap();
-  if let Some(action) = history.get_mut(&pattern_id).redo() {
-    action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
-  }
-  Ok(())
-}
-
-#[tauri::command]
-pub fn undo_transaction<R: tauri::Runtime>(
+  single: Option<bool>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
@@ -49,7 +16,11 @@ pub fn undo_transaction<R: tauri::Runtime>(
   let pattern = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
   let mut history = history.write().unwrap();
-  if let Some(actions) = history.get_mut(&pattern_id).undo_transaction() {
+  if single.unwrap_or(false) {
+    if let Some(action) = history.get_mut(&pattern_id).undo() {
+      action.revoke(&window, pattern)?;
+    }
+  } else if let Some(actions) = history.get_mut(&pattern_id).undo_transaction() {
     for action in actions.iter() {
       action.revoke(&window, pattern)?;
     }
@@ -59,7 +30,8 @@ pub fn undo_transaction<R: tauri::Runtime>(
 }
 
 #[tauri::command]
-pub fn redo_transaction<R: tauri::Runtime>(
+pub fn redo<R: tauri::Runtime>(
+  single: Option<bool>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
@@ -71,7 +43,11 @@ pub fn redo_transaction<R: tauri::Runtime>(
   let pattern = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
   let mut history = history.write().unwrap();
-  if let Some(actions) = history.get_mut(&pattern_id).redo_transaction() {
+  if single.unwrap_or(false) {
+    if let Some(action) = history.get_mut(&pattern_id).redo() {
+      action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
+    }
+  } else if let Some(actions) = history.get_mut(&pattern_id).redo_transaction() {
     for action in actions.iter() {
       action.perform(&window, pattern)?;
     }
