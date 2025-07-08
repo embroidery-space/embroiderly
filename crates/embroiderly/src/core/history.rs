@@ -37,11 +37,10 @@ impl<R: tauri::Runtime> History<R> {
   pub fn end_transaction(&mut self) {
     if let Some(actions) = self.active_transaction.take() {
       if !actions.is_empty() {
-        let transaction = Transaction {
+        self.undo_stack.push(HistoryEntry::Transaction(Transaction {
           id: self.last_transaction_id,
           actions,
-        };
-        self.undo_stack.push(HistoryEntry::Transaction(transaction));
+        }));
         self.redo_stack.clear();
         self.last_transaction_id += 1;
       }
@@ -84,9 +83,8 @@ impl<R: tauri::Runtime> History<R> {
     }
 
     if self.active_transaction.is_some() {
-      // If there is an active transaction, we end the transaction and undo the action.
+      // If there is an active transaction, we end the transaction before proceeding.
       self.end_transaction();
-      return self.undo();
     }
 
     if let Some(entry) = self.undo_stack.last_mut() {
@@ -102,9 +100,11 @@ impl<R: tauri::Runtime> History<R> {
             // Push the `CheckpointAction` to the redo stack, but do not return it.
             self.redo_stack.push(HistoryEntry::Single(action));
 
-            // Since we can't have more than one `CheckpointAction` in a row, we can safely call `undo` again to undo the actual action.
-            // We will always end up in this branch in the `else` case of this condition.
-            return self.undo();
+            // Undo the next action in the undo stack.
+            if let Some(HistoryEntry::Single(action)) = self.undo_stack.pop() {
+              self.redo_stack.push(HistoryEntry::Single(action.clone()));
+              return Some(action);
+            }
           } else {
             self.redo_stack.push(HistoryEntry::Single(action.clone()));
             return Some(action);
@@ -119,11 +119,10 @@ impl<R: tauri::Runtime> History<R> {
               }
               _ => {
                 // Otherwise, we create a new transaction entry with the same id in the redo stack.
-                let new_transaction = Transaction {
+                self.redo_stack.push(HistoryEntry::Transaction(Transaction {
                   id: transaction.id,
                   actions: vec![action.clone()],
-                };
-                self.redo_stack.push(HistoryEntry::Transaction(new_transaction));
+                }));
               }
             }
 
@@ -174,18 +173,17 @@ impl<R: tauri::Runtime> History<R> {
         }
         HistoryEntry::Transaction(transaction) => {
           if let Some(action) = transaction.actions.pop() {
-            match self.undo_stack.first_mut() {
+            match self.undo_stack.last_mut() {
               Some(HistoryEntry::Transaction(last_transaction)) if last_transaction.id == transaction.id => {
                 // If the last action in the undo stack is part of the same transaction, we can push the action to it.
                 last_transaction.actions.push(action.clone());
               }
               _ => {
                 // Otherwise, we create a new transaction entry with the same id in the undo stack.
-                let new_transaction = Transaction {
+                self.undo_stack.push(HistoryEntry::Transaction(Transaction {
                   id: transaction.id,
                   actions: vec![action.clone()],
-                };
-                self.undo_stack.push(HistoryEntry::Transaction(new_transaction));
+                }));
               }
             }
 
@@ -220,16 +218,17 @@ impl<R: tauri::Runtime> History<R> {
 
           match self.redo_stack.last_mut() {
             Some(HistoryEntry::Transaction(last_transaction)) if last_transaction.id == transaction.id => {
-              // If the last action in the redo stack is part of the same transaction, we can push the actions to it.
-              last_transaction.actions.extend(transaction.actions.clone());
+              // If the last action in the redo stack is part of the same transaction, we can push the actions to it in reverse order.
+              last_transaction
+                .actions
+                .extend(transaction.actions.iter().rev().cloned());
             }
             _ => {
-              // Otherwise, we create a new transaction entry with the same id in the redo stack.
-              let new_transaction = Transaction {
+              // Otherwise, we create a new transaction entry with the same id with reversed actions in the redo stack.
+              self.redo_stack.push(HistoryEntry::Transaction(Transaction {
                 id: transaction.id,
-                actions: transaction.actions.clone(),
-              };
-              self.redo_stack.push(HistoryEntry::Transaction(new_transaction));
+                actions: transaction.actions.iter().rev().cloned().collect(),
+              }));
             }
           }
 
@@ -251,10 +250,21 @@ impl<R: tauri::Runtime> History<R> {
             unreachable!()
           };
 
-          self.undo_stack.push(HistoryEntry::Transaction(Transaction {
-            id: transaction.id,
-            actions: transaction.actions.clone(),
-          }));
+          match self.undo_stack.last_mut() {
+            Some(HistoryEntry::Transaction(last_transaction)) if last_transaction.id == transaction.id => {
+              // If the last action in the undo stack is part of the same transaction, we can push the actions to it in reverse order.
+              last_transaction
+                .actions
+                .extend(transaction.actions.iter().rev().cloned());
+            }
+            _ => {
+              // Otherwise, we create a new transaction entry with the same id with reversed actions in the undo stack.
+              self.undo_stack.push(HistoryEntry::Transaction(Transaction {
+                id: transaction.id,
+                actions: transaction.actions.iter().rev().cloned().collect(),
+              }));
+            }
+          }
 
           return Some(transaction.actions);
         }
