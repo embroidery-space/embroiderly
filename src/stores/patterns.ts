@@ -386,14 +386,24 @@ export const usePatternsStore = defineStore(
       pattern.value.publishSettings.pdf = PdfExportOptions.deserialize(payload);
     });
 
-    async function undo() {
+    async function undo(options?: HistoryApi.UndoRedoOptions) {
       if (!pattern.value) return;
-      await HistoryApi.undo(pattern.value.id);
+      await HistoryApi.undo(pattern.value.id, options);
     }
 
-    async function redo() {
+    async function redo(options?: HistoryApi.UndoRedoOptions) {
       if (!pattern.value) return;
-      await HistoryApi.redo(pattern.value.id);
+      await HistoryApi.redo(pattern.value.id, options);
+    }
+
+    async function startTransaction() {
+      if (!pattern.value) return;
+      await HistoryApi.startTransaction(pattern.value.id);
+    }
+
+    async function endTransaction() {
+      if (!pattern.value) return;
+      await HistoryApi.endTransaction(pattern.value.id);
     }
 
     return {
@@ -425,6 +435,8 @@ export const usePatternsStore = defineStore(
       updatePdfExportOptions,
       undo,
       redo,
+      startTransaction,
+      endTransaction,
     };
   },
   { tauri: { save: false, sync: false } },

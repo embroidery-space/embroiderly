@@ -81,7 +81,11 @@
 
   let prevStitchState: Stitch | undefined;
 
-  useEventListener<CustomEvent>(patternCanvas, EventType.ToolMainAction, (e) => handleToolMainAction(e.detail));
+  useEventListener<CustomEvent<ToolEventDetail>>(patternCanvas, EventType.ToolMainAction, async (e) => {
+    // If there is no previous stitch state, this means that this is the first action in the transaction.
+    if (prevStitchState === undefined) await patternsStore.startTransaction();
+    await handleToolMainAction(e.detail);
+  });
   async function handleToolMainAction(detail: ToolEventDetail) {
     const tool = appStateStore.selectedStitchTool;
     const palindex = appStateStore.selectedPaletteItemIndexes[0];
@@ -194,6 +198,7 @@
 
   useEventListener<CustomEvent>(patternCanvas, EventType.ToolRelease, async (e) => {
     await handleToolReleaseAction(e.detail);
+    await patternsStore.endTransaction();
     prevStitchState = undefined;
   });
   async function handleToolReleaseAction(detail: ToolEventDetail) {

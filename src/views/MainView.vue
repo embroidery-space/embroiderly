@@ -60,4 +60,9 @@
       }
     }
   });
+
+  defineShortcuts({
+    ctrl_shift_z: () => patternsStore.undo({ single: true }),
+    ctrl_shift_y: () => patternsStore.redo({ single: true }),
+  });
 </script>
