@@ -31,8 +31,8 @@ tauri-plugin-process = "2.3.0"
 tauri-plugin-shell = "2.3.0"
 tauri-plugin-updater = "2.9.0"
 ## Third-party Tauri plugins
-tauri-plugin-prevent-default = "2.1.1"
-tauri-plugin-pinia = "3.6.0"
+tauri-plugin-prevent-default = "2.1.2"
+tauri-plugin-pinia = "3.7.1"
 
 # Embroiderly Core
 embroiderly-parsers = { path = "crates/embroiderly-parsers" }
