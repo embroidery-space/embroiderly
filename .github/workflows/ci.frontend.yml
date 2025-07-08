@@ -13,7 +13,7 @@ on:
       - ".github/workflows/ci.frontend.yml"
       - ".github/workflows/audit.frontend.yml"
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref }}-frontend
   cancel-in-progress: true
 jobs:
   audit:
