@@ -8,7 +8,7 @@ use quick_xml::events::{BytesDecl, BytesText, Event};
 #[path = "svg.test.rs"]
 mod tests;
 
-pub fn export_pattern(
+pub fn generate_svg(
   patproj: &PatternProject,
   color: bool,
   options: ImageExportOptions,
