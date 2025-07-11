@@ -92,12 +92,72 @@ export enum DisplayMode {
   Mixed = "Mixed",
 }
 
+export class LayersVisibility {
+  fullstitches: boolean;
+  petitestitches: boolean;
+  halfstitches: boolean;
+  quarterstitches: boolean;
+  lines: boolean;
+  nodes: boolean;
+  specialstitches: boolean;
+  grid: boolean;
+  rulers: boolean;
+
+  constructor(data: b.infer<typeof LayersVisibility.schema>) {
+    this.fullstitches = data.fullstitches;
+    this.petitestitches = data.petitestitches;
+    this.halfstitches = data.halfstitches;
+    this.quarterstitches = data.quarterstitches;
+    this.lines = data.lines;
+    this.nodes = data.nodes;
+    this.specialstitches = data.specialstitches;
+    this.grid = data.grid;
+    this.rulers = data.rulers;
+  }
+
+  static readonly schema = b.struct({
+    fullstitches: b.bool(),
+    petitestitches: b.bool(),
+    halfstitches: b.bool(),
+    quarterstitches: b.bool(),
+    lines: b.bool(),
+    nodes: b.bool(),
+    specialstitches: b.bool(),
+    grid: b.bool(),
+    rulers: b.bool(),
+  });
+
+  static serialize(data: LayersVisibility) {
+    return LayersVisibility.schema.serialize(data);
+  }
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new LayersVisibility(LayersVisibility.schema.deserialize(buffer));
+  }
+
+  static default() {
+    return new LayersVisibility({
+      fullstitches: true,
+      petitestitches: true,
+      halfstitches: true,
+      quarterstitches: true,
+      lines: true,
+      nodes: true,
+      specialstitches: true,
+      grid: true,
+      rulers: true,
+    });
+  }
+}
+
 export class DisplaySettings {
   defaultSymbolFont: string;
   grid: Grid;
   displayMode: DisplayMode;
   showSymbols: boolean;
   paletteSettings: PaletteSettings;
+  layersVisibility: LayersVisibility;
 
   constructor(data: b.infer<typeof DisplaySettings.schema>) {
     this.defaultSymbolFont = data.defaultSymbolFont;
@@ -105,6 +165,7 @@ export class DisplaySettings {
     this.displayMode = data.displayMode;
     this.showSymbols = data.showSymbols;
     this.paletteSettings = new PaletteSettings(data.paletteSettings);
+    this.layersVisibility = new LayersVisibility(data.layersVisibility);
   }
 
   static readonly schema = b.struct({
@@ -113,5 +174,6 @@ export class DisplaySettings {
     displayMode: b.nativeEnum(DisplayMode),
     showSymbols: b.bool(),
     paletteSettings: PaletteSettings.schema,
+    layersVisibility: LayersVisibility.schema,
   });
 }

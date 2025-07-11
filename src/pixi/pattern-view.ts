@@ -21,6 +21,7 @@ import {
   DisplaySettings,
   PublishSettings,
   type Stitch,
+  LayersVisibility,
 } from "#/schemas";
 
 import { STITCH_SCALE_FACTOR } from "./constants.ts";
@@ -166,6 +167,20 @@ export class PatternView {
 
     // Update the display mode since it depends on the `showSymbols` value.
     this.displayMode = this.#displayMode;
+  }
+
+  get layersVisibility() {
+    return this.displaySettings.layersVisibility;
+  }
+  set layersVisibility(layersVisibility: LayersVisibility) {
+    this.displaySettings.layersVisibility = layersVisibility;
+    for (const [layer, visible] of Object.entries(layersVisibility)) {
+      const stage = this.stages[layer as keyof typeof this.stages];
+      if (stage) {
+        stage.visible = visible;
+        stage.renderable = visible;
+      }
+    }
   }
 
   get fabric() {

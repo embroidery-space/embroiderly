@@ -83,6 +83,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::pattern::update_pattern_info,
     commands::display::set_display_mode,
     commands::display::show_symbols,
+    commands::display::set_layers_visibility,
     commands::fabric::update_fabric,
     commands::grid::update_grid,
     commands::palette::add_palette_item,
