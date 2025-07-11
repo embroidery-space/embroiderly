@@ -8,6 +8,7 @@ pub struct DisplaySettings {
   pub display_mode: DisplayMode,
   pub show_symbols: bool,
   pub palette_settings: PaletteSettings,
+  pub layers_visibility: LayersVisibility,
 }
 
 impl Default for DisplaySettings {
@@ -18,6 +19,7 @@ impl Default for DisplaySettings {
       display_mode: DisplayMode::Solid,
       show_symbols: false,
       palette_settings: PaletteSettings::default(),
+      layers_visibility: LayersVisibility::default(),
     }
   }
 }
@@ -141,6 +143,36 @@ impl Default for PaletteSettings {
       show_color_brands: PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS,
       show_color_numbers: PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS,
       show_color_names: PaletteSettings::DEFAULT_SHOW_COLOR_NAMES,
+    }
+  }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+pub struct LayersVisibility {
+  pub fullstitches: bool,
+  pub petitestitches: bool,
+  pub halfstitches: bool,
+  pub quarterstitches: bool,
+  pub lines: bool,
+  pub nodes: bool,
+  pub specialstitches: bool,
+  pub grid: bool,
+  pub rulers: bool,
+}
+
+impl Default for LayersVisibility {
+  fn default() -> Self {
+    Self {
+      fullstitches: true,
+      petitestitches: true,
+      halfstitches: true,
+      quarterstitches: true,
+      lines: true,
+      nodes: true,
+      specialstitches: true,
+      grid: true,
+      rulers: true,
     }
   }
 }

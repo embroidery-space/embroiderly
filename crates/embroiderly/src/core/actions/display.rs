@@ -1,10 +1,11 @@
 use std::sync::OnceLock;
 
 use anyhow::Result;
-use embroiderly_pattern::{DisplayMode, PatternProject};
+use embroiderly_pattern::{DisplayMode, LayersVisibility, PatternProject};
 use tauri::{Emitter, WebviewWindow};
 
 use super::Action;
+use crate::utils::base64;
 
 #[cfg(test)]
 #[path = "display.test.rs"]
@@ -77,6 +78,56 @@ impl<R: tauri::Runtime> Action<R> for ShowSymbolsAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     patproj.display_settings.show_symbols = !self.value;
     window.emit("display:show_symbols", !self.value)?;
+    Ok(())
+  }
+}
+
+#[derive(Clone)]
+pub struct SetLayersVisibilityAction {
+  layers_visibility: LayersVisibility,
+  old_layers_visibility: OnceLock<LayersVisibility>,
+}
+
+impl SetLayersVisibilityAction {
+  pub fn new(layers_visibility: LayersVisibility) -> Self {
+    Self {
+      layers_visibility,
+      old_layers_visibility: OnceLock::new(),
+    }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for SetLayersVisibilityAction {
+  /// Updates the layers visibility.
+  ///
+  /// **Emits:**
+  /// - `display:set_layers_visibility` with the updated layers visibility.
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    window.emit(
+      "display:set_layers_visibility",
+      base64::encode(borsh::to_vec(&self.layers_visibility)?),
+    )?;
+    let old_layers_visibility = std::mem::replace(
+      &mut patproj.display_settings.layers_visibility,
+      self.layers_visibility.clone(),
+    );
+    if self.old_layers_visibility.get().is_none() {
+      self.old_layers_visibility.set(old_layers_visibility).unwrap();
+    }
+    Ok(())
+  }
+
+  /// Restores the previous layers visibility.
+  ///
+  /// **Emits:**
+  /// - `display:set_layers_visibility` with the previous layers visibility.
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    let old_layers_visibility = self.old_layers_visibility.get().unwrap();
+    window.emit(
+      "display:set_layers_visibility",
+      base64::encode(borsh::to_vec(old_layers_visibility)?),
+    )?;
+    patproj.display_settings.layers_visibility = old_layers_visibility.clone();
     Ok(())
   }
 }

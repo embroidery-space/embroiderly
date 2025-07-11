@@ -1,5 +1,17 @@
 <template>
   <div class="flex flex-col gap-1 p-1">
+    <NuxtPopover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
+      <NuxtTooltip arrow text="Layers" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
+        <NuxtButton color="neutral" variant="ghost" icon="i-lucide:layers" :disabled="disabled" />
+      </NuxtTooltip>
+
+      <template #content>
+        <LayersForm v-model="layers" />
+      </template>
+    </NuxtPopover>
+
+    <NuxtSeparator />
+
     <ToolSelector
       v-for="option in displayModeOptions"
       :key="option.value"
@@ -7,7 +19,9 @@
       :options="[option]"
       :disabled="disabled"
     />
+
     <NuxtSeparator />
+
     <ToolToggle
       v-model="showSymbols"
       :option="{
@@ -20,14 +34,17 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from "vue";
-  import { DisplayMode } from "#/schemas/";
+  import { computed, ref, watch } from "vue";
+  import { DisplayMode, LayersVisibility } from "#/schemas/";
 
   const fluent = useFluent();
 
   const patternsStore = usePatternsStore();
 
   const disabled = computed(() => patternsStore.pattern === undefined);
+
+  const layers = ref(new LayersVisibility(patternsStore.pattern?.layersVisibility || LayersVisibility.default()));
+  watch(layers, (newLayers) => patternsStore.setLayersVisibility(newLayers), { deep: true });
 
   const displayMode = computed({
     get: () => patternsStore.pattern?.displayMode,

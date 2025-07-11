@@ -28,6 +28,7 @@ import {
   PatternInfo,
   PdfExportOptions,
   type Stitch,
+  LayersVisibility,
 } from "#/schemas";
 import {
   PatternErrorBackupFileExists,
@@ -373,6 +374,16 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
+    function setLayersVisibility(layersVisibility: LayersVisibility) {
+      if (!pattern.value) return;
+      return DisplayApi.setLayersVisibility(pattern.value.id, layersVisibility);
+    }
+    appWindow.listen<string>("display:set_layers_visibility", ({ payload }) => {
+      if (!pattern.value) return;
+      pattern.value.layersVisibility = LayersVisibility.deserialize(payload);
+      triggerRef(pattern);
+    });
+
     function openPublishModal() {
       if (!pattern.value) return;
       publishModal.open({ options: pattern.value.publishSettings.pdf });
@@ -431,6 +442,7 @@ export const usePatternsStore = defineStore(
       removeStitch,
       setDisplayMode,
       showSymbols,
+      setLayersVisibility,
       openPublishModal,
       updatePdfExportOptions,
       undo,
