@@ -35,7 +35,6 @@ export class PatternViewport extends Container {
   worldHeight = this.screenHeight;
 
   wheelAction: WheelAction = "zoom";
-  zoom: ZoomState = 1;
 
   private startPoint?: Point;
 
@@ -101,7 +100,9 @@ export class PatternViewport extends Container {
     this.emitTransformEvent();
   }
 
-  moveCenter(point: Point) {
+  moveCenter(point?: Point) {
+    if (!point) point = new Point(this.worldWidth / 2, this.worldHeight / 2);
+
     const x = (this.worldScreenWidth / 2 - point.x) * this.scale.x;
     const y = (this.worldScreenHeight / 2 - point.y) * this.scale.y;
     this.position.set(x, y);
@@ -109,24 +110,48 @@ export class PatternViewport extends Container {
     this.emitTransformEvent();
   }
 
+  setZoom(zoom: ZoomState) {
+    if (zoom === "fit") this.fit();
+    else if (zoom === "fit-width") this.fitWidth();
+    else if (zoom === "fit-height") this.fitHeight();
+    else {
+      const position = this.position.clone();
+
+      const beforeTransform = this.toLocal(position);
+      this.clampZoom(zoom);
+
+      const afterTransform = this.toLocal(position);
+      this.position.x += (afterTransform.x - beforeTransform.x) * this.scale.x;
+      this.position.y += (afterTransform.y - beforeTransform.y) * this.scale.y;
+
+      this.emitTransformEvent();
+    }
+  }
+
   fit() {
     const scaleX = this.screenWidth / this.worldWidth;
     const scaleY = this.screenHeight / this.worldHeight;
-    this.clampZoom(Math.min(scaleX, scaleY), "fit");
+
+    this.clampZoom(Math.min(scaleX, scaleY));
+    this.moveCenter();
 
     this.emitTransformEvent();
   }
 
   fitWidth() {
     const scale = this.screenWidth / this.worldWidth;
-    this.clampZoom(scale, "fit-width");
+
+    this.clampZoom(scale);
+    this.moveCenter();
 
     this.emitTransformEvent();
   }
 
   fitHeight() {
     const scale = this.screenHeight / this.worldHeight;
-    this.clampZoom(scale, "fit-height");
+
+    this.clampZoom(scale);
+    this.moveCenter();
 
     this.emitTransformEvent();
   }
@@ -240,11 +265,10 @@ export class PatternViewport extends Container {
     this.emitTransformEvent();
   }
 
-  private clampZoom(value = this.scale.x, zoom?: ZoomState) {
+  /** Clamps the zoom level to the defined min and max scale and sets it. */
+  private clampZoom(value = this.scale.x) {
     const scale = Math.min(Math.max(value, MIN_SCALE), MAX_SCALE);
-
     this.scale.set(scale);
-    this.zoom = zoom ?? scale;
   }
 }
 

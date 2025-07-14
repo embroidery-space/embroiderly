@@ -128,7 +128,9 @@ label-display-options-show-brand = Show thread brands
 label-display-options-show-number = Show color numbers
 label-display-options-show-name = Show color names
 
-## Titles, labels and messages related to the canvas panel and its settings.
+## Titles, labels and messages related to the canvas panel and its controls.
+
+label-layers = Layers
 
 label-view-as-mix = View as a Mix of Solid and Stitches
 label-view-as-solid = View as Solid
@@ -249,6 +251,15 @@ message-frame-preserved-overlap-description = The size of overlap between frames
 
 label-frame-show-grid-line-numbers = Show grid line numbers
 label-frame-show-centering-marks = Show centering marks
+
+## Titles, labels and messages related to the zoom controls.
+
+label-zoom-in = Zoom In
+label-zoom-out = Zoom Out
+
+label-fit = Fit
+label-fit-width = Fit Width
+label-fit-height = Fit Height
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved

@@ -1,5 +1,5 @@
 <template>
-  <div class="size-full">
+  <div class="size-full flex flex-col">
     <div class="relative">
       <NuxtTabs
         :model-value="appStateStore.currentPattern!.id"
@@ -34,15 +34,37 @@
       </NuxtTabs>
       <NuxtProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
     </div>
-    <canvas ref="canvas" class="size-full"></canvas>
+
+    <div class="w-full grow overflow-hidden">
+      <canvas ref="canvas" class="size-full"></canvas>
+    </div>
+
+    <div class="w-full flex items-center justify-between border border-t border-default px-4 py-1">
+      <div class="grow"></div>
+      <ZoomControls
+        :model-value="zoom"
+        :min="MIN_SCALE"
+        :max="MAX_SCALE"
+        class="max-w-3xs w-full"
+        @update:model-value="(value) => patternCanvas.setZoom(value)"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, onUnmounted, useTemplateRef, watch } from "vue";
+  import { onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
   import { useEventListener } from "@vueuse/core";
   import { Assets, Point } from "pixi.js";
-  import { PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX, StitchGraphics } from "#/pixi";
+  import {
+    PatternCanvas,
+    EventType,
+    TextureManager,
+    STITCH_FONT_PREFIX,
+    StitchGraphics,
+    MAX_SCALE,
+    MIN_SCALE,
+  } from "#/pixi";
   import type { ToolEventDetail, TransformEventDetail } from "#/pixi";
   import {
     FullStitch,
@@ -63,6 +85,8 @@
 
   const canvas = useTemplateRef("canvas");
   const patternCanvas = new PatternCanvas();
+
+  const zoom = ref(1);
 
   async function switchPattern(id: string) {
     if (appStateStore.currentPattern!.id !== id) {
@@ -233,6 +257,7 @@
   });
 
   useEventListener<CustomEvent<TransformEventDetail>>(patternCanvas, EventType.Transform, async ({ detail }) => {
+    zoom.value = Math.round(detail.scale);
     patternsStore.pattern!.adjustZoom(detail.scale, detail.bounds);
   });
 
