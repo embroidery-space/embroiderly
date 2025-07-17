@@ -36,7 +36,11 @@
     </div>
 
     <div class="w-full grow overflow-hidden">
-      <canvas ref="canvas" class="size-full"></canvas>
+      <canvas
+        ref="canvas"
+        v-element-size="useDebounceFn((size) => patternCanvas.resize(size), 100)"
+        class="size-full"
+      ></canvas>
     </div>
 
     <div class="w-full flex items-center justify-between border border-t border-default px-4 py-1">
@@ -54,7 +58,8 @@
 
 <script lang="ts" setup>
   import { onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
-  import { useEventListener } from "@vueuse/core";
+  import { useDebounceFn, useEventListener } from "@vueuse/core";
+  import { vElementSize } from "@vueuse/components";
   import { Assets, Point } from "pixi.js";
   import {
     PatternCanvas,
@@ -302,7 +307,6 @@
     await patternCanvas.init(canvasElement, canvasElement.getBoundingClientRect(), {
       render: {
         antialias: settingsStore.viewport.antialias,
-        resizeTo: canvasElement,
       },
       viewport: {
         wheelAction: settingsStore.viewport.wheelAction,
