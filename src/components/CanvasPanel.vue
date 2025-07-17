@@ -43,7 +43,7 @@
       ></canvas>
     </div>
 
-    <div class="w-full flex items-center justify-between border border-t border-default px-4 py-1">
+    <div class="w-full flex items-center justify-between border-t border-default px-2 py-1">
       <div class="grow"></div>
       <ZoomControls
         :model-value="zoom"
