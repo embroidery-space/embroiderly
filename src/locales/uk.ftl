@@ -131,7 +131,9 @@ label-display-options-show-brand = Відображати бренди нито�
 label-display-options-show-number = Відображати номери кольорів
 label-display-options-show-name = Відображати назви кольорів
 
-## Titles, labels and messages related to the canvas panel and its settings.
+## Titles, labels and messages related to the canvas panel and its controls.
+
+label-layers = Шари
 
 label-view-as-mix = Відображати як мікс суцільного і стібків
 label-view-as-solid = Відображати як суцільне
@@ -252,6 +254,15 @@ message-frame-preserved-overlap-description = Розмір перекриття 
 
 label-frame-show-grid-line-numbers = Показати номери ліній сітки
 label-frame-show-centering-marks = Показати центрувальні мітки
+
+## Titles, labels and messages related to the zoom controls.
+
+label-zoom-in = Збільшити
+label-zoom-out = Зменшити
+
+label-fit = Вмістити
+label-fit-width = Вмістити по ширині
+label-fit-height = Вмістити по висоті
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено

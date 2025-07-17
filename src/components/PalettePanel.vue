@@ -32,7 +32,7 @@
 
         <template #footer>
           <div class="flex items-center justify-between" @contextmenu.stop.prevent>
-            <span class="text-nowrap">
+            <span class="text-sm text-nowrap">
               {{ $t("label-palette-size", { size: patternsStore.pattern?.palette.length ?? 0 }) }}
             </span>
             <NuxtTooltip
@@ -43,6 +43,7 @@
               <NuxtButton
                 variant="ghost"
                 color="neutral"
+                size="xs"
                 :disabled="paletteIsDisabled"
                 :icon="paletteIsBeingEdited ? 'i-lucide:check' : 'i-lucide:pen'"
                 @click="

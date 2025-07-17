@@ -1,10 +1,16 @@
 import { initDevtools } from "@pixi/devtools";
-import { Application, Point } from "pixi.js";
+import { Application } from "pixi.js";
 import type { ApplicationOptions, ColorSource } from "pixi.js";
 
 import { Hint } from "./components/";
 import { PatternView } from "./pattern-view.ts";
-import { EventType, InternalEventType, PatternViewport, type ViewportOptions } from "./pattern-viewport.ts";
+import {
+  EventType,
+  InternalEventType,
+  PatternViewport,
+  type ViewportOptions,
+  type ZoomState,
+} from "./pattern-viewport.ts";
 import { TextureManager } from "./texture-manager.ts";
 
 import type { Bead, LineStitch, NodeStitch } from "#/schemas/";
@@ -90,7 +96,10 @@ export class PatternCanvas extends EventTarget {
     const { width, height } = pattern.fabric;
     this.viewport.resizeWorld(width, height);
     this.viewport.fit();
-    this.viewport.moveCenter(new Point(width / 2, height / 2));
+  }
+
+  setZoom(zoom: ZoomState) {
+    this.viewport.setZoom(zoom);
   }
 
   resize({ width, height }: CanvasSize) {

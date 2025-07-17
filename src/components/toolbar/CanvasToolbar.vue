@@ -1,7 +1,13 @@
 <template>
   <div class="flex flex-col gap-1 p-1">
     <NuxtPopover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
-      <NuxtTooltip arrow text="Layers" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
+      <NuxtTooltip
+        arrow
+        :text="$t('label-layers')"
+        :delay-duration="200"
+        :disabled="disabled"
+        :content="{ side: 'left' }"
+      >
         <NuxtButton color="neutral" variant="ghost" icon="i-lucide:layers" :disabled="disabled" />
       </NuxtTooltip>
 
