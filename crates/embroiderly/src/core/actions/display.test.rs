@@ -101,8 +101,10 @@ fn test_layers_visibility() {
     halfstitches: true,
     quarterstitches: false,
     specialstitches: false,
-    lines: false,
-    nodes: false,
+    backstitches: false,
+    straightstitches: false,
+    frenchknots: false,
+    beads: false,
     grid: true,
     rulers: true,
   };

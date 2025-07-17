@@ -95,22 +95,36 @@ export enum DisplayMode {
 export class LayersVisibility {
   fullstitches: boolean;
   petitestitches: boolean;
+
   halfstitches: boolean;
   quarterstitches: boolean;
-  lines: boolean;
-  nodes: boolean;
+
+  backstitches: boolean;
+  straightstitches: boolean;
+
+  frenchknots: boolean;
+  beads: boolean;
+
   specialstitches: boolean;
+
   grid: boolean;
   rulers: boolean;
 
   constructor(data: b.infer<typeof LayersVisibility.schema>) {
     this.fullstitches = data.fullstitches;
     this.petitestitches = data.petitestitches;
+
     this.halfstitches = data.halfstitches;
     this.quarterstitches = data.quarterstitches;
-    this.lines = data.lines;
-    this.nodes = data.nodes;
+
+    this.backstitches = data.backstitches;
+    this.straightstitches = data.straightstitches;
+
+    this.frenchknots = data.frenchknots;
+    this.beads = data.beads;
+
     this.specialstitches = data.specialstitches;
+
     this.grid = data.grid;
     this.rulers = data.rulers;
   }
@@ -118,11 +132,17 @@ export class LayersVisibility {
   static readonly schema = b.struct({
     fullstitches: b.bool(),
     petitestitches: b.bool(),
+
     halfstitches: b.bool(),
     quarterstitches: b.bool(),
-    lines: b.bool(),
-    nodes: b.bool(),
+
+    backstitches: b.bool(),
+    straightstitches: b.bool(),
+    frenchknots: b.bool(),
+    beads: b.bool(),
+
     specialstitches: b.bool(),
+
     grid: b.bool(),
     rulers: b.bool(),
   });
@@ -140,11 +160,19 @@ export class LayersVisibility {
     return new LayersVisibility({
       fullstitches: true,
       petitestitches: true,
+
       halfstitches: true,
+
       quarterstitches: true,
-      lines: true,
-      nodes: true,
+
+      backstitches: true,
+      straightstitches: true,
+
+      frenchknots: true,
+      beads: true,
+
       specialstitches: true,
+
       grid: true,
       rulers: true,
     });

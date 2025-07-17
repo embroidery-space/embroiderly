@@ -22,6 +22,8 @@ import {
   PublishSettings,
   type Stitch,
   LayersVisibility,
+  LineStitchKind,
+  NodeStitchKind,
 } from "#/schemas";
 
 import { STITCH_SCALE_FACTOR } from "./constants.ts";
@@ -69,8 +71,26 @@ export class PatternView {
     symbols: new StitchGraphicsContainer({ label: "Symbols" }),
     grid: new PatternGrid(),
     specialstitches: new Container({ label: "Special Stitches" }),
-    lines: new StitchGraphicsContainer({ label: "Lines Stitches", eventMode: "passive", interactiveChildren: true }),
-    nodes: new StitchGraphicsContainer({ label: "Nodes Stitches", eventMode: "passive", interactiveChildren: true }),
+    backstitches: new StitchGraphicsContainer({
+      label: "Back Stitches",
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
+    straightstitches: new StitchGraphicsContainer({
+      label: "Straight Stitches",
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
+    frenchknots: new StitchGraphicsContainer({
+      label: "French Knots",
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
+    beads: new StitchGraphicsContainer({
+      label: "Beads",
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
     rulers: new Rulers(),
     // highest
   };
@@ -258,6 +278,7 @@ export class PatternView {
     const symbol = new StitchSymbol(stitch, palitem.symbol, {
       fontFamily: symbolFont ? [symbolFont, defaultSymbolFont] : defaultSymbolFont,
     });
+
     this.stages.symbols.addStitch(symbol);
   }
 
@@ -267,6 +288,7 @@ export class PatternView {
 
   addFullStitch(stitch: FullStitch) {
     const { x, y, palindex, kind } = stitch;
+
     const particle = new StitchParticle(stitch, {
       texture: TextureManager.shared.getFullStitchTexture(this.displayMode ?? this.#previousDisplayMode, kind),
       x,
@@ -275,6 +297,7 @@ export class PatternView {
       scaleX: STITCH_SCALE_FACTOR,
       scaleY: STITCH_SCALE_FACTOR,
     });
+
     if (kind === FullStitchKind.Full) this.stages.fullstitches.addStitch(particle);
     else this.stages.petitestitches.addStitch(particle);
   }
@@ -286,6 +309,7 @@ export class PatternView {
 
   addPartStitch(stitch: PartStitch) {
     const { x, y, palindex, kind, direction } = stitch;
+
     const particle = new StitchParticle(stitch, {
       texture: TextureManager.shared.getPartStitchTexture(this.displayMode ?? this.#previousDisplayMode, kind),
       x,
@@ -295,6 +319,7 @@ export class PatternView {
       scaleY: STITCH_SCALE_FACTOR,
       anchorX: direction === PartStitchDirection.Forward ? 0 : 1,
     });
+
     if (kind === PartStitchKind.Half) this.stages.halfstitches.addStitch(particle);
     else this.stages.quarterstitches.addStitch(particle);
   }
@@ -306,8 +331,10 @@ export class PatternView {
 
   addLineStitch(stitch: LineStitch) {
     const { x, y, palindex } = stitch;
+
     const start = { x: x[0], y: y[0] };
     const end = { x: x[1], y: y[1] };
+
     const graphics = new StitchGraphics(stitch)
       .moveTo(start.x, start.y)
       .lineTo(end.x, end.y)
@@ -318,16 +345,20 @@ export class PatternView {
       // Draw a line with a smaller width to make it look like a fill.
       .stroke({ width: 0.2, color: this.#palette[palindex]!.color, cap: "round" });
     graphics.eventMode = "static";
-    this.stages.lines.addStitch(graphics);
+
+    if (stitch.kind === LineStitchKind.Back) this.stages.backstitches.addStitch(graphics);
+    else this.stages.straightstitches.addStitch(graphics);
   }
 
   removeLineStitch(stitch: LineStitch) {
-    this.stages.lines.removeStitch(stitch);
+    if (stitch.kind === LineStitchKind.Back) this.stages.backstitches.removeStitch(stitch);
+    else this.stages.straightstitches.removeStitch(stitch);
   }
 
   addNodeStitch(stitch: NodeStitch) {
     const { x, y, palindex, kind, rotated } = stitch;
     const palitem = this.#palette[palindex]!;
+
     const graphics = new StitchGraphics(stitch, TextureManager.shared.getNodeTexture(kind));
     graphics.eventMode = "static";
     graphics.tint = palitem.color;
@@ -335,11 +366,14 @@ export class PatternView {
     graphics.scale.set(STITCH_SCALE_FACTOR);
     graphics.position.set(x, y);
     if (rotated) graphics.angle = 90;
-    this.stages.nodes.addStitch(graphics);
+
+    if (kind === NodeStitchKind.FrenchKnot) this.stages.frenchknots.addStitch(graphics);
+    else this.stages.beads.addStitch(graphics);
   }
 
   removeNodeStitch(stitch: NodeStitch) {
-    this.stages.nodes.removeStitch(stitch);
+    if (stitch.kind === NodeStitchKind.FrenchKnot) this.stages.frenchknots.removeStitch(stitch);
+    else this.stages.beads.removeStitch(stitch);
   }
 
   addSpecialStitch(specialStitch: SpecialStitch) {
