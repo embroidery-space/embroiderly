@@ -1172,8 +1172,16 @@ fn parse_display_settings_inner<R: io::BufRead>(
 ) -> Result<DisplaySettings> {
   let mut display_settings = DisplaySettings::default();
 
+  if let Some(default_symbol_font) = attributes.get("default_symbol_font") {
+    display_settings.default_symbol_font = default_symbol_font.to_owned();
+  }
+
   if let Some(display_mode) = attributes.get_parsed("display_mode") {
     display_settings.display_mode = display_mode;
+  }
+
+  if let Some(show_symbols) = attributes.get_bool("show_symbols") {
+    display_settings.show_symbols = show_symbols;
   }
 
   let mut buf = Vec::new();
@@ -1187,6 +1195,10 @@ fn parse_display_settings_inner<R: io::BufRead>(
         b"grid" => {
           let attributes = AttributesMap::try_from(e.attributes())?;
           display_settings.grid = read_grid(reader, attributes)?;
+        }
+        b"layers_visibility" => {
+          let attributes = AttributesMap::try_from(e.attributes())?;
+          display_settings.layers_visibility = read_layers_visibility(attributes)?;
         }
         _ => {}
       },
@@ -1210,10 +1222,15 @@ pub fn save_display_settings_to_vec(display_settings: &DisplaySettings) -> Resul
   writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None)))?;
   writer
     .create_element("display_settings")
-    .with_attributes([("display_mode", display_settings.display_mode.to_string().as_str())])
+    .with_attributes([
+      ("display_mode", display_settings.display_mode.to_string().as_str()),
+      ("default_symbol_font", display_settings.default_symbol_font.as_str()),
+      ("show_symbols", display_settings.show_symbols.to_string().as_str()),
+    ])
     .write_inner_content(|writer| {
       write_palette_settings(writer, &display_settings.palette_settings)?;
       write_grid(writer, &display_settings.grid)?;
+      write_layers_visibility(writer, &display_settings.layers_visibility)?;
       Ok(())
     })?;
 
@@ -1307,6 +1324,42 @@ fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid) -> io::Result<(
       Ok(())
     })?;
 
+  Ok(())
+}
+
+fn read_layers_visibility(attributes: AttributesMap) -> Result<LayersVisibility> {
+  Ok(LayersVisibility {
+    fullstitches: attributes.get_bool("fullstitches").unwrap_or_default(),
+    petitestitches: attributes.get_bool("petitestitches").unwrap_or_default(),
+    halfstitches: attributes.get_bool("halfstitches").unwrap_or_default(),
+    quarterstitches: attributes.get_bool("quarterstitches").unwrap_or_default(),
+    backstitches: attributes.get_bool("backstitches").unwrap_or_default(),
+    straightstitches: attributes.get_bool("straightstitches").unwrap_or_default(),
+    frenchknots: attributes.get_bool("frenchknots").unwrap_or_default(),
+    beads: attributes.get_bool("beads").unwrap_or_default(),
+    specialstitches: attributes.get_bool("specialstitches").unwrap_or_default(),
+    grid: attributes.get_bool("grid").unwrap_or_default(),
+    rulers: attributes.get_bool("rulers").unwrap_or_default(),
+  })
+}
+
+fn write_layers_visibility<W: io::Write>(writer: &mut Writer<W>, layers: &LayersVisibility) -> io::Result<()> {
+  writer
+    .create_element("layers_visibility")
+    .with_attributes([
+      ("fullstitches", layers.fullstitches.to_string().as_str()),
+      ("petitestitches", layers.petitestitches.to_string().as_str()),
+      ("halfstitches", layers.halfstitches.to_string().as_str()),
+      ("quarterstitches", layers.quarterstitches.to_string().as_str()),
+      ("backstitches", layers.backstitches.to_string().as_str()),
+      ("straightstitches", layers.straightstitches.to_string().as_str()),
+      ("frenchknots", layers.frenchknots.to_string().as_str()),
+      ("beads", layers.beads.to_string().as_str()),
+      ("specialstitches", layers.specialstitches.to_string().as_str()),
+      ("grid", layers.grid.to_string().as_str()),
+      ("rulers", layers.rulers.to_string().as_str()),
+    ])
+    .write_empty()?;
   Ok(())
 }
 
