@@ -7,8 +7,11 @@
       <NuxtCheckbox v-model="layers.halfstitches" label="Half Stitches" />
       <NuxtCheckbox v-model="layers.quarterstitches" label="Quarter Stitches" />
 
-      <NuxtCheckbox v-model="layers.lines" label="Lines" />
-      <NuxtCheckbox v-model="layers.nodes" label="Nodes" />
+      <NuxtCheckbox v-model="layers.backstitches" label="Back Stitches" />
+      <NuxtCheckbox v-model="layers.straightstitches" label="Straight Stitches" />
+
+      <NuxtCheckbox v-model="layers.frenchknots" label="French Knots" />
+      <NuxtCheckbox v-model="layers.beads" label="Beads" />
 
       <NuxtCheckbox v-model="layers.specialstitches" label="Special Stitches" class="col-span-2" />
 

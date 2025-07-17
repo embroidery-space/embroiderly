@@ -717,12 +717,13 @@ fn should_end_on_end_chart_tag() {
 #[test]
 fn reads_and_writes_display_settings() {
   let xml = r#"<?xml version="1.0" encoding="UTF-8"?>
-<display_settings display_mode="Solid">
+<display_settings display_mode="Solid" default_symbol_font="Ursasoftware" show_symbols="false">
   <palette_settings columns_number="1" color_only="false" show_color_brands="true" show_color_names="true" show_color_numbers="true"/>
   <grid major_lines_interval="10">
     <minor_lines color="C8C8C8" thickness="0.072"/>
     <major_lines color="646464" thickness="0.072"/>
   </grid>
+  <layers_visibility fullstitches="true" petitestitches="true" halfstitches="true" quarterstitches="true" backstitches="true" straightstitches="true" frenchknots="true" beads="true" specialstitches="true" grid="true" rulers="true"/>
 </display_settings>"#;
 
   let mut reader = create_reader(xml);
@@ -778,6 +779,28 @@ fn reads_and_writes_grid() {
 
   let mut writer = create_writer();
   write_grid(&mut writer, &grid).unwrap();
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
+}
+
+#[test]
+fn reads_and_writes_layers_visibility() {
+  let xml = r#"<layers_visibility fullstitches="true" petitestitches="true" halfstitches="true" quarterstitches="true" backstitches="true" straightstitches="true" frenchknots="true" beads="true" specialstitches="true" grid="true" rulers="true"/>"#;
+
+  let mut reader = create_reader(xml);
+  let attributes = if let Event::Start(e) = reader.read_event().unwrap() {
+    AttributesMap::try_from(e.attributes()).unwrap()
+  } else {
+    unreachable!()
+  };
+
+  let layers_visibility = read_layers_visibility(attributes).unwrap();
+  assert_eq!(layers_visibility, LayersVisibility::default());
+
+  let mut writer = create_writer();
+  write_layers_visibility(&mut writer, &layers_visibility).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);

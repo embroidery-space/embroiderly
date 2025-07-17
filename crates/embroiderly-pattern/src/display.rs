@@ -152,11 +152,18 @@ impl Default for PaletteSettings {
 pub struct LayersVisibility {
   pub fullstitches: bool,
   pub petitestitches: bool,
+
   pub halfstitches: bool,
   pub quarterstitches: bool,
-  pub lines: bool,
-  pub nodes: bool,
+
+  pub backstitches: bool,
+  pub straightstitches: bool,
+
+  pub frenchknots: bool,
+  pub beads: bool,
+
   pub specialstitches: bool,
+
   pub grid: bool,
   pub rulers: bool,
 }
@@ -166,11 +173,18 @@ impl Default for LayersVisibility {
     Self {
       fullstitches: true,
       petitestitches: true,
+
       halfstitches: true,
       quarterstitches: true,
-      lines: true,
-      nodes: true,
+
+      backstitches: true,
+      straightstitches: true,
+
+      frenchknots: true,
+      beads: true,
+
       specialstitches: true,
+
       grid: true,
       rulers: true,
     }
