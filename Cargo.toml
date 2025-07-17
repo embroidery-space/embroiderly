@@ -52,7 +52,7 @@ typst-pdf = "0.13.1"
 typst-as-lib = "0.14.4"
 
 # Archiving
-zip = { version = "4.2.0", features = [
+zip = { version = "4.3.0", features = [
   "zstd",
   "time",
 ], default-features = false }
@@ -68,7 +68,7 @@ base64 = "0.22.1"
 borsh = { version = "1.5.7", features = ["derive"] }
 
 # CLI
-clap = { version = "4.5.40", default-features = false, features = [
+clap = { version = "4.5.41", default-features = false, features = [
   "std",
   "derive",
 ] }
