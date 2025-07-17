@@ -4,7 +4,6 @@ mod error;
 pub use error::*;
 
 pub mod pdf;
-pub mod svg;
 
 mod format;
 pub use format::PatternExportFormat;
