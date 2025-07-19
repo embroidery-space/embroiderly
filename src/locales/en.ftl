@@ -131,6 +131,17 @@ label-display-options-show-name = Show color names
 ## Titles, labels and messages related to the canvas panel and its controls.
 
 label-layers = Layers
+label-layers-fullstitches = Full Stitches
+label-layers-petitestitches = Petite Stitches
+label-layers-halfstitches = Half Stitches
+label-layers-quarterstitches = Quarter Stitches
+label-layers-backstitches = Back Stitches
+label-layers-straightstitches = Straight Stitches
+label-layers-frenchknots = French Knots
+label-layers-beads = Beads
+label-layers-specialstitches = Special Stitches
+label-layers-grid = Grid
+label-layers-rulers = Rulers
 
 label-view-as-mix = View as a Mix of Solid and Stitches
 label-view-as-solid = View as Solid

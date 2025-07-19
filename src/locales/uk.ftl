@@ -134,6 +134,17 @@ label-display-options-show-name = Відображати назви кольор
 ## Titles, labels and messages related to the canvas panel and its controls.
 
 label-layers = Шари
+label-layers-fullstitches = Хрести
+label-layers-petitestitches = Петіти
+label-layers-halfstitches = Півхрести
+label-layers-quarterstitches = Чвертьхрести
+label-layers-backstitches = Зворотні стібки
+label-layers-straightstitches = Прямі стібки
+label-layers-frenchknots = Фр. вузлики
+label-layers-beads = Бісер
+label-layers-specialstitches = Спеціальні стібки
+label-layers-grid = Сітка
+label-layers-rulers = Лінійки
 
 label-view-as-mix = Відображати як мікс суцільного і стібків
 label-view-as-solid = Відображати як суцільне
