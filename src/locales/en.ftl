@@ -139,6 +139,15 @@ label-view-as-stitches = View as Stitches
 label-show-symbols = Show Symbols
 label-hide-symbols = Hide Symbols
 
+## Titles, labels and messages related to the zoom controls.
+
+label-zoom-in = Zoom In
+label-zoom-out = Zoom Out
+
+label-fit = Fit
+label-fit-width = Fit Width
+label-fit-height = Fit Height
+
 ## Titles, labels and messages related to the settings dialog.
 
 title-settings = Settings
@@ -251,15 +260,6 @@ message-frame-preserved-overlap-description = The size of overlap between frames
 
 label-frame-show-grid-line-numbers = Show grid line numbers
 label-frame-show-centering-marks = Show centering marks
-
-## Titles, labels and messages related to the zoom controls.
-
-label-zoom-in = Zoom In
-label-zoom-out = Zoom Out
-
-label-fit = Fit
-label-fit-width = Fit Width
-label-fit-height = Fit Height
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved

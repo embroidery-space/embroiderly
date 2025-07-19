@@ -142,6 +142,15 @@ label-view-as-stitches = Відображати як стібки
 label-show-symbols = Показати символи
 label-hide-symbols = Сховати символи
 
+## Titles, labels and messages related to the zoom controls.
+
+label-zoom-in = Збільшити
+label-zoom-out = Зменшити
+
+label-fit = Вмістити
+label-fit-width = Вмістити по ширині
+label-fit-height = Вмістити по висоті
+
 ## Titles, labels and messages related to the settings dialog.
 
 title-settings = Налаштування
@@ -254,15 +263,6 @@ message-frame-preserved-overlap-description = Розмір перекриття 
 
 label-frame-show-grid-line-numbers = Показати номери ліній сітки
 label-frame-show-centering-marks = Показати центрувальні мітки
-
-## Titles, labels and messages related to the zoom controls.
-
-label-zoom-in = Збільшити
-label-zoom-out = Зменшити
-
-label-fit = Вмістити
-label-fit-width = Вмістити по ширині
-label-fit-height = Вмістити по висоті
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено
