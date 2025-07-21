@@ -8,6 +8,7 @@ import {
   FabricApi,
   GridApi,
   HistoryApi,
+  ImageApi,
   PaletteApi,
   PathApi,
   PatternApi,
@@ -29,6 +30,7 @@ import {
   PdfExportOptions,
   type Stitch,
   LayersVisibility,
+  ReferenceImage,
 } from "#/schemas";
 import {
   PatternErrorBackupFileExists,
@@ -251,6 +253,31 @@ export const usePatternsStore = defineStore(
       }
     }
 
+    async function setReferenceImage() {
+      if (!pattern.value) return;
+      appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
+      const selectedPath = await open({
+        defaultPath: appStateStore.lastOpenedFolder,
+        multiple: false,
+        filters: [
+          { name: "Images", extensions: ["png", "apng", "jpg", "jpeg"] },
+          { name: "All Files", extensions: ["*"] },
+        ],
+      });
+      if (selectedPath === null) return;
+      await ImageApi.setReferenceImage(pattern.value.id, selectedPath);
+    }
+    appWindow.listen<string>("image:set", ({ payload }) => {
+      if (!pattern.value) return;
+      pattern.value.setReferenceImage(ReferenceImage.deserialize(payload));
+      triggerRef(pattern);
+    });
+    appWindow.listen<void>("image:remove", () => {
+      if (!pattern.value) return;
+      pattern.value.removeReferenceImage();
+      triggerRef(pattern);
+    });
+
     function openPatternInfoModal() {
       if (!pattern.value) return;
       patternInfoModal.open({ patternInfo: pattern.value.info });
@@ -429,6 +456,7 @@ export const usePatternsStore = defineStore(
       exportPatternAsOxs,
       exportPatternAsPdf,
       closePattern,
+      setReferenceImage,
       openPatternInfoModal,
       updatePatternInfo,
       openFabricModal,

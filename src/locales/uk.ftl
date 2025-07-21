@@ -131,7 +131,11 @@ label-display-options-show-brand = Відображати бренди нито�
 label-display-options-show-number = Відображати номери кольорів
 label-display-options-show-name = Відображати назви кольорів
 
-## Titles, labels and messages related to the canvas panel and its controls.
+## Titles, labels and messages related to the canvas context menu.
+
+label-set-reference-image = Встановити зразкове зображення
+
+## Titles, labels and messages related to the canvas toolbar.
 
 label-layers = Шари
 label-layers-fullstitches = Хрести
@@ -153,7 +157,7 @@ label-view-as-stitches = Відображати як стібки
 label-show-symbols = Показати символи
 label-hide-symbols = Сховати символи
 
-## Titles, labels and messages related to the zoom controls.
+## Titles, labels and messages related to the canvas zoom controls.
 
 label-zoom-in = Збільшити
 label-zoom-out = Зменшити

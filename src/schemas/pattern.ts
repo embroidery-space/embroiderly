@@ -3,6 +3,7 @@ import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 import { stringify as stringifyUuid } from "uuid";
 
+import { ReferenceImage } from "./image.ts";
 import { DisplaySettings, PaletteSettings } from "./display.ts";
 import { PublishSettings } from "./publish.ts";
 
@@ -409,6 +410,8 @@ export class SpecialStitchModel {
 export class Pattern {
   id: string;
 
+  referenceImage?: ReferenceImage;
+
   info: PatternInfo;
   fabric: Fabric;
   palette: PaletteItem[];
@@ -424,6 +427,8 @@ export class Pattern {
 
   constructor(data: b.infer<typeof Pattern.schema>) {
     this.id = stringifyUuid(new Uint8Array(data.id));
+
+    if (data.referenceImage) this.referenceImage = new ReferenceImage(data.referenceImage);
 
     this.info = new PatternInfo(data.info);
     this.fabric = new Fabric(data.fabric);
@@ -441,6 +446,8 @@ export class Pattern {
 
   static readonly schema = b.struct({
     id: b.array(b.u8(), 16),
+
+    referenceImage: b.option(ReferenceImage.schema),
 
     info: PatternInfo.schema,
     fabric: Fabric.schema,

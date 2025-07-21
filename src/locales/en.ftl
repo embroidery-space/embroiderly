@@ -128,7 +128,11 @@ label-display-options-show-brand = Show thread brands
 label-display-options-show-number = Show color numbers
 label-display-options-show-name = Show color names
 
-## Titles, labels and messages related to the canvas panel and its controls.
+## Titles, labels and messages related to the canvas context menu.
+
+label-set-reference-image = Set Reference Image
+
+## Titles, labels and messages related to the canvas toolbar.
 
 label-layers = Layers
 label-layers-fullstitches = Full Stitches
@@ -150,7 +154,7 @@ label-view-as-stitches = View as Stitches
 label-show-symbols = Show Symbols
 label-hide-symbols = Hide Symbols
 
-## Titles, labels and messages related to the zoom controls.
+## Titles, labels and messages related to the canvas zoom controls.
 
 label-zoom-in = Zoom In
 label-zoom-out = Zoom Out

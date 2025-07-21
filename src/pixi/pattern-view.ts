@@ -24,6 +24,7 @@ import {
   LayersVisibility,
   LineStitchKind,
   NodeStitchKind,
+  ReferenceImage,
 } from "#/schemas";
 
 import { STITCH_SCALE_FACTOR } from "./constants.ts";
@@ -35,6 +36,7 @@ import {
   StitchSymbol,
   PatternGrid,
   Rulers,
+  ReferenceImageContainer,
 } from "./components/";
 import { TextureManager } from "./texture-manager.ts";
 
@@ -64,6 +66,7 @@ export class PatternView {
   private stages = {
     // lowest
     fabric: new Graphics({ label: "Fabric" }),
+    image: new ReferenceImageContainer({ label: "Reference Image Container" }),
     fullstitches: new StitchParticleContainer({ label: "Full Stitches" }),
     petitestitches: new StitchParticleContainer({ label: "Petite Stitches" }),
     halfstitches: new StitchParticleContainer({ label: "Half Stitches" }),
@@ -422,6 +425,13 @@ export class PatternView {
     if (flip[1]) graphics.scale.y = -1;
 
     this.stages.specialstitches.addChild(graphics);
+  }
+
+  async setReferenceImage(image: ReferenceImage) {
+    await this.stages.image.setImage(image);
+  }
+  removeReferenceImage() {
+    this.stages.image.removeImage();
   }
 
   /**

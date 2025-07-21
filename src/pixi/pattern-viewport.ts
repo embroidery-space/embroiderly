@@ -1,5 +1,5 @@
-import { Container, Point } from "pixi.js";
-import type { Bounds, DestroyOptions, FederatedPointerEvent } from "pixi.js";
+import { Bounds, Container, FederatedPointerEvent, Point } from "pixi.js";
+import { type DestroyOptions } from "pixi.js";
 
 const MODIFIERS: Modifiers = {
   mod1: (e) => e.ctrlKey,
@@ -63,6 +63,9 @@ export class PatternViewport extends Container {
 
     this.handleWheel = this.handleWheel.bind(this);
     this.domElement.addEventListener("wheel", this.handleWheel, { passive: false });
+
+    this.handleContextMenu = this.handleContextMenu.bind(this);
+    this.domElement.addEventListener("contextmenu", this.handleContextMenu, { capture: true });
   }
 
   override destroy(options?: DestroyOptions): void {
@@ -71,8 +74,10 @@ export class PatternViewport extends Container {
     this.off("pointerup", this.handlePointerUp, this);
     this.off("pointerupoutside", this.handlePointerUp, this);
     this.off("pointercancel", this.handlePointerUp, this);
+    this.off("rightclick", this.handlePointerUp, this);
 
     this.domElement.removeEventListener("wheel", this.handleWheel);
+    this.domElement.removeEventListener("contextmenu", this.handleContextMenu, { capture: true });
 
     super.destroy(options);
   }
@@ -199,10 +204,16 @@ export class PatternViewport extends Container {
     if (buttons.left) this.emitToolEvent(EventType.ToolRelease, e);
     else if (buttons.right) {
       if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
-      else this.emitToolEvent(EventType.ContextMenu, e);
     }
     this.startPoint = undefined;
     this.emitToolEvent(InternalEventType.CanvasClear, e);
+  }
+
+  private handleContextMenu(e: MouseEvent) {
+    const buttons = getMouseButtons(e);
+    if (buttons.right && MODIFIERS.mod1(e)) {
+      e.preventDefault();
+    }
   }
 
   /**
@@ -276,7 +287,6 @@ export const enum EventType {
   ToolMainAction = "tool-main-action",
   ToolAntiAction = "tool-anti-action",
   ToolRelease = "tool-release",
-  ContextMenu = "context-menu",
   Transform = "transform",
 }
 
@@ -324,7 +334,7 @@ export interface ModifiersState {
   mod3: boolean;
 }
 
-function getMouseButtons(event: FederatedPointerEvent): MouseButtons {
+function getMouseButtons(event: PointerEvent | MouseEvent): MouseButtons {
   const { button, buttons } = event;
   if (button !== -1) {
     return { left: button === 0, middle: button === 1, right: button === 2 };

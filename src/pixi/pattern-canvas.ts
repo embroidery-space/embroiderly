@@ -50,9 +50,6 @@ export class PatternCanvas extends EventTarget {
     this.viewport.on(EventType.ToolRelease, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ToolRelease, { detail }));
     });
-    this.viewport.on(EventType.ContextMenu, (detail) => {
-      this.dispatchEvent(new CustomEvent(EventType.ContextMenu, { detail }));
-    });
     this.viewport.on(EventType.Transform, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.Transform, { detail }));
     });

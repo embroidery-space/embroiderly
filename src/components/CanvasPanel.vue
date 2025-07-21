@@ -36,11 +36,13 @@
     </div>
 
     <div class="w-full grow overflow-hidden">
-      <canvas
-        ref="canvas"
-        v-element-size="useDebounceFn((size) => patternCanvas.resize(size), 100)"
-        class="size-full"
-      ></canvas>
+      <NuxtContextMenu :items="canvasContextMenuOptions">
+        <canvas
+          ref="canvas"
+          v-element-size="useDebounceFn((size) => patternCanvas.resize(size), 100)"
+          class="size-full"
+        ></canvas>
+      </NuxtContextMenu>
     </div>
 
     <div class="w-full flex items-center justify-between border-t border-default px-2 py-1">
@@ -57,7 +59,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import type { ContextMenuItem } from "@nuxt/ui";
   import { useDebounceFn, useEventListener } from "@vueuse/core";
   import { vElementSize } from "@vueuse/components";
   import { Assets, Point } from "pixi.js";
@@ -84,12 +87,23 @@
   } from "#/schemas/";
   import type { Stitch, StitchKind } from "#/schemas/";
 
+  const fluent = useFluent();
+
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
   const settingsStore = useSettingsStore();
 
   const canvas = useTemplateRef("canvas");
   const patternCanvas = new PatternCanvas();
+  const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
+    [
+      {
+        icon: "i-lucide:image",
+        label: fluent.$t("label-set-reference-image"),
+        onSelect: () => patternsStore.setReferenceImage(),
+      },
+    ],
+  ]);
 
   const zoom = ref(1);
 
@@ -256,10 +270,6 @@
       }
     }
   }
-
-  useEventListener<CustomEvent>(patternCanvas, EventType.ContextMenu, () => {
-    if (import.meta.env.DEV) console.log("Context menu");
-  });
 
   useEventListener<CustomEvent<TransformEventDetail>>(patternCanvas, EventType.Transform, async ({ detail }) => {
     zoom.value = Math.round(detail.scale);
