@@ -1433,7 +1433,6 @@ dependencies = [
  "thiserror 2.0.12",
  "xsp-parsers",
  "zip",
- "zip-extract",
 ]
 
 [[package]]
@@ -8304,17 +8303,6 @@ dependencies = [
  "memchr",
  "time",
  "zstd",
-]
-
-[[package]]
-name = "zip-extract"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aed5f10c571472911e37d8f7601a8dfba52b4f7f73a344015291b82ab292faf6"
-dependencies = [
- "log",
- "thiserror 2.0.12",
- "zip",
 ]
 
 [[package]]

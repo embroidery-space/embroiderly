@@ -2,81 +2,15 @@ use std::io;
 
 use anyhow::Result;
 use embroiderly_pattern::*;
-use quick_xml::events::{BytesDecl, BytesStart, Event};
+use quick_xml::events::{BytesDecl, Event};
 use quick_xml::{Reader, Writer};
 
+use self::utils::*;
 use crate::PackageInfo;
 
 #[cfg(test)]
 #[path = "oxs.test.rs"]
 mod tests;
-
-// These are utility functions to work with the OXS format.
-
-struct AttributesMap {
-  inner: std::collections::HashMap<String, String>,
-}
-
-impl AttributesMap {
-  fn get(&self, key: &str) -> Option<&str> {
-    self.inner.get(key).map(|s| s.as_str())
-  }
-
-  fn get_coord(&self, key: &str) -> Option<Coord> {
-    self.get(key).and_then(|s| {
-      let normalized = s.replace(',', ".");
-      normalized.parse().ok()
-    })
-  }
-
-  fn get_palindex(&self, key: &str) -> Option<u32> {
-    match self.get(key).and_then(|s| s.parse::<u32>().ok()) {
-      Some(palindex) if palindex != 0 => Some(palindex - 1),
-      _ => None,
-    }
-  }
-
-  fn get_color(&self, key: &str) -> Option<&str> {
-    let color = self.get(key);
-    if color.is_some_and(|c| c.is_empty() || c == "nil") {
-      None
-    } else {
-      color
-    }
-  }
-
-  fn get_objecttype(&self, key: &str) -> Option<String> {
-    self
-      .get(key)
-      .and_then(|s| if s.is_empty() { None } else { Some(s.to_owned()) })
-  }
-
-  fn get_bool(&self, key: &str) -> Option<bool> {
-    self.get(key).and_then(|s| {
-      let normalized = s.to_lowercase();
-      normalized.parse().ok()
-    })
-  }
-
-  fn get_parsed<T: std::str::FromStr>(&self, key: &str) -> Option<T> {
-    self.get(key).and_then(|s| s.parse::<T>().ok())
-  }
-}
-
-impl TryFrom<quick_xml::events::attributes::Attributes<'_>> for AttributesMap {
-  type Error = anyhow::Error;
-
-  fn try_from(attributes: quick_xml::events::attributes::Attributes) -> Result<Self, Self::Error> {
-    let mut map = std::collections::HashMap::new();
-    for attr in attributes {
-      let attr = attr?;
-      let key = String::from_utf8(attr.key.as_ref().to_vec())?;
-      let value = String::from_utf8(attr.value.to_vec())?;
-      map.insert(key, value);
-    }
-    Ok(AttributesMap { inner: map })
-  }
-}
 
 /// Tries to get a value using the provided expression.
 /// If the result is `Some(value)`, returns the unwrapped value.
@@ -98,36 +32,29 @@ macro_rules! unwrap_or_continue {
   };
 }
 
-// These are the main functions to parse and save OXS files.
+pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
+  let file_path = file_path.as_ref();
+  let mut reader = Reader::from_file(file_path)?;
 
-pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
-  let mut reader = Reader::from_file(&file_path)?;
-  let reader_config = reader.config_mut();
-  reader_config.expand_empty_elements = true;
-  reader_config.check_end_names = true;
-  reader_config.trim_text(true);
-
-  let mut buf = Vec::new();
-  let mut pattern = loop {
-    match reader
-      .read_event_into(&mut buf)
-      .map_err(|e| anyhow::anyhow!("Error at position {}: {e:?}", reader.error_position()))?
-    {
-      Event::Start(ref e) if e.name().as_ref() == b"chart" => break parse_pattern_inner(&mut reader)?,
-      Event::Eof => anyhow::bail!("Unexpected EOF. It seems that the `chart` tag is not found."),
-      _ => {}
-    }
-    buf.clear();
-  };
-
+  let mut pattern = parse_pattern_inner(&mut reader)?;
   if pattern.info.title.is_empty() {
-    // The file name is provided by the file picker so it is always valid.
-    let file_name = file_path.file_name().unwrap().to_string_lossy().to_string();
-    pattern.info.title = file_name;
+    pattern.info.title = file_path.file_name().unwrap().to_string_lossy().to_string();
   }
 
   Ok(PatternProject::new(
-    file_path,
+    file_path.to_owned(),
+    pattern,
+    Default::default(),
+    Default::default(),
+  ))
+}
+
+pub fn parse_pattern_from_reader<R: io::BufRead>(reader: R) -> Result<PatternProject> {
+  let mut reader = Reader::from_reader(reader);
+
+  let pattern = parse_pattern_inner(&mut reader)?;
+  Ok(PatternProject::new(
+    Default::default(),
     pattern,
     Default::default(),
     Default::default(),
@@ -137,12 +64,20 @@ pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
 fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern> {
   log::trace!("Parsing OXS file");
 
+  let reader_config = reader.config_mut();
+  reader_config.expand_empty_elements = true;
+  reader_config.check_end_names = true;
+  reader_config.trim_text(true);
+
   let mut pattern = Pattern::default();
   let mut palette_size = None;
 
   let mut buf = Vec::new();
   loop {
-    match reader.read_event_into(&mut buf)? {
+    match reader
+      .read_event_into(&mut buf)
+      .map_err(|e| anyhow::anyhow!("Error at position {}: {e:?}", reader.error_position()))?
+    {
       Event::Start(ref e) => {
         let name = e.name();
         log::trace!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
@@ -1138,390 +1073,71 @@ fn write_special_stitch_models<W: io::Write>(
   Ok(())
 }
 
-// These are the functions to read and write Embroidery Studio custom sections.
+pub mod utils {
+  use embroiderly_pattern::Coord;
 
-pub fn parse_display_settings(file_path: std::path::PathBuf) -> Result<DisplaySettings> {
-  let mut reader = Reader::from_file(&file_path)?;
-  let reader_config = reader.config_mut();
-  reader_config.expand_empty_elements = true;
-  reader_config.check_end_names = true;
-  reader_config.trim_text(true);
+  pub struct AttributesMap {
+    inner: std::collections::HashMap<String, String>,
+  }
 
-  let mut buf = Vec::new();
-  let display_settings = loop {
-    match reader
-      .read_event_into(&mut buf)
-      .map_err(|e| anyhow::anyhow!("Error at position {}: {e:?}", reader.error_position()))?
-    {
-      Event::Start(ref e) if e.name().as_ref() == b"display_settings" => {
-        let attributes = AttributesMap::try_from(e.attributes())?;
-        break parse_display_settings_inner(&mut reader, attributes)?;
+  impl AttributesMap {
+    pub fn get(&self, key: &str) -> Option<&str> {
+      self.inner.get(key).map(|s| s.as_str())
+    }
+
+    pub fn get_coord(&self, key: &str) -> Option<Coord> {
+      self.get(key).and_then(|s| {
+        let normalized = s.replace(',', ".");
+        normalized.parse().ok()
+      })
+    }
+
+    pub fn get_palindex(&self, key: &str) -> Option<u32> {
+      match self.get(key).and_then(|s| s.parse::<u32>().ok()) {
+        Some(palindex) if palindex != 0 => Some(palindex - 1),
+        _ => None,
       }
-      Event::Eof => anyhow::bail!("Unexpected EOF. It seems that the `display_settings` tag is not found."),
-      _ => {}
     }
-    buf.clear();
-  };
 
-  Ok(display_settings)
-}
-
-fn parse_display_settings_inner<R: io::BufRead>(
-  reader: &mut Reader<R>,
-  attributes: AttributesMap,
-) -> Result<DisplaySettings> {
-  let mut display_settings = DisplaySettings::default();
-
-  if let Some(default_symbol_font) = attributes.get("default_symbol_font") {
-    display_settings.default_symbol_font = default_symbol_font.to_owned();
-  }
-
-  if let Some(display_mode) = attributes.get_parsed("display_mode") {
-    display_settings.display_mode = display_mode;
-  }
-
-  if let Some(show_symbols) = attributes.get_bool("show_symbols") {
-    display_settings.show_symbols = show_symbols;
-  }
-
-  let mut buf = Vec::new();
-  loop {
-    match reader.read_event_into(&mut buf)? {
-      Event::Start(ref e) => match e.name().as_ref() {
-        b"palette_settings" => {
-          let attributes = AttributesMap::try_from(e.attributes())?;
-          display_settings.palette_settings = read_palette_settings(attributes)?;
-        }
-        b"grid" => {
-          let attributes = AttributesMap::try_from(e.attributes())?;
-          display_settings.grid = read_grid(reader, attributes)?;
-        }
-        b"layers_visibility" => {
-          let attributes = AttributesMap::try_from(e.attributes())?;
-          display_settings.layers_visibility = read_layers_visibility(attributes)?;
-        }
-        _ => {}
-      },
-      Event::End(ref e) if e.name().as_ref() == b"display_settings" => break,
-      Event::Eof => anyhow::bail!("Unexpected EOF. The end of the `display_settings` tag is not found."),
-      _ => {}
-    }
-    buf.clear();
-  }
-
-  Ok(display_settings)
-}
-
-pub fn save_display_settings_to_vec(display_settings: &DisplaySettings) -> Result<Vec<u8>> {
-  // In the development mode, we want to have a pretty-printed XML file for easy debugging.
-  #[cfg(debug_assertions)]
-  let mut writer = Writer::new_with_indent(Vec::new(), b' ', 2);
-  #[cfg(not(debug_assertions))]
-  let mut writer = Writer::new(Vec::new());
-
-  writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None)))?;
-  writer
-    .create_element("display_settings")
-    .with_attributes([
-      ("display_mode", display_settings.display_mode.to_string().as_str()),
-      ("default_symbol_font", display_settings.default_symbol_font.as_str()),
-      ("show_symbols", display_settings.show_symbols.to_string().as_str()),
-    ])
-    .write_inner_content(|writer| {
-      write_palette_settings(writer, &display_settings.palette_settings)?;
-      write_grid(writer, &display_settings.grid)?;
-      write_layers_visibility(writer, &display_settings.layers_visibility)?;
-      Ok(())
-    })?;
-
-  Ok(writer.into_inner())
-}
-
-fn read_palette_settings(attributes: AttributesMap) -> Result<PaletteSettings> {
-  Ok(PaletteSettings {
-    columns_number: attributes
-      .get_parsed("columns_number")
-      .unwrap_or(PaletteSettings::DEFAULT_COLUMNS_NUMBER),
-    color_only: attributes
-      .get_parsed("color_only")
-      .unwrap_or(PaletteSettings::DEFAULT_COLOR_ONLY),
-    show_color_brands: attributes
-      .get_parsed("show_color_brands")
-      .unwrap_or(PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS),
-    show_color_numbers: attributes
-      .get_parsed("show_color_names")
-      .unwrap_or(PaletteSettings::DEFAULT_SHOW_COLOR_NAMES),
-    show_color_names: attributes
-      .get_parsed("show_color_numbers")
-      .unwrap_or(PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS),
-  })
-}
-
-fn write_palette_settings<W: io::Write>(writer: &mut Writer<W>, settings: &PaletteSettings) -> io::Result<()> {
-  writer
-    .create_element("palette_settings")
-    .with_attributes([
-      ("columns_number", settings.columns_number.to_string().as_str()),
-      ("color_only", settings.color_only.to_string().as_str()),
-      ("show_color_brands", settings.show_color_brands.to_string().as_str()),
-      ("show_color_names", settings.show_color_names.to_string().as_str()),
-      ("show_color_numbers", settings.show_color_numbers.to_string().as_str()),
-    ])
-    .write_empty()?;
-  Ok(())
-}
-
-fn read_grid<R: io::BufRead>(reader: &mut Reader<R>, attributes: AttributesMap) -> Result<Grid> {
-  let mut grid = Grid::default();
-
-  if let Some(interval) = attributes.get_parsed("major_lines_interval") {
-    grid.major_lines_interval = interval;
-  }
-
-  fn parse_grid_line(event: &BytesStart<'_>) -> Result<GridLine> {
-    let attributes = AttributesMap::try_from(event.attributes())?;
-    Ok(GridLine {
-      color: attributes.get("color").unwrap_or("C8C8C8").to_string(),
-      thickness: attributes.get_parsed("thickness").unwrap_or(0.072),
-    })
-  }
-
-  let mut buf = Vec::new();
-  loop {
-    match reader.read_event_into(&mut buf)? {
-      Event::Start(ref e) => match e.name().as_ref() {
-        b"minor_lines" => grid.minor_lines = parse_grid_line(e)?,
-        b"major_lines" => grid.major_lines = parse_grid_line(e)?,
-        _ => {}
-      },
-      Event::End(ref e) if e.name().as_ref() == b"grid" => break,
-      _ => {}
-    }
-    buf.clear();
-  }
-
-  Ok(grid)
-}
-
-fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid) -> io::Result<()> {
-  fn write_grid_line<W: io::Write>(writer: &mut Writer<W>, element: &str, line: &GridLine) -> io::Result<()> {
-    writer
-      .create_element(element)
-      .with_attributes([
-        ("color", line.color.as_str()),
-        ("thickness", line.thickness.to_string().as_str()),
-      ])
-      .write_empty()?;
-    Ok(())
-  }
-
-  writer
-    .create_element("grid")
-    .with_attributes([("major_lines_interval", grid.major_lines_interval.to_string().as_str())])
-    .write_inner_content(|writer| {
-      write_grid_line(writer, "minor_lines", &grid.minor_lines)?;
-      write_grid_line(writer, "major_lines", &grid.major_lines)?;
-      Ok(())
-    })?;
-
-  Ok(())
-}
-
-fn read_layers_visibility(attributes: AttributesMap) -> Result<LayersVisibility> {
-  Ok(LayersVisibility {
-    fullstitches: attributes.get_bool("fullstitches").unwrap_or_default(),
-    petitestitches: attributes.get_bool("petitestitches").unwrap_or_default(),
-    halfstitches: attributes.get_bool("halfstitches").unwrap_or_default(),
-    quarterstitches: attributes.get_bool("quarterstitches").unwrap_or_default(),
-    backstitches: attributes.get_bool("backstitches").unwrap_or_default(),
-    straightstitches: attributes.get_bool("straightstitches").unwrap_or_default(),
-    frenchknots: attributes.get_bool("frenchknots").unwrap_or_default(),
-    beads: attributes.get_bool("beads").unwrap_or_default(),
-    specialstitches: attributes.get_bool("specialstitches").unwrap_or_default(),
-    grid: attributes.get_bool("grid").unwrap_or_default(),
-    rulers: attributes.get_bool("rulers").unwrap_or_default(),
-  })
-}
-
-fn write_layers_visibility<W: io::Write>(writer: &mut Writer<W>, layers: &LayersVisibility) -> io::Result<()> {
-  writer
-    .create_element("layers_visibility")
-    .with_attributes([
-      ("fullstitches", layers.fullstitches.to_string().as_str()),
-      ("petitestitches", layers.petitestitches.to_string().as_str()),
-      ("halfstitches", layers.halfstitches.to_string().as_str()),
-      ("quarterstitches", layers.quarterstitches.to_string().as_str()),
-      ("backstitches", layers.backstitches.to_string().as_str()),
-      ("straightstitches", layers.straightstitches.to_string().as_str()),
-      ("frenchknots", layers.frenchknots.to_string().as_str()),
-      ("beads", layers.beads.to_string().as_str()),
-      ("specialstitches", layers.specialstitches.to_string().as_str()),
-      ("grid", layers.grid.to_string().as_str()),
-      ("rulers", layers.rulers.to_string().as_str()),
-    ])
-    .write_empty()?;
-  Ok(())
-}
-
-pub fn parse_publish_settings(file_path: std::path::PathBuf) -> Result<PublishSettings> {
-  let mut reader = Reader::from_file(&file_path)?;
-  let reader_config = reader.config_mut();
-  reader_config.expand_empty_elements = true;
-  reader_config.check_end_names = true;
-  reader_config.trim_text(true);
-
-  let mut buf = Vec::new();
-  let publish_settings = loop {
-    match reader
-      .read_event_into(&mut buf)
-      .map_err(|e| anyhow::anyhow!("Error at position {}: {e:?}", reader.error_position()))?
-    {
-      Event::Start(ref e) if e.name().as_ref() == b"publish_settings" => {
-        break parse_publish_settings_inner(&mut reader)?;
+    pub fn get_color(&self, key: &str) -> Option<&str> {
+      let color = self.get(key);
+      if color.is_some_and(|c| c.is_empty() || c == "nil") {
+        None
+      } else {
+        color
       }
-      Event::Eof => anyhow::bail!("Unexpected EOF. It seems that the `publish_settings` tag is not found."),
-      _ => {}
     }
-    buf.clear();
-  };
 
-  Ok(publish_settings)
-}
-
-fn parse_publish_settings_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<PublishSettings> {
-  let mut publish_settings = PublishSettings::default();
-
-  let mut buf = Vec::new();
-  loop {
-    match reader.read_event_into(&mut buf)? {
-      #[allow(clippy::single_match)]
-      Event::Start(ref e) => match e.name().as_ref() {
-        b"pdf" => {
-          let pdf_attributes = AttributesMap::try_from(e.attributes())?;
-          publish_settings.pdf = read_pdf_export_options(reader, pdf_attributes)?;
-        }
-        _ => {}
-      },
-      Event::End(ref e) if e.name().as_ref() == b"publish_settings" => break,
-      Event::Eof => anyhow::bail!("Unexpected EOF. The end of the `publish_settings` tag is not found."),
-      _ => {}
+    pub fn get_objecttype(&self, key: &str) -> Option<String> {
+      self
+        .get(key)
+        .and_then(|s| if s.is_empty() { None } else { Some(s.to_owned()) })
     }
-    buf.clear();
-  }
 
-  Ok(publish_settings)
-}
-
-pub fn save_publish_settings_to_vec(publish_settings: &PublishSettings) -> Result<Vec<u8>> {
-  // In the development mode, we want to have a pretty-printed XML file for easy debugging.
-  #[cfg(debug_assertions)]
-  let mut writer = Writer::new_with_indent(Vec::new(), b' ', 2);
-  #[cfg(not(debug_assertions))]
-  let mut writer = Writer::new(Vec::new());
-
-  writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None)))?;
-  writer
-    .create_element("publish_settings")
-    .write_inner_content(|writer| {
-      write_pdf_export_options(writer, &publish_settings.pdf)?;
-      Ok(())
-    })?;
-
-  Ok(writer.into_inner())
-}
-
-fn read_pdf_export_options<R: io::BufRead>(
-  reader: &mut Reader<R>,
-  attributes: AttributesMap,
-) -> Result<PdfExportOptions> {
-  let mut pdf = PdfExportOptions {
-    monochrome: attributes.get_bool("monochrome").unwrap_or_default(),
-    color: attributes.get_bool("color").unwrap_or_default(),
-    center_frames: attributes.get_bool("center_frames").unwrap_or_default(),
-    enumerate_frames: attributes.get_bool("enumerate_frames").unwrap_or_default(),
-    ..Default::default()
-  };
-
-  let mut buf = Vec::new();
-  loop {
-    #[allow(clippy::single_match)]
-    match reader.read_event_into(&mut buf)? {
-      Event::Start(ref e) => match e.name().as_ref() {
-        b"frame_options" => {
-          let attributes = AttributesMap::try_from(e.attributes())?;
-          pdf.frame_options = read_image_export_options(attributes)?;
-        }
-        _ => {}
-      },
-      Event::End(ref e) if e.name().as_ref() == b"pdf" => break,
-      _ => {}
+    pub fn get_bool(&self, key: &str) -> Option<bool> {
+      self.get(key).and_then(|s| {
+        let normalized = s.to_lowercase();
+        normalized.parse().ok()
+      })
     }
-    buf.clear();
+
+    pub fn get_parsed<T: std::str::FromStr>(&self, key: &str) -> Option<T> {
+      self.get(key).and_then(|s| s.parse::<T>().ok())
+    }
   }
 
-  Ok(pdf)
-}
+  impl TryFrom<quick_xml::events::attributes::Attributes<'_>> for AttributesMap {
+    type Error = anyhow::Error;
 
-fn write_pdf_export_options<W: io::Write>(writer: &mut Writer<W>, pdf: &PdfExportOptions) -> io::Result<()> {
-  writer
-    .create_element("pdf")
-    .with_attributes([
-      ("monochrome", pdf.monochrome.to_string().as_str()),
-      ("color", pdf.color.to_string().as_str()),
-      ("center_frames", pdf.center_frames.to_string().as_str()),
-      ("enumerate_frames", pdf.enumerate_frames.to_string().as_str()),
-    ])
-    .write_inner_content(|writer| {
-      write_image_export_options(writer, "frame_options", &pdf.frame_options)?;
-      Ok(())
-    })?;
-  Ok(())
-}
-
-fn read_image_export_options(attributes: AttributesMap) -> Result<ImageExportOptions> {
-  let image = ImageExportOptions {
-    frame_size: if let Some(frame_width) = attributes.get_parsed("frame_width") {
-      let frame_height = attributes.get_parsed("frame_height").unwrap_or(frame_width);
-      Some((frame_width, frame_height))
-    } else {
-      None
-    },
-    cell_size: attributes
-      .get_parsed("cell_size")
-      .unwrap_or(ImageExportOptions::DEFAULT_CELL_SIZE),
-    preserved_overlap: attributes.get_parsed("preserved_overlap"),
-    show_grid_line_numbers: attributes.get_bool("show_grid_line_numbers").unwrap_or_default(),
-    show_centering_marks: attributes.get_bool("show_centering_marks").unwrap_or_default(),
-  };
-
-  Ok(image)
-}
-
-fn write_image_export_options<W: io::Write>(
-  writer: &mut Writer<W>,
-  element: &str,
-  image: &ImageExportOptions,
-) -> io::Result<()> {
-  let mut attributes = Vec::new();
-
-  if let Some(frame_size) = image.frame_size {
-    attributes.push(("frame_width", frame_size.0.to_string()));
-    attributes.push(("frame_height", frame_size.1.to_string()));
+    fn try_from(attributes: quick_xml::events::attributes::Attributes) -> Result<Self, Self::Error> {
+      let mut map = std::collections::HashMap::new();
+      for attr in attributes {
+        let attr = attr?;
+        let key = String::from_utf8(attr.key.as_ref().to_vec())?;
+        let value = String::from_utf8(attr.value.to_vec())?;
+        map.insert(key, value);
+      }
+      Ok(AttributesMap { inner: map })
+    }
   }
-  attributes.push(("cell_size", image.cell_size.to_string()));
-
-  if let Some(preserved_overlap) = image.preserved_overlap {
-    attributes.push(("preserved_overlap", preserved_overlap.to_string()));
-  }
-
-  attributes.push(("show_grid_line_numbers", image.show_grid_line_numbers.to_string()));
-  attributes.push(("show_centering_marks", image.show_centering_marks.to_string()));
-
-  let attributes = attributes.iter().map(|(k, v)| (*k, v.as_str())).collect::<Vec<_>>();
-  writer
-    .create_element(element)
-    .with_attributes(attributes)
-    .write_empty()?;
-
-  Ok(())
 }
