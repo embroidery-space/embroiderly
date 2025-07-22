@@ -37,6 +37,7 @@ export class PatternViewport extends Container {
   wheelAction: WheelAction = "zoom";
 
   private startPoint?: Point;
+  private isDragging = false;
 
   constructor() {
     super({
@@ -172,11 +173,12 @@ export class PatternViewport extends Container {
   }
 
   private handlePointerDown(e: FederatedPointerEvent) {
+    const buttons = getMouseButtons(e);
     const point = this.toWorld(e.global);
+
     this.startPoint = this.containsPoint(point) ? point : undefined;
     if (this.startPoint === undefined) return this.emitToolEvent(InternalEventType.CanvasClear, e);
 
-    const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
       else this.emitToolEvent(EventType.ToolMainAction, e);
@@ -193,6 +195,7 @@ export class PatternViewport extends Container {
       if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
       else {
         this.startPoint = undefined;
+        this.isDragging = true;
         this.move(e.movement);
       }
     }
@@ -206,12 +209,13 @@ export class PatternViewport extends Container {
       if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
     }
     this.startPoint = undefined;
+    this.isDragging = false;
     this.emitToolEvent(InternalEventType.CanvasClear, e);
   }
 
   private handleContextMenu(e: MouseEvent) {
     const buttons = getMouseButtons(e);
-    if (buttons.right && MODIFIERS.mod1(e)) {
+    if (buttons.right && (MODIFIERS.mod1(e) || this.isDragging)) {
       e.preventDefault();
     }
   }
