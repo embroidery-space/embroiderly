@@ -18,7 +18,7 @@ split-debuginfo = "packed"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.5.1", features = ["config-json5"] }
+tauri = { version = "2.7.0", features = ["config-json5"] }
 tauri-build = { version = "2.3.1", features = ["config-json5"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.0"
