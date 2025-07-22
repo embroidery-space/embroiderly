@@ -16,11 +16,7 @@ pub fn set_reference_image<R: tauri::Runtime>(
   log::debug!("Setting a reference image");
   let (pattern_id,) = parse_command_payload!(request);
 
-  let image_content = std::fs::read(file_path)?;
-  let image = ReferenceImage {
-    format: image::guess_format(&image_content)?,
-    content: image_content,
-  };
+  let image = ReferenceImage::new(std::fs::read(file_path)?);
 
   let mut patterns = patterns.write().unwrap();
   let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();

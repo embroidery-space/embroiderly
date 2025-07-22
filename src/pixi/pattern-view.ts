@@ -123,6 +123,8 @@ export class PatternView {
     this.#displayMode = pattern.displaySettings.displayMode;
     this.#previousDisplayMode = pattern.displaySettings.displayMode;
 
+    if (pattern.referenceImage) this.setReferenceImage(pattern.referenceImage);
+
     this.render = () => {
       this.fabric = this.#fabric;
       this.grid = this.#grid;

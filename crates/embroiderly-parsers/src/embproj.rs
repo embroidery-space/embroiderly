@@ -1,7 +1,7 @@
 use std::io::{Read, Write};
 
 use anyhow::Result;
-use embroiderly_pattern::PatternProject;
+use embroiderly_pattern::{PatternProject, ReferenceImage};
 
 use crate::PackageInfo;
 use crate::oxs::{parse_pattern_from_reader, save_pattern_to_vec};
@@ -44,6 +44,17 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
     Err(e) => return Err(e.into()),
   };
 
+  // Since we store the reference image with the original extension,
+  // we don't know the exact file name, so we have to search for it.
+  let file_names = archive.file_names().map(|s| s.to_string()).collect::<Vec<_>>();
+  if let Some(image_file_name) = file_names.iter().find(|name| name.starts_with("reference_image")) {
+    patproj.reference_image = match read_zip_file!(archive, image_file_name.as_str()) {
+      Ok(file) => Some(ReferenceImage::new(file.into_inner().into_inner())),
+      Err(zip::result::ZipError::FileNotFound) => None,
+      Err(e) => return Err(e.into()),
+    };
+  }
+
   if patproj.pattern.info.title.is_empty() {
     patproj.pattern.info.title = file_path.file_name().unwrap().to_string_lossy().to_string();
   }
@@ -69,6 +80,12 @@ pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Res
 
   zip.start_file("publish_settings.xml", options)?;
   zip.write_all(&save_publish_settings_to_vec(&patproj.publish_settings)?)?;
+
+  if let Some(ref image) = patproj.reference_image {
+    let image_file_name = format!("reference_image.{}", image.format.extensions_str()[0]);
+    zip.start_file(image_file_name, options)?;
+    zip.write_all(&image.content)?;
+  }
 
   zip.finish()?;
   Ok(())
