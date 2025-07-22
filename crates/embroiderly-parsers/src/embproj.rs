@@ -8,11 +8,12 @@ use crate::{PackageInfo, oxs};
 pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
   log::info!("Parsing the EMBPROJ pattern file");
 
-  let temp = tempfile::Builder::new().tempdir()?.path().to_path_buf();
+  let mut archive = zip::ZipArchive::new(std::fs::File::open(&file_path)?)?;
 
   // `quick-xml` doesn't support reading from a `ZipFile`'s directly because it doesn't implement `std::io::BufRead` trait,
   // so we extract all the files to a temporary directory to read them as regular files.
-  zip_extract::extract(std::fs::File::open(&file_path)?, &temp, true)?;
+  let temp = tempfile::Builder::new().tempdir()?.path().to_path_buf();
+  archive.extract(&temp)?;
 
   let mut patproj = oxs::parse_pattern(temp.join("pattern.oxs"))?;
   patproj.file_path = file_path;
