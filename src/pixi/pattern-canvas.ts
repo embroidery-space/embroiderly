@@ -60,7 +60,9 @@ export class PatternCanvas extends EventTarget {
     this.viewport.on(InternalEventType.CanvasClear, () => this.clearHint());
   }
 
-  async init(canvas: HTMLCanvasElement, { width, height }: CanvasSize, options?: PatternCanvasOptions) {
+  async init(canvas: HTMLCanvasElement, options?: PatternCanvasOptions) {
+    const { width, height } = canvas.getBoundingClientRect();
+
     await this.pixi.init({
       ...DEFAULT_INIT_OPTIONS,
       ...options?.render,
@@ -69,9 +71,9 @@ export class PatternCanvas extends EventTarget {
       height,
     });
     this.viewport.init(this.pixi.renderer.events.domElement, {
+      ...options?.viewport,
       screenWidth: width,
       screenHeight: height,
-      ...options?.viewport,
     });
 
     TextureManager.shared.init(this.pixi.renderer);
@@ -102,7 +104,7 @@ export class PatternCanvas extends EventTarget {
     this.viewport.setZoom(zoom);
   }
 
-  resize({ width, height }: CanvasSize) {
+  resize(width: number, height: number) {
     this.pixi.renderer.resize(width, height);
     this.viewport.resizeScreen(width, height);
   }
@@ -122,9 +124,4 @@ export class PatternCanvas extends EventTarget {
   clearHint() {
     this.stages.hint.clearHint();
   }
-}
-
-export interface CanvasSize {
-  width: number;
-  height: number;
 }

@@ -2,7 +2,7 @@
   <div class="size-full flex flex-col">
     <div class="relative">
       <NuxtTabs
-        :model-value="appStateStore.currentPattern!.id"
+        :model-value="appStateStore.currentPattern?.id"
         :items="appStateStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
         :content="false"
         color="neutral"
@@ -38,7 +38,7 @@
     <div class="w-full grow overflow-hidden">
       <canvas
         ref="canvas"
-        v-element-size="useDebounceFn((size) => patternCanvas.resize(size), 100)"
+        v-element-size="useDebounceFn(({ width, height }) => patternCanvas.resize(width, height), 100)"
         class="size-full"
       ></canvas>
     </div>
@@ -70,7 +70,7 @@
     MAX_SCALE,
     MIN_SCALE,
   } from "#/pixi";
-  import type { ToolEventDetail, TransformEventDetail } from "#/pixi";
+  import type { PatternCanvasOptions, ToolEventDetail, TransformEventDetail } from "#/pixi";
   import {
     FullStitch,
     LineStitch,
@@ -86,10 +86,17 @@
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
-  const settingsStore = useSettingsStore();
 
   const canvas = useTemplateRef("canvas");
   const patternCanvas = new PatternCanvas();
+
+  /**
+   * Initialize the pattern canvas.
+   * It sets up the Pixi application, configures stages, and prepares the texture manager.
+   */
+  async function initPatternCanvas(options?: PatternCanvasOptions) {
+    await patternCanvas.init(canvas.value!, options);
+  }
 
   const zoom = ref(1);
 
@@ -302,17 +309,9 @@
     else return [end, start];
   }
 
-  onMounted(async () => {
-    const canvasElement = canvas.value!;
-    await patternCanvas.init(canvasElement, canvasElement.getBoundingClientRect(), {
-      render: {
-        antialias: settingsStore.viewport.antialias,
-      },
-      viewport: {
-        wheelAction: settingsStore.viewport.wheelAction,
-      },
-    });
+  defineExpose({ initPatternCanvas });
 
+  onMounted(async () => {
     const patternView = patternsStore.pattern;
     if (!patternView) return;
     await Assets.load(patternView.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));

@@ -7,7 +7,6 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { computed, onMounted } from "vue";
-  import { useSessionStorage } from "@vueuse/core";
   import { NUXT_LOCALES } from "./fluent.ts";
   import { PatternApi } from "./api/";
 
@@ -60,21 +59,6 @@
     }
   });
 
-  const openedFilesProcessed = useSessionStorage("openedFilesProcessed", false);
-  async function processOpenedFiles() {
-    // @ts-expect-error This property is injected on the Rust side when handling file associations.
-    const openedFiles: string[] = window.openedFiles;
-
-    // Process opened files only if we haven't processed them yet.
-    if (openedFiles.length && !openedFilesProcessed.value) {
-      for (const file of openedFiles) await patternsStore.openPattern(file);
-      openedFilesProcessed.value = true;
-    } else {
-      const currentPattern = appStateStore.currentPattern;
-      if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
-    }
-  }
-
   async function checkForUpdates() {
     await settingsStore.$tauri.start();
     if (settingsStore.updater.autoCheck) {
@@ -83,7 +67,7 @@
   }
 
   onMounted(async () => {
-    await Promise.all([processOpenedFiles(), checkForUpdates()]);
+    await Promise.all([checkForUpdates()]);
   });
 
   window.onunhandledrejection = (event) => {

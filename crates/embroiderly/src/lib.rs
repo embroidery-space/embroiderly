@@ -78,6 +78,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::pattern::export_pattern,
     commands::pattern::close_pattern,
     commands::pattern::close_all_patterns,
+    commands::pattern::get_opened_patterns,
     commands::pattern::get_unsaved_patterns,
     commands::pattern::get_pattern_file_path,
     commands::pattern::update_pattern_info,
@@ -105,10 +106,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     .expect("Failed to build Embroiderly")
 }
 
-fn create_webview_window<R: tauri::Runtime>(
-  app: &tauri::AppHandle<R>,
-  init_script: Option<String>,
-) -> anyhow::Result<tauri::WebviewWindow<R>> {
+fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> anyhow::Result<tauri::WebviewWindow<R>> {
   let webview_window = {
     #[allow(unused_mut)]
     let mut webview_window_builder = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
@@ -117,10 +115,6 @@ fn create_webview_window<R: tauri::Runtime>(
       .maximized(true)
       .decorations(false)
       .additional_browser_args("--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,ElasticOverscroll");
-
-    if let Some(script) = init_script {
-      webview_window_builder = webview_window_builder.initialization_script(script);
-    }
 
     // We enable browser extensions only for development.
     #[cfg(all(debug_assertions, target_os = "windows"))]
@@ -235,17 +229,10 @@ pub fn handle_file_associations<R: tauri::Runtime>(
   app_handle: &tauri::AppHandle<R>,
   files: Vec<std::path::PathBuf>,
 ) -> anyhow::Result<tauri::WebviewWindow<R>> {
-  let files = files
-    .into_iter()
-    .map(|file| {
-      let file = file.to_string_lossy().replace('\\', "\\\\"); // escape backslash
-      format!("\"{file}\"",) // wrap in quotes for JS array
-    })
-    .collect::<Vec<_>>()
-    .join(",");
+  // Load pattern files to the memory so that they can be accessed from the frontend later.
+  for file in files {
+    commands::pattern::open_pattern(file, Some(false), app_handle.state::<PatternsState>())?;
+  }
 
-  // TODO: Find a better way to pass the files to the frontend.
-  let init_script = format!("window.openedFiles = [{files}]");
-
-  create_webview_window(app_handle, Some(init_script))
+  create_webview_window(app_handle)
 }
