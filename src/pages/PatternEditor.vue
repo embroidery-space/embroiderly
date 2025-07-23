@@ -92,5 +92,8 @@
     // 3. Load the current pattern if it exists.
     const currentPattern = appStateStore.currentPattern;
     if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
+
+    // 4. Make the app window visible (it is invisible by default).
+    await appWindow.show();
   });
 </script>
