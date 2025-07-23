@@ -12,7 +12,10 @@ export class AddedPaletteItemData {
     this.palindex = data.palindex;
   }
 
-  static readonly schema = b.struct({ palitem: PaletteItem.schema, palindex: b.u32() });
+  static readonly schema = b.struct({
+    palitem: PaletteItem.schema,
+    palindex: b.u32(),
+  });
 
   static deserialize(data: Uint8Array | string) {
     const buffer = typeof data === "string" ? toByteArray(data) : data;

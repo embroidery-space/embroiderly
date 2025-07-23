@@ -15,7 +15,6 @@ import {
   StitchesApi,
 } from "#/api";
 import { useConfirm } from "#/composables";
-import { PatternView } from "#/pixi";
 import {
   AddedPaletteItemData,
   deserializeStitch,
@@ -25,6 +24,7 @@ import {
   PaletteItem,
   Fabric,
   Grid,
+  Pattern,
   PatternInfo,
   PdfExportOptions,
   type Stitch,
@@ -73,12 +73,12 @@ export const usePatternsStore = defineStore(
 
     const blocked = ref(false);
     const loading = ref(false);
-    const pattern = shallowRef<PatternView>();
+    const pattern = shallowRef<Pattern>();
 
     async function loadPattern(id: string) {
       try {
         loading.value = true;
-        pattern.value = new PatternView(await PatternApi.loadPattern(id));
+        pattern.value = await PatternApi.loadPattern(id);
         appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
       } finally {
         loading.value = false;
@@ -104,9 +104,9 @@ export const usePatternsStore = defineStore(
 
       try {
         loading.value = true;
-        const rawPattern = await PatternApi.openPattern(path, options);
-        appStateStore.addOpenedPattern(rawPattern.id, rawPattern.info.title);
-        if (options?.assignToCurrent ?? true) pattern.value = new PatternView(rawPattern);
+        const _pattern = await PatternApi.openPattern(path, options);
+        appStateStore.addOpenedPattern(_pattern.id, _pattern.info.title);
+        if (options?.assignToCurrent ?? true) pattern.value = _pattern;
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
           confirm.open({
@@ -134,7 +134,7 @@ export const usePatternsStore = defineStore(
     async function createPattern(fabric: Fabric) {
       try {
         loading.value = true;
-        pattern.value = new PatternView(await PatternApi.createPattern(fabric));
+        pattern.value = await PatternApi.createPattern(fabric);
         appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
       } finally {
         loading.value = false;

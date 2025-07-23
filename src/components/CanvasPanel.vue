@@ -108,10 +108,10 @@
 
   watch(
     () => patternsStore.pattern,
-    async (view) => {
-      if (!view) return;
-      await Assets.load(view.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
-      patternCanvas.setPatternView(view);
+    async (pattern) => {
+      if (!pattern) return;
+      await Assets.load(pattern.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
+      patternCanvas.setPattern(pattern);
     },
   );
 
@@ -312,10 +312,10 @@
   defineExpose({ initPatternCanvas });
 
   onMounted(async () => {
-    const patternView = patternsStore.pattern;
-    if (!patternView) return;
-    await Assets.load(patternView.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
-    patternCanvas.setPatternView(patternView);
+    const pattern = patternsStore.pattern;
+    if (!pattern) return;
+    await Assets.load(pattern.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
+    patternCanvas.setPattern(pattern);
   });
 
   onUnmounted(async () => {

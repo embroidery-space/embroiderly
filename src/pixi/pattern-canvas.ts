@@ -2,8 +2,8 @@ import { initDevtools } from "@pixi/devtools";
 import { Application } from "pixi.js";
 import type { ApplicationOptions, ColorSource } from "pixi.js";
 
+import { Pattern } from "#/schemas/";
 import { Hint } from "./components/";
-import { PatternView } from "./pattern-view.ts";
 import {
   EventType,
   InternalEventType,
@@ -89,10 +89,8 @@ export class PatternCanvas extends EventTarget {
     this.pixi.destroy();
   }
 
-  setPatternView(pattern: PatternView) {
+  setPattern(pattern: Pattern) {
     this.clear();
-
-    pattern.render?.();
     this.viewport.addChild(pattern.root, this.stages.hint);
 
     const { width, height } = pattern.fabric;
