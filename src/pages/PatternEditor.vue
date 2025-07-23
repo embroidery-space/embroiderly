@@ -28,7 +28,6 @@
 <script lang="ts" setup>
   import { PatternApi } from "#/api/index.ts";
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-  import { useSessionStorage } from "@vueuse/core";
   import { onMounted, ref, useTemplateRef } from "vue";
 
   const appWindow = getCurrentWebviewWindow();
@@ -70,7 +69,6 @@
     ctrl_shift_y: () => patternsStore.redo({ single: true }),
   });
 
-  const openedFilesProcessed = useSessionStorage("openedFilesProcessed", false);
   onMounted(async () => {
     // 1. Initialize the pattern canvas.
     await patternCanvas.value!.initPatternCanvas({
@@ -83,10 +81,11 @@
     });
 
     // 2. Initially load opened patterns.
-    if (!openedFilesProcessed.value) {
+    if (!appStateStore.openedPatterns.length) {
+      // If there are no opened patterns, it means the app was just started.
+      // So we should load those patterns that were opened via file associations.
       const openedPatterns = await PatternApi.getOpenedPatterns();
       for (const [id, title] of openedPatterns) appStateStore.addOpenedPattern(id, title);
-      openedFilesProcessed.value = true;
     }
 
     // 3. Load the current pattern if it exists.
