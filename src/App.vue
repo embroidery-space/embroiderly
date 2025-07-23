@@ -90,9 +90,10 @@
 
   window.onunhandledrejection = (event) => {
     const err = event.reason;
-    if (err instanceof Error) {
-      error(`Error: ${err.message}`);
-      toast.add({ type: "background", color: "error", title: fluent.$t("title-error") });
-    } else error(`Error: ${err}`);
+
+    if (err instanceof Error) error(`Error: ${err.message}`);
+    else error(`Error: ${err}`);
+
+    toast.add({ type: "background", color: "error", title: fluent.$t("title-error") });
   };
 </script>
