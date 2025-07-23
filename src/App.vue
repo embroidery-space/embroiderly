@@ -42,23 +42,21 @@
   appWindow.onCloseRequested(async (e) => {
     const unsavedPatterns = await PatternApi.getUnsavedPatterns();
     if (unsavedPatterns.length) {
-      e.preventDefault();
       const patterns = appStateStore.openedPatterns
         .filter(({ id }) => unsavedPatterns.includes(id))
         .map(({ title }) => `- ${title}`)
         .join("\n");
 
-      const accepted = await confirm.open({
+      const savePatterns = await confirm.open({
         title: fluent.$t("title-unsaved-changes"),
         message: fluent.$t("message-unsaved-patterns", { patterns }),
       }).result;
 
-      // If the user dismisses the dialog, prevent the window from closing.
-      if (accepted === undefined) return;
+      // If the user dismissed the dialog, prevent the window from closing.
+      if (savePatterns === undefined) return e.preventDefault();
 
-      if (accepted) await PatternApi.saveAllPatterns();
+      if (savePatterns) await PatternApi.saveAllPatterns();
       await PatternApi.closeAllPatterns();
-      await appWindow.destroy();
     }
   });
 
