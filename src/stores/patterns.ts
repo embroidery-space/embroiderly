@@ -29,7 +29,7 @@ import {
   PdfExportOptions,
   type Stitch,
   LayersVisibility,
-} from "#/schemas";
+} from "#/core/pattern/";
 import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,

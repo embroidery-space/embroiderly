@@ -8,7 +8,7 @@ import {
   PartStitchDirection,
   PartStitchKind,
   type Stitch,
-} from "#/schemas/pattern";
+} from "#/core/pattern/";
 
 import { DEFAULT_CONTAINER_OPTIONS, DEFAULT_TEXT_STYLE_OPTIONS, STITCH_SCALE_FACTOR } from "../constants.ts";
 

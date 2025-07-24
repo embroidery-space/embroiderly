@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-  import type { LayersVisibility } from "#/schemas/display.ts";
+  import type { LayersVisibility } from "#/core/pattern/";
 
   const layers = defineModel<LayersVisibility>({ required: true });
 </script>

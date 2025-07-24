@@ -2,7 +2,7 @@ import { initDevtools } from "@pixi/devtools";
 import { Application } from "pixi.js";
 import type { ApplicationOptions, ColorSource } from "pixi.js";
 
-import { Pattern } from "#/schemas/";
+import { Pattern } from "#/core/pattern/";
 import { Hint } from "./components/";
 import {
   EventType,
@@ -13,7 +13,7 @@ import {
 } from "./pattern-viewport.ts";
 import { TextureManager } from "./texture-manager.ts";
 
-import type { Bead, LineStitch, NodeStitch } from "#/schemas/";
+import type { Bead, LineStitch, NodeStitch } from "#/core/pattern/";
 
 export interface PatternCanvasOptions {
   render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;

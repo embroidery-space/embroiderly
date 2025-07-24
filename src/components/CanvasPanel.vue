@@ -81,8 +81,8 @@
     PartStitchDirection,
     LineStitchKind,
     NodeStitchKind,
-  } from "#/schemas/";
-  import type { Stitch, StitchKind } from "#/schemas/";
+  } from "#/core/pattern/";
+  import type { Stitch, StitchKind } from "#/core/pattern/";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();

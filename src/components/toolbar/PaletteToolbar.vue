@@ -29,7 +29,7 @@
 
 <script lang="ts" setup>
   import { computed } from "vue";
-  import { FullStitchKind, LineStitchKind, NodeStitchKind, PartStitchKind } from "#/schemas/pattern.ts";
+  import { FullStitchKind, LineStitchKind, NodeStitchKind, PartStitchKind } from "#/core/pattern/";
 
   const fluent = useFluent();
 

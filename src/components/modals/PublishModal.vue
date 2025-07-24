@@ -13,7 +13,7 @@
 <script setup lang="ts">
   import { ref } from "vue";
 
-  import { PdfExportOptions } from "#/schemas/";
+  import { PdfExportOptions } from "#/core/pattern/";
 
   const props = defineProps<{ options: PdfExportOptions }>();
   const emit = defineEmits<{ close: [] }>();

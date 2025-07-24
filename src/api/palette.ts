@@ -1,5 +1,5 @@
 import { invoke } from "./index.ts";
-import { PaletteItem, PaletteSettings } from "#/schemas/index.ts";
+import { PaletteItem, PaletteSettings } from "#/core/pattern/";
 
 export function addPaletteItem(patternId: string, paletteItem: PaletteItem) {
   return invoke<void>("add_palette_item", PaletteItem.serialize(paletteItem), { headers: { patternId } });

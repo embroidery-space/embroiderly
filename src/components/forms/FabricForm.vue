@@ -77,7 +77,7 @@
   import { computed, onMounted, reactive, ref, watch } from "vue";
   import { Color } from "pixi.js";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#/utils/measurement";
-  import { Fabric, PaletteItem, PaletteSettings } from "#/schemas/index.ts";
+  import { Fabric, PaletteItem, PaletteSettings } from "#/core/pattern/";
 
   const fabric = defineModel<Fabric>({ required: true });
 

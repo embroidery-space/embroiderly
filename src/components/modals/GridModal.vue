@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
   import { ref } from "vue";
-  import { Grid } from "#/schemas/";
+  import { Grid } from "#/core/pattern/";
   import GridForm from "../forms/GridForm.vue";
 
   const props = defineProps<{ grid: Grid }>();
