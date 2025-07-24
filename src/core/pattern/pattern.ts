@@ -13,7 +13,7 @@ import {
   StitchParticleContainer,
   StitchSymbol,
   TextureManager,
-} from "#/pixi/";
+} from "#/core/pixi//";
 
 import { PaletteItem } from "./palette.ts";
 import {

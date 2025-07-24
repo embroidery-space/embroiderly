@@ -69,8 +69,8 @@
     StitchGraphics,
     MAX_SCALE,
     MIN_SCALE,
-  } from "#/pixi";
-  import type { PatternCanvasOptions, ToolEventDetail, TransformEventDetail } from "#/pixi";
+  } from "#/core/pixi/";
+  import type { PatternCanvasOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
   import {
     FullStitch,
     LineStitch,
