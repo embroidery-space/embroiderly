@@ -37,6 +37,7 @@ tauri-plugin-pinia = "3.7.1"
 # Embroiderly Core
 embroiderly-parsers = { path = "crates/embroiderly-parsers" }
 embroiderly-pattern = { path = "crates/embroiderly-pattern" }
+embroiderly-image = { path = "crates/embroiderly-image" }
 xsp-parsers = { path = "crates/xsp-parsers" }
 
 # Parsing pattern files
@@ -50,6 +51,11 @@ typst = "0.13.1"
 typst-pdf = "0.13.1"
 ## Third-party Typst libraries
 typst-as-lib = "0.14.4"
+
+# Image processing
+image = "0.25.6"
+quantette = "0.3.0"
+palette = "0.7.6"
 
 # Archiving
 zip = { version = "4.3.0", features = [
@@ -79,11 +85,13 @@ log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 simple_logger = "5.0.0"
 
 # Other
-ordered-float = { version = "5.0.0" }
+ordered-float = "5.0.0"
+ordermap = "0.5.8"
 dyn-clone = "1.0.19"
 itertools = "0.14.0"
 paste = "1.0.15"
 prettydiff = { version = "0.8.1", default-features = false }
+rayon = "1.10.0"
 tempfile = "3.20.0"
 convert_case = "0.8.0"
 uuid = { version = "1.17.0", features = ["v4"] }
