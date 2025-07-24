@@ -16,7 +16,6 @@ import {
 } from "#/pixi/";
 import { DisplayMode, DisplaySettings, Grid, LayersVisibility, PaletteSettings } from "./display.ts";
 import { PublishSettings } from "./publish.ts";
-import { AddedPaletteItemData } from "./index.ts";
 
 export class PatternInfo {
   title: string;
@@ -580,8 +579,8 @@ export class Pattern {
     return this.#palette;
   }
 
-  addPaletteItem(data: AddedPaletteItemData) {
-    this.#palette.splice(data.palindex, 0, data.palitem);
+  addPaletteItem(palitem: PaletteItem, palindex: number) {
+    this.#palette.splice(palindex, 0, palitem);
   }
 
   removePaletteItem(palindex: number) {

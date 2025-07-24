@@ -296,7 +296,8 @@ export const usePatternsStore = defineStore(
     }
     appWindow.listen<string>("palette:add_palette_item", ({ payload }) => {
       if (!pattern.value) return;
-      pattern.value.addPaletteItem(AddedPaletteItemData.deserialize(payload));
+      const { palitem, palindex } = AddedPaletteItemData.deserialize(payload);
+      pattern.value.addPaletteItem(palitem, palindex);
       triggerRef(pattern);
     });
 
