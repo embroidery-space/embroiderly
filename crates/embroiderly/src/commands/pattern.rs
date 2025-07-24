@@ -307,6 +307,19 @@ pub fn close_all_patterns<R: tauri::Runtime>(
   Ok(())
 }
 
+/// Returns a list of opened patterns with their IDs and titles.
+/// This is used on the first app startup to initially load those patterns which were opened using file associations.
+#[tauri::command]
+pub fn get_opened_patterns(patterns: tauri::State<PatternsState>) -> Vec<(String, String)> {
+  log::debug!("Getting opened patterns");
+
+  let patterns = patterns.read().unwrap();
+  patterns
+    .patterns()
+    .map(|patproj| (patproj.id.to_string(), patproj.pattern.info.title.to_string()))
+    .collect()
+}
+
 #[tauri::command]
 pub fn get_unsaved_patterns<R: tauri::Runtime>(
   // This argument is required to resolve a strange type error.

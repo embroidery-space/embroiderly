@@ -1,5 +1,5 @@
 import { Container, Graphics, type ColorSource } from "pixi.js";
-import type { Bead, LineStitch, NodeStitch } from "#/schemas/pattern";
+import type { Bead, LineStitch, NodeStitch } from "#/core/pattern/";
 import { TextureManager } from "../texture-manager";
 import { STITCH_SCALE_FACTOR } from "../constants";
 

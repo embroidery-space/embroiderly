@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-  import type { PaletteItem, PaletteSettings } from "#/schemas/";
+  import type { PaletteItem, PaletteSettings } from "#/core/pattern/";
 
   interface PaletteItemProps {
     paletteItem: PaletteItem;

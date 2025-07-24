@@ -1,5 +1,5 @@
 import { invoke } from "./index.ts";
-import { Pattern, Fabric, PatternInfo } from "#/schemas";
+import { Pattern, Fabric, PatternInfo } from "#/core/pattern/";
 
 export async function loadPattern(patternId: string) {
   const buffer = await invoke<ArrayBuffer>("load_pattern", { patternId });
@@ -51,6 +51,14 @@ export function closePattern(patternId: string, options?: ClosePatternOptions) {
 
 export function closeAllPatterns() {
   return invoke<void>("close_all_patterns");
+}
+
+/**
+ * Returns a list of opened patterns with their IDs and titles.
+ * This is used on the first app startup to initially load those patterns which were opened using file associations.
+ */
+export function getOpenedPatterns() {
+  return invoke<[id: string, title: string][]>("get_opened_patterns");
 }
 
 export function getUnsavedPatterns() {

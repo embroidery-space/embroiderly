@@ -4,7 +4,7 @@ import { check } from "@tauri-apps/plugin-updater";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
 import { LOCALES } from "#/fluent.ts";
-import type { WheelAction } from "#/pixi/";
+import type { WheelAction } from "#/core/pixi//";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";

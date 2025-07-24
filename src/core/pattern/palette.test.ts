@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { Blend, PaletteItem } from "./pattern.ts";
+import { Blend, PaletteItem } from "./palette.ts";
 import { PaletteSettings } from "./display.ts";
 
 const BLENDS = [
