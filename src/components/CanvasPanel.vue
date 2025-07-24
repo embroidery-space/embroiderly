@@ -2,7 +2,7 @@
   <div class="size-full flex flex-col">
     <div class="relative">
       <NuxtTabs
-        :model-value="appStateStore.currentPattern!.id"
+        :model-value="appStateStore.currentPattern?.id"
         :items="appStateStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
         :content="false"
         color="neutral"
@@ -39,7 +39,7 @@
       <NuxtContextMenu :items="canvasContextMenuOptions">
         <canvas
           ref="canvas"
-          v-element-size="useDebounceFn((size) => patternCanvas.resize(size), 100)"
+          v-element-size="useDebounceFn(({ width, height }) => patternCanvas.resize(width, height), 100)"
           class="size-full"
         ></canvas>
       </NuxtContextMenu>
@@ -72,8 +72,8 @@
     StitchGraphics,
     MAX_SCALE,
     MIN_SCALE,
-  } from "#/pixi";
-  import type { ToolEventDetail, TransformEventDetail } from "#/pixi";
+  } from "#/core/pixi/";
+  import type { PatternCanvasOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
   import {
     FullStitch,
     LineStitch,
@@ -84,14 +84,13 @@
     PartStitchDirection,
     LineStitchKind,
     NodeStitchKind,
-  } from "#/schemas/";
-  import type { Stitch, StitchKind } from "#/schemas/";
+  } from "#/core/pattern/";
+  import type { Stitch, StitchKind } from "#/core/pattern/";
 
   const fluent = useFluent();
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
-  const settingsStore = useSettingsStore();
 
   const canvas = useTemplateRef("canvas");
   const patternCanvas = new PatternCanvas();
@@ -105,6 +104,14 @@
     ],
   ]);
 
+  /**
+   * Initialize the pattern canvas.
+   * It sets up the Pixi application, configures stages, and prepares the texture manager.
+   */
+  async function initPatternCanvas(options?: PatternCanvasOptions) {
+    await patternCanvas.init(canvas.value!, options);
+  }
+
   const zoom = ref(1);
 
   async function switchPattern(id: string) {
@@ -115,10 +122,10 @@
 
   watch(
     () => patternsStore.pattern,
-    async (view) => {
-      if (!view) return;
-      await Assets.load(view.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
-      patternCanvas.setPatternView(view);
+    async (pattern) => {
+      if (!pattern) return;
+      await Assets.load(pattern.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
+      patternCanvas.setPattern(pattern);
     },
   );
 
@@ -312,21 +319,13 @@
     else return [end, start];
   }
 
-  onMounted(async () => {
-    const canvasElement = canvas.value!;
-    await patternCanvas.init(canvasElement, canvasElement.getBoundingClientRect(), {
-      render: {
-        antialias: settingsStore.viewport.antialias,
-      },
-      viewport: {
-        wheelAction: settingsStore.viewport.wheelAction,
-      },
-    });
+  defineExpose({ initPatternCanvas });
 
-    const patternView = patternsStore.pattern;
-    if (!patternView) return;
-    await Assets.load(patternView.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
-    patternCanvas.setPatternView(patternView);
+  onMounted(async () => {
+    const pattern = patternsStore.pattern;
+    if (!pattern) return;
+    await Assets.load(pattern.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
+    patternCanvas.setPattern(pattern);
   });
 
   onUnmounted(async () => {

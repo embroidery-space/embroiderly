@@ -15,8 +15,8 @@
             >
               <NuxtIcon name="i-lucide:upload" class="size-16" />
             </div>
-            <Suspense v-if="patternsStore.pattern"><CanvasPanel /></Suspense>
-            <WelcomePanel v-else class="size-full" />
+            <WelcomePanel v-if="!patternsStore.pattern" class="size-full" />
+            <CanvasPanel v-show="patternsStore.pattern" ref="pattern-canvas" />
           </BlockUI>
         </RekaSplitterPanel>
       </RekaSplitterGroup>
@@ -26,14 +26,17 @@
 </template>
 
 <script lang="ts" setup>
+  import { PatternApi } from "#/api/index.ts";
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-  import { defineAsyncComponent, ref } from "vue";
-
-  const CanvasPanel = defineAsyncComponent(() => import("#/components/CanvasPanel.vue"));
-
-  const patternsStore = usePatternsStore();
+  import { onMounted, ref, useTemplateRef } from "vue";
 
   const appWindow = getCurrentWebviewWindow();
+
+  const appStateStore = useAppStateStore();
+  const patternsStore = usePatternsStore();
+  const settingsStore = useSettingsStore();
+
+  const patternCanvas = useTemplateRef("pattern-canvas");
 
   const isDragging = ref(false);
   appWindow.onDragDropEvent(async ({ payload }) => {
@@ -64,5 +67,32 @@
   defineShortcuts({
     ctrl_shift_z: () => patternsStore.undo({ single: true }),
     ctrl_shift_y: () => patternsStore.redo({ single: true }),
+  });
+
+  onMounted(async () => {
+    // 1. Initialize the pattern canvas.
+    await patternCanvas.value!.initPatternCanvas({
+      render: {
+        antialias: settingsStore.viewport.antialias,
+      },
+      viewport: {
+        wheelAction: settingsStore.viewport.wheelAction,
+      },
+    });
+
+    // 2. Initially load opened patterns.
+    if (!appStateStore.openedPatterns.length) {
+      // If there are no opened patterns, it means the app was just started.
+      // So we should load those patterns that were opened via file associations.
+      const openedPatterns = await PatternApi.getOpenedPatterns();
+      for (const [id, title] of openedPatterns) appStateStore.addOpenedPattern(id, title);
+    }
+
+    // 3. Load the current pattern if it exists.
+    const currentPattern = appStateStore.currentPattern;
+    if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
+
+    // 4. Make the app window visible (it is invisible by default).
+    await appWindow.show();
   });
 </script>

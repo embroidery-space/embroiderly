@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { FullStitchKind, type StitchKind } from "#/schemas/index.ts";
+import { FullStitchKind, type StitchKind } from "#/core/pattern/";
 
 interface OpenedPattern {
   id: string;

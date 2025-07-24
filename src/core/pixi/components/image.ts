@@ -1,7 +1,7 @@
 import { ImageSource, Sprite, Texture, type ContainerOptions } from "pixi.js";
 
-import type { ReferenceImage } from "#/schemas/image.ts";
-import { DEFAULT_CONTAINER_OPTIONS } from "#/pixi/constants.ts";
+import type { ReferenceImage } from "#/core/pattern/";
+import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
 import { OutlineSelection } from "./utils/";
 
 export class ReferenceImageContainer extends OutlineSelection {

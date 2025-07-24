@@ -1,59 +1,118 @@
-import { Bounds, Container, Graphics, Rectangle } from "pixi.js";
+import { b } from "@zorsh/zorsh";
+import { toByteArray } from "base64-js";
+import { Bounds, Color, Container, Graphics, Rectangle } from "pixi.js";
+import { stringify as stringifyUuid } from "uuid";
 
 import {
-  AddedPaletteItemData,
-  DisplayMode,
-  Fabric,
-  FullStitch,
-  FullStitchKind,
-  Grid,
-  LineStitch,
-  NodeStitch,
-  PaletteItem,
-  PaletteSettings,
-  PartStitch,
-  PartStitchDirection,
-  PartStitchKind,
-  PatternInfo,
-  Pattern,
-  SpecialStitch,
-  SpecialStitchModel,
-  DisplaySettings,
-  PublishSettings,
-  type Stitch,
-  LayersVisibility,
-  LineStitchKind,
-  NodeStitchKind,
-  ReferenceImage,
-} from "#/schemas";
-
-import { STITCH_SCALE_FACTOR } from "./constants.ts";
-import {
+  PatternGrid,
+  ReferenceImageContainer,
+  Rulers,
+  STITCH_SCALE_FACTOR,
   StitchGraphics,
   StitchGraphicsContainer,
   StitchParticle,
   StitchParticleContainer,
   StitchSymbol,
-  PatternGrid,
-  Rulers,
-  ReferenceImageContainer,
-} from "./components/";
-import { TextureManager } from "./texture-manager.ts";
+  TextureManager,
+} from "#/core/pixi/";
 
-/**
- * Represents the view of a pattern.
- * It contains all the pattern data along with the graphics objects to display them.
- */
-export class PatternView {
+import { ReferenceImage } from "./image.ts";
+import { PaletteItem } from "./palette.ts";
+import {
+  FullStitch,
+  FullStitchKind,
+  PartStitch,
+  PartStitchDirection,
+  PartStitchKind,
+  LineStitch,
+  LineStitchKind,
+  NodeStitch,
+  NodeStitchKind,
+  SpecialStitch,
+  SpecialStitchModel,
+  type Stitch,
+} from "./stitches.ts";
+import { DisplayMode, DisplaySettings, Grid, LayersVisibility, PaletteSettings } from "./display.ts";
+import { PublishSettings } from "./publish.ts";
+
+export class PatternInfo {
+  title: string;
+  author: string;
+  copyright: string;
+  description: string;
+
+  constructor(data: b.infer<typeof PatternInfo.schema>) {
+    this.title = data.title;
+    this.author = data.author;
+    this.copyright = data.copyright;
+    this.description = data.description;
+  }
+
+  static readonly schema = b.struct({
+    title: b.string(),
+    author: b.string(),
+    copyright: b.string(),
+    description: b.string(),
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new PatternInfo(PatternInfo.schema.deserialize(buffer));
+  }
+
+  static serialize(data: PatternInfo) {
+    return PatternInfo.schema.serialize(data);
+  }
+}
+
+export class Fabric {
+  width: number;
+  height: number;
+  spi: [number, number];
+  kind: string;
+  name: string;
+  color: Color;
+
+  constructor(data: Fabric | b.infer<typeof Fabric.schema>) {
+    this.width = data.width;
+    this.height = data.height;
+    this.spi = data.spi;
+    this.kind = data.kind;
+    this.name = data.name;
+    this.color = new Color(data.color);
+  }
+
+  static readonly schema = b.struct({
+    width: b.u16(),
+    height: b.u16(),
+    spi: b.tuple(b.u8(), b.u8()),
+    kind: b.string(),
+    name: b.string(),
+    color: b.string(),
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new Fabric(Fabric.schema.deserialize(buffer));
+  }
+
+  static serialize(data: Fabric) {
+    return Fabric.schema.serialize({ ...data, color: data.color.toHex().slice(1).toUpperCase() });
+  }
+
+  static default() {
+    return new Fabric({ width: 100, height: 100, spi: [14, 14], name: "White", color: "FFFFFF", kind: "Aida" });
+  }
+}
+
+export class Pattern {
   readonly id: string;
-
   info: PatternInfo;
 
-  #palette: PaletteItem[];
-  paletteDisplaySettings: PaletteSettings;
+  #fabric!: Fabric;
+  #grid!: Grid;
 
-  #fabric: Fabric;
-  #grid: Grid;
+  #palette: PaletteItem[];
 
   #specialStitchModels: SpecialStitchModel[];
 
@@ -103,109 +162,69 @@ export class PatternView {
     children: Object.values(this.stages),
   });
 
-  render?: () => void;
+  constructor(data: b.infer<typeof Pattern.schema>) {
+    this.id = stringifyUuid(new Uint8Array(data.id));
 
-  constructor(pattern: Pattern) {
-    this.id = pattern.id;
-    this.info = pattern.info;
+    this.info = new PatternInfo(data.info);
 
-    this.#palette = pattern.palette;
-    this.paletteDisplaySettings = pattern.displaySettings.paletteSettings;
+    this.fabric = new Fabric(data.fabric);
+    this.grid = new Grid(data.displaySettings.grid);
 
-    this.#fabric = pattern.fabric;
-    this.#grid = pattern.displaySettings.grid;
+    this.#palette = data.palette.map((item) => new PaletteItem(item));
 
-    this.#specialStitchModels = pattern.specialStitchModels;
+    this.displaySettings = new DisplaySettings(data.displaySettings);
+    this.publishSettings = new PublishSettings(data.publishSettings);
 
-    this.displaySettings = pattern.displaySettings;
-    this.publishSettings = pattern.publishSettings;
+    this.#previousDisplayMode = this.#displayMode = data.displaySettings.displayMode;
+    this.showSymbols = data.displaySettings.showSymbols;
 
-    this.#displayMode = pattern.displaySettings.displayMode;
-    this.#previousDisplayMode = pattern.displaySettings.displayMode;
+    if (data.referenceImage) this.setReferenceImage(new ReferenceImage(data.referenceImage));
 
-    if (pattern.referenceImage) this.setReferenceImage(pattern.referenceImage);
-
-    this.render = () => {
-      this.fabric = this.#fabric;
-      this.grid = this.#grid;
-
-      this.showSymbols = pattern.displaySettings.showSymbols;
-
-      for (const stitch of pattern.fullstitches) {
-        this.addFullStitch(stitch);
-        this.addSymbol(stitch);
-      }
-      for (const stitch of pattern.partstitches) {
-        this.addPartStitch(stitch);
-        this.addSymbol(stitch);
-      }
-      for (const stitch of pattern.linestitches) {
-        this.addLineStitch(stitch);
-        this.addSymbol(stitch);
-      }
-      for (const stitch of pattern.nodestitches) {
-        this.addNodeStitch(stitch);
-        this.addSymbol(stitch);
-      }
-
-      for (const specialstitch of pattern.specialstitches) this.addSpecialStitch(specialstitch);
-
-      this.render = undefined;
-    };
-  }
-
-  get displayMode() {
-    return this.displaySettings.displayMode;
-  }
-
-  set displayMode(displayMode: DisplayMode | undefined) {
-    this.#displayMode = this.showSymbols ? displayMode : (displayMode ?? this.#previousDisplayMode);
-    if (displayMode) {
-      this.#previousDisplayMode = displayMode;
-      this.stages.fullstitches.texture = TextureManager.shared.getFullStitchTexture(displayMode, FullStitchKind.Full);
-      this.stages.petitestitches.texture = TextureManager.shared.getFullStitchTexture(
-        displayMode,
-        FullStitchKind.Petite,
-      );
-      this.stages.halfstitches.texture = TextureManager.shared.getPartStitchTexture(displayMode, PartStitchKind.Half);
-      this.stages.quarterstitches.texture = TextureManager.shared.getPartStitchTexture(
-        displayMode,
-        PartStitchKind.Quarter,
-      );
+    for (const stitch of data.fullstitches.map((stitch) => new FullStitch(stitch))) {
+      this.addFullStitch(stitch);
+      this.addSymbol(stitch);
+    }
+    for (const stitch of data.partstitches.map((stitch) => new PartStitch(stitch))) {
+      this.addPartStitch(stitch);
+      this.addSymbol(stitch);
+    }
+    for (const stitch of data.linestitches.map((stitch) => new LineStitch(stitch))) {
+      this.addLineStitch(stitch);
+      this.addSymbol(stitch);
+    }
+    for (const stitch of data.nodestitches.map((stitch) => new NodeStitch(stitch))) {
+      this.addNodeStitch(stitch);
+      this.addSymbol(stitch);
     }
 
-    const visible = this.#displayMode !== undefined;
-    this.stages.fullstitches.visible = visible;
-    this.stages.petitestitches.visible = visible;
-    this.stages.halfstitches.visible = visible;
-    this.stages.quarterstitches.visible = visible;
-  }
-
-  get showSymbols() {
-    return this.displaySettings.showSymbols;
-  }
-
-  set showSymbols(value: boolean) {
-    this.displaySettings.showSymbols = value;
-    this.stages.symbols.visible = value;
-    this.stages.symbols.renderable = value;
-
-    // Update the display mode since it depends on the `showSymbols` value.
-    this.displayMode = this.#displayMode;
-  }
-
-  get layersVisibility() {
-    return this.displaySettings.layersVisibility;
-  }
-  set layersVisibility(layersVisibility: LayersVisibility) {
-    this.displaySettings.layersVisibility = layersVisibility;
-    for (const [layer, visible] of Object.entries(layersVisibility)) {
-      const stage = this.stages[layer as keyof typeof this.stages];
-      if (stage) {
-        stage.visible = visible;
-        stage.renderable = visible;
-      }
+    this.#specialStitchModels = data.specialStitchModels.map((model) => new SpecialStitchModel(model));
+    for (const specialstitch of data.specialstitches.map((stitch) => new SpecialStitch(stitch))) {
+      this.addSpecialStitch(specialstitch);
     }
+  }
+
+  static readonly schema = b.struct({
+    id: b.array(b.u8(), 16),
+
+    referenceImage: b.option(ReferenceImage.schema),
+
+    info: PatternInfo.schema,
+    fabric: Fabric.schema,
+    palette: b.vec(PaletteItem.schema),
+    fullstitches: b.vec(FullStitch.schema),
+    partstitches: b.vec(PartStitch.schema),
+    linestitches: b.vec(LineStitch.schema),
+    nodestitches: b.vec(NodeStitch.schema),
+    specialstitches: b.vec(SpecialStitch.schema),
+    specialStitchModels: b.vec(SpecialStitchModel.schema),
+
+    displaySettings: DisplaySettings.schema,
+    publishSettings: PublishSettings.schema,
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new Pattern(Pattern.schema.deserialize(buffer));
   }
 
   get fabric() {
@@ -236,25 +255,38 @@ export class PatternView {
     this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
   }
 
+  get layersVisibility() {
+    return this.displaySettings.layersVisibility;
+  }
+  set layersVisibility(layersVisibility: LayersVisibility) {
+    this.displaySettings.layersVisibility = layersVisibility;
+    for (const [layer, visible] of Object.entries(layersVisibility)) {
+      const stage = this.stages[layer as keyof typeof this.stages];
+      if (stage) {
+        stage.visible = visible;
+        stage.renderable = visible;
+      }
+    }
+  }
+
   get palette() {
     return this.#palette;
   }
 
-  addPaletteItem(data: AddedPaletteItemData) {
-    this.#palette.splice(data.palindex, 0, data.palitem);
+  addPaletteItem(palitem: PaletteItem, palindex: number) {
+    this.#palette.splice(palindex, 0, palitem);
   }
 
   removePaletteItem(palindex: number) {
     this.#palette.splice(palindex, 1);
   }
 
-  get allStitchFonts() {
-    const fonts = new Set<string>();
-    fonts.add(this.displaySettings.defaultSymbolFont);
-    for (const palitem of this.palette) {
-      if (palitem.symbolFont) fonts.add(palitem.symbolFont);
-    }
-    return Array.from(fonts);
+  get paletteDisplaySettings() {
+    return this.displaySettings.paletteSettings;
+  }
+
+  set paletteDisplaySettings(settings: PaletteSettings) {
+    this.displaySettings.paletteSettings = settings;
   }
 
   addStitch(stitch: Stitch) {
@@ -429,13 +461,6 @@ export class PatternView {
     this.stages.specialstitches.addChild(graphics);
   }
 
-  async setReferenceImage(image: ReferenceImage) {
-    await this.stages.image.setImage(image);
-  }
-  removeReferenceImage() {
-    this.stages.image.removeImage();
-  }
-
   /**
    * Adjusts the zoom level of the pattern view.
    * @param zoom - The zoom level in range 1 to 100.
@@ -443,5 +468,62 @@ export class PatternView {
   adjustZoom(zoom: number, bounds?: Bounds) {
     this.stages.grid.renderGrid();
     this.stages.rulers.renderRulers(zoom, bounds);
+  }
+
+  get displayMode() {
+    return this.#displayMode;
+  }
+
+  set displayMode(displayMode: DisplayMode | undefined) {
+    this.#displayMode = this.showSymbols ? displayMode : (displayMode ?? this.#previousDisplayMode);
+    if (displayMode) {
+      this.#previousDisplayMode = displayMode;
+      this.stages.fullstitches.texture = TextureManager.shared.getFullStitchTexture(displayMode, FullStitchKind.Full);
+      this.stages.petitestitches.texture = TextureManager.shared.getFullStitchTexture(
+        displayMode,
+        FullStitchKind.Petite,
+      );
+      this.stages.halfstitches.texture = TextureManager.shared.getPartStitchTexture(displayMode, PartStitchKind.Half);
+      this.stages.quarterstitches.texture = TextureManager.shared.getPartStitchTexture(
+        displayMode,
+        PartStitchKind.Quarter,
+      );
+    }
+
+    const visible = this.#displayMode !== undefined;
+    this.stages.fullstitches.visible = visible;
+    this.stages.petitestitches.visible = visible;
+    this.stages.halfstitches.visible = visible;
+    this.stages.quarterstitches.visible = visible;
+  }
+
+  get showSymbols() {
+    return this.displaySettings.showSymbols;
+  }
+
+  set showSymbols(value: boolean) {
+    this.displaySettings.showSymbols = value;
+    this.stages.symbols.visible = value;
+    this.stages.symbols.renderable = value;
+
+    // Update the display mode since it depends on the `showSymbols` value.
+    this.displayMode = this.#displayMode;
+  }
+
+  async setReferenceImage(image: ReferenceImage) {
+    await this.stages.image.setImage(image);
+  }
+
+  removeReferenceImage() {
+    this.stages.image.removeImage();
+  }
+
+  get allStitchFonts() {
+    const fonts = new Set<string>();
+    fonts.add(this.displaySettings.defaultSymbolFont);
+    for (const palitem of this.palette) {
+      if (palitem.symbolFont) fonts.add(palitem.symbolFont);
+    }
+    return Array.from(fonts);
   }
 }

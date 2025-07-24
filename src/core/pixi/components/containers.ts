@@ -4,7 +4,7 @@ import type { ContainerOptions, ParticleContainerOptions } from "pixi.js";
 
 import { DEFAULT_CONTAINER_OPTIONS } from "../constants.ts";
 import { StitchGraphics, StitchParticle, StitchSymbol } from "./stitches.ts";
-import type { Stitch } from "#/schemas/pattern";
+import type { Stitch } from "#/core/pattern/";
 
 /** A wrapper around `Container` that contains a kind of the stitches it holds. */
 export class StitchGraphicsContainer extends Container {

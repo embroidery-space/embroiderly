@@ -8,5 +8,4 @@ export * from "./components/";
 export * from "./constants.ts";
 export * from "./pattern-canvas.ts";
 export * from "./pattern-viewport.ts";
-export * from "./pattern-view.ts";
 export * from "./texture-manager.ts";

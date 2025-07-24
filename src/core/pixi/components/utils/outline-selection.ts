@@ -1,6 +1,6 @@
 import { Container, type ContainerOptions } from "pixi.js";
 
-import { DEFAULT_CONTAINER_OPTIONS } from "#/pixi/constants.ts";
+import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/";
 
 export class OutlineSelection extends Container {
   constructor(options?: ContainerOptions) {

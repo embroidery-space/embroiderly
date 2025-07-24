@@ -9,6 +9,7 @@
     "core:path:allow-join",
     "core:path:allow-basename",
     "core:path:allow-resolve-directory",
+    "core:window:allow-show",
     "core:window:allow-start-dragging",
     "core:window:allow-minimize",
     "core:window:allow-toggle-maximize",

@@ -37,7 +37,7 @@
   import { onMounted, ref } from "vue";
   import { computedAsync } from "@vueuse/core";
   import { dequal } from "dequal";
-  import { PaletteItem, PaletteSettings } from "#/schemas/";
+  import { PaletteItem, PaletteSettings } from "#/core/pattern/";
 
   const props = defineProps<{ palette: PaletteItem[] }>();
   const emit = defineEmits<{
