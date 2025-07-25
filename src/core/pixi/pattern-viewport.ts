@@ -75,7 +75,6 @@ export class PatternViewport extends Container {
     this.off("pointerup", this.handlePointerUp, this);
     this.off("pointerupoutside", this.handlePointerUp, this);
     this.off("pointercancel", this.handlePointerUp, this);
-    this.off("rightclick", this.handlePointerUp, this);
 
     this.domElement.removeEventListener("wheel", this.handleWheel);
     this.domElement.removeEventListener("contextmenu", this.handleContextMenu, { capture: true });

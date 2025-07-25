@@ -9,12 +9,13 @@ export class ReferenceImageContainer extends OutlineSelection {
     super({ ...DEFAULT_CONTAINER_OPTIONS, ...options });
   }
 
+  /** Sets the reference image. */
   async setImage(image: ReferenceImage) {
     const resource = await createImageBitmap(image);
     const texture = new Texture({ source: new ImageSource({ resource }) });
 
-    this.removeChildren();
-    this.addChild(
+    this.removeImage();
+    this.push(
       new Sprite({
         ...DEFAULT_CONTAINER_OPTIONS,
         texture,
@@ -23,7 +24,19 @@ export class ReferenceImageContainer extends OutlineSelection {
     );
   }
 
+  /** Removes the reference image. */
   removeImage() {
-    this.removeChildren();
+    this.clear();
+  }
+
+  /** Resizes the reference image to fit within the specified dimensions. */
+  fit(width: number, height: number) {
+    const image = this.children[0];
+    if (!image) return;
+
+    const scaleX = width / image.width;
+    const scaleY = height / image.height;
+
+    this.scale.set(Math.min(scaleX, scaleY));
   }
 }
