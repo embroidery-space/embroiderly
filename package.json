@@ -31,7 +31,6 @@
     "dequal": "^2.0.3",
     "fluent-vue": "^3.7.2",
     "pinia": "^3.0.2",
-    "pinia-plugin-persistedstate": "^4.4.1",
     "pixi.js": "^8.9.2",
     "primevue": "^4.3.6",
     "reka-ui": "^2.3.2",

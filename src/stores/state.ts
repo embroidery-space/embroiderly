@@ -10,9 +10,6 @@ interface OpenedPattern {
 export const useAppStateStore = defineStore(
   "embroiderly-state",
   () => {
-    const lastOpenedFolder = ref<string | null>(null);
-    const lastSavedFolder = ref<string | null>(null);
-
     const selectedStitchTool = ref<StitchKind>(FullStitchKind.Full);
     const selectedPaletteItemIndexes = ref<number[]>([]);
     const openedPatterns = ref<OpenedPattern[]>([]);
@@ -53,8 +50,6 @@ export const useAppStateStore = defineStore(
     }
 
     return {
-      lastOpenedFolder,
-      lastSavedFolder,
       selectedStitchTool,
       selectedPaletteItemIndexes,
       openedPatterns,
@@ -64,11 +59,5 @@ export const useAppStateStore = defineStore(
       removeCurrentPattern,
     };
   },
-  {
-    tauri: { save: false, sync: false },
-    persist: [
-      { storage: sessionStorage, omit: ["lastOpenedFolder", "lastSavedFolder"] },
-      { storage: localStorage, pick: ["lastOpenedFolder", "lastSavedFolder"] },
-    ],
-  },
+  { tauri: { save: false } },
 );

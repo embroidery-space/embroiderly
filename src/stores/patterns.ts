@@ -1,6 +1,4 @@
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { basename, join, sep } from "@tauri-apps/api/path";
-import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { defineStore } from "pinia";
 import {
@@ -10,12 +8,10 @@ import {
   HistoryApi,
   ImageApi,
   PaletteApi,
-  PathApi,
   PatternApi,
   PublishApi,
   StitchesApi,
 } from "#/api";
-import { useConfirm } from "#/composables";
 import {
   AddedPaletteItemData,
   deserializeStitch,
@@ -37,14 +33,6 @@ import {
   PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
 } from "#/error.ts";
-
-export const ANY_PATTERN_FILTER: DialogFilter[] = [
-  { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
-  { name: "All Files", extensions: ["*"] },
-];
-export const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
-export const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
-export const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
 
 export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
   /**
@@ -70,6 +58,7 @@ export const usePatternsStore = defineStore(
 
     const fluent = useFluent();
     const confirm = useConfirm();
+    const filePicker = useFilePicker();
 
     const appStateStore = useAppStateStore();
 
@@ -90,18 +79,9 @@ export const usePatternsStore = defineStore(
     async function openPattern(filePath?: string, options?: OpenPatternOptions) {
       let path = filePath;
       if (!path) {
-        appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
-        const selectedPath = await open({
-          defaultPath: appStateStore.lastOpenedFolder,
-          multiple: false,
-          filters: [
-            { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
-            { name: "All Files", extensions: ["*"] },
-          ],
-        });
+        const selectedPath = await filePicker.open({ filters: filePicker.ANY_PATTERN_FILTER });
         if (selectedPath === null) return;
         path = selectedPath;
-        appStateStore.lastOpenedFolder = path.substring(0, path.lastIndexOf(sep()));
       }
 
       try {
@@ -148,14 +128,9 @@ export const usePatternsStore = defineStore(
       try {
         let path = await PatternApi.getPatternFilePath(pattern.value.id);
         if (as) {
-          appStateStore.lastSavedFolder ??= path.substring(0, path.lastIndexOf(sep()));
-          const selectedPath = await save({
-            defaultPath: await join(appStateStore.lastSavedFolder, await basename(path)),
-            filters: EMBPROJ_FILTER,
-          });
+          const selectedPath = await filePicker.save(path, { filters: filePicker.EMBPROJ_FILTER });
           if (selectedPath === null) return;
           path = selectedPath;
-          appStateStore.lastSavedFolder = path.substring(0, path.lastIndexOf(sep()));
         }
         loading.value = true;
         await PatternApi.savePattern(pattern.value.id, path);
@@ -199,8 +174,10 @@ export const usePatternsStore = defineStore(
 
     async function exportPatternAsOxs(filePath: string) {
       if (!pattern.value) return;
-      const path = await save({ defaultPath: filePath, filters: OXS_FILTER });
+
+      const path = await filePicker.save(filePath, { filters: filePicker.OXS_FILTER });
       if (path === null) return;
+
       try {
         loading.value = true;
         await PatternApi.savePattern(pattern.value.id, path);
@@ -255,16 +232,10 @@ export const usePatternsStore = defineStore(
 
     async function setReferenceImage() {
       if (!pattern.value) return;
-      appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
-      const selectedPath = await open({
-        defaultPath: appStateStore.lastOpenedFolder,
-        multiple: false,
-        filters: [
-          { name: "Images", extensions: ["png", "apng", "jpg", "jpeg"] },
-          { name: "All Files", extensions: ["*"] },
-        ],
-      });
+
+      const selectedPath = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
       if (selectedPath === null) return;
+
       await ImageApi.setReferenceImage(pattern.value.id, selectedPath);
     }
     appWindow.listen<string>("image:set", ({ payload }) => {
