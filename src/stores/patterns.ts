@@ -28,6 +28,7 @@ import {
   LayersVisibility,
   ReferenceImage,
 } from "#/core/pattern/";
+import { PatternEventBus } from "#/core/services/";
 import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,
@@ -329,10 +330,12 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return StitchesApi.addStitch(pattern.value.id, stitch);
     }
+    PatternEventBus.on("add-stitch", addStitch);
     function removeStitch(stitch: Stitch) {
       if (!pattern.value) return;
       return StitchesApi.removeStitch(pattern.value.id, stitch);
     }
+    PatternEventBus.on("remove-stitch", removeStitch);
     appWindow.listen<string>("stitches:add_one", ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.addStitch(deserializeStitch(payload));

@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { FullStitchKind, type StitchKind } from "#/core/pattern/";
+import { tools, type PatternEditorTool } from "#/core/tools/";
 
 interface OpenedPattern {
   id: string;
@@ -10,8 +10,9 @@ interface OpenedPattern {
 export const useAppStateStore = defineStore(
   "embroiderly-state",
   () => {
-    const selectedStitchTool = ref<StitchKind>(FullStitchKind.Full);
+    const selectedTool = ref<PatternEditorTool>(tools.FullStitch);
     const selectedPaletteItemIndexes = ref<number[]>([]);
+
     const openedPatterns = ref<OpenedPattern[]>([]);
     const currentPattern = ref<OpenedPattern | undefined>(undefined);
 
@@ -50,7 +51,7 @@ export const useAppStateStore = defineStore(
     }
 
     return {
-      selectedStitchTool,
+      selectedTool,
       selectedPaletteItemIndexes,
       openedPatterns,
       currentPattern,
