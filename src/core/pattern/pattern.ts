@@ -534,6 +534,10 @@ export class Pattern {
     this.displayMode = this.#displayMode;
   }
 
+  get referenceImage() {
+    return this.stages.image;
+  }
+
   async setReferenceImage(image: ReferenceImage) {
     await this.stages.image.setImage(image);
     this.stages.image.fit(this.#fabric.width, this.#fabric.height);

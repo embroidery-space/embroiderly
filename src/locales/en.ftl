@@ -45,7 +45,7 @@ label-no = No
 label-hint-counts-in-stitches = In stitches
 label-hint-counts-in-points = In points
 
-## Names of the stitches and other instruments.
+## Names of the stitches and other tools.
 
 label-stitch-full = Full Stitch
 label-stitch-petite = Petite Stitch
@@ -55,6 +55,8 @@ label-stitch-back = Back Stitch
 label-stitch-straight = Straight Stitch
 label-stitch-french-knot = French Knot
 label-stitch-bead = Bead
+
+label-tool-cursor = Cursor
 
 ## Titles, labels and messages related to the updater.
 

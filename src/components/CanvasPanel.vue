@@ -130,7 +130,7 @@
     const pattern = patternsStore.pattern;
     if (!tool || !pattern) return;
 
-    await tool.anti(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
+    await tool.anti?.(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
   });
 
   useEventListener<CustomEvent<ToolEventDetail>>(patternCanvas, EventType.ToolRelease, async (e) => {
@@ -143,7 +143,7 @@
       await patternsStore.endTransaction();
     }
 
-    await tool.release(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
+    await tool.release?.(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
   });
 
   useEventListener<CustomEvent<TransformEventDetail>>(patternCanvas, EventType.Transform, async ({ detail }) => {

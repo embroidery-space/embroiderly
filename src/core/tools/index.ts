@@ -2,6 +2,7 @@ import type { ToolEventDetail } from "#/core/pixi/pattern-viewport.ts";
 import { Pattern, FullStitchKind, LineStitchKind, NodeStitchKind, PartStitchKind } from "#/core/pattern/";
 
 import { StitchTool } from "./stitch.tool.ts";
+import { CursorTool } from "./cursor.tool.ts";
 
 export const tools = Object.freeze({
   FullStitch: new StitchTool(FullStitchKind.Full),
@@ -12,6 +13,8 @@ export const tools = Object.freeze({
   StraightStitch: new StitchTool(LineStitchKind.Straight),
   Bead: new StitchTool(NodeStitchKind.Bead),
   FrenchKnot: new StitchTool(NodeStitchKind.FrenchKnot),
+
+  Cursor: new CursorTool(),
 });
 
 export interface PatternEditorTool {
@@ -29,7 +32,7 @@ export interface PatternEditorTool {
    * @param detail The event details.
    * @param palindex The index of the selected palette item.
    */
-  anti(pattern: Pattern, detail: ToolEventDetail, palindex?: number): Promise<void> | void;
+  anti?(pattern: Pattern, detail: ToolEventDetail, palindex?: number): Promise<void> | void;
 
   /**
    * Tool's release action handler.
@@ -37,7 +40,7 @@ export interface PatternEditorTool {
    * @param detail The event details.
    * @param palindex The index of the selected palette item.
    */
-  release(pattern: Pattern, detail: ToolEventDetail, palindex?: number): Promise<void> | void;
+  release?(pattern: Pattern, detail: ToolEventDetail, palindex?: number): Promise<void> | void;
 }
 
 export { StitchTool };

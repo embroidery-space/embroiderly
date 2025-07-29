@@ -24,6 +24,8 @@
       :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
       :disabled="disabled"
     />
+
+    <ToolSelector v-model="appStateStore.selectedTool" :options="cursor" :disabled="disabled" />
   </div>
 </template>
 
@@ -55,5 +57,9 @@
   const nodestitches = computed(() => [
     { icon: "i-stitches:french-knot", label: fluent.$t("label-stitch-french-knot"), value: tools.FrenchKnot },
     { icon: "i-stitches:bead", label: fluent.$t("label-stitch-bead"), value: tools.Bead },
+  ]);
+
+  const cursor = computed(() => [
+    { icon: "i-material-symbols:arrow-selector-tool", label: fluent.$t("label-tool-cursor"), value: tools.Cursor },
   ]);
 </script>

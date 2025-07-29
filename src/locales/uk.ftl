@@ -45,7 +45,7 @@ label-no = Ні
 label-hint-counts-in-stitches = У стібках
 label-hint-counts-in-points = У пунктах
 
-## Names of the stitches and other instruments.
+## Names of the stitches and other tools.
 
 label-stitch-full = Хрест
 label-stitch-petite = Петіт
@@ -55,6 +55,8 @@ label-stitch-back = Зворотний стібок
 label-stitch-straight = Прямий стібок
 label-stitch-french-knot = Фр. вузелок
 label-stitch-bead = Бісер
+
+label-tool-cursor = Курсор
 
 ## Titles, labels and messages related to the updater.
 

@@ -20,6 +20,7 @@ export class ReferenceImageContainer extends OutlineSelection {
         ...DEFAULT_CONTAINER_OPTIONS,
         texture,
         label: "Reference Image",
+        interactive: true,
       }),
     );
   }
