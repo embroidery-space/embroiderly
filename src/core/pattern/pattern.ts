@@ -1,10 +1,11 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
-import { Bounds, Color, Container, Graphics, Rectangle } from "pixi.js";
+import { Bounds, Color, Container, Graphics, Rectangle, RenderLayer } from "pixi.js";
 import { stringify as stringifyUuid } from "uuid";
 
 import {
   PatternGrid,
+  ReferenceImageContainer,
   Rulers,
   STITCH_SCALE_FACTOR,
   StitchGraphics,
@@ -13,8 +14,9 @@ import {
   StitchParticleContainer,
   StitchSymbol,
   TextureManager,
-} from "#/core/pixi//";
+} from "#/core/pixi/";
 
+import { ReferenceImage } from "./image.ts";
 import { PaletteItem } from "./palette.ts";
 import {
   FullStitch,
@@ -121,15 +123,18 @@ export class Pattern {
   #previousDisplayMode: DisplayMode;
 
   private stages = {
-    // lowest
     fabric: new Graphics({ label: "Fabric" }),
+    grid: new PatternGrid(),
+    rulers: new Rulers(),
+
+    image: new ReferenceImageContainer({ label: "Reference Image Container" }),
+
     fullstitches: new StitchParticleContainer({ label: "Full Stitches" }),
     petitestitches: new StitchParticleContainer({ label: "Petite Stitches" }),
+
     halfstitches: new StitchParticleContainer({ label: "Half Stitches" }),
     quarterstitches: new StitchParticleContainer({ label: "Quarter Stitches" }),
-    symbols: new StitchGraphicsContainer({ label: "Symbols" }),
-    grid: new PatternGrid(),
-    specialstitches: new Container({ label: "Special Stitches" }),
+
     backstitches: new StitchGraphicsContainer({
       label: "Back Stitches",
       eventMode: "passive",
@@ -140,6 +145,7 @@ export class Pattern {
       eventMode: "passive",
       interactiveChildren: true,
     }),
+
     frenchknots: new StitchGraphicsContainer({
       label: "French Knots",
       eventMode: "passive",
@@ -150,17 +156,17 @@ export class Pattern {
       eventMode: "passive",
       interactiveChildren: true,
     }),
-    rulers: new Rulers(),
-    // highest
+
+    specialstitches: new Container({ label: "Special Stitches" }),
+
+    symbols: new StitchGraphicsContainer({ label: "Symbols" }),
   };
-  readonly root = new Container({
-    label: "Pattern View",
-    isRenderGroup: true,
-    children: Object.values(this.stages),
-  });
+  private layer = new RenderLayer();
+  readonly root = new Container({ label: "Pattern View", isRenderGroup: true });
 
   constructor(data: b.infer<typeof Pattern.schema>) {
     this.id = stringifyUuid(new Uint8Array(data.id));
+
     this.info = new PatternInfo(data.info);
 
     this.fabric = new Fabric(data.fabric);
@@ -173,6 +179,8 @@ export class Pattern {
 
     this.#previousDisplayMode = this.#displayMode = data.displaySettings.displayMode;
     this.showSymbols = data.displaySettings.showSymbols;
+
+    if (data.referenceImage) this.setReferenceImage(new ReferenceImage(data.referenceImage));
 
     for (const stitch of data.fullstitches.map((stitch) => new FullStitch(stitch))) {
       this.addFullStitch(stitch);
@@ -195,10 +203,34 @@ export class Pattern {
     for (const specialstitch of data.specialstitches.map((stitch) => new SpecialStitch(stitch))) {
       this.addSpecialStitch(specialstitch);
     }
+
+    // Configure the stages and render layer.
+    this.root.addChild(...Object.values(this.stages), this.layer);
+    this.layer.attach(
+      // lowest
+      this.stages.fabric,
+      this.stages.image.content,
+      this.stages.fullstitches,
+      this.stages.petitestitches,
+      this.stages.halfstitches,
+      this.stages.quarterstitches,
+      this.stages.symbols,
+      this.stages.grid,
+      this.stages.specialstitches,
+      this.stages.backstitches,
+      this.stages.straightstitches,
+      this.stages.frenchknots,
+      this.stages.beads,
+      this.stages.rulers,
+      this.stages.image.controls,
+      // highest
+    );
   }
 
   static readonly schema = b.struct({
     id: b.array(b.u8(), 16),
+
+    referenceImage: b.option(ReferenceImage.schema),
 
     info: PatternInfo.schema,
     fabric: Fabric.schema,
@@ -500,6 +532,19 @@ export class Pattern {
 
     // Update the display mode since it depends on the `showSymbols` value.
     this.displayMode = this.#displayMode;
+  }
+
+  get referenceImage() {
+    return this.stages.image;
+  }
+
+  async setReferenceImage(image: ReferenceImage) {
+    await this.stages.image.setImage(image);
+    this.stages.image.fit(this.#fabric.width, this.#fabric.height);
+  }
+
+  removeReferenceImage() {
+    this.stages.image.removeImage();
   }
 
   get allStitchFonts() {

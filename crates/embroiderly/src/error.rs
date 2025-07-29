@@ -12,6 +12,9 @@ pub enum Error {
   Tauri(#[from] tauri::Error),
 
   #[error(transparent)]
+  Image(#[from] image::ImageError),
+
+  #[error(transparent)]
   Io(#[from] std::io::Error),
 
   #[error(transparent)]
@@ -34,6 +37,7 @@ pub enum ErrorKind {
   Command(String),
   Pattern(String),
   Tauri(String),
+  Image(String),
   Io(String),
   Uuid(String),
   Unknown(String),
@@ -46,6 +50,7 @@ impl serde::Serialize for Error {
       Self::Command(_) => ErrorKind::Command(error_message),
       Self::Pattern(_) => ErrorKind::Pattern(error_message),
       Self::Tauri(_) => ErrorKind::Tauri(error_message),
+      Self::Image(_) => ErrorKind::Image(error_message),
       Self::Io(_) => ErrorKind::Io(error_message),
       Self::Uuid(_) => ErrorKind::Uuid(error_message),
       Self::Unknown(_) => ErrorKind::Unknown(error_message),

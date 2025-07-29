@@ -12,3 +12,6 @@ pub use display::*;
 
 mod publish;
 pub use publish::*;
+
+mod image;
+pub use image::*;

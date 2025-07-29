@@ -1,11 +1,7 @@
-import { Container, Point } from "pixi.js";
-import type { Bounds, DestroyOptions, FederatedPointerEvent } from "pixi.js";
+import { Bounds, Container, FederatedPointerEvent, Point } from "pixi.js";
+import { type DestroyOptions } from "pixi.js";
 
-const MODIFIERS: Modifiers = {
-  mod1: (e) => e.ctrlKey,
-  mod2: (e) => e.shiftKey,
-  mod3: (e) => e.altKey,
-};
+import { getMouseButtons, MODIFIERS, type ModifiersState } from "./utils/";
 
 export const MIN_SCALE = 1;
 export const MAX_SCALE = 100;
@@ -37,6 +33,7 @@ export class PatternViewport extends Container {
   wheelAction: WheelAction = "zoom";
 
   private startPoint?: Point;
+  private isDragging = false;
 
   constructor() {
     super({
@@ -63,6 +60,9 @@ export class PatternViewport extends Container {
 
     this.handleWheel = this.handleWheel.bind(this);
     this.domElement.addEventListener("wheel", this.handleWheel, { passive: false });
+
+    this.handleContextMenu = this.handleContextMenu.bind(this);
+    this.domElement.addEventListener("contextmenu", this.handleContextMenu, { capture: true });
   }
 
   override destroy(options?: DestroyOptions): void {
@@ -73,6 +73,7 @@ export class PatternViewport extends Container {
     this.off("pointercancel", this.handlePointerUp, this);
 
     this.domElement.removeEventListener("wheel", this.handleWheel);
+    this.domElement.removeEventListener("contextmenu", this.handleContextMenu, { capture: true });
 
     super.destroy(options);
   }
@@ -167,11 +168,12 @@ export class PatternViewport extends Container {
   }
 
   private handlePointerDown(e: FederatedPointerEvent) {
+    const buttons = getMouseButtons(e);
     const point = this.toWorld(e.global);
+
     this.startPoint = this.containsPoint(point) ? point : undefined;
     if (this.startPoint === undefined) return this.emitToolEvent(InternalEventType.CanvasClear, e);
 
-    const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
       else this.emitToolEvent(EventType.ToolMainAction, e);
@@ -188,7 +190,13 @@ export class PatternViewport extends Container {
       if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
       else {
         this.startPoint = undefined;
-        this.move(e.movement);
+        this.isDragging = true;
+
+        if (e.target instanceof PatternViewport) {
+          // We have other draggable elements in the viewport,
+          // so we need to move the viewport only if the event target is the viewport.
+          this.move(e.movement);
+        }
       }
     }
   }
@@ -199,10 +207,17 @@ export class PatternViewport extends Container {
     if (buttons.left) this.emitToolEvent(EventType.ToolRelease, e);
     else if (buttons.right) {
       if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
-      else this.emitToolEvent(EventType.ContextMenu, e);
     }
     this.startPoint = undefined;
+    this.isDragging = false;
     this.emitToolEvent(InternalEventType.CanvasClear, e);
+  }
+
+  private handleContextMenu(e: MouseEvent) {
+    const buttons = getMouseButtons(e);
+    if (buttons.right && (MODIFIERS.mod1(e) || this.isDragging)) {
+      e.preventDefault();
+    }
   }
 
   /**
@@ -276,7 +291,6 @@ export const enum EventType {
   ToolMainAction = "tool-main-action",
   ToolAntiAction = "tool-anti-action",
   ToolRelease = "tool-release",
-  ContextMenu = "context-menu",
   Transform = "transform",
 }
 
@@ -302,39 +316,4 @@ export interface TransformEventDetail {
   scale: number;
   /** The current bounds of the viewport. */
   bounds: Bounds;
-}
-
-export interface Modifiers {
-  /** Modifier 1. Default is the `Ctrl` key. */
-  mod1: ModifierChecker;
-
-  /** Modifier 2. Default is the `Shift` key. */
-  mod2: ModifierChecker;
-
-  /** Modifier 3. Default is the `Alt` key. */
-  mod3: ModifierChecker;
-}
-
-/** A function that checks if a modifier key is pressed based on the given event. */
-export type ModifierChecker = (event: MouseEvent) => boolean;
-
-export interface ModifiersState {
-  mod1: boolean;
-  mod2: boolean;
-  mod3: boolean;
-}
-
-function getMouseButtons(event: FederatedPointerEvent): MouseButtons {
-  const { button, buttons } = event;
-  if (button !== -1) {
-    return { left: button === 0, middle: button === 1, right: button === 2 };
-  } else {
-    return { left: (buttons & 1) !== 0, middle: (buttons & 4) !== 0, right: (buttons & 2) !== 0 };
-  }
-}
-
-interface MouseButtons {
-  left: boolean;
-  middle: boolean;
-  right: boolean;
 }

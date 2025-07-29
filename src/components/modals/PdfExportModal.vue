@@ -54,17 +54,16 @@
 
 <script setup lang="ts">
   import { basename } from "@tauri-apps/api/path";
-  import { save } from "@tauri-apps/plugin-dialog";
   import { ref } from "vue";
   import { asyncComputed, refAutoReset } from "@vueuse/core";
 
   import { PdfExportOptions } from "#/core/pattern/";
-  import { PDF_FILTER } from "#/stores/patterns.ts";
 
   const props = defineProps<{ filePath: string; options: PdfExportOptions }>();
   const emit = defineEmits<{ close: [] }>();
 
   const patternsStore = usePatternsStore();
+  const filePicker = useFilePicker();
 
   // Copy the data from the props to a reactive object.
   const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
@@ -83,7 +82,7 @@
   );
 
   async function chooseFile() {
-    const path = await save({ defaultPath: filePath.value, filters: PDF_FILTER });
+    const path = await filePicker.save(filePath.value, { filters: filePicker.PDF_FILTER });
     if (path !== null) filePath.value = path;
   }
 

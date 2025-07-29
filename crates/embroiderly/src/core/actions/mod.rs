@@ -33,6 +33,9 @@ pub use palette::*;
 mod publish;
 pub use publish::*;
 
+mod image;
+pub use image::*;
+
 /// An action that can be executed and revoked.
 #[allow(unused_variables)]
 pub trait Action<R: tauri::Runtime>: Send + Sync + dyn_clone::DynClone + std::any::Any {

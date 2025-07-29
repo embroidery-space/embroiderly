@@ -29,6 +29,9 @@ tauri-plugin-pinia = { workspace = true }
 embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
 
+# Image processing
+image = { workspace = true }
+
 # De/serialization
 serde = { workspace = true }
 serde_json = { workspace = true }

@@ -105,6 +105,20 @@ addCollection({
     "zoom-out": {
       body: '<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21l-4.35-4.35M8 11h6"/></g>',
     },
+    image: {
+      body: '<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></g>',
+    },
+  },
+  width: 24,
+  height: 24,
+});
+
+addCollection({
+  prefix: "material-symbols",
+  icons: {
+    "arrow-selector-tool": {
+      body: '<path fill="currentColor" d="m13.775 22l-3.625-7.8L6 20V2l14 11h-7.1l3.6 7.725z"/>',
+    },
   },
   width: 24,
   height: 24,

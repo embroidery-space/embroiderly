@@ -3,6 +3,7 @@ pub mod fabric;
 pub mod fonts;
 pub mod grid;
 pub mod history;
+pub mod image;
 pub mod palette;
 pub mod path;
 pub mod pattern;
