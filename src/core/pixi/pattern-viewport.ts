@@ -191,12 +191,7 @@ export class PatternViewport extends Container {
       else {
         this.startPoint = undefined;
         this.isDragging = true;
-
-        if (e.target instanceof PatternViewport) {
-          // We have other draggable elements in the viewport,
-          // so we need to move the viewport only if the event target is the viewport.
-          this.move(e.movement);
-        }
+        this.move(e.movement);
       }
     }
   }

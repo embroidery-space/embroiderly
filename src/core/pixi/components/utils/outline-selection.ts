@@ -22,7 +22,13 @@ export class OutlineSelection extends Container {
   #stages = {
     // lowest
     content: new Container({ ...DEFAULT_CONTAINER_OPTIONS, label: "Selection Content", interactiveChildren: true }),
-    controls: new Container({ ...DEFAULT_CONTAINER_OPTIONS, label: "Selection Controls", interactiveChildren: true }),
+    controls: new Container({
+      ...DEFAULT_CONTAINER_OPTIONS,
+      label: "Selection Controls",
+      interactiveChildren: true,
+      visible: false,
+      renderable: false,
+    }),
     // highest
   };
 
@@ -67,7 +73,6 @@ export class OutlineSelection extends Container {
   /** Pushes children to the content container. */
   push(...children: Container[]) {
     this.#stages.content.addChild(...children);
-    if (this.isFocused) this.focus();
     this.renderSelectionControls();
   }
 
@@ -79,7 +84,7 @@ export class OutlineSelection extends Container {
 
   /** Focuses the selection container. */
   focus() {
-    if (!this.child) return;
+    if (!this.child || this.isFocused) return;
 
     this.isFocused = true;
 
@@ -91,7 +96,7 @@ export class OutlineSelection extends Container {
 
   /** Blurs the selection container. */
   blur() {
-    if (!this.child) return;
+    if (!this.child || !this.isFocused) return;
 
     this.isFocused = false;
 
