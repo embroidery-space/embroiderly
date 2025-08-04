@@ -1,6 +1,6 @@
 import { ImageSource, Sprite, Texture, type ContainerOptions } from "pixi.js";
 
-import type { ReferenceImage } from "#/core/pattern/";
+import { ReferenceImage, ReferenceImageSettings } from "#/core/pattern/";
 import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
 import { OutlineSelection } from "./utils/";
 
@@ -32,12 +32,30 @@ export class ReferenceImageContainer extends OutlineSelection {
 
   /** Resizes the reference image to fit within the specified dimensions. */
   fit(width: number, height: number) {
-    const image = this.children[0];
-    if (!image) return;
+    if (!this.child) return;
 
-    const scaleX = width / image.width;
-    const scaleY = height / image.height;
+    const scaleX = width / this.child.width;
+    const scaleY = height / this.child.height;
 
     this.scale.set(Math.min(scaleX, scaleY));
+  }
+
+  get transformations(): ReferenceImageSettings | undefined {
+    if (!this.child) return undefined;
+
+    const { x, y } = this.position;
+    const { width, height } = this.child.getSize();
+
+    return new ReferenceImageSettings({ x, y, width, height });
+  }
+
+  set transformations(settings: ReferenceImageSettings) {
+    if (!this.child) return;
+    const { x, y, width, height } = settings;
+
+    this.position.set(x, y);
+
+    this.child.width = width;
+    this.child.height = height;
   }
 }

@@ -180,7 +180,11 @@ export class Pattern {
     this.#previousDisplayMode = this.#displayMode = data.displaySettings.displayMode;
     this.showSymbols = data.displaySettings.showSymbols;
 
-    if (data.referenceImage) this.setReferenceImage(new ReferenceImage(data.referenceImage));
+    if (data.referenceImage) {
+      this.setReferenceImage(new ReferenceImage(data.referenceImage)).then(() => {
+        this.referenceImage.transformations = data.referenceImage!.settings;
+      });
+    }
 
     for (const stitch of data.fullstitches.map((stitch) => new FullStitch(stitch))) {
       this.addFullStitch(stitch);

@@ -56,7 +56,7 @@ export class OutlineSelection extends Container {
   }
 
   /** Returns the target child of the content container. */
-  private get child() {
+  get child() {
     return this.#stages.content.children[0];
   }
 

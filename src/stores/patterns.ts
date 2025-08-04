@@ -27,6 +27,7 @@ import {
   type Stitch,
   LayersVisibility,
   ReferenceImage,
+  ReferenceImageSettings,
 } from "#/core/pattern/";
 import { PatternEventBus } from "#/core/services/";
 import {
@@ -250,6 +251,16 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
+    async function updateReferenceImageSettings(settings: ReferenceImageSettings) {
+      if (!pattern.value) return;
+      await ImageApi.updateReferenceImageSettings(pattern.value.id, settings);
+    }
+    PatternEventBus.on("update-reference-image-settings", updateReferenceImageSettings);
+    appWindow.listen<string>("image:settings:update", ({ payload }) => {
+      if (!pattern.value) return;
+      pattern.value.referenceImage.transformations = ReferenceImageSettings.deserialize(payload);
+    });
+
     function openPatternInfoModal() {
       if (!pattern.value) return;
       patternInfoModal.open({ patternInfo: pattern.value.info });
@@ -432,6 +443,7 @@ export const usePatternsStore = defineStore(
       exportPatternAsPdf,
       closePattern,
       setReferenceImage,
+      updateReferenceImageSettings,
       openPatternInfoModal,
       updatePatternInfo,
       openFabricModal,

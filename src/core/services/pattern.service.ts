@@ -1,5 +1,5 @@
 import EventEmitter from "eventemitter3";
-import type { Stitch } from "#/core/pattern/";
+import type { ReferenceImageSettings, Stitch } from "#/core/pattern/";
 
 export const PatternEventBus = new EventEmitter<PatternEvents>();
 
@@ -9,4 +9,6 @@ interface PatternEvents {
 
   "draw-line-hint": Stitch;
   "draw-node-hint": Stitch;
+
+  "update-reference-image-settings": ReferenceImageSettings;
 }

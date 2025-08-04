@@ -83,6 +83,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::pattern::get_pattern_file_path,
     commands::pattern::update_pattern_info,
     commands::image::set_reference_image,
+    commands::image::update_reference_image_settings,
     commands::display::set_display_mode,
     commands::display::show_symbols,
     commands::display::set_layers_visibility,

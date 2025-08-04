@@ -12,6 +12,9 @@ use display_settings::{parse_display_settings_from_reader, save_display_settings
 mod publish_settings;
 use publish_settings::{parse_publish_settings_from_reader, save_publish_settings_to_vec};
 
+mod reference_image_settings;
+use reference_image_settings::{parse_reference_image_settings_from_reader, save_reference_image_settings_to_vec};
+
 /// Reads a `ZipFile` and returns a buffered reader for its content.
 macro_rules! read_zip_file {
   ($archive:expr, $name:expr) => {{
@@ -48,8 +51,15 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
   // we don't know the exact file name, so we have to search for it.
   let file_names = archive.file_names().map(|s| s.to_string()).collect::<Vec<_>>();
   if let Some(image_file_name) = file_names.iter().find(|name| name.starts_with("reference_image")) {
-    patproj.reference_image = match read_zip_file!(archive, image_file_name.as_str()) {
-      Ok(file) => Some(ReferenceImage::new(file.into_inner().into_inner())),
+    let image_file = read_zip_file!(archive, image_file_name.as_str());
+    let settings_file = read_zip_file!(archive, "reference_image_settings.xml");
+
+    patproj.reference_image = match image_file.and_then(|i| settings_file.map(|s| (i, s))) {
+      Ok((image_file, mut settings_file)) => {
+        let image = image_file.into_inner().into_inner();
+        let settings = parse_reference_image_settings_from_reader(&mut settings_file)?;
+        Some(ReferenceImage::new(image, Some(settings)))
+      }
       Err(zip::result::ZipError::FileNotFound) => None,
       Err(e) => return Err(e.into()),
     };
@@ -85,6 +95,9 @@ pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Res
     let image_file_name = format!("reference_image.{}", image.format.extensions_str()[0]);
     zip.start_file(image_file_name, options)?;
     zip.write_all(&image.content)?;
+
+    zip.start_file("reference_image_settings.xml", options)?;
+    zip.write_all(&save_reference_image_settings_to_vec(&image.settings)?)?;
   }
 
   zip.finish()?;

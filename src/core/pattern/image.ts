@@ -1,12 +1,48 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 
-export class ReferenceImage extends Blob {
-  constructor(data: b.infer<typeof ReferenceImage.schema>) {
-    super([data]);
+export class ReferenceImageSettings {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+
+  constructor(data: b.infer<typeof ReferenceImageSettings.schema>) {
+    this.x = data.x;
+    this.y = data.y;
+    this.width = Math.round(data.width);
+    this.height = Math.round(data.height);
   }
 
-  static readonly schema = b.vec(b.u8());
+  static readonly schema = b.struct({
+    x: b.f32(),
+    y: b.f32(),
+    width: b.u32(),
+    height: b.u32(),
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new ReferenceImageSettings(ReferenceImageSettings.schema.deserialize(buffer));
+  }
+
+  static serialize(data: ReferenceImageSettings) {
+    return ReferenceImageSettings.schema.serialize(data);
+  }
+}
+
+export class ReferenceImage extends Blob {
+  settings: ReferenceImageSettings;
+
+  constructor(data: b.infer<typeof ReferenceImage.schema>) {
+    super([data.content]);
+    this.settings = new ReferenceImageSettings(data.settings);
+  }
+
+  static readonly schema = b.struct({
+    content: b.vec(b.u8()),
+    settings: ReferenceImageSettings.schema,
+  });
 
   static deserialize(data: Uint8Array | string) {
     const buffer = typeof data === "string" ? toByteArray(data) : data;
