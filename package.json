@@ -10,6 +10,9 @@
     "lint": "eslint ./eslint.config.js ./vite.config.ts src/",
     "test": "vitest --run"
   },
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "dependencies": {
     "@fluent/bundle": "0.19.1",
     "@nuxt/ui": "3.3.0",
