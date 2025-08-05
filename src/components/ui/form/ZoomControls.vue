@@ -29,7 +29,7 @@
         :min="min"
         :max="max"
         class="grow"
-        @update:model-value="emit('update:model-value', $event)"
+        @update:model-value="emit('update:model-value', $event as number)"
       />
 
       <NuxtTooltip :text="fluent.$t('label-zoom-in')" :delay-duration="200" :kbds="['ctrl', '+']">
