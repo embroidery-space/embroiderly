@@ -18,6 +18,7 @@ const app = createApp(App);
 app.use(router);
 app.use(pinia);
 app.use(fluent);
+// @ts-expect-error Ignore an obscure type error.
 app.use(ui);
 app.use(PrimeVue, { unstyled: true });
 app.directive("shortcuts", ShortcutsDirective);
