@@ -63,7 +63,7 @@ Here is a recommended setup:
        // Hide all TypeScript configs under the main one.
        "tsconfig.json": "tsconfig.*.json, *.d.ts, *.tsbuildinfo",
        // Hide lock files under the main manifests.
-       "package.json": "package-lock.json",
+       "package.json": "package-lock.json, .npmrc",
        "Cargo.toml": "Cargo.lock, rustfmt.toml",
        // Hide ESLint and Prettier configurations under `.editorconfig`.
        ".editorconfig": "eslint.config.js, .prettierrc.json",
