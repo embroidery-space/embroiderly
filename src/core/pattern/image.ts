@@ -35,7 +35,9 @@ export class ReferenceImage extends Blob {
   settings: ReferenceImageSettings;
 
   constructor(data: b.infer<typeof ReferenceImage.schema>) {
-    super([data.content]);
+    // Specify the content type to `Uint8Array<ArrayBuffer>` to fix the type mismatch.
+    super([data.content as Uint8Array<ArrayBuffer>]);
+
     this.settings = new ReferenceImageSettings(data.settings);
   }
 

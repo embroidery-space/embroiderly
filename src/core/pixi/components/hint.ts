@@ -35,7 +35,7 @@ export class Hint extends Container {
   drawNodeHint(node: NodeStitch, color: ColorSource, bead?: Bead) {
     const { x, y, kind, rotated } = node;
     const graphics = this.clearHint();
-    graphics.context = TextureManager.shared.getNodeTexture(kind, bead);
+    graphics.context = TextureManager.getNodeTexture(kind, bead);
     graphics.pivot.set(this.width / 2, this.height / 2);
     graphics.scale.set(STITCH_SCALE_FACTOR);
     graphics.position.set(x, y);

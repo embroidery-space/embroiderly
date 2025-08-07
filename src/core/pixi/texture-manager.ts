@@ -1,8 +1,7 @@
-import { Container, Graphics, RenderTexture } from "pixi.js";
-import { GraphicsContext, type Renderer, type RenderOptions, type TextureSourceOptions } from "pixi.js";
-import { GRAPHICS_STROKE, TEXTURE_STROKE } from "./constants";
-import { mm2px } from "#/utils/measurement";
+import { Container, Graphics, Texture } from "pixi.js";
+import { GraphicsContext, type Renderer, type TextureSourceOptions } from "pixi.js";
 import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "#/core/pattern/";
+import { mm2px } from "#/utils/measurement";
 
 const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
   resolution: window.devicePixelRatio,
@@ -12,215 +11,223 @@ const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
 
 /**
  * Manages the textures used to render stitches.
- * This class is responsible for creating and caching the textures.
+ * This class is responsible for creating and caching stitch textures.
  */
-export class TextureManager {
-  static shared = new TextureManager();
-
+class TextureManagerClass {
   #renderer!: Renderer;
   #textureSourceOptions!: TextureSourceOptions;
 
-  #fullstitches = new Map<DisplayMode, Record<FullStitchKind, RenderTexture>>();
-  #partstitches = new Map<DisplayMode, Record<PartStitchKind, RenderTexture>>();
+  #cache = new Map<string, unknown>();
 
-  #frenchKnot?: GraphicsContext;
-  #beads = new Map<string, GraphicsContext>();
-
+  /**
+   * Initializes the texture manager.
+   * @param renderer The Pixi.js renderer instance (e.g. `app.renderer`).
+   * @param textureSourceOptions Options for the texture source.
+   */
   init(renderer: Renderer, textureSourceOptions?: TextureSourceOptions) {
     this.#renderer = renderer;
-    this.#textureSourceOptions = Object.assign({}, DEFAULT_TEXTURE_SOURCE_OPTIONS, textureSourceOptions);
+    this.#textureSourceOptions = { ...DEFAULT_TEXTURE_SOURCE_OPTIONS, ...textureSourceOptions };
   }
 
   getFullStitchTexture(mode: DisplayMode, kind: FullStitchKind) {
-    let textures = this.#fullstitches.get(mode);
-    if (!textures) {
-      textures = this.#createFullStitchTextures(mode);
-      this.#fullstitches.set(mode, textures);
+    const stitchCachekey = `${kind}Stitch${mode}`;
+
+    let texture = this.#cache.get(stitchCachekey) as Texture;
+    if (!texture) {
+      texture = this.#createFullStitchTexture(mode, kind);
+      this.#cache.set(stitchCachekey, texture);
     }
-    return textures[kind];
+
+    return texture;
   }
 
-  #createFullStitchTextures(mode: DisplayMode) {
-    if (mode === DisplayMode.Solid || mode === DisplayMode.Mixed) {
-      return {
-        [FullStitchKind.Full]: (() => {
-          const shape = new Graphics().rect(0, 0, 100, 100).fill(0xffffff);
-          return this.#createTexture(shape, { label: "FullStitch-Solid", width: 100, height: 100 });
-        })(),
-        [FullStitchKind.Petite]: (() => {
-          const shape = new Graphics().rect(1, 1, 48, 48).stroke(TEXTURE_STROKE).fill(0xffffff);
-          return this.#createTexture(shape, { label: "PetiteStitch-Solid", width: 50, height: 50 });
-        })(),
-      };
-    } else {
-      return {
-        [FullStitchKind.Full]: (() => {
-          const shape = new Graphics()
-            .poly([
-              { x: 1, y: 1 },
-              { x: 30, y: 1 },
-              { x: 50, y: 20 },
-              { x: 70, y: 1 },
-              { x: 99, y: 1 },
-              { x: 99, y: 30 },
-              { x: 80, y: 50 },
-              { x: 99, y: 70 },
-              { x: 99, y: 99 },
-              { x: 70, y: 99 },
-              { x: 50, y: 80 },
-              { x: 30, y: 99 },
-              { x: 1, y: 99 },
-              { x: 1, y: 70 },
-              { x: 20, y: 50 },
-              { x: 1, y: 30 },
-            ])
-            .stroke(TEXTURE_STROKE)
-            .fill(0xffffff);
-          return this.#createTexture(shape, { label: "FullStitch-Stitches", width: 100, height: 100 });
-        })(),
-        [FullStitchKind.Petite]: (() => {
-          const shape = new Graphics()
-            .poly([
-              { x: 1, y: 1 },
-              { x: 15, y: 1 },
-              { x: 25, y: 10 },
-              { x: 35, y: 1 },
-              { x: 49, y: 1 },
-              { x: 49, y: 15 },
-              { x: 40, y: 25 },
-              { x: 49, y: 35 },
-              { x: 49, y: 49 },
-              { x: 35, y: 49 },
-              { x: 25, y: 40 },
-              { x: 15, y: 49 },
-              { x: 1, y: 49 },
-              { x: 1, y: 35 },
-              { x: 10, y: 25 },
-              { x: 1, y: 15 },
-            ])
-            .stroke(TEXTURE_STROKE)
-            .fill(0xffffff);
-          return this.#createTexture(shape, { label: "PetiteStitch-Stitches", width: 50, height: 50 });
-        })(),
-      };
-    }
+  #createFullStitchTexture(mode: DisplayMode, kind: FullStitchKind) {
+    const figure = (() => {
+      if (mode === DisplayMode.Stitches) {
+        if (kind === FullStitchKind.Full) return createFullStitchShapeFigure();
+        else return createPetiteStitchShapeFigure();
+      } else {
+        // In the solid and mixed mode, full stitches are rendered as solid figures.
+        if (kind === FullStitchKind.Full) return createFullStitchSolidFigure();
+        else return createPetiteStitchSolidFigure();
+      }
+    })();
+    return this.#createTexture(figure);
   }
 
   getPartStitchTexture(mode: DisplayMode, kind: PartStitchKind) {
-    let textures = this.#partstitches.get(mode);
-    if (!textures) {
-      textures = this.#createPartStitchTextures(mode);
-      this.#partstitches.set(mode, textures);
+    const stitchCachekey = `${kind}Stitch${mode}`;
+
+    let texture = this.#cache.get(stitchCachekey) as Texture;
+    if (!texture) {
+      texture = this.#createPartStitchTexture(mode, kind);
+      this.#cache.set(stitchCachekey, texture);
     }
-    return textures[kind];
+
+    return texture;
   }
 
-  #createPartStitchTextures(mode: DisplayMode) {
-    if (mode === DisplayMode.Solid) {
-      return {
-        [PartStitchKind.Half]: (() => {
-          const shape = new Graphics().rect(1, 51, 48, 48).rect(51, 1, 48, 48).stroke(TEXTURE_STROKE).fill(0xffffff);
-          return this.#createTexture(shape, { label: "HalfStitch-Solid", width: 100, height: 100 });
-        })(),
-        [PartStitchKind.Quarter]: (() => {
-          const shape = new Graphics().rect(1, 1, 48, 48).stroke(TEXTURE_STROKE).fill(0xffffff);
-          return this.#createTexture(shape, { label: "QuarterStitch-Solid", width: 50, height: 50 });
-        })(),
-      };
-    } else {
-      return {
-        [PartStitchKind.Half]: (() => {
-          const shape = new Graphics()
-            .poly([
-              { x: 99, y: 1 },
-              { x: 99, y: 35 },
-              { x: 35, y: 99 },
-              { x: 1, y: 99 },
-              { x: 1, y: 65 },
-              { x: 65, y: 1 },
-            ])
-            .stroke(TEXTURE_STROKE)
-            .fill(0xffffff);
-          return this.#createTexture(shape, { label: "HalfStitch-Stitches", width: 100, height: 100 });
-        })(),
-        [PartStitchKind.Quarter]: (() => {
-          const shape = new Graphics()
-            .poly([
-              { x: 49, y: 1 },
-              { x: 49, y: 25 },
-              { x: 25, y: 49 },
-              { x: 1, y: 49 },
-              { x: 1, y: 25 },
-              { x: 25, y: 1 },
-            ])
-            .stroke(TEXTURE_STROKE)
-            .fill(0xffffff);
-          return this.#createTexture(shape, { label: "QuarterStitch-Stitches", width: 50, height: 50 });
-        })(),
-      };
-    }
+  #createPartStitchTexture(mode: DisplayMode, kind: PartStitchKind) {
+    const figure = (() => {
+      if (mode === DisplayMode.Solid) {
+        if (kind === PartStitchKind.Half) return createHalfStitchSolidFigure();
+        else return createQuarterStitchSolidFigure();
+      } else {
+        // In the shape and mixed mode, part stitches are rendered as shape figures.
+        if (kind === PartStitchKind.Half) return createHalfStitchShapeFigure();
+        else return createQuarterStitchShapeFigure();
+      }
+    })();
+    return this.#createTexture(figure);
   }
 
   getNodeTexture(kind: NodeStitchKind, bead = Bead.default()) {
-    if (kind === NodeStitchKind.FrenchKnot) {
-      return (this.#frenchKnot ??= this.#createFrenchKnotTexture());
+    const stitchCachekey = kind === NodeStitchKind.FrenchKnot ? kind : `${kind}-${bead.diameter}x${bead.length}`;
+
+    let texture = this.#cache.get(stitchCachekey) as GraphicsContext;
+    if (!texture) {
+      texture = kind === NodeStitchKind.FrenchKnot ? this.#createFrenchKnotTexture() : this.#createBeadTexture(bead);
+      this.#cache.set(stitchCachekey, texture);
     }
 
-    const beadKey = `Bead(${bead.diameter}x${bead.length})`;
-    const texture = this.#beads.get(beadKey);
-    if (texture) return texture;
-    else {
-      const texture = this.#createBeadTexture(bead);
-      this.#beads.set(beadKey, texture);
-      return texture;
-    }
+    return texture;
   }
 
   #createFrenchKnotTexture() {
-    return new GraphicsContext().circle(25, 25, 25).stroke(GRAPHICS_STROKE).fill(0xffffff);
+    return createFrenchKnotFigure();
   }
 
   #createBeadTexture(bead: Bead) {
-    const width = mm2px(bead.diameter) * 10;
-    const height = mm2px(bead.length) * 10;
-    return (
-      new GraphicsContext()
-        // Set negative coordinates to rotate elements around their center.
-        .roundRect(0, 0, width, height, width * 0.4)
-        .stroke(GRAPHICS_STROKE)
-        .fill(0xffffff)
-    );
+    return createBeadFigure(bead);
   }
 
-  #createTexture(
-    container: Container,
-    textureSourceOptions?: Partial<TextureSourceOptions>,
-    renderOptions?: Omit<RenderOptions, "container" | "target">,
-  ) {
-    const rt = RenderTexture.create({ ...this.#textureSourceOptions, ...textureSourceOptions });
-    rt.resize(textureSourceOptions!.width!, textureSourceOptions!.height!);
-    this.#renderer.render({ container, target: rt, ...renderOptions });
+  #createTexture(container: Container, textureSourceOptions?: Partial<TextureSourceOptions>) {
+    const texture = this.#renderer.generateTexture({
+      target: container,
+      textureSourceOptions: { ...this.#textureSourceOptions, ...textureSourceOptions },
+    });
+
+    // The container is temporary, so we should destroy it to free resources.
     container.destroy(true);
-    return rt;
+
+    return texture;
   }
 
-  clear() {
-    for (const textures of this.#fullstitches.values()) {
-      for (const texture of Object.values(textures)) texture.destroy(true);
-    }
-    this.#fullstitches.clear();
+  destroy() {
+    // Clear the cache and destroy all textures.
+    this.#cache.forEach((texture) => (texture as Texture | GraphicsContext).destroy(true));
+    this.#cache.clear();
 
-    for (const textures of this.#partstitches.values()) {
-      for (const texture of Object.values(textures)) texture.destroy(true);
-    }
-    this.#partstitches.clear();
-
-    if (this.#frenchKnot) {
-      this.#frenchKnot.destroy(true);
-      this.#frenchKnot = undefined;
-    }
-
-    for (const texture of this.#beads.values()) texture.destroy(true);
-    this.#beads.clear();
+    // Reset the renderer and texture source options.
+    this.#renderer = null as unknown as Renderer;
+    this.#textureSourceOptions = null as unknown as TextureSourceOptions;
   }
+}
+export const TextureManager = new TextureManagerClass();
+
+function createFullStitchSolidFigure() {
+  return new Graphics().rect(0, 0, 100, 100).fill(0xffffff).stroke({ width: 2, alignment: 0.5, color: 0x000000 });
+}
+function createFullStitchShapeFigure() {
+  return new Graphics()
+    .poly([
+      { x: 0, y: 0 },
+      { x: 30, y: 0 },
+      { x: 50, y: 20 },
+      { x: 70, y: 0 },
+      { x: 100, y: 0 },
+      { x: 100, y: 30 },
+      { x: 80, y: 50 },
+      { x: 100, y: 70 },
+      { x: 100, y: 100 },
+      { x: 70, y: 100 },
+      { x: 50, y: 80 },
+      { x: 30, y: 100 },
+      { x: 0, y: 100 },
+      { x: 0, y: 70 },
+      { x: 20, y: 50 },
+      { x: 0, y: 30 },
+    ])
+    .fill(0xffffff)
+    .stroke({ width: 2, alignment: 0.5, color: 0x000000 });
+}
+
+function createPetiteStitchSolidFigure() {
+  return new Graphics().rect(0, 0, 50, 50).fill(0xffffff).stroke({ width: 1, alignment: 0.5, color: 0x000000 });
+}
+function createPetiteStitchShapeFigure() {
+  return new Graphics()
+    .poly([
+      { x: 0, y: 0 },
+      { x: 15, y: 0 },
+      { x: 25, y: 10 },
+      { x: 35, y: 0 },
+      { x: 50, y: 0 },
+      { x: 50, y: 15 },
+      { x: 40, y: 25 },
+      { x: 50, y: 35 },
+      { x: 50, y: 50 },
+      { x: 35, y: 50 },
+      { x: 25, y: 40 },
+      { x: 15, y: 50 },
+      { x: 0, y: 50 },
+      { x: 0, y: 35 },
+      { x: 10, y: 25 },
+      { x: 0, y: 15 },
+    ])
+    .fill(0xffffff)
+    .stroke({ width: 1, alignment: 0.5, color: 0x000000 });
+}
+
+function createHalfStitchSolidFigure() {
+  return new Graphics()
+    .rect(0, 50, 50, 50)
+    .rect(50, 0, 50, 50)
+    .fill(0xffffff)
+    .stroke({ width: 2, alignment: 0.5, color: 0x000000 });
+}
+function createHalfStitchShapeFigure() {
+  return new Graphics()
+    .poly([
+      { x: 100, y: 0 },
+      { x: 100, y: 35 },
+      { x: 35, y: 100 },
+      { x: 0, y: 100 },
+      { x: 0, y: 65 },
+      { x: 65, y: 0 },
+    ])
+    .stroke({ width: 2, alignment: 0.5, color: 0x000000 })
+    .fill(0xffffff);
+}
+
+function createQuarterStitchShapeFigure() {
+  return new Graphics().rect(0, 0, 50, 50).fill(0xffffff).stroke({ width: 1, alignment: 0.5, color: 0x000000 });
+}
+function createQuarterStitchSolidFigure() {
+  return new Graphics()
+    .poly([
+      { x: 50, y: 0 },
+      { x: 50, y: 25 },
+      { x: 25, y: 49 },
+      { x: 0, y: 50 },
+      { x: 0, y: 25 },
+      { x: 25, y: 0 },
+    ])
+    .fill(0xffffff)
+    .stroke({ width: 1, alignment: 0.5, color: 0x000000 });
+}
+
+function createFrenchKnotFigure() {
+  return new GraphicsContext()
+    .circle(25, 25, 25)
+    .fill(0xffffff)
+    .stroke({ pixelLine: true, alignment: 0.5, color: 0x000000 });
+}
+function createBeadFigure(bead: Bead) {
+  const width = mm2px(bead.diameter) * 10;
+  const height = mm2px(bead.length) * 10;
+  return new GraphicsContext()
+    .roundRect(0, 0, width, height, width * 0.4)
+    .fill(0xffffff)
+    .stroke({ pixelLine: true, alignment: 0.5, color: 0x000000 });
 }

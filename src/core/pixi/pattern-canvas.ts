@@ -73,7 +73,7 @@ export class PatternCanvas extends EventTarget {
       screenHeight: height,
     });
 
-    TextureManager.shared.init(this.pixi.renderer);
+    TextureManager.init(this.pixi.renderer);
 
     // Replace the default stage with our viewport.
     this.pixi.stage = this.viewport;
@@ -83,7 +83,10 @@ export class PatternCanvas extends EventTarget {
   }
 
   destroy() {
-    this.pixi.destroy();
+    this.viewport.destroy(true);
+    this.pixi.destroy(true, true);
+
+    TextureManager.destroy();
   }
 
   setPattern(pattern: Pattern) {

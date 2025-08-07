@@ -36,13 +36,13 @@
     </div>
 
     <div class="w-full grow overflow-hidden">
-      <NuxtContextMenu :items="canvasContextMenuOptions">
+      <UContextMenu :items="canvasContextMenuOptions">
         <canvas
           ref="canvas"
           v-element-size="useDebounceFn(({ width, height }) => patternCanvas.resize(width, height), 100)"
           class="size-full"
         ></canvas>
-      </NuxtContextMenu>
+      </UContextMenu>
     </div>
 
     <div class="w-full flex items-center justify-between border-t border-default px-2 py-1">
@@ -65,7 +65,7 @@
   import { vElementSize } from "@vueuse/components";
   import { Assets } from "pixi.js";
 
-  import { PatternCanvas, EventType, TextureManager, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE } from "#/core/pixi/";
+  import { PatternCanvas, EventType, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE } from "#/core/pixi/";
   import type { PatternCanvasOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
   import { StitchTool } from "#/core/tools/";
   import { PatternEventBus } from "#/core/services/";
@@ -176,8 +176,7 @@
     patternCanvas.setPattern(pattern);
   });
 
-  onUnmounted(async () => {
-    patternCanvas.clear();
-    TextureManager.shared.clear();
+  onUnmounted(() => {
+    patternCanvas.destroy();
   });
 </script>

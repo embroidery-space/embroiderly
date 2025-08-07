@@ -355,7 +355,7 @@ export class Pattern {
     const { x, y, palindex, kind } = stitch;
 
     const particle = new StitchParticle(stitch, {
-      texture: TextureManager.shared.getFullStitchTexture(this.displayMode ?? this.#previousDisplayMode, kind),
+      texture: kind === FullStitchKind.Full ? this.stages.fullstitches.texture : this.stages.petitestitches.texture,
       x,
       y,
       tint: this.#palette[palindex]!.color,
@@ -376,7 +376,7 @@ export class Pattern {
     const { x, y, palindex, kind, direction } = stitch;
 
     const particle = new StitchParticle(stitch, {
-      texture: TextureManager.shared.getPartStitchTexture(this.displayMode ?? this.#previousDisplayMode, kind),
+      texture: kind === PartStitchKind.Half ? this.stages.halfstitches.texture : this.stages.quarterstitches.texture,
       x,
       y,
       tint: this.#palette[palindex]!.color,
@@ -424,7 +424,7 @@ export class Pattern {
     const { x, y, palindex, kind, rotated } = stitch;
     const palitem = this.#palette[palindex]!;
 
-    const graphics = new StitchGraphics(stitch, TextureManager.shared.getNodeTexture(kind));
+    const graphics = new StitchGraphics(stitch, TextureManager.getNodeTexture(kind));
     graphics.eventMode = "static";
     graphics.tint = palitem.color;
     graphics.pivot.set(graphics.width / 2, graphics.height / 2);
@@ -506,16 +506,10 @@ export class Pattern {
     this.#displayMode = this.showSymbols ? displayMode : (displayMode ?? this.#previousDisplayMode);
     if (displayMode) {
       this.#previousDisplayMode = displayMode;
-      this.stages.fullstitches.texture = TextureManager.shared.getFullStitchTexture(displayMode, FullStitchKind.Full);
-      this.stages.petitestitches.texture = TextureManager.shared.getFullStitchTexture(
-        displayMode,
-        FullStitchKind.Petite,
-      );
-      this.stages.halfstitches.texture = TextureManager.shared.getPartStitchTexture(displayMode, PartStitchKind.Half);
-      this.stages.quarterstitches.texture = TextureManager.shared.getPartStitchTexture(
-        displayMode,
-        PartStitchKind.Quarter,
-      );
+      this.stages.fullstitches.texture = TextureManager.getFullStitchTexture(displayMode, FullStitchKind.Full);
+      this.stages.petitestitches.texture = TextureManager.getFullStitchTexture(displayMode, FullStitchKind.Petite);
+      this.stages.halfstitches.texture = TextureManager.getPartStitchTexture(displayMode, PartStitchKind.Half);
+      this.stages.quarterstitches.texture = TextureManager.getPartStitchTexture(displayMode, PartStitchKind.Quarter);
     }
 
     const visible = this.#displayMode !== undefined;
