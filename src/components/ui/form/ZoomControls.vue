@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-x-2">
-    <NuxtButtonGroup class="w-16">
-      <NuxtInputNumber
+    <UButtonGroup class="w-16">
+      <UInputNumber
         :model-value="zoom"
         color="neutral"
         variant="outline"
@@ -12,17 +12,17 @@
         @update:model-value="emit('update:model-value', $event)"
       />
 
-      <NuxtDropdownMenu :items="zoomOptions">
-        <NuxtButton color="neutral" variant="outline" size="xs" icon="i-lucide:chevron-down" />
-      </NuxtDropdownMenu>
-    </NuxtButtonGroup>
+      <UDropdownMenu :items="zoomOptions">
+        <UButton color="neutral" variant="outline" size="xs" icon="i-lucide:chevron-down" />
+      </UDropdownMenu>
+    </UButtonGroup>
 
     <div class="grow flex items-center gap-x-1">
-      <NuxtTooltip :text="fluent.$t('label-zoom-out')" :delay-duration="200" :kbds="['ctrl', '-']">
-        <NuxtButton color="neutral" variant="ghost" icon="i-lucide:zoom-out" size="xs" @click="zoomOut" />
-      </NuxtTooltip>
+      <UTooltip :text="fluent.$t('label-zoom-out')" :delay-duration="200" :kbds="['ctrl', '-']">
+        <UButton color="neutral" variant="ghost" icon="i-lucide:zoom-out" size="xs" @click="zoomOut" />
+      </UTooltip>
 
-      <NuxtSlider
+      <USlider
         :model-value="zoom"
         tooltip
         size="xs"
@@ -32,9 +32,9 @@
         @update:model-value="emit('update:model-value', $event as number)"
       />
 
-      <NuxtTooltip :text="fluent.$t('label-zoom-in')" :delay-duration="200" :kbds="['ctrl', '+']">
-        <NuxtButton color="neutral" variant="ghost" icon="i-lucide:zoom-in" size="xs" @click="zoomIn" />
-      </NuxtTooltip>
+      <UTooltip :text="fluent.$t('label-zoom-in')" :delay-duration="200" :kbds="['ctrl', '+']">
+        <UButton color="neutral" variant="ghost" icon="i-lucide:zoom-in" size="xs" @click="zoomIn" />
+      </UTooltip>
     </div>
   </div>
 </template>

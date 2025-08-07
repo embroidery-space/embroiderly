@@ -1,13 +1,13 @@
 <template>
-  <NuxtModal :title="$t('title-publish-settings')" :ui="{ content: 'w-xl' }">
+  <UModal :title="$t('title-publish-settings')" :ui="{ content: 'w-xl' }">
     <template #body>
       <PdfPublishForm v-model="options" />
     </template>
     <template #footer>
-      <NuxtButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <NuxtButton :label="$t('label-save')" @click="updateOptions" />
+      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('label-save')" @click="updateOptions" />
     </template>
-  </NuxtModal>
+  </UModal>
 </template>
 
 <script setup lang="ts">

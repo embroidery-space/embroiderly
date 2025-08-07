@@ -1,13 +1,13 @@
 <template>
-  <NuxtModal :title="$t('title-pattern-info')">
+  <UModal :title="$t('title-pattern-info')">
     <template #body>
       <PatternInfoForm v-model="patternInfo" />
     </template>
     <template #footer>
-      <NuxtButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <NuxtButton :label="$t('label-save')" @click="updatePatternInfo" />
+      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('label-save')" @click="updatePatternInfo" />
     </template>
-  </NuxtModal>
+  </UModal>
 </template>
 
 <script setup lang="ts">

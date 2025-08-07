@@ -18,13 +18,12 @@ const CHECKBOX_DEFAULT_VARIANTS: any = {
 
 export const NuxtUIConfig: Parameters<typeof ui>[0] = {
   components: {
-    resolvers: [RekaResolver({ prefix: "Reka" })],
+    resolvers: [RekaResolver({ prefix: "R" })],
   },
   autoImport: {
     dirs: ["src/components/", "src/composables/", "src/stores/"],
     packagePresets: ["fluent-vue"],
   },
-  prefix: "Nuxt",
   ui: {
     colors: {
       primary: "primary",

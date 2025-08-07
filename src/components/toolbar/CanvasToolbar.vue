@@ -1,22 +1,16 @@
 <template>
   <div class="flex flex-col gap-1 p-1">
-    <NuxtPopover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
-      <NuxtTooltip
-        arrow
-        :text="$t('label-layers')"
-        :delay-duration="200"
-        :disabled="disabled"
-        :content="{ side: 'left' }"
-      >
-        <NuxtButton color="neutral" variant="ghost" icon="i-lucide:layers" :disabled="disabled" />
-      </NuxtTooltip>
+    <UPopover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
+      <UTooltip arrow :text="$t('label-layers')" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
+        <UButton color="neutral" variant="ghost" icon="i-lucide:layers" :disabled="disabled" />
+      </UTooltip>
 
       <template #content>
         <LayersForm v-model="layers" />
       </template>
-    </NuxtPopover>
+    </UPopover>
 
-    <NuxtSeparator />
+    <USeparator />
 
     <ToolSelector
       v-for="option in displayModeOptions"
@@ -26,7 +20,7 @@
       :disabled="disabled"
     />
 
-    <NuxtSeparator />
+    <USeparator />
 
     <ToolToggle
       v-model="showSymbols"
