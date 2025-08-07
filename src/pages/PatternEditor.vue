@@ -2,24 +2,24 @@
   <div class="h-full flex flex-col">
     <AppHeader />
     <div class="flex grow overflow-y-auto">
-      <RekaSplitterGroup direction="horizontal">
-        <RekaSplitterPanel :default-size="15" :style="{ overflow: 'visible clip' }">
+      <RSplitterGroup direction="horizontal">
+        <RSplitterPanel :default-size="15" :style="{ overflow: 'visible clip' }">
           <PalettePanel />
-        </RekaSplitterPanel>
-        <RekaSplitterResizeHandle class="border-2 border-default" />
-        <RekaSplitterPanel class="relative">
+        </RSplitterPanel>
+        <RSplitterResizeHandle class="border-2 border-default" />
+        <RSplitterPanel class="relative">
           <BlockUI :blocked="patternsStore.loading || patternsStore.blocked || isDragging" class="size-full">
             <div
               v-if="isDragging"
               class="bg-default absolute left-1/2 top-1/2 z-10 flex items-center justify-center rounded-full p-6 -translate-x-1/2 -translate-y-1/2"
             >
-              <NuxtIcon name="i-lucide:upload" class="size-16" />
+              <UIcon name="i-lucide:upload" class="size-16" />
             </div>
             <WelcomePanel v-if="!patternsStore.pattern" class="size-full" />
             <CanvasPanel v-show="patternsStore.pattern" ref="pattern-canvas" />
           </BlockUI>
-        </RekaSplitterPanel>
-      </RekaSplitterGroup>
+        </RSplitterPanel>
+      </RSplitterGroup>
       <CanvasToolbar class="h-full border-l border-default" />
     </div>
   </div>

@@ -11,7 +11,7 @@
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
       <template #header>
-        <NuxtSelect
+        <USelect
           v-model="selectedPaletteCatalogItem"
           :items="paletteCatalogOptions"
           :loading="loadingPalette"

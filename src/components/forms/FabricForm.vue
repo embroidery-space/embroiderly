@@ -1,40 +1,40 @@
 <template>
   <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
     <FormFieldset :legend="$t('label-count-and-kind')">
-      <NuxtFormField :label="$t('label-count')" class="w-full">
-        <NuxtSelect
+      <UFormField :label="$t('label-count')" class="w-full">
+        <USelect
           v-model="fabric.spi[0]"
           :items="fabricCounts"
           class="w-full"
           @update:model-value="fabric.spi[1] = $event"
         />
-      </NuxtFormField>
-      <NuxtFormField :label="$t('label-kind')" class="w-full">
-        <NuxtSelect v-model="fabric.kind" :items="fabricKinds" class="w-full" />
-      </NuxtFormField>
+      </UFormField>
+      <UFormField :label="$t('label-kind')" class="w-full">
+        <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" />
+      </UFormField>
     </FormFieldset>
 
     <FormFieldset :legend="$t('label-size')">
       <div class="flex gap-4 pb-2">
         <div>
-          <NuxtFormField :label="$t('label-width')" class="w-full">
-            <NuxtInputNumber
+          <UFormField :label="$t('label-width')" class="w-full">
+            <UInputNumber
               v-model="fabricSizeFinal.width"
               orientation="vertical"
               :min="0.1"
               :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
             />
-          </NuxtFormField>
-          <NuxtFormField :label="$t('label-height')" class="w-full">
-            <NuxtInputNumber
+          </UFormField>
+          <UFormField :label="$t('label-height')" class="w-full">
+            <UInputNumber
               v-model="fabricSizeFinal.height"
               orientation="vertical"
               :min="0.1"
               :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
             />
-          </NuxtFormField>
+          </UFormField>
         </div>
-        <NuxtRadioGroup v-model="fabricSizeMeasurement" :items="fabricSizeOptions" class="mt-6" />
+        <URadioGroup v-model="fabricSizeMeasurement" :items="fabricSizeOptions" class="mt-6" />
       </div>
 
       <p>

@@ -1,23 +1,23 @@
 <template>
-  <NuxtModal :title="$t('title-pdf-export')" :ui="{ content: 'w-xl' }">
+  <UModal :title="$t('title-pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
       <div class="flex flex-col gap-y-4">
-        <NuxtButtonGroup class="w-full">
-          <NuxtButton :label="$t('label-choose-file')" @click="chooseFile" />
-          <NuxtInput :model-value="pdfFile.base" readonly class="w-full" />
-        </NuxtButtonGroup>
+        <UButtonGroup class="w-full">
+          <UButton :label="$t('label-choose-file')" @click="chooseFile" />
+          <UInput :model-value="pdfFile.base" readonly class="w-full" />
+        </UButtonGroup>
 
         <div class="flex flex-col gap-y-1">
-          <NuxtCheckbox
+          <UCheckbox
             v-model="options.monochrome"
             :label="$t('label-pdf-export-monochrome')"
             :description="pdfFile.monochrome"
           />
-          <NuxtCheckbox v-model="options.color" :label="$t('label-pdf-export-color')" :description="pdfFile.color" />
+          <UCheckbox v-model="options.color" :label="$t('label-pdf-export-color')" :description="pdfFile.color" />
         </div>
 
-        <NuxtCollapsible class="flex flex-col gap-x-2">
-          <NuxtButton
+        <UCollapsible class="flex flex-col gap-x-2">
+          <UButton
             block
             color="neutral"
             variant="subtle"
@@ -31,25 +31,25 @@
           <template #content>
             <PdfPublishForm v-model="options" />
           </template>
-        </NuxtCollapsible>
+        </UCollapsible>
       </div>
     </template>
     <template #footer>
-      <NuxtButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <NuxtButton
+      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton
         :label="$t('label-save-settings')"
         variant="outline"
         :icon="optionsUpdated ? 'i-lucide:check' : undefined"
         @click="updateOptions"
       />
-      <NuxtButton
+      <UButton
         v-if="filePath"
         :label="$t('label-export-document')"
         :loading="exportingPattern"
         @click="exportPattern"
       />
     </template>
-  </NuxtModal>
+  </UModal>
 </template>
 
 <script setup lang="ts">

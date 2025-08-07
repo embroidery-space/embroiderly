@@ -1,5 +1,5 @@
 <template>
-  <NuxtModal :title="$t('title-settings')" :ui="{ content: 'w-xl' }">
+  <UModal :title="$t('title-settings')" :ui="{ content: 'w-xl' }">
     <template #body>
       <AppSettingsForm
         v-model:ui="settingsStore.ui"
@@ -8,7 +8,7 @@
         v-model:other="settingsStore.other"
       />
     </template>
-  </NuxtModal>
+  </UModal>
 </template>
 
 <script setup lang="ts">

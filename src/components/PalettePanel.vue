@@ -4,7 +4,7 @@
     class="h-full flex"
     :class="{ 'border-primary border-2': paletteIsBeingEdited }"
   >
-    <NuxtContextMenu :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions">
+    <UContextMenu :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions">
       <PaletteList
         :model-value="appStateStore.selectedPaletteItemIndexes"
         :options="patternsStore.pattern?.palette"
@@ -17,15 +17,15 @@
       >
         <template #header>
           <div v-if="paletteIsBeingEdited" class="flex gap-x-1" @contextmenu.stop.prevent>
-            <NuxtButton
+            <UButton
               icon="i-lucide:check"
               :label="$t('label-save-changes')"
               class="grow justify-center text-sm"
               @click="paletteIsBeingEdited = false"
             />
-            <NuxtDropdownMenu :items="palettePanelsMenuOptions">
-              <NuxtButton icon="i-lucide:menu" />
-            </NuxtDropdownMenu>
+            <UDropdownMenu :items="palettePanelsMenuOptions">
+              <UButton icon="i-lucide:menu" />
+            </UDropdownMenu>
           </div>
           <PaletteToolbar v-else :disabled="paletteIsDisabled" @contextmenu.stop.prevent />
         </template>
@@ -35,12 +35,12 @@
             <span class="text-sm text-nowrap">
               {{ $t("label-palette-size", { size: patternsStore.pattern?.palette.length ?? 0 }) }}
             </span>
-            <NuxtTooltip
+            <UTooltip
               :text="paletteIsBeingEdited ? $t('label-save-changes') : $t('label-palette-edit')"
               :delay-duration="200"
               :disabled="paletteIsDisabled"
             >
-              <NuxtButton
+              <UButton
                 variant="ghost"
                 color="neutral"
                 size="xs"
@@ -53,11 +53,11 @@
                   }
                 "
               />
-            </NuxtTooltip>
+            </UTooltip>
           </div>
         </template>
       </PaletteList>
-    </NuxtContextMenu>
+    </UContextMenu>
 
     <PaletteCatalog
       v-if="patternsStore.pattern?.palette && showPaletteCatalog"

@@ -1,7 +1,7 @@
 <template>
   <div class="size-full flex flex-col">
     <div class="relative">
-      <NuxtTabs
+      <UTabs
         :model-value="appStateStore.currentPattern?.id"
         :items="appStateStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
         :content="false"
@@ -19,7 +19,7 @@
         @update:model-value="switchPattern($event as string)"
       >
         <template #trailing="{ item }">
-          <NuxtButton
+          <UButton
             size="xs"
             variant="ghost"
             icon="i-lucide:x"
@@ -31,8 +31,8 @@
             @click.stop="patternsStore.closePattern(item.value)"
           />
         </template>
-      </NuxtTabs>
-      <NuxtProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
+      </UTabs>
+      <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
     </div>
 
     <div class="w-full grow overflow-hidden">

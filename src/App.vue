@@ -1,7 +1,7 @@
 <template>
-  <NuxtApp :locale="locale">
+  <UApp :locale="locale">
     <RouterView />
-  </NuxtApp>
+  </UApp>
 </template>
 
 <script lang="ts" setup>
