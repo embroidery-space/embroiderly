@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center justify-between">
     <!-- This div is needed to correctly justify containers. -->
     <div></div>
-    <NuxtProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
+    <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
 
     <div class="max-size-full min-w-1/2 flex flex-col gap-6 overflow-auto p-8">
       <span class="text-4xl">{{ $t("title-welcome") }}</span>
@@ -10,15 +10,10 @@
       <div>
         <i18n tag="p" path="message-get-started">
           <template #button-open="{ buttonOpenLabel }">
-            <NuxtButton
-              variant="link"
-              :label="buttonOpenLabel"
-              class="p-0"
-              @click="() => patternsStore.openPattern()"
-            />
+            <UButton variant="link" :label="buttonOpenLabel" class="p-0" @click="() => patternsStore.openPattern()" />
           </template>
           <template #button-create="{ buttonCreateLabel }">
-            <NuxtButton
+            <UButton
               variant="link"
               :label="buttonCreateLabel"
               class="p-0"
@@ -34,14 +29,14 @@
         <div class="flex flex-col gap-y-1">
           <span class="text-lg">{{ $t("label-start") }}</span>
           <div class="max-w-max flex flex-col gap-y-1">
-            <NuxtButton
+            <UButton
               variant="ghost"
               icon="i-lucide:file-plus"
               :label="$t('label-start-create')"
               class="justify-start"
               @click="() => patternsStore.openFabricModal()"
             />
-            <NuxtButton
+            <UButton
               variant="ghost"
               icon="i-lucide:file-up"
               :label="$t('label-start-open')"
@@ -63,7 +58,7 @@
             >
               <span class="flex items-center gap-2 text-primary font-medium">
                 {{ item.title }}
-                <NuxtIcon v-if="item.url" name="i-lucide:external-link" />
+                <UIcon v-if="item.url" name="i-lucide:external-link" />
               </span>
               <span v-if="item.text">{{ item.text }}</span>
             </div>

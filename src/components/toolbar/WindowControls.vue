@@ -5,7 +5,7 @@
       class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-black/[.12] focus-visible:bg-black/[.06] hover:bg-black/[.06] dark:text-white dark:active:bg-white/[.12] dark:hover:bg-white/[.06]"
       @click="appWindow.minimize()"
     >
-      <NuxtIcon name="i-window:minimize" class="size-3" />
+      <UIcon name="i-window:minimize" class="size-3" />
     </button>
 
     <button
@@ -13,8 +13,8 @@
       class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-black/[.12] focus-visible:bg-black/[.06] hover:bg-black/[.06] dark:text-white dark:active:bg-white/[.12] dark:hover:bg-white/[.06]"
       @click="appWindow.toggleMaximize()"
     >
-      <NuxtIcon v-if="isMaximized" name="i-window:restore" class="size-3" />
-      <NuxtIcon v-else name="i-window:maximize" class="size-3" />
+      <UIcon v-if="isMaximized" name="i-window:restore" class="size-3" />
+      <UIcon v-else name="i-window:maximize" class="size-3" />
     </button>
 
     <button
@@ -22,7 +22,7 @@
       class="size-10 inline-flex items-center justify-center text-black hover:cursor-pointer active:bg-red-700 focus-visible:bg-red-600 hover:bg-red-600 dark:text-white focus-visible:text-white hover:text-white"
       @click="appWindow.close()"
     >
-      <NuxtIcon name="i-window:close" class="size-3" />
+      <UIcon name="i-window:close" class="size-3" />
     </button>
   </div>
 </template>

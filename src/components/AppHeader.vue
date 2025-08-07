@@ -1,9 +1,9 @@
 <template>
   <div class="flex border-b border-default">
     <div data-tauri-drag-region class="grow flex items-center gap-x-2 px-2">
-      <NuxtDropdownMenu :items="fileOptions" :modal="false">
+      <UDropdownMenu :items="fileOptions" :modal="false">
         <template #default="{ open }">
-          <NuxtButton
+          <UButton
             :variant="open ? 'soft' : 'ghost'"
             color="neutral"
             trailing-icon="i-lucide:chevron-down"
@@ -11,10 +11,10 @@
             :ui="{ base: 'px-2 py-1 text-default font-normal' }"
           />
         </template>
-      </NuxtDropdownMenu>
-      <NuxtDropdownMenu v-if="patternsStore.pattern !== undefined" :items="patternOptions" :modal="false">
+      </UDropdownMenu>
+      <UDropdownMenu v-if="patternsStore.pattern !== undefined" :items="patternOptions" :modal="false">
         <template #default="{ open }">
-          <NuxtButton
+          <UButton
             :variant="open ? 'soft' : 'ghost'"
             color="neutral"
             trailing-icon="i-lucide:chevron-down"
@@ -22,10 +22,10 @@
             :ui="{ base: 'px-2 py-1 text-default font-normal' }"
           />
         </template>
-      </NuxtDropdownMenu>
-      <NuxtDropdownMenu :items="toolsOptions" :modal="false">
+      </UDropdownMenu>
+      <UDropdownMenu :items="toolsOptions" :modal="false">
         <template #default="{ open }">
-          <NuxtButton
+          <UButton
             :variant="open ? 'soft' : 'ghost'"
             color="neutral"
             trailing-icon="i-lucide:chevron-down"
@@ -33,10 +33,10 @@
             :ui="{ base: 'px-2 py-1 text-default font-normal' }"
           />
         </template>
-      </NuxtDropdownMenu>
-      <NuxtDropdownMenu :items="helpOptions" :modal="false">
+      </UDropdownMenu>
+      <UDropdownMenu :items="helpOptions" :modal="false">
         <template #default="{ open }">
-          <NuxtButton
+          <UButton
             :variant="open ? 'soft' : 'ghost'"
             color="neutral"
             trailing-icon="i-lucide:chevron-down"
@@ -44,7 +44,7 @@
             :ui="{ base: 'px-2 py-1 text-default font-normal' }"
           />
         </template>
-      </NuxtDropdownMenu>
+      </UDropdownMenu>
     </div>
 
     <div class="flex items-center gap-2">
@@ -61,14 +61,14 @@
           :kbds="['ctrl', 'y']"
           :on-click="patternsStore.redo"
         />
-        <NuxtSeparator orientation="vertical" />
+        <USeparator orientation="vertical" />
       </template>
 
-      <NuxtDropdownMenu :items="manageOptions" :modal="false">
-        <NuxtTooltip :text="$t('label-manage')">
-          <NuxtButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-lucide:settings" />
-        </NuxtTooltip>
-      </NuxtDropdownMenu>
+      <UDropdownMenu :items="manageOptions" :modal="false">
+        <UTooltip :text="$t('label-manage')">
+          <UButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-lucide:settings" />
+        </UTooltip>
+      </UDropdownMenu>
 
       <Suspense> <WindowControls /> </Suspense>
     </div>

@@ -1,14 +1,14 @@
 <template>
-  <NuxtModal :title="$t('title-fabric-properties')" :ui="{ body: '!pt-0' }">
+  <UModal :title="$t('title-fabric-properties')" :ui="{ body: '!pt-0' }">
     <template #body>
       <!-- @vue-expect-error For some reason, TypeScript can't resolve the type of the `Fabric.color` property. -->
       <FabricForm v-model="fabric" />
     </template>
     <template #footer>
-      <NuxtButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <NuxtButton :label="$t('label-save')" @click="updateFabric" />
+      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('label-save')" @click="updateFabric" />
     </template>
-  </NuxtModal>
+  </UModal>
 </template>
 
 <script setup lang="ts">

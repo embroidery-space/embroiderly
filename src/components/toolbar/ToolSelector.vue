@@ -1,13 +1,7 @@
 <template>
   <div class="relative">
-    <NuxtTooltip
-      arrow
-      :text="currentOption.label"
-      :delay-duration="200"
-      :disabled="disabled"
-      :content="{ side: 'left' }"
-    >
-      <NuxtButton
+    <UTooltip arrow :text="currentOption.label" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
+      <UButton
         color="neutral"
         :variant="selected ? 'solid' : 'ghost'"
         :icon="currentOption.icon"
@@ -19,11 +13,11 @@
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
       />
-    </NuxtTooltip>
+    </UTooltip>
 
     <!-- @vue-ignore -->
-    <NuxtDropdownMenu v-model:open="optionsMenuOpen" :items="options">
-      <NuxtButton
+    <UDropdownMenu v-model:open="optionsMenuOpen" :items="options">
+      <UButton
         v-if="options.length > 1"
         ref="dropdown-button"
         variant="link"
@@ -49,14 +43,14 @@
             }
           "
         >
-          <NuxtIcon v-if="typeof item.icon === 'string'" :name="item.icon" />
+          <UIcon v-if="typeof item.icon === 'string'" :name="item.icon" />
           <div v-else class="size-6">
             <component :is="item.icon"></component>
           </div>
           <span>{{ item.label }}</span>
         </div>
       </template>
-    </NuxtDropdownMenu>
+    </UDropdownMenu>
   </div>
 </template>
 

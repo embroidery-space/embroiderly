@@ -1,13 +1,13 @@
 <template>
-  <NuxtModal :title="$t('title-grid-properties')">
+  <UModal :title="$t('title-grid-properties')">
     <template #body>
       <GridForm v-model="grid" />
     </template>
     <template #footer>
-      <NuxtButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <NuxtButton :label="$t('label-save')" @click="updateGrid" />
+      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('label-save')" @click="updateGrid" />
     </template>
-  </NuxtModal>
+  </UModal>
 </template>
 
 <script setup lang="ts">

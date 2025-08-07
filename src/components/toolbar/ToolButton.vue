@@ -1,6 +1,6 @@
 <template>
-  <NuxtTooltip arrow :text="label" :kbds="kbds" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
-    <NuxtButton
+  <UTooltip arrow :text="label" :kbds="kbds" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
+    <UButton
       color="neutral"
       variant="ghost"
       :icon="icon"
@@ -9,7 +9,7 @@
       :ui="{ leadingIcon: 'size-5' }"
       @click="onClick"
     />
-  </NuxtTooltip>
+  </UTooltip>
 </template>
 
 <script lang="ts" setup>

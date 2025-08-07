@@ -1,5 +1,5 @@
 <template>
-  <NuxtTabs
+  <UTabs
     :items="tabs"
     orientation="vertical"
     color="neutral"
@@ -11,17 +11,17 @@
   >
     <template #ui>
       <div class="flex flex-col gap-y-2">
-        <NuxtFormField :label="$t('label-theme')" class="w-full">
-          <NuxtSelect v-model="ui.theme" :items="themeOptions" :icon="themeIcon" class="w-full" />
-        </NuxtFormField>
+        <UFormField :label="$t('label-theme')" class="w-full">
+          <USelect v-model="ui.theme" :items="themeOptions" :icon="themeIcon" class="w-full" />
+        </UFormField>
 
-        <NuxtFormField :label="$t('label-scale')" class="w-full">
-          <NuxtSelect v-model="ui.scale" :items="scaleOptions" class="w-full" />
-        </NuxtFormField>
+        <UFormField :label="$t('label-scale')" class="w-full">
+          <USelect v-model="ui.scale" :items="scaleOptions" class="w-full" />
+        </UFormField>
 
-        <NuxtFormField :label="$t('label-language')" class="w-full">
-          <NuxtSelect v-model="ui.language" :items="languageOptions" class="w-full" />
-        </NuxtFormField>
+        <UFormField :label="$t('label-language')" class="w-full">
+          <USelect v-model="ui.language" :items="languageOptions" class="w-full" />
+        </UFormField>
       </div>
     </template>
 
@@ -29,24 +29,24 @@
       <div class="flex flex-col gap-y-2">
         <p class="text-sm text-neutral-300">{{ $t("message-viewport-hint") }}</p>
 
-        <NuxtCheckbox v-model="viewport.antialias" :label="$t('label-viewport-antialias')" />
+        <UCheckbox v-model="viewport.antialias" :label="$t('label-viewport-antialias')" />
 
-        <NuxtFormField :label="$t('label-viewport-wheel-action')" class="w-full">
-          <NuxtSelect v-model="viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
-        </NuxtFormField>
+        <UFormField :label="$t('label-viewport-wheel-action')" class="w-full">
+          <USelect v-model="viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
+        </UFormField>
       </div>
     </template>
 
     <template #updater>
       <div class="flex flex-col gap-y-2">
-        <NuxtButton
+        <UButton
           :loading="settingsStore.loadingUpdate"
           :label="$t('label-check-for-updates')"
           class="w-full justify-center"
           @click="() => settingsStore.checkForUpdates()"
         />
 
-        <NuxtCheckbox
+        <UCheckbox
           v-model="updater.autoCheck"
           :label="$t('label-auto-check-for-updates')"
           :description="$t('message-auto-check-for-updates-hint')"
@@ -56,21 +56,21 @@
 
     <template #other>
       <div class="flex flex-col gap-y-2">
-        <NuxtFormField
+        <UFormField
           :label="$t('label-autosave-interval')"
           :description="$t('message-autosave-interval-description')"
           class="w-full"
         >
-          <NuxtInputNumber v-model="other.autoSaveInterval" orientation="vertical" class="w-full" />
-        </NuxtFormField>
+          <UInputNumber v-model="other.autoSaveInterval" orientation="vertical" class="w-full" />
+        </UFormField>
 
-        <NuxtCheckbox
+        <UCheckbox
           v-model="other.usePaletteItemColorForStitchTools"
           :label="$t('label-use-palitem-color-for-stitch-tools')"
         />
       </div>
     </template>
-  </NuxtTabs>
+  </UTabs>
 </template>
 
 <script setup lang="ts">

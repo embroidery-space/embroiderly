@@ -1,23 +1,23 @@
 <template>
-  <NuxtModal :title="props.title">
+  <UModal :title="props.title">
     <template #body>
       <p class="whitespace-pre-line">{{ props.message }}</p>
     </template>
     <template #footer>
-      <NuxtButton
+      <UButton
         v-if="props.rejectLabel !== null"
         :label="props.rejectLabel ?? $t('label-no')"
         color="neutral"
         variant="outline"
         @click="emit('close', false)"
       />
-      <NuxtButton
+      <UButton
         v-if="props.acceptLabel !== null"
         :label="props.acceptLabel ?? $t('label-yes')"
         @click="emit('close', true)"
       />
     </template>
-  </NuxtModal>
+  </UModal>
 </template>
 
 <script lang="ts" setup>
