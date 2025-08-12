@@ -215,10 +215,10 @@ fn collect_files_from_args() -> Vec<std::path::PathBuf> {
     }
 
     if maybe_file.starts_with("file://") {
-      if let Ok(url) = tauri::Url::parse(&maybe_file) {
-        if let Ok(path) = url.to_file_path() {
-          files.push(path);
-        }
+      if let Ok(url) = tauri::Url::parse(&maybe_file)
+        && let Ok(path) = url.to_file_path()
+      {
+        files.push(path);
       }
     } else {
       files.push(maybe_file.into());

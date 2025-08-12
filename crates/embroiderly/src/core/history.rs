@@ -38,15 +38,15 @@ impl<R: tauri::Runtime> History<R> {
 
   /// Ends the current transaction and pushes it to the undo stack.
   pub fn end_transaction(&mut self) {
-    if let Some(actions) = self.active_transaction.take() {
-      if !actions.is_empty() {
-        self.undo_stack.push(HistoryEntry::Transaction(Transaction {
-          id: self.last_transaction_id,
-          actions,
-        }));
-        self.redo_stack.clear();
-        self.last_transaction_id += 1;
-      }
+    if let Some(actions) = self.active_transaction.take()
+      && !actions.is_empty()
+    {
+      self.undo_stack.push(HistoryEntry::Transaction(Transaction {
+        id: self.last_transaction_id,
+        actions,
+      }));
+      self.redo_stack.clear();
+      self.last_transaction_id += 1;
     }
   }
 
