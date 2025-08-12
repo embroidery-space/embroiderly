@@ -67,7 +67,7 @@
 
   import { PatternCanvas, EventType, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE } from "#/core/pixi/";
   import type { PatternCanvasOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
-  import { StitchTool } from "#/core/tools/";
+  import { CursorTool, StitchTool } from "#/core/tools/";
   import { PatternEventBus } from "#/core/services/";
 
   const fluent = useFluent();
@@ -112,6 +112,19 @@
     },
   );
 
+  watch(
+    () => appStateStore.selectedTool,
+    (_tool, prevTool) => {
+      if (!patternsStore.pattern) return;
+
+      if (prevTool instanceof CursorTool) {
+        // Blur the reference image when the cursor tool is deselected.
+        patternsStore.pattern!.referenceImage.blur();
+      }
+    },
+    { immediate: true },
+  );
+
   useEventListener<CustomEvent<ToolEventDetail>>(patternCanvas, EventType.ToolMainAction, async (e) => {
     const tool = appStateStore.selectedTool;
     const pattern = patternsStore.pattern;
@@ -138,12 +151,16 @@
     const pattern = patternsStore.pattern;
     if (!tool || !pattern) return;
 
+    if (e.detail.event.type !== "pointerupoutside") {
+      // Call the `release` method only if the pointer is not released outside.
+      await tool.release?.(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
+    }
+    patternCanvas.clear();
+
     if (tool instanceof StitchTool) {
       // End a transaction on the stitch tool release.
       await patternsStore.endTransaction();
     }
-
-    await tool.release?.(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
   });
 
   useEventListener<CustomEvent<TransformEventDetail>>(patternCanvas, EventType.Transform, async ({ detail }) => {

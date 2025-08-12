@@ -43,4 +43,4 @@ export interface PatternEditorTool {
   release?(pattern: Pattern, detail: ToolEventDetail, palindex?: number): Promise<void> | void;
 }
 
-export { StitchTool };
+export { StitchTool, CursorTool };

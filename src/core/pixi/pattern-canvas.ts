@@ -4,13 +4,7 @@ import type { ApplicationOptions, ColorSource } from "pixi.js";
 
 import { Pattern } from "#/core/pattern/";
 import { Hint } from "./components/";
-import {
-  EventType,
-  InternalEventType,
-  PatternViewport,
-  type ViewportOptions,
-  type ZoomState,
-} from "./pattern-viewport.ts";
+import { EventType, PatternViewport, type ViewportOptions, type ZoomState } from "./pattern-viewport.ts";
 import { TextureManager } from "./texture-manager.ts";
 
 import type { Bead, LineStitch, NodeStitch } from "#/core/pattern/";
@@ -62,8 +56,6 @@ export class PatternCanvas extends EventTarget {
     this.#viewport.on(EventType.Transform, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.Transform, { detail }));
     });
-
-    this.#viewport.on(InternalEventType.CanvasClear, () => this.clearHint());
   }
 
   /**
@@ -94,13 +86,16 @@ export class PatternCanvas extends EventTarget {
     if (import.meta.env.DEV) initDevtools({ app: this.#pixi });
   }
 
+  /** Destroys the pattern canvas. */
   destroy() {
-    this.#viewport.destroy(true);
-    this.#pixi.destroy(true, true);
-
+    this.#pixi.destroy(undefined, true);
     TextureManager.destroy();
   }
 
+  /**
+   * Sets the pattern to display in the viewport.
+   * @param pattern The pattern to display.
+   */
   setPattern(pattern: Pattern) {
     this.#viewport.removeChildren();
     this.#viewport.addChild(pattern.root, this.#stages.hint);
@@ -110,24 +105,45 @@ export class PatternCanvas extends EventTarget {
     this.#viewport.fit();
   }
 
+  /**
+   * Sets the zoom level of the viewport.
+   * @param zoom The zoom level to set.
+   */
   setZoom(zoom: ZoomState) {
     this.#viewport.setZoom(zoom);
   }
 
+  /**
+   * Resizes the Pixi.js renderer.
+   * @param width The new width of the renderer.
+   * @param height The new height of the renderer.
+   */
   resize(width: number, height: number) {
     this.#pixi.renderer.resize(width, height);
     this.#viewport.resizeScreen(width, height);
   }
 
+  /**
+   * Draws a line hint on the canvas.
+   * @param line The line to draw.
+   * @param color The color of the line.
+   */
   drawLineHint(line: LineStitch, color: ColorSource) {
     this.#stages.hint.drawLineHint(line, color);
   }
 
+  /**
+   * Draws a node hint on the canvas.
+   * @param node The node to draw.
+   * @param color The color of the node.
+   * @param bead The bead to draw (optional).
+   */
   drawNodeHint(node: NodeStitch, color: ColorSource, bead?: Bead) {
     this.#stages.hint.drawNodeHint(node, color, bead);
   }
 
-  clearHint() {
+  /** Clears the temporary display object (e.g. hints). */
+  clear() {
     this.#stages.hint.clearHint();
   }
 }

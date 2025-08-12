@@ -31,10 +31,12 @@ export class StitchTool implements PatternEditorTool {
     return this.prevStitchState === undefined;
   }
 
-  main(_pattern: Pattern, detail: ToolEventDetail, palindex?: number) {
+  main(pattern: Pattern, detail: ToolEventDetail, palindex?: number) {
     if (palindex === undefined) return;
 
     const { start, end, modifiers } = detail;
+    if (!patternContainsPoint(pattern.fabric, start, end)) return;
+
     const { x, y } = adjustStitchCoordinate(end, this.kind);
 
     switch (this.kind) {
@@ -113,8 +115,9 @@ export class StitchTool implements PatternEditorTool {
     }
   }
 
-  anti(_pattern: Pattern, detail: ToolEventDetail, palindex = 0) {
+  anti(pattern: Pattern, detail: ToolEventDetail, palindex = 0) {
     const { event, end: point } = detail;
+    if (!patternContainsPoint(pattern.fabric, point)) return;
 
     if (event.target instanceof StitchGraphics) {
       PatternEventBus.emit("remove-stitch", event.target.stitch);
@@ -135,10 +138,12 @@ export class StitchTool implements PatternEditorTool {
     }
   }
 
-  release(_pattern: Pattern, detail: ToolEventDetail, palindex?: number) {
+  release(pattern: Pattern, detail: ToolEventDetail, palindex?: number) {
     if (palindex === undefined) return;
 
     const { start, end } = detail;
+    if (!patternContainsPoint(pattern.fabric, start, end)) return;
+
     const { x, y } = adjustStitchCoordinate(end, this.kind);
 
     switch (this.kind) {
@@ -163,7 +168,14 @@ export class StitchTool implements PatternEditorTool {
   }
 }
 
-function adjustStitchCoordinate({ x, y }: Point, tool: StitchKind): Point {
+/**
+ * Adjusts the stitch coordinates based on the tool being used.
+ * @param point The point to adjust.
+ * @param tool The tool being used.
+ * @returns The adjusted point.
+ */
+function adjustStitchCoordinate(point: Point, tool: StitchKind): Point {
+  const { x, y } = point;
   const [intX, intY] = [Math.trunc(x), Math.trunc(y)];
   const [fracX, fracY] = [x - intX, y - intY];
   switch (tool) {
@@ -193,8 +205,26 @@ function adjustStitchCoordinate({ x, y }: Point, tool: StitchKind): Point {
   }
 }
 
-/** Orders points so that is no way to draw two lines with the same coordinates. */
+/**
+ * Orders points so that is no way to draw two lines with the same coordinates.
+ * @param start The start point.
+ * @param end The end point.
+ * @returns The ordered points.
+ */
 function orderPoints(start: Point, end: Point): [Point, Point] {
   if (start.y < end.y || (start.y === end.y && start.x < end.x)) return [start, end];
   else return [end, start];
+}
+
+/**
+ * Checks if a point is within the bounds of a pattern.
+ * @param patternSize The size of the pattern.
+ * @param points The points to check.
+ * @returns True if the point is within the pattern bounds, false otherwise.
+ */
+function patternContainsPoint(patternSize: { width: number; height: number }, ...points: Point[]) {
+  return points.every((point) => {
+    const { x, y } = point;
+    return x >= 0 && y >= 0 && x < patternSize.width && y < patternSize.height;
+  });
 }

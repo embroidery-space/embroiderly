@@ -234,11 +234,9 @@ export class PatternViewport extends Container {
   }
 
   private handlePointerDown(e: FederatedPointerEvent) {
-    const buttons = getMouseButtons(e);
-
     this.startPoint = this.content.toLocal(e.global);
-    if (!this.containsPoint(this.startPoint)) return this.emitToolEvent(InternalEventType.CanvasClear, e);
 
+    const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
       else this.emitToolEvent(EventType.ToolMainAction, e);
@@ -261,10 +259,6 @@ export class PatternViewport extends Container {
   }
 
   private handlePointerUp(e: FederatedPointerEvent) {
-    if (this.startPoint === undefined || !this.containsPoint(this.startPoint)) {
-      return this.emitToolEvent(InternalEventType.CanvasClear, e);
-    }
-
     const buttons = getMouseButtons(e);
     if (buttons.left) this.emitToolEvent(EventType.ToolRelease, e);
     else if (buttons.right) {
@@ -277,7 +271,6 @@ export class PatternViewport extends Container {
     setTimeout(() => {
       this.startPoint = undefined;
       this.isDragging = false;
-      this.emitToolEvent(InternalEventType.CanvasClear, e);
     }, 0);
   }
 
@@ -287,9 +280,8 @@ export class PatternViewport extends Container {
    * @param type - The type of the event to emit.
    * @param event - The original pointer event.
    */
-  private emitToolEvent(type: EventType | InternalEventType, event: FederatedPointerEvent) {
+  private emitToolEvent(type: EventType, event: FederatedPointerEvent) {
     const point = this.content.toLocal(event.global);
-    if (!this.containsPoint(point) && type !== InternalEventType.CanvasClear) return;
     const modifiers: ModifiersState = {
       mod1: MODIFIERS.mod1(event),
       mod2: MODIFIERS.mod2(event),
@@ -368,10 +360,6 @@ export const enum EventType {
   ToolAntiAction = "tool-anti-action",
   ToolRelease = "tool-release",
   Transform = "transform",
-}
-
-export const enum InternalEventType {
-  CanvasClear = "canvas-clear",
 }
 
 /** The detail of the tool event. */
