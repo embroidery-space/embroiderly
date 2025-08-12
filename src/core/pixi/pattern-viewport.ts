@@ -1,56 +1,98 @@
-import { Bounds, Container, FederatedPointerEvent, Point } from "pixi.js";
-import { type DestroyOptions } from "pixi.js";
+import { Bounds, Container, Point, Rectangle } from "pixi.js";
+import type { ContainerChild, DestroyOptions, IRenderLayer, FederatedPointerEvent } from "pixi.js";
 
 import { getMouseButtons, MODIFIERS, type ModifiersState } from "./utils/";
+import { DEFAULT_CONTAINER_OPTIONS } from "./constants.ts";
 
 export const MIN_SCALE = 1;
 export const MAX_SCALE = 100;
 
 const WHEEL_ZOOM_FACTOR = 0.1;
 
+/** Options for the pattern viewport. */
 export interface ViewportOptions {
+  /**
+   * The width of the screen in pixels.
+   * @default window.innerWidth
+   */
   screenWidth?: number;
+  /**
+   * The height of the screen in pixels.
+   * @default window.innerHeight
+   */
   screenHeight?: number;
 
-  worldWidth?: number;
-  worldHeight?: number;
+  /**
+   * The width of the pattern in stitches (which are actually mapped 1 to 1 to pixels, though).
+   * @default options.patternWidth
+   */
+  patternWidth?: number;
+  /**
+   * The height of the pattern in stitches (which are actually mapped 1 to 1 to pixels, though).
+   * @default options.patternHeight
+   */
+  patternHeight?: number;
 
+  /**
+   * The action to take when the user scrolls the wheel over the viewport.
+   * @default "zoom"
+   */
   wheelAction?: WheelAction;
 }
 
 export type ZoomState = "fit" | "fit-width" | "fit-height" | number;
 export type WheelAction = "zoom" | "scroll";
 
+/**
+ * The main viewport for the pattern editor.
+ *
+ * It is responsible for handling user input and managing the view of the pattern.
+ */
 export class PatternViewport extends Container {
   private domElement!: HTMLElement;
+
+  wheelAction: WheelAction = "zoom";
 
   screenWidth = window.innerWidth;
   screenHeight = window.innerHeight;
 
-  worldWidth = this.screenWidth;
-  worldHeight = this.screenHeight;
-
-  wheelAction: WheelAction = "zoom";
+  patternWidth = this.screenWidth;
+  patternHeight = this.screenHeight;
 
   private startPoint?: Point;
   private isDragging = false;
 
+  /**
+   * The content container for the pattern viewport.
+   * It holds all the elements added to the viewport.
+   */
+  private content = new Container({ label: "Pattern Viewport Content", interactiveChildren: true });
+
   constructor() {
     super({
+      ...DEFAULT_CONTAINER_OPTIONS,
       label: "Pattern Viewport",
       eventMode: "static",
+      interactiveChildren: true,
     });
+    this.addChildAt(this.content, 0);
   }
 
-  init(domElement: HTMLElement, options: ViewportOptions) {
+  /**
+   * Initializes the pattern viewport.
+   * @param domElement The Canvas DOM element.
+   * It is used for handling some user input events.
+   * @param options The options to use for the viewport.
+   */
+  init(domElement: HTMLElement, options?: ViewportOptions) {
     this.domElement = domElement;
 
-    this.screenWidth = options.screenWidth ?? this.screenWidth;
-    this.screenHeight = options.screenHeight ?? this.screenHeight;
-    this.worldWidth = options.worldWidth ?? this.worldWidth;
-    this.worldHeight = options.worldHeight ?? this.worldHeight;
+    this.screenWidth = options?.screenWidth ?? this.screenWidth;
+    this.screenHeight = options?.screenHeight ?? this.screenHeight;
+    this.patternWidth = options?.patternWidth ?? this.patternWidth;
+    this.patternHeight = options?.patternHeight ?? this.patternHeight;
 
-    this.wheelAction = options.wheelAction ?? "zoom";
+    this.wheelAction = options?.wheelAction ?? "zoom";
 
     this.on("pointerdown", this.handlePointerDown, this);
     this.on("pointermove", this.handlePointerMove, this);
@@ -59,7 +101,7 @@ export class PatternViewport extends Container {
     this.on("pointercancel", this.handlePointerUp, this);
 
     this.handleWheel = this.handleWheel.bind(this);
-    this.domElement.addEventListener("wheel", this.handleWheel, { passive: false });
+    this.domElement.addEventListener("wheel", this.handleWheel, { passive: false, capture: true });
 
     this.handleContextMenu = this.handleContextMenu.bind(this);
     this.domElement.addEventListener("contextmenu", this.handleContextMenu, { capture: true });
@@ -72,107 +114,130 @@ export class PatternViewport extends Container {
     this.off("pointerupoutside", this.handlePointerUp, this);
     this.off("pointercancel", this.handlePointerUp, this);
 
-    this.domElement.removeEventListener("wheel", this.handleWheel);
+    this.domElement.removeEventListener("wheel", this.handleWheel, { capture: true });
     this.domElement.removeEventListener("contextmenu", this.handleContextMenu, { capture: true });
 
     super.destroy(options);
   }
 
-  get worldScreenWidth() {
-    return this.screenWidth / this.scale.x;
+  /**
+   * Resizes the screen area.
+   * @param width The new width of the screen.
+   * @param height The new height of the screen.
+   */
+  resizeScreen(width: number, height: number) {
+    this.screenWidth = width;
+    this.screenHeight = height;
+    this.hitArea = this.boundsArea = new Rectangle(0, 0, width, height);
   }
 
-  get worldScreenHeight() {
-    return this.screenHeight / this.scale.y;
+  /**
+   * Resizes the pattern area.
+   * @param width The new width of the pattern.
+   * @param height The new height of the pattern.
+   */
+  resizePattern(width: number, height: number) {
+    this.patternWidth = width;
+    this.patternHeight = height;
   }
 
+  // Override the `addChild` method to add children to the content container, but not the viewport itself.
+  override addChild<U extends (ContainerChild | IRenderLayer)[]>(...children: U): U[0] {
+    return this.content.addChild(...children);
+  }
+
+  // Override the `removeChildren` method to remove children from the content container, but not the viewport itself.
+  override removeChildren(beginIndex?: number, endIndex?: number): ContainerChild[] {
+    return this.content.removeChildren(beginIndex, endIndex);
+  }
+
+  /** The width of the pattern in screen coordinates. */
+  get patternScreenWidth() {
+    return this.screenWidth / this.content.scale.x;
+  }
+
+  /** The height of the pattern in screen coordinates. */
+  get patternScreenHeight() {
+    return this.screenHeight / this.content.scale.y;
+  }
+
+  /** Checks if the given point is within the pattern bounds. */
   containsPoint({ x, y }: Point) {
-    return x >= 0 && y >= 0 && x <= this.worldWidth && y <= this.worldHeight;
+    return x >= 0 && y >= 0 && x <= this.patternWidth && y <= this.patternHeight;
   }
 
-  toWorld(point: Point) {
-    return this.toLocal(point);
-  }
-
-  move(point: Point) {
-    this.position.x += point.x;
-    this.position.y += point.y;
-
+  /**
+   * Moves the content by the given point.
+   * @param point The point to move by.
+   */
+  moveBy(point: Point) {
+    this.content.position.x += point.x;
+    this.content.position.y += point.y;
     this.emitTransformEvent();
   }
 
-  moveCenter(point?: Point) {
-    if (!point) point = new Point(this.worldWidth / 2, this.worldHeight / 2);
-
-    const x = (this.worldScreenWidth / 2 - point.x) * this.scale.x;
-    const y = (this.worldScreenHeight / 2 - point.y) * this.scale.y;
-    this.position.set(x, y);
-
+  /** Moves the content to the center of the viewport. */
+  moveToCenter() {
+    this.content.position.x = (this.patternScreenWidth / 2 - this.patternWidth / 2) * this.scale.x;
+    this.content.position.y = (this.patternScreenHeight / 2 - this.patternHeight / 2) * this.scale.y;
     this.emitTransformEvent();
   }
 
+  /** Sets the zoom level of the viewport. */
   setZoom(zoom: ZoomState) {
     if (zoom === "fit") this.fit();
     else if (zoom === "fit-width") this.fitWidth();
     else if (zoom === "fit-height") this.fitHeight();
     else {
-      const position = this.position.clone();
+      const position = this.content.position.clone();
 
-      const beforeTransform = this.toLocal(position);
+      const beforeTransform = this.content.toLocal(position);
       this.clampZoom(zoom);
+      const afterTransform = this.content.toLocal(position);
 
-      const afterTransform = this.toLocal(position);
-      this.position.x += (afterTransform.x - beforeTransform.x) * this.scale.x;
-      this.position.y += (afterTransform.y - beforeTransform.y) * this.scale.y;
+      this.position.x += (afterTransform.x - beforeTransform.x) * this.content.scale.x;
+      this.position.y += (afterTransform.y - beforeTransform.y) * this.content.scale.y;
 
       this.emitTransformEvent();
     }
   }
 
+  /** Fits the content to the viewport. */
   fit() {
-    const scaleX = this.screenWidth / this.worldWidth;
-    const scaleY = this.screenHeight / this.worldHeight;
+    const scaleX = this.screenWidth / this.patternWidth;
+    const scaleY = this.screenHeight / this.patternHeight;
 
     this.clampZoom(Math.min(scaleX, scaleY));
-    this.moveCenter();
+    this.moveToCenter();
 
     this.emitTransformEvent();
   }
 
+  /** Fits the content to the width of the viewport. */
   fitWidth() {
-    const scale = this.screenWidth / this.worldWidth;
+    const scale = this.screenWidth / this.patternWidth;
 
     this.clampZoom(scale);
-    this.moveCenter();
+    this.moveToCenter();
 
     this.emitTransformEvent();
   }
 
+  /** Fits the content to the height of the viewport. */
   fitHeight() {
-    const scale = this.screenHeight / this.worldHeight;
+    const scale = this.screenHeight / this.patternHeight;
 
     this.clampZoom(scale);
-    this.moveCenter();
+    this.moveToCenter();
 
     this.emitTransformEvent();
-  }
-
-  resizeScreen(width: number, height: number) {
-    this.screenWidth = width;
-    this.screenHeight = height;
-  }
-
-  resizeWorld(width: number, height: number) {
-    this.worldWidth = width;
-    this.worldHeight = height;
   }
 
   private handlePointerDown(e: FederatedPointerEvent) {
     const buttons = getMouseButtons(e);
-    const point = this.toWorld(e.global);
 
-    this.startPoint = this.containsPoint(point) ? point : undefined;
-    if (this.startPoint === undefined) return this.emitToolEvent(InternalEventType.CanvasClear, e);
+    this.startPoint = this.content.toLocal(e.global);
+    if (!this.containsPoint(this.startPoint)) return this.emitToolEvent(InternalEventType.CanvasClear, e);
 
     if (buttons.left) {
       if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
@@ -189,30 +254,31 @@ export class PatternViewport extends Container {
     } else if (buttons.right) {
       if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
       else {
-        this.startPoint = undefined;
         this.isDragging = true;
-        this.move(e.movement);
+        this.moveBy(e.movement);
       }
     }
   }
 
   private handlePointerUp(e: FederatedPointerEvent) {
-    if (this.startPoint === undefined) return this.emitToolEvent(InternalEventType.CanvasClear, e);
+    if (this.startPoint === undefined || !this.containsPoint(this.startPoint)) {
+      return this.emitToolEvent(InternalEventType.CanvasClear, e);
+    }
+
     const buttons = getMouseButtons(e);
     if (buttons.left) this.emitToolEvent(EventType.ToolRelease, e);
     else if (buttons.right) {
       if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
     }
-    this.startPoint = undefined;
-    this.isDragging = false;
-    this.emitToolEvent(InternalEventType.CanvasClear, e);
-  }
 
-  private handleContextMenu(e: MouseEvent) {
-    const buttons = getMouseButtons(e);
-    if (buttons.right && (MODIFIERS.mod1(e) || this.isDragging)) {
-      e.preventDefault();
-    }
+    // Clear the start point and dragging state on the next tick.
+    // It is necessary to do this on the next tick to allow the `handleContextMenu` method to access the correct state,
+    // since the `contextmenu` event is fired at the same time.
+    setTimeout(() => {
+      this.startPoint = undefined;
+      this.isDragging = false;
+      this.emitToolEvent(InternalEventType.CanvasClear, e);
+    }, 0);
   }
 
   /**
@@ -222,7 +288,7 @@ export class PatternViewport extends Container {
    * @param event - The original pointer event.
    */
   private emitToolEvent(type: EventType | InternalEventType, event: FederatedPointerEvent) {
-    const point = this.toWorld(event.global);
+    const point = this.content.toLocal(event.global);
     if (!this.containsPoint(point) && type !== InternalEventType.CanvasClear) return;
     const modifiers: ModifiersState = {
       mod1: MODIFIERS.mod1(event),
@@ -235,7 +301,10 @@ export class PatternViewport extends Container {
 
   /** Emits a transform event with the current scale and bounds. */
   private emitTransformEvent() {
-    const detail: TransformEventDetail = { scale: this.scale.x, bounds: this.getBounds() };
+    const detail: TransformEventDetail = {
+      scale: this.content.scale.x,
+      bounds: this.content.getBounds(),
+    };
     this.emit(EventType.Transform, detail);
   }
 
@@ -250,35 +319,47 @@ export class PatternViewport extends Container {
   private handleWheelScroll(e: WheelEvent) {
     const isTouchpad = Math.abs(e.deltaX) !== 0;
     if (isTouchpad) {
-      this.position.x -= e.deltaX;
-      this.position.y -= e.deltaY;
+      this.content.position.x -= e.deltaX;
+      this.content.position.y -= e.deltaY;
     } else {
-      if (MODIFIERS.mod2(e)) this.position.x -= e.deltaY;
-      else this.position.y -= e.deltaY;
+      if (MODIFIERS.mod2(e)) this.content.position.x -= e.deltaY;
+      else this.content.position.y -= e.deltaY;
     }
 
     this.emitTransformEvent();
   }
 
   private handleWheelZoom(e: WheelEvent) {
+    // Prevent zoom on a little scroll.
     if (Math.abs(e.deltaY) < 2) return;
+
     const delta = 1 - (e.deltaY > 0 ? WHEEL_ZOOM_FACTOR : -WHEEL_ZOOM_FACTOR);
-
     const mousePosition = new Point(e.offsetX, e.offsetY);
-    const beforeTransform = this.toLocal(mousePosition);
-    this.clampZoom(this.scale.x * delta);
 
-    const afterTransform = this.toLocal(mousePosition);
-    this.position.x += (afterTransform.x - beforeTransform.x) * this.scale.x;
-    this.position.y += (afterTransform.y - beforeTransform.y) * this.scale.y;
+    const beforeTransform = this.content.toLocal(mousePosition);
+    this.clampZoom(this.content.scale.x * delta);
+    const afterTransform = this.content.toLocal(mousePosition);
+
+    this.content.position.x += (afterTransform.x - beforeTransform.x) * this.content.scale.x;
+    this.content.position.y += (afterTransform.y - beforeTransform.y) * this.content.scale.y;
 
     this.emitTransformEvent();
   }
 
-  /** Clamps the zoom level to the defined min and max scale and sets it. */
-  private clampZoom(value = this.scale.x) {
+  private handleContextMenu(e: MouseEvent) {
+    const buttons = getMouseButtons(e);
+    if (buttons.right && (MODIFIERS.mod1(e) || this.isDragging)) {
+      e.preventDefault();
+    }
+  }
+
+  /**
+   * Clamps the zoom level to the defined min and max scale and sets it.
+   * @param value The zoom level to set. Defaults to the current content scale.
+   */
+  private clampZoom(value = this.content.scale.x) {
     const scale = Math.min(Math.max(value, MIN_SCALE), MAX_SCALE);
-    this.scale.set(scale);
+    this.content.scale.set(scale);
   }
 }
 

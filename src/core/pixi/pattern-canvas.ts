@@ -15,13 +15,21 @@ import { TextureManager } from "./texture-manager.ts";
 
 import type { Bead, LineStitch, NodeStitch } from "#/core/pattern/";
 
+/** Options for the pattern canvas. */
 export interface PatternCanvasOptions {
+  /** Options for the Pixi.js renderer. */
   render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;
-  viewport?: Pick<ViewportOptions, "wheelAction">;
+  /** Options for the custom viewport. */
+  viewport?: ViewportOptions;
 }
 
 const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
-  eventFeatures: { globalMove: false },
+  eventFeatures: {
+    // We don't need to support global mouse movement.
+    globalMove: false,
+    // We handle wheel events ourselves so we disable Pixi.js wheel events for performance.
+    wheel: false,
+  },
   antialias: true,
   backgroundAlpha: 0,
   preference: "webgl",
@@ -30,9 +38,10 @@ const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
 // We use a native `EventTarget` instead of an `EventEmitter` from Pixi.js here,
 // because this class will be used in a Vue.js environment where it is more convenient to use native events.
 export class PatternCanvas extends EventTarget {
-  private pixi = new Application();
-  private viewport = new PatternViewport();
-  private stages = {
+  #pixi = new Application();
+  #viewport = new PatternViewport();
+
+  #stages = {
     // lowest
     hint: new Hint(),
     // highest
@@ -41,85 +50,84 @@ export class PatternCanvas extends EventTarget {
   constructor() {
     super();
 
-    this.viewport.on(EventType.ToolMainAction, (detail) => {
+    this.#viewport.on(EventType.ToolMainAction, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ToolMainAction, { detail }));
     });
-    this.viewport.on(EventType.ToolAntiAction, (detail) => {
+    this.#viewport.on(EventType.ToolAntiAction, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ToolAntiAction, { detail }));
     });
-    this.viewport.on(EventType.ToolRelease, (detail) => {
+    this.#viewport.on(EventType.ToolRelease, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.ToolRelease, { detail }));
     });
-    this.viewport.on(EventType.Transform, (detail) => {
+    this.#viewport.on(EventType.Transform, (detail) => {
       this.dispatchEvent(new CustomEvent(EventType.Transform, { detail }));
     });
 
-    this.viewport.on(InternalEventType.CanvasClear, () => this.clearHint());
+    this.#viewport.on(InternalEventType.CanvasClear, () => this.clearHint());
   }
 
+  /**
+   * Initializes the pattern canvas.
+   * @param canvas The canvas element to use for rendering.
+   * @param options The options to use for initializing the canvas.
+   */
   async init(canvas: HTMLCanvasElement, options?: PatternCanvasOptions) {
     const { width, height } = canvas.getBoundingClientRect();
 
-    await this.pixi.init({
+    // Initialize the Pixi application and custom viewport.
+    await this.#pixi.init({
       ...DEFAULT_INIT_OPTIONS,
       ...options?.render,
       canvas,
       width,
       height,
     });
-    this.viewport.init(this.pixi.renderer.events.domElement, {
-      ...options?.viewport,
-      screenWidth: width,
-      screenHeight: height,
-    });
+    this.#viewport.init(this.#pixi.renderer.events.domElement, options?.viewport);
 
-    TextureManager.init(this.pixi.renderer);
+    // Initialize the texture manager.
+    TextureManager.init(this.#pixi.renderer);
 
     // Replace the default stage with our viewport.
-    this.pixi.stage = this.viewport;
+    this.#pixi.stage = this.#viewport;
 
     // Init devtools last, so it has access to the fully initialized application.
-    if (import.meta.env.DEV) initDevtools({ app: this.pixi });
+    if (import.meta.env.DEV) initDevtools({ app: this.#pixi });
   }
 
   destroy() {
-    this.viewport.destroy(true);
-    this.pixi.destroy(true, true);
+    this.#viewport.destroy(true);
+    this.#pixi.destroy(true, true);
 
     TextureManager.destroy();
   }
 
   setPattern(pattern: Pattern) {
-    this.clear();
-    this.viewport.addChild(pattern.root, this.stages.hint);
+    this.#viewport.removeChildren();
+    this.#viewport.addChild(pattern.root, this.#stages.hint);
 
     const { width, height } = pattern.fabric;
-    this.viewport.resizeWorld(width, height);
-    this.viewport.fit();
+    this.#viewport.resizePattern(width, height);
+    this.#viewport.fit();
   }
 
   setZoom(zoom: ZoomState) {
-    this.viewport.setZoom(zoom);
+    this.#viewport.setZoom(zoom);
   }
 
   resize(width: number, height: number) {
-    this.pixi.renderer.resize(width, height);
-    this.viewport.resizeScreen(width, height);
+    this.#pixi.renderer.resize(width, height);
+    this.#viewport.resizeScreen(width, height);
   }
 
   drawLineHint(line: LineStitch, color: ColorSource) {
-    this.stages.hint.drawLineHint(line, color);
+    this.#stages.hint.drawLineHint(line, color);
   }
 
   drawNodeHint(node: NodeStitch, color: ColorSource, bead?: Bead) {
-    this.stages.hint.drawNodeHint(node, color, bead);
-  }
-
-  clear() {
-    this.viewport.removeChildren();
+    this.#stages.hint.drawNodeHint(node, color, bead);
   }
 
   clearHint() {
-    this.stages.hint.clearHint();
+    this.#stages.hint.clearHint();
   }
 }
