@@ -264,10 +264,10 @@ pub fn close_pattern<R: tauri::Runtime>(
 
   if !force.unwrap_or(false) {
     let history = history.read().unwrap();
-    if let Some(history) = history.get(&pattern_id) {
-      if history.has_unsaved_changes() {
-        return Err(PatternError::UnsavedChanges(pattern_id).into());
-      }
+    if let Some(history) = history.get(&pattern_id)
+      && history.has_unsaved_changes()
+    {
+      return Err(PatternError::UnsavedChanges(pattern_id).into());
     }
   }
 
