@@ -1,11 +1,5 @@
-import {
-  Container,
-  FederatedPointerEvent,
-  Graphics,
-  GraphicsContext,
-  type ContainerOptions,
-  type StrokeStyle,
-} from "pixi.js";
+import { Container, FederatedPointerEvent, Graphics, GraphicsContext, Rectangle } from "pixi.js";
+import type { ContainerChild, ContainerOptions, DestroyOptions, StrokeStyle, IRenderLayer } from "pixi.js";
 
 import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/";
 import { getMouseButtons } from "#/core/pixi/utils/";
@@ -19,23 +13,22 @@ const SELECTION_CORNER_CONTEXT = new GraphicsContext()
 type ResizeDirection = "top" | "right" | "bottom" | "left" | "top-left" | "top-right" | "bottom-right" | "bottom-left";
 
 export class OutlineSelection extends Container {
-  #stages = {
-    // lowest
-    content: new Container({ ...DEFAULT_CONTAINER_OPTIONS, label: "Selection Content", interactiveChildren: true }),
-    controls: new Container({
-      ...DEFAULT_CONTAINER_OPTIONS,
-      label: "Selection Controls",
-      interactiveChildren: true,
-      visible: false,
-      renderable: false,
-    }),
-    // highest
-  };
+  private content = new Container({
+    ...DEFAULT_CONTAINER_OPTIONS,
+    label: "Selection Content",
+    interactiveChildren: true,
+  });
+  readonly controls = new Container({
+    ...DEFAULT_CONTAINER_OPTIONS,
+    label: "Selection Controls",
+    interactiveChildren: true,
+    visible: false,
+    renderable: false,
+  });
 
   private isFocused = false;
-
-  private isResizing?: ResizeDirection;
   private isDragging = false;
+  private isResizing?: ResizeDirection;
 
   constructor(options?: ContainerOptions) {
     super({
@@ -45,8 +38,8 @@ export class OutlineSelection extends Container {
       interactiveChildren: true,
     });
 
-    this.addChild(...Object.values(this.#stages));
-    this.blur();
+    this.addChildAt(this.content, 0);
+    this.addChildAt(this.controls, 1);
 
     this.on("pointerdown", this.handlePointerDown, this);
     this.on("pointermove", this.handlePointerMove, this);
@@ -55,59 +48,59 @@ export class OutlineSelection extends Container {
     this.on("pointercancel", this.handlePointerUp, this);
   }
 
-  /** Returns the target child of the content container. */
-  get child() {
-    return this.#stages.content.children[0];
+  override destroy(options?: DestroyOptions): void {
+    this.off("pointerdown", this.handlePointerDown, this);
+    this.off("pointermove", this.handlePointerMove, this);
+    this.off("pointerup", this.handlePointerUp, this);
+    this.off("pointerupoutside", this.handlePointerUp, this);
+    this.off("pointercancel", this.handlePointerUp, this);
+
+    super.destroy(options);
   }
 
-  /** Returns the content of the selection container. */
-  get content() {
-    return this.#stages.content;
-  }
+  override addChild<U extends (ContainerChild | IRenderLayer)[]>(...children: U): U[0] {
+    const first = this.content.addChild(...children);
 
-  /** Returns the controls of the selection container. */
-  get controls() {
-    return this.#stages.controls;
-  }
-
-  /** Pushes children to the content container. */
-  push(...children: Container[]) {
-    this.#stages.content.addChild(...children);
+    if (first instanceof Container) {
+      this.boundsArea = new Rectangle(0, 0, first.width, first.height);
+    }
     this.renderSelectionControls();
+
+    return first;
   }
 
-  /** Clears all children from the content container. */
-  clear() {
-    this.#stages.content.removeChildren();
-    if (this.isFocused) this.blur();
+  override removeChildren(beginIndex?: number, endIndex?: number): ContainerChild[] {
+    this.blur();
+    return this.content.removeChildren(beginIndex, endIndex);
   }
 
   /** Focuses the selection container. */
   focus() {
-    if (!this.child || this.isFocused) return;
+    if (this.isFocused) return;
 
     this.isFocused = true;
 
-    this.child.cursor = "move";
+    this.content.children.forEach((child) => (child.cursor = "move"));
+    this.renderSelectionControls();
 
-    this.#stages.controls.visible = true;
-    this.#stages.controls.renderable = true;
+    this.controls.visible = true;
+    this.controls.renderable = true;
   }
 
   /** Blurs the selection container. */
   blur() {
-    if (!this.child || !this.isFocused) return;
+    if (!this.isFocused) return;
 
     this.isFocused = false;
 
-    this.child.cursor = "default";
+    this.content.children.forEach((child) => (child.cursor = "default"));
 
-    this.#stages.controls.visible = false;
-    this.#stages.controls.renderable = false;
+    this.controls.visible = false;
+    this.controls.renderable = false;
   }
 
   private renderSelectionControls() {
-    const { width, height } = this.#stages.content.getSize();
+    const { width, height } = this.content.getSize();
 
     const tEdge = new Graphics({ label: "top" }).moveTo(0, 0).lineTo(width, 0).fill("white").stroke(SELECTION_STOKE); // prettier-ignore
     const rEdge = new Graphics({ label: "right" }).moveTo(width, 0).lineTo(width, height).fill("white").stroke(SELECTION_STOKE); // prettier-ignore
@@ -131,9 +124,9 @@ export class OutlineSelection extends Container {
     tlCorner.cursor = brCorner.cursor = "nwse-resize";
     trCorner.cursor = blCorner.cursor = "nesw-resize";
 
-    this.#stages.controls.removeChildren().forEach((child) => child.destroy());
-    this.#stages.controls.addChild(tEdge, rEdge, bEdge, lEdge);
-    this.#stages.controls.addChild(tlCorner, trCorner, blCorner, brCorner);
+    this.controls.removeChildren().forEach((child) => child.destroy());
+    this.controls.addChild(tEdge, rEdge, bEdge, lEdge);
+    this.controls.addChild(tlCorner, trCorner, blCorner, brCorner);
   }
 
   private handlePointerDown(e: FederatedPointerEvent) {
@@ -151,55 +144,55 @@ export class OutlineSelection extends Container {
   }
 
   private handlePointerMove(e: FederatedPointerEvent) {
-    if (!this.child || !this.isFocused) return;
+    if (!this.isFocused) return;
 
     if (this.isResizing) {
       switch (this.isResizing) {
         case "top": {
-          this.child.height -= e.movementY;
-          this.y += e.movementY * (this.height / this.child.height);
+          this.height -= e.movementY;
+          this.y += e.movementY;
           break;
         }
         case "bottom": {
-          this.child.height += e.movementY;
+          this.height += e.movementY;
           break;
         }
 
         case "left": {
-          this.child.width -= e.movementX;
+          this.width -= e.movementX;
           this.x += e.movementX;
           break;
         }
         case "right": {
-          this.child.width += e.movementX;
+          this.width += e.movementX;
           break;
         }
 
         case "top-left": {
-          this.child.height -= e.movementY;
-          this.y += e.movementY * (this.height / this.child.height);
-          this.child.width -= e.movementX;
-          this.x += e.movementX * (this.width / this.child.width);
+          this.height -= e.movementY;
+          this.y += e.movementY;
+          this.width -= e.movementX;
+          this.x += e.movementX;
           break;
         }
 
         case "top-right": {
-          this.child.height -= e.movementY;
-          this.y += e.movementY * (this.height / this.child.height);
-          this.child.width += e.movementX;
+          this.height -= e.movementY;
+          this.y += e.movementY;
+          this.width += e.movementX;
           break;
         }
 
         case "bottom-right": {
-          this.child.height += e.movementY;
-          this.child.width += e.movementX;
+          this.height += e.movementY;
+          this.width += e.movementX;
           break;
         }
 
         case "bottom-left": {
-          this.child.height += e.movementY;
-          this.child.width -= e.movementX;
-          this.x += e.movementX * (this.width / this.child.width);
+          this.height += e.movementY;
+          this.width -= e.movementX;
+          this.x += e.movementX;
           break;
         }
       }
@@ -208,8 +201,8 @@ export class OutlineSelection extends Container {
     }
 
     if (this.isDragging) {
-      this.x += e.movementX * (this.width / this.child.width);
-      this.y += e.movementY * (this.height / this.child.height);
+      this.x += e.movementX;
+      this.y += e.movementY;
     }
   }
 

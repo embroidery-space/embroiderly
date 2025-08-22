@@ -39,7 +39,7 @@
       <UContextMenu :items="canvasContextMenuOptions">
         <canvas
           ref="canvas"
-          v-element-size="useDebounceFn(({ width, height }) => patternCanvas.resize(width, height), 100)"
+          v-element-size="useDebounceFn(({ width, height }) => patternApplication.resize(width, height), 100)"
           class="size-full"
         ></canvas>
       </UContextMenu>
@@ -52,31 +52,32 @@
         :min="MIN_SCALE"
         :max="MAX_SCALE"
         class="max-w-3xs w-full"
-        @update:model-value="(value) => patternCanvas.setZoom(value)"
+        @update:model-value="(value) => patternApplication.setZoom(value)"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
   import type { ContextMenuItem } from "@nuxt/ui";
   import { useDebounceFn, useEventListener } from "@vueuse/core";
   import { vElementSize } from "@vueuse/components";
   import { Assets } from "pixi.js";
 
-  import { PatternCanvas, EventType, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE } from "#/core/pixi/";
-  import type { PatternCanvasOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
-  import { CursorTool, StitchTool } from "#/core/tools/";
-  import { PatternEventBus } from "#/core/services/";
+  import { PatternEvent } from "#/core/pattern/";
+  import { PatternApplication, ToolEvent, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE, PatternView } from "#/core/pixi/";
+  import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
+  import { CursorTool, type PatternEditorToolContext } from "#/core/tools/";
 
   const fluent = useFluent();
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
 
+  const patternApplication = new PatternApplication();
+
   const canvas = useTemplateRef("canvas");
-  const patternCanvas = new PatternCanvas();
   const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
     [
       {
@@ -86,14 +87,6 @@
       },
     ],
   ]);
-
-  /**
-   * Initialize the pattern canvas.
-   * It sets up the Pixi application, configures stages, and prepares the texture manager.
-   */
-  async function initPatternCanvas(options?: PatternCanvasOptions) {
-    await patternCanvas.init(canvas.value!, options);
-  }
 
   const zoom = ref(1);
 
@@ -105,10 +98,27 @@
 
   watch(
     () => patternsStore.pattern,
-    async (pattern) => {
-      if (!pattern) return;
-      await Assets.load(pattern.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
-      patternCanvas.setPattern(pattern);
+    async (pattern, oldPattern) => {
+      if (!pattern || pattern.id === oldPattern?.id) return;
+
+      await Assets.load(pattern.allSymbolFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
+
+      const patternView = new PatternView(pattern);
+      patternApplication.view = patternView;
+
+      pattern.addEventListener(PatternEvent.UpdateReferenceImage, (e) => {
+        const image = (e as CustomEvent).detail;
+        if (image) patternView.setReferenceImage(image);
+        else patternView.removeReferenceImage();
+      });
+      pattern.addEventListener(PatternEvent.UpdateReferenceImageSettings, (e) => (patternView.referenceImageSettings = (e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateFabric, (e) => patternView.setFabric((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateGrid, (e) => patternView.setGrid((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.AddStitch, (e) => patternView.addStitch((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.RemoveStitch, (e) => patternView.removeStitch((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateDisplayMode, (e) => patternView.setDisplayMode((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateShowSymbols, (e) => patternView.setShowSymbols((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateLayersVisibility, (e) => patternView.setLayersVisibility((e as CustomEvent).detail)); // prettier-ignore
     },
   );
 
@@ -119,81 +129,108 @@
 
       if (prevTool instanceof CursorTool) {
         // Blur the reference image when the cursor tool is deselected.
-        patternsStore.pattern!.referenceImage.blur();
+        // patternsStore.pattern!.referenceImage.blur();
       }
     },
     { immediate: true },
   );
 
-  useEventListener<CustomEvent<ToolEventDetail>>(patternCanvas, EventType.ToolMainAction, async (e) => {
-    const tool = appStateStore.selectedTool;
+  /**
+   * Initialize the pattern application.
+   * It sets up the Pixi.js `Application`, configures stages, and prepares the texture manager.
+   */
+  async function initPatternApplication(options?: PatternApplicationOptions) {
+    await patternApplication.init(canvas.value!, options);
+  }
+
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolMainAction, async (e) => {
     const pattern = patternsStore.pattern;
-    if (!tool || !pattern) return;
+    if (!pattern) return;
 
-    if (tool instanceof StitchTool && tool.isFirstRun) {
-      // Start a transaction for the first run of the stitch tool.
-      await patternsStore.startTransaction();
-    }
-
-    await tool.main(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
+    await appStateStore.selectedTool.main(createPatternEditorToolContext(e.detail));
   });
 
-  useEventListener<CustomEvent<ToolEventDetail>>(patternCanvas, EventType.ToolAntiAction, async (e) => {
-    const tool = appStateStore.selectedTool;
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolAntiAction, async (e) => {
     const pattern = patternsStore.pattern;
-    if (!tool || !pattern) return;
+    if (!pattern) return;
 
-    await tool.anti?.(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
+    await appStateStore.selectedTool.anti?.(createPatternEditorToolContext(e.detail));
   });
 
-  useEventListener<CustomEvent<ToolEventDetail>>(patternCanvas, EventType.ToolRelease, async (e) => {
-    const tool = appStateStore.selectedTool;
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolRelease, async (e) => {
     const pattern = patternsStore.pattern;
-    if (!tool || !pattern) return;
+    if (!pattern) return;
 
     if (e.detail.event.type !== "pointerupoutside") {
       // Call the `release` method only if the pointer is not released outside.
-      await tool.release?.(pattern, e.detail, appStateStore.selectedPaletteItemIndexes[0]);
-    }
-    patternCanvas.clear();
-
-    if (tool instanceof StitchTool) {
-      // End a transaction on the stitch tool release.
-      await patternsStore.endTransaction();
+      await appStateStore.selectedTool.release?.(createPatternEditorToolContext(e.detail));
     }
   });
 
-  useEventListener<CustomEvent<TransformEventDetail>>(patternCanvas, EventType.Transform, async ({ detail }) => {
+  useEventListener<CustomEvent<TransformEventDetail>>(patternApplication, ToolEvent.Transform, async ({ detail }) => {
+    if (!patternApplication.view) return;
+
     zoom.value = Math.round(detail.scale);
-    patternsStore.pattern!.adjustZoom(detail.scale, detail.bounds);
+    patternApplication.view.adjustZoom(detail.scale, detail.bounds);
   });
 
-  PatternEventBus.on("draw-line-hint", (line) => {
-    const pattern = patternsStore.pattern;
-    if (!pattern) return;
+  function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorToolContext {
+    return {
+      ...detail,
+      pattern: patternsStore.pattern!,
+      api: {
+        async addStitch(stitch) {
+          const palindex = appStateStore.selectedPaletteItemIndexes[0];
+          if (palindex !== undefined) {
+            stitch.palindex = palindex;
+            await patternsStore.addStitch(stitch);
+          }
+        },
+        async removeStitch(stitch) {
+          const palindex = appStateStore.selectedPaletteItemIndexes[0];
+          if (palindex !== undefined) {
+            stitch.palindex = palindex;
+            await patternsStore.removeStitch(stitch);
+          }
+        },
 
-    const palitem = pattern.palette[line.palindex]!;
-    patternCanvas.drawLineHint(line, palitem.color);
-  });
+        async updateReferenceImageSettings(settings) {
+          await patternsStore.updateReferenceImageSettings(settings);
+        },
 
-  PatternEventBus.on("draw-node-hint", (node) => {
-    const pattern = patternsStore.pattern;
-    if (!pattern) return;
+        startTransaction: patternsStore.startTransaction,
+        endTransaction: patternsStore.endTransaction,
+      },
+      ui: {
+        referenceImage: {
+          getSettings: () => patternApplication.view?.referenceImageSettings,
+          focus: () => patternApplication.view?.focusReferenceImage(),
+          blur: () => patternApplication.view?.blurReferenceImage(),
+        },
 
-    const palitem = pattern.palette[node.palindex]!;
-    patternCanvas.drawNodeHint(node, palitem.color);
-  });
+        hint: {
+          drawLine(stitch) {
+            const palindex = appStateStore.selectedPaletteItemIndexes[0];
+            if (palindex !== undefined) {
+              stitch.palindex = palindex;
+              patternApplication.view!.drawLineHint(stitch);
+            }
+          },
+          drawNode(stitch) {
+            const palindex = appStateStore.selectedPaletteItemIndexes[0];
+            if (palindex !== undefined) {
+              stitch.palindex = palindex;
+              patternApplication.view!.drawNodeHint(stitch);
+            }
+          },
+        },
+      },
+    };
+  }
 
-  defineExpose({ initPatternCanvas });
-
-  onMounted(async () => {
-    const pattern = patternsStore.pattern;
-    if (!pattern) return;
-    await Assets.load(pattern.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
-    patternCanvas.setPattern(pattern);
-  });
+  defineExpose({ initPatternApplication });
 
   onUnmounted(() => {
-    patternCanvas.destroy();
+    patternApplication.destroy();
   });
 </script>

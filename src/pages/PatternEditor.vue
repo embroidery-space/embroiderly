@@ -77,7 +77,7 @@
 
   onMounted(async () => {
     // 1. Initialize the pattern canvas.
-    await patternCanvas.value!.initPatternCanvas({
+    await patternCanvas.value!.initPatternApplication({
       render: {
         antialias: settingsStore.viewport.antialias,
       },

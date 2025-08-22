@@ -1,27 +1,29 @@
-import { Container, Graphics, type ColorSource } from "pixi.js";
+import { Container, Graphics } from "pixi.js";
+import type { ColorSource, ContainerOptions, DestroyOptions } from "pixi.js";
+
 import type { Bead, LineStitch, NodeStitch } from "#/core/pattern/";
-import { TextureManager } from "../texture-manager";
-import { STITCH_SCALE_FACTOR } from "../constants";
+import { DEFAULT_CONTAINER_OPTIONS, STITCH_SCALE_FACTOR, TextureManager } from "#/core/pixi/";
 
 export class Hint extends Container {
-  private graphics = new Graphics();
-  private zoom = 1;
-
-  constructor() {
-    super();
-    this.label = "Hint";
+  constructor(options?: ContainerOptions) {
+    super({
+      ...DEFAULT_CONTAINER_OPTIONS,
+      ...options,
+      label: "Hint",
+      alpha: 0.5,
+    });
   }
 
-  setZoom(value: number) {
-    this.zoom = value;
-    this.graphics.scale.set(value);
+  private clear(options?: DestroyOptions) {
+    this.removeChildren().forEach((child) => child.destroy(options));
+    return this.addChild(new Graphics());
   }
 
-  drawLineHint(line: LineStitch, color: ColorSource) {
-    const { x, y } = line;
+  drawLine(stitch: LineStitch, color: ColorSource) {
+    const { x, y } = stitch;
     const start = { x: x[0], y: y[0] };
     const end = { x: x[1], y: y[1] };
-    this.clearHint()
+    this.clear({ context: true })
       .moveTo(start.x, start.y)
       .lineTo(end.x, end.y)
       // Draw a line with a larger width to make it look like a border.
@@ -32,25 +34,14 @@ export class Hint extends Container {
       .stroke({ width: 0.2, color, cap: "round" });
   }
 
-  drawNodeHint(node: NodeStitch, color: ColorSource, bead?: Bead) {
-    const { x, y, kind, rotated } = node;
-    const graphics = this.clearHint();
+  drawNode(stitch: NodeStitch, color: ColorSource, bead?: Bead) {
+    const { x, y, kind, rotated } = stitch;
+    const graphics = this.clear({ context: false });
     graphics.context = TextureManager.getNodeTexture(kind, bead);
     graphics.pivot.set(this.width / 2, this.height / 2);
     graphics.scale.set(STITCH_SCALE_FACTOR);
     graphics.position.set(x, y);
     graphics.tint = color;
     if (rotated) graphics.angle = 90;
-  }
-
-  clearHint() {
-    this.graphics.destroy();
-    this.graphics = new Graphics();
-    this.graphics.angle = 0;
-    this.graphics.alpha = 0.5;
-    this.graphics.pivot.set(0, 0);
-    this.graphics.scale.set(this.zoom);
-    this.graphics.position.set(0, 0);
-    return this.addChild(this.graphics);
   }
 }

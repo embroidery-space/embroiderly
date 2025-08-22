@@ -2,9 +2,9 @@ import { ImageSource, Sprite, Texture, type ContainerOptions } from "pixi.js";
 
 import { ReferenceImage, ReferenceImageSettings } from "#/core/pattern/";
 import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
-import { OutlineSelection } from "./utils/";
+import { OutlineSelection } from "../utils";
 
-export class ReferenceImageContainer extends OutlineSelection {
+export class ReferenceImageView extends OutlineSelection {
   constructor(options?: ContainerOptions) {
     super({ ...DEFAULT_CONTAINER_OPTIONS, ...options });
   }
@@ -15,11 +15,12 @@ export class ReferenceImageContainer extends OutlineSelection {
     const texture = new Texture({ source: new ImageSource({ resource }) });
 
     this.removeImage();
-    this.push(
+    this.addChild(
       new Sprite({
         ...DEFAULT_CONTAINER_OPTIONS,
         texture,
         label: "Reference Image",
+        eventMode: "static",
         interactive: true,
       }),
     );
@@ -27,35 +28,18 @@ export class ReferenceImageContainer extends OutlineSelection {
 
   /** Removes the reference image. */
   removeImage() {
-    this.clear();
+    this.removeChildren().forEach((child) => child.destroy(true));
   }
 
-  /** Resizes the reference image to fit within the specified dimensions. */
-  fit(width: number, height: number) {
-    if (!this.child) return;
-
-    const scaleX = width / this.child.width;
-    const scaleY = height / this.child.height;
-
-    this.scale.set(Math.min(scaleX, scaleY));
+  /** Returns the settings for the reference image. */
+  get settings() {
+    return new ReferenceImageSettings(this);
   }
 
-  get transformations(): ReferenceImageSettings | undefined {
-    if (!this.child) return undefined;
-
-    const { x, y } = this.position;
-    const { width, height } = this.child.getSize();
-
-    return new ReferenceImageSettings({ x, y, width, height });
-  }
-
-  set transformations(settings: ReferenceImageSettings) {
-    if (!this.child) return;
+  /** Sets the settings for the reference image. */
+  set settings(settings: ReferenceImageSettings) {
     const { x, y, width, height } = settings;
-
     this.position.set(x, y);
-
-    this.child.width = width;
-    this.child.height = height;
+    this.setSize(width, height);
   }
 }

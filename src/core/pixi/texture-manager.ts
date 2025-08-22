@@ -200,10 +200,10 @@ function createHalfStitchShapeFigure() {
     .fill(0xffffff);
 }
 
-function createQuarterStitchShapeFigure() {
+function createQuarterStitchSolidFigure() {
   return new Graphics().rect(0, 0, 50, 50).fill(0xffffff).stroke({ width: 1, alignment: 0.5, color: 0x000000 });
 }
-function createQuarterStitchSolidFigure() {
+function createQuarterStitchShapeFigure() {
   return new Graphics()
     .poly([
       { x: 50, y: 0 },

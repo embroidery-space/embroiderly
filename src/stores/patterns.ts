@@ -13,23 +13,23 @@ import {
   StitchesApi,
 } from "#/api";
 import {
+  Pattern,
+  PatternInfo,
+  PatternEvent,
   AddedPaletteItemData,
-  deserializeStitch,
-  deserializeStitches,
   DisplayMode,
   PaletteSettings,
   PaletteItem,
   Fabric,
   Grid,
-  Pattern,
-  PatternInfo,
   PdfExportOptions,
-  type Stitch,
   LayersVisibility,
   ReferenceImage,
   ReferenceImageSettings,
+  deserializeStitch,
+  deserializeStitches,
+  type Stitch,
 } from "#/core/pattern/";
-import { PatternEventBus } from "#/core/services/";
 import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,
@@ -164,7 +164,7 @@ export const usePatternsStore = defineStore(
           case "pdf": {
             pdfExportModal.open({
               filePath,
-              options: pattern.value.publishSettings.pdf,
+              options: pattern.value.pdfExportOptions,
             });
             break;
           }
@@ -242,12 +242,12 @@ export const usePatternsStore = defineStore(
     }
     appWindow.listen<string>("image:set", ({ payload }) => {
       if (!pattern.value) return;
-      pattern.value.setReferenceImage(ReferenceImage.deserialize(payload));
+      pattern.value.referenceImage = ReferenceImage.deserialize(payload);
       triggerRef(pattern);
     });
     appWindow.listen<void>("image:remove", () => {
       if (!pattern.value) return;
-      pattern.value.removeReferenceImage();
+      pattern.value.referenceImage = undefined;
       triggerRef(pattern);
     });
 
@@ -255,10 +255,9 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await ImageApi.updateReferenceImageSettings(pattern.value.id, settings);
     }
-    PatternEventBus.on("update-reference-image-settings", updateReferenceImageSettings);
-    appWindow.listen<string>("image:settings:update", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdateReferenceImageSettings, ({ payload }) => {
       if (!pattern.value) return;
-      pattern.value.referenceImage.transformations = ReferenceImageSettings.deserialize(payload);
+      pattern.value.referenceImageSettings = ReferenceImageSettings.deserialize(payload);
     });
 
     function openPatternInfoModal() {
@@ -269,7 +268,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
     }
-    appWindow.listen<string>("pattern-info:update", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.info = PatternInfo.deserialize(payload);
       appStateStore.updateOpenedPattern(pattern.value.id, pattern.value.info.title);
@@ -282,7 +281,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await FabricApi.updateFabric(pattern.value.id, fabric);
     }
-    appWindow.listen<string>("fabric:update", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdateFabric, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.fabric = Fabric.deserialize(payload);
     });
@@ -295,7 +294,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await GridApi.updateGrid(pattern.value!.id, grid);
     }
-    appWindow.listen<string>("grid:update", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdateGrid, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.grid = Grid.deserialize(payload);
     });
@@ -304,7 +303,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await PaletteApi.addPaletteItem(pattern.value.id, palitem);
     }
-    appWindow.listen<string>("palette:add_palette_item", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.AddPaletteItem, ({ payload }) => {
       if (!pattern.value) return;
       const { palitem, palindex } = AddedPaletteItemData.deserialize(payload);
       pattern.value.addPaletteItem(palitem, palindex);
@@ -315,7 +314,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await PaletteApi.removePaletteItems(pattern.value.id, paletteItemIndexes);
     }
-    appWindow.listen<number[]>("palette:remove_palette_items", ({ payload: palindexes }) => {
+    appWindow.listen<number[]>(PatternEvent.RemovePaletteItem, ({ payload: palindexes }) => {
       if (!pattern.value) return;
       for (const palindex of palindexes.reverse()) {
         pattern.value.removePaletteItem(palindex);
@@ -324,14 +323,14 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
-    async function updatePaletteDisplaySettings(displaySettings: PaletteSettings, local = false) {
+    async function updatePaletteDisplaySettings(settings: PaletteSettings, local = false) {
       if (!pattern.value) return;
       if (local) {
-        pattern.value.paletteDisplaySettings = displaySettings;
+        pattern.value.paletteDisplaySettings = settings;
         triggerRef(pattern);
-      } else await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, displaySettings);
+      } else await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, settings);
     }
-    appWindow.listen<string>("palette:update_display_settings", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdatePaletteDisplaySettings, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.paletteDisplaySettings = PaletteSettings.deserialize(payload);
       triggerRef(pattern);
@@ -341,12 +340,10 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return StitchesApi.addStitch(pattern.value.id, stitch);
     }
-    PatternEventBus.on("add-stitch", addStitch);
     function removeStitch(stitch: Stitch) {
       if (!pattern.value) return;
       return StitchesApi.removeStitch(pattern.value.id, stitch);
     }
-    PatternEventBus.on("remove-stitch", removeStitch);
     appWindow.listen<string>("stitches:add_one", ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.addStitch(deserializeStitch(payload));
@@ -371,7 +368,7 @@ export const usePatternsStore = defineStore(
         return triggerRef(pattern);
       } else return DisplayApi.setDisplayMode(pattern.value.id, mode);
     }
-    appWindow.listen<DisplayMode>("display:set_mode", ({ payload: mode }) => {
+    appWindow.listen<DisplayMode>(PatternEvent.UpdateDisplayMode, ({ payload: mode }) => {
       if (!pattern.value) return;
       pattern.value.displayMode = mode;
       triggerRef(pattern);
@@ -381,7 +378,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return DisplayApi.showSymbols(pattern.value.id, value);
     }
-    appWindow.listen<boolean>("display:show_symbols", ({ payload: value }) => {
+    appWindow.listen<boolean>(PatternEvent.UpdateShowSymbols, ({ payload: value }) => {
       if (!pattern.value) return;
       pattern.value.showSymbols = value;
       triggerRef(pattern);
@@ -391,7 +388,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return DisplayApi.setLayersVisibility(pattern.value.id, layersVisibility);
     }
-    appWindow.listen<string>("display:set_layers_visibility", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdateLayersVisibility, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.layersVisibility = LayersVisibility.deserialize(payload);
       triggerRef(pattern);
@@ -399,15 +396,15 @@ export const usePatternsStore = defineStore(
 
     function openPublishModal() {
       if (!pattern.value) return;
-      publishModal.open({ options: pattern.value.publishSettings.pdf });
+      publishModal.open({ options: pattern.value.pdfExportOptions });
     }
     async function updatePdfExportOptions(options: PdfExportOptions) {
       if (!pattern.value) return;
       await PublishApi.updatePdfExportOptions(pattern.value.id, options);
     }
-    appWindow.listen<string>("publish:update-pdf", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdatePdfExportOptions, ({ payload }) => {
       if (!pattern.value) return;
-      pattern.value.publishSettings.pdf = PdfExportOptions.deserialize(payload);
+      pattern.value.pdfExportOptions = PdfExportOptions.deserialize(payload);
     });
 
     async function undo(options?: HistoryApi.UndoRedoOptions) {

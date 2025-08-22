@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
+    "strictPropertyInitialization": false,
     "paths": { "#/*": ["./src/*"] },
     "types": []
   }

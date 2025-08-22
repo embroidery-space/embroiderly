@@ -1,11 +1,8 @@
 import { Bounds, Container, Point, Rectangle } from "pixi.js";
 import type { ContainerChild, DestroyOptions, IRenderLayer, FederatedPointerEvent } from "pixi.js";
 
-import { getMouseButtons, MODIFIERS, type ModifiersState } from "./utils/";
-import { DEFAULT_CONTAINER_OPTIONS } from "./constants.ts";
-
-export const MIN_SCALE = 1;
-export const MAX_SCALE = 100;
+import { getMouseButtons, MODIFIERS, type ModifiersState } from "./utils/index.ts";
+import { MIN_SCALE, MAX_SCALE, DEFAULT_CONTAINER_OPTIONS } from "./constants.ts";
 
 const WHEEL_ZOOM_FACTOR = 0.1;
 
@@ -238,8 +235,8 @@ export class PatternViewport extends Container {
 
     const buttons = getMouseButtons(e);
     if (buttons.left) {
-      if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
-      else this.emitToolEvent(EventType.ToolMainAction, e);
+      if (MODIFIERS.mod3(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
+      else this.emitToolEvent(ToolEvent.ToolMainAction, e);
     }
   }
 
@@ -247,10 +244,10 @@ export class PatternViewport extends Container {
     const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (this.startPoint === undefined) return;
-      if (MODIFIERS.mod3(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
-      else this.emitToolEvent(EventType.ToolMainAction, e);
+      if (MODIFIERS.mod3(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
+      else this.emitToolEvent(ToolEvent.ToolMainAction, e);
     } else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
+      if (MODIFIERS.mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
       else {
         this.isDragging = true;
         this.moveBy(e.movement);
@@ -260,9 +257,9 @@ export class PatternViewport extends Container {
 
   private handlePointerUp(e: FederatedPointerEvent) {
     const buttons = getMouseButtons(e);
-    if (buttons.left) this.emitToolEvent(EventType.ToolRelease, e);
+    if (buttons.left) this.emitToolEvent(ToolEvent.ToolRelease, e);
     else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this.emitToolEvent(EventType.ToolAntiAction, e);
+      if (MODIFIERS.mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
     }
 
     // Clear the start point and dragging state on the next tick.
@@ -280,7 +277,7 @@ export class PatternViewport extends Container {
    * @param type - The type of the event to emit.
    * @param event - The original pointer event.
    */
-  private emitToolEvent(type: EventType, event: FederatedPointerEvent) {
+  private emitToolEvent(type: ToolEvent, event: FederatedPointerEvent) {
     const point = this.content.toLocal(event.global);
     const modifiers: ModifiersState = {
       mod1: MODIFIERS.mod1(event),
@@ -297,7 +294,7 @@ export class PatternViewport extends Container {
       scale: this.content.scale.x,
       bounds: this.content.getBounds(),
     };
-    this.emit(EventType.Transform, detail);
+    this.emit(ToolEvent.Transform, detail);
   }
 
   private handleWheel(e: WheelEvent) {
@@ -355,7 +352,7 @@ export class PatternViewport extends Container {
   }
 }
 
-export const enum EventType {
+export const enum ToolEvent {
   ToolMainAction = "tool-main-action",
   ToolAntiAction = "tool-anti-action",
   ToolRelease = "tool-release",

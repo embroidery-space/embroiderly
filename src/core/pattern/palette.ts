@@ -62,17 +62,17 @@ export class PaletteItem {
   brand: string;
   number: string;
   name: string;
+  color: Color;
   blends?: Blend[];
   symbolFont?: string;
 
-  private _color: Color;
   private _symbolCode?: number;
 
   constructor(data: b.infer<typeof PaletteItem.schema>) {
     this.brand = data.brand;
     this.number = data.number;
     this.name = data.name;
-    this._color = new Color(data.color);
+    this.color = new Color(data.color);
 
     if (data.blends) this.blends = data.blends.map((blend) => new Blend(blend));
 
@@ -103,7 +103,7 @@ export class PaletteItem {
       brand: data.brand,
       number: data.number,
       name: data.name,
-      color: data.color,
+      color: data.hex.slice(1),
       blends: data.blends ?? null,
       symbolFont: data.symbolFont ?? null,
       symbol: data._symbolCode ? { code: data._symbolCode } : null,
@@ -111,15 +111,11 @@ export class PaletteItem {
   }
 
   get hex() {
-    return this._color.toHex().toUpperCase();
-  }
-
-  get color() {
-    return this.hex.slice(1);
+    return this.color.toHex().toUpperCase();
   }
 
   get contrastColor() {
-    const [r, g, b] = this._color.toUint8RgbArray() as [number, number, number];
+    const [r, g, b] = this.color.toUint8RgbArray() as [number, number, number];
     const brightness = r * 0.299 + g * 0.587 + b * 0.114;
     return brightness > 128 ? "black" : "white";
   }

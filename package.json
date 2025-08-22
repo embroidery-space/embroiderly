@@ -32,7 +32,6 @@
     "@zorsh/zorsh": "0.3.3",
     "base64-js": "1.5.1",
     "dequal": "2.0.3",
-    "eventemitter3": "5.0.1",
     "fluent-vue": "3.7.3",
     "pinia": "3.0.3",
     "pinia-plugin-persistedstate": "4.4.1",
