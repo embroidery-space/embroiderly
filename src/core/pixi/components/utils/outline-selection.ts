@@ -38,6 +38,11 @@ export class OutlineSelection<T extends Container = Container> extends Container
 
     this.target = this.addChild(target, this.controls);
 
+    this.onRender = () => {
+      if (!this.isDragging || !this.isResizing) return;
+      this.renderSelectionControls();
+    };
+
     this.on("pointerdown", this.handlePointerDown, this);
     this.on("pointermove", this.handlePointerMove, this);
     this.on("pointerup", this.handlePointerUp, this);
@@ -46,6 +51,9 @@ export class OutlineSelection<T extends Container = Container> extends Container
   }
 
   override destroy(options?: DestroyOptions): void {
+    // @ts-expect-error ...
+    this.onRender = null;
+
     this.off("pointerdown", this.handlePointerDown, this);
     this.off("pointermove", this.handlePointerMove, this);
     this.off("pointerup", this.handlePointerUp, this);
@@ -179,8 +187,6 @@ export class OutlineSelection<T extends Container = Container> extends Container
           break;
         }
       }
-
-      this.renderSelectionControls();
     }
 
     if (this.isDragging) {
