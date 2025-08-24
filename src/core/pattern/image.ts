@@ -10,15 +10,15 @@ export class ReferenceImageSettings {
   constructor(data: b.infer<typeof ReferenceImageSettings.schema>) {
     this.x = data.x;
     this.y = data.y;
-    this.width = Math.round(data.width);
-    this.height = Math.round(data.height);
+    this.width = data.width;
+    this.height = data.height;
   }
 
   static readonly schema = b.struct({
     x: b.f32(),
     y: b.f32(),
-    width: b.u32(),
-    height: b.u32(),
+    width: b.f32(),
+    height: b.f32(),
   });
 
   static deserialize(data: Uint8Array | string) {

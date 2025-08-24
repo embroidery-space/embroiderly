@@ -102,8 +102,8 @@ fn test_update_reference_image_settings() {
   let new_settings = ReferenceImageSettings {
     x: 10.0,
     y: 20.0,
-    width: 100,
-    height: 200,
+    width: 100.0,
+    height: 200.0,
   };
   let action = UpdateReferenceImageSettingsAction::new(new_settings.clone());
 
