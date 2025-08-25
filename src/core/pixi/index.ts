@@ -1,3 +1,5 @@
+import "pixi.js/math-extras";
+
 import { CullerPlugin, extensions } from "pixi.js";
 import { StitchFontsLoader } from "./extensions/stitch-fonts-loader";
 

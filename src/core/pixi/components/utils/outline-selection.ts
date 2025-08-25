@@ -195,8 +195,9 @@ export class OutlineSelection<T extends Container = Container> extends Container
     }
 
     if (this.isDragging) {
-      this.x += e.movementX;
-      this.y += e.movementY;
+      const prevPos = this.parent.toLocal(e.global.subtract(e.movement));
+      const delta = pos.subtract(prevPos);
+      this.position = this.position.add(delta);
     }
   }
 
