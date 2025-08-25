@@ -104,6 +104,7 @@ fn test_update_reference_image_settings() {
     y: 20.0,
     width: 100.0,
     height: 200.0,
+    rotation: 45.0,
   };
   let action = UpdateReferenceImageSettingsAction::new(new_settings.clone());
 

@@ -6,12 +6,14 @@ export class ReferenceImageSettings {
   y: number;
   width: number;
   height: number;
+  rotation: number;
 
   constructor(data: b.infer<typeof ReferenceImageSettings.schema>) {
     this.x = data.x;
     this.y = data.y;
     this.width = data.width;
     this.height = data.height;
+    this.rotation = data.rotation;
   }
 
   static readonly schema = b.struct({
@@ -19,6 +21,7 @@ export class ReferenceImageSettings {
     y: b.f32(),
     width: b.f32(),
     height: b.f32(),
+    rotation: b.f32(),
   });
 
   static deserialize(data: Uint8Array | string) {

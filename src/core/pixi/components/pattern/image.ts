@@ -50,14 +50,21 @@ export class ReferenceImageView extends OutlineSelection<Sprite> {
 
   /** Returns the settings for the reference image. */
   get settings() {
-    return new ReferenceImageSettings(this);
+    const { x, y } = this.position;
+    const { width, height } = this.target.getSize();
+    const rotation = this.angle;
+    return new ReferenceImageSettings({ x, y, width, height, rotation });
   }
 
   /** Sets the settings for the reference image. */
   set settings(settings: ReferenceImageSettings) {
-    const { x, y, width, height } = settings;
+    const { x, y, width, height, rotation } = settings;
+
     this.target.setSize(width, height);
+
     this.position.set(x, y);
+    this.origin.set(width / 2, height / 2);
+    this.angle = rotation;
     this.boundsArea = new Rectangle(0, 0, width, height);
   }
 }

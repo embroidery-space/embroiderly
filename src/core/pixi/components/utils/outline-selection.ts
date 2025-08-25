@@ -1,4 +1,4 @@
-import { Container, FederatedPointerEvent, Graphics, GraphicsContext, Rectangle } from "pixi.js";
+import { Container, FederatedPointerEvent, Graphics, GraphicsContext, Point, Rectangle } from "pixi.js";
 import type { ContainerOptions, DestroyOptions, Size, StrokeStyle } from "pixi.js";
 
 import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/";
@@ -10,8 +10,6 @@ const SELECTION_CORNER_CONTEXT = new GraphicsContext()
   .fill("white")
   .stroke({ pixelLine: true, alignment: 0, color: "#b48ead" });
 
-type ResizeDirection = "top" | "right" | "bottom" | "left" | "top-left" | "top-right" | "bottom-right" | "bottom-left";
-
 export class OutlineSelection<T extends Container = Container> extends Container {
   /** The target element that is being selected. */
   readonly target: T;
@@ -19,8 +17,6 @@ export class OutlineSelection<T extends Container = Container> extends Container
   readonly controls = new SelectionControls();
 
   private isFocused = false;
-  private isDragging = false;
-  private isResizing?: ResizeDirection;
 
   constructor(target: T, options?: ContainerOptions) {
     super({
@@ -34,11 +30,16 @@ export class OutlineSelection<T extends Container = Container> extends Container
 
     this.onRender = () => {
       if (!this.isFocused) return;
+
+      // Update the bounds area and origin after possible transformations.
+      this.boundsArea = new Rectangle(0, 0, this.target.width, this.target.height);
+      this.origin.set(this.width / 2, this.height / 2);
+
+      // Render the controls after updating the bounds and origin.
       this.controls.render(this.target.getSize());
     };
 
     this.on("pointerdown", this.handlePointerDown, this);
-    this.on("pointermove", this.handlePointerMove, this);
     this.on("pointerup", this.handlePointerUp, this);
     this.on("pointerupoutside", this.handlePointerUp, this);
     this.on("pointercancel", this.handlePointerUp, this);
@@ -48,11 +49,7 @@ export class OutlineSelection<T extends Container = Container> extends Container
     // @ts-expect-error ...
     this.onRender = null;
 
-    this.off("pointerdown", this.handlePointerDown, this);
-    this.off("pointermove", this.handlePointerMove, this);
-    this.off("pointerup", this.handlePointerUp, this);
-    this.off("pointerupoutside", this.handlePointerUp, this);
-    this.off("pointercancel", this.handlePointerUp, this);
+    this.removeAllListeners();
 
     super.destroy(options);
   }
@@ -85,98 +82,100 @@ export class OutlineSelection<T extends Container = Container> extends Container
     const buttons = getMouseButtons(e);
     if (!buttons.left) return;
 
+    // Bind appropriate handler based on the target.
     if (e.target instanceof Graphics) {
-      this.isResizing = e.target.label as ResizeDirection;
-    } else {
-      this.isResizing = undefined;
-      this.isDragging = true;
-    }
-  }
-
-  private handlePointerMove(e: FederatedPointerEvent) {
-    if (!this.isFocused) return;
-
-    const pos = this.parent.toLocal(e.global);
-
-    if (this.isResizing) {
-      switch (this.isResizing) {
-        case "top": {
-          this.target.height -= pos.y - this.y;
-          this.y = pos.y;
-          break;
-        }
-        case "bottom": {
-          this.target.height = pos.y - this.y;
-          break;
-        }
-
-        case "left": {
-          this.target.width -= pos.x - this.x;
-          this.x = pos.x;
-          break;
-        }
-        case "right": {
-          this.target.width = pos.x - this.x;
-          break;
-        }
-
-        case "top-left": {
-          this.target.width -= pos.x - this.x;
-          this.target.height -= pos.y - this.y;
-          this.y = pos.y;
-          this.x = pos.x;
-          break;
-        }
-
-        case "top-right": {
-          this.target.width = pos.x - this.x;
-          this.target.height -= pos.y - this.y;
-          this.y = pos.y;
-          break;
-        }
-
-        case "bottom-right": {
-          this.target.width = pos.x - this.x;
-          this.target.height = pos.y - this.y;
-          break;
-        }
-
-        case "bottom-left": {
-          this.target.width -= pos.x - this.x;
-          this.target.height = pos.y - this.y;
-          this.x += pos.x - this.x;
-          break;
-        }
+      if (e.target.label === "rotation") this.on("pointermove", this.handleRotating, this);
+      else {
+        const direction = e.target.label;
+        this.on("pointermove", (e) => this.handleResizing(e, direction), this);
       }
-      this.boundsArea = new Rectangle(0, 0, this.target.width, this.target.height);
-    }
-
-    if (this.isDragging) {
-      const prevPos = this.parent.toLocal(e.global.subtract(e.movement));
-      const delta = pos.subtract(prevPos);
-      this.position = this.position.add(delta);
-    }
+    } else this.on("pointermove", this.handleDragging, this);
   }
 
   private handlePointerUp() {
-    this.isResizing = undefined;
-    this.isDragging = false;
+    this.removeAllListeners("pointermove");
+  }
+
+  private handleDragging(e: FederatedPointerEvent) {
+    const currPos = this.parent!.toLocal(e.global);
+    const prevPos = this.parent!.toLocal(e.global.subtract(e.movement));
+
+    const delta = currPos.subtract(prevPos);
+    this.position = this.position.add(delta);
+  }
+
+  private handleResizing(e: FederatedPointerEvent, direction: string) {
+    const currPos = this.parent!.toLocal(e.global);
+    const prevPos = this.parent!.toLocal(e.global.subtract(e.movement));
+    const globalDelta = currPos.subtract(prevPos);
+
+    const cos = Math.cos(this.rotation);
+    const sin = Math.sin(this.rotation);
+
+    const localDelta = new Point(globalDelta.x * cos + globalDelta.y * sin, -globalDelta.x * sin + globalDelta.y * cos);
+
+    let dw = 0;
+    let dh = 0;
+    let dx = 0;
+    let dy = 0;
+
+    if (direction.includes("left")) {
+      dw = -localDelta.x;
+      dx = localDelta.x;
+    } else if (direction.includes("right")) {
+      dw = localDelta.x;
+    }
+
+    if (direction.includes("top")) {
+      dh = -localDelta.y;
+      dy = localDelta.y;
+    } else if (direction.includes("bottom")) {
+      dh = localDelta.y;
+    }
+
+    this.target.width += dw;
+    this.target.height += dh;
+
+    if (dx !== 0 || dy !== 0) {
+      this.x += dx * cos - dy * sin;
+      this.y += dx * sin + dy * cos;
+    }
+  }
+
+  private handleRotating(e: FederatedPointerEvent) {
+    // Normalize the current rotation to determine primary orientation.
+    const normalizedRotation = ((this.rotation % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+
+    // Determine if we're closer to horizontal (0, π) or vertical (π/2, 3π/2) orientation.
+    const isHorizontallyOriented =
+      normalizedRotation < Math.PI / 4 ||
+      (normalizedRotation > (3 * Math.PI) / 4 && normalizedRotation < (5 * Math.PI) / 4) ||
+      normalizedRotation > (7 * Math.PI) / 4;
+
+    // Calculate the current and previous positions relative to the parent container.
+    const currPos = this.parent!.toLocal(e.global);
+    const prevPos = this.parent!.toLocal(e.global.subtract(e.movement));
+    const delta = currPos.subtract(prevPos);
+
+    // Multiply the delta by a factor to increase the rotation speed.
+    // (The movement delta is too low for convenient rotation)
+    this.angle += (isHorizontallyOriented ? delta.x : delta.y) * 5;
   }
 }
 
 /** Internal class for managing selection control graphics. */
 class SelectionControls extends Container {
-  // Edge graphics
   private readonly tEdge = new Graphics({ label: "top" });
   private readonly rEdge = new Graphics({ label: "right" });
   private readonly bEdge = new Graphics({ label: "bottom" });
   private readonly lEdge = new Graphics({ label: "left" });
 
-  // Corner graphics
   private readonly tlCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-left" });
   private readonly trCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-right" });
   private readonly blCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-left" });
   private readonly brCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-right" });
+
+  private readonly rotationControl = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "rotation" });
 
   constructor() {
     super({
@@ -200,8 +199,13 @@ class SelectionControls extends Container {
     this.blCorner.scale.set(0.1);
     this.brCorner.scale.set(0.1);
 
+    this.rotationControl.eventMode = "static";
+    this.rotationControl.cursor = "grab";
+    this.rotationControl.scale.set(0.1);
+
     this.addChild(this.tEdge, this.rEdge, this.bEdge, this.lEdge);
     this.addChild(this.tlCorner, this.trCorner, this.blCorner, this.brCorner);
+    this.addChild(this.rotationControl);
   }
 
   /**
@@ -227,5 +231,7 @@ class SelectionControls extends Container {
     this.trCorner.position.set(width, 0);
     this.blCorner.position.set(0, height);
     this.brCorner.position.set(width, height);
+
+    this.rotationControl.position.set(width / 2, -1);
   }
 }
