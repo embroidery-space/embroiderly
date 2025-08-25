@@ -1,5 +1,5 @@
 import { Container, FederatedPointerEvent, Graphics, GraphicsContext, Rectangle } from "pixi.js";
-import type { ContainerOptions, DestroyOptions, StrokeStyle } from "pixi.js";
+import type { ContainerOptions, DestroyOptions, Size, StrokeStyle } from "pixi.js";
 
 import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/";
 import { getMouseButtons } from "#/core/pixi/utils/";
@@ -16,13 +16,7 @@ export class OutlineSelection<T extends Container = Container> extends Container
   /** The target element that is being selected. */
   readonly target: T;
   /** The container that holds the selection controls. */
-  readonly controls = new Container({
-    ...DEFAULT_CONTAINER_OPTIONS,
-    label: "Selection Controls",
-    interactiveChildren: true,
-    visible: false,
-    renderable: false,
-  });
+  readonly controls = new SelectionControls();
 
   private isFocused = false;
   private isDragging = false;
@@ -40,7 +34,7 @@ export class OutlineSelection<T extends Container = Container> extends Container
 
     this.onRender = () => {
       if (!this.isFocused) return;
-      this.renderSelectionControls();
+      this.controls.render(this.target.getSize());
     };
 
     this.on("pointerdown", this.handlePointerDown, this);
@@ -70,8 +64,6 @@ export class OutlineSelection<T extends Container = Container> extends Container
     this.isFocused = true;
 
     this.target.cursor = "move";
-    this.renderSelectionControls();
-
     this.controls.visible = true;
     this.controls.renderable = true;
   }
@@ -83,43 +75,8 @@ export class OutlineSelection<T extends Container = Container> extends Container
     this.isFocused = false;
 
     this.target.cursor = "default";
-
     this.controls.visible = false;
     this.controls.renderable = false;
-  }
-
-  private renderSelectionControls() {
-    const { width, height } = this.target.getSize();
-
-    const tEdge = new Graphics({ label: "top" }).moveTo(0, 0).lineTo(width, 0).fill("white").stroke(SELECTION_STOKE); // prettier-ignore
-    const rEdge = new Graphics({ label: "right" }).moveTo(width, 0).lineTo(width, height).fill("white").stroke(SELECTION_STOKE); // prettier-ignore
-    const bEdge = new Graphics({ label: "bottom" }).moveTo(0, height).lineTo(width, height).fill("white").stroke(SELECTION_STOKE); // prettier-ignore
-    const lEdge = new Graphics({ label: "left" }).moveTo(0, 0).lineTo(0, height).fill("white").stroke(SELECTION_STOKE); // prettier-ignore
-
-    tEdge.eventMode = rEdge.eventMode = bEdge.eventMode = lEdge.eventMode = "static";
-    tEdge.cursor = bEdge.cursor = "ns-resize";
-    rEdge.cursor = lEdge.cursor = "ew-resize";
-
-    const tlCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-left" });
-    tlCorner.position.set(0, 0);
-    tlCorner.scale.set(0.1);
-    const trCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-right" });
-    trCorner.position.set(width, 0);
-    trCorner.scale.set(0.1);
-    const blCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-left" });
-    blCorner.position.set(0, height);
-    blCorner.scale.set(0.1);
-    const brCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-right" });
-    brCorner.position.set(width, height);
-    brCorner.scale.set(0.1);
-
-    tlCorner.eventMode = trCorner.eventMode = blCorner.eventMode = brCorner.eventMode = "static";
-    tlCorner.cursor = brCorner.cursor = "nwse-resize";
-    trCorner.cursor = blCorner.cursor = "nesw-resize";
-
-    this.controls.removeChildren().forEach((child) => child.destroy());
-    this.controls.addChild(tEdge, rEdge, bEdge, lEdge);
-    this.controls.addChild(tlCorner, trCorner, blCorner, brCorner);
   }
 
   private handlePointerDown(e: FederatedPointerEvent) {
@@ -204,5 +161,71 @@ export class OutlineSelection<T extends Container = Container> extends Container
   private handlePointerUp() {
     this.isResizing = undefined;
     this.isDragging = false;
+  }
+}
+
+/** Internal class for managing selection control graphics. */
+class SelectionControls extends Container {
+  // Edge graphics
+  private readonly tEdge = new Graphics({ label: "top" });
+  private readonly rEdge = new Graphics({ label: "right" });
+  private readonly bEdge = new Graphics({ label: "bottom" });
+  private readonly lEdge = new Graphics({ label: "left" });
+
+  // Corner graphics
+  private readonly tlCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-left" });
+  private readonly trCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-right" });
+  private readonly blCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-left" });
+  private readonly brCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-right" });
+
+  constructor() {
+    super({
+      ...DEFAULT_CONTAINER_OPTIONS,
+      label: "Selection Controls",
+      interactiveChildren: true,
+      visible: false,
+      renderable: false,
+    });
+
+    this.tEdge.eventMode = this.rEdge.eventMode = this.bEdge.eventMode = this.lEdge.eventMode = "static";
+    this.tEdge.cursor = this.bEdge.cursor = "ns-resize";
+    this.rEdge.cursor = this.lEdge.cursor = "ew-resize";
+
+    this.tlCorner.eventMode = this.trCorner.eventMode = this.blCorner.eventMode = this.brCorner.eventMode = "static";
+    this.tlCorner.cursor = this.brCorner.cursor = "nwse-resize";
+    this.trCorner.cursor = this.blCorner.cursor = "nesw-resize";
+
+    this.tlCorner.scale.set(0.1);
+    this.trCorner.scale.set(0.1);
+    this.blCorner.scale.set(0.1);
+    this.brCorner.scale.set(0.1);
+
+    this.addChild(this.tEdge, this.rEdge, this.bEdge, this.lEdge);
+    this.addChild(this.tlCorner, this.trCorner, this.blCorner, this.brCorner);
+  }
+
+  /**
+   * Renders the selection controls with the specified dimensions.
+   * @param size - The dimensions of the selection controls.
+   */
+  render(size: Size) {
+    const { width, height } = size;
+
+    this.tEdge.clear();
+    this.tEdge.moveTo(0, 0).lineTo(width, 0).fill("white").stroke(SELECTION_STOKE);
+
+    this.rEdge.clear();
+    this.rEdge.moveTo(width, 0).lineTo(width, height).fill("white").stroke(SELECTION_STOKE);
+
+    this.bEdge.clear();
+    this.bEdge.moveTo(0, height).lineTo(width, height).fill("white").stroke(SELECTION_STOKE);
+
+    this.lEdge.clear();
+    this.lEdge.moveTo(0, 0).lineTo(0, height).fill("white").stroke(SELECTION_STOKE);
+
+    this.tlCorner.position.set(0, 0);
+    this.trCorner.position.set(width, 0);
+    this.blCorner.position.set(0, height);
+    this.brCorner.position.set(width, height);
   }
 }
