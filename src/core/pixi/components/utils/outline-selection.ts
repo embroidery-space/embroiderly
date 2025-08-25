@@ -1,10 +1,10 @@
-import { Container, FederatedPointerEvent, Graphics, GraphicsContext } from "pixi.js";
+import { Container, FederatedPointerEvent, Graphics, GraphicsContext, Rectangle } from "pixi.js";
 import type { ContainerOptions, DestroyOptions, StrokeStyle } from "pixi.js";
 
 import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/";
 import { getMouseButtons } from "#/core/pixi/utils/";
 
-const SELECTION_STOKE: StrokeStyle = { width: 1, color: "#b48ead" };
+const SELECTION_STOKE: StrokeStyle = { width: 0.1, color: "#b48ead" };
 const SELECTION_CORNER_CONTEXT = new GraphicsContext()
   .circle(0, 0, 2)
   .fill("white")
@@ -39,7 +39,7 @@ export class OutlineSelection<T extends Container = Container> extends Container
     this.target = this.addChild(target, this.controls);
 
     this.onRender = () => {
-      if (!this.isDragging || !this.isResizing) return;
+      if (!this.isFocused) return;
       this.renderSelectionControls();
     };
 
@@ -102,12 +102,16 @@ export class OutlineSelection<T extends Container = Container> extends Container
 
     const tlCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-left" });
     tlCorner.position.set(0, 0);
+    tlCorner.scale.set(0.1);
     const trCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-right" });
     trCorner.position.set(width, 0);
+    trCorner.scale.set(0.1);
     const blCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-left" });
     blCorner.position.set(0, height);
+    blCorner.scale.set(0.1);
     const brCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-right" });
     brCorner.position.set(width, height);
+    brCorner.scale.set(0.1);
 
     tlCorner.eventMode = trCorner.eventMode = blCorner.eventMode = brCorner.eventMode = "static";
     tlCorner.cursor = brCorner.cursor = "nwse-resize";
@@ -140,53 +144,54 @@ export class OutlineSelection<T extends Container = Container> extends Container
     if (this.isResizing) {
       switch (this.isResizing) {
         case "top": {
-          this.height -= pos.y - this.y;
+          this.target.height -= pos.y - this.y;
           this.y = pos.y;
           break;
         }
         case "bottom": {
-          this.height = pos.y - this.y;
+          this.target.height = pos.y - this.y;
           break;
         }
 
         case "left": {
-          this.width -= pos.x - this.x;
+          this.target.width -= pos.x - this.x;
           this.x = pos.x;
           break;
         }
         case "right": {
-          this.width = pos.x - this.x;
+          this.target.width = pos.x - this.x;
           break;
         }
 
         case "top-left": {
-          this.width -= pos.x - this.x;
-          this.height -= pos.y - this.y;
+          this.target.width -= pos.x - this.x;
+          this.target.height -= pos.y - this.y;
           this.y = pos.y;
           this.x = pos.x;
           break;
         }
 
         case "top-right": {
-          this.width = pos.x - this.x;
-          this.height -= pos.y - this.y;
+          this.target.width = pos.x - this.x;
+          this.target.height -= pos.y - this.y;
           this.y = pos.y;
           break;
         }
 
         case "bottom-right": {
-          this.width = pos.x - this.x;
-          this.height = pos.y - this.y;
+          this.target.width = pos.x - this.x;
+          this.target.height = pos.y - this.y;
           break;
         }
 
         case "bottom-left": {
-          this.width -= pos.x - this.x;
-          this.height = pos.y - this.y;
+          this.target.width -= pos.x - this.x;
+          this.target.height = pos.y - this.y;
           this.x += pos.x - this.x;
           break;
         }
       }
+      this.boundsArea = new Rectangle(0, 0, this.target.width, this.target.height);
     }
 
     if (this.isDragging) {
@@ -196,8 +201,6 @@ export class OutlineSelection<T extends Container = Container> extends Container
   }
 
   private handlePointerUp() {
-    if (!this.isFocused) return;
-
     this.isResizing = undefined;
     this.isDragging = false;
   }

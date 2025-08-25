@@ -386,12 +386,10 @@ export class PatternView extends Container {
   ) {
     // Set the image and its settings.
     await this.stages.image.setImage(image);
-    this.stages.image.settings = image.settings;
 
     if (options?.fit ?? true) {
-      const scaleX = this.stages.fabric.width / this.stages.image.width;
-      const scaleY = this.stages.fabric.height / this.stages.image.height;
-      this.stages.image.scale.set(Math.min(scaleX, scaleY));
+      const { width, height } = this.stages.fabric;
+      this.stages.image.fit(width, height);
     }
   }
 
