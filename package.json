@@ -35,7 +35,7 @@
     "fluent-vue": "3.7.3",
     "pinia": "3.0.3",
     "pinia-plugin-persistedstate": "4.4.1",
-    "pixi.js": "8.9.2",
+    "pixi.js": "8.12.0",
     "primevue": "4.3.7",
     "reka-ui": "2.4.1",
     "uuid": "11.1.0",

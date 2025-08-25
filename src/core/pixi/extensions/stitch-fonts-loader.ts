@@ -5,6 +5,7 @@ export const STITCH_FONT_PREFIX = "stitch-font/";
 
 /** A loader plugin for handling local stitch fonts. */
 export const StitchFontsLoader: LoaderParser = {
+  id: "stitch-fonts-loader",
   name: "StitchFontsLoader",
   extension: { type: ExtensionType.LoadParser, priority: LoaderParserPriority.High },
 
