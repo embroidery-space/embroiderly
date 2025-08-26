@@ -5,7 +5,11 @@ import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/";
 import { getMouseButtons } from "#/core/pixi/utils/";
 
 const SELECTION_STOKE: StrokeStyle = { width: 0.1, color: "#b48ead" };
-const SELECTION_CORNER_CONTEXT = new GraphicsContext()
+const SELECTION_CORNER_CONTROL_CONTEXT = new GraphicsContext()
+  .roundRect(0, 0, 6, 6, 2)
+  .fill("white")
+  .stroke({ pixelLine: true, alignment: 0, color: "#b48ead" });
+const SELECTION_ROTATION_CONTROL_CONTEXT = new GraphicsContext()
   .circle(0, 0, 2)
   .fill("white")
   .stroke({ pixelLine: true, alignment: 0, color: "#b48ead" });
@@ -170,12 +174,12 @@ class SelectionControls extends Container {
   private readonly bEdge = new Graphics({ label: "bottom" });
   private readonly lEdge = new Graphics({ label: "left" });
 
-  private readonly tlCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-left" });
-  private readonly trCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "top-right" });
-  private readonly blCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-left" });
-  private readonly brCorner = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "bottom-right" });
+  private readonly tlCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "top-left" });
+  private readonly trCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "top-right" });
+  private readonly blCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "bottom-left" });
+  private readonly brCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "bottom-right" });
 
-  private readonly rotationControl = new Graphics({ context: SELECTION_CORNER_CONTEXT, label: "rotation" });
+  private readonly rotationControl = new Graphics({ context: SELECTION_ROTATION_CONTROL_CONTEXT, label: "rotation" });
 
   constructor() {
     super({
@@ -194,10 +198,10 @@ class SelectionControls extends Container {
     this.tlCorner.cursor = this.brCorner.cursor = "nwse-resize";
     this.trCorner.cursor = this.blCorner.cursor = "nesw-resize";
 
-    this.tlCorner.scale.set(0.1);
-    this.trCorner.scale.set(0.1);
-    this.blCorner.scale.set(0.1);
-    this.brCorner.scale.set(0.1);
+    for (const control of [this.tlCorner, this.trCorner, this.blCorner, this.brCorner]) {
+      control.pivot.set(3, 3);
+      control.scale.set(0.05);
+    }
 
     this.rotationControl.eventMode = "static";
     this.rotationControl.cursor = "grab";
