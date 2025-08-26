@@ -2,7 +2,7 @@ import { Container, FederatedPointerEvent, Graphics, GraphicsContext, Point, Rec
 import type { ContainerOptions, DestroyOptions, Size, StrokeStyle } from "pixi.js";
 
 import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/";
-import { getMouseButtons } from "#/core/pixi/utils/";
+import { checkIfHorizontallyOriented, getCursorForRotation, getMouseButtons } from "#/core/pixi/utils/";
 
 const SELECTION_STOKE: StrokeStyle = { width: 0.1, color: "#b48ead" };
 const SELECTION_CORNER_CONTROL_CONTEXT = new GraphicsContext()
@@ -40,7 +40,7 @@ export class OutlineSelection<T extends Container = Container> extends Container
       this.origin.set(this.width / 2, this.height / 2);
 
       // Render the controls after updating the bounds and origin.
-      this.controls.render(this.target.getSize());
+      this.controls.render(this.target.getSize(), this.rotation);
     };
 
     this.on("pointerdown", this.handlePointerDown, this);
@@ -147,15 +147,6 @@ export class OutlineSelection<T extends Container = Container> extends Container
   }
 
   private handleRotating(e: FederatedPointerEvent) {
-    // Normalize the current rotation to determine primary orientation.
-    const normalizedRotation = ((this.rotation % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-
-    // Determine if we're closer to horizontal (0, π) or vertical (π/2, 3π/2) orientation.
-    const isHorizontallyOriented =
-      normalizedRotation < Math.PI / 4 ||
-      (normalizedRotation > (3 * Math.PI) / 4 && normalizedRotation < (5 * Math.PI) / 4) ||
-      normalizedRotation > (7 * Math.PI) / 4;
-
     // Calculate the current and previous positions relative to the parent container.
     const currPos = this.parent!.toLocal(e.global);
     const prevPos = this.parent!.toLocal(e.global.subtract(e.movement));
@@ -163,7 +154,7 @@ export class OutlineSelection<T extends Container = Container> extends Container
 
     // Multiply the delta by a factor to increase the rotation speed.
     // (The movement delta is too low for convenient rotation)
-    this.angle += (isHorizontallyOriented ? delta.x : delta.y) * 5;
+    this.angle += (checkIfHorizontallyOriented(this.rotation) ? delta.x : delta.y) * 5;
   }
 }
 
@@ -191,12 +182,7 @@ class SelectionControls extends Container {
     });
 
     this.tEdge.eventMode = this.rEdge.eventMode = this.bEdge.eventMode = this.lEdge.eventMode = "static";
-    this.tEdge.cursor = this.bEdge.cursor = "ns-resize";
-    this.rEdge.cursor = this.lEdge.cursor = "ew-resize";
-
     this.tlCorner.eventMode = this.trCorner.eventMode = this.blCorner.eventMode = this.brCorner.eventMode = "static";
-    this.tlCorner.cursor = this.brCorner.cursor = "nwse-resize";
-    this.trCorner.cursor = this.blCorner.cursor = "nesw-resize";
 
     for (const control of [this.tlCorner, this.trCorner, this.blCorner, this.brCorner]) {
       control.pivot.set(3, 3);
@@ -215,27 +201,27 @@ class SelectionControls extends Container {
   /**
    * Renders the selection controls with the specified dimensions.
    * @param size - The dimensions of the selection controls.
+   * @param rotation - The rotation (in radians) of the selection container.
    */
-  render(size: Size) {
-    const { width, height } = size;
+  render(size: Size, rotation: number) {
+    const { width: w, height: h } = size;
 
-    this.tEdge.clear();
-    this.tEdge.moveTo(0, 0).lineTo(width, 0).fill("white").stroke(SELECTION_STOKE);
+    this.tEdge.clear().moveTo(0, 0).lineTo(w, 0).fill("white").stroke(SELECTION_STOKE);
+    this.rEdge.clear().moveTo(w, 0).lineTo(w, h).fill("white").stroke(SELECTION_STOKE);
+    this.bEdge.clear().moveTo(0, h).lineTo(w, h).fill("white").stroke(SELECTION_STOKE);
+    this.lEdge.clear().moveTo(0, 0).lineTo(0, h).fill("white").stroke(SELECTION_STOKE);
 
-    this.rEdge.clear();
-    this.rEdge.moveTo(width, 0).lineTo(width, height).fill("white").stroke(SELECTION_STOKE);
-
-    this.bEdge.clear();
-    this.bEdge.moveTo(0, height).lineTo(width, height).fill("white").stroke(SELECTION_STOKE);
-
-    this.lEdge.clear();
-    this.lEdge.moveTo(0, 0).lineTo(0, height).fill("white").stroke(SELECTION_STOKE);
+    this.tEdge.cursor = this.bEdge.cursor = getCursorForRotation("ns-resize", rotation);
+    this.lEdge.cursor = this.rEdge.cursor = getCursorForRotation("ew-resize", rotation);
 
     this.tlCorner.position.set(0, 0);
-    this.trCorner.position.set(width, 0);
-    this.blCorner.position.set(0, height);
-    this.brCorner.position.set(width, height);
+    this.trCorner.position.set(w, 0);
+    this.blCorner.position.set(0, h);
+    this.brCorner.position.set(w, h);
 
-    this.rotationControl.position.set(width / 2, -1);
+    this.tlCorner.cursor = this.brCorner.cursor = getCursorForRotation("nwse-resize", rotation);
+    this.trCorner.cursor = this.blCorner.cursor = getCursorForRotation("nesw-resize", rotation);
+
+    this.rotationControl.position.set(w / 2, -1);
   }
 }
