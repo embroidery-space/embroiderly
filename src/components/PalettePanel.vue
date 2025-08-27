@@ -1,8 +1,8 @@
 <template>
   <div
     v-shortcuts.escape="() => (paletteIsBeingEdited = false)"
-    class="h-full flex"
-    :class="{ 'border-primary border-2': paletteIsBeingEdited }"
+    class="flex h-full"
+    :class="{ 'border-2 border-primary': paletteIsBeingEdited }"
   >
     <UContextMenu :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions">
       <PaletteList

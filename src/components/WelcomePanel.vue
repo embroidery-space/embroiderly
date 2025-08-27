@@ -4,7 +4,7 @@
     <div></div>
     <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
 
-    <div class="max-size-full min-w-1/2 flex flex-col gap-6 overflow-auto p-8">
+    <div class="flex min-w-1/2 flex-col gap-6 overflow-auto p-8">
       <span class="text-4xl">{{ $t("title-welcome") }}</span>
 
       <div>
@@ -28,7 +28,7 @@
       <div class="flex flex-wrap justify-between gap-4">
         <div class="flex flex-col gap-y-1">
           <span class="text-lg">{{ $t("label-start") }}</span>
-          <div class="max-w-max flex flex-col gap-y-1">
+          <div class="flex max-w-max flex-col gap-y-1">
             <UButton
               variant="ghost"
               icon="i-lucide:file-plus"
@@ -53,10 +53,10 @@
               v-for="item in section.items"
               :key="item.title"
               tabindex="0"
-              class="p-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors duration-initial hover:cursor-pointer hover:bg-elevated"
+              class="rounded-md p-2 transition-colors duration-initial hover:cursor-pointer hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               @click="handleInfoItemClick(item)"
             >
-              <span class="flex items-center gap-2 text-primary font-medium">
+              <span class="flex items-center gap-2 font-medium text-primary">
                 {{ item.title }}
                 <UIcon v-if="item.url" name="i-lucide:external-link" />
               </span>

@@ -51,7 +51,7 @@
       </p>
     </FormFieldset>
 
-    <FormFieldset :legend="$t('label-color')" class="w-md row-start-1 row-end-3">
+    <FormFieldset :legend="$t('label-color')" class="row-start-1 row-end-3 w-md">
       <PaletteList
         :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
         :options="fabricColors"

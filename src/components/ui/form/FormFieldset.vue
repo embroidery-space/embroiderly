@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="border border-default rounded-md mt-2 px-4 pb-4">
+  <fieldset class="mt-2 rounded-md border border-default px-4 pb-4">
     <legend class="font-medium text-default">{{ props.legend }}</legend>
     <slot />
   </fieldset>

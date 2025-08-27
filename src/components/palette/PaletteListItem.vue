@@ -7,11 +7,11 @@
     :ui="{ content: 'text-base' }"
   >
     <div
-      class="min-h-8 px-2 py-1 rounded-md"
-      :class="{ [`palette-list-item-shadow-${paletteItem.contrastColor}`]: selected }"
+      class="min-h-8 rounded-md px-2 py-1 outline-2 -outline-offset-4 outline-solid"
       :style="{
         backgroundColor: paletteItem.hex,
         color: `${paletteItem.contrastColor} !important`,
+        outlineColor: selected ? paletteItem.contrastColor : 'transparent',
       }"
     >
       <p v-show="!displaySettings.colorOnly" class="truncate">

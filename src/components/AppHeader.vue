@@ -1,6 +1,6 @@
 <template>
   <div class="flex border-b border-default">
-    <div data-tauri-drag-region class="grow flex items-center gap-x-2 px-2">
+    <div data-tauri-drag-region class="flex grow items-center gap-x-2 px-2">
       <UDropdownMenu :items="fileOptions" :modal="false">
         <template #default="{ open }">
           <UButton
