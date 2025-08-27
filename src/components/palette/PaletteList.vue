@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <div v-if="$slots.header" class="px-2 py-1 border-b border-default">
+    <div v-if="$slots.header" class="border-b border-default px-2 py-1">
       <slot name="header"></slot>
     </div>
     <Listbox
@@ -28,7 +28,7 @@
         </slot>
       </template>
     </Listbox>
-    <div v-if="$slots.footer" class="px-2 py-1 border-t border-default">
+    <div v-if="$slots.footer" class="border-t border-default px-2 py-1">
       <slot name="footer"></slot>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full flex flex-col">
+  <div class="flex h-full flex-col">
     <AppHeader />
     <div class="flex grow overflow-y-auto">
       <RSplitterGroup direction="horizontal">
@@ -11,7 +11,10 @@
           <BlockUI :blocked="patternsStore.loading || patternsStore.blocked || isDragging" class="size-full">
             <div
               v-if="isDragging"
-              class="bg-default absolute left-1/2 top-1/2 z-10 flex items-center justify-center rounded-full p-6 -translate-x-1/2 -translate-y-1/2"
+              class="
+                absolute top-1/2 left-1/2 z-10 flex -translate-1/2 items-center justify-center rounded-full bg-default
+                p-6
+              "
             >
               <UIcon name="i-lucide:upload" class="size-16" />
             </div>
