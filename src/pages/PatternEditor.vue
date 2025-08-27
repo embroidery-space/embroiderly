@@ -11,10 +11,7 @@
           <BlockUI :blocked="patternsStore.loading || patternsStore.blocked || isDragging" class="size-full">
             <div
               v-if="isDragging"
-              class="
-                absolute top-1/2 left-1/2 z-10 flex -translate-1/2 items-center justify-center rounded-full bg-default
-                p-6
-              "
+              class="absolute top-1/2 left-1/2 z-10 flex -translate-1/2 items-center justify-center rounded-full bg-default p-6"
             >
               <UIcon name="i-lucide:upload" class="size-16" />
             </div>

@@ -53,11 +53,7 @@
               v-for="item in section.items"
               :key="item.title"
               tabindex="0"
-              class="
-                rounded-md p-2 transition-colors duration-initial
-                hover:cursor-pointer hover:bg-elevated
-                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-              "
+              class="rounded-md p-2 transition-colors duration-initial hover:cursor-pointer hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               @click="handleInfoItemClick(item)"
             >
               <span class="flex items-center gap-2 font-medium text-primary">

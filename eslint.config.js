@@ -26,7 +26,7 @@ export default defineConfigWithVueTs(
     },
     rules: {
       // Stylistic rules.
-      "better-tailwindcss/enforce-consistent-line-wrapping": ["warn", { printWidth: 120 }],
+      "better-tailwindcss/enforce-consistent-line-wrapping": ["off"],
       "better-tailwindcss/enforce-consistent-class-order": ["warn", { order: "official" }],
       "better-tailwindcss/enforce-consistent-variable-syntax": ["warn"],
       "better-tailwindcss/enforce-consistent-important-position": ["warn"],
