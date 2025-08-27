@@ -17,7 +17,7 @@
       </UDropdownMenu>
     </UButtonGroup>
 
-    <div class="grow flex items-center gap-x-1">
+    <div class="flex grow items-center gap-x-1">
       <UTooltip :text="fluent.$t('label-zoom-out')" :delay-duration="200" :kbds="['ctrl', '-']">
         <UButton color="neutral" variant="ghost" icon="i-lucide:zoom-out" size="xs" @click="zoomOut" />
       </UTooltip>

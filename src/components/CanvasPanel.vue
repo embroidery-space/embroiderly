@@ -1,5 +1,5 @@
 <template>
-  <div class="size-full flex flex-col">
+  <div class="flex size-full flex-col">
     <div class="relative">
       <UTabs
         :model-value="appStateStore.currentPattern?.id"
@@ -43,13 +43,13 @@
       ></canvas>
     </div>
 
-    <div class="w-full flex items-center justify-between border-t border-default px-2 py-1">
+    <div class="flex w-full items-center justify-between border-t border-default px-2 py-1">
       <div class="grow"></div>
       <ZoomControls
         :model-value="zoom"
         :min="MIN_SCALE"
         :max="MAX_SCALE"
-        class="max-w-3xs w-full"
+        class="w-full max-w-3xs"
         @update:model-value="(value) => patternCanvas.setZoom(value)"
       />
     </div>

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <FormFieldset :legend="$t('label-print-options')" class="!m-0">
-      <div class="flex flex-col gap-y-1 mt-1">
+    <FormFieldset :legend="$t('label-print-options')" class="m-0!">
+      <div class="mt-1 flex flex-col gap-y-1">
         <UCheckbox v-model="options.centerFrames" :label="$t('label-print-center-frames')" />
         <UCheckbox v-model="options.enumerateFrames" :label="$t('label-print-enumerate-frames')" />
       </div>
     </FormFieldset>
 
     <FormFieldset :legend="$t('label-frame-options')">
-      <p class="my-2 text-sm text-dimmed whitespace-pre-line">{{ $t("message-frame-what-is-this") }}</p>
+      <p class="my-2 text-sm whitespace-pre-line text-dimmed">{{ $t("message-frame-what-is-this") }}</p>
 
       <div class="flex flex-col gap-y-1">
         <div class="flex gap-x-2">
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-y-1 mt-2">
+      <div class="mt-2 flex flex-col gap-y-1">
         <UCheckbox
           v-model="options.frameOptions.showGridLineNumbers"
           :label="$t('label-frame-show-grid-line-numbers')"
