@@ -33,7 +33,10 @@ export class ReferenceImageView extends OutlineSelection<Sprite> {
   /** Removes the reference image. */
   removeImage() {
     this.blur();
+
+    const texture = this.target.texture;
     this.target.texture = Texture.EMPTY;
+    texture.destroy();
   }
 
   /**

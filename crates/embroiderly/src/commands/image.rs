@@ -21,13 +21,36 @@ pub fn set_reference_image<R: tauri::Runtime>(
   let mut patterns = patterns.write().unwrap();
   let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
-  let action = SetReferenceImageAction::new(image);
+  let action = SetReferenceImageAction::new(Some(image));
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).push(Box::new(action));
 
   log::debug!("Reference image set successfully");
+  Ok(())
+}
+
+#[tauri::command]
+pub fn remove_reference_image<R: tauri::Runtime>(
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  patterns: tauri::State<PatternsState>,
+  history: tauri::State<HistoryState<R>>,
+) -> Result<()> {
+  log::debug!("Removing reference image");
+  let (pattern_id,) = parse_command_payload!(request);
+
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  let action = SetReferenceImageAction::new(None);
+  action.perform(&window, patproj)?;
+
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).push(Box::new(action));
+
+  log::debug!("Reference image removed successfully");
   Ok(())
 }
 
@@ -41,11 +64,15 @@ pub fn update_reference_image_settings<R: tauri::Runtime>(
   let (pattern_id, settings) = parse_command_payload!(request, ReferenceImageSettings);
 
   let mut patterns = patterns.write().unwrap();
-  let action = UpdateReferenceImageSettingsAction::new(settings);
-  action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
+  let pattern = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
-  let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  if pattern.reference_image.is_some() {
+    let action = UpdateReferenceImageSettingsAction::new(settings);
+    action.perform(&window, pattern)?;
+
+    let mut history = history.write().unwrap();
+    history.get_mut(&pattern_id).push(Box::new(action));
+  }
 
   Ok(())
 }

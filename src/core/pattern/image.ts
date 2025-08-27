@@ -51,6 +51,7 @@ export class ReferenceImage extends Blob {
 
   static deserialize(data: Uint8Array | string) {
     const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new ReferenceImage(ReferenceImage.schema.deserialize(buffer));
+    const result = b.option(ReferenceImage.schema).deserialize(buffer);
+    return result ? new ReferenceImage(result) : undefined;
   }
 }

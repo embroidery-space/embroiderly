@@ -85,6 +85,13 @@
         label: fluent.$t("label-set-reference-image"),
         onSelect: () => patternsStore.setReferenceImage(),
       },
+      {
+        icon: "i-lucide:image-off",
+        label: fluent.$t("label-remove-reference-image"),
+        color: "error",
+        disabled: !patternsStore.pattern?.referenceImage,
+        onSelect: () => patternsStore.removeReferenceImage(),
+      },
     ],
   ]);
 

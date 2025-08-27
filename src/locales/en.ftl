@@ -133,6 +133,7 @@ label-display-options-show-name = Show color names
 ## Titles, labels and messages related to the canvas context menu.
 
 label-set-reference-image = Set Reference Image
+label-remove-reference-image = Remove Reference Image
 
 ## Titles, labels and messages related to the canvas toolbar.
 

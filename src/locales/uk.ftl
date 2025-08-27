@@ -136,6 +136,7 @@ label-display-options-show-name = Відображати назви кольор
 ## Titles, labels and messages related to the canvas context menu.
 
 label-set-reference-image = Встановити зразкове зображення
+label-remove-reference-image = Вилучити зразкове зображення
 
 ## Titles, labels and messages related to the canvas toolbar.
 

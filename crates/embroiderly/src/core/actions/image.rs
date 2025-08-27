@@ -13,12 +13,12 @@ mod tests;
 
 #[derive(Clone)]
 pub struct SetReferenceImageAction {
-  image: ReferenceImage,
+  image: Option<ReferenceImage>,
   old_image: OnceLock<Option<ReferenceImage>>,
 }
 
 impl SetReferenceImageAction {
-  pub fn new(image: ReferenceImage) -> Self {
+  pub fn new(image: Option<ReferenceImage>) -> Self {
     Self {
       image,
       old_image: OnceLock::new(),
@@ -27,13 +27,13 @@ impl SetReferenceImageAction {
 }
 
 impl<R: tauri::Runtime> Action<R> for SetReferenceImageAction {
-  /// Sets a reference image.
+  /// Sets or removes a reference image.
   ///
   /// **Emits:**
-  /// - `image:set` with the new reference image.
+  /// - `image:set` with the new reference image wrapped in Option (None for removal).
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     window.emit("image:set", base64::encode(borsh::to_vec(&self.image)?))?;
-    let old_image = patproj.reference_image.replace(self.image.clone());
+    let old_image = std::mem::replace(&mut patproj.reference_image, self.image.clone());
     if self.old_image.get().is_none() {
       self.old_image.set(old_image).unwrap();
     }
@@ -43,15 +43,10 @@ impl<R: tauri::Runtime> Action<R> for SetReferenceImageAction {
   /// Restore the the previous image.
   ///
   /// **Emits:**
-  /// - `image:set` with the previous reference image if it exists.
-  /// - `image:remove` if there was no previous image.
+  /// - `image:set` with the previous reference image wrapped in Option (None if no previous image).
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_image = self.old_image.get().unwrap();
-    if let Some(old_image) = old_image {
-      window.emit("image:set", base64::encode(borsh::to_vec(old_image)?))?;
-    } else {
-      window.emit("image:remove", ())?;
-    }
+    window.emit("image:set", base64::encode(borsh::to_vec(&old_image)?))?;
     patproj.reference_image = old_image.clone();
     Ok(())
   }

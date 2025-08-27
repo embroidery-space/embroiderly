@@ -240,14 +240,13 @@ export const usePatternsStore = defineStore(
 
       await ImageApi.setReferenceImage(pattern.value.id, selectedPath);
     }
+    async function removeReferenceImage() {
+      if (!pattern.value) return;
+      await ImageApi.removeReferenceImage(pattern.value.id);
+    }
     appWindow.listen<string>("image:set", ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.referenceImage = ReferenceImage.deserialize(payload);
-      triggerRef(pattern);
-    });
-    appWindow.listen<void>("image:remove", () => {
-      if (!pattern.value) return;
-      pattern.value.referenceImage = undefined;
       triggerRef(pattern);
     });
 
@@ -440,6 +439,7 @@ export const usePatternsStore = defineStore(
       exportPatternAsPdf,
       closePattern,
       setReferenceImage,
+      removeReferenceImage,
       updateReferenceImageSettings,
       openPatternInfoModal,
       updatePatternInfo,
