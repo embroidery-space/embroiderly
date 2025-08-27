@@ -200,6 +200,7 @@ fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid) -> io::Result<(
 
 fn read_layers_visibility(attributes: AttributesMap) -> Result<LayersVisibility> {
   Ok(LayersVisibility {
+    reference_image: attributes.get_bool("reference_image").unwrap_or_default(),
     fullstitches: attributes.get_bool("fullstitches").unwrap_or_default(),
     petitestitches: attributes.get_bool("petitestitches").unwrap_or_default(),
     halfstitches: attributes.get_bool("halfstitches").unwrap_or_default(),
@@ -218,6 +219,7 @@ fn write_layers_visibility<W: io::Write>(writer: &mut Writer<W>, layers: &Layers
   writer
     .create_element("layers_visibility")
     .with_attributes([
+      ("reference_image", layers.reference_image.to_string().as_str()),
       ("fullstitches", layers.fullstitches.to_string().as_str()),
       ("petitestitches", layers.petitestitches.to_string().as_str()),
       ("halfstitches", layers.halfstitches.to_string().as_str()),

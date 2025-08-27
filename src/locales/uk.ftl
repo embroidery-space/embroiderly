@@ -140,6 +140,7 @@ label-set-reference-image = Встановити зразкове зображе
 ## Titles, labels and messages related to the canvas toolbar.
 
 label-layers = Шари
+label-layers-reference-image = Зразкове зображення
 label-layers-fullstitches = Хрести
 label-layers-petitestitches = Петіти
 label-layers-halfstitches = Півхрести

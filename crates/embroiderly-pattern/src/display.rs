@@ -150,6 +150,8 @@ impl Default for PaletteSettings {
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct LayersVisibility {
+  pub reference_image: bool,
+
   pub fullstitches: bool,
   pub petitestitches: bool,
 
@@ -171,6 +173,8 @@ pub struct LayersVisibility {
 impl Default for LayersVisibility {
   fn default() -> Self {
     Self {
+      reference_image: true,
+
       fullstitches: true,
       petitestitches: true,
 

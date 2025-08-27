@@ -56,7 +56,7 @@ export class PatternView extends Container {
     // lowest
     fabric: new FabricView(),
 
-    image: new ReferenceImageView(),
+    referenceImage: new ReferenceImageView(),
 
     fullstitches: new StitchParticleContainer({ label: "Full Stitches" }),
     petitestitches: new StitchParticleContainer({ label: "Petite Stitches" }),
@@ -141,7 +141,7 @@ export class PatternView extends Container {
 
     // Configure the stages and overlay.
     this.addChild(...Object.values(this.stages), this.overlay);
-    this.overlay.attach(this.stages.image.controls);
+    this.overlay.attach(this.stages.referenceImage.controls);
   }
 
   setFabric(fabric: Fabric) {
@@ -385,31 +385,31 @@ export class PatternView extends Container {
     },
   ) {
     // Set the image and its settings.
-    await this.stages.image.setImage(image);
+    await this.stages.referenceImage.setImage(image);
 
     if (options?.fit ?? true) {
       const { width, height } = this.stages.fabric;
-      this.stages.image.fit(width, height);
+      this.stages.referenceImage.fit(width, height);
     }
   }
 
   removeReferenceImage() {
-    this.stages.image.removeImage();
+    this.stages.referenceImage.removeImage();
   }
 
   focusReferenceImage() {
-    this.stages.image.focus();
+    this.stages.referenceImage.focus();
   }
 
   blurReferenceImage() {
-    this.stages.image.blur();
+    this.stages.referenceImage.blur();
   }
 
   get referenceImageSettings() {
-    return this.stages.image.settings;
+    return this.stages.referenceImage.settings;
   }
   set referenceImageSettings(settings: ReferenceImageSettings) {
-    this.stages.image.settings = settings;
+    this.stages.referenceImage.settings = settings;
   }
 
   drawLineHint(stitch: LineStitch) {

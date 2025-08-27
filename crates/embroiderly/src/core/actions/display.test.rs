@@ -96,6 +96,7 @@ fn test_layers_visibility() {
 
   let mut patproj = PatternProject::default();
   let visibility = LayersVisibility {
+    reference_image: true,
     fullstitches: true,
     petitestitches: false,
     halfstitches: true,

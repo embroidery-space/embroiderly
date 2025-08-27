@@ -137,6 +137,7 @@ label-set-reference-image = Set Reference Image
 ## Titles, labels and messages related to the canvas toolbar.
 
 label-layers = Layers
+label-layers-reference-image = Reference Image
 label-layers-fullstitches = Full Stitches
 label-layers-petitestitches = Petite Stitches
 label-layers-halfstitches = Half Stitches

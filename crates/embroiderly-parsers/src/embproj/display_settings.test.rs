@@ -24,7 +24,7 @@ fn reads_and_writes_display_settings() {
     <minor_lines color="C8C8C8" thickness="0.072"/>
     <major_lines color="646464" thickness="0.072"/>
   </grid>
-  <layers_visibility fullstitches="true" petitestitches="true" halfstitches="true" quarterstitches="true" backstitches="true" straightstitches="true" frenchknots="true" beads="true" specialstitches="true" grid="true" rulers="true"/>
+  <layers_visibility reference_image="true" fullstitches="true" petitestitches="true" halfstitches="true" quarterstitches="true" backstitches="true" straightstitches="true" frenchknots="true" beads="true" specialstitches="true" grid="true" rulers="true"/>
 </display_settings>"#;
 
   let mut reader = create_reader(xml);
@@ -88,7 +88,7 @@ fn reads_and_writes_grid() {
 
 #[test]
 fn reads_and_writes_layers_visibility() {
-  let xml = r#"<layers_visibility fullstitches="true" petitestitches="true" halfstitches="true" quarterstitches="true" backstitches="true" straightstitches="true" frenchknots="true" beads="true" specialstitches="true" grid="true" rulers="true"/>"#;
+  let xml = r#"<layers_visibility reference_image="true" fullstitches="true" petitestitches="true" halfstitches="true" quarterstitches="true" backstitches="true" straightstitches="true" frenchknots="true" beads="true" specialstitches="true" grid="true" rulers="true"/>"#;
 
   let mut reader = create_reader(xml);
   let attributes = if let Event::Start(e) = reader.read_event().unwrap() {
