@@ -15,8 +15,6 @@ export interface PatternApplicationOptions {
 
 const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
   eventFeatures: {
-    // We don't need to support global mouse movement.
-    globalMove: false,
     // We handle wheel events ourselves so we disable Pixi.js wheel events for performance.
     wheel: false,
   },

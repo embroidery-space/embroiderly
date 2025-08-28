@@ -88,16 +88,16 @@ export class OutlineSelection<T extends Container = Container> extends Container
 
     // Bind appropriate handler based on the target.
     if (e.target instanceof Graphics) {
-      if (e.target.label === "rotation") this.on("pointermove", this.handleRotating, this);
+      if (e.target.label === "rotation") this.on("globalpointermove", this.handleRotating, this);
       else {
         const direction = e.target.label;
-        this.on("pointermove", (e) => this.handleResizing(e, direction), this);
+        this.on("globalpointermove", (e) => this.handleResizing(e, direction), this);
       }
-    } else this.on("pointermove", this.handleDragging, this);
+    } else this.on("globalpointermove", this.handleDragging, this);
   }
 
   private handlePointerUp() {
-    this.removeAllListeners("pointermove");
+    this.removeAllListeners("globalpointermove");
   }
 
   private handleDragging(e: FederatedPointerEvent) {
