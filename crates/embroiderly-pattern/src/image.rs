@@ -19,6 +19,7 @@ impl ReferenceImage {
         width: width as f32,
         height: height as f32,
         rotation: 0.0,
+        opacity: 1.0,
       }
     });
     Self { format, content, settings }
@@ -41,4 +42,5 @@ pub struct ReferenceImageSettings {
   pub width: f32,
   pub height: f32,
   pub rotation: f32,
+  pub opacity: f32,
 }

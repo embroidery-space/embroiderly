@@ -34,6 +34,7 @@ pub fn parse_reference_image_settings_from_reader<R: io::BufRead>(reader: &mut R
         reference_image_settings.width = attributes.get_parsed("width").unwrap_or_default();
         reference_image_settings.height = attributes.get_parsed("height").unwrap_or_default();
         reference_image_settings.rotation = attributes.get_parsed("rotation").unwrap_or_default();
+        reference_image_settings.opacity = attributes.get_parsed("opacity").unwrap_or_default();
       }
       Event::End(ref e) if e.name().as_ref() == b"reference_image_settings" => break,
       Event::Eof => anyhow::bail!("Unexpected EOF. It seems that the `reference_image_settings` tag is not found."),
@@ -61,6 +62,7 @@ pub fn save_reference_image_settings_to_vec(settings: &ReferenceImageSettings) -
       ("width", settings.width.to_string().as_str()),
       ("height", settings.height.to_string().as_str()),
       ("rotation", settings.rotation.to_string().as_str()),
+      ("opacity", settings.opacity.to_string().as_str()),
     ])
     .write_empty()?;
 

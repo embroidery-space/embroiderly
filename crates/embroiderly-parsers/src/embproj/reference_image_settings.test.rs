@@ -3,7 +3,7 @@ use super::*;
 #[test]
 fn reads_and_writes_reference_image_settings() {
   let xml = r#"<?xml version="1.0" encoding="UTF-8"?>
-<reference_image_settings x="0" y="0" width="0" height="0" rotation="0"/>"#;
+<reference_image_settings x="0" y="0" width="0" height="0" rotation="0" opacity="0"/>"#;
 
   let reference_image_settings =
     parse_reference_image_settings_from_reader(&mut std::io::Cursor::new(xml.as_bytes())).unwrap();

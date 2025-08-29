@@ -152,6 +152,7 @@ fn test_update_reference_image_settings() {
     width: 100.0,
     height: 200.0,
     rotation: 45.0,
+    opacity: 0.5,
   };
   let action = UpdateReferenceImageSettingsAction::new(new_settings.clone());
 

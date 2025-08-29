@@ -1,28 +1,34 @@
-import { Container, FederatedPointerEvent, Graphics, GraphicsContext, Point, Rectangle } from "pixi.js";
+import { Color, Container, FederatedPointerEvent, Graphics, GraphicsContext, Point, Rectangle } from "pixi.js";
 import type { ContainerOptions, DestroyOptions, Size, StrokeStyle } from "pixi.js";
 
 import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/";
 import { checkIfHorizontallyOriented, getCursorForRotation, getMouseButtons } from "#/core/pixi/utils/";
 
-const SELECTION_STOKE: StrokeStyle = { width: 0.1, color: "#b48ead" };
+export const SELECTION_STROKE_COLOR = new Color("#b48ead");
+export const SELECTION_EDGE_STOKE: StrokeStyle = { width: 0.1, color: SELECTION_STROKE_COLOR };
+export const SELECTION_CONTROL_STROKE: StrokeStyle = { pixelLine: true, alignment: 1, color: SELECTION_STROKE_COLOR };
+
 const SELECTION_CORNER_CONTROL_CONTEXT = new GraphicsContext()
   .roundRect(0, 0, 6, 6, 2)
   .fill("white")
-  .stroke({ pixelLine: true, alignment: 0, color: "#b48ead" });
+  .stroke(SELECTION_CONTROL_STROKE);
 const SELECTION_ROTATION_CONTROL_CONTEXT = new GraphicsContext()
   .circle(0, 0, 2)
   .fill("white")
-  .stroke({ pixelLine: true, alignment: 0, color: "#b48ead" });
+  .stroke(SELECTION_CONTROL_STROKE);
 
-export class OutlineSelection<T extends Container = Container> extends Container {
+export class OutlineSelection<
+  TTarget extends Container = Container,
+  TControls extends SelectionControls = SelectionControls,
+> extends Container {
   /** The target element that is being selected. */
-  readonly target: T;
+  readonly target: TTarget;
   /** The container that holds the selection controls. */
-  readonly controls = new SelectionControls();
+  readonly controls: TControls;
 
   private isFocused = false;
 
-  constructor(target: T, options?: ContainerOptions) {
+  constructor(target: TTarget, controls?: TControls, options?: ContainerOptions) {
     super({
       ...DEFAULT_CONTAINER_OPTIONS,
       ...options,
@@ -30,7 +36,8 @@ export class OutlineSelection<T extends Container = Container> extends Container
       interactiveChildren: true,
     });
 
-    this.target = this.addChild(target, this.controls);
+    this.target = this.addChild(target);
+    this.controls = this.addChild(controls ?? new SelectionControls()) as TControls;
 
     this.onRender = () => {
       if (!this.isFocused) return;
@@ -158,19 +165,19 @@ export class OutlineSelection<T extends Container = Container> extends Container
   }
 }
 
-/** Internal class for managing selection control graphics. */
-class SelectionControls extends Container {
-  private readonly tEdge = new Graphics({ label: "top" });
-  private readonly rEdge = new Graphics({ label: "right" });
-  private readonly bEdge = new Graphics({ label: "bottom" });
-  private readonly lEdge = new Graphics({ label: "left" });
+/** A set of controls used for manipulating the selection. */
+export class SelectionControls extends Container {
+  protected readonly tEdge = new Graphics({ label: "top" });
+  protected readonly rEdge = new Graphics({ label: "right" });
+  protected readonly bEdge = new Graphics({ label: "bottom" });
+  protected readonly lEdge = new Graphics({ label: "left" });
 
-  private readonly tlCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "top-left" });
-  private readonly trCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "top-right" });
-  private readonly blCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "bottom-left" });
-  private readonly brCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "bottom-right" });
+  protected readonly tlCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "top-left" });
+  protected readonly trCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "top-right" });
+  protected readonly blCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "bottom-left" });
+  protected readonly brCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "bottom-right" });
 
-  private readonly rotationControl = new Graphics({ context: SELECTION_ROTATION_CONTROL_CONTEXT, label: "rotation" });
+  protected readonly rotationControl = new Graphics({ context: SELECTION_ROTATION_CONTROL_CONTEXT, label: "rotation" });
 
   constructor() {
     super({
@@ -206,10 +213,10 @@ class SelectionControls extends Container {
   render(size: Size, rotation: number) {
     const { width: w, height: h } = size;
 
-    this.tEdge.clear().moveTo(0, 0).lineTo(w, 0).fill("white").stroke(SELECTION_STOKE);
-    this.rEdge.clear().moveTo(w, 0).lineTo(w, h).fill("white").stroke(SELECTION_STOKE);
-    this.bEdge.clear().moveTo(0, h).lineTo(w, h).fill("white").stroke(SELECTION_STOKE);
-    this.lEdge.clear().moveTo(0, 0).lineTo(0, h).fill("white").stroke(SELECTION_STOKE);
+    this.tEdge.clear().moveTo(0, 0).lineTo(w, 0).fill("white").stroke(SELECTION_EDGE_STOKE);
+    this.rEdge.clear().moveTo(w, 0).lineTo(w, h).fill("white").stroke(SELECTION_EDGE_STOKE);
+    this.bEdge.clear().moveTo(0, h).lineTo(w, h).fill("white").stroke(SELECTION_EDGE_STOKE);
+    this.lEdge.clear().moveTo(0, 0).lineTo(0, h).fill("white").stroke(SELECTION_EDGE_STOKE);
 
     this.tEdge.cursor = this.bEdge.cursor = getCursorForRotation("ns-resize", rotation);
     this.lEdge.cursor = this.rEdge.cursor = getCursorForRotation("ew-resize", rotation);

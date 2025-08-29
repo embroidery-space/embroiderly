@@ -136,7 +136,7 @@
 
       if (prevTool instanceof CursorTool) {
         // Blur the reference image when the cursor tool is deselected.
-        // patternsStore.pattern!.referenceImage.blur();
+        patternApplication.view?.blurReferenceImage();
       }
     },
     { immediate: true },

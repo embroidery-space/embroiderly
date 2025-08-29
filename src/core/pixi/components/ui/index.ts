@@ -1,1 +1,1 @@
-export * from "./rulers.ts";
+export * from "./slider.ts";

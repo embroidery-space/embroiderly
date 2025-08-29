@@ -1,20 +1,26 @@
 import { dequal } from "dequal/lite";
 import { Container, Graphics, GraphicsContext, Particle, ParticleContainer, Text, Texture } from "pixi.js";
 import type {
+  ColorSource,
   ContainerOptions,
+  DestroyOptions,
   ParticleContainerOptions,
   ParticleOptions,
   TextOptions,
   TextStyleOptions,
 } from "pixi.js";
 
+import { TextureManager } from "#/core/pixi/";
 import { DEFAULT_CONTAINER_OPTIONS, DEFAULT_TEXT_STYLE_OPTIONS, STITCH_SCALE_FACTOR } from "#/core/pixi/constants.ts";
 import {
+  Bead,
   FullStitch,
   FullStitchKind,
   PartStitch,
   PartStitchDirection,
   PartStitchKind,
+  LineStitch,
+  NodeStitch,
   type Stitch,
 } from "#/core/pattern/";
 
@@ -161,5 +167,47 @@ export class StitchSymbol extends Container {
         break;
       }
     }
+  }
+}
+
+export class StitchesHint extends Container {
+  constructor(options?: ContainerOptions) {
+    super({
+      ...DEFAULT_CONTAINER_OPTIONS,
+      ...options,
+      label: "Hint",
+      alpha: 0.5,
+    });
+  }
+
+  private clear(options?: DestroyOptions) {
+    this.removeChildren().forEach((child) => child.destroy(options));
+    return this.addChild(new Graphics());
+  }
+
+  drawLine(stitch: LineStitch, color: ColorSource) {
+    const { x, y } = stitch;
+    const start = { x: x[0], y: y[0] };
+    const end = { x: x[1], y: y[1] };
+    this.clear({ context: true })
+      .moveTo(start.x, start.y)
+      .lineTo(end.x, end.y)
+      // Draw a line with a larger width to make it look like a border.
+      .stroke({ width: 0.225, color: 0x000000, cap: "round" })
+      .moveTo(start.x, start.y)
+      .lineTo(end.x, end.y)
+      // Draw a line with a smaller width to make it look like a fill.
+      .stroke({ width: 0.2, color, cap: "round" });
+  }
+
+  drawNode(stitch: NodeStitch, color: ColorSource, bead?: Bead) {
+    const { x, y, kind, rotated } = stitch;
+    const graphics = this.clear({ context: false });
+    graphics.context = TextureManager.getNodeTexture(kind, bead);
+    graphics.pivot.set(this.width / 2, this.height / 2);
+    graphics.scale.set(STITCH_SCALE_FACTOR);
+    graphics.position.set(x, y);
+    graphics.tint = color;
+    if (rotated) graphics.angle = 90;
   }
 }

@@ -26,11 +26,10 @@ import {
 import { STITCH_SCALE_FACTOR } from "#/core/pixi/constants.ts";
 import { TextureManager } from "#/core/pixi/texture-manager.ts";
 
-import { Rulers } from "../ui/";
-import { Hint } from "../hint.ts";
 import { ReferenceImageView } from "./image.ts";
 import { FabricView } from "./fabric.ts";
 import { GridView } from "./grid.ts";
+import { Rulers } from "./rulers.ts";
 import {
   StitchGraphics,
   StitchGraphicsContainer,
@@ -38,6 +37,7 @@ import {
   StitchParticleContainer,
   StitchSymbol,
   StitchSymbolsContainer,
+  StitchesHint,
 } from "./stitches.ts";
 
 export class PatternView extends Container {
@@ -95,7 +95,7 @@ export class PatternView extends Container {
       interactiveChildren: true,
     }),
 
-    hint: new Hint(),
+    stitchesHint: new StitchesHint(),
     rulers: new Rulers(),
     // highest
   };
@@ -414,12 +414,12 @@ export class PatternView extends Container {
 
   drawLineHint(stitch: LineStitch) {
     const palitem = this.palette[stitch.palindex]!;
-    this.stages.hint.drawLine(stitch, palitem.color);
+    this.stages.stitchesHint.drawLine(stitch, palitem.color);
   }
 
   drawNodeHint(stitch: NodeStitch) {
     const palitem = this.palette[stitch.palindex]!;
-    this.stages.hint.drawNode(stitch, palitem.color);
+    this.stages.stitchesHint.drawNode(stitch, palitem.color);
   }
 
   /**
