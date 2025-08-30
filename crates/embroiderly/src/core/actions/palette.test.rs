@@ -38,7 +38,7 @@ fn test_add_palette_item() {
 
   // Test executing the command.
   {
-    window.listen("palette:add_palette_item", move |e| {
+    window.once("palette:add_palette_item", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: AddedPaletteItemData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(
@@ -57,7 +57,7 @@ fn test_add_palette_item() {
 
   // Test revoking the command.
   {
-    window.listen("palette:remove_palette_item", move |e| {
+    window.once("palette:remove_palette_item", move |e| {
       assert_eq!(serde_json::from_str::<usize>(e.payload()).unwrap(), 7);
     });
 
@@ -75,11 +75,11 @@ fn assert_executing_remove_palette_items_action(
   initial_palsize: usize,
   expected_palsize: usize,
 ) {
-  let remove_palette_items_event_id = window.listen("palette:remove_palette_items", move |e| {
+  window.once("palette:remove_palette_items", move |e| {
     let received_palindexes = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
     assert_eq!(received_palindexes, expected_palindexes);
   });
-  let remove_many_stitches_event_id = window.listen("stitches:remove_many", move |e| {
+  window.once("stitches:remove", move |e| {
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
     let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
     assert!(!conflicts.is_empty());
@@ -88,9 +88,6 @@ fn assert_executing_remove_palette_items_action(
   assert_eq!(patproj.pattern.palette.len(), initial_palsize);
   action.perform(window, patproj).unwrap();
   assert_eq!(patproj.pattern.palette.len(), expected_palsize);
-
-  window.unlisten(remove_palette_items_event_id);
-  window.unlisten(remove_many_stitches_event_id);
 }
 
 fn assert_revoking_remove_palette_items_action(
@@ -101,12 +98,12 @@ fn assert_revoking_remove_palette_items_action(
   initial_palsize: usize,
   expected_palsize: usize,
 ) {
-  let add_palette_item_event_id = window.listen("palette:add_palette_item", move |e| {
+  window.once("palette:add_palette_item", move |e| {
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
     let expected: AddedPaletteItemData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
     assert!(expected_palindexes.contains(&expected.palindex));
   });
-  let add_many_stitches_event_id = window.listen("stitches:add_many", move |e| {
+  window.once("stitches:add", move |e| {
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
     let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
     assert!(!conflicts.is_empty());
@@ -115,9 +112,6 @@ fn assert_revoking_remove_palette_items_action(
   assert_eq!(patproj.pattern.palette.len(), initial_palsize);
   action.revoke(window, patproj).unwrap();
   assert_eq!(patproj.pattern.palette.len(), expected_palsize);
-
-  window.unlisten(add_palette_item_event_id);
-  window.unlisten(add_many_stitches_event_id);
 }
 
 /// Test removing a set of palette items against corner cases and general use cases.
@@ -223,23 +217,23 @@ fn test_update_palette_display_settings() {
 
   // Test executing the command.
   {
-    let update_display_settings_event_id = window.listen("palette:update_display_settings", move |e| {
+    window.once("palette:update_display_settings", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let received_settings: PaletteSettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(received_settings, new_settings);
     });
+
     action.perform(&window, &mut patproj).unwrap();
-    window.unlisten(update_display_settings_event_id);
   }
 
   // Test revoking the command.
   {
-    let update_display_settings_event_id = window.listen("palette:update_display_settings", move |e| {
+    window.once("palette:update_display_settings", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let received_settings: PaletteSettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(received_settings, old_settings);
     });
+
     action.revoke(&window, &mut patproj).unwrap();
-    window.unlisten(update_display_settings_event_id);
   }
 }

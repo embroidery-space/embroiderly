@@ -317,8 +317,8 @@ export const enum PatternEvent {
   UpdateFabric = "fabric:update",
   UpdateGrid = "grid:update",
 
-  AddStitch = "stitch:add",
-  RemoveStitch = "stitch:remove",
+  AddStitch = "stitches:add",
+  RemoveStitch = "stitches:remove",
 
   AddPaletteItem = "palette:add_palette_item",
   RemovePaletteItem = "palette:remove_palette_item",

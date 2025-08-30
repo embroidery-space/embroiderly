@@ -26,7 +26,6 @@ import {
   LayersVisibility,
   ReferenceImage,
   ReferenceImageSettings,
-  deserializeStitch,
   deserializeStitches,
   type Stitch,
 } from "#/core/pattern/";
@@ -343,19 +342,11 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return StitchesApi.removeStitch(pattern.value.id, stitch);
     }
-    appWindow.listen<string>("stitches:add_one", ({ payload }) => {
-      if (!pattern.value) return;
-      pattern.value.addStitch(deserializeStitch(payload));
-    });
-    appWindow.listen<string>("stitches:add_many", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.AddStitch, ({ payload }) => {
       if (!pattern.value) return;
       for (const stitch of deserializeStitches(payload)) pattern.value.addStitch(stitch);
     });
-    appWindow.listen<string>("stitches:remove_one", ({ payload }) => {
-      if (!pattern.value) return;
-      pattern.value.removeStitch(deserializeStitch(payload));
-    });
-    appWindow.listen<string>("stitches:remove_many", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.RemoveStitch, ({ payload }) => {
       if (!pattern.value) return;
       for (const stitch of deserializeStitches(payload)) pattern.value.removeStitch(stitch);
     });

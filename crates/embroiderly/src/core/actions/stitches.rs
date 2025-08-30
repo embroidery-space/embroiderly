@@ -30,12 +30,12 @@ impl<R: tauri::Runtime> Action<R> for AddStitchAction {
   /// Add the stitch to the pattern.
   ///
   /// **Emits:**
-  /// - `stitches:add_one` with the added stitch
-  /// - `stitches:remove_many` with the removed stitches that conflict with the new stitch
+  /// - `stitches:add` with the added stitch (as array).
+  /// - `stitches:remove` with the removed stitches that conflict with the new stitch.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let conflicts = patproj.pattern.add_stitch(self.stitch);
-    window.emit("stitches:add_one", base64::encode(borsh::to_vec(&self.stitch)?))?;
-    window.emit("stitches:remove_many", base64::encode(borsh::to_vec(&conflicts)?))?;
+    window.emit("stitches:add", base64::encode(borsh::to_vec(&vec![self.stitch])?))?;
+    window.emit("stitches:remove", base64::encode(borsh::to_vec(&conflicts)?))?;
     if self.conflicts.get().is_none() {
       self.conflicts.set(conflicts).unwrap();
     }
@@ -45,14 +45,14 @@ impl<R: tauri::Runtime> Action<R> for AddStitchAction {
   /// Remove the added stitch from the pattern.
   ///
   /// **Emits:**
-  /// - `stitches:remove_one` with the removed stitch
-  /// - `stitches:add_many` with the added stitches that were removed when the stitch was added
+  /// - `stitches:remove` with the removed stitch (as array).
+  /// - `stitches:add` with the added stitches that were removed when the stitch was added.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let conflicts = self.conflicts.get().unwrap();
     patproj.pattern.remove_stitch(self.stitch);
     patproj.pattern.add_stitches(conflicts.clone());
-    window.emit("stitches:remove_one", base64::encode(borsh::to_vec(&self.stitch)?))?;
-    window.emit("stitches:add_many", base64::encode(borsh::to_vec(&conflicts)?))?;
+    window.emit("stitches:remove", base64::encode(borsh::to_vec(&vec![self.stitch])?))?;
+    window.emit("stitches:add", base64::encode(borsh::to_vec(&conflicts)?))?;
     Ok(())
   }
 }
@@ -78,24 +78,24 @@ impl<R: tauri::Runtime> Action<R> for RemoveStitchAction {
   /// Remove the stitch from the pattern.
   ///
   /// **Emits:**
-  /// - `stitches:remove_one` with the removed stitch
+  /// - `stitches:remove` with the removed stitch (as array).
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let stitch = patproj.pattern.remove_stitch(self.target_stitch).unwrap();
     if self.actual_stitch.get().is_none() {
       self.actual_stitch.set(stitch).unwrap();
     }
-    window.emit("stitches:remove_one", base64::encode(borsh::to_vec(&stitch)?))?;
+    window.emit("stitches:remove", base64::encode(borsh::to_vec(&vec![stitch])?))?;
     Ok(())
   }
 
   /// Add the removed stitch back to the pattern.
   ///
   /// **Emits:**
-  /// - `stitches:add_one` with the added stitch
+  /// - `stitches:add` with the added stitch (as array).
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let stitch = self.actual_stitch.get().unwrap();
     patproj.pattern.add_stitch(*stitch);
-    window.emit("stitches:add_one", base64::encode(borsh::to_vec(&stitch)?))?;
+    window.emit("stitches:add", base64::encode(borsh::to_vec(&vec![*stitch])?))?;
     Ok(())
   }
 }
