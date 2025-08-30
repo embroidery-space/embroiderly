@@ -78,7 +78,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
   ///
   /// **Emits:**
   /// - `palette:remove_palette_item` with the palette item index.
-  /// - `stitches:remove_many` with the stitches that should be removed.
+  /// - `stitches:remove` with the stitches that should be removed.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let mut palitems = Vec::with_capacity(self.palindexes.len());
     for &palindex in self.palindexes.iter().rev() {
@@ -90,7 +90,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
     palitems.reverse();
 
     let conflicts = patproj.pattern.remove_stitches_by_palindexes(&self.palindexes);
-    window.emit("stitches:remove_many", base64::encode(borsh::to_vec(&conflicts)?))?;
+    window.emit("stitches:remove", base64::encode(borsh::to_vec(&conflicts)?))?;
 
     if self.metadata.get().is_none() {
       self
@@ -106,7 +106,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
   ///
   /// **Emits:**
   /// - `palette:add_palette_item` with the added palette item and its related types.
-  /// - `stitches:add_many` with the stitches that should be restored.
+  /// - `stitches:add` with the stitches that should be restored.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let metadata = self.metadata.get().unwrap();
     for (index, &palindex) in self.palindexes.iter().enumerate() {
@@ -124,7 +124,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
       &self.palindexes,
       patproj.pattern.palette.len() as u32,
     );
-    window.emit("stitches:add_many", base64::encode(borsh::to_vec(&metadata.conflicts)?))?;
+    window.emit("stitches:add", base64::encode(borsh::to_vec(&metadata.conflicts)?))?;
 
     Ok(())
   }

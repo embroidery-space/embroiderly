@@ -35,25 +35,23 @@ fn test_update_pdf_export_options() {
 
   // Test executing the command.
   {
-    let event_id = window.listen("publish:update-pdf", move |e| {
+    window.once("publish:update-pdf", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: PdfExportOptions = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, options);
     });
 
     action.perform(&window, &mut patproj).unwrap();
-    window.unlisten(event_id);
   }
 
   // Test revoking the command.
   {
-    let event_id = window.listen("publish:update-pdf", move |e| {
+    window.once("publish:update-pdf", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: PdfExportOptions = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, PdfExportOptions::default());
     });
 
     action.revoke(&window, &mut patproj).unwrap();
-    window.unlisten(event_id);
   }
 }
