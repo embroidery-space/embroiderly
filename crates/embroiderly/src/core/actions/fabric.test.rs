@@ -29,19 +29,18 @@ fn test_update_fabric() {
 
   // Test executing the command.
   {
-    let event_id = window.listen("fabric:update", move |e| {
+    window.once("fabric:update", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: Fabric = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, fabric);
     });
 
     action.perform(&window, &mut patproj).unwrap();
-    window.unlisten(event_id);
   }
 
   // Test revoking the command.
   {
-    window.listen("fabric:update", move |e| {
+    window.once("fabric:update", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: Fabric = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, Fabric::default());

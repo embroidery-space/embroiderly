@@ -24,19 +24,18 @@ fn test_set_display_mode() {
 
   // Test executing the command.
   {
-    let event_id = window.listen("display:set_mode", move |e| {
+    window.once("display:set_mode", move |e| {
       let str: String = serde_json::from_str(e.payload()).unwrap();
       let expected: DisplayMode = str.parse().unwrap();
       assert_eq!(expected, mode);
     });
 
     action.perform(&window, &mut patproj).unwrap();
-    window.unlisten(event_id);
   }
 
   // Test revoking the command.
   {
-    window.listen("display:set_mode", move |e| {
+    window.once("display:set_mode", move |e| {
       let str: String = serde_json::from_str(e.payload()).unwrap();
       let expected: DisplayMode = str.parse().unwrap();
       assert_eq!(expected, old_mode);
@@ -63,27 +62,25 @@ fn test_show_symbols() {
   // Test executing the command
   {
     let expected_value = new_value;
-    let event_id = window.listen("display:show_symbols", move |e| {
+    window.once("display:show_symbols", move |e| {
       let value: bool = serde_json::from_str(e.payload()).unwrap();
       assert_eq!(value, expected_value);
     });
 
     action.perform(&window, &mut patproj).unwrap();
     assert_eq!(patproj.display_settings.show_symbols, new_value);
-    window.unlisten(event_id);
   }
 
   // Test revoking the command
   {
     let expected_value = !new_value;
-    let event_id = window.listen("display:show_symbols", move |e| {
+    window.once("display:show_symbols", move |e| {
       let value: bool = serde_json::from_str(e.payload()).unwrap();
       assert_eq!(value, expected_value);
     });
 
     action.revoke(&window, &mut patproj).unwrap();
     assert_eq!(patproj.display_settings.show_symbols, !new_value);
-    window.unlisten(event_id);
   }
 }
 
@@ -112,19 +109,18 @@ fn test_layers_visibility() {
 
   // Test executing the command
   {
-    let event_id = window.listen("display:set_layers_visibility", move |e| {
+    window.once("display:set_layers_visibility", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: LayersVisibility = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, visibility);
     });
 
     action.perform(&window, &mut patproj).unwrap();
-    window.unlisten(event_id);
   }
 
   // Test revoking the command
   {
-    window.listen("display:set_layers_visibility", move |e| {
+    window.once("display:set_layers_visibility", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: LayersVisibility = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, LayersVisibility::default());

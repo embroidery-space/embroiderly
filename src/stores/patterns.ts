@@ -17,7 +17,6 @@ import {
 import { useConfirm } from "#/composables";
 import {
   AddedPaletteItemData,
-  deserializeStitch,
   deserializeStitches,
   DisplayMode,
   PaletteSettings,
@@ -335,19 +334,11 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return StitchesApi.removeStitch(pattern.value.id, stitch);
     }
-    appWindow.listen<string>("stitches:add_one", ({ payload }) => {
-      if (!pattern.value) return;
-      pattern.value.addStitch(deserializeStitch(payload));
-    });
-    appWindow.listen<string>("stitches:add_many", ({ payload }) => {
+    appWindow.listen<string>("stitches:add", ({ payload }) => {
       if (!pattern.value) return;
       for (const stitch of deserializeStitches(payload)) pattern.value.addStitch(stitch);
     });
-    appWindow.listen<string>("stitches:remove_one", ({ payload }) => {
-      if (!pattern.value) return;
-      pattern.value.removeStitch(deserializeStitch(payload));
-    });
-    appWindow.listen<string>("stitches:remove_many", ({ payload }) => {
+    appWindow.listen<string>("stitches:remove", ({ payload }) => {
       if (!pattern.value) return;
       for (const stitch of deserializeStitches(payload)) pattern.value.removeStitch(stitch);
     });
