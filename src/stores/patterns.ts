@@ -17,7 +17,6 @@ import {
 import { useConfirm } from "#/composables";
 import {
   AddedPaletteItemData,
-  deserializeStitch,
   deserializeStitches,
   DisplayMode,
   PaletteSettings,
