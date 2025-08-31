@@ -70,37 +70,37 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
   }
 
   builder = builder.invoke_handler(tauri::generate_handler![
-    commands::path::get_app_document_dir,
-    commands::pattern::load_pattern,
-    commands::pattern::open_pattern,
-    commands::pattern::create_pattern,
-    commands::pattern::save_pattern,
-    commands::pattern::save_all_patterns,
-    commands::pattern::export_pattern,
-    commands::pattern::close_pattern,
-    commands::pattern::close_all_patterns,
-    commands::pattern::get_opened_patterns,
-    commands::pattern::get_unsaved_patterns,
-    commands::pattern::get_pattern_file_path,
-    commands::pattern::update_pattern_info,
-    commands::display::set_display_mode,
-    commands::display::show_symbols,
-    commands::display::set_layers_visibility,
-    commands::fabric::update_fabric,
-    commands::grid::update_grid,
-    commands::palette::add_palette_item,
-    commands::palette::remove_palette_items,
-    commands::palette::update_palette_display_settings,
-    commands::stitches::add_stitch,
-    commands::stitches::remove_stitch,
-    commands::publish::update_pdf_export_options,
-    commands::history::undo,
-    commands::history::redo,
-    commands::history::start_transaction,
-    commands::history::end_transaction,
-    commands::fonts::load_stitch_font,
-    commands::system::get_system_info,
-    commands::logger::log,
+    commands::core::pattern::load_pattern,
+    commands::core::pattern::open_pattern,
+    commands::core::pattern::create_pattern,
+    commands::core::pattern::save_pattern,
+    commands::core::pattern::save_all_patterns,
+    commands::core::pattern::export_pattern,
+    commands::core::pattern::close_pattern,
+    commands::core::pattern::close_all_patterns,
+    commands::core::pattern::get_opened_patterns,
+    commands::core::pattern::get_unsaved_patterns,
+    commands::core::pattern::get_pattern_file_path,
+    commands::core::pattern::update_pattern_info,
+    commands::core::display::set_display_mode,
+    commands::core::display::show_symbols,
+    commands::core::display::set_layers_visibility,
+    commands::core::fabric::update_fabric,
+    commands::core::grid::update_grid,
+    commands::core::palette::add_palette_item,
+    commands::core::palette::remove_palette_items,
+    commands::core::palette::update_palette_display_settings,
+    commands::core::stitches::add_stitch,
+    commands::core::stitches::remove_stitch,
+    commands::core::publish::update_pdf_export_options,
+    commands::core::history::undo,
+    commands::core::history::redo,
+    commands::core::history::start_transaction,
+    commands::core::history::end_transaction,
+    commands::core::fonts::load_stitch_font,
+    commands::utils::logger::log,
+    commands::utils::path::get_app_document_dir,
+    commands::utils::system::get_system_info,
   ]);
 
   builder
@@ -189,7 +189,7 @@ fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHa
         .map(|p| (p.id, p.file_path.clone()))
         .collect::<Vec<_>>();
       for (pattern_id, file_path) in patterns {
-        if let Err(err) = commands::pattern::save_pattern(
+        if let Err(err) = commands::core::pattern::save_pattern(
           pattern_id,
           file_path,
           app_handle.clone(),
@@ -234,7 +234,7 @@ pub fn handle_file_associations<R: tauri::Runtime>(
 ) -> anyhow::Result<tauri::WebviewWindow<R>> {
   // Load pattern files to the memory so that they can be accessed from the frontend later.
   for file in files {
-    commands::pattern::open_pattern(file, Some(false), app_handle.state::<PatternsState>())?;
+    commands::core::pattern::open_pattern(file, Some(false), app_handle.state::<PatternsState>())?;
   }
 
   create_webview_window(app_handle)
