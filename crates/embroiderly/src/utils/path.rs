@@ -16,6 +16,20 @@ pub fn app_document_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> 
   Ok(dir_path.join(app_name))
 }
 
+/// Returns the path to the application's log directory.
+#[allow(unused_variables)]
+pub fn app_logs_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<PathBuf> {
+  #[cfg(not(debug_assertions))]
+  let logs_dir = {
+    use tauri::Manager as _;
+    app.path().app_log_dir()? // In production, store logs in the application's log directory.
+  };
+  #[cfg(debug_assertions)]
+  let logs_dir = std::path::PathBuf::from("logs"); // In development, store logs in the `logs` directory near to the sources.
+
+  Ok(logs_dir)
+}
+
 pub fn backup_file_path<P: AsRef<Path>>(file_path: P, postfix: &str) -> PathBuf {
   let file_path = file_path.as_ref();
   let file_stem = file_path

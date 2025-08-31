@@ -16,6 +16,8 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     .setup(|app| {
       let app_handle = app.handle();
 
+      logger::init(app_handle)?;
+
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
         let files = collect_files_from_args();
@@ -30,8 +32,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
       Ok(())
     })
     .manage(RwLock::new(core::pattern_manager::PatternManager::new()))
-    .manage(RwLock::new(HistoryStateInner::<R>::new()))
-    .plugin(logger::init());
+    .manage(RwLock::new(HistoryStateInner::<R>::new()));
 
   #[cfg(not(feature = "test"))]
   {
@@ -99,6 +100,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::history::end_transaction,
     commands::fonts::load_stitch_font,
     commands::system::get_system_info,
+    commands::logger::log,
   ]);
 
   builder
