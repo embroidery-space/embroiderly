@@ -1,42 +1,57 @@
 /* eslint-disable no-console */
-import { warn, debug, trace, info, error, type LogOptions } from "@tauri-apps/plugin-log";
+import { invoke } from "@tauri-apps/api/core";
+import StackTracey from "stacktracey";
 
 declare global {
   /** Prints an error message in the console and sends it to the logging backend. */
-  function error(message: string, options?: LogOptions): Promise<void>;
+  function error(message: string): Promise<void>;
 
   /** Prints a warning message in the console and sends it to the logging backend. */
-  function warn(message: string, options?: LogOptions): Promise<void>;
+  function warn(message: string): Promise<void>;
 
   /** Prints an informational message in the console and sends it to the logging backend. */
-  function info(message: string, options?: LogOptions): Promise<void>;
+  function info(message: string): Promise<void>;
 
   /** Prints a debug message in the console and sends it to the logging backend. */
-  function debug(message: string, options?: LogOptions): Promise<void>;
+  function debug(message: string): Promise<void>;
 
   /** Prints a trace message in the console and sends it to the logging backend. */
-  function trace(message: string, options?: LogOptions): Promise<void>;
+  function trace(message: string): Promise<void>;
 }
 
 export function initLogger() {
-  globalThis.error = (message, options) => {
+  globalThis.error = async (message) => {
     console.error(message);
-    return error(message, options);
+    return log("error", message);
   };
-  globalThis.warn = (message, options) => {
+  globalThis.warn = async (message) => {
     console.warn(message);
-    return warn(message, options);
+    return log("warn", message);
   };
-  globalThis.info = (message, options) => {
+  globalThis.info = async (message) => {
     console.info(message);
-    return info(message, options);
+    return log("info", message);
   };
-  globalThis.debug = (message, options) => {
+  globalThis.debug = async (message) => {
     console.debug(message);
-    return debug(message, options);
+    return log("debug", message);
   };
-  globalThis.trace = (message, options) => {
+  globalThis.trace = async (message) => {
     console.trace(message);
-    return trace(message, options);
+    return log("trace", message);
   };
+}
+
+async function log(level: string, message: string) {
+  const location = getCallerLocation(new Error().stack);
+  return invoke<void>("log", { level, message, location });
+}
+
+function getCallerLocation(stack?: string) {
+  if (!stack) return;
+
+  const entry = new StackTracey(stack).items[2]; // Get the third entry which is the main caller.
+  if (!entry) return;
+
+  return `${entry.callee || "<anonymous>"}@${entry.fileName}:${entry.line}:${entry.column}`;
 }
