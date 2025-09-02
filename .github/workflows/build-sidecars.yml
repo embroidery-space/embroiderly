@@ -73,7 +73,7 @@ jobs:
       - run: rm -rf crates/embroiderly/binaries/*
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           path: crates/embroiderly/binaries/
           merge-multiple: true
