@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-add-breadcrumb"
+description = "Enables the add_breadcrumb command without any pre-configured scope."
+commands.allow = ["add_breadcrumb"]
+
+[[permission]]
+identifier = "deny-add-breadcrumb"
+description = "Denies the add_breadcrumb command without any pre-configured scope."
+commands.deny = ["add_breadcrumb"]

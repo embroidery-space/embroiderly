@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import ui from "@nuxt/ui/vue-plugin";
 import PrimeVue from "primevue/config";
+import * as Sentry from "@sentry/vue";
+import { defaultSentryOptions } from "@embroiderly/tauri-plugin-sentry";
 
 import "./assets/styles.css";
 import "./assets/icons.ts";
@@ -15,6 +17,16 @@ import App from "./App.vue";
 initLogger();
 
 const app = createApp(App);
+
+Sentry.init({
+  app,
+  // Specify a dummy DSN to correctly setup Sentry.
+  // Requests will be handled by the Tauri backend.
+  dsn: "https://123456@dummy.dsn/0",
+  debug: import.meta.env.DEV,
+  ...defaultSentryOptions,
+});
+
 app.use(router);
 app.use(pinia);
 app.use(fluent);

@@ -6,6 +6,7 @@ mod commands;
 mod core;
 mod error;
 mod logger;
+mod telemetry;
 mod utils;
 
 pub mod state;
@@ -17,6 +18,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
       let app_handle = app.handle();
 
       logger::init(app_handle)?;
+      telemetry::init(app_handle)?;
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
