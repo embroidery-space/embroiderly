@@ -1542,6 +1542,7 @@ dependencies = [
  "tauri-plugin-clipboard-manager",
  "tauri-plugin-dialog",
  "tauri-plugin-fs",
+ "tauri-plugin-log",
  "tauri-plugin-opener",
  "tauri-plugin-os",
  "tauri-plugin-pinia",
@@ -6119,6 +6120,15 @@ dependencies = [
  "thiserror 2.0.16",
  "toml 0.8.23",
  "url",
+]
+
+[[package]]
+name = "tauri-plugin-log"
+version = "0.0.0"
+dependencies = [
+ "log",
+ "tauri",
+ "tauri-plugin",
 ]
 
 [[package]]

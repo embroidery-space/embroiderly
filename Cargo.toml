@@ -34,6 +34,7 @@ tauri-plugin-updater = "2.9.0"
 tauri-plugin-prevent-default = "2.1.4"
 tauri-plugin-pinia = "3.7.1"
 ## Custom Tauri plugins
+tauri-plugin-log = { path = "crates/tauri-plugin-log" }
 tauri-plugin-sentry = { path = "crates/tauri-plugin-sentry" }
 
 # Embroiderly Core

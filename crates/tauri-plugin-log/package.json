@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "type": "module",
+  "name": "@embroiderly/tauri-plugin-log",
+  "types": "./dist-js/index.d.ts",
+  "module": "./dist-js/index.js",
+  "exports": {
+    "types": "./dist-js/index.d.ts",
+    "import": "./dist-js/index.js"
+  },
+  "files": [
+    "dist-js",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "2.0.0",
+    "stacktracey": "2.1.8"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "12.0.0",
+    "rollup": "4.9.6",
+    "tslib": "2.6.2",
+    "typescript": "5.3.3"
+  }
+}

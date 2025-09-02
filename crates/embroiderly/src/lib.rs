@@ -100,7 +100,6 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::core::history::start_transaction,
     commands::core::history::end_transaction,
     commands::core::fonts::load_stitch_font,
-    commands::utils::logger::log,
     commands::utils::path::get_app_document_dir,
     commands::utils::system::get_system_info,
   ]);

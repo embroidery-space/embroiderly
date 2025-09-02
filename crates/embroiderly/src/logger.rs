@@ -7,5 +7,7 @@ pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Resu
     .level_for("pmaker", APPLICATION_LOG_LEVEL.to_level_filter());
   dispatch.apply()?;
 
+  app_handle.plugin(tauri_plugin_log::init())?;
+
   Ok(())
 }
