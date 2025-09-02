@@ -5,5 +5,5 @@ dist-js/
 
 target/
 
-permissions/
+permissions/*
 !permissions/default.toml
