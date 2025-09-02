@@ -45,32 +45,6 @@ Denies the add_breadcrumb command without any pre-configured scope.
 <tr>
 <td>
 
-`sentry:allow-add-breadcrumbs`
-
-</td>
-<td>
-
-Enables the add_breadcrumbs command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`sentry:deny-add-breadcrumbs`
-
-</td>
-<td>
-
-Denies the add_breadcrumbs command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `sentry:allow-envelope`
 
 </td>
