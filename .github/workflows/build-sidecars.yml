@@ -24,7 +24,7 @@ jobs:
         sidecar: ["embroiderly-publish"]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - uses: swatinem/rust-cache@v2
 
@@ -65,7 +65,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.EMBROIDERLY_PAT }}
 
