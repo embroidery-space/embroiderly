@@ -40,6 +40,7 @@ pub fn init_sidecar_logger(binary_name: &str) -> anyhow::Result<fern::Dispatch> 
 fn create_base_dispatch(log_file_path: std::path::PathBuf) -> anyhow::Result<fern::Dispatch> {
   log_panics::init();
 
+  #[allow(unused_mut)]
   let mut dispatch = fern::Dispatch::new()
     .format(|out, message, record| {
       // The format is the same as a built-in ISO 8601 except for formatting.

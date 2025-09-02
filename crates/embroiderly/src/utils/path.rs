@@ -22,7 +22,7 @@ pub fn app_logs_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyh
   #[cfg(not(debug_assertions))]
   let logs_dir = {
     use tauri::Manager as _;
-    app.path().app_log_dir()? // In production, store logs in the application's log directory.
+    app_handle.path().app_log_dir()? // In production, store logs in the application's log directory.
   };
   #[cfg(debug_assertions)]
   let logs_dir = std::path::PathBuf::from("logs"); // In development, store logs in the `logs` directory near to the sources.
