@@ -58,6 +58,7 @@ jobs:
         with:
           name: sidecar-binary-${{ matrix.sidecar }}-${{ matrix.os }}
           path: binaries/
+          retention-days: 1
 
   commit:
     permissions:

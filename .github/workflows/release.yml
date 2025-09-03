@@ -13,6 +13,8 @@ jobs:
       matrix:
         platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
+    outputs:
+      app-version: ${{ steps.tauri.outputs.appVersion }}
     steps:
       - uses: actions/checkout@v5
       - name: Install system dependencies (Ubuntu-only)
@@ -22,11 +24,14 @@ jobs:
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: package.json
           cache: npm
       - uses: dtolnay/rust-toolchain@stable
       - run: npm ci
-      - uses: tauri-apps/tauri-action@dev
+
+      - name: Build the application
+        id: tauri
+        uses: tauri-apps/tauri-action@dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
@@ -36,3 +41,72 @@ jobs:
           tagName: v__VERSION__
           releaseName: Embroiderly v__VERSION__
           updaterJsonPreferNsis: true
+
+      - name: Upload debug symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-symbols-${{ matrix.platform }}
+          path: target/release/embroiderly.(pdb|dwp)
+          retention-days: 1
+
+  sentry:
+    needs: release
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: npm
+      - run: npm ci
+
+      - name: Install Sentry CLI
+        run: npm install -g @sentry/cli
+
+      - name: Create Sentry release
+        run: |
+          sentry-cli releases new "${{ needs.release.outputs.app-version }}"
+          sentry-cli releases set-commits "${{ needs.release.outputs.app-version }}" --auto || true
+
+      - name: Build frontend with source maps (Windows)
+        env:
+          TAURI_ENV_DEBUG: "true"
+          TAURI_ENV_PLATFORM: "windows"
+        run: npm run build
+
+      - name: Upload source maps to Sentry (Windows)
+        run: |
+          sentry-cli sourcemaps inject ./dist
+          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" --dist="windows" ./dist
+
+      - name: Build frontend with source maps (Linux)
+        env:
+          TAURI_ENV_DEBUG: "true"
+          TAURI_ENV_PLATFORM: "linux"
+        run: npm run build
+
+      - name: Upload source maps to Sentry (Linux)
+        run: |
+          sentry-cli sourcemaps inject ./dist
+          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" --dist="linux" ./dist
+
+      - name: Download debug symbols
+        uses: actions/download-artifact@v4
+        with:
+          pattern: debug-symbols-*
+          merge-multiple: true
+
+      - name: Upload debug symbols to Sentry
+        run: |
+          find . -name "embroiderly.pdb" -exec sentry-cli debug-files upload --release="${{ needs.release.outputs.app-version }}" {} + || true
+          find . -name "embroiderly.dwp" -exec sentry-cli debug-files upload --release="${{ needs.release.outputs.app-version }}" {} + || true
+
+      - name: Finalize Sentry release
+        run: sentry-cli releases finalize "${{ needs.release.outputs.app-version }}"
