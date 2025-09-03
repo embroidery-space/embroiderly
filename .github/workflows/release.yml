@@ -36,7 +36,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          EMBROIDERLY_SENTRY_DSN: ${{ secrets.EMBROIDERLY_SENTRY_DSN }}
+          EMBROIDERLY_PUBLISH_SENTRY_DSN: ${{ secrets.EMBROIDERLY_PUBLISH_SENTRY_DSN }}
         with:
           tagName: v__VERSION__
           releaseName: Embroiderly v__VERSION__
@@ -57,8 +58,8 @@ jobs:
         shell: bash
     env:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+      SENTRY_ORG: embroidery-space
+      SENTRY_PROJECT: embroiderly
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
@@ -110,3 +111,10 @@ jobs:
 
       - name: Finalize Sentry release
         run: sentry-cli releases finalize "${{ needs.release.outputs.app-version }}"
+
+  build-sidecars:
+    needs: release
+    uses: ./.github/workflows/build-sidecars.yml
+    with:
+      app-version: ${{ needs.release.outputs.app-version }}
+    secrets: inherit

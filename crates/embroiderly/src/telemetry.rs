@@ -1,38 +1,25 @@
 use tauri_plugin_sentry::sentry;
 
+/// Returns the release name for Sentry.
+pub fn sentry_release_name(package_info: &tauri::PackageInfo) -> String {
+  format!("{}@{}", package_info.name, package_info.version).to_lowercase()
+}
+
 pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
   init_diagnostics(app_handle)?;
   Ok(())
 }
 
 fn init_diagnostics<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
-  // Get a configuration setting from the config.
-  #[cfg(not(debug_assertions))]
-  let diagnostics_enabled = {
-    use tauri_plugin_pinia::ManagerExt as _;
-    app_handle
-      .pinia()
-      .get("embroiderly-settings", "telemetry")
-      .and_then(|v| v.get("diagnostics").cloned())
-      .and_then(|v| serde_json::from_value(v).ok())
-      .unwrap_or(false)
-  };
-  #[cfg(debug_assertions)]
-  let diagnostics_enabled = false;
-
-  // Get the release name.
-  let package_info = app_handle.package_info();
-  let release_name = format!("{}@{}", package_info.name, package_info.version).to_lowercase();
-
   // Configure Sentry.
   let client_options = sentry::ClientOptions {
-    release: Some(std::borrow::Cow::Owned(release_name)),
+    release: Some(std::borrow::Cow::Owned(sentry_release_name(app_handle.package_info()))),
     auto_session_tracking: true,
     debug: cfg!(debug_assertions),
     ..Default::default()
   };
-  let client = if let Some(dsn) = std::option_env!("SENTRY_DSN")
-    && diagnostics_enabled
+  let client = if let Some(dsn) = option_env!("EMBROIDERLY_SENTRY_DSN")
+    && crate::utils::settings::telemetry_diagnostics_enabled(app_handle)
   {
     log::info!("Telemetry: Diagnostics is enabled.");
     sentry::init((dsn, client_options))

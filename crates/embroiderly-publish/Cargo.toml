@@ -26,6 +26,9 @@ quick-xml = { workspace = true }
 # Logging
 log = { workspace = true }
 
+# Telemetry
+sentry = { workspace = true }
+
 # Error handling
 anyhow = { workspace = true }
 thiserror = { workspace = true }

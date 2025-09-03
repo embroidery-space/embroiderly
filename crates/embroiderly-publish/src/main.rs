@@ -21,7 +21,8 @@ struct Args {
 }
 
 fn main() -> anyhow::Result<()> {
-  embroiderly_logger::init_sidecar_logger("embroiderly-publish")?.apply()?;
+  embroiderly_publish::logger::init()?;
+  let _telemetry = embroiderly_publish::telemetry::init()?;
 
   let args = Args::parse();
 

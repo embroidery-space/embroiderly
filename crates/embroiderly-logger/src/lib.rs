@@ -55,7 +55,13 @@ fn create_base_dispatch(log_file_path: std::path::PathBuf) -> anyhow::Result<fer
       ))
     })
     .level(DEFAULT_LOG_LEVEL.to_level_filter())
-    .chain(fern::log_file(&log_file_path)?);
+    .chain(
+      std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .open(&log_file_path)?,
+    );
 
   // In debug mode, also log to stderr.
   #[cfg(debug_assertions)]

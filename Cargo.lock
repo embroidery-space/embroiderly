@@ -1607,6 +1607,7 @@ dependencies = [
  "log",
  "prettydiff",
  "quick-xml 0.37.5",
+ "sentry",
  "serde_json",
  "thiserror 2.0.16",
  "typst",

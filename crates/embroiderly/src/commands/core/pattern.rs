@@ -207,13 +207,25 @@ pub fn export_pattern<R: tauri::Runtime>(
 
   let logs_dir = app_logs_dir(&app_handle)?;
 
+  let diagnostics_enabled = crate::utils::settings::telemetry_diagnostics_enabled(&app_handle);
+  let sentry_release_name = crate::telemetry::sentry_release_name(app_handle.package_info());
+
   let sidecar = app_handle
     .shell()
     .sidecar("embroiderly-publish")
     .map_err(|e| PatternError::FailedToExport(e.into()))?;
   let output = tauri::async_runtime::block_on(async move {
-    let mut sidecar = sidecar
-      .env(embroiderly_logger::EMBROIDERLY_LOG_DIR_ENV_VAR, logs_dir)
+    let mut sidecar = sidecar.env(embroiderly_logger::EMBROIDERLY_LOG_DIR_ENV_VAR, logs_dir);
+
+    if let Some(dsn) = std::option_env!("EMBROIDERLY_PUBLISH_SENTRY_DSN")
+      && diagnostics_enabled
+    {
+      sidecar = sidecar
+        .env("SENTRY_DSN", dsn)
+        .env("SENTRY_RELEASE_NAME", sentry_release_name);
+    }
+
+    sidecar = sidecar
       .arg("--pattern")
       .arg(&tempfile_path)
       .arg("--output")

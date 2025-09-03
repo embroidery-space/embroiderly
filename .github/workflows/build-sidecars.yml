@@ -2,6 +2,12 @@ name: Build and Commit Sidecar Binaries
 
 on:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      app-version:
+        description: Application version for Sentry release
+        required: false
+        type: string
   push:
     branches: [dev]
     paths:
@@ -60,11 +66,20 @@ jobs:
           path: binaries/
           retention-days: 1
 
+      - name: Upload debug symbols for Sentry
+        if: inputs.app-version != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: sidecar-debug-symbols-${{ matrix.sidecar }}-${{ matrix.os }}
+          path: target/release/${{ matrix.sidecar }}.(pdb|dwp)
+          retention-days: 1
+
   commit:
     permissions:
       contents: write
     needs: build
     runs-on: ubuntu-latest
+    if: inputs.app-version == ''
     steps:
       - uses: actions/checkout@v5
         with:
@@ -97,3 +112,43 @@ jobs:
           commit_user_name: ${{ steps.gpg.outputs.name }}
           commit_user_email: ${{ steps.gpg.outputs.email }}
           push_options: "--force"
+
+  sentry:
+    needs: build
+    runs-on: ubuntu-latest
+    if: inputs.app-version != ''
+    strategy:
+      fail-fast: false
+      matrix:
+        sidecar: ["embroiderly-publish"]
+    defaults:
+      run:
+        shell: bash
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: embroidery-space
+      SENTRY_PROJECT: ${{ matrix.sidecar }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Sentry CLI
+        run: npm install -g @sentry/cli
+
+      - name: Create Sentry release
+        run: |
+          sentry-cli releases new "${{ inputs.app-version }}"
+          sentry-cli releases set-commits "${{ inputs.app-version }}" --auto || true
+
+      - name: Download debug symbols
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sidecar-debug-symbols-${{ matrix.sidecar }}-*
+          merge-multiple: true
+
+      - name: Upload debug symbols to Sentry
+        run: |
+          find . -name "${{ matrix.sidecar }}.pdb" -exec sentry-cli debug-files upload --release="${{ inputs.app-version }}" {} + || true
+          find . -name "${{ matrix.sidecar }}.dwp" -exec sentry-cli debug-files upload --release="${{ inputs.app-version }}" {} + || true
+
+      - name: Finalize Sentry release
+        run: sentry-cli releases finalize "${{ inputs.app-version }}"

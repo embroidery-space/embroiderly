@@ -160,17 +160,7 @@ fn copy_sample_patterns<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> 
 }
 
 fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) {
-  use tauri_plugin_pinia::ManagerExt as _;
-
-  let interval = app_handle
-    .pinia()
-    .get("embroiderly-settings", "other")
-    .and_then(|v| v.get("autoSaveInterval").cloned())
-    .and_then(|v| serde_json::from_value(v).ok())
-    .unwrap_or(15)
-    .clamp(0, 240);
-  let interval = std::time::Duration::from_secs(interval * 60);
-
+  let interval = crate::utils::settings::auto_save_interval(app_handle);
   if interval.is_zero() {
     log::debug!("Auto-save is disabled.");
     return;
