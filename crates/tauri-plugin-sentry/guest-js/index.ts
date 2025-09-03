@@ -6,6 +6,10 @@ import { addBreadcrumb, envelope } from "./commands.js";
 
 /** Default options for the Sentry SDK to pass events and breadcrumbs to the Rust SDK. */
 export const defaultSentryOptions: Options = {
+  // Specify dummy DSN and release to correctly setup Sentry.
+  // Requests will be proxied through the Tauri backend and these values will be replaced with real ones.
+  dsn: "https://123456@dummy.dsn/0",
+  release: "application@0.0.0",
   transport: makeTauriTransport,
   beforeBreadcrumb: sendBreadcrumbToRust,
 };

@@ -16,7 +16,7 @@ pub fn envelope(body: Buffer, sentry_client: tauri::State<'_, sentry::Client>) {
     if let Some(mut event) = envelope.event().cloned() {
       event.platform = "javascript".into();
 
-      // These come from the Rust config, so remove what came from the webview.
+      // Remove values from JavaScript, as they should be replaced by values from Rust.
       event.release = None;
       event.environment = None;
       event.dist = None;

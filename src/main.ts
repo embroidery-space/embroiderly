@@ -20,9 +20,6 @@ initLogger();
 Sentry.init({
   ...defaultSentryOptions,
   app,
-  // Specify a dummy DSN to correctly setup Sentry.
-  // Requests will be handled by the Tauri backend.
-  dsn: "https://123456@dummy.dsn/0",
   debug: import.meta.env.DEV,
 });
 
