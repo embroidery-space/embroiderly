@@ -1,12 +1,13 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{Fabric, Pattern, PatternInfo, PatternProject};
+use embroiderly_pattern::{Fabric, Pattern, PatternInfo, PatternProject, PdfExportOptions};
 use tauri::Emitter as _;
 
 use crate::core::actions::{Action as _, CheckpointAction, UpdatePatternInfoAction};
 use crate::error::{CommandError, PatternError, Result};
 use crate::parse_command_payload;
+use crate::sidecars::SidecarRunner as _;
 use crate::state::{HistoryState, PatternsState};
-use crate::utils::path::{app_document_dir, app_logs_dir, backup_file_path};
+use crate::utils::path::{app_document_dir, backup_file_path};
 
 #[tauri::command]
 pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Result<tauri::ipc::Response> {
@@ -177,12 +178,10 @@ pub fn save_all_patterns<R: tauri::Runtime>(
 pub fn export_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
   file_path: std::path::PathBuf,
-  options: serde_json::Value,
+  options: PdfExportOptions,
   app_handle: tauri::AppHandle<R>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
-  use tauri_plugin_shell::ShellExt;
-
   log::debug!("Exporting Pattern({pattern_id:?})");
 
   let package_info = {
@@ -205,49 +204,11 @@ pub fn export_pattern<R: tauri::Runtime>(
   embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
   patproj.file_path = previous_file_path;
 
-  let logs_dir = app_logs_dir(&app_handle)?;
-
-  let diagnostics_enabled = crate::utils::settings::telemetry_diagnostics_enabled(&app_handle);
-  let sentry_release_name = crate::telemetry::sentry_release_name(app_handle.package_info());
-
-  let sidecar = app_handle
-    .shell()
-    .sidecar("embroiderly-publish")
-    .map_err(|e| PatternError::FailedToExport(e.into()))?;
-  let output = tauri::async_runtime::block_on(async move {
-    let mut sidecar = sidecar.env(embroiderly_logger::EMBROIDERLY_LOG_DIR_ENV_VAR, logs_dir);
-
-    if let Some(dsn) = std::option_env!("EMBROIDERLY_PUBLISH_SENTRY_DSN")
-      && diagnostics_enabled
-    {
-      sidecar = sidecar
-        .env("SENTRY_DSN", dsn)
-        .env("SENTRY_RELEASE_NAME", sentry_release_name);
-    }
-
-    sidecar = sidecar
-      .arg("--pattern")
-      .arg(&tempfile_path)
-      .arg("--output")
-      .arg(&file_path);
-
-    if let Ok(options) = serde_json::to_string(&options) {
-      sidecar = sidecar.arg("--options").arg(options);
-    } else {
-      log::error!("Failed to serialize options: {options:?}");
-      return Err(PatternError::FailedToExport(anyhow::anyhow!(
-        "Failed to serialize options"
-      )));
-    }
-
-    let result = sidecar.output().await;
-
-    if let Err(e) = std::fs::remove_file(tempfile_path) {
-      log::error!("Failed to remove temporary file: {e}");
-    }
-
-    result.map_err(|e| PatternError::FailedToExport(e.into()))
-  })?;
+  let output = crate::sidecars::ExportPdfSidecar::new(app_handle.clone())
+    .pattern_path(tempfile_path)
+    .output_path(file_path)
+    .options(options)
+    .run()?;
 
   if !output.status.success() {
     let stderr = String::from_utf8_lossy(&output.stderr);
