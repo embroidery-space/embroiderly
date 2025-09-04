@@ -76,6 +76,13 @@ message-update-available =
 title-no-updates-available = No Update Available
 message-no-updates-available = There are currently no updates available.
 
+## Titles, labels and messages related to telemetry.
+
+label-telemetry = Telemetry
+
+label-allow-diagnostics = Allow collecting diagnostics reports
+message-allow-diagnostics-description = Help improve the stability of { -app-name } by automatically sending diagnostic reports when errors occur or the application is crashed.
+
 ## Titles, labels and messages related to the welcome page.
 
 title-welcome = { -app-name }

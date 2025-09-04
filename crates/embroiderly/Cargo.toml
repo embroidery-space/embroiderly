@@ -23,6 +23,9 @@ tauri-plugin-updater = { workspace = true }
 ## Third-party plugins
 tauri-plugin-prevent-default = { workspace = true }
 tauri-plugin-pinia = { workspace = true }
+## Custom Tauri plugins
+tauri-plugin-log = { workspace = true }
+tauri-plugin-sentry = { workspace = true }
 
 # Embroiderly Core
 embroiderly-parsers = { workspace = true }

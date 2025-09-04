@@ -38,7 +38,7 @@
     </template>
 
     <template #updater>
-      <div class="flex flex-col gap-y-2">
+      <div class="space-y-2">
         <UButton
           :loading="settingsStore.loadingUpdate"
           :label="$t('label-check-for-updates')"
@@ -54,8 +54,18 @@
       </div>
     </template>
 
+    <template #telemetry>
+      <div class="space-y-2">
+        <UCheckbox
+          v-model="telemetry.diagnostics"
+          :label="$t('label-allow-diagnostics')"
+          :description="$t('message-allow-diagnostics-description')"
+        />
+      </div>
+    </template>
+
     <template #other>
-      <div class="flex flex-col gap-y-2">
+      <div class="space-y-2">
         <UFormField
           :label="$t('label-autosave-interval')"
           :description="$t('message-autosave-interval-description')"
@@ -81,6 +91,7 @@
   const ui = defineModel<UiOptions>("ui", { required: true });
   const viewport = defineModel<ViewportOptions>("viewport", { required: true });
   const updater = defineModel<UpdaterOptions>("updater", { required: true });
+  const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
   const other = defineModel<OtherOptions>("other", { required: true });
 
   const fluent = useFluent();
@@ -90,6 +101,7 @@
     { label: fluent.$t("label-interface"), slot: "ui" },
     { label: fluent.$t("label-viewport"), slot: "viewport" },
     { label: fluent.$t("label-updater"), slot: "updater" },
+    { label: fluent.$t("label-telemetry"), slot: "telemetry" },
     { label: fluent.$t("label-other"), slot: "other" },
   ]);
 

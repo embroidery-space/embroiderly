@@ -6,6 +6,7 @@ mod commands;
 mod core;
 mod error;
 mod logger;
+mod telemetry;
 mod utils;
 
 pub mod state;
@@ -17,6 +18,7 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
       let app_handle = app.handle();
 
       logger::init(app_handle)?;
+      telemetry::init(app_handle)?;
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
@@ -98,7 +100,6 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
     commands::core::history::start_transaction,
     commands::core::history::end_transaction,
     commands::core::fonts::load_stitch_font,
-    commands::utils::logger::log,
     commands::utils::path::get_app_document_dir,
     commands::utils::system::get_system_info,
   ]);
@@ -159,17 +160,7 @@ fn copy_sample_patterns<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> 
 }
 
 fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) {
-  use tauri_plugin_pinia::ManagerExt as _;
-
-  let interval = app_handle
-    .pinia()
-    .get("embroiderly-settings", "other")
-    .and_then(|v| v.get("autoSaveInterval").cloned())
-    .and_then(|v| serde_json::from_value(v).ok())
-    .unwrap_or(15)
-    .clamp(0, 240);
-  let interval = std::time::Duration::from_secs(interval * 60);
-
+  let interval = crate::utils::settings::auto_save_interval(app_handle);
   if interval.is_zero() {
     log::debug!("Auto-save is disabled.");
     return;

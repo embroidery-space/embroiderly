@@ -20,6 +20,7 @@ split-debuginfo = "packed"
 # Tauri
 tauri = { version = "2.7.0", features = ["config-json5"] }
 tauri-build = { version = "2.4.1", features = ["config-json5"] }
+tauri-plugin = { version = "2.4.0", features = ["build"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.0"
 tauri-plugin-dialog = "2.3.3"
@@ -32,6 +33,9 @@ tauri-plugin-updater = "2.9.0"
 ## Third-party Tauri plugins
 tauri-plugin-prevent-default = "2.1.4"
 tauri-plugin-pinia = "3.7.1"
+## Custom Tauri plugins
+tauri-plugin-log = { path = "crates/tauri-plugin-log" }
+tauri-plugin-sentry = { path = "crates/tauri-plugin-sentry" }
 
 # Embroiderly Core
 embroiderly-parsers = { path = "crates/embroiderly-parsers" }
@@ -80,6 +84,9 @@ time = { version = "0.3.42", features = ["formatting", "macros"] }
 log = "0.4.27"
 log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 fern = "0.7.1"
+
+# Telemetry
+sentry = "0.42.0"
 
 # Other
 ordered-float = { version = "5.0.0" }

@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
-import { invoke } from "@tauri-apps/api/core";
-import StackTracey from "stacktracey";
+import { LogLevel, log } from "@embroiderly/tauri-plugin-log";
 
 declare global {
   /** Prints an error message in the console and sends it to the logging backend. */
@@ -22,36 +21,22 @@ declare global {
 export function initLogger() {
   globalThis.error = async (message) => {
     console.error(message);
-    return log("error", message);
+    return log(LogLevel.Error, message);
   };
   globalThis.warn = async (message) => {
     console.warn(message);
-    return log("warn", message);
+    return log(LogLevel.Warn, message);
   };
   globalThis.info = async (message) => {
     console.info(message);
-    return log("info", message);
+    return log(LogLevel.Info, message);
   };
   globalThis.debug = async (message) => {
     console.debug(message);
-    return log("debug", message);
+    return log(LogLevel.Debug, message);
   };
   globalThis.trace = async (message) => {
     console.trace(message);
-    return log("trace", message);
+    return log(LogLevel.Trace, message);
   };
-}
-
-async function log(level: string, message: string) {
-  const location = getCallerLocation(new Error().stack);
-  return invoke<void>("log", { level, message, location });
-}
-
-function getCallerLocation(stack?: string) {
-  if (!stack) return;
-
-  const entry = new StackTracey(stack).items[2]; // Get the third entry which is the main caller.
-  if (!entry) return;
-
-  return `${entry.callee || "<anonymous>"}@${entry.fileName}:${entry.line}:${entry.column}`;
 }

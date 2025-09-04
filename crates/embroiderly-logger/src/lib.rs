@@ -40,6 +40,7 @@ pub fn init_sidecar_logger(binary_name: &str) -> anyhow::Result<fern::Dispatch> 
 fn create_base_dispatch(log_file_path: std::path::PathBuf) -> anyhow::Result<fern::Dispatch> {
   log_panics::init();
 
+  #[allow(unused_mut)]
   let mut dispatch = fern::Dispatch::new()
     .format(|out, message, record| {
       // The format is the same as a built-in ISO 8601 except for formatting.
@@ -54,7 +55,13 @@ fn create_base_dispatch(log_file_path: std::path::PathBuf) -> anyhow::Result<fer
       ))
     })
     .level(DEFAULT_LOG_LEVEL.to_level_filter())
-    .chain(fern::log_file(&log_file_path)?);
+    .chain(
+      std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .open(&log_file_path)?,
+    );
 
   // In debug mode, also log to stderr.
   #[cfg(debug_assertions)]

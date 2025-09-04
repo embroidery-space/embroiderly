@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-  import { computed, onMounted } from "vue";
+  import { computed, onMounted, onErrorCaptured } from "vue";
   import { NUXT_LOCALES } from "./fluent.ts";
   import { PatternApi } from "./api/";
 
@@ -70,12 +70,9 @@
     await Promise.all([checkForUpdates()]);
   });
 
-  window.onunhandledrejection = (event) => {
-    const err = event.reason;
-
-    if (err instanceof Error) error(`Error: ${err.message}`);
-    else error(`Error: ${err}`);
-
+  onErrorCaptured((err, _component, info) => {
+    // Log the error, notify the user, and let it be propagated further so that Sentry can handle it.
+    error(`Error (${info}): ${err instanceof Error ? err.message : err}`);
     toast.add({ type: "background", color: "error", title: fluent.$t("title-error") });
-  };
+  });
 </script>
