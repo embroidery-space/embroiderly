@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { FullStitchKind, type StitchKind } from "#/core/pattern/";
+import { tools, type PatternEditorTool } from "#/core/tools/";
 
 interface OpenedPattern {
   id: string;
@@ -10,11 +10,9 @@ interface OpenedPattern {
 export const useAppStateStore = defineStore(
   "embroiderly-state",
   () => {
-    const lastOpenedFolder = ref<string | null>(null);
-    const lastSavedFolder = ref<string | null>(null);
-
-    const selectedStitchTool = ref<StitchKind>(FullStitchKind.Full);
+    const selectedTool = ref<PatternEditorTool>(tools.FullStitch);
     const selectedPaletteItemIndexes = ref<number[]>([]);
+
     const openedPatterns = ref<OpenedPattern[]>([]);
     const currentPattern = ref<OpenedPattern | undefined>(undefined);
 
@@ -53,9 +51,7 @@ export const useAppStateStore = defineStore(
     }
 
     return {
-      lastOpenedFolder,
-      lastSavedFolder,
-      selectedStitchTool,
+      selectedTool,
       selectedPaletteItemIndexes,
       openedPatterns,
       currentPattern,
@@ -64,11 +60,5 @@ export const useAppStateStore = defineStore(
       removeCurrentPattern,
     };
   },
-  {
-    tauri: { save: false, sync: false },
-    persist: [
-      { storage: sessionStorage, omit: ["lastOpenedFolder", "lastSavedFolder"] },
-      { storage: localStorage, pick: ["lastOpenedFolder", "lastSavedFolder"] },
-    ],
-  },
+  { tauri: { save: false } },
 );

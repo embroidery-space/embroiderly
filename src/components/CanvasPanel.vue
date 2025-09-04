@@ -36,11 +36,13 @@
     </div>
 
     <div class="w-full grow overflow-hidden">
-      <canvas
-        ref="canvas"
-        v-element-size="useDebounceFn(({ width, height }) => patternCanvas.resize(width, height), 100)"
-        class="size-full"
-      ></canvas>
+      <UContextMenu :items="canvasContextMenuOptions">
+        <canvas
+          ref="canvas"
+          v-element-size="useDebounceFn(({ width, height }) => patternApplication.resize(width, height), 100)"
+          class="size-full"
+        ></canvas>
+      </UContextMenu>
     </div>
 
     <div class="flex w-full items-center justify-between border-t border-default px-2 py-1">
@@ -50,53 +52,48 @@
         :min="MIN_SCALE"
         :max="MAX_SCALE"
         class="w-full max-w-3xs"
-        @update:model-value="(value) => patternCanvas.setZoom(value)"
+        @update:model-value="(value) => patternApplication.setZoom(value)"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import type { ContextMenuItem } from "@nuxt/ui";
   import { useDebounceFn, useEventListener } from "@vueuse/core";
   import { vElementSize } from "@vueuse/components";
-  import { Assets, Point } from "pixi.js";
-  import {
-    PatternCanvas,
-    EventType,
-    TextureManager,
-    STITCH_FONT_PREFIX,
-    StitchGraphics,
-    MAX_SCALE,
-    MIN_SCALE,
-  } from "#/core/pixi/";
-  import type { PatternCanvasOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
-  import {
-    FullStitch,
-    LineStitch,
-    NodeStitch,
-    PartStitch,
-    FullStitchKind,
-    PartStitchKind,
-    PartStitchDirection,
-    LineStitchKind,
-    NodeStitchKind,
-  } from "#/core/pattern/";
-  import type { Stitch, StitchKind } from "#/core/pattern/";
+  import { Assets } from "pixi.js";
+
+  import { PatternEvent } from "#/core/pattern/";
+  import { PatternApplication, ToolEvent, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE, PatternView } from "#/core/pixi/";
+  import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
+  import { CursorTool, type PatternEditorToolContext } from "#/core/tools/";
+
+  const fluent = useFluent();
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
 
-  const canvas = useTemplateRef("canvas");
-  const patternCanvas = new PatternCanvas();
+  const patternApplication = new PatternApplication();
 
-  /**
-   * Initialize the pattern canvas.
-   * It sets up the Pixi application, configures stages, and prepares the texture manager.
-   */
-  async function initPatternCanvas(options?: PatternCanvasOptions) {
-    await patternCanvas.init(canvas.value!, options);
-  }
+  const canvas = useTemplateRef("canvas");
+  const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
+    [
+      {
+        icon: "i-lucide:image",
+        label: fluent.$t("label-set-reference-image"),
+        onSelect: () => patternsStore.setReferenceImage(),
+      },
+      {
+        icon: "i-lucide:image-off",
+        label: fluent.$t("label-remove-reference-image"),
+        color: "error",
+        disabled: !patternsStore.pattern?.referenceImage,
+        onSelect: () => patternsStore.removeReferenceImage(),
+      },
+    ],
+  ]);
 
   const zoom = ref(1);
 
@@ -108,218 +105,139 @@
 
   watch(
     () => patternsStore.pattern,
-    async (pattern) => {
-      if (!pattern) return;
-      await Assets.load(pattern.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
-      patternCanvas.setPattern(pattern);
+    async (pattern, oldPattern) => {
+      if (!pattern || pattern.id === oldPattern?.id) return;
+
+      await Assets.load(pattern.allSymbolFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
+
+      const patternView = new PatternView(pattern);
+      patternApplication.view = patternView;
+
+      pattern.addEventListener(PatternEvent.UpdateReferenceImage, (e) => {
+        const image = (e as CustomEvent).detail;
+        if (image) patternView.setReferenceImage(image);
+        else patternView.removeReferenceImage();
+      });
+      pattern.addEventListener(PatternEvent.UpdateReferenceImageSettings, (e) => (patternView.referenceImageSettings = (e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateFabric, (e) => patternView.setFabric((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateGrid, (e) => patternView.setGrid((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.AddStitch, (e) => patternView.addStitch((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.RemoveStitch, (e) => patternView.removeStitch((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateDisplayMode, (e) => patternView.setDisplayMode((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateShowSymbols, (e) => patternView.setShowSymbols((e as CustomEvent).detail)); // prettier-ignore
+      pattern.addEventListener(PatternEvent.UpdateLayersVisibility, (e) => patternView.setLayersVisibility((e as CustomEvent).detail)); // prettier-ignore
     },
   );
 
-  let prevStitchState: Stitch | undefined;
+  watch(
+    () => appStateStore.selectedTool,
+    (_tool, prevTool) => {
+      if (!patternsStore.pattern) return;
 
-  useEventListener<CustomEvent<ToolEventDetail>>(patternCanvas, EventType.ToolMainAction, async (e) => {
-    // If there is no previous stitch state, this means that this is the first action in the transaction.
-    if (prevStitchState === undefined) await patternsStore.startTransaction();
-    await handleToolMainAction(e.detail);
-  });
-  async function handleToolMainAction(detail: ToolEventDetail) {
-    const tool = appStateStore.selectedStitchTool;
-    const palindex = appStateStore.selectedPaletteItemIndexes[0];
-    if (palindex === undefined) return;
-
-    const { start, end, modifiers } = detail;
-    const { x, y } = adjustStitchCoordinate(end, tool);
-
-    switch (tool) {
-      case FullStitchKind.Full:
-      case FullStitchKind.Petite: {
-        const full = new FullStitch({ x, y, palindex, kind: tool });
-        prevStitchState ??= full;
-
-        // Whether the stitch should have the same position in the cell as the previous stitch.
-        const lockPosition = modifiers.mod1;
-        if (lockPosition && prevStitchState instanceof FullStitch) {
-          full.x = Math.trunc(x) + (prevStitchState.x - Math.trunc(prevStitchState.x));
-          full.y = Math.trunc(y) + (prevStitchState.y - Math.trunc(prevStitchState.y));
-        }
-
-        await patternsStore.addStitch(full);
-        break;
+      if (prevTool instanceof CursorTool) {
+        // Blur the reference image when the cursor tool is deselected.
+        patternApplication.view?.blurReferenceImage();
       }
+    },
+    { immediate: true },
+  );
 
-      case PartStitchKind.Half:
-      case PartStitchKind.Quarter: {
-        const [fracX, fracY] = [end.x % 1, end.y % 1];
-        const direction =
-          (fracX < 0.5 && fracY > 0.5) || (fracX > 0.5 && fracY < 0.5)
-            ? PartStitchDirection.Forward
-            : PartStitchDirection.Backward;
-        const part = new PartStitch({ x, y, palindex, kind: tool, direction });
-        prevStitchState ??= part;
-
-        // Whether the stitch should have the same position in the cell as the previous stitch.
-        const lockPosition = modifiers.mod1;
-        if (lockPosition && prevStitchState instanceof PartStitch) {
-          part.direction = prevStitchState.direction;
-          if (tool === PartStitchKind.Quarter) {
-            part.x = Math.trunc(x) + (prevStitchState.x - Math.trunc(prevStitchState.x));
-            part.y = Math.trunc(y) + (prevStitchState.y - Math.trunc(prevStitchState.y));
-          }
-        }
-
-        await patternsStore.addStitch(part);
-        break;
-      }
-
-      case LineStitchKind.Back: {
-        const [_start, _end] = [adjustStitchCoordinate(start, tool), adjustStitchCoordinate(end, tool)];
-        if (_start.equals(new Point()) || _end.equals(new Point())) return;
-        const line = new LineStitch({ x: [_start.x, _end.x], y: [_start.y, _end.y], palindex, kind: tool });
-        if (prevStitchState instanceof LineStitch) {
-          line.x[0] = prevStitchState.x[1];
-          line.y[0] = prevStitchState.y[1];
-        }
-        if (line.x[0] === line.x[1] && line.y[0] === line.y[1]) return;
-        const lineLength = Math.sqrt(Math.pow(line.x[1] - line.x[0], 2) + Math.pow(line.y[1] - line.y[0], 2));
-        // Check that the line is not longer than 1 horizontally and vertically, or it is diagonal.
-        if (lineLength > 1 && lineLength !== Math.sqrt(2)) return;
-        prevStitchState = line;
-        await patternsStore.addStitch(line);
-        break;
-      }
-
-      case LineStitchKind.Straight: {
-        const [_start, _end] = orderPoints(start, end);
-        const { x: x1, y: y1 } = adjustStitchCoordinate(_start, tool);
-        const { x: x2, y: y2 } = adjustStitchCoordinate(_end, tool);
-        const line = new LineStitch({ x: [x1, x2], y: [y1, y2], palindex, kind: tool });
-        patternCanvas.drawLineHint(line, patternsStore.pattern!.palette[palindex]!.color);
-        break;
-      }
-
-      case NodeStitchKind.FrenchKnot:
-      case NodeStitchKind.Bead: {
-        const node = new NodeStitch({ x, y, palindex, kind: tool, rotated: modifiers.mod1 });
-        const palitem = patternsStore.pattern!.palette[palindex]!;
-        patternCanvas.drawNodeHint(node, palitem.color);
-        break;
-      }
-    }
+  /**
+   * Initialize the pattern application.
+   * It sets up the Pixi.js `Application`, configures stages, and prepares the texture manager.
+   */
+  async function initPatternApplication(options?: PatternApplicationOptions) {
+    await patternApplication.init(canvas.value!, options);
   }
 
-  useEventListener<CustomEvent>(patternCanvas, EventType.ToolAntiAction, (e) => handleToolAntiAction(e.detail));
-  async function handleToolAntiAction(detail: ToolEventDetail) {
-    const { event, end: point } = detail;
-    if (event.target instanceof StitchGraphics) {
-      await patternsStore.removeStitch(event.target.stitch);
-    } else {
-      const promises = [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter].map(
-        (kind) => {
-          const { x, y } = adjustStitchCoordinate(point, kind);
-          if (kind === FullStitchKind.Full || kind === FullStitchKind.Petite) {
-            return patternsStore.removeStitch(new FullStitch({ x, y, kind, palindex: 0 }));
-          } else {
-            const [fractX, fractY] = [point.x - Math.trunc(x), point.y - Math.trunc(y)];
-            const direction =
-              (fractX < 0.5 && fractY > 0.5) || (fractX > 0.5 && fractY < 0.5)
-                ? PartStitchDirection.Forward
-                : PartStitchDirection.Backward;
-            return patternsStore.removeStitch(new PartStitch({ x, y, kind, direction, palindex: 0 }));
-          }
-        },
-      );
-      await Promise.all(promises);
-    }
-  }
-
-  useEventListener<CustomEvent>(patternCanvas, EventType.ToolRelease, async (e) => {
-    await handleToolReleaseAction(e.detail);
-    await patternsStore.endTransaction();
-    prevStitchState = undefined;
-  });
-  async function handleToolReleaseAction(detail: ToolEventDetail) {
-    const tool = appStateStore.selectedStitchTool;
-    const palindex = appStateStore.selectedPaletteItemIndexes[0];
-    if (palindex === undefined) return;
-
-    const { start, end } = detail;
-    const { x, y } = adjustStitchCoordinate(end, tool);
-
-    switch (tool) {
-      case LineStitchKind.Straight: {
-        const [_start, _end] = orderPoints(start, end);
-        const { x: x1, y: y1 } = adjustStitchCoordinate(_start, tool);
-        const { x: x2, y: y2 } = adjustStitchCoordinate(_end, tool);
-        const line = new LineStitch({ x: [x1, x2], y: [y1, y2], palindex, kind: tool });
-        await patternsStore.addStitch(line);
-        break;
-      }
-
-      case NodeStitchKind.FrenchKnot:
-      case NodeStitchKind.Bead: {
-        const node = new NodeStitch({ x, y, palindex, kind: tool, rotated: false });
-        await patternsStore.addStitch(node);
-        break;
-      }
-    }
-  }
-
-  useEventListener<CustomEvent>(patternCanvas, EventType.ContextMenu, () => {
-    if (import.meta.env.DEV) console.log("Context menu");
-  });
-
-  useEventListener<CustomEvent<TransformEventDetail>>(patternCanvas, EventType.Transform, async ({ detail }) => {
-    zoom.value = Math.round(detail.scale);
-    patternsStore.pattern!.adjustZoom(detail.scale, detail.bounds);
-  });
-
-  function adjustStitchCoordinate({ x, y }: Point, tool: StitchKind): Point {
-    const [intX, intY] = [Math.trunc(x), Math.trunc(y)];
-    const [fracX, fracY] = [x - intX, y - intY];
-    switch (tool) {
-      case FullStitchKind.Full:
-      case PartStitchKind.Half: {
-        return new Point(intX, intY);
-      }
-      case FullStitchKind.Petite:
-      case PartStitchKind.Quarter: {
-        return new Point(fracX > 0.5 ? intX + 0.5 : intX, fracY > 0.5 ? intY + 0.5 : intY);
-      }
-      case LineStitchKind.Back: {
-        if (fracX <= 0.4 && fracY <= 0.4) return new Point(intX, intY); // top-left
-        if (fracX >= 0.6 && fracY <= 0.4) return new Point(intX + 1, intY); // top-right
-        if (fracX <= 0.4 && fracY >= 0.6) return new Point(intX, intY + 1); // bottom-left
-        if (fracX >= 0.6 && fracY >= 0.6) return new Point(intX + 1, intY + 1); // bottom-right
-        return new Point(); // to not handle it
-      }
-      case LineStitchKind.Straight:
-      case NodeStitchKind.FrenchKnot:
-      case NodeStitchKind.Bead: {
-        return new Point(
-          fracX > 0.5 ? intX + 1 : fracX > 0.25 ? intX + 0.5 : intX,
-          fracY > 0.5 ? intY + 1 : fracY > 0.25 ? intY + 0.5 : intY,
-        );
-      }
-    }
-  }
-
-  /** Orders points so that is no way to draw two lines with the same coordinates. */
-  function orderPoints(start: Point, end: Point): [Point, Point] {
-    if (start.y < end.y || (start.y === end.y && start.x < end.x)) return [start, end];
-    else return [end, start];
-  }
-
-  defineExpose({ initPatternCanvas });
-
-  onMounted(async () => {
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolMainAction, async (e) => {
     const pattern = patternsStore.pattern;
     if (!pattern) return;
-    await Assets.load(pattern.allStitchFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
-    patternCanvas.setPattern(pattern);
+
+    await appStateStore.selectedTool.main(createPatternEditorToolContext(e.detail));
   });
 
-  onUnmounted(async () => {
-    patternCanvas.clear();
-    TextureManager.shared.clear();
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolAntiAction, async (e) => {
+    const pattern = patternsStore.pattern;
+    if (!pattern) return;
+
+    await appStateStore.selectedTool.anti?.(createPatternEditorToolContext(e.detail));
+  });
+
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolRelease, async (e) => {
+    const pattern = patternsStore.pattern;
+    if (!pattern) return;
+
+    if (e.detail.event.type !== "pointerupoutside") {
+      // Call the `release` method only if the pointer is not released outside.
+      await appStateStore.selectedTool.release?.(createPatternEditorToolContext(e.detail));
+    }
+  });
+
+  useEventListener<CustomEvent<TransformEventDetail>>(patternApplication, ToolEvent.Transform, async ({ detail }) => {
+    if (!patternApplication.view) return;
+
+    zoom.value = Math.round(detail.scale);
+    patternApplication.view.adjustZoom(detail.scale, detail.bounds);
+  });
+
+  function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorToolContext {
+    return {
+      ...detail,
+      pattern: patternsStore.pattern!,
+      api: {
+        async addStitch(stitch) {
+          const palindex = appStateStore.selectedPaletteItemIndexes[0];
+          if (palindex !== undefined) {
+            stitch.palindex = palindex;
+            await patternsStore.addStitch(stitch);
+          }
+        },
+        async removeStitch(stitch) {
+          const palindex = appStateStore.selectedPaletteItemIndexes[0];
+          if (palindex !== undefined) {
+            stitch.palindex = palindex;
+            await patternsStore.removeStitch(stitch);
+          }
+        },
+
+        async updateReferenceImageSettings(settings) {
+          await patternsStore.updateReferenceImageSettings(settings);
+        },
+
+        startTransaction: patternsStore.startTransaction,
+        endTransaction: patternsStore.endTransaction,
+      },
+      ui: {
+        referenceImage: {
+          getSettings: () => patternApplication.view?.referenceImageSettings,
+          focus: () => patternApplication.view?.focusReferenceImage(),
+          blur: () => patternApplication.view?.blurReferenceImage(),
+        },
+
+        hint: {
+          drawLine(stitch) {
+            const palindex = appStateStore.selectedPaletteItemIndexes[0];
+            if (palindex !== undefined) {
+              stitch.palindex = palindex;
+              patternApplication.view!.drawLineHint(stitch);
+            }
+          },
+          drawNode(stitch) {
+            const palindex = appStateStore.selectedPaletteItemIndexes[0];
+            if (palindex !== undefined) {
+              stitch.palindex = palindex;
+              patternApplication.view!.drawNodeHint(stitch);
+            }
+          },
+        },
+      },
+    };
+  }
+
+  defineExpose({ initPatternApplication });
+
+  onUnmounted(() => {
+    patternApplication.destroy();
   });
 </script>

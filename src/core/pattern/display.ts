@@ -93,6 +93,8 @@ export enum DisplayMode {
 }
 
 export class LayersVisibility {
+  referenceImage: boolean;
+
   fullstitches: boolean;
   petitestitches: boolean;
 
@@ -111,6 +113,8 @@ export class LayersVisibility {
   rulers: boolean;
 
   constructor(data: b.infer<typeof LayersVisibility.schema>) {
+    this.referenceImage = data.referenceImage;
+
     this.fullstitches = data.fullstitches;
     this.petitestitches = data.petitestitches;
 
@@ -130,6 +134,8 @@ export class LayersVisibility {
   }
 
   static readonly schema = b.struct({
+    referenceImage: b.bool(),
+
     fullstitches: b.bool(),
     petitestitches: b.bool(),
 
@@ -158,6 +164,8 @@ export class LayersVisibility {
 
   static default() {
     return new LayersVisibility({
+      referenceImage: true,
+
       fullstitches: true,
       petitestitches: true,
 

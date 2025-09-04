@@ -1,6 +1,4 @@
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { basename, join, sep } from "@tauri-apps/api/path";
-import { open, save, type DialogFilter } from "@tauri-apps/plugin-dialog";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 import { defineStore } from "pinia";
 import {
@@ -8,40 +6,34 @@ import {
   FabricApi,
   GridApi,
   HistoryApi,
+  ImageApi,
   PaletteApi,
-  PathApi,
   PatternApi,
   PublishApi,
   StitchesApi,
 } from "#/api";
-import { useConfirm } from "#/composables";
 import {
+  Pattern,
+  PatternInfo,
+  PatternEvent,
   AddedPaletteItemData,
-  deserializeStitches,
   DisplayMode,
   PaletteSettings,
   PaletteItem,
   Fabric,
   Grid,
-  Pattern,
-  PatternInfo,
   PdfExportOptions,
-  type Stitch,
   LayersVisibility,
+  ReferenceImage,
+  ReferenceImageSettings,
+  deserializeStitches,
+  type Stitch,
 } from "#/core/pattern/";
 import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
 } from "#/error.ts";
-
-export const ANY_PATTERN_FILTER: DialogFilter[] = [
-  { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
-  { name: "All Files", extensions: ["*"] },
-];
-export const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
-export const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
-export const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
 
 export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
   /**
@@ -67,6 +59,7 @@ export const usePatternsStore = defineStore(
 
     const fluent = useFluent();
     const confirm = useConfirm();
+    const filePicker = useFilePicker();
 
     const appStateStore = useAppStateStore();
 
@@ -87,18 +80,9 @@ export const usePatternsStore = defineStore(
     async function openPattern(filePath?: string, options?: OpenPatternOptions) {
       let path = filePath;
       if (!path) {
-        appStateStore.lastOpenedFolder ??= await PathApi.getAppDocumentDir();
-        const selectedPath = await open({
-          defaultPath: appStateStore.lastOpenedFolder,
-          multiple: false,
-          filters: [
-            { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
-            { name: "All Files", extensions: ["*"] },
-          ],
-        });
+        const selectedPath = await filePicker.open({ filters: filePicker.ANY_PATTERN_FILTER });
         if (selectedPath === null) return;
         path = selectedPath;
-        appStateStore.lastOpenedFolder = path.substring(0, path.lastIndexOf(sep()));
       }
 
       try {
@@ -145,14 +129,9 @@ export const usePatternsStore = defineStore(
       try {
         let path = await PatternApi.getPatternFilePath(pattern.value.id);
         if (as) {
-          appStateStore.lastSavedFolder ??= path.substring(0, path.lastIndexOf(sep()));
-          const selectedPath = await save({
-            defaultPath: await join(appStateStore.lastSavedFolder, await basename(path)),
-            filters: EMBPROJ_FILTER,
-          });
+          const selectedPath = await filePicker.save(path, { filters: filePicker.EMBPROJ_FILTER });
           if (selectedPath === null) return;
           path = selectedPath;
-          appStateStore.lastSavedFolder = path.substring(0, path.lastIndexOf(sep()));
         }
         loading.value = true;
         await PatternApi.savePattern(pattern.value.id, path);
@@ -184,7 +163,7 @@ export const usePatternsStore = defineStore(
           case "pdf": {
             pdfExportModal.open({
               filePath,
-              options: pattern.value.publishSettings.pdf,
+              options: pattern.value.pdfExportOptions,
             });
             break;
           }
@@ -196,8 +175,10 @@ export const usePatternsStore = defineStore(
 
     async function exportPatternAsOxs(filePath: string) {
       if (!pattern.value) return;
-      const path = await save({ defaultPath: filePath, filters: OXS_FILTER });
+
+      const path = await filePicker.save(filePath, { filters: filePicker.OXS_FILTER });
       if (path === null) return;
+
       try {
         loading.value = true;
         await PatternApi.savePattern(pattern.value.id, path);
@@ -250,6 +231,33 @@ export const usePatternsStore = defineStore(
       }
     }
 
+    async function setReferenceImage() {
+      if (!pattern.value) return;
+
+      const selectedPath = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
+      if (selectedPath === null) return;
+
+      await ImageApi.setReferenceImage(pattern.value.id, selectedPath);
+    }
+    async function removeReferenceImage() {
+      if (!pattern.value) return;
+      await ImageApi.removeReferenceImage(pattern.value.id);
+    }
+    appWindow.listen<string>("image:set", ({ payload }) => {
+      if (!pattern.value) return;
+      pattern.value.referenceImage = ReferenceImage.deserialize(payload);
+      triggerRef(pattern);
+    });
+
+    async function updateReferenceImageSettings(settings: ReferenceImageSettings) {
+      if (!pattern.value) return;
+      await ImageApi.updateReferenceImageSettings(pattern.value.id, settings);
+    }
+    appWindow.listen<string>(PatternEvent.UpdateReferenceImageSettings, ({ payload }) => {
+      if (!pattern.value) return;
+      pattern.value.referenceImageSettings = ReferenceImageSettings.deserialize(payload);
+    });
+
     function openPatternInfoModal() {
       if (!pattern.value) return;
       patternInfoModal.open({ patternInfo: pattern.value.info });
@@ -258,7 +266,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
     }
-    appWindow.listen<string>("pattern-info:update", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.info = PatternInfo.deserialize(payload);
       appStateStore.updateOpenedPattern(pattern.value.id, pattern.value.info.title);
@@ -271,7 +279,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await FabricApi.updateFabric(pattern.value.id, fabric);
     }
-    appWindow.listen<string>("fabric:update", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdateFabric, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.fabric = Fabric.deserialize(payload);
     });
@@ -284,7 +292,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await GridApi.updateGrid(pattern.value!.id, grid);
     }
-    appWindow.listen<string>("grid:update", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdateGrid, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.grid = Grid.deserialize(payload);
     });
@@ -293,7 +301,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await PaletteApi.addPaletteItem(pattern.value.id, palitem);
     }
-    appWindow.listen<string>("palette:add_palette_item", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.AddPaletteItem, ({ payload }) => {
       if (!pattern.value) return;
       const { palitem, palindex } = AddedPaletteItemData.deserialize(payload);
       pattern.value.addPaletteItem(palitem, palindex);
@@ -304,7 +312,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       await PaletteApi.removePaletteItems(pattern.value.id, paletteItemIndexes);
     }
-    appWindow.listen<number[]>("palette:remove_palette_items", ({ payload: palindexes }) => {
+    appWindow.listen<number[]>(PatternEvent.RemovePaletteItem, ({ payload: palindexes }) => {
       if (!pattern.value) return;
       for (const palindex of palindexes.reverse()) {
         pattern.value.removePaletteItem(palindex);
@@ -313,14 +321,14 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
-    async function updatePaletteDisplaySettings(displaySettings: PaletteSettings, local = false) {
+    async function updatePaletteDisplaySettings(settings: PaletteSettings, local = false) {
       if (!pattern.value) return;
       if (local) {
-        pattern.value.paletteDisplaySettings = displaySettings;
+        pattern.value.paletteDisplaySettings = settings;
         triggerRef(pattern);
-      } else await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, displaySettings);
+      } else await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, settings);
     }
-    appWindow.listen<string>("palette:update_display_settings", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdatePaletteDisplaySettings, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.paletteDisplaySettings = PaletteSettings.deserialize(payload);
       triggerRef(pattern);
@@ -334,11 +342,11 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return StitchesApi.removeStitch(pattern.value.id, stitch);
     }
-    appWindow.listen<string>("stitches:add", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.AddStitch, ({ payload }) => {
       if (!pattern.value) return;
       for (const stitch of deserializeStitches(payload)) pattern.value.addStitch(stitch);
     });
-    appWindow.listen<string>("stitches:remove", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.RemoveStitch, ({ payload }) => {
       if (!pattern.value) return;
       for (const stitch of deserializeStitches(payload)) pattern.value.removeStitch(stitch);
     });
@@ -350,7 +358,7 @@ export const usePatternsStore = defineStore(
         return triggerRef(pattern);
       } else return DisplayApi.setDisplayMode(pattern.value.id, mode);
     }
-    appWindow.listen<DisplayMode>("display:set_mode", ({ payload: mode }) => {
+    appWindow.listen<DisplayMode>(PatternEvent.UpdateDisplayMode, ({ payload: mode }) => {
       if (!pattern.value) return;
       pattern.value.displayMode = mode;
       triggerRef(pattern);
@@ -360,7 +368,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return DisplayApi.showSymbols(pattern.value.id, value);
     }
-    appWindow.listen<boolean>("display:show_symbols", ({ payload: value }) => {
+    appWindow.listen<boolean>(PatternEvent.UpdateShowSymbols, ({ payload: value }) => {
       if (!pattern.value) return;
       pattern.value.showSymbols = value;
       triggerRef(pattern);
@@ -370,7 +378,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       return DisplayApi.setLayersVisibility(pattern.value.id, layersVisibility);
     }
-    appWindow.listen<string>("display:set_layers_visibility", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdateLayersVisibility, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.layersVisibility = LayersVisibility.deserialize(payload);
       triggerRef(pattern);
@@ -378,15 +386,15 @@ export const usePatternsStore = defineStore(
 
     function openPublishModal() {
       if (!pattern.value) return;
-      publishModal.open({ options: pattern.value.publishSettings.pdf });
+      publishModal.open({ options: pattern.value.pdfExportOptions });
     }
     async function updatePdfExportOptions(options: PdfExportOptions) {
       if (!pattern.value) return;
       await PublishApi.updatePdfExportOptions(pattern.value.id, options);
     }
-    appWindow.listen<string>("publish:update-pdf", ({ payload }) => {
+    appWindow.listen<string>(PatternEvent.UpdatePdfExportOptions, ({ payload }) => {
       if (!pattern.value) return;
-      pattern.value.publishSettings.pdf = PdfExportOptions.deserialize(payload);
+      pattern.value.pdfExportOptions = PdfExportOptions.deserialize(payload);
     });
 
     async function undo(options?: HistoryApi.UndoRedoOptions) {
@@ -421,6 +429,9 @@ export const usePatternsStore = defineStore(
       exportPatternAsOxs,
       exportPatternAsPdf,
       closePattern,
+      setReferenceImage,
+      removeReferenceImage,
+      updateReferenceImageSettings,
       openPatternInfoModal,
       updatePatternInfo,
       openFabricModal,

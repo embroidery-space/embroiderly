@@ -1,15 +1,20 @@
 import { Graphics } from "pixi.js";
 
-import { DEFAULT_CONTAINER_OPTIONS } from "../constants.ts";
+import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
 import type { Grid } from "#/core/pattern/";
 
-export class PatternGrid extends Graphics {
-  #width!: number;
-  #height!: number;
-  #grid!: Grid;
+export class GridView extends Graphics {
+  #width: number;
+  #height: number;
+  #grid: Grid;
 
   constructor() {
     super({ ...DEFAULT_CONTAINER_OPTIONS, label: "Grid" });
+  }
+
+  /** The original grid. */
+  get original() {
+    return this.#grid;
   }
 
   /**
@@ -48,6 +53,7 @@ export class PatternGrid extends Graphics {
       this.lineTo(this.#width, i);
     }
 
+    // Apply stroke style for minor lines.
     const { thickness, color } = this.#grid.minorLines;
     this.stroke({ width: thickness, color });
   }
@@ -69,6 +75,7 @@ export class PatternGrid extends Graphics {
       this.lineTo(point, this.#height);
     }
 
+    // Apply stroke style for major lines.
     const { thickness, color } = this.#grid.majorLines;
     this.stroke({ width: thickness, color });
   }

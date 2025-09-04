@@ -45,7 +45,7 @@ label-no = No
 label-hint-counts-in-stitches = In stitches
 label-hint-counts-in-points = In points
 
-## Names of the stitches and other instruments.
+## Names of the stitches and other tools.
 
 label-stitch-full = Full Stitch
 label-stitch-petite = Petite Stitch
@@ -55,6 +55,8 @@ label-stitch-back = Back Stitch
 label-stitch-straight = Straight Stitch
 label-stitch-french-knot = French Knot
 label-stitch-bead = Bead
+
+label-tool-cursor = Cursor
 
 ## Titles, labels and messages related to the updater.
 
@@ -135,9 +137,26 @@ label-display-options-show-brand = Show thread brands
 label-display-options-show-number = Show color numbers
 label-display-options-show-name = Show color names
 
-## Titles, labels and messages related to the canvas panel and its controls.
+## Titles, labels and messages related to the canvas context menu.
+
+label-set-reference-image = Set Reference Image
+label-remove-reference-image = Remove Reference Image
+
+## Titles, labels and messages related to the canvas toolbar.
 
 label-layers = Layers
+label-layers-reference-image = Reference Image
+label-layers-fullstitches = Full Stitches
+label-layers-petitestitches = Petite Stitches
+label-layers-halfstitches = Half Stitches
+label-layers-quarterstitches = Quarter Stitches
+label-layers-backstitches = Back Stitches
+label-layers-straightstitches = Straight Stitches
+label-layers-frenchknots = French Knots
+label-layers-beads = Beads
+label-layers-specialstitches = Special Stitches
+label-layers-grid = Grid
+label-layers-rulers = Rulers
 
 label-view-as-mix = View as a Mix of Solid and Stitches
 label-view-as-solid = View as Solid
@@ -145,6 +164,15 @@ label-view-as-stitches = View as Stitches
 
 label-show-symbols = Show Symbols
 label-hide-symbols = Hide Symbols
+
+## Titles, labels and messages related to the canvas zoom controls.
+
+label-zoom-in = Zoom In
+label-zoom-out = Zoom Out
+
+label-fit = Fit
+label-fit-width = Fit Width
+label-fit-height = Fit Height
 
 ## Titles, labels and messages related to the settings dialog.
 
@@ -258,15 +286,6 @@ message-frame-preserved-overlap-description = The size of overlap between frames
 
 label-frame-show-grid-line-numbers = Show grid line numbers
 label-frame-show-centering-marks = Show centering marks
-
-## Titles, labels and messages related to the zoom controls.
-
-label-zoom-in = Zoom In
-label-zoom-out = Zoom Out
-
-label-fit = Fit
-label-fit-width = Fit Width
-label-fit-height = Fit Height
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved

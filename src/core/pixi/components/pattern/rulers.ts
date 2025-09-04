@@ -1,7 +1,6 @@
 import { Bounds, Container, Graphics, Text, TextStyle } from "pixi.js";
 
-import { DEFAULT_CONTAINER_OPTIONS, STITCH_SCALE_FACTOR } from "../constants.ts";
-import { MAX_SCALE } from "../pattern-viewport.ts";
+import { MAX_SCALE, STITCH_SCALE_FACTOR, DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
 
 const RULER_LABEL_TEXT_STYLE_OPTIONS = new TextStyle({
   fontSize: 64,
@@ -11,9 +10,9 @@ const RULER_LABEL_TEXT_STYLE_OPTIONS = new TextStyle({
 });
 
 export class Rulers extends Container {
-  #width!: number;
-  #height!: number;
-  #interval!: number;
+  #width: number;
+  #height: number;
+  #interval: number;
 
   #previousZoom?: number;
 
@@ -155,7 +154,6 @@ function calculateRulersScale(zoom?: number): number {
     const [max, min] = [4, 0.3];
     const normalizedLog = Math.log(zoom) / Math.log(MAX_SCALE);
     const coefficient = max - (max - min) * normalizedLog;
-
     return STITCH_SCALE_FACTOR * coefficient;
   } else return STITCH_SCALE_FACTOR;
 }

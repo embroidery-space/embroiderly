@@ -32,6 +32,9 @@ embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
 embroiderly-logger = { workspace = true }
 
+# Image processing
+image = { workspace = true }
+
 # De/serialization
 serde = { workspace = true }
 serde_json = { workspace = true }

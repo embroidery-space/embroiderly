@@ -15,8 +15,14 @@
             >
               <UIcon name="i-lucide:upload" class="size-16" />
             </div>
+
+            <!--
+              The `CanvasPanel` is always visible but hidden when there is no pattern opened.
+              Since both `WelcomePanel` and `CanvasPanel` are full-size components,
+              the `CanvasPanel` will be off the screen when the `WelcomePanel` is visible.
+            -->
             <WelcomePanel v-if="!patternsStore.pattern" class="size-full" />
-            <CanvasPanel v-show="patternsStore.pattern" ref="pattern-canvas" />
+            <CanvasPanel ref="pattern-canvas" />
           </BlockUI>
         </RSplitterPanel>
       </RSplitterGroup>
@@ -71,7 +77,7 @@
 
   onMounted(async () => {
     // 1. Initialize the pattern canvas.
-    await patternCanvas.value!.initPatternCanvas({
+    await patternCanvas.value!.initPatternApplication({
       render: {
         antialias: settingsStore.viewport.antialias,
       },

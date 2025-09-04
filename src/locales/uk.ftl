@@ -45,7 +45,7 @@ label-no = Ні
 label-hint-counts-in-stitches = У стібках
 label-hint-counts-in-points = У пунктах
 
-## Names of the stitches and other instruments.
+## Names of the stitches and other tools.
 
 label-stitch-full = Хрест
 label-stitch-petite = Петіт
@@ -55,6 +55,8 @@ label-stitch-back = Зворотний стібок
 label-stitch-straight = Прямий стібок
 label-stitch-french-knot = Фр. вузелок
 label-stitch-bead = Бісер
+
+label-tool-cursor = Курсор
 
 ## Titles, labels and messages related to the updater.
 
@@ -138,9 +140,26 @@ label-display-options-show-brand = Відображати бренди нито�
 label-display-options-show-number = Відображати номери кольорів
 label-display-options-show-name = Відображати назви кольорів
 
-## Titles, labels and messages related to the canvas panel and its controls.
+## Titles, labels and messages related to the canvas context menu.
+
+label-set-reference-image = Встановити зразкове зображення
+label-remove-reference-image = Вилучити зразкове зображення
+
+## Titles, labels and messages related to the canvas toolbar.
 
 label-layers = Шари
+label-layers-reference-image = Зразкове зображення
+label-layers-fullstitches = Хрести
+label-layers-petitestitches = Петіти
+label-layers-halfstitches = Півхрести
+label-layers-quarterstitches = Чвертьхрести
+label-layers-backstitches = Зворотні стібки
+label-layers-straightstitches = Прямі стібки
+label-layers-frenchknots = Фр. вузлики
+label-layers-beads = Бісер
+label-layers-specialstitches = Спеціальні стібки
+label-layers-grid = Сітка
+label-layers-rulers = Лінійки
 
 label-view-as-mix = Відображати як мікс суцільного і стібків
 label-view-as-solid = Відображати як суцільне
@@ -148,6 +167,15 @@ label-view-as-stitches = Відображати як стібки
 
 label-show-symbols = Показати символи
 label-hide-symbols = Сховати символи
+
+## Titles, labels and messages related to the canvas zoom controls.
+
+label-zoom-in = Збільшити
+label-zoom-out = Зменшити
+
+label-fit = Вмістити
+label-fit-width = Вмістити по ширині
+label-fit-height = Вмістити по висоті
 
 ## Titles, labels and messages related to the settings dialog.
 
@@ -261,15 +289,6 @@ message-frame-preserved-overlap-description = Розмір перекриття 
 
 label-frame-show-grid-line-numbers = Показати номери ліній сітки
 label-frame-show-centering-marks = Показати центрувальні мітки
-
-## Titles, labels and messages related to the zoom controls.
-
-label-zoom-in = Збільшити
-label-zoom-out = Зменшити
-
-label-fit = Вмістити
-label-fit-width = Вмістити по ширині
-label-fit-height = Вмістити по висоті
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено

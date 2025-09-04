@@ -1,37 +1,22 @@
 import { b } from "@zorsh/zorsh";
+import { dequal } from "dequal/lite";
 import { toByteArray } from "base64-js";
-import { Bounds, Color, Container, Graphics, Rectangle } from "pixi.js";
 import { stringify as stringifyUuid } from "uuid";
+import { Color } from "pixi.js";
 
-import {
-  PatternGrid,
-  Rulers,
-  STITCH_SCALE_FACTOR,
-  StitchGraphics,
-  StitchGraphicsContainer,
-  StitchParticle,
-  StitchParticleContainer,
-  StitchSymbol,
-  TextureManager,
-} from "#/core/pixi//";
-
+import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
 import { PaletteItem } from "./palette.ts";
 import {
   FullStitch,
-  FullStitchKind,
   PartStitch,
-  PartStitchDirection,
-  PartStitchKind,
   LineStitch,
-  LineStitchKind,
   NodeStitch,
-  NodeStitchKind,
   SpecialStitch,
   SpecialStitchModel,
   type Stitch,
 } from "./stitches.ts";
 import { DisplayMode, DisplaySettings, Grid, LayersVisibility, PaletteSettings } from "./display.ts";
-import { PublishSettings } from "./publish.ts";
+import { PdfExportOptions, PublishSettings } from "./publish.ts";
 
 export class PatternInfo {
   title: string;
@@ -103,102 +88,56 @@ export class Fabric {
   }
 }
 
-export class Pattern {
+/**
+ * Represents a pattern in the embroidery application.
+ *
+ * **Emits:**
+ * - `stitch:add` - Fired when a stitch is added to the pattern.
+ * - `stitch:remove` - Fired when a stitch is removed from the pattern.
+ */
+export class Pattern extends EventTarget {
   readonly id: string;
-  info: PatternInfo;
 
-  #fabric!: Fabric;
-  #grid!: Grid;
+  #referenceImage?: ReferenceImage;
 
+  #info: PatternInfo;
+  #fabric: Fabric;
   #palette: PaletteItem[];
-
+  #fullstitches: FullStitch[];
+  #partstitches: PartStitch[];
+  #linestitches: LineStitch[];
+  #nodestitches: NodeStitch[];
+  #specialstitches: SpecialStitch[];
   #specialStitchModels: SpecialStitchModel[];
 
-  displaySettings: DisplaySettings;
-  publishSettings: PublishSettings;
-
-  #displayMode: DisplayMode | undefined;
-  #previousDisplayMode: DisplayMode;
-
-  private stages = {
-    // lowest
-    fabric: new Graphics({ label: "Fabric" }),
-    fullstitches: new StitchParticleContainer({ label: "Full Stitches" }),
-    petitestitches: new StitchParticleContainer({ label: "Petite Stitches" }),
-    halfstitches: new StitchParticleContainer({ label: "Half Stitches" }),
-    quarterstitches: new StitchParticleContainer({ label: "Quarter Stitches" }),
-    symbols: new StitchGraphicsContainer({ label: "Symbols" }),
-    grid: new PatternGrid(),
-    specialstitches: new Container({ label: "Special Stitches" }),
-    backstitches: new StitchGraphicsContainer({
-      label: "Back Stitches",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
-    straightstitches: new StitchGraphicsContainer({
-      label: "Straight Stitches",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
-    frenchknots: new StitchGraphicsContainer({
-      label: "French Knots",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
-    beads: new StitchGraphicsContainer({
-      label: "Beads",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
-    rulers: new Rulers(),
-    // highest
-  };
-  readonly root = new Container({
-    label: "Pattern View",
-    isRenderGroup: true,
-    children: Object.values(this.stages),
-  });
+  #displaySettings: DisplaySettings;
+  #publishSettings: PublishSettings;
 
   constructor(data: b.infer<typeof Pattern.schema>) {
+    super();
+
     this.id = stringifyUuid(new Uint8Array(data.id));
-    this.info = new PatternInfo(data.info);
 
-    this.fabric = new Fabric(data.fabric);
-    this.grid = new Grid(data.displaySettings.grid);
+    if (data.referenceImage) this.#referenceImage = new ReferenceImage(data.referenceImage);
 
+    this.#info = new PatternInfo(data.info);
+    this.#fabric = new Fabric(data.fabric);
     this.#palette = data.palette.map((item) => new PaletteItem(item));
-
-    this.displaySettings = new DisplaySettings(data.displaySettings);
-    this.publishSettings = new PublishSettings(data.publishSettings);
-
-    this.#previousDisplayMode = this.#displayMode = data.displaySettings.displayMode;
-    this.showSymbols = data.displaySettings.showSymbols;
-
-    for (const stitch of data.fullstitches.map((stitch) => new FullStitch(stitch))) {
-      this.addFullStitch(stitch);
-      this.addSymbol(stitch);
-    }
-    for (const stitch of data.partstitches.map((stitch) => new PartStitch(stitch))) {
-      this.addPartStitch(stitch);
-      this.addSymbol(stitch);
-    }
-    for (const stitch of data.linestitches.map((stitch) => new LineStitch(stitch))) {
-      this.addLineStitch(stitch);
-      this.addSymbol(stitch);
-    }
-    for (const stitch of data.nodestitches.map((stitch) => new NodeStitch(stitch))) {
-      this.addNodeStitch(stitch);
-      this.addSymbol(stitch);
-    }
-
+    this.#fullstitches = data.fullstitches.map((stitch) => new FullStitch(stitch));
+    this.#partstitches = data.partstitches.map((stitch) => new PartStitch(stitch));
+    this.#linestitches = data.linestitches.map((stitch) => new LineStitch(stitch));
+    this.#nodestitches = data.nodestitches.map((stitch) => new NodeStitch(stitch));
+    this.#specialstitches = data.specialstitches.map((stitch) => new SpecialStitch(stitch));
     this.#specialStitchModels = data.specialStitchModels.map((model) => new SpecialStitchModel(model));
-    for (const specialstitch of data.specialstitches.map((stitch) => new SpecialStitch(stitch))) {
-      this.addSpecialStitch(specialstitch);
-    }
+
+    this.#displaySettings = new DisplaySettings(data.displaySettings);
+    this.#publishSettings = new PublishSettings(data.publishSettings);
   }
 
   static readonly schema = b.struct({
     id: b.array(b.u8(), 16),
+
+    referenceImage: b.option(ReferenceImage.schema),
 
     info: PatternInfo.schema,
     fabric: Fabric.schema,
@@ -219,295 +158,175 @@ export class Pattern {
     return new Pattern(Pattern.schema.deserialize(buffer));
   }
 
-  get fabric() {
-    return this.#fabric;
+  get referenceImage() {
+    return this.#referenceImage;
+  }
+  set referenceImage(image: ReferenceImage | undefined) {
+    this.#referenceImage = image;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateReferenceImage, { detail: image }));
+  }
+  set referenceImageSettings(settings: ReferenceImageSettings) {
+    if (!this.#referenceImage) return;
+    this.#referenceImage.settings = settings;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateReferenceImageSettings, { detail: settings }));
   }
 
-  set fabric(fabric: Fabric) {
-    this.#fabric = fabric;
-    this.stages.fabric.clear();
-    this.stages.fabric.rect(0, 0, this.fabric.width, this.fabric.height).fill(this.fabric.color);
-
-    // Set the container bounds.
-    this.root.boundsArea = new Rectangle(0, 0, this.fabric.width, this.fabric.height);
-
-    // If the grid is set, adjust it to the new fabric.
-    if (this.#grid) this.grid = this.#grid;
+  get info() {
+    return this.#info;
   }
-
-  get grid() {
-    return this.#grid;
-  }
-
-  set grid(grid: Grid) {
-    this.#grid = grid;
-
-    const { width, height } = this.fabric;
-    this.stages.grid.setGrid(width, height, grid);
-    this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
-  }
-
-  get layersVisibility() {
-    return this.displaySettings.layersVisibility;
-  }
-  set layersVisibility(layersVisibility: LayersVisibility) {
-    this.displaySettings.layersVisibility = layersVisibility;
-    for (const [layer, visible] of Object.entries(layersVisibility)) {
-      const stage = this.stages[layer as keyof typeof this.stages];
-      if (stage) {
-        stage.visible = visible;
-        stage.renderable = visible;
-      }
-    }
+  set info(info: PatternInfo) {
+    this.#info = info;
   }
 
   get palette() {
     return this.#palette;
   }
-
   addPaletteItem(palitem: PaletteItem, palindex: number) {
     this.#palette.splice(palindex, 0, palitem);
   }
-
   removePaletteItem(palindex: number) {
     this.#palette.splice(palindex, 1);
   }
 
   get paletteDisplaySettings() {
-    return this.displaySettings.paletteSettings;
+    return this.#displaySettings.paletteSettings;
   }
-
   set paletteDisplaySettings(settings: PaletteSettings) {
-    this.displaySettings.paletteSettings = settings;
+    this.#displaySettings.paletteSettings = settings;
   }
 
-  addStitch(stitch: Stitch) {
-    if (stitch instanceof FullStitch) this.addFullStitch(stitch);
-    else if (stitch instanceof PartStitch) this.addPartStitch(stitch);
-    else if (stitch instanceof LineStitch) this.addLineStitch(stitch);
-    else this.addNodeStitch(stitch);
-    this.addSymbol(stitch);
+  get fabric() {
+    return this.#fabric;
+  }
+  set fabric(fabric: Fabric) {
+    this.#fabric = fabric;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateFabric, { detail: fabric }));
   }
 
-  removeStitch(stitch: Stitch) {
-    if (stitch instanceof FullStitch) this.removeFullStitch(stitch);
-    else if (stitch instanceof PartStitch) this.removePartStitch(stitch);
-    else if (stitch instanceof LineStitch) this.removeLineStitch(stitch);
-    else this.removeNodeStitch(stitch);
-    this.removeSymbol(stitch);
+  get grid() {
+    return this.#displaySettings.grid;
+  }
+  set grid(grid: Grid) {
+    this.#displaySettings.grid = grid;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateGrid, { detail: grid }));
   }
 
-  addSymbol(stitch: Stitch) {
-    if (stitch instanceof LineStitch || stitch instanceof NodeStitch) return;
-
-    const palitem = this.#palette[stitch.palindex]!;
-    const symbolFont = palitem.symbolFont;
-    const defaultSymbolFont = this.displaySettings.defaultSymbolFont;
-
-    const symbol = new StitchSymbol(stitch, palitem.symbol, {
-      fontFamily: symbolFont ? [symbolFont, defaultSymbolFont] : defaultSymbolFont,
-    });
-
-    this.stages.symbols.addStitch(symbol);
+  get fullstitches() {
+    return this.#fullstitches;
   }
-
-  removeSymbol(stitch: Stitch) {
-    this.stages.symbols.removeStitch(stitch);
+  get partstitches() {
+    return this.#partstitches;
   }
-
-  addFullStitch(stitch: FullStitch) {
-    const { x, y, palindex, kind } = stitch;
-
-    const particle = new StitchParticle(stitch, {
-      texture: TextureManager.shared.getFullStitchTexture(this.displayMode ?? this.#previousDisplayMode, kind),
-      x,
-      y,
-      tint: this.#palette[palindex]!.color,
-      scaleX: STITCH_SCALE_FACTOR,
-      scaleY: STITCH_SCALE_FACTOR,
-    });
-
-    if (kind === FullStitchKind.Full) this.stages.fullstitches.addStitch(particle);
-    else this.stages.petitestitches.addStitch(particle);
+  get linestitches() {
+    return this.#linestitches;
   }
-
-  removeFullStitch(stitch: FullStitch) {
-    if (stitch.kind === FullStitchKind.Full) this.stages.fullstitches.removeStitch(stitch);
-    else this.stages.petitestitches.removeStitch(stitch);
+  get nodestitches() {
+    return this.#nodestitches;
   }
-
-  addPartStitch(stitch: PartStitch) {
-    const { x, y, palindex, kind, direction } = stitch;
-
-    const particle = new StitchParticle(stitch, {
-      texture: TextureManager.shared.getPartStitchTexture(this.displayMode ?? this.#previousDisplayMode, kind),
-      x,
-      y,
-      tint: this.#palette[palindex]!.color,
-      scaleX: direction === PartStitchDirection.Forward ? STITCH_SCALE_FACTOR : -STITCH_SCALE_FACTOR,
-      scaleY: STITCH_SCALE_FACTOR,
-      anchorX: direction === PartStitchDirection.Forward ? 0 : 1,
-    });
-
-    if (kind === PartStitchKind.Half) this.stages.halfstitches.addStitch(particle);
-    else this.stages.quarterstitches.addStitch(particle);
+  get specialstitches() {
+    return this.#specialstitches;
   }
-
-  removePartStitch(stitch: PartStitch) {
-    if (stitch.kind === PartStitchKind.Half) this.stages.halfstitches.removeStitch(stitch);
-    else this.stages.quarterstitches.removeStitch(stitch);
-  }
-
-  addLineStitch(stitch: LineStitch) {
-    const { x, y, palindex } = stitch;
-
-    const start = { x: x[0], y: y[0] };
-    const end = { x: x[1], y: y[1] };
-
-    const graphics = new StitchGraphics(stitch)
-      .moveTo(start.x, start.y)
-      .lineTo(end.x, end.y)
-      // Draw a line with a larger width to make it look like a border.
-      .stroke({ width: 0.225, color: 0x000000, cap: "round" })
-      .moveTo(start.x, start.y)
-      .lineTo(end.x, end.y)
-      // Draw a line with a smaller width to make it look like a fill.
-      .stroke({ width: 0.2, color: this.#palette[palindex]!.color, cap: "round" });
-    graphics.eventMode = "static";
-
-    if (stitch.kind === LineStitchKind.Back) this.stages.backstitches.addStitch(graphics);
-    else this.stages.straightstitches.addStitch(graphics);
-  }
-
-  removeLineStitch(stitch: LineStitch) {
-    if (stitch.kind === LineStitchKind.Back) this.stages.backstitches.removeStitch(stitch);
-    else this.stages.straightstitches.removeStitch(stitch);
-  }
-
-  addNodeStitch(stitch: NodeStitch) {
-    const { x, y, palindex, kind, rotated } = stitch;
-    const palitem = this.#palette[palindex]!;
-
-    const graphics = new StitchGraphics(stitch, TextureManager.shared.getNodeTexture(kind));
-    graphics.eventMode = "static";
-    graphics.tint = palitem.color;
-    graphics.pivot.set(graphics.width / 2, graphics.height / 2);
-    graphics.scale.set(STITCH_SCALE_FACTOR);
-    graphics.position.set(x, y);
-    if (rotated) graphics.angle = 90;
-
-    if (kind === NodeStitchKind.FrenchKnot) this.stages.frenchknots.addStitch(graphics);
-    else this.stages.beads.addStitch(graphics);
-  }
-
-  removeNodeStitch(stitch: NodeStitch) {
-    if (stitch.kind === NodeStitchKind.FrenchKnot) this.stages.frenchknots.removeStitch(stitch);
-    else this.stages.beads.removeStitch(stitch);
-  }
-
-  addSpecialStitch(specialStitch: SpecialStitch) {
-    const { x, y, rotation, flip, palindex, modindex } = specialStitch;
-    const model = this.#specialStitchModels[modindex]!;
-
-    // Special stitches are very rare and complex so it is easier to draw them using graphics.
-    const graphics = new Graphics();
-
-    for (const { points } of model.curvedstitches) {
-      // Draw a polyline with a larger width to make it look like a border.
-      graphics.poly(points.flat(), false).stroke({ width: 0.225, color: 0x000000, cap: "round", join: "round" });
-      // Draw a polyline with a smaller width to make it look like a fill.
-      graphics.poly(points.flat(), false).stroke({ width: 0.2, cap: "round", join: "round" });
-    }
-
-    for (const { x, y } of model.linestitches) {
-      const start = { x: x[0], y: y[0] };
-      const end = { x: x[1], y: y[1] };
-      graphics
-        // Draw a line with a larger width to make it look like a border.
-        .moveTo(start.x, start.y)
-        .lineTo(end.x, end.y)
-        .stroke({ width: 0.225, color: 0x000000, cap: "round" })
-        // Draw a line with a smaller width to make it look like a fill.
-        .moveTo(start.x, start.y)
-        .lineTo(end.x, end.y)
-        .stroke({ width: 0.2, cap: "round" });
-    }
-
-    // Decrease the scale factor to draw the nodes with more points.
-    graphics.scale.set(0.1);
-    for (const { x, y } of model.nodestitches) {
-      // All nodes are french knotes there.
-      graphics
-        .circle(x * 10, y * 10, 5)
-        .stroke({ pixelLine: true, color: 0x000000, cap: "round" })
-        .fill(0xffffff);
-    }
-    graphics.scale.set(1);
-
-    graphics.tint = this.palette[palindex]!.color;
-    graphics.position.set(x, y);
-    graphics.angle = rotation;
-    if (flip[0]) graphics.scale.x = -1;
-    if (flip[1]) graphics.scale.y = -1;
-
-    this.stages.specialstitches.addChild(graphics);
+  get specialStitchModels() {
+    return this.#specialStitchModels;
   }
 
   /**
-   * Adjusts the zoom level of the pattern view.
-   * @param zoom - The zoom level in range 1 to 100.
+   * Adds a stitch to the pattern.
+   * Fires `stitch:add` event.
+   * @param stitch The stitch to add.
    */
-  adjustZoom(zoom: number, bounds?: Bounds) {
-    this.stages.grid.renderGrid();
-    this.stages.rulers.renderRulers(zoom, bounds);
+  addStitch(stitch: Stitch) {
+    if (stitch instanceof FullStitch) this.#fullstitches.push(stitch);
+    else if (stitch instanceof PartStitch) this.#partstitches.push(stitch);
+    else if (stitch instanceof LineStitch) this.#linestitches.push(stitch);
+    else this.#nodestitches.push(stitch);
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: stitch }));
+  }
+
+  /**
+   * Removes a stitch from the pattern.
+   * Fires `stitch:remove` event.
+   * @param stitch The stitch to remove.
+   */
+  removeStitch(stitch: Stitch) {
+    function removeStitchFromArray(array: Stitch[], stitch: Stitch) {
+      const index = array.findIndex((item) => dequal(item, stitch));
+      if (index !== -1) array.splice(index, 1);
+    }
+
+    if (stitch instanceof FullStitch) removeStitchFromArray(this.#fullstitches, stitch);
+    else if (stitch instanceof PartStitch) removeStitchFromArray(this.#partstitches, stitch);
+    else if (stitch instanceof LineStitch) removeStitchFromArray(this.#linestitches, stitch);
+    else removeStitchFromArray(this.#nodestitches, stitch);
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: stitch }));
+  }
+
+  get defaultSymbolFont() {
+    return this.#displaySettings.defaultSymbolFont;
   }
 
   get displayMode() {
-    return this.#displayMode;
+    return this.#displaySettings.displayMode;
   }
-
-  set displayMode(displayMode: DisplayMode | undefined) {
-    this.#displayMode = this.showSymbols ? displayMode : (displayMode ?? this.#previousDisplayMode);
-    if (displayMode) {
-      this.#previousDisplayMode = displayMode;
-      this.stages.fullstitches.texture = TextureManager.shared.getFullStitchTexture(displayMode, FullStitchKind.Full);
-      this.stages.petitestitches.texture = TextureManager.shared.getFullStitchTexture(
-        displayMode,
-        FullStitchKind.Petite,
-      );
-      this.stages.halfstitches.texture = TextureManager.shared.getPartStitchTexture(displayMode, PartStitchKind.Half);
-      this.stages.quarterstitches.texture = TextureManager.shared.getPartStitchTexture(
-        displayMode,
-        PartStitchKind.Quarter,
-      );
-    }
-
-    const visible = this.#displayMode !== undefined;
-    this.stages.fullstitches.visible = visible;
-    this.stages.petitestitches.visible = visible;
-    this.stages.halfstitches.visible = visible;
-    this.stages.quarterstitches.visible = visible;
+  set displayMode(mode: DisplayMode | undefined) {
+    if (this.#displaySettings.displayMode !== mode && mode !== undefined) this.#displaySettings.displayMode = mode;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplayMode, { detail: mode }));
   }
 
   get showSymbols() {
-    return this.displaySettings.showSymbols;
+    return this.#displaySettings.showSymbols;
   }
-
   set showSymbols(value: boolean) {
-    this.displaySettings.showSymbols = value;
-    this.stages.symbols.visible = value;
-    this.stages.symbols.renderable = value;
-
-    // Update the display mode since it depends on the `showSymbols` value.
-    this.displayMode = this.#displayMode;
+    this.#displaySettings.showSymbols = value;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateShowSymbols, { detail: value }));
   }
 
-  get allStitchFonts() {
-    const fonts = new Set<string>();
-    fonts.add(this.displaySettings.defaultSymbolFont);
+  get layersVisibility() {
+    return this.#displaySettings.layersVisibility;
+  }
+  set layersVisibility(value: LayersVisibility) {
+    this.#displaySettings.layersVisibility = value;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateLayersVisibility, { detail: value }));
+  }
+
+  get pdfExportOptions() {
+    return this.#publishSettings.pdf;
+  }
+  set pdfExportOptions(options: PdfExportOptions) {
+    this.#publishSettings.pdf = options;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdatePdfExportOptions, { detail: options }));
+  }
+
+  get allSymbolFonts() {
+    const fonts = new Set<string>([this.defaultSymbolFont]);
     for (const palitem of this.palette) {
       if (palitem.symbolFont) fonts.add(palitem.symbolFont);
     }
     return Array.from(fonts);
   }
+}
+
+export const enum PatternEvent {
+  UpdateReferenceImage = "image:set",
+  UpdateReferenceImageSettings = "image:settings:update",
+
+  UpdatePatternInfo = "pattern-info:update",
+
+  UpdateFabric = "fabric:update",
+  UpdateGrid = "grid:update",
+
+  AddStitch = "stitches:add",
+  RemoveStitch = "stitches:remove",
+
+  AddPaletteItem = "palette:add_palette_item",
+  RemovePaletteItem = "palette:remove_palette_item",
+  UpdatePaletteDisplaySettings = "palette:update_display_settings",
+
+  UpdateDisplayMode = "display:set_mode",
+  UpdateShowSymbols = "display:show_symbols",
+  UpdateLayersVisibility = "display:set_layers_visibility",
+
+  UpdatePdfExportOptions = "publish:update-pdf",
 }

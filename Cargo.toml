@@ -55,6 +55,9 @@ typst-pdf = "0.13.1"
 ## Third-party Typst libraries
 typst-as-lib = "0.14.4"
 
+# Image processing
+image = "0.25.6"
+
 # Archiving
 zip = { version = "4.6.0", features = [
   "zstd",
