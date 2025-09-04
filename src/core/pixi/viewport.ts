@@ -175,8 +175,8 @@ export class PatternViewport extends Container {
 
   /** Moves the content to the center of the viewport. */
   moveToCenter() {
-    this.content.position.x = (this.patternScreenWidth / 2 - this.patternWidth / 2) * this.scale.x;
-    this.content.position.y = (this.patternScreenHeight / 2 - this.patternHeight / 2) * this.scale.y;
+    this.content.position.x = (this.patternScreenWidth / 2 - this.patternWidth / 2) * this.content.scale.x;
+    this.content.position.y = (this.patternScreenHeight / 2 - this.patternHeight / 2) * this.content.scale.y;
     this.emitTransformEvent();
   }
 
