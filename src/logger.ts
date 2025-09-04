@@ -1,42 +1,42 @@
 /* eslint-disable no-console */
-import { warn, debug, trace, info, error, type LogOptions } from "@tauri-apps/plugin-log";
+import { LogLevel, log } from "@embroiderly/tauri-plugin-log";
 
 declare global {
   /** Prints an error message in the console and sends it to the logging backend. */
-  function error(message: string, options?: LogOptions): Promise<void>;
+  function error(message: string): Promise<void>;
 
   /** Prints a warning message in the console and sends it to the logging backend. */
-  function warn(message: string, options?: LogOptions): Promise<void>;
+  function warn(message: string): Promise<void>;
 
   /** Prints an informational message in the console and sends it to the logging backend. */
-  function info(message: string, options?: LogOptions): Promise<void>;
+  function info(message: string): Promise<void>;
 
   /** Prints a debug message in the console and sends it to the logging backend. */
-  function debug(message: string, options?: LogOptions): Promise<void>;
+  function debug(message: string): Promise<void>;
 
   /** Prints a trace message in the console and sends it to the logging backend. */
-  function trace(message: string, options?: LogOptions): Promise<void>;
+  function trace(message: string): Promise<void>;
 }
 
 export function initLogger() {
-  globalThis.error = (message, options) => {
+  globalThis.error = async (message) => {
     console.error(message);
-    return error(message, options);
+    return log(LogLevel.Error, message);
   };
-  globalThis.warn = (message, options) => {
+  globalThis.warn = async (message) => {
     console.warn(message);
-    return warn(message, options);
+    return log(LogLevel.Warn, message);
   };
-  globalThis.info = (message, options) => {
+  globalThis.info = async (message) => {
     console.info(message);
-    return info(message, options);
+    return log(LogLevel.Info, message);
   };
-  globalThis.debug = (message, options) => {
+  globalThis.debug = async (message) => {
     console.debug(message);
-    return debug(message, options);
+    return log(LogLevel.Debug, message);
   };
-  globalThis.trace = (message, options) => {
+  globalThis.trace = async (message) => {
     console.trace(message);
-    return trace(message, options);
+    return log(LogLevel.Trace, message);
   };
 }

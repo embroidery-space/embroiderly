@@ -6,7 +6,7 @@ use crate::core::actions::{Action as _, CheckpointAction, UpdatePatternInfoActio
 use crate::error::{CommandError, PatternError, Result};
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
-use crate::utils::path::{app_document_dir, backup_file_path};
+use crate::utils::path::{app_document_dir, app_logs_dir, backup_file_path};
 
 #[tauri::command]
 pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Result<tauri::ipc::Response> {
@@ -205,12 +205,27 @@ pub fn export_pattern<R: tauri::Runtime>(
   embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
   patproj.file_path = previous_file_path;
 
+  let logs_dir = app_logs_dir(&app_handle)?;
+
+  let diagnostics_enabled = crate::utils::settings::telemetry_diagnostics_enabled(&app_handle);
+  let sentry_release_name = crate::telemetry::sentry_release_name(app_handle.package_info());
+
   let sidecar = app_handle
     .shell()
     .sidecar("embroiderly-publish")
     .map_err(|e| PatternError::FailedToExport(e.into()))?;
   let output = tauri::async_runtime::block_on(async move {
-    let mut sidecar = sidecar
+    let mut sidecar = sidecar.env(embroiderly_logger::EMBROIDERLY_LOG_DIR_ENV_VAR, logs_dir);
+
+    if let Some(dsn) = std::option_env!("EMBROIDERLY_PUBLISH_SENTRY_DSN")
+      && diagnostics_enabled
+    {
+      sidecar = sidecar
+        .env("SENTRY_DSN", dsn)
+        .env("SENTRY_RELEASE_NAME", sentry_release_name);
+    }
+
+    sidecar = sidecar
       .arg("--pattern")
       .arg(&tempfile_path)
       .arg("--output")

@@ -24,10 +24,11 @@
     "opener:allow-open-url",
     "opener:allow-default-urls",
     "process:allow-restart",
-    "log:allow-log",
     "updater:allow-check",
     "updater:allow-download-and-install",
     "pinia:default",
+    "log:default",
+    "sentry:default",
     { "identifier": "fs:allow-read-dir", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-text-file", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-file", "allow": [{ "path": "$RESOURCE/**/*" }] }

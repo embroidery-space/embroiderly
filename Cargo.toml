@@ -19,12 +19,12 @@ split-debuginfo = "packed"
 [workspace.dependencies]
 # Tauri
 tauri = { version = "2.7.0", features = ["config-json5"] }
-tauri-build = { version = "2.4.0", features = ["config-json5"] }
+tauri-build = { version = "2.4.1", features = ["config-json5"] }
+tauri-plugin = { version = "2.4.0", features = ["build"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.0"
-tauri-plugin-dialog = "2.3.2"
+tauri-plugin-dialog = "2.3.3"
 tauri-plugin-fs = "2.0.3"
-tauri-plugin-log = "2.6.0"
 tauri-plugin-opener = "2.5.0"
 tauri-plugin-os = "2.3.1"
 tauri-plugin-process = "2.3.0"
@@ -33,10 +33,14 @@ tauri-plugin-updater = "2.9.0"
 ## Third-party Tauri plugins
 tauri-plugin-prevent-default = "2.1.4"
 tauri-plugin-pinia = "3.7.1"
+## Custom Tauri plugins
+tauri-plugin-log = { path = "crates/tauri-plugin-log" }
+tauri-plugin-sentry = { path = "crates/tauri-plugin-sentry" }
 
 # Embroiderly Core
 embroiderly-parsers = { path = "crates/embroiderly-parsers" }
 embroiderly-pattern = { path = "crates/embroiderly-pattern" }
+embroiderly-logger = { path = "crates/embroiderly-logger" }
 xsp-parsers = { path = "crates/xsp-parsers" }
 
 # Parsing pattern files
@@ -55,7 +59,7 @@ typst-as-lib = "0.14.4"
 image = "0.25.6"
 
 # Archiving
-zip = { version = "4.5.0", features = [
+zip = { version = "4.6.0", features = [
   "zstd",
   "time",
 ], default-features = false }
@@ -67,7 +71,7 @@ base64 = "0.22.1"
 borsh = { version = "1.5.7", features = ["derive"] }
 
 # CLI
-clap = { version = "4.5.45", default-features = false, features = [
+clap = { version = "4.5.46", default-features = false, features = [
   "std",
   "derive",
 ] }
@@ -76,10 +80,16 @@ clap = { version = "4.5.45", default-features = false, features = [
 anyhow = "1.0.99"
 thiserror = "2.0.16"
 
+# Time handling
+time = { version = "0.3.42", features = ["formatting", "macros"] }
+
 # Logging
 log = "0.4.27"
 log-panics = { version = "2.1.0", features = ["with-backtrace"] }
-simple_logger = "5.0.0"
+fern = "0.7.1"
+
+# Telemetry
+sentry = "0.42.0"
 
 # Other
 ordered-float = { version = "5.0.0" }
@@ -89,5 +99,5 @@ paste = "1.0.15"
 prettydiff = { version = "0.8.1", default-features = false }
 tempfile = "3.21.0"
 convert_case = "0.8.0"
-uuid = { version = "1.18.0", features = ["v4"] }
+uuid = { version = "1.18.1", features = ["v4"] }
 rand = "0.9.2"

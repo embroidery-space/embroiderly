@@ -15,7 +15,6 @@ tauri = { workspace = true, features = ["test"] }
 tauri-plugin-clipboard-manager = { workspace = true }
 tauri-plugin-dialog = { workspace = true }
 tauri-plugin-fs = { workspace = true }
-tauri-plugin-log = { workspace = true }
 tauri-plugin-opener = { workspace = true }
 tauri-plugin-os = { workspace = true }
 tauri-plugin-process = { workspace = true }
@@ -24,10 +23,14 @@ tauri-plugin-updater = { workspace = true }
 ## Third-party plugins
 tauri-plugin-prevent-default = { workspace = true }
 tauri-plugin-pinia = { workspace = true }
+## Custom Tauri plugins
+tauri-plugin-log = { workspace = true }
+tauri-plugin-sentry = { workspace = true }
 
 # Embroiderly Core
 embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
+embroiderly-logger = { workspace = true }
 
 # Image processing
 image = { workspace = true }
@@ -44,7 +47,6 @@ thiserror = { workspace = true }
 
 # Logging
 log = { workspace = true }
-log-panics = { workspace = true }
 
 # Other
 dyn-clone = { workspace = true }

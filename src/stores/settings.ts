@@ -26,11 +26,6 @@ export interface UpdaterOptions {
   autoCheck: boolean;
 }
 
-export interface OtherOptions {
-  usePaletteItemColorForStitchTools: boolean;
-  autoSaveInterval: number;
-}
-
 export interface CheckForUpdatesOptions {
   /**
    * Identifies whether this is an automatic check or a manual check.
@@ -38,6 +33,20 @@ export interface CheckForUpdatesOptions {
    * @default false
    */
   auto: boolean;
+}
+
+/** Options for telemetry. */
+export interface TelemetryOptions {
+  /**
+   * Whether errors monitoring is enabled or not.
+   * @default false
+   */
+  diagnostics: boolean;
+}
+
+export interface OtherOptions {
+  usePaletteItemColorForStitchTools: boolean;
+  autoSaveInterval: number;
 }
 
 export const useSettingsStore = defineStore("embroiderly-settings", () => {
@@ -73,6 +82,10 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
 
   const updater = reactive<UpdaterOptions>({
     autoCheck: false,
+  });
+
+  const telemetry = reactive<TelemetryOptions>({
+    diagnostics: false,
   });
 
   const other = reactive<OtherOptions>({
@@ -132,6 +145,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     ui,
     viewport,
     updater,
+    telemetry,
     other,
     openSettingsModal,
     checkForUpdates,

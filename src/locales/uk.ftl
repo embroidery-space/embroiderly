@@ -78,6 +78,13 @@ message-update-available =
 title-no-updates-available = Оновлень немає
 message-no-updates-available = Наразі немає доступних оновлень.
 
+## Titles, labels and messages related to telemetry.
+
+label-telemetry = Телеметрія
+
+label-allow-diagnostics = Дозволити збір діагностичних звітів
+message-allow-diagnostics-description = Допоможіть покращити стабільність { -app-name } автоматично відправляючи діагностичні звіти при виникненні помилок або збоях у роботі застосунку.
+
 ## Titles, labels and messages related to the welcome page.
 
 title-welcome = { -app-name }
