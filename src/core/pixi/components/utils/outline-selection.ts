@@ -57,7 +57,6 @@ export class OutlineSelection<
   }
 
   override destroy(options?: DestroyOptions): void {
-    // @ts-expect-error ...
     this.onRender = null;
 
     this.removeAllListeners();
