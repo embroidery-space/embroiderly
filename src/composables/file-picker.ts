@@ -13,7 +13,7 @@ const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions
 const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
 
 const ANY_IMAGE_FILTER: DialogFilter[] = [
-  { name: "Images", extensions: ["png", "apng", "jpg", "jpeg"] },
+  { name: "Images", extensions: ["png", "jpg", "jpeg", "webp"] },
   { name: "All Files", extensions: ["*"] },
 ];
 
