@@ -17,10 +17,6 @@ import {
   PatternInfo,
   PatternEvent,
   AddedPaletteItemData,
-<<<<<<< HEAD
-=======
-  deserializeStitches,
->>>>>>> dev
   DisplayMode,
   PaletteSettings,
   PaletteItem,
