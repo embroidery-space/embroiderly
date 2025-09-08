@@ -13,8 +13,5 @@ tauri = { workspace = true }
 # De/serialization
 serde = { workspace = true }
 
-# Error handling
-thiserror = { workspace = true }
-
 # Telemetry
 sentry = { workspace = true }

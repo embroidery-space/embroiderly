@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import ui from "@nuxt/ui/vue-plugin";
 import PrimeVue from "primevue/config";
-import * as Sentry from "@sentry/vue";
 import { defaultSentryOptions } from "@embroiderly/tauri-plugin-sentry";
 
 import "./assets/styles.css";
@@ -12,16 +11,13 @@ import { pinia } from "./stores/";
 import { ShortcutsDirective } from "./directives/";
 import { fluent } from "./fluent.ts";
 import { initLogger } from "./logger.ts";
+import { sentry } from "./vendor/";
 import App from "./App.vue";
 
 const app = createApp(App);
 
 initLogger();
-Sentry.init({
-  ...defaultSentryOptions,
-  app,
-  debug: import.meta.env.DEV,
-});
+sentry.init({ ...defaultSentryOptions, app });
 
 app.use(router);
 app.use(pinia);

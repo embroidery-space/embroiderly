@@ -61,6 +61,12 @@
           :label="$t('label-allow-diagnostics')"
           :description="$t('message-allow-diagnostics-description')"
         />
+
+        <UCheckbox
+          v-model="telemetry.metrics"
+          :label="$t('label-allow-metrics')"
+          :description="$t('message-allow-metrics-description')"
+        />
       </div>
     </template>
 

@@ -16,6 +16,7 @@
   "dependencies": {
     "@embroiderly/tauri-plugin-log": "file:./crates/tauri-plugin-log/",
     "@embroiderly/tauri-plugin-sentry": "file:./crates/tauri-plugin-sentry/",
+    "@embroiderly/tauri-plugin-posthog": "file:./crates/tauri-plugin-posthog/",
     "@fluent/bundle": "0.19.1",
     "@nuxt/ui": "3.3.3",
     "@pixi/devtools": "2.0.1",
@@ -38,6 +39,7 @@
     "pinia": "3.0.3",
     "pinia-plugin-persistedstate": "4.5.0",
     "pixi.js": "8.13.1",
+    "posthog-js": "1.261.6",
     "primevue": "4.3.8",
     "reka-ui": "2.5.0",
     "uuid": "11.1.0",

@@ -1,16 +1,6 @@
-use tauri_plugin_sentry::sentry;
-
-/// Returns the release name for Sentry.
-pub fn sentry_release_name(package_info: &tauri::PackageInfo) -> String {
-  format!("{}@{}", package_info.name, package_info.version).to_lowercase()
-}
+use super::sentry;
 
 pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
-  init_diagnostics(app_handle)?;
-  Ok(())
-}
-
-fn init_diagnostics<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
   // Configure Sentry.
   let client_options = sentry::ClientOptions {
     release: Some(std::borrow::Cow::Owned(sentry_release_name(app_handle.package_info()))),
@@ -37,4 +27,9 @@ fn init_diagnostics<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyh
   std::mem::forget(client);
 
   Ok(())
+}
+
+/// Returns the release name for Sentry.
+pub fn sentry_release_name(package_info: &tauri::PackageInfo) -> String {
+  format!("{}@{}", package_info.name, package_info.version).to_lowercase()
 }

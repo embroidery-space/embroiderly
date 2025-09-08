@@ -42,6 +42,12 @@ export interface TelemetryOptions {
    * @default false
    */
   diagnostics: boolean;
+
+  /**
+   * Whether metrics collection is enabled or not.
+   * @default false
+   */
+  metrics: boolean;
 }
 
 export interface OtherOptions {
@@ -86,6 +92,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
 
   const telemetry = reactive<TelemetryOptions>({
     diagnostics: false,
+    metrics: false,
   });
 
   const other = reactive<OtherOptions>({

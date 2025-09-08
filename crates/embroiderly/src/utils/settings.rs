@@ -27,3 +27,19 @@ pub fn telemetry_diagnostics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppH
 
   diagnostics_enabled
 }
+
+/// Returns whether metrics collection is enabled from user settings.
+#[allow(unused_variables)]
+pub fn telemetry_metrics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> bool {
+  #[cfg(not(debug_assertions))]
+  let metrics_enabled = app_handle
+    .pinia()
+    .get("embroiderly-settings", "telemetry")
+    .and_then(|v| v.get("metrics").cloned())
+    .and_then(|v| serde_json::from_value(v).ok())
+    .unwrap_or(false);
+  #[cfg(debug_assertions)]
+  let metrics_enabled = false;
+
+  metrics_enabled
+}
