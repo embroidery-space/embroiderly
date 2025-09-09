@@ -17,6 +17,8 @@ import App from "./App.vue";
 const app = createApp(App);
 
 initLogger();
+
+// @ts-expect-error Ignore weird type mismatch.
 Sentry.init({
   ...defaultSentryOptions,
   app,
