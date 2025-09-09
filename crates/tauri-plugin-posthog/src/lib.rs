@@ -23,21 +23,15 @@ pub struct DeviceId(String);
 
 impl DeviceId {
   /// Creates a new `DeviceId` by hashing machine UID with app name and version.
-  /// Falls back to UUID v4 if machine UID cannot be obtained.
   pub fn new(package_info: &tauri::PackageInfo) -> Self {
-    if let Ok(machine_uid) = machine_uid::get() {
-      let mut hasher = sha2::Sha256::new();
-      hasher.update(machine_uid.as_bytes());
-      hasher.update(package_info.name.as_bytes());
-      hasher.update(package_info.version.to_string().as_bytes());
+    let machine_uid = machine_uid::get().unwrap_or(uuid::Uuid::new_v4().to_string());
 
-      let hash = hasher.finalize();
-      let device_id = format!("{:x}", hash);
+    let mut hasher = sha2::Sha256::new();
+    hasher.update(machine_uid.as_bytes());
+    hasher.update(package_info.name.as_bytes());
+    hasher.update(package_info.version.to_string().as_bytes());
 
-      DeviceId(device_id)
-    } else {
-      DeviceId(uuid::Uuid::new_v4().to_string())
-    }
+    DeviceId(format!("{:x}", hasher.finalize()))
   }
 
   /// Returns the device ID as a string.
