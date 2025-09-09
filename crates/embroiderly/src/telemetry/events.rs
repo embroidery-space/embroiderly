@@ -1,5 +1,5 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{Fabric, PaletteSettings};
+use embroiderly_pattern::{Fabric, Grid, PaletteSettings};
 
 /// Represents all telemetry events that can occur in the application.
 pub enum AppEvent {
@@ -52,6 +52,13 @@ pub enum AppEvent {
   PaletteDisplaySettingsUpdated {
     settings: PaletteSettings,
   },
+
+  FabricUpdated {
+    fabric: Fabric,
+  },
+  GridUpdated {
+    grid: Grid,
+  },
 }
 
 impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
@@ -69,6 +76,9 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
       AppEvent::PaletteItemAdded { .. } => "palette_item_added",
       AppEvent::PaletteItemRemoved { .. } => "palette_item_removed",
       AppEvent::PaletteDisplaySettingsUpdated { .. } => "palette_display_settings_updated",
+
+      AppEvent::FabricUpdated { .. } => "fabric_updated",
+      AppEvent::GridUpdated { .. } => "grid_updated",
     }
   }
 
@@ -153,6 +163,23 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("show_color_brands", json!(settings.show_color_brands)),
         ("show_color_numbers", json!(settings.show_color_numbers)),
         ("show_color_names", json!(settings.show_color_names)),
+      ],
+
+      AppEvent::FabricUpdated { fabric } => vec![
+        (
+          "fabric_dimensions",
+          json!(format!("{}x{}", fabric.width, fabric.height)),
+        ),
+        ("fabric_spi", json!(format!("{}x{}", fabric.spi.0, fabric.spi.1))),
+        ("fabric_kind", json!(fabric.kind)),
+        ("fabric_color", json!(fabric.color)),
+      ],
+      AppEvent::GridUpdated { grid } => vec![
+        ("major_lines_interval", json!(grid.major_lines_interval)),
+        ("minor_lines_thickness", json!(grid.minor_lines.thickness)),
+        ("minor_lines_color", json!(grid.minor_lines.color)),
+        ("major_lines_thickness", json!(grid.major_lines.thickness)),
+        ("major_lines_color", json!(grid.major_lines.color)),
       ],
 
       _ => vec![],
