@@ -7,6 +7,7 @@ mod commands;
 mod core;
 mod error;
 mod logger;
+mod sidecars;
 mod telemetry;
 mod utils;
 
