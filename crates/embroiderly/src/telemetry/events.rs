@@ -1,5 +1,7 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{DisplayMode, Fabric, Grid, LayersVisibility, PaletteSettings, ReferenceImageSettings};
+use embroiderly_pattern::{
+  DisplayMode, Fabric, Grid, LayersVisibility, PaletteSettings, PdfExportOptions, ReferenceImageSettings,
+};
 
 /// Represents all telemetry events that can occur in the application.
 pub enum AppEvent {
@@ -36,8 +38,14 @@ pub enum AppEvent {
   PatternSaved {
     format: PatternFormat,
   },
-  PatternExported,
   PatternClosed,
+
+  PatternExportedAsPdf {
+    settings: PdfExportOptions,
+  },
+  PdfExportSettingsUpdated {
+    settings: PdfExportOptions,
+  },
 
   ReferenceImageSet {
     format: image::ImageFormat,
@@ -90,8 +98,10 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
       AppEvent::PatternCreated { .. } => "pattern_created",
       AppEvent::PatternOpened { .. } => "pattern_opened",
       AppEvent::PatternSaved { .. } => "pattern_saved",
-      AppEvent::PatternExported => "pattern_exported",
       AppEvent::PatternClosed => "pattern_closed",
+
+      AppEvent::PatternExportedAsPdf { .. } => "pattern_exported_as_pdf",
+      AppEvent::PdfExportSettingsUpdated { .. } => "pdf_export_settings_updated",
 
       AppEvent::ReferenceImageSet { .. } => "reference_image_set",
       AppEvent::ReferenceImageRemoved => "reference_image_removed",
@@ -175,6 +185,41 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
       ],
       AppEvent::PatternSaved { format } => vec![("format", json!(format.to_string()))],
 
+      AppEvent::PatternExportedAsPdf { settings } | AppEvent::PdfExportSettingsUpdated { settings } => vec![
+        ("export_monochrome", json!(settings.monochrome)),
+        ("export_color", json!(settings.color)),
+        ("center_frames", json!(settings.center_frames)),
+        ("enumerate_frames", json!(settings.enumerate_frames)),
+        (
+          "frame_size",
+          json!(settings.frame_options.frame_size.map(|(w, h)| format!("{w}x{h}"))),
+        ),
+        ("cell_size", json!(settings.frame_options.cell_size)),
+        ("preserved_overlap", json!(settings.frame_options.preserved_overlap)),
+        (
+          "show_grid_line_numbers",
+          json!(settings.frame_options.show_grid_line_numbers),
+        ),
+        (
+          "show_centering_marks",
+          json!(settings.frame_options.show_centering_marks),
+        ),
+      ],
+
+      AppEvent::ReferenceImageSet { format, dimensions, size } => vec![
+        ("format", json!(image::ImageFormat::extensions_str(*format)[0])),
+        ("dimensions", json!(format!("{}x{}", dimensions.0, dimensions.1))),
+        ("size", json!(size)),
+      ],
+      AppEvent::ReferenceImageSettingsUpdated { settings } => vec![
+        ("x", json!(settings.x)),
+        ("y", json!(settings.y)),
+        ("width", json!(settings.width)),
+        ("height", json!(settings.height)),
+        ("rotation", json!(settings.rotation)),
+        ("opactity", json!(settings.opacity)),
+      ],
+
       AppEvent::PaletteItemAdded { brand, is_blend, blends_number } => vec![
         ("brand", json!(brand)),
         ("is_blend", json!(is_blend)),
@@ -191,20 +236,6 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("show_color_brands", json!(settings.show_color_brands)),
         ("show_color_numbers", json!(settings.show_color_numbers)),
         ("show_color_names", json!(settings.show_color_names)),
-      ],
-
-      AppEvent::ReferenceImageSet { format, dimensions, size } => vec![
-        ("format", json!(image::ImageFormat::extensions_str(*format)[0])),
-        ("dimensions", json!(format!("{}x{}", dimensions.0, dimensions.1))),
-        ("size", json!(size)),
-      ],
-      AppEvent::ReferenceImageSettingsUpdated { settings } => vec![
-        ("x", json!(settings.x)),
-        ("y", json!(settings.y)),
-        ("width", json!(settings.width)),
-        ("height", json!(settings.height)),
-        ("rotation", json!(settings.rotation)),
-        ("opactity", json!(settings.opacity)),
       ],
 
       AppEvent::FabricUpdated { fabric } => vec![
