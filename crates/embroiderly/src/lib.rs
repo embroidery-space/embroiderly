@@ -228,7 +228,12 @@ pub fn handle_file_associations<R: tauri::Runtime>(
 ) -> anyhow::Result<tauri::WebviewWindow<R>> {
   // Load pattern files to the memory so that they can be accessed from the frontend later.
   for file in files {
-    commands::core::pattern::open_pattern(file, Some(false), app_handle.state::<PatternsState>())?;
+    commands::core::pattern::open_pattern(
+      file,
+      Some(false),
+      app_handle.clone(),
+      app_handle.state::<PatternsState>(),
+    )?;
   }
 
   create_webview_window(app_handle)

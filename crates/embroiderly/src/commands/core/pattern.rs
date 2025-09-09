@@ -1,11 +1,13 @@
 use embroiderly_parsers::PatternFormat;
 use embroiderly_pattern::{Fabric, Pattern, PatternInfo, PatternProject};
 use tauri::Emitter as _;
+use tauri_plugin_posthog::PostHogExt as _;
 
 use crate::core::actions::{Action as _, CheckpointAction, UpdatePatternInfoAction};
 use crate::error::{CommandError, PatternError, Result};
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
+use crate::telemetry::AppEvent;
 use crate::utils::path::{app_document_dir, app_logs_dir, backup_file_path};
 
 #[tauri::command]
@@ -23,9 +25,10 @@ pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState
 }
 
 #[tauri::command]
-pub fn open_pattern(
+pub fn open_pattern<R: tauri::Runtime>(
   file_path: std::path::PathBuf,
   restore_from_backup: Option<bool>,
+  app_handle: tauri::AppHandle<R>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<tauri::ipc::Response> {
   log::debug!("Opening pattern");
@@ -53,12 +56,46 @@ pub fn open_pattern(
     };
   }
 
-  let mut pattern = embroiderly_parsers::parse_pattern(file_path.clone())?;
-  pattern.file_path = file_path.with_extension(PatternFormat::default().to_string());
-  log::debug!("Pattern({:?}) opened", pattern.id);
+  let mut patproj = embroiderly_parsers::parse_pattern(file_path.clone())?;
+  patproj.file_path = file_path.with_extension(PatternFormat::default().to_string());
 
-  let result = borsh::to_vec(&pattern)?;
-  patterns.add_pattern(pattern);
+  {
+    let (full_stitches_number, petite_stitches_number) = patproj.pattern.full_stitches_number();
+    let (half_stitches_number, quarter_stitches_number) = patproj.pattern.part_stitches_number();
+    let (back_stitches_number, straight_stitches_number) = patproj.pattern.line_stitches_number();
+    let (french_knots_number, beads_number) = patproj.pattern.node_stitches_number();
+    let special_stitches_number = patproj.pattern.specialstitches.len();
+
+    log::debug!("Pattern({:?}) opened", patproj.id);
+    app_handle.capture_event(AppEvent::PatternOpened {
+      format: PatternFormat::try_from(file_path.extension())
+        .expect("After parsing, the pattern format is always valid"),
+      fabric: patproj.pattern.fabric.clone(),
+
+      palette_size: patproj.pattern.palette.len(),
+      blends_number: patproj.pattern.blends_number(),
+      used_palette_brands: patproj.pattern.used_palette_brands(),
+      used_stitch_fonts: patproj.pattern.used_stitch_fonts(),
+
+      full_stitches_number,
+      petite_stitches_number,
+      half_stitches_number,
+      quarter_stitches_number,
+      back_stitches_number,
+      straight_stitches_number,
+      french_knots_number,
+      beads_number,
+      special_stitches_number,
+
+      has_reference_image: patproj.reference_image.is_some(),
+      reference_image_format: patproj.reference_image.as_ref().map(|image| image.format),
+      reference_image_dimensions: patproj.reference_image.as_ref().map(|image| image.dimensions()),
+      reference_image_size: patproj.reference_image.as_ref().map(|image| image.content.len()),
+    });
+  }
+
+  let result = borsh::to_vec(&patproj)?;
+  patterns.add_pattern(patproj);
 
   Ok(tauri::ipc::Response::new(result))
 }
@@ -77,12 +114,14 @@ pub fn create_pattern<R: tauri::Runtime>(
     let file_path = app_document_dir(&app_handle)?.join(format!("{}.{}", pattern.info.title, PatternFormat::default()));
 
     let patproj = PatternProject::new(file_path, pattern, Default::default(), Default::default());
+
     log::debug!("Pattern({:?}) created", patproj.id);
+    app_handle.capture_event(AppEvent::PatternCreated {
+      fabric: patproj.pattern.fabric.clone(),
+    });
 
     let result = borsh::to_vec(&patproj)?;
-
-    let mut patterns = patterns.write().unwrap();
-    patterns.add_pattern(patproj);
+    patterns.write().unwrap().add_pattern(patproj);
 
     Ok(tauri::ipc::Response::new(result))
   } else {
@@ -113,13 +152,16 @@ pub fn save_pattern<R: tauri::Runtime>(
     }
   };
 
-  // If the file is saved in a different format (e.g. oxs), we just write it down.
-  // Else, we will also back it up.
-  if PatternFormat::try_from(file_path.extension())? != PatternFormat::default() {
+  let format = PatternFormat::try_from(file_path.extension())?;
+  if format != PatternFormat::default() {
+    // If the file is saved not in the default format (e.g. in oxs), we simply write it as is.
     patproj.file_path = file_path.clone();
     embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
     patproj.file_path = previous_file_path;
   } else {
+    // Otherwise, it means that we are saving the pattern as project.
+    // In that case, we also back it up.
+
     let new_file_path = backup_file_path(&file_path, "new");
     let backup_file_path = backup_file_path(&file_path, "bak");
 
@@ -137,11 +179,13 @@ pub fn save_pattern<R: tauri::Runtime>(
     patproj.file_path = file_path;
   }
 
+  log::debug!("Pattern saved {pattern_id:?}");
+  app_handle.capture_event(AppEvent::PatternSaved { format });
+
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).push(Box::new(CheckpointAction));
 
   app_handle.emit("app:pattern-saved", &pattern_id)?;
-  log::debug!("Pattern saved {pattern_id:?}");
   Ok(())
 }
 
@@ -263,6 +307,8 @@ pub fn export_pattern<R: tauri::Runtime>(
   app_handle.emit("app:pattern-exported", &pattern_id)?;
 
   log::debug!("Pattern({pattern_id:?}) exported");
+  app_handle.capture_event(AppEvent::PatternExported);
+
   Ok(())
 }
 
@@ -270,8 +316,7 @@ pub fn export_pattern<R: tauri::Runtime>(
 pub fn close_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
   force: Option<bool>,
-  // This argument is required to resolve a strange type error.
-  _window: tauri::WebviewWindow<R>,
+  app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
@@ -295,13 +340,14 @@ pub fn close_pattern<R: tauri::Runtime>(
   }
 
   log::debug!("Pattern({pattern_id:?}) closed");
+  app_handle.capture_event(AppEvent::PatternClosed);
+
   Ok(())
 }
 
 #[tauri::command]
 pub fn close_all_patterns<R: tauri::Runtime>(
-  // This argument is required to resolve a strange type error.
-  _window: tauri::WebviewWindow<R>,
+  app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
@@ -312,7 +358,7 @@ pub fn close_all_patterns<R: tauri::Runtime>(
     close_pattern(
       pattern_id,
       Some(true),
-      _window.clone(),
+      app_handle.clone(),
       history.clone(),
       patterns.clone(),
     )?;

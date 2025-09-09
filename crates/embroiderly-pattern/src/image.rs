@@ -24,6 +24,12 @@ impl ReferenceImage {
     });
     Self { format, content, settings }
   }
+
+  /// Returns the original image dimensions.
+  pub fn dimensions(&self) -> (u32, u32) {
+    let image_reader = image::ImageReader::with_format(std::io::Cursor::new(&self.content), self.format);
+    image_reader.into_dimensions().unwrap_or((0, 0))
+  }
 }
 
 impl borsh::BorshDeserialize for ReferenceImage {
