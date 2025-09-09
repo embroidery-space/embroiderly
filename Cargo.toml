@@ -59,7 +59,7 @@ typst-as-lib = "0.14.4"
 image = "0.25.6"
 
 # Archiving
-zip = { version = "4.6.0", features = [
+zip = { version = "4.6.1", features = [
   "zstd",
   "time",
 ], default-features = false }
