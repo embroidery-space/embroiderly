@@ -1,6 +1,7 @@
 use std::sync::RwLock;
 
 use tauri::Manager as _;
+use tauri_plugin_posthog::PostHogExt as _;
 
 mod commands;
 mod core;
@@ -12,6 +13,26 @@ mod utils;
 pub mod state;
 use state::{HistoryState, HistoryStateInner, PatternsState};
 
+/// Runs the application.
+pub fn run() {
+  setup_app(tauri::Builder::default()).run(|app_handle, event| {
+    match event {
+      // Yeah, we don't currently support MacOS, but keep the code for future use.
+      #[cfg(any(target_os = "macos", target_os = "ios"))]
+      tauri::RunEvent::Opened { urls } => {
+        let files = urls
+          .into_iter()
+          .filter_map(|url| url.to_file_path().ok())
+          .collect::<Vec<_>>();
+        handle_file_associations(app_handle, files);
+      }
+      tauri::RunEvent::Exit => app_handle.capture_event(telemetry::AppEvent::AppExited),
+      _ => {}
+    }
+  });
+}
+
+/// Sets up the application for running or testing.
 pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R> {
   builder = builder
     .setup(|app| {
@@ -19,6 +40,8 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
 
       logger::init(app_handle)?;
       telemetry::init(app_handle)?;
+
+      app_handle.capture_event(telemetry::AppEvent::AppStarted);
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
@@ -222,7 +245,7 @@ fn collect_files_from_args() -> Vec<std::path::PathBuf> {
   files
 }
 
-pub fn handle_file_associations<R: tauri::Runtime>(
+fn handle_file_associations<R: tauri::Runtime>(
   app_handle: &tauri::AppHandle<R>,
   files: Vec<std::path::PathBuf>,
 ) -> anyhow::Result<tauri::WebviewWindow<R>> {

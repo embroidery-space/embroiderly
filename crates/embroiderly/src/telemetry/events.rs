@@ -3,6 +3,9 @@ use embroiderly_pattern::Fabric;
 
 /// Represents all telemetry events that can occur in the application.
 pub enum AppEvent {
+  AppStarted,
+  AppExited,
+
   PatternCreated {
     fabric: Fabric,
   },
@@ -43,6 +46,9 @@ pub enum AppEvent {
 impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
   fn event_name(&self) -> &str {
     match self {
+      AppEvent::AppStarted => "app_started",
+      AppEvent::AppExited => "app_exited",
+
       AppEvent::PatternCreated { .. } => "pattern_created",
       AppEvent::PatternOpened { .. } => "pattern_opened",
       AppEvent::PatternSaved { .. } => "pattern_saved",
@@ -61,7 +67,6 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("fabric_kind", json!(fabric.kind)),
         ("fabric_color", json!(fabric.color)),
       ],
-
       AppEvent::PatternOpened {
         format,
         fabric,
@@ -115,11 +120,9 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ),
         ("reference_image_size", json!(reference_image_size)),
       ],
-
       AppEvent::PatternSaved { format } => vec![("format", json!(format.to_string()))],
 
-      AppEvent::PatternExported => vec![],
-      AppEvent::PatternClosed => vec![],
+      _ => vec![],
     }
     .into_iter()
     .map(|(k, v)| (k.to_string(), v))
