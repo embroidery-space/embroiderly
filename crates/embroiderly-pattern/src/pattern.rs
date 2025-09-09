@@ -23,11 +23,7 @@ impl Pattern {
 
   /// Returns the number of blend colors in the pattern palette.
   pub fn blends_number(&self) -> usize {
-    self
-      .palette
-      .iter()
-      .filter(|palitem| palitem.blends.as_ref().is_some_and(|blends| !blends.is_empty()))
-      .count()
+    self.palette.iter().filter(|palitem| palitem.is_blend()).count()
   }
 
   /// Returns the thread brands used in the pattern palette.
@@ -418,6 +414,11 @@ pub struct PaletteItem {
 }
 
 impl PaletteItem {
+  /// Returns true if the palette item is a blend.
+  pub fn is_blend(&self) -> bool {
+    self.blends.as_ref().is_some_and(|blends| !blends.is_empty())
+  }
+
   /// Returns a printable representation of the `Symbol`.
   pub fn get_symbol(&self) -> String {
     self.symbol.as_ref().map(|s| s.render()).unwrap_or_default()

@@ -117,7 +117,7 @@ impl std::str::FromStr for DisplayMode {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteSettings {
   pub columns_number: u8,

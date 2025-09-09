@@ -1,5 +1,5 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::Fabric;
+use embroiderly_pattern::{Fabric, PaletteSettings};
 
 /// Represents all telemetry events that can occur in the application.
 pub enum AppEvent {
@@ -9,7 +9,6 @@ pub enum AppEvent {
   PatternCreated {
     fabric: Fabric,
   },
-
   PatternOpened {
     format: PatternFormat,
     fabric: Fabric,
@@ -34,13 +33,25 @@ pub enum AppEvent {
     reference_image_dimensions: Option<(u32, u32)>,
     reference_image_size: Option<usize>,
   },
-
   PatternSaved {
     format: PatternFormat,
   },
-
   PatternExported,
   PatternClosed,
+
+  PaletteItemAdded {
+    brand: String,
+    is_blend: bool,
+    blends_number: Option<usize>,
+  },
+  PaletteItemRemoved {
+    brand: String,
+    is_blend: bool,
+    blends_number: Option<usize>,
+  },
+  PaletteDisplaySettingsUpdated {
+    settings: PaletteSettings,
+  },
 }
 
 impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
@@ -54,6 +65,10 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
       AppEvent::PatternSaved { .. } => "pattern_saved",
       AppEvent::PatternExported => "pattern_exported",
       AppEvent::PatternClosed => "pattern_closed",
+
+      AppEvent::PaletteItemAdded { .. } => "palette_item_added",
+      AppEvent::PaletteItemRemoved { .. } => "palette_item_removed",
+      AppEvent::PaletteDisplaySettingsUpdated { .. } => "palette_display_settings_updated",
     }
   }
 
@@ -121,6 +136,24 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("reference_image_size", json!(reference_image_size)),
       ],
       AppEvent::PatternSaved { format } => vec![("format", json!(format.to_string()))],
+
+      AppEvent::PaletteItemAdded { brand, is_blend, blends_number } => vec![
+        ("brand", json!(brand)),
+        ("is_blend", json!(is_blend)),
+        ("blends_number", json!(blends_number)),
+      ],
+      AppEvent::PaletteItemRemoved { brand, is_blend, blends_number } => vec![
+        ("brand", json!(brand)),
+        ("is_blend", json!(is_blend)),
+        ("blends_number", json!(blends_number)),
+      ],
+      AppEvent::PaletteDisplaySettingsUpdated { settings } => vec![
+        ("columns_number", json!(settings.columns_number)),
+        ("color_only", json!(settings.color_only)),
+        ("show_color_brands", json!(settings.show_color_brands)),
+        ("show_color_numbers", json!(settings.show_color_numbers)),
+        ("show_color_names", json!(settings.show_color_names)),
+      ],
 
       _ => vec![],
     }

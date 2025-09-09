@@ -60,8 +60,11 @@ impl SessionId {
 
 /// Extension trait for `tauri::AppHandle` to capture PostHog events.
 pub trait PostHogExt<R: tauri::Runtime> {
-  /// Captures a PostHog event with the given event data.
+  /// Captures the provided PostHog event.
   fn capture_event(&self, event: impl ToPostHogEvent);
+
+  /// Captures a collection of PostHog events with a single request.
+  fn capture_batch(&self, events: Vec<impl ToPostHogEvent>);
 }
 
 impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
@@ -83,6 +86,32 @@ impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
 
     if let Err(e) = posthog_client.capture(event) {
       log::error!("Failed to capture PostHog event: {e:?}",);
+    }
+  }
+
+  fn capture_batch(&self, events: Vec<impl ToPostHogEvent>) {
+    let posthog_client = self.state::<posthog::Client>();
+    let device_id = self.state::<DeviceId>();
+    let session_id = self.state::<SessionId>();
+
+    let events = events
+      .into_iter()
+      .map(|event| {
+        let event_name = event.event_name();
+        let properties = event.properties();
+
+        let event = utils::create_event(
+          event_name.to_string(),
+          properties,
+          device_id.as_str().to_string(),
+          session_id.as_str().to_string(),
+        );
+        utils::saturate_event(event, self.package_info())
+      })
+      .collect();
+
+    if let Err(e) = posthog_client.capture_batch(events) {
+      log::error!("Failed to capture PostHog batch event: {e:?}",);
     }
   }
 }
