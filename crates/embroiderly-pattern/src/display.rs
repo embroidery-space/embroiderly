@@ -76,7 +76,7 @@ impl From<pmaker::GridLineStyle> for GridLine {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum DisplayMode {
   Solid,
@@ -147,7 +147,7 @@ impl Default for PaletteSettings {
   }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct LayersVisibility {
   pub reference_image: bool,

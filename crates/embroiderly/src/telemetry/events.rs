@@ -1,5 +1,5 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{Fabric, Grid, PaletteSettings};
+use embroiderly_pattern::{DisplayMode, Fabric, Grid, LayersVisibility, PaletteSettings};
 
 /// Represents all telemetry events that can occur in the application.
 pub enum AppEvent {
@@ -59,6 +59,16 @@ pub enum AppEvent {
   GridUpdated {
     grid: Grid,
   },
+
+  DisplayModeChanged {
+    mode: DisplayMode,
+  },
+  SymbolsVisibilityChanged {
+    visible: bool,
+  },
+  LayersVisibilityChanged {
+    visibility: LayersVisibility,
+  },
 }
 
 impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
@@ -79,6 +89,10 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
 
       AppEvent::FabricUpdated { .. } => "fabric_updated",
       AppEvent::GridUpdated { .. } => "grid_updated",
+
+      AppEvent::DisplayModeChanged { .. } => "display_mode_changed",
+      AppEvent::SymbolsVisibilityChanged { .. } => "symbols_visibility_changed",
+      AppEvent::LayersVisibilityChanged { .. } => "layers_visibility_changed",
     }
   }
 
@@ -180,6 +194,23 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("minor_lines_color", json!(grid.minor_lines.color)),
         ("major_lines_thickness", json!(grid.major_lines.thickness)),
         ("major_lines_color", json!(grid.major_lines.color)),
+      ],
+
+      AppEvent::DisplayModeChanged { mode } => vec![("display_mode", json!(mode.to_string()))],
+      AppEvent::SymbolsVisibilityChanged { visible } => vec![("symbols_visible", json!(visible))],
+      AppEvent::LayersVisibilityChanged { visibility } => vec![
+        ("reference_image_visible", json!(visibility.reference_image)),
+        ("full_stitches_visible", json!(visibility.fullstitches)),
+        ("petite_stitches_visible", json!(visibility.petitestitches)),
+        ("half_stitches_visible", json!(visibility.halfstitches)),
+        ("quarter_stitches_visible", json!(visibility.quarterstitches)),
+        ("back_stitches_visible", json!(visibility.backstitches)),
+        ("straight_stitches_visible", json!(visibility.straightstitches)),
+        ("french_knots_visible", json!(visibility.frenchknots)),
+        ("beads_visible", json!(visibility.beads)),
+        ("special_stitches_visible", json!(visibility.specialstitches)),
+        ("grid_visible", json!(visibility.grid)),
+        ("rulers_visible", json!(visibility.rulers)),
       ],
 
       _ => vec![],
