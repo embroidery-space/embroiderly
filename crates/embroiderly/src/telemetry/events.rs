@@ -1,5 +1,5 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{DisplayMode, Fabric, Grid, LayersVisibility, PaletteSettings};
+use embroiderly_pattern::{DisplayMode, Fabric, Grid, LayersVisibility, PaletteSettings, ReferenceImageSettings};
 
 /// Represents all telemetry events that can occur in the application.
 pub enum AppEvent {
@@ -38,6 +38,16 @@ pub enum AppEvent {
   },
   PatternExported,
   PatternClosed,
+
+  ReferenceImageSet {
+    format: image::ImageFormat,
+    dimensions: (u32, u32),
+    size: usize,
+  },
+  ReferenceImageRemoved,
+  ReferenceImageSettingsUpdated {
+    settings: ReferenceImageSettings,
+  },
 
   PaletteItemAdded {
     brand: String,
@@ -82,6 +92,10 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
       AppEvent::PatternSaved { .. } => "pattern_saved",
       AppEvent::PatternExported => "pattern_exported",
       AppEvent::PatternClosed => "pattern_closed",
+
+      AppEvent::ReferenceImageSet { .. } => "reference_image_set",
+      AppEvent::ReferenceImageRemoved => "reference_image_removed",
+      AppEvent::ReferenceImageSettingsUpdated { .. } => "reference_image_settings_updated",
 
       AppEvent::PaletteItemAdded { .. } => "palette_item_added",
       AppEvent::PaletteItemRemoved { .. } => "palette_item_removed",
@@ -177,6 +191,20 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("show_color_brands", json!(settings.show_color_brands)),
         ("show_color_numbers", json!(settings.show_color_numbers)),
         ("show_color_names", json!(settings.show_color_names)),
+      ],
+
+      AppEvent::ReferenceImageSet { format, dimensions, size } => vec![
+        ("format", json!(image::ImageFormat::extensions_str(*format)[0])),
+        ("dimensions", json!(format!("{}x{}", dimensions.0, dimensions.1))),
+        ("size", json!(size)),
+      ],
+      AppEvent::ReferenceImageSettingsUpdated { settings } => vec![
+        ("x", json!(settings.x)),
+        ("y", json!(settings.y)),
+        ("width", json!(settings.width)),
+        ("height", json!(settings.height)),
+        ("rotation", json!(settings.rotation)),
+        ("opactity", json!(settings.opacity)),
       ],
 
       AppEvent::FabricUpdated { fabric } => vec![

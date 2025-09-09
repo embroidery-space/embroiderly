@@ -40,7 +40,7 @@ impl borsh::BorshDeserialize for ReferenceImage {
   }
 }
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, Copy, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct ReferenceImageSettings {
   pub x: f32,

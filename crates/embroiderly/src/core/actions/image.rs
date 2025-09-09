@@ -75,10 +75,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateReferenceImageSettingsAction {
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     debug_assert!(patproj.reference_image.is_some());
     window.emit("image:settings:update", base64::encode(borsh::to_vec(&self.settings)?))?;
-    let old_settings = std::mem::replace(
-      &mut patproj.reference_image.as_mut().unwrap().settings,
-      self.settings.clone(),
-    );
+    let old_settings = std::mem::replace(&mut patproj.reference_image.as_mut().unwrap().settings, self.settings);
     if self.old_settings.get().is_none() {
       self.old_settings.set(old_settings).unwrap();
     }
@@ -92,7 +89,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateReferenceImageSettingsAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_settings = self.old_settings.get().unwrap();
     if let Some(image) = patproj.reference_image.as_mut() {
-      image.settings = old_settings.clone();
+      image.settings = *old_settings;
       window.emit("image:settings:update", base64::encode(borsh::to_vec(&old_settings)?))?;
     }
     Ok(())
