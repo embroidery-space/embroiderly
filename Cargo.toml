@@ -95,7 +95,7 @@ posthog-rs = {version = "0.3.7", default-features = false }
 
 # Identification
 machine-uid = "0.5.3"
-uuid = { version = "1.18.1", features = ["v4"] }
+uuid = { version = "1.18.1", features = ["v4", "v7"] }
 
 # Other
 ordered-float = { version = "5.0.0" }

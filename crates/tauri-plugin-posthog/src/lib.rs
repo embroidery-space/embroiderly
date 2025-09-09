@@ -11,6 +11,7 @@ pub fn init<R: tauri::Runtime>(client: posthog::Client) -> tauri::plugin::TauriP
     .setup(move |app, _api| {
       app.manage(client);
       app.manage(DeviceId::new(app.package_info()));
+      app.manage(SessionId::new());
       Ok(())
     })
     .invoke_handler(tauri::generate_handler![commands::capture_event])
@@ -19,7 +20,7 @@ pub fn init<R: tauri::Runtime>(client: posthog::Client) -> tauri::plugin::TauriP
 
 /// A unique device identifier derived from machine UID and app info.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct DeviceId(String);
+pub(crate) struct DeviceId(String);
 
 impl DeviceId {
   /// Creates a new `DeviceId` by hashing machine UID with app name and version.
@@ -40,6 +41,23 @@ impl DeviceId {
   }
 }
 
+/// A unique session identifier.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) struct SessionId(String);
+
+impl SessionId {
+  /// Creates a new `SessionId` using UUID v7.
+  pub fn new() -> Self {
+    let uuid = uuid::Uuid::now_v7();
+    SessionId(format!("{:x}", uuid))
+  }
+
+  /// Returns the session ID as a string.
+  pub fn as_str(&self) -> &str {
+    &self.0
+  }
+}
+
 /// Extension trait for `tauri::AppHandle` to capture PostHog events.
 pub trait PostHogExt<R: tauri::Runtime> {
   /// Captures a PostHog event with the given event data.
@@ -50,11 +68,17 @@ impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
   fn capture_event(&self, event: impl ToPostHogEvent) {
     let posthog_client = self.state::<posthog::Client>();
     let device_id = self.state::<DeviceId>();
+    let session_id = self.state::<SessionId>();
 
     let event_name = event.event_name();
     let properties = event.properties();
 
-    let event = utils::create_event(event_name, device_id.as_str(), properties);
+    let event = utils::create_event(
+      event_name.to_string(),
+      properties,
+      device_id.as_str().to_string(),
+      session_id.as_str().to_string(),
+    );
     let event = utils::saturate_event(event, self.package_info());
 
     if let Err(e) = posthog_client.capture(event) {
