@@ -3,16 +3,16 @@ use std::sync::RwLock;
 use tauri::Manager as _;
 use tauri_plugin_posthog::PostHogExt as _;
 
-mod commands;
+pub mod commands;
 mod core;
 mod error;
-mod logger;
+pub mod logger;
 mod sidecars;
-mod telemetry;
+pub mod telemetry;
 mod utils;
 
 pub mod state;
-use state::{HistoryState, HistoryStateInner, PatternsState};
+use state::{HistoryManager, HistoryState, PatternManager, PatternsState};
 
 /// Runs the application.
 pub fn run() {
@@ -34,7 +34,7 @@ pub fn run() {
 }
 
 /// Sets up the application for running or testing.
-pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R> {
+fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R> {
   builder = builder
     .setup(|app| {
       let app_handle = app.handle();
@@ -57,43 +57,38 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
 
       Ok(())
     })
-    .manage(RwLock::new(core::pattern_manager::PatternManager::new()))
-    .manage(RwLock::new(HistoryStateInner::<R>::new()));
+    .manage(RwLock::new(PatternManager::new()))
+    .manage(RwLock::new(HistoryManager::<R>::new()));
 
-  #[cfg(not(feature = "test"))]
+  #[cfg(debug_assertions)]
   {
-    // We do not need these plugins in tests, so we only add them in non-test builds.
-
-    #[cfg(debug_assertions)]
-    {
-      use tauri_plugin_prevent_default::Flags;
-      builder = builder.plugin(
-        tauri_plugin_prevent_default::Builder::new()
-          .with_flags(Flags::all().difference(Flags::DEV_TOOLS | Flags::RELOAD))
-          .build(),
-      );
-    }
-
-    #[cfg(not(debug_assertions))]
-    {
-      use tauri_plugin_prevent_default::Flags;
-      builder = builder.plugin(
-        tauri_plugin_prevent_default::Builder::new()
-          .with_flags(Flags::all().difference(Flags::RELOAD))
-          .build(),
-      );
-    }
-
-    builder = builder
-      .plugin(tauri_plugin_clipboard_manager::init())
-      .plugin(tauri_plugin_dialog::init())
-      .plugin(tauri_plugin_fs::init())
-      .plugin(tauri_plugin_opener::init())
-      .plugin(tauri_plugin_process::init())
-      .plugin(tauri_plugin_shell::init())
-      .plugin(tauri_plugin_updater::Builder::new().build())
-      .plugin(tauri_plugin_pinia::init());
+    use tauri_plugin_prevent_default::Flags;
+    builder = builder.plugin(
+      tauri_plugin_prevent_default::Builder::new()
+        .with_flags(Flags::all().difference(Flags::DEV_TOOLS | Flags::RELOAD))
+        .build(),
+    );
   }
+
+  #[cfg(not(debug_assertions))]
+  {
+    use tauri_plugin_prevent_default::Flags;
+    builder = builder.plugin(
+      tauri_plugin_prevent_default::Builder::new()
+        .with_flags(Flags::all().difference(Flags::RELOAD))
+        .build(),
+    );
+  }
+
+  builder = builder
+    .plugin(tauri_plugin_clipboard_manager::init())
+    .plugin(tauri_plugin_dialog::init())
+    .plugin(tauri_plugin_fs::init())
+    .plugin(tauri_plugin_opener::init())
+    .plugin(tauri_plugin_process::init())
+    .plugin(tauri_plugin_shell::init())
+    .plugin(tauri_plugin_updater::Builder::new().build())
+    .plugin(tauri_plugin_pinia::init());
 
   builder = builder.invoke_handler(tauri::generate_handler![
     commands::core::pattern::load_pattern,

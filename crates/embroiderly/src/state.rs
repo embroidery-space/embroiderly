@@ -1,13 +1,13 @@
 use std::collections::HashMap;
 
 use crate::core::history::History;
-use crate::core::pattern_manager::PatternManager;
+pub use crate::core::pattern_manager::PatternManager;
 
-pub struct HistoryStateInner<R: tauri::Runtime> {
+pub struct HistoryManager<R: tauri::Runtime> {
   inner: HashMap<uuid::Uuid, History<R>>,
 }
 
-impl<R: tauri::Runtime> HistoryStateInner<R> {
+impl<R: tauri::Runtime> HistoryManager<R> {
   #[allow(clippy::new_without_default)]
   pub fn new() -> Self {
     Self { inner: HashMap::new() }
@@ -31,4 +31,4 @@ impl<R: tauri::Runtime> HistoryStateInner<R> {
 }
 
 pub type PatternsState = std::sync::RwLock<PatternManager>;
-pub type HistoryState<R> = std::sync::RwLock<HistoryStateInner<R>>;
+pub type HistoryState<R> = std::sync::RwLock<HistoryManager<R>>;

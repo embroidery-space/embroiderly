@@ -1,8 +1,10 @@
-use embroiderly::setup_app;
+use embroiderly::commands;
 use embroiderly::state::PatternsState;
 use embroiderly_pattern::{Fabric, PatternProject};
 use tauri::Manager;
-use tauri::test::{INVOKE_KEY, MockRuntime, get_ipc_response, mock_builder};
+use tauri::test::{INVOKE_KEY, get_ipc_response};
+
+mod common;
 
 fn get_all_test_patterns() -> Vec<std::io::Result<std::fs::DirEntry>> {
   let sample_patterns = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("resources/patterns");
@@ -15,11 +17,11 @@ fn get_all_test_patterns() -> Vec<std::io::Result<std::fs::DirEntry>> {
 
 #[test]
 fn parses_supported_pattern_formats() {
-  let app = setup_app::<MockRuntime>(mock_builder());
-  let webview = tauri::WebviewWindowBuilder::new(&app, "main", Default::default())
-    .build()
-    .unwrap();
-  let patterns_state = app.handle().state::<PatternsState>();
+  let (app, webview) = setup_test_app!(
+    commands: [commands::core::pattern::open_pattern],
+    plugins: [tauri_plugin_pinia::init()]
+  );
+  let patterns_state = app.state::<PatternsState>();
 
   for file_path in get_all_test_patterns().into_iter() {
     let file_path = file_path.unwrap().path();
@@ -50,11 +52,11 @@ fn parses_supported_pattern_formats() {
 
 #[test]
 fn creates_new_pattern() {
-  let app = setup_app::<MockRuntime>(mock_builder());
-  let webview = tauri::WebviewWindowBuilder::new(&app, "main", Default::default())
-    .build()
-    .unwrap();
-  let patterns_state = app.handle().state::<PatternsState>();
+  let (app, webview) = setup_test_app!(
+    commands: [commands::core::pattern::create_pattern],
+    plugins: [tauri_plugin_pinia::init()]
+  );
+  let patterns_state = app.state::<PatternsState>();
 
   assert!(patterns_state.read().unwrap().is_empty());
   assert!(
@@ -77,10 +79,15 @@ fn creates_new_pattern() {
 
 #[test]
 fn saves_pattern() {
-  let app = setup_app::<MockRuntime>(mock_builder());
-  let webview = tauri::WebviewWindowBuilder::new(&app, "main", Default::default())
-    .build()
-    .unwrap();
+  let (_app, webview) = setup_test_app!(
+    commands: [
+      commands::core::pattern::load_pattern,
+      commands::core::pattern::open_pattern,
+      commands::core::pattern::save_pattern,
+      commands::core::pattern::close_pattern,
+    ],
+    plugins: [tauri_plugin_pinia::init()]
+  );
 
   for file_path in get_all_test_patterns().into_iter() {
     let file_path = file_path.unwrap().path();
@@ -169,11 +176,14 @@ fn saves_pattern() {
 
 #[test]
 fn closes_pattern() {
-  let app = setup_app::<MockRuntime>(mock_builder());
-  let webview = tauri::WebviewWindowBuilder::new(&app, "main", Default::default())
-    .build()
-    .unwrap();
-  let patterns_state = app.handle().state::<PatternsState>();
+  let (app, webview) = setup_test_app!(
+    commands: [
+      commands::core::pattern::create_pattern,
+      commands::core::pattern::close_pattern,
+    ],
+    plugins: [tauri_plugin_pinia::init()]
+  );
+  let patterns_state = app.state::<PatternsState>();
 
   assert!(patterns_state.read().unwrap().is_empty());
   let tauri::ipc::InvokeResponseBody::Raw(body) = get_ipc_response(

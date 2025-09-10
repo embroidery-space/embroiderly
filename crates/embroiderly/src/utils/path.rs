@@ -3,7 +3,6 @@ use std::path::{Path, PathBuf};
 use tauri::Manager as _;
 
 pub fn app_document_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<PathBuf> {
-  let app_name = app_handle.config().product_name.clone().unwrap();
   let dir_path = if cfg!(test) {
     std::env::temp_dir()
   } else {
@@ -13,7 +12,7 @@ pub fn app_document_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> 
       // We expect the home directory to always be available.
       .unwrap_or_else(|_| path_resolver.home_dir().unwrap())
   };
-  Ok(dir_path.join(app_name))
+  Ok(dir_path.join(&app_handle.package_info().name))
 }
 
 /// Returns the path to the application's log directory.
