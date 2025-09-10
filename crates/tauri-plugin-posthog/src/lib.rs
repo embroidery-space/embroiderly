@@ -5,11 +5,13 @@ use tauri::Manager as _;
 mod commands;
 mod utils;
 
+pub(crate) type PostHogClientState = std::sync::Arc<posthog::Client>;
+
 /// Initializes the plugin.
 pub fn init<R: tauri::Runtime>(client: posthog::Client) -> tauri::plugin::TauriPlugin<R> {
   tauri::plugin::Builder::new("posthog")
     .setup(move |app, _api| {
-      app.manage(client);
+      app.manage(std::sync::Arc::new(client));
       app.manage(DeviceId::new(app.package_info()));
       app.manage(SessionId::new());
       Ok(())
@@ -69,55 +71,63 @@ pub trait PostHogExt<R: tauri::Runtime> {
 
 impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
   fn capture_event(&self, event: impl ToPostHogEvent) {
-    let posthog_client = self.state::<posthog::Client>();
-    let device_id = self.state::<DeviceId>();
-    let session_id = self.state::<SessionId>();
+    let package_info = self.package_info().clone();
 
-    let event_name = event.event_name();
+    let client = self.state::<PostHogClientState>().inner().clone();
+    let device_id = self.state::<DeviceId>().inner().clone();
+    let session_id = self.state::<SessionId>().inner().clone();
+
+    let event_name = event.event_name().to_string();
     let properties = event.properties();
 
-    let event = utils::create_event(
-      event_name.to_string(),
-      properties,
-      device_id.as_str().to_string(),
-      session_id.as_str().to_string(),
-    );
-    let event = utils::saturate_event(event, self.package_info());
+    std::thread::spawn(move || {
+      let event = utils::create_event(
+        event_name,
+        properties,
+        device_id.as_str().to_string(),
+        session_id.as_str().to_string(),
+      );
+      let event = utils::saturate_event(event, &package_info);
 
-    if let Err(e) = posthog_client.capture(event) {
-      log::error!("Failed to capture PostHog event: {e:?}",);
-    }
+      if let Err(e) = client.capture(event) {
+        log::error!("Failed to capture PostHog event: {e:?}",);
+      }
+    });
   }
 
   fn capture_batch(&self, events: Vec<impl ToPostHogEvent>) {
-    let posthog_client = self.state::<posthog::Client>();
-    let device_id = self.state::<DeviceId>();
-    let session_id = self.state::<SessionId>();
+    let package_info = self.package_info().clone();
 
-    let events = events
-      .into_iter()
-      .map(|event| {
-        let event_name = event.event_name();
-        let properties = event.properties();
+    let client = self.state::<PostHogClientState>().inner().clone();
+    let device_id = self.state::<DeviceId>().inner().clone();
+    let session_id = self.state::<SessionId>().inner().clone();
 
-        let event = utils::create_event(
-          event_name.to_string(),
-          properties,
-          device_id.as_str().to_string(),
-          session_id.as_str().to_string(),
-        );
-        utils::saturate_event(event, self.package_info())
-      })
-      .collect();
+    std::thread::spawn(move || {
+      let events = events
+        .into_iter()
+        .map(|event| {
+          let event_name = event.event_name().to_string();
+          let properties = event.properties();
 
-    if let Err(e) = posthog_client.capture_batch(events) {
-      log::error!("Failed to capture PostHog batch event: {e:?}",);
-    }
+          let event = utils::create_event(
+            event_name,
+            properties,
+            device_id.as_str().to_string(),
+            session_id.as_str().to_string(),
+          );
+          utils::saturate_event(event, &package_info)
+        })
+        .collect();
+
+      if let Err(e) = client.capture_batch(events) {
+        log::error!("Failed to capture PostHog batch event: {e:?}",);
+      }
+    });
   }
 }
 
 /// A trait for converting custom types to PostHog events.
-pub trait ToPostHogEvent {
+pub trait ToPostHogEvent: Send + 'static {
   /// Returns the event name as a string for telemetry systems.
   fn event_name(&self) -> &str;
 
