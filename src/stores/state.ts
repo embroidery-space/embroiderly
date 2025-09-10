@@ -1,6 +1,7 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { defineStore } from "pinia";
 import { tools, type PatternEditorTool } from "#/core/tools/";
+import { AppEvent, posthog } from "#/vendor";
 
 interface OpenedPattern {
   id: string;
@@ -12,6 +13,10 @@ export const useAppStateStore = defineStore(
   () => {
     const selectedTool = ref<PatternEditorTool>(tools.FullStitch);
     const selectedPaletteItemIndexes = ref<number[]>([]);
+
+    watch(selectedTool, (tool, prevTool) => {
+      posthog.capture(new AppEvent.ToolChanged(tool.name, prevTool.name));
+    });
 
     const openedPatterns = ref<OpenedPattern[]>([]);
     const currentPattern = ref<OpenedPattern | undefined>(undefined);

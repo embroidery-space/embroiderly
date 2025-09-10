@@ -42,4 +42,4 @@ export const posthog = _posthog.init({
 
 export * as sentry from "@sentry/vue";
 
-export * as Event from "./events.ts";
+export * as AppEvent from "./events.ts";

@@ -39,7 +39,7 @@ pub fn telemetry_metrics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppHandl
     .and_then(|v| serde_json::from_value(v).ok())
     .unwrap_or(false);
   #[cfg(debug_assertions)]
-  let metrics_enabled = false;
+  let metrics_enabled = true;
 
   metrics_enabled
 }
