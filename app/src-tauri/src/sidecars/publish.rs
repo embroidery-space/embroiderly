@@ -78,7 +78,7 @@ impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
     {
       sidecar = sidecar.env("SENTRY_DSN", dsn).env(
         "SENTRY_RELEASE_NAME",
-        crate::telemetry::sentry_release_name(self.app_handle.package_info()),
+        crate::vendor::telemetry::sentry_release_name(self.app_handle.package_info()),
       );
     }
 

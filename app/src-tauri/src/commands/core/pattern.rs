@@ -8,8 +8,8 @@ use crate::error::{CommandError, PatternError, Result};
 use crate::parse_command_payload;
 use crate::sidecars::SidecarRunner as _;
 use crate::state::{HistoryState, PatternsState};
-use crate::telemetry::AppEvent;
 use crate::utils::path::{app_document_dir, backup_file_path};
+use crate::vendor::telemetry::AppEvent;
 
 #[tauri::command]
 pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Result<tauri::ipc::Response> {

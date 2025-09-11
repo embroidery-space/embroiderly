@@ -5,7 +5,7 @@ use crate::core::actions::{Action as _, UpdateFabricPropertiesAction};
 use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
-use crate::telemetry::AppEvent;
+use crate::vendor::telemetry::AppEvent;
 
 #[tauri::command]
 pub fn update_fabric<R: tauri::Runtime>(

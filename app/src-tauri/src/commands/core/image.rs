@@ -5,7 +5,7 @@ use crate::core::actions::{Action as _, SetReferenceImageAction, UpdateReference
 use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
-use crate::telemetry::AppEvent;
+use crate::vendor::telemetry::AppEvent;
 
 #[tauri::command]
 pub fn set_reference_image<R: tauri::Runtime>(
