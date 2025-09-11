@@ -9,14 +9,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
-          cache: npm
-      - run: npm ci
+          cache: pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: true
       - name: Check types
-        run: npm run build
+        run: pnpm build
       - name: Check formatting
-        run: npm run fmt
+        run: pnpm fmt
       - name: Check linting
-        run: npm run lint
+        run: pnpm lint
   test:
     strategy:
       fail-fast: false
@@ -28,7 +30,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
-          cache: npm
-      - run: npm ci
+          cache: pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: true
       - name: Test
-        run: npm run test
+        run: pnpm test

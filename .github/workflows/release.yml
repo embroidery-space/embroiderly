@@ -25,9 +25,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
-          cache: npm
+          cache: pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: true
       - uses: dtolnay/rust-toolchain@stable
-      - run: npm ci
 
       - name: Build the application
         id: tauri
@@ -65,11 +67,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
-          cache: npm
-      - run: npm ci
+          cache: pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: true
 
       - name: Install Sentry CLI
-        run: npm install -g @sentry/cli
+        run: pnpm install -g @sentry/cli
 
       - name: Create Sentry release
         run: |
@@ -79,7 +83,7 @@ jobs:
       - name: Build frontend with source maps
         env:
           TAURI_ENV_DEBUG: "true"
-        run: npm run build
+        run: pnpm build
 
       - name: Upload source maps to Sentry
         run: |
