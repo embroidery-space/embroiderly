@@ -29,6 +29,7 @@
     "pinia:default",
     "log:default",
     "sentry:default",
+    "posthog:default",
     { "identifier": "fs:allow-read-dir", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-text-file", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-file", "allow": [{ "path": "$RESOURCE/**/*" }] }

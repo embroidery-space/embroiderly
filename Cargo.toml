@@ -36,6 +36,7 @@ tauri-plugin-pinia = "3.7.1"
 ## Custom Tauri plugins
 tauri-plugin-log = { path = "crates/tauri-plugin-log" }
 tauri-plugin-sentry = { path = "crates/tauri-plugin-sentry" }
+tauri-plugin-posthog = { path = "crates/tauri-plugin-posthog" }
 
 # Embroiderly Core
 embroiderly-parsers = { path = "crates/embroiderly-parsers" }
@@ -90,6 +91,11 @@ fern = "0.7.1"
 
 # Telemetry
 sentry = "0.42.0"
+posthog-rs = {version = "0.3.7", default-features = false }
+
+# Identification
+machine-uid = "0.5.3"
+uuid = { version = "1.18.1", features = ["v4", "v7"] }
 
 # Other
 ordered-float = { version = "5.0.0" }
@@ -99,5 +105,5 @@ paste = "1.0.15"
 prettydiff = { version = "0.8.1", default-features = false }
 tempfile = "3.21.0"
 convert_case = "0.8.0"
-uuid = { version = "1.18.1", features = ["v4"] }
 rand = "0.9.2"
+sha2 = "0.10.9"

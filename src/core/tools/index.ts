@@ -28,6 +28,9 @@ export const tools = Object.freeze({
 });
 
 export interface PatternEditorTool {
+  /** Tool's name. */
+  readonly name: string;
+
   /** Tool's main action handler. */
   main(context: PatternEditorToolContext): Promise<void> | void;
 

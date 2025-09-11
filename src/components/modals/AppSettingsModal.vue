@@ -13,5 +13,18 @@
 </template>
 
 <script setup lang="ts">
+  import { posthog, AppEvent } from "#/vendor/";
+
   const settingsStore = useSettingsStore();
+  settingsStore.$subscribe((_mutation, state) => {
+    posthog.capture(
+      new AppEvent.AppSettingsChanged({
+        ui: state.ui,
+        viewport: state.viewport,
+        updater: state.updater,
+        telemetry: state.telemetry,
+        other: state.other,
+      }),
+    );
+  });
 </script>

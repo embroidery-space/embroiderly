@@ -2,6 +2,8 @@ import { ReferenceImageView } from "../pixi/components/pattern/image.ts";
 import type { PatternEditorTool, PatternEditorToolContext } from "./index.ts";
 
 export class CursorTool implements PatternEditorTool {
+  readonly name: "cursor";
+
   main({ event, ui }: PatternEditorToolContext) {
     if (event.path.find((el) => el instanceof ReferenceImageView)) {
       ui.referenceImage.focus();

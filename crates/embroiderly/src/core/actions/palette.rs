@@ -45,7 +45,7 @@ impl<R: tauri::Runtime> Action<R> for AddPaletteItemAction {
   /// - `palette:remove_palette_item` with the palette item index.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     patproj.pattern.palette.pop();
-    window.emit("palette:remove_palette_item", patproj.pattern.palette.len())?;
+    window.emit("palette:remove_palette_item", [patproj.pattern.palette.len()])?;
     Ok(())
   }
 }
@@ -84,7 +84,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
     for &palindex in self.palindexes.iter().rev() {
       palitems.push(patproj.pattern.palette.remove(palindex as usize));
     }
-    window.emit("palette:remove_palette_items", &self.palindexes)?;
+    window.emit("palette:remove_palette_item", &self.palindexes)?;
 
     // Reverse the vectors to restore the in the order of `palindexes`.
     palitems.reverse();
@@ -162,7 +162,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePaletteDisplaySettingsAction {
       "palette:update_display_settings",
       base64::encode(borsh::to_vec(&self.settings)?),
     )?;
-    let old_settings = std::mem::replace(&mut patproj.display_settings.palette_settings, self.settings.clone());
+    let old_settings = std::mem::replace(&mut patproj.display_settings.palette_settings, self.settings);
     if self.old_settings.get().is_none() {
       self.old_settings.set(old_settings).unwrap();
     }
@@ -179,7 +179,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePaletteDisplaySettingsAction {
       "palette:update_display_settings",
       base64::encode(borsh::to_vec(&old_settings)?),
     )?;
-    patproj.display_settings.palette_settings = old_settings.clone();
+    patproj.display_settings.palette_settings = *old_settings;
     Ok(())
   }
 }

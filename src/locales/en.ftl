@@ -85,6 +85,9 @@ label-telemetry = Telemetry
 label-allow-diagnostics = Allow collecting diagnostics reports
 message-allow-diagnostics-description = Help improve the stability of { -app-name } by automatically sending diagnostic reports when errors occur or the application is crashed.
 
+label-allow-metrics = Allow collecting metrics
+message-allow-metrics-description = Help improve { -app-name } by sending anonymized application usage data.
+
 ## Titles, labels and messages related to the welcome page.
 
 title-welcome = { -app-name }

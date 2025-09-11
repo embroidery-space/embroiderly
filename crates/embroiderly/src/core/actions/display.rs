@@ -30,7 +30,7 @@ impl<R: tauri::Runtime> Action<R> for SetDisplayModeAction {
   /// - `display:set_mode` with the updated display mode.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     window.emit("display:set_mode", self.mode.to_string())?;
-    let old_mode = std::mem::replace(&mut patproj.display_settings.display_mode, self.mode.clone());
+    let old_mode = std::mem::replace(&mut patproj.display_settings.display_mode, self.mode);
     if self.old_mode.get().is_none() {
       self.old_mode.set(old_mode).unwrap();
     }
@@ -44,7 +44,7 @@ impl<R: tauri::Runtime> Action<R> for SetDisplayModeAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_mode = self.old_mode.get().unwrap();
     window.emit("display:set_mode", old_mode.to_string())?;
-    patproj.display_settings.display_mode = old_mode.clone();
+    patproj.display_settings.display_mode = *old_mode;
     Ok(())
   }
 }
@@ -107,10 +107,8 @@ impl<R: tauri::Runtime> Action<R> for SetLayersVisibilityAction {
       "display:set_layers_visibility",
       base64::encode(borsh::to_vec(&self.layers_visibility)?),
     )?;
-    let old_layers_visibility = std::mem::replace(
-      &mut patproj.display_settings.layers_visibility,
-      self.layers_visibility.clone(),
-    );
+    let old_layers_visibility =
+      std::mem::replace(&mut patproj.display_settings.layers_visibility, self.layers_visibility);
     if self.old_layers_visibility.get().is_none() {
       self.old_layers_visibility.set(old_layers_visibility).unwrap();
     }
@@ -127,7 +125,7 @@ impl<R: tauri::Runtime> Action<R> for SetLayersVisibilityAction {
       "display:set_layers_visibility",
       base64::encode(borsh::to_vec(old_layers_visibility)?),
     )?;
-    patproj.display_settings.layers_visibility = old_layers_visibility.clone();
+    patproj.display_settings.layers_visibility = *old_layers_visibility;
     Ok(())
   }
 }

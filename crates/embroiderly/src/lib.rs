@@ -1,25 +1,48 @@
 use std::sync::RwLock;
 
 use tauri::Manager as _;
+use tauri_plugin_posthog::PostHogExt as _;
 
-mod commands;
+pub mod commands;
 mod core;
 mod error;
-mod logger;
+pub mod logger;
 mod sidecars;
-mod telemetry;
+pub mod telemetry;
 mod utils;
 
 pub mod state;
-use state::{HistoryState, HistoryStateInner, PatternsState};
+use state::{HistoryManager, HistoryState, PatternManager, PatternsState};
 
-pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R> {
+/// Runs the application.
+pub fn run() {
+  setup_app(tauri::Builder::default()).run(|app_handle, event| {
+    match event {
+      // Yeah, we don't currently support MacOS, but keep the code for future use.
+      #[cfg(any(target_os = "macos", target_os = "ios"))]
+      tauri::RunEvent::Opened { urls } => {
+        let files = urls
+          .into_iter()
+          .filter_map(|url| url.to_file_path().ok())
+          .collect::<Vec<_>>();
+        handle_file_associations(app_handle, files);
+      }
+      tauri::RunEvent::Exit => app_handle.capture_event(telemetry::AppEvent::AppExited),
+      _ => {}
+    }
+  });
+}
+
+/// Sets up the application for running or testing.
+fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R> {
   builder = builder
     .setup(|app| {
       let app_handle = app.handle();
 
       logger::init(app_handle)?;
       telemetry::init(app_handle)?;
+
+      app_handle.capture_event(telemetry::AppEvent::AppStarted);
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
@@ -34,43 +57,38 @@ pub fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::Ap
 
       Ok(())
     })
-    .manage(RwLock::new(core::pattern_manager::PatternManager::new()))
-    .manage(RwLock::new(HistoryStateInner::<R>::new()));
+    .manage(RwLock::new(PatternManager::new()))
+    .manage(RwLock::new(HistoryManager::<R>::new()));
 
-  #[cfg(not(feature = "test"))]
+  #[cfg(debug_assertions)]
   {
-    // We do not need these plugins in tests, so we only add them in non-test builds.
-
-    #[cfg(debug_assertions)]
-    {
-      use tauri_plugin_prevent_default::Flags;
-      builder = builder.plugin(
-        tauri_plugin_prevent_default::Builder::new()
-          .with_flags(Flags::all().difference(Flags::DEV_TOOLS | Flags::RELOAD))
-          .build(),
-      );
-    }
-
-    #[cfg(not(debug_assertions))]
-    {
-      use tauri_plugin_prevent_default::Flags;
-      builder = builder.plugin(
-        tauri_plugin_prevent_default::Builder::new()
-          .with_flags(Flags::all().difference(Flags::RELOAD))
-          .build(),
-      );
-    }
-
-    builder = builder
-      .plugin(tauri_plugin_clipboard_manager::init())
-      .plugin(tauri_plugin_dialog::init())
-      .plugin(tauri_plugin_fs::init())
-      .plugin(tauri_plugin_opener::init())
-      .plugin(tauri_plugin_process::init())
-      .plugin(tauri_plugin_shell::init())
-      .plugin(tauri_plugin_updater::Builder::new().build())
-      .plugin(tauri_plugin_pinia::init());
+    use tauri_plugin_prevent_default::Flags;
+    builder = builder.plugin(
+      tauri_plugin_prevent_default::Builder::new()
+        .with_flags(Flags::all().difference(Flags::DEV_TOOLS | Flags::RELOAD))
+        .build(),
+    );
   }
+
+  #[cfg(not(debug_assertions))]
+  {
+    use tauri_plugin_prevent_default::Flags;
+    builder = builder.plugin(
+      tauri_plugin_prevent_default::Builder::new()
+        .with_flags(Flags::all().difference(Flags::RELOAD))
+        .build(),
+    );
+  }
+
+  builder = builder
+    .plugin(tauri_plugin_clipboard_manager::init())
+    .plugin(tauri_plugin_dialog::init())
+    .plugin(tauri_plugin_fs::init())
+    .plugin(tauri_plugin_opener::init())
+    .plugin(tauri_plugin_process::init())
+    .plugin(tauri_plugin_shell::init())
+    .plugin(tauri_plugin_updater::Builder::new().build())
+    .plugin(tauri_plugin_pinia::init());
 
   builder = builder.invoke_handler(tauri::generate_handler![
     commands::core::pattern::load_pattern,
@@ -223,13 +241,18 @@ fn collect_files_from_args() -> Vec<std::path::PathBuf> {
   files
 }
 
-pub fn handle_file_associations<R: tauri::Runtime>(
+fn handle_file_associations<R: tauri::Runtime>(
   app_handle: &tauri::AppHandle<R>,
   files: Vec<std::path::PathBuf>,
 ) -> anyhow::Result<tauri::WebviewWindow<R>> {
   // Load pattern files to the memory so that they can be accessed from the frontend later.
   for file in files {
-    commands::core::pattern::open_pattern(file, Some(false), app_handle.state::<PatternsState>())?;
+    commands::core::pattern::open_pattern(
+      file,
+      Some(false),
+      app_handle.clone(),
+      app_handle.state::<PatternsState>(),
+    )?;
   }
 
   create_webview_window(app_handle)

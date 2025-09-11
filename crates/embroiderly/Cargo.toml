@@ -26,6 +26,7 @@ tauri-plugin-pinia = { workspace = true }
 ## Custom Tauri plugins
 tauri-plugin-log = { workspace = true }
 tauri-plugin-sentry = { workspace = true }
+tauri-plugin-posthog = { workspace = true }
 
 # Embroiderly Core
 embroiderly-parsers = { workspace = true }

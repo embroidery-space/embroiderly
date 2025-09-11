@@ -18,11 +18,16 @@ import {
 import type { PatternEditorTool, PatternEditorToolContext } from "./index.ts";
 
 export class StitchTool implements PatternEditorTool {
+  readonly name: string;
+
   private readonly kind: StitchKind;
   private prevStitchState?: Stitch;
 
   constructor(kind: StitchKind) {
     this.kind = kind;
+    if (kind === NodeStitchKind.FrenchKnot) this.name = "french-knot";
+    else if (kind === NodeStitchKind.Bead) this.name = "bead";
+    else this.name = [kind, "stitch"].join("-").toLowerCase();
   }
 
   /** Whether this is the first run in a sequence of the tool. */
