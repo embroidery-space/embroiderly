@@ -15,7 +15,6 @@ export default defineConfig({
   envPrefix: ["VITE_", "TAURI_ENV_*"],
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
   build: {
-    target: [process.env.TAURI_ENV_PLATFORM == "windows" ? "chrome107" : "safari16"],
     minify: !process.env.TAURI_ENV_DEBUG ? "esbuild" : false,
     sourcemap: !!process.env.TAURI_ENV_DEBUG,
     chunkSizeWarningLimit: 1000,
