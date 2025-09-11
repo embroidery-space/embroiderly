@@ -22,14 +22,14 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
           cache: pnpm
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: true
       - uses: dtolnay/rust-toolchain@stable
+
+      - run: pnpm install
 
       - name: Build the application
         id: tauri
@@ -64,13 +64,13 @@ jobs:
       SENTRY_PROJECT: embroiderly
     steps:
       - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
           cache: pnpm
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: true
+
+      - run: pnpm install
 
       - name: Install Sentry CLI
         run: pnpm install -g @sentry/cli
