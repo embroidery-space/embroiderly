@@ -76,27 +76,15 @@ jobs:
           sentry-cli releases new "${{ needs.release.outputs.app-version }}"
           sentry-cli releases set-commits "${{ needs.release.outputs.app-version }}" --auto || true
 
-      - name: Build frontend with source maps (Windows)
+      - name: Build frontend with source maps
         env:
           TAURI_ENV_DEBUG: "true"
-          TAURI_ENV_PLATFORM: "windows"
         run: npm run build
 
-      - name: Upload source maps to Sentry (Windows)
+      - name: Upload source maps to Sentry
         run: |
           sentry-cli sourcemaps inject ./dist
-          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" --dist="windows" ./dist
-
-      - name: Build frontend with source maps (Linux)
-        env:
-          TAURI_ENV_DEBUG: "true"
-          TAURI_ENV_PLATFORM: "linux"
-        run: npm run build
-
-      - name: Upload source maps to Sentry (Linux)
-        run: |
-          sentry-cli sourcemaps inject ./dist
-          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" --dist="linux" ./dist
+          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" ./dist
 
       - name: Download debug symbols
         uses: actions/download-artifact@v4
