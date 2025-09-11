@@ -11,7 +11,7 @@ export default defineConfigWithVueTs(
   js.configs.recommended,
   vue.configs["flat/recommended"],
   {
-    files: ["src/**/*.ts", "src/**/*.vue"],
+    files: ["app/src/**/*.{js,ts,vue}", "crates/**/guest-js/**/*.{js,ts,vue}"],
     languageOptions: { ecmaVersion: "latest", globals: { ...globals.browser } },
     rules: { "no-console": ["warn"] },
   },
@@ -21,7 +21,7 @@ export default defineConfigWithVueTs(
     plugins: { "better-tailwindcss": betterTailwindcss },
     settings: {
       "better-tailwindcss": {
-        entryPoint: "src/assets/styles.css",
+        entryPoint: "app/src/assets/styles.css",
       },
     },
     rules: {

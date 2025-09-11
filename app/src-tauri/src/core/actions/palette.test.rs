@@ -1,7 +1,7 @@
 use embroiderly_pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch};
 use rand::seq::SliceRandom;
-use tauri::test::{MockRuntime, mock_builder};
-use tauri::{App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder, generate_context};
+use tauri::test::{mock_builder, MockRuntime};
+use tauri::{generate_context, App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder};
 
 use super::{
   Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
@@ -58,7 +58,7 @@ fn test_add_palette_item() {
   // Test revoking the command.
   {
     window.once("palette:remove_palette_item", move |e| {
-      assert_eq!(serde_json::from_str::<usize>(e.payload()).unwrap(), 7);
+      assert_eq!(serde_json::from_str::<Vec<u32>>(e.payload()).unwrap(), vec![7]);
     });
 
     assert_eq!(patproj.pattern.palette.len(), 8);
@@ -75,7 +75,7 @@ fn assert_executing_remove_palette_items_action(
   initial_palsize: usize,
   expected_palsize: usize,
 ) {
-  window.once("palette:remove_palette_items", move |e| {
+  window.once("palette:remove_palette_item", move |e| {
     let received_palindexes = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
     assert_eq!(received_palindexes, expected_palindexes);
   });

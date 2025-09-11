@@ -4,9 +4,9 @@
   identifier: "me.niusia.embroiderly",
   version: "0.5.1",
   build: {
-    beforeDevCommand: "npm run dev",
-    beforeBuildCommand: "npm run build",
-    frontendDist: "../../dist",
+    beforeDevCommand: "pnpm dev",
+    beforeBuildCommand: "pnpm build",
+    frontendDist: "../dist",
     devUrl: "http://localhost:1420",
     removeUnusedCommands: true,
   },
