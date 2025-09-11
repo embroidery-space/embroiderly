@@ -80,7 +80,7 @@
   import { openUrl } from "@tauri-apps/plugin-opener";
   import { computed } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
-  import { SystemApi } from "#/api/";
+  import { SystemApi } from "~/api/";
 
   const confirm = useConfirm();
 

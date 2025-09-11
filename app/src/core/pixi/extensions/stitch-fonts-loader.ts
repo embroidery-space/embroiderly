@@ -1,4 +1,4 @@
-import { FontsApi } from "#/api";
+import { FontsApi } from "~/api";
 import { DOMAdapter, ExtensionType, LoaderParserPriority, type LoaderParser } from "pixi.js";
 
 export const STITCH_FONT_PREFIX = "stitch-font/";

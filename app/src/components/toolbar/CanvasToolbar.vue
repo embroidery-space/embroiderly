@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
   import { computed, ref, watch } from "vue";
-  import { DisplayMode, LayersVisibility } from "#/core/pattern/";
+  import { DisplayMode, LayersVisibility } from "~/core/pattern/";
 
   const fluent = useFluent();
 

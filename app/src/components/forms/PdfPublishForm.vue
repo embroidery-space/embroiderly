@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts" setup>
-  import type { PdfExportOptions } from "#/core/pattern/";
+  import type { PdfExportOptions } from "~/core/pattern/";
 
   const options = defineModel<PdfExportOptions>({ required: true });
 </script>

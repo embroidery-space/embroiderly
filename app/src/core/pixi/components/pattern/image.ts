@@ -1,7 +1,7 @@
 import { Graphics, ImageSource, Rectangle, Sprite, Texture, type ContainerOptions, type Size } from "pixi.js";
 
-import { ReferenceImage, ReferenceImageSettings } from "#/core/pattern/";
-import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
+import { ReferenceImage, ReferenceImageSettings } from "~/core/pattern/";
+import { DEFAULT_CONTAINER_OPTIONS } from "~/core/pixi/constants.ts";
 import { Slider } from "../ui/";
 import { OutlineSelection, SELECTION_CONTROL_STROKE, SELECTION_STROKE_COLOR, SelectionControls } from "../utils/";
 

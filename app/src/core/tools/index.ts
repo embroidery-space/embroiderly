@@ -8,8 +8,8 @@ import {
   NodeStitchKind,
   ReferenceImageSettings,
   type Stitch,
-} from "#/core/pattern/";
-import type { ToolEventDetail } from "#/core/pixi/";
+} from "~/core/pattern/";
+import type { ToolEventDetail } from "~/core/pixi/";
 
 import { StitchTool } from "./stitch.tool.ts";
 import { CursorTool } from "./cursor.tool.ts";

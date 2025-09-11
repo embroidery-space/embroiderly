@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-  import { PatternInfo } from "#/core/pattern/";
+  import { PatternInfo } from "~/core/pattern/";
 
   const patternInfo = defineModel<PatternInfo>({ required: true });
 </script>

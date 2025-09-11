@@ -82,7 +82,7 @@
   import { computed, ref, watch } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { dequal } from "dequal";
-  import { PaletteSettings } from "#/core/pattern/";
+  import { PaletteSettings } from "~/core/pattern/";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();

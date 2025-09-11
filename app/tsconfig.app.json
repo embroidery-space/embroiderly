@@ -7,7 +7,7 @@
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
-    "paths": { "#/*": ["./src/*"] },
+    "paths": { "~/*": ["./src/*"] },
     "types": []
   }
 }

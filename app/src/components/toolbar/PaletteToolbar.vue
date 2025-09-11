@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
   import { computed } from "vue";
-  import { tools } from "#/core/tools/";
+  import { tools } from "~/core/tools/";
 
   const fluent = useFluent();
 

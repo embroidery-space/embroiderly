@@ -11,7 +11,7 @@ import {
   PatternApi,
   PublishApi,
   StitchesApi,
-} from "#/api";
+} from "~/api";
 import {
   Pattern,
   PatternInfo,
@@ -28,12 +28,12 @@ import {
   ReferenceImageSettings,
   deserializeStitches,
   type Stitch,
-} from "#/core/pattern/";
+} from "~/core/pattern/";
 import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
-} from "#/error.ts";
+} from "~/error.ts";
 
 export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
   /**
@@ -48,12 +48,12 @@ export const usePatternsStore = defineStore(
   () => {
     const overlay = useOverlay();
     const patternInfoModal = overlay.create(
-      defineAsyncComponent(() => import("#/components/modals/PatternInfoModal.vue")),
+      defineAsyncComponent(() => import("~/components/modals/PatternInfoModal.vue")),
     );
-    const fabricModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/FabricModal.vue")));
-    const gridModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/GridModal.vue")));
-    const publishModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/PublishModal.vue")));
-    const pdfExportModal = overlay.create(defineAsyncComponent(() => import("#/components/modals/PdfExportModal.vue")));
+    const fabricModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/FabricModal.vue")));
+    const gridModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/GridModal.vue")));
+    const publishModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/PublishModal.vue")));
+    const pdfExportModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/PdfExportModal.vue")));
 
     const appWindow = getCurrentWebviewWindow();
 

@@ -11,7 +11,7 @@ import { NuxtUIConfig } from "./ui.config";
 export default defineConfig({
   plugins: [vue(), ui(NuxtUIConfig), tailwindcss(), vueDevTools()],
   clearScreen: false,
-  resolve: { alias: { "#": fileURLToPath(new URL("./src", import.meta.url)) } },
+  resolve: { alias: { "~": fileURLToPath(new URL("./src", import.meta.url)) } },
   envPrefix: ["VITE_", "TAURI_ENV_*"],
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
   build: {

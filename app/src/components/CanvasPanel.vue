@@ -65,10 +65,10 @@
   import { vElementSize } from "@vueuse/components";
   import { Assets } from "pixi.js";
 
-  import { PatternEvent } from "#/core/pattern/";
-  import { PatternApplication, ToolEvent, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE, PatternView } from "#/core/pixi/";
-  import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "#/core/pixi/";
-  import { CursorTool, type PatternEditorToolContext } from "#/core/tools/";
+  import { PatternEvent } from "~/core/pattern/";
+  import { PatternApplication, ToolEvent, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
+  import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
+  import { CursorTool, type PatternEditorToolContext } from "~/core/tools/";
 
   const fluent = useFluent();
 

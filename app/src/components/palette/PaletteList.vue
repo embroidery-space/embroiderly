@@ -36,7 +36,7 @@
 
 <script setup lang="ts" generic="T, V">
   import Listbox, { type ListboxOptionDblClickEvent } from "primevue/listbox";
-  import type { PaletteSettings } from "#/core/pattern/";
+  import type { PaletteSettings } from "~/core/pattern/";
 
   interface PaletteListProps<T, V> {
     modelValue: V;

@@ -1,7 +1,7 @@
 import { Graphics } from "pixi.js";
 
-import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
-import type { Grid } from "#/core/pattern/";
+import { DEFAULT_CONTAINER_OPTIONS } from "~/core/pixi/constants.ts";
+import type { Grid } from "~/core/pattern/";
 
 export class GridView extends Graphics {
   #width: number;

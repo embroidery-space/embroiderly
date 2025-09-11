@@ -3,7 +3,7 @@ import { open, save } from "@tauri-apps/plugin-dialog";
 import type { DialogFilter, OpenDialogOptions, SaveDialogOptions } from "@tauri-apps/plugin-dialog";
 import { createSharedComposable, useLocalStorage } from "@vueuse/core";
 
-import { PathApi } from "#/api/";
+import { PathApi } from "~/api/";
 
 const ANY_PATTERN_FILTER: DialogFilter[] = [
   { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },

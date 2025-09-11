@@ -1,5 +1,5 @@
 import { invoke } from "./index.ts";
-import { Pattern, Fabric, PatternInfo } from "#/core/pattern/";
+import { Pattern, Fabric, PatternInfo } from "~/core/pattern/";
 
 export async function loadPattern(patternId: string) {
   const buffer = await invoke<ArrayBuffer>("load_pattern", { patternId });

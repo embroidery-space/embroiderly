@@ -1,7 +1,7 @@
 import { Graphics } from "pixi.js";
 
-import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
-import type { Fabric } from "#/core/pattern/";
+import { DEFAULT_CONTAINER_OPTIONS } from "~/core/pixi/constants.ts";
+import type { Fabric } from "~/core/pattern/";
 
 export class FabricView extends Graphics {
   #fabric: Fabric;

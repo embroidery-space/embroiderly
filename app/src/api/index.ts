@@ -1,5 +1,5 @@
 import { invoke as invokeTauriCommand, type InvokeArgs, type InvokeOptions } from "@tauri-apps/api/core";
-import { toApplicationError } from "#/error.ts";
+import { toApplicationError } from "~/error.ts";
 
 export async function invoke<T>(cmd: string, args?: InvokeArgs, options?: InvokeOptions): Promise<T> {
   try {

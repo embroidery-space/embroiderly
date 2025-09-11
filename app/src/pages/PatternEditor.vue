@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { PatternApi } from "#/api/index.ts";
+  import { PatternApi } from "~/api/index.ts";
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { onMounted, ref, useTemplateRef } from "vue";
 

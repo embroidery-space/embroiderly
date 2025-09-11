@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Grid } from "#/core/pattern/";
+  import { Grid } from "~/core/pattern/";
 
   const grid = defineModel<Grid>({ required: true });
 </script>

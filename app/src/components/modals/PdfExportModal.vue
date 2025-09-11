@@ -57,7 +57,7 @@
   import { ref } from "vue";
   import { asyncComputed, refAutoReset } from "@vueuse/core";
 
-  import { PdfExportOptions } from "#/core/pattern/";
+  import { PdfExportOptions } from "~/core/pattern/";
 
   const props = defineProps<{ filePath: string; options: PdfExportOptions }>();
   const emit = defineEmits<{ close: [] }>();

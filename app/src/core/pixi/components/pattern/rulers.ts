@@ -1,6 +1,6 @@
 import { Bounds, Container, Graphics, Text, TextStyle } from "pixi.js";
 
-import { MAX_SCALE, STITCH_SCALE_FACTOR, DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
+import { MAX_SCALE, STITCH_SCALE_FACTOR, DEFAULT_CONTAINER_OPTIONS } from "~/core/pixi/constants.ts";
 
 const RULER_LABEL_TEXT_STYLE_OPTIONS = new TextStyle({
   fontSize: 64,

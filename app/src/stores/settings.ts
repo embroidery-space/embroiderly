@@ -3,8 +3,8 @@ import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
-import { LOCALES } from "#/fluent.ts";
-import type { WheelAction } from "#/core/pixi//";
+import { LOCALES } from "~/fluent.ts";
+import type { WheelAction } from "~/core/pixi/";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
@@ -58,7 +58,7 @@ export interface OtherOptions {
 export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const overlay = useOverlay();
   const appSettingModal = overlay.create(
-    defineAsyncComponent(() => import("#/components/modals/AppSettingsModal.vue")),
+    defineAsyncComponent(() => import("~/components/modals/AppSettingsModal.vue")),
   );
 
   const toast = useToast();

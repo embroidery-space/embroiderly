@@ -1,7 +1,7 @@
 import { Container, Graphics, FederatedPointerEvent } from "pixi.js";
 import type { ContainerOptions, DestroyOptions } from "pixi.js";
 
-import { DEFAULT_CONTAINER_OPTIONS } from "#/core/pixi/constants.ts";
+import { DEFAULT_CONTAINER_OPTIONS } from "~/core/pixi/constants.ts";
 
 export interface SliderOptions extends ContainerOptions {
   /** Graphics for the slider track. */

@@ -21,10 +21,10 @@ import {
   SpecialStitch,
   SpecialStitchModel,
   type Stitch,
-} from "#/core/pattern/";
+} from "~/core/pattern/";
 
-import { STITCH_SCALE_FACTOR } from "#/core/pixi/constants.ts";
-import { TextureManager } from "#/core/pixi/texture-manager.ts";
+import { STITCH_SCALE_FACTOR } from "~/core/pixi/constants.ts";
+import { TextureManager } from "~/core/pixi/texture-manager.ts";
 
 import { ReferenceImageView } from "./image.ts";
 import { FabricView } from "./fabric.ts";

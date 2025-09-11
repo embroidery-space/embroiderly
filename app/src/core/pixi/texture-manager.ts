@@ -1,7 +1,7 @@
 import { Container, Graphics, Texture } from "pixi.js";
 import { GraphicsContext, type Renderer, type TextureSourceOptions } from "pixi.js";
-import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "#/core/pattern/";
-import { mm2px } from "#/utils/measurement";
+import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "~/core/pattern/";
+import { mm2px } from "~/utils/measurement";
 
 const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
   resolution: window.devicePixelRatio,

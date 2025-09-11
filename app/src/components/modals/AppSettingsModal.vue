@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-  import { posthog, AppEvent } from "#/vendor/";
+  import { posthog, AppEvent } from "~/vendor/";
 
   const settingsStore = useSettingsStore();
   settingsStore.$subscribe((_mutation, state) => {

@@ -1,7 +1,7 @@
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
-import { tools, type PatternEditorTool } from "#/core/tools/";
-import { AppEvent, posthog } from "#/vendor";
+import { tools, type PatternEditorTool } from "~/core/tools/";
+import { AppEvent, posthog } from "~/vendor";
 
 interface OpenedPattern {
   id: string;
