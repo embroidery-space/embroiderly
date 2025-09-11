@@ -45,7 +45,7 @@ impl<R: tauri::Runtime> Action<R> for AddPaletteItemAction {
   /// - `palette:remove_palette_item` with the palette item index.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     patproj.pattern.palette.pop();
-    window.emit("palette:remove_palette_item", patproj.pattern.palette.len())?;
+    window.emit("palette:remove_palette_item", [patproj.pattern.palette.len()])?;
     Ok(())
   }
 }
@@ -84,7 +84,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
     for &palindex in self.palindexes.iter().rev() {
       palitems.push(patproj.pattern.palette.remove(palindex as usize));
     }
-    window.emit("palette:remove_palette_items", &self.palindexes)?;
+    window.emit("palette:remove_palette_item", &self.palindexes)?;
 
     // Reverse the vectors to restore the in the order of `palindexes`.
     palitems.reverse();
