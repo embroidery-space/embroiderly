@@ -3,15 +3,22 @@ use sha2::Digest as _;
 use tauri::Manager as _;
 
 mod commands;
+mod config;
 mod utils;
+
+pub use config::*;
 
 pub(crate) type PostHogClientState = std::sync::Arc<posthog::Client>;
 
 /// Initializes the plugin.
-pub fn init<R: tauri::Runtime>(client: posthog::Client) -> tauri::plugin::TauriPlugin<R> {
+pub fn init<R: tauri::Runtime>(
+  client: posthog::Client,
+  config: config::PostHogConfig,
+) -> tauri::plugin::TauriPlugin<R> {
   tauri::plugin::Builder::new("posthog")
     .setup(move |app, _api| {
       app.manage(std::sync::Arc::new(client));
+      app.manage(config);
       app.manage(DeviceId::new(app.package_info()));
       app.manage(SessionId::new());
       Ok(())
@@ -76,6 +83,7 @@ impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
     let client = self.state::<PostHogClientState>().inner().clone();
     let device_id = self.state::<DeviceId>().inner().clone();
     let session_id = self.state::<SessionId>().inner().clone();
+    let before_send = self.state::<config::PostHogConfig>().before_send.clone();
 
     let event_name = event.event_name().to_string();
     let properties = event.properties();
@@ -87,7 +95,14 @@ impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
         device_id.as_str().to_string(),
         session_id.as_str().to_string(),
       );
-      let event = utils::saturate_event(event, &package_info);
+      let mut event = utils::saturate_event(event, &package_info);
+
+      // Apply `before_send` callback if provided.
+      if let Some(before_send_fn) = &before_send
+        && !before_send_fn(&mut event)
+      {
+        return;
+      }
 
       if let Err(e) = client.capture(event) {
         log::error!("Failed to capture PostHog event: {e:?}",);
@@ -101,6 +116,7 @@ impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
     let client = self.state::<PostHogClientState>().inner().clone();
     let device_id = self.state::<DeviceId>().inner().clone();
     let session_id = self.state::<SessionId>().inner().clone();
+    let before_send = self.state::<config::PostHogConfig>().before_send.clone();
 
     std::thread::spawn(move || {
       let events = events
@@ -117,9 +133,19 @@ impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
           );
           utils::saturate_event(event, &package_info)
         })
-        .collect();
+        .filter_map(|mut event| {
+          // Apply `before_send` callback if provided.
+          if let Some(before_send_fn) = &before_send {
+            if before_send_fn(&mut event) { Some(event) } else { None }
+          } else {
+            Some(event)
+          }
+        })
+        .collect::<Vec<_>>();
 
-      if let Err(e) = client.capture_batch(events) {
+      if !events.is_empty()
+        && let Err(e) = client.capture_batch(events)
+      {
         log::error!("Failed to capture PostHog batch event: {e:?}",);
       }
     });
@@ -127,7 +153,7 @@ impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
 }
 
 /// A trait for converting custom types to PostHog events.
-pub trait ToPostHogEvent: Send + 'static {
+pub trait ToPostHogEvent: Send + Sync + 'static {
   /// Returns the event name as a string for telemetry systems.
   fn event_name(&self) -> &str;
 
