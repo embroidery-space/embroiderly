@@ -71,7 +71,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sidecar-debug-symbols-${{ matrix.sidecar }}-${{ matrix.os }}
-          path: target/release/${{ matrix.sidecar }}.(pdb|dwp)
+          path: |
+            target/release/${{ matrix.sidecar }}.pdb
+            target/release/${{ matrix.sidecar }}.dwp
           retention-days: 1
 
   commit:
@@ -130,10 +132,11 @@ jobs:
       SENTRY_PROJECT: ${{ matrix.sidecar }}
     steps:
       - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
         with:
           node-version-file: package.json
-      - uses: pnpm/action-setup@v4
+          cache: pnpm
 
       - name: Install Sentry CLI
         run: pnpm install -g @sentry/cli
