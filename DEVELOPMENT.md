@@ -21,6 +21,8 @@ crates/ # Shared Rust libraries and Tauri plugins.
 ├── tauri-plugin-sentry/ # Custom Tauri plugin for Sentry integration.
 ├── tauri-plugin-posthog/ # Custom Tauri plugin for PostHog integration.
 └── xsp-parsers/ # Parsers of external cross-stitch pattern formats.
+
+scripts/ # Some utility scripts for development.
 ```
 
 ## Prerequisites
