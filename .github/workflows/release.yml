@@ -55,8 +55,6 @@ jobs:
   sentry:
     needs: release
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     defaults:
       run:
         shell: bash
@@ -108,6 +106,8 @@ jobs:
 
   build-sidecars:
     needs: release
+    permissions:
+      contents: write
     uses: ./.github/workflows/build-sidecars.yml
     with:
       app-version: ${{ needs.release.outputs.app-version }}
