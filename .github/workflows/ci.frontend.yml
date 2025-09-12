@@ -4,12 +4,14 @@ on:
     branches: ["dev"]
     types: ["opened", "reopened", "edited", "synchronize"]
     paths:
-      - "src/**"
+      - "app/**"
+      - "!app/src-tauri/**"
       - "package*.json"
-      - "tsconfig*.json"
-      - "*.config.ts"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "eslint.config.js"
       - ".prettierrc.json"
-      - ".eslint.config.js"
+      - ".prettierignore"
       - ".github/workflows/ci.frontend.yml"
       - ".github/workflows/audit.frontend.yml"
 concurrency:

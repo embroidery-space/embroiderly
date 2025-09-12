@@ -3,10 +3,6 @@ target/
 node_modules/
 dist/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-
 # Auto-generated type declarations
 auto-imports.d.ts
 components.d.ts

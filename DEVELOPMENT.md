@@ -6,14 +6,21 @@ You can follow it to start working on your ideas, improvements, fixes, etc.
 
 ## Project Structure
 
+This project uses a **pnpm workspace** structure:
+
 ```
-src/ # Everything related to the frontend.
-crates/
-├── embroiderly/ # The main application.
-├── embroiderly-export/ # An additional application for exporting cross-stitch patterns into various formats.
-├── embroiderly-parsers/ # A library that contains parsers of cross-stitch pattern which return the pattern object in our internal representation.
-├── embroiderly-pattern/ # A library that contains our internal representation of cross-stitch patterns.
-└── xsp-parsers/ # A library that contains cross-stitch parsers of different formats from varoius applications.
+app/ # Main application (Vue frontend + Tauri backend)
+├── src/ # Frontend source code.
+└── src-tauri/ # Backend source code.
+
+crates/ # Shared Rust libraries and Tauri plugins.
+├── embroiderly-parsers/ # Cross-stitch pattern file parsers.
+├── embroiderly-pattern/ # Internal pattern representation.
+├── embroiderly-publish/ # Pattern export functionality.
+├── tauri-plugin-log/ # Custom Tauri logging plugin.
+├── tauri-plugin-sentry/ # Custom Tauri plugin for Sentry integration.
+├── tauri-plugin-posthog/ # Custom Tauri plugin for PostHog integration.
+└── xsp-parsers/ # Parsers of external cross-stitch pattern formats.
 ```
 
 ## Prerequisites
@@ -27,84 +34,21 @@ To get started working on Embroiderly, you will first need to install a few depe
    We are using the latest stable Rust version and the latest LTS Node.js version.
    Also, we are using the nightly Rust edition for running its tooling with unstable features.
 
-3. NPM and Cargo dependecnies.
+3. **pnpm** and Cargo dependencies.
 
-   Run `npm install` in the porject root.
-   Cargo dependencies will be installed during the first run of the project.
+   Install pnpm using corepack (see [official documentation](https://pnpm.io/installation#using-corepack)):
 
-### VS Code Setup
-
-We are using Visual Studio Code as our development environment.
-Here is a recommended setup:
-
-1. Install and enable extensions listed in `.vscode/extensions.json`.
-2. Configure the VS Code using the following `.vscode/settings.json` file:
-
-   ```json
-   {
-     // Enable auto-formatting on file save.
-     "editor.formatOnSave": true,
-     "editor.codeActionsOnSave": {
-       "source.fixAll": "explicit"
-     },
-     // Use Prettier as the default formatter.
-     "editor.defaultFormatter": "esbenp.prettier-vscode",
-
-     // Enable and configure file nesting to hide related files.
-     "explorer.fileNesting.enabled": true,
-     "explorer.fileNesting.expand": false,
-     "explorer.fileNesting.patterns": {
-       // Hide all documentation files and a license under the `README.md`.
-       "README.md": "*.md, LICENSE",
-       // Hide all unit test files under their source files.
-       "*.vue": "${capture}.test.ts",
-       "*.ts": "${capture}.test.ts",
-       "*.rs": "${capture}.test.rs",
-       // Hide all TypeScript configs under the main one.
-       "tsconfig.json": "tsconfig.*.json, *.d.ts, *.tsbuildinfo",
-       // Hide lock files under the main manifests.
-       "package.json": "package-lock.json, .npmrc",
-       "Cargo.toml": "Cargo.lock, rustfmt.toml",
-       // Hide ESLint and Prettier configurations under `.editorconfig`.
-       ".editorconfig": "eslint.config.js, .prettierrc.json",
-       // Hide app image under index.html.
-       "index.html": "app-icon.png"
-     },
-
-     "files.associations": {
-       "*.css": "tailwindcss",
-       "tauri.conf.json5": "jsonc"
-     },
-     "editor.quickSuggestions": { "strings": "on" },
-     "tailwindCSS.classAttributes": ["class", "ui"],
-     "tailwindCSS.experimental.classRegex": [["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]],
-
-     // Optionally, use enhanced syntax highlighter for TOML files.
-     // Make sure you have installed a corresponding extension.
-     // "[toml]": {
-     //   "editor.defaultFormatter": "tamasfe.even-better-toml"
-     // },
-
-     // Optionally, use enhanced syntax highlighter for XML files to view OXS patterns.
-     // Make sure you have installed a corresponding extension.
-     // "[xml]": {
-     //   "editor.defaultFormatter": "redhat.vscode-xml"
-     // },
-
-     // Use RustAnalyzer as the default formatter for Rust source files.
-     "[rust]": {
-       "editor.defaultFormatter": "rust-lang.rust-analyzer"
-     },
-     // Force Rustfmt to use the nightly Rust version.
-     "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
-     // Store RustAnalyzer's artefacts in a separate directory in `target/` to not block debug builds.
-     "rust-analyzer.cargo.targetDir": true,
-
-     // Automatically specify file extensions when importing JS modules.
-     "javascript.preferences.importModuleSpecifierEnding": "js",
-     "typescript.preferences.importModuleSpecifierEnding": "js"
-   }
+   ```sh
+   corepack enable pnpm
    ```
+
+   Then install project dependencies:
+
+   ```sh
+   pnpm install
+   ```
+
+   Cargo dependencies will be installed during the first run of the project.
 
 ## Running and Building Application
 
@@ -127,18 +71,17 @@ Please make sure your code is well-formatted, linted and properly tested:
 - Check the frontend code:
 
   ```sh
-  npm run fmt
-  npm run lint
-  npm run test
+  pnpm fmt
+  pnpm lint
+  pnpm test
   ```
 
 - Check the backend code:
 
   ```sh
-  cd src-tauri/
-  cargo fmt --check
-  cargo clippy -- -D warnings
-  cargo test
+  cargo +nightly fmt --check
+  cargo clippy --locked -- -D warnings
+  cargo nextest run --locked --no-fail-fast -F embroiderly/test
   ```
 
 You can configure local Git hooks so these checks run on every commit/push.

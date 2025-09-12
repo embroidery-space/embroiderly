@@ -27,6 +27,7 @@ class PostHog extends OriginalPostHog {
     const captureEvent: BeforeSendFn = (captureResult) => {
       if (captureResult) {
         const { event, properties } = captureResult;
+        // eslint-disable-next-line no-console
         invoke<void>("plugin:posthog|capture_event", { event, properties }).catch(console.log);
       }
       return null; // Prevent default behavior.

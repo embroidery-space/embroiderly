@@ -1,0 +1,13 @@
+{
+  "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
+  "include": ["src/**/*.vue", "src/**/*.ts", "env.d.ts", "auto-imports.d.ts", "components.d.ts"],
+  "exclude": ["src/**/*.test.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "exactOptionalPropertyTypes": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "strictPropertyInitialization": false,
+    "paths": { "~/*": ["./src/*"] },
+    "types": []
+  }
+}

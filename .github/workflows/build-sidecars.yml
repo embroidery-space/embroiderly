@@ -85,13 +85,13 @@ jobs:
         with:
           token: ${{ secrets.EMBROIDERLY_PAT }}
 
-      - run: mkdir -p crates/embroiderly/binaries
-      - run: rm -rf crates/embroiderly/binaries/*
+      - run: mkdir -p app/src-tauri/binaries
+      - run: rm -rf app/src-tauri/binaries/*
 
       - name: Download all artifacts
         uses: actions/download-artifact@v5
         with:
-          path: crates/embroiderly/binaries/
+          path: app/src-tauri/binaries/
           merge-multiple: true
 
       - name: Import GPG key
@@ -106,7 +106,7 @@ jobs:
       - name: Commit binaries
         uses: stefanzweifel/git-auto-commit-action@v6
         with:
-          file_pattern: crates/embroiderly/binaries/**
+          file_pattern: app/src-tauri/binaries/**
           commit_message: "build: update sidecar binaries"
           commit_author: "${{ steps.gpg.outputs.name }} <${{ steps.gpg.outputs.email }}>"
           commit_user_name: ${{ steps.gpg.outputs.name }}
@@ -130,9 +130,13 @@ jobs:
       SENTRY_PROJECT: ${{ matrix.sidecar }}
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+      - uses: pnpm/action-setup@v4
 
       - name: Install Sentry CLI
-        run: npm install -g @sentry/cli
+        run: pnpm install -g @sentry/cli
 
       - name: Create Sentry release
         run: |

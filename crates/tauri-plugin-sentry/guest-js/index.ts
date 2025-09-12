@@ -20,6 +20,7 @@ function makeTauriTransport(options: BaseTransportOptions) {
     try {
       await envelope(request);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Failed to send envelope to Tauri:", e);
     }
     return { statusCode: 200 };
@@ -36,6 +37,7 @@ function sendBreadcrumbToRust(breadcrumb: Breadcrumb) {
     return null;
   }
 
+  // eslint-disable-next-line no-console
   addBreadcrumb(breadcrumb).catch((e) => console.error("Failed to add breadcrumb to Tauri:", e));
 
   return null;

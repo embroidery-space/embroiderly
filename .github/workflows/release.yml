@@ -22,12 +22,14 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
-          cache: npm
+          cache: pnpm
       - uses: dtolnay/rust-toolchain@stable
-      - run: npm ci
+
+      - run: pnpm install
 
       - name: Build the application
         id: tauri
@@ -62,14 +64,16 @@ jobs:
       SENTRY_PROJECT: embroiderly
     steps:
       - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
-          cache: npm
-      - run: npm ci
+          cache: pnpm
+
+      - run: pnpm install
 
       - name: Install Sentry CLI
-        run: npm install -g @sentry/cli
+        run: pnpm install -g @sentry/cli
 
       - name: Create Sentry release
         run: |
@@ -79,7 +83,7 @@ jobs:
       - name: Build frontend with source maps
         env:
           TAURI_ENV_DEBUG: "true"
-        run: npm run build
+        run: pnpm build
 
       - name: Upload source maps to Sentry
         run: |
