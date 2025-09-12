@@ -87,8 +87,8 @@ jobs:
 
       - name: Upload source maps to Sentry
         run: |
-          sentry-cli sourcemaps inject ./dist
-          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" ./dist
+          sentry-cli sourcemaps inject ./app/dist
+          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" ./app/dist
 
       - name: Download debug symbols
         uses: actions/download-artifact@v4
