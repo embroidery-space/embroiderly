@@ -1,30 +1,72 @@
-use std::io::Write;
+use std::io::{Read, Write};
 
 use anyhow::Result;
-use embroiderly_pattern::PatternProject;
+use embroiderly_pattern::{PatternProject, ReferenceImage};
 
-use crate::{PackageInfo, oxs};
+use crate::PackageInfo;
+use crate::oxs::{parse_pattern_from_reader, save_pattern_to_vec};
 
-pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
+mod display_settings;
+use display_settings::{parse_display_settings_from_reader, save_display_settings_to_vec};
+
+mod publish_settings;
+use publish_settings::{parse_publish_settings_from_reader, save_publish_settings_to_vec};
+
+mod reference_image_settings;
+use reference_image_settings::{parse_reference_image_settings_from_reader, save_reference_image_settings_to_vec};
+
+/// Reads a `ZipFile` and returns a buffered reader for its content.
+macro_rules! read_zip_file {
+  ($archive:expr, $name:expr) => {{
+    $archive.by_name($name).map(|mut file| {
+      let mut buf = Vec::new();
+      if let Err(e) = file.read_to_end(&mut buf) {
+        log::error!("Failed to read zip file {}: {}", $name, e);
+      }
+
+      std::io::BufReader::new(std::io::Cursor::new(buf))
+    })
+  }};
+}
+
+pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
   log::info!("Parsing the EMBPROJ pattern file");
+  let file_path = file_path.as_ref();
+  let file = std::fs::File::open(file_path)?;
+  let mut archive = zip::ZipArchive::new(file)?;
 
-  let temp = tempfile::Builder::new().tempdir()?.path().to_path_buf();
+  let mut patproj = parse_pattern_from_reader(&mut read_zip_file!(archive, "pattern.oxs")?)?;
+  patproj.display_settings = match read_zip_file!(archive, "display_settings.xml") {
+    Ok(mut file) => parse_display_settings_from_reader(&mut file)?,
+    Err(zip::result::ZipError::FileNotFound) => Default::default(),
+    Err(e) => return Err(e.into()),
+  };
+  patproj.publish_settings = match read_zip_file!(archive, "publish_settings.xml") {
+    Ok(mut file) => parse_publish_settings_from_reader(&mut file)?,
+    Err(zip::result::ZipError::FileNotFound) => Default::default(),
+    Err(e) => return Err(e.into()),
+  };
 
-  // `quick-xml` doesn't support reading from a `ZipFile`'s directly because it doesn't implement `std::io::BufRead` trait,
-  // so we extract all the files to a temporary directory to read them as regular files.
-  zip_extract::extract(std::fs::File::open(&file_path)?, &temp, true)?;
+  // Since we store the reference image with the original extension,
+  // we don't know the exact file name, so we have to search for it.
+  let file_names = archive.file_names().map(|s| s.to_string()).collect::<Vec<_>>();
+  if let Some(image_file_name) = file_names.iter().find(|name| name.starts_with("reference_image")) {
+    let image_file = read_zip_file!(archive, image_file_name.as_str());
+    let settings_file = read_zip_file!(archive, "reference_image_settings.xml");
 
-  let mut patproj = oxs::parse_pattern(temp.join("pattern.oxs"))?;
-  patproj.file_path = file_path;
-
-  let display_settings_path = temp.join("display_settings.xml");
-  if display_settings_path.exists() {
-    patproj.display_settings = oxs::parse_display_settings(display_settings_path)?;
+    patproj.reference_image = match image_file.and_then(|i| settings_file.map(|s| (i, s))) {
+      Ok((image_file, mut settings_file)) => {
+        let image = image_file.into_inner().into_inner();
+        let settings = parse_reference_image_settings_from_reader(&mut settings_file)?;
+        Some(ReferenceImage::new(image, Some(settings)))
+      }
+      Err(zip::result::ZipError::FileNotFound) => None,
+      Err(e) => return Err(e.into()),
+    };
   }
 
-  let publish_settings_path = temp.join("publish_settings.xml");
-  if publish_settings_path.exists() {
-    patproj.publish_settings = oxs::parse_publish_settings(publish_settings_path)?;
+  if patproj.pattern.info.title.is_empty() {
+    patproj.pattern.info.title = file_path.file_name().unwrap().to_string_lossy().to_string();
   }
 
   Ok(patproj)
@@ -41,13 +83,22 @@ pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Res
   let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Zstd);
 
   zip.start_file("pattern.oxs", options)?;
-  zip.write_all(&oxs::save_pattern_to_vec(patproj, package_info)?)?;
+  zip.write_all(&save_pattern_to_vec(patproj, package_info)?)?;
 
   zip.start_file("display_settings.xml", options)?;
-  zip.write_all(&oxs::save_display_settings_to_vec(&patproj.display_settings)?)?;
+  zip.write_all(&save_display_settings_to_vec(&patproj.display_settings)?)?;
 
   zip.start_file("publish_settings.xml", options)?;
-  zip.write_all(&oxs::save_publish_settings_to_vec(&patproj.publish_settings)?)?;
+  zip.write_all(&save_publish_settings_to_vec(&patproj.publish_settings)?)?;
+
+  if let Some(ref image) = patproj.reference_image {
+    let image_file_name = format!("reference_image.{}", image.format.extensions_str()[0]);
+    zip.start_file(image_file_name, options)?;
+    zip.write_all(&image.content)?;
+
+    zip.start_file("reference_image_settings.xml", options)?;
+    zip.write_all(&save_reference_image_settings_to_vec(&image.settings)?)?;
+  }
 
   zip.finish()?;
   Ok(())

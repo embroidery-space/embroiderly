@@ -5,18 +5,19 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
+          node-version-file: package.json
+          cache: pnpm
+      - run: pnpm install
       - name: Check types
-        run: npm run build
+        run: pnpm build
       - name: Check formatting
-        run: npm run fmt
+        run: pnpm fmt
       - name: Check linting
-        run: npm run lint
+        run: pnpm lint
   test:
     strategy:
       fail-fast: false
@@ -24,11 +25,12 @@ jobs:
         platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
+          node-version-file: package.json
+          cache: pnpm
+      - run: pnpm install
       - name: Test
-        run: npm run test
+        run: pnpm test

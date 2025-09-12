@@ -21,6 +21,85 @@ impl Pattern {
     Pattern { fabric, ..Pattern::default() }
   }
 
+  /// Returns the number of blend colors in the pattern palette.
+  pub fn blends_number(&self) -> usize {
+    self.palette.iter().filter(|palitem| palitem.is_blend()).count()
+  }
+
+  /// Returns the thread brands used in the pattern palette.
+  pub fn used_palette_brands(&self) -> Vec<String> {
+    self
+      .palette
+      .iter()
+      .map(|palitem| palitem.brand.clone())
+      .collect::<std::collections::HashSet<String>>() // Collect unique values only.
+      .into_iter()
+      .collect() // Convert to vector.
+  }
+
+  /// Returns the stitch font names used in the pattern.
+  pub fn used_stitch_fonts(&self) -> Vec<String> {
+    self
+      .palette
+      .iter()
+      .filter_map(|palitem| palitem.symbol_font.clone())
+      .collect::<std::collections::HashSet<String>>() // Collect unique values only.
+      .into_iter()
+      .collect() // Convert to vector.
+  }
+
+  /// Returns the number of full and petite stitches in the pattern.
+  pub fn full_stitches_number(&self) -> (usize, usize) {
+    let mut full = 0;
+    let mut petite = 0;
+    for stitch in self.fullstitches.iter() {
+      match stitch.kind {
+        FullStitchKind::Full => full += 1,
+        FullStitchKind::Petite => petite += 1,
+      }
+    }
+    (full, petite)
+  }
+
+  /// Returns the number of half and quarter stitches in the pattern.
+  pub fn part_stitches_number(&self) -> (usize, usize) {
+    let mut half = 0;
+    let mut quarter = 0;
+    for stitch in self.partstitches.iter() {
+      match stitch.kind {
+        PartStitchKind::Half => half += 1,
+        PartStitchKind::Quarter => quarter += 1,
+      }
+    }
+    (half, quarter)
+  }
+
+  /// Returns the number of back and straight stitches in the pattern.
+  pub fn line_stitches_number(&self) -> (usize, usize) {
+    let mut back = 0;
+    let mut straight = 0;
+    for stitch in self.linestitches.iter() {
+      match stitch.kind {
+        LineStitchKind::Back => back += 1,
+        LineStitchKind::Straight => straight += 1,
+      }
+    }
+    (back, straight)
+  }
+
+  /// Returns the number of french knots and beads in the pattern.
+  pub fn node_stitches_number(&self) -> (usize, usize) {
+    let mut knot = 0;
+    let mut bead = 0;
+    for stitch in self.nodestitches.iter() {
+      match stitch.kind {
+        NodeStitchKind::FrenchKnot => knot += 1,
+        NodeStitchKind::Bead => bead += 1,
+      }
+    }
+    (knot, bead)
+  }
+
   /// Get a stitch from the pattern.
   pub fn get_stitch(&self, stitch: &Stitch) -> Option<Stitch> {
     // This method accepts a reference stitch which may not contain all the stitch properties.
@@ -335,6 +414,11 @@ pub struct PaletteItem {
 }
 
 impl PaletteItem {
+  /// Returns true if the palette item is a blend.
+  pub fn is_blend(&self) -> bool {
+    self.blends.as_ref().is_some_and(|blends| !blends.is_empty())
+  }
+
   /// Returns a printable representation of the `Symbol`.
   pub fn get_symbol(&self) -> String {
     self.symbol.as_ref().map(|s| s.render()).unwrap_or_default()

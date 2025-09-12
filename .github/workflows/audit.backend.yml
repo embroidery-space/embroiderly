@@ -7,13 +7,11 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install system dependencies
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-      - name: Create dummy embroiderly-publish sidecar binaries
-        run: sh ./scripts/create-dummy-embroiderly-publish-sidecar.sh
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
@@ -32,14 +30,12 @@ jobs:
         platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install system dependencies (Ubuntu-only)
         if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-      - name: Create dummy embroiderly-publish sidecar binaries
-        run: sh ./scripts/create-dummy-embroiderly-publish-sidecar.sh
       - uses: dtolnay/rust-toolchain@stable
       - uses: swatinem/rust-cache@v2
       - uses: taiki-e/install-action@nextest

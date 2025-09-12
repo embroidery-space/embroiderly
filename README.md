@@ -50,11 +50,6 @@ We plan to improve this kind of software's already established basic functionali
 
 </details>
 
-## Vision
-
-We have a lot of ideas on how to improve the current state of things.
-Check out our [vision](./VISION.md).
-
 ## Installation
 
 Information on how to install Embroiderly can be found in the [installation guide](./INSTALLATION.md).

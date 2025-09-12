@@ -8,6 +8,7 @@ pub struct DisplaySettings {
   pub display_mode: DisplayMode,
   pub show_symbols: bool,
   pub palette_settings: PaletteSettings,
+  pub layers_visibility: LayersVisibility,
 }
 
 impl Default for DisplaySettings {
@@ -18,6 +19,7 @@ impl Default for DisplaySettings {
       display_mode: DisplayMode::Solid,
       show_symbols: false,
       palette_settings: PaletteSettings::default(),
+      layers_visibility: LayersVisibility::default(),
     }
   }
 }
@@ -74,7 +76,7 @@ impl From<pmaker::GridLineStyle> for GridLine {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum DisplayMode {
   Solid,
@@ -115,7 +117,7 @@ impl std::str::FromStr for DisplayMode {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteSettings {
   pub columns_number: u8,
@@ -141,6 +143,54 @@ impl Default for PaletteSettings {
       show_color_brands: PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS,
       show_color_numbers: PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS,
       show_color_names: PaletteSettings::DEFAULT_SHOW_COLOR_NAMES,
+    }
+  }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+pub struct LayersVisibility {
+  pub reference_image: bool,
+
+  pub fullstitches: bool,
+  pub petitestitches: bool,
+
+  pub halfstitches: bool,
+  pub quarterstitches: bool,
+
+  pub backstitches: bool,
+  pub straightstitches: bool,
+
+  pub frenchknots: bool,
+  pub beads: bool,
+
+  pub specialstitches: bool,
+
+  pub grid: bool,
+  pub rulers: bool,
+}
+
+impl Default for LayersVisibility {
+  fn default() -> Self {
+    Self {
+      reference_image: true,
+
+      fullstitches: true,
+      petitestitches: true,
+
+      halfstitches: true,
+      quarterstitches: true,
+
+      backstitches: true,
+      straightstitches: true,
+
+      frenchknots: true,
+      beads: true,
+
+      specialstitches: true,
+
+      grid: true,
+      rulers: true,
     }
   }
 }

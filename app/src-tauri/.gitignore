@@ -1,0 +1,9 @@
+# Tauri schemas
+gen/
+
+# Browser extensions
+extensions/*
+!extensions/README.md
+
+# Debug logs
+logs/

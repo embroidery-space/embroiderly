@@ -1,0 +1,17 @@
+[package]
+name = "tauri-plugin-sentry"
+links = "tauri-plugin-sentry"
+edition = { workspace = true }
+
+[build-dependencies]
+tauri-plugin = { workspace = true }
+
+[dependencies]
+# Tauri
+tauri = { workspace = true }
+
+# De/serialization
+serde = { workspace = true }
+
+# Telemetry
+sentry = { workspace = true }

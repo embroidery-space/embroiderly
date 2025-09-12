@@ -3,6 +3,9 @@ use embroiderly_pattern::{PatternProject, PdfExportOptions};
 mod error;
 pub use error::*;
 
+pub mod logger;
+pub mod telemetry;
+
 pub mod pdf;
 pub mod svg;
 

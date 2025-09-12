@@ -521,8 +521,8 @@ fn generates_svg_frames() {
     let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
       .join("testdata/images/frames")
       .join(format!("image{i}.svg"));
-    let svg = std::fs::read(file_path).unwrap();
+    let expected = std::fs::read(file_path).unwrap();
 
-    assert_eq!(frame, svg, "Frame {i} does not match expected SVG content");
+    assert_eq!(frame, expected, "Frame {i} does not match expected SVG content");
   }
 }

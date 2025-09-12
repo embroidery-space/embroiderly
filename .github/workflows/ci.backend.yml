@@ -4,13 +4,14 @@ on:
     branches: ["dev"]
     types: ["opened", "reopened", "edited", "synchronize"]
     paths:
+      - "app/src-tauri/**"
       - "crates/**"
       - "Cargo.*"
       - "rustfmt.toml"
       - ".github/workflows/ci.backend.yml"
       - ".github/workflows/audit.backend.yml"
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref }}-backend
   cancel-in-progress: true
 env:
   CARGO_TERM_COLOR: always
