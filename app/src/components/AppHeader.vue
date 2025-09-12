@@ -150,7 +150,7 @@
   ]);
   const helpOptions = computed<DropdownMenuItem[][]>(() => [
     [
-      { label: fluent.$t("label-learn-more"), onSelect: () => openLocalDocs() },
+      { label: fluent.$t("label-learn-more"), onSelect: () => openDocs() },
       {
         label: fluent.$t("label-license"),
         onSelect: () => openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE"),
@@ -172,13 +172,14 @@
   defineShortcuts(extractShortcuts(fileOptions.value));
   defineShortcuts(extractShortcuts(toolsOptions.value));
 
-  async function openLocalDocs() {
+  async function openDocs() {
+    const lang = settingsStore.ui.language;
     try {
-      const docsPath = await resolveResource(`resources/docs/${settingsStore.ui.language}/index.html`);
+      const docsPath = await resolveResource(`resources/docs/${lang}/index.html`);
       await openPath(docsPath);
     } catch (err) {
       warn(`Failed to open local documentation: ${err}`);
-      await openUrl("https://embroiderly.niusia.me"); // Fallback to online documentation.
+      await openUrl(`https://embroiderly.niusia.me/${lang}/`); // Fallback to online documentation.
     }
   }
 
