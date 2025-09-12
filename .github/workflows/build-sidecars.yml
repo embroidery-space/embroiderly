@@ -71,7 +71,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sidecar-debug-symbols-${{ matrix.sidecar }}-${{ matrix.os }}
-          path: target/release/${{ matrix.sidecar }}.(pdb|dwp)
+          path: |
+            target/release/${{ matrix.sidecar }}.pdb
+            target/release/${{ matrix.sidecar }}.dwp
           retention-days: 1
 
   commit:
