@@ -130,10 +130,11 @@ jobs:
       SENTRY_PROJECT: ${{ matrix.sidecar }}
     steps:
       - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
         with:
           node-version-file: package.json
-      - uses: pnpm/action-setup@v4
+          cache: pnpm
 
       - name: Install Sentry CLI
         run: pnpm install -g @sentry/cli
