@@ -1,0 +1,45 @@
+name: CodeQL Analysis (frontend)
+
+on:
+  pull_request:
+    branches: ["dev"]
+    types: ["opened", "reopened", "edited", "synchronize"]
+    paths:
+      - "app/**"
+      - "!app/src-tauri/**"
+      - "package*.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/codeql.frontend.yml"
+  schedule:
+    - cron: "0 12 * * 1" # Run at 12:00 UTC every Monday
+
+concurrency:
+  group: ${{ github.ref }}-codeql-frontend
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          build-mode: none
+          config: |
+            paths:
+              - app/
+            paths-ignore:
+              - app/src-tauri/
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript-typescript"
