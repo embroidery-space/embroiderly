@@ -34,7 +34,7 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: rust
-          build-mode: autobuild
+          build-mode: none
           config: |
             paths:
               - app/src-tauri/
