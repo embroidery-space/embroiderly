@@ -37,7 +37,6 @@
           class="flex items-center gap-x-2"
           @pointerup="
             () => {
-              currentOption = item as ToolOption;
               emit('update:modelValue', item.value);
               optionsMenuOpen = false;
             }
@@ -55,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, useTemplateRef, type MaybeRefOrGetter } from "vue";
+  import { ref, computed, toRaw, useTemplateRef, type MaybeRefOrGetter } from "vue";
   import { unrefElement } from "@vueuse/core";
 
   interface ToolOption {
@@ -76,11 +75,11 @@
   const patternsStore = usePatternsStore();
 
   const optionsMenuOpen = ref(false);
-  const currentOption = ref<ToolOption>(
-    props.options.find(({ value }) => value === props.modelValue) ?? props.options[0]!,
-  );
+  const currentOption = computed<ToolOption>(() => {
+    return props.options.find(({ value }) => value === toRaw(props.modelValue)) ?? props.options[0]!;
+  });
 
-  const selected = computed(() => props.modelValue === currentOption.value.value && !props.disabled);
+  const selected = computed(() => currentOption.value.value === toRaw(props.modelValue) && !props.disabled);
   const selectionColor = computed<string>(() => {
     const palindex = appStateStore.selectedPaletteItemIndexes[0];
     if (!props.usePalitemColor || !patternsStore.pattern || palindex === undefined) return "var(--text-dimmed)";
