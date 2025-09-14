@@ -6,7 +6,7 @@ use tauri_plugin_shell::ShellExt as _;
 use super::SidecarRunner;
 use crate::error::{PatternError, Result};
 
-/// A utility struct for exporting the pattern as a PDF document using the `embroiderly-publish` sidecar.
+/// A utility struct for exporting the pattern as a PDF document using the `embroiderly_publish` sidecar.
 pub struct ExportPdfSidecar<R: tauri::Runtime> {
   app_handle: tauri::AppHandle<R>,
   pattern_path: Option<PathBuf>,
@@ -63,7 +63,7 @@ impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
     let mut sidecar = self
       .app_handle
       .shell()
-      .sidecar("embroiderly-publish")
+      .sidecar("embroiderly_publish")
       .map_err(|e| PatternError::FailedToExport(e.into()))?;
 
     // Set logs directory.

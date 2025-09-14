@@ -1691,7 +1691,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "embroiderly-publish"
+name = "embroiderly_publish"
 version = "0.0.0"
 dependencies = [
  "anyhow",

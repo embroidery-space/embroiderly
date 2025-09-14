@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        sidecar: ["embroiderly-publish"]
+        sidecar: ["embroiderly_publish"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v5
@@ -56,7 +56,7 @@ jobs:
           mkdir -p binaries/${{ matrix.sidecar }}
 
           SOURCE_FILE="target/release/${{ matrix.sidecar }}${{ steps.target.outputs.EXT }}"
-          DEST_FILE="binaries/${{ matrix.sidecar }}/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
+          DEST_FILE="binaries/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
           mv "$SOURCE_FILE" "$DEST_FILE"
 
       - name: Upload artifact
@@ -122,7 +122,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sidecar: ["embroiderly-publish"]
+        sidecar: ["embroiderly_publish"]
     defaults:
       run:
         shell: bash
