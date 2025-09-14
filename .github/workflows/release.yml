@@ -101,8 +101,8 @@ jobs:
 
       - name: Upload debug symbols to Sentry
         run: |
-          find . -name "embroiderly.pdb" -exec sentry-cli debug-files upload --release="${{ needs.release.outputs.app-version }}" {} + || true
-          find . -name "embroiderly.dwp" -exec sentry-cli debug-files upload --release="${{ needs.release.outputs.app-version }}" {} + || true
+          find . -name "embroiderly.pdb" -exec sentry-cli debug-files upload {} + || true
+          find . -name "embroiderly.dwp" -exec sentry-cli debug-files upload {} + || true
 
       - name: Finalize Sentry release
         run: sentry-cli releases finalize "${{ needs.release.outputs.app-version }}"

@@ -1,5 +1,5 @@
 [package]
-name = "embroiderly-publish"
+name = "embroiderly_publish"
 edition = { workspace = true }
 
 [dependencies]
