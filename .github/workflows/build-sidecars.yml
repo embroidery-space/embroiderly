@@ -154,8 +154,8 @@ jobs:
 
       - name: Upload debug symbols to Sentry
         run: |
-          find . -name "${{ matrix.sidecar }}.pdb" -exec sentry-cli debug-files upload --release="${{ inputs.app-version }}" {} + || true
-          find . -name "${{ matrix.sidecar }}.dwp" -exec sentry-cli debug-files upload --release="${{ inputs.app-version }}" {} + || true
+          find . -name "${{ matrix.sidecar }}.pdb" -exec sentry-cli debug-files upload {} + || true
+          find . -name "${{ matrix.sidecar }}.dwp" -exec sentry-cli debug-files upload {} + || true
 
       - name: Finalize Sentry release
         run: sentry-cli releases finalize "${{ inputs.app-version }}"
