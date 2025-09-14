@@ -1,48 +1,44 @@
-name: CodeQL Analysis (backend)
-
+name: CodeQL Analysis
 on:
   push:
     branches: ["dev"]
   pull_request:
     branches: ["dev"]
     types: ["opened", "reopened", "edited", "synchronize"]
-    paths:
-      - "app/src-tauri/**"
-      - "crates/**"
-      - "Cargo.*"
-      - ".github/workflows/codeql.backend.yml"
   schedule:
     - cron: "0 12 * * 1" # Run at 12:00 UTC every Monday
-
 concurrency:
-  group: ${{ github.ref }}-codeql-backend
+  group: ${{ github.ref }}-codeql
   cancel-in-progress: true
-
 env:
   CARGO_TERM_COLOR: always
-
 jobs:
   analyze:
+    name: CodeQL Analysis
     runs-on: ubuntu-latest
     permissions:
       security-events: write
       contents: read
       actions: read
-
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+            build-mode: none
+          - language: javascript-typescript
+            build-mode: none
+          - language: rust
+            build-mode: none
     steps:
       - uses: actions/checkout@v5
-
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: rust
-          build-mode: none
-          config: |
-            paths:
-              - app/src-tauri/
-              - crates/
-
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: +security-extended
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:rust"
+          category: "/language:${{ matrix.language }}"
