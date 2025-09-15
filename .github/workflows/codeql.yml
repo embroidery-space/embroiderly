@@ -7,6 +7,10 @@ on:
     types: ["opened", "reopened", "edited", "synchronize"]
   schedule:
     - cron: "0 12 * * 1" # Run at 12:00 UTC every Monday
+permissions:
+  security-events: write
+  contents: read
+  actions: read
 concurrency:
   group: ${{ github.ref }}-codeql
   cancel-in-progress: true
@@ -16,10 +20,6 @@ jobs:
   analyze:
     name: CodeQL Analysis
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      contents: read
-      actions: read
     strategy:
       fail-fast: false
       matrix:

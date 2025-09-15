@@ -61,6 +61,8 @@ jobs:
     defaults:
       run:
         shell: bash
+    permissions:
+      contents: read
     env:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       SENTRY_ORG: embroidery-space
