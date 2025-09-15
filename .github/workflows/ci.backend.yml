@@ -10,6 +10,8 @@ on:
       - "rustfmt.toml"
       - ".github/workflows/ci.backend.yml"
       - ".github/workflows/audit.backend.yml"
+permissions:
+  contents: read
 concurrency:
   group: ${{ github.ref }}-backend
   cancel-in-progress: true
