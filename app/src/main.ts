@@ -1,6 +1,5 @@
 import { createApp } from "vue";
 import ui from "@nuxt/ui/vue-plugin";
-import PrimeVue from "primevue/config";
 import { defaultSentryOptions } from "@embroiderly/tauri-plugin-sentry";
 
 import "./assets/styles.css";
@@ -23,7 +22,6 @@ app.use(router);
 app.use(pinia);
 app.use(fluent);
 app.use(ui);
-app.use(PrimeVue, { unstyled: true });
 app.directive("shortcuts", ShortcutsDirective);
 
 app.mount("#app");
