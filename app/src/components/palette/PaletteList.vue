@@ -3,31 +3,46 @@
     <div v-if="$slots.header" class="border-b border-default px-2 py-1">
       <slot name="header"></slot>
     </div>
-    <Listbox
-      :model-value="modelValue"
-      :options="options"
-      :option-value="optionValue"
+
+    <RListboxRoot
+      v-model="value as AcceptableValue"
       :disabled="disabled"
       :multiple="multiple"
-      :meta-key-selection="metaKeySelection"
-      :empty-message="$t('message-palette-empty')"
-      scroll-height="100%"
-      pt:root:class="grow overflow-y-auto data-[p=disabled]:cursor-not-allowed"
-      pt:list:class="grid gap-1 p-1 overflow-hidden outline-none"
-      :pt:list:style="{
-        gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
-      }"
-      pt:option:class="rounded-md ring-neutral data-[p-focused=true]:ring-2"
-      pt:empty-message:class="px-2"
-      @update:model-value="(v) => emit('update:modelValue', v)"
-      @option-dblclick="handleOptionDoubleClick"
+      class="grow overflow-y-auto data-[disabled]:cursor-not-allowed"
     >
-      <template #option="{ option, selected }">
-        <slot name="option" v-bind="{ option, selected, displaySettings }">
-          <PaletteListItem :palette-item="option" :selected="selected" :display-settings="displaySettings" />
-        </slot>
-      </template>
-    </Listbox>
+      <RListboxContent
+        class="p1 grid gap-1 overflow-hidden outline-none"
+        :style="{
+          gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
+        }"
+      >
+        <template v-if="options.length">
+          <RListboxItem
+            v-for="(option, index) in options"
+            :key="index"
+            :value="optionValue(option) as AcceptableValue"
+            @dblclick="handleOptionDoubleClick($event, option)"
+          >
+            <slot
+              name="option"
+              v-bind="{
+                option,
+                selected: optionIsSelected(option),
+                displaySettings,
+              }"
+            >
+              <PaletteListItem
+                :palette-item="option as PaletteItem"
+                :selected="optionIsSelected(option)"
+                :display-settings="displaySettings"
+              />
+            </slot>
+          </RListboxItem>
+        </template>
+        <p v-else class="px-2">{{ $t("message-palette-empty") }}</p>
+      </RListboxContent>
+    </RListboxRoot>
+
     <div v-if="$slots.footer" class="border-t border-default px-2 py-1">
       <slot name="footer"></slot>
     </div>
@@ -35,30 +50,28 @@
 </template>
 
 <script setup lang="ts" generic="T, V">
-  import Listbox, { type ListboxOptionDblClickEvent } from "primevue/listbox";
-  import type { PaletteSettings } from "~/core/pattern/";
+  import { dequal } from "dequal/lite";
+  import type { AcceptableValue } from "reka-ui";
 
-  interface PaletteListProps<T, V> {
-    modelValue: V;
+  import type { PaletteItem, PaletteSettings } from "~/core/pattern/";
+
+  interface PaletteListProps<T> {
     options?: T[];
     optionValue?: (option: T) => unknown;
     disabled?: boolean;
     multiple?: boolean;
-    metaKeySelection?: boolean;
     displaySettings: PaletteSettings;
   }
 
+  const value = defineModel<V>({ required: true });
   const {
-    modelValue,
     options = [],
-    optionValue = undefined,
+    optionValue = (option) => option,
     disabled = false,
     multiple = false,
-    metaKeySelection = true,
     displaySettings,
-  } = defineProps<PaletteListProps<T, V>>();
+  } = defineProps<PaletteListProps<T>>();
   const emit = defineEmits<{
-    "update:modelValue": [V];
     "option-dblclick": [
       {
         /** Original event */
@@ -71,8 +84,24 @@
     ];
   }>();
 
-  function handleOptionDoubleClick({ originalEvent, value: palitem }: ListboxOptionDblClickEvent) {
-    const palindex = options.indexOf(palitem);
-    if (palindex !== -1) emit("option-dblclick", { originalEvent, palitem, palindex });
+  /**
+   * Handle double-click event on an option.
+   * @param originalEvent - The original event.
+   * @param option - The option that was double-clicked.
+   */
+  function handleOptionDoubleClick(originalEvent: MouseEvent, option: T) {
+    const palindex = options.indexOf(option);
+    if (palindex !== -1) emit("option-dblclick", { originalEvent, palitem: option, palindex });
+  }
+
+  /**
+   * Check if an option is selected.
+   * @param option - The option to check.
+   * @returns True if the option is selected, false otherwise.
+   */
+  function optionIsSelected(option: T) {
+    const transformed = optionValue(option);
+    if (multiple) return (value.value as V[]).find((option) => dequal(option, transformed)) !== undefined;
+    return dequal(value, transformed);
   }
 </script>
