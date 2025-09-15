@@ -1,17 +1,15 @@
 use std::sync::RwLock;
 
-use tauri::Manager as _;
 use tauri_plugin_posthog::PostHogExt as _;
 
 pub mod commands;
 mod core;
 mod error;
 mod sidecars;
+mod startup;
+pub mod state;
 mod utils;
 pub mod vendor;
-
-pub mod state;
-use state::{HistoryManager, HistoryState, PatternManager, PatternsState};
 
 /// Runs the application.
 pub fn run() {
@@ -20,11 +18,8 @@ pub fn run() {
       // Yeah, we don't currently support MacOS, but keep the code for future use.
       #[cfg(any(target_os = "macos", target_os = "ios"))]
       tauri::RunEvent::Opened { urls } => {
-        let files = urls
-          .into_iter()
-          .filter_map(|url| url.to_file_path().ok())
-          .collect::<Vec<_>>();
-        handle_file_associations(app_handle, files);
+        startup::handle_file_associations(app_handle, urls.into_iter().map(|url| url.to_string())).unwrap();
+        startup::create_webview_window(app_handle).unwrap();
       }
       tauri::RunEvent::Exit => app_handle.capture_event(vendor::telemetry::AppEvent::AppExited),
       _ => {}
@@ -45,19 +40,19 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
-        let files = collect_files_from_args();
-        handle_file_associations(app_handle, files)?;
+        startup::handle_file_associations(app_handle, std::env::args().skip(1))?;
+        startup::create_webview_window(app_handle)?;
       }
 
       #[cfg(not(debug_assertions))]
-      copy_sample_patterns(app_handle)?;
+      startup::copy_sample_patterns(app_handle)?;
 
-      run_auto_save_background_process(app_handle);
+      startup::run_auto_save_background_process(app_handle);
 
       Ok(())
     })
-    .manage(RwLock::new(PatternManager::new()))
-    .manage(RwLock::new(HistoryManager::<R>::new()));
+    .manage(RwLock::new(state::PatternManager::new()))
+    .manage(RwLock::new(state::HistoryManager::<R>::new()));
 
   #[cfg(debug_assertions)]
   {
@@ -128,131 +123,4 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
   builder
     .build(tauri::generate_context!())
     .expect("Failed to build Embroiderly")
-}
-
-fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> anyhow::Result<tauri::WebviewWindow<R>> {
-  let webview_window = {
-    #[allow(unused_mut)]
-    let mut webview_window_builder = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
-      .title(app.package_info().name.clone())
-      .min_inner_size(640.0, 480.0)
-      .maximized(true)
-      .decorations(false)
-      .visible(cfg!(debug_assertions))
-      .additional_browser_args("--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,ElasticOverscroll");
-
-    // We enable browser extensions only for development.
-    #[cfg(all(debug_assertions, target_os = "windows"))]
-    {
-      // Enable and setup browser extensions for development.
-      webview_window_builder = webview_window_builder
-        .browser_extensions_enabled(true)
-        // Load the browser extensions from the `src-tauri/extensions/` directory.
-        .extensions_path(std::env::current_dir()?.join("extensions"));
-    }
-
-    webview_window_builder.build()?
-  };
-
-  #[cfg(debug_assertions)]
-  webview_window.open_devtools();
-
-  Ok(webview_window)
-}
-
-#[allow(dead_code)]
-fn copy_sample_patterns<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
-  let app_document_dir = utils::path::app_document_dir(app_handle)?;
-  if !app_document_dir.exists() {
-    // Create the Embroiderly directory in the user's document directory
-    // and copy the sample patterns there if it doesn't exist.
-    log::debug!("Creating an app document directory",);
-    std::fs::create_dir(&app_document_dir)?;
-    log::debug!("Copying sample patterns to the app document directory");
-    let patterns_path = app_handle
-      .path()
-      .resolve("resources/patterns/", tauri::path::BaseDirectory::Resource)?;
-    for pattern in std::fs::read_dir(patterns_path)? {
-      let pattern = pattern?.path();
-      std::fs::copy(pattern.clone(), app_document_dir.join(pattern.file_name().unwrap()))?;
-    }
-  }
-  Ok(())
-}
-
-fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) {
-  let interval = crate::utils::settings::auto_save_interval(app_handle);
-  if interval.is_zero() {
-    log::debug!("Auto-save is disabled.");
-    return;
-  }
-
-  let app_handle = app_handle.clone();
-  std::thread::spawn(move || {
-    loop {
-      std::thread::sleep(interval);
-      log::debug!("Auto-saving patterns...");
-
-      let patterns = app_handle.state::<PatternsState>();
-      let patterns = patterns
-        .read()
-        .unwrap()
-        .patterns()
-        .map(|p| (p.id, p.file_path.clone()))
-        .collect::<Vec<_>>();
-      for (pattern_id, file_path) in patterns {
-        if let Err(err) = commands::core::pattern::save_pattern(
-          pattern_id,
-          file_path,
-          app_handle.clone(),
-          app_handle.state::<HistoryState<R>>(),
-          app_handle.state::<PatternsState>(),
-        ) {
-          log::error!("Failed to auto-save Pattern({pattern_id:?}): {err:?}");
-        }
-      }
-
-      log::debug!("Auto-save completed.");
-    }
-  });
-}
-
-fn collect_files_from_args() -> Vec<std::path::PathBuf> {
-  let mut files = Vec::new();
-
-  // `args` may include URL protocol (`file://`) or arguments (`--`).
-  for maybe_file in std::env::args().skip(1) {
-    if maybe_file.starts_with('-') {
-      continue;
-    }
-
-    if maybe_file.starts_with("file://") {
-      if let Ok(url) = tauri::Url::parse(&maybe_file)
-        && let Ok(path) = url.to_file_path()
-      {
-        files.push(path);
-      }
-    } else {
-      files.push(maybe_file.into());
-    }
-  }
-
-  files
-}
-
-fn handle_file_associations<R: tauri::Runtime>(
-  app_handle: &tauri::AppHandle<R>,
-  files: Vec<std::path::PathBuf>,
-) -> anyhow::Result<tauri::WebviewWindow<R>> {
-  // Load pattern files to the memory so that they can be accessed from the frontend later.
-  for file in files {
-    commands::core::pattern::open_pattern(
-      file,
-      Some(false),
-      app_handle.clone(),
-      app_handle.state::<PatternsState>(),
-    )?;
-  }
-
-  create_webview_window(app_handle)
 }
