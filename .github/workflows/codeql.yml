@@ -1,15 +1,9 @@
 name: CodeQL Analysis
 on:
   push:
-    branches:
-      - "dev"
-      - "!dependabot/**"
-      - "!dependency-updates"
+    branches: ["dev"]
   pull_request:
-    branches:
-      - "dev"
-      - "!dependabot/**"
-      - "!dependency-updates"
+    branches: ["dev"]
     types: ["opened", "reopened", "edited", "synchronize"]
   schedule:
     - cron: "0 12 * * 1" # Run at 12:00 UTC every Monday
@@ -25,6 +19,9 @@ env:
 jobs:
   analyze:
     name: CodeQL Analysis
+    if: |
+      startsWith(github.head_ref, "dependabot/') != true
+      || github.head_ref != "dependency-updates"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
