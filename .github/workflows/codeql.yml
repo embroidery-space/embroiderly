@@ -1,9 +1,15 @@
 name: CodeQL Analysis
 on:
   push:
-    branches: ["dev"]
+    branches:
+      - "dev"
+      - "!dependabot/**"
+      - "!dependency-updates"
   pull_request:
-    branches: ["dev"]
+    branches:
+      - "dev"
+      - "!dependabot/**"
+      - "!dependency-updates"
     types: ["opened", "reopened", "edited", "synchronize"]
   schedule:
     - cron: "0 12 * * 1" # Run at 12:00 UTC every Monday
