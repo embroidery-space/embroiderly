@@ -19,6 +19,10 @@ env:
 jobs:
   analyze:
     name: CodeQL Analysis
+    # Skip actions ran on dependency update branches.
+    if: |
+      startsWith(github.head_ref, 'dependabot/') == false
+      && github.head_ref != 'dependency-updates'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
