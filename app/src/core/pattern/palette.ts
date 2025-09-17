@@ -45,28 +45,14 @@ export class Bead {
   }
 }
 
-export class Symbol {
-  value: b.infer<typeof Symbol.schema> | null;
-
-  constructor(data: b.infer<typeof Symbol.schema> | null) {
-    this.value = data;
-  }
-
-  static readonly schema = b.enum({
-    code: b.u16(),
-    char: b.string(),
-  });
-}
-
 export class PaletteItem {
   brand: string;
   number: string;
   name: string;
   color: Color;
   blends?: Blend[];
+  symbol?: string;
   symbolFont?: string;
-
-  private _symbolCode?: number;
 
   constructor(data: b.infer<typeof PaletteItem.schema>) {
     this.brand = data.brand;
@@ -76,11 +62,8 @@ export class PaletteItem {
 
     if (data.blends) this.blends = data.blends.map((blend) => new Blend(blend));
 
+    if (data.symbol) this.symbol = String.fromCodePoint(data.symbol);
     if (data.symbolFont) this.symbolFont = data.symbolFont;
-    if (data.symbol) {
-      if ("code" in data.symbol) this._symbolCode = data.symbol.code;
-      else this._symbolCode = data.symbol.char.codePointAt(0);
-    }
   }
 
   static readonly schema = b.struct({
@@ -89,8 +72,8 @@ export class PaletteItem {
     name: b.string(),
     color: b.string(),
     blends: b.option(b.vec(Blend.schema)),
+    symbol: b.option(b.u32()),
     symbolFont: b.option(b.string()),
-    symbol: b.option(b.enum({ code: b.u16(), char: b.string() })),
   });
 
   static deserialize(data: Uint8Array | string) {
@@ -105,8 +88,8 @@ export class PaletteItem {
       name: data.name,
       color: data.hex.slice(1),
       blends: data.blends ?? null,
+      symbol: data.symbol?.codePointAt(0) ?? null,
       symbolFont: data.symbolFont ?? null,
-      symbol: data._symbolCode ? { code: data._symbolCode } : null,
     });
   }
 
@@ -138,10 +121,6 @@ export class PaletteItem {
       return [components.join(" "), this.name].join(", ");
     }
     return components.join(" ");
-  }
-
-  get symbol() {
-    return this._symbolCode ? String.fromCodePoint(this._symbolCode) : "";
   }
 }
 

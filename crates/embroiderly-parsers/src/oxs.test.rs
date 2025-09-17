@@ -114,7 +114,7 @@ fn reads_and_writes_palette() {
   <palette_item index="0" name="cloth" color="FFFFFF" kind="Aida"/>
   <palette_item index="1" number="DMC 310" name="Black" color="2C3225" fontname="Ursasoftware"/>
   <palette_item index="2" number="Anchor Marlitt 815" name="Fuschia" color="9B2759" fontname="CrossStitch3" symbol="131"/>
-  <palette_item index="3" number="Madeira1206" name="Jade-MD" color="007F49" fontname="Ursasoftware" symbol="k"/>
+  <palette_item index="3" number="Madeira1206" name="Jade-MD" color="007F49" fontname="Ursasoftware" symbol="107"/>
 </palette>"#;
 
   let expected_fabric = Fabric {
@@ -138,7 +138,8 @@ fn reads_and_writes_palette() {
       name: String::from("Fuschia"),
       color: String::from("9B2759"),
       blends: None,
-      symbol: Some(Symbol::Code(131)),
+      // symbol: Some(Symbol::Code(131)),
+      symbol: Some('\u{83}'),
       symbol_font: Some(String::from("CrossStitch3")),
     },
     PaletteItem {
@@ -147,7 +148,8 @@ fn reads_and_writes_palette() {
       name: String::from("Jade-MD"),
       color: String::from("007F49"),
       blends: None,
-      symbol: Some(Symbol::Char("k".to_string())),
+      // symbol: Some(Symbol::Char("k".to_string())),
+      symbol: Some('\u{6B}'),
       symbol_font: Some(String::from("Ursasoftware")),
     },
   ];

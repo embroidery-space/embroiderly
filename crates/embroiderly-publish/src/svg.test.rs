@@ -24,8 +24,8 @@ fn create_palette() -> Vec<PaletteItem> {
       name: String::from("Black"),
       color: String::from("2C3225"),
       blends: None,
-      symbol_font: None,
       symbol: None,
+      symbol_font: None,
     },
     PaletteItem {
       brand: String::from("DMC"),
@@ -33,8 +33,8 @@ fn create_palette() -> Vec<PaletteItem> {
       name: String::from("Salmon-VY LT"),
       color: String::from("F0D1CB"),
       blends: None,
+      symbol: Some('\u{41}'),
       symbol_font: None,
-      symbol: Some(Symbol::Char("A".to_string())),
     },
     PaletteItem {
       brand: String::from("DMC"),
@@ -42,8 +42,8 @@ fn create_palette() -> Vec<PaletteItem> {
       name: String::from("Gray Green-LT"),
       color: String::from("A6BDB4"),
       blends: None,
+      symbol: Some('\u{3F}'),
       symbol_font: Some(String::from("Ursasoftware")),
-      symbol: Some(Symbol::Code(63)),
     },
   ]
 }
