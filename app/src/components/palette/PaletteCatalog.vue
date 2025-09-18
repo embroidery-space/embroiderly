@@ -60,6 +60,7 @@
   });
 
   const filePicker = useFilePicker();
+  const fluent = useFluent();
   const toast = useToast();
 
   const { palette } = defineProps<{ palette: PaletteItem[] }>();
@@ -78,20 +79,28 @@
   const selectedPalette: Ref<BrandPaletteItem[]> = ref([]);
 
   const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
-    { label: "Import palettes", onSelect: importPalettes, loading: importingPalettes.value },
+    {
+      label: fluent.$t("label-palette-catalog-menu-import-palettes"),
+      onSelect: importPalettes,
+      loading: importingPalettes.value,
+    },
   ]);
 
   async function refreshPalettesList() {
     const { system, custom } = await PaletteApi.getPalettesList();
 
-    const systemPalettes: SelectMenuItem[] = [{ label: "System", type: "label" }];
+    const systemPalettes: SelectMenuItem[] = [
+      { label: fluent.$t("label-palette-catalog-group-system"), type: "label" },
+    ];
     for (const palette of system) {
       const paletteKey = `system/${palette}`;
       systemPalettes.push({ label: palette, value: paletteKey });
       paletteCatalog.set(paletteKey, undefined);
     }
 
-    const customPalettes: SelectMenuItem[] = [{ label: "Custom", type: "label" }];
+    const customPalettes: SelectMenuItem[] = [
+      { label: fluent.$t("label-palette-catalog-group-custom"), type: "label" },
+    ];
     for (const palette of custom) {
       const paletteKey = `custom/${palette}`;
       customPalettes.push({ label: palette, value: paletteKey });
@@ -113,7 +122,7 @@
       selectedPalette.value = palette;
     } catch (err) {
       error(`Failed to load palette ${paletteKey}: ${err}`);
-      toast.add({ title: "Palette Loading", description: `Failed to load palette ${paletteKey}`, color: "error" });
+      toast.add({ title: fluent.$t("message-palette-load-error", { paletteKey }), color: "error" });
     } finally {
       loadingPalette.value = false;
     }
@@ -130,10 +139,10 @@
       await PaletteApi.importPalettes(paths);
       await refreshPalettesList();
 
-      toast.add({ title: "Palette Import", description: "Palettes imported successfully", color: "success" });
+      toast.add({ title: fluent.$t("message-palette-import-success"), color: "success" });
     } catch (err) {
       error(`Failed to import palettes: ${err}`);
-      toast.add({ title: "Palette Import", description: "Failed to import palettes", color: "error" });
+      toast.add({ title: fluent.$t("message-palette-import-error"), color: "error" });
     } finally {
       importingPalettes.value = false;
     }
