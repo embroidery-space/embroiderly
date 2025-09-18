@@ -412,6 +412,7 @@ pub struct BrandPaletteItem {
   pub number: String,
   pub name: String,
   pub color: String,
+  #[cfg_attr(feature = "serde", serde(skip_serializing_if = "blends_empty"))]
   pub blends: Option<Vec<Blend>>,
 }
 
@@ -660,4 +661,9 @@ fn deserialize_option_char<R: borsh::io::Read>(reader: &mut R) -> borsh::io::Res
   } else {
     Ok(None)
   }
+}
+
+#[cfg(feature = "serde")]
+fn blends_empty(blends: &Option<Vec<Blend>>) -> bool {
+  blends.as_ref().is_none_or(|blends| blends.is_empty())
 }
