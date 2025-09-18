@@ -11,7 +11,7 @@
       class="grow overflow-y-auto data-[disabled]:cursor-not-allowed"
     >
       <RListboxContent
-        class="p1 grid gap-1 overflow-hidden outline-none"
+        class="grid gap-1 overflow-hidden p-1 outline-none"
         :style="{
           gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
         }"
@@ -32,7 +32,7 @@
               }"
             >
               <PaletteListItem
-                :palette-item="option as PaletteItem"
+                :palette-item="option"
                 :selected="optionIsSelected(option)"
                 :display-settings="displaySettings"
               />
@@ -49,11 +49,11 @@
   </div>
 </template>
 
-<script setup lang="ts" generic="T, V">
+<script setup lang="ts" generic="T extends BasePaletteItem, V">
   import { dequal } from "dequal/lite";
   import type { AcceptableValue } from "reka-ui";
 
-  import type { PaletteItem, PaletteSettings } from "~/core/pattern/";
+  import { BasePaletteItem, PaletteSettings } from "~/core/pattern/";
 
   interface PaletteListProps<T> {
     options?: T[];

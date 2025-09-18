@@ -32,6 +32,7 @@ tauri-plugin-posthog = { workspace = true }
 embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
 embroiderly-logger = { workspace = true }
+xsp-parsers = { workspace = true }
 
 # Image processing
 image = { workspace = true }
@@ -49,11 +50,15 @@ thiserror = { workspace = true }
 # Logging
 log = { workspace = true }
 
+# File system utilities
+tempfile = { workspace = true }
+walkdir = { workspace = true }
+
 # Other
 dyn-clone = { workspace = true }
-tempfile = { workspace = true }
 convert_case = { workspace = true }
 uuid = { workspace = true, features = ["borsh", "serde"] }
+rayon = { workspace = true }
 
 [dev-dependencies]
 rand = { workspace = true }

@@ -1,4 +1,4 @@
-use xsp_parsers::pmaker;
+use xsp_parsers::{pmaker, ursa, xspro};
 
 use super::stitches::*;
 
@@ -401,6 +401,61 @@ impl From<pmaker::PatternInfo> for PatternInfo {
   }
 }
 
+/// Represents a _brand_ palette item.
+///
+/// It contains only essential properties for clearly identifying colors.
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct BrandPaletteItem {
+  pub brand: String,
+  pub number: String,
+  pub name: String,
+  pub color: String,
+  pub blends: Option<Vec<Blend>>,
+}
+
+impl From<pmaker::PaletteItem> for BrandPaletteItem {
+  fn from(palitem: pmaker::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: palitem
+        .blends
+        .map(|blends| blends.into_iter().map(Blend::from).collect()),
+    }
+  }
+}
+
+impl From<ursa::PaletteItem> for BrandPaletteItem {
+  fn from(palitem: ursa::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: None,
+    }
+  }
+}
+
+impl From<xspro::PaletteItem> for BrandPaletteItem {
+  fn from(palitem: xspro::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: None,
+    }
+  }
+}
+
+/// Represents a _working_ palette item.
+///
+/// It contains all the properties from `BrandPaletteItem` and some other for advanced displaying purposes.
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteItem {
@@ -432,24 +487,68 @@ impl PaletteItem {
   }
 }
 
-impl From<pmaker::PaletteItem> for PaletteItem {
-  fn from(palette_item: pmaker::PaletteItem) -> Self {
+impl From<BrandPaletteItem> for PaletteItem {
+  fn from(brand_item: BrandPaletteItem) -> Self {
     Self {
-      brand: palette_item.brand,
-      number: palette_item.number,
-      name: palette_item.name,
-      color: palette_item.color,
-      blends: palette_item
+      brand: brand_item.brand,
+      number: brand_item.number,
+      name: brand_item.name,
+      color: brand_item.color,
+      blends: brand_item.blends,
+
+      symbol: None,
+      symbol_font: None,
+    }
+  }
+}
+
+impl From<pmaker::PaletteItem> for PaletteItem {
+  fn from(palitem: pmaker::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: palitem
         .blends
         .map(|blends| blends.into_iter().map(Blend::from).collect()),
-      symbol_font: None,
       symbol: None,
+      symbol_font: None,
+    }
+  }
+}
+
+impl From<ursa::PaletteItem> for PaletteItem {
+  fn from(palitem: ursa::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: None,
+      symbol: None,
+      symbol_font: None,
+    }
+  }
+}
+
+impl From<xspro::PaletteItem> for PaletteItem {
+  fn from(palitem: xspro::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: None,
+      symbol: None,
+      symbol_font: None,
     }
   }
 }
 
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Blend {
   pub brand: String,
   pub number: String,

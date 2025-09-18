@@ -2,6 +2,19 @@ use std::path::{Path, PathBuf};
 
 use tauri::Manager as _;
 
+/// Returns the path to the application's data directory.
+pub fn app_data_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<PathBuf> {
+  let dir_path = if cfg!(test) {
+    std::env::temp_dir()
+  } else {
+    let path_resolver = app_handle.path();
+    path_resolver
+      .app_data_dir()
+      .unwrap_or_else(|_| path_resolver.home_dir().unwrap().join(".local/share"))
+  };
+  Ok(dir_path.join(&app_handle.package_info().name))
+}
+
 pub fn app_document_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<PathBuf> {
   let dir_path = if cfg!(test) {
     std::env::temp_dir()

@@ -1,7 +1,7 @@
 <template>
   <PaletteSection :title="$t('label-palette-colors')">
     <PaletteList
-      :model-value="props.palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
+      :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="selectedPalette"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
@@ -11,19 +11,32 @@
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
       <template #header>
-        <USelect
-          v-model="selectedPaletteCatalogItem"
-          :items="paletteCatalogOptions"
-          :loading="loadingPalette"
-          size="md"
-          class="w-full"
-        />
+        <div class="flex gap-x-1">
+          <USelectMenu
+            v-model="selectedPaletteKey"
+            :loading="loadingPalette"
+            :items="paletteCatalogOptions"
+            value-key="value"
+            size="md"
+            class="w-full"
+            @update:model-value="
+              async (key: string) => {
+                const [brand, name] = key.split('/') as [string, string];
+                await loadPalette(brand, name);
+              }
+            "
+          />
+
+          <UDropdownMenu :items="paletteCatalogMenuOptions">
+            <UButton :loading="importingPalettes" color="neutral" variant="outline" icon="i-lucide:menu" />
+          </UDropdownMenu>
+        </div>
       </template>
 
       <template #option="{ option, displaySettings }">
         <PaletteListItem
           :palette-item="option"
-          :selected="props.palette.find((pi) => comparePaletteItems(pi, option)) !== undefined"
+          :selected="palette.find((palitem) => palitem.compare(option)) !== undefined"
           :display-settings="displaySettings"
         />
       </template>
@@ -32,18 +45,11 @@
 </template>
 
 <script setup lang="ts">
-  import { resolveResource, sep } from "@tauri-apps/api/path";
-  import { readDir, readTextFile } from "@tauri-apps/plugin-fs";
-  import { onMounted, ref } from "vue";
-  import { computedAsync } from "@vueuse/core";
-  import { dequal } from "dequal";
-  import { PaletteItem, PaletteSettings } from "~/core/pattern/";
+  import type { DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
+  import { onMounted, ref, computed, type Ref } from "vue";
 
-  const props = defineProps<{ palette: PaletteItem[] }>();
-  const emit = defineEmits<{
-    addPaletteItem: [palitem: PaletteItem];
-    removePaletteItem: [palindex: number];
-  }>();
+  import { PaletteApi } from "~/api";
+  import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/core/pattern/";
 
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
     columnsNumber: 4,
@@ -53,61 +59,94 @@
     showColorNames: false,
   });
 
-  const paletteCatalog = new Map<string, PaletteItem[] | undefined>();
-  const paletteCatalogOptions = ref<string[]>([]);
-  const selectedPaletteCatalogItem = ref("DMC");
+  const filePicker = useFilePicker();
+  const toast = useToast();
 
-  const paletteCatalogDirPath = ref<string>();
+  const { palette } = defineProps<{ palette: PaletteItem[] }>();
+  const emit = defineEmits<{
+    addPaletteItem: [palitem: PaletteItem];
+    removePaletteItem: [palindex: number];
+  }>();
 
   const loadingPalette = ref(false);
-  const selectedPalette = computedAsync<PaletteItem[]>(
-    async () => {
-      loadingPalette.value = true;
-      const brand = selectedPaletteCatalogItem.value;
-      let palette = paletteCatalog.get(brand);
-      if (palette === undefined) {
-        const path = [paletteCatalogDirPath.value, `${brand}.json`].join(sep());
-        const content = await readTextFile(path);
-        // @ts-expect-error Here, palitems have `brand`, `number`, `name`, and `color` properties which is enough to create an instance of the `PaletteItem`.
-        // The rest of the properties are optional.
-        palette = JSON.parse(content).map((pi) => new PaletteItem(pi));
-        paletteCatalog.set(brand, palette);
-      }
-      loadingPalette.value = false;
-      return palette as PaletteItem[];
-    },
-    [],
-    { lazy: true },
-  );
+  const importingPalettes = ref(false);
 
-  function handlePaletteCatalogOptionDoubleClick(palitem: PaletteItem) {
-    const isAlreadyContained = props.palette.find((pi) => dequal(pi, palitem));
-    if (isAlreadyContained) {
-      const palindex = props.palette.indexOf(isAlreadyContained);
-      emit("removePaletteItem", palindex);
-    } else emit("addPaletteItem", palitem);
+  const paletteCatalog = new Map<string, BrandPaletteItem[] | undefined>();
+  const paletteCatalogOptions = ref<SelectMenuItem[][]>([]);
+
+  const selectedPaletteKey = ref("system/DMC");
+  const selectedPalette: Ref<BrandPaletteItem[]> = ref([]);
+
+  const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
+    { label: "Import palettes", onSelect: importPalettes, loading: importingPalettes.value },
+  ]);
+
+  async function refreshPalettesList() {
+    const { system, custom } = await PaletteApi.getPalettesList();
+
+    const systemPalettes: SelectMenuItem[] = [{ label: "System", type: "label" }];
+    for (const palette of system) {
+      const paletteKey = `system/${palette}`;
+      systemPalettes.push({ label: palette, value: paletteKey });
+      paletteCatalog.set(paletteKey, undefined);
+    }
+
+    const customPalettes: SelectMenuItem[] = [{ label: "Custom", type: "label" }];
+    for (const palette of custom) {
+      const paletteKey = `custom/${palette}`;
+      customPalettes.push({ label: palette, value: paletteKey });
+      paletteCatalog.set(paletteKey, undefined);
+    }
+
+    paletteCatalogOptions.value = [systemPalettes, customPalettes];
   }
 
-  /**
-   * We maintain a separate function to compare palette items because the `pi1` has more properties than the `pi2`.
-   * This function only compares the `brand` and `number` properties.
-   *
-   * @param pi1 - The palette item from the `props.palette`
-   * @param pi2 - The palette item from the catalog.
-   */
-  function comparePaletteItems(pi1: PaletteItem, pi2: PaletteItem) {
-    return pi1.brand === pi2.brand && pi1.number === pi2.number;
+  async function loadPalette(paletteGroup: string, paletteName: string) {
+    const paletteKey = `${paletteGroup}/${paletteName}`;
+    try {
+      let palette = paletteCatalog.get(paletteKey);
+      if (!palette) {
+        loadingPalette.value = true;
+        palette = await PaletteApi.loadPalette(paletteGroup, paletteName);
+        paletteCatalog.set(paletteKey, palette);
+      }
+      selectedPalette.value = palette;
+    } catch (err) {
+      error(`Failed to load palette ${paletteKey}: ${err}`);
+      toast.add({ title: "Palette Loading", description: `Failed to load palette ${paletteKey}`, color: "error" });
+    } finally {
+      loadingPalette.value = false;
+    }
+  }
+
+  /** Imports selected palette files. */
+  async function importPalettes() {
+    const paths = (await filePicker.open({ multiple: true, filters: filePicker.PALETTE_FILTER })) as string[] | null;
+    if (!paths) return;
+
+    try {
+      importingPalettes.value = true;
+
+      await PaletteApi.importPalettes(paths);
+      await refreshPalettesList();
+
+      toast.add({ title: "Palette Import", description: "Palettes imported successfully", color: "success" });
+    } catch (err) {
+      error(`Failed to import palettes: ${err}`);
+      toast.add({ title: "Palette Import", description: "Failed to import palettes", color: "error" });
+    } finally {
+      importingPalettes.value = false;
+    }
+  }
+
+  function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
+    const palindex = palette.findIndex((palitem) => palitem.compare(option));
+    if (palindex !== -1) emit("removePaletteItem", palindex);
+    else emit("addPaletteItem", option);
   }
 
   onMounted(async () => {
-    paletteCatalogDirPath.value = await resolveResource("resources/palettes");
-    for (const entry of await readDir(paletteCatalogDirPath.value)) {
-      if (entry.isFile) {
-        // The file name is the brand name.
-        const brand = entry.name.split(".")[0]!;
-        paletteCatalog.set(brand, undefined);
-      }
-    }
-    paletteCatalogOptions.value = [...paletteCatalog.keys()];
+    await refreshPalettesList();
+    await loadPalette("system", "DMC"); // Load default system palette.
   });
 </script>

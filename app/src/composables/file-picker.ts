@@ -5,19 +5,29 @@ import { createSharedComposable, useLocalStorage } from "@vueuse/core";
 
 import { PathApi } from "~/api/";
 
+const ALL_FILES_FILTER: DialogFilter = { name: "All Files", extensions: ["*"] };
+
 const ANY_PATTERN_FILTER: DialogFilter[] = [
   { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
-  { name: "All Files", extensions: ["*"] },
+  ALL_FILES_FILTER,
 ];
 const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
 const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
 
 const ANY_IMAGE_FILTER: DialogFilter[] = [
   { name: "Images", extensions: ["png", "jpg", "jpeg", "webp"] },
-  { name: "All Files", extensions: ["*"] },
+  ALL_FILES_FILTER,
 ];
 
 const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
+
+const PALETTE_FILTER = [
+  { name: "All Palette Files", extensions: ["master", "user", "threads", "rng"] },
+  { name: "Pattern Maker Palettes", extensions: ["master", "user"] },
+  { name: "Win/MacStitch Palettes", extensions: ["threads"] },
+  { name: "XSPro Platinum Palettes", extensions: ["rng"] },
+  ALL_FILES_FILTER,
+];
 
 export const useFilePicker = createSharedComposable(() => {
   const lastOpenedFolder = useLocalStorage<string | null>("last-opened-folder", null);
@@ -36,6 +46,9 @@ export const useFilePicker = createSharedComposable(() => {
 
     /** The filter for PDF files. */
     PDF_FILTER,
+
+    /** The filter for palette files. */
+    PALETTE_FILTER,
 
     /** The last opened folder path. */
     lastOpenedFolder,
@@ -57,7 +70,8 @@ export const useFilePicker = createSharedComposable(() => {
       });
 
       if (path) {
-        lastOpenedFolder.value = path.substring(0, path.lastIndexOf(sep()));
+        const first = Array.isArray(path) ? path[0] : path;
+        lastOpenedFolder.value = first.substring(0, first.lastIndexOf(sep()));
       }
 
       return path;
