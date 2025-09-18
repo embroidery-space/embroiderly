@@ -59,6 +59,7 @@
     showColorNames: false,
   });
 
+  const confirm = useConfirm();
   const filePicker = useFilePicker();
   const fluent = useFluent();
   const toast = useToast();
@@ -136,10 +137,17 @@
     try {
       importingPalettes.value = true;
 
-      await PaletteApi.importPalettes(paths);
+      const { failedFiles } = await PaletteApi.importPalettes(paths);
       await refreshPalettesList();
 
-      toast.add({ title: fluent.$t("message-palette-import-success"), color: "success" });
+      if (failedFiles.length) {
+        confirm.open({
+          title: fluent.$t("title-failed-palette-files"),
+          message: fluent.$t("message-failed-palette-files", {
+            failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
+          }),
+        });
+      } else toast.add({ title: fluent.$t("message-palette-import-success"), color: "success" });
     } catch (err) {
       error(`Failed to import palettes: ${err}`);
       toast.add({ title: fluent.$t("message-palette-import-error"), color: "error" });

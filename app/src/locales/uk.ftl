@@ -315,6 +315,13 @@ message-unsaved-patterns =
   { $patterns }
   Чи хочете ви зберегти їх перед закриттям застосунку?
 
+title-failed-palette-files = Не вдалі файли палітр
+message-failed-palette-files =
+  Деякі файли палітри не вдалося імпортувати.
+  Це може бути повʼязано з конфліктом назв палітр (вони повинні бути унікальними) або пошкодженням файлів палітр.
+
+  { $failedFilesList }
+
 title-system-info = Інформація про систему
 message-system-info =
   Операційна система: { $osType } { $osVersion } { $osArch }

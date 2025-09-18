@@ -312,6 +312,13 @@ message-unsaved-patterns =
   { $patterns }.
   Do you want to save them before closing the application?
 
+title-failed-palette-files = Failed Palette Files
+message-failed-palette-files =
+  Some palette files failed to import.
+  It may be due to conflicts in palette names (they must be unique) or palette files corruption.
+
+  { $failedFilesList }
+
 title-system-info = System Information
 message-system-info =
   Operating System: { $osType } { $osVersion } { $osArch }
