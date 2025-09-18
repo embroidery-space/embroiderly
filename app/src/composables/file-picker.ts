@@ -22,10 +22,11 @@ const ANY_IMAGE_FILTER: DialogFilter[] = [
 const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
 
 const PALETTE_FILTER = [
-  { name: "All Palette Files", extensions: ["master", "user", "threads", "rng"] },
+  { name: "All Palette Files", extensions: ["master", "user", "threads", "rng", "json"] },
   { name: "Pattern Maker Palettes", extensions: ["master", "user"] },
   { name: "Win/MacStitch Palettes", extensions: ["threads"] },
   { name: "XSPro Platinum Palettes", extensions: ["rng"] },
+  { name: "JSON Palettes", extensions: ["json"] },
   ALL_FILES_FILTER,
 ];
 

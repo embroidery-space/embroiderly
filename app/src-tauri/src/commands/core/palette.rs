@@ -167,15 +167,20 @@ fn parse_and_save_palette(file_path: &Path, palettes_dir: &Path) -> anyhow::Resu
       .map(BrandPaletteItem::from)
       .collect(),
     "threads" => xsp_parsers::ursa::parse_palette(file_path)
-      .map_err(|e| anyhow::anyhow!("Failed to parse UrsaSoftware palette: {}", e))?
+      .map_err(|e| anyhow::anyhow!("Failed to parse UrsaSoftware palette: {e}"))?
       .into_iter()
       .map(BrandPaletteItem::from)
       .collect(),
     "rng" => xsp_parsers::xspro::parse_palette(file_path)
-      .map_err(|e| anyhow::anyhow!("Failed to parse XSPro Platinum palette: {}", e))?
+      .map_err(|e| anyhow::anyhow!("Failed to parse XSPro Platinum palette: {e}"))?
       .into_iter()
       .map(BrandPaletteItem::from)
       .collect(),
+    "json" => {
+      let content = std::fs::read_to_string(file_path)?;
+      serde_json::from_str::<Vec<BrandPaletteItem>>(&content)
+        .map_err(|e| anyhow::anyhow!("Failed to parse JSON palette: {e}"))?
+    }
     _ => return Err(anyhow::anyhow!("Unsupported palette file format")),
   };
 
@@ -186,7 +191,7 @@ fn parse_and_save_palette(file_path: &Path, palettes_dir: &Path) -> anyhow::Resu
     .ok_or_else(|| anyhow::anyhow!("Invalid palette file name"))?;
 
   // Check for name conflicts.
-  let output_path = palettes_dir.join(format!("{}.json", palette_name));
+  let output_path = palettes_dir.join(format!("{palette_name}.json"));
   if output_path.exists() {
     return Err(anyhow::anyhow!(r#"Palette with name "{palette_name}" already exists"#));
   }
