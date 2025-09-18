@@ -2,9 +2,9 @@ import { b } from "@zorsh/zorsh";
 import { dequal } from "dequal/lite";
 import { toByteArray } from "base64-js";
 import { stringify as stringifyUuid } from "uuid";
-import { Color } from "pixi.js";
 
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
+import { Fabric } from "./fabric.ts";
 import { PaletteItem } from "./palette.ts";
 import {
   FullStitch,
@@ -45,46 +45,6 @@ export class PatternInfo {
 
   static serialize(data: PatternInfo) {
     return PatternInfo.schema.serialize(data);
-  }
-}
-
-export class Fabric {
-  width: number;
-  height: number;
-  spi: [number, number];
-  kind: string;
-  name: string;
-  color: Color;
-
-  constructor(data: Fabric | b.infer<typeof Fabric.schema>) {
-    this.width = data.width;
-    this.height = data.height;
-    this.spi = data.spi;
-    this.kind = data.kind;
-    this.name = data.name;
-    this.color = new Color(data.color);
-  }
-
-  static readonly schema = b.struct({
-    width: b.u16(),
-    height: b.u16(),
-    spi: b.tuple(b.u8(), b.u8()),
-    kind: b.string(),
-    name: b.string(),
-    color: b.string(),
-  });
-
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Fabric(Fabric.schema.deserialize(buffer));
-  }
-
-  static serialize(data: Fabric) {
-    return Fabric.schema.serialize({ ...data, color: data.color.toHex().slice(1).toUpperCase() });
-  }
-
-  static default() {
-    return new Fabric({ width: 100, height: 100, spi: [14, 14], name: "White", color: "FFFFFF", kind: "Aida" });
   }
 }
 

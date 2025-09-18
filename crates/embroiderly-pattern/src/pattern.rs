@@ -627,6 +627,15 @@ impl From<pmaker::Fabric> for Fabric {
   }
 }
 
+/// Represents a fabric color item.
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct FabricColor {
+  pub name: String,
+  pub color: String,
+}
+
 #[cfg(feature = "borsh")]
 fn serialize_option_char<W: borsh::io::Write>(value: &Option<char>, writer: &mut W) -> borsh::io::Result<()> {
   use borsh::BorshSerialize;

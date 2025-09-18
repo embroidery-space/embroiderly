@@ -55,7 +55,7 @@
       <PaletteList
         :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
         :options="fabricColors"
-        :option-value="({ name, color }) => ({ name, color })"
+        :option-value="(color) => ({ name: color.name, color: color.color.toHex().substring(1).toUpperCase() })"
         :display-settings="FABRIC_COLORS_DISPLAY_SETTINGS"
         @update:model-value="
           (value) => {
@@ -72,12 +72,12 @@
 </template>
 
 <script setup lang="ts">
-  import { resolveResource } from "@tauri-apps/api/path";
-  import { readTextFile } from "@tauri-apps/plugin-fs";
-  import { computed, onMounted, reactive, ref, watch } from "vue";
+  import { computed, onMounted, reactive, ref, watch, type Ref } from "vue";
   import { Color } from "pixi.js";
+
+  import { FabricApi } from "~/api";
+  import { Fabric, PaletteSettings, FabricColor } from "~/core/pattern/";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/utils/measurement";
-  import { Fabric, PaletteItem, PaletteSettings } from "~/core/pattern/";
 
   const fabric = defineModel<Fabric>({ required: true });
 
@@ -155,7 +155,7 @@
     { label: fluent.$t("label-kind-evenweave"), value: "Evenweave" },
     { label: fluent.$t("label-kind-linen"), value: "Linen" },
   ]);
-  const fabricColors = ref<PaletteItem[]>([]);
+  const fabricColors: Ref<FabricColor[]> = ref([]);
   const FABRIC_COLORS_DISPLAY_SETTINGS = new PaletteSettings({
     columnsNumber: 8,
     colorOnly: true,
@@ -165,10 +165,6 @@
   });
 
   onMounted(async () => {
-    const fabricColorsPath = await resolveResource("resources/fabric-colors.json");
-    const content = await readTextFile(fabricColorsPath);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fabricColors.value = JSON.parse(content).map((color: any) => new PaletteItem(color));
+    fabricColors.value = await FabricApi.loadFabricColors();
   });
 </script>

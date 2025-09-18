@@ -104,6 +104,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::display::show_symbols,
     commands::core::display::set_layers_visibility,
     commands::core::fabric::update_fabric,
+    commands::core::fabric::load_fabric_colors,
     commands::core::grid::update_grid,
     commands::core::palette::add_palette_item,
     commands::core::palette::remove_palette_items,

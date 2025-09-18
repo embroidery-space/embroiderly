@@ -102,6 +102,6 @@
   function optionIsSelected(option: T) {
     const transformed = optionValue(option);
     if (multiple) return (value.value as V[]).find((option) => dequal(option, transformed)) !== undefined;
-    return dequal(value, transformed);
+    return dequal(value.value, transformed);
   }
 </script>
