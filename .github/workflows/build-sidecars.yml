@@ -33,9 +33,9 @@ jobs:
         sidecar: ["embroiderly_publish"]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: swatinem/rust-cache@v2
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: dtolnay/rust-toolchain@1.89.0 # stable
+      - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
 
       - name: Get target platform triple
         id: target
@@ -63,7 +63,7 @@ jobs:
           mv "$SOURCE_FILE" "$DEST_FILE"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: sidecar-binary-${{ matrix.sidecar }}-${{ matrix.os }}
           path: binaries/
@@ -71,7 +71,7 @@ jobs:
 
       - name: Upload debug symbols for Sentry
         if: inputs.app-version != ''
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: sidecar-debug-symbols-${{ matrix.sidecar }}-${{ matrix.os }}
           path: |
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     if: inputs.app-version == ''
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           token: ${{ secrets.EMBROIDERLY_PAT }}
 
@@ -94,7 +94,7 @@ jobs:
       - run: rm -rf app/src-tauri/binaries/*
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
           path: app/src-tauri/binaries/
           merge-multiple: true
@@ -134,9 +134,9 @@ jobs:
       SENTRY_ORG: embroidery-space
       SENTRY_PROJECT: ${{ matrix.sidecar }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: package.json
           cache: pnpm
@@ -150,7 +150,7 @@ jobs:
           sentry-cli releases set-commits "${{ inputs.app-version }}" --auto || true
 
       - name: Download debug symbols
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
           pattern: sidecar-debug-symbols-${{ matrix.sidecar }}-*
           merge-multiple: true
