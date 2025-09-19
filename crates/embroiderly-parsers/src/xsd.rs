@@ -25,7 +25,7 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
 
         palitem.symbol_font = formats.font.font_name.clone();
         if let Some(code) = symbols.full {
-          palitem.symbol = Some(Symbol::Code(code));
+          palitem.symbol = Some(char::try_from(code as u32)?);
         }
       }
 

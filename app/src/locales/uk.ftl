@@ -137,6 +137,15 @@ label-palette-delete-selected = { $selected ->
 }
 label-palette-select-all = Виділити всі
 
+label-palette-catalog-menu-import-palettes = Імпортувати палітри
+
+label-palette-catalog-group-system = Системні
+label-palette-catalog-group-custom = Власні
+
+message-palette-import-success = Палітри успішно імпортовані
+message-palette-import-error = Не вдалося імпортувати палітри
+message-palette-load-error = Не вдалося завантажити палітру { $paletteKey }
+
 label-display-options-columns-number = Кількість стовпців
 label-display-options-color-only = Тільки колір
 label-display-options-show-brand = Відображати бренди ниток
@@ -305,6 +314,13 @@ message-unsaved-patterns =
   У вас є схеми із незбереженими змінами:
   { $patterns }
   Чи хочете ви зберегти їх перед закриттям застосунку?
+
+title-failed-palette-files = Не вдалі файли палітр
+message-failed-palette-files =
+  Деякі файли палітри не вдалося імпортувати.
+  Це може бути повʼязано з конфліктом назв палітр (вони повинні бути унікальними) або пошкодженням файлів палітр.
+
+  { $failedFilesList }
 
 title-system-info = Інформація про систему
 message-system-info =

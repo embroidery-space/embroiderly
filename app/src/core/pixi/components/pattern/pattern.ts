@@ -187,7 +187,7 @@ export class PatternView extends Container {
     const symbolFont = palitem.symbolFont;
     const defaultSymbolFont = this.defaultSymbolFont;
 
-    const symbol = new StitchSymbol(stitch, palitem.symbol, {
+    const symbol = new StitchSymbol(stitch, palitem.symbol ?? "", {
       fontFamily: symbolFont ? [symbolFont, defaultSymbolFont] : defaultSymbolFont,
     });
 

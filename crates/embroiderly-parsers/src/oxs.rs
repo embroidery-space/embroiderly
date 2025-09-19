@@ -388,7 +388,7 @@ fn read_palette<R: io::BufRead>(
             name,
             color: attributes.get_color("color").unwrap_or("FF00FF").to_owned(),
             blends: if blends.is_empty() { None } else { Some(blends) },
-            symbol: attributes.get_parsed("symbol"),
+            symbol: attributes.get_symbol("symbol"),
             symbol_font: attributes.get("fontname").map(|s| s.to_owned()),
           });
         }
@@ -439,8 +439,8 @@ fn write_palette<W: io::Write>(
         ),
       ];
 
-      if let Some(s) = &palitem.symbol {
-        attributes.push(("symbol", s.to_string()));
+      if let Some(ch) = &palitem.symbol {
+        attributes.push(("symbol", (*ch as u32).to_string()));
       }
 
       let element = writer
@@ -1123,6 +1123,18 @@ pub mod utils {
 
     pub fn get_parsed<T: std::str::FromStr>(&self, key: &str) -> Option<T> {
       self.get(key).and_then(|s| s.parse::<T>().ok())
+    }
+
+    pub fn get_symbol(&self, key: &str) -> Option<char> {
+      self.get(key).and_then(|s| {
+        if s.chars().count() == 1 {
+          // First try to parse as a single character.
+          s.chars().next()
+        } else {
+          // Try to parse as a numeric char code.
+          s.parse::<u32>().ok().and_then(char::from_u32)
+        }
+      })
     }
   }
 

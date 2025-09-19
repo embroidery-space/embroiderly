@@ -134,6 +134,15 @@ label-palette-delete-selected = { $selected ->
 }
 label-palette-select-all = Select All
 
+label-palette-catalog-menu-import-palettes = Import Palettes
+
+label-palette-catalog-group-system = System
+label-palette-catalog-group-custom = Custom
+
+message-palette-import-success = Palettes imported successfully
+message-palette-import-error = Failed to import palettes
+message-palette-load-error = Failed to load palette { $paletteKey }
+
 label-display-options-columns-number = Columns Number
 label-display-options-color-only = Color only
 label-display-options-show-brand = Show thread brands
@@ -302,6 +311,13 @@ message-unsaved-patterns =
   You have patterns with unsaved changes:
   { $patterns }.
   Do you want to save them before closing the application?
+
+title-failed-palette-files = Failed Palette Files
+message-failed-palette-files =
+  Some palette files failed to import.
+  It may be due to conflicts in palette names (they must be unique) or palette files corruption.
+
+  { $failedFilesList }
 
 title-system-info = System Information
 message-system-info =

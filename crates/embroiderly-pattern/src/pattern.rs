@@ -1,4 +1,4 @@
-use xsp_parsers::pmaker;
+use xsp_parsers::{pmaker, ursa, xspro};
 
 use super::stitches::*;
 
@@ -401,6 +401,62 @@ impl From<pmaker::PatternInfo> for PatternInfo {
   }
 }
 
+/// Represents a _brand_ palette item.
+///
+/// It contains only essential properties for clearly identifying colors.
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct BrandPaletteItem {
+  pub brand: String,
+  pub number: String,
+  pub name: String,
+  pub color: String,
+  #[cfg_attr(feature = "serde", serde(skip_serializing_if = "blends_empty"))]
+  pub blends: Option<Vec<Blend>>,
+}
+
+impl From<pmaker::PaletteItem> for BrandPaletteItem {
+  fn from(palitem: pmaker::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: palitem
+        .blends
+        .map(|blends| blends.into_iter().map(Blend::from).collect()),
+    }
+  }
+}
+
+impl From<ursa::PaletteItem> for BrandPaletteItem {
+  fn from(palitem: ursa::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: None,
+    }
+  }
+}
+
+impl From<xspro::PaletteItem> for BrandPaletteItem {
+  fn from(palitem: xspro::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: None,
+    }
+  }
+}
+
+/// Represents a _working_ palette item.
+///
+/// It contains all the properties from `BrandPaletteItem` and some other for advanced displaying purposes.
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteItem {
@@ -409,8 +465,15 @@ pub struct PaletteItem {
   pub name: String,
   pub color: String,
   pub blends: Option<Vec<Blend>>,
+  #[cfg_attr(
+    feature = "borsh",
+    borsh(
+      serialize_with = "serialize_option_char",
+      deserialize_with = "deserialize_option_char"
+    )
+  )]
+  pub symbol: Option<char>,
   pub symbol_font: Option<String>,
-  pub symbol: Option<Symbol>,
 }
 
 impl PaletteItem {
@@ -419,30 +482,74 @@ impl PaletteItem {
     self.blends.as_ref().is_some_and(|blends| !blends.is_empty())
   }
 
-  /// Returns a printable representation of the `Symbol`.
+  /// Returns a printable representation of the symbol.
   pub fn get_symbol(&self) -> String {
-    self.symbol.as_ref().map(|s| s.render()).unwrap_or_default()
+    self.symbol.map(|ch| ch.to_string()).unwrap_or_default()
+  }
+}
+
+impl From<BrandPaletteItem> for PaletteItem {
+  fn from(brand_item: BrandPaletteItem) -> Self {
+    Self {
+      brand: brand_item.brand,
+      number: brand_item.number,
+      name: brand_item.name,
+      color: brand_item.color,
+      blends: brand_item.blends,
+
+      symbol: None,
+      symbol_font: None,
+    }
   }
 }
 
 impl From<pmaker::PaletteItem> for PaletteItem {
-  fn from(palette_item: pmaker::PaletteItem) -> Self {
+  fn from(palitem: pmaker::PaletteItem) -> Self {
     Self {
-      brand: palette_item.brand,
-      number: palette_item.number,
-      name: palette_item.name,
-      color: palette_item.color,
-      blends: palette_item
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: palitem
         .blends
         .map(|blends| blends.into_iter().map(Blend::from).collect()),
-      symbol_font: None,
       symbol: None,
+      symbol_font: None,
+    }
+  }
+}
+
+impl From<ursa::PaletteItem> for PaletteItem {
+  fn from(palitem: ursa::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: None,
+      symbol: None,
+      symbol_font: None,
+    }
+  }
+}
+
+impl From<xspro::PaletteItem> for PaletteItem {
+  fn from(palitem: xspro::PaletteItem) -> Self {
+    Self {
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.color,
+      blends: None,
+      symbol: None,
+      symbol_font: None,
     }
   }
 }
 
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Blend {
   pub brand: String,
   pub number: String,
@@ -470,52 +577,6 @@ impl From<pmaker::Bead> for Bead {
       length: bead.length,
       diameter: bead.diameter,
     }
-  }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-pub enum Symbol {
-  Code(u16),
-  Char(String),
-}
-
-impl Symbol {
-  /// Returns a printable representation of the symbol.
-  pub fn render(&self) -> String {
-    match self {
-      Symbol::Code(code) => std::char::decode_utf16([*code])
-        .map(|r| r.unwrap_or(std::char::REPLACEMENT_CHARACTER))
-        .collect::<String>(),
-      Symbol::Char(char) => char.to_owned(),
-    }
-  }
-}
-
-impl std::fmt::Display for Symbol {
-  fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-    match self {
-      Symbol::Code(code) => write!(f, "{code}"),
-      Symbol::Char(ch) => write!(f, "{ch}"),
-    }
-  }
-}
-
-impl std::str::FromStr for Symbol {
-  type Err = anyhow::Error;
-
-  fn from_str(s: &str) -> Result<Self, Self::Err> {
-    if let Ok(code) = s.parse::<u16>() {
-      return Ok(Symbol::Code(code));
-    }
-
-    if s.len() == 1 {
-      return Ok(Symbol::Char(s.to_string()));
-    }
-
-    Err(anyhow::anyhow!(
-      "Invalid symbol: {s}. Must be a single character or a number"
-    ))
   }
 }
 
@@ -565,4 +626,44 @@ impl From<pmaker::Fabric> for Fabric {
       color: fabric.color,
     }
   }
+}
+
+/// Represents a fabric color item.
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct FabricColor {
+  pub name: String,
+  pub color: String,
+}
+
+#[cfg(feature = "borsh")]
+fn serialize_option_char<W: borsh::io::Write>(value: &Option<char>, writer: &mut W) -> borsh::io::Result<()> {
+  use borsh::BorshSerialize;
+
+  match value {
+    Some(ch) => {
+      true.serialize(writer)?;
+      (*ch as u32).serialize(writer)
+    }
+    None => false.serialize(writer),
+  }
+}
+
+#[cfg(feature = "borsh")]
+fn deserialize_option_char<R: borsh::io::Read>(reader: &mut R) -> borsh::io::Result<Option<char>> {
+  use borsh::BorshDeserialize;
+
+  let has_value = bool::deserialize_reader(reader)?;
+  if has_value {
+    let value = u32::deserialize_reader(reader)?;
+    Ok(char::from_u32(value))
+  } else {
+    Ok(None)
+  }
+}
+
+#[cfg(feature = "serde")]
+fn blends_empty(blends: &Option<Vec<Blend>>) -> bool {
+  blends.as_ref().is_none_or(|blends| blends.is_empty())
 }

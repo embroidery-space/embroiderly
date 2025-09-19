@@ -237,7 +237,7 @@ fn draw_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8
 
 macro_rules! draw_stitch_symbol {
   ($writer:expr, $x:expr, $y:expr, $symbol:expr, $symbol_font:expr, $font_size:expr) => {{
-    if let Some(symbol) = $symbol.as_ref().map(|s| s.render()) {
+    if !$symbol.is_empty() {
       $writer
         .create_element("text")
         .with_attributes([
@@ -248,7 +248,7 @@ macro_rules! draw_stitch_symbol {
           ("text-anchor", "middle"),
           ("dominant-baseline", "middle"),
         ])
-        .write_text_content(BytesText::new(&symbol))?;
+        .write_text_content(BytesText::new(&$symbol))?;
     }
   }};
 }
@@ -303,7 +303,7 @@ fn draw_full_stitches<W: io::Write>(
               writer,
               size / 2.0,
               size / 2.0,
-              palitem.symbol,
+              palitem.get_symbol(),
               palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
               font_size
             );
@@ -407,7 +407,7 @@ fn draw_part_stitches<W: io::Write>(
                     writer,
                     size + size / 2.0,
                     size / 2.0,
-                    palitem.symbol,
+                    palitem.get_symbol(),
                     palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
                     font_size
                   );
@@ -415,7 +415,7 @@ fn draw_part_stitches<W: io::Write>(
                     writer,
                     size / 2.0,
                     size + size / 2.0,
-                    palitem.symbol,
+                    palitem.get_symbol(),
                     palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
                     font_size
                   );
@@ -425,7 +425,7 @@ fn draw_part_stitches<W: io::Write>(
                     writer,
                     size / 2.0,
                     size / 2.0,
-                    palitem.symbol,
+                    palitem.get_symbol(),
                     palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
                     font_size
                   );
@@ -433,7 +433,7 @@ fn draw_part_stitches<W: io::Write>(
                     writer,
                     size + size / 2.0,
                     size + size / 2.0,
-                    palitem.symbol,
+                    palitem.get_symbol(),
                     palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
                     font_size
                   );
@@ -444,7 +444,7 @@ fn draw_part_stitches<W: io::Write>(
                   writer,
                   size / 2.0,
                   size / 2.0,
-                  palitem.symbol,
+                  palitem.get_symbol(),
                   palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
                   font_size
                 );
