@@ -9,7 +9,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install system dependencies
         run: |
           sudo apt update
@@ -17,10 +17,10 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@1.89.0 # stable
         with:
           components: clippy
-      - uses: swatinem/rust-cache@v2
+      - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
       - name: Check formatting
         run: cargo +nightly fmt --check
       - name: Check linting
@@ -32,14 +32,16 @@ jobs:
         platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install system dependencies (Ubuntu-only)
         if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: swatinem/rust-cache@v2
-      - uses: taiki-e/install-action@nextest
+      - uses: dtolnay/rust-toolchain@1.89.0 # stable
+      - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
+      - uses: taiki-e/install-action@0aa4f22591557b744fe31e55dbfcdfea74a073f7 # v2.61.10
+        with:
+          tool: cargo-nextest@87857ddf299a42c9cb5822422aeba77bd8fb74e8 # v0.9.104
       - name: Test
         run: cargo nextest run --locked -F embroiderly/test

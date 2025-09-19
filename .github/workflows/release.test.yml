@@ -19,20 +19,20 @@ jobs:
         platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install system dependencies (Ubuntu-only)
         if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt update
           sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v5
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: package.json
           cache: pnpm
       - run: pnpm install
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: tauri-apps/tauri-action@dev
+      - uses: dtolnay/rust-toolchain@1.89.0 # stable
+      - uses: tauri-apps/tauri-action@e834788a94591d81e3ae0bd9ec06366f5afb8994 # v0.5.23
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
