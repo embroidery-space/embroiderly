@@ -77,7 +77,8 @@
 
 <script setup lang="ts">
   import { writeText } from "@tauri-apps/plugin-clipboard-manager";
-  import { openUrl } from "@tauri-apps/plugin-opener";
+  import { openPath, openUrl } from "@tauri-apps/plugin-opener";
+  import { resolveResource } from "@tauri-apps/api/path";
   import { computed } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { SystemApi } from "~/api/";
@@ -149,7 +150,7 @@
   ]);
   const helpOptions = computed<DropdownMenuItem[][]>(() => [
     [
-      { label: fluent.$t("label-learn-more"), onSelect: () => openUrl("https://embroiderly.niusia.me") },
+      { label: fluent.$t("label-learn-more"), onSelect: () => openDocs() },
       {
         label: fluent.$t("label-license"),
         onSelect: () => openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE"),
@@ -170,6 +171,17 @@
 
   defineShortcuts(extractShortcuts(fileOptions.value));
   defineShortcuts(extractShortcuts(toolsOptions.value));
+
+  async function openDocs() {
+    const lang = settingsStore.ui.language;
+    try {
+      const docsPath = await resolveResource(`resources/docs/${lang}/index.html`);
+      await openPath(docsPath);
+    } catch (err) {
+      warn(`Failed to open local documentation: ${err}`);
+      await openUrl(`https://embroiderly.niusia.me/${lang}/`); // Fallback to online documentation.
+    }
+  }
 
   async function showSystemInfo() {
     const systemInfo = await SystemApi.getSystemInfo();

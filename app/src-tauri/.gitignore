@@ -7,3 +7,6 @@ extensions/*
 
 # Debug logs
 logs/
+
+# Documentation build
+resources/docs/

@@ -6,6 +6,7 @@
   build: {
     beforeDevCommand: "pnpm dev",
     beforeBuildCommand: "pnpm build",
+    beforeBundleCommand: "node scripts/bundle-docs.js",
     frontendDist: "../dist",
     devUrl: "http://localhost:1420",
     removeUnusedCommands: true,
