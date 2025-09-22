@@ -14,14 +14,14 @@
     "test": "pnpm -r test"
   },
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^9.36.0",
     "@html-eslint/parser": "0.46.2",
     "@tauri-apps/cli": "2.8.4",
     "@vue/eslint-config-prettier": "10.2.0",
     "@vue/eslint-config-typescript": "14.6.0",
-    "eslint": "9.35.0",
-    "eslint-plugin-better-tailwindcss": "3.7.8",
-    "eslint-plugin-vue": "10.4.0",
+    "eslint": "9.36.0",
+    "eslint-plugin-better-tailwindcss": "3.7.9",
+    "eslint-plugin-vue": "10.5.0",
     "globals": "16.4.0",
     "prettier": "3.6.2",
     "tailwindcss": "4.1.13",
