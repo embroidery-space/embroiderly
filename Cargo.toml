@@ -66,23 +66,23 @@ zip = { version = "4.6.1", features = [
 ], default-features = false }
 
 # De/serialization
-serde = { version = "1.0.224", features = ["derive"] }
+serde = { version = "1.0.226", features = ["derive"] }
 serde_json = "1.0.145"
 base64 = "0.22.1"
 borsh = { version = "1.5.7", features = ["derive"] }
 
 # CLI
-clap = { version = "4.5.47", default-features = false, features = [
+clap = { version = "4.5.48", default-features = false, features = [
   "std",
   "derive",
 ] }
 
 # Error handling
-anyhow = "1.0.99"
+anyhow = "1.0.100"
 thiserror = "2.0.16"
 
 # Time handling
-time = { version = "0.3.43", features = ["formatting", "macros"] }
+time = { version = "0.3.44", features = ["formatting", "macros"] }
 
 # Logging
 log = "0.4.28"
