@@ -32,16 +32,20 @@
 
         <template #option="{ option: paletteItem, selected, displaySettings }">
           <PaletteListItem :palette-item="paletteItem" :selected="selected" :display-settings="displaySettings">
-            <span
-              v-if="!displaySettings.colorOnly && displaySettings.showStitchSymbols && paletteItem.symbol"
-              class="mr-2 inline-flex size-5 shrink-0 items-center justify-center"
-              :class="{
-                'rounded-sm bg-white text-black': displaySettings.stitchSymbolsOnContrastBackground,
-              }"
-              :style="{ fontFamily: getPaletteItemSymbolFontFamily(paletteItem) }"
-            >
-              {{ paletteItem.symbol }}
-            </span>
+            <template v-if="!displaySettings.colorOnly && displaySettings.showStitchSymbols">
+              <span
+                v-if="paletteItem.symbol"
+                class="mr-2 inline-flex size-5 shrink-0 items-center justify-center"
+                :class="{
+                  'rounded-sm bg-white text-black': displaySettings.stitchSymbolsOnContrastBackground,
+                }"
+                :style="{ fontFamily: getPaletteItemSymbolFontFamily(paletteItem) }"
+              >
+                {{ paletteItem.symbol }}
+              </span>
+              <!-- If the palete item doesn't have a stitch symbol, render an empty `span`, so that the title is properly aligned with those with symbols. -->
+              <span v-else class="mr-2 size-5 shrink-0"></span>
+            </template>
           </PaletteListItem>
         </template>
 

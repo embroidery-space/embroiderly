@@ -15,9 +15,9 @@
       }"
     >
       <slot />
-      <p v-show="!displaySettings.colorOnly" class="truncate">
+      <span v-show="!displaySettings.colorOnly" class="truncate">
         {{ paletteItem.getTitle(displaySettings) }}
-      </p>
+      </span>
     </div>
   </UTooltip>
 </template>
