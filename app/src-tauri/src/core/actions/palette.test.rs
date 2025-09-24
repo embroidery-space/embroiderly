@@ -209,6 +209,8 @@ fn test_update_palette_display_settings() {
   let new_settings = PaletteSettings {
     columns_number: 4,
     color_only: true,
+    show_stitch_symbols: true,
+    stitch_symbols_on_contrast_background: true,
     show_color_brands: true,
     show_color_names: true,
     show_color_numbers: true,

@@ -122,6 +122,8 @@ impl std::str::FromStr for DisplayMode {
 pub struct PaletteSettings {
   pub columns_number: u8,
   pub color_only: bool,
+  pub show_stitch_symbols: bool,
+  pub stitch_symbols_on_contrast_background: bool,
   pub show_color_brands: bool,
   pub show_color_numbers: bool,
   pub show_color_names: bool,
@@ -130,6 +132,8 @@ pub struct PaletteSettings {
 impl PaletteSettings {
   pub const DEFAULT_COLUMNS_NUMBER: u8 = 1;
   pub const DEFAULT_COLOR_ONLY: bool = false;
+  pub const DEFAULT_SHOW_STITCH_SYMBOLS: bool = true;
+  pub const DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND: bool = true;
   pub const DEFAULT_SHOW_COLOR_BRANDS: bool = true;
   pub const DEFAULT_SHOW_COLOR_NUMBERS: bool = true;
   pub const DEFAULT_SHOW_COLOR_NAMES: bool = true;
@@ -140,6 +144,8 @@ impl Default for PaletteSettings {
     Self {
       columns_number: PaletteSettings::DEFAULT_COLUMNS_NUMBER,
       color_only: PaletteSettings::DEFAULT_COLOR_ONLY,
+      show_stitch_symbols: PaletteSettings::DEFAULT_SHOW_STITCH_SYMBOLS,
+      stitch_symbols_on_contrast_background: PaletteSettings::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND,
       show_color_brands: PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS,
       show_color_numbers: PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS,
       show_color_names: PaletteSettings::DEFAULT_SHOW_COLOR_NAMES,

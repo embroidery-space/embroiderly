@@ -20,6 +20,18 @@
 
       <div class="flex flex-col gap-y-1">
         <UCheckbox
+          :model-value="props.settings.showStitchSymbols"
+          :disabled="props.settings.colorOnly"
+          :label="$t('label-display-options-show-stitch-symbols')"
+          @update:model-value="(value) => updateSettings('showStitchSymbols', value as boolean)"
+        />
+        <UCheckbox
+          :model-value="props.settings.stitchSymbolsOnContrastBackground"
+          :disabled="props.settings.colorOnly || !props.settings.showStitchSymbols"
+          :label="$t('label-display-options-stitch-symbols-on-contrast-background')"
+          @update:model-value="(value) => updateSettings('stitchSymbolsOnContrastBackground', value as boolean)"
+        />
+        <UCheckbox
           :model-value="props.settings.showColorBrands"
           :disabled="props.settings.colorOnly"
           :label="$t('label-display-options-show-brand')"

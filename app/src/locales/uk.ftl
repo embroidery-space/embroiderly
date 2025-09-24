@@ -148,6 +148,8 @@ message-palette-load-error = Не вдалося завантажити палі
 
 label-display-options-columns-number = Кількість стовпців
 label-display-options-color-only = Тільки колір
+label-display-options-show-stitch-symbols = Відображати символи стібків
+label-display-options-stitch-symbols-on-contrast-background = Розмістити символи стібків на контрастному фоні
 label-display-options-show-brand = Відображати бренди ниток
 label-display-options-show-number = Відображати номери кольорів
 label-display-options-show-name = Відображати назви кольорів

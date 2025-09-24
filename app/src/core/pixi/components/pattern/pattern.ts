@@ -184,12 +184,11 @@ export class PatternView extends Container {
     if (stitch instanceof LineStitch || stitch instanceof NodeStitch) return;
 
     const palitem = this.palette[stitch.palindex]!;
-    const symbolFont = palitem.symbolFont;
-    const defaultSymbolFont = this.defaultSymbolFont;
 
-    const symbol = new StitchSymbol(stitch, palitem.symbol ?? "", {
-      fontFamily: symbolFont ? [symbolFont, defaultSymbolFont] : defaultSymbolFont,
-    });
+    const fontFamily = palitem.symbolFont
+      ? Array.from(new Set([palitem.symbolFont, this.defaultSymbolFont]))
+      : this.defaultSymbolFont;
+    const symbol = new StitchSymbol(stitch, palitem.symbol ?? "", { fontFamily });
 
     this.stages.symbols.addStitch(symbol);
   }
