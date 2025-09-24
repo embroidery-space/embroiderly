@@ -7,16 +7,17 @@
     :ui="{ content: 'text-base' }"
   >
     <div
-      class="min-h-8 rounded-md px-2 py-1 outline-2 -outline-offset-4 outline-solid"
+      class="flex min-h-8 items-center rounded-md px-2 py-1 outline-2 -outline-offset-4 outline-solid"
       :style="{
         backgroundColor: paletteItem.hex,
         color: `${paletteItem.contrastColor} !important`,
         outlineColor: selected ? paletteItem.contrastColor : 'transparent',
       }"
     >
-      <p v-show="!displaySettings.colorOnly" class="truncate">
+      <slot />
+      <span v-show="!displaySettings.colorOnly" class="truncate">
         {{ paletteItem.getTitle(displaySettings) }}
-      </p>
+      </span>
     </div>
   </UTooltip>
 </template>

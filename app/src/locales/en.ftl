@@ -145,6 +145,8 @@ message-palette-load-error = Failed to load palette { $paletteKey }
 
 label-display-options-columns-number = Columns Number
 label-display-options-color-only = Color only
+label-display-options-show-stitch-symbols = Show stitch symbols
+label-display-options-stitch-symbols-on-contrast-background = Place stitch symbols on contrast background
 label-display-options-show-brand = Show thread brands
 label-display-options-show-number = Show color numbers
 label-display-options-show-name = Show color names

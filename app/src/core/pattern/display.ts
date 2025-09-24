@@ -46,6 +46,8 @@ export class Grid {
 export class PaletteSettings {
   columnsNumber: number;
   colorOnly: boolean;
+  showStitchSymbols: boolean;
+  stitchSymbolsOnContrastBackground: boolean;
   showColorBrands: boolean;
   showColorNumbers: boolean;
   showColorNames: boolean;
@@ -53,6 +55,8 @@ export class PaletteSettings {
   constructor(data: b.infer<typeof PaletteSettings.schema>) {
     this.columnsNumber = data.columnsNumber;
     this.colorOnly = data.colorOnly;
+    this.showStitchSymbols = data.showStitchSymbols;
+    this.stitchSymbolsOnContrastBackground = data.stitchSymbolsOnContrastBackground;
     this.showColorBrands = data.showColorBrands;
     this.showColorNumbers = data.showColorNumbers;
     this.showColorNames = data.showColorNames;
@@ -61,6 +65,8 @@ export class PaletteSettings {
   static readonly schema = b.struct({
     columnsNumber: b.u8(),
     colorOnly: b.bool(),
+    showStitchSymbols: b.bool(),
+    stitchSymbolsOnContrastBackground: b.bool(),
     showColorBrands: b.bool(),
     showColorNumbers: b.bool(),
     showColorNames: b.bool(),
@@ -79,6 +85,8 @@ export class PaletteSettings {
     return new PaletteSettings({
       columnsNumber: 1,
       colorOnly: true,
+      showStitchSymbols: true,
+      stitchSymbolsOnContrastBackground: true,
       showColorBrands: true,
       showColorNumbers: true,
       showColorNames: true,

@@ -116,6 +116,12 @@ fn read_palette_settings(attributes: AttributesMap) -> Result<PaletteSettings> {
     color_only: attributes
       .get_parsed("color_only")
       .unwrap_or(PaletteSettings::DEFAULT_COLOR_ONLY),
+    show_stitch_symbols: attributes
+      .get_parsed("show_stitch_symbols")
+      .unwrap_or(PaletteSettings::DEFAULT_SHOW_STITCH_SYMBOLS),
+    stitch_symbols_on_contrast_background: attributes
+      .get_parsed("stitch_symbols_on_contrast_background")
+      .unwrap_or(PaletteSettings::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND),
     show_color_brands: attributes
       .get_parsed("show_color_brands")
       .unwrap_or(PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS),
@@ -134,6 +140,11 @@ fn write_palette_settings<W: io::Write>(writer: &mut Writer<W>, settings: &Palet
     .with_attributes([
       ("columns_number", settings.columns_number.to_string().as_str()),
       ("color_only", settings.color_only.to_string().as_str()),
+      ("show_stitch_symbols", settings.show_stitch_symbols.to_string().as_str()),
+      (
+        "stitch_symbols_on_contrast_background",
+        settings.stitch_symbols_on_contrast_background.to_string().as_str(),
+      ),
       ("show_color_brands", settings.show_color_brands.to_string().as_str()),
       ("show_color_names", settings.show_color_names.to_string().as_str()),
       ("show_color_numbers", settings.show_color_numbers.to_string().as_str()),

@@ -30,6 +30,25 @@
           <PaletteToolbar v-else :disabled="paletteIsDisabled" @contextmenu.stop.prevent />
         </template>
 
+        <template #option="{ option: paletteItem, selected, displaySettings }">
+          <PaletteListItem :palette-item="paletteItem" :selected="selected" :display-settings="displaySettings">
+            <template v-if="!displaySettings.colorOnly && displaySettings.showStitchSymbols">
+              <span
+                v-if="paletteItem.symbol"
+                class="mr-2 inline-flex size-5 shrink-0 items-center justify-center"
+                :class="{
+                  'rounded-sm bg-white text-black': displaySettings.stitchSymbolsOnContrastBackground,
+                }"
+                :style="{ fontFamily: getPaletteItemSymbolFontFamily(paletteItem) }"
+              >
+                {{ paletteItem.symbol }}
+              </span>
+              <!-- If the palete item doesn't have a stitch symbol, render an empty `span`, so that the title is properly aligned with those with symbols. -->
+              <span v-else class="mr-2 size-5 shrink-0"></span>
+            </template>
+          </PaletteListItem>
+        </template>
+
         <template #footer>
           <div class="flex items-center justify-between" @contextmenu.stop.prevent>
             <span class="text-sm text-nowrap">
@@ -82,7 +101,7 @@
   import { computed, ref, watch } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { dequal } from "dequal";
-  import { PaletteSettings } from "~/core/pattern/";
+  import { PaletteItem, PaletteSettings } from "~/core/pattern/";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -171,5 +190,16 @@
     if (palindexes.length > 1 && !paletteIsBeingEdited.value) {
       appStateStore.selectedPaletteItemIndexes = palindexes.slice(-1);
     } else appStateStore.selectedPaletteItemIndexes = palindexes;
+  }
+
+  function getPaletteItemSymbolFontFamily(palitem: PaletteItem) {
+    const defaultSymbolFont = patternsStore.pattern?.defaultSymbolFont;
+    if (defaultSymbolFont) {
+      return palitem.symbolFont
+        ? Array.from(new Set([palitem.symbolFont, defaultSymbolFont]))
+            .map((f) => `"${f}"`)
+            .join(", ")
+        : defaultSymbolFont;
+    } else return `"${palitem.symbolFont}"`;
   }
 </script>

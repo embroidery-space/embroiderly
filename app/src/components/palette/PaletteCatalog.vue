@@ -54,6 +54,8 @@
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
     columnsNumber: 4,
     colorOnly: false,
+    showStitchSymbols: false,
+    stitchSymbolsOnContrastBackground: false,
     showColorBrands: false,
     showColorNumbers: true,
     showColorNames: false,

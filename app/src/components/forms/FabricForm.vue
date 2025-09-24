@@ -159,6 +159,8 @@
   const FABRIC_COLORS_DISPLAY_SETTINGS = new PaletteSettings({
     columnsNumber: 8,
     colorOnly: true,
+    showStitchSymbols: false,
+    stitchSymbolsOnContrastBackground: false,
     showColorBrands: false,
     showColorNumbers: false,
     showColorNames: false,

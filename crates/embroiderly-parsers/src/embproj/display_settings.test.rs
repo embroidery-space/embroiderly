@@ -19,7 +19,7 @@ fn create_writer() -> Writer<std::io::Cursor<Vec<u8>>> {
 fn reads_and_writes_display_settings() {
   let xml = r#"<?xml version="1.0" encoding="UTF-8"?>
 <display_settings display_mode="Solid" default_symbol_font="Ursasoftware" show_symbols="false">
-  <palette_settings columns_number="1" color_only="false" show_color_brands="true" show_color_names="true" show_color_numbers="true"/>
+  <palette_settings columns_number="1" color_only="false" show_stitch_symbols="true" stitch_symbols_on_contrast_background="true" show_color_brands="true" show_color_names="true" show_color_numbers="true"/>
   <grid major_lines_interval="10">
     <minor_lines color="C8C8C8" thickness="0.072"/>
     <major_lines color="646464" thickness="0.072"/>
@@ -46,7 +46,7 @@ fn reads_and_writes_display_settings() {
 
 #[test]
 fn reads_and_writes_palette_settings() {
-  let xml = r#"<palette_settings columns_number="1" color_only="false" show_color_brands="true" show_color_names="true" show_color_numbers="true"/>"#;
+  let xml = r#"<palette_settings columns_number="1" color_only="false" show_stitch_symbols="true" stitch_symbols_on_contrast_background="true" show_color_brands="true" show_color_names="true" show_color_numbers="true"/>"#;
 
   let mut reader = create_reader(xml);
   let attributes = if let Event::Start(e) = reader.read_event().unwrap() {
