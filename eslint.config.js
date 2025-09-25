@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import globals from "globals";
 import js from "@eslint/js";
 import vue from "eslint-plugin-vue";
@@ -5,18 +6,23 @@ import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescri
 import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import vueEslintParser from "vue-eslint-parser";
-import htmlEslintParser from "@html-eslint/parser";
+
+// Read the `.prettierignore` file and filter out empty lines and comments.
+const ignores = fs
+  .readFileSync(".prettierignore", { encoding: "utf-8" })
+  .split(/\r?\n/)
+  .filter((s) => s.length && !s.startsWith("#"));
 
 export default defineConfigWithVueTs(
+  { ignores },
   js.configs.recommended,
   vue.configs["flat/recommended"],
   {
-    files: ["app/src/**/*.{js,ts,vue}", "crates/**/guest-js/**/*.{js,ts,vue}"],
+    files: ["app/src/**/*.{ts,vue}", "crates/**/guest-js/**/*.ts"],
     languageOptions: { ecmaVersion: "latest", globals: { ...globals.browser } },
     rules: { "no-console": ["warn"] },
   },
-  { files: ["**/*.html"], languageOptions: { parser: htmlEslintParser } },
-  { files: ["**/*.vue"], languageOptions: { parser: vueEslintParser } },
+  { files: ["app/src/**/*.vue"], languageOptions: { parser: vueEslintParser } },
   {
     plugins: { "better-tailwindcss": betterTailwindcss },
     settings: {

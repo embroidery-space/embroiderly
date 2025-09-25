@@ -9,13 +9,14 @@
     "tauri": "tauri",
     "dev": "pnpm --filter @embroiderly/app dev",
     "build": "pnpm --filter @embroiderly/app build",
-    "fmt": "prettier --check app/src/",
-    "lint": "eslint app/src/",
+    "fmt": "prettier --check .",
+    "fmt:fix": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "test": "pnpm -r test"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
-    "@html-eslint/parser": "0.46.2",
     "@tauri-apps/cli": "2.8.4",
     "@vue/eslint-config-prettier": "10.2.0",
     "@vue/eslint-config-typescript": "14.6.0",

@@ -11,9 +11,6 @@ importers:
       '@eslint/js':
         specifier: ^9.36.0
         version: 9.36.0
-      '@html-eslint/parser':
-        specifier: 0.46.2
-        version: 0.46.2(jiti@2.6.0)
       '@tauri-apps/cli':
         specifier: 2.8.4
         version: 2.8.4
@@ -676,15 +673,6 @@ packages:
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     peerDependencies:
       '@fluent/bundle': '>= 0.13.0'
-
-  '@html-eslint/parser@0.46.2':
-    resolution: {integrity: sha512-qjOaNuLqa5rP4awi3269LXul3sB7YeWtpc3Bk8p5ZGxvEovTagV0V5csOnBw3gNhnRrE68F8Gr/IduszV6gvPg==}
-
-  '@html-eslint/template-syntax-parser@0.46.2':
-    resolution: {integrity: sha512-1F7ipV/QMpKyYW+joVSQRU8nb8zsC5KhHzNflp0muUoJhhmxxtXuLnovHkCqU1oA1iD9sL5finZ4OJTufE5RGw==}
-
-  '@html-eslint/types@0.46.0':
-    resolution: {integrity: sha512-vEXvucymWh4DVmnpg0oeg2PiGzjRiVLqLwOeJRc4iEbOUo77+VnsSHPOUZOtoeANfgW7abX4YQtOCCIJzbxu0A==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2611,9 +2599,6 @@ packages:
 
   errx@0.1.0:
     resolution: {integrity: sha512-fZmsRiDNv07K6s2KkKFTiD2aIvECa7++PKyD5NC32tpRw46qZA3sOz+aM+/V9V0GDHxVTKLziveV4JhzBHDp9Q==}
-
-  es-html-parser@0.3.0:
-    resolution: {integrity: sha512-86KsmbP/zqoG7LIoXiCXv7KFDVbF9N9SCpavmRzeKtCODmF+LyLEBt3UPSlcntNQEwGGe0xn4ZED186rLmwKSw==}
 
   es-module-lexer@1.7.0:
     resolution: {integrity: sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==}
@@ -4622,31 +4607,6 @@ snapshots:
   '@fluent/sequence@0.8.0(@fluent/bundle@0.19.1)':
     dependencies:
       '@fluent/bundle': 0.19.1
-
-  '@html-eslint/parser@0.46.2(jiti@2.6.0)':
-    dependencies:
-      '@html-eslint/template-syntax-parser': 0.46.2(jiti@2.6.0)
-      '@html-eslint/types': 0.46.0(jiti@2.6.0)
-      es-html-parser: 0.3.0
-    transitivePeerDependencies:
-      - jiti
-      - supports-color
-
-  '@html-eslint/template-syntax-parser@0.46.2(jiti@2.6.0)':
-    dependencies:
-      '@html-eslint/types': 0.46.0(jiti@2.6.0)
-    transitivePeerDependencies:
-      - jiti
-      - supports-color
-
-  '@html-eslint/types@0.46.0(jiti@2.6.0)':
-    dependencies:
-      '@types/estree': 1.0.8
-      es-html-parser: 0.3.0
-      eslint: 9.36.0(jiti@2.6.0)
-    transitivePeerDependencies:
-      - jiti
-      - supports-color
 
   '@humanfs/core@0.19.1': {}
 
@@ -6739,8 +6699,6 @@ snapshots:
   error-stack-parser-es@1.0.5: {}
 
   errx@0.1.0: {}
-
-  es-html-parser@0.3.0: {}
 
   es-module-lexer@1.7.0: {}
 

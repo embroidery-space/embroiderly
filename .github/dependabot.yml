@@ -9,7 +9,7 @@ updates:
       - "/"
       - "/app"
       - "/crates/tauri-plugin-log"
-      - "/crates/tauri-plugin-sentry" 
+      - "/crates/tauri-plugin-sentry"
       - "/crates/tauri-plugin-posthog"
     schedule:
       interval: "weekly"
