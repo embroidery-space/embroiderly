@@ -13,7 +13,7 @@
     "@embroiderly/tauri-plugin-posthog": "workspace:*",
     "@embroiderly/tauri-plugin-sentry": "workspace:*",
     "@fluent/bundle": "0.19.1",
-    "@nuxt/ui": "3.3.4",
+    "@nuxt/ui": "4.0.0",
     "@pixi/devtools": "2.0.1",
     "@sentry/vue": "10.13.0",
     "@stdlib/math-base-special-roundn": "0.2.2",
