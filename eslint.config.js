@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { fileURLToPath, URL } from "node:url";
 
 import js from "@eslint/js";
 import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
@@ -12,7 +13,7 @@ import yamlEslintParser from "yaml-eslint-parser";
 
 // Read the `.prettierignore` file and filter out empty lines and comments.
 const ignores = fs
-  .readFileSync(".prettierignore", { encoding: "utf-8" })
+  .readFileSync(fileURLToPath(new URL(".prettierignore", import.meta.url)), { encoding: "utf-8" })
   .split(/\r?\n/)
   .filter((s) => s.length && !s.startsWith("#"));
 
@@ -67,7 +68,7 @@ export default defineConfigWithVueTs(
     plugins: { "better-tailwindcss": betterTailwindcss },
     settings: {
       "better-tailwindcss": {
-        entryPoint: "app/src/assets/styles.css",
+        entryPoint: fileURLToPath(new URL("app/src/assets/styles.css", import.meta.url)),
       },
     },
     rules: {
