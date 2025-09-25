@@ -5,7 +5,6 @@ import vue from "eslint-plugin-vue";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
-import vueEslintParser from "vue-eslint-parser";
 
 // Read the `.prettierignore` file and filter out empty lines and comments.
 const ignores = fs
@@ -17,13 +16,14 @@ export default defineConfigWithVueTs(
   { ignores },
   js.configs.recommended,
   vue.configs["flat/recommended"],
+  vueTsConfigs.recommended,
   {
     files: ["app/src/**/*.{ts,vue}", "crates/**/guest-js/**/*.ts"],
     languageOptions: { ecmaVersion: "latest", globals: { ...globals.browser } },
     rules: { "no-console": ["warn"] },
   },
-  { files: ["app/src/**/*.vue"], languageOptions: { parser: vueEslintParser } },
   {
+    files: ["app/src/**/*.vue"],
     plugins: { "better-tailwindcss": betterTailwindcss },
     settings: {
       "better-tailwindcss": {
@@ -50,5 +50,4 @@ export default defineConfigWithVueTs(
     },
   },
   vuePrettierEslintConfig,
-  vueTsConfigs.recommended,
 );

@@ -38,9 +38,6 @@ importers:
       tailwindcss:
         specifier: 4.1.13
         version: 4.1.13
-      vue-eslint-parser:
-        specifier: 10.2.0
-        version: 10.2.0(eslint@9.36.0(jiti@2.6.0))
 
   app:
     dependencies:
