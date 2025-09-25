@@ -44,11 +44,9 @@ export default defineConfigWithVueTs(
       "better-tailwindcss/no-unnecessary-whitespace": ["warn"],
 
       // Correctness rules.
-      // For some reason, some Nuxt UI classes aren't recognized by the plugin.
-      // So keep the `no-unregistered-classes` rule disabled for now.
-      "better-tailwindcss/no-unregistered-classes": ["off"],
-      "better-tailwindcss/no-conflicting-classes": ["off"],
-      "better-tailwindcss/no-restricted-classes": ["off"],
+      "better-tailwindcss/no-unregistered-classes": ["warn"],
+      "better-tailwindcss/no-conflicting-classes": ["warn"],
+      "better-tailwindcss/no-restricted-classes": ["warn"],
     },
   },
   vuePrettierEslintConfig,
