@@ -1,6 +1,8 @@
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
+
 import { defineStore } from "pinia";
+import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
+
 import {
   DisplayApi,
   FabricApi,
@@ -27,8 +29,8 @@ import {
   ReferenceImage,
   ReferenceImageSettings,
   deserializeStitches,
-  type Stitch,
 } from "~/core/pattern/";
+import type { Stitch } from "~/core/pattern/";
 import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,

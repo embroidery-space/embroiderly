@@ -1,10 +1,11 @@
 /// <reference types="vitest" />
 import { fileURLToPath, URL } from "node:url";
-import { defineConfig } from "vite";
-import vueDevTools from "vite-plugin-vue-devtools";
-import vue from "@vitejs/plugin-vue";
+
 import ui from "@nuxt/ui/vite";
 import tailwindcss from "@tailwindcss/vite";
+import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
+import vueDevTools from "vite-plugin-vue-devtools";
 
 import { NuxtUIConfig } from "./ui.config";
 

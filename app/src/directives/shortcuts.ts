@@ -1,5 +1,5 @@
-import type { DirectiveBinding } from "vue";
 import { useMagicKeys, whenever } from "@vueuse/core";
+import type { DirectiveBinding } from "vue";
 
 /** Vue.js directive to handle keyboard shortcuts on a specific element. */
 export function ShortcutsDirective<Value extends () => void>(el: HTMLElement, binding: DirectiveBinding<Value>) {

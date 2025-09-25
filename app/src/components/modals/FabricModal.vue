@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
   import { ref } from "vue";
+
   import { Fabric } from "~/core/pattern/";
 
   const props = defineProps<{ fabric?: Fabric }>();

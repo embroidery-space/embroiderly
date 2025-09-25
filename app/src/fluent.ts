@@ -1,5 +1,5 @@
-import { en as nuxtEnLocale, uk as nuxtUkLocale } from "@nuxt/ui/locale";
 import { FluentBundle, FluentResource } from "@fluent/bundle";
+import { en as nuxtEnLocale, uk as nuxtUkLocale } from "@nuxt/ui/locale";
 import { createFluentVue } from "fluent-vue";
 
 import enContent from "~/locales/en.ftl?raw";

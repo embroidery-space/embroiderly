@@ -1,6 +1,7 @@
 import { sep } from "@tauri-apps/api/path";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import type { DialogFilter, OpenDialogOptions, SaveDialogOptions } from "@tauri-apps/plugin-dialog";
+
 import { createSharedComposable, useLocalStorage } from "@vueuse/core";
 
 import { PathApi } from "~/api/";

@@ -20,15 +20,14 @@ import {
   ReferenceImageSettings,
   SpecialStitch,
   SpecialStitchModel,
-  type Stitch,
 } from "~/core/pattern/";
-
+import type { Stitch } from "~/core/pattern/";
 import { STITCH_SCALE_FACTOR } from "~/core/pixi/constants.ts";
 import { TextureManager } from "~/core/pixi/texture-manager.ts";
 
-import { ReferenceImageView } from "./image.ts";
 import { FabricView } from "./fabric.ts";
 import { GridView } from "./grid.ts";
+import { ReferenceImageView } from "./image.ts";
 import { Rulers } from "./rulers.ts";
 import {
   StitchGraphics,

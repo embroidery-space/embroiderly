@@ -6,9 +6,11 @@
 
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+
   import { computed, onMounted, onErrorCaptured } from "vue";
-  import { NUXT_LOCALES } from "./fluent.ts";
+
   import { PatternApi } from "./api/";
+  import { NUXT_LOCALES } from "./fluent.ts";
 
   const confirm = useConfirm();
   const toast = useToast();

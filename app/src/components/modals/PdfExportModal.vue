@@ -54,8 +54,9 @@
 
 <script setup lang="ts">
   import { basename } from "@tauri-apps/api/path";
-  import { ref } from "vue";
+
   import { asyncComputed, refAutoReset } from "@vueuse/core";
+  import { ref } from "vue";
 
   import { PdfExportOptions } from "~/core/pattern/";
 

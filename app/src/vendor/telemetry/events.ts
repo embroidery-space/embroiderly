@@ -1,4 +1,5 @@
 import type { EventObject } from "@embroiderly/tauri-plugin-posthog";
+
 import type { Properties } from "posthog-js/dist/module.no-external";
 
 import type { OtherOptions, TelemetryOptions, UiOptions, UpdaterOptions, ViewportOptions } from "~/stores/settings";

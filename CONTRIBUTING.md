@@ -20,7 +20,6 @@ There are several areas of contribution:
 
 - **Documentation.**
   You can always edit the [documentation](https://github.com/embroidery-space/documentation).
-
   - **Specifications.**
     We are working on specifying the [cross-stitch pattern file format](https://github.com/embroidery-space/xsp-specs) supported by Embroiderly, making it much easier to understand its internal structure and then develop parsers.
     You are welcome to do so if you know how to improve them!

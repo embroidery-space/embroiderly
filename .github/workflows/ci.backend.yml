@@ -1,15 +1,15 @@
 name: CI (backend)
 on:
   pull_request:
-    branches: ["dev"]
-    types: ["opened", "reopened", "edited", "synchronize"]
+    branches: [dev]
+    types: [opened, reopened, edited, synchronize]
     paths:
       - "app/src-tauri/**"
       - "crates/**"
       - "Cargo.*"
-      - "rustfmt.toml"
-      - ".github/workflows/ci.backend.yml"
-      - ".github/workflows/audit.backend.yml"
+      - rustfmt.toml
+      - .github/workflows/ci.backend.yml
+      - .github/workflows/audit.backend.yml
 permissions:
   contents: read
 concurrency:

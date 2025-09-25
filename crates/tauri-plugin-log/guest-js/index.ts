@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
+
 import StackTracey from "stacktracey";
 
 export enum LogLevel {

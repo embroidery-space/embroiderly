@@ -1,22 +1,15 @@
 import { b } from "@zorsh/zorsh";
-import { dequal } from "dequal/lite";
 import { toByteArray } from "base64-js";
+import { dequal } from "dequal/lite";
 import { stringify as stringifyUuid } from "uuid";
 
-import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
-import { Fabric } from "./fabric.ts";
-import { PaletteItem } from "./palette.ts";
-import {
-  FullStitch,
-  PartStitch,
-  LineStitch,
-  NodeStitch,
-  SpecialStitch,
-  SpecialStitchModel,
-  type Stitch,
-} from "./stitches.ts";
 import { DisplayMode, DisplaySettings, Grid, LayersVisibility, PaletteSettings } from "./display.ts";
+import { Fabric } from "./fabric.ts";
+import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
+import { PaletteItem } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
+import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch, SpecialStitchModel } from "./stitches.ts";
+import type { Stitch } from "./stitches.ts";
 
 export class PatternInfo {
   title: string;

@@ -78,8 +78,10 @@
 <script setup lang="ts">
   import { writeText } from "@tauri-apps/plugin-clipboard-manager";
   import { openUrl } from "@tauri-apps/plugin-opener";
-  import { computed } from "vue";
+
   import type { DropdownMenuItem } from "@nuxt/ui";
+  import { computed } from "vue";
+
   import { SystemApi } from "~/api/";
 
   const confirm = useConfirm();

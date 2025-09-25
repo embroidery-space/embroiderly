@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
-import { Blend, PaletteItem } from "./palette.ts";
 import { PaletteSettings } from "./display.ts";
+import { Blend, PaletteItem } from "./palette.ts";
 
 const BLENDS = [
   { brand: "Anchor", number: "9159" },

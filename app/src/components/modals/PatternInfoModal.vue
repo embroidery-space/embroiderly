@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
   import { ref } from "vue";
+
   import { PatternInfo } from "~/core/pattern/";
 
   const props = defineProps<{ patternInfo: PatternInfo }>();

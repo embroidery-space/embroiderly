@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
+
 import type { Breadcrumb, TransportRequest } from "@sentry/core";
 
 export async function envelope(request: TransportRequest) {

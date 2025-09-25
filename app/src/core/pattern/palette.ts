@@ -1,6 +1,7 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
-import { Color, type ColorSource } from "pixi.js";
+import { Color } from "pixi.js";
+import type { ColorSource } from "pixi.js";
 
 import { PaletteSettings } from "./display.ts";
 

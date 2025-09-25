@@ -1,0 +1,18 @@
+# Build
+**/node_modules/
+**/dist/
+pnpm-lock.yaml
+
+**/target/
+Cargo.toml
+Cargo.lock
+rustfmt.toml
+
+# Rust
+app/src-tauri/
+
+crates/xsp-parsers/
+crates/embroiderly-*/
+crates/tauri-plugin-*/dist-js/
+crates/tauri-plugin-*/permissions/
+crates/tauri-plugin-*/src/
