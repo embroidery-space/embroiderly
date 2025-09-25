@@ -17,15 +17,22 @@ const ignores = fs
   .filter((s) => s.length && !s.startsWith("#"));
 
 export default defineConfigWithVueTs(
+  // Common options.
   { ignores },
   js.configs.recommended,
+
+  // Vue.js configs.
   vue.configs["flat/recommended"],
   vueTsConfigs.recommended,
+
+  // Custom rules.
   {
     files: ["app/src/**/*.{ts,vue}", "crates/**/guest-js/**/*.ts"],
     languageOptions: { ecmaVersion: "latest", globals: { ...globals.browser } },
     rules: { "no-console": ["warn"] },
   },
+
+  // Imports organization.
   {
     files: ["**/*.{js,ts,vue}"],
     plugins: { "import-x": importX },
@@ -53,6 +60,8 @@ export default defineConfigWithVueTs(
       "import-x/consistent-type-specifier-style": ["warn", "prefer-top-level"],
     },
   },
+
+  // TailwindCSS classes validation.
   {
     files: ["app/src/**/*.vue"],
     plugins: { "better-tailwindcss": betterTailwindcss },
@@ -78,6 +87,8 @@ export default defineConfigWithVueTs(
       "better-tailwindcss/no-restricted-classes": ["warn"],
     },
   },
+
+  // YAML validation.
   {
     files: ["pnpm-workspace.yaml", ".github/**/*.yml"],
     extends: yml.configs["flat/standard"],
@@ -86,5 +97,7 @@ export default defineConfigWithVueTs(
       "yml/no-empty-mapping-value": "off",
     },
   },
+
+  // Prettier intergation.
   vuePrettierEslintConfig,
 );
