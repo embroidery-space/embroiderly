@@ -49,7 +49,6 @@ export default defineConfigWithVueTs(
       "better-tailwindcss/no-restricted-classes": ["warn"],
     },
   },
-  vuePrettierEslintConfig,
   {
     files: ["pnpm-workspace.yaml", ".github/**/*.yml"],
     extends: yml.configs["flat/standard"],
@@ -58,4 +57,5 @@ export default defineConfigWithVueTs(
       "yml/no-empty-mapping-value": "off",
     },
   },
+  vuePrettierEslintConfig,
 );
