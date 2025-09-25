@@ -31,7 +31,7 @@ jobs:
           node-version-file: package.json
           cache: pnpm
       - run: pnpm install
-      - uses: dtolnay/rust-toolchain@1.89.0 # stable
+      - uses: dtolnay/rust-toolchain@1.100.0 # stable
       - uses: tauri-apps/tauri-action@e834788a94591d81e3ae0bd9ec06366f5afb8994 # v0.5.23
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

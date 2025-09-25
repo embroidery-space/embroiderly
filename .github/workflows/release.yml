@@ -27,7 +27,7 @@ jobs:
         with:
           node-version-file: package.json
           cache: pnpm
-      - uses: dtolnay/rust-toolchain@1.89.0 # stable
+      - uses: dtolnay/rust-toolchain@1.100.0 # stable
 
       - run: pnpm install
 
