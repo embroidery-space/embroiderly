@@ -72,8 +72,9 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, reactive, ref, watch, type Ref } from "vue";
   import { Color } from "pixi.js";
+  import { computed, onMounted, reactive, ref, watch } from "vue";
+  import type { Ref } from "vue";
 
   import { FabricApi } from "~/api";
   import { Fabric, PaletteSettings, FabricColor } from "~/core/pattern/";

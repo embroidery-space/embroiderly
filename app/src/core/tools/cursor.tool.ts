@@ -1,4 +1,5 @@
 import { ReferenceImageView } from "../pixi/components/pattern/image.ts";
+
 import type { PatternEditorTool, PatternEditorToolContext } from "./index.ts";
 
 export class CursorTool implements PatternEditorTool {

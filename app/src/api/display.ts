@@ -1,5 +1,7 @@
+import { LayersVisibility } from "~/core/pattern/";
+import type { DisplayMode } from "~/core/pattern/";
+
 import { invoke } from "./index.ts";
-import { LayersVisibility, type DisplayMode } from "~/core/pattern/";
 
 export function setDisplayMode(patternId: string, mode: DisplayMode) {
   return invoke<void>("set_display_mode", { mode }, { headers: { patternId } });

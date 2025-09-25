@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
+
 import { PostHog as OriginalPostHog } from "posthog-js/dist/module.no-external";
 import type { EventName, Properties, CaptureOptions, BeforeSendFn } from "posthog-js/dist/module.no-external";
 

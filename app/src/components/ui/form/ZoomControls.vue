@@ -40,8 +40,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
+  import { computed } from "vue";
+
   import type { ZoomState } from "~/core/pixi//";
 
   const fluent = useFluent();

@@ -1,9 +1,11 @@
 import { initDevtools } from "@pixi/devtools";
-import { Application, type ApplicationOptions } from "pixi.js";
+import { Application } from "pixi.js";
+import type { ApplicationOptions } from "pixi.js";
 
-import { type PatternView } from "./components/";
+import type { PatternView } from "./components/";
 import { TextureManager } from "./texture-manager.ts";
-import { ToolEvent, PatternViewport, type ToolEventDetail, type ViewportOptions, type ZoomState } from "./viewport.ts";
+import { ToolEvent, PatternViewport } from "./viewport.ts";
+import type { ToolEventDetail, ViewportOptions, ZoomState } from "./viewport.ts";
 
 /** Options for the pattern application. */
 export interface PatternApplicationOptions {

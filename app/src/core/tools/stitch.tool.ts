@@ -1,6 +1,5 @@
 import { Point } from "pixi.js";
 
-import { StitchGraphics } from "~/core/pixi/";
 import {
   FullStitch,
   FullStitchKind,
@@ -11,9 +10,9 @@ import {
   LineStitchKind,
   NodeStitch,
   NodeStitchKind,
-  type StitchKind,
-  type Stitch,
 } from "~/core/pattern/";
+import type { StitchKind, Stitch } from "~/core/pattern/";
+import { StitchGraphics } from "~/core/pixi/";
 
 import type { PatternEditorTool, PatternEditorToolContext } from "./index.ts";
 

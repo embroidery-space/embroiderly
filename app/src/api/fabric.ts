@@ -1,5 +1,7 @@
+import { Fabric, deserializeFabricColors } from "~/core/pattern/";
+import type { FabricColor } from "~/core/pattern/";
+
 import { invoke } from "./index.ts";
-import { Fabric, deserializeFabricColors, type FabricColor } from "~/core/pattern/";
 
 export function updateFabric(patternId: string, fabric: Fabric) {
   return invoke<void>("update_fabric", Fabric.serialize(fabric), { headers: { patternId } });

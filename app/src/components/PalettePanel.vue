@@ -98,9 +98,10 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch } from "vue";
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { dequal } from "dequal";
+  import { computed, ref, watch } from "vue";
+
   import { PaletteItem, PaletteSettings } from "~/core/pattern/";
 
   const appStateStore = useAppStateStore();

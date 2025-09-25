@@ -1,11 +1,13 @@
 import fs from "node:fs";
-import globals from "globals";
+
 import js from "@eslint/js";
-import vue from "eslint-plugin-vue";
-import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
+import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
+import importX from "eslint-plugin-import-x";
+import vue from "eslint-plugin-vue";
 import yml from "eslint-plugin-yml";
+import globals from "globals";
 import yamlEslintParser from "yaml-eslint-parser";
 
 // Read the `.prettierignore` file and filter out empty lines and comments.
@@ -23,6 +25,33 @@ export default defineConfigWithVueTs(
     files: ["app/src/**/*.{ts,vue}", "crates/**/guest-js/**/*.ts"],
     languageOptions: { ecmaVersion: "latest", globals: { ...globals.browser } },
     rules: { "no-console": ["warn"] },
+  },
+  {
+    files: ["**/*.{js,ts,vue}"],
+    plugins: { "import-x": importX },
+    rules: {
+      "import-x/order": [
+        "warn",
+        {
+          groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+          pathGroups: [
+            {
+              pattern: "{@embroiderly/**,@tauri-apps/**}",
+              group: "external",
+              position: "before",
+            },
+            {
+              pattern: "~/**",
+              group: "internal",
+            },
+          ],
+          pathGroupsExcludedImportTypes: ["builtin"],
+          "newlines-between": "always",
+          alphabetize: { order: "asc", caseInsensitive: true },
+        },
+      ],
+      "import-x/consistent-type-specifier-style": ["warn", "prefer-top-level"],
+    },
   },
   {
     files: ["app/src/**/*.vue"],

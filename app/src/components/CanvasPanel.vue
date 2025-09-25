@@ -59,16 +59,17 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
   import type { ContextMenuItem } from "@nuxt/ui";
-  import { useDebounceFn, useEventListener } from "@vueuse/core";
   import { vElementSize } from "@vueuse/components";
+  import { useDebounceFn, useEventListener } from "@vueuse/core";
   import { Assets } from "pixi.js";
+  import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
 
   import { PatternEvent } from "~/core/pattern/";
   import { PatternApplication, ToolEvent, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
-  import { CursorTool, type PatternEditorToolContext } from "~/core/tools/";
+  import { CursorTool } from "~/core/tools/";
+  import type { PatternEditorToolContext } from "~/core/tools/";
 
   const fluent = useFluent();
 

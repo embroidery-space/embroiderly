@@ -90,8 +90,9 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from "vue";
   import type { TabsItem } from "@nuxt/ui";
+  import { computed } from "vue";
+
   import type { OtherOptions, UiOptions, UpdaterOptions, ViewportOptions } from "~/stores/settings.ts";
 
   const ui = defineModel<UiOptions>("ui", { required: true });

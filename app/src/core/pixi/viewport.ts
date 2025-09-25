@@ -1,8 +1,9 @@
 import { Bounds, Container, Point, Rectangle } from "pixi.js";
 import type { ContainerChild, DestroyOptions, IRenderLayer, FederatedPointerEvent } from "pixi.js";
 
-import { getMouseButtons, MODIFIERS, type ModifiersState } from "./utils/index.ts";
 import { MIN_SCALE, MAX_SCALE, DEFAULT_CONTAINER_OPTIONS } from "./constants.ts";
+import { getMouseButtons, MODIFIERS } from "./utils/index.ts";
+import type { ModifiersState } from "./utils/index.ts";
 
 const WHEEL_ZOOM_FACTOR = 0.1;
 

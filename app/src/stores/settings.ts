@@ -1,10 +1,12 @@
 import { setTheme as setAppTheme } from "@tauri-apps/api/app";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
-import { defineAsyncComponent, reactive, ref, watch } from "vue";
+
 import { defineStore } from "pinia";
-import { LOCALES } from "~/fluent.ts";
+import { defineAsyncComponent, reactive, ref, watch } from "vue";
+
 import type { WheelAction } from "~/core/pixi/";
+import { LOCALES } from "~/fluent.ts";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";

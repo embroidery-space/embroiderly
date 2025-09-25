@@ -2,8 +2,8 @@ import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 
-import { BasePaletteItem } from "./palette";
 import { PaletteSettings } from "./display";
+import { BasePaletteItem } from "./palette";
 
 export class Fabric {
   width: number;

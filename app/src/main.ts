@@ -1,17 +1,18 @@
-import { createApp } from "vue";
-import ui from "@nuxt/ui/vue-plugin";
 import { defaultSentryOptions } from "@embroiderly/tauri-plugin-sentry";
+
+import ui from "@nuxt/ui/vue-plugin";
+import { createApp } from "vue";
 
 import "./assets/styles.css";
 import "./assets/icons.ts";
 
-import { router } from "./router.ts";
-import { pinia } from "./stores/";
+import App from "./App.vue";
 import { ShortcutsDirective } from "./directives/";
 import { fluent } from "./fluent.ts";
 import { initLogger } from "./logger.ts";
+import { router } from "./router.ts";
+import { pinia } from "./stores/";
 import { sentry } from "./vendor/";
-import App from "./App.vue";
 
 const app = createApp(App);
 

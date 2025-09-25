@@ -54,8 +54,9 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, toRaw, useTemplateRef, type MaybeRefOrGetter } from "vue";
   import { unrefElement } from "@vueuse/core";
+  import { ref, computed, toRaw, useTemplateRef } from "vue";
+  import type { MaybeRefOrGetter } from "vue";
 
   interface ToolOption {
     label: string;

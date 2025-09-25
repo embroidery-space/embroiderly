@@ -10,8 +10,6 @@ import type {
   TextStyleOptions,
 } from "pixi.js";
 
-import { TextureManager } from "~/core/pixi/";
-import { DEFAULT_CONTAINER_OPTIONS, DEFAULT_TEXT_STYLE_OPTIONS, STITCH_SCALE_FACTOR } from "~/core/pixi/constants.ts";
 import {
   Bead,
   FullStitch,
@@ -21,8 +19,10 @@ import {
   PartStitchKind,
   LineStitch,
   NodeStitch,
-  type Stitch,
 } from "~/core/pattern/";
+import type { Stitch } from "~/core/pattern/";
+import { TextureManager } from "~/core/pixi/";
+import { DEFAULT_CONTAINER_OPTIONS, DEFAULT_TEXT_STYLE_OPTIONS, STITCH_SCALE_FACTOR } from "~/core/pixi/constants.ts";
 
 export interface StitchContainer<G> {
   /**

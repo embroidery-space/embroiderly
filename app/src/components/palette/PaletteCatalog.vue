@@ -46,7 +46,8 @@
 
 <script setup lang="ts">
   import type { DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
-  import { onMounted, ref, computed, type Ref } from "vue";
+  import { onMounted, ref, computed } from "vue";
+  import type { Ref } from "vue";
 
   import { PaletteApi } from "~/api";
   import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/core/pattern/";

@@ -75,6 +75,7 @@
 
 <script setup lang="ts">
   import { openUrl } from "@tauri-apps/plugin-opener";
+
   import { computed } from "vue";
 
   const settingsStore = useSettingsStore();
