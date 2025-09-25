@@ -1,19 +1,19 @@
 name: CI (frontend)
 on:
   pull_request:
-    branches: ["dev"]
-    types: ["opened", "reopened", "edited", "synchronize"]
+    branches: [dev]
+    types: [opened, reopened, edited, synchronize]
     paths:
       - "app/**"
       - "!app/src-tauri/**"
       - "package*.json"
-      - "pnpm-lock.yaml"
-      - "pnpm-workspace.yaml"
-      - "eslint.config.js"
-      - ".prettierrc.json"
-      - ".prettierignore"
-      - ".github/workflows/ci.frontend.yml"
-      - ".github/workflows/audit.frontend.yml"
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+      - eslint.config.js
+      - .prettierrc.json
+      - .prettierignore
+      - .github/workflows/ci.frontend.yml
+      - .github/workflows/audit.frontend.yml
 permissions:
   contents: read
 concurrency:

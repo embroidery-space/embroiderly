@@ -5,6 +5,8 @@ import vue from "eslint-plugin-vue";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
+import yml from "eslint-plugin-yml";
+import yamlEslintParser from "yaml-eslint-parser";
 
 // Read the `.prettierignore` file and filter out empty lines and comments.
 const ignores = fs
@@ -50,4 +52,12 @@ export default defineConfigWithVueTs(
     },
   },
   vuePrettierEslintConfig,
+  {
+    files: ["pnpm-workspace.yaml", ".github/**/*.yml"],
+    extends: yml.configs["flat/standard"],
+    languageOptions: { parser: yamlEslintParser },
+    rules: {
+      "yml/no-empty-mapping-value": "off",
+    },
+  },
 );
