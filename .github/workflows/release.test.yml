@@ -8,10 +8,6 @@ permissions:
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  audit-frontend:
-    uses: ./.github/workflows/audit.frontend.yml
-  audit-backend:
-    uses: ./.github/workflows/audit.backend.yml
   build:
     strategy:
       fail-fast: false

@@ -1,7 +1,7 @@
 name: CI (frontend)
 on:
   pull_request:
-    branches: [dev]
+    branches: [main, dev]
     types: [opened, reopened, edited, synchronize]
     paths:
       - "app/**"
@@ -13,12 +13,31 @@ on:
       - .prettierrc.json
       - .prettierignore
       - .github/workflows/ci.frontend.yml
-      - .github/workflows/audit.frontend.yml
 permissions:
   contents: read
 concurrency:
   group: ${{ github.ref }}-frontend
   cancel-in-progress: true
 jobs:
-  audit:
-    uses: ./.github/workflows/audit.frontend.yml
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: ./.github/actions/setup-node
+      - name: Check types
+        run: pnpm build
+      - name: Check formatting
+        run: pnpm fmt
+      - name: Check linting
+        run: pnpm lint
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: ./.github/actions/setup-node
+      - name: Test
+        run: pnpm test
