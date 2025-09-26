@@ -98,7 +98,7 @@ machine-uid = "0.5.3"
 uuid = { version = "1.18.1", features = ["v4", "v7"] }
 
 # File system utilities
-tempfile = "3.22.0"
+tempfile = "3.23.0"
 walkdir = "2.5.0"
 
 # Iterator utilities
