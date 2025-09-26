@@ -4,6 +4,7 @@ on:
     branches: [main, dev]
     types: [opened, reopened, edited, synchronize]
     paths:
+      - ".config/**"
       - "app/src-tauri/**"
       - "crates/**"
       - "Cargo.*"
