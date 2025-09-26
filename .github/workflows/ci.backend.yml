@@ -1,7 +1,7 @@
 name: CI (backend)
 on:
   pull_request:
-    branches: [dev]
+    branches: [main, dev]
     types: [opened, reopened, edited, synchronize]
     paths:
       - "app/src-tauri/**"
@@ -9,7 +9,6 @@ on:
       - "Cargo.*"
       - rustfmt.toml
       - .github/workflows/ci.backend.yml
-      - .github/workflows/audit.backend.yml
 permissions:
   contents: read
 concurrency:
@@ -18,5 +17,25 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  audit:
-    uses: ./.github/workflows/audit.backend.yml
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: ./.github/actions/setup-rust
+        with:
+          with-nightly: true
+      - name: Check formatting
+        run: cargo +nightly fmt --check
+      - name: Check linting
+        run: cargo clippy --locked -- -D warnings
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: ./.github/actions/setup-rust
+      - name: Test
+        run: cargo nextest run --locked -F embroiderly/test

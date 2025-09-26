@@ -18,8 +18,7 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   analyze:
-    name: CodeQL Analysis
-    # Skip actions ran on dependency update branches.
+    # Skip CodeQL on dependency update branches.
     if: |
       startsWith(github.head_ref, 'dependabot/') == false
       && github.head_ref != 'dependency-updates'

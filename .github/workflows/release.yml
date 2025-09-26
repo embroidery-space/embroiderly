@@ -17,19 +17,8 @@ jobs:
       app-version: ${{ steps.tauri.outputs.appVersion }}
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Install system dependencies (Ubuntu-only)
-        if: matrix.platform == 'ubuntu-latest'
-        run: |
-          sudo apt update
-          sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
-        with:
-          node-version-file: package.json
-          cache: pnpm
-      - uses: dtolnay/rust-toolchain@1.89.0 # stable
-
-      - run: pnpm install
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-rust
 
       - name: Build the application
         id: tauri
@@ -69,13 +58,7 @@ jobs:
       SENTRY_PROJECT: embroiderly
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
-        with:
-          node-version-file: package.json
-          cache: pnpm
-
-      - run: pnpm install
+      - uses: ./.github/actions/setup-node
 
       - name: Install Sentry CLI
         run: pnpm install -g @sentry/cli
