@@ -1,5 +1,10 @@
 name: Setup Node.js and pnpm
 description: Sets up Node.js and pnpm with caching
+inputs:
+  install-deps:
+    description: Whether to install dependencies with pnpm
+    required: false
+    default: "true"
 runs:
   using: composite
   steps:
@@ -8,4 +13,5 @@ runs:
       with:
         node-version-file: package.json
         cache: pnpm
-    - run: pnpm install
+    - if: inputs.install-deps == 'true'
+      run: pnpm install
