@@ -2,10 +2,10 @@
   <UModal :title="$t('title-pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
       <div class="flex flex-col gap-y-4">
-        <UButtonGroup class="w-full">
+        <UFieldGroup class="w-full">
           <UButton :label="$t('label-choose-file')" @click="chooseFile" />
           <UInput :model-value="pdfFile.base" readonly class="w-full" />
-        </UButtonGroup>
+        </UFieldGroup>
 
         <div class="flex flex-col gap-y-1">
           <UCheckbox

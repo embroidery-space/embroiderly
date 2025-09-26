@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center gap-x-2">
-    <UButtonGroup class="w-16">
+    <UFieldGroup class="w-16">
       <UInputNumber
         :model-value="zoom"
         color="neutral"
@@ -15,7 +15,7 @@
       <UDropdownMenu :items="zoomOptions">
         <UButton color="neutral" variant="outline" size="xs" icon="i-lucide:chevron-down" />
       </UDropdownMenu>
-    </UButtonGroup>
+    </UFieldGroup>
 
     <div class="flex grow items-center gap-x-1">
       <UTooltip :text="fluent.$t('label-zoom-out')" :delay-duration="200" :kbds="['ctrl', '-']">
