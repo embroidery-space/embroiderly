@@ -1,0 +1,22 @@
+name: Cleanup caches on closed PRs
+on:
+  pull_request:
+    branches: [main, dev]
+    types: [closed]
+jobs:
+  cleanup:
+    if: github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - run: |
+          set +e
+          for cacheKey in $(gh cache list --ref $BRANCH --json id --jq '.[].id')
+          do
+            gh cache delete $cacheKey
+          done
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
