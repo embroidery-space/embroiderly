@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && npm run check-types",
+    "build-only": "vite build",
     "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest --run",

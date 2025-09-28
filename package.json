@@ -9,6 +9,7 @@
     "tauri": "tauri",
     "dev": "pnpm --filter @embroiderly/app dev",
     "build": "pnpm --filter @embroiderly/app build",
+    "build-only": "pnpm --filter @embroiderly/app build-only",
     "fmt": "prettier --check .",
     "fmt:fix": "prettier --write .",
     "lint": "eslint .",
