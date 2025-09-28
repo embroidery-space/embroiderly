@@ -14,11 +14,15 @@ pub fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> an
     // We enable browser extensions only for development.
     #[cfg(all(debug_assertions, target_os = "windows"))]
     {
-      // Enable and setup browser extensions for development.
-      webview_window_builder = webview_window_builder
-        .browser_extensions_enabled(true)
-        // Load the browser extensions from the `src-tauri/extensions/` directory.
-        .extensions_path(std::env::current_dir()?.join("extensions"));
+      // Skip browser extensions for automation testing.
+      // This env var is set by `tauri-driver`.
+      if std::env::var("TAURI_WEBVIEW_AUTOMATION").is_err() {
+        // Enable and setup browser extensions for development.
+        webview_window_builder = webview_window_builder
+          .browser_extensions_enabled(true)
+          // Load the browser extensions from the `src-tauri/extensions/` directory.
+          .extensions_path(std::env::current_dir()?.join("extensions"));
+      }
     }
 
     webview_window_builder.build()?

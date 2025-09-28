@@ -1,5 +1,8 @@
 target/
 
+# Needed for integration tests.
+msedgedriver.exe
+
 node_modules/
 dist/
 
