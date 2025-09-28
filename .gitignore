@@ -1,4 +1,5 @@
 target/
+logs/
 
 # Needed for integration tests.
 msedgedriver.exe

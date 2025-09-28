@@ -37,7 +37,7 @@ pub fn app_logs_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyh
     app_handle.path().app_log_dir()? // In production, store logs in the application's log directory.
   };
   #[cfg(debug_assertions)]
-  let logs_dir = std::path::PathBuf::from("logs"); // In development, store logs in the `logs` directory near to the sources.
+  let logs_dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../logs"); // In development, store logs in the `app/logs/` directory.
 
   Ok(logs_dir)
 }
