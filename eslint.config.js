@@ -2,11 +2,13 @@ import fs from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 
 import js from "@eslint/js";
+import vitest from "@vitest/eslint-plugin";
 import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import importX from "eslint-plugin-import-x";
 import vue from "eslint-plugin-vue";
+import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
 import globals from "globals";
 import yamlEslintParser from "yaml-eslint-parser";
@@ -31,6 +33,16 @@ export default defineConfigWithVueTs(
     files: ["app/src/**/*.{ts,vue}", "crates/**/guest-js/**/*.ts"],
     languageOptions: { ecmaVersion: "latest", globals: { ...globals.browser } },
     rules: { "no-console": ["warn"] },
+  },
+
+  {
+    files: ["app/src/**/*.test.ts"],
+    extends: [vitest.configs["recommended"]],
+  },
+
+  {
+    files: ["app/tests/**/*.ts"],
+    extends: [wdio.configs["flat/recommended"]],
   },
 
   // Imports organization.
@@ -92,7 +104,7 @@ export default defineConfigWithVueTs(
   // YAML validation.
   {
     files: ["pnpm-workspace.yaml", ".github/**/*.yml"],
-    extends: yml.configs["flat/standard"],
+    extends: [yml.configs["flat/standard"]],
     languageOptions: { parser: yamlEslintParser },
     rules: {
       "yml/no-empty-mapping-value": "off",
