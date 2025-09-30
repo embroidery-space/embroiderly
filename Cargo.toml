@@ -66,7 +66,7 @@ zip = { version = "4.6.1", features = [
 ], default-features = false }
 
 # De/serialization
-serde = { version = "1.0.226", features = ["derive"] }
+serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.145"
 base64 = "0.22.1"
 borsh = { version = "1.5.7", features = ["derive"] }
@@ -79,7 +79,7 @@ clap = { version = "4.5.48", default-features = false, features = [
 
 # Error handling
 anyhow = "1.0.100"
-thiserror = "2.0.16"
+thiserror = "2.0.17"
 
 # Time handling
 time = { version = "0.3.44", features = ["formatting", "macros"] }
