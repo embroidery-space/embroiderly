@@ -1,7 +1,7 @@
 [test-groups]
-# Due to some plugins, which access some system resources for their need, we should run them sequentially to eliminate conflicts.
-tauri-commands = { max-threads = 1 }
+# We should run pattern I/O commands sequentially to eliminate conflicts.
+pattern-io-commands = { max-threads = 1 }
 
 [[profile.default.overrides]]
-filter = 'package(embroiderly) and kind(test)'
-test-group = 'tauri-commands'
+filter = 'package(embroiderly) and test(pattern_io)'
+test-group = 'pattern-io-commands'

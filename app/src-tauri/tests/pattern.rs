@@ -1,166 +1,40 @@
 use embroiderly::commands;
-use embroiderly::state::PatternsState;
-use embroiderly_pattern::{Fabric, PatternProject};
-use tauri::Manager;
+use embroiderly::state::{HistoryState, PatternsState};
+use embroiderly_pattern::PatternInfo;
+use tauri::Manager as _;
 
 mod utils;
 
-fn get_all_test_patterns() -> Vec<std::io::Result<std::fs::DirEntry>> {
-  let sample_patterns = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("resources/patterns");
-  let test_patterns = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/patterns");
-  std::fs::read_dir(sample_patterns)
-    .unwrap()
-    .chain(std::fs::read_dir(test_patterns).unwrap())
-    .collect()
-}
-
 #[test]
-fn parses_supported_pattern_formats() {
-  let (app, webview) = setup_test_app!(
-    commands: [commands::core::pattern::open_pattern],
-    plugins: [tauri_plugin_pinia::init()]
-  );
-  let patterns_state = app.state::<PatternsState>();
+fn updates_pattern_info() {
+  let (app, webview) = setup_test_app!(commands: [commands::core::pattern::update_pattern_info]);
+  let pattern_id = utils::create_test_pattern(&app);
 
-  for file_path in get_all_test_patterns().into_iter() {
-    let file_path = file_path.unwrap().path();
-
-    let tauri::ipc::InvokeResponseBody::Raw(body) = invoke_ipc!(
-      &webview,
-      cmd: "open_pattern",
-      body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-        "filePath": file_path.to_str().unwrap(),
-        "restoreFromBackup": None::<bool>,
-      }))
-    )
-    .unwrap() else {
-      panic!("Expected raw body in IPC response");
-    };
-    let patproj: PatternProject = borsh::from_slice(&body).unwrap();
-
-    assert!(patterns_state.read().unwrap().get_pattern_by_id(&patproj.id).is_some());
-  }
-}
-
-#[test]
-fn creates_new_pattern() {
-  let (app, webview) = setup_test_app!(
-    commands: [commands::core::pattern::create_pattern],
-    plugins: [tauri_plugin_pinia::init()]
-  );
-  let patterns_state = app.state::<PatternsState>();
-
-  assert!(patterns_state.read().unwrap().is_empty());
+  let new_pattern_info = PatternInfo {
+    title: "Updated Title".to_string(),
+    author: "Test Author".to_string(),
+    copyright: "2025".to_string(),
+    description: "Test Description".to_string(),
+  };
   assert!(
     invoke_ipc!(
       &webview,
-      cmd: "create_pattern",
-      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&Fabric::default()).unwrap())
+      cmd: "update_pattern_info",
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&new_pattern_info).unwrap()),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
     )
     .is_ok()
   );
-  assert_eq!(patterns_state.read().unwrap().len(), 1);
-}
 
-#[test]
-fn saves_pattern() {
-  let (_app, webview) = setup_test_app!(
-    commands: [
-      commands::core::pattern::load_pattern,
-      commands::core::pattern::open_pattern,
-      commands::core::pattern::save_pattern,
-      commands::core::pattern::close_pattern,
-    ],
-    plugins: [tauri_plugin_pinia::init()]
-  );
-
-  for file_path in get_all_test_patterns().into_iter() {
-    let file_path = file_path.unwrap().path();
-
-    // Loading the pattern first.
-    let tauri::ipc::InvokeResponseBody::Raw(body) = invoke_ipc!(
-      &webview,
-      cmd: "open_pattern",
-      body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-        "filePath": file_path.to_str().unwrap(),
-        "restoreFromBackup": None::<bool>,
-      }))
-    )
-    .unwrap() else {
-      panic!("Expected raw body in IPC response");
-    };
-    let patproj: PatternProject = borsh::from_slice(&body).unwrap();
-
-    for extension in ["oxs", "embproj"] {
-      let file_path = std::env::temp_dir().join(format!("pattern.{extension}"));
-
-      // If we can save the pattern and then parse it back, we can consider it a success.
-      assert!(
-        invoke_ipc!(
-          &webview,
-          cmd: "save_pattern",
-          body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-            "patternId": patproj.id.to_string(),
-            "filePath": file_path.to_str().unwrap(),
-          }))
-        )
-        .is_ok()
-      );
-      assert!(
-        invoke_ipc!(
-          &webview,
-          cmd: "load_pattern",
-          body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-            "patternId": patproj.id.to_string(),
-          }))
-        )
-        .is_ok()
-      );
-    }
-
-    assert!(
-      invoke_ipc!(
-        &webview,
-        cmd: "close_pattern",
-        body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-          "patternId": patproj.id.to_string(),
-        }))
-      )
-      .is_ok()
-    );
-  }
-}
-
-#[test]
-fn closes_pattern() {
-  let (app, webview) = setup_test_app!(
-    commands: [
-      commands::core::pattern::create_pattern,
-      commands::core::pattern::close_pattern,
-    ],
-    plugins: [tauri_plugin_pinia::init()]
-  );
   let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
 
-  assert!(patterns_state.read().unwrap().is_empty());
-  let tauri::ipc::InvokeResponseBody::Raw(body) = invoke_ipc!(
-    &webview,
-    cmd: "create_pattern",
-    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&Fabric::default()).unwrap())
-  )
-  .unwrap() else {
-    panic!("Expected raw body in IPC response");
-  };
-  let patproj: PatternProject = borsh::from_slice(&body).unwrap();
-  assert_eq!(patterns_state.read().unwrap().len(), 1);
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert_eq!(patproj.pattern.info, new_pattern_info);
 
-  invoke_ipc!(
-    &webview,
-    cmd: "close_pattern",
-    body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-      "patternId": patproj.id.to_string(),
-    }))
-  )
-  .unwrap();
-  assert!(patterns_state.read().unwrap().is_empty());
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 1);
 }
