@@ -105,6 +105,9 @@ walkdir = "2.5.0"
 itertools = "0.14.0"
 rayon = "1.11.0"
 
+# Testing utilities
+rstest = "0.26.1"
+
 # Other
 ordered-float = { version = "5.0.0" }
 dyn-clone = "1.0.20"
