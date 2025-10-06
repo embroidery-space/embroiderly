@@ -3,5 +3,5 @@
 pattern-io-commands = { max-threads = 1 }
 
 [[profile.default.overrides]]
-filter = 'package(embroiderly) and test(pattern_io)'
+filter = 'package(embroiderly) and binary(pattern_io)'
 test-group = 'pattern-io-commands'
