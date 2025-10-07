@@ -6,6 +6,7 @@ pub mod history;
 pub mod image;
 pub mod palette;
 pub mod pattern;
+pub mod pattern_io;
 pub mod publish;
 pub mod stitches;
 
