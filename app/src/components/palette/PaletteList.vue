@@ -56,7 +56,7 @@
   import { BasePaletteItem, PaletteSettings } from "~/core/pattern/";
 
   interface PaletteListProps<T> {
-    options?: T[];
+    options?: readonly T[];
     optionValue?: (option: T) => unknown;
     disabled?: boolean;
     multiple?: boolean;

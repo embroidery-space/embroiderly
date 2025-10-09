@@ -7,8 +7,8 @@
     <UContextMenu :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions">
       <PaletteList
         :model-value="appStateStore.selectedPaletteItemIndexes"
-        :options="patternsStore.pattern?.palette"
-        :option-value="(pi) => patternsStore.pattern?.palette.findIndex((cmp) => dequal(cmp, pi))"
+        :options="patternsStore.pattern?.palette?.items"
+        :option-value="(pi) => patternsStore.pattern?.palette.items.findIndex((cmp) => dequal(cmp, pi))"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
         multiple
@@ -80,7 +80,7 @@
 
     <PaletteCatalog
       v-if="patternsStore.pattern?.palette && showPaletteCatalog"
-      :palette="patternsStore.pattern.palette"
+      :palette="patternsStore.pattern.palette.items"
       class="min-w-max border-l border-default"
       @close="showPaletteCatalog = false"
       @add-palette-item="patternsStore.addPaletteItem"
@@ -167,7 +167,7 @@
         disabled: !patternsStore.pattern?.palette.length,
         onSelect: (event) => {
           event.preventDefault();
-          appStateStore.selectedPaletteItemIndexes = patternsStore.pattern!.palette.map((_, i) => i);
+          appStateStore.selectedPaletteItemIndexes = patternsStore.pattern!.palette.items.map((_, i) => i);
         },
       },
     ],

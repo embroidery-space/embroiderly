@@ -105,7 +105,7 @@ pub fn export_pattern(
 
     let pattern_context = PatternContext {
       fabric: &patproj.pattern.fabric,
-      palette: &patproj.pattern.palette,
+      palette: patproj.pattern.palette.as_ref(),
       fullstitches: &fullstitches,
       partstitches: &partstitches,
       linestitches: &linestitches,

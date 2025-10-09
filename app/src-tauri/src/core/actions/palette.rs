@@ -82,7 +82,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let mut palitems = Vec::with_capacity(self.palindexes.len());
     for &palindex in self.palindexes.iter().rev() {
-      palitems.push(patproj.pattern.palette.remove(palindex as usize));
+      palitems.push(patproj.pattern.palette.remove(palindex));
     }
     window.emit("palette:remove_palette_item", &self.palindexes)?;
 
@@ -111,7 +111,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
     let metadata = self.metadata.get().unwrap();
     for (index, &palindex) in self.palindexes.iter().enumerate() {
       let palitem = metadata.palitems.get(index).unwrap().clone();
-      patproj.pattern.palette.insert(palindex as usize, palitem.clone());
+      patproj.pattern.palette.insert(palindex, palitem.clone());
 
       window.emit(
         "palette:add_palette_item",

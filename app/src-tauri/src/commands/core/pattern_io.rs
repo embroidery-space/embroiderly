@@ -73,9 +73,9 @@ pub fn open_pattern<R: tauri::Runtime>(
       fabric: patproj.pattern.fabric.clone(),
 
       palette_size: patproj.pattern.palette.len(),
-      blends_number: patproj.pattern.blends_number(),
-      used_palette_brands: patproj.pattern.used_palette_brands(),
-      used_stitch_fonts: patproj.pattern.used_stitch_fonts(),
+      blends_number: patproj.pattern.palette.blends_number(),
+      used_palette_brands: patproj.pattern.palette.used_brands(),
+      used_stitch_fonts: patproj.pattern.palette.used_symbol_fonts(),
 
       full_stitches_number,
       petite_stitches_number,

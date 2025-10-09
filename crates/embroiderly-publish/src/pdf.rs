@@ -54,7 +54,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   let typst_content = TypstContent {
     info: pattern.info.clone(),
     fabric: pattern.fabric.clone(),
-    palette: pattern.palette.clone(),
+    palette: pattern.palette.clone().into(),
     default_symbol_font: display_settings.default_symbol_font.clone(),
     frames: frames.iter().map(|(name, _)| name).cloned().collect(),
     options,

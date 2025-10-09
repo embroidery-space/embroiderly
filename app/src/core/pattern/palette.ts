@@ -212,6 +212,104 @@ export class AddedPaletteItemData {
   }
 }
 
+/** Manages palette items and their visual ordering. */
+export class Palette {
+  /** The actual palette items. */
+  #items: PaletteItem[];
+  /** Visual ordering of palette items. */
+  #positions: number[];
+
+  constructor(data: b.infer<typeof Palette.schema>) {
+    this.#items = data.items.map((item) => new PaletteItem(item));
+    this.#positions = [...data.positions];
+  }
+
+  static readonly schema = b.struct({
+    items: b.vec(PaletteItem.schema),
+    positions: b.vec(b.u32()),
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new Palette(Palette.schema.deserialize(buffer));
+  }
+
+  // === Access Methods ===
+
+  /** Returns the number of palette items. */
+  get length(): number {
+    return this.#items.length;
+  }
+
+  /** Returns read-only reference to items in actual order. */
+  get items(): readonly PaletteItem[] {
+    return this.#items;
+  }
+
+  /** Returns read-only reference to visual positions. */
+  get positions(): readonly number[] {
+    return this.#positions;
+  }
+  set positions(positions: number[]) {
+    if (import.meta.env.DEV && positions.length !== this.#items.length) {
+      throw new Error("Positions array length must match items length");
+    }
+    this.#positions = [...positions];
+  }
+
+  /** Returns palette items in visual order. */
+  getItemsInVisualOrder(): PaletteItem[] {
+    return this.#positions.map((index) => this.#items[index]!);
+  }
+
+  /** Return an item by its actual index. */
+  get(index: number): PaletteItem | undefined {
+    return this.#items[index];
+  }
+
+  // === Mutation Methods ===
+
+  /** Adds a new palette item, returning its actual index. */
+  push(item: PaletteItem): number {
+    const index = this.#items.length;
+    this.#items.push(item);
+    this.#positions.push(index);
+    return index;
+  }
+
+  /** Inserts a palette item at a specific actual index. */
+  insert(index: number, item: PaletteItem): void {
+    this.#items.splice(index, 0, item);
+
+    // Update all positions that reference indexes >= index
+    for (let i = 0; i < this.#positions.length; i++) {
+      if (this.#positions[i]! >= index) this.#positions[i]! += 1;
+    }
+
+    // Find where index should be inserted in visual order
+    const position = this.#positions.findIndex((idx) => idx > index);
+    const insertAt = position === -1 ? this.#positions.length : position;
+    this.#positions.splice(insertAt, 0, index);
+  }
+
+  /** Removes a palette item by its actual index. */
+  remove(index: number): PaletteItem | undefined {
+    if (index < 0 || index >= this.#items.length) return undefined;
+
+    const removed = this.#items.splice(index, 1)[0];
+
+    // Remove from positions
+    this.#positions = this.#positions.filter((idx) => idx !== index);
+
+    // Update all positions that reference indexes > index
+    for (let i = 0; i < this.#positions.length; i++) {
+      if (this.#positions[i]! > index) this.#positions[i]! -= 1;
+    }
+
+    return removed;
+  }
+}
+
 export function deserializeBrandPalette(data: Uint8Array | string) {
   const buffer = typeof data === "string" ? toByteArray(data) : data;
   return b

@@ -67,7 +67,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
       patproj
         .pattern
         .palette
-        .get(palindex as usize)
+        .get(palindex)
         .map(|palitem| AppEvent::PaletteItemRemoved {
           brand: palitem.brand.clone(),
           is_blend: palitem.is_blend(),

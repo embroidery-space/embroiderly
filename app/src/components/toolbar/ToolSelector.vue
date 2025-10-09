@@ -84,7 +84,7 @@
   const selectionColor = computed<string>(() => {
     const palindex = appStateStore.selectedPaletteItemIndexes[0];
     if (!props.usePalitemColor || !patternsStore.pattern || palindex === undefined) return "var(--text-dimmed)";
-    return patternsStore.pattern.palette[palindex]!.hex;
+    return patternsStore.pattern.palette.items[palindex]!.hex;
   });
 
   // Suppress the error by casting to `MaybeRefOrGetter`.

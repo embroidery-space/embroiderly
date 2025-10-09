@@ -1,5 +1,6 @@
-use xsp_parsers::{pmaker, ursa, xspro};
+use xsp_parsers::pmaker;
 
+use super::palette::*;
 use super::stitches::*;
 
 #[derive(Debug, Default, Clone)]
@@ -7,7 +8,7 @@ use super::stitches::*;
 pub struct Pattern {
   pub info: PatternInfo,
   pub fabric: Fabric,
-  pub palette: Vec<PaletteItem>,
+  pub palette: Palette,
   pub fullstitches: Stitches<FullStitch>,
   pub partstitches: Stitches<PartStitch>,
   pub linestitches: Stitches<LineStitch>,
@@ -19,33 +20,6 @@ pub struct Pattern {
 impl Pattern {
   pub fn new(fabric: Fabric) -> Self {
     Pattern { fabric, ..Pattern::default() }
-  }
-
-  /// Returns the number of blend colors in the pattern palette.
-  pub fn blends_number(&self) -> usize {
-    self.palette.iter().filter(|palitem| palitem.is_blend()).count()
-  }
-
-  /// Returns the thread brands used in the pattern palette.
-  pub fn used_palette_brands(&self) -> Vec<String> {
-    self
-      .palette
-      .iter()
-      .map(|palitem| palitem.brand.clone())
-      .collect::<std::collections::HashSet<String>>() // Collect unique values only.
-      .into_iter()
-      .collect() // Convert to vector.
-  }
-
-  /// Returns the stitch font names used in the pattern.
-  pub fn used_stitch_fonts(&self) -> Vec<String> {
-    self
-      .palette
-      .iter()
-      .filter_map(|palitem| palitem.symbol_font.clone())
-      .collect::<std::collections::HashSet<String>>() // Collect unique values only.
-      .into_iter()
-      .collect() // Convert to vector.
   }
 
   /// Returns the number of full and petite stitches in the pattern.
@@ -358,16 +332,6 @@ impl Pattern {
     self.linestitches.restore_stitches(linestitches, palindexes, palsize);
     self.nodestitches.restore_stitches(nodestitches, palindexes, palsize);
   }
-
-  pub fn get_all_symbol_fonts(&self) -> Vec<String> {
-    let mut fonts = std::collections::HashSet::new();
-    for item in &self.palette {
-      if let Some(symbol_font) = &item.symbol_font {
-        fonts.insert(symbol_font.clone());
-      }
-    }
-    fonts.into_iter().collect()
-  }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -397,185 +361,6 @@ impl From<pmaker::PatternInfo> for PatternInfo {
       author: pattern_info.author,
       copyright: pattern_info.copyright,
       description: pattern_info.description,
-    }
-  }
-}
-
-/// Represents a _brand_ palette item.
-///
-/// It contains only essential properties for clearly identifying colors.
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct BrandPaletteItem {
-  pub brand: String,
-  pub number: String,
-  pub name: String,
-  pub color: String,
-  #[cfg_attr(feature = "serde", serde(skip_serializing_if = "blends_empty"))]
-  pub blends: Option<Vec<Blend>>,
-}
-
-impl From<pmaker::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: pmaker::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: palitem
-        .blends
-        .map(|blends| blends.into_iter().map(Blend::from).collect()),
-    }
-  }
-}
-
-impl From<ursa::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: ursa::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-    }
-  }
-}
-
-impl From<xspro::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: xspro::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-    }
-  }
-}
-
-/// Represents a _working_ palette item.
-///
-/// It contains all the properties from `BrandPaletteItem` and some other for advanced displaying purposes.
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-pub struct PaletteItem {
-  pub brand: String,
-  pub number: String,
-  pub name: String,
-  pub color: String,
-  pub blends: Option<Vec<Blend>>,
-  #[cfg_attr(
-    feature = "borsh",
-    borsh(
-      serialize_with = "serialize_option_char",
-      deserialize_with = "deserialize_option_char"
-    )
-  )]
-  pub symbol: Option<char>,
-  pub symbol_font: Option<String>,
-}
-
-impl PaletteItem {
-  /// Returns true if the palette item is a blend.
-  pub fn is_blend(&self) -> bool {
-    self.blends.as_ref().is_some_and(|blends| !blends.is_empty())
-  }
-
-  /// Returns a printable representation of the symbol.
-  pub fn get_symbol(&self) -> String {
-    self.symbol.map(|ch| ch.to_string()).unwrap_or_default()
-  }
-}
-
-impl From<BrandPaletteItem> for PaletteItem {
-  fn from(brand_item: BrandPaletteItem) -> Self {
-    Self {
-      brand: brand_item.brand,
-      number: brand_item.number,
-      name: brand_item.name,
-      color: brand_item.color,
-      blends: brand_item.blends,
-
-      symbol: None,
-      symbol_font: None,
-    }
-  }
-}
-
-impl From<pmaker::PaletteItem> for PaletteItem {
-  fn from(palitem: pmaker::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: palitem
-        .blends
-        .map(|blends| blends.into_iter().map(Blend::from).collect()),
-      symbol: None,
-      symbol_font: None,
-    }
-  }
-}
-
-impl From<ursa::PaletteItem> for PaletteItem {
-  fn from(palitem: ursa::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-      symbol: None,
-      symbol_font: None,
-    }
-  }
-}
-
-impl From<xspro::PaletteItem> for PaletteItem {
-  fn from(palitem: xspro::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-      symbol: None,
-      symbol_font: None,
-    }
-  }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct Blend {
-  pub brand: String,
-  pub number: String,
-}
-
-impl From<pmaker::Blend> for Blend {
-  fn from(blend: pmaker::Blend) -> Self {
-    Self {
-      brand: blend.brand,
-      number: blend.number,
-    }
-  }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-pub struct Bead {
-  pub length: f32,
-  pub diameter: f32,
-}
-
-impl From<pmaker::Bead> for Bead {
-  fn from(bead: pmaker::Bead) -> Self {
-    Self {
-      length: bead.length,
-      diameter: bead.diameter,
     }
   }
 }
@@ -635,35 +420,4 @@ impl From<pmaker::Fabric> for Fabric {
 pub struct FabricColor {
   pub name: String,
   pub color: String,
-}
-
-#[cfg(feature = "borsh")]
-fn serialize_option_char<W: borsh::io::Write>(value: &Option<char>, writer: &mut W) -> borsh::io::Result<()> {
-  use borsh::BorshSerialize;
-
-  match value {
-    Some(ch) => {
-      true.serialize(writer)?;
-      (*ch as u32).serialize(writer)
-    }
-    None => false.serialize(writer),
-  }
-}
-
-#[cfg(feature = "borsh")]
-fn deserialize_option_char<R: borsh::io::Read>(reader: &mut R) -> borsh::io::Result<Option<char>> {
-  use borsh::BorshDeserialize;
-
-  let has_value = bool::deserialize_reader(reader)?;
-  if has_value {
-    let value = u32::deserialize_reader(reader)?;
-    Ok(char::from_u32(value))
-  } else {
-    Ok(None)
-  }
-}
-
-#[cfg(feature = "serde")]
-fn blends_empty(blends: &Option<Vec<Blend>>) -> bool {
-  blends.as_ref().is_none_or(|blends| blends.is_empty())
 }

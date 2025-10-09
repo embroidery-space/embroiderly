@@ -106,7 +106,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
               kind: fabric.kind,
               ..pattern.fabric
             };
-            pattern.palette = palette;
+            pattern.palette = palette.into();
           }
           b"fullstitches" => pattern.fullstitches.extend(
             read_full_stitches(reader)?
@@ -208,7 +208,7 @@ fn save_pattern_inner<W: io::Write>(
     write_palette(
       writer,
       &pattern.fabric,
-      &pattern.palette,
+      pattern.palette.as_ref(),
       &display_settings.default_symbol_font,
     )?;
     write_full_stitches(writer, &pattern.fullstitches)?;

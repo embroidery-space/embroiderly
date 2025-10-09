@@ -67,7 +67,7 @@
   const fluent = useFluent();
   const toast = useToast();
 
-  const { palette } = defineProps<{ palette: PaletteItem[] }>();
+  const { palette } = defineProps<{ palette: readonly PaletteItem[] }>();
   const emit = defineEmits<{
     addPaletteItem: [palitem: PaletteItem];
     removePaletteItem: [palindex: number];

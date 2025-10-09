@@ -306,7 +306,7 @@ export const usePatternsStore = defineStore(
     appWindow.listen<string>(PatternEvent.AddPaletteItem, ({ payload }) => {
       if (!pattern.value) return;
       const { palitem, palindex } = AddedPaletteItemData.deserialize(payload);
-      pattern.value.addPaletteItem(palitem, palindex);
+      pattern.value.palette.insert(palindex, palitem);
       triggerRef(pattern);
     });
 
@@ -317,7 +317,7 @@ export const usePatternsStore = defineStore(
     appWindow.listen<number[]>(PatternEvent.RemovePaletteItem, ({ payload: palindexes }) => {
       if (!pattern.value) return;
       for (const palindex of palindexes.reverse()) {
-        pattern.value.removePaletteItem(palindex);
+        pattern.value.palette.remove(palindex);
         if (appStateStore.selectedPaletteItemIndexes.includes(palindex)) appStateStore.selectedPaletteItemIndexes = [];
       }
       triggerRef(pattern);
