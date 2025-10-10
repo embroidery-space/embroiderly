@@ -22,6 +22,7 @@ import {
   DisplayMode,
   PaletteSettings,
   PaletteItem,
+  SortPaletteBy,
   Fabric,
   Grid,
   PdfExportOptions,
@@ -336,6 +337,16 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
+    async function sortPaletteBy(sortBy: SortPaletteBy) {
+      if (!pattern.value) return;
+      await PaletteApi.sortPaletteBy(pattern.value.id, sortBy);
+    }
+    appWindow.listen<number[]>("palette:sort", ({ payload: positions }) => {
+      if (!pattern.value) return;
+      pattern.value.palette.positions = positions;
+      triggerRef(pattern);
+    });
+
     function addStitch(stitch: Stitch) {
       if (!pattern.value) return;
       return StitchesApi.addStitch(pattern.value.id, stitch);
@@ -443,6 +454,7 @@ export const usePatternsStore = defineStore(
       addPaletteItem,
       removePaletteItem,
       updatePaletteDisplaySettings,
+      sortPaletteBy,
       addStitch,
       removeStitch,
       setDisplayMode,

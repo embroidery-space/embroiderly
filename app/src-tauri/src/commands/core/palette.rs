@@ -6,7 +6,8 @@ use tauri::Manager as _;
 use tauri_plugin_posthog::PostHogExt as _;
 
 use crate::core::actions::{
-  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
+  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, SortPaletteAction, SortPaletteBy,
+  UpdatePaletteDisplaySettingsAction,
 };
 use crate::error::Result;
 use crate::parse_command_payload;
@@ -270,4 +271,26 @@ pub fn load_palette<R: tauri::Runtime>(
     serde_json::from_str(&content).map_err(|e| anyhow::anyhow!("Failed to parse palette JSON: {}", e))?
   };
   Ok(borsh::to_vec(&palette)?)
+}
+
+#[tauri::command]
+pub fn sort_palette_by<R: tauri::Runtime>(
+  sort_by: SortPaletteBy,
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  let (pattern_id,) = parse_command_payload!(request);
+
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  let action = SortPaletteAction::new(sort_by);
+  action.perform(&window, patproj)?;
+
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).push(Box::new(action));
+
+  Ok(())
 }

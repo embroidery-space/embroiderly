@@ -128,6 +128,8 @@ label-palette-edit = Edit Palette
 
 label-palette-colors = Colors
 label-palette-display-options = Display Settings
+label-palette-sort-by = Sort By
+label-palette-sort-by-brand-and-number = Brand & Number
 label-palette-delete-selected = { $selected ->
   [0] Delete Selected
   *[other] Delete { $selected } Selected

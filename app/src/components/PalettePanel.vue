@@ -7,7 +7,7 @@
     <UContextMenu :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions">
       <PaletteList
         :model-value="appStateStore.selectedPaletteItemIndexes"
-        :options="patternsStore.pattern?.palette?.items"
+        :options="patternsStore.pattern?.palette?.itemsInVisualOrder"
         :option-value="(pi) => patternsStore.pattern?.palette.items.findIndex((cmp) => dequal(cmp, pi))"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
@@ -102,7 +102,7 @@
   import { dequal } from "dequal";
   import { computed, ref, watch } from "vue";
 
-  import { PaletteItem, PaletteSettings } from "~/core/pattern/";
+  import { PaletteItem, PaletteSettings, SortPaletteBy } from "~/core/pattern/";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -152,6 +152,18 @@
   ]);
   const paletteEditingContextMenuOptions = computed<DropdownMenuItem[][]>(() => [
     palettePanelsMenuOptions.value,
+    [
+      {
+        label: fluent.$t("label-palette-sort-by"),
+        disabled: !patternsStore.pattern?.palette.length,
+        children: [
+          {
+            label: fluent.$t("label-palette-sort-by-brand-and-number"),
+            onSelect: () => patternsStore.sortPaletteBy(SortPaletteBy.BrandAndNumber),
+          },
+        ],
+      },
+    ],
     [
       {
         label: fluent.$t("label-palette-delete-selected", {

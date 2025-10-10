@@ -165,6 +165,35 @@ impl Palette {
     &self.positions
   }
 
+  /// Sets the visual positions.
+  pub fn set_positions(&mut self, positions: Vec<u32>) {
+    debug_assert_eq!(positions.len(), self.items.len());
+    self.positions = positions;
+  }
+
+  /// Sorts palette items by brand and number alphanumerically.
+  ///
+  /// Returns the new positions array after sorting.
+  pub fn sort_by_brand_and_number(&mut self) -> Vec<u32> {
+    // Create a vector of (index, sort_key) pairs.
+    let mut indexed_items: Vec<(u32, String)> = self
+      .items
+      .iter()
+      .enumerate()
+      .map(|(idx, item)| {
+        let sort_key = format!("{} {}", item.brand, item.number);
+        (idx as u32, sort_key)
+      })
+      .collect();
+
+    // Sort alphanumerically.
+    alphanumeric_sort::sort_slice_by_str_key(&mut indexed_items, |(_, key)| key);
+
+    // Set and return new positions.
+    self.positions = indexed_items.iter().map(|(idx, _)| *idx).collect();
+    self.positions.clone()
+  }
+
   // === Utility Methods ===
 
   /// Returns the number of blend colors in the palette.

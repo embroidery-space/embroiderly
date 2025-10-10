@@ -5,6 +5,10 @@ import type { ColorSource } from "pixi.js";
 
 import { PaletteSettings } from "./display.ts";
 
+export enum SortPaletteBy {
+  BrandAndNumber = "BrandAndNumber",
+}
+
 export class Blend {
   brand: string;
   number: string;
@@ -219,9 +223,11 @@ export class Palette {
   /** Visual ordering of palette items. */
   #positions: number[];
 
-  constructor(data: b.infer<typeof Palette.schema>) {
+  constructor(
+    data: b.infer<typeof Palette.schema> | { items: b.infer<typeof PaletteItem.schema>[]; positions: number[] },
+  ) {
     this.#items = data.items.map((item) => new PaletteItem(item));
-    this.#positions = [...data.positions];
+    this.#positions = Array.from(data.positions);
   }
 
   static readonly schema = b.struct({
@@ -236,17 +242,17 @@ export class Palette {
 
   // === Access Methods ===
 
-  /** Returns the number of palette items. */
+  /** The number of palette items. */
   get length(): number {
     return this.#items.length;
   }
 
-  /** Returns read-only reference to items in actual order. */
+  /** Read-only reference to items in actual order. */
   get items(): readonly PaletteItem[] {
     return this.#items;
   }
 
-  /** Returns read-only reference to visual positions. */
+  /** Read-only reference to visual positions. */
   get positions(): readonly number[] {
     return this.#positions;
   }
@@ -257,8 +263,8 @@ export class Palette {
     this.#positions = [...positions];
   }
 
-  /** Returns palette items in visual order. */
-  getItemsInVisualOrder(): PaletteItem[] {
+  /** Palette items in visual order. */
+  get itemsInVisualOrder(): PaletteItem[] {
     return this.#positions.map((index) => this.#items[index]!);
   }
 
@@ -279,6 +285,7 @@ export class Palette {
 
   /** Inserts a palette item at a specific actual index. */
   insert(index: number, item: PaletteItem): void {
+    // Insert the item at the actual index
     this.#items.splice(index, 0, item);
 
     // Update all positions that reference indexes >= index
@@ -286,7 +293,8 @@ export class Palette {
       if (this.#positions[i]! >= index) this.#positions[i]! += 1;
     }
 
-    // Find where index should be inserted in visual order
+    // Find where the new index should be inserted in visual order
+    // It goes right before the first position that is greater than index
     const position = this.#positions.findIndex((idx) => idx > index);
     const insertAt = position === -1 ? this.#positions.length : position;
     this.#positions.splice(insertAt, 0, index);

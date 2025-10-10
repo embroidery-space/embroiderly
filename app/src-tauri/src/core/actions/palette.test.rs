@@ -4,7 +4,8 @@ use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder, generate_context};
 
 use super::{
-  Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
+  Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, SortPaletteAction, SortPaletteBy,
+  UpdatePaletteDisplaySettingsAction,
 };
 use crate::utils::base64;
 
@@ -237,5 +238,52 @@ fn test_update_palette_display_settings() {
     });
 
     action.revoke(&window, &mut patproj).unwrap();
+  }
+}
+
+#[test]
+fn test_sort_palette_action() {
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = create_pattern_project();
+  let initial_positions = patproj.pattern.palette.positions().to_vec();
+  let action = SortPaletteAction::new(SortPaletteBy::BrandAndNumber);
+
+  // Test executing the action.
+  {
+    let initial_positions_clone = initial_positions.clone();
+    window.once("palette:sort", move |e| {
+      let new_positions = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
+
+      // Verify that positions have been sorted (they should differ from initial).
+      assert_ne!(new_positions, initial_positions_clone);
+
+      // Verify that all original indexes are present.
+      let mut sorted_new_positions = new_positions.clone();
+      sorted_new_positions.sort();
+      assert_eq!(sorted_new_positions, initial_positions_clone);
+    });
+
+    action.perform(&window, &mut patproj).unwrap();
+    let sorted_positions = patproj.pattern.palette.positions().to_vec();
+    // Verify positions changed in the pattern.
+    assert_ne!(sorted_positions, initial_positions);
+  }
+
+  // Test revoking the action.
+  {
+    let initial_positions_clone = initial_positions.clone();
+    window.once("palette:sort", move |e| {
+      let restored_positions = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
+      // Verify that old positions were restored.
+      assert_eq!(restored_positions, initial_positions_clone);
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+    // Verify positions restored in the pattern.
+    assert_eq!(patproj.pattern.palette.positions(), initial_positions.as_slice());
   }
 }

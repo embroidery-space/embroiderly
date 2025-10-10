@@ -11,6 +11,13 @@ use crate::utils::base64;
 #[path = "palette.test.rs"]
 mod tests;
 
+/// Specifies how palette items should be sorted.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Deserialize)]
+pub enum SortPaletteBy {
+  /// Sort by brand and number alphanumerically.
+  BrandAndNumber,
+}
+
 #[derive(Clone)]
 pub struct AddPaletteItemAction {
   palitem: PaletteItem,
@@ -180,6 +187,56 @@ impl<R: tauri::Runtime> Action<R> for UpdatePaletteDisplaySettingsAction {
       base64::encode(borsh::to_vec(&old_settings)?),
     )?;
     patproj.display_settings.palette_settings = *old_settings;
+    Ok(())
+  }
+}
+
+#[derive(Clone)]
+pub struct SortPaletteAction {
+  sort_by: SortPaletteBy,
+  old_positions: OnceLock<Vec<u32>>,
+}
+
+impl SortPaletteAction {
+  pub fn new(sort_by: SortPaletteBy) -> Self {
+    Self {
+      sort_by,
+      old_positions: OnceLock::new(),
+    }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for SortPaletteAction {
+  /// Sort the palette items.
+  ///
+  /// **Emits:**
+  /// - `palette:sort` with the new positions array.
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    // Save old positions if not already saved.
+    if self.old_positions.get().is_none() {
+      self
+        .old_positions
+        .set(patproj.pattern.palette.positions().to_vec())
+        .unwrap();
+    }
+
+    // Sort based on the specified method.
+    let new_positions = match self.sort_by {
+      SortPaletteBy::BrandAndNumber => patproj.pattern.palette.sort_by_brand_and_number(),
+    };
+
+    window.emit("palette:sort", new_positions)?;
+    Ok(())
+  }
+
+  /// Restore the previous palette order.
+  ///
+  /// **Emits:**
+  /// - `palette:sort` with the old positions array.
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    let old_positions = self.old_positions.get().unwrap().clone();
+    patproj.pattern.palette.set_positions(old_positions.clone());
+    window.emit("palette:sort", old_positions)?;
     Ok(())
   }
 }

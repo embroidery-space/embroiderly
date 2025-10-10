@@ -129,6 +129,8 @@ label-palette-edit = Редагувати палітру
 
 label-palette-colors = Кольори
 label-palette-display-options = Налаштування відображення
+label-palette-sort-by = Сортувати за
+label-palette-sort-by-brand-and-number = Брендом і номером
 label-palette-delete-selected = { $selected ->
   [0] Видалити вибрані
   [one] Видалити { $selected } вибраний

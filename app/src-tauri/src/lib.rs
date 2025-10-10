@@ -109,6 +109,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::palette::add_palette_item,
     commands::core::palette::remove_palette_items,
     commands::core::palette::update_palette_display_settings,
+    commands::core::palette::sort_palette_by,
     commands::core::palette::import_palettes,
     commands::core::palette::get_palettes_list,
     commands::core::palette::load_palette,

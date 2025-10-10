@@ -354,6 +354,98 @@ mod palette {
     }
   }
 
+  mod sorting {
+    use super::*;
+
+    #[test]
+    fn test_sort_by_brand_and_number_basic() {
+      let mut palette = Palette::new();
+      let idx0 = palette.push(create_test_item("DMC", "321", "Christmas Red", "B1272A"));
+      let idx1 = palette.push(create_test_item("DMC", "310", "Black", "000000"));
+      let idx2 = palette.push(create_test_item("DMC", "3865", "White", "FFFFFF"));
+
+      // Store items before sorting
+      let item0 = palette.get(idx0).unwrap().clone();
+      let item1 = palette.get(idx1).unwrap().clone();
+      let item2 = palette.get(idx2).unwrap().clone();
+
+      let new_positions = palette.sort_by_brand_and_number();
+
+      // Items should be sorted: DMC 310, DMC 321, DMC 3865
+      assert_eq!(new_positions, vec![1, 0, 2]);
+      assert_eq!(palette.positions(), &[1, 0, 2]);
+
+      // Items should still be accessible by their original indexes
+      assert_eq!(palette.get(idx0).unwrap(), &item0);
+      assert_eq!(palette.get(idx1).unwrap(), &item1);
+      assert_eq!(palette.get(idx2).unwrap(), &item2);
+    }
+
+    #[test]
+    fn test_sort_by_brand_and_number_multiple_brands() {
+      let mut palette = Palette::new();
+      palette.push(create_test_item("DMC", "321", "Christmas Red", "B1272A"));
+      palette.push(create_test_item("Anchor", "403", "Black", "000000"));
+      palette.push(create_test_item("Madeira", "1", "White", "FFFFFF"));
+      palette.push(create_test_item("DMC", "310", "Black", "000000"));
+
+      let new_positions = palette.sort_by_brand_and_number();
+
+      // Sorted: Anchor 403, DMC 310, DMC 321, Madeira 1
+      assert_eq!(new_positions, vec![1, 3, 0, 2]);
+      assert_eq!(palette.positions(), &[1, 3, 0, 2]);
+    }
+
+    #[test]
+    fn test_sort_by_brand_and_number_already_sorted() {
+      let mut palette = Palette::new();
+      palette.push(create_test_item("DMC", "310", "Black", "000000"));
+      palette.push(create_test_item("DMC", "321", "Christmas Red", "B1272A"));
+      palette.push(create_test_item("DMC", "3865", "White", "FFFFFF"));
+
+      let new_positions = palette.sort_by_brand_and_number();
+
+      // Already sorted, positions should remain unchanged
+      assert_eq!(new_positions, vec![0, 1, 2]);
+      assert_eq!(palette.positions(), &[0, 1, 2]);
+    }
+
+    #[test]
+    fn test_sort_by_brand_and_number_empty() {
+      let mut palette = Palette::new();
+
+      let new_positions = palette.sort_by_brand_and_number();
+
+      assert_eq!(new_positions, Vec::<u32>::new());
+      assert_eq!(palette.positions(), &[]);
+    }
+
+    #[test]
+    fn test_sort_by_brand_and_number_single_item() {
+      let mut palette = Palette::new();
+      palette.push(create_test_item("DMC", "310", "Black", "000000"));
+
+      let new_positions = palette.sort_by_brand_and_number();
+
+      assert_eq!(new_positions, vec![0]);
+      assert_eq!(palette.positions(), &[0]);
+    }
+
+    #[test]
+    fn test_sort_by_brand_and_number_with_blanc() {
+      let mut palette = Palette::new();
+      palette.push(create_test_item("DMC", "321", "Christmas Red", "B1272A"));
+      palette.push(create_test_item("DMC", "blanc", "White", "FFFFFF"));
+      palette.push(create_test_item("DMC", "310", "Black", "000000"));
+
+      let new_positions = palette.sort_by_brand_and_number();
+
+      // Alphanumeric sort: DMC 310, DMC 321, DMC blanc
+      assert_eq!(new_positions, vec![2, 0, 1]);
+      assert_eq!(palette.positions(), &[2, 0, 1]);
+    }
+  }
+
   mod utility {
     use super::*;
 
