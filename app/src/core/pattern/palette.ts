@@ -64,8 +64,8 @@ export class PaletteItem {
   name: string;
   color: Color;
   blends?: Blend[];
-  symbolFont?: string;
 
+  symbolFont?: string;
   private _symbolCode?: number;
 
   constructor(data: b.infer<typeof PaletteItem.schema>) {
@@ -78,8 +78,13 @@ export class PaletteItem {
 
     if (data.symbolFont) this.symbolFont = data.symbolFont;
     if (data.symbol) {
-      if ("code" in data.symbol) this._symbolCode = data.symbol.code;
-      else this._symbolCode = data.symbol.char.codePointAt(0);
+      const code = "code" in data.symbol ? data.symbol.code : data.symbol.char.codePointAt(0);
+
+      // Check if the code is a valid Unicode character.
+      // We support only a part of the BMP supported by XML 1.0.
+      if (code && ((code >= 0x0020 && code <= 0xd7ff) || (code >= 0xe000 && code <= 0xfffd))) {
+        this._symbolCode = code;
+      } else this._symbolCode = 0xfffd; // Replacement character.
     }
   }
 
@@ -90,7 +95,12 @@ export class PaletteItem {
     color: b.string(),
     blends: b.option(b.vec(Blend.schema)),
     symbolFont: b.option(b.string()),
-    symbol: b.option(b.enum({ code: b.u16(), char: b.string() })),
+    symbol: b.option(
+      b.enum({
+        code: b.u16(),
+        char: b.string(),
+      }),
+    ),
   });
 
   static deserialize(data: Uint8Array | string) {
