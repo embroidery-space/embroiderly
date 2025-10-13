@@ -292,7 +292,10 @@ label-frame-show-centering-marks = Show centering marks
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Pattern Saved
+message-pattern-save-failed = Pattern Save Failed
+
 message-pattern-exported = Pattern Exported
+message-pattern-export-failed = Pattern Export Failed
 
 title-unsaved-changes = Unsaved Changes
 message-unsaved-changes =

@@ -483,11 +483,22 @@ pub enum Symbol {
 impl Symbol {
   /// Returns a printable representation of the symbol.
   pub fn render(&self) -> String {
+    let code = self.to_code();
+
+    // Check if the code is a valid Unicode character.
+    // We support only a part of the BMP supported by XML 1.0.
+    if matches!(code, 0x0020..=0xD7FF | 0xE000..=0xFFFD) {
+      char::from_u32(code).unwrap_or(char::REPLACEMENT_CHARACTER).to_string()
+    } else {
+      char::REPLACEMENT_CHARACTER.to_string()
+    }
+  }
+
+  /// Returns the Unicode code point of the symbol.
+  pub fn to_code(&self) -> u32 {
     match self {
-      Symbol::Code(code) => std::char::decode_utf16([*code])
-        .map(|r| r.unwrap_or(std::char::REPLACEMENT_CHARACTER))
-        .collect::<String>(),
-      Symbol::Char(char) => char.to_owned(),
+      Symbol::Code(code) => *code as u32,
+      Symbol::Char(char) => char.chars().next().unwrap_or(std::char::REPLACEMENT_CHARACTER) as u32,
     }
   }
 }
@@ -496,7 +507,7 @@ impl std::fmt::Display for Symbol {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
       Symbol::Code(code) => write!(f, "{code}"),
-      Symbol::Char(ch) => write!(f, "{ch}"),
+      Symbol::Char(char) => write!(f, "{char}"),
     }
   }
 }

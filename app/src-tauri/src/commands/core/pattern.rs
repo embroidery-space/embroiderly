@@ -265,7 +265,6 @@ pub fn export_pattern<R: tauri::Runtime>(
       .into(),
     );
   }
-  app_handle.emit("app:pattern-exported", &pattern_id)?;
 
   log::debug!("Pattern({pattern_id:?}) exported");
   app_handle.capture_event(AppEvent::PatternExportedAsPdf {
