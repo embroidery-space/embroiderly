@@ -104,6 +104,9 @@ importers:
       '@vueuse/core':
         specifier: 13.9.0
         version: 13.9.0(vue@3.5.22(typescript@5.9.3))
+      '@vueuse/integrations':
+        specifier: 13.9.0
+        version: 13.9.0(fuse.js@7.1.0)(vue@3.5.22(typescript@5.9.3))
       '@zorsh/zorsh':
         specifier: 0.3.3
         version: 0.3.3
@@ -116,6 +119,9 @@ importers:
       fluent-vue:
         specifier: 3.7.4
         version: 3.7.4(@fluent/bundle@0.19.1)(vue@3.5.22(typescript@5.9.3))
+      fuse.js:
+        specifier: 7.1.0
+        version: 7.1.0
       pinia:
         specifier: 3.0.3
         version: 3.0.3(typescript@5.9.3)(vue@3.5.22(typescript@5.9.3))

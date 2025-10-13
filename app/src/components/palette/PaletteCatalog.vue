@@ -2,7 +2,7 @@
   <PaletteSection :title="$t('label-palette-colors')">
     <PaletteList
       :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
-      :options="selectedPalette"
+      :options="results.map((r) => r.item)"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
       multiple
@@ -33,6 +33,17 @@
         </div>
       </template>
 
+      <template #filter>
+        <UInput
+          v-model="searchQuery"
+          size="md"
+          variant="outline"
+          leading-icon="i-lucide:search"
+          :label="$t('label-palette-catalog-search-placeholder')"
+          class="w-full"
+        />
+      </template>
+
       <template #option="{ option, displaySettings }">
         <PaletteListItem
           :palette-item="option"
@@ -46,7 +57,8 @@
 
 <script setup lang="ts">
   import type { DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
-  import { onMounted, ref, computed } from "vue";
+  import { useFuse } from "@vueuse/integrations/useFuse";
+  import { onMounted, ref, computed, shallowRef } from "vue";
   import type { Ref } from "vue";
 
   import { PaletteApi } from "~/api";
@@ -77,10 +89,22 @@
   const importingPalettes = ref(false);
 
   const paletteCatalog = new Map<string, BrandPaletteItem[] | undefined>();
-  const paletteCatalogOptions = ref<SelectMenuItem[][]>([]);
+  const paletteCatalogOptions = shallowRef<SelectMenuItem[][]>([]);
 
   const selectedPaletteKey = ref("system/DMC");
-  const selectedPalette: Ref<BrandPaletteItem[]> = ref([]);
+  const selectedPalette: Ref<BrandPaletteItem[]> = shallowRef([]);
+
+  const searchQuery = ref("");
+  const { results } = useFuse(searchQuery, selectedPalette, {
+    matchAllWhenSearchEmpty: true,
+    fuseOptions: {
+      keys: ["number", "name"],
+      threshold: 0, // Exact match.
+      ignoreLocation: true, // Anywhere in the string.
+      ignoreFieldNorm: true, // Range both short and long values similarly.
+      ignoreDiacritics: true,
+    },
+  });
 
   const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
     {

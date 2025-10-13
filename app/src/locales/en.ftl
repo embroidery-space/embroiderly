@@ -141,6 +141,8 @@ label-palette-catalog-menu-import-palettes = Import Palettes
 label-palette-catalog-group-system = System
 label-palette-catalog-group-custom = Custom
 
+label-palette-catalog-search-placeholder = Search...
+
 message-palette-import-success = Palettes imported successfully
 message-palette-import-error = Failed to import palettes
 message-palette-load-error = Failed to load palette { $paletteKey }

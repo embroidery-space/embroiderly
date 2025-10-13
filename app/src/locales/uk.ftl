@@ -144,6 +144,8 @@ label-palette-catalog-menu-import-palettes = Імпортувати палітр
 label-palette-catalog-group-system = Системні
 label-palette-catalog-group-custom = Власні
 
+label-palette-catalog-search-placeholder = Пошук...
+
 message-palette-import-success = Палітри успішно імпортовані
 message-palette-import-error = Не вдалося імпортувати палітри
 message-palette-load-error = Не вдалося завантажити палітру { $paletteKey }
