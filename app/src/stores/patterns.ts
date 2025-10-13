@@ -59,6 +59,7 @@ export const usePatternsStore = defineStore(
 
     const fluent = useFluent();
     const confirm = useConfirm();
+    const toast = useToast();
     const filePicker = useFilePicker();
 
     const appStateStore = useAppStateStore();
@@ -143,13 +144,18 @@ export const usePatternsStore = defineStore(
             acceptLabel: fluent.$t("label-ok"),
             rejectLabel: null,
           });
-          return;
+        } else {
+          toast.add({ color: "error", title: fluent.$t("message-pattern-save-failed"), duration: 3000 });
         }
-        throw error;
       } finally {
         loading.value = false;
       }
     }
+    appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
+      if (patternId === pattern.value?.id) {
+        toast.add({ type: "background", color: "success", title: fluent.$t("message-pattern-saved"), duration: 3000 });
+      }
+    });
 
     async function openExportModal(ext: "oxs" | "pdf") {
       if (!pattern.value) return;
@@ -192,6 +198,9 @@ export const usePatternsStore = defineStore(
       try {
         loading.value = true;
         await PatternApi.exportPattern(pattern.value.id, filePath, options);
+        toast.add({ color: "success", title: fluent.$t("message-pattern-exported"), duration: 3000 });
+      } catch {
+        toast.add({ color: "error", title: fluent.$t("message-pattern-export-failed"), duration: 3000 });
       } finally {
         loading.value = false;
       }
