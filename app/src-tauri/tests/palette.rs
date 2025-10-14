@@ -274,3 +274,85 @@ fn sorts_palette_by_brand_and_number() {
   let history = history_manager.get(&pattern_id).unwrap();
   assert_eq!(history.undo_stack_len(), 5);
 }
+
+#[test]
+fn reorders_palette_items() {
+  let (app, webview) = setup_test_app!(commands: [
+    commands::core::palette::add_palette_item,
+    commands::core::palette::reorder_palette_items
+  ]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  // Add palette items.
+  let palitems = vec![
+    PaletteItem {
+      brand: "DMC".to_string(),
+      number: "310".to_string(),
+      name: "Black".to_string(),
+      color: "#000000".to_string(),
+      blends: None,
+      symbol: None,
+      symbol_font: None,
+    },
+    PaletteItem {
+      brand: "DMC".to_string(),
+      number: "3865".to_string(),
+      name: "Winter White".to_string(),
+      color: "#F9F9F9".to_string(),
+      blends: None,
+      symbol: None,
+      symbol_font: None,
+    },
+    PaletteItem {
+      brand: "DMC".to_string(),
+      number: "321".to_string(),
+      name: "Christmas Red".to_string(),
+      color: "#B1272A".to_string(),
+      blends: None,
+      symbol: None,
+      symbol_font: None,
+    },
+  ];
+  for palitem in &palitems {
+    invoke_ipc!(
+      &webview,
+      cmd: "add_palette_item",
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(palitem).unwrap()),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .unwrap();
+  }
+
+  // Verify initial order.
+  {
+    let patterns_state = app.state::<PatternsState>();
+    let patterns_manager = patterns_state.read().unwrap();
+    let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+    assert_eq!(patproj.pattern.palette.positions(), &[0, 1, 2]);
+  }
+
+  // Reorder: move first item to last position (0 -> 2).
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "reorder_palette_items",
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "oldPosition": 0, "newPosition": 2 })),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  // Verify new order: [1, 2, 0] (White, Red, Black).
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert_eq!(patproj.pattern.palette.positions(), &[1, 2, 0]);
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  // Verify history stack has 4 items (3 adds + 1 reorder).
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 4);
+}

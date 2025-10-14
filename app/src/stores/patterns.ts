@@ -356,6 +356,16 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
+    async function reorderPaletteItems(oldPosition: number, newPosition: number) {
+      if (!pattern.value) return;
+      await PaletteApi.reorderPaletteItems(pattern.value.id, oldPosition, newPosition);
+    }
+    appWindow.listen<number[]>("palette:reorder", ({ payload: positions }) => {
+      if (!pattern.value) return;
+      pattern.value.palette.positions = positions;
+      triggerRef(pattern);
+    });
+
     function addStitch(stitch: Stitch) {
       if (!pattern.value) return;
       return StitchesApi.addStitch(pattern.value.id, stitch);
@@ -464,6 +474,7 @@ export const usePatternsStore = defineStore(
       removePaletteItem,
       updatePaletteDisplaySettings,
       sortPaletteBy,
+      reorderPaletteItems,
       addStitch,
       removeStitch,
       setDisplayMode,

@@ -240,3 +240,54 @@ impl<R: tauri::Runtime> Action<R> for SortPaletteAction {
     Ok(())
   }
 }
+
+#[derive(Clone)]
+pub struct ReorderPaletteItemsAction {
+  old_position: u32,
+  new_position: u32,
+  old_positions: OnceLock<Vec<u32>>,
+}
+
+impl ReorderPaletteItemsAction {
+  pub fn new(old_position: u32, new_position: u32) -> Self {
+    Self {
+      old_position,
+      new_position,
+      old_positions: OnceLock::new(),
+    }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for ReorderPaletteItemsAction {
+  /// Reorder a palette item from one position to another.
+  ///
+  /// **Emits:**
+  /// - `palette:reorder` with the new positions array.
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    if self.old_positions.get().is_none() {
+      self
+        .old_positions
+        .set(patproj.pattern.palette.positions().to_vec())
+        .unwrap();
+    }
+
+    let new_positions = patproj
+      .pattern
+      .palette
+      .reorder_palette_items(self.old_position, self.new_position);
+
+    window.emit("palette:reorder", new_positions)?;
+    Ok(())
+  }
+
+  /// Restore the previous palette order.
+  ///
+  /// **Emits:**
+  /// - `palette:reorder` with the old positions array.
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    let old_positions = self.old_positions.get().unwrap().clone();
+    patproj.pattern.palette.set_positions(old_positions.clone());
+    window.emit("palette:reorder", old_positions)?;
+    Ok(())
+  }
+}

@@ -1696,6 +1696,7 @@ dependencies = [
  "image",
  "log",
  "ordered-float",
+ "rstest",
  "serde",
  "uuid",
  "xsp-parsers",

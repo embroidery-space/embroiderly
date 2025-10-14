@@ -1,3 +1,5 @@
+use rstest::rstest;
+
 use super::*;
 
 /// Helper function to create a test palette item.
@@ -354,7 +356,8 @@ mod palette {
     }
   }
 
-  mod sorting {
+  mod ordering {
+
     use super::*;
 
     #[test]
@@ -443,6 +446,34 @@ mod palette {
       // Alphanumeric sort: DMC 310, DMC 321, DMC blanc
       assert_eq!(new_positions, vec![2, 0, 1]);
       assert_eq!(palette.positions(), &[2, 0, 1]);
+    }
+
+    #[rstest]
+    #[case(1, 1, vec![0, 1, 2])]
+    #[case(0, 2, vec![1, 2, 0])]
+    #[case(2, 0, vec![2, 0, 1])]
+    #[case(1, 0, vec![1, 0, 2])]
+    #[case(1, 2, vec![0, 2, 1])]
+    #[case(0, 1, vec![1, 0, 2])]
+    fn test_reorder_palette_items(
+      #[case] old_position: u32,
+      #[case] new_position: u32,
+      #[case] expected_positions: Vec<u32>,
+    ) {
+      let mut palette = Palette::new();
+      palette.push(create_test_item("DMC", "310", "Black", "000000"));
+      palette.push(create_test_item("DMC", "3865", "White", "FFFFFF"));
+      palette.push(create_test_item("DMC", "321", "Christmas Red", "B1272A"));
+
+      let new_positions = palette.reorder_palette_items(old_position, new_position);
+
+      assert_eq!(new_positions, expected_positions);
+      assert_eq!(palette.positions(), expected_positions.as_slice());
+
+      // Items should still be accessible by their original indexes.
+      assert_eq!(palette.get(0).unwrap().number, "310");
+      assert_eq!(palette.get(1).unwrap().number, "3865");
+      assert_eq!(palette.get(2).unwrap().number, "321");
     }
   }
 

@@ -27,3 +27,6 @@ xsp-parsers = { workspace = true }
 alphanumeric-sort = { workspace = true }
 ordered-float = { workspace = true }
 uuid = { workspace = true }
+
+[dev-dependencies]
+rstest = { workspace = true }

@@ -17,6 +17,7 @@
       </div>
 
       <RListboxContent
+        ref="content"
         class="grid gap-1 overflow-hidden p-1 outline-none"
         :style="{
           gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
@@ -25,8 +26,9 @@
         <template v-if="options.length">
           <RListboxItem
             v-for="(option, index) in options"
-            :key="index"
-            :value="optionValue(option) as AcceptableValue"
+            :key="optionKey?.(option) ?? index"
+            :value="optionValue?.(option) ?? option"
+            as-child
             @dblclick="handleOptionDoubleClick($event, option)"
           >
             <slot
@@ -56,25 +58,31 @@
 </template>
 
 <script setup lang="ts" generic="T extends BasePaletteItem, V">
+  import { useSortable } from "@vueuse/integrations/useSortable";
   import { dequal } from "dequal/lite";
   import type { AcceptableValue } from "reka-ui";
+  import { watchEffect, useTemplateRef } from "vue";
 
   import { BasePaletteItem, PaletteSettings } from "~/core/pattern/";
 
   interface PaletteListProps<T> {
-    options?: readonly T[];
-    optionValue?: (option: T) => unknown;
+    options?: T[];
+    optionValue?: (option: T) => V;
+    optionKey?: (option: T) => PropertyKey;
     disabled?: boolean;
     multiple?: boolean;
+    draggable?: boolean;
     displaySettings: PaletteSettings;
   }
 
-  const value = defineModel<V>({ required: true });
+  const value = defineModel<V | V[]>({ required: true });
   const {
     options = [],
-    optionValue = (option) => option,
+    optionValue = undefined,
+    optionKey = undefined,
     disabled = false,
     multiple = false,
+    draggable = false,
     displaySettings,
   } = defineProps<PaletteListProps<T>>();
   const emit = defineEmits<{
@@ -88,7 +96,22 @@
         palindex: number;
       },
     ];
+    reorder: [{ oldPosition: number; newPosition: number }];
   }>();
+
+  const content = useTemplateRef("content");
+  const { option: setSortableOption } = useSortable(content, options, {
+    animation: 100,
+    forceFallback: true,
+    onUpdate: ({ oldIndex, newIndex }) => {
+      if (oldIndex !== undefined && newIndex !== undefined) {
+        emit("reorder", { oldPosition: oldIndex, newPosition: newIndex });
+      }
+    },
+  });
+  watchEffect(() => {
+    setSortableOption("disabled", !draggable || disabled);
+  });
 
   /**
    * Handle double-click event on an option.
@@ -106,7 +129,7 @@
    * @returns True if the option is selected, false otherwise.
    */
   function optionIsSelected(option: T) {
-    const transformed = optionValue(option);
+    const transformed = optionValue?.(option) ?? option;
     if (multiple) return (value.value as V[]).find((option) => dequal(option, transformed)) !== undefined;
     return dequal(value.value, transformed);
   }

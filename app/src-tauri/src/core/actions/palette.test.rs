@@ -4,8 +4,8 @@ use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder, generate_context};
 
 use super::{
-  Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, SortPaletteAction, SortPaletteBy,
-  UpdatePaletteDisplaySettingsAction,
+  Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, ReorderPaletteItemsAction,
+  SortPaletteAction, SortPaletteBy, UpdatePaletteDisplaySettingsAction,
 };
 use crate::utils::base64;
 
@@ -279,6 +279,48 @@ fn test_sort_palette_action() {
     window.once("palette:sort", move |e| {
       let restored_positions = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
       // Verify that old positions were restored.
+      assert_eq!(restored_positions, initial_positions_clone);
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+    // Verify positions restored in the pattern.
+    assert_eq!(patproj.pattern.palette.positions(), initial_positions.as_slice());
+  }
+}
+
+#[test]
+fn test_reorder_palette_items_action() {
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = create_pattern_project();
+  let initial_positions = patproj.pattern.palette.positions().to_vec();
+  let old_position = 0;
+  let new_position = 3;
+  let action = ReorderPaletteItemsAction::new(old_position, new_position);
+
+  // Test executing the action.
+  {
+    let initial_positions_clone = initial_positions.clone();
+    window.once("palette:reorder", move |e| {
+      let new_positions = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
+      assert_ne!(new_positions, initial_positions_clone);
+      assert_eq!(
+        new_positions[new_position as usize],
+        initial_positions_clone[old_position as usize]
+      );
+    });
+
+    action.perform(&window, &mut patproj).unwrap();
+  }
+
+  // Test revoking the action.
+  {
+    let initial_positions_clone = initial_positions.clone();
+    window.once("palette:reorder", move |e| {
+      let restored_positions = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
       assert_eq!(restored_positions, initial_positions_clone);
     });
 

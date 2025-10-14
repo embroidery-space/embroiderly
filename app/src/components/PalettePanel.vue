@@ -7,13 +7,16 @@
     <UContextMenu :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions">
       <PaletteList
         :model-value="appStateStore.selectedPaletteItemIndexes"
-        :options="patternsStore.pattern?.palette?.itemsInVisualOrder"
-        :option-value="(pi) => patternsStore.pattern?.palette.items.findIndex((cmp) => dequal(cmp, pi))"
+        :options="patternsStore.pattern?.palette.itemsInVisualOrder"
+        :option-value="(pi) => patternsStore.pattern?.palette.items.findIndex((cmp) => dequal(cmp, pi))!"
+        :option-key="(pi) => patternsStore.pattern?.palette.items.findIndex((cmp) => dequal(cmp, pi))!"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
+        :draggable="paletteIsBeingEdited"
         multiple
         class="grow"
         @update:model-value="handlePaletteItemsSelection"
+        @reorder="({ oldPosition, newPosition }) => patternsStore.reorderPaletteItems(oldPosition, newPosition)"
       >
         <template #header>
           <div v-if="paletteIsBeingEdited" class="flex gap-x-1" @contextmenu.stop.prevent>
@@ -199,7 +202,8 @@
     }
   });
 
-  function handlePaletteItemsSelection(palindexes: number[]) {
+  function handlePaletteItemsSelection(value: number | number[]) {
+    const palindexes = Array.isArray(value) ? value : [value];
     if (palindexes.length > 1 && !paletteIsBeingEdited.value) {
       appStateStore.selectedPaletteItemIndexes = palindexes.slice(-1);
     } else appStateStore.selectedPaletteItemIndexes = palindexes;

@@ -4,6 +4,7 @@
       :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="results.map((r) => r.item)"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
+      :option-key="(pi) => `${pi.brand}-${pi.number}`"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
       multiple
       meta-key-selection
@@ -39,7 +40,7 @@
           size="md"
           variant="outline"
           leading-icon="i-lucide:search"
-          :label="$t('label-palette-catalog-search-placeholder')"
+          :placeholder="$t('label-palette-catalog-search-placeholder')"
           class="w-full"
         />
       </template>

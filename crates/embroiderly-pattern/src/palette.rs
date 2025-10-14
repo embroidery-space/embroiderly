@@ -194,6 +194,21 @@ impl Palette {
     self.positions.clone()
   }
 
+  /// Reorders a palette item from one visual position to another.
+  pub fn reorder_palette_items(&mut self, old_position: u32, new_position: u32) -> Vec<u32> {
+    debug_assert!((old_position as usize) < self.positions.len());
+    debug_assert!((new_position as usize) < self.positions.len());
+
+    if old_position == new_position {
+      return self.positions.clone();
+    }
+
+    let item_index = self.positions.remove(old_position as usize);
+    self.positions.insert(new_position as usize, item_index);
+
+    self.positions.clone()
+  }
+
   // === Utility Methods ===
 
   /// Returns the number of blend colors in the palette.

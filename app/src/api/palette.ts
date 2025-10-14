@@ -32,3 +32,7 @@ export async function loadPalette(paletteGroup: string, paletteName: string) {
 export function sortPaletteBy(patternId: string, sortBy: SortPaletteBy) {
   return invoke<void>("sort_palette_by", { sortBy }, { headers: { patternId } });
 }
+
+export function reorderPaletteItems(patternId: string, oldPosition: number, newPosition: number) {
+  return invoke<void>("reorder_palette_items", { oldPosition, newPosition }, { headers: { patternId } });
+}
