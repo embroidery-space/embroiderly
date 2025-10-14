@@ -54,7 +54,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   let typst_content = TypstContent {
     info: pattern.info.clone(),
     fabric: pattern.fabric.clone(),
-    palette: pattern.palette.clone().into(),
+    palette: pattern.palette.clone(),
     default_symbol_font: display_settings.default_symbol_font.clone(),
     frames: frames.iter().map(|(name, _)| name).cloned().collect(),
     options,
@@ -93,7 +93,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
 struct TypstContent {
   info: PatternInfo,
   fabric: Fabric,
-  palette: Vec<PaletteItem>,
+  palette: Palette,
   default_symbol_font: String,
   frames: Vec<String>,
   options: PdfExportOptions,
@@ -105,8 +105,9 @@ impl From<TypstContent> for typst::foundations::Dict {
     let fabric = fabric_to_dict(content.fabric);
     let palette = content
       .palette
-      .into_iter()
-      .map(palette_item_to_dict)
+      .positions()
+      .iter()
+      .map(|&index| palette_item_to_dict(content.palette[index].clone()))
       .collect::<Vec<_>>();
     let options = pdf_export_options_to_dict(content.options);
 

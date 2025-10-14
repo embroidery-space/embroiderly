@@ -161,7 +161,7 @@ fn reads_and_writes_palette() {
   assert_eq!(palette, expected_palette);
 
   let mut writer = create_writer();
-  write_palette(&mut writer, &fabric, &palette, "Ursasoftware").unwrap();
+  write_palette(&mut writer, &fabric, &Palette::from(palette), "Ursasoftware").unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
@@ -213,7 +213,7 @@ fn reads_and_writes_blends() {
   assert_eq!(palette, expected_palette);
 
   let mut writer = create_writer();
-  write_palette(&mut writer, &fabric, &palette, "Ursasoftware").unwrap();
+  write_palette(&mut writer, &fabric, &Palette::from(palette), "Ursasoftware").unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
@@ -294,7 +294,7 @@ fn reads_and_writes_full_stitches() {
   assert_eq!(stitches, expected_stitches);
 
   let mut writer = create_writer();
-  write_full_stitches(&mut writer, &Stitches::from_iter(stitches)).unwrap();
+  write_full_stitches(&mut writer, stitches.into_iter()).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
@@ -487,7 +487,7 @@ fn reads_and_writes_line_stitches() {
   assert_eq!(stitches, expected_stitches);
 
   let mut writer = create_writer();
-  write_line_stitches(&mut writer, &Stitches::from_iter(stitches)).unwrap();
+  write_line_stitches(&mut writer, stitches.into_iter()).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
@@ -573,10 +573,10 @@ fn reads_and_writes_ornaments() {
   let mut writer = create_writer();
   write_ornaments(
     &mut writer,
-    &Stitches::from_iter(fullstitches),
-    &Stitches::from_iter(partstitches),
-    &Stitches::from_iter(nodestitches),
-    &Stitches::from_iter(specialstitches),
+    fullstitches.into_iter(),
+    partstitches.into_iter(),
+    nodestitches.into_iter(),
+    specialstitches.into_iter(),
   )
   .unwrap();
 
