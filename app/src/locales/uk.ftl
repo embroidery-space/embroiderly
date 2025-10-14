@@ -310,7 +310,10 @@ label-frame-show-centering-marks = Показати центрувальні м�
 
 ## Titles, labels and messages related to notification and error messages.
 message-pattern-saved = Схему збережено
+message-pattern-save-failed = Схему не вдалося зберегти
+
 message-pattern-exported = Схему експортовано
+message-pattern-export-failed = Схему не вдалося експортувати
 
 title-unsaved-changes = Незбережені зміни
 message-unsaved-changes =

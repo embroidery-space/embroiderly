@@ -24,21 +24,9 @@
   });
 
   const appStateStore = useAppStateStore();
-  const patternsStore = usePatternsStore();
   const settingsStore = useSettingsStore();
 
   const appWindow = getCurrentWebviewWindow();
-
-  appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
-    if (patternId === patternsStore.pattern?.id) {
-      toast.add({ type: "background", color: "success", title: fluent.$t("message-pattern-saved"), duration: 3000 });
-    }
-  });
-  appWindow.listen<string>("app:pattern-exported", ({ payload: patternId }) => {
-    if (patternId === patternsStore.pattern?.id) {
-      toast.add({ type: "background", color: "success", title: fluent.$t("message-pattern-exported"), duration: 3000 });
-    }
-  });
 
   appWindow.onCloseRequested(async (e) => {
     const unsavedPatterns = await PatternApi.getUnsavedPatterns();

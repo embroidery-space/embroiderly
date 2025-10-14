@@ -306,7 +306,17 @@ impl PaletteItem {
 
   /// Returns a printable representation of the symbol.
   pub fn get_symbol(&self) -> String {
-    self.symbol.map(|ch| ch.to_string()).unwrap_or_default()
+    if let Some(symbol) = self.symbol {
+      // Check if the symbol code is a valid Unicode character.
+      // We support only a part of the BMP supported by XML 1.0.
+      if matches!(symbol as u32, 0x0020..=0xD7FF | 0xE000..=0xFFFD) {
+        symbol.to_string()
+      } else {
+        char::REPLACEMENT_CHARACTER.to_string()
+      }
+    } else {
+      String::new()
+    }
   }
 }
 
