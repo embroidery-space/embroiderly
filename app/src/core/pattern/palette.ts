@@ -160,7 +160,14 @@ export class PaletteItem extends BrandPaletteItem {
   constructor(data: b.infer<typeof PaletteItem.schema>) {
     super(data);
 
-    if (data.symbol) this.symbol = String.fromCodePoint(data.symbol);
+    // Check if the symbol code is a valid Unicode character.
+    // We support only a part of the BMP supported by XML 1.0.
+    if (
+      data.symbol &&
+      ((data.symbol >= 0x0020 && data.symbol <= 0xd7ff) || (data.symbol >= 0xe000 && data.symbol <= 0xfffd))
+    ) {
+      this.symbol = String.fromCodePoint(data.symbol);
+    } else this.symbol = String.fromCodePoint(0xfffd); // Replacement character.
     if (data.symbolFont) this.symbolFont = data.symbolFont;
   }
 
