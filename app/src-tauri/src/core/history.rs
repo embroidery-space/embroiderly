@@ -27,6 +27,10 @@ struct Transaction<R: tauri::Runtime> {
 }
 
 impl<R: tauri::Runtime> History<R> {
+  pub fn new() -> Self {
+    Default::default()
+  }
+
   /// Returns the number of items in the undo stack.
   pub fn undo_stack_len(&self) -> usize {
     self.undo_stack.len()

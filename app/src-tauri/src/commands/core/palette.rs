@@ -39,7 +39,7 @@ pub fn add_palette_item<R: tauri::Runtime>(
     action.perform(&window, patproj)?;
 
     let mut history = history.write().unwrap();
-    history.get_mut(&pattern_id).push(Box::new(action));
+    history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
     app_handle.capture_event(event);
   }
@@ -81,7 +81,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_batch(events);
 
@@ -99,11 +99,18 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
   let (pattern_id, settings) = parse_command_payload!(request, PaletteSettings);
 
   let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  // Only update if settings have actually changed.
+  if patproj.display_settings.palette_settings == settings {
+    return Ok(());
+  };
+
   let action = UpdatePaletteDisplaySettingsAction::new(settings);
-  action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
+  action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_event(AppEvent::PaletteDisplaySettingsUpdated { settings });
 
@@ -290,7 +297,7 @@ pub fn sort_palette_by<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   Ok(())
 }
@@ -313,7 +320,7 @@ pub fn reorder_palette_items<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   Ok(())
 }

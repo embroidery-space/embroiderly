@@ -185,6 +185,28 @@ fn updates_palette_display_settings() {
 }
 
 #[test]
+fn does_not_update_palette_display_settings_if_unchanged() {
+  let (app, webview) = setup_test_app!(commands: [commands::core::palette::update_palette_display_settings]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "update_palette_display_settings",
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&PaletteSettings::default()).unwrap()),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 0);
+}
+
+#[test]
 fn sorts_palette_by_brand_and_number() {
   let (app, webview) = setup_test_app!(commands: [
     commands::core::palette::add_palette_item,

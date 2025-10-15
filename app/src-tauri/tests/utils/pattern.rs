@@ -1,8 +1,9 @@
-use embroiderly::state::PatternsState;
+use embroiderly::state::{HistoryState, PatternsState};
 use embroiderly_pattern::PatternProject;
 use tauri::Manager as _;
 
 /// Creates a new pattern project with defaults and adds it to the patterns state.
+/// Also initializes a history entry for the pattern.
 /// Returns the ID of the created pattern.
 #[allow(unused)]
 pub fn create_test_pattern<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> uuid::Uuid {
@@ -16,6 +17,9 @@ pub fn create_test_pattern<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) 
 
   let patterns_state = app_handle.state::<PatternsState>();
   patterns_state.write().unwrap().add_pattern(patproj);
+
+  let history_state = app_handle.state::<HistoryState<R>>();
+  history_state.write().unwrap().create(pattern_id);
 
   pattern_id
 }

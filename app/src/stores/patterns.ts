@@ -333,12 +333,9 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
-    async function updatePaletteDisplaySettings(settings: PaletteSettings, local = false) {
+    async function updatePaletteDisplaySettings(settings: PaletteSettings) {
       if (!pattern.value) return;
-      if (local) {
-        pattern.value.paletteDisplaySettings = settings;
-        triggerRef(pattern);
-      } else await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, settings);
+      await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, settings);
     }
     appWindow.listen<string>(PatternEvent.UpdatePaletteDisplaySettings, ({ payload }) => {
       if (!pattern.value) return;

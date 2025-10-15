@@ -22,7 +22,7 @@ pub fn update_fabric<R: tauri::Runtime>(
   action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_event(AppEvent::FabricUpdated { fabric });
 
