@@ -8,9 +8,9 @@
       v-model="value as AcceptableValue"
       :disabled="disabled"
       :multiple="multiple"
-      class="grow overflow-y-auto data-[disabled]:cursor-not-allowed"
+      class="flex grow flex-col overflow-hidden data-[disabled]:cursor-not-allowed"
     >
-      <div v-if="$slots.filter" class="border-b border-default px-2 py-1">
+      <div v-if="$slots.filter" class="shrink-0 border-b border-default px-2 py-1">
         <RListboxFilter as-child>
           <slot name="filter"></slot>
         </RListboxFilter>
@@ -18,7 +18,7 @@
 
       <RListboxContent
         ref="content"
-        class="grid gap-1 overflow-hidden p-1 outline-none"
+        class="grid gap-1 overflow-y-auto p-1 outline-none"
         :style="{
           gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
         }"
