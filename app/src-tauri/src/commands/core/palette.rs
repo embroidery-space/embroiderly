@@ -283,6 +283,7 @@ pub fn load_palette<R: tauri::Runtime>(
 #[tauri::command]
 pub fn sort_palette_by<R: tauri::Runtime>(
   sort_by: SortPaletteBy,
+  app_handle: tauri::AppHandle<R>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
@@ -298,6 +299,13 @@ pub fn sort_palette_by<R: tauri::Runtime>(
 
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).unwrap().push(Box::new(action));
+
+  app_handle.capture_event(AppEvent::PaletteSorted {
+    sort_by,
+    palette_size: patproj.pattern.palette.len(),
+    blends_number: patproj.pattern.palette.blends_number(),
+    used_palette_brands: patproj.pattern.palette.used_brands(),
+  });
 
   Ok(())
 }

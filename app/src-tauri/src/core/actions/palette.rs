@@ -12,7 +12,7 @@ use crate::utils::base64;
 mod tests;
 
 /// Specifies how palette items should be sorted.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum SortPaletteBy {
   /// Sort by brand and number alphanumerically.
   BrandAndNumber,
