@@ -136,7 +136,9 @@
    */
   function optionIsSelected(option: T) {
     const transformed = optionValue?.(option) ?? option;
-    if (multiple) return (value.value as V[]).find((option) => dequal(option, transformed)) !== undefined;
+    if (multiple && Array.isArray(value.value)) {
+      return value.value.find((option) => dequal(option, transformed)) !== undefined;
+    }
     return dequal(value.value, transformed);
   }
 </script>

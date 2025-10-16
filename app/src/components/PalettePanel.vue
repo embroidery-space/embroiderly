@@ -9,15 +9,14 @@
       @update:open="(isOpen) => !isOpen && updatePaletteDisplaySettings()"
     >
       <PaletteList
-        :model-value="appStateStore.selectedPaletteItemIndexes"
+        :model-value="appStateStore.selectedPaletteItemIndex"
         :options="patternsStore.pattern?.palette.itemsInVisualOrder"
-        :option-value="(pi) => patternsStore.pattern?.palette.items.findIndex((cmp) => dequal(cmp, pi))!"
+        :option-value="(pi) => pi.index"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
         :draggable="paletteIsBeingEdited"
-        multiple
         class="grow"
-        @update:model-value="handlePaletteItemsSelection"
+        @update:model-value="(value) => (appStateStore.selectedPaletteItemIndex = value as number)"
         @reorder="({ oldPosition, newPosition }) => patternsStore.reorderPaletteItems(oldPosition, newPosition)"
       >
         <template #header>
@@ -104,7 +103,6 @@
 
 <script setup lang="ts">
   import type { ContextMenuItem, DropdownMenuItem } from "@nuxt/ui";
-  import { dequal } from "dequal";
   import { computed, ref, watch } from "vue";
 
   import { PaletteItem, PaletteSettings, SortPaletteBy } from "~/core/pattern/";
@@ -264,19 +262,22 @@
     [
       {
         label: fluent.$t("label-palette-delete-selected", {
-          selected: appStateStore.selectedPaletteItemIndexes.length,
+          selected: appStateStore.selectedPaletteItemIndex !== undefined ? 1 : 0,
         }),
-        disabled: !patternsStore.pattern?.palette.length || !appStateStore.selectedPaletteItemIndexes.length,
-        onSelect: () => patternsStore.removePaletteItem(...appStateStore.selectedPaletteItemIndexes),
+        disabled: !patternsStore.pattern?.palette.length || appStateStore.selectedPaletteItemIndex === undefined,
+        onSelect: () => {
+          if (appStateStore.selectedPaletteItemIndex !== undefined) {
+            patternsStore.removePaletteItem(appStateStore.selectedPaletteItemIndex);
+          }
+        },
       },
-    ],
-    [
       {
-        label: fluent.$t("label-palette-select-all"),
+        label: fluent.$t("label-palette-delete-all"),
         disabled: !patternsStore.pattern?.palette.length,
-        onSelect: (event) => {
-          event.preventDefault();
-          appStateStore.selectedPaletteItemIndexes = patternsStore.pattern!.palette.items.map((_, i) => i);
+        onSelect: () => {
+          if (patternsStore.pattern?.palette.length) {
+            patternsStore.removePaletteItem(...new Array(patternsStore.pattern.palette.length).keys());
+          }
         },
       },
     ],
@@ -305,17 +306,9 @@
     if (!value) {
       showPaletteCatalog.value = false;
       showPaletteDisplaySettings.value = false;
-      handlePaletteItemsSelection(appStateStore.selectedPaletteItemIndexes);
       await updatePaletteDisplaySettings();
     }
   });
-
-  function handlePaletteItemsSelection(value: number | number[]) {
-    const palindexes = Array.isArray(value) ? value : [value];
-    if (palindexes.length > 1 && !paletteIsBeingEdited.value) {
-      appStateStore.selectedPaletteItemIndexes = palindexes.slice(-1);
-    } else appStateStore.selectedPaletteItemIndexes = palindexes;
-  }
 
   function getPaletteItemSymbolFontFamily(palitem: PaletteItem) {
     const defaultSymbolFont = patternsStore.pattern?.defaultSymbolFont;

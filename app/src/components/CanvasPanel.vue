@@ -188,14 +188,14 @@
       pattern: patternsStore.pattern!,
       api: {
         async addStitch(stitch) {
-          const palindex = appStateStore.selectedPaletteItemIndexes[0];
+          const palindex = appStateStore.selectedPaletteItemIndex;
           if (palindex !== undefined) {
             stitch.palindex = palindex;
             await patternsStore.addStitch(stitch);
           }
         },
         async removeStitch(stitch) {
-          const palindex = appStateStore.selectedPaletteItemIndexes[0];
+          const palindex = appStateStore.selectedPaletteItemIndex;
           if (palindex !== undefined) {
             stitch.palindex = palindex;
             await patternsStore.removeStitch(stitch);
@@ -218,14 +218,14 @@
 
         hint: {
           drawLine(stitch) {
-            const palindex = appStateStore.selectedPaletteItemIndexes[0];
+            const palindex = appStateStore.selectedPaletteItemIndex;
             if (palindex !== undefined) {
               stitch.palindex = palindex;
               patternApplication.view!.drawLineHint(stitch);
             }
           },
           drawNode(stitch) {
-            const palindex = appStateStore.selectedPaletteItemIndexes[0];
+            const palindex = appStateStore.selectedPaletteItemIndex;
             if (palindex !== undefined) {
               stitch.palindex = palindex;
               patternApplication.view!.drawNodeHint(stitch);

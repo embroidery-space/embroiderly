@@ -328,7 +328,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       for (const palindex of palindexes.reverse()) {
         pattern.value.palette.remove(palindex);
-        if (appStateStore.selectedPaletteItemIndexes.includes(palindex)) appStateStore.selectedPaletteItemIndexes = [];
+        if (appStateStore.selectedPaletteItemIndex === palindex) appStateStore.selectedPaletteItemIndex = undefined;
       }
       triggerRef(pattern);
     });

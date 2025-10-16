@@ -134,7 +134,7 @@ label-palette-delete-selected = { $selected ->
   [0] Delete Selected
   *[other] Delete { $selected } Selected
 }
-label-palette-select-all = Select All
+label-palette-delete-all = Delete All
 
 label-palette-catalog-menu-import-palettes = Import Palettes
 

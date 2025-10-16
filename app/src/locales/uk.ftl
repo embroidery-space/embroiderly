@@ -137,7 +137,7 @@ label-palette-delete-selected = { $selected ->
   [few] Видалити { $selected } вибрані
   *[many] Видалити { $selected } вибраних
 }
-label-palette-select-all = Виділити всі
+label-palette-delete-all = Видалити всі
 
 label-palette-catalog-menu-import-palettes = Імпортувати палітри
 
