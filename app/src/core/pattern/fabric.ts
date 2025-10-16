@@ -47,8 +47,8 @@ export class Fabric {
 
 /** Represents a fabric color. */
 export class FabricColor extends BasePaletteItem {
-  constructor(data: b.infer<typeof FabricColor.schema>) {
-    super(data);
+  constructor(index: number, data: b.infer<typeof FabricColor.schema>) {
+    super(index, data);
   }
 
   static readonly schema = b.struct({
@@ -56,20 +56,8 @@ export class FabricColor extends BasePaletteItem {
     color: b.string(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new FabricColor(FabricColor.schema.deserialize(buffer));
-  }
-
-  static serialize(data: FabricColor) {
-    return FabricColor.schema.serialize({
-      name: data.name,
-      color: data.hex.slice(1),
-    });
-  }
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getTitle(_options = PaletteSettings.default()) {
+  getTitle(_options?: PaletteSettings) {
     return this.name;
   }
 
@@ -83,5 +71,5 @@ export function deserializeFabricColors(data: Uint8Array | string) {
   return b
     .vec(FabricColor.schema)
     .deserialize(buffer)
-    .map((color) => new FabricColor(color));
+    .map((color, index) => new FabricColor(index, color));
 }

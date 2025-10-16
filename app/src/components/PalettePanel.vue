@@ -12,7 +12,6 @@
         :model-value="appStateStore.selectedPaletteItemIndexes"
         :options="patternsStore.pattern?.palette.itemsInVisualOrder"
         :option-value="(pi) => patternsStore.pattern?.palette.items.findIndex((cmp) => dequal(cmp, pi))!"
-        :option-key="(pi) => patternsStore.pattern?.palette.items.findIndex((cmp) => dequal(cmp, pi))!"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
         :draggable="paletteIsBeingEdited"

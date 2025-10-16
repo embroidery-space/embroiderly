@@ -1,7 +1,7 @@
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize))]
 pub struct ReferenceImage {
-  #[borsh(skip)]
+  #[cfg_attr(feature = "borsh", borsh(skip))]
   pub format: image::ImageFormat,
   pub content: Vec<u8>,
   pub settings: ReferenceImageSettings,
@@ -32,6 +32,7 @@ impl ReferenceImage {
   }
 }
 
+#[cfg(feature = "borsh")]
 impl borsh::BorshDeserialize for ReferenceImage {
   fn deserialize_reader<R: std::io::Read>(reader: &mut R) -> std::io::Result<Self> {
     let content = borsh::BorshDeserialize::deserialize_reader(reader)?;

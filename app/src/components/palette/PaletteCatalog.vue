@@ -4,7 +4,6 @@
       :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="results.map((r) => r.item)"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
-      :option-key="(pi) => `${pi.brand}-${pi.number}`"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
       multiple
       meta-key-selection

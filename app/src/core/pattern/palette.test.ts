@@ -30,7 +30,7 @@ describe("Palette", () => {
       positions: [0, 1],
     });
 
-    const newItem = new PaletteItem(PALETTE_ITEMS.LAVENDER);
+    const newItem = new PaletteItem(palette.length, PALETTE_ITEMS.LAVENDER);
     const index = palette.push(newItem);
 
     expect(index).toBe(2);
@@ -45,7 +45,7 @@ describe("Palette", () => {
       positions: [0, 1, 2],
     });
 
-    const newItem = new PaletteItem(PALETTE_ITEMS.WHITE);
+    const newItem = new PaletteItem(1, PALETTE_ITEMS.WHITE);
     palette.insert(1, newItem);
 
     expect(palette.length).toBe(4);
@@ -65,7 +65,7 @@ describe("Palette", () => {
       positions: [0, 1],
     });
 
-    const newItem = new PaletteItem(PALETTE_ITEMS.WHITE);
+    const newItem = new PaletteItem(0, PALETTE_ITEMS.WHITE);
     palette.insert(0, newItem);
 
     expect(palette.length).toBe(3);
@@ -158,7 +158,7 @@ describe("PaletteItem", () => {
         { brand: "Madeira", number: "0705" },
       ].map((data) => new Blend(data)),
     },
-  ].map((data) => new PaletteItem({ blends: null, symbol: null, symbolFont: null, ...data }));
+  ].map((data, index) => new PaletteItem(index, { blends: null, symbol: null, symbolFont: null, ...data }));
 
   test("returns contrast color", () => {
     expect(PALETTE[0].contrastColor).toBe("white");

@@ -25,8 +25,8 @@
       >
         <template v-if="options.length">
           <RListboxItem
-            v-for="(option, index) in options"
-            :key="optionKey?.(option) ?? index"
+            v-for="option in options"
+            :key="option.index"
             :value="optionValue?.(option) ?? option"
             as-child
             @dblclick="handleOptionDoubleClick($event, option)"
@@ -58,17 +58,16 @@
 </template>
 
 <script setup lang="ts" generic="T extends BasePaletteItem, V">
-  import { useSortable } from "@vueuse/integrations/useSortable";
+  import { insertNodeAt, removeNode, useSortable } from "@vueuse/integrations/useSortable";
   import { dequal } from "dequal/lite";
   import type { AcceptableValue } from "reka-ui";
-  import { watchEffect, useTemplateRef } from "vue";
+  import { nextTick, watchEffect, useTemplateRef } from "vue";
 
   import { BasePaletteItem, PaletteSettings } from "~/core/pattern/";
 
   interface PaletteListProps<T> {
     options?: T[];
     optionValue?: (option: T) => V;
-    optionKey?: (option: T) => PropertyKey;
     disabled?: boolean;
     multiple?: boolean;
     draggable?: boolean;
@@ -79,7 +78,6 @@
   const {
     options = [],
     optionValue = undefined,
-    optionKey = undefined,
     disabled = false,
     multiple = false,
     draggable = false,
@@ -100,13 +98,21 @@
   }>();
 
   const content = useTemplateRef("content");
-  const { option: setSortableOption } = useSortable(content, options, {
+  const { option: setSortableOption } = useSortable(content, /* options */ [], {
     animation: 100,
-    forceFallback: true,
-    onUpdate: ({ oldIndex, newIndex }) => {
-      if (oldIndex !== undefined && newIndex !== undefined) {
+    disabled: true, // Sortable is disabled by default.
+    forceFallback: true, // Use custom implementation instead of built-in HTML5 features.
+    avoidImplicitDeselect: true, // Don't deselect items on click outside.
+    onUpdate: ({ from, item, oldIndex, newIndex }) => {
+      if (oldIndex === undefined || newIndex === undefined) return;
+
+      // Restore the original item positions in the DOM to let Vue to properly render the palette list.
+      removeNode(item);
+      insertNodeAt(from, item, oldIndex);
+
+      nextTick(() => {
         emit("reorder", { oldPosition: oldIndex, newPosition: newIndex });
-      }
+      });
     },
   });
   watchEffect(() => {
