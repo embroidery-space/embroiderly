@@ -34,7 +34,7 @@ pub fn set_reference_image<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   log::debug!("Reference image set successfully");
   app_handle.capture_event(event);
@@ -60,7 +60,7 @@ pub fn remove_reference_image<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   log::debug!("Reference image removed successfully");
   app_handle.capture_event(AppEvent::ReferenceImageRemoved);
@@ -86,7 +86,7 @@ pub fn update_reference_image_settings<R: tauri::Runtime>(
     action.perform(&window, pattern)?;
 
     let mut history = history.write().unwrap();
-    history.get_mut(&pattern_id).push(Box::new(action));
+    history.get_mut(&pattern_id).unwrap().push(Box::new(action));
   }
 
   app_handle.capture_event(AppEvent::ReferenceImageSettingsUpdated { settings });

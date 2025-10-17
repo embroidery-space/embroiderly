@@ -11,6 +11,7 @@ pub fn handle_file_associations<R: tauri::Runtime>(
       file,
       Some(false),
       app_handle.clone(),
+      app_handle.state::<crate::state::HistoryState<R>>(),
       app_handle.state::<crate::state::PatternsState>(),
     )?;
   }

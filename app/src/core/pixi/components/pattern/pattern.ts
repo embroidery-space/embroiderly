@@ -40,7 +40,7 @@ import {
 } from "./stitches.ts";
 
 export class PatternView extends Container {
-  private palette: PaletteItem[];
+  private readonly palette: readonly PaletteItem[];
   private specialStitchModels: SpecialStitchModel[];
 
   private displayMode: DisplayMode | undefined;
@@ -103,7 +103,7 @@ export class PatternView extends Container {
   constructor(pattern: Pattern) {
     super({ label: "Pattern", isRenderGroup: true });
 
-    this.palette = pattern.palette;
+    this.palette = pattern.palette.items;
 
     this.setFabric(pattern.fabric);
     this.setGrid(pattern.grid);

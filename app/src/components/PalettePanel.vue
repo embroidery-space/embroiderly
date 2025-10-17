@@ -4,16 +4,20 @@
     class="flex h-full"
     :class="{ 'border-2 border-primary': paletteIsBeingEdited }"
   >
-    <UContextMenu :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions">
+    <UContextMenu
+      :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions"
+      @update:open="(isOpen) => !isOpen && updatePaletteDisplaySettings()"
+    >
       <PaletteList
-        :model-value="appStateStore.selectedPaletteItemIndexes"
-        :options="patternsStore.pattern?.palette"
-        :option-value="(pi) => patternsStore.pattern?.palette.findIndex((cmp) => dequal(cmp, pi))"
+        :model-value="appStateStore.selectedPaletteItemIndex"
+        :options="patternsStore.pattern?.palette.itemsInVisualOrder"
+        :option-value="(pi) => pi.index"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
-        multiple
+        :draggable="paletteIsBeingEdited"
         class="grow"
-        @update:model-value="handlePaletteItemsSelection"
+        @update:model-value="(value) => (appStateStore.selectedPaletteItemIndex = value as number)"
+        @reorder="({ oldPosition, newPosition }) => patternsStore.reorderPaletteItems(oldPosition, newPosition)"
       >
         <template #header>
           <div v-if="paletteIsBeingEdited" class="flex gap-x-1" @contextmenu.stop.prevent>
@@ -80,7 +84,7 @@
 
     <PaletteCatalog
       v-if="patternsStore.pattern?.palette && showPaletteCatalog"
-      :palette="patternsStore.pattern.palette"
+      :palette="patternsStore.pattern.palette.items"
       class="min-w-max border-l border-default"
       @close="showPaletteCatalog = false"
       @add-palette-item="patternsStore.addPaletteItem"
@@ -98,11 +102,10 @@
 </template>
 
 <script setup lang="ts">
-  import type { DropdownMenuItem } from "@nuxt/ui";
-  import { dequal } from "dequal";
+  import type { ContextMenuItem, DropdownMenuItem } from "@nuxt/ui";
   import { computed, ref, watch } from "vue";
 
-  import { PaletteItem, PaletteSettings } from "~/core/pattern/";
+  import { PaletteItem, PaletteSettings, SortPaletteBy } from "~/core/pattern/";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -115,14 +118,171 @@
   const showPaletteCatalog = ref(false);
   const showPaletteDisplaySettings = ref(false);
 
-  let paletteDisplaySettingsHaveChanged = false;
-  const paletteDisplaySettings = computed({
-    get: () => patternsStore.pattern?.paletteDisplaySettings ?? PaletteSettings.default(),
-    set: (value: PaletteSettings) => {
-      paletteDisplaySettingsHaveChanged = true;
-      patternsStore.updatePaletteDisplaySettings(value, true);
+  const paletteDisplaySettings = ref(PaletteSettings.default());
+  watch(
+    () => patternsStore.pattern?.paletteDisplaySettings,
+    (settings) => {
+      if (settings) paletteDisplaySettings.value = settings;
     },
-  });
+    { immediate: true },
+  );
+
+  const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => [
+    [
+      {
+        label: fluent.$t("label-palette-edit"),
+        onSelect: (event) => {
+          event.preventDefault();
+          paletteIsBeingEdited.value = true;
+        },
+      },
+    ],
+    [
+      {
+        label: fluent.$t("label-palette-display-options"),
+        children: [
+          [
+            {
+              label: fluent.$t("label-display-options-columns-number"),
+              children: [1, 2, 3, 4, 5, 6, 7, 8].map<ContextMenuItem>((n) => ({
+                label: n.toString(),
+                type: "checkbox",
+                checked: paletteDisplaySettings.value.columnsNumber === n,
+                onSelect: (event) => {
+                  event.preventDefault();
+                  paletteDisplaySettings.value = {
+                    ...paletteDisplaySettings.value,
+                    columnsNumber: n,
+                  };
+                },
+              })),
+            },
+          ],
+          [
+            {
+              label: fluent.$t("label-display-options-color-only"),
+              type: "checkbox",
+              checked: paletteDisplaySettings.value.colorOnly,
+              onSelect: (event) => {
+                event.preventDefault();
+                paletteDisplaySettings.value = {
+                  ...paletteDisplaySettings.value,
+                  colorOnly: !paletteDisplaySettings.value.colorOnly,
+                };
+              },
+            },
+          ],
+          [
+            {
+              label: fluent.$t("label-display-options-show-stitch-symbols"),
+              type: "checkbox",
+              checked: paletteDisplaySettings.value.showStitchSymbols,
+              disabled: paletteDisplaySettings.value.colorOnly,
+              onSelect: (event) => {
+                event.preventDefault();
+                paletteDisplaySettings.value = {
+                  ...paletteDisplaySettings.value,
+                  showStitchSymbols: !paletteDisplaySettings.value.showStitchSymbols,
+                };
+              },
+            },
+            {
+              label: fluent.$t("label-display-options-stitch-symbols-on-contrast-background"),
+              type: "checkbox",
+              checked: paletteDisplaySettings.value.stitchSymbolsOnContrastBackground,
+              disabled: paletteDisplaySettings.value.colorOnly,
+              onSelect: (event) => {
+                event.preventDefault();
+                paletteDisplaySettings.value = {
+                  ...paletteDisplaySettings.value,
+                  stitchSymbolsOnContrastBackground: !paletteDisplaySettings.value.stitchSymbolsOnContrastBackground,
+                };
+              },
+            },
+          ],
+          [
+            {
+              label: fluent.$t("label-display-options-show-brand"),
+              type: "checkbox",
+              checked: paletteDisplaySettings.value.showColorBrands,
+              disabled: paletteDisplaySettings.value.colorOnly,
+              onSelect: (event) => {
+                event.preventDefault();
+                paletteDisplaySettings.value = {
+                  ...paletteDisplaySettings.value,
+                  showColorBrands: !paletteDisplaySettings.value.showColorBrands,
+                };
+              },
+            },
+            {
+              label: fluent.$t("label-display-options-show-number"),
+              type: "checkbox",
+              checked: paletteDisplaySettings.value.showColorNumbers,
+              disabled: paletteDisplaySettings.value.colorOnly,
+              onSelect: (event) => {
+                event.preventDefault();
+                paletteDisplaySettings.value = {
+                  ...paletteDisplaySettings.value,
+                  showColorNumbers: !paletteDisplaySettings.value.showColorNumbers,
+                };
+              },
+            },
+            {
+              label: fluent.$t("label-display-options-show-name"),
+              type: "checkbox",
+              checked: paletteDisplaySettings.value.showColorNames,
+              disabled: paletteDisplaySettings.value.colorOnly,
+              onSelect: (event) => {
+                event.preventDefault();
+                paletteDisplaySettings.value = {
+                  ...paletteDisplaySettings.value,
+                  showColorNames: !paletteDisplaySettings.value.showColorNames,
+                };
+              },
+            },
+          ],
+        ],
+      },
+    ],
+  ]);
+  const paletteEditingContextMenuOptions = computed<ContextMenuItem[][]>(() => [
+    palettePanelsMenuOptions.value,
+    [
+      {
+        label: fluent.$t("label-palette-sort-by"),
+        disabled: !patternsStore.pattern?.palette.length,
+        children: [
+          {
+            label: fluent.$t("label-palette-sort-by-brand-and-number"),
+            onSelect: () => patternsStore.sortPaletteBy(SortPaletteBy.BrandAndNumber),
+          },
+        ],
+      },
+    ],
+    [
+      {
+        label: fluent.$t("label-palette-delete-selected", {
+          selected: appStateStore.selectedPaletteItemIndex !== undefined ? 1 : 0,
+        }),
+        disabled: !patternsStore.pattern?.palette.length || appStateStore.selectedPaletteItemIndex === undefined,
+        onSelect: () => {
+          if (appStateStore.selectedPaletteItemIndex !== undefined) {
+            patternsStore.removePaletteItem(appStateStore.selectedPaletteItemIndex);
+          }
+        },
+      },
+      {
+        label: fluent.$t("label-palette-delete-all"),
+        disabled: !patternsStore.pattern?.palette.length,
+        onSelect: () => {
+          if (patternsStore.pattern?.palette.length) {
+            patternsStore.removePaletteItem(...new Array(patternsStore.pattern.palette.length).keys());
+          }
+        },
+      },
+    ],
+    [{ label: fluent.$t("label-save-changes"), onSelect: () => (paletteIsBeingEdited.value = false) }],
+  ]);
 
   const palettePanelsMenuOptions = computed<DropdownMenuItem[]>(() => [
     {
@@ -141,57 +301,14 @@
     },
   ]);
 
-  const paletteContextMenuOptions = computed<DropdownMenuItem[]>(() => [
-    {
-      label: fluent.$t("label-palette-edit"),
-      onSelect: (event) => {
-        event.preventDefault();
-        paletteIsBeingEdited.value = true;
-      },
-    },
-  ]);
-  const paletteEditingContextMenuOptions = computed<DropdownMenuItem[][]>(() => [
-    palettePanelsMenuOptions.value,
-    [
-      {
-        label: fluent.$t("label-palette-delete-selected", {
-          selected: appStateStore.selectedPaletteItemIndexes.length,
-        }),
-        disabled: !patternsStore.pattern?.palette.length || !appStateStore.selectedPaletteItemIndexes.length,
-        onSelect: () => patternsStore.removePaletteItem(...appStateStore.selectedPaletteItemIndexes),
-      },
-    ],
-    [
-      {
-        label: fluent.$t("label-palette-select-all"),
-        disabled: !patternsStore.pattern?.palette.length,
-        onSelect: (event) => {
-          event.preventDefault();
-          appStateStore.selectedPaletteItemIndexes = patternsStore.pattern!.palette.map((_, i) => i);
-        },
-      },
-    ],
-    [{ label: fluent.$t("label-save-changes"), onSelect: () => (paletteIsBeingEdited.value = false) }],
-  ]);
-
-  watch(paletteIsBeingEdited, (value) => {
+  watch(paletteIsBeingEdited, async (value) => {
     patternsStore.blocked = value;
     if (!value) {
       showPaletteCatalog.value = false;
-      if (paletteDisplaySettingsHaveChanged) {
-        patternsStore.updatePaletteDisplaySettings(paletteDisplaySettings.value);
-        paletteDisplaySettingsHaveChanged = false;
-      }
       showPaletteDisplaySettings.value = false;
-      handlePaletteItemsSelection(appStateStore.selectedPaletteItemIndexes);
+      await updatePaletteDisplaySettings();
     }
   });
-
-  function handlePaletteItemsSelection(palindexes: number[]) {
-    if (palindexes.length > 1 && !paletteIsBeingEdited.value) {
-      appStateStore.selectedPaletteItemIndexes = palindexes.slice(-1);
-    } else appStateStore.selectedPaletteItemIndexes = palindexes;
-  }
 
   function getPaletteItemSymbolFontFamily(palitem: PaletteItem) {
     const defaultSymbolFont = patternsStore.pattern?.defaultSymbolFont;
@@ -202,5 +319,9 @@
             .join(", ")
         : defaultSymbolFont;
     } else return `"${palitem.symbolFont}"`;
+  }
+
+  async function updatePaletteDisplaySettings() {
+    await patternsStore.updatePaletteDisplaySettings(paletteDisplaySettings.value);
   }
 </script>

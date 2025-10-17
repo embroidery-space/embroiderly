@@ -128,16 +128,20 @@ label-palette-edit = Edit Palette
 
 label-palette-colors = Colors
 label-palette-display-options = Display Settings
+label-palette-sort-by = Sort By
+label-palette-sort-by-brand-and-number = Brand & Number
 label-palette-delete-selected = { $selected ->
   [0] Delete Selected
   *[other] Delete { $selected } Selected
 }
-label-palette-select-all = Select All
+label-palette-delete-all = Delete All
 
 label-palette-catalog-menu-import-palettes = Import Palettes
 
 label-palette-catalog-group-system = System
 label-palette-catalog-group-custom = Custom
+
+label-palette-catalog-search-placeholder = Search...
 
 message-palette-import-success = Palettes imported successfully
 message-palette-import-error = Failed to import palettes

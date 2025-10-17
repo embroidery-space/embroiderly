@@ -29,7 +29,7 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
         }
       }
 
-      palette
+      palette.into()
     },
     fullstitches: Stitches::from_iter(
       xsd_pattern

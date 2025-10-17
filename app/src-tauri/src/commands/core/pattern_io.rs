@@ -29,6 +29,7 @@ pub fn open_pattern<R: tauri::Runtime>(
   file_path: std::path::PathBuf,
   restore_from_backup: Option<bool>,
   app_handle: tauri::AppHandle<R>,
+  history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<tauri::ipc::Response> {
   log::debug!("Opening pattern");
@@ -46,10 +47,12 @@ pub fn open_pattern<R: tauri::Runtime>(
         let pattern = embroiderly_parsers::parse_pattern(backup_file_path)?;
         log::debug!("Pattern({:?}) restored from backup", pattern.id);
 
-        let result = borsh::to_vec(&pattern)?;
+        let response = tauri::ipc::Response::new(borsh::to_vec(&pattern)?);
+
+        history.write().unwrap().create(pattern.id);
         patterns.add_pattern(pattern);
 
-        return Ok(tauri::ipc::Response::new(result));
+        return Ok(response);
       }
       Some(false) => {}
       None => return Err(PatternError::BackupFileExists.into()),
@@ -73,9 +76,9 @@ pub fn open_pattern<R: tauri::Runtime>(
       fabric: patproj.pattern.fabric.clone(),
 
       palette_size: patproj.pattern.palette.len(),
-      blends_number: patproj.pattern.blends_number(),
-      used_palette_brands: patproj.pattern.used_palette_brands(),
-      used_stitch_fonts: patproj.pattern.used_stitch_fonts(),
+      blends_number: patproj.pattern.palette.blends_number(),
+      used_palette_brands: patproj.pattern.palette.used_brands(),
+      used_stitch_fonts: patproj.pattern.palette.used_symbol_fonts(),
 
       full_stitches_number,
       petite_stitches_number,
@@ -94,16 +97,19 @@ pub fn open_pattern<R: tauri::Runtime>(
     });
   }
 
-  let result = borsh::to_vec(&patproj)?;
+  let response = tauri::ipc::Response::new(borsh::to_vec(&patproj)?);
+
+  history.write().unwrap().create(patproj.id);
   patterns.add_pattern(patproj);
 
-  Ok(tauri::ipc::Response::new(result))
+  Ok(response)
 }
 
 #[tauri::command]
 pub fn create_pattern<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,
   app_handle: tauri::AppHandle<R>,
+  history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<tauri::ipc::Response> {
   if let tauri::ipc::InvokeBody::Raw(data) = request.body() {
@@ -120,10 +126,12 @@ pub fn create_pattern<R: tauri::Runtime>(
       fabric: patproj.pattern.fabric.clone(),
     });
 
-    let result = borsh::to_vec(&patproj)?;
+    let response = tauri::ipc::Response::new(borsh::to_vec(&patproj)?);
+
+    history.write().unwrap().create(patproj.id);
     patterns.write().unwrap().add_pattern(patproj);
 
-    Ok(tauri::ipc::Response::new(result))
+    Ok(response)
   } else {
     Err(CommandError::InvalidRequestBody.into())
   }
@@ -183,7 +191,7 @@ pub fn save_pattern<R: tauri::Runtime>(
   app_handle.capture_event(AppEvent::PatternSaved { format });
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(CheckpointAction));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(CheckpointAction));
 
   app_handle.emit("app:pattern-saved", &pattern_id)?;
   Ok(())

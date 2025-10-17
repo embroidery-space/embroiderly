@@ -203,6 +203,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "alphanumeric-sort"
+version = "1.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d67c60c5f10f11c6ee04de72b2dd98bb9d2548cbc314d22a609bfa8bd9e87e8f"
+
+[[package]]
 name = "android-tzdata"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1684,11 +1690,13 @@ dependencies = [
 name = "embroiderly-pattern"
 version = "0.0.0"
 dependencies = [
+ "alphanumeric-sort",
  "anyhow",
  "borsh",
  "image",
  "log",
  "ordered-float",
+ "rstest",
  "serde",
  "uuid",
  "xsp-parsers",

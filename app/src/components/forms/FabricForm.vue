@@ -59,9 +59,10 @@
         :display-settings="FABRIC_COLORS_DISPLAY_SETTINGS"
         @update:model-value="
           (value) => {
-            if (value) {
-              fabric.name = value.name;
-              fabric.color = new Color(value.color);
+            const item = Array.isArray(value) ? value[0] : value;
+            if (item) {
+              fabric.name = item.name;
+              fabric.color = new Color(item.color);
             }
           }
         "

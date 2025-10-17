@@ -13,12 +13,18 @@ impl<R: tauri::Runtime> HistoryManager<R> {
     Self { inner: HashMap::new() }
   }
 
+  /// Creates a new history entry for the given pattern ID.
+  /// If history already exists for this pattern, this is a no-op.
+  pub fn create(&mut self, id: uuid::Uuid) {
+    self.inner.insert(id, History::new());
+  }
+
   pub fn get(&self, id: &uuid::Uuid) -> Option<&History<R>> {
     self.inner.get(id)
   }
 
-  pub fn get_mut(&mut self, id: &uuid::Uuid) -> &mut History<R> {
-    self.inner.entry(*id).or_default()
+  pub fn get_mut(&mut self, id: &uuid::Uuid) -> Option<&mut History<R>> {
+    self.inner.get_mut(id)
   }
 
   pub fn remove(&mut self, id: &uuid::Uuid) -> Option<History<R>> {

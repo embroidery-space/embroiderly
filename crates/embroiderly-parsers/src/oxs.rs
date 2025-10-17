@@ -106,7 +106,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
               kind: fabric.kind,
               ..pattern.fabric
             };
-            pattern.palette = palette;
+            pattern.palette = palette.into();
           }
           b"fullstitches" => pattern.fullstitches.extend(
             read_full_stitches(reader)?
@@ -187,6 +187,13 @@ fn save_pattern_inner<W: io::Write>(
 
   let PatternProject { pattern, display_settings, .. } = patproj;
 
+  // Create a mapping from actual index to visual position for efficient lookups when writing stitches.
+  // This allows us to convert stitch palindex values (which reference actual indexes) to visual positions.
+  let mut index_to_position = vec![0u32; pattern.palette.len()];
+  for (position, &index) in pattern.palette.positions().iter().enumerate() {
+    index_to_position[index as usize] = position as u32;
+  }
+
   // In the development mode, we want to have a pretty-printed XML file for easy debugging.
   #[cfg(debug_assertions)]
   let mut writer = Writer::new_with_indent(writer, b' ', 2);
@@ -211,14 +218,46 @@ fn save_pattern_inner<W: io::Write>(
       &pattern.palette,
       &display_settings.default_symbol_font,
     )?;
-    write_full_stitches(writer, &pattern.fullstitches)?;
-    write_line_stitches(writer, &pattern.linestitches)?;
+    write_full_stitches(
+      writer,
+      pattern
+        .fullstitches
+        .iter()
+        .filter(|stitch| stitch.kind == FullStitchKind::Full)
+        .map(|stitch| FullStitch {
+          palindex: index_to_position[stitch.palindex as usize],
+          ..*stitch
+        }),
+    )?;
+    write_line_stitches(
+      writer,
+      pattern.linestitches.iter().map(|stitch| LineStitch {
+        palindex: index_to_position[stitch.palindex as usize],
+        ..*stitch
+      }),
+    )?;
     write_ornaments(
       writer,
-      &pattern.fullstitches,
-      &pattern.partstitches,
-      &pattern.nodestitches,
-      &pattern.specialstitches,
+      pattern
+        .fullstitches
+        .iter()
+        .filter(|stitch| stitch.kind == FullStitchKind::Petite)
+        .map(|stitch| FullStitch {
+          palindex: index_to_position[stitch.palindex as usize],
+          ..*stitch
+        }),
+      pattern.partstitches.iter().map(|stitch| PartStitch {
+        palindex: index_to_position[stitch.palindex as usize],
+        ..*stitch
+      }),
+      pattern.nodestitches.iter().map(|stitch| NodeStitch {
+        palindex: index_to_position[stitch.palindex as usize],
+        ..*stitch
+      }),
+      pattern.specialstitches.iter().map(|stitch| SpecialStitch {
+        palindex: index_to_position[stitch.palindex as usize],
+        ..*stitch
+      }),
     )?;
     write_special_stitch_models(writer, &pattern.special_stitch_models)?;
     Ok(())
@@ -410,7 +449,7 @@ fn read_palette<R: io::BufRead>(
 fn write_palette<W: io::Write>(
   writer: &mut Writer<W>,
   fabric: &Fabric,
-  palette: &[PaletteItem],
+  palette: &Palette,
   default_symbol_font: &str,
 ) -> io::Result<()> {
   writer.create_element("palette").write_inner_content(|writer| {
@@ -424,9 +463,11 @@ fn write_palette<W: io::Write>(
       ])
       .write_empty()?;
 
-    for (index, palitem) in palette.iter().enumerate() {
+    // Write palette items in visual order (following positions).
+    for (visual_position, &actual_index) in palette.positions().iter().enumerate() {
+      let palitem = &palette[actual_index];
       let mut attributes = vec![
-        ("index", (index + 1).to_string()),
+        ("index", (visual_position + 1).to_string()),
         (
           "number",
           format!("{} {}", palitem.brand, palitem.number).trim().to_owned(),
@@ -494,9 +535,12 @@ fn read_full_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Full
   Ok(fullstitches)
 }
 
-fn write_full_stitches<W: io::Write>(writer: &mut Writer<W>, fullstitches: &Stitches<FullStitch>) -> io::Result<()> {
+fn write_full_stitches<W: io::Write>(
+  writer: &mut Writer<W>,
+  fullstitches: impl Iterator<Item = FullStitch>,
+) -> io::Result<()> {
   writer.create_element("fullstitches").write_inner_content(|writer| {
-    for fullstitch in fullstitches.iter().filter(|stitch| stitch.kind == FullStitchKind::Full) {
+    for fullstitch in fullstitches {
       writer
         .create_element("stitch")
         .with_attributes([
@@ -691,9 +735,12 @@ fn read_line_stitch(attributes: AttributesMap) -> Result<Option<OxsLineStitch>> 
   Ok(stitch)
 }
 
-fn write_line_stitches<W: io::Write>(writer: &mut Writer<W>, linestitches: &Stitches<LineStitch>) -> io::Result<()> {
+fn write_line_stitches<W: io::Write>(
+  writer: &mut Writer<W>,
+  linestitches: impl Iterator<Item = LineStitch>,
+) -> io::Result<()> {
   writer.create_element("backstitches").write_inner_content(|writer| {
-    for linestitch in linestitches.iter().cloned() {
+    for linestitch in linestitches {
       write_line_stitch(writer, OxsLineStitch::LineStitch(linestitch))?;
     }
     Ok(())
@@ -869,31 +916,27 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
 
 fn write_ornaments<W: io::Write>(
   writer: &mut Writer<W>,
-  fullstitches: &Stitches<FullStitch>,
-  partstitches: &Stitches<PartStitch>,
-  nodestitches: &Stitches<NodeStitch>,
-  specialstitches: &Stitches<SpecialStitch>,
+  fullstitches: impl Iterator<Item = FullStitch>,
+  partstitches: impl Iterator<Item = PartStitch>,
+  nodestitches: impl Iterator<Item = NodeStitch>,
+  specialstitches: impl Iterator<Item = SpecialStitch>,
 ) -> io::Result<()> {
   writer
     .create_element("ornaments_inc_knots_and_beads")
     .write_inner_content(|writer| {
-      for fullstitch in fullstitches
-        .iter()
-        .filter(|stitch| stitch.kind == FullStitchKind::Petite)
-        .cloned()
-      {
+      for fullstitch in fullstitches {
         write_ornament(writer, OxsOrnament::Full(fullstitch))?;
       }
 
-      for partstitch in partstitches.iter().cloned() {
+      for partstitch in partstitches {
         write_ornament(writer, OxsOrnament::Part(partstitch))?;
       }
 
-      for nodestitch in nodestitches.iter().cloned() {
+      for nodestitch in nodestitches {
         write_ornament(writer, OxsOrnament::Node(nodestitch))?;
       }
 
-      for specialstitch in specialstitches.iter().cloned() {
+      for specialstitch in specialstitches {
         write_ornament(writer, OxsOrnament::Special(specialstitch))?;
       }
 

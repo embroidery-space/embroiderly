@@ -6,7 +6,8 @@ use tauri::Manager as _;
 use tauri_plugin_posthog::PostHogExt as _;
 
 use crate::core::actions::{
-  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
+  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, ReorderPaletteItemsAction, SortPaletteAction,
+  SortPaletteBy, UpdatePaletteDisplaySettingsAction,
 };
 use crate::error::Result;
 use crate::parse_command_payload;
@@ -38,7 +39,7 @@ pub fn add_palette_item<R: tauri::Runtime>(
     action.perform(&window, patproj)?;
 
     let mut history = history.write().unwrap();
-    history.get_mut(&pattern_id).push(Box::new(action));
+    history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
     app_handle.capture_event(event);
   }
@@ -67,7 +68,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
       patproj
         .pattern
         .palette
-        .get(palindex as usize)
+        .get(palindex)
         .map(|palitem| AppEvent::PaletteItemRemoved {
           brand: palitem.brand.clone(),
           is_blend: palitem.is_blend(),
@@ -80,7 +81,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_batch(events);
 
@@ -98,11 +99,18 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
   let (pattern_id, settings) = parse_command_payload!(request, PaletteSettings);
 
   let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  // Only update if settings have actually changed.
+  if patproj.display_settings.palette_settings == settings {
+    return Ok(());
+  };
+
   let action = UpdatePaletteDisplaySettingsAction::new(settings);
-  action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
+  action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_event(AppEvent::PaletteDisplaySettingsUpdated { settings });
 
@@ -270,4 +278,57 @@ pub fn load_palette<R: tauri::Runtime>(
     serde_json::from_str(&content).map_err(|e| anyhow::anyhow!("Failed to parse palette JSON: {}", e))?
   };
   Ok(borsh::to_vec(&palette)?)
+}
+
+#[tauri::command]
+pub fn sort_palette_by<R: tauri::Runtime>(
+  sort_by: SortPaletteBy,
+  app_handle: tauri::AppHandle<R>,
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  let (pattern_id,) = parse_command_payload!(request);
+
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  let action = SortPaletteAction::new(sort_by);
+  action.perform(&window, patproj)?;
+
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
+
+  app_handle.capture_event(AppEvent::PaletteSorted {
+    sort_by,
+    palette_size: patproj.pattern.palette.len(),
+    blends_number: patproj.pattern.palette.blends_number(),
+    used_palette_brands: patproj.pattern.palette.used_brands(),
+  });
+
+  Ok(())
+}
+
+#[tauri::command]
+pub fn reorder_palette_items<R: tauri::Runtime>(
+  old_position: u32,
+  new_position: u32,
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  let (pattern_id,) = parse_command_payload!(request);
+
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  let action = ReorderPaletteItemsAction::new(old_position, new_position);
+  action.perform(&window, patproj)?;
+
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
+
+  Ok(())
 }

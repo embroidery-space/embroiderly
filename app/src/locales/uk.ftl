@@ -129,18 +129,22 @@ label-palette-edit = Редагувати палітру
 
 label-palette-colors = Кольори
 label-palette-display-options = Налаштування відображення
+label-palette-sort-by = Сортувати за
+label-palette-sort-by-brand-and-number = Брендом і номером
 label-palette-delete-selected = { $selected ->
   [0] Видалити вибрані
   [one] Видалити { $selected } вибраний
   [few] Видалити { $selected } вибрані
   *[many] Видалити { $selected } вибраних
 }
-label-palette-select-all = Виділити всі
+label-palette-delete-all = Видалити всі
 
 label-palette-catalog-menu-import-palettes = Імпортувати палітри
 
 label-palette-catalog-group-system = Системні
 label-palette-catalog-group-custom = Власні
+
+label-palette-catalog-search-placeholder = Пошук...
 
 message-palette-import-success = Палітри успішно імпортовані
 message-palette-import-error = Не вдалося імпортувати палітри

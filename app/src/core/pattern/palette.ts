@@ -5,6 +5,10 @@ import type { ColorSource } from "pixi.js";
 
 import { PaletteSettings } from "./display.ts";
 
+export enum SortPaletteBy {
+  BrandAndNumber = "BrandAndNumber",
+}
+
 export class Blend {
   brand: string;
   number: string;
@@ -48,10 +52,22 @@ export class Bead {
 
 /** Represents a base palette item. */
 export abstract class BasePaletteItem {
+  /**
+   * An index of this palette item in the palette.
+   * It is used to correctly identify an element when rendering a palette item using `v-for`.
+   *
+   * The reason to use a dedicated property instead of an actual index when iterating,
+   * is that in some cases, palette items may be intentionally rendered in a different order,
+   * which causes rendering issues due to the way Vue.js handles list rendering.
+   */
+  readonly index: number;
+
   name: string;
   color: Color;
 
-  constructor(data: { name: string; color: ColorSource }) {
+  constructor(index: number, data: { name: string; color: ColorSource }) {
+    this.index = index;
+
     this.name = data.name;
     this.color = new Color(data.color);
   }
@@ -91,8 +107,8 @@ export class BrandPaletteItem extends BasePaletteItem {
 
   blends?: Blend[];
 
-  constructor(data: b.infer<typeof BrandPaletteItem.schema>) {
-    super(data);
+  constructor(index: number, data: b.infer<typeof BrandPaletteItem.schema>) {
+    super(index, data);
 
     this.brand = data.brand;
     this.number = data.number;
@@ -107,11 +123,6 @@ export class BrandPaletteItem extends BasePaletteItem {
     color: b.string(),
     blends: b.option(b.vec(Blend.schema)),
   });
-
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? Buffer.from(data, "base64") : data;
-    return new BrandPaletteItem(BrandPaletteItem.schema.deserialize(buffer));
-  }
 
   static serialize(data: BrandPaletteItem) {
     return BrandPaletteItem.schema.serialize({
@@ -157,8 +168,8 @@ export class PaletteItem extends BrandPaletteItem {
   symbol?: string;
   symbolFont?: string;
 
-  constructor(data: b.infer<typeof PaletteItem.schema>) {
-    super(data);
+  constructor(index: number, data: b.infer<typeof PaletteItem.schema>) {
+    super(index, data);
 
     // Check if the symbol code is a valid Unicode character.
     // We support only a part of the BMP supported by XML 1.0.
@@ -181,11 +192,6 @@ export class PaletteItem extends BrandPaletteItem {
     symbolFont: b.option(b.string()),
   });
 
-  static override deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new PaletteItem(PaletteItem.schema.deserialize(buffer));
-  }
-
   static override serialize(data: PaletteItem) {
     return PaletteItem.schema.serialize({
       brand: data.brand,
@@ -204,7 +210,7 @@ export class AddedPaletteItemData {
   palindex: number;
 
   constructor(data: b.infer<typeof AddedPaletteItemData.schema>) {
-    this.palitem = new PaletteItem(data.palitem);
+    this.palitem = new PaletteItem(data.palindex, data.palitem);
     this.palindex = data.palindex;
   }
 
@@ -219,10 +225,112 @@ export class AddedPaletteItemData {
   }
 }
 
+/** Manages palette items and their visual ordering. */
+export class Palette {
+  /** The actual palette items. */
+  #items: PaletteItem[];
+  /** Visual ordering of palette items. */
+  #positions: number[];
+
+  constructor(
+    data: b.infer<typeof Palette.schema> | { items: b.infer<typeof PaletteItem.schema>[]; positions: number[] },
+  ) {
+    this.#items = data.items.map((item, index) => new PaletteItem(index, item));
+    this.#positions = Array.from(data.positions);
+  }
+
+  static readonly schema = b.struct({
+    items: b.vec(PaletteItem.schema),
+    positions: b.vec(b.u32()),
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new Palette(Palette.schema.deserialize(buffer));
+  }
+
+  // === Access Methods ===
+
+  /** The number of palette items. */
+  get length(): number {
+    return this.#items.length;
+  }
+
+  /** Read-only reference to items in actual order. */
+  get items(): readonly PaletteItem[] {
+    return this.#items;
+  }
+
+  /** Read-only reference to visual positions. */
+  get positions(): readonly number[] {
+    return this.#positions;
+  }
+  set positions(positions: number[]) {
+    if (import.meta.env.DEV && positions.length !== this.#items.length) {
+      throw new Error("Positions array length must match items length");
+    }
+    this.#positions = [...positions];
+  }
+
+  /** Palette items in visual order. */
+  get itemsInVisualOrder(): PaletteItem[] {
+    return this.#positions.map((index) => this.#items[index]!);
+  }
+
+  /** Return an item by its actual index. */
+  get(index: number): PaletteItem | undefined {
+    return this.#items[index];
+  }
+
+  // === Mutation Methods ===
+
+  /** Adds a new palette item, returning its actual index. */
+  push(item: PaletteItem): number {
+    const index = this.#items.length;
+    this.#items.push(item);
+    this.#positions.push(index);
+    return index;
+  }
+
+  /** Inserts a palette item at a specific actual index. */
+  insert(index: number, item: PaletteItem): void {
+    // Insert the item at the actual index
+    this.#items.splice(index, 0, item);
+
+    // Update all positions that reference indexes >= index
+    for (let i = 0; i < this.#positions.length; i++) {
+      if (this.#positions[i]! >= index) this.#positions[i]! += 1;
+    }
+
+    // Find where the new index should be inserted in visual order
+    // It goes right before the first position that is greater than index
+    const position = this.#positions.findIndex((idx) => idx > index);
+    const insertAt = position === -1 ? this.#positions.length : position;
+    this.#positions.splice(insertAt, 0, index);
+  }
+
+  /** Removes a palette item by its actual index. */
+  remove(index: number): PaletteItem | undefined {
+    if (index < 0 || index >= this.#items.length) return undefined;
+
+    const removed = this.#items.splice(index, 1)[0];
+
+    // Remove from positions
+    this.#positions = this.#positions.filter((idx) => idx !== index);
+
+    // Update all positions that reference indexes > index
+    for (let i = 0; i < this.#positions.length; i++) {
+      if (this.#positions[i]! > index) this.#positions[i]! -= 1;
+    }
+
+    return removed;
+  }
+}
+
 export function deserializeBrandPalette(data: Uint8Array | string) {
   const buffer = typeof data === "string" ? toByteArray(data) : data;
   return b
     .vec(BrandPaletteItem.schema)
     .deserialize(buffer)
-    .map((palitem) => new BrandPaletteItem(palitem));
+    .map((palitem, index) => new BrandPaletteItem(index, palitem));
 }
