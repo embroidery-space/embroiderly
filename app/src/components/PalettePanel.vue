@@ -72,7 +72,7 @@
                 @click="
                   () => {
                     paletteIsBeingEdited = !paletteIsBeingEdited;
-                    showPaletteCatalog = true;
+                    sectionVisibility.paletteCatalog = true;
                   }
                 "
               />
@@ -82,28 +82,33 @@
       </PaletteList>
     </UContextMenu>
 
+    <PaletteDisplaySettings
+      v-if="sectionVisibility.paletteDisplaySettings"
+      v-model:settings="paletteDisplaySettings"
+      class="border-l border-default"
+      @close="sectionVisibility.paletteDisplaySettings = false"
+    />
+
     <PaletteCatalog
-      v-if="patternsStore.pattern?.palette && showPaletteCatalog"
+      v-if="patternsStore.pattern?.palette && sectionVisibility.paletteCatalog"
       :palette="patternsStore.pattern.palette.items"
       class="min-w-max border-l border-default"
-      @close="showPaletteCatalog = false"
+      @close="sectionVisibility.paletteCatalog = false"
       @add-palette-item="patternsStore.addPaletteItem"
       @remove-palette-item="patternsStore.removePaletteItem"
     />
 
-    <PaletteDisplaySettings
-      v-if="showPaletteDisplaySettings"
-      :settings="paletteDisplaySettings"
+    <StitchSymbols
+      v-if="sectionVisibility.stitchSymbols"
       class="border-l border-default"
-      @update:settings="(value) => (paletteDisplaySettings = value)"
-      @close="showPaletteDisplaySettings = false"
+      @close="sectionVisibility.stitchSymbols = false"
     />
   </div>
 </template>
 
 <script setup lang="ts">
   import type { ContextMenuItem, DropdownMenuItem } from "@nuxt/ui";
-  import { computed, ref, watch } from "vue";
+  import { computed, reactive, ref, watch } from "vue";
 
   import { PaletteItem, PaletteSettings, SortPaletteBy } from "~/core/pattern/";
 
@@ -115,8 +120,11 @@
   const paletteIsDisabled = computed(() => !patternsStore.pattern);
   const paletteIsBeingEdited = ref(false);
 
-  const showPaletteCatalog = ref(false);
-  const showPaletteDisplaySettings = ref(false);
+  const sectionVisibility = reactive({
+    paletteDisplaySettings: false,
+    paletteCatalog: false,
+    stitchSymbols: false,
+  });
 
   const paletteDisplaySettings = ref(PaletteSettings.default());
   watch(
@@ -286,17 +294,25 @@
 
   const palettePanelsMenuOptions = computed<DropdownMenuItem[]>(() => [
     {
-      label: fluent.$t("label-palette-colors"),
-      onSelect: () => {
-        paletteIsBeingEdited.value = true;
-        showPaletteCatalog.value = !showPaletteCatalog.value;
-      },
-    },
-    {
       label: fluent.$t("label-palette-display-options"),
       onSelect: () => {
         paletteIsBeingEdited.value = true;
-        showPaletteDisplaySettings.value = !showPaletteDisplaySettings.value;
+        sectionVisibility.paletteDisplaySettings = !sectionVisibility.paletteDisplaySettings;
+      },
+    },
+    {
+      label: fluent.$t("label-palette-colors"),
+      onSelect: () => {
+        paletteIsBeingEdited.value = true;
+        sectionVisibility.paletteCatalog = !sectionVisibility.paletteCatalog;
+      },
+    },
+
+    {
+      label: fluent.$t("label-stitch-symbols"),
+      onSelect: () => {
+        paletteIsBeingEdited.value = true;
+        sectionVisibility.stitchSymbols = !sectionVisibility.stitchSymbols;
       },
     },
   ]);
@@ -304,8 +320,9 @@
   watch(paletteIsBeingEdited, async (value) => {
     patternsStore.blocked = value;
     if (!value) {
-      showPaletteCatalog.value = false;
-      showPaletteDisplaySettings.value = false;
+      sectionVisibility.paletteDisplaySettings = false;
+      sectionVisibility.paletteCatalog = false;
+      sectionVisibility.stitchSymbols = false;
       await updatePaletteDisplaySettings();
     }
   });

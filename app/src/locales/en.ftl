@@ -155,6 +155,10 @@ label-display-options-show-brand = Show thread brands
 label-display-options-show-number = Show color numbers
 label-display-options-show-name = Show color names
 
+## Titles, labels and messages related to stitch symbols management.
+
+label-stitch-symbols = Stitch Symbols
+
 ## Titles, labels and messages related to the canvas context menu.
 
 label-set-reference-image = Set Reference Image

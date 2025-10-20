@@ -1,5 +1,5 @@
 <template>
-  <PaletteSection :title="$t('label-palette-colors')">
+  <PanelSection :title="$t('label-palette-colors')">
     <PaletteList
       :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="results.map((r) => r.item)"
@@ -52,7 +52,7 @@
         />
       </template>
     </PaletteList>
-  </PaletteSection>
+  </PanelSection>
 </template>
 
 <script setup lang="ts">

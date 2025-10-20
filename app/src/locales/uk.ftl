@@ -158,6 +158,10 @@ label-display-options-show-brand = Відображати бренди нито�
 label-display-options-show-number = Відображати номери кольорів
 label-display-options-show-name = Відображати назви кольорів
 
+## Titles, labels and messages related to stitch symbols management.
+
+label-stitch-symbols = Символи стібків
+
 ## Titles, labels and messages related to the canvas context menu.
 
 label-set-reference-image = Встановити зразкове зображення
