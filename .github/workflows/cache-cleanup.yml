@@ -5,7 +5,6 @@ on:
     types: [closed]
 jobs:
   cleanup:
-    if: github.event.ref_type == 'branch'
     runs-on: ubuntu-latest
     permissions:
       actions: write
