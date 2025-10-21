@@ -1,6 +1,6 @@
 pub mod display;
 pub mod fabric;
-pub mod fonts;
+pub mod fonts_io;
 pub mod grid;
 pub mod history;
 pub mod image;

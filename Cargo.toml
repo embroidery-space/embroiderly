@@ -50,6 +50,10 @@ encoding_rs = "0.8.35"
 hex = "0.4.3"
 quick-xml = "0.37.5"
 
+# Fonts handling
+font-kit = "0.14.3"
+ttf-parser = "0.25.1"
+
 # Typst
 typst = "0.13.1"
 typst-pdf = "0.13.1"

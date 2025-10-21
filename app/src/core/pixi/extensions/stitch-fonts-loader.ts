@@ -19,8 +19,7 @@ export const StitchFontsLoader: LoaderParser = {
     // From `http://localhost:1420/stitch-font/CrossStitch3` to `CrossStitch3`.
     const name = url.split(STITCH_FONT_PREFIX)[1]!;
     try {
-      const content = await FontsApi.loadStitchFont(name);
-      const fontFace = new FontFace(name, content);
+      const fontFace = await FontsApi.loadSymbolFont(name);
       DOMAdapter.get().getFontFaceSet()!.add(fontFace);
     } catch {
       warn(`Unsupported stitch font: ${name}`);

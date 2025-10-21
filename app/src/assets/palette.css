@@ -58,4 +58,16 @@
   --color-info-800: #39516f;
   --color-info-900: #28394d;
   --color-info-950: #1c2736;
+
+  --color-help-50: #f1eaef;
+  --color-help-100: #ede3eb;
+  --color-help-200: #e0d1de;
+  --color-help-300: #d4bfd0;
+  --color-help-400: #c6a9c1;
+  --color-help-500: #b48ead; /* Nord 15 */
+  --color-help-600: #aa7ea2;
+  --color-help-700: #9b6992;
+  --color-help-800: #84587c;
+  --color-help-900: #593b53;
+  --color-help-950: #3d293a;
 }

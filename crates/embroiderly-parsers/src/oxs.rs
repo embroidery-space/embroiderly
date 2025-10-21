@@ -421,15 +421,20 @@ fn read_palette<R: io::BufRead>(
             blends.push(Blend { brand, number });
           }
 
-          palette.push(PaletteItem {
+          let color = attributes.get_color("color").unwrap_or("FF00FF").to_owned();
+          let blends = if blends.is_empty() { None } else { Some(blends) };
+          let symbol = attributes.get_symbol("symbol");
+          let symbol_font = attributes.get("fontname").map(|s| s.to_owned());
+
+          palette.push(PaletteItem::new(
             brand,
             number,
             name,
-            color: attributes.get_color("color").unwrap_or("FF00FF").to_owned(),
-            blends: if blends.is_empty() { None } else { Some(blends) },
-            symbol: attributes.get_symbol("symbol"),
-            symbol_font: attributes.get("fontname").map(|s| s.to_owned()),
-          });
+            color,
+            blends,
+            symbol,
+            symbol_font,
+          ));
         }
       }
       Event::End(ref e) if e.name().as_ref() == b"palette" => break,

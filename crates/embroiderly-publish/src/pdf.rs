@@ -144,7 +144,7 @@ fn fabric_to_dict(fabric: Fabric) -> typst::foundations::Dict {
 }
 
 fn palette_item_to_dict(palitem: PaletteItem) -> typst::foundations::Dict {
-  let symbol = palitem.get_symbol();
+  let symbol = palitem.symbol.map(|s| s.to_string()).unwrap_or_default();
   typst::foundations::dict!(
     "brand" => palitem.brand,
     "number" => palitem.number,

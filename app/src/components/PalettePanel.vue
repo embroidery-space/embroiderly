@@ -99,8 +99,16 @@
     />
 
     <StitchSymbols
-      v-if="sectionVisibility.stitchSymbols"
-      class="border-l border-default"
+      v-if="patternsStore.pattern?.palette && sectionVisibility.stitchSymbols"
+      :symbols="
+        patternsStore.pattern.palette.items
+          .filter((pi) => pi.symbolCode !== undefined)
+          .map((pi) => ({
+            codePoint: pi.symbolCode!,
+            fontFamily: pi.symbolFont ?? patternsStore.pattern!.defaultSymbolFont,
+          }))
+      "
+      class="min-w-max border-l border-default"
       @close="sectionVisibility.stitchSymbols = false"
     />
   </div>

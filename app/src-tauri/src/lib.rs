@@ -121,7 +121,10 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::history::redo,
     commands::core::history::start_transaction,
     commands::core::history::end_transaction,
-    commands::core::fonts::load_stitch_font,
+    commands::core::fonts_io::get_symbol_fonts_list,
+    commands::core::fonts_io::load_symbol_font_content,
+    commands::core::fonts_io::load_symbol_font_code_points,
+    commands::core::fonts_io::import_symbol_fonts,
     commands::utils::path::get_app_document_dir,
     commands::utils::system::get_system_info,
   ]);

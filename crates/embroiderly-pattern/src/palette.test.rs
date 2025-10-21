@@ -670,19 +670,6 @@ mod palette_item {
   }
 
   #[test]
-  fn test_get_symbol_none() {
-    let item = create_test_item("DMC", "310", "Black", "000000");
-    assert_eq!(item.get_symbol(), "");
-  }
-
-  #[test]
-  fn test_get_symbol_some() {
-    let mut item = create_test_item("DMC", "310", "Black", "000000");
-    item.symbol = Some('X');
-    assert_eq!(item.get_symbol(), "X");
-  }
-
-  #[test]
   fn test_from_brand_item() {
     let brand_item = BrandPaletteItem {
       brand: "DMC".to_string(),

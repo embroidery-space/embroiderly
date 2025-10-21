@@ -314,83 +314,97 @@ pub struct PaletteItem {
 }
 
 impl PaletteItem {
+  pub fn new(
+    brand: String,
+    number: String,
+    name: String,
+    color: String,
+    blends: Option<Vec<Blend>>,
+    symbol: Option<char>,
+    symbol_font: Option<String>,
+  ) -> Self {
+    // Check if the symbol code is a valid Unicode character.
+    // We support only a part of the BMP supported by XML 1.0.
+    let symbol = symbol.and_then(|s| {
+      if matches!(s as u32, 0x0021..=0xD7FF | 0xE000..=0xFFFD) {
+        Some(s)
+      } else {
+        None
+      }
+    });
+
+    Self {
+      brand,
+      number,
+      name,
+      color,
+      blends,
+      symbol,
+      symbol_font,
+    }
+  }
+
   /// Returns true if the palette item is a blend.
   pub fn is_blend(&self) -> bool {
     self.blends.as_ref().is_some_and(|blends| !blends.is_empty())
-  }
-
-  /// Returns a printable representation of the symbol.
-  pub fn get_symbol(&self) -> String {
-    if let Some(symbol) = self.symbol {
-      // Check if the symbol code is a valid Unicode character.
-      // We support only a part of the BMP supported by XML 1.0.
-      if matches!(symbol as u32, 0x0020..=0xD7FF | 0xE000..=0xFFFD) {
-        symbol.to_string()
-      } else {
-        char::REPLACEMENT_CHARACTER.to_string()
-      }
-    } else {
-      String::new()
-    }
   }
 }
 
 impl From<BrandPaletteItem> for PaletteItem {
   fn from(brand_item: BrandPaletteItem) -> Self {
-    Self {
-      brand: brand_item.brand,
-      number: brand_item.number,
-      name: brand_item.name,
-      color: brand_item.color,
-      blends: brand_item.blends,
-
-      symbol: None,
-      symbol_font: None,
-    }
+    Self::new(
+      brand_item.brand,
+      brand_item.number,
+      brand_item.name,
+      brand_item.color,
+      brand_item.blends,
+      None,
+      None,
+    )
   }
 }
 
 impl From<pmaker::PaletteItem> for PaletteItem {
   fn from(palitem: pmaker::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: palitem
+    Self::new(
+      palitem.brand,
+      palitem.number,
+      palitem.name,
+      palitem.color,
+      palitem
         .blends
         .map(|blends| blends.into_iter().map(Blend::from).collect()),
-      symbol: None,
-      symbol_font: None,
-    }
+      None,
+      None,
+    )
   }
 }
 
 impl From<ursa::PaletteItem> for PaletteItem {
   fn from(palitem: ursa::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-      symbol: None,
-      symbol_font: None,
-    }
+    Self::new(
+      palitem.brand,
+      palitem.number,
+      palitem.name,
+      palitem.color,
+      None,
+      None,
+      None,
+    )
   }
 }
 
 impl From<xspro::PaletteItem> for PaletteItem {
   fn from(palitem: xspro::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-      symbol: None,
-      symbol_font: None,
-    }
+    Self::new(
+      palitem.brand,
+      palitem.number,
+      palitem.name,
+      palitem.color,
+      None,
+      None,
+      None,
+    )
   }
 }
 

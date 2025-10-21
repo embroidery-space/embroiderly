@@ -24,6 +24,9 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
     dirs: ["src/components/", "src/composables/", "src/stores/"],
     packagePresets: ["fluent-vue"],
   },
+  theme: {
+    colors: ["primary", "error", "success", "warning", "info", "help"],
+  },
   ui: {
     colors: {
       primary: "primary",
@@ -31,6 +34,7 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
       success: "success",
       warning: "warning",
       info: "info",
+      help: "help",
     },
     button: {
       slots: {

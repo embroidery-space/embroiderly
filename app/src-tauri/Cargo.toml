@@ -34,6 +34,10 @@ embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
 embroiderly-logger = { workspace = true }
 xsp-parsers = { workspace = true }
 
+# Fonts handling
+font-kit = {workspace=true}
+ttf-parser = {workspace=true}
+
 # Image processing
 image = { workspace = true }
 

@@ -45,6 +45,9 @@ label-no = No
 label-hint-counts-in-stitches = In stitches
 label-hint-counts-in-points = In points
 
+label-files-system = System
+label-files-custom = Custom
+
 ## Names of the stitches and other tools.
 
 label-stitch-full = Full Stitch
@@ -138,9 +141,6 @@ label-palette-delete-all = Delete All
 
 label-palette-catalog-menu-import-palettes = Import Palettes
 
-label-palette-catalog-group-system = System
-label-palette-catalog-group-custom = Custom
-
 label-palette-catalog-search-placeholder = Search...
 
 message-palette-import-success = Palettes imported successfully
@@ -157,7 +157,19 @@ label-display-options-show-name = Show color names
 
 ## Titles, labels and messages related to stitch symbols management.
 
-label-stitch-symbols = Stitch Symbols
+label-stitch-symbols = Symbols
+label-stitch-symbols-count = { $total ->
+  [0] No symbols
+  [one] { $total } symbol ({ $used } used)
+  *[other] { $total } symbols ({ $used } used)
+}
+message-stitch-symbols-empty = No symbols available
+
+label-stitch-symbols-menu-import-fonts = Import Symbol Fonts
+
+message-symbol-fonts-import-success = Symbol fonts imported successfully
+message-symbol-fonts-import-error = Failed to import symbol fonts
+message-symbol-font-load-error = Failed to load font { $fontKey }
 
 ## Titles, labels and messages related to the canvas context menu.
 
@@ -329,6 +341,13 @@ title-failed-palette-files = Failed Palette Files
 message-failed-palette-files =
   Some palette files failed to import.
   It may be due to conflicts in palette names (they must be unique) or palette files corruption.
+
+  { $failedFilesList }
+
+title-failed-font-files = Failed Font Files
+message-failed-font-files =
+  Some font files could not be imported.
+  It may be due to conflicts in font family names (they must be unique), missing font family metadata, or font files corruption.
 
   { $failedFilesList }
 

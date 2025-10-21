@@ -165,20 +165,17 @@ export class BrandPaletteItem extends BasePaletteItem {
  * This class extends the `BrandPaletteItem` class and adds additional properties for advanced displaying purposes.
  */
 export class PaletteItem extends BrandPaletteItem {
-  symbol?: string;
+  readonly symbol?: string;
+  readonly symbolCode?: number;
   symbolFont?: string;
 
   constructor(index: number, data: b.infer<typeof PaletteItem.schema>) {
     super(index, data);
 
-    // Check if the symbol code is a valid Unicode character.
-    // We support only a part of the BMP supported by XML 1.0.
-    if (
-      data.symbol &&
-      ((data.symbol >= 0x0020 && data.symbol <= 0xd7ff) || (data.symbol >= 0xe000 && data.symbol <= 0xfffd))
-    ) {
+    if (data.symbol) {
+      this.symbolCode = data.symbol;
       this.symbol = String.fromCodePoint(data.symbol);
-    } else this.symbol = String.fromCodePoint(0xfffd); // Replacement character.
+    }
     if (data.symbolFont) this.symbolFont = data.symbolFont;
   }
 
