@@ -17,7 +17,6 @@ fn adds_palette_item() {
     color: "#000000".to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   };
   assert!(
     invoke_ipc!(
@@ -54,7 +53,6 @@ fn does_not_add_duplicate_palette_item() {
     color: "#000000".to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   };
   invoke_ipc!(
     &webview,
@@ -95,7 +93,6 @@ fn removes_palette_items() {
     color: "#000000".to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   };
   invoke_ipc!(
     &webview,
@@ -112,7 +109,6 @@ fn removes_palette_items() {
     color: "#FFFFFF".to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   };
   invoke_ipc!(
     &webview,
@@ -223,7 +219,6 @@ fn sorts_palette_by_brand_and_number() {
       color: "#000000".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "DMC".to_string(),
@@ -232,7 +227,6 @@ fn sorts_palette_by_brand_and_number() {
       color: "#F9F9F9".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "DMC".to_string(),
@@ -241,7 +235,6 @@ fn sorts_palette_by_brand_and_number() {
       color: "#FFFFFF".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "Anchor".to_string(),
@@ -250,7 +243,6 @@ fn sorts_palette_by_brand_and_number() {
       color: "#FFFFFF".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
   ];
   for palitem in &palitems {
@@ -314,7 +306,6 @@ fn reorders_palette_items() {
       color: "#000000".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "DMC".to_string(),
@@ -323,7 +314,6 @@ fn reorders_palette_items() {
       color: "#F9F9F9".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "DMC".to_string(),
@@ -332,7 +322,6 @@ fn reorders_palette_items() {
       color: "#B1272A".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
   ];
   for palitem in &palitems {

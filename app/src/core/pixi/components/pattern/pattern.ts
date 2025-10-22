@@ -49,8 +49,6 @@ export class PatternView extends Container {
   private showSymbols: boolean;
   private layersVisibility: LayersVisibility;
 
-  private defaultSymbolFont: string;
-
   private stages = {
     // lowest
     fabric: new FabricView(),
@@ -111,8 +109,6 @@ export class PatternView extends Container {
     this.setShowSymbols(pattern.showSymbols);
     this.setDisplayMode(pattern.displayMode);
     this.setLayersVisibility(pattern.layersVisibility);
-
-    this.defaultSymbolFont = pattern.defaultSymbolFont;
 
     if (pattern.referenceImage) this.setReferenceImage(pattern.referenceImage, { fit: false });
 
@@ -183,11 +179,7 @@ export class PatternView extends Container {
     if (stitch instanceof LineStitch || stitch instanceof NodeStitch) return;
 
     const palitem = this.palette[stitch.palindex]!;
-
-    const fontFamily = palitem.symbolFont
-      ? Array.from(new Set([palitem.symbolFont, this.defaultSymbolFont]))
-      : this.defaultSymbolFont;
-    const symbol = new StitchSymbol(stitch, palitem.symbol ?? "", { fontFamily });
+    const symbol = new StitchSymbol(stitch, palitem.symbol);
 
     this.stages.symbols.addStitch(symbol);
   }

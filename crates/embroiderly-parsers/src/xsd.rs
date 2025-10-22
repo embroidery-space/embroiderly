@@ -32,13 +32,24 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
           .symbols
           .get(i)
           .and_then(|symbols| symbols.full)
-          .and_then(|code| char::try_from(code as u32).ok());
-        let symbol_font = xsd_pattern
-          .formats
-          .get(i)
-          .and_then(|format| format.font.font_name.clone());
+          .and_then(|code| char::try_from(code as u32).ok())
+          .and_then(|code| {
+            let font = xsd_pattern
+              .formats
+              .get(i)
+              .and_then(|format| format.font.font_name.clone())
+              .unwrap_or_else(|| xsd_pattern.pattern_settings.default_stitch_font.clone());
+            Symbol::new(code, font)
+          });
 
-        PaletteItem::new(brand, number, name, color, blends, symbol, symbol_font)
+        PaletteItem {
+          brand,
+          number,
+          name,
+          color,
+          blends,
+          symbol,
+        }
       })
       .collect(),
     fullstitches: Stitches::from_iter(
@@ -89,7 +100,6 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
       .collect::<Result<Vec<_>, _>>()?,
   };
   let display_settings = DisplaySettings {
-    default_symbol_font: xsd_pattern.pattern_settings.default_stitch_font,
     grid: xsd_pattern.grid.into(),
     display_mode: DisplayMode::from_pattern_maker(xsd_pattern.pattern_settings.view),
     ..Default::default()

@@ -50,6 +50,23 @@ export class Bead {
   }
 }
 
+export class Symbol {
+  readonly code: number;
+  readonly char: string;
+  readonly font: string;
+
+  constructor(data: b.infer<typeof Symbol.schema>) {
+    this.code = data.code;
+    this.char = String.fromCodePoint(data.code);
+    this.font = data.font;
+  }
+
+  static readonly schema = b.struct({
+    code: b.u32(),
+    font: b.string(),
+  });
+}
+
 /** Represents a base palette item. */
 export abstract class BasePaletteItem {
   /**
@@ -165,18 +182,12 @@ export class BrandPaletteItem extends BasePaletteItem {
  * This class extends the `BrandPaletteItem` class and adds additional properties for advanced displaying purposes.
  */
 export class PaletteItem extends BrandPaletteItem {
-  readonly symbol?: string;
-  readonly symbolCode?: number;
-  symbolFont?: string;
+  readonly symbol?: Symbol;
 
   constructor(index: number, data: b.infer<typeof PaletteItem.schema>) {
     super(index, data);
 
-    if (data.symbol) {
-      this.symbolCode = data.symbol;
-      this.symbol = String.fromCodePoint(data.symbol);
-    }
-    if (data.symbolFont) this.symbolFont = data.symbolFont;
+    if (data.symbol) this.symbol = new Symbol(data.symbol);
   }
 
   static override readonly schema = b.struct({
@@ -185,8 +196,7 @@ export class PaletteItem extends BrandPaletteItem {
     name: b.string(),
     color: b.string(),
     blends: b.option(b.vec(Blend.schema)),
-    symbol: b.option(b.u32()),
-    symbolFont: b.option(b.string()),
+    symbol: b.option(Symbol.schema),
   });
 
   static override serialize(data: PaletteItem) {
@@ -196,8 +206,7 @@ export class PaletteItem extends BrandPaletteItem {
       name: data.name,
       color: data.hex.slice(1),
       blends: data.blends ?? null,
-      symbol: data.symbol?.codePointAt(0) ?? null,
-      symbolFont: data.symbolFont ?? null,
+      symbol: data.symbol ? { code: data.symbol.code, font: data.symbol.font } : null,
     });
   }
 }

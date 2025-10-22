@@ -43,9 +43,9 @@
                 :class="{
                   'rounded-sm bg-white text-black': displaySettings.stitchSymbolsOnContrastBackground,
                 }"
-                :style="{ fontFamily: getPaletteItemSymbolFontFamily(paletteItem) }"
+                :style="{ fontFamily: paletteItem.symbol.font }"
               >
-                {{ paletteItem.symbol }}
+                {{ paletteItem.symbol.char }}
               </span>
               <!-- If the palete item doesn't have a stitch symbol, render an empty `span`, so that the title is properly aligned with those with symbols. -->
               <span v-else class="mr-2 size-5 shrink-0"></span>
@@ -102,10 +102,10 @@
       v-if="patternsStore.pattern?.palette && sectionVisibility.stitchSymbols"
       :symbols="
         patternsStore.pattern.palette.items
-          .filter((pi) => pi.symbolCode !== undefined)
+          .filter((pi) => pi.symbol !== undefined)
           .map((pi) => ({
-            codePoint: pi.symbolCode!,
-            fontFamily: pi.symbolFont ?? patternsStore.pattern!.defaultSymbolFont,
+            codePoint: pi.symbol!.code,
+            fontFamily: pi.symbol!.font,
           }))
       "
       class="min-w-max border-l border-default"
@@ -118,7 +118,7 @@
   import type { ContextMenuItem, DropdownMenuItem } from "@nuxt/ui";
   import { computed, reactive, ref, watch } from "vue";
 
-  import { PaletteItem, PaletteSettings, SortPaletteBy } from "~/core/pattern/";
+  import { PaletteSettings, SortPaletteBy } from "~/core/pattern/";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -334,17 +334,6 @@
       await updatePaletteDisplaySettings();
     }
   });
-
-  function getPaletteItemSymbolFontFamily(palitem: PaletteItem) {
-    const defaultSymbolFont = patternsStore.pattern?.defaultSymbolFont;
-    if (defaultSymbolFont) {
-      return palitem.symbolFont
-        ? Array.from(new Set([palitem.symbolFont, defaultSymbolFont]))
-            .map((f) => `"${f}"`)
-            .join(", ")
-        : defaultSymbolFont;
-    } else return `"${palitem.symbolFont}"`;
-  }
 
   async function updatePaletteDisplaySettings() {
     await patternsStore.updatePaletteDisplaySettings(paletteDisplaySettings.value);

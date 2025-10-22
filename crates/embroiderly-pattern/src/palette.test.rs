@@ -11,7 +11,6 @@ fn create_test_item(brand: &str, number: &str, name: &str, color: &str) -> Palet
     color: color.to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   }
 }
 
@@ -24,7 +23,6 @@ fn create_blend_item(brand: &str, number: &str, blends: Vec<Blend>) -> PaletteIt
     color: "000000".to_string(),
     blends: Some(blends),
     symbol: None,
-    symbol_font: None,
   }
 }
 
@@ -615,15 +613,24 @@ mod palette {
       let mut palette = Palette::new();
 
       let mut item1 = create_test_item("DMC", "310", "Black", "000000");
-      item1.symbol_font = Some("Ursasoftware".to_string());
+      item1.symbol = Some(Symbol {
+        char: 'A',
+        font: "Ursasoftware".to_string(),
+      });
       palette.push(item1);
 
       let mut item2 = create_test_item("DMC", "3865", "White", "FFFFFF");
-      item2.symbol_font = Some("CrossStitch3".to_string());
+      item2.symbol = Some(Symbol {
+        char: 'B',
+        font: "CrossStitch3".to_string(),
+      });
       palette.push(item2);
 
       let mut item3 = create_test_item("DMC", "321", "Christmas Red", "B1272A");
-      item3.symbol_font = Some("Ursasoftware".to_string());
+      item3.symbol = Some(Symbol {
+        char: 'C',
+        font: "Ursasoftware".to_string(),
+      });
       palette.push(item3);
 
       let fonts = palette.used_symbol_fonts();
@@ -686,7 +693,6 @@ mod palette_item {
     assert_eq!(palette_item.color, brand_item.color);
     assert_eq!(palette_item.blends, brand_item.blends);
     assert_eq!(palette_item.symbol, None);
-    assert_eq!(palette_item.symbol_font, None);
   }
 
   #[test]

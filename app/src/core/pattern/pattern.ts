@@ -210,10 +210,6 @@ export class Pattern extends EventTarget {
     this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: stitch }));
   }
 
-  get defaultSymbolFont() {
-    return this.#displaySettings.defaultSymbolFont;
-  }
-
   get displayMode() {
     return this.#displaySettings.displayMode;
   }
@@ -247,9 +243,9 @@ export class Pattern extends EventTarget {
   }
 
   get allSymbolFonts() {
-    const fonts = new Set<string>([this.defaultSymbolFont]);
+    const fonts = new Set<string>();
     for (const palitem of this.palette.items) {
-      if (palitem.symbolFont) fonts.add(palitem.symbolFont);
+      if (palitem.symbol?.font) fonts.add(palitem.symbol.font);
     }
     return Array.from(fonts);
   }

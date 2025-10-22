@@ -43,7 +43,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   options: PdfExportOptions,
   symbol_fonts_dir: std::path::PathBuf,
 ) -> Result<()> {
-  let PatternProject { pattern, display_settings, .. } = patproj;
+  let PatternProject { pattern, .. } = patproj;
 
   let frames = frames
     .into_iter()
@@ -55,7 +55,6 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
     info: pattern.info.clone(),
     fabric: pattern.fabric.clone(),
     palette: pattern.palette.clone(),
-    default_symbol_font: display_settings.default_symbol_font.clone(),
     frames: frames.iter().map(|(name, _)| name).cloned().collect(),
     options,
   };
@@ -94,7 +93,6 @@ struct TypstContent {
   info: PatternInfo,
   fabric: Fabric,
   palette: Palette,
-  default_symbol_font: String,
   frames: Vec<String>,
   options: PdfExportOptions,
 }
@@ -116,7 +114,6 @@ impl From<TypstContent> for typst::foundations::Dict {
       "info" => info,
       "fabric" => fabric,
       "palette" => palette,
-      "default_symbol_font" => content.default_symbol_font,
       "frames" => content.frames,
       "options" => options,
     )
@@ -144,13 +141,18 @@ fn fabric_to_dict(fabric: Fabric) -> typst::foundations::Dict {
 }
 
 fn palette_item_to_dict(palitem: PaletteItem) -> typst::foundations::Dict {
-  let symbol = palitem.symbol.map(|s| s.to_string()).unwrap_or_default();
+  let symbol = palitem.symbol.as_ref().map(|s| {
+    typst::foundations::dict!(
+      "char" => s.char.to_string(),
+      "font" => s.font.clone(),
+    )
+  });
+
   typst::foundations::dict!(
     "brand" => palitem.brand,
     "number" => palitem.number,
     "name" => palitem.name,
     "color" => format!("#{}", palitem.color),
-    "symbol_font" => palitem.symbol_font,
     "symbol" => symbol,
   )
 }

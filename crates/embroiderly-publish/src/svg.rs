@@ -114,7 +114,6 @@ pub fn export_pattern(
       special_stitch_models: &patproj.pattern.special_stitch_models,
 
       grid: &patproj.display_settings.grid,
-      default_symbol_font: &patproj.display_settings.default_symbol_font,
     };
     let frame_context = FrameContext {
       color,
@@ -156,7 +155,6 @@ struct PatternContext<'a> {
   special_stitch_models: &'a [SpecialStitchModel],
 
   grid: &'a Grid,
-  default_symbol_font: &'a str,
 }
 
 #[derive(Clone, Copy)]
@@ -202,20 +200,8 @@ fn draw_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8
           ),
         ])
         .write_inner_content(|writer| {
-          draw_full_stitches(
-            writer,
-            pattern.palette,
-            pattern.fullstitches,
-            pattern.default_symbol_font,
-            frame,
-          )?;
-          draw_part_stitches(
-            writer,
-            pattern.palette,
-            pattern.partstitches,
-            pattern.default_symbol_font,
-            frame,
-          )?;
+          draw_full_stitches(writer, pattern.palette, pattern.fullstitches, frame)?;
+          draw_part_stitches(writer, pattern.palette, pattern.partstitches, frame)?;
           draw_grid(writer, pattern.fabric, pattern.grid, frame)?;
           write_special_stitches(
             writer,
@@ -236,7 +222,7 @@ fn draw_frame(pattern: PatternContext, frame: FrameContext) -> io::Result<Vec<u8
 }
 
 macro_rules! draw_stitch_symbol {
-  ($writer:expr, $x:expr, $y:expr, $symbol:expr, $symbol_font:expr, $font_size:expr) => {{
+  ($writer:expr, $x:expr, $y:expr, $symbol:expr, $font_size:expr) => {{
     if let Some(symbol) = &$symbol {
       $writer
         .create_element("text")
@@ -244,11 +230,11 @@ macro_rules! draw_stitch_symbol {
           ("x", $x.to_string().as_str()),
           ("y", $y.to_string().as_str()),
           ("font-size", $font_size.to_string().as_str()),
-          ("font-family", $symbol_font),
+          ("font-family", symbol.font.as_str()),
           ("text-anchor", "middle"),
           ("dominant-baseline", "middle"),
         ])
-        .write_text_content(BytesText::new(&symbol.to_string()))?;
+        .write_text_content(BytesText::new(&symbol.char.to_string()))?;
     }
   }};
 }
@@ -257,7 +243,6 @@ fn draw_full_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
   fullstitches: &[FullStitch],
-  default_symbol_font: &str,
   frame: FrameContext,
 ) -> io::Result<()> {
   let FrameContext { color, cell_size, .. } = frame;
@@ -280,12 +265,14 @@ fn draw_full_stitches<W: io::Write>(
               FullStitchKind::Full => cell_size,
               FullStitchKind::Petite => cell_size / 2.0,
             };
+            let font_size = size * 0.8;
 
             let fill = if color {
               format!("#{}", palitem.color)
             } else {
               "none".to_string()
             };
+
             writer
               .create_element("rect")
               .with_attributes([
@@ -297,16 +284,7 @@ fn draw_full_stitches<W: io::Write>(
                 ("stroke", "#000000"),
               ])
               .write_empty()?;
-
-            let font_size = size * 0.8;
-            draw_stitch_symbol!(
-              writer,
-              size / 2.0,
-              size / 2.0,
-              palitem.symbol,
-              palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
-              font_size
-            );
+            draw_stitch_symbol!(writer, size / 2.0, size / 2.0, palitem.symbol, font_size);
 
             Ok(())
           })?;
@@ -320,7 +298,6 @@ fn draw_part_stitches<W: io::Write>(
   writer: &mut Writer<W>,
   palette: &[PaletteItem],
   partstitches: &[PartStitch],
-  default_symbol_font: &str,
   frame: FrameContext,
 ) -> io::Result<()> {
   let FrameContext { color, cell_size, .. } = frame;
@@ -403,51 +380,16 @@ fn draw_part_stitches<W: io::Write>(
             match stitch.kind {
               PartStitchKind::Half => match stitch.direction {
                 PartStitchDirection::Forward => {
-                  draw_stitch_symbol!(
-                    writer,
-                    size + size / 2.0,
-                    size / 2.0,
-                    palitem.symbol,
-                    palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
-                    font_size
-                  );
-                  draw_stitch_symbol!(
-                    writer,
-                    size / 2.0,
-                    size + size / 2.0,
-                    palitem.symbol,
-                    palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
-                    font_size
-                  );
+                  draw_stitch_symbol!(writer, size + size / 2.0, size / 2.0, palitem.symbol, font_size);
+                  draw_stitch_symbol!(writer, size / 2.0, size + size / 2.0, palitem.symbol, font_size);
                 }
                 PartStitchDirection::Backward => {
-                  draw_stitch_symbol!(
-                    writer,
-                    size / 2.0,
-                    size / 2.0,
-                    palitem.symbol,
-                    palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
-                    font_size
-                  );
-                  draw_stitch_symbol!(
-                    writer,
-                    size + size / 2.0,
-                    size + size / 2.0,
-                    palitem.symbol,
-                    palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
-                    font_size
-                  );
+                  draw_stitch_symbol!(writer, size / 2.0, size / 2.0, palitem.symbol, font_size);
+                  draw_stitch_symbol!(writer, size + size / 2.0, size + size / 2.0, palitem.symbol, font_size);
                 }
               },
               PartStitchKind::Quarter => {
-                draw_stitch_symbol!(
-                  writer,
-                  size / 2.0,
-                  size / 2.0,
-                  palitem.symbol,
-                  palitem.symbol_font.as_deref().unwrap_or(default_symbol_font),
-                  font_size
-                );
+                draw_stitch_symbol!(writer, size / 2.0, size / 2.0, palitem.symbol, font_size);
               }
             };
 
