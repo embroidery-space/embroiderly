@@ -719,3 +719,44 @@ mod palette_item {
     assert!(palette_item.is_blend());
   }
 }
+
+mod symbol {
+  use super::*;
+
+  #[test]
+  fn test_symbol_creation_valid_char() {
+    let symbol = Symbol::new('A', "Arial".to_string());
+    assert!(symbol.is_some());
+
+    let symbol = symbol.unwrap();
+    assert_eq!(symbol.char, 'A');
+    assert_eq!(symbol.font, "Arial");
+  }
+
+  #[test]
+  fn test_symbol_creation_valid_unicode_ranges() {
+    // Range 0x0021..=0xD7FF
+    assert!(Symbol::new('\u{0021}', "Font".to_string()).is_some()); // '!'
+    assert!(Symbol::new('\u{00A0}', "Font".to_string()).is_some()); // Non-breaking space
+    assert!(Symbol::new('\u{D7FF}', "Font".to_string()).is_some()); // Upper limit of first range
+
+    // Range 0xE000..=0xFFFD
+    assert!(Symbol::new('\u{E000}', "Font".to_string()).is_some()); // Private use area start
+    assert!(Symbol::new('\u{F000}', "Font".to_string()).is_some()); // Private use area
+    assert!(Symbol::new('\u{FFFD}', "Font".to_string()).is_some()); // Replacement character
+  }
+
+  #[test]
+  fn test_symbol_creation_invalid_chars() {
+    assert!(Symbol::new('\u{0000}', "Font".to_string()).is_none()); // NULL
+    assert!(Symbol::new('\u{0010}', "Font".to_string()).is_none()); // Control character
+    assert!(Symbol::new('\u{0020}', "Font".to_string()).is_none()); // Space (below 0x0021)
+
+    // Test surrogate pair range by creating from code points
+    assert!(Symbol::new(char::from_u32(0xD800).unwrap_or('\0'), "Font".to_string()).is_none());
+    assert!(Symbol::new(char::from_u32(0xDFFF).unwrap_or('\0'), "Font".to_string()).is_none());
+
+    assert!(Symbol::new('\u{FFFE}', "Font".to_string()).is_none()); // Above 0xFFFD
+    assert!(Symbol::new('\u{FFFF}', "Font".to_string()).is_none()); // Above 0xFFFD
+  }
+}
