@@ -1,7 +1,7 @@
 use std::sync::OnceLock;
 
 use anyhow::Result;
-use embroiderly_pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch};
+use embroiderly_pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch, Symbol};
 use tauri::{Emitter, WebviewWindow};
 
 use super::Action;
@@ -290,4 +290,80 @@ impl<R: tauri::Runtime> Action<R> for ReorderPaletteItemsAction {
     window.emit("palette:reorder", old_positions)?;
     Ok(())
   }
+}
+
+#[derive(Clone)]
+pub struct SetSymbolAction {
+  palindex: u32,
+  symbol: Option<Symbol>,
+  old_symbol: OnceLock<Option<Symbol>>,
+}
+
+impl SetSymbolAction {
+  pub fn new(palindex: u32, symbol: Option<Symbol>) -> Self {
+    Self {
+      palindex,
+      symbol,
+      old_symbol: OnceLock::new(),
+    }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for SetSymbolAction {
+  /// Set or unset the symbol for a palette item.
+  ///
+  /// **Emits:**
+  /// - `palette:set_symbol` with the palette item index and symbol data.
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    if self.old_symbol.get().is_none() {
+      let old_symbol = patproj
+        .pattern
+        .palette
+        .get(self.palindex)
+        .and_then(|item| item.symbol.clone());
+      self.old_symbol.set(old_symbol).unwrap();
+    }
+
+    if let Some(palitem) = patproj.pattern.palette.get_mut(self.palindex) {
+      palitem.symbol = self.symbol.clone();
+    }
+
+    window.emit(
+      "palette:set_symbol",
+      base64::encode(borsh::to_vec(&SetSymbolData {
+        palindex: self.palindex,
+        symbol: self.symbol.clone(),
+      })?),
+    )?;
+
+    Ok(())
+  }
+
+  /// Restore the previous symbol state.
+  ///
+  /// **Emits:**
+  /// - `palette:set_symbol` with the old symbol data.
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    let old_symbol = self.old_symbol.get().unwrap();
+
+    if let Some(palitem) = patproj.pattern.palette.get_mut(self.palindex) {
+      palitem.symbol = old_symbol.clone();
+    }
+
+    window.emit(
+      "palette:set_symbol",
+      base64::encode(borsh::to_vec(&SetSymbolData {
+        palindex: self.palindex,
+        symbol: old_symbol.clone(),
+      })?),
+    )?;
+
+    Ok(())
+  }
+}
+
+#[derive(Debug, Clone, borsh::BorshSerialize, borsh::BorshDeserialize)]
+pub struct SetSymbolData {
+  pub palindex: u32,
+  pub symbol: Option<Symbol>,
 }

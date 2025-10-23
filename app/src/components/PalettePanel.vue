@@ -9,14 +9,13 @@
       @update:open="(isOpen) => !isOpen && updatePaletteDisplaySettings()"
     >
       <PaletteList
-        :model-value="appStateStore.selectedPaletteItemIndex"
+        v-model="appStateStore.selectedPaletteItemIndex"
         :options="patternsStore.pattern?.palette.itemsInVisualOrder"
         :option-value="(pi) => pi.index"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
         :draggable="paletteIsBeingEdited"
         class="grow"
-        @update:model-value="(value) => (appStateStore.selectedPaletteItemIndex = value as number)"
         @reorder="({ oldPosition, newPosition }) => patternsStore.reorderPaletteItems(oldPosition, newPosition)"
       >
         <template #header>
@@ -110,6 +109,8 @@
       "
       class="min-w-max border-l border-default"
       @close="sectionVisibility.stitchSymbols = false"
+      @set-symbol="handleSetSymbol"
+      @unset-symbol="handleUnsetSymbol"
     />
   </div>
 </template>
@@ -118,12 +119,13 @@
   import type { ContextMenuItem, DropdownMenuItem } from "@nuxt/ui";
   import { computed, reactive, ref, watch } from "vue";
 
-  import { PaletteSettings, SortPaletteBy } from "~/core/pattern/";
+  import { PaletteSettings, SortPaletteBy, Symbol } from "~/core/pattern/";
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
 
   const fluent = useFluent();
+  const toast = useToast();
 
   const paletteIsDisabled = computed(() => !patternsStore.pattern);
   const paletteIsBeingEdited = ref(false);
@@ -324,6 +326,35 @@
       },
     },
   ]);
+
+  function handleSetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePoint: number }) {
+    if (appStateStore.selectedPaletteItemIndex === undefined) {
+      toast.add({ title: fluent.$t("message-no-palette-item-selected"), color: "warning" });
+      return;
+    }
+
+    // Check if this symbol is already assigned to another palette item.
+    const existingItem = patternsStore.pattern?.palette.items.find(
+      (pi) => pi.symbol?.font === fontFamily && pi.symbol?.code === codePoint,
+    );
+    if (existingItem && existingItem.index !== appStateStore.selectedPaletteItemIndex) {
+      toast.add({ title: fluent.$t("message-symbol-already-assigned"), color: "warning" });
+      return;
+    }
+
+    const symbol = new Symbol({ code: codePoint, font: fontFamily });
+    patternsStore.setPaletteItemSymbol(appStateStore.selectedPaletteItemIndex, symbol);
+  }
+
+  function handleUnsetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePoint: number }) {
+    // Find the palette item that has this symbol.
+    const paletteItem = patternsStore.pattern?.palette.items.find(
+      (pi) => pi.symbol?.font === fontFamily && pi.symbol?.code === codePoint,
+    );
+    if (!paletteItem) return;
+
+    patternsStore.setPaletteItemSymbol(paletteItem.index, undefined);
+  }
 
   watch(paletteIsBeingEdited, async (value) => {
     patternsStore.blocked = value;

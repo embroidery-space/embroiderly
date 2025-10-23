@@ -182,7 +182,7 @@ export class BrandPaletteItem extends BasePaletteItem {
  * This class extends the `BrandPaletteItem` class and adds additional properties for advanced displaying purposes.
  */
 export class PaletteItem extends BrandPaletteItem {
-  readonly symbol?: Symbol;
+  symbol?: Symbol;
 
   constructor(index: number, data: b.infer<typeof PaletteItem.schema>) {
     super(index, data);
@@ -330,6 +330,33 @@ export class Palette {
     }
 
     return removed;
+  }
+}
+
+export class SetSymbolData {
+  palindex: number;
+  symbol?: Symbol;
+
+  constructor(data: b.infer<typeof SetSymbolData.schema>) {
+    this.palindex = data.palindex;
+    if (data.symbol) this.symbol = new Symbol(data.symbol);
+  }
+
+  static readonly schema = b.struct({
+    palindex: b.u32(),
+    symbol: b.option(Symbol.schema),
+  });
+
+  static serialize(data: SetSymbolData) {
+    return SetSymbolData.schema.serialize({
+      palindex: data.palindex,
+      symbol: data.symbol ?? null,
+    });
+  }
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new SetSymbolData(SetSymbolData.schema.deserialize(buffer));
   }
 }
 

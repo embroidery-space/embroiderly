@@ -5,7 +5,7 @@
     </div>
 
     <RListboxRoot
-      :model-value="value as AcceptableValue"
+      v-model="value as AcceptableValue"
       :disabled="disabled"
       :multiple="multiple"
       class="flex grow flex-col overflow-hidden data-disabled:cursor-not-allowed"

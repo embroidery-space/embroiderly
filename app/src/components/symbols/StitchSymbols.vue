@@ -1,45 +1,49 @@
 <template>
   <PanelSection :title="$t('label-stitch-symbols')">
-    <SymbolsList
-      :model-value="usedSymbols"
-      :options="selectedCodePoints"
-      :font-family="selectedFontKey.split('/')[1]"
-      class="overflow-y-auto"
-    >
-      <template #header>
-        <div class="flex gap-x-1">
-          <USelectMenu
-            v-model="selectedFontKey"
-            :loading="loadingFont"
-            :items="symbolFontOptions"
-            value-key="value"
-            size="md"
-            class="w-full"
-            @update:model-value="
-              async (key: string) => {
-                const [fontGroup, fontFamily] = key.split('/') as [string, string];
-                await loadFont(fontGroup, fontFamily);
-              }
-            "
-          />
+    <UContextMenu :items="contextMenuOptions">
+      <SymbolsList
+        v-model:selected-symbol="selectedSymbol"
+        :assigned-symbols="assignedSymbols"
+        :options="selectedCodePoints"
+        :font-family="selectedFontKey.split('/')[1]"
+        class="overflow-y-auto"
+        @option-dblclick="handleSetSymbol($event.codePoint)"
+      >
+        <template #header>
+          <div class="flex gap-x-1">
+            <USelectMenu
+              v-model="selectedFontKey"
+              :loading="loadingFont"
+              :items="symbolFontOptions"
+              value-key="value"
+              size="md"
+              class="w-full"
+              @update:model-value="
+                async (key: string) => {
+                  const [fontGroup, fontFamily] = key.split('/') as [string, string];
+                  await loadFont(fontGroup, fontFamily);
+                }
+              "
+            />
 
-          <UDropdownMenu :items="symbolFontMenuOptions">
-            <UButton :loading="importingFonts" color="neutral" variant="outline" icon="i-lucide:menu" />
-          </UDropdownMenu>
-        </div>
-      </template>
+            <UDropdownMenu :items="symbolFontMenuOptions">
+              <UButton :loading="importingFonts" color="neutral" variant="outline" icon="i-lucide:menu" />
+            </UDropdownMenu>
+          </div>
+        </template>
 
-      <template #footer>
-        <span class="text-sm text-nowrap">
-          {{ $t("label-stitch-symbols-count", { total: selectedCodePoints.length, used: usedSymbols.length }) }}
-        </span>
-      </template>
-    </SymbolsList>
+        <template #footer>
+          <span class="text-sm text-nowrap">
+            {{ $t("label-stitch-symbols-count", { total: selectedCodePoints.length, used: assignedSymbols.length }) }}
+          </span>
+        </template>
+      </SymbolsList>
+    </UContextMenu>
   </PanelSection>
 </template>
 
 <script setup lang="ts">
-  import type { DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
+  import type { ContextMenuItem, DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
   import { computed, onMounted, ref, shallowRef } from "vue";
 
   import { FontsApi } from "~/api";
@@ -53,10 +57,37 @@
   const { symbols = [] } = defineProps<{
     symbols?: { fontFamily: string; codePoint: number }[];
   }>();
+  const emit = defineEmits<{
+    setSymbol: [{ fontFamily: string; codePoint: number }];
+    unsetSymbol: [{ fontFamily: string; codePoint: number }];
+  }>();
 
-  const usedSymbols = computed(() => {
+  const selectedSymbol = ref<number | undefined>(undefined);
+  const assignedSymbols = computed(() => {
     const currentFontFamily = selectedFontKey.value.split("/")[1];
     return symbols.filter((s) => s.fontFamily === currentFontFamily).map((s) => s.codePoint);
+  });
+
+  const contextMenuOptions = computed<ContextMenuItem[][]>(() => {
+    const targetSymbol = selectedSymbol.value;
+
+    const hasTargetSymbol = targetSymbol !== undefined;
+    const isAssigned = assignedSymbols.value.includes(targetSymbol!);
+
+    return [
+      [
+        {
+          label: fluent.$t("label-stitch-symbols-context-menu-set-symbol"),
+          disabled: !hasTargetSymbol || isAssigned,
+          onSelect: () => handleSetSymbol(targetSymbol!),
+        },
+        {
+          label: fluent.$t("label-stitch-symbols-context-menu-unset-symbol"),
+          disabled: !hasTargetSymbol || !isAssigned,
+          onSelect: () => handleUnsetSymbol(targetSymbol!),
+        },
+      ],
+    ];
   });
 
   const loadingFont = ref(false);
@@ -144,6 +175,16 @@
     } finally {
       importingFonts.value = false;
     }
+  }
+
+  function handleSetSymbol(codePoint: number) {
+    const fontFamily = selectedFontKey.value.split("/")[1]!;
+    emit("setSymbol", { fontFamily, codePoint });
+  }
+
+  function handleUnsetSymbol(codePoint: number) {
+    const fontFamily = selectedFontKey.value.split("/")[1]!;
+    emit("unsetSymbol", { fontFamily, codePoint });
   }
 
   onMounted(async () => {

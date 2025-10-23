@@ -167,6 +167,12 @@ message-stitch-symbols-empty = No symbols available
 
 label-stitch-symbols-menu-import-fonts = Import Symbol Fonts
 
+label-stitch-symbols-context-menu-set-symbol = Set Symbol
+label-stitch-symbols-context-menu-unset-symbol = Unset Symbol
+
+message-no-palette-item-selected = No palette item selected
+message-symbol-already-assigned = This symbol is already assigned to another palette item
+
 message-symbol-fonts-import-success = Symbol fonts imported successfully
 message-symbol-fonts-import-error = Failed to import symbol fonts
 message-symbol-font-load-error = Failed to load font { $fontKey }

@@ -5,10 +5,11 @@
     </div>
 
     <RListboxRoot
-      :model-value="value"
+      v-model="selectedSymbol"
       :disabled="disabled"
-      multiple
+      selection-behavior="replace"
       class="flex grow flex-col overflow-hidden data-disabled:cursor-not-allowed"
+      @highlight="selectedSymbol = $event?.value as number"
     >
       <RListboxContent
         class="grid gap-1 overflow-y-auto p-1 outline-none"
@@ -17,12 +18,28 @@
         }"
       >
         <template v-if="options.length">
-          <RListboxItem v-for="option in options" :key="option" :value="option" as-child>
-            <slot name="option" v-bind="{ option, fontFamily }">
+          <RListboxItem
+            v-for="option in options"
+            :key="option"
+            :value="option"
+            as-child
+            @dblclick="emit('option-dblclick', { originalEvent: $event, codePoint: option })"
+            @contextmenu="selectedSymbol = option"
+          >
+            <slot
+              name="option"
+              v-bind="{
+                option,
+                fontFamily,
+                assigned: assignedSymbols.includes(option),
+                selected: selectedSymbol === option,
+              }"
+            >
               <SymbolsListItem
                 :symbol="String.fromCodePoint(option)"
                 :font-family="fontFamily"
-                :selected="value.includes(option)"
+                :assigned="assignedSymbols.includes(option)"
+                :selected="selectedSymbol === option"
               />
             </slot>
           </RListboxItem>
@@ -39,11 +56,23 @@
 
 <script setup lang="ts">
   interface SymbolsListProps {
+    assignedSymbols: number[];
     options?: number[];
     fontFamily?: string;
     disabled?: boolean;
   }
 
-  const value = defineModel<number[]>({ required: true });
-  const { options = [], fontFamily = "", disabled = false } = defineProps<SymbolsListProps>();
+  const selectedSymbol = defineModel<number>("selectedSymbol");
+  const { assignedSymbols, options = [], fontFamily = "", disabled = false } = defineProps<SymbolsListProps>();
+
+  const emit = defineEmits<{
+    "option-dblclick": [
+      {
+        /** Original event */
+        originalEvent: Event;
+        /** Code point of the symbol */
+        codePoint: number;
+      },
+    ];
+  }>();
 </script>

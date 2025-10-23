@@ -171,6 +171,12 @@ message-stitch-symbols-empty = Символи відсутні
 
 label-stitch-symbols-menu-import-fonts = Імпортувати символьні шрифти
 
+label-stitch-symbols-context-menu-set-symbol = Встановити символ
+label-stitch-symbols-context-menu-unset-symbol = Прибрати символ
+
+message-no-palette-item-selected = Не вибрано жоден елемент палітри
+message-symbol-already-assigned = Цей символ вже призначено іншому елементу палітри
+
 message-symbol-fonts-import-success = Символьні шрифти успішно імпортовані
 message-symbol-fonts-import-error = Не вдалося імпортувати символьні шрифти
 message-symbol-font-load-error = Не вдалося завантажити шрифт { $fontKey }

@@ -30,6 +30,8 @@ import {
   ReferenceImage,
   ReferenceImageSettings,
   deserializeStitches,
+  SetSymbolData,
+  Symbol,
 } from "~/core/pattern/";
 import type { Stitch } from "~/core/pattern/";
 import {
@@ -363,6 +365,20 @@ export const usePatternsStore = defineStore(
       triggerRef(pattern);
     });
 
+    async function setPaletteItemSymbol(palindex: number, symbol?: Symbol) {
+      if (!pattern.value) return;
+      await PaletteApi.setSymbol(pattern.value.id, palindex, symbol);
+    }
+    appWindow.listen<string>("palette:set_symbol", ({ payload }) => {
+      if (!pattern.value) return;
+      const { palindex, symbol } = SetSymbolData.deserialize(payload);
+      const item = pattern.value.palette.get(palindex);
+      if (item) {
+        item.symbol = symbol;
+        triggerRef(pattern);
+      }
+    });
+
     function addStitch(stitch: Stitch) {
       if (!pattern.value) return;
       return StitchesApi.addStitch(pattern.value.id, stitch);
@@ -472,6 +488,7 @@ export const usePatternsStore = defineStore(
       updatePaletteDisplaySettings,
       sortPaletteBy,
       reorderPaletteItems,
+      setPaletteItemSymbol,
       addStitch,
       removeStitch,
       setDisplayMode,

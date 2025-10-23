@@ -2,8 +2,8 @@ use embroiderly_pattern::{PaletteItem, PaletteSettings};
 use tauri_plugin_posthog::PostHogExt as _;
 
 use crate::core::actions::{
-  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, ReorderPaletteItemsAction, SortPaletteAction,
-  SortPaletteBy, UpdatePaletteDisplaySettingsAction,
+  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, ReorderPaletteItemsAction, SetSymbolAction,
+  SetSymbolData, SortPaletteAction, SortPaletteBy, UpdatePaletteDisplaySettingsAction,
 };
 use crate::error::Result;
 use crate::parse_command_payload;
@@ -156,6 +156,27 @@ pub fn reorder_palette_items<R: tauri::Runtime>(
   let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
   let action = ReorderPaletteItemsAction::new(old_position, new_position);
+  action.perform(&window, patproj)?;
+
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
+
+  Ok(())
+}
+
+#[tauri::command]
+pub fn set_symbol<R: tauri::Runtime>(
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  let (pattern_id, SetSymbolData { palindex, symbol }) = parse_command_payload!(request, SetSymbolData);
+
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  let action = SetSymbolAction::new(palindex, symbol);
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
