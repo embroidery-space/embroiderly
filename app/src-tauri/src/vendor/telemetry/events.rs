@@ -95,6 +95,15 @@ pub enum AppEvent {
   LayersVisibilityChanged {
     visibility: LayersVisibility,
   },
+
+  PalettesImported {
+    total_files: usize,
+    failed_files: usize,
+  },
+  SymbolFontsImported {
+    total_files: usize,
+    failed_files: usize,
+  },
 }
 
 impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
@@ -126,6 +135,9 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
       AppEvent::DisplayModeChanged { .. } => "display_mode_changed",
       AppEvent::SymbolsVisibilityChanged { .. } => "symbols_visibility_changed",
       AppEvent::LayersVisibilityChanged { .. } => "layers_visibility_changed",
+
+      AppEvent::PalettesImported { .. } => "palettes_imported",
+      AppEvent::SymbolFontsImported { .. } => "symbol_fonts_imported",
     }
   }
 
@@ -290,6 +302,15 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("special_stitches_visible", json!(visibility.specialstitches)),
         ("grid_visible", json!(visibility.grid)),
         ("rulers_visible", json!(visibility.rulers)),
+      ],
+
+      AppEvent::PalettesImported { total_files, failed_files } => vec![
+        ("total_files", json!(total_files)),
+        ("failed_files", json!(failed_files)),
+      ],
+      AppEvent::SymbolFontsImported { total_files, failed_files } => vec![
+        ("total_files", json!(total_files)),
+        ("failed_files", json!(failed_files)),
       ],
 
       _ => vec![],

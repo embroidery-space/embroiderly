@@ -2,10 +2,12 @@ use std::path::{Path, PathBuf};
 
 use rayon::prelude::*;
 use tauri::Manager as _;
+use tauri_plugin_posthog::PostHogExt as _;
 
 use crate::error::Result;
 use crate::utils::fonts::is_font_file;
 use crate::utils::path::app_data_dir;
+use crate::vendor::telemetry::AppEvent;
 
 #[derive(serde::Serialize)]
 pub struct SymbolFontsListResponse {
@@ -166,13 +168,19 @@ pub fn import_symbol_fonts<R: tauri::Runtime>(
   }
 
   // Process and save fonts in parallel.
-  let failed_files = font_files
+  let total_files = font_files.len();
+  let failed_files: Vec<String> = font_files
     .into_par_iter()
     .filter_map(|file_path| match process_and_save_font(&file_path, &fonts_dir) {
       Ok(_) => None,
       Err(_) => Some(file_path.to_string_lossy().to_string()),
     })
     .collect();
+
+  app_handle.capture_event(AppEvent::SymbolFontsImported {
+    total_files,
+    failed_files: failed_files.len(),
+  });
 
   Ok(ImportSymbolFontsResponse { failed_files })
 }

@@ -3,10 +3,12 @@ use std::path::{Path, PathBuf};
 use embroiderly_pattern::BrandPaletteItem;
 use rayon::prelude::*;
 use tauri::Manager as _;
+use tauri_plugin_posthog::PostHogExt as _;
 
 use crate::error::Result;
 use crate::utils::palette::is_palette_file;
 use crate::utils::path::app_data_dir;
+use crate::vendor::telemetry::AppEvent;
 
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -41,13 +43,19 @@ pub fn import_palettes<R: tauri::Runtime>(
   }
 
   // Parse and save palettes in parallel.
-  let failed_files = palette_files
+  let total_files = palette_files.len();
+  let failed_files: Vec<String> = palette_files
     .into_par_iter()
     .filter_map(|file_path| match parse_and_save_palette(&file_path, &palettes_dir) {
       Ok(_) => None,
       Err(_) => Some(file_path.to_string_lossy().to_string()),
     })
     .collect();
+
+  app_handle.capture_event(AppEvent::PalettesImported {
+    total_files,
+    failed_files: failed_files.len(),
+  });
 
   Ok(ImportPaletteFilesResponse { failed_files })
 }
