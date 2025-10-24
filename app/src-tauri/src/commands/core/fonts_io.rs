@@ -194,7 +194,28 @@ fn process_and_save_font(file_path: &Path, fonts_dir: &Path) -> anyhow::Result<(
     .names()
     .into_iter()
     .find(|name| name.name_id == ttf_parser::name_id::FAMILY)
-    .and_then(|name| name.to_string())
+    .and_then(|name| {
+      // Try decode Unicode first (default approach).
+      let font_family = name.to_string();
+      if font_family.is_some() {
+        return font_family;
+      }
+
+      // Then, try decode Macintosh.
+      if name.platform_id == ttf_parser::PlatformId::Macintosh && name.encoding_id == 0 {
+        let (decoded, _, _) = encoding_rs::MACINTOSH.decode(name.name);
+        return Some(decoded.into_owned());
+      }
+
+      // Give up.
+      log::error!(
+        "Failed to get font family name. Platform: {:?}, encoding: {}, is Unicode: {}",
+        name.platform_id,
+        name.encoding_id,
+        name.is_unicode()
+      );
+      None
+    })
     .ok_or_else(|| anyhow::anyhow!("Font does not have a family name"))?;
 
   // Check for name conflicts.
@@ -204,6 +225,7 @@ fn process_and_save_font(file_path: &Path, fonts_dir: &Path) -> anyhow::Result<(
     .ok_or_else(|| anyhow::anyhow!("Invalid font file extension"))?;
   let output_path = fonts_dir.join(format!("{font_family}.{extension}"));
   if output_path.exists() {
+    log::error!("Font with family name '{font_family}' already exists");
     return Err(anyhow::anyhow!(
       r#"Font with family name "{font_family}" already exists"#
     ));

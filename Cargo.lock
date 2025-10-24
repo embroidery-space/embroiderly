@@ -1653,6 +1653,7 @@ dependencies = [
  "embroiderly-logger",
  "embroiderly-parsers",
  "embroiderly-pattern",
+ "encoding_rs",
  "font-kit",
  "image",
  "log",
