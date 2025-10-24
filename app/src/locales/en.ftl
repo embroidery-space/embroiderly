@@ -350,6 +350,10 @@ message-failed-palette-files =
 
   { $failedFilesList }
 
+message-failed-symbol-fonts =
+  Failed to load symbol fonts: { $fonts }.
+  Some symbols may display incorrectly.
+
 title-failed-font-files = Failed Font Files
 message-failed-font-files =
   Some font files could not be imported.

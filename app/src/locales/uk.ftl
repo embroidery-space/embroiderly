@@ -354,6 +354,10 @@ message-failed-palette-files =
 
   { $failedFilesList }
 
+message-failed-symbol-fonts =
+  Не вдалося завантажити символьні шрифти: { $fonts }.
+  Деякі символи можуть відображатися некоректно.
+
 title-failed-font-files = Невдалі файли шрифтів
 message-failed-font-files =
   Деякі файли шрифтів не вдалося імпортувати.

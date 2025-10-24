@@ -73,6 +73,7 @@
   import { addSymbolFonts } from "~/utils/font-face";
 
   const fluent = useFluent();
+  const toast = useToast();
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -110,9 +111,7 @@
     async (pattern, oldPattern) => {
       if (!pattern || pattern.id === oldPattern?.id) return;
 
-      // Load symbol fonts and add them to the document's font face set.
-      const fontFaces = await Promise.all(pattern.allSymbolFonts.map((font) => FontsApi.loadSymbolFont(font)));
-      addSymbolFonts(fontFaces);
+      await loadSymbolFonts(pattern.allSymbolFonts);
 
       const patternView = new PatternView(pattern);
       patternApplication.view = patternView;
@@ -237,6 +236,31 @@
         },
       },
     };
+  }
+
+  async function loadSymbolFonts(fonts: string[]) {
+    const results = await Promise.allSettled(fonts.map((font) => FontsApi.loadSymbolFont(font)));
+    const failedFonts: string[] = [];
+    const fontFaces = results
+      .map((result, index) => {
+        if (result.status === "fulfilled") return result.value;
+        else {
+          const fontName = fonts[index]!;
+          failedFonts.push(fontName);
+          error(`Failed to load symbol font "${fontName}": ${result.reason}`);
+          return undefined;
+        }
+      })
+      .filter((fontFace) => fontFace !== undefined);
+    addSymbolFonts(fontFaces);
+
+    if (failedFonts.length) {
+      toast.add({
+        title: fluent.$t("title-error"),
+        description: fluent.$t("message-failed-symbol-fonts", { fonts: failedFonts.join(", ") }),
+        color: "error",
+      });
+    }
   }
 
   defineExpose({ initPatternApplication });
