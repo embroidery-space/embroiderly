@@ -5,7 +5,7 @@ use tauri::{App, Listener, WebviewUrl, WebviewWindow, WebviewWindowBuilder, gene
 
 use super::{
   Action, AddPaletteItemAction, AddedPaletteItemData, RemovePaletteItemsAction, ReorderPaletteItemsAction,
-  SortPaletteAction, SortPaletteBy, UpdatePaletteDisplaySettingsAction,
+  SetSymbolAction, SetSymbolData, SortPaletteAction, SortPaletteBy, UpdatePaletteDisplaySettingsAction,
 };
 use crate::utils::base64;
 
@@ -32,7 +32,6 @@ fn test_add_palette_item() {
     name: String::from("Pumpkin-Pale"),
     color: String::from("F5BA82"),
     blends: None,
-    symbol_font: None,
     symbol: None,
   };
   let action = AddPaletteItemAction::new(palitem.clone());
@@ -327,5 +326,197 @@ fn test_reorder_palette_items_action() {
     action.revoke(&window, &mut patproj).unwrap();
     // Verify positions restored in the pattern.
     assert_eq!(patproj.pattern.palette.positions(), initial_positions.as_slice());
+  }
+}
+
+#[test]
+fn test_set_symbol_action() {
+  use embroiderly_pattern::Symbol;
+
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = create_pattern_project();
+
+  let symbol = Symbol {
+    char: 'A',
+    font: "Arial".to_string(),
+  };
+  let action = SetSymbolAction::new(0, Some(symbol.clone()));
+
+  // Test executing the action.
+  {
+    window.once("palette:set_symbol", move |e| {
+      let base64: &str = serde_json::from_str(e.payload()).unwrap();
+      let data: SetSymbolData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
+
+      assert_eq!(data.palindex, 0);
+      assert!(data.symbol.is_some());
+
+      let symbol = data.symbol.unwrap();
+      assert_eq!(symbol.char, 'A');
+      assert_eq!(symbol.font, "Arial");
+    });
+
+    // Verify symbol is not set initially.
+    assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_none());
+
+    action.perform(&window, &mut patproj).unwrap();
+
+    // Verify symbol was set.
+    let symbol = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+    assert_eq!(symbol.char, 'A');
+    assert_eq!(symbol.font, "Arial");
+  }
+
+  // Test revoking the action.
+  {
+    window.once("palette:set_symbol", move |e| {
+      let base64: &str = serde_json::from_str(e.payload()).unwrap();
+      let data: SetSymbolData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
+
+      assert_eq!(data.palindex, 0);
+      assert!(data.symbol.is_none());
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+
+    // Verify symbol was unset.
+    assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_none());
+  }
+}
+
+#[test]
+fn test_unset_symbol_action() {
+  use embroiderly_pattern::Symbol;
+
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = create_pattern_project();
+
+  // Set a symbol on the first palette item.
+  if let Some(item) = patproj.pattern.palette.get_mut(0) {
+    item.symbol = Some(Symbol {
+      char: 'B',
+      font: "Times".to_string(),
+    });
+  }
+
+  // Verify initial state.
+  assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_some());
+
+  let action = SetSymbolAction::new(0, None);
+
+  // Test executing the action
+  {
+    window.once("palette:set_symbol", move |e| {
+      let base64: &str = serde_json::from_str(e.payload()).unwrap();
+      let data: SetSymbolData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
+
+      assert_eq!(data.palindex, 0);
+      assert!(data.symbol.is_none());
+    });
+
+    action.perform(&window, &mut patproj).unwrap();
+
+    // Verify symbol was unset.
+    assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_none());
+  }
+
+  // Test revoking the action
+  {
+    window.once("palette:set_symbol", move |e| {
+      let base64: &str = serde_json::from_str(e.payload()).unwrap();
+      let data: SetSymbolData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
+
+      assert_eq!(data.palindex, 0);
+      assert!(data.symbol.is_some());
+
+      let symbol = data.symbol.unwrap();
+      assert_eq!(symbol.char, 'B');
+      assert_eq!(symbol.font, "Times");
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+
+    // Verify original symbol was restored.
+    let symbol = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+    assert_eq!(symbol.char, 'B');
+    assert_eq!(symbol.font, "Times");
+  }
+}
+
+#[test]
+fn test_replace_symbol_action() {
+  use embroiderly_pattern::Symbol;
+
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = create_pattern_project();
+
+  // Set initial symbol.
+  if let Some(item) = patproj.pattern.palette.get_mut(0) {
+    item.symbol = Some(Symbol {
+      char: 'X',
+      font: "Font1".to_string(),
+    });
+  }
+
+  let new_symbol = Symbol {
+    char: 'Y',
+    font: "Font2".to_string(),
+  };
+  let action = SetSymbolAction::new(0, Some(new_symbol));
+
+  // Test executing the action.
+  {
+    window.once("palette:set_symbol", move |e| {
+      let base64: &str = serde_json::from_str(e.payload()).unwrap();
+      let data: SetSymbolData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
+
+      assert_eq!(data.palindex, 0);
+      assert!(data.symbol.is_some());
+
+      let symbol = data.symbol.unwrap();
+      assert_eq!(symbol.char, 'Y');
+      assert_eq!(symbol.font, "Font2");
+    });
+
+    action.perform(&window, &mut patproj).unwrap();
+
+    // Verify new symbol.
+    let symbol = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+    assert_eq!(symbol.char, 'Y');
+    assert_eq!(symbol.font, "Font2");
+  }
+
+  // Test revoking the action.
+  {
+    window.once("palette:set_symbol", move |e| {
+      let base64: &str = serde_json::from_str(e.payload()).unwrap();
+      let data: SetSymbolData = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
+
+      assert_eq!(data.palindex, 0);
+      assert!(data.symbol.is_some());
+
+      let symbol = data.symbol.unwrap();
+      assert_eq!(symbol.char, 'X');
+      assert_eq!(symbol.font, "Font1");
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+
+    // Verify original symbol was restored.
+    let symbol = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+    assert_eq!(symbol.char, 'X');
+    assert_eq!(symbol.font, "Font1");
   }
 }

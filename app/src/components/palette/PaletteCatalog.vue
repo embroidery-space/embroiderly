@@ -1,12 +1,11 @@
 <template>
-  <PaletteSection :title="$t('label-palette-colors')">
+  <PanelSection :title="$t('label-palette-colors')">
     <PaletteList
       :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="results.map((r) => r.item)"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
       multiple
-      meta-key-selection
       class="overflow-y-auto"
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
@@ -52,7 +51,7 @@
         />
       </template>
     </PaletteList>
-  </PaletteSection>
+  </PanelSection>
 </template>
 
 <script setup lang="ts">
@@ -117,18 +116,14 @@
   async function refreshPalettesList() {
     const { system, custom } = await PaletteApi.getPalettesList();
 
-    const systemPalettes: SelectMenuItem[] = [
-      { label: fluent.$t("label-palette-catalog-group-system"), type: "label" },
-    ];
+    const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("label-files-system"), type: "label" }];
     for (const palette of system) {
       const paletteKey = `system/${palette}`;
       systemPalettes.push({ label: palette, value: paletteKey });
       paletteCatalog.set(paletteKey, undefined);
     }
 
-    const customPalettes: SelectMenuItem[] = [
-      { label: fluent.$t("label-palette-catalog-group-custom"), type: "label" },
-    ];
+    const customPalettes: SelectMenuItem[] = [{ label: fluent.$t("label-files-custom"), type: "label" }];
     for (const palette of custom) {
       const paletteKey = `custom/${palette}`;
       customPalettes.push({ label: palette, value: paletteKey });

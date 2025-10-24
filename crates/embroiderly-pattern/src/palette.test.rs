@@ -11,7 +11,6 @@ fn create_test_item(brand: &str, number: &str, name: &str, color: &str) -> Palet
     color: color.to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   }
 }
 
@@ -24,7 +23,6 @@ fn create_blend_item(brand: &str, number: &str, blends: Vec<Blend>) -> PaletteIt
     color: "000000".to_string(),
     blends: Some(blends),
     symbol: None,
-    symbol_font: None,
   }
 }
 
@@ -615,15 +613,24 @@ mod palette {
       let mut palette = Palette::new();
 
       let mut item1 = create_test_item("DMC", "310", "Black", "000000");
-      item1.symbol_font = Some("Ursasoftware".to_string());
+      item1.symbol = Some(Symbol {
+        char: 'A',
+        font: "Ursasoftware".to_string(),
+      });
       palette.push(item1);
 
       let mut item2 = create_test_item("DMC", "3865", "White", "FFFFFF");
-      item2.symbol_font = Some("CrossStitch3".to_string());
+      item2.symbol = Some(Symbol {
+        char: 'B',
+        font: "CrossStitch3".to_string(),
+      });
       palette.push(item2);
 
       let mut item3 = create_test_item("DMC", "321", "Christmas Red", "B1272A");
-      item3.symbol_font = Some("Ursasoftware".to_string());
+      item3.symbol = Some(Symbol {
+        char: 'C',
+        font: "Ursasoftware".to_string(),
+      });
       palette.push(item3);
 
       let fonts = palette.used_symbol_fonts();
@@ -670,19 +677,6 @@ mod palette_item {
   }
 
   #[test]
-  fn test_get_symbol_none() {
-    let item = create_test_item("DMC", "310", "Black", "000000");
-    assert_eq!(item.get_symbol(), "");
-  }
-
-  #[test]
-  fn test_get_symbol_some() {
-    let mut item = create_test_item("DMC", "310", "Black", "000000");
-    item.symbol = Some('X');
-    assert_eq!(item.get_symbol(), "X");
-  }
-
-  #[test]
   fn test_from_brand_item() {
     let brand_item = BrandPaletteItem {
       brand: "DMC".to_string(),
@@ -699,7 +693,6 @@ mod palette_item {
     assert_eq!(palette_item.color, brand_item.color);
     assert_eq!(palette_item.blends, brand_item.blends);
     assert_eq!(palette_item.symbol, None);
-    assert_eq!(palette_item.symbol_font, None);
   }
 
   #[test]
@@ -724,5 +717,46 @@ mod palette_item {
     let palette_item = PaletteItem::from(brand_item.clone());
     assert_eq!(palette_item.blends, brand_item.blends);
     assert!(palette_item.is_blend());
+  }
+}
+
+mod symbol {
+  use super::*;
+
+  #[test]
+  fn test_symbol_creation_valid_char() {
+    let symbol = Symbol::new('A', "Arial".to_string());
+    assert!(symbol.is_some());
+
+    let symbol = symbol.unwrap();
+    assert_eq!(symbol.char, 'A');
+    assert_eq!(symbol.font, "Arial");
+  }
+
+  #[test]
+  fn test_symbol_creation_valid_unicode_ranges() {
+    // Range 0x0021..=0xD7FF
+    assert!(Symbol::new('\u{0021}', "Font".to_string()).is_some()); // '!'
+    assert!(Symbol::new('\u{00A0}', "Font".to_string()).is_some()); // Non-breaking space
+    assert!(Symbol::new('\u{D7FF}', "Font".to_string()).is_some()); // Upper limit of first range
+
+    // Range 0xE000..=0xFFFD
+    assert!(Symbol::new('\u{E000}', "Font".to_string()).is_some()); // Private use area start
+    assert!(Symbol::new('\u{F000}', "Font".to_string()).is_some()); // Private use area
+    assert!(Symbol::new('\u{FFFD}', "Font".to_string()).is_some()); // Replacement character
+  }
+
+  #[test]
+  fn test_symbol_creation_invalid_chars() {
+    assert!(Symbol::new('\u{0000}', "Font".to_string()).is_none()); // NULL
+    assert!(Symbol::new('\u{0010}', "Font".to_string()).is_none()); // Control character
+    assert!(Symbol::new('\u{0020}', "Font".to_string()).is_none()); // Space (below 0x0021)
+
+    // Test surrogate pair range by creating from code points
+    assert!(Symbol::new(char::from_u32(0xD800).unwrap_or('\0'), "Font".to_string()).is_none());
+    assert!(Symbol::new(char::from_u32(0xDFFF).unwrap_or('\0'), "Font".to_string()).is_none());
+
+    assert!(Symbol::new('\u{FFFE}', "Font".to_string()).is_none()); // Above 0xFFFD
+    assert!(Symbol::new('\u{FFFF}', "Font".to_string()).is_none()); // Above 0xFFFD
   }
 }

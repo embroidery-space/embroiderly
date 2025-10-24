@@ -17,7 +17,6 @@ fn adds_palette_item() {
     color: "#000000".to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   };
   assert!(
     invoke_ipc!(
@@ -54,7 +53,6 @@ fn does_not_add_duplicate_palette_item() {
     color: "#000000".to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   };
   invoke_ipc!(
     &webview,
@@ -95,7 +93,6 @@ fn removes_palette_items() {
     color: "#000000".to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   };
   invoke_ipc!(
     &webview,
@@ -112,7 +109,6 @@ fn removes_palette_items() {
     color: "#FFFFFF".to_string(),
     blends: None,
     symbol: None,
-    symbol_font: None,
   };
   invoke_ipc!(
     &webview,
@@ -223,7 +219,6 @@ fn sorts_palette_by_brand_and_number() {
       color: "#000000".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "DMC".to_string(),
@@ -232,7 +227,6 @@ fn sorts_palette_by_brand_and_number() {
       color: "#F9F9F9".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "DMC".to_string(),
@@ -241,7 +235,6 @@ fn sorts_palette_by_brand_and_number() {
       color: "#FFFFFF".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "Anchor".to_string(),
@@ -250,7 +243,6 @@ fn sorts_palette_by_brand_and_number() {
       color: "#FFFFFF".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
   ];
   for palitem in &palitems {
@@ -314,7 +306,6 @@ fn reorders_palette_items() {
       color: "#000000".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "DMC".to_string(),
@@ -323,7 +314,6 @@ fn reorders_palette_items() {
       color: "#F9F9F9".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
     PaletteItem {
       brand: "DMC".to_string(),
@@ -332,7 +322,6 @@ fn reorders_palette_items() {
       color: "#B1272A".to_string(),
       blends: None,
       symbol: None,
-      symbol_font: None,
     },
   ];
   for palitem in &palitems {
@@ -377,4 +366,194 @@ fn reorders_palette_items() {
   // Verify history stack has 4 items (3 adds + 1 reorder).
   let history = history_manager.get(&pattern_id).unwrap();
   assert_eq!(history.undo_stack_len(), 4);
+}
+
+#[test]
+fn sets_symbol_on_palette_item() {
+  let (app, webview) = setup_test_app!(commands: [
+    commands::core::palette::add_palette_item,
+    commands::core::palette::set_symbol
+  ]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  // Add a palette item first.
+  let palitem = PaletteItem {
+    brand: "DMC".to_string(),
+    number: "310".to_string(),
+    name: "Black".to_string(),
+    color: "#000000".to_string(),
+    blends: None,
+    symbol: None,
+  };
+  invoke_ipc!(
+    &webview,
+    cmd: "add_palette_item",
+    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&palitem).unwrap()),
+    headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+  )
+  .unwrap();
+
+  // Set symbol on the palette item.
+  let symbol = embroiderly_pattern::Symbol {
+    char: 'A',
+    font: "Arial".to_string(),
+  };
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "set_symbol",
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&(0u32, Some(symbol.clone()))).unwrap()),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  // Verify symbol was set.
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_some());
+
+  let symbol = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+  assert_eq!(symbol.char, 'A');
+  assert_eq!(symbol.font, "Arial");
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  // Verify history.
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 2); // add_palette_item + set_symbol
+}
+
+#[test]
+fn unsets_symbol_from_palette_item() {
+  let (app, webview) = setup_test_app!(commands: [
+    commands::core::palette::add_palette_item,
+    commands::core::palette::set_symbol
+  ]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  // Add a palette item with a symbol.
+  let symbol = embroiderly_pattern::Symbol {
+    char: 'B',
+    font: "Times".to_string(),
+  };
+  let palitem = PaletteItem {
+    brand: "DMC".to_string(),
+    number: "3865".to_string(),
+    name: "White".to_string(),
+    color: "FFFFFF".to_string(),
+    blends: None,
+    symbol: Some(symbol),
+  };
+  invoke_ipc!(
+    &webview,
+    cmd: "add_palette_item",
+    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&palitem).unwrap()),
+    headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+  )
+  .unwrap();
+
+  // Verify symbol is set.
+  {
+    let patterns_state = app.state::<PatternsState>();
+    let patterns_manager = patterns_state.read().unwrap();
+    let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+    assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_some());
+  }
+
+  // Unset the symbol.
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "set_symbol",
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&(0u32, None::<embroiderly_pattern::Symbol>)).unwrap()),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  // Verify symbol was unset.
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_none());
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  // Verify history.
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 2); // add_palette_item + set_symbol (to None)
+}
+
+#[test]
+fn replaces_existing_symbol() {
+  let (app, webview) = setup_test_app!(commands: [
+    commands::core::palette::add_palette_item,
+    commands::core::palette::set_symbol
+  ]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  // Add palette item.
+  let palitem = PaletteItem {
+    brand: "DMC".to_string(),
+    number: "321".to_string(),
+    name: "Red".to_string(),
+    color: "FF0000".to_string(),
+    blends: None,
+    symbol: None,
+  };
+  invoke_ipc!(
+    &webview,
+    cmd: "add_palette_item",
+    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&palitem).unwrap()),
+    headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+  )
+  .unwrap();
+
+  // Set first symbol.
+  let first_symbol = embroiderly_pattern::Symbol {
+    char: 'X',
+    font: "Font1".to_string(),
+  };
+  invoke_ipc!(
+    &webview,
+    cmd: "set_symbol",
+    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&(0u32, Some(first_symbol))).unwrap()),
+    headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+  )
+  .unwrap();
+
+  // Replace with second symbol.
+  let second_symbol = embroiderly_pattern::Symbol {
+    char: 'Y',
+    font: "Font2".to_string(),
+  };
+  invoke_ipc!(
+    &webview,
+    cmd: "set_symbol",
+    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&(0u32, Some(second_symbol))).unwrap()),
+    headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+  )
+  .unwrap();
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  // Verify second symbol replaced first.
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  let symbol = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+  assert_eq!(symbol.char, 'Y');
+  assert_eq!(symbol.font, "Font2");
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  // Verify history
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 3); // add_palette_item + set_symbol + set_symbol
 }

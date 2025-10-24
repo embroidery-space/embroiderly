@@ -12,6 +12,9 @@ use crate::PackageInfo;
 #[path = "oxs.test.rs"]
 mod tests;
 
+/// Default symbol font used when no font is specified in OXS files.
+const DEFAULT_SYMBOL_FONT: &str = "Ursasoftware";
+
 /// Tries to get a value using the provided expression.
 /// If the result is `Some(value)`, returns the unwrapped value.
 /// Otherwise, continues the current loop.
@@ -185,7 +188,7 @@ fn save_pattern_inner<W: io::Write>(
 ) -> io::Result<()> {
   log::trace!("Saving OXS file");
 
-  let PatternProject { pattern, display_settings, .. } = patproj;
+  let PatternProject { pattern, .. } = patproj;
 
   // Create a mapping from actual index to visual position for efficient lookups when writing stitches.
   // This allows us to convert stitch palindex values (which reference actual indexes) to visual positions.
@@ -212,12 +215,7 @@ fn save_pattern_inner<W: io::Write>(
       pattern.palette.len(),
       package_info,
     )?;
-    write_palette(
-      writer,
-      &pattern.fabric,
-      &pattern.palette,
-      &display_settings.default_symbol_font,
-    )?;
+    write_palette(writer, &pattern.fabric, &pattern.palette)?;
     write_full_stitches(
       writer,
       pattern
@@ -421,14 +419,21 @@ fn read_palette<R: io::BufRead>(
             blends.push(Blend { brand, number });
           }
 
+          let color = attributes.get_color("color").unwrap_or("FF00FF").to_owned();
+          let blends = if blends.is_empty() { None } else { Some(blends) };
+
+          let symbol = attributes.get_symbol("symbol").and_then(|code| {
+            let font = attributes.get("fontname").unwrap_or(DEFAULT_SYMBOL_FONT).to_owned();
+            Symbol::new(code, font)
+          });
+
           palette.push(PaletteItem {
             brand,
             number,
             name,
-            color: attributes.get_color("color").unwrap_or("FF00FF").to_owned(),
-            blends: if blends.is_empty() { None } else { Some(blends) },
-            symbol: attributes.get_symbol("symbol"),
-            symbol_font: attributes.get("fontname").map(|s| s.to_owned()),
+            color,
+            blends,
+            symbol,
           });
         }
       }
@@ -446,12 +451,7 @@ fn read_palette<R: io::BufRead>(
   Ok((fabric, palette))
 }
 
-fn write_palette<W: io::Write>(
-  writer: &mut Writer<W>,
-  fabric: &Fabric,
-  palette: &Palette,
-  default_symbol_font: &str,
-) -> io::Result<()> {
+fn write_palette<W: io::Write>(writer: &mut Writer<W>, fabric: &Fabric, palette: &Palette) -> io::Result<()> {
   writer.create_element("palette").write_inner_content(|writer| {
     writer
       .create_element("palette_item")
@@ -474,14 +474,11 @@ fn write_palette<W: io::Write>(
         ),
         ("name", palitem.name.clone()),
         ("color", palitem.color.clone()),
-        (
-          "fontname",
-          palitem.symbol_font.as_deref().unwrap_or(default_symbol_font).to_owned(),
-        ),
       ];
 
-      if let Some(ch) = &palitem.symbol {
-        attributes.push(("symbol", (*ch as u32).to_string()));
+      if let Some(symbol) = &palitem.symbol {
+        attributes.push(("symbol", (symbol.char as u32).to_string()));
+        attributes.push(("fontname", symbol.font.clone()));
       }
 
       let element = writer

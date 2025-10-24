@@ -232,7 +232,7 @@ impl Palette {
     self
       .items
       .iter()
-      .filter_map(|palitem| palitem.symbol_font.clone())
+      .filter_map(|palitem| palitem.symbol.as_ref().map(|s| s.font.clone()))
       .collect::<std::collections::HashSet<String>>() // Collect unique values only.
       .into_iter()
       .collect() // Convert to vector.
@@ -302,36 +302,13 @@ pub struct PaletteItem {
   pub name: String,
   pub color: String,
   pub blends: Option<Vec<Blend>>,
-  #[cfg_attr(
-    feature = "borsh",
-    borsh(
-      serialize_with = "serialize_option_char",
-      deserialize_with = "deserialize_option_char"
-    )
-  )]
-  pub symbol: Option<char>,
-  pub symbol_font: Option<String>,
+  pub symbol: Option<Symbol>,
 }
 
 impl PaletteItem {
   /// Returns true if the palette item is a blend.
   pub fn is_blend(&self) -> bool {
     self.blends.as_ref().is_some_and(|blends| !blends.is_empty())
-  }
-
-  /// Returns a printable representation of the symbol.
-  pub fn get_symbol(&self) -> String {
-    if let Some(symbol) = self.symbol {
-      // Check if the symbol code is a valid Unicode character.
-      // We support only a part of the BMP supported by XML 1.0.
-      if matches!(symbol as u32, 0x0020..=0xD7FF | 0xE000..=0xFFFD) {
-        symbol.to_string()
-      } else {
-        char::REPLACEMENT_CHARACTER.to_string()
-      }
-    } else {
-      String::new()
-    }
   }
 }
 
@@ -343,9 +320,7 @@ impl From<BrandPaletteItem> for PaletteItem {
       name: brand_item.name,
       color: brand_item.color,
       blends: brand_item.blends,
-
       symbol: None,
-      symbol_font: None,
     }
   }
 }
@@ -361,7 +336,6 @@ impl From<pmaker::PaletteItem> for PaletteItem {
         .blends
         .map(|blends| blends.into_iter().map(Blend::from).collect()),
       symbol: None,
-      symbol_font: None,
     }
   }
 }
@@ -375,7 +349,6 @@ impl From<ursa::PaletteItem> for PaletteItem {
       color: palitem.color,
       blends: None,
       symbol: None,
-      symbol_font: None,
     }
   }
 }
@@ -389,7 +362,6 @@ impl From<xspro::PaletteItem> for PaletteItem {
       color: palitem.color,
       blends: None,
       symbol: None,
-      symbol_font: None,
     }
   }
 }
@@ -447,6 +419,47 @@ impl From<xspro::PaletteItem> for BrandPaletteItem {
   }
 }
 
+/// Represents a symbol used in a palette item.
+#[derive(Debug, Clone, PartialEq)]
+pub struct Symbol {
+  pub char: char,
+  pub font: String,
+}
+
+impl Symbol {
+  pub fn new(char: char, font: String) -> Option<Self> {
+    // Check if the symbol code is a valid Unicode character.
+    // We support only a part of the BMP supported by XML 1.0.
+    if matches!(char as u32, 0x0021..=0xD7FF | 0xE000..=0xFFFD) {
+      Some(Self { char, font })
+    } else {
+      None
+    }
+  }
+}
+
+#[cfg(feature = "borsh")]
+impl borsh::BorshSerialize for Symbol {
+  fn serialize<W: borsh::io::Write>(&self, writer: &mut W) -> borsh::io::Result<()> {
+    (self.char as u32).serialize(writer)?;
+    self.font.serialize(writer)
+  }
+}
+
+#[cfg(feature = "borsh")]
+impl borsh::BorshDeserialize for Symbol {
+  fn deserialize_reader<R: borsh::io::Read>(reader: &mut R) -> borsh::io::Result<Self> {
+    let code_point = u32::deserialize_reader(reader)?;
+    let char = char::from_u32(code_point)
+      .ok_or_else(|| borsh::io::Error::new(borsh::io::ErrorKind::InvalidData, "Invalid Unicode code point"))?;
+
+    Ok(Self {
+      char,
+      font: String::deserialize_reader(reader)?,
+    })
+  }
+}
+
 /// Represents a blend component of a palette item.
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
@@ -479,32 +492,6 @@ impl From<pmaker::Bead> for Bead {
       length: bead.length,
       diameter: bead.diameter,
     }
-  }
-}
-
-#[cfg(feature = "borsh")]
-fn serialize_option_char<W: borsh::io::Write>(value: &Option<char>, writer: &mut W) -> borsh::io::Result<()> {
-  use borsh::BorshSerialize;
-
-  match value {
-    Some(ch) => {
-      true.serialize(writer)?;
-      (*ch as u32).serialize(writer)
-    }
-    None => false.serialize(writer),
-  }
-}
-
-#[cfg(feature = "borsh")]
-fn deserialize_option_char<R: borsh::io::Read>(reader: &mut R) -> borsh::io::Result<Option<char>> {
-  use borsh::BorshDeserialize;
-
-  let has_value = bool::deserialize_reader(reader)?;
-  if has_value {
-    let value = u32::deserialize_reader(reader)?;
-    Ok(char::from_u32(value))
-  } else {
-    Ok(None)
   }
 }
 

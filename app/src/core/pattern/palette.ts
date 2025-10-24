@@ -50,6 +50,23 @@ export class Bead {
   }
 }
 
+export class Symbol {
+  readonly code: number;
+  readonly char: string;
+  readonly font: string;
+
+  constructor(data: b.infer<typeof Symbol.schema>) {
+    this.code = data.code;
+    this.char = String.fromCodePoint(data.code);
+    this.font = data.font;
+  }
+
+  static readonly schema = b.struct({
+    code: b.u32(),
+    font: b.string(),
+  });
+}
+
 /** Represents a base palette item. */
 export abstract class BasePaletteItem {
   /**
@@ -165,21 +182,12 @@ export class BrandPaletteItem extends BasePaletteItem {
  * This class extends the `BrandPaletteItem` class and adds additional properties for advanced displaying purposes.
  */
 export class PaletteItem extends BrandPaletteItem {
-  symbol?: string;
-  symbolFont?: string;
+  symbol?: Symbol;
 
   constructor(index: number, data: b.infer<typeof PaletteItem.schema>) {
     super(index, data);
 
-    // Check if the symbol code is a valid Unicode character.
-    // We support only a part of the BMP supported by XML 1.0.
-    if (
-      data.symbol &&
-      ((data.symbol >= 0x0020 && data.symbol <= 0xd7ff) || (data.symbol >= 0xe000 && data.symbol <= 0xfffd))
-    ) {
-      this.symbol = String.fromCodePoint(data.symbol);
-    } else this.symbol = String.fromCodePoint(0xfffd); // Replacement character.
-    if (data.symbolFont) this.symbolFont = data.symbolFont;
+    if (data.symbol) this.symbol = new Symbol(data.symbol);
   }
 
   static override readonly schema = b.struct({
@@ -188,8 +196,7 @@ export class PaletteItem extends BrandPaletteItem {
     name: b.string(),
     color: b.string(),
     blends: b.option(b.vec(Blend.schema)),
-    symbol: b.option(b.u32()),
-    symbolFont: b.option(b.string()),
+    symbol: b.option(Symbol.schema),
   });
 
   static override serialize(data: PaletteItem) {
@@ -199,8 +206,7 @@ export class PaletteItem extends BrandPaletteItem {
       name: data.name,
       color: data.hex.slice(1),
       blends: data.blends ?? null,
-      symbol: data.symbol?.codePointAt(0) ?? null,
-      symbolFont: data.symbolFont ?? null,
+      symbol: data.symbol ? { code: data.symbol.code, font: data.symbol.font } : null,
     });
   }
 }
@@ -324,6 +330,33 @@ export class Palette {
     }
 
     return removed;
+  }
+}
+
+export class SetSymbolData {
+  palindex: number;
+  symbol?: Symbol;
+
+  constructor(data: b.infer<typeof SetSymbolData.schema>) {
+    this.palindex = data.palindex;
+    if (data.symbol) this.symbol = new Symbol(data.symbol);
+  }
+
+  static readonly schema = b.struct({
+    palindex: b.u32(),
+    symbol: b.option(Symbol.schema),
+  });
+
+  static serialize(data: SetSymbolData) {
+    return SetSymbolData.schema.serialize({
+      palindex: data.palindex,
+      symbol: data.symbol ?? null,
+    });
+  }
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new SetSymbolData(SetSymbolData.schema.deserialize(buffer));
   }
 }
 

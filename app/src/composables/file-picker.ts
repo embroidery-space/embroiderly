@@ -31,6 +31,13 @@ const PALETTE_FILTER = [
   ALL_FILES_FILTER,
 ];
 
+const FONT_FILTER = [
+  { name: "All Font Files", extensions: ["ttf", "otf"] },
+  { name: "TrueType Fonts", extensions: ["ttf"] },
+  { name: "OpenType Fonts", extensions: ["otf"] },
+  ALL_FILES_FILTER,
+];
+
 export const useFilePicker = createSharedComposable(() => {
   const lastOpenedFolder = useLocalStorage<string | null>("last-opened-folder", null);
   const lastSavedFolder = useLocalStorage<string | null>("last-saved-folder", null);
@@ -51,6 +58,9 @@ export const useFilePicker = createSharedComposable(() => {
 
     /** The filter for palette files. */
     PALETTE_FILTER,
+
+    /** The filter for font files. */
+    FONT_FILTER,
 
     /** The last opened folder path. */
     lastOpenedFolder,

@@ -1,10 +1,11 @@
 pub mod display;
 pub mod fabric;
-pub mod fonts;
+pub mod fonts_io;
 pub mod grid;
 pub mod history;
 pub mod image;
 pub mod palette;
+pub mod palette_io;
 pub mod pattern;
 pub mod pattern_io;
 pub mod publish;

@@ -8,7 +8,7 @@
       v-model="value as AcceptableValue"
       :disabled="disabled"
       :multiple="multiple"
-      class="flex grow flex-col overflow-hidden data-[disabled]:cursor-not-allowed"
+      class="flex grow flex-col overflow-hidden data-disabled:cursor-not-allowed"
     >
       <div v-if="$slots.filter" class="shrink-0 border-b border-default px-2 py-1">
         <RListboxFilter as-child>

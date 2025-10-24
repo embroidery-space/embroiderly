@@ -45,6 +45,9 @@ label-no = Ні
 label-hint-counts-in-stitches = У стібках
 label-hint-counts-in-points = У пунктах
 
+label-files-system = Системні
+label-files-custom = Власні
+
 ## Names of the stitches and other tools.
 
 label-stitch-full = Хрест
@@ -141,9 +144,6 @@ label-palette-delete-all = Видалити всі
 
 label-palette-catalog-menu-import-palettes = Імпортувати палітри
 
-label-palette-catalog-group-system = Системні
-label-palette-catalog-group-custom = Власні
-
 label-palette-catalog-search-placeholder = Пошук...
 
 message-palette-import-success = Палітри успішно імпортовані
@@ -157,6 +157,29 @@ label-display-options-stitch-symbols-on-contrast-background = Розмістит
 label-display-options-show-brand = Відображати бренди ниток
 label-display-options-show-number = Відображати номери кольорів
 label-display-options-show-name = Відображати назви кольорів
+
+## Titles, labels and messages related to stitch symbols management.
+
+label-stitch-symbols = Символи
+label-stitch-symbols-count = { $total ->
+  [0] Немає символів
+  [one] { $total } символ ({ $used } використано)
+  [few] { $total } символи ({ $used } використано)
+  *[many] { $total } символів ({ $used } використано)
+}
+message-stitch-symbols-empty = Символи відсутні
+
+label-stitch-symbols-menu-import-fonts = Імпортувати символьні шрифти
+
+label-stitch-symbols-context-menu-set-symbol = Встановити символ
+label-stitch-symbols-context-menu-unset-symbol = Прибрати символ
+
+message-no-palette-item-selected = Не вибрано жоден елемент палітри
+message-symbol-already-assigned = Цей символ вже призначено іншому елементу палітри
+
+message-symbol-fonts-import-success = Символьні шрифти успішно імпортовані
+message-symbol-fonts-import-error = Не вдалося імпортувати символьні шрифти
+message-symbol-font-load-error = Не вдалося завантажити шрифт { $fontKey }
 
 ## Titles, labels and messages related to the canvas context menu.
 
@@ -324,10 +347,21 @@ message-unsaved-patterns =
   { $patterns }
   Чи хочете ви зберегти їх перед закриттям застосунку?
 
-title-failed-palette-files = Не вдалі файли палітр
+title-failed-palette-files = Невдалі файли палітр
 message-failed-palette-files =
   Деякі файли палітри не вдалося імпортувати.
   Це може бути повʼязано з конфліктом назв палітр (вони повинні бути унікальними) або пошкодженням файлів палітр.
+
+  { $failedFilesList }
+
+message-failed-symbol-fonts =
+  Не вдалося завантажити символьні шрифти: { $fonts }.
+  Деякі символи можуть відображатися некоректно.
+
+title-failed-font-files = Невдалі файли шрифтів
+message-failed-font-files =
+  Деякі файли шрифтів не вдалося імпортувати.
+  Це може бути повʼязано з конфліктом назв сімейств шрифтів (вони повинні бути унікальними), відсутністю метаданих сімейства шрифтів або пошкодженням файлів шрифтів.
 
   { $failedFilesList }
 

@@ -5,10 +5,10 @@ import { Blend, Palette, PaletteItem } from "./palette.ts";
 
 describe("Palette", () => {
   const PALETTE_ITEMS = {
-    BLACK: { brand: "DMC", number: "310", name: "Black", color: "2C3225", blends: null, symbol: null, symbolFont: null }, // prettier-ignore
-    GARNET: { brand: "DMC", number: "816", name: "Garnet", color: "973E3B", blends: null, symbol: null, symbolFont: null }, // prettier-ignore
-    LAVENDER: { brand: "DMC", number: "327", name: "Lavender-VY DK", color: "7A5577", blends: null, symbol: null, symbolFont: null }, // prettier-ignore
-    WHITE: { brand: "DMC", number: "blanc", name: "White", color: "FFFFFF", blends: null, symbol: null, symbolFont: null }, // prettier-ignore
+    BLACK: { brand: "DMC", number: "310", name: "Black", color: "2C3225", blends: null, symbol: null }, // prettier-ignore
+    GARNET: { brand: "DMC", number: "816", name: "Garnet", color: "973E3B", blends: null, symbol: null }, // prettier-ignore
+    LAVENDER: { brand: "DMC", number: "327", name: "Lavender-VY DK", color: "7A5577", blends: null, symbol: null }, // prettier-ignore
+    WHITE: { brand: "DMC", number: "blanc", name: "White", color: "FFFFFF", blends: null, symbol: null }, // prettier-ignore
   };
 
   test("returns items in visual order", () => {
@@ -158,7 +158,7 @@ describe("PaletteItem", () => {
         { brand: "Madeira", number: "0705" },
       ].map((data) => new Blend(data)),
     },
-  ].map((data, index) => new PaletteItem(index, { blends: null, symbol: null, symbolFont: null, ...data }));
+  ].map((data, index) => new PaletteItem(index, { blends: null, symbol: null, ...data }));
 
   test("returns contrast color", () => {
     expect(PALETTE[0].contrastColor).toBe("white");
