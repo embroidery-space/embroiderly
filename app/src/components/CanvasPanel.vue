@@ -62,14 +62,15 @@
   import type { ContextMenuItem } from "@nuxt/ui";
   import { vElementSize } from "@vueuse/components";
   import { useDebounceFn, useEventListener } from "@vueuse/core";
-  import { Assets } from "pixi.js";
   import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
 
+  import { FontsApi } from "~/api";
   import { PatternEvent } from "~/core/pattern/";
-  import { PatternApplication, ToolEvent, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
+  import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
   import { CursorTool } from "~/core/tools/";
   import type { PatternEditorToolContext } from "~/core/tools/";
+  import { addSymbolFonts } from "~/utils/font-face";
 
   const fluent = useFluent();
 
@@ -109,7 +110,9 @@
     async (pattern, oldPattern) => {
       if (!pattern || pattern.id === oldPattern?.id) return;
 
-      await Assets.load(pattern.allSymbolFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
+      // Load symbol fonts and add them to the document's font face set.
+      const fontFaces = await Promise.all(pattern.allSymbolFonts.map((font) => FontsApi.loadSymbolFont(font)));
+      addSymbolFonts(fontFaces);
 
       const patternView = new PatternView(pattern);
       patternApplication.view = patternView;
