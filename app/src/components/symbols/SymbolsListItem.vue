@@ -6,7 +6,11 @@
       'outline-transparent': !selected,
     }"
   >
-    <UIcon v-if="assigned" name="i-lucide:check" class="absolute top-0.5 left-0.5 size-2.5 text-black" />
+    <span
+      v-if="assigned"
+      class="absolute top-0.5 right-0.5 size-2 rounded-xs bg-black"
+      style="clip-path: polygon(0 0, 100% 0, 100% 100%)"
+    ></span>
     <span :style="{ fontFamily: fontFamily, color: assigned ? 'var(--color-help-700)' : 'black' }">{{ symbol }}</span>
   </div>
 </template>
