@@ -60,7 +60,6 @@ walkdir = { workspace = true }
 
 # Other
 dyn-clone = { workspace = true }
-convert_case = { workspace = true }
 uuid = { workspace = true, features = ["borsh", "serde"] }
 rayon = { workspace = true }
 
