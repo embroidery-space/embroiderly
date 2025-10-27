@@ -28,7 +28,7 @@
     "@types/sortablejs": "1.15.8",
     "@vueuse/components": "13.9.0",
     "@vueuse/core": "13.9.0",
-    "@vueuse/integrations": "13.9.0",
+    "@vueuse/integrations": "14.0.0",
     "@zorsh/zorsh": "0.3.3",
     "base64-js": "1.5.1",
     "dequal": "2.0.3",
