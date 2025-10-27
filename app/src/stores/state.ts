@@ -14,7 +14,7 @@ export const useAppStateStore = defineStore(
   "embroiderly-state",
   () => {
     const selectedTool = ref<PatternEditorTool>(tools.FullStitch);
-    const selectedPaletteItemIndexes = ref<number[]>([]);
+    const selectedPaletteItemIndex = ref<number | undefined>(undefined);
 
     watch(selectedTool, (tool, prevTool) => {
       posthog.capture(new AppEvent.ToolChanged(tool.name, prevTool.name));
@@ -33,7 +33,7 @@ export const useAppStateStore = defineStore(
     function addOpenedPattern(id: string, title: string) {
       const openedPattern: OpenedPattern = { id, title };
       if (openedPatterns.value.findIndex((p) => p.id === id) === -1) openedPatterns.value.push(openedPattern);
-      selectedPaletteItemIndexes.value = [];
+      selectedPaletteItemIndex.value = undefined;
       currentPattern.value = openedPattern;
     }
 
@@ -50,7 +50,7 @@ export const useAppStateStore = defineStore(
     /** Removes the currently opened pattern. */
     function removeCurrentPattern() {
       if (!openedPatterns.value || !currentPattern.value) return;
-      selectedPaletteItemIndexes.value = [];
+      selectedPaletteItemIndex.value = undefined;
       const index = openedPatterns.value.findIndex((p) => p.id === currentPattern.value!.id);
       if (index !== -1) openedPatterns.value.splice(index, 1);
       if (openedPatterns.value.length) currentPattern.value = openedPatterns.value[0];
@@ -59,7 +59,7 @@ export const useAppStateStore = defineStore(
 
     return {
       selectedTool,
-      selectedPaletteItemIndexes,
+      selectedPaletteItemIndex,
       openedPatterns,
       currentPattern,
       addOpenedPattern,

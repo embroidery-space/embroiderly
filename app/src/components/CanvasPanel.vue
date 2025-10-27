@@ -62,16 +62,18 @@
   import type { ContextMenuItem } from "@nuxt/ui";
   import { vElementSize } from "@vueuse/components";
   import { useDebounceFn, useEventListener } from "@vueuse/core";
-  import { Assets } from "pixi.js";
   import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
 
+  import { FontsApi } from "~/api";
   import { PatternEvent } from "~/core/pattern/";
-  import { PatternApplication, ToolEvent, STITCH_FONT_PREFIX, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
+  import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
   import { CursorTool } from "~/core/tools/";
   import type { PatternEditorToolContext } from "~/core/tools/";
+  import { addSymbolFonts } from "~/utils/font-face";
 
   const fluent = useFluent();
+  const toast = useToast();
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -109,7 +111,7 @@
     async (pattern, oldPattern) => {
       if (!pattern || pattern.id === oldPattern?.id) return;
 
-      await Assets.load(pattern.allSymbolFonts.map((font) => `${STITCH_FONT_PREFIX}${font}`));
+      await loadSymbolFonts(pattern.allSymbolFonts);
 
       const patternView = new PatternView(pattern);
       patternApplication.view = patternView;
@@ -188,14 +190,14 @@
       pattern: patternsStore.pattern!,
       api: {
         async addStitch(stitch) {
-          const palindex = appStateStore.selectedPaletteItemIndexes[0];
+          const palindex = appStateStore.selectedPaletteItemIndex;
           if (palindex !== undefined) {
             stitch.palindex = palindex;
             await patternsStore.addStitch(stitch);
           }
         },
         async removeStitch(stitch) {
-          const palindex = appStateStore.selectedPaletteItemIndexes[0];
+          const palindex = appStateStore.selectedPaletteItemIndex;
           if (palindex !== undefined) {
             stitch.palindex = palindex;
             await patternsStore.removeStitch(stitch);
@@ -218,14 +220,14 @@
 
         hint: {
           drawLine(stitch) {
-            const palindex = appStateStore.selectedPaletteItemIndexes[0];
+            const palindex = appStateStore.selectedPaletteItemIndex;
             if (palindex !== undefined) {
               stitch.palindex = palindex;
               patternApplication.view!.drawLineHint(stitch);
             }
           },
           drawNode(stitch) {
-            const palindex = appStateStore.selectedPaletteItemIndexes[0];
+            const palindex = appStateStore.selectedPaletteItemIndex;
             if (palindex !== undefined) {
               stitch.palindex = palindex;
               patternApplication.view!.drawNodeHint(stitch);
@@ -234,6 +236,31 @@
         },
       },
     };
+  }
+
+  async function loadSymbolFonts(fonts: string[]) {
+    const results = await Promise.allSettled(fonts.map((font) => FontsApi.loadSymbolFont(font)));
+    const failedFonts: string[] = [];
+    const fontFaces = results
+      .map((result, index) => {
+        if (result.status === "fulfilled") return result.value;
+        else {
+          const fontName = fonts[index]!;
+          failedFonts.push(fontName);
+          error(`Failed to load symbol font "${fontName}": ${result.reason}`);
+          return undefined;
+        }
+      })
+      .filter((fontFace) => fontFace !== undefined);
+    addSymbolFonts(fontFaces);
+
+    if (failedFonts.length) {
+      toast.add({
+        title: fluent.$t("title-error"),
+        description: fluent.$t("message-failed-symbol-fonts", { fonts: failedFonts.join(", ") }),
+        color: "error",
+      });
+    }
   }
 
   defineExpose({ initPatternApplication });

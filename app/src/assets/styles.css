@@ -9,6 +9,7 @@
   --ui-success: var(--ui-color-success-500);
   --ui-warning: var(--ui-color-warning-500);
   --ui-info: var(--ui-color-info-500);
+  --ui-help: var(--ui-color-help-500);
 
   --ui-color-neutral-50: #f9fafb;
   --ui-color-neutral-100: #f5f7f9;
@@ -47,6 +48,7 @@
   --ui-success: var(--ui-color-success-500);
   --ui-warning: var(--ui-color-warning-500);
   --ui-info: var(--ui-color-info-500);
+  --ui-help: var(--ui-color-help-500);
 
   --ui-color-neutral-50: #e4e7ec;
   --ui-color-neutral-100: #d5d9e1;

@@ -1,4 +1,11 @@
-import { deserializeBrandPalette, PaletteItem, PaletteSettings } from "~/core/pattern/";
+import {
+  deserializeBrandPalette,
+  PaletteItem,
+  PaletteSettings,
+  SetSymbolData,
+  SortPaletteBy,
+  Symbol,
+} from "~/core/pattern/";
 
 import { invoke } from "./index.ts";
 
@@ -27,4 +34,16 @@ export function getPalettesList() {
 export async function loadPalette(paletteGroup: string, paletteName: string) {
   const buffer = await invoke<ArrayBuffer>("load_palette", { paletteGroup, paletteName });
   return deserializeBrandPalette(new Uint8Array(buffer));
+}
+
+export function sortPaletteBy(patternId: string, sortBy: SortPaletteBy) {
+  return invoke<void>("sort_palette_by", { sortBy }, { headers: { patternId } });
+}
+
+export function reorderPaletteItems(patternId: string, oldPosition: number, newPosition: number) {
+  return invoke<void>("reorder_palette_items", { oldPosition, newPosition }, { headers: { patternId } });
+}
+
+export function setSymbol(patternId: string, palindex: number, symbol?: Symbol) {
+  return invoke<void>("set_symbol", SetSymbolData.serialize({ palindex, symbol }), { headers: { patternId } });
 }

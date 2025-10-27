@@ -1,5 +1,5 @@
 import { dequal } from "dequal/lite";
-import { Container, Graphics, GraphicsContext, Particle, ParticleContainer, Text, Texture } from "pixi.js";
+import { Container, Graphics, GraphicsContext, Particle, ParticleContainer, Text, TextStyle, Texture } from "pixi.js";
 import type {
   ColorSource,
   ContainerOptions,
@@ -19,6 +19,7 @@ import {
   PartStitchKind,
   LineStitch,
   NodeStitch,
+  Symbol,
 } from "~/core/pattern/";
 import type { Stitch } from "~/core/pattern/";
 import { TextureManager } from "~/core/pixi/";
@@ -122,7 +123,7 @@ export class StitchSymbolsContainer extends Container implements StitchContainer
 export class StitchSymbol extends Container {
   readonly stitch: FullStitch | PartStitch;
 
-  constructor(stitch: FullStitch | PartStitch, symbol: string, styleOptions: TextStyleOptions) {
+  constructor(stitch: FullStitch | PartStitch, symbol?: Symbol) {
     super({
       ...DEFAULT_CONTAINER_OPTIONS,
       x: stitch.x,
@@ -133,9 +134,12 @@ export class StitchSymbol extends Container {
 
     this.stitch = stitch;
 
-    const textStyle = { ...DEFAULT_TEXT_STYLE_OPTIONS, ...styleOptions };
+    const textStyle: TextStyleOptions = {
+      ...DEFAULT_TEXT_STYLE_OPTIONS,
+      fontFamily: symbol?.font ?? TextStyle.defaultTextStyle.fontFamily,
+    };
     const textOptions: TextOptions = { anchor: 0.5 };
-    const text = this.addChild(new Text({ text: symbol, style: textStyle, ...textOptions }));
+    const text = this.addChild(new Text({ text: symbol?.char, style: textStyle, ...textOptions }));
 
     switch (this.stitch.kind) {
       case FullStitchKind.Full: {
@@ -147,7 +151,7 @@ export class StitchSymbol extends Container {
       case PartStitchKind.Half: {
         text.scale.set(STITCH_SCALE_FACTOR / 2);
 
-        const duplicate = this.addChild(new Text({ text: symbol, style: textStyle, ...textOptions }));
+        const duplicate = this.addChild(new Text({ text: symbol?.char, style: textStyle, ...textOptions }));
         duplicate.scale.set(STITCH_SCALE_FACTOR / 2);
 
         if (this.stitch.direction === PartStitchDirection.Forward) {

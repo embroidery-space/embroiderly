@@ -34,6 +34,11 @@ embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
 embroiderly-logger = { workspace = true }
 xsp-parsers = { workspace = true }
 
+# Fonts parsing
+font-kit = { workspace = true }
+ttf-parser = { workspace = true }
+encoding_rs = { workspace = true }
+
 # Image processing
 image = { workspace = true }
 
@@ -56,9 +61,9 @@ walkdir = { workspace = true }
 
 # Other
 dyn-clone = { workspace = true }
-convert_case = { workspace = true }
 uuid = { workspace = true, features = ["borsh", "serde"] }
 rayon = { workspace = true }
 
 [dev-dependencies]
 rand = { workspace = true }
+rstest = { workspace = true }

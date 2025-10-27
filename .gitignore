@@ -7,6 +7,9 @@ msedgedriver.exe
 node_modules/
 dist/
 
+coverage/
+lcov.info
+
 # Auto-generated type declarations
 auto-imports.d.ts
 components.d.ts

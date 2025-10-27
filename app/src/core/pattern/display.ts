@@ -196,7 +196,6 @@ export class LayersVisibility {
 }
 
 export class DisplaySettings {
-  defaultSymbolFont: string;
   grid: Grid;
   displayMode: DisplayMode;
   showSymbols: boolean;
@@ -204,7 +203,6 @@ export class DisplaySettings {
   layersVisibility: LayersVisibility;
 
   constructor(data: b.infer<typeof DisplaySettings.schema>) {
-    this.defaultSymbolFont = data.defaultSymbolFont;
     this.grid = new Grid(data.grid);
     this.displayMode = data.displayMode;
     this.showSymbols = data.showSymbols;
@@ -213,7 +211,6 @@ export class DisplaySettings {
   }
 
   static readonly schema = b.struct({
-    defaultSymbolFont: b.string(),
     grid: Grid.schema,
     displayMode: b.nativeEnum(DisplayMode),
     showSymbols: b.bool(),

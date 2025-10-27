@@ -43,10 +43,6 @@ fn parse_display_settings_inner<R: io::BufRead>(
 ) -> Result<DisplaySettings> {
   let mut display_settings = DisplaySettings::default();
 
-  if let Some(default_symbol_font) = attributes.get("default_symbol_font") {
-    display_settings.default_symbol_font = default_symbol_font.to_owned();
-  }
-
   if let Some(display_mode) = attributes.get_parsed("display_mode") {
     display_settings.display_mode = display_mode;
   }
@@ -95,7 +91,6 @@ pub fn save_display_settings_to_vec(display_settings: &DisplaySettings) -> Resul
     .create_element("display_settings")
     .with_attributes([
       ("display_mode", display_settings.display_mode.to_string().as_str()),
-      ("default_symbol_font", display_settings.default_symbol_font.as_str()),
       ("show_symbols", display_settings.show_symbols.to_string().as_str()),
     ])
     .write_inner_content(|writer| {

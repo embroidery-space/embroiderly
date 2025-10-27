@@ -3,7 +3,6 @@ use xsp_parsers::pmaker;
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct DisplaySettings {
-  pub default_symbol_font: String,
   pub grid: Grid,
   pub display_mode: DisplayMode,
   pub show_symbols: bool,
@@ -14,7 +13,6 @@ pub struct DisplaySettings {
 impl Default for DisplaySettings {
   fn default() -> Self {
     Self {
-      default_symbol_font: String::from("Ursasoftware"),
       grid: Grid::default(),
       display_mode: DisplayMode::Solid,
       show_symbols: false,

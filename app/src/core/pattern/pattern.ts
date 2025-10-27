@@ -6,7 +6,7 @@ import { stringify as stringifyUuid } from "uuid";
 import { DisplayMode, DisplaySettings, Grid, LayersVisibility, PaletteSettings } from "./display.ts";
 import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
-import { PaletteItem } from "./palette.ts";
+import { Palette } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
 import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch, SpecialStitchModel } from "./stitches.ts";
 import type { Stitch } from "./stitches.ts";
@@ -55,7 +55,7 @@ export class Pattern extends EventTarget {
 
   #info: PatternInfo;
   #fabric: Fabric;
-  #palette: PaletteItem[];
+  #palette: Palette;
   #fullstitches: FullStitch[];
   #partstitches: PartStitch[];
   #linestitches: LineStitch[];
@@ -75,7 +75,7 @@ export class Pattern extends EventTarget {
 
     this.#info = new PatternInfo(data.info);
     this.#fabric = new Fabric(data.fabric);
-    this.#palette = data.palette.map((item) => new PaletteItem(item));
+    this.#palette = new Palette(data.palette);
     this.#fullstitches = data.fullstitches.map((stitch) => new FullStitch(stitch));
     this.#partstitches = data.partstitches.map((stitch) => new PartStitch(stitch));
     this.#linestitches = data.linestitches.map((stitch) => new LineStitch(stitch));
@@ -94,7 +94,7 @@ export class Pattern extends EventTarget {
 
     info: PatternInfo.schema,
     fabric: Fabric.schema,
-    palette: b.vec(PaletteItem.schema),
+    palette: Palette.schema,
     fullstitches: b.vec(FullStitch.schema),
     partstitches: b.vec(PartStitch.schema),
     linestitches: b.vec(LineStitch.schema),
@@ -133,12 +133,6 @@ export class Pattern extends EventTarget {
 
   get palette() {
     return this.#palette;
-  }
-  addPaletteItem(palitem: PaletteItem, palindex: number) {
-    this.#palette.splice(palindex, 0, palitem);
-  }
-  removePaletteItem(palindex: number) {
-    this.#palette.splice(palindex, 1);
   }
 
   get paletteDisplaySettings() {
@@ -216,10 +210,6 @@ export class Pattern extends EventTarget {
     this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: stitch }));
   }
 
-  get defaultSymbolFont() {
-    return this.#displaySettings.defaultSymbolFont;
-  }
-
   get displayMode() {
     return this.#displaySettings.displayMode;
   }
@@ -253,9 +243,9 @@ export class Pattern extends EventTarget {
   }
 
   get allSymbolFonts() {
-    const fonts = new Set<string>([this.defaultSymbolFont]);
-    for (const palitem of this.palette) {
-      if (palitem.symbolFont) fonts.add(palitem.symbolFont);
+    const fonts = new Set<string>();
+    for (const palitem of this.palette.items) {
+      if (palitem.symbol?.font) fonts.add(palitem.symbol.font);
     }
     return Array.from(fonts);
   }

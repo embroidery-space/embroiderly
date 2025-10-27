@@ -24,5 +24,9 @@ anyhow = { workspace = true }
 xsp-parsers = { workspace = true }
 
 # Other
+alphanumeric-sort = { workspace = true }
 ordered-float = { workspace = true }
 uuid = { workspace = true }
+
+[dev-dependencies]
+rstest = { workspace = true }

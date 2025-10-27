@@ -1,5 +1,5 @@
 import { Bounds, Container, Point, Rectangle } from "pixi.js";
-import type { ContainerChild, DestroyOptions, IRenderLayer, FederatedPointerEvent } from "pixi.js";
+import type { ContainerChild, DestroyOptions, FederatedPointerEvent } from "pixi.js";
 
 import { MIN_SCALE, MAX_SCALE, DEFAULT_CONTAINER_OPTIONS } from "./constants.ts";
 import { getMouseButtons, MODIFIERS } from "./utils/index.ts";
@@ -140,7 +140,7 @@ export class PatternViewport extends Container {
   }
 
   // Override the `addChild` method to add children to the content container, but not the viewport itself.
-  override addChild<U extends (ContainerChild | IRenderLayer)[]>(...children: U): U[0] {
+  override addChild<U extends ContainerChild[]>(...children: U): U[0] {
     return this.content.addChild(...children);
   }
 

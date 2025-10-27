@@ -3,6 +3,8 @@ use embroiderly_pattern::{
   DisplayMode, Fabric, Grid, LayersVisibility, PaletteSettings, PdfExportOptions, ReferenceImageSettings,
 };
 
+use crate::core::actions::SortPaletteBy;
+
 /// Represents all telemetry events that can occur in the application.
 pub enum AppEvent {
   AppStarted,
@@ -70,6 +72,12 @@ pub enum AppEvent {
   PaletteDisplaySettingsUpdated {
     settings: PaletteSettings,
   },
+  PaletteSorted {
+    sort_by: SortPaletteBy,
+    palette_size: usize,
+    blends_number: usize,
+    used_palette_brands: Vec<String>,
+  },
 
   FabricUpdated {
     fabric: Fabric,
@@ -86,6 +94,15 @@ pub enum AppEvent {
   },
   LayersVisibilityChanged {
     visibility: LayersVisibility,
+  },
+
+  PalettesImported {
+    total_files: usize,
+    failed_files: usize,
+  },
+  SymbolFontsImported {
+    total_files: usize,
+    failed_files: usize,
   },
 }
 
@@ -110,6 +127,7 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
       AppEvent::PaletteItemAdded { .. } => "palette_item_added",
       AppEvent::PaletteItemRemoved { .. } => "palette_item_removed",
       AppEvent::PaletteDisplaySettingsUpdated { .. } => "palette_display_settings_updated",
+      AppEvent::PaletteSorted { .. } => "palette_sorted",
 
       AppEvent::FabricUpdated { .. } => "fabric_updated",
       AppEvent::GridUpdated { .. } => "grid_updated",
@@ -117,6 +135,9 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
       AppEvent::DisplayModeChanged { .. } => "display_mode_changed",
       AppEvent::SymbolsVisibilityChanged { .. } => "symbols_visibility_changed",
       AppEvent::LayersVisibilityChanged { .. } => "layers_visibility_changed",
+
+      AppEvent::PalettesImported { .. } => "palettes_imported",
+      AppEvent::SymbolFontsImported { .. } => "symbol_fonts_imported",
     }
   }
 
@@ -237,6 +258,17 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("show_color_numbers", json!(settings.show_color_numbers)),
         ("show_color_names", json!(settings.show_color_names)),
       ],
+      AppEvent::PaletteSorted {
+        sort_by,
+        palette_size,
+        blends_number,
+        used_palette_brands,
+      } => vec![
+        ("sort_by", json!(sort_by)),
+        ("palette_size", json!(palette_size)),
+        ("blends_number", json!(blends_number)),
+        ("used_palette_brands", json!(used_palette_brands)),
+      ],
 
       AppEvent::FabricUpdated { fabric } => vec![
         (
@@ -270,6 +302,15 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("special_stitches_visible", json!(visibility.specialstitches)),
         ("grid_visible", json!(visibility.grid)),
         ("rulers_visible", json!(visibility.rulers)),
+      ],
+
+      AppEvent::PalettesImported { total_files, failed_files } => vec![
+        ("total_files", json!(total_files)),
+        ("failed_files", json!(failed_files)),
+      ],
+      AppEvent::SymbolFontsImported { total_files, failed_files } => vec![
+        ("total_files", json!(total_files)),
+        ("failed_files", json!(failed_files)),
       ],
 
       _ => vec![],

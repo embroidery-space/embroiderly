@@ -10,5 +10,8 @@ export default defineConfig({
     environment: "jsdom",
     bail: process.env.GITHUB_ACTIONS ? 1 : 0,
     reporters: process.env.GITHUB_ACTIONS ? ["verbose", "github-actions"] : ["verbose"],
+    coverage: {
+      reporter: process.env.GITHUB_ACTIONS ? ["text", "lcov"] : ["text"],
+    },
   },
 });

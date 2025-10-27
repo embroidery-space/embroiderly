@@ -1,5 +1,5 @@
 <template>
-  <PaletteSection :title="$t('label-palette-display-options')">
+  <PanelSection :title="$t('label-palette-display-options')">
     <div class="flex flex-col gap-y-2 p-2">
       <UFormField :label="$t('label-display-options-columns-number')" class="w-full">
         <UInputNumber
@@ -51,7 +51,7 @@
         />
       </div>
     </div>
-  </PaletteSection>
+  </PanelSection>
 </template>
 
 <script setup lang="ts">

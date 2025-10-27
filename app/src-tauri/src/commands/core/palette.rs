@@ -1,18 +1,13 @@
-use std::path::{Path, PathBuf};
-
-use embroiderly_pattern::{BrandPaletteItem, PaletteItem, PaletteSettings};
-use rayon::prelude::*;
-use tauri::Manager as _;
+use embroiderly_pattern::{PaletteItem, PaletteSettings};
 use tauri_plugin_posthog::PostHogExt as _;
 
 use crate::core::actions::{
-  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, UpdatePaletteDisplaySettingsAction,
+  Action as _, AddPaletteItemAction, RemovePaletteItemsAction, ReorderPaletteItemsAction, SetSymbolAction,
+  SetSymbolData, SortPaletteAction, SortPaletteBy, UpdatePaletteDisplaySettingsAction,
 };
 use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
-use crate::utils::palette::is_palette_file;
-use crate::utils::path::app_data_dir;
 use crate::vendor::telemetry::AppEvent;
 
 #[tauri::command]
@@ -38,7 +33,7 @@ pub fn add_palette_item<R: tauri::Runtime>(
     action.perform(&window, patproj)?;
 
     let mut history = history.write().unwrap();
-    history.get_mut(&pattern_id).push(Box::new(action));
+    history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
     app_handle.capture_event(event);
   }
@@ -67,7 +62,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
       patproj
         .pattern
         .palette
-        .get(palindex as usize)
+        .get(palindex)
         .map(|palitem| AppEvent::PaletteItemRemoved {
           brand: palitem.brand.clone(),
           is_blend: palitem.is_blend(),
@@ -80,7 +75,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_batch(events);
 
@@ -98,176 +93,94 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
   let (pattern_id, settings) = parse_command_payload!(request, PaletteSettings);
 
   let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  // Only update if settings have actually changed.
+  if patproj.display_settings.palette_settings == settings {
+    return Ok(());
+  };
+
   let action = UpdatePaletteDisplaySettingsAction::new(settings);
-  action.perform(&window, patterns.get_mut_pattern_by_id(&pattern_id).unwrap())?;
+  action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_event(AppEvent::PaletteDisplaySettingsUpdated { settings });
 
   Ok(())
 }
 
-#[derive(serde::Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ImportPaletteFilesResponse {
-  pub failed_files: Vec<String>,
-}
-
 #[tauri::command]
-pub fn import_palettes<R: tauri::Runtime>(
-  paths: Vec<String>,
+pub fn sort_palette_by<R: tauri::Runtime>(
+  sort_by: SortPaletteBy,
   app_handle: tauri::AppHandle<R>,
-) -> Result<ImportPaletteFilesResponse> {
-  let palettes_dir = app_data_dir(&app_handle)?.join("palettes");
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  let (pattern_id,) = parse_command_payload!(request);
 
-  // Ensure the palettes directory exists.
-  std::fs::create_dir_all(&palettes_dir)?;
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
-  // Collect all palette files from the provided paths.
-  let mut palette_files = Vec::new();
-  for entry in paths.into_iter().map(PathBuf::from) {
-    if entry.is_file() {
-      palette_files.push(entry);
-    } else if entry.is_dir() {
-      palette_files.extend(
-        walkdir::WalkDir::new(entry)
-          .into_iter()
-          .filter_map(|entry| entry.ok())
-          .filter(|entry| entry.file_type().is_file() && is_palette_file(entry.path()))
-          .map(|entry| entry.path().to_path_buf()),
-      );
-    }
-  }
+  let action = SortPaletteAction::new(sort_by);
+  action.perform(&window, patproj)?;
 
-  // Parse and save palettes in parallel.
-  let failed_files = palette_files
-    .into_par_iter()
-    .filter_map(|file_path| match parse_and_save_palette(&file_path, &palettes_dir) {
-      Ok(_) => None,
-      Err(_) => Some(file_path.to_string_lossy().to_string()),
-    })
-    .collect();
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
-  Ok(ImportPaletteFilesResponse { failed_files })
-}
-
-fn parse_and_save_palette(file_path: &Path, palettes_dir: &Path) -> anyhow::Result<()> {
-  let extension = file_path
-    .extension()
-    .and_then(|ext| ext.to_str())
-    .ok_or_else(|| anyhow::anyhow!("Invalid palette file extension"))?;
-
-  // Parse palette based on file extension.
-  let palette: Vec<BrandPaletteItem> = match extension.to_ascii_lowercase().as_str() {
-    "master" | "user" => xsp_parsers::pmaker::parse_palette(file_path)
-      .map_err(|e| anyhow::anyhow!("Failed to parse Pattern Maker palette: {e}"))?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-    "threads" => xsp_parsers::ursa::parse_palette(file_path)
-      .map_err(|e| anyhow::anyhow!("Failed to parse UrsaSoftware palette: {e}"))?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-    "rng" => xsp_parsers::xspro::parse_palette(file_path)
-      .map_err(|e| anyhow::anyhow!("Failed to parse XSPro Platinum palette: {e}"))?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-    "json" => {
-      let content = std::fs::read_to_string(file_path)?;
-      serde_json::from_str::<Vec<BrandPaletteItem>>(&content)
-        .map_err(|e| anyhow::anyhow!("Failed to parse JSON palette: {e}"))?
-    }
-    _ => return Err(anyhow::anyhow!("Unsupported palette file format")),
-  };
-
-  // Get palette name from file stem.
-  let palette_name = file_path
-    .file_stem()
-    .and_then(|name| name.to_str())
-    .ok_or_else(|| anyhow::anyhow!("Invalid palette file name"))?;
-
-  // Check for name conflicts.
-  let output_path = palettes_dir.join(format!("{palette_name}.json"));
-  if output_path.exists() {
-    return Err(anyhow::anyhow!(r#"Palette with name "{palette_name}" already exists"#));
-  }
-
-  // Save palette as JSON.
-  let json_content = serde_json::to_string(&palette)?;
-  std::fs::write(&output_path, json_content)?;
+  app_handle.capture_event(AppEvent::PaletteSorted {
+    sort_by,
+    palette_size: patproj.pattern.palette.len(),
+    blends_number: patproj.pattern.palette.blends_number(),
+    used_palette_brands: patproj.pattern.palette.used_brands(),
+  });
 
   Ok(())
 }
 
-#[derive(serde::Serialize)]
-pub struct PalettesListResponse {
-  pub system: Vec<String>,
-  pub custom: Vec<String>,
+#[tauri::command]
+pub fn reorder_palette_items<R: tauri::Runtime>(
+  old_position: u32,
+  new_position: u32,
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  let (pattern_id,) = parse_command_payload!(request);
+
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  let action = ReorderPaletteItemsAction::new(old_position, new_position);
+  action.perform(&window, patproj)?;
+
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
+
+  Ok(())
 }
 
 #[tauri::command]
-pub fn get_palettes_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> Result<PalettesListResponse> {
-  let mut system = Vec::new();
-  let mut custom = Vec::new();
+pub fn set_symbol<R: tauri::Runtime>(
+  request: tauri::ipc::Request<'_>,
+  window: tauri::WebviewWindow<R>,
+  history: tauri::State<HistoryState<R>>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  let (pattern_id, SetSymbolData { palindex, symbol }) = parse_command_payload!(request, SetSymbolData);
 
-  // Get system palettes from resources.
-  let resource_path = app_handle
-    .path()
-    .resolve("resources/palettes", tauri::path::BaseDirectory::Resource)?;
-  if let Ok(entries) = std::fs::read_dir(resource_path) {
-    for entry in entries.flatten() {
-      if let Some(name) = entry.path().file_stem() {
-        system.push(name.to_string_lossy().to_string());
-      }
-    }
-  }
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
-  // Get custom palettes from app data directory.
-  let palettes_dir = app_data_dir(&app_handle)?.join("palettes");
-  if let Ok(entries) = std::fs::read_dir(palettes_dir) {
-    for entry in entries.flatten() {
-      if let Some(name) = entry.path().file_stem() {
-        custom.push(name.to_string_lossy().to_string());
-      }
-    }
-  }
+  let action = SetSymbolAction::new(palindex, symbol);
+  action.perform(&window, patproj)?;
 
-  system.sort();
-  custom.sort();
+  let mut history = history.write().unwrap();
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
-  Ok(PalettesListResponse { system, custom })
-}
-
-#[derive(serde::Deserialize)]
-pub enum PaletteGroup {
-  #[serde(rename = "system")]
-  System,
-  #[serde(rename = "custom")]
-  Custom,
-}
-
-#[tauri::command]
-pub fn load_palette<R: tauri::Runtime>(
-  palette_group: PaletteGroup,
-  palette_name: String,
-  app_handle: tauri::AppHandle<R>,
-) -> Result<Vec<u8>> {
-  let palette_path = match palette_group {
-    PaletteGroup::System => app_handle.path().resolve(
-      format!("resources/palettes/{}.json", palette_name),
-      tauri::path::BaseDirectory::Resource,
-    )?,
-    PaletteGroup::Custom => app_data_dir(&app_handle)?
-      .join("palettes")
-      .join(format!("{}.json", palette_name)),
-  };
-  let palette: Vec<BrandPaletteItem> = {
-    let content = std::fs::read_to_string(palette_path)?;
-    serde_json::from_str(&content).map_err(|e| anyhow::anyhow!("Failed to parse palette JSON: {}", e))?
-  };
-  Ok(borsh::to_vec(&palette)?)
+  Ok(())
 }

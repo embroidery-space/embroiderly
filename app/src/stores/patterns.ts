@@ -22,6 +22,7 @@ import {
   DisplayMode,
   PaletteSettings,
   PaletteItem,
+  SortPaletteBy,
   Fabric,
   Grid,
   PdfExportOptions,
@@ -29,6 +30,8 @@ import {
   ReferenceImage,
   ReferenceImageSettings,
   deserializeStitches,
+  SetSymbolData,
+  Symbol,
 } from "~/core/pattern/";
 import type { Stitch } from "~/core/pattern/";
 import {
@@ -61,6 +64,7 @@ export const usePatternsStore = defineStore(
 
     const fluent = useFluent();
     const confirm = useConfirm();
+    const toast = useToast();
     const filePicker = useFilePicker();
 
     const appStateStore = useAppStateStore();
@@ -145,13 +149,18 @@ export const usePatternsStore = defineStore(
             acceptLabel: fluent.$t("label-ok"),
             rejectLabel: null,
           });
-          return;
+        } else {
+          toast.add({ color: "error", title: fluent.$t("message-pattern-save-failed"), duration: 3000 });
         }
-        throw error;
       } finally {
         loading.value = false;
       }
     }
+    appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
+      if (patternId === pattern.value?.id) {
+        toast.add({ type: "background", color: "success", title: fluent.$t("message-pattern-saved"), duration: 3000 });
+      }
+    });
 
     async function openExportModal(ext: "oxs" | "pdf") {
       if (!pattern.value) return;
@@ -194,6 +203,9 @@ export const usePatternsStore = defineStore(
       try {
         loading.value = true;
         await PatternApi.exportPattern(pattern.value.id, filePath, options);
+        toast.add({ color: "success", title: fluent.$t("message-pattern-exported"), duration: 3000 });
+      } catch {
+        toast.add({ color: "error", title: fluent.$t("message-pattern-export-failed"), duration: 3000 });
       } finally {
         loading.value = false;
       }
@@ -306,7 +318,7 @@ export const usePatternsStore = defineStore(
     appWindow.listen<string>(PatternEvent.AddPaletteItem, ({ payload }) => {
       if (!pattern.value) return;
       const { palitem, palindex } = AddedPaletteItemData.deserialize(payload);
-      pattern.value.addPaletteItem(palitem, palindex);
+      pattern.value.palette.insert(palindex, palitem);
       triggerRef(pattern);
     });
 
@@ -317,23 +329,54 @@ export const usePatternsStore = defineStore(
     appWindow.listen<number[]>(PatternEvent.RemovePaletteItem, ({ payload: palindexes }) => {
       if (!pattern.value) return;
       for (const palindex of palindexes.reverse()) {
-        pattern.value.removePaletteItem(palindex);
-        if (appStateStore.selectedPaletteItemIndexes.includes(palindex)) appStateStore.selectedPaletteItemIndexes = [];
+        pattern.value.palette.remove(palindex);
+        if (appStateStore.selectedPaletteItemIndex === palindex) appStateStore.selectedPaletteItemIndex = undefined;
       }
       triggerRef(pattern);
     });
 
-    async function updatePaletteDisplaySettings(settings: PaletteSettings, local = false) {
+    async function updatePaletteDisplaySettings(settings: PaletteSettings) {
       if (!pattern.value) return;
-      if (local) {
-        pattern.value.paletteDisplaySettings = settings;
-        triggerRef(pattern);
-      } else await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, settings);
+      await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, settings);
     }
     appWindow.listen<string>(PatternEvent.UpdatePaletteDisplaySettings, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.paletteDisplaySettings = PaletteSettings.deserialize(payload);
       triggerRef(pattern);
+    });
+
+    async function sortPaletteBy(sortBy: SortPaletteBy) {
+      if (!pattern.value) return;
+      await PaletteApi.sortPaletteBy(pattern.value.id, sortBy);
+    }
+    appWindow.listen<number[]>("palette:sort", ({ payload: positions }) => {
+      if (!pattern.value) return;
+      pattern.value.palette.positions = positions;
+      triggerRef(pattern);
+    });
+
+    async function reorderPaletteItems(oldPosition: number, newPosition: number) {
+      if (!pattern.value) return;
+      await PaletteApi.reorderPaletteItems(pattern.value.id, oldPosition, newPosition);
+    }
+    appWindow.listen<number[]>("palette:reorder", ({ payload: positions }) => {
+      if (!pattern.value) return;
+      pattern.value.palette.positions = positions;
+      triggerRef(pattern);
+    });
+
+    async function setPaletteItemSymbol(palindex: number, symbol?: Symbol) {
+      if (!pattern.value) return;
+      await PaletteApi.setSymbol(pattern.value.id, palindex, symbol);
+    }
+    appWindow.listen<string>("palette:set_symbol", ({ payload }) => {
+      if (!pattern.value) return;
+      const { palindex, symbol } = SetSymbolData.deserialize(payload);
+      const item = pattern.value.palette.get(palindex);
+      if (item) {
+        item.symbol = symbol;
+        triggerRef(pattern);
+      }
     });
 
     function addStitch(stitch: Stitch) {
@@ -443,6 +486,9 @@ export const usePatternsStore = defineStore(
       addPaletteItem,
       removePaletteItem,
       updatePaletteDisplaySettings,
+      sortPaletteBy,
+      reorderPaletteItems,
+      setPaletteItemSymbol,
       addStitch,
       removeStitch,
       setDisplayMode,

@@ -27,6 +27,30 @@ struct Transaction<R: tauri::Runtime> {
 }
 
 impl<R: tauri::Runtime> History<R> {
+  pub fn new() -> Self {
+    Default::default()
+  }
+
+  /// Returns the number of items in the undo stack.
+  pub fn undo_stack_len(&self) -> usize {
+    self.undo_stack.len()
+  }
+
+  /// Returns the number of items in the redo stack.
+  pub fn redo_stack_len(&self) -> usize {
+    self.redo_stack.len()
+  }
+
+  /// Returns whether the undo stack is empty.
+  pub fn undo_stack_is_empty(&self) -> bool {
+    self.undo_stack.is_empty()
+  }
+
+  /// Returns whether the redo stack is empty.
+  pub fn redo_stack_is_empty(&self) -> bool {
+    self.redo_stack.is_empty()
+  }
+
   /// Creates a new transaction.
   /// After calling this method, all actions pushed to the history will be part of this transaction until `end_transaction` is called.
   pub fn start_transaction(&mut self) {

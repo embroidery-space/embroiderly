@@ -18,7 +18,7 @@ fn create_writer() -> Writer<std::io::Cursor<Vec<u8>>> {
 #[test]
 fn reads_and_writes_display_settings() {
   let xml = r#"<?xml version="1.0" encoding="UTF-8"?>
-<display_settings display_mode="Solid" default_symbol_font="Ursasoftware" show_symbols="false">
+<display_settings display_mode="Solid" show_symbols="false">
   <palette_settings columns_number="1" color_only="false" show_stitch_symbols="true" stitch_symbols_on_contrast_background="true" show_color_brands="true" show_color_names="true" show_color_numbers="true"/>
   <grid major_lines_interval="10">
     <minor_lines color="C8C8C8" thickness="0.072"/>

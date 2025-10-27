@@ -22,7 +22,7 @@ pub fn add_stitch<R: tauri::Runtime>(
     action.perform(&window, patproj)?;
 
     let mut history = history.write().unwrap();
-    history.get_mut(&pattern_id).push(Box::new(action));
+    history.get_mut(&pattern_id).unwrap().push(Box::new(action));
   }
 
   Ok(())
@@ -47,7 +47,7 @@ pub fn remove_stitch<R: tauri::Runtime>(
     action.perform(&window, patproj)?;
 
     let mut history = history.write().unwrap();
-    history.get_mut(&pattern_id).push(Box::new(action));
+    history.get_mut(&pattern_id).unwrap().push(Box::new(action));
   }
 
   Ok(())
