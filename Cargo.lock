@@ -974,9 +974,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.5.49"
+version = "4.5.50"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f4512b90fa68d3a9932cea5184017c5d200f5921df706d45e853537dea51508f"
+checksum = "0c2cfd7bf8a6017ddaa4e32ffe7403d547790db06bd171c1c53926faab501623"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -984,9 +984,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.5.49"
+version = "4.5.50"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0025e98baa12e766c67ba13ff4695a887a1eba19569aad00a472546795bd6730"
+checksum = "0a4c05b9e80c5ccd3a7ef080ad7b6ba7d6fc00a985b8b157197075677c82c7a0"
 dependencies = [
  "anstyle",
  "clap_lex",
@@ -1810,7 +1810,7 @@ dependencies = [
  "sentry",
  "serde_json",
  "thiserror 2.0.17",
- "typst",
+ "typst 0.14.0",
  "typst-as-lib",
  "typst-pdf",
 ]
@@ -6762,6 +6762,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
 
 [[package]]
+name = "svg2pdf"
+version = "0.12.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5014c9dadcf318fb7ef8c16438e95abcc9de1ae24d60d5bccc64c55100c50364"
+dependencies = [
+ "fontdb 0.21.0",
+ "image",
+ "log",
+ "miniz_oxide",
+ "once_cell",
+ "pdf-writer",
+ "resvg",
+ "siphasher 1.0.1",
+ "subsetter",
+ "tiny-skia",
+ "ttf-parser 0.24.1",
+ "usvg 0.43.0",
+]
+
+[[package]]
 name = "svgtypes"
 version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6964,9 +6984,9 @@ checksum = "61c41af27dd6d1e27b1b16b489db798443478cef1f06a660c96db617ba5de3b1"
 
 [[package]]
 name = "tauri"
-version = "2.9.0"
+version = "2.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f07c6590706b2fc0ab287b041cf5ce9c435b3850bdae5571e19d9d27584e89d"
+checksum = "c9871670c6711f50fddd4e20350be6b9dd6e6c2b5d77d8ee8900eb0d58cd837a"
 dependencies = [
  "anyhow",
  "bytes",
@@ -7007,7 +7027,6 @@ dependencies = [
  "tokio",
  "tray-icon",
  "url",
- "urlpattern",
  "webkit2gtk",
  "webview2-com",
  "window-vibrancy",
@@ -7016,9 +7035,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-build"
-version = "2.5.0"
+version = "2.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f71be1f494b683ac439e6d61c16ab5c472c6f9c6ee78995b29556d9067c021a1"
+checksum = "a924b6c50fe83193f0f8b14072afa7c25b7a72752a2a73d9549b463f5fe91a38"
 dependencies = [
  "anyhow",
  "cargo_toml",
@@ -7079,9 +7098,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin"
-version = "2.5.0"
+version = "2.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d7ce9aab979296b2f91e6fbf154207c2e3512b12ddca0b24bfa0e0cde6b2976"
+checksum = "076c78a474a7247c90cad0b6e87e593c4c620ed4efdb79cbe0214f0021f6c39d"
 dependencies = [
  "anyhow",
  "glob",
@@ -7096,9 +7115,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-clipboard-manager"
-version = "2.3.0"
+version = "2.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "adddd9e9275b20e77af3061d100a25a884cced3c4c9ef680bd94dd0f7e26c1ca"
+checksum = "206dc20af4ed210748ba945c2774e60fd0acd52b9a73a028402caf809e9b6ecf"
 dependencies = [
  "arboard",
  "log",
@@ -7111,9 +7130,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-dialog"
-version = "2.4.0"
+version = "2.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0beee42a4002bc695550599b011728d9dfabf82f767f134754ed6655e434824e"
+checksum = "313f8138692ddc4a2127c4c9607d616a46f5c042e77b3722450866da0aad2f19"
 dependencies = [
  "log",
  "raw-window-handle",
@@ -7129,9 +7148,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-fs"
-version = "2.4.2"
+version = "2.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "315784ec4be45e90a987687bae7235e6be3d6e9e350d2b75c16b8a4bf22c1db7"
+checksum = "47df422695255ecbe7bac7012440eddaeefd026656171eac9559f5243d3230d9"
 dependencies = [
  "anyhow",
  "dunce",
@@ -7160,9 +7179,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-opener"
-version = "2.5.0"
+version = "2.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "786156aa8e89e03d271fbd3fe642207da8e65f3c961baa9e2930f332bf80a1f5"
+checksum = "c26b72571d25dee25667940027114e60f569fc3974f8cefbe50c2cbc5fd65e3b"
 dependencies = [
  "dunce",
  "glob",
@@ -7182,9 +7201,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-os"
-version = "2.3.1"
+version = "2.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77a1c77ebf6f20417ab2a74e8c310820ba52151406d0c80fbcea7df232e3f6ba"
+checksum = "d8f08346c8deb39e96f86973da0e2d76cbb933d7ac9b750f6dc4daf955a6f997"
 dependencies = [
  "gethostname 1.0.2",
  "log",
@@ -7242,9 +7261,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-process"
-version = "2.3.0"
+version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7461c622a5ea00eb9cd9f7a08dbd3bf79484499fd5c21aa2964677f64ca651ab"
+checksum = "d55511a7bf6cd70c8767b02c97bf8134fa434daf3926cfc1be0a0f94132d165a"
 dependencies = [
  "tauri",
  "tauri-plugin",
@@ -7262,9 +7281,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-shell"
-version = "2.3.1"
+version = "2.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "54777d0c0d8add34eea3ced84378619ef5b97996bd967d3038c668feefd21071"
+checksum = "c374b6db45f2a8a304f0273a15080d98c70cde86178855fc24653ba657a1144c"
 dependencies = [
  "encoding_rs",
  "log",
@@ -7315,9 +7334,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-runtime"
-version = "2.9.0"
+version = "2.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3367f0b47df90e9195cd9f04a56b0055a2cba45aa11923c6c253d748778176fc"
+checksum = "9368f09358496f2229313fccb37682ad116b7f46fa76981efe116994a0628926"
 dependencies = [
  "cookie",
  "dpi",
@@ -7340,9 +7359,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-runtime-wry"
-version = "2.9.0"
+version = "2.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "80d91d29ca680c545364cf75ba2f2e3c7ea2ab6376bfa3be26b56fa2463a5b5e"
+checksum = "929f5df216f5c02a9e894554401bcdab6eec3e39ec6a4a7731c7067fc8688a93"
 dependencies = [
  "gtk",
  "http 1.3.1",
@@ -7992,15 +8011,35 @@ checksum = "140458bc8c72b014266f8ea5fad57165c8159845105eea8949c8954b2a8f49f4"
 dependencies = [
  "comemo 0.4.0",
  "ecow",
- "typst-eval",
- "typst-html",
- "typst-layout",
+ "typst-eval 0.13.1",
+ "typst-html 0.13.1",
+ "typst-layout 0.13.1",
  "typst-library 0.13.1",
  "typst-macros 0.13.1",
- "typst-realize",
+ "typst-realize 0.13.1",
  "typst-syntax 0.13.1",
  "typst-timing 0.13.1",
  "typst-utils 0.13.1",
+]
+
+[[package]]
+name = "typst"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2d9198018d9acb075f27abe70036e6e24302156c37f0142ea18b5e813ecb8172"
+dependencies = [
+ "comemo 0.5.0",
+ "ecow",
+ "rustc-hash",
+ "typst-eval 0.14.0",
+ "typst-html 0.14.0",
+ "typst-layout 0.14.0",
+ "typst-library 0.14.0",
+ "typst-macros 0.14.0",
+ "typst-realize 0.14.0",
+ "typst-syntax 0.14.0",
+ "typst-timing 0.14.0",
+ "typst-utils 0.14.0",
 ]
 
 [[package]]
@@ -8014,7 +8053,7 @@ dependencies = [
  "dirs",
  "ecow",
  "thiserror 2.0.17",
- "typst",
+ "typst 0.13.1",
  "typst-kit",
 ]
 
@@ -8051,6 +8090,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "typst-eval"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3bb8965a12371f0ff325dedac06d14fa9dd0d4fa0588034bc99802da7af9362f"
+dependencies = [
+ "comemo 0.5.0",
+ "ecow",
+ "indexmap 2.9.0",
+ "rustc-hash",
+ "stacker",
+ "toml 0.8.23",
+ "typst-library 0.14.0",
+ "typst-macros 0.14.0",
+ "typst-syntax 0.14.0",
+ "typst-timing 0.14.0",
+ "typst-utils 0.14.0",
+ "unicode-segmentation",
+]
+
+[[package]]
 name = "typst-html"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8060,10 +8119,31 @@ dependencies = [
  "ecow",
  "typst-library 0.13.1",
  "typst-macros 0.13.1",
- "typst-svg",
+ "typst-svg 0.13.1",
  "typst-syntax 0.13.1",
  "typst-timing 0.13.1",
  "typst-utils 0.13.1",
+]
+
+[[package]]
+name = "typst-html"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "67d6858f22690a9d105ff2ea1ea38dbf345e1610e30f947d7c3f79da27e1dd0b"
+dependencies = [
+ "bumpalo",
+ "comemo 0.5.0",
+ "ecow",
+ "palette",
+ "rustc-hash",
+ "time",
+ "typst-assets 0.14.0",
+ "typst-library 0.14.0",
+ "typst-macros 0.14.0",
+ "typst-svg 0.14.0",
+ "typst-syntax 0.14.0",
+ "typst-timing 0.14.0",
+ "typst-utils 0.14.0",
 ]
 
 [[package]]
@@ -8109,6 +8189,42 @@ dependencies = [
  "typst-syntax 0.13.1",
  "typst-timing 0.13.1",
  "typst-utils 0.13.1",
+ "unicode-bidi",
+ "unicode-math-class",
+ "unicode-script",
+ "unicode-segmentation",
+]
+
+[[package]]
+name = "typst-layout"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "80e80dfe619a391c79efa7eafbb2530fcc7090daead435a86c2eb5d53c3095ae"
+dependencies = [
+ "az",
+ "bumpalo",
+ "codex 0.2.0",
+ "comemo 0.5.0",
+ "ecow",
+ "either",
+ "hypher",
+ "icu_properties 1.5.1",
+ "icu_provider 1.5.0",
+ "icu_provider_adapters",
+ "icu_provider_blob",
+ "icu_segmenter",
+ "kurbo 0.12.0",
+ "memchr",
+ "rustc-hash",
+ "rustybuzz 0.20.1",
+ "smallvec",
+ "ttf-parser 0.25.1",
+ "typst-assets 0.14.0",
+ "typst-library 0.14.0",
+ "typst-macros 0.14.0",
+ "typst-syntax 0.14.0",
+ "typst-timing 0.14.0",
+ "typst-utils 0.14.0",
  "unicode-bidi",
  "unicode-math-class",
  "unicode-script",
@@ -8283,13 +8399,16 @@ dependencies = [
  "krilla-svg",
  "rustc-hash",
  "serde",
- "smallvec",
- "typst-assets 0.14.0",
- "typst-library 0.14.0",
- "typst-macros 0.14.0",
- "typst-syntax 0.14.0",
- "typst-timing 0.14.0",
- "typst-utils 0.14.0",
+ "subsetter",
+ "svg2pdf",
+ "ttf-parser 0.24.1",
+ "typst-assets 0.13.1",
+ "typst-library 0.13.1",
+ "typst-macros 0.13.1",
+ "typst-syntax 0.13.1",
+ "typst-timing 0.13.1",
+ "typst-utils 0.13.1",
+ "xmp-writer",
 ]
 
 [[package]]
@@ -8311,6 +8430,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "typst-realize"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a2725822b4c5a1a9d7aa46708f7a996a4cb1b15470f077c7ba3e788fb95e495d"
+dependencies = [
+ "arrayvec",
+ "bumpalo",
+ "comemo 0.5.0",
+ "ecow",
+ "regex",
+ "typst-library 0.14.0",
+ "typst-macros 0.14.0",
+ "typst-syntax 0.14.0",
+ "typst-timing 0.14.0",
+ "typst-utils 0.14.0",
+]
+
+[[package]]
 name = "typst-svg"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8326,6 +8463,30 @@ dependencies = [
  "typst-macros 0.13.1",
  "typst-timing 0.13.1",
  "typst-utils 0.13.1",
+ "xmlparser",
+ "xmlwriter",
+]
+
+[[package]]
+name = "typst-svg"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b53718b9b8f4b4e2454600084eca155530ce9d30cb62fed0799671b8044e40fc"
+dependencies = [
+ "base64 0.22.1",
+ "comemo 0.5.0",
+ "ecow",
+ "flate2",
+ "hayro",
+ "hayro-svg",
+ "image",
+ "rustc-hash",
+ "ttf-parser 0.25.1",
+ "typst-assets 0.14.0",
+ "typst-library 0.14.0",
+ "typst-macros 0.14.0",
+ "typst-timing 0.14.0",
+ "typst-utils 0.14.0",
  "xmlparser",
  "xmlwriter",
 ]
