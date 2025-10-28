@@ -18,17 +18,17 @@ split-debuginfo = "packed"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.0", features = ["config-json5"] }
+tauri = { version = "2.9.1", features = ["config-json5"] }
 tauri-build = { version = "2.4.1", features = ["config-json5"] }
-tauri-plugin = { version = "2.5.0", features = ["build"] }
+tauri-plugin = { version = "2.5.1", features = ["build"] }
 ## Official Tauri plugins
-tauri-plugin-clipboard-manager = "2.3.0"
-tauri-plugin-dialog = "2.4.0"
+tauri-plugin-clipboard-manager = "2.3.2"
+tauri-plugin-dialog = "2.4.2"
 tauri-plugin-fs = "2.0.3"
-tauri-plugin-opener = "2.5.0"
-tauri-plugin-os = "2.3.1"
-tauri-plugin-process = "2.3.0"
-tauri-plugin-shell = "2.3.1"
+tauri-plugin-opener = "2.5.2"
+tauri-plugin-os = "2.3.2"
+tauri-plugin-process = "2.3.1"
+tauri-plugin-shell = "2.3.3"
 tauri-plugin-updater = "2.9.0"
 ## Third-party Tauri plugins
 tauri-plugin-prevent-default = "3.0.3"
@@ -55,8 +55,8 @@ font-kit = "0.14.3"
 ttf-parser = "0.25.1"
 
 # Typst
-typst = "0.13.1"
-typst-pdf = "0.13.1"
+typst = "0.14.0"
+typst-pdf = "0.14.0"
 ## Third-party Typst libraries
 typst-as-lib = "0.15.0"
 
@@ -76,7 +76,7 @@ base64 = "0.22.1"
 borsh = { version = "1.5.7", features = ["derive"] }
 
 # CLI
-clap = { version = "4.5.49", default-features = false, features = [
+clap = { version = "4.5.50", default-features = false, features = [
   "std",
   "derive",
 ] }
