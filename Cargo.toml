@@ -58,7 +58,7 @@ ttf-parser = "0.25.1"
 typst = "0.14.0"
 typst-pdf = "0.14.0"
 ## Third-party Typst libraries
-typst-as-lib = "0.14.4"
+typst-as-lib = "0.15.0"
 
 # Image processing
 image = "0.25.8"
