@@ -47,7 +47,7 @@
       </UDropdownMenu>
     </div>
 
-    <div class="flex items-center gap-2">
+    <div data-tauri-drag-region class="flex items-center gap-2">
       <template v-if="patternsStore.pattern !== undefined">
         <ToolButton
           :label="$t('label-undo')"
