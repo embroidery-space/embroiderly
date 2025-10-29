@@ -21,11 +21,9 @@ class PatternEditorPage {
     await this.fileMenuButton.click();
 
     // Click the _Create_ menu item.
-    await this.fileCreateMenuItem.waitForDisplayed();
     await this.fileCreateMenuItem.click();
 
     // Click the _Save_ button to create the pattern.
-    await this.fabricPropertiesModal.waitForDisplayed();
     await this.fabricPropertiesModal.$("button*=Save").click();
 
     // Wait for modal to close.
