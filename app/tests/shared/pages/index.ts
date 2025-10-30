@@ -1,1 +1,1 @@
-export { default as PatternEditorPage } from "./pattern-editor";
+export * from "./pattern-editor";

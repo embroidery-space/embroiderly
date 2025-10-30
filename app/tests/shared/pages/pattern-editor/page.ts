@@ -1,0 +1,176 @@
+import { ConfirmDialog, FabricModal } from "./modals";
+
+/** Page object for the _Pattern Editor_ page. */
+class PatternEditorPage {
+  confirmDialog = new ConfirmDialog();
+
+  fabricModal = new FabricModal();
+
+  /** Returns a button that triggers the _File_ dropdown menu. */
+  get fileMenuButton() {
+    return $("button*=File");
+  }
+
+  /** Returns a button within the _File_ dropdown menu that opens the _Fabric Properties_ modal. */
+  get fileCreateMenuItem() {
+    return $("button*=Create");
+  }
+
+  /** Returns a button that triggers the _Pattern_ dropdown menu. */
+  get patternMenuButton() {
+    return $("button*=Pattern");
+  }
+
+  /** Returns a button within the _Pattern_ dropdown menu that opens the _Pattern Info_ modal. */
+  get patternInfoMenuItem() {
+    return $("button*=Pattern Info");
+  }
+
+  /** Returns a button within the _Pattern_ dropdown menu that opens the _Fabric Properties_ modal. */
+  get patternFabricMenuItem() {
+    return $("button*=Fabric Properties");
+  }
+
+  /** Returns a button within the _Pattern_ dropdown menu that opens the _Grid Properties_ modal. */
+  get patternGridMenuItem() {
+    return $("button*=Grid Properties");
+  }
+
+  /** Returns the Undo button in the header. */
+  get undoButton() {
+    return $('button[aria-label*="Undo"]');
+  }
+
+  /** Returns the Redo button in the header. */
+  get redoButton() {
+    return $('button[aria-label*="Redo"]');
+  }
+
+  /** Returns the canvas element. */
+  get canvas() {
+    return $("canvas");
+  }
+
+  /** Returns the welcome panel (shown when no pattern is opened). */
+  get welcomePanel() {
+    return $('[data-testid="welcome-panel"]');
+  }
+
+  /**
+   * Creates a new pattern with default fabric settings.
+   * This is a convenience method that opens the _File_ menu, clicks _Create_ menu item, and saves the default fabric settings.
+   */
+  async createDefaultPattern() {
+    await this.openCreatePatternDialog();
+    await this.fabricModal.save();
+  }
+
+  /**
+   * Opens the _File_ menu and clicks the _Create_ menu item.
+   * The _Fabric Properties_ modal will be displayed after this.
+   */
+  async openCreatePatternDialog() {
+    await this.fileMenuButton.click();
+    await this.fileCreateMenuItem.click();
+  }
+
+  /**
+   * Opens the _Pattern_ menu and clicks the _Pattern Info_ menu item.
+   * The _Pattern Info_ modal will be displayed after this.
+   */
+  async openPatternInfoDialog() {
+    await this.patternMenuButton.click();
+    await this.patternInfoMenuItem.click();
+  }
+
+  /**
+   * Opens the _Pattern_ menu and clicks the _Fabric Properties_ menu item.
+   * The _Fabric Properties_ modal will be displayed after this.
+   */
+  async openFabricPropertiesDialog() {
+    await this.patternMenuButton.click();
+    await this.patternFabricMenuItem.click();
+  }
+
+  /**
+   * Opens the _Pattern_ menu and clicks the _Grid Properties_ menu item.
+   * The _Grid Properties_ modal will be displayed after this.
+   */
+  async openGridPropertiesDialog() {
+    await this.patternMenuButton.click();
+    await this.patternGridMenuItem.click();
+  }
+
+  /** All pattern tabs. */
+  get tabs() {
+    return $$('//div[@role="tablist"]//button[@role="tab"]');
+  }
+
+  /** An active pattern tab. */
+  get activeTab() {
+    return $('//button[@role="tab"][@aria-selected="true"]');
+  }
+
+  /** Clicks a pattern tab by index (0-based). */
+  async clickTab(index: number) {
+    await this.tabs[index].click();
+  }
+
+  /** Gets the text of a pattern tab by index (0-based). */
+  getTabText(index: number) {
+    return this.tabs[index].getText();
+  }
+
+  /** Clicks the close button on a pattern tab by index (0-based). */
+  async closeTab(index: number) {
+    // Each tab contains a nested button with a "close" icon.
+    await this.tabs[index].$(".//button").click();
+  }
+
+  /** Clicks the _Undo_ button. */
+  async clickUndo() {
+    await this.undoButton.click();
+  }
+
+  /** Clicks the _Redo_ button. */
+  async clickRedo() {
+    await this.redoButton.click();
+  }
+
+  /** Presses keyboard shortcut for _Undo_ (`Ctrl+Shift+Z`). */
+  async pressUndoShortcut() {
+    await browser.keys(["Control", "Shift", "z"]);
+  }
+
+  /** Presses keyboard shortcut for _Redo_ (`Ctrl+Shift+Y`). */
+  async pressRedoShortcut() {
+    await browser.keys(["Control", "Shift", "y"]);
+  }
+
+  /**
+   * Closes all opened patterns without saving changes.
+   * This is a utility method for test cleanup and ensuring a clean state.
+   * If patterns have unsaved changes, it will automatically reject the save dialog.
+   */
+  async forceCloseAllPatterns() {
+    // Keep closing patterns until none remain.
+    while (true) {
+      if ((await this.tabs.length) === 0) break;
+
+      await this.closeTab(0);
+
+      // Proceed without saving changes if there any.
+      try {
+        await this.confirmDialog.modal.waitForDisplayed({ timeout: 1000 });
+        await this.confirmDialog.reject();
+      } catch {
+        // No dialog appeared.
+      }
+    }
+
+    // Verify welcome panel is displayed.
+    await this.welcomePanel.waitForDisplayed();
+  }
+}
+
+export default new PatternEditorPage();

@@ -6,11 +6,12 @@
           v-model="fabric.spi[0]"
           :items="fabricCounts"
           class="w-full"
+          data-testid="fabric-count-select"
           @update:model-value="fabric.spi[1] = $event"
         />
       </UFormField>
       <UFormField :label="$t('label-kind')" class="w-full">
-        <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" />
+        <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" data-testid="fabric-kind-select" />
       </UFormField>
     </FormFieldset>
 
@@ -21,20 +22,29 @@
             <UInputNumber
               v-model="fabricSizeFinal.width"
               orientation="vertical"
+              :step-snapping="false"
               :min="0.1"
               :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
+              data-testid="fabric-width-input"
             />
           </UFormField>
           <UFormField :label="$t('label-height')" class="w-full">
             <UInputNumber
               v-model="fabricSizeFinal.height"
               orientation="vertical"
+              :step-snapping="false"
               :min="0.1"
               :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
+              data-testid="fabric-height-input"
             />
           </UFormField>
         </div>
-        <URadioGroup v-model="fabricSizeMeasurement" :items="fabricSizeOptions" class="mt-6" />
+        <URadioGroup
+          v-model="fabricSizeMeasurement"
+          :items="fabricSizeOptions"
+          class="mt-6"
+          data-testid="fabric-unit-radio-group"
+        />
       </div>
 
       <p>
@@ -57,6 +67,7 @@
         :options="fabricColors"
         :option-value="(color) => ({ name: color.name, color: color.color.toHex().substring(1).toUpperCase() })"
         :display-settings="FABRIC_COLORS_DISPLAY_SETTINGS"
+        data-testid="fabric-colors-listbox"
         @update:model-value="
           (value) => {
             const item = Array.isArray(value) ? value[0] : value;
