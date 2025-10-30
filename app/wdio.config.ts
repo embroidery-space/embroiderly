@@ -4,6 +4,8 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 
+import type { VisualServiceOptions } from "@wdio/visual-service";
+
 const root = fileURLToPath(new URL("..", import.meta.url));
 
 // Keep track of the `tauri-driver` child process.
@@ -13,6 +15,13 @@ function closeTauriDriver() {
   exit = true;
   tauriDriver?.kill();
 }
+
+const visualServiceConfig: VisualServiceOptions = {
+  isHybridApp: true,
+  screenshotPath: path.join(root, "app", "tests", ".tmp"),
+  baselineFolder: path.join(root, "app", "tests", "__screenshots__"),
+  formatImageName: "{tag}-{width}x{height}",
+};
 
 export const config: WebdriverIO.Config = {
   host: "127.0.0.1",
@@ -29,6 +38,8 @@ export const config: WebdriverIO.Config = {
       },
     },
   ],
+
+  services: [["visual", visualServiceConfig]],
 
   reporters: ["spec"],
   framework: "mocha",
