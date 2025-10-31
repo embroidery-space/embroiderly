@@ -54,12 +54,18 @@
           icon="i-lucide:undo"
           :kbds="['ctrl', 'z']"
           :on-click="patternsStore.undo"
+          :tooltip-arrow="false"
+          tooltip-side="bottom"
+          data-testid="undo-button"
         />
         <ToolButton
           :label="$t('label-redo')"
           icon="i-lucide:redo"
           :kbds="['ctrl', 'y']"
           :on-click="patternsStore.redo"
+          :tooltip-arrow="false"
+          tooltip-side="bottom"
+          data-testid="redo-button"
         />
         <USeparator orientation="vertical" />
       </template>
