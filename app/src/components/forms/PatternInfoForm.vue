@@ -10,7 +10,12 @@
       <UInput v-model="patternInfo.copyright" class="w-full" data-testid="pattern-copyright-input" />
     </UFormField>
     <UFormField :label="$t('label-pattern-description')" class="w-full">
-      <UTextarea v-model="patternInfo.description" autoresize class="w-full" data-testid="pattern-description-textarea" />
+      <UTextarea
+        v-model="patternInfo.description"
+        autoresize
+        class="w-full"
+        data-testid="pattern-description-textarea"
+      />
     </UFormField>
   </div>
 </template>
