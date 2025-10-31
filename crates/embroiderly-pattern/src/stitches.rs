@@ -248,19 +248,15 @@ impl Stitches<FullStitch> {
   }
 
   pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<FullStitch> {
-    let mut conflicts = Vec::new();
-    for fullstitch in std::mem::take(&mut self.inner).into_iter() {
-      if fullstitch.x < bounds.x.into()
-        || fullstitch.x >= (bounds.x + bounds.width).into()
-        || fullstitch.y < bounds.y.into()
-        || fullstitch.y >= (bounds.y + bounds.height).into()
-      {
-        conflicts.push(fullstitch);
-      } else {
-        self.inner.insert(fullstitch);
-      }
-    }
-    conflicts
+    self
+      .inner
+      .extract_if(.., |fullstitch| {
+        fullstitch.x < bounds.x.into()
+          || fullstitch.x >= (bounds.x + bounds.width).into()
+          || fullstitch.y < bounds.y.into()
+          || fullstitch.y >= (bounds.y + bounds.height).into()
+      })
+      .collect()
   }
 
   pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &FullStitch> {
@@ -425,19 +421,15 @@ impl Stitches<PartStitch> {
   }
 
   pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<PartStitch> {
-    let mut conflicts = Vec::new();
-    for fullstitch in std::mem::take(&mut self.inner).into_iter() {
-      if fullstitch.x < bounds.x.into()
-        || fullstitch.x >= (bounds.x + bounds.width).into()
-        || fullstitch.y < bounds.y.into()
-        || fullstitch.y >= (bounds.y + bounds.height).into()
-      {
-        conflicts.push(fullstitch);
-      } else {
-        self.inner.insert(fullstitch);
-      }
-    }
-    conflicts
+    self
+      .inner
+      .extract_if(.., |partstitch| {
+        partstitch.x < bounds.x.into()
+          || partstitch.x >= (bounds.x + bounds.width).into()
+          || partstitch.y < bounds.y.into()
+          || partstitch.y >= (bounds.y + bounds.height).into()
+      })
+      .collect()
   }
 
   pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &PartStitch> {
@@ -450,23 +442,19 @@ impl Stitches<PartStitch> {
 
 impl Stitches<LineStitch> {
   pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<LineStitch> {
-    let mut conflicts = Vec::new();
-    for line in std::mem::take(&mut self.inner).into_iter() {
-      if line.x.0 < bounds.x.into()
-        || line.x.1 < bounds.x.into()
-        || line.x.0 > (bounds.x + bounds.width).into()
-        || line.x.1 > (bounds.x + bounds.width).into()
-        || line.y.0 < bounds.y.into()
-        || line.y.1 < bounds.y.into()
-        || line.y.0 > (bounds.y + bounds.height).into()
-        || line.y.1 > (bounds.y + bounds.height).into()
-      {
-        conflicts.push(line);
-      } else {
-        self.inner.insert(line);
-      }
-    }
-    conflicts
+    self
+      .inner
+      .extract_if(.., |line| {
+        line.x.0 < bounds.x.into()
+          || line.x.1 < bounds.x.into()
+          || line.x.0 > (bounds.x + bounds.width).into()
+          || line.x.1 > (bounds.x + bounds.width).into()
+          || line.y.0 < bounds.y.into()
+          || line.y.1 < bounds.y.into()
+          || line.y.0 > (bounds.y + bounds.height).into()
+          || line.y.1 > (bounds.y + bounds.height).into()
+      })
+      .collect()
   }
 
   pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &LineStitch> {
@@ -478,19 +466,15 @@ impl Stitches<LineStitch> {
 
 impl Stitches<NodeStitch> {
   pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<NodeStitch> {
-    let mut conflicts = Vec::new();
-    for node in std::mem::take(&mut self.inner).into_iter() {
-      if node.x < bounds.x.into()
-        || node.x >= (bounds.x + bounds.width).into()
-        || node.y < bounds.y.into()
-        || node.y >= (bounds.y + bounds.height).into()
-      {
-        conflicts.push(node);
-      } else {
-        self.inner.insert(node);
-      }
-    }
-    conflicts
+    self
+      .inner
+      .extract_if(.., |node| {
+        node.x < bounds.x.into()
+          || node.x >= (bounds.x + bounds.width).into()
+          || node.y < bounds.y.into()
+          || node.y >= (bounds.y + bounds.height).into()
+      })
+      .collect()
   }
 
   pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &NodeStitch> {
