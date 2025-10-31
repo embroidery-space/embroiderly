@@ -6,7 +6,15 @@ import { fileURLToPath, URL } from "node:url";
 
 import type { VisualServiceOptions } from "@wdio/visual-service";
 
-const root = fileURLToPath(new URL("..", import.meta.url));
+const ROOT_PATH = fileURLToPath(new URL("..", import.meta.url));
+
+const TESTS_TEMP_PATH = path.join(ROOT_PATH, "app", "tests", ".tmp");
+const TESTS_SCREENSHOTS_PATH = path.join(ROOT_PATH, "app", "tests", "__screenshots__");
+
+const TAURI_DRIVER_PATH = path.resolve(os.homedir(), ".cargo", "bin", "tauri-driver");
+
+const MSEDGEDERIVER_TOOL_PATH = path.resolve(os.homedir(), ".cargo", "bin", "msedgedriver-tool");
+const MSEDGEDRIVER_PATH = path.join(TESTS_TEMP_PATH, "msedgedriver.exe");
 
 // Keep track of the `tauri-driver` child process.
 let exit = false;
@@ -18,8 +26,8 @@ function closeTauriDriver() {
 
 const visualServiceConfig: VisualServiceOptions = {
   isHybridApp: true,
-  screenshotPath: path.join(root, "app", "tests", ".tmp"),
-  baselineFolder: path.join(root, "app", "tests", "__screenshots__"),
+  screenshotPath: TESTS_TEMP_PATH,
+  baselineFolder: TESTS_SCREENSHOTS_PATH,
   formatImageName: "{tag}-{width}x{height}",
 };
 
@@ -49,10 +57,13 @@ export const config: WebdriverIO.Config = {
   },
 
   onPrepare: () => {
+    // Ensure the temporary directory exists.
+    if (!fs.existsSync(TESTS_TEMP_PATH)) fs.mkdirSync(TESTS_TEMP_PATH);
+
     // Ensure the fresh Microsoft Edge Driver is installed on Windows.
-    if (os.platform() === "win32" && !fs.existsSync(path.join(root, "msedgedriver.exe"))) {
-      spawnSync(path.resolve(os.homedir(), ".cargo", "bin", "msedgedriver-tool"), [], {
-        cwd: root,
+    if (os.platform() === "win32" && !fs.existsSync(MSEDGEDRIVER_PATH)) {
+      spawnSync(MSEDGEDERIVER_TOOL_PATH, [], {
+        cwd: TESTS_TEMP_PATH,
         stdio: [null, process.stdout, process.stderr],
       });
     }
@@ -65,9 +76,12 @@ export const config: WebdriverIO.Config = {
   },
 
   beforeSession: () => {
+    const tauriDriverArgs = [];
+
     // Ensure we are running `tauri-driver` before the session starts so that we can proxy the webdriver requests.
-    const nativeDriverArgs = os.platform() === "win32" ? ["--native-driver", path.join(root, "msedgedriver.exe")] : [];
-    tauriDriver = spawn(path.resolve(os.homedir(), ".cargo", "bin", "tauri-driver"), [...nativeDriverArgs], {
+    if (os.platform() === "win32") tauriDriverArgs.push("--native-driver", MSEDGEDRIVER_PATH);
+
+    tauriDriver = spawn(TAURI_DRIVER_PATH, tauriDriverArgs, {
       stdio: [null, process.stdout, process.stderr],
     });
 
