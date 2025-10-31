@@ -1,10 +1,12 @@
-import { ConfirmDialog, FabricModal } from "./modals";
+import { ConfirmDialog, FabricModal, PatternInfoModal, GridModal } from "./modals";
 
 /** Page object for the _Pattern Editor_ page. */
 class PatternEditorPage {
   confirmDialog = new ConfirmDialog();
 
+  patternInfoModal = new PatternInfoModal();
   fabricModal = new FabricModal();
+  gridModal = new GridModal();
 
   /** Returns a button that triggers the _File_ dropdown menu. */
   get fileMenuButton() {
@@ -23,7 +25,7 @@ class PatternEditorPage {
 
   /** Returns a button within the _Pattern_ dropdown menu that opens the _Pattern Info_ modal. */
   get patternInfoMenuItem() {
-    return $("button*=Pattern Info");
+    return $("button*=Pattern Information");
   }
 
   /** Returns a button within the _Pattern_ dropdown menu that opens the _Fabric Properties_ modal. */
@@ -108,7 +110,7 @@ class PatternEditorPage {
 
   /** An active pattern tab. */
   get activeTab() {
-    return $('//button[@role="tab"][@aria-selected="true"]');
+    return $('//div[@role="tablist"]//button[@role="tab"][@aria-selected="true"]');
   }
 
   /** Clicks a pattern tab by index (0-based). */

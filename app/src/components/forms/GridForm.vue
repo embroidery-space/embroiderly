@@ -7,7 +7,7 @@
           orientation="vertical"
           :min="1"
           class="w-full"
-          data-testid="grid-major-lines-interval"
+          data-testid="grid-major-lines-interval-input"
         />
       </UFormField>
     </div>
@@ -20,11 +20,11 @@
             orientation="vertical"
             :min="0.001"
             :step="0.01"
-            data-testid="grid-minor-thickness"
+            data-testid="grid-minor-lines-thickness-input"
           />
         </UFormField>
         <UFormField :label="$t('label-color')">
-          <ColorPicker v-model="grid.minorLines.color" data-testid="grid-minor-color" />
+          <ColorPicker v-model="grid.minorLines.color" data-testid="grid-minor-lines-color-input" />
         </UFormField>
       </div>
     </FormFieldset>
@@ -37,11 +37,11 @@
             orientation="vertical"
             :min="0.001"
             :step="0.01"
-            data-testid="grid-major-thickness"
+            data-testid="grid-major-lines-thickness-input"
           />
         </UFormField>
         <UFormField :label="$t('label-color')">
-          <ColorPicker v-model="grid.majorLines.color" data-testid="grid-major-color" />
+          <ColorPicker v-model="grid.majorLines.color" data-testid="grid-major-lines-color-input" />
         </UFormField>
       </div>
     </FormFieldset>
