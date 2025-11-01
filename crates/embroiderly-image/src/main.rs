@@ -17,10 +17,6 @@ struct Args {
 }
 
 fn main() -> anyhow::Result<()> {
-  simple_logger::SimpleLogger::new()
-    .with_level(log::LevelFilter::Debug)
-    .init()?;
-
   let args = Args::parse();
 
   let pattern_path = args

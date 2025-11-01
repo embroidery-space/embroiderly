@@ -4,6 +4,9 @@ pub use project::*;
 mod pattern;
 pub use pattern::*;
 
+mod palette;
+pub use palette::*;
+
 mod stitches;
 pub use stitches::*;
 
@@ -12,3 +15,6 @@ pub use display::*;
 
 mod publish;
 pub use publish::*;
+
+mod image;
+pub use image::*;

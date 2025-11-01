@@ -11,6 +11,9 @@ serde = ["dep:serde", "uuid/serde"]
 borsh = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 
+# Image processing
+image = { workspace = true }
+
 # Logging
 log = { workspace = true }
 
@@ -21,5 +24,9 @@ anyhow = { workspace = true }
 xsp-parsers = { workspace = true }
 
 # Other
+alphanumeric-sort = { workspace = true }
 ordered-float = { workspace = true }
 uuid = { workspace = true }
+
+[dev-dependencies]
+rstest = { workspace = true }

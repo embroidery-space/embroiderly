@@ -1,5 +1,6 @@
 use xsp_parsers::pmaker;
 
+use super::palette::*;
 use super::stitches::*;
 
 #[derive(Debug, Default, Clone)]
@@ -7,7 +8,7 @@ use super::stitches::*;
 pub struct Pattern {
   pub info: PatternInfo,
   pub fabric: Fabric,
-  pub palette: Vec<PaletteItem>,
+  pub palette: Palette,
   pub fullstitches: Stitches<FullStitch>,
   pub partstitches: Stitches<PartStitch>,
   pub linestitches: Stitches<LineStitch>,
@@ -19,6 +20,58 @@ pub struct Pattern {
 impl Pattern {
   pub fn new(fabric: Fabric) -> Self {
     Pattern { fabric, ..Pattern::default() }
+  }
+
+  /// Returns the number of full and petite stitches in the pattern.
+  pub fn full_stitches_number(&self) -> (usize, usize) {
+    let mut full = 0;
+    let mut petite = 0;
+    for stitch in self.fullstitches.iter() {
+      match stitch.kind {
+        FullStitchKind::Full => full += 1,
+        FullStitchKind::Petite => petite += 1,
+      }
+    }
+    (full, petite)
+  }
+
+  /// Returns the number of half and quarter stitches in the pattern.
+  pub fn part_stitches_number(&self) -> (usize, usize) {
+    let mut half = 0;
+    let mut quarter = 0;
+    for stitch in self.partstitches.iter() {
+      match stitch.kind {
+        PartStitchKind::Half => half += 1,
+        PartStitchKind::Quarter => quarter += 1,
+      }
+    }
+    (half, quarter)
+  }
+
+  /// Returns the number of back and straight stitches in the pattern.
+  pub fn line_stitches_number(&self) -> (usize, usize) {
+    let mut back = 0;
+    let mut straight = 0;
+    for stitch in self.linestitches.iter() {
+      match stitch.kind {
+        LineStitchKind::Back => back += 1,
+        LineStitchKind::Straight => straight += 1,
+      }
+    }
+    (back, straight)
+  }
+
+  /// Returns the number of french knots and beads in the pattern.
+  pub fn node_stitches_number(&self) -> (usize, usize) {
+    let mut knot = 0;
+    let mut bead = 0;
+    for stitch in self.nodestitches.iter() {
+      match stitch.kind {
+        NodeStitchKind::FrenchKnot => knot += 1,
+        NodeStitchKind::Bead => bead += 1,
+      }
+    }
+    (knot, bead)
   }
 
   /// Get a stitch from the pattern.
@@ -279,16 +332,6 @@ impl Pattern {
     self.linestitches.restore_stitches(linestitches, palindexes, palsize);
     self.nodestitches.restore_stitches(nodestitches, palindexes, palsize);
   }
-
-  pub fn get_all_symbol_fonts(&self) -> Vec<String> {
-    let mut fonts = std::collections::HashSet::new();
-    for item in &self.palette {
-      if let Some(symbol_font) = &item.symbol_font {
-        fonts.insert(symbol_font.clone());
-      }
-    }
-    fonts.into_iter().collect()
-  }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -319,123 +362,6 @@ impl From<pmaker::PatternInfo> for PatternInfo {
       copyright: pattern_info.copyright,
       description: pattern_info.description,
     }
-  }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct PaletteItem {
-  pub brand: String,
-  pub number: String,
-  pub name: String,
-  pub color: String,
-  #[serde(skip)]
-  pub blends: Option<Vec<Blend>>,
-  #[serde(skip)]
-  pub symbol_font: Option<String>,
-  #[serde(skip)]
-  pub symbol: Option<Symbol>,
-}
-
-impl PaletteItem {
-  /// Returns a printable representation of the `Symbol`.
-  pub fn get_symbol(&self) -> String {
-    self.symbol.as_ref().map(|s| s.render()).unwrap_or_default()
-  }
-}
-
-impl From<pmaker::PaletteItem> for PaletteItem {
-  fn from(palette_item: pmaker::PaletteItem) -> Self {
-    Self {
-      brand: palette_item.brand,
-      number: palette_item.number,
-      name: palette_item.name,
-      color: palette_item.color,
-      blends: palette_item
-        .blends
-        .map(|blends| blends.into_iter().map(Blend::from).collect()),
-      symbol_font: None,
-      symbol: None,
-    }
-  }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-pub struct Blend {
-  pub brand: String,
-  pub number: String,
-}
-
-impl From<pmaker::Blend> for Blend {
-  fn from(blend: pmaker::Blend) -> Self {
-    Self {
-      brand: blend.brand,
-      number: blend.number,
-    }
-  }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-pub struct Bead {
-  pub length: f32,
-  pub diameter: f32,
-}
-
-impl From<pmaker::Bead> for Bead {
-  fn from(bead: pmaker::Bead) -> Self {
-    Self {
-      length: bead.length,
-      diameter: bead.diameter,
-    }
-  }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-pub enum Symbol {
-  Code(u16),
-  Char(String),
-}
-
-impl Symbol {
-  /// Returns a printable representation of the symbol.
-  pub fn render(&self) -> String {
-    match self {
-      Symbol::Code(code) => std::char::decode_utf16([*code])
-        .map(|r| r.unwrap_or(std::char::REPLACEMENT_CHARACTER))
-        .collect::<String>(),
-      Symbol::Char(char) => char.to_owned(),
-    }
-  }
-}
-
-impl std::fmt::Display for Symbol {
-  fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-    match self {
-      Symbol::Code(code) => write!(f, "{code}"),
-      Symbol::Char(ch) => write!(f, "{ch}"),
-    }
-  }
-}
-
-impl std::str::FromStr for Symbol {
-  type Err = anyhow::Error;
-
-  fn from_str(s: &str) -> Result<Self, Self::Err> {
-    if let Ok(code) = s.parse::<u16>() {
-      return Ok(Symbol::Code(code));
-    }
-
-    if s.len() == 1 {
-      return Ok(Symbol::Char(s.to_string()));
-    }
-
-    Err(anyhow::anyhow!(
-      "Invalid symbol: {s}. Must be a single character or a number"
-    ))
   }
 }
 
@@ -485,4 +411,13 @@ impl From<pmaker::Fabric> for Fabric {
       color: fabric.color,
     }
   }
+}
+
+/// Represents a fabric color item.
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct FabricColor {
+  pub name: String,
+  pub color: String,
 }

@@ -1,0 +1,30 @@
+[package]
+name = "tauri-plugin-posthog"
+links = "tauri-plugin-posthog"
+edition = { workspace = true }
+
+[build-dependencies]
+tauri-plugin = { workspace = true }
+
+[dependencies]
+# Tauri
+tauri = { workspace = true }
+## Official plugins
+tauri-plugin-os = { workspace = true }
+
+# De/serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Logging
+log = {workspace = true}
+
+# Telemetry
+posthog-rs = { workspace = true }
+
+# Identification
+machine-uid = { workspace = true }
+uuid = { workspace = true }
+
+# Other
+sha2 = { workspace = true }

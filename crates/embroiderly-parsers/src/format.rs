@@ -2,7 +2,7 @@ use std::ffi::OsStr;
 
 use crate::error::Error;
 
-#[derive(Default, PartialEq, Eq)]
+#[derive(Default, Clone, Copy, PartialEq, Eq)]
 pub enum PatternFormat {
   /// Probably, stands for `Cross-Stitch Design`.
   /// Only **read-only** mode is currently available.

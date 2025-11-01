@@ -3,9 +3,8 @@ target/
 node_modules/
 dist/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
+coverage/
+lcov.info
 
 # Auto-generated type declarations
 auto-imports.d.ts

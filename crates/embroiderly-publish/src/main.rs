@@ -21,10 +21,8 @@ struct Args {
 }
 
 fn main() -> anyhow::Result<()> {
-  simple_logger::SimpleLogger::new()
-    .with_level(log::LevelFilter::Debug)
-    .with_module_level("usvg::text::layout", log::LevelFilter::Error)
-    .init()?;
+  embroiderly_publish::logger::init()?;
+  let _telemetry = embroiderly_publish::telemetry::init()?;
 
   let args = Args::parse();
 

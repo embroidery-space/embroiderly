@@ -79,7 +79,7 @@ pub fn import_image<P: AsRef<std::path::Path>>(
   debug_assert!(gaussian_pyramid.len() == laplacian_pyramid.len());
 
   let pattern_image = reconstruct_image(&laplacian_pyramid);
-  let target_palette: Vec<PaletteItem> = {
+  let target_palette: Vec<BrandPaletteItem> = {
     let palette_path = palettes_dir.join(format!("{}.json", options.palette));
     let content = std::fs::read_to_string(palette_path)?;
     serde_json::from_str(&content)?
@@ -200,7 +200,7 @@ fn convert_image_into_pattern(
   image: image::RgbImage,
   width: u16,
   height: u16,
-  target_palette: &[PaletteItem],
+  target_palette: &[BrandPaletteItem],
 ) -> anyhow::Result<Pattern> {
   log::debug!("Converting image into pattern");
 
@@ -250,7 +250,7 @@ fn convert_image_into_pattern(
 
   Ok(Pattern {
     fabric,
-    palette: palette_map.into_values().collect(),
+    palette: palette_map.into_values().map(PaletteItem::from).collect(),
     fullstitches: Stitches::from_iter(fullstitches),
     ..Pattern::default()
   })

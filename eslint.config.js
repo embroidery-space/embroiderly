@@ -1,17 +1,104 @@
-import globals from "globals";
+import fs from "node:fs";
+import { fileURLToPath, URL } from "node:url";
+
 import js from "@eslint/js";
-import vue from "eslint-plugin-vue";
 import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
+import betterTailwindcss from "eslint-plugin-better-tailwindcss";
+import importX from "eslint-plugin-import-x";
+import vue from "eslint-plugin-vue";
+import yml from "eslint-plugin-yml";
+import globals from "globals";
+import yamlEslintParser from "yaml-eslint-parser";
+
+// Read the `.prettierignore` file and filter out empty lines and comments.
+const ignores = fs
+  .readFileSync(fileURLToPath(new URL(".prettierignore", import.meta.url)), { encoding: "utf-8" })
+  .split(/\r?\n/)
+  .filter((s) => s.length && !s.startsWith("#"));
 
 export default defineConfigWithVueTs(
+  // Common options.
+  { ignores },
   js.configs.recommended,
+
+  // Vue.js configs.
   vue.configs["flat/recommended"],
+  vueTsConfigs.recommended,
+
+  // Custom rules.
   {
-    files: ["src/**/*.ts", "src/**/*.vue"],
+    files: ["app/src/**/*.{ts,vue}", "crates/**/guest-js/**/*.ts"],
     languageOptions: { ecmaVersion: "latest", globals: { ...globals.browser } },
     rules: { "no-console": ["warn"] },
   },
+
+  // Imports organization.
+  {
+    files: ["**/*.{js,ts,vue}"],
+    plugins: { "import-x": importX },
+    rules: {
+      "import-x/order": [
+        "warn",
+        {
+          groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+          pathGroups: [
+            {
+              pattern: "{@embroiderly/**,@tauri-apps/**}",
+              group: "external",
+              position: "before",
+            },
+            {
+              pattern: "~/**",
+              group: "internal",
+            },
+          ],
+          pathGroupsExcludedImportTypes: ["builtin"],
+          "newlines-between": "always",
+          alphabetize: { order: "asc", caseInsensitive: true },
+        },
+      ],
+      "import-x/consistent-type-specifier-style": ["warn", "prefer-top-level"],
+    },
+  },
+
+  // TailwindCSS classes validation.
+  {
+    files: ["app/src/**/*.vue"],
+    plugins: { "better-tailwindcss": betterTailwindcss },
+    settings: {
+      "better-tailwindcss": {
+        entryPoint: fileURLToPath(new URL("app/src/assets/styles.css", import.meta.url)),
+      },
+    },
+    rules: {
+      // Stylistic rules.
+      "better-tailwindcss/enforce-consistent-line-wrapping": ["off"],
+      "better-tailwindcss/enforce-consistent-class-order": ["warn", { order: "official" }],
+      "better-tailwindcss/enforce-consistent-variable-syntax": ["warn"],
+      "better-tailwindcss/enforce-consistent-important-position": ["warn"],
+      "better-tailwindcss/enforce-shorthand-classes": ["warn"],
+      "better-tailwindcss/no-duplicate-classes": ["warn"],
+      "better-tailwindcss/no-deprecated-classes": ["warn"],
+      "better-tailwindcss/no-unnecessary-whitespace": ["warn"],
+
+      // Correctness rules.
+      "better-tailwindcss/no-unregistered-classes": ["warn"],
+      "better-tailwindcss/no-conflicting-classes": ["warn"],
+      "better-tailwindcss/no-restricted-classes": ["warn"],
+    },
+  },
+
+  // YAML validation.
+  {
+    files: ["pnpm-workspace.yaml", ".github/**/*.yml"],
+    extends: yml.configs["flat/standard"],
+    languageOptions: { parser: yamlEslintParser },
+    rules: {
+      "yml/no-empty-mapping-value": "off",
+    },
+  },
+
+  // Prettier intergation.
   vuePrettierEslintConfig,
-  vueTsConfigs.recommended,
 );

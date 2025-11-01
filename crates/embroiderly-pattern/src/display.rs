@@ -3,21 +3,21 @@ use xsp_parsers::pmaker;
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct DisplaySettings {
-  pub default_symbol_font: String,
   pub grid: Grid,
   pub display_mode: DisplayMode,
   pub show_symbols: bool,
   pub palette_settings: PaletteSettings,
+  pub layers_visibility: LayersVisibility,
 }
 
 impl Default for DisplaySettings {
   fn default() -> Self {
     Self {
-      default_symbol_font: String::from("Ursasoftware"),
       grid: Grid::default(),
       display_mode: DisplayMode::Solid,
       show_symbols: false,
       palette_settings: PaletteSettings::default(),
+      layers_visibility: LayersVisibility::default(),
     }
   }
 }
@@ -74,7 +74,7 @@ impl From<pmaker::GridLineStyle> for GridLine {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum DisplayMode {
   Solid,
@@ -115,11 +115,13 @@ impl std::str::FromStr for DisplayMode {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteSettings {
   pub columns_number: u8,
   pub color_only: bool,
+  pub show_stitch_symbols: bool,
+  pub stitch_symbols_on_contrast_background: bool,
   pub show_color_brands: bool,
   pub show_color_numbers: bool,
   pub show_color_names: bool,
@@ -128,6 +130,8 @@ pub struct PaletteSettings {
 impl PaletteSettings {
   pub const DEFAULT_COLUMNS_NUMBER: u8 = 1;
   pub const DEFAULT_COLOR_ONLY: bool = false;
+  pub const DEFAULT_SHOW_STITCH_SYMBOLS: bool = true;
+  pub const DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND: bool = true;
   pub const DEFAULT_SHOW_COLOR_BRANDS: bool = true;
   pub const DEFAULT_SHOW_COLOR_NUMBERS: bool = true;
   pub const DEFAULT_SHOW_COLOR_NAMES: bool = true;
@@ -138,9 +142,59 @@ impl Default for PaletteSettings {
     Self {
       columns_number: PaletteSettings::DEFAULT_COLUMNS_NUMBER,
       color_only: PaletteSettings::DEFAULT_COLOR_ONLY,
+      show_stitch_symbols: PaletteSettings::DEFAULT_SHOW_STITCH_SYMBOLS,
+      stitch_symbols_on_contrast_background: PaletteSettings::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND,
       show_color_brands: PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS,
       show_color_numbers: PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS,
       show_color_names: PaletteSettings::DEFAULT_SHOW_COLOR_NAMES,
+    }
+  }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+pub struct LayersVisibility {
+  pub reference_image: bool,
+
+  pub fullstitches: bool,
+  pub petitestitches: bool,
+
+  pub halfstitches: bool,
+  pub quarterstitches: bool,
+
+  pub backstitches: bool,
+  pub straightstitches: bool,
+
+  pub frenchknots: bool,
+  pub beads: bool,
+
+  pub specialstitches: bool,
+
+  pub grid: bool,
+  pub rulers: bool,
+}
+
+impl Default for LayersVisibility {
+  fn default() -> Self {
+    Self {
+      reference_image: true,
+
+      fullstitches: true,
+      petitestitches: true,
+
+      halfstitches: true,
+      quarterstitches: true,
+
+      backstitches: true,
+      straightstitches: true,
+
+      frenchknots: true,
+      beads: true,
+
+      specialstitches: true,
+
+      grid: true,
+      rulers: true,
     }
   }
 }

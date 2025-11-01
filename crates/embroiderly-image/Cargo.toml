@@ -24,7 +24,6 @@ palette = { workspace = true }
 
 # Logging
 log = { workspace = true }
-simple_logger = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

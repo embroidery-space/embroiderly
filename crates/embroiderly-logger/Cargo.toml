@@ -1,0 +1,15 @@
+[package]
+name = "embroiderly-logger"
+edition = { workspace = true }
+
+[dependencies]
+# Logging
+log = { workspace = true }
+log-panics = { workspace = true }
+fern = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+
+# Time handling
+time = { workspace = true }

@@ -1,7 +1,5 @@
 use super::*;
 
-static SYMBOL_FONT: &str = "CrossStitch3";
-
 const CELL_SIZE: f32 = 14.0;
 const FRAME: FrameContext = FrameContext {
   color: true,
@@ -24,7 +22,6 @@ fn create_palette() -> Vec<PaletteItem> {
       name: String::from("Black"),
       color: String::from("2C3225"),
       blends: None,
-      symbol_font: None,
       symbol: None,
     },
     PaletteItem {
@@ -33,8 +30,10 @@ fn create_palette() -> Vec<PaletteItem> {
       name: String::from("Salmon-VY LT"),
       color: String::from("F0D1CB"),
       blends: None,
-      symbol_font: None,
-      symbol: Some(Symbol::Char("A".to_string())),
+      symbol: Some(Symbol {
+        char: '\u{41}',
+        font: String::from("CrossStitch3"),
+      }),
     },
     PaletteItem {
       brand: String::from("DMC"),
@@ -42,8 +41,10 @@ fn create_palette() -> Vec<PaletteItem> {
       name: String::from("Gray Green-LT"),
       color: String::from("A6BDB4"),
       blends: None,
-      symbol_font: Some(String::from("Ursasoftware")),
-      symbol: Some(Symbol::Code(63)),
+      symbol: Some(Symbol {
+        char: '\u{3F}',
+        font: String::from("Ursasoftware"),
+      }),
     },
   ]
 }
@@ -100,7 +101,7 @@ fn writes_full_stitches() {
 
     let mut writer = create_writer();
     let frame = FrameContext { color: false, ..FRAME };
-    draw_full_stitches(&mut writer, &palette, &fullstitches, SYMBOL_FONT, frame).unwrap();
+    draw_full_stitches(&mut writer, &palette, &fullstitches, frame).unwrap();
 
     let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
     let diff = prettydiff::diff_lines(&result, xml);
@@ -128,7 +129,7 @@ fn writes_full_stitches() {
 </g>"##;
 
     let mut writer = create_writer();
-    draw_full_stitches(&mut writer, &palette, &fullstitches, SYMBOL_FONT, FRAME).unwrap();
+    draw_full_stitches(&mut writer, &palette, &fullstitches, FRAME).unwrap();
 
     let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
     let diff = prettydiff::diff_lines(&result, xml);
@@ -195,7 +196,7 @@ fn writes_part_stitches() {
 
     let mut writer = create_writer();
     let frame = FrameContext { color: false, ..FRAME };
-    draw_part_stitches(&mut writer, &palette, &partstitches, SYMBOL_FONT, frame).unwrap();
+    draw_part_stitches(&mut writer, &palette, &partstitches, frame).unwrap();
 
     let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
     let diff = prettydiff::diff_lines(&result, xml);
@@ -226,7 +227,7 @@ fn writes_part_stitches() {
 </g>"##;
 
     let mut writer = create_writer();
-    draw_part_stitches(&mut writer, &palette, &partstitches, SYMBOL_FONT, FRAME).unwrap();
+    draw_part_stitches(&mut writer, &palette, &partstitches, FRAME).unwrap();
 
     let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
     let diff = prettydiff::diff_lines(&result, xml);
@@ -505,25 +506,24 @@ fn writes_overlapping_zones_by_xy() {
   assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
-// TODO: Fix this test to work on CI on Windows.
-// #[test]
-// fn generates_svg_frames() {
-//   let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/patterns/piggies.xsd");
-//   let patproj = embroiderly_parsers::parse_pattern(file_path).unwrap();
+#[test]
+fn generates_svg_frames() {
+  let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/patterns/piggies.xsd");
+  let patproj = embroiderly_parsers::parse_pattern(file_path).unwrap();
 
-//   let options = ImageExportOptions {
-//     frame_size: Some((30, 40)),
-//     show_grid_line_numbers: true,
-//     show_centering_marks: true,
-//     ..ImageExportOptions::default()
-//   };
-//   let frames = generate_svg(&patproj, true, options).unwrap();
-//   for (i, frame) in frames.into_iter().enumerate() {
-//     let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-//       .join("testdata/images/frames")
-//       .join(format!("image{i}.svg"));
-//     let svg = std::fs::read(file_path).unwrap();
+  let options = ImageExportOptions {
+    frame_size: Some((30, 40)),
+    show_grid_line_numbers: true,
+    show_centering_marks: true,
+    ..ImageExportOptions::default()
+  };
+  let frames = generate_svg(&patproj, true, options).unwrap();
+  for (i, frame) in frames.into_iter().enumerate() {
+    let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+      .join("testdata/images/frames")
+      .join(format!("image{i}.svg"));
+    let expected = std::fs::read(file_path).unwrap();
 
-//     assert_eq!(frame, svg, "Frame {i} does not match expected SVG content");
-//   }
-// }
+    assert_eq!(frame, expected, "Frame {i} does not match expected SVG content");
+  }
+}

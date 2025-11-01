@@ -1,5 +1,5 @@
 [package]
-name = "embroiderly-publish"
+name = "embroiderly_publish"
 edition = { workspace = true }
 
 [dependencies]
@@ -7,9 +7,10 @@ edition = { workspace = true }
 clap = { workspace = true }
 
 # Embroiderly Core
+embroiderly-image = { workspace = true }
 embroiderly-parsers = { workspace = true }
 embroiderly-pattern = { workspace = true }
-embroiderly-image = { workspace = true }
+embroiderly-logger = { workspace = true }
 
 # De/serialization
 serde_json = { workspace = true }
@@ -22,7 +23,9 @@ typst-as-lib = { workspace = true, features = ["typst-kit-fonts"] }
 
 # Logging
 log = { workspace = true }
-simple_logger = { workspace = true }
+
+# Telemetry
+sentry = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

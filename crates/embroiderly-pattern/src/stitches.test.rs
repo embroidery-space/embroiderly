@@ -608,3 +608,322 @@ fn test_restore_stitches() {
   assert_eq!(all_stitches[2].palindex, 2);
   assert_eq!(all_stitches[3].palindex, 3);
 }
+
+#[test]
+fn test_remove_fullstitches_outside_bounds() {
+  let mut stitches = Stitches::from_iter([
+    FullStitch {
+      x: NotNan::new(0.0).unwrap(),
+      y: NotNan::new(0.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(10.0).unwrap(),
+      y: NotNan::new(10.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(15.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+  ]);
+
+  let bounds = Bounds::new(5, 5, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // Check that stitches outside bounds were removed.
+  assert_eq!(stitches.len(), 2);
+  assert_eq!(removed.len(), 2);
+  assert!(removed[0].x == 0.0 && removed[0].y == 0.0);
+  assert!(removed[1].x == 15.0 && removed[1].y == 5.0);
+}
+
+#[test]
+fn test_remove_fullstitches_outside_bounds_with_petites() {
+  let mut stitches = Stitches::from_iter([
+    FullStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(5.5).unwrap(),
+      y: NotNan::new(5.5).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Petite,
+    },
+    FullStitch {
+      x: NotNan::new(20.0).unwrap(),
+      y: NotNan::new(20.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Petite,
+    },
+  ]);
+
+  let bounds = Bounds::new(0, 0, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // Check that petite outside bounds was removed.
+  assert_eq!(stitches.len(), 2);
+  assert_eq!(removed.len(), 1);
+  assert!(removed[0].x == 20.0 && removed[0].y == 20.0);
+  assert_eq!(removed[0].kind, FullStitchKind::Petite);
+}
+
+#[test]
+fn test_remove_partstitches_outside_bounds() {
+  let mut stitches = Stitches::from_iter([
+    PartStitch {
+      x: NotNan::new(0.0).unwrap(),
+      y: NotNan::new(0.0).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Forward,
+      kind: PartStitchKind::Half,
+    },
+    PartStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Backward,
+      kind: PartStitchKind::Half,
+    },
+    PartStitch {
+      x: NotNan::new(10.0).unwrap(),
+      y: NotNan::new(10.0).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Forward,
+      kind: PartStitchKind::Quarter,
+    },
+    PartStitch {
+      x: NotNan::new(15.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Backward,
+      kind: PartStitchKind::Quarter,
+    },
+  ]);
+
+  let bounds = Bounds::new(5, 5, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // Check that stitches outside bounds were removed.
+  assert_eq!(stitches.len(), 2);
+  assert_eq!(removed.len(), 2);
+  assert!(removed[0].x == 0.0 && removed[0].y == 0.0);
+  assert!(removed[1].x == 15.0 && removed[1].y == 5.0);
+}
+
+#[test]
+fn test_remove_partstitches_boundary_cases() {
+  let mut stitches = Stitches::from_iter([
+    PartStitch {
+      x: NotNan::new(4.5).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Forward,
+      kind: PartStitchKind::Quarter,
+    },
+    PartStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Backward,
+      kind: PartStitchKind::Half,
+    },
+    PartStitch {
+      x: NotNan::new(14.5).unwrap(),
+      y: NotNan::new(14.5).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Forward,
+      kind: PartStitchKind::Quarter,
+    },
+    PartStitch {
+      x: NotNan::new(15.0).unwrap(),
+      y: NotNan::new(15.0).unwrap(),
+      palindex: 0,
+      direction: PartStitchDirection::Backward,
+      kind: PartStitchKind::Half,
+    },
+  ]);
+
+  let bounds = Bounds::new(5, 5, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // Check boundary behavior: x < bounds.x OR x >= (bounds.x + bounds.width)
+  assert_eq!(stitches.len(), 2);
+  assert_eq!(removed.len(), 2);
+  assert!(removed[0].x == 4.5);
+  assert!(removed[1].x == 15.0);
+}
+
+#[test]
+fn test_remove_linestitches_outside_bounds() {
+  let mut stitches = Stitches::from_iter([
+    LineStitch {
+      x: (NotNan::new(0.0).unwrap(), NotNan::new(1.0).unwrap()),
+      y: (NotNan::new(0.0).unwrap(), NotNan::new(1.0).unwrap()),
+      palindex: 0,
+      kind: LineStitchKind::Back,
+    },
+    LineStitch {
+      x: (NotNan::new(5.0).unwrap(), NotNan::new(6.0).unwrap()),
+      y: (NotNan::new(5.0).unwrap(), NotNan::new(6.0).unwrap()),
+      palindex: 0,
+      kind: LineStitchKind::Straight,
+    },
+    LineStitch {
+      x: (NotNan::new(10.0).unwrap(), NotNan::new(11.0).unwrap()),
+      y: (NotNan::new(10.0).unwrap(), NotNan::new(11.0).unwrap()),
+      palindex: 0,
+      kind: LineStitchKind::Back,
+    },
+    LineStitch {
+      x: (NotNan::new(20.0).unwrap(), NotNan::new(21.0).unwrap()),
+      y: (NotNan::new(20.0).unwrap(), NotNan::new(21.0).unwrap()),
+      palindex: 0,
+      kind: LineStitchKind::Straight,
+    },
+  ]);
+
+  let bounds = Bounds::new(5, 5, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // Check that line stitches outside bounds were removed.
+  assert_eq!(stitches.len(), 2);
+  assert_eq!(removed.len(), 2);
+  assert!(removed[0].x.0 == 0.0);
+  assert!(removed[1].x.0 == 20.0);
+}
+
+#[test]
+fn test_remove_linestitches_partial_bounds() {
+  let mut stitches = Stitches::from_iter([
+    LineStitch {
+      x: (NotNan::new(3.0).unwrap(), NotNan::new(7.0).unwrap()),
+      y: (NotNan::new(3.0).unwrap(), NotNan::new(7.0).unwrap()),
+      palindex: 0,
+      kind: LineStitchKind::Back,
+    },
+    LineStitch {
+      x: (NotNan::new(7.0).unwrap(), NotNan::new(20.0).unwrap()),
+      y: (NotNan::new(7.0).unwrap(), NotNan::new(20.0).unwrap()),
+      palindex: 0,
+      kind: LineStitchKind::Straight,
+    },
+  ]);
+
+  let bounds = Bounds::new(5, 5, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // Check that line stitches partially outside bounds were removed.
+  assert_eq!(removed.len(), 2);
+  assert_eq!(stitches.len(), 0);
+}
+
+#[test]
+fn test_remove_nodestitches_outside_bounds() {
+  let mut stitches = Stitches::from_iter([
+    NodeStitch {
+      x: NotNan::new(0.0).unwrap(),
+      y: NotNan::new(0.0).unwrap(),
+      rotated: false,
+      palindex: 0,
+      kind: NodeStitchKind::FrenchKnot,
+    },
+    NodeStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      rotated: false,
+      palindex: 0,
+      kind: NodeStitchKind::Bead,
+    },
+    NodeStitch {
+      x: NotNan::new(10.0).unwrap(),
+      y: NotNan::new(10.0).unwrap(),
+      rotated: true,
+      palindex: 0,
+      kind: NodeStitchKind::FrenchKnot,
+    },
+    NodeStitch {
+      x: NotNan::new(15.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      rotated: false,
+      palindex: 0,
+      kind: NodeStitchKind::Bead,
+    },
+  ]);
+
+  let bounds = Bounds::new(5, 5, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // Check that node stitches outside bounds were removed.
+  assert_eq!(stitches.len(), 2);
+  assert_eq!(removed.len(), 2);
+  assert!(removed[0].x == 0.0 && removed[0].y == 0.0);
+  assert!(removed[1].x == 15.0 && removed[1].y == 5.0);
+}
+
+#[test]
+fn test_remove_nodestitches_all_outside_bounds() {
+  let mut stitches = Stitches::from_iter([
+    NodeStitch {
+      x: NotNan::new(0.0).unwrap(),
+      y: NotNan::new(0.0).unwrap(),
+      rotated: false,
+      palindex: 0,
+      kind: NodeStitchKind::FrenchKnot,
+    },
+    NodeStitch {
+      x: NotNan::new(20.0).unwrap(),
+      y: NotNan::new(20.0).unwrap(),
+      rotated: true,
+      palindex: 0,
+      kind: NodeStitchKind::Bead,
+    },
+  ]);
+
+  let bounds = Bounds::new(5, 5, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // All stitches should be removed.
+  assert_eq!(stitches.len(), 0);
+  assert_eq!(removed.len(), 2);
+}
+
+#[test]
+fn test_remove_nodestitches_all_inside_bounds() {
+  let mut stitches = Stitches::from_iter([
+    NodeStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      rotated: false,
+      palindex: 0,
+      kind: NodeStitchKind::FrenchKnot,
+    },
+    NodeStitch {
+      x: NotNan::new(10.0).unwrap(),
+      y: NotNan::new(10.0).unwrap(),
+      rotated: true,
+      palindex: 0,
+      kind: NodeStitchKind::Bead,
+    },
+  ]);
+
+  let bounds = Bounds::new(5, 5, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds);
+
+  // No stitches should be removed.
+  assert_eq!(stitches.len(), 2);
+  assert_eq!(removed.len(), 0);
+}

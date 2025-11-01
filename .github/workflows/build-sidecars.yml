@@ -2,11 +2,20 @@ name: Build and Commit Sidecar Binaries
 
 on:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      app-version:
+        description: Application version for Sentry release
+        required: false
+        type: string
   push:
     branches: [dev]
     paths:
       - crates/embroiderly-publish/**
-      - ".github/workflows/build-sidecars.yml"
+      - .github/workflows/build-sidecars.yml
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.ref }}
@@ -21,12 +30,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        sidecar: ["embroiderly-publish"]
+        sidecar: [embroiderly_publish]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: swatinem/rust-cache@v2
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: dtolnay/rust-toolchain@1.89.0 # stable
+      - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
 
       - name: Get target platform triple
         id: target
@@ -50,37 +59,49 @@ jobs:
           mkdir -p binaries/${{ matrix.sidecar }}
 
           SOURCE_FILE="target/release/${{ matrix.sidecar }}${{ steps.target.outputs.EXT }}"
-          DEST_FILE="binaries/${{ matrix.sidecar }}/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
+          DEST_FILE="binaries/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
           mv "$SOURCE_FILE" "$DEST_FILE"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: sidecar-binary-${{ matrix.sidecar }}-${{ matrix.os }}
           path: binaries/
+          retention-days: 1
+
+      - name: Upload debug symbols for Sentry
+        if: inputs.app-version != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: sidecar-debug-symbols-${{ matrix.sidecar }}-${{ matrix.os }}
+          path: |
+            target/release/${{ matrix.sidecar }}.pdb
+            target/release/${{ matrix.sidecar }}.dwp
+          retention-days: 1
 
   commit:
     permissions:
       contents: write
     needs: build
     runs-on: ubuntu-latest
+    if: inputs.app-version == ''
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           token: ${{ secrets.EMBROIDERLY_PAT }}
 
-      - run: mkdir -p crates/embroiderly/binaries
-      - run: rm -rf crates/embroiderly/binaries/*
+      - run: mkdir -p app/src-tauri/binaries
+      - run: rm -rf app/src-tauri/binaries/*
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
-          path: crates/embroiderly/binaries/
+          path: app/src-tauri/binaries/
           merge-multiple: true
 
       - name: Import GPG key
         id: gpg
-        uses: crazy-max/ghaction-import-gpg@v6
+        uses: crazy-max/ghaction-import-gpg@e89d40939c28e39f97cf32126055eeae86ba74ec # v6.3.0
         with:
           gpg_private_key: ${{ secrets.EMBROIDERLY_GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.EMBROIDERLY_GPG_PASSPHRASE }}
@@ -88,11 +109,54 @@ jobs:
           git_commit_gpgsign: true
 
       - name: Commit binaries
-        uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
         with:
-          file_pattern: crates/embroiderly/binaries/**
+          file_pattern: app/src-tauri/binaries/**
           commit_message: "build: update sidecar binaries"
           commit_author: "${{ steps.gpg.outputs.name }} <${{ steps.gpg.outputs.email }}>"
           commit_user_name: ${{ steps.gpg.outputs.name }}
           commit_user_email: ${{ steps.gpg.outputs.email }}
-          push_options: "--force"
+          push_options: --force
+
+  sentry:
+    needs: build
+    runs-on: ubuntu-latest
+    if: inputs.app-version != ''
+    strategy:
+      fail-fast: false
+      matrix:
+        sidecar: [embroiderly_publish]
+    defaults:
+      run:
+        shell: bash
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: embroidery-space
+      SENTRY_PROJECT: ${{ matrix.sidecar }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: ./.github/actions/setup-node
+        with:
+          install-deps: false
+
+      - name: Install Sentry CLI
+        run: pnpm install -g @sentry/cli
+
+      - name: Create Sentry release
+        run: |
+          sentry-cli releases new "${{ inputs.app-version }}"
+          sentry-cli releases set-commits "${{ inputs.app-version }}" --auto || true
+
+      - name: Download debug symbols
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          pattern: sidecar-debug-symbols-${{ matrix.sidecar }}-*
+          merge-multiple: true
+
+      - name: Upload debug symbols to Sentry
+        run: |
+          find . -name "${{ matrix.sidecar }}.pdb" -exec sentry-cli debug-files upload {} + || true
+          find . -name "${{ matrix.sidecar }}.dwp" -exec sentry-cli debug-files upload {} + || true
+
+      - name: Finalize Sentry release
+        run: sentry-cli releases finalize "${{ inputs.app-version }}"
