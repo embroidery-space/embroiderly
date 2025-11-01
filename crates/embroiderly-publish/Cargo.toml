@@ -7,10 +7,10 @@ edition = { workspace = true }
 clap = { workspace = true }
 
 # Embroiderly Core
-embroiderly-image = { workspace = true }
-embroiderly-parsers = { workspace = true }
-embroiderly-pattern = { workspace = true }
-embroiderly-logger = { workspace = true }
+embroiderly_image = { workspace = true }
+embroiderly_parsers = { workspace = true }
+embroiderly_pattern = { workspace = true }
+embroiderly_logger = { workspace = true }
 
 # De/serialization
 serde_json = { workspace = true }

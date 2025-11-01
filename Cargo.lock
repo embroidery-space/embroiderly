@@ -1710,9 +1710,9 @@ dependencies = [
  "base64 0.22.1",
  "borsh",
  "dyn-clone",
- "embroiderly-logger",
- "embroiderly-parsers",
- "embroiderly-pattern",
+ "embroiderly_logger",
+ "embroiderly_parsers",
+ "embroiderly_pattern",
  "encoding_rs",
  "font-kit",
  "image",
@@ -1742,17 +1742,17 @@ dependencies = [
  "ttf-parser",
  "uuid",
  "walkdir",
- "xsp-parsers",
+ "xsp_parsers",
 ]
 
 [[package]]
-name = "embroiderly-image"
+name = "embroiderly_image"
 version = "0.0.0"
 dependencies = [
  "anyhow",
  "clap",
- "embroiderly-parsers",
- "embroiderly-pattern",
+ "embroiderly_parsers",
+ "embroiderly_pattern",
  "image",
  "log",
  "ordered-float 5.1.0",
@@ -1768,7 +1768,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "embroiderly-logger"
+name = "embroiderly_logger"
 version = "0.0.0"
 dependencies = [
  "anyhow",
@@ -1779,22 +1779,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "embroiderly-parsers"
+name = "embroiderly_parsers"
 version = "0.0.0"
 dependencies = [
  "anyhow",
- "embroiderly-pattern",
+ "embroiderly_pattern",
  "log",
  "prettydiff",
  "quick-xml 0.38.3",
  "tempfile",
  "thiserror 2.0.17",
- "xsp-parsers",
+ "xsp_parsers",
  "zip 6.0.0",
 ]
 
 [[package]]
-name = "embroiderly-pattern"
+name = "embroiderly_pattern"
 version = "0.0.0"
 dependencies = [
  "alphanumeric-sort",
@@ -1806,7 +1806,7 @@ dependencies = [
  "rstest",
  "serde",
  "uuid",
- "xsp-parsers",
+ "xsp_parsers",
 ]
 
 [[package]]
@@ -1815,10 +1815,10 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "clap",
- "embroiderly-image",
- "embroiderly-logger",
- "embroiderly-parsers",
- "embroiderly-pattern",
+ "embroiderly_image",
+ "embroiderly_logger",
+ "embroiderly_parsers",
+ "embroiderly_pattern",
  "log",
  "sentry",
  "serde_json",
@@ -9912,7 +9912,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ce9e2f4a404d9ebffc0a9832cf4f50907220ba3d7fffa9099261a5cab52f2dd7"
 
 [[package]]
-name = "xsp-parsers"
+name = "xsp_parsers"
 version = "0.0.0"
 dependencies = [
  "byteorder",

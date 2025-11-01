@@ -1,5 +1,5 @@
 [package]
-name = "embroiderly-logger"
+name = "embroiderly_logger"
 edition = { workspace = true }
 
 [dependencies]

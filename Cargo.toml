@@ -39,11 +39,11 @@ tauri-plugin-sentry = { path = "crates/tauri-plugin-sentry" }
 tauri-plugin-posthog = { path = "crates/tauri-plugin-posthog" }
 
 # Embroiderly Core
-embroiderly-image = { path = "crates/embroiderly-image" }
-embroiderly-parsers = { path = "crates/embroiderly-parsers" }
-embroiderly-pattern = { path = "crates/embroiderly-pattern" }
-embroiderly-logger = { path = "crates/embroiderly-logger" }
-xsp-parsers = { path = "crates/xsp-parsers" }
+embroiderly_image = { path = "crates/embroiderly-image" }
+embroiderly_parsers = { path = "crates/embroiderly-parsers" }
+embroiderly_pattern = { path = "crates/embroiderly-pattern" }
+embroiderly_logger = { path = "crates/embroiderly-logger" }
+xsp_parsers = { path = "crates/xsp-parsers" }
 
 # Parsing pattern files
 byteorder = "1.5.0"

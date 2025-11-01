@@ -1,5 +1,5 @@
 [package]
-name = "embroiderly-image"
+name = "embroiderly_image"
 edition = { workspace = true }
 
 [dependencies]
@@ -7,8 +7,8 @@ edition = { workspace = true }
 clap = { workspace = true }
 
 # Embroiderly Core
-embroiderly-parsers = { workspace = true }
-embroiderly-pattern = { workspace = true }
+embroiderly_parsers = { workspace = true }
+embroiderly_pattern = { workspace = true }
 
 # De/serialization
 serde = { workspace = true }

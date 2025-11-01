@@ -1,5 +1,5 @@
 [package]
-name = "xsp-parsers"
+name = "xsp_parsers"
 edition = { workspace = true }
 
 [dependencies]
