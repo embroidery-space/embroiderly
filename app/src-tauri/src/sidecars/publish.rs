@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
 use embroiderly_pattern::PdfExportOptions;
+use tauri::Manager as _;
 use tauri_plugin_shell::ShellExt as _;
 
 use super::SidecarRunner;
@@ -61,6 +62,12 @@ impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
           .map_err(|e| PatternError::FailedToExport(anyhow::anyhow!("Failed to serialize PDF export options: {e}")))
       })?;
 
+    let system_fonts_dir = self
+      .app_handle
+      .path()
+      .resolve("resources/fonts", tauri::path::BaseDirectory::Resource)?;
+    let custom_fonts_dir = crate::utils::path::app_data_dir(&self.app_handle)?.join("fonts");
+
     let mut sidecar = self
       .app_handle
       .shell()
@@ -80,7 +87,11 @@ impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
       .arg("--output")
       .arg(&output_path)
       .arg("--options")
-      .arg(&options);
+      .arg(&options)
+      .arg("--symbol-fonts-dir")
+      .arg(&system_fonts_dir)
+      .arg("--symbol-fonts-dir")
+      .arg(&custom_fonts_dir);
 
     // Execute the command.
     let output = sidecar

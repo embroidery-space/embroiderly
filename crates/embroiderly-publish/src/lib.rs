@@ -14,7 +14,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
   patproj: &PatternProject,
   file_path: P,
   options: serde_json::Value,
-  symbol_fonts_dir: std::path::PathBuf,
+  symbol_fonts_dir: Vec<std::path::PathBuf>,
 ) -> Result<()> {
   match PatternExportFormat::try_from(file_path.as_ref().extension())? {
     PatternExportFormat::Pdf => {

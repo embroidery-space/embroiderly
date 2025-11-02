@@ -16,8 +16,8 @@ struct Args {
   options: String,
 
   /// path to the Embroiderly symbol fonts directory
-  #[argh(option, default = "std::path::PathBuf::from(\"./resources/fonts/\")")]
-  symbol_fonts_dir: std::path::PathBuf,
+  #[argh(option)]
+  symbol_fonts_dir: Vec<std::path::PathBuf>,
 }
 
 fn main() -> anyhow::Result<()> {

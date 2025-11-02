@@ -5,7 +5,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
   patproj: &PatternProject,
   file_path: P,
   options: PdfExportOptions,
-  symbol_fonts_dir: std::path::PathBuf,
+  symbol_fonts_dir: Vec<std::path::PathBuf>,
 ) -> Result<()> {
   log::debug!("Exporting Pattern({:?}) to PDF", patproj.id);
   let file_path = file_path.as_ref();
@@ -18,7 +18,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
       file_path.file_stem().unwrap_or_default().to_string_lossy(),
       file_path.extension().unwrap_or_default().to_string_lossy()
     ));
-    export_pattern_inner(patproj, file_path, frames, options, symbol_fonts_dir.clone())?;
+    export_pattern_inner(patproj, file_path, frames, options, &symbol_fonts_dir)?;
   }
 
   if options.color {
@@ -29,7 +29,7 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
       file_path.file_stem().unwrap_or_default().to_string_lossy(),
       file_path.extension().unwrap_or_default().to_string_lossy()
     ));
-    export_pattern_inner(patproj, file_path, frames, options, symbol_fonts_dir)?;
+    export_pattern_inner(patproj, file_path, frames, options, &symbol_fonts_dir)?;
   }
 
   log::debug!("Pattern({:?}) exported to PDF", patproj.id);
@@ -41,7 +41,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   file_path: P,
   frames: Vec<Vec<u8>>,
   options: PdfExportOptions,
-  symbol_fonts_dir: std::path::PathBuf,
+  symbol_fonts_dir: &[std::path::PathBuf],
 ) -> Result<()> {
   let PatternProject { pattern, .. } = patproj;
 
@@ -60,7 +60,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   };
   let typst_template = typst_as_lib::TypstEngine::builder()
     .main_file(include_str!("../templates/pattern.typ"))
-    .search_fonts_with(typst_as_lib::typst_kit_options::TypstKitFontOptions::default().include_dirs([symbol_fonts_dir]))
+    .search_fonts_with(typst_as_lib::typst_kit_options::TypstKitFontOptions::default().include_dirs(symbol_fonts_dir))
     .with_static_file_resolver(
       frames
         .into_iter()
