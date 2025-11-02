@@ -79,10 +79,7 @@ base64 = "0.22.1"
 borsh = { version = "1.5.7", features = ["derive"] }
 
 # CLI
-clap = { version = "4.5.50", default-features = false, features = [
-  "std",
-  "derive",
-] }
+argh = { version = "0.1.13", default-features = false }
 
 # Error handling
 anyhow = "1.0.100"

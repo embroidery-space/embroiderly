@@ -1,18 +1,18 @@
-use clap::Parser;
+use argh::FromArgs;
 
 /// A utility program to import and convert images into embroidery patterns.
-#[derive(Debug, Parser)]
+#[derive(FromArgs)]
 struct Args {
-  /// Path to the input image file
-  #[arg(long)]
+  /// path to the input image file
+  #[argh(option)]
   image: std::path::PathBuf,
 
-  /// Options for the import process in JSON format
-  #[arg(long)]
+  /// options for the import process in JSON format
+  #[argh(option)]
   options: String,
 
-  /// Path to the Embroiderly palettes directory
-  #[arg(long, default_value = "./resources/palettes/")]
+  /// path to the Embroiderly palettes directory
+  #[argh(option, default = "std::path::PathBuf::from(\"./resources/palettes/\")")]
   palettes_dir: std::path::PathBuf,
 }
 
@@ -20,7 +20,7 @@ fn main() -> anyhow::Result<()> {
   embroiderly_image::logger::init()?;
   let _telemetry = embroiderly_image::telemetry::init()?;
 
-  let args = Args::parse();
+  let args: Args = argh::from_env();
 
   let pattern_path = args
     .image

@@ -1,22 +1,22 @@
-use clap::Parser;
+use argh::FromArgs;
 
 /// A utility program to export embroidery patterns to various formats.
-#[derive(Debug, Parser)]
+#[derive(FromArgs)]
 struct Args {
-  /// Path to the pattern file
-  #[arg(long)]
+  /// path to the pattern file
+  #[argh(option)]
   pattern: std::path::PathBuf,
 
-  /// Path to the output file
-  #[arg(long)]
+  /// path to the output file
+  #[argh(option)]
   output: std::path::PathBuf,
 
-  /// Options for the export process in JSON format
-  #[arg(long)]
+  /// options for the export process in JSON format
+  #[argh(option)]
   options: String,
 
-  /// Path to the Embroiderly symbol fonts directory
-  #[arg(long, default_value = "./resources/fonts/")]
+  /// path to the Embroiderly symbol fonts directory
+  #[argh(option, default = "std::path::PathBuf::from(\"./resources/fonts/\")")]
   symbol_fonts_dir: std::path::PathBuf,
 }
 
@@ -24,7 +24,7 @@ fn main() -> anyhow::Result<()> {
   embroiderly_publish::logger::init()?;
   let _telemetry = embroiderly_publish::telemetry::init()?;
 
-  let args = Args::parse();
+  let args: Args = argh::from_env();
 
   let patproj = embroiderly_parsers::parse_pattern(args.pattern)?;
   embroiderly_publish::export_pattern(

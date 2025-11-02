@@ -4,7 +4,7 @@ edition = { workspace = true }
 
 [dependencies]
 # CLI
-clap = { workspace = true }
+argh = { workspace = true }
 
 # Embroiderly Core
 embroiderly_image = { workspace = true }
