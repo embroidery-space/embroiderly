@@ -1,4 +1,5 @@
 use argh::FromArgs;
+use embroiderly_publish::Error;
 
 /// A utility program to export embroidery patterns to various formats.
 #[derive(FromArgs)]
@@ -23,15 +24,17 @@ struct Args {
 fn main() -> anyhow::Result<()> {
   embroiderly_publish::logger::init()?;
 
-  let args: Args = argh::from_env();
+  let Args {
+    pattern,
+    output,
+    options,
+    symbol_fonts_dir,
+  } = argh::from_env();
 
-  let patproj = embroiderly_parsers::parse_pattern(args.pattern)?;
-  embroiderly_publish::export_pattern(
-    &patproj,
-    args.output,
-    serde_json::from_str(&args.options)?,
-    args.symbol_fonts_dir,
-  )?;
+  let patproj = embroiderly_parsers::parse_pattern(pattern)?;
+  let options = serde_json::from_str(&options).map_err(Error::InvalidPdfExportOptions)?;
+
+  embroiderly_publish::export_pattern(&patproj, output, options, symbol_fonts_dir)?;
 
   Ok(())
 }
