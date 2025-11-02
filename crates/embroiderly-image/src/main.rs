@@ -17,6 +17,9 @@ struct Args {
 }
 
 fn main() -> anyhow::Result<()> {
+  embroiderly_image::logger::init()?;
+  let _telemetry = embroiderly_image::telemetry::init()?;
+
   let args = Args::parse();
 
   let pattern_path = args

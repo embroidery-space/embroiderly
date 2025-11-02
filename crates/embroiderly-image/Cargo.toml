@@ -9,6 +9,7 @@ clap = { workspace = true }
 # Embroiderly Core
 embroiderly_parsers = { workspace = true }
 embroiderly_pattern = { workspace = true }
+embroiderly_logger = { workspace = true }
 
 # De/serialization
 serde = { workspace = true }
@@ -24,6 +25,9 @@ palette = { workspace = true }
 
 # Logging
 log = { workspace = true }
+
+# Telemetry
+sentry = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

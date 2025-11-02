@@ -1751,6 +1751,7 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "clap",
+ "embroiderly_logger",
  "embroiderly_parsers",
  "embroiderly_pattern",
  "image",
@@ -1762,6 +1763,7 @@ dependencies = [
  "quantette",
  "quick-xml 0.38.3",
  "rayon",
+ "sentry",
  "serde",
  "serde_json",
  "thiserror 2.0.17",
