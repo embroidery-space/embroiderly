@@ -255,23 +255,12 @@ pub fn export_pattern<R: tauri::Runtime>(
   embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
   patproj.file_path = previous_file_path;
 
-  let output = crate::sidecars::ExportPdfSidecar::new(app_handle.clone())
+  crate::sidecars::ExportPdfSidecar::new(app_handle.clone())
     .pattern_path(tempfile_path)
     .output_path(file_path)
     .options(options)
     .run()?;
 
-  if !output.status.success() {
-    let stderr = String::from_utf8_lossy(&output.stderr);
-    log::error!("Error while exporting pattern: {stderr}");
-    return Err(
-      PatternError::FailedToExport(anyhow::anyhow!(
-        "Process terminated with exit code {:?}: {stderr}",
-        output.status.code()
-      ))
-      .into(),
-    );
-  }
   app_handle.emit("app:pattern-exported", &pattern_id)?;
 
   app_handle.capture_event(AppEvent::PatternExportedAsPdf {

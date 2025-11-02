@@ -24,9 +24,6 @@ typst-as-lib = { workspace = true, features = ["typst-kit-fonts"] }
 # Logging
 log = { workspace = true }
 
-# Telemetry
-sentry = { workspace = true }
-
 # Error handling
 anyhow = { workspace = true }
 thiserror = { workspace = true }

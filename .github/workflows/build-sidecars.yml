@@ -2,12 +2,6 @@ name: Build and Commit Sidecar Binaries
 
 on:
   workflow_dispatch:
-  workflow_call:
-    inputs:
-      app-version:
-        description: Application version for Sentry release
-        required: false
-        type: string
   push:
     branches: [dev]
     paths:
@@ -69,22 +63,11 @@ jobs:
           path: binaries/
           retention-days: 1
 
-      - name: Upload debug symbols for Sentry
-        if: inputs.app-version != ''
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: sidecar-debug-symbols-${{ matrix.sidecar }}-${{ matrix.os }}
-          path: |
-            target/release/${{ matrix.sidecar }}.pdb
-            target/release/${{ matrix.sidecar }}.dwp
-          retention-days: 1
-
   commit:
     permissions:
       contents: write
     needs: build
     runs-on: ubuntu-latest
-    if: inputs.app-version == ''
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
@@ -117,46 +100,3 @@ jobs:
           commit_user_name: ${{ steps.gpg.outputs.name }}
           commit_user_email: ${{ steps.gpg.outputs.email }}
           push_options: --force
-
-  sentry:
-    needs: build
-    runs-on: ubuntu-latest
-    if: inputs.app-version != ''
-    strategy:
-      fail-fast: false
-      matrix:
-        sidecar: [embroiderly_publish]
-    defaults:
-      run:
-        shell: bash
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: embroidery-space
-      SENTRY_PROJECT: ${{ matrix.sidecar }}
-    steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: ./.github/actions/setup-node
-        with:
-          install-deps: false
-
-      - name: Install Sentry CLI
-        run: pnpm install -g @sentry/cli
-
-      - name: Create Sentry release
-        run: |
-          sentry-cli releases new "${{ inputs.app-version }}"
-          sentry-cli releases set-commits "${{ inputs.app-version }}" --auto || true
-
-      - name: Download debug symbols
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
-        with:
-          pattern: sidecar-debug-symbols-${{ matrix.sidecar }}-*
-          merge-multiple: true
-
-      - name: Upload debug symbols to Sentry
-        run: |
-          find . -name "${{ matrix.sidecar }}.pdb" -exec sentry-cli debug-files upload {} + || true
-          find . -name "${{ matrix.sidecar }}.dwp" -exec sentry-cli debug-files upload {} + || true
-
-      - name: Finalize Sentry release
-        run: sentry-cli releases finalize "${{ inputs.app-version }}"
