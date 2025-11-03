@@ -4,7 +4,7 @@ import type { DialogFilter, OpenDialogOptions, SaveDialogOptions } from "@tauri-
 
 import { createSharedComposable, useLocalStorage } from "@vueuse/core";
 
-import { PathApi } from "~/api/";
+import { UtilityApi } from "~/api/";
 
 const ALL_FILES_FILTER: DialogFilter = { name: "All Files", extensions: ["*"] };
 
@@ -73,7 +73,7 @@ export const useFilePicker = createSharedComposable(() => {
      * @returns The selected file path or null if canceled.
      */
     open: async (options?: Omit<OpenDialogOptions, "defaultPath">) => {
-      lastOpenedFolder.value ??= await PathApi.getAppDocumentDir();
+      lastOpenedFolder.value ??= await UtilityApi.getAppDocumentDir();
 
       const path = await open({
         defaultPath: lastOpenedFolder.value,

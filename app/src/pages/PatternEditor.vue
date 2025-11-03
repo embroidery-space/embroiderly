@@ -36,7 +36,7 @@
 
   import { onMounted, ref, useTemplateRef } from "vue";
 
-  import { PatternApi } from "~/api/index.ts";
+  import { FilesApi } from "~/api/index.ts";
 
   const appWindow = getCurrentWebviewWindow();
 
@@ -92,7 +92,7 @@
     if (!appStateStore.openedPatterns.length) {
       // If there are no opened patterns, it means the app was just started.
       // So we should load those patterns that were opened via file associations.
-      const openedPatterns = await PatternApi.getOpenedPatterns();
+      const openedPatterns = await FilesApi.getOpenedPatterns();
       for (const [id, title] of openedPatterns) appStateStore.addOpenedPattern(id, title);
     }
 

@@ -5,22 +5,17 @@ use rayon::prelude::*;
 use tauri::Manager as _;
 use tauri_plugin_posthog::PostHogExt as _;
 
+use super::{FileGroup, GroupedFilesList, ImportFilesResponse};
 use crate::error::Result;
 use crate::utils::palette::is_palette_file;
 use crate::utils::path::app_data_dir;
 use crate::vendor::telemetry::AppEvent;
 
-#[derive(serde::Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ImportPaletteFilesResponse {
-  pub failed_files: Vec<String>,
-}
-
 #[tauri::command]
 pub fn import_palettes<R: tauri::Runtime>(
   paths: Vec<String>,
   app_handle: tauri::AppHandle<R>,
-) -> Result<ImportPaletteFilesResponse> {
+) -> Result<ImportFilesResponse> {
   let palettes_dir = app_data_dir(&app_handle)?.join("palettes");
 
   // Ensure the palettes directory exists.
@@ -57,7 +52,7 @@ pub fn import_palettes<R: tauri::Runtime>(
     failed_files: failed_files.len(),
   });
 
-  Ok(ImportPaletteFilesResponse { failed_files })
+  Ok(ImportFilesResponse { failed_files })
 }
 
 fn parse_and_save_palette(file_path: &Path, palettes_dir: &Path) -> anyhow::Result<()> {
@@ -110,14 +105,8 @@ fn parse_and_save_palette(file_path: &Path, palettes_dir: &Path) -> anyhow::Resu
   Ok(())
 }
 
-#[derive(serde::Serialize)]
-pub struct PalettesListResponse {
-  pub system: Vec<String>,
-  pub custom: Vec<String>,
-}
-
 #[tauri::command]
-pub fn get_palettes_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> Result<PalettesListResponse> {
+pub fn get_palettes_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> Result<GroupedFilesList> {
   let mut system = Vec::new();
   let mut custom = Vec::new();
 
@@ -146,20 +135,12 @@ pub fn get_palettes_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> 
   system.sort();
   custom.sort();
 
-  Ok(PalettesListResponse { system, custom })
-}
-
-#[derive(serde::Deserialize)]
-pub enum PaletteGroup {
-  #[serde(rename = "system")]
-  System,
-  #[serde(rename = "custom")]
-  Custom,
+  Ok(GroupedFilesList { system, custom })
 }
 
 #[tauri::command]
 pub fn load_palette<R: tauri::Runtime>(
-  palette_group: PaletteGroup,
+  palette_group: FileGroup,
   palette_name: String,
   app_handle: tauri::AppHandle<R>,
 ) -> Result<Vec<u8>> {
@@ -173,7 +154,7 @@ pub fn load_palette<R: tauri::Runtime>(
 
 #[tauri::command]
 pub fn resolve_palette_path<R: tauri::Runtime>(
-  palette_group: PaletteGroup,
+  palette_group: FileGroup,
   palette_name: String,
   app_handle: tauri::AppHandle<R>,
 ) -> Result<PathBuf> {
@@ -181,16 +162,16 @@ pub fn resolve_palette_path<R: tauri::Runtime>(
 }
 
 fn resolve_palette_path_inner<R: tauri::Runtime>(
-  palette_group: PaletteGroup,
+  palette_group: FileGroup,
   palette_name: String,
   app_handle: tauri::AppHandle<R>,
 ) -> Result<PathBuf> {
   let palette_path = match palette_group {
-    PaletteGroup::System => app_handle.path().resolve(
+    FileGroup::System => app_handle.path().resolve(
       format!("resources/palettes/{}.json", palette_name),
       tauri::path::BaseDirectory::Resource,
     )?,
-    PaletteGroup::Custom => app_data_dir(&app_handle)?
+    FileGroup::Custom => app_data_dir(&app_handle)?
       .join("palettes")
       .join(format!("{}.json", palette_name)),
   };

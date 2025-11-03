@@ -72,7 +72,7 @@
   import { computedAsync, watchDebounced } from "@vueuse/core";
   import { ref, reactive, onMounted, shallowRef, onUnmounted, computed } from "vue";
 
-  import { ImageApi, PaletteApi } from "~/api";
+  import { FilesApi } from "~/api";
 
   type Size = [width: number, height: number];
 
@@ -106,12 +106,12 @@
   const selectedPaletteKey = ref("system/DMC");
   const selectedPalettePath = computedAsync(async () => {
     const [brand, name] = selectedPaletteKey.value.split("/") as [string, string];
-    return await PaletteApi.resolvePalettePath(brand, name);
+    return await FilesApi.resolvePalettePath(brand, name);
   }, "");
   const paletteOptions = shallowRef<SelectMenuItem[][]>([]);
 
   async function loadPalettesList() {
-    const { system, custom } = await PaletteApi.getPalettesList();
+    const { system, custom } = await FilesApi.getPalettesList();
 
     const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("label-files-system"), type: "label" }];
     for (const palette of system) systemPalettes.push({ label: palette, value: `system/${palette}` });
@@ -148,7 +148,7 @@
       try {
         if (previewImageSrc.value) URL.revokeObjectURL(previewImageSrc.value);
 
-        const buffer = await ImageApi.getPatternPreviewFromImage(imagePath, palettePath, options);
+        const buffer = await FilesApi.getPatternPreviewFromImage(imagePath, palettePath, options);
         const blob = new Blob([buffer], { type: "image/jpeg" });
 
         previewImageSrc.value = URL.createObjectURL(blob);

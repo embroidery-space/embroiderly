@@ -46,7 +46,7 @@
   import type { ContextMenuItem, DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
   import { computed, onMounted, ref, shallowRef } from "vue";
 
-  import { FontsApi } from "~/api";
+  import { FilesApi } from "~/api";
   import { addSymbolFonts } from "~/utils/font-face";
 
   const confirm = useConfirm();
@@ -108,7 +108,7 @@
   ]);
 
   async function refreshFontsList() {
-    const { system, custom } = await FontsApi.getSymbolFontsList();
+    const { system, custom } = await FilesApi.getSymbolFontsList();
 
     const systemFonts: SelectMenuItem[] = [{ label: fluent.$t("label-files-system"), type: "label" }];
     for (const fontFamily of system) {
@@ -132,8 +132,8 @@
       if (!codePoints) {
         loadingFont.value = true;
         const [fontFace, loadedCodePoints] = await Promise.all([
-          FontsApi.loadSymbolFont(fontFamily),
-          FontsApi.loadSymbolFontCodePoints(fontFamily),
+          FilesApi.loadSymbolFont(fontFamily),
+          FilesApi.loadSymbolFontCodePoints(fontFamily),
         ]);
         addSymbolFonts(fontFace);
         codePoints = loadedCodePoints;
@@ -156,7 +156,7 @@
     try {
       importingFonts.value = true;
 
-      const { failedFiles } = await FontsApi.importSymbolFonts(paths);
+      const { failedFiles } = await FilesApi.importSymbolFonts(paths);
       await refreshFontsList();
 
       if (failedFiles.length) {

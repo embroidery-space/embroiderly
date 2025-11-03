@@ -1,5 +1,13 @@
 import { invoke } from "./index.ts";
 
+// === Paths ===
+
+export function getAppDocumentDir() {
+  return invoke<string>("get_app_document_dir");
+}
+
+// === System ===
+
 export interface SystemInfo {
   osType: string;
   osArch: string;
@@ -7,6 +15,7 @@ export interface SystemInfo {
   appVersion: string;
   webviewVersion: string;
 }
+
 export function getSystemInfo() {
   return invoke<SystemInfo>("get_system_info");
 }

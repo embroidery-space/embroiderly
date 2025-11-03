@@ -85,19 +85,33 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     .plugin(tauri_plugin_pinia::init());
 
   builder = builder.invoke_handler(tauri::generate_handler![
+    // Pattern files management.
+    commands::files::patterns::load_pattern,
+    commands::files::patterns::open_pattern,
+    commands::files::patterns::create_pattern,
+    commands::files::patterns::save_pattern,
+    commands::files::patterns::save_all_patterns,
+    commands::files::patterns::close_pattern,
+    commands::files::patterns::close_all_patterns,
+    commands::files::patterns::get_opened_patterns,
+    commands::files::patterns::get_unsaved_patterns,
+    commands::files::patterns::get_pattern_file_path,
+    // Palette files management.
+    commands::files::palettes::import_palettes,
+    commands::files::palettes::get_palettes_list,
+    commands::files::palettes::load_palette,
+    commands::files::palettes::resolve_palette_path,
+    // Symbol font files management.
+    commands::files::fonts::get_symbol_fonts_list,
+    commands::files::fonts::load_symbol_font_content,
+    commands::files::fonts::load_symbol_font_code_points,
+    commands::files::fonts::import_symbol_fonts,
+    // Importing images into patterns.
     commands::files::import::get_image_dimensions,
     commands::files::import::get_pattern_preview_from_image,
-    commands::core::pattern_io::load_pattern,
-    commands::core::pattern_io::open_pattern,
-    commands::core::pattern_io::create_pattern,
-    commands::core::pattern_io::save_pattern,
-    commands::core::pattern_io::save_all_patterns,
-    commands::core::pattern_io::export_pattern,
-    commands::core::pattern_io::close_pattern,
-    commands::core::pattern_io::close_all_patterns,
-    commands::core::pattern_io::get_opened_patterns,
-    commands::core::pattern_io::get_unsaved_patterns,
-    commands::core::pattern_io::get_pattern_file_path,
+    // Exporting patterns into PDF documents.
+    commands::files::export::export_pattern,
+    // Core commands (patterns edititng).
     commands::core::pattern::update_pattern_info,
     commands::core::image::set_reference_image,
     commands::core::image::remove_reference_image,
@@ -114,14 +128,6 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::palette::sort_palette_by,
     commands::core::palette::reorder_palette_items,
     commands::core::palette::set_symbol,
-    commands::core::palette_io::import_palettes,
-    commands::core::palette_io::get_palettes_list,
-    commands::core::palette_io::load_palette,
-    commands::core::palette_io::resolve_palette_path,
-    commands::core::fonts_io::get_symbol_fonts_list,
-    commands::core::fonts_io::load_symbol_font_content,
-    commands::core::fonts_io::load_symbol_font_code_points,
-    commands::core::fonts_io::import_symbol_fonts,
     commands::core::stitches::add_stitch,
     commands::core::stitches::remove_stitch,
     commands::core::publish::update_pdf_export_options,
@@ -129,6 +135,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::history::redo,
     commands::core::history::start_transaction,
     commands::core::history::end_transaction,
+    // Utility commands.
     commands::utils::path::get_app_document_dir,
     commands::utils::system::get_system_info,
   ]);

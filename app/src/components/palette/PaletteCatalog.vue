@@ -60,7 +60,7 @@
   import { onMounted, ref, computed, shallowRef } from "vue";
   import type { Ref } from "vue";
 
-  import { PaletteApi } from "~/api";
+  import { FilesApi } from "~/api";
   import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/core/pattern/";
 
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
@@ -114,7 +114,7 @@
   ]);
 
   async function refreshPalettesList() {
-    const { system, custom } = await PaletteApi.getPalettesList();
+    const { system, custom } = await FilesApi.getPalettesList();
 
     const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("label-files-system"), type: "label" }];
     for (const palette of system) {
@@ -139,7 +139,7 @@
       let palette = paletteCatalog.get(paletteKey);
       if (!palette) {
         loadingPalette.value = true;
-        palette = await PaletteApi.loadPalette(paletteGroup, paletteName);
+        palette = await FilesApi.loadPalette(paletteGroup, paletteName);
         paletteCatalog.set(paletteKey, palette);
       }
       selectedPalette.value = palette;
@@ -159,7 +159,7 @@
     try {
       importingPalettes.value = true;
 
-      const { failedFiles } = await PaletteApi.importPalettes(paths);
+      const { failedFiles } = await FilesApi.importPalettes(paths);
       await refreshPalettesList();
 
       if (failedFiles.length) {

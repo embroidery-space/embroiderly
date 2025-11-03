@@ -77,7 +77,7 @@
   import { computed, onMounted, reactive, ref, watch } from "vue";
   import type { Ref } from "vue";
 
-  import { FabricApi } from "~/api";
+  import { PatternApi } from "~/api";
   import { Fabric, PaletteSettings, FabricColor } from "~/core/pattern/";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/utils/measurement";
 
@@ -169,6 +169,6 @@
   });
 
   onMounted(async () => {
-    fabricColors.value = await FabricApi.loadFabricColors();
+    fabricColors.value = await PatternApi.loadFabricColors();
   });
 </script>

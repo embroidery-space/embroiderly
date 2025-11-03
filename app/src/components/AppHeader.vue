@@ -82,7 +82,7 @@
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { computed } from "vue";
 
-  import { SystemApi } from "~/api/";
+  import { UtilityApi } from "~/api/";
 
   const confirm = useConfirm();
 
@@ -178,7 +178,7 @@
   defineShortcuts(extractShortcuts(toolsOptions.value));
 
   async function showSystemInfo() {
-    const systemInfo = await SystemApi.getSystemInfo();
+    const systemInfo = await UtilityApi.getSystemInfo();
     const systemInfoMessage = fluent.$t("message-system-info", { ...systemInfo });
 
     const accepted = await confirm.open({

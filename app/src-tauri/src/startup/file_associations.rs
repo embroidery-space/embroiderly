@@ -7,7 +7,7 @@ pub fn handle_file_associations<R: tauri::Runtime>(
   args: impl IntoIterator<Item = String>,
 ) -> anyhow::Result<()> {
   for file in collect_files_from_args(args) {
-    crate::commands::core::pattern_io::open_pattern(
+    crate::commands::files::patterns::open_pattern(
       file,
       Some(false),
       app_handle.clone(),
