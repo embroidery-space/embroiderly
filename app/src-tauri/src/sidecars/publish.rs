@@ -4,20 +4,18 @@ use embroiderly_pattern::PdfExportOptions;
 use tauri::Manager as _;
 use tauri_plugin_shell::ShellExt as _;
 
-use super::SidecarRunner;
 use crate::error::{PatternError, Result};
-use crate::vendor::telemetry::sentry;
 
-/// A utility struct for exporting the pattern as a PDF document using the `embroiderly_publish` sidecar.
-pub struct ExportPdfSidecar<R: tauri::Runtime> {
+/// A utility for exporting cross-stitch patterns as a PDF documents using the `embroiderly_publish` sidecar.
+pub struct PdfExportSidecar<R: tauri::Runtime> {
   app_handle: tauri::AppHandle<R>,
   pattern_path: Option<PathBuf>,
   output_path: Option<PathBuf>,
   options: Option<PdfExportOptions>,
 }
 
-impl<R: tauri::Runtime> ExportPdfSidecar<R> {
-  /// Create a new `PublishSidecar` instance with the given app handle.
+impl<R: tauri::Runtime> PdfExportSidecar<R> {
+  /// Create a new sidecar instance with the given app handle.
   pub fn new(app_handle: tauri::AppHandle<R>) -> Self {
     Self {
       app_handle,
@@ -46,7 +44,7 @@ impl<R: tauri::Runtime> ExportPdfSidecar<R> {
   }
 }
 
-impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
+impl<R: tauri::Runtime> super::SidecarRunner for PdfExportSidecar<R> {
   async fn run_async(self) -> Result<tauri_plugin_shell::process::Output> {
     let pattern_path = self
       .pattern_path
@@ -99,51 +97,6 @@ impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
       .await
       .map_err(|e| PatternError::FailedToExport(e.into()))?;
 
-    // Handle sidecar failure and capture to Sentry if enabled.
-    if !output.status.success() {
-      let stdout = String::from_utf8_lossy(&output.stdout);
-      let stderr = String::from_utf8_lossy(&output.stderr);
-      let exit_code = output.status.code();
-
-      log::error!("Sidecar 'embroiderly_publish' failed with exit code {exit_code:?}: {stderr}",);
-
-      // Capture error to Sentry with sidecar log file attachment.
-      if crate::utils::settings::telemetry_diagnostics_enabled(&self.app_handle) {
-        let log_file_path = crate::utils::path::app_logs_dir(&self.app_handle)?.join("embroiderly_publish.log");
-
-        sentry::configure_scope(|scope| {
-          // Add sidecar output as extra data.
-          scope.set_extra("sidecar_stdout", stdout.to_string().into());
-          scope.set_extra("sidecar_stderr", stderr.to_string().into());
-          scope.set_extra("sidecar_exit_code", exit_code.into());
-
-          // Attach sidecar log file if it exists.
-          if log_file_path.exists()
-            && let Ok(log_contents) = std::fs::read(&log_file_path)
-          {
-            scope.add_attachment(sentry::protocol::Attachment {
-              buffer: log_contents,
-              filename: String::from("embroiderly_publish.log"),
-              content_type: Some(String::from("text/plain")),
-              ty: None,
-            });
-          }
-        });
-
-        sentry::capture_message(
-          &format!("Sidecar 'embroiderly_publish' failed with exit code {exit_code:?}",),
-          sentry::Level::Error,
-        );
-      }
-
-      return Err(
-        PatternError::FailedToExport(anyhow::anyhow!(
-          "Sidecar process terminated with exit code {exit_code:?}: {stderr}",
-        ))
-        .into(),
-      );
-    }
-
-    Ok(output)
+    super::handle_sidecar_output(&self.app_handle, output, "embroiderly_publish")
   }
 }
