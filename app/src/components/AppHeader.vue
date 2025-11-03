@@ -112,6 +112,10 @@
     ],
     [
       {
+        label: fluent.$t("label-import"),
+        children: [{ label: fluent.$t("label-image"), onSelect: () => patternsStore.openImageImportModal() }],
+      },
+      {
         label: fluent.$t("label-export"),
         disabled: !patternsStore.pattern,
         children: [

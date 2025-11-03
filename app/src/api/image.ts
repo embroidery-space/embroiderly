@@ -15,3 +15,11 @@ export function updateReferenceImageSettings(patternId: string, settings: Refere
     headers: { patternId },
   });
 }
+
+export function getImageDimensions(imagePath: string) {
+  return invoke<[width: number, height: number]>("get_image_dimensions", { imagePath });
+}
+
+export function getPatternPreviewFromImage(imagePath: string, palettePath: string, options: object) {
+  return invoke<ArrayBuffer>("get_pattern_preview_from_image", { imagePath, palettePath, options });
+}

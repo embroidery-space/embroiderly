@@ -85,6 +85,8 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     .plugin(tauri_plugin_pinia::init());
 
   builder = builder.invoke_handler(tauri::generate_handler![
+    commands::files::import::get_image_dimensions,
+    commands::files::import::get_pattern_preview_from_image,
     commands::core::pattern_io::load_pattern,
     commands::core::pattern_io::open_pattern,
     commands::core::pattern_io::create_pattern,
@@ -115,6 +117,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::palette_io::import_palettes,
     commands::core::palette_io::get_palettes_list,
     commands::core::palette_io::load_palette,
+    commands::core::palette_io::resolve_palette_path,
     commands::core::fonts_io::get_symbol_fonts_list,
     commands::core::fonts_io::load_symbol_font_content,
     commands::core::fonts_io::load_symbol_font_code_points,

@@ -36,6 +36,10 @@ export async function loadPalette(paletteGroup: string, paletteName: string) {
   return deserializeBrandPalette(new Uint8Array(buffer));
 }
 
+export async function resolvePalettePath(paletteGroup: string, paletteName: string) {
+  return await invoke<string>("resolve_palette_path", { paletteGroup, paletteName });
+}
+
 export function sortPaletteBy(patternId: string, sortBy: SortPaletteBy) {
   return invoke<void>("sort_palette_by", { sortBy }, { headers: { patternId } });
 }

@@ -255,7 +255,7 @@ pub fn export_pattern<R: tauri::Runtime>(
   embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
   patproj.file_path = previous_file_path;
 
-  crate::sidecars::ExportPdfSidecar::new(app_handle.clone())
+  crate::sidecars::PdfExportSidecar::new(app_handle.clone())
     .pattern_path(tempfile_path)
     .output_path(file_path)
     .options(options)

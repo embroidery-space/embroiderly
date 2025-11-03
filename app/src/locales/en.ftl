@@ -23,6 +23,9 @@ label-save-changes = Save Changes
 
 label-close = Close
 
+label-import = Import
+label-import-image = Import Image
+
 label-export = Export
 label-export-document = Export Document
 
@@ -47,6 +50,8 @@ label-hint-counts-in-points = In points
 
 label-files-system = System
 label-files-custom = Custom
+
+label-image = Image
 
 ## Names of the stitches and other tools.
 

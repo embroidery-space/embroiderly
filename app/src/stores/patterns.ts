@@ -58,6 +58,10 @@ export const usePatternsStore = defineStore(
     const fabricModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/FabricModal.vue")));
     const gridModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/GridModal.vue")));
     const publishModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/PublishModal.vue")));
+
+    const imageImportModal = overlay.create(
+      defineAsyncComponent(() => import("~/components/modals/ImageImportModal.vue")),
+    );
     const pdfExportModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/PdfExportModal.vue")));
 
     const appWindow = getCurrentWebviewWindow();
@@ -162,25 +166,30 @@ export const usePatternsStore = defineStore(
       }
     });
 
+    async function openImageImportModal() {
+      const imagePath = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
+      if (imagePath === null) return;
+
+      const imageDimensions = await ImageApi.getImageDimensions(imagePath);
+      imageImportModal.open({ imagePath, imageDimensions });
+    }
+
     async function openExportModal(ext: "oxs" | "pdf") {
       if (!pattern.value) return;
-      try {
-        const filePath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
-        switch (ext) {
-          case "oxs": {
-            await exportPatternAsOxs(filePath);
-            break;
-          }
-          case "pdf": {
-            pdfExportModal.open({
-              filePath,
-              options: pattern.value.pdfExportOptions,
-            });
-            break;
-          }
+
+      const filePath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
+      switch (ext) {
+        case "oxs": {
+          await exportPatternAsOxs(filePath);
+          break;
         }
-      } finally {
-        loading.value = false;
+        case "pdf": {
+          pdfExportModal.open({
+            filePath,
+            options: pattern.value.pdfExportOptions,
+          });
+          break;
+        }
       }
     }
 
@@ -470,6 +479,7 @@ export const usePatternsStore = defineStore(
       openPattern,
       createPattern,
       savePattern,
+      openImageImportModal,
       openExportModal,
       exportPatternAsOxs,
       exportPatternAsPdf,

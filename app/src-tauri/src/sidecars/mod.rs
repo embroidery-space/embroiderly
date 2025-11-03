@@ -1,6 +1,7 @@
 use crate::vendor::telemetry::sentry;
 
-
+mod image;
+pub use image::*;
 
 mod publish;
 pub use publish::*;

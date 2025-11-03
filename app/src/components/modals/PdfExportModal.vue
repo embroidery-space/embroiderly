@@ -55,7 +55,7 @@
 <script setup lang="ts">
   import { basename } from "@tauri-apps/api/path";
 
-  import { asyncComputed, refAutoReset } from "@vueuse/core";
+  import { computedAsync, refAutoReset } from "@vueuse/core";
   import { ref } from "vue";
 
   import { PdfExportOptions } from "~/core/pattern/";
@@ -70,7 +70,7 @@
   const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
 
   const filePath = ref(props.filePath);
-  const pdfFile = asyncComputed(
+  const pdfFile = computedAsync(
     async () => {
       const fileName = filePath.value ? await basename(filePath.value, ".pdf") : "";
       return {

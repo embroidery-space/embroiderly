@@ -29,6 +29,7 @@ tauri-plugin-sentry = { workspace = true }
 tauri-plugin-posthog = { workspace = true }
 
 # Embroiderly Core
+embroiderly_image = { workspace = true }
 embroiderly_parsers = { workspace = true }
 embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
 embroiderly_logger = { workspace = true }
