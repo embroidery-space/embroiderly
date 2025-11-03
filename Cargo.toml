@@ -18,7 +18,7 @@ split-debuginfo = "packed"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.1", features = ["config-json5"] }
+tauri = { version = "2.9.2", features = ["config-json5"] }
 tauri-build = { version = "2.4.1", features = ["config-json5"] }
 tauri-plugin = { version = "2.5.1", features = ["build"] }
 ## Official Tauri plugins
@@ -76,7 +76,7 @@ base64 = "0.22.1"
 borsh = { version = "1.5.7", features = ["derive"] }
 
 # CLI
-clap = { version = "4.5.50", default-features = false, features = [
+clap = { version = "4.5.51", default-features = false, features = [
   "std",
   "derive",
 ] }
@@ -98,7 +98,7 @@ sentry = "0.45.0"
 posthog-rs = {version = "0.3.7", default-features = false }
 
 # Identification
-machine-uid = "0.5.3"
+machine-uid = "0.5.4"
 uuid = { version = "1.18.1", features = ["v4", "v7"] }
 
 # File system utilities
