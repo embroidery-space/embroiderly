@@ -20,7 +20,6 @@ quick-xml = { workspace = true }
 
 # Image processing
 image = { workspace = true }
-quantette = { workspace = true }
 palette = { workspace = true }
 
 # Logging

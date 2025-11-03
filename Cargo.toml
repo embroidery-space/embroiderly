@@ -63,7 +63,6 @@ typst-as-lib = "0.15.0"
 
 # Image processing
 image = "0.25.8"
-quantette = "0.3.0"
 palette = "0.7.6"
 
 # Archiving
