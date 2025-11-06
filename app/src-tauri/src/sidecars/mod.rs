@@ -1,3 +1,4 @@
+use crate::error::Result;
 use crate::vendor::telemetry::sentry;
 
 mod image;
@@ -5,14 +6,15 @@ pub use image::*;
 
 mod publish;
 pub use publish::*;
+use tauri_plugin_shell::process::{Command, CommandEvent};
 
 /// Trait for executing sidecar commands.
 pub trait SidecarRunner {
   /// Execute the sidecar command asynchronously and return the output.
-  async fn run_async(self) -> crate::error::Result<tauri_plugin_shell::process::Output>;
+  async fn run_async(self) -> Result<Output>;
 
   /// Execute the sidecar command synchronously and return the output.
-  fn run(self) -> crate::error::Result<tauri_plugin_shell::process::Output>
+  fn run(self) -> Result<Output>
   where
     Self: Sized,
   {
@@ -20,19 +22,74 @@ pub trait SidecarRunner {
   }
 }
 
+/// The output of a finished sidecar process.
+pub struct Output {
+  /// The exit status of the sidecar process.
+  pub status: ExitStatus,
+  /// The data that the process wrote to stdout.
+  pub stdout: Vec<u8>,
+  /// The data that the process wrote to stdout.
+  #[allow(unused)]
+  pub stderr: Vec<u8>,
+}
+
+/// Describes the result of a process after it has terminated.
+#[derive(Debug)]
+pub struct ExitStatus {
+  code: Option<i32>,
+}
+
+impl ExitStatus {
+  /// Returns the exit code of the process, if any.
+  pub fn code(&self) -> Option<i32> {
+    self.code
+  }
+
+  /// Returns true if exit status is zero.
+  /// Signal termination is not considered a success, and success is defined as a zero exit status.
+  pub fn success(&self) -> bool {
+    self.code == Some(0)
+  }
+}
+
+/// Collects the **binary** output of a sidecar process.
+pub async fn collect_sidecar_binary_output(command: Command) -> Result<Output> {
+  let (mut rx, _child) = command
+    .spawn()
+    .map_err(|e| anyhow::anyhow!("Failed to spawn sidecar process: {e}"))?;
+
+  let mut code = None;
+  let mut stdout = Vec::new();
+  let mut stderr = Vec::new();
+
+  while let Some(event) = rx.recv().await {
+    match event {
+      CommandEvent::Terminated(payload) => code = payload.code,
+      CommandEvent::Stdout(line) => stdout.extend(line),
+      CommandEvent::Stderr(line) => stderr.extend(line),
+      _ => {}
+    }
+  }
+
+  Ok(Output {
+    status: ExitStatus { code },
+    stdout,
+    stderr,
+  })
+}
+
 /// Handle sidecar output and capture failure to Sentry if enabled.
 pub fn handle_sidecar_output<R: tauri::Runtime>(
   app_handle: &tauri::AppHandle<R>,
-  output: tauri_plugin_shell::process::Output,
+  output: Output,
   sidecar_name: &str,
-) -> crate::error::Result<tauri_plugin_shell::process::Output> {
+) -> Result<Output> {
   // Handle sidecar failure and capture to Sentry if enabled.
   if !output.status.success() {
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
     let exit_code = output.status.code();
 
-    log::error!("Sidecar '{sidecar_name}' failed with exit code {exit_code:?}: {stderr}");
+    let error_message = format!("Sidecar '{sidecar_name}' failed with exit code {exit_code:?}");
+    log::error!("{error_message}");
 
     // Capture error to Sentry with sidecar log file attachment.
     if crate::utils::settings::telemetry_diagnostics_enabled(app_handle) {
@@ -40,11 +97,6 @@ pub fn handle_sidecar_output<R: tauri::Runtime>(
       let log_file_path = crate::utils::path::app_logs_dir(app_handle)?.join(&log_file_name);
 
       sentry::configure_scope(|scope| {
-        // Add sidecar output as extra data.
-        scope.set_extra("sidecar_stdout", stdout.to_string().into());
-        scope.set_extra("sidecar_stderr", stderr.to_string().into());
-        scope.set_extra("sidecar_exit_code", exit_code.into());
-
         // Attach sidecar log file if it exists.
         if log_file_path.exists()
           && let Ok(log_contents) = std::fs::read(&log_file_path)
@@ -58,13 +110,10 @@ pub fn handle_sidecar_output<R: tauri::Runtime>(
         }
       });
 
-      sentry::capture_message(
-        &format!("Sidecar '{sidecar_name}' failed with exit code {exit_code:?}"),
-        sentry::Level::Error,
-      );
+      sentry::capture_message(&error_message, sentry::Level::Error);
     }
 
-    return Err(anyhow::anyhow!("Sidecar process terminated with exit code {exit_code:?}: {stderr}").into());
+    return Err(anyhow::anyhow!("{error_message}").into());
   }
 
   Ok(output)

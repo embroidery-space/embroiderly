@@ -127,8 +127,9 @@ export function getImageDimensions(imagePath: string) {
   return invoke<[width: number, height: number]>("get_image_dimensions", { imagePath });
 }
 
-export function getPatternPreviewFromImage(imagePath: string, palettePath: string, options: object) {
-  return invoke<ArrayBuffer>("get_pattern_preview_from_image", { imagePath, palettePath, options });
+export async function importPatternFromImage(imagePath: string, palettePath: string, options: object) {
+  const buffer = await invoke<ArrayBuffer>("import_pattern_from_image", { imagePath, palettePath, options });
+  return Pattern.deserialize(new Uint8Array(buffer));
 }
 
 // === Exporting pattern into PDF documents ===

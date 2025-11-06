@@ -44,7 +44,7 @@ impl<R: tauri::Runtime> ImageImportSidecar<R> {
 }
 
 impl<R: tauri::Runtime> super::SidecarRunner for ImageImportSidecar<R> {
-  async fn run_async(self) -> Result<tauri_plugin_shell::process::Output> {
+  async fn run_async(self) -> Result<super::Output> {
     let image_path = self
       .image_path
       .ok_or_else(|| PatternError::FailedToExport(anyhow::anyhow!("Image path is required")))?;
@@ -81,10 +81,7 @@ impl<R: tauri::Runtime> super::SidecarRunner for ImageImportSidecar<R> {
       .arg(&options);
 
     // Execute the command.
-    let output = sidecar
-      .output()
-      .await
-      .map_err(|e| PatternError::FailedToExport(e.into()))?;
+    let output = super::collect_sidecar_binary_output(sidecar).await?;
 
     super::handle_sidecar_output(&self.app_handle, output, "embroiderly_image")
   }

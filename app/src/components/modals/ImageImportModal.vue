@@ -49,30 +49,36 @@
         <USeparator decorative orientation="vertical" />
 
         <div class="flex w-full items-center justify-center py-4 sm:py-6">
-          <UEmpty
+          <!-- <UEmpty
             v-if="imageImportOptionsInvalid"
             title="No image"
             description="The image import options are invalid."
-          />
-          <template v-else>
-            <img v-if="previewImageSrc" :src="previewImageSrc" class="size-full object-contain" />
-          </template>
+          /> -->
+          <canvas
+            ref="canvas"
+            v-element-size="useDebounceFn(({ width, height }) => patternApplication.resize(width, height), 100)"
+            class="size-full"
+          ></canvas>
         </div>
       </div>
     </template>
     <template #footer>
       <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('label-import-image')" :loading="importingImage" @click="importImage" />
+      <UButton :label="$t('label-import-image')" />
     </template>
   </UModal>
 </template>
 
 <script setup lang="ts">
   import type { SelectMenuItem } from "@nuxt/ui";
-  import { computedAsync, watchDebounced } from "@vueuse/core";
-  import { ref, reactive, onMounted, shallowRef, onUnmounted, computed } from "vue";
+  import { vElementSize } from "@vueuse/components";
+  import { computedAsync, useDebounceFn, watchDebounced } from "@vueuse/core";
+  import { useTemplateRef } from "vue";
+  import { ref, reactive, onMounted, onUnmounted, shallowRef, computed } from "vue";
 
   import { FilesApi } from "~/api";
+  import { LayersVisibility } from "~/core/pattern";
+  import { PatternApplication, PatternView } from "~/core/pixi";
 
   type Size = [width: number, height: number];
 
@@ -92,7 +98,13 @@
   const props = defineProps<ImportImageModalProps>();
   const emit = defineEmits<{ close: [] }>();
 
+  const canvas = useTemplateRef("canvas");
+
   const imagePath = ref(props.imagePath);
+  async function chooseImage() {
+    const path = await filePicker.save(imagePath.value, { filters: filePicker.ANY_IMAGE_FILTER });
+    if (path !== null) imagePath.value = path;
+  }
 
   const imageImportOptions = reactive<ImageImportOptions>({
     patternSize: [0, 0],
@@ -122,53 +134,50 @@
     paletteOptions.value = [systemPalettes, customPalettes];
   }
 
-  const importingImage = ref(false);
-  async function importImage() {
-    // try {
-    //   exportingPattern.value = true;
-    //   await patternsStore.exportPatternAsPdf(filePath.value, options.value);
-    // } finally {
-    //   exportingPattern.value = false;
-    // }
-  }
+  const patternApplication = new PatternApplication();
+  const patternApplicationInitialized = ref(false);
 
-  const creatingPreviewImage = ref(false);
-  const previewImageSrc = ref<string>();
+  const importingPattern = ref(false);
+  async function importPatternFromImage() {
+    if (!patternApplicationInitialized.value) {
+      await patternApplication.init(canvas.value!);
+      patternApplicationInitialized.value = true;
+    }
+
+    importingPattern.value = true;
+    try {
+      const pattern = await FilesApi.importPatternFromImage(
+        imagePath.value,
+        selectedPalettePath.value,
+        imageImportOptions,
+      );
+      patternApplication.view = new PatternView(pattern);
+
+      // Configure the pattern view.
+      patternApplication.view.setShowSymbols(false);
+      patternApplication.view.setLayersVisibility({
+        ...LayersVisibility.default(false),
+        fullstitches: true,
+      });
+    } finally {
+      importingPattern.value = false;
+    }
+  }
 
   watchDebounced(
     [imagePath, selectedPalettePath, imageImportOptions],
-    async (update) => {
+    async () => {
       if (imageImportOptionsInvalid.value) return;
-
-      const imagePath = update[0] as unknown as string;
-      const palettePath = update[1] as unknown as string;
-      const options = update[2] as unknown as ImageImportOptions;
-
-      creatingPreviewImage.value = true;
-      try {
-        if (previewImageSrc.value) URL.revokeObjectURL(previewImageSrc.value);
-
-        const buffer = await FilesApi.getPatternPreviewFromImage(imagePath, palettePath, options);
-        const blob = new Blob([buffer], { type: "image/jpeg" });
-
-        previewImageSrc.value = URL.createObjectURL(blob);
-      } finally {
-        creatingPreviewImage.value = false;
-      }
+      await importPatternFromImage();
     },
     { debounce: 1000 },
   );
-
-  async function chooseImage() {
-    const path = await filePicker.save(imagePath.value, { filters: filePicker.ANY_IMAGE_FILTER });
-    if (path !== null) imagePath.value = path;
-  }
 
   onMounted(async () => {
     await loadPalettesList();
   });
 
   onUnmounted(() => {
-    if (previewImageSrc.value) URL.revokeObjectURL(previewImageSrc.value);
+    patternApplication.destroy();
   });
 </script>
