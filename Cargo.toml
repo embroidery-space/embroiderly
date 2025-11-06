@@ -64,6 +64,7 @@ typst-as-lib = "0.15.0"
 # Image processing
 image = "0.25.8"
 palette = "0.7.6"
+kmeans_colors = { version = "0.7.1", default-features = false, features = ["palette_color"] }
 
 # Archiving
 zip = { version = "6.0.0", features = [
