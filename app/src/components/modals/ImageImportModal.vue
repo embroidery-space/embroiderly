@@ -102,7 +102,7 @@
 
   const imagePath = ref(props.imagePath);
   async function chooseImage() {
-    const path = await filePicker.save(imagePath.value, { filters: filePicker.ANY_IMAGE_FILTER });
+    const path = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
     if (path !== null) imagePath.value = path;
   }
 
