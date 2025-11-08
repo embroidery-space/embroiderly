@@ -6,7 +6,7 @@
 use std::io::{self, Read, Seek, SeekFrom};
 use std::sync::LazyLock;
 
-use byteorder::{LittleEndian, ReadBytesExt};
+use byteorder::{LittleEndian, ReadBytesExt as _};
 
 use crate::pmaker::error::{PmakerError, Result};
 use crate::pmaker::schemas::xsd::*;
@@ -808,7 +808,7 @@ fn map_stitches_data_into_stitches(
 /// The XSD format contains coordinates without additional offsets relative to the cell.
 /// But this is important for us.
 fn adjust_small_stitch_coors(x: f32, y: f32, kind: XsdSmallStitchKind) -> (f32, f32) {
-  #[allow(clippy::match_same_arms)]
+  #[expect(clippy::match_same_arms)]
   match kind {
     XsdSmallStitchKind::QuarterTopLeft | XsdSmallStitchKind::PetiteTopLeft => (x, y),
     XsdSmallStitchKind::QuarterTopRight | XsdSmallStitchKind::PetiteTopRight => (x + 0.5, y),
@@ -916,7 +916,7 @@ impl From<u16> for XsdJointKind {
 type Joints = (Vec<LineStitch>, Vec<NodeStitch>, Vec<SpecialStitch>, Vec<CurvedStitch>);
 
 /// Reads the french knots, beads, back, straight and special stitches and curved stitches used in the pattern.
-#[allow(clippy::too_many_lines)]
+#[expect(clippy::too_many_lines)]
 fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<Joints> {
   log::trace!("Reading joints");
 

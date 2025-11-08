@@ -2,7 +2,7 @@ use std::sync::OnceLock;
 
 use anyhow::Result;
 use embroiderly_pattern::{PatternProject, PdfExportOptions};
-use tauri::{Emitter, WebviewWindow};
+use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
 use crate::utils::base64;

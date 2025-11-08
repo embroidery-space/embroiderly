@@ -42,7 +42,7 @@ fn parse_publish_settings_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Resul
   let mut buf = Vec::new();
   loop {
     match reader.read_event_into(&mut buf)? {
-      #[allow(clippy::single_match)]
+      #[expect(clippy::single_match)]
       Event::Start(ref e) => match e.name().as_ref() {
         b"pdf" => {
           let pdf_attributes = AttributesMap::try_from(e.attributes())?;
@@ -92,7 +92,7 @@ fn read_pdf_export_options<R: io::BufRead>(
 
   let mut buf = Vec::new();
   loop {
-    #[allow(clippy::single_match)]
+    #[expect(clippy::single_match)]
     match reader.read_event_into(&mut buf)? {
       Event::Start(ref e) => match e.name().as_ref() {
         b"frame_options" => {

@@ -628,7 +628,7 @@ fn read_part_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Part
                   kind: PartStitchKind::Quarter,
                 });
               }
-            };
+            }
           }
           // Half stitches
           3 | 4 => {
@@ -792,7 +792,7 @@ fn write_line_stitch<W: io::Write>(writer: &mut Writer<W>, stitch: OxsLineStitch
   Ok(())
 }
 
-#[allow(clippy::type_complexity)]
+#[expect(clippy::type_complexity)]
 fn read_ornaments<R: io::BufRead>(
   reader: &mut Reader<R>,
 ) -> Result<(Vec<FullStitch>, Vec<PartStitch>, Vec<NodeStitch>, Vec<SpecialStitch>)> {

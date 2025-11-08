@@ -507,7 +507,7 @@ impl From<pmaker::Bead> for Bead {
 }
 
 #[cfg(feature = "serde")]
-#[allow(clippy::ref_option)]
+#[expect(clippy::ref_option)]
 fn blends_empty(blends: &Option<Vec<Blend>>) -> bool {
   blends.as_ref().is_none_or(Vec::is_empty)
 }

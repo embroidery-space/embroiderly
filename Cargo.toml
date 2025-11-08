@@ -45,7 +45,9 @@ restriction = { level = "allow", priority = -1 }
 dbg_macro = "warn"
 print_stdout = "warn"
 print_stderr = "warn"
+semicolon_inside_block = "warn"
 todo = "warn"
+unused_trait_names = "warn"
 
 nursery = { level = "warn", priority = -1 }
 large_stack_frames = "allow"

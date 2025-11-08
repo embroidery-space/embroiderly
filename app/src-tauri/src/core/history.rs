@@ -311,7 +311,7 @@ impl<R: tauri::Runtime> History<R> {
   }
 
   /// Helper method to check if an action is a `CheckpointAction`.
-  #[allow(clippy::unused_self)]
+  #[expect(clippy::unused_self)]
   fn is_checkpoint_action(&self, action: Box<dyn std::any::Any>) -> bool {
     action.downcast_ref::<super::actions::CheckpointAction>().is_some()
   }

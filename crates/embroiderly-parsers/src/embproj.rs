@@ -1,4 +1,4 @@
-use std::io::{Read, Write};
+use std::io::{Read as _, Write as _};
 
 use anyhow::Result;
 use embroiderly_pattern::{PatternProject, ReferenceImage};

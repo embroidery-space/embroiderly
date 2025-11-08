@@ -1,6 +1,6 @@
 use std::io::{self, Read};
 
-use byteorder::{LittleEndian, ReadBytesExt};
+use byteorder::{LittleEndian, ReadBytesExt as _};
 
 use crate::utils::read::ReadXspExt as _;
 use crate::xspro::schemas::palette::PaletteItem;

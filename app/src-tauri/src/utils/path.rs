@@ -22,7 +22,7 @@ pub fn app_document_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> 
 }
 
 /// Returns the path to the application's log directory.
-#[allow(unused_variables, clippy::unnecessary_wraps)]
+#[expect(unused_variables, clippy::unnecessary_wraps)]
 pub fn app_logs_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<PathBuf> {
   #[cfg(not(debug_assertions))]
   let logs_dir = app_handle.path().app_log_dir()?; // In production, store logs in the application's log directory.

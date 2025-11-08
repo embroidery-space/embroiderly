@@ -129,7 +129,7 @@ fn read_palette_settings(attributes: AttributesMap) -> PaletteSettings {
   }
 }
 
-#[allow(clippy::trivially_copy_pass_by_ref)]
+#[expect(clippy::trivially_copy_pass_by_ref)]
 fn write_palette_settings<W: io::Write>(writer: &mut Writer<W>, settings: &PaletteSettings) -> io::Result<()> {
   writer
     .create_element("palette_settings")

@@ -1,4 +1,4 @@
-use byteorder::{LittleEndian, ReadBytesExt};
+use byteorder::{LittleEndian, ReadBytesExt as _};
 
 use crate::pmaker::PaletteItem;
 use crate::pmaker::error::{PmakerError, Result};

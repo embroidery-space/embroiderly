@@ -8,7 +8,7 @@ pub struct HistoryManager<R: tauri::Runtime> {
 }
 
 impl<R: tauri::Runtime> HistoryManager<R> {
-  #[allow(clippy::new_without_default)]
+  #[expect(clippy::new_without_default)]
   #[must_use]
   pub fn new() -> Self {
     Self { inner: HashMap::new() }
