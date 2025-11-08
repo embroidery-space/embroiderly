@@ -30,6 +30,7 @@ pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Resu
 }
 
 /// Returns the release name for Sentry.
+#[must_use]
 pub fn sentry_release_name(package_info: &tauri::PackageInfo) -> String {
   format!("{}@{}", package_info.name, package_info.version).to_lowercase()
 }

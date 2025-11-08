@@ -16,7 +16,7 @@ pub fn create_event(
   properties.remove("token");
 
   properties.insert("distinct_id".to_string(), json!(distinct_id));
-  properties.insert("$device_id".to_string(), json!(distinct_id.clone()));
+  properties.insert("$device_id".to_string(), json!(distinct_id));
   properties.insert("$session_id".to_string(), json!(session_id));
 
   for (key, value) in properties {

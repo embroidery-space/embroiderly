@@ -64,20 +64,18 @@ impl ImageExportOptions {
   pub const DEFAULT_CELL_SIZE: f32 = 14.0;
   pub const DEFAULT_PRESERVED_OVERLAP: u16 = 3;
 
+  #[must_use]
   pub fn new(cell_size: f32) -> Self {
-    ImageExportOptions {
-      cell_size,
-      ..ImageExportOptions::default()
-    }
+    Self { cell_size, ..Self::default() }
   }
 }
 
 impl Default for ImageExportOptions {
   fn default() -> Self {
-    ImageExportOptions {
+    Self {
       frame_size: None,
-      cell_size: ImageExportOptions::DEFAULT_CELL_SIZE,
-      preserved_overlap: Some(ImageExportOptions::DEFAULT_PRESERVED_OVERLAP),
+      cell_size: Self::DEFAULT_CELL_SIZE,
+      preserved_overlap: Some(Self::DEFAULT_PRESERVED_OVERLAP),
       show_grid_line_numbers: false,
       show_centering_marks: false,
     }

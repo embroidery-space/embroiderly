@@ -61,15 +61,10 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   let typst_template = typst_as_lib::TypstEngine::builder()
     .main_file(include_str!("../templates/pattern.typ"))
     .search_fonts_with(typst_as_lib::typst_kit_options::TypstKitFontOptions::default().include_dirs([symbol_fonts_dir]))
-    .with_static_file_resolver(
-      frames
-        .into_iter()
-        .map(|(name, content)| {
-          use typst::syntax::{FileId, VirtualPath};
-          (FileId::new(None, VirtualPath::new(name)), content)
-        })
-        .collect::<Vec<_>>(),
-    )
+    .with_static_file_resolver(frames.into_iter().map(|(name, content)| {
+      use typst::syntax::{FileId, VirtualPath};
+      (FileId::new(None, VirtualPath::new(name)), content)
+    }))
     .build();
 
   let doc = {
@@ -82,7 +77,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
 
   let pdf_options = Default::default();
   let pdf_bytes =
-    typst_pdf::pdf(&doc, &pdf_options).map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {:?}", warnings))?;
+    typst_pdf::pdf(&doc, &pdf_options).map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))?;
 
   std::fs::write(file_path, pdf_bytes)?;
   Ok(())

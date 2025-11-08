@@ -32,22 +32,22 @@ impl<R: tauri::Runtime> History<R> {
   }
 
   /// Returns the number of items in the undo stack.
-  pub fn undo_stack_len(&self) -> usize {
+  pub const fn undo_stack_len(&self) -> usize {
     self.undo_stack.len()
   }
 
   /// Returns the number of items in the redo stack.
-  pub fn redo_stack_len(&self) -> usize {
+  pub const fn redo_stack_len(&self) -> usize {
     self.redo_stack.len()
   }
 
   /// Returns whether the undo stack is empty.
-  pub fn undo_stack_is_empty(&self) -> bool {
+  pub const fn undo_stack_is_empty(&self) -> bool {
     self.undo_stack.is_empty()
   }
 
   /// Returns whether the redo stack is empty.
-  pub fn redo_stack_is_empty(&self) -> bool {
+  pub const fn redo_stack_is_empty(&self) -> bool {
     self.redo_stack.is_empty()
   }
 
@@ -160,11 +160,10 @@ impl<R: tauri::Runtime> History<R> {
             }
 
             return Some(action);
-          } else {
-            unreachable!("The undo stack should not contain empty transactions.");
           }
+          unreachable!("The undo stack should not contain empty transactions.");
         }
-      };
+      }
     }
 
     None
@@ -221,9 +220,8 @@ impl<R: tauri::Runtime> History<R> {
             }
 
             return Some(action);
-          } else {
-            unreachable!("The redo stack should not contain empty transactions.");
           }
+          unreachable!("The redo stack should not contain empty transactions.");
         }
       }
     }
@@ -313,6 +311,7 @@ impl<R: tauri::Runtime> History<R> {
   }
 
   /// Helper method to check if an action is a `CheckpointAction`.
+  #[expect(clippy::unused_self)]
   fn is_checkpoint_action(&self, action: Box<dyn std::any::Any>) -> bool {
     action.downcast_ref::<super::actions::CheckpointAction>().is_some()
   }
