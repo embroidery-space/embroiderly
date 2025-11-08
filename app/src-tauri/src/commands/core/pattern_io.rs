@@ -247,7 +247,7 @@ pub fn export_pattern<R: tauri::Runtime>(
     .path()
     .with_extension(PatternFormat::default().to_string());
   let previous_file_path = patproj.file_path.clone();
-  patproj.file_path = tempfile_path.to_path_buf().clone();
+  patproj.file_path = tempfile_path.clone().clone();
   embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
   patproj.file_path = previous_file_path;
 
@@ -342,7 +342,7 @@ pub fn get_opened_patterns(patterns: tauri::State<PatternsState>) -> Vec<(String
   let patterns = patterns.read().unwrap();
   patterns
     .patterns()
-    .map(|patproj| (patproj.id.to_string(), patproj.pattern.info.title.to_string()))
+    .map(|patproj| (patproj.id.to_string(), patproj.pattern.info.title.clone()))
     .collect()
 }
 
