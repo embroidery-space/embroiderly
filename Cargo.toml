@@ -25,6 +25,7 @@ style = { level = "warn", priority = -1 }
 pedantic = { level = "allow", priority = -1 }
 restriction = { level = "allow", priority = -1 }
 nursery = { level = "allow", priority = -1 }
+fallible_impl_from = "warn"
 cargo = { level = "allow", priority = -1 }
 redundant_feature_names = "deny"
 wildcard_dependencies = "deny"
