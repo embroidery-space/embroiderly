@@ -22,6 +22,7 @@ suspicious = { level = "deny", priority = -1 }
 complexity = { level = "warn", priority = -1 }
 perf = { level = "warn", priority = -1 }
 style = { level = "warn", priority = -1 }
+
 pedantic = { level = "warn", priority = -1 }
 cast_lossless = "allow"
 cast_possible_truncation = "allow"
@@ -39,13 +40,16 @@ struct_excessive_bools = "allow"
 single_char_pattern = "allow"
 too_many_lines = "allow"
 wildcard_imports = "allow"
+
 restriction = { level = "allow", priority = -1 }
 dbg_macro = "warn"
 print_stdout = "warn"
 print_stderr = "warn"
 todo = "warn"
+
 nursery = { level = "allow", priority = -1 }
 fallible_impl_from = "warn"
+
 cargo = { level = "allow", priority = -1 }
 redundant_feature_names = "deny"
 wildcard_dependencies = "deny"
