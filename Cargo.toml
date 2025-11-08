@@ -28,6 +28,7 @@ restriction = { level = "allow", priority = -1 }
 dbg_macro = "warn"
 print_stdout = "warn"
 print_stderr = "warn"
+todo = "warn"
 nursery = { level = "allow", priority = -1 }
 fallible_impl_from = "warn"
 cargo = { level = "allow", priority = -1 }
