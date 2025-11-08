@@ -2,6 +2,9 @@
 name = "embroiderly-parsers"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [dependencies]
 # Embroiderly Core
 embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }

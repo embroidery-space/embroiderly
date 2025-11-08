@@ -2,6 +2,9 @@
 name = "embroiderly-logger"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [dependencies]
 # Logging
 log = { workspace = true }
