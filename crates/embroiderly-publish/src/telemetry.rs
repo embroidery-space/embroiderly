@@ -1,3 +1,4 @@
+#[must_use]
 pub fn init() -> Vec<Box<dyn std::any::Any>> {
   let guard = init_diagnostics();
   vec![Box::new(guard)]

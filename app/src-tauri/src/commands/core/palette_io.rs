@@ -47,7 +47,7 @@ pub fn import_palettes<R: tauri::Runtime>(
   let failed_files: Vec<String> = palette_files
     .into_par_iter()
     .filter_map(|file_path| match parse_and_save_palette(&file_path, &palettes_dir) {
-      Ok(_) => None,
+      Ok(()) => None,
       Err(_) => Some(file_path.to_string_lossy().to_string()),
     })
     .collect();

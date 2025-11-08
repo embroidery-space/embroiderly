@@ -47,7 +47,7 @@ impl<R: tauri::Runtime> Action<R> for SetReferenceImageAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_image = self.old_image.get().unwrap();
     window.emit("image:set", base64::encode(borsh::to_vec(&old_image)?))?;
-    patproj.reference_image = old_image.clone();
+    patproj.reference_image.clone_from(old_image);
     Ok(())
   }
 }

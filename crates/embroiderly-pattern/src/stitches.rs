@@ -33,10 +33,12 @@ pub struct Bounds {
 }
 
 impl Bounds {
+  #[must_use]
   pub fn new(x: u16, y: u16, width: u16, height: u16) -> Self {
     Self { x, y, width, height }
   }
 
+  #[must_use]
   pub fn contains_point(&self, x: Coord, y: Coord) -> bool {
     x >= self.x.into() && x < (self.x + self.width).into() && y >= self.y.into() && y < (self.y + self.height).into()
   }
@@ -88,6 +90,7 @@ impl<T: Ord> Default for Stitches<T> {
 }
 
 impl<T: Ord> Stitches<T> {
+  #[must_use]
   pub fn new() -> Self {
     Self::default()
   }
@@ -96,10 +99,12 @@ impl<T: Ord> Stitches<T> {
     self.inner.iter()
   }
 
+  #[must_use]
   pub fn len(&self) -> usize {
     self.inner.len()
   }
 
+  #[must_use]
   pub fn is_empty(&self) -> bool {
     self.inner.is_empty()
   }
@@ -219,7 +224,7 @@ impl Stitches<FullStitch> {
           self.remove(&petite).inspect(|&petite| conflicts.push(petite));
         }
       }
-    };
+    }
 
     self.remove(&fullstitch).inspect(|&fs| conflicts.push(fs));
 

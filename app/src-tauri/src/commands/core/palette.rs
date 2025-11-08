@@ -98,7 +98,7 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
   // Only update if settings have actually changed.
   if patproj.display_settings.palette_settings == settings {
     return Ok(());
-  };
+  }
 
   let action = UpdatePaletteDisplaySettingsAction::new(settings);
   action.perform(&window, patproj)?;

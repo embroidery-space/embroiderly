@@ -8,6 +8,7 @@ pub struct ReferenceImage {
 }
 
 impl ReferenceImage {
+  #[must_use]
   pub fn new(content: Vec<u8>, settings: Option<ReferenceImageSettings>) -> Self {
     let format = image::guess_format(&content).unwrap_or(image::ImageFormat::Png);
     let settings = settings.unwrap_or_else(|| {
@@ -26,6 +27,7 @@ impl ReferenceImage {
   }
 
   /// Returns the original image dimensions.
+  #[must_use]
   pub fn dimensions(&self) -> (u32, u32) {
     let image_reader = image::ImageReader::with_format(std::io::Cursor::new(&self.content), self.format);
     image_reader.into_dimensions().unwrap_or((0, 0))

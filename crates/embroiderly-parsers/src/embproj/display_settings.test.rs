@@ -54,7 +54,7 @@ fn reads_and_writes_palette_settings() {
   } else {
     unreachable!()
   };
-  let settings = read_palette_settings(attributes).unwrap();
+  let settings = read_palette_settings(attributes);
   assert_eq!(settings, PaletteSettings::default());
 
   let mut writer = create_writer();
@@ -97,7 +97,7 @@ fn reads_and_writes_layers_visibility() {
     unreachable!()
   };
 
-  let layers_visibility = read_layers_visibility(attributes).unwrap();
+  let layers_visibility = read_layers_visibility(attributes);
   assert_eq!(layers_visibility, LayersVisibility::default());
 
   let mut writer = create_writer();

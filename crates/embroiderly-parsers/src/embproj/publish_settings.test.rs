@@ -87,7 +87,7 @@ fn reads_and_writes_image_export_options() {
     unreachable!()
   };
 
-  let image_export_options = read_image_export_options(attributes).unwrap();
+  let image_export_options = read_image_export_options(attributes);
   assert_eq!(
     image_export_options,
     ImageExportOptions {

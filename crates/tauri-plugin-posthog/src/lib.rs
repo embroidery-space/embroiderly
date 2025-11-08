@@ -11,6 +11,7 @@ pub use config::*;
 pub(crate) type PostHogClientState = std::sync::Arc<posthog::Client>;
 
 /// Initializes the plugin.
+#[must_use]
 pub fn init<R: tauri::Runtime>(
   client: posthog::Client,
   config: config::PostHogConfig,
@@ -67,12 +68,12 @@ impl SessionId {
   }
 }
 
-/// Extension trait for `tauri::AppHandle` to capture PostHog events.
+/// Extension trait for `tauri::AppHandle` to capture `PostHog` events.
 pub trait PostHogExt<R: tauri::Runtime> {
-  /// Captures the provided PostHog event.
+  /// Captures the provided `PostHog` event.
   fn capture_event(&self, event: impl ToPostHogEvent);
 
-  /// Captures a collection of PostHog events with a single request.
+  /// Captures a collection of `PostHog` events with a single request.
   fn capture_batch(&self, events: Vec<impl ToPostHogEvent>);
 }
 
@@ -152,11 +153,11 @@ impl<R: tauri::Runtime> PostHogExt<R> for tauri::AppHandle<R> {
   }
 }
 
-/// A trait for converting custom types to PostHog events.
+/// A trait for converting custom types to `PostHog` events.
 pub trait ToPostHogEvent: Send + Sync + 'static {
   /// Returns the event name as a string for telemetry systems.
   fn event_name(&self) -> &str;
 
-  /// Extracts properties as a HashMap for telemetry systems.
+  /// Extracts properties as a `HashMap` for telemetry systems.
   fn properties(&self) -> std::collections::HashMap<String, serde_json::Value>;
 }

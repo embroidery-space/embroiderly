@@ -72,7 +72,7 @@ struct RemovePaletteItemActionMetadata {
 impl RemovePaletteItemsAction {
   pub fn new(palindexes: Vec<u32>) -> Self {
     let mut palindexes = palindexes.clone();
-    palindexes.sort();
+    palindexes.sort_unstable();
     Self {
       palindexes,
       metadata: OnceLock::new(),
@@ -122,7 +122,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
 
       window.emit(
         "palette:add_palette_item",
-        base64::encode(borsh::to_vec(&AddedPaletteItemData { palindex, palitem })?),
+        base64::encode(borsh::to_vec(&AddedPaletteItemData { palitem, palindex })?),
       )?;
     }
 
@@ -325,7 +325,7 @@ impl<R: tauri::Runtime> Action<R> for SetSymbolAction {
     }
 
     if let Some(palitem) = patproj.pattern.palette.get_mut(self.palindex) {
-      palitem.symbol = self.symbol.clone();
+      palitem.symbol.clone_from(&self.symbol);
     }
 
     window.emit(
@@ -347,7 +347,7 @@ impl<R: tauri::Runtime> Action<R> for SetSymbolAction {
     let old_symbol = self.old_symbol.get().unwrap();
 
     if let Some(palitem) = patproj.pattern.palette.get_mut(self.palindex) {
-      palitem.symbol = old_symbol.clone();
+      palitem.symbol.clone_from(old_symbol);
     }
 
     window.emit(

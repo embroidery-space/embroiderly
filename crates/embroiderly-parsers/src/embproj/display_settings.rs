@@ -129,6 +129,7 @@ fn read_palette_settings(attributes: AttributesMap) -> PaletteSettings {
   }
 }
 
+#[allow(clippy::trivially_copy_pass_by_ref)]
 fn write_palette_settings<W: io::Write>(writer: &mut Writer<W>, settings: &PaletteSettings) -> io::Result<()> {
   writer
     .create_element("palette_settings")
@@ -149,18 +150,18 @@ fn write_palette_settings<W: io::Write>(writer: &mut Writer<W>, settings: &Palet
 }
 
 fn read_grid<R: io::BufRead>(reader: &mut Reader<R>, attributes: AttributesMap) -> Result<Grid> {
-  let mut grid = Grid::default();
-
-  if let Some(interval) = attributes.get_parsed("major_lines_interval") {
-    grid.major_lines_interval = interval;
-  }
-
   fn parse_grid_line(event: &BytesStart<'_>) -> Result<GridLine> {
     let attributes = AttributesMap::try_from(event.attributes())?;
     Ok(GridLine {
       color: attributes.get("color").unwrap_or("C8C8C8").to_string(),
       thickness: attributes.get_parsed("thickness").unwrap_or(0.072),
     })
+  }
+
+  let mut grid = Grid::default();
+
+  if let Some(interval) = attributes.get_parsed("major_lines_interval") {
+    grid.major_lines_interval = interval;
   }
 
   let mut buf = Vec::new();

@@ -371,8 +371,8 @@ fn read_node_formats<R: Read + Seek>(reader: &mut R, palette_size: usize) -> io:
     let thickness = reader.read_u16::<LittleEndian>()? as f32 / 10.0;
     formats.push(NodeStitchFormat {
       use_dot_style,
-      color,
       use_alt_color,
+      color,
       thickness,
     });
   }
@@ -404,11 +404,11 @@ fn read_font_formats<R: Read + Seek>(reader: &mut R, palette_size: usize) -> io:
 }
 
 fn read_symbols<R: Read>(reader: &mut R, palette_size: usize) -> io::Result<Vec<Symbols>> {
-  log::trace!("Reading symbols");
-
   fn map_symbol(value: u16) -> Option<u16> {
     if value == 0xFFFF { None } else { Some(value) }
   }
+
+  log::trace!("Reading symbols");
 
   let mut symbols = Vec::with_capacity(palette_size);
   for _ in 0..palette_size {
@@ -488,8 +488,6 @@ fn read_pattern_and_print_settings<R: Read + Seek>(reader: &mut R) -> io::Result
 }
 
 fn read_grid<R: Read + Seek>(reader: &mut R) -> io::Result<Grid> {
-  log::trace!("Reading grid");
-
   fn read_grid_line_style<R: Read + Seek>(reader: &mut R) -> io::Result<GridLineStyle> {
     let thickness = (reader.read_u16::<LittleEndian>()? * 72) as f32 / 1000.0; // Convert to points.
     reader.seek_relative(2)?;
@@ -497,6 +495,8 @@ fn read_grid<R: Read + Seek>(reader: &mut R) -> io::Result<Grid> {
     reader.seek_relative(3)?;
     Ok(GridLineStyle { color, thickness })
   }
+
+  log::trace!("Reading grid");
 
   let major_lines_interval = reader.read_u16::<LittleEndian>()?;
   reader.seek_relative(2)?;
@@ -808,6 +808,7 @@ fn map_stitches_data_into_stitches(
 /// The XSD format contains coordinates without additional offsets relative to the cell.
 /// But this is important for us.
 fn adjust_small_stitch_coors(x: f32, y: f32, kind: XsdSmallStitchKind) -> (f32, f32) {
+  #[allow(clippy::match_same_arms)]
   match kind {
     XsdSmallStitchKind::QuarterTopLeft | XsdSmallStitchKind::PetiteTopLeft => (x, y),
     XsdSmallStitchKind::QuarterTopRight | XsdSmallStitchKind::PetiteTopRight => (x + 0.5, y),
@@ -915,6 +916,7 @@ impl From<u16> for XsdJointKind {
 type Joints = (Vec<LineStitch>, Vec<NodeStitch>, Vec<SpecialStitch>, Vec<CurvedStitch>);
 
 /// Reads the french knots, beads, back, straight and special stitches and curved stitches used in the pattern.
+#[allow(clippy::too_many_lines)]
 fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<Joints> {
   log::trace!("Reading joints");
 
@@ -1020,10 +1022,10 @@ fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<
         specialstitches.push(SpecialStitch {
           x,
           y,
-          palindex,
-          modindex,
           rotation,
           flip,
+          palindex,
+          modindex,
         });
       }
 

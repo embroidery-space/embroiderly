@@ -52,6 +52,7 @@ pub struct Palette {
 
 impl Palette {
   /// Creates a new empty palette.
+  #[must_use]
   pub fn new() -> Self {
     Self {
       items: Vec::new(),
@@ -62,18 +63,21 @@ impl Palette {
   // === Access Methods ===
 
   /// Returns the number of palette items.
+  #[must_use]
   pub fn len(&self) -> usize {
     debug_assert_eq!(self.items.len(), self.positions.len(),);
     self.items.len()
   }
 
   /// Returns `true` if the palette is empty.
+  #[must_use]
   pub fn is_empty(&self) -> bool {
     debug_assert_eq!(self.items.is_empty(), self.positions.is_empty(),);
     self.items.is_empty()
   }
 
   /// Returns a reference to a palette item by its actual index.
+  #[must_use]
   pub fn get(&self, index: u32) -> Option<&PaletteItem> {
     self.items.get(index as usize)
   }
@@ -84,6 +88,7 @@ impl Palette {
   }
 
   /// Returns `true` if a palette item exists in the palette.
+  #[must_use]
   pub fn contains(&self, item: &PaletteItem) -> bool {
     self.items.contains(item)
   }
@@ -161,6 +166,7 @@ impl Palette {
   // === Ordering Methods ===
 
   /// Returns the current visual positions.
+  #[must_use]
   pub fn positions(&self) -> &[u32] {
     &self.positions
   }
@@ -212,11 +218,13 @@ impl Palette {
   // === Utility Methods ===
 
   /// Returns the number of blend colors in the palette.
+  #[must_use]
   pub fn blends_number(&self) -> usize {
     self.items.iter().filter(|palitem| palitem.is_blend()).count()
   }
 
   /// Returns the thread brands used in the palette.
+  #[must_use]
   pub fn used_brands(&self) -> Vec<String> {
     self
       .items
@@ -228,6 +236,7 @@ impl Palette {
   }
 
   /// Returns the symbol font names used in the palette.
+  #[must_use]
   pub fn used_symbol_fonts(&self) -> Vec<String> {
     self
       .items
@@ -307,6 +316,7 @@ pub struct PaletteItem {
 
 impl PaletteItem {
   /// Returns true if the palette item is a blend.
+  #[must_use]
   pub fn is_blend(&self) -> bool {
     self.blends.as_ref().is_some_and(|blends| !blends.is_empty())
   }
@@ -427,6 +437,7 @@ pub struct Symbol {
 }
 
 impl Symbol {
+  #[must_use]
   pub fn new(char: char, font: String) -> Option<Self> {
     // Check if the symbol code is a valid Unicode character.
     // We support only a part of the BMP supported by XML 1.0.
@@ -496,6 +507,7 @@ impl From<pmaker::Bead> for Bead {
 }
 
 #[cfg(feature = "serde")]
+#[allow(clippy::ref_option)]
 fn blends_empty(blends: &Option<Vec<Blend>>) -> bool {
   blends.as_ref().is_none_or(Vec::is_empty)
 }

@@ -13,18 +13,22 @@ pub struct PartStitch {
 }
 
 impl PartStitch {
+  #[must_use]
   pub fn is_on_top_left(&self) -> bool {
     self.x.fract() < 0.5 && self.y.fract() < 0.5
   }
 
+  #[must_use]
   pub fn is_on_top_right(&self) -> bool {
     self.x.fract() >= 0.5 && self.y.fract() < 0.5
   }
 
+  #[must_use]
   pub fn is_on_bottom_right(&self) -> bool {
     self.x.fract() >= 0.5 && self.y.fract() >= 0.5
   }
 
+  #[must_use]
   pub fn is_on_bottom_left(&self) -> bool {
     self.x.fract() < 0.5 && self.y.fract() >= 0.5
   }

@@ -172,7 +172,7 @@ pub fn import_symbol_fonts<R: tauri::Runtime>(
   let failed_files: Vec<String> = font_files
     .into_par_iter()
     .filter_map(|file_path| match process_and_save_font(&file_path, &fonts_dir) {
-      Ok(_) => None,
+      Ok(()) => None,
       Err(_) => Some(file_path.to_string_lossy().to_string()),
     })
     .collect();

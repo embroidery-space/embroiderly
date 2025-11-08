@@ -812,7 +812,7 @@ fn read_ornaments<R: io::BufRead>(
           Some(OxsOrnament::Node(stitch)) => nodestitches.push(stitch),
           Some(OxsOrnament::Special(stitch)) => specialstitches.push(stitch),
           None => {}
-        };
+        }
       }
       Event::End(ref e) if e.name().as_ref() == b"ornaments_inc_knots_and_beads" => break,
       _ => {}
@@ -846,21 +846,21 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
         palindex,
         kind: FullStitchKind::Petite,
       })));
-    } else {
-      let (x_fract, y_fract) = (x.fract(), y.fract());
-      let direction = if x_fract == 0.0 && y_fract == 0.0 || x_fract == 0.5 && y_fract == 0.5 {
-        PartStitchDirection::Backward
-      } else {
-        PartStitchDirection::Forward
-      };
-      return Ok(Some(OxsOrnament::Part(PartStitch {
-        x,
-        y,
-        palindex,
-        direction,
-        kind: PartStitchKind::Quarter,
-      })));
     }
+
+    let (x_fract, y_fract) = (x.fract(), y.fract());
+    let direction = if x_fract == 0.0 && y_fract == 0.0 || x_fract == 0.5 && y_fract == 0.5 {
+      PartStitchDirection::Backward
+    } else {
+      PartStitchDirection::Forward
+    };
+    return Ok(Some(OxsOrnament::Part(PartStitch {
+      x,
+      y,
+      palindex,
+      direction,
+      kind: PartStitchKind::Quarter,
+    })));
   }
 
   if kind == "tent" {
@@ -1039,7 +1039,7 @@ fn read_special_stitch_models<R: io::BufRead>(reader: &mut Reader<R>) -> Result<
                 Some(OxsLineStitch::LineStitch(stitch)) => linestitches.push(stitch),
                 Some(OxsLineStitch::CurvedStitch(stitch)) => curvedstitches.push(stitch),
                 None => {}
-              };
+              }
             }
             Event::Start(ref e) if e.name().as_ref() == b"object" => {
               let attributes = AttributesMap::try_from(e.attributes())?;
@@ -1089,11 +1089,11 @@ fn write_special_stitch_models<W: io::Write>(
             ("height", spsmodel.height.to_string().as_str()),
           ])
           .write_inner_content(|writer| {
-            for linestitch in spsmodel.linestitches.iter().cloned() {
+            for linestitch in spsmodel.linestitches.iter().copied() {
               write_line_stitch(writer, OxsLineStitch::LineStitch(linestitch))?;
             }
 
-            for nodestitch in spsmodel.nodestitches.iter().cloned() {
+            for nodestitch in spsmodel.nodestitches.iter().copied() {
               write_ornament(writer, OxsOrnament::Node(nodestitch))?;
             }
 
@@ -1123,6 +1123,7 @@ pub mod utils {
       self.inner.get(key).map(std::string::String::as_str)
     }
 
+    #[must_use]
     pub fn get_coord(&self, key: &str) -> Option<Coord> {
       self.get(key).and_then(|s| {
         let normalized = s.replace(',', ".");
@@ -1130,6 +1131,7 @@ pub mod utils {
       })
     }
 
+    #[must_use]
     pub fn get_palindex(&self, key: &str) -> Option<u32> {
       match self.get(key).and_then(|s| s.parse::<u32>().ok()) {
         Some(palindex) if palindex != 0 => Some(palindex - 1),
@@ -1137,6 +1139,7 @@ pub mod utils {
       }
     }
 
+    #[must_use]
     pub fn get_color(&self, key: &str) -> Option<&str> {
       let color = self.get(key);
       if color.is_some_and(|c| c.is_empty() || c == "nil") {
@@ -1146,12 +1149,14 @@ pub mod utils {
       }
     }
 
+    #[must_use]
     pub fn get_objecttype(&self, key: &str) -> Option<String> {
       self
         .get(key)
         .and_then(|s| if s.is_empty() { None } else { Some(s.to_owned()) })
     }
 
+    #[must_use]
     pub fn get_bool(&self, key: &str) -> Option<bool> {
       self.get(key).and_then(|s| {
         let normalized = s.to_lowercase();
@@ -1159,10 +1164,12 @@ pub mod utils {
       })
     }
 
+    #[must_use]
     pub fn get_parsed<T: std::str::FromStr>(&self, key: &str) -> Option<T> {
       self.get(key).and_then(|s| s.parse::<T>().ok())
     }
 
+    #[must_use]
     pub fn get_symbol(&self, key: &str) -> Option<char> {
       self.get(key).and_then(|s| {
         if s.chars().count() == 1 {

@@ -160,11 +160,10 @@ impl<R: tauri::Runtime> History<R> {
             }
 
             return Some(action);
-          } else {
-            unreachable!("The undo stack should not contain empty transactions.");
           }
+          unreachable!("The undo stack should not contain empty transactions.");
         }
-      };
+      }
     }
 
     None
@@ -221,9 +220,8 @@ impl<R: tauri::Runtime> History<R> {
             }
 
             return Some(action);
-          } else {
-            unreachable!("The redo stack should not contain empty transactions.");
           }
+          unreachable!("The redo stack should not contain empty transactions.");
         }
       }
     }
@@ -313,6 +311,7 @@ impl<R: tauri::Runtime> History<R> {
   }
 
   /// Helper method to check if an action is a `CheckpointAction`.
+  #[allow(clippy::unused_self)]
   fn is_checkpoint_action(&self, action: Box<dyn std::any::Any>) -> bool {
     action.downcast_ref::<super::actions::CheckpointAction>().is_some()
   }

@@ -56,7 +56,7 @@ pub fn open_pattern<R: tauri::Runtime>(
       }
       Some(false) => {}
       None => return Err(PatternError::BackupFileExists.into()),
-    };
+    }
   }
 
   let mut patproj = embroiderly_parsers::parse_pattern(file_path.clone())?;
@@ -166,7 +166,7 @@ pub fn save_pattern<R: tauri::Runtime>(
     let backup_file_path = backup_file_path(&file_path, "bak");
 
     log::trace!("Saving the pattern to a temporary file.");
-    patproj.file_path = new_file_path.clone();
+    patproj.file_path.clone_from(&new_file_path);
     embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
 
     log::trace!("Backing up the previous file.");
@@ -178,7 +178,7 @@ pub fn save_pattern<R: tauri::Runtime>(
     std::fs::rename(&new_file_path, &file_path)?;
     patproj.file_path = file_path;
   } else {
-    patproj.file_path = file_path.clone();
+    patproj.file_path.clone_from(&file_path);
     embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
     patproj.file_path = previous_file_path;
   }
@@ -201,13 +201,13 @@ pub fn save_all_patterns<R: tauri::Runtime>(
 ) -> Result<()> {
   log::debug!("Saving all patterns");
 
-  let _patterns = patterns
+  let patterns_to_save = patterns
     .read()
     .unwrap()
     .patterns()
     .map(|p| (p.id, p.file_path.clone()))
     .collect::<Vec<_>>();
-  for (pattern_id, file_path) in _patterns {
+  for (pattern_id, file_path) in patterns_to_save {
     save_pattern(
       pattern_id,
       file_path,
@@ -247,7 +247,7 @@ pub fn export_pattern<R: tauri::Runtime>(
     .path()
     .with_extension(PatternFormat::default().to_string());
   let previous_file_path = patproj.file_path.clone();
-  patproj.file_path = tempfile_path.clone().clone();
+  patproj.file_path.clone_from(&tempfile_path.clone());
   embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
   patproj.file_path = previous_file_path;
 
@@ -318,8 +318,8 @@ pub fn close_all_patterns<R: tauri::Runtime>(
 ) -> Result<()> {
   log::debug!("Closing all patterns");
 
-  let _patterns = patterns.read().unwrap().patterns().map(|p| p.id).collect::<Vec<_>>();
-  for pattern_id in _patterns {
+  let patterns_to_close = patterns.read().unwrap().patterns().map(|p| p.id).collect::<Vec<_>>();
+  for pattern_id in patterns_to_close {
     close_pattern(
       pattern_id,
       Some(true),
@@ -336,6 +336,7 @@ pub fn close_all_patterns<R: tauri::Runtime>(
 /// Returns a list of opened patterns with their IDs and titles.
 /// This is used on the first app startup to initially load those patterns which were opened using file associations.
 #[tauri::command]
+#[must_use]
 pub fn get_opened_patterns(patterns: tauri::State<PatternsState>) -> Vec<(String, String)> {
   log::debug!("Getting opened patterns");
 
@@ -368,6 +369,7 @@ pub fn get_unsaved_patterns<R: tauri::Runtime>(
 }
 
 #[tauri::command]
+#[must_use]
 pub fn get_pattern_file_path(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> String {
   let patterns = patterns.read().unwrap();
   let patproj = patterns.get_pattern_by_id(&pattern_id).unwrap();

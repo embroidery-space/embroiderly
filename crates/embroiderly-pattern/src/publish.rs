@@ -64,6 +64,7 @@ impl ImageExportOptions {
   pub const DEFAULT_CELL_SIZE: f32 = 14.0;
   pub const DEFAULT_PRESERVED_OVERLAP: u16 = 3;
 
+  #[must_use]
   pub fn new(cell_size: f32) -> Self {
     ImageExportOptions {
       cell_size,

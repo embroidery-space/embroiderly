@@ -83,6 +83,7 @@ pub enum DisplayMode {
 }
 
 impl DisplayMode {
+  #[must_use]
   pub fn from_pattern_maker(value: u16) -> Self {
     match value {
       0 => DisplayMode::Stitches,
