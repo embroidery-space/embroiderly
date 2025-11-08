@@ -32,7 +32,7 @@ function sendBreadcrumbToRust(breadcrumb: Breadcrumb) {
   // Ignore IPC breadcrumbs so we don't get into an infinite loop.
   if (
     typeof breadcrumb.data?.url === "string" &&
-    (breadcrumb.data.url.startsWith("ipc://") || breadcrumb.data.url.match(/^https?:\/\/ipc\.localhost/))
+    (breadcrumb.data.url.startsWith("ipc://") || /^https?:\/\/ipc\.localhost/.test(breadcrumb.data.url))
   ) {
     return null;
   }

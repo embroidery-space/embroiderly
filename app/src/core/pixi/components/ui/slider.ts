@@ -153,7 +153,7 @@ export class Slider extends Container {
   /** Removes a listener from the update event. */
   offUpdate(listener: (event: SliderChangeEvent) => void) {
     const index = this.#onUpdateListeners.indexOf(listener);
-    if (index >= 0) this.#onUpdateListeners.splice(index, 1);
+    if (index !== -1) this.#onUpdateListeners.splice(index, 1);
   }
 
   /** Adds a listener for value changes when dragging ends. */
@@ -164,7 +164,7 @@ export class Slider extends Container {
   /** Removes a listener from the change event. */
   offChange(listener: (event: SliderChangeEvent) => void) {
     const index = this.#onChangeListeners.indexOf(listener);
-    if (index >= 0) this.#onChangeListeners.splice(index, 1);
+    if (index !== -1) this.#onChangeListeners.splice(index, 1);
   }
 
   private onPointerDown(event: FederatedPointerEvent) {
@@ -222,7 +222,7 @@ export class Slider extends Container {
       value: this.value,
       normalized: this.normalizedValue,
     };
-    this.#onUpdateListeners.forEach((listener) => listener(event));
+    for (const listener of this.#onUpdateListeners) listener(event);
   }
 
   private emitChange() {
@@ -230,6 +230,6 @@ export class Slider extends Container {
       value: this.value,
       normalized: this.normalizedValue,
     };
-    this.#onChangeListeners.forEach((listener) => listener(event));
+    for (const listener of this.#onChangeListeners) listener(event);
   }
 }

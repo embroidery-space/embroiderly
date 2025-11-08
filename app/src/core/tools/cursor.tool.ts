@@ -6,14 +6,13 @@ export class CursorTool implements PatternEditorTool {
   readonly name: "cursor";
 
   main({ event, ui }: PatternEditorToolContext) {
-    if (event.path.find((el) => el instanceof ReferenceImageView)) {
+    if (event.path.some((el) => el instanceof ReferenceImageView)) {
       ui.referenceImage.focus();
     }
   }
 
   async release({ event, api, ui }: PatternEditorToolContext) {
-    const image = event.path.find((el) => el instanceof ReferenceImageView);
-    if (!image) {
+    if (!event.path.some((el) => el instanceof ReferenceImageView)) {
       // If the reference image is not found in the event path,
       // we blur the reference image to ensure it's not focused.
       ui.referenceImage.blur();

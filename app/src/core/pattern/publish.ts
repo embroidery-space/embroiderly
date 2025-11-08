@@ -27,7 +27,7 @@ export class ImageExportOptions {
   static default(): ImageExportOptions {
     return new ImageExportOptions({
       frameSize: null,
-      cellSize: 14.0,
+      cellSize: 14,
       preservedOverlap: 3,
       showGridLineNumbers: false,
       showCenteringMarks: false,
@@ -75,7 +75,7 @@ export class PdfExportOptions {
       enumerateFrames: true,
       frameOptions: {
         frameSize: [30, 40],
-        cellSize: 14.0,
+        cellSize: 14,
         preservedOverlap: 3,
         showGridLineNumbers: true,
         showCenteringMarks: true,

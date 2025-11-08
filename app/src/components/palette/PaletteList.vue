@@ -77,7 +77,7 @@
   const value = defineModel<V | V[]>({ required: true });
   const {
     options = [],
-    optionValue = undefined,
+    optionValue = undefined, // eslint-disable-line unicorn/no-useless-undefined
     disabled = false,
     multiple = false,
     draggable = false,
@@ -137,7 +137,7 @@
   function optionIsSelected(option: T) {
     const transformed = optionValue?.(option) ?? option;
     if (multiple && Array.isArray(value.value)) {
-      return value.value.find((option) => dequal(option, transformed)) !== undefined;
+      return value.value.some((option) => dequal(option, transformed));
     }
     return dequal(value.value, transformed);
   }
