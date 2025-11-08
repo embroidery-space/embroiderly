@@ -26,6 +26,7 @@ pedantic = { level = "allow", priority = -1 }
 fn_params_excessive_bools = "warn"
 if_not_else = "warn"
 implicit_clone = "warn"
+unnested_or_patterns = "warn"
 restriction = { level = "allow", priority = -1 }
 dbg_macro = "warn"
 print_stdout = "warn"

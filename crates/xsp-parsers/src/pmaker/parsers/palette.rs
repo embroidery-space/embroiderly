@@ -15,8 +15,8 @@ impl TryFrom<Option<&std::ffi::OsStr>> for PatternMakerPalette {
   fn try_from(value: Option<&std::ffi::OsStr>) -> Result<Self> {
     match value {
       Some(os_str) => match os_str.to_str() {
-        Some("Master") | Some("master") => Ok(PatternMakerPalette::Master),
-        Some("User") | Some("user") => Ok(PatternMakerPalette::User),
+        Some("Master" | "master") => Ok(PatternMakerPalette::Master),
+        Some("User" | "user") => Ok(PatternMakerPalette::User),
         _ => Err(PmakerError::InvalidPaletteType(os_str.to_string_lossy().to_string())),
       },
       None => Err(PmakerError::InvalidPaletteType("No palette type provided".into())),
