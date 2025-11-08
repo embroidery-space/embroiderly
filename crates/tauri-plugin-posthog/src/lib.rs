@@ -58,7 +58,7 @@ impl SessionId {
   /// Creates a new `SessionId` using UUID v7.
   pub fn new() -> Self {
     let uuid = uuid::Uuid::now_v7();
-    SessionId(format!("{:x}", uuid))
+    SessionId(format!("{uuid:x}"))
   }
 
   /// Returns the session ID as a string.

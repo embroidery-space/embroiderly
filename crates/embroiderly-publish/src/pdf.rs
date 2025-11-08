@@ -82,7 +82,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
 
   let pdf_options = Default::default();
   let pdf_bytes =
-    typst_pdf::pdf(&doc, &pdf_options).map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {:?}", warnings))?;
+    typst_pdf::pdf(&doc, &pdf_options).map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))?;
 
   std::fs::write(file_path, pdf_bytes)?;
   Ok(())

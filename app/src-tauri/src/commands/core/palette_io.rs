@@ -165,16 +165,16 @@ pub fn load_palette<R: tauri::Runtime>(
 ) -> Result<Vec<u8>> {
   let palette_path = match palette_group {
     PaletteGroup::System => app_handle.path().resolve(
-      format!("resources/palettes/{}.json", palette_name),
+      format!("resources/palettes/{palette_name}.json"),
       tauri::path::BaseDirectory::Resource,
     )?,
     PaletteGroup::Custom => app_data_dir(&app_handle)?
       .join("palettes")
-      .join(format!("{}.json", palette_name)),
+      .join(format!("{palette_name}.json")),
   };
   let palette: Vec<BrandPaletteItem> = {
     let content = std::fs::read_to_string(palette_path)?;
-    serde_json::from_str(&content).map_err(|e| anyhow::anyhow!("Failed to parse palette JSON: {}", e))?
+    serde_json::from_str(&content).map_err(|e| anyhow::anyhow!("Failed to parse palette JSON: {e}"))?
   };
   Ok(borsh::to_vec(&palette)?)
 }

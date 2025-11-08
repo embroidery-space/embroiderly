@@ -34,7 +34,7 @@ pub fn load_fabric_colors() -> Result<tauri::ipc::Response> {
   let fabric_colors_path = crate::utils::path::resolve_app_resources("resources/fabric-colors.json")?;
   let fabric_colors: Vec<FabricColor> = {
     let content = std::fs::read_to_string(fabric_colors_path)?;
-    serde_json::from_str(&content).map_err(|e| anyhow::anyhow!("Failed to parse fabric colors JSON: {}", e))?
+    serde_json::from_str(&content).map_err(|e| anyhow::anyhow!("Failed to parse fabric colors JSON: {e}"))?
   };
   Ok(tauri::ipc::Response::new(borsh::to_vec(&fabric_colors)?))
 }

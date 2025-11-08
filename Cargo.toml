@@ -29,6 +29,7 @@ implicit_clone = "warn"
 unnested_or_patterns = "warn"
 semicolon_if_nothing_returned = "warn"
 redundant_closure_for_method_calls = "warn"
+uninlined_format_args = "warn"
 restriction = { level = "allow", priority = -1 }
 dbg_macro = "warn"
 print_stdout = "warn"
