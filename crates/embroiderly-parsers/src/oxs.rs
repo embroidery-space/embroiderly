@@ -762,7 +762,6 @@ fn write_line_stitch<W: io::Write>(writer: &mut Writer<W>, stitch: OxsLineStitch
     OxsLineStitch::CurvedStitch(curvedstitch) => {
       let attributes = curvedstitch
         .points
-        
         .into_iter()
         .enumerate()
         .flat_map(|(i, (x, y))| {

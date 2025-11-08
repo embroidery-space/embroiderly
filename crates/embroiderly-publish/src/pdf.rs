@@ -61,14 +61,10 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   let typst_template = typst_as_lib::TypstEngine::builder()
     .main_file(include_str!("../templates/pattern.typ"))
     .search_fonts_with(typst_as_lib::typst_kit_options::TypstKitFontOptions::default().include_dirs([symbol_fonts_dir]))
-    .with_static_file_resolver(
-      frames
-        .into_iter()
-        .map(|(name, content)| {
-          use typst::syntax::{FileId, VirtualPath};
-          (FileId::new(None, VirtualPath::new(name)), content)
-        }),
-    )
+    .with_static_file_resolver(frames.into_iter().map(|(name, content)| {
+      use typst::syntax::{FileId, VirtualPath};
+      (FileId::new(None, VirtualPath::new(name)), content)
+    }))
     .build();
 
   let doc = {
