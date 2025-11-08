@@ -47,7 +47,7 @@ pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> Result<Vec<Pale
 
   let mut palette = Vec::with_capacity(palette_size);
   for _ in 0..palette_size {
-    palette.push(read_palette_item(&mut cursor)?)
+    palette.push(read_palette_item(&mut cursor)?);
   }
 
   log::debug!("Palette parsed");

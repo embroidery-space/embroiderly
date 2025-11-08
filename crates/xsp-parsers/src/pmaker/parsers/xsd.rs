@@ -766,7 +766,7 @@ fn map_stitches_data_into_stitches(
           y,
           palindex: small_stitch_buffer[palindex_index],
           kind: FullStitchKind::Petite,
-        })
+        });
       }
     }
 
@@ -796,7 +796,7 @@ fn map_stitches_data_into_stitches(
           palindex: small_stitch_buffer[palindex_index],
           direction,
           kind,
-        })
+        });
       }
     }
   }
