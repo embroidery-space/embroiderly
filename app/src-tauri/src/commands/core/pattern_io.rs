@@ -1,5 +1,5 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{Fabric, Pattern, PatternProject, PdfExportOptions};
+use embroiderly_pattern::{Fabric, Pattern, PatternProject, PdfExportOptions, ReferenceImage};
 use tauri::Emitter as _;
 use tauri_plugin_posthog::PostHogExt as _;
 
@@ -92,7 +92,7 @@ pub fn open_pattern<R: tauri::Runtime>(
 
       has_reference_image: patproj.reference_image.is_some(),
       reference_image_format: patproj.reference_image.as_ref().map(|image| image.format),
-      reference_image_dimensions: patproj.reference_image.as_ref().map(|image| image.dimensions()),
+      reference_image_dimensions: patproj.reference_image.as_ref().map(ReferenceImage::dimensions),
       reference_image_size: patproj.reference_image.as_ref().map(|image| image.content.len()),
     });
   }

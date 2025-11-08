@@ -35,7 +35,7 @@ pub fn import_palettes<R: tauri::Runtime>(
       palette_files.extend(
         walkdir::WalkDir::new(entry)
           .into_iter()
-          .filter_map(|entry| entry.ok())
+          .filter_map(std::result::Result::ok)
           .filter(|entry| entry.file_type().is_file() && is_palette_file(entry.path()))
           .map(|entry| entry.path().to_path_buf()),
       );

@@ -19,7 +19,7 @@ mod tests;
 static PM_THREAD_BRANDS: LazyLock<std::collections::HashMap<u8, String>> = LazyLock::new(|| {
   let content = include_str!("../../resources/pmaker_thread_brands.txt");
   let entries = content.lines().map(|line| {
-    let mut parts = line.split(':').map(|part| part.trim());
+    let mut parts = line.split(':').map(str::trim);
     let id = parts.next().unwrap().parse().unwrap();
     let name = parts.next().unwrap().to_owned();
     (id, name)

@@ -1122,7 +1122,7 @@ pub mod utils {
 
   impl AttributesMap {
     pub fn get(&self, key: &str) -> Option<&str> {
-      self.inner.get(key).map(|s| s.as_str())
+      self.inner.get(key).map(std::string::String::as_str)
     }
 
     pub fn get_coord(&self, key: &str) -> Option<Coord> {

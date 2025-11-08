@@ -49,7 +49,7 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
 
   // Since we store the reference image with the original extension,
   // we don't know the exact file name, so we have to search for it.
-  let file_names = archive.file_names().map(|s| s.to_string()).collect::<Vec<_>>();
+  let file_names = archive.file_names().map(ToString::to_string).collect::<Vec<_>>();
   if let Some(image_file_name) = file_names.iter().find(|name| name.starts_with("reference_image")) {
     let image_file = read_zip_file!(archive, image_file_name.as_str());
     let settings_file = read_zip_file!(archive, "reference_image_settings.xml");

@@ -236,10 +236,10 @@ impl Pattern {
   pub fn remove_stitch(&mut self, stitch: Stitch) -> Option<Stitch> {
     log::trace!("Removing stitch");
     match stitch {
-      Stitch::Full(fullstitch) => self.fullstitches.remove(&fullstitch).map(|fs| fs.into()),
-      Stitch::Part(partstitch) => self.partstitches.remove(&partstitch).map(|ps| ps.into()),
-      Stitch::Node(node) => self.nodestitches.remove(&node).map(|node| node.into()),
-      Stitch::Line(line) => self.linestitches.remove(&line).map(|line| line.into()),
+      Stitch::Full(fullstitch) => self.fullstitches.remove(&fullstitch).map(Into::into),
+      Stitch::Part(partstitch) => self.partstitches.remove(&partstitch).map(Into::into),
+      Stitch::Node(node) => self.nodestitches.remove(&node).map(Into::into),
+      Stitch::Line(line) => self.linestitches.remove(&line).map(Into::into),
     }
   }
 

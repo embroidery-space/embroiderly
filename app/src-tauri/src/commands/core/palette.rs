@@ -26,7 +26,7 @@ pub fn add_palette_item<R: tauri::Runtime>(
     let event = AppEvent::PaletteItemAdded {
       brand: palitem.brand.clone(),
       is_blend: palitem.is_blend(),
-      blends_number: palitem.blends.as_ref().map(|blends| blends.len()),
+      blends_number: palitem.blends.as_ref().map(Vec::len),
     };
 
     let action = AddPaletteItemAction::new(palitem);
@@ -66,7 +66,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
         .map(|palitem| AppEvent::PaletteItemRemoved {
           brand: palitem.brand.clone(),
           is_blend: palitem.is_blend(),
-          blends_number: palitem.blends.as_ref().map(|blends| blends.len()),
+          blends_number: palitem.blends.as_ref().map(Vec::len),
         })
     })
     .collect();

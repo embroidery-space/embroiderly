@@ -56,28 +56,28 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
       xsd_pattern
         .fullstitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
     partstitches: Stitches::from_iter(
       xsd_pattern
         .partstitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
     linestitches: Stitches::from_iter(
       xsd_pattern
         .linestitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
     nodestitches: Stitches::from_iter(
       xsd_pattern
         .nodestitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
     specialstitches: Stitches::from_iter(
@@ -96,7 +96,7 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
     special_stitch_models: xsd_pattern
       .special_stitch_models
       .into_iter()
-      .map(|model| model.try_into())
+      .map(TryInto::try_into)
       .collect::<Result<Vec<_>, _>>()?,
   };
   let display_settings = DisplaySettings {
