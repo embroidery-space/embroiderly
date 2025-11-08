@@ -161,15 +161,7 @@ pub fn save_pattern<R: tauri::Runtime>(
   };
 
   let format = PatternFormat::try_from(file_path.extension())?;
-  if format != PatternFormat::default() {
-    // If the file is saved not in the default format (e.g. in oxs), we simply write it as is.
-    patproj.file_path = file_path.clone();
-    embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
-    patproj.file_path = previous_file_path;
-  } else {
-    // Otherwise, it means that we are saving the pattern as project.
-    // In that case, we also back it up.
-
+  if format == PatternFormat::default() {
     let new_file_path = backup_file_path(&file_path, "new");
     let backup_file_path = backup_file_path(&file_path, "bak");
 
@@ -185,6 +177,10 @@ pub fn save_pattern<R: tauri::Runtime>(
     log::trace!("Renaming the new file to the target file name.");
     std::fs::rename(&new_file_path, &file_path)?;
     patproj.file_path = file_path;
+  } else {
+    patproj.file_path = file_path.clone();
+    embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
+    patproj.file_path = previous_file_path;
   }
 
   log::debug!("Pattern saved {pattern_id:?}");
