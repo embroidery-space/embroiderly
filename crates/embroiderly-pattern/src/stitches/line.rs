@@ -46,8 +46,8 @@ pub enum LineStitchKind {
 impl std::fmt::Display for LineStitchKind {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
-      LineStitchKind::Back => write!(f, "backstitch"),
-      LineStitchKind::Straight => write!(f, "straightstitch"),
+      Self::Back => write!(f, "backstitch"),
+      Self::Straight => write!(f, "straightstitch"),
     }
   }
 }
@@ -57,9 +57,9 @@ impl std::str::FromStr for LineStitchKind {
 
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     match s {
-      "backstitch" => Ok(LineStitchKind::Back),
-      "straightstitch" => Ok(LineStitchKind::Straight),
-      _ => Ok(LineStitchKind::Back),
+      "backstitch" => Ok(Self::Back),
+      "straightstitch" => Ok(Self::Straight),
+      _ => Ok(Self::Back),
     }
   }
 }
@@ -67,8 +67,8 @@ impl std::str::FromStr for LineStitchKind {
 impl From<pmaker::LineStitchKind> for LineStitchKind {
   fn from(kind: pmaker::LineStitchKind) -> Self {
     match kind {
-      pmaker::LineStitchKind::Back => LineStitchKind::Back,
-      pmaker::LineStitchKind::Straight => LineStitchKind::Straight,
+      pmaker::LineStitchKind::Back => Self::Back,
+      pmaker::LineStitchKind::Straight => Self::Straight,
     }
   }
 }

@@ -18,7 +18,7 @@ pub struct Pattern {
   pub print_settings: PrintSettings,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct PatternInfo {
   pub title: String,
   pub author: String,
@@ -27,7 +27,7 @@ pub struct PatternInfo {
   pub description: String,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Fabric {
   pub width: u16,
   pub height: u16,
@@ -48,7 +48,7 @@ pub struct PaletteItem {
   pub strands: Option<StitchStrands<Option<u8>>>,
 }
 
-#[derive(Debug, PartialEq, Default)]
+#[derive(Debug, PartialEq, Eq, Default)]
 pub struct StitchStrands<T> {
   pub full: T,
   pub petite: T,
@@ -60,7 +60,7 @@ pub struct StitchStrands<T> {
   pub special: T,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Blend {
   pub brand: String,
   pub number: String,
@@ -84,7 +84,7 @@ pub struct Formats {
   pub font: FontFormat,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct SymbolFormat {
   pub use_alt_bg_color: bool,
   pub bg_color: String,
@@ -107,7 +107,7 @@ pub struct NodeStitchFormat {
   pub thickness: f32,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct FontFormat {
   pub font_name: Option<String>,
   pub bold: bool,
@@ -116,7 +116,7 @@ pub struct FontFormat {
   pub small_stitch_size: u8,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Symbols {
   pub full: Option<u16>,
   pub petite: Option<u16>,
@@ -134,7 +134,7 @@ pub struct FullStitch {
   pub kind: FullStitchKind,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum FullStitchKind {
   Full,
   Petite,
@@ -149,13 +149,13 @@ pub struct PartStitch {
   pub kind: PartStitchKind,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum PartStitchDirection {
   Forward,
   Backward,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum PartStitchKind {
   Half,
   Quarter,
@@ -169,7 +169,7 @@ pub struct LineStitch {
   pub kind: LineStitchKind,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum LineStitchKind {
   Back,
   Straight,
@@ -184,7 +184,7 @@ pub struct NodeStitch {
   pub kind: NodeStitchKind,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum NodeStitchKind {
   FrenchKnot,
   Bead,
@@ -231,7 +231,7 @@ pub struct GridLineStyle {
   pub thickness: f32,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct PatternSettings {
   pub default_stitch_font: String,
   pub view: u16,
@@ -258,7 +258,7 @@ pub struct StitchOutline {
   pub thickness: f32,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct SymbolSettings {
   pub screen_spacing: (u16, u16),
   pub printer_spacing: (u16, u16),
@@ -283,7 +283,7 @@ pub struct PrintSettings {
   pub center_chart_on_pages: bool,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Font {
   pub name: String,
   pub size: u16,

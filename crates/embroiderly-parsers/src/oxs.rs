@@ -762,7 +762,7 @@ fn write_line_stitch<W: io::Write>(writer: &mut Writer<W>, stitch: OxsLineStitch
     OxsLineStitch::CurvedStitch(curvedstitch) => {
       let attributes = curvedstitch
         .points
-        .clone()
+        
         .into_iter()
         .enumerate()
         .flat_map(|(i, (x, y))| {
@@ -1194,7 +1194,7 @@ pub mod utils {
         let value = String::from_utf8(attr.value.to_vec())?;
         map.insert(key, value);
       }
-      Ok(AttributesMap { inner: map })
+      Ok(Self { inner: map })
     }
   }
 }

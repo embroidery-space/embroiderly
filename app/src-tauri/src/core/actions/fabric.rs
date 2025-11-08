@@ -19,7 +19,7 @@ pub struct UpdateFabricPropertiesAction {
 }
 
 impl UpdateFabricPropertiesAction {
-  pub fn new(fabric: Fabric) -> Self {
+  pub const fn new(fabric: Fabric) -> Self {
     Self {
       fabric,
       old_fabric: OnceLock::new(),

@@ -18,7 +18,7 @@ pub struct UpdatePatternInfoAction {
 }
 
 impl UpdatePatternInfoAction {
-  pub fn new(info: PatternInfo) -> Self {
+  pub const fn new(info: PatternInfo) -> Self {
     Self { info, old_info: OnceLock::new() }
   }
 }

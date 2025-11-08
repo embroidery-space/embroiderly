@@ -67,8 +67,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
         .map(|(name, content)| {
           use typst::syntax::{FileId, VirtualPath};
           (FileId::new(None, VirtualPath::new(name)), content)
-        })
-        .collect::<Vec<_>>(),
+        }),
     )
     .build();
 

@@ -20,7 +20,7 @@ pub struct Pattern {
 impl Pattern {
   #[must_use]
   pub fn new(fabric: Fabric) -> Self {
-    Pattern { fabric, ..Pattern::default() }
+    Self { fabric, ..Self::default() }
   }
 
   /// Returns the number of full and petite stitches in the pattern.
@@ -341,7 +341,7 @@ impl Pattern {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PatternInfo {
   pub title: String,
@@ -374,7 +374,7 @@ impl From<pmaker::PatternInfo> for PatternInfo {
 
 pub type StitchesPerInch = (u8, u8);
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Fabric {
   pub width: u16,
@@ -397,12 +397,12 @@ impl Fabric {
 impl Default for Fabric {
   fn default() -> Self {
     Self {
-      width: Fabric::DEFAULT_WIDTH,
-      height: Fabric::DEFAULT_HEIGHT,
-      spi: (Fabric::DEFAULT_SPI, Fabric::DEFAULT_SPI),
-      kind: String::from(Fabric::DEFAULT_KIND),
-      name: String::from(Fabric::DEFAULT_NAME),
-      color: String::from(Fabric::DEFAULT_COLOR),
+      width: Self::DEFAULT_WIDTH,
+      height: Self::DEFAULT_HEIGHT,
+      spi: (Self::DEFAULT_SPI, Self::DEFAULT_SPI),
+      kind: String::from(Self::DEFAULT_KIND),
+      name: String::from(Self::DEFAULT_NAME),
+      color: String::from(Self::DEFAULT_COLOR),
     }
   }
 }
@@ -421,7 +421,7 @@ impl From<pmaker::Fabric> for Fabric {
 }
 
 /// Represents a fabric color item.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct FabricColor {

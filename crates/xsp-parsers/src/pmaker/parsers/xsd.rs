@@ -270,7 +270,7 @@ fn skip_palette_items_notes<R: Read + Seek>(reader: &mut R, palette_size: usize)
 }
 
 fn read_palette_item_strands<R: Read>(reader: &mut R) -> io::Result<StitchStrands<Option<u8>>> {
-  fn map_strands(value: u16) -> Option<u8> {
+  const fn map_strands(value: u16) -> Option<u8> {
     if value == 0 { None } else { Some(value as u8) }
   }
 
@@ -404,7 +404,7 @@ fn read_font_formats<R: Read + Seek>(reader: &mut R, palette_size: usize) -> io:
 }
 
 fn read_symbols<R: Read>(reader: &mut R, palette_size: usize) -> io::Result<Vec<Symbols>> {
-  fn map_symbol(value: u16) -> Option<u16> {
+  const fn map_symbol(value: u16) -> Option<u16> {
     if value == 0xFFFF { None } else { Some(value) }
   }
 
@@ -902,12 +902,12 @@ enum XsdJointKind {
 impl From<u16> for XsdJointKind {
   fn from(value: u16) -> Self {
     match value {
-      1 => XsdJointKind::FrenchKnot,
-      2 => XsdJointKind::Back,
-      3 => XsdJointKind::Curve,
-      4 => XsdJointKind::Special,
-      5 => XsdJointKind::Straight,
-      6 => XsdJointKind::Bead,
+      1 => Self::FrenchKnot,
+      2 => Self::Back,
+      3 => Self::Curve,
+      4 => Self::Special,
+      5 => Self::Straight,
+      6 => Self::Bead,
       _ => unreachable!("Invalid joint kind {value}"),
     }
   }

@@ -34,7 +34,7 @@ pub struct Bounds {
 
 impl Bounds {
   #[must_use]
-  pub fn new(x: u16, y: u16, width: u16, height: u16) -> Self {
+  pub const fn new(x: u16, y: u16, width: u16, height: u16) -> Self {
     Self { x, y, width, height }
   }
 

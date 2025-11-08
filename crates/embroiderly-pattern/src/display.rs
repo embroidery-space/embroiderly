@@ -84,11 +84,11 @@ pub enum DisplayMode {
 
 impl DisplayMode {
   #[must_use]
-  pub fn from_pattern_maker(value: u16) -> Self {
+  pub const fn from_pattern_maker(value: u16) -> Self {
     match value {
-      0 => DisplayMode::Stitches,
-      2 => DisplayMode::Solid,
-      _ => DisplayMode::Mixed,
+      0 => Self::Stitches,
+      2 => Self::Solid,
+      _ => Self::Mixed,
     }
   }
 }
@@ -96,9 +96,9 @@ impl DisplayMode {
 impl std::fmt::Display for DisplayMode {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
-      DisplayMode::Solid => write!(f, "Solid"),
-      DisplayMode::Stitches => write!(f, "Stitches"),
-      DisplayMode::Mixed => write!(f, "Mixed"),
+      Self::Solid => write!(f, "Solid"),
+      Self::Stitches => write!(f, "Stitches"),
+      Self::Mixed => write!(f, "Mixed"),
     }
   }
 }
@@ -108,10 +108,10 @@ impl std::str::FromStr for DisplayMode {
 
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     match s {
-      "Solid" => Ok(DisplayMode::Solid),
-      "Stitches" => Ok(DisplayMode::Stitches),
-      "Mixed" => Ok(DisplayMode::Mixed),
-      _ => Ok(DisplayMode::Mixed),
+      "Solid" => Ok(Self::Solid),
+      "Stitches" => Ok(Self::Stitches),
+      "Mixed" => Ok(Self::Mixed),
+      _ => Ok(Self::Mixed),
     }
   }
 }
@@ -141,13 +141,13 @@ impl PaletteSettings {
 impl Default for PaletteSettings {
   fn default() -> Self {
     Self {
-      columns_number: PaletteSettings::DEFAULT_COLUMNS_NUMBER,
-      color_only: PaletteSettings::DEFAULT_COLOR_ONLY,
-      show_stitch_symbols: PaletteSettings::DEFAULT_SHOW_STITCH_SYMBOLS,
-      stitch_symbols_on_contrast_background: PaletteSettings::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND,
-      show_color_brands: PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS,
-      show_color_numbers: PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS,
-      show_color_names: PaletteSettings::DEFAULT_SHOW_COLOR_NAMES,
+      columns_number: Self::DEFAULT_COLUMNS_NUMBER,
+      color_only: Self::DEFAULT_COLOR_ONLY,
+      show_stitch_symbols: Self::DEFAULT_SHOW_STITCH_SYMBOLS,
+      stitch_symbols_on_contrast_background: Self::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND,
+      show_color_brands: Self::DEFAULT_SHOW_COLOR_BRANDS,
+      show_color_numbers: Self::DEFAULT_SHOW_COLOR_NUMBERS,
+      show_color_names: Self::DEFAULT_SHOW_COLOR_NAMES,
     }
   }
 }

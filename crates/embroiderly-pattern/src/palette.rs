@@ -53,7 +53,7 @@ pub struct Palette {
 impl Palette {
   /// Creates a new empty palette.
   #[must_use]
-  pub fn new() -> Self {
+  pub const fn new() -> Self {
     Self {
       items: Vec::new(),
       positions: Vec::new(),
@@ -303,7 +303,7 @@ impl std::ops::IndexMut<u32> for Palette {
 /// Represents a _working_ palette item.
 ///
 /// It contains all the properties from [`BrandPaletteItem`] plus project-specific display properties.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteItem {
   pub brand: String,
@@ -379,7 +379,7 @@ impl From<xspro::PaletteItem> for PaletteItem {
 /// Represents a _brand_ palette item.
 ///
 /// It contains only essential properties for clearly identifying colors from manufacturer catalogs or custom collections.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BrandPaletteItem {
@@ -430,7 +430,7 @@ impl From<xspro::PaletteItem> for BrandPaletteItem {
 }
 
 /// Represents a symbol used in a palette item.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Symbol {
   pub char: char,
   pub font: String,
@@ -472,7 +472,7 @@ impl borsh::BorshDeserialize for Symbol {
 }
 
 /// Represents a blend component of a palette item.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Blend {

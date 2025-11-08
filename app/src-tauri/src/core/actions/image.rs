@@ -18,7 +18,7 @@ pub struct SetReferenceImageAction {
 }
 
 impl SetReferenceImageAction {
-  pub fn new(image: Option<ReferenceImage>) -> Self {
+  pub const fn new(image: Option<ReferenceImage>) -> Self {
     Self {
       image,
       old_image: OnceLock::new(),
@@ -59,7 +59,7 @@ pub struct UpdateReferenceImageSettingsAction {
 }
 
 impl UpdateReferenceImageSettingsAction {
-  pub fn new(settings: ReferenceImageSettings) -> Self {
+  pub const fn new(settings: ReferenceImageSettings) -> Self {
     Self {
       settings,
       old_settings: OnceLock::new(),

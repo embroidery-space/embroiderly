@@ -18,7 +18,7 @@ pub struct UpdatePdfExportOptionsAction {
 }
 
 impl UpdatePdfExportOptionsAction {
-  pub fn new(options: PdfExportOptions) -> Self {
+  pub const fn new(options: PdfExportOptions) -> Self {
     Self {
       options,
       old_options: OnceLock::new(),

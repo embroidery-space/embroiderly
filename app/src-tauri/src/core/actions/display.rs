@@ -18,7 +18,7 @@ pub struct SetDisplayModeAction {
 }
 
 impl SetDisplayModeAction {
-  pub fn new(mode: DisplayMode) -> Self {
+  pub const fn new(mode: DisplayMode) -> Self {
     Self { mode, old_mode: OnceLock::new() }
   }
 }
@@ -55,7 +55,7 @@ pub struct ShowSymbolsAction {
 }
 
 impl ShowSymbolsAction {
-  pub fn new(value: bool) -> Self {
+  pub const fn new(value: bool) -> Self {
     Self { value }
   }
 }
@@ -89,7 +89,7 @@ pub struct SetLayersVisibilityAction {
 }
 
 impl SetLayersVisibilityAction {
-  pub fn new(layers_visibility: LayersVisibility) -> Self {
+  pub const fn new(layers_visibility: LayersVisibility) -> Self {
     Self {
       layers_visibility,
       old_layers_visibility: OnceLock::new(),

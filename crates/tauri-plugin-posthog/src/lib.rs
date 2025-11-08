@@ -42,7 +42,7 @@ impl DeviceId {
     hasher.update(package_info.name.as_bytes());
     hasher.update(package_info.version.to_string().as_bytes());
 
-    DeviceId(format!("{:x}", hasher.finalize()))
+    Self(format!("{:x}", hasher.finalize()))
   }
 
   /// Returns the device ID as a string.
@@ -59,7 +59,7 @@ impl SessionId {
   /// Creates a new `SessionId` using UUID v7.
   pub fn new() -> Self {
     let uuid = uuid::Uuid::now_v7();
-    SessionId(format!("{uuid:x}"))
+    Self(format!("{uuid:x}"))
   }
 
   /// Returns the session ID as a string.

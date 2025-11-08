@@ -24,7 +24,7 @@ pub struct AddPaletteItemAction {
 }
 
 impl AddPaletteItemAction {
-  pub fn new(palitem: PaletteItem) -> Self {
+  pub const fn new(palitem: PaletteItem) -> Self {
     Self { palitem }
   }
 }
@@ -71,7 +71,7 @@ struct RemovePaletteItemActionMetadata {
 
 impl RemovePaletteItemsAction {
   pub fn new(palindexes: Vec<u32>) -> Self {
-    let mut palindexes = palindexes.clone();
+    let mut palindexes = palindexes;
     palindexes.sort_unstable();
     Self {
       palindexes,
@@ -151,7 +151,7 @@ pub struct UpdatePaletteDisplaySettingsAction {
 }
 
 impl UpdatePaletteDisplaySettingsAction {
-  pub fn new(settings: PaletteSettings) -> Self {
+  pub const fn new(settings: PaletteSettings) -> Self {
     Self {
       settings,
       old_settings: OnceLock::new(),
@@ -198,7 +198,7 @@ pub struct SortPaletteAction {
 }
 
 impl SortPaletteAction {
-  pub fn new(sort_by: SortPaletteBy) -> Self {
+  pub const fn new(sort_by: SortPaletteBy) -> Self {
     Self {
       sort_by,
       old_positions: OnceLock::new(),
@@ -249,7 +249,7 @@ pub struct ReorderPaletteItemsAction {
 }
 
 impl ReorderPaletteItemsAction {
-  pub fn new(old_position: u32, new_position: u32) -> Self {
+  pub const fn new(old_position: u32, new_position: u32) -> Self {
     Self {
       old_position,
       new_position,
@@ -300,7 +300,7 @@ pub struct SetSymbolAction {
 }
 
 impl SetSymbolAction {
-  pub fn new(palindex: u32, symbol: Option<Symbol>) -> Self {
+  pub const fn new(palindex: u32, symbol: Option<Symbol>) -> Self {
     Self {
       palindex,
       symbol,

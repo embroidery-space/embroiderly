@@ -39,7 +39,7 @@ impl borsh::BorshDeserialize for ReferenceImage {
   fn deserialize_reader<R: std::io::Read>(reader: &mut R) -> std::io::Result<Self> {
     let content = borsh::BorshDeserialize::deserialize_reader(reader)?;
     let settings = borsh::BorshDeserialize::deserialize_reader(reader)?;
-    Ok(ReferenceImage::new(content, Some(settings)))
+    Ok(Self::new(content, Some(settings)))
   }
 }
 
