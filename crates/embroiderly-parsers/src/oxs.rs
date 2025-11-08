@@ -94,7 +94,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             let software_version = attributes.get("software_version").unwrap_or("Unknown");
             log::trace!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
 
-            let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes)?;
+            let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes);
             pattern.info = pattern_info;
             pattern.fabric.width = pattern_width;
             pattern.fabric.height = pattern_height;
@@ -289,9 +289,7 @@ fn write_format<W: io::Write>(writer: &mut Writer<W>) -> io::Result<()> {
   Ok(())
 }
 
-fn read_pattern_properties(
-  attributes: AttributesMap,
-) -> Result<(u16, u16, PatternInfo, StitchesPerInch, Option<usize>)> {
+fn read_pattern_properties(attributes: AttributesMap) -> (u16, u16, PatternInfo, StitchesPerInch, Option<usize>) {
   let pattern_width = attributes.get_parsed("chartwidth").unwrap_or(Fabric::DEFAULT_WIDTH);
   let pattern_height = attributes.get_parsed("chartheight").unwrap_or(Fabric::DEFAULT_HEIGHT);
 
@@ -312,7 +310,7 @@ fn read_pattern_properties(
 
   let palette_size = attributes.get_parsed("palettecount");
 
-  Ok((pattern_width, pattern_height, info, spi, palette_size))
+  (pattern_width, pattern_height, info, spi, palette_size)
 }
 
 fn write_pattern_properties<W: io::Write>(

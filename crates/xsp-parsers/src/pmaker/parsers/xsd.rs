@@ -603,7 +603,7 @@ fn read_stitches<R: Read>(
   log::trace!("Reading stitches");
   let stitches_data = read_stitches_data(reader, total_stitches_count)?;
   let small_stitch_buffers = read_small_stitch_buffers(reader, small_stitches_count)?;
-  let stitches = map_stitches_data_into_stitches(stitches_data, small_stitch_buffers, coord_factor)?;
+  let stitches = map_stitches_data_into_stitches(stitches_data, small_stitch_buffers, coord_factor);
   Ok(stitches)
 }
 
@@ -706,7 +706,7 @@ fn read_small_stitch_buffers<R: Read>(reader: &mut R, small_stitches_count: usiz
   Ok(small_stitch_buffers)
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum XsdSmallStitchKind {
   HalfTop,
   HalfBottom,
@@ -725,7 +725,7 @@ fn map_stitches_data_into_stitches(
   stitches_data: Vec<i32>,
   small_stitch_buffers: Vec<[u8; 10]>,
   coord_factor: usize,
-) -> io::Result<(Vec<FullStitch>, Vec<PartStitch>)> {
+) -> (Vec<FullStitch>, Vec<PartStitch>) {
   let mut fullstitches = Vec::new();
   let mut partstitches = Vec::new();
 
@@ -759,7 +759,7 @@ fn map_stitches_data_into_stitches(
       (1, 4, 6, XsdSmallStitchKind::PetiteTopRight),
       (1, 8, 7, XsdSmallStitchKind::PetiteBottomRight),
     ] {
-      let (x, y) = adjust_small_stitch_coors(x, y, kind)?;
+      let (x, y) = adjust_small_stitch_coors(x, y, kind);
       if small_stitch_buffer[significant_byte_index] & bitand_arg != 0 {
         fullstitches.push(FullStitch {
           x,
@@ -779,7 +779,7 @@ fn map_stitches_data_into_stitches(
       (0, 32, 7, XsdSmallStitchKind::QuarterBottomRight),
     ] {
       if small_stitch_buffer[significant_byte_index] & bitand_arg != 0 {
-        let (x, y) = adjust_small_stitch_coors(x, y, kind.clone())?;
+        let (x, y) = adjust_small_stitch_coors(x, y, kind);
         let direction = match kind {
           XsdSmallStitchKind::HalfTop | XsdSmallStitchKind::QuarterTopLeft | XsdSmallStitchKind::QuarterBottomRight => {
             PartStitchDirection::Backward
@@ -801,19 +801,19 @@ fn map_stitches_data_into_stitches(
     }
   }
 
-  Ok((fullstitches, partstitches))
+  (fullstitches, partstitches)
 }
 
 /// Adjusts the coordinates of the small stitch.
 /// The XSD format contains coordinates without additional offsets relative to the cell.
 /// But this is important for us.
-fn adjust_small_stitch_coors(x: f32, y: f32, kind: XsdSmallStitchKind) -> io::Result<(f32, f32)> {
+fn adjust_small_stitch_coors(x: f32, y: f32, kind: XsdSmallStitchKind) -> (f32, f32) {
   match kind {
-    XsdSmallStitchKind::QuarterTopLeft | XsdSmallStitchKind::PetiteTopLeft => Ok((x, y)),
-    XsdSmallStitchKind::QuarterTopRight | XsdSmallStitchKind::PetiteTopRight => Ok((x + 0.5, y)),
-    XsdSmallStitchKind::QuarterBottomLeft | XsdSmallStitchKind::PetiteBottomLeft => Ok((x, y + 0.5)),
-    XsdSmallStitchKind::QuarterBottomRight | XsdSmallStitchKind::PetiteBottomRight => Ok((x + 0.5, y + 0.5)),
-    _ => Ok((x, y)),
+    XsdSmallStitchKind::QuarterTopLeft | XsdSmallStitchKind::PetiteTopLeft => (x, y),
+    XsdSmallStitchKind::QuarterTopRight | XsdSmallStitchKind::PetiteTopRight => (x + 0.5, y),
+    XsdSmallStitchKind::QuarterBottomLeft | XsdSmallStitchKind::PetiteBottomLeft => (x, y + 0.5),
+    XsdSmallStitchKind::QuarterBottomRight | XsdSmallStitchKind::PetiteBottomRight => (x + 0.5, y + 0.5),
+    _ => (x, y),
   }
 }
 

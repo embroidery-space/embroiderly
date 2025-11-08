@@ -97,7 +97,7 @@ fn read_pdf_export_options<R: io::BufRead>(
       Event::Start(ref e) => match e.name().as_ref() {
         b"frame_options" => {
           let attributes = AttributesMap::try_from(e.attributes())?;
-          pdf.frame_options = read_image_export_options(attributes)?;
+          pdf.frame_options = read_image_export_options(attributes);
         }
         _ => {}
       },
@@ -126,8 +126,8 @@ fn write_pdf_export_options<W: io::Write>(writer: &mut Writer<W>, pdf: &PdfExpor
   Ok(())
 }
 
-fn read_image_export_options(attributes: AttributesMap) -> Result<ImageExportOptions> {
-  let image = ImageExportOptions {
+fn read_image_export_options(attributes: AttributesMap) -> ImageExportOptions {
+  ImageExportOptions {
     frame_size: if let Some(frame_width) = attributes.get_parsed("frame_width") {
       let frame_height = attributes.get_parsed("frame_height").unwrap_or(frame_width);
       Some((frame_width, frame_height))
@@ -140,9 +140,7 @@ fn read_image_export_options(attributes: AttributesMap) -> Result<ImageExportOpt
     preserved_overlap: attributes.get_parsed("preserved_overlap"),
     show_grid_line_numbers: attributes.get_bool("show_grid_line_numbers").unwrap_or_default(),
     show_centering_marks: attributes.get_bool("show_centering_marks").unwrap_or_default(),
-  };
-
-  Ok(image)
+  }
 }
 
 fn write_image_export_options<W: io::Write>(

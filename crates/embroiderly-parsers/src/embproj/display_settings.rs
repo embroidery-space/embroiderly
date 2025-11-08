@@ -57,7 +57,7 @@ fn parse_display_settings_inner<R: io::BufRead>(
       Event::Start(ref e) => match e.name().as_ref() {
         b"palette_settings" => {
           let attributes = AttributesMap::try_from(e.attributes())?;
-          display_settings.palette_settings = read_palette_settings(attributes)?;
+          display_settings.palette_settings = read_palette_settings(attributes);
         }
         b"grid" => {
           let attributes = AttributesMap::try_from(e.attributes())?;
@@ -65,7 +65,7 @@ fn parse_display_settings_inner<R: io::BufRead>(
         }
         b"layers_visibility" => {
           let attributes = AttributesMap::try_from(e.attributes())?;
-          display_settings.layers_visibility = read_layers_visibility(attributes)?;
+          display_settings.layers_visibility = read_layers_visibility(attributes);
         }
         _ => {}
       },
@@ -103,8 +103,8 @@ pub fn save_display_settings_to_vec(display_settings: &DisplaySettings) -> Resul
   Ok(writer.into_inner())
 }
 
-fn read_palette_settings(attributes: AttributesMap) -> Result<PaletteSettings> {
-  Ok(PaletteSettings {
+fn read_palette_settings(attributes: AttributesMap) -> PaletteSettings {
+  PaletteSettings {
     columns_number: attributes
       .get_parsed("columns_number")
       .unwrap_or(PaletteSettings::DEFAULT_COLUMNS_NUMBER),
@@ -126,7 +126,7 @@ fn read_palette_settings(attributes: AttributesMap) -> Result<PaletteSettings> {
     show_color_names: attributes
       .get_parsed("show_color_numbers")
       .unwrap_or(PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS),
-  })
+  }
 }
 
 fn write_palette_settings<W: io::Write>(writer: &mut Writer<W>, settings: &PaletteSettings) -> io::Result<()> {
@@ -204,8 +204,8 @@ fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid) -> io::Result<(
   Ok(())
 }
 
-fn read_layers_visibility(attributes: AttributesMap) -> Result<LayersVisibility> {
-  Ok(LayersVisibility {
+fn read_layers_visibility(attributes: AttributesMap) -> LayersVisibility {
+  LayersVisibility {
     reference_image: attributes.get_bool("reference_image").unwrap_or_default(),
     fullstitches: attributes.get_bool("fullstitches").unwrap_or_default(),
     petitestitches: attributes.get_bool("petitestitches").unwrap_or_default(),
@@ -218,7 +218,7 @@ fn read_layers_visibility(attributes: AttributesMap) -> Result<LayersVisibility>
     specialstitches: attributes.get_bool("specialstitches").unwrap_or_default(),
     grid: attributes.get_bool("grid").unwrap_or_default(),
     rulers: attributes.get_bool("rulers").unwrap_or_default(),
-  })
+  }
 }
 
 fn write_layers_visibility<W: io::Write>(writer: &mut Writer<W>, layers: &LayersVisibility) -> io::Result<()> {
