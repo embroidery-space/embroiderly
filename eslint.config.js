@@ -6,6 +6,7 @@ import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import importX from "eslint-plugin-import-x";
+import promise from "eslint-plugin-promise";
 import unicorn from "eslint-plugin-unicorn";
 import vue from "eslint-plugin-vue";
 import yml from "eslint-plugin-yml";
@@ -28,7 +29,7 @@ export default defineConfigWithVueTs(
 
   // High-quality code.
   {
-    extends: [unicorn.configs.unopinionated],
+    extends: [promise.configs["flat/recommended"], unicorn.configs.unopinionated],
     rules: {
       "unicorn/prefer-ternary": "off",
       "unicorn/no-useless-undefined": "off",
