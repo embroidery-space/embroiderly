@@ -7,6 +7,7 @@ import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import importX from "eslint-plugin-import-x";
+import noOnlyTests from "eslint-plugin-no-only-tests";
 import vue from "eslint-plugin-vue";
 import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
@@ -35,11 +36,15 @@ export default defineConfigWithVueTs(
     rules: { "no-console": ["warn"] },
   },
 
+  // Testing.
+  {
+    files: ["app/src/**/*.test.ts", "app/tests/**/*.ts"],
+    plugins: { "no-only-tests": noOnlyTests },
+  },
   {
     files: ["app/src/**/*.test.ts"],
     extends: [vitest.configs["recommended"]],
   },
-
   {
     files: ["app/tests/**/*.ts"],
     extends: [wdio.configs["flat/recommended"]],
