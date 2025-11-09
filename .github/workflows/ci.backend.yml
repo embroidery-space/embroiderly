@@ -42,6 +42,11 @@ jobs:
         with:
           nightly-components: llvm-tools-preview
           tools: cargo-nextest,cargo-llvm-cov
+      - name: Create XDG directories (Ubuntu-only)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          mkdir -p ~/Documents
+          echo "XDG_DOCUMENTS_DIR=$HOME/Documents" >> $GITHUB_ENV
       - name: Test
         run: cargo +nightly llvm-cov nextest --locked -F embroiderly/test --lcov --output-path lcov.info
       - name: Upload coverage to Codecov
