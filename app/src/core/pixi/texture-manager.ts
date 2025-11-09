@@ -117,8 +117,7 @@ class TextureManagerClass {
 
   destroy() {
     // Clear the cache and destroy all textures.
-    // eslint-disable-next-line unicorn/no-array-for-each
-    this.#cache.forEach((texture) => (texture as Texture | GraphicsContext).destroy(true));
+    for (const texture of this.#cache.values()) (texture as Texture | GraphicsContext).destroy(true);
     this.#cache.clear();
 
     // Reset the renderer and texture source options.

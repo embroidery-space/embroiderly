@@ -30,20 +30,19 @@ export default defineConfigWithVueTs(
   {
     extends: [unicorn.configs.unopinionated],
     rules: {
-      "unicorn/import-style": "off",
       "unicorn/prefer-ternary": "off",
-      "unicorn/prefer-dom-node-append": "off",
-      "unicorn/prefer-dom-node-remove": "off",
+      "unicorn/no-useless-undefined": "off",
+
+      // Enable when Vue.js base TS config's target supports these features.
+      "unicorn/no-array-reverse": "off",
+      "unicorn/no-array-sort": "off",
+
       "unicorn/numeric-separators-style": [
         "warn",
         {
           onlyIfContainsSeparator: true,
         },
       ],
-
-      // Enable when Vue.js base TS config's target supports these features.
-      "unicorn/no-array-reverse": "off",
-      "unicorn/no-array-sort": "off",
     },
   },
 

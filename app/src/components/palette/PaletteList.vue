@@ -77,7 +77,7 @@
   const value = defineModel<V | V[]>({ required: true });
   const {
     options = [],
-    optionValue = undefined, // eslint-disable-line unicorn/no-useless-undefined
+    optionValue = undefined,
     disabled = false,
     multiple = false,
     draggable = false,

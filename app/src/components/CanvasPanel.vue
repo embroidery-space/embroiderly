@@ -248,7 +248,7 @@
           const fontName = fonts[index]!;
           failedFonts.push(fontName);
           error(`Failed to load symbol font "${fontName}": ${result.reason}`);
-          return undefined; // eslint-disable-line unicorn/no-useless-undefined
+          return undefined;
         }
       })
       .filter((fontFace) => fontFace !== undefined);
