@@ -7,6 +7,7 @@ import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescri
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import importX from "eslint-plugin-import-x";
 import promise from "eslint-plugin-promise";
+import sonarjs from "eslint-plugin-sonarjs";
 import unicorn from "eslint-plugin-unicorn";
 import vue from "eslint-plugin-vue";
 import yml from "eslint-plugin-yml";
@@ -29,7 +30,7 @@ export default defineConfigWithVueTs(
 
   // High-quality code.
   {
-    extends: [promise.configs["flat/recommended"], unicorn.configs.unopinionated],
+    extends: [promise.configs["flat/recommended"], sonarjs.configs.recommended, unicorn.configs.unopinionated],
     rules: {
       "unicorn/prefer-ternary": "off",
       "unicorn/no-useless-undefined": "off",
@@ -44,6 +45,9 @@ export default defineConfigWithVueTs(
           onlyIfContainsSeparator: true,
         },
       ],
+
+      "sonarjs/no-empty-test-file": "off",
+      "sonarjs/no-identical-functions": "off",
     },
   },
 

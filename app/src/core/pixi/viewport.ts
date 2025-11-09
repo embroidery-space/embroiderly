@@ -309,9 +309,12 @@ export class PatternViewport extends Container {
 
   private handleWheel(e: WheelEvent) {
     e.preventDefault();
+
     // We use the mod3 to switch between scroll and zoom actions.
-    const action = MODIFIERS.mod3(e) ? (this.wheelAction === "scroll" ? "zoom" : "scroll") : this.wheelAction;
-    if (action === "scroll") this.handleWheelScroll(e);
+    const [wheelAction, altWheelAction] = [this.wheelAction, this.wheelAction === "scroll" ? "zoom" : "scroll"];
+    const actualWheelAction = MODIFIERS.mod3(e) ? altWheelAction : wheelAction;
+
+    if (actualWheelAction === "scroll") this.handleWheelScroll(e);
     else this.handleWheelZoom(e);
   }
 

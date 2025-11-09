@@ -2,6 +2,8 @@ interface ApplicationError {
   kind: "command" | "pattern" | "tauri" | "io" | "uuid" | "unknown";
   message: string;
 }
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export function toApplicationError(error: unknown): Error {
   const isApplicationError = typeof error === "object" && error !== null && "kind" in error && "message" in error;
   if (isApplicationError) {
