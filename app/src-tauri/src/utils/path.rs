@@ -1,24 +1,23 @@
 use std::path::{Path, PathBuf};
 
+#[allow(unused)]
 use tauri::Manager as _;
 
 /// Returns the path to the application's data directory.
 pub fn app_data_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<PathBuf> {
-  let dir_path = if cfg!(test) {
-    std::env::temp_dir()
-  } else {
-    app_handle.path().app_data_dir()?
-  };
-  Ok(dir_path.join(&app_handle.package_info().name))
+  #[cfg(feature = "test")]
+  let app_data_dir = std::env::temp_dir();
+  #[cfg(not(feature = "test"))]
+  let app_data_dir = app_handle.path().app_data_dir()?;
+  Ok(app_data_dir.join(&app_handle.package_info().name))
 }
 
 pub fn app_document_dir<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<PathBuf> {
-  let dir_path = if cfg!(test) {
-    std::env::temp_dir()
-  } else {
-    app_handle.path().document_dir()?
-  };
-  Ok(dir_path.join(&app_handle.package_info().name))
+  #[cfg(feature = "test")]
+  let document_dir = std::env::temp_dir();
+  #[cfg(not(feature = "test"))]
+  let document_dir = app_handle.path().document_dir()?;
+  Ok(document_dir.join(&app_handle.package_info().name))
 }
 
 /// Returns the path to the application's log directory.
