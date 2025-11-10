@@ -3,6 +3,9 @@ name = "tauri-plugin-log"
 links = "tauri-plugin-log"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [build-dependencies]
 tauri-plugin = { workspace = true }
 

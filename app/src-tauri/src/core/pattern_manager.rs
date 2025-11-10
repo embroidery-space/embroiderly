@@ -12,7 +12,8 @@ pub struct PatternManager {
 }
 
 impl PatternManager {
-  #[allow(clippy::new_without_default)]
+  #[expect(clippy::new_without_default)]
+  #[must_use]
   pub fn new() -> Self {
     Self {
       patterns_by_id: HashMap::new(),
@@ -24,10 +25,12 @@ impl PatternManager {
     self.patterns_by_id.values()
   }
 
+  #[must_use]
   pub fn len(&self) -> usize {
     self.patterns_by_id.len()
   }
 
+  #[must_use]
   pub fn is_empty(&self) -> bool {
     self.patterns_by_id.is_empty()
   }
@@ -37,6 +40,7 @@ impl PatternManager {
     self.patterns_by_id.insert(pattern.id, pattern);
   }
 
+  #[must_use]
   pub fn get_pattern_by_id(&self, id: &uuid::Uuid) -> Option<&PatternProject> {
     self.patterns_by_id.get(id)
   }
@@ -45,6 +49,7 @@ impl PatternManager {
     self.patterns_by_id.get_mut(id)
   }
 
+  #[must_use]
   pub fn get_pattern_by_path(&self, path: &std::path::PathBuf) -> Option<&PatternProject> {
     self.id_by_path.get(path).and_then(|id| self.patterns_by_id.get(id))
   }

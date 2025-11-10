@@ -32,7 +32,7 @@ export const useAppStateStore = defineStore(
      */
     function addOpenedPattern(id: string, title: string) {
       const openedPattern: OpenedPattern = { id, title };
-      if (openedPatterns.value.findIndex((p) => p.id === id) === -1) openedPatterns.value.push(openedPattern);
+      if (!openedPatterns.value.some((p) => p.id === id)) openedPatterns.value.push(openedPattern);
       selectedPaletteItemIndex.value = undefined;
       currentPattern.value = openedPattern;
     }

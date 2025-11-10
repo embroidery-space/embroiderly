@@ -24,12 +24,12 @@
   function block() {
     mask.value = document.createElement("div");
     mask.value.classList = "absolute top-0 left-0 z-0 w-full h-full bg-black/50";
-    container.value!.appendChild(mask.value);
+    container.value!.append(mask.value);
   }
 
   function unblock() {
     if (mask.value) {
-      container.value!.removeChild(mask.value);
+      mask.value.remove();
       mask.value = null;
     }
   }

@@ -40,7 +40,7 @@ pub fn export_pattern(
       .pattern
       .fullstitches
       .get_stitches_in_bounds(bounds)
-      .cloned()
+      .copied()
       .map(|stitch| FullStitch {
         // Adjust coordinates to be relative to the current frame.
         x: Coord::new(stitch.x - current_position.0 as f32).unwrap(),
@@ -52,7 +52,7 @@ pub fn export_pattern(
       .pattern
       .partstitches
       .get_stitches_in_bounds(bounds)
-      .cloned()
+      .copied()
       .map(|stitch| PartStitch {
         // Adjust coordinates to be relative to the current frame.
         x: Coord::new(stitch.x - current_position.0 as f32).unwrap(),
@@ -64,7 +64,7 @@ pub fn export_pattern(
       .pattern
       .linestitches
       .get_stitches_in_bounds(bounds)
-      .cloned()
+      .copied()
       .map(|stitch| LineStitch {
         // Adjust coordinates to be relative to the current frame.
         x: (
@@ -82,7 +82,7 @@ pub fn export_pattern(
       .pattern
       .nodestitches
       .get_stitches_in_bounds(bounds)
-      .cloned()
+      .copied()
       .map(|stitch| NodeStitch {
         // Adjust coordinates to be relative to the current frame.
         x: Coord::new(stitch.x - current_position.0 as f32).unwrap(),
@@ -94,7 +94,7 @@ pub fn export_pattern(
       .pattern
       .specialstitches
       .get_stitches_in_bounds(bounds)
-      .cloned()
+      .copied()
       .map(|stitch| SpecialStitch {
         // Adjust coordinates to be relative to the current frame.
         x: Coord::new(stitch.x - current_position.0 as f32).unwrap(),
@@ -391,7 +391,7 @@ fn draw_part_stitches<W: io::Write>(
               PartStitchKind::Quarter => {
                 draw_stitch_symbol!(writer, size / 2.0, size / 2.0, palitem.symbol, font_size);
               }
-            };
+            }
 
             Ok(())
           })?;

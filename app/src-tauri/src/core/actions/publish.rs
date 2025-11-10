@@ -2,7 +2,7 @@ use std::sync::OnceLock;
 
 use anyhow::Result;
 use embroiderly_pattern::{PatternProject, PdfExportOptions};
-use tauri::{Emitter, WebviewWindow};
+use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
 use crate::utils::base64;
@@ -18,7 +18,7 @@ pub struct UpdatePdfExportOptionsAction {
 }
 
 impl UpdatePdfExportOptionsAction {
-  pub fn new(options: PdfExportOptions) -> Self {
+  pub const fn new(options: PdfExportOptions) -> Self {
     Self {
       options,
       old_options: OnceLock::new(),

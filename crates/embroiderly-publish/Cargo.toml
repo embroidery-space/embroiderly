@@ -2,6 +2,9 @@
 name = "embroiderly_publish"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [dependencies]
 # CLI
 clap = { workspace = true }

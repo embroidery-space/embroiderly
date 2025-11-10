@@ -8,7 +8,8 @@ pub struct HistoryManager<R: tauri::Runtime> {
 }
 
 impl<R: tauri::Runtime> HistoryManager<R> {
-  #[allow(clippy::new_without_default)]
+  #[expect(clippy::new_without_default)]
+  #[must_use]
   pub fn new() -> Self {
     Self { inner: HashMap::new() }
   }
@@ -19,6 +20,7 @@ impl<R: tauri::Runtime> HistoryManager<R> {
     self.inner.insert(id, History::new());
   }
 
+  #[must_use]
   pub fn get(&self, id: &uuid::Uuid) -> Option<&History<R>> {
     self.inner.get(id)
   }

@@ -22,7 +22,7 @@ struct Args {
 
 fn main() -> anyhow::Result<()> {
   embroiderly_publish::logger::init()?;
-  let _telemetry = embroiderly_publish::telemetry::init()?;
+  let _telemetry = embroiderly_publish::telemetry::init();
 
   let args = Args::parse();
 

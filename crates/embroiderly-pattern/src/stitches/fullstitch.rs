@@ -61,8 +61,8 @@ pub enum FullStitchKind {
 impl From<PartStitchKind> for FullStitchKind {
   fn from(kind: PartStitchKind) -> Self {
     match kind {
-      PartStitchKind::Half => FullStitchKind::Full,
-      PartStitchKind::Quarter => FullStitchKind::Petite,
+      PartStitchKind::Half => Self::Full,
+      PartStitchKind::Quarter => Self::Petite,
     }
   }
 }
@@ -70,8 +70,8 @@ impl From<PartStitchKind> for FullStitchKind {
 impl From<pmaker::FullStitchKind> for FullStitchKind {
   fn from(kind: pmaker::FullStitchKind) -> Self {
     match kind {
-      pmaker::FullStitchKind::Full => FullStitchKind::Full,
-      pmaker::FullStitchKind::Petite => FullStitchKind::Petite,
+      pmaker::FullStitchKind::Full => Self::Full,
+      pmaker::FullStitchKind::Petite => Self::Petite,
     }
   }
 }
