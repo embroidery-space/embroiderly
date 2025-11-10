@@ -83,7 +83,7 @@
 
   const fabric = defineModel<Fabric>({ required: true });
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
 
   const fabricCounts = ref([14, 16, 18, 20]);
 

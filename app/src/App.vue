@@ -1,5 +1,5 @@
 <template>
-  <UApp :locale="locale">
+  <UApp :locale="currentUiLocale">
     <RouterView />
   </UApp>
 </template>
@@ -7,21 +7,13 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-  import { computed, onMounted, onErrorCaptured } from "vue";
+  import { onMounted, onErrorCaptured } from "vue";
 
   import { PatternApi } from "./api/";
-  import { NUXT_LOCALES } from "./fluent.ts";
 
   const confirm = useConfirm();
   const toast = useToast();
-
-  const fluent = useFluent();
-  const locale = computed(() => {
-    const bundles = [...fluent.bundles.value];
-    const locale = bundles[0]!.locales[0]!;
-    // @ts-expect-error The `locale` code is always a valid key in `NUXT_LOCALES`.
-    return NUXT_LOCALES[locale];
-  });
+  const { fluent, currentUiLocale } = useI18n();
 
   const appStateStore = useAppStateStore();
   const settingsStore = useSettingsStore();

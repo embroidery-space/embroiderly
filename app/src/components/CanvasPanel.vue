@@ -72,7 +72,7 @@
   import type { PatternEditorToolContext } from "~/core/tools/";
   import { addSymbolFonts } from "~/utils/font-face";
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
   const toast = useToast();
 
   const appStateStore = useAppStateStore();

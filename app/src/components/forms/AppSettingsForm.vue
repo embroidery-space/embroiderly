@@ -101,7 +101,7 @@
   const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
   const other = defineModel<OtherOptions>("other", { required: true });
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
   const settingsStore = useSettingsStore();
 
   const tabs = computed<TabsItem[]>(() => [

@@ -89,7 +89,7 @@
   const patternsStore = usePatternsStore();
   const settingsStore = useSettingsStore();
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
 
   const fileOptions = computed<DropdownMenuItem[][]>(() => [
     [

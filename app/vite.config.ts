@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [vue(), ui(NuxtUIConfig), tailwindcss(), vueDevTools()],
   clearScreen: false,
   resolve: { alias: { "~": fileURLToPath(new URL("src", import.meta.url)) } },
-  envPrefix: ["VITE_", "TAURI_ENV_*"],
+  envPrefix: ["VITE_", "TAURI_ENV_"],
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
   build: {
     sourcemap: !!process.env.TAURI_ENV_DEBUG,

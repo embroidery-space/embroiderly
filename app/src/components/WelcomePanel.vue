@@ -81,7 +81,7 @@
   const settingsStore = useSettingsStore();
   const patternsStore = usePatternsStore();
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
 
   const infoSections = computed<InfoSection[]>(() => [
     {

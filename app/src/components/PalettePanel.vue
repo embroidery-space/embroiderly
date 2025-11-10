@@ -124,7 +124,7 @@
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
   const toast = useToast();
 
   const paletteIsDisabled = computed(() => !patternsStore.pattern);

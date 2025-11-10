@@ -34,7 +34,7 @@
 
   import { tools } from "~/core/tools/";
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
 
   const appStateStore = useAppStateStore();
   const settingsStore = useSettingsStore();

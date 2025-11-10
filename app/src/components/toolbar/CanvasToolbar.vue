@@ -38,7 +38,7 @@
 
   import { DisplayMode, LayersVisibility } from "~/core/pattern/";
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
 
   const patternsStore = usePatternsStore();
 

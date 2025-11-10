@@ -45,7 +45,7 @@
 
   import type { ZoomState } from "~/core/pixi//";
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
 
   const {
     modelValue: zoom,

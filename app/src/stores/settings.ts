@@ -6,7 +6,6 @@ import { defineStore } from "pinia";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 
 import type { WheelAction } from "~/core/pixi/";
-import { LOCALES } from "~/fluent.ts";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
@@ -63,8 +62,8 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     defineAsyncComponent(() => import("~/components/modals/AppSettingsModal.vue")),
   );
 
+  const { fluent, setLocale } = useI18n();
   const toast = useToast();
-  const fluent = useFluent();
 
   const loadingUpdate = ref(false);
 
@@ -76,9 +75,9 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   watch(
     ui,
     async (newUi) => {
-      await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
       document.documentElement.style.fontSize = newUi.scale;
-      fluent.bundles.value = [LOCALES[newUi.language]];
+      setLocale(newUi.language);
+      await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
     },
     { immediate: true },
   );

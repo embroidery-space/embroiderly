@@ -62,7 +62,7 @@ export const usePatternsStore = defineStore(
 
     const appWindow = getCurrentWebviewWindow();
 
-    const fluent = useFluent();
+    const { fluent } = useI18n();
     const confirm = useConfirm();
     const toast = useToast();
     const filePicker = useFilePicker();

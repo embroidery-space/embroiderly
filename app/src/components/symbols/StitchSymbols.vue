@@ -51,7 +51,7 @@
 
   const confirm = useConfirm();
   const filePicker = useFilePicker();
-  const fluent = useFluent();
+  const { fluent } = useI18n();
   const toast = useToast();
 
   const { symbols = [] } = defineProps<{
