@@ -11,7 +11,7 @@ export function ShortcutsDirective<Value extends () => void>(el: HTMLElement, bi
       // Transform modifiers to key codes.
       // See https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values
 
-      if (/^[0-9]$/.test(mod)) return `Digit${mod}`;
+      if (/^\d$/.test(mod)) return `Digit${mod}`;
       if (/^[a-z]$/.test(mod)) return `Key${mod.toUpperCase()}`;
 
       // If the modifier is not a digit or a character, then it is a multi word modifier.

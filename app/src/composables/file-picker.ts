@@ -83,7 +83,7 @@ export const useFilePicker = createSharedComposable(() => {
 
       if (path) {
         const first = Array.isArray(path) ? path[0] : path;
-        lastOpenedFolder.value = first.substring(0, first.lastIndexOf(sep()));
+        lastOpenedFolder.value = first.slice(0, Math.max(0, first.lastIndexOf(sep())));
       }
 
       return path;
@@ -102,7 +102,7 @@ export const useFilePicker = createSharedComposable(() => {
       });
 
       if (path) {
-        lastOpenedFolder.value = path.substring(0, path.lastIndexOf(sep()));
+        lastOpenedFolder.value = path.slice(0, Math.max(0, path.lastIndexOf(sep())));
       }
 
       return path;

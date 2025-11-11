@@ -217,8 +217,8 @@ export const usePatternsStore = defineStore(
         loading.value = true;
         await FilesApi.closePattern(patternId, options);
         appStateStore.removeCurrentPattern();
-        if (!appStateStore.currentPattern) pattern.value = undefined;
-        else await loadPattern(appStateStore.currentPattern.id);
+        if (appStateStore.currentPattern) await loadPattern(appStateStore.currentPattern.id);
+        else pattern.value = undefined;
       } catch (error) {
         if (error instanceof PatternErrorUnsavedChanges) {
           const accepted = await confirm.open({
@@ -397,10 +397,11 @@ export const usePatternsStore = defineStore(
 
     function setDisplayMode(mode: DisplayMode | undefined) {
       if (!pattern.value) return;
-      if (!mode) {
+      if (mode) return PatternApi.setDisplayMode(pattern.value.id, mode);
+      else {
         pattern.value.displayMode = mode;
         return triggerRef(pattern);
-      } else return PatternApi.setDisplayMode(pattern.value.id, mode);
+      }
     }
     appWindow.listen<DisplayMode>(PatternEvent.UpdateDisplayMode, ({ payload: mode }) => {
       if (!pattern.value) return;

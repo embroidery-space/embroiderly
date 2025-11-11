@@ -2,7 +2,7 @@ use std::sync::OnceLock;
 
 use anyhow::Result;
 use embroiderly_pattern::{PatternProject, Stitch};
-use tauri::{Emitter, WebviewWindow};
+use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
 use crate::utils::base64;
@@ -18,7 +18,7 @@ pub struct AddStitchAction {
 }
 
 impl AddStitchAction {
-  pub fn new(stitch: Stitch) -> Self {
+  pub const fn new(stitch: Stitch) -> Self {
     Self {
       stitch,
       conflicts: OnceLock::new(),
@@ -66,7 +66,7 @@ pub struct RemoveStitchAction {
 }
 
 impl RemoveStitchAction {
-  pub fn new(stitch: Stitch) -> Self {
+  pub const fn new(stitch: Stitch) -> Self {
     Self {
       target_stitch: stitch,
       actual_stitch: OnceLock::new(),

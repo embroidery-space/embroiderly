@@ -2,7 +2,7 @@ use std::sync::OnceLock;
 
 use anyhow::Result;
 use embroiderly_pattern::{PatternInfo, PatternProject};
-use tauri::{Emitter, WebviewWindow};
+use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
 use crate::utils::base64;
@@ -18,7 +18,7 @@ pub struct UpdatePatternInfoAction {
 }
 
 impl UpdatePatternInfoAction {
-  pub fn new(info: PatternInfo) -> Self {
+  pub const fn new(info: PatternInfo) -> Self {
     Self { info, old_info: OnceLock::new() }
   }
 }

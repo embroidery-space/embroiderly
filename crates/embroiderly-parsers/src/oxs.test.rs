@@ -26,7 +26,7 @@ fn reads_and_writes_pattern_properties() {
     unreachable!()
   };
 
-  let (pattern_width, pattern_height, pattern_info, spi, palette_size) = read_pattern_properties(attributes).unwrap();
+  let (pattern_width, pattern_height, pattern_info, spi, palette_size) = read_pattern_properties(attributes);
 
   assert_eq!(pattern_width, 20);
   assert_eq!(pattern_height, 10);
@@ -71,7 +71,7 @@ fn reads_and_writes_default_pattern_properties() {
     unreachable!()
   };
 
-  let (pattern_width, pattern_height, pattern_info, spi, palette_size) = read_pattern_properties(attributes).unwrap();
+  let (pattern_width, pattern_height, pattern_info, spi, palette_size) = read_pattern_properties(attributes);
 
   assert_eq!(pattern_width, Fabric::DEFAULT_WIDTH);
   assert_eq!(pattern_height, Fabric::DEFAULT_HEIGHT);

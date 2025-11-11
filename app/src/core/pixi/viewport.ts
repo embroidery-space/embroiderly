@@ -183,20 +183,31 @@ export class PatternViewport extends Container {
 
   /** Sets the zoom level of the viewport. */
   setZoom(zoom: ZoomState) {
-    if (zoom === "fit") this.fit();
-    else if (zoom === "fit-width") this.fitWidth();
-    else if (zoom === "fit-height") this.fitHeight();
-    else {
-      const position = this.content.position.clone();
+    switch (zoom) {
+      case "fit": {
+        this.fit();
+        break;
+      }
+      case "fit-width": {
+        this.fitWidth();
+        break;
+      }
+      case "fit-height": {
+        this.fitHeight();
+        break;
+      }
+      default: {
+        const position = this.content.position.clone();
 
-      const beforeTransform = this.content.toLocal(position);
-      this.clampZoom(zoom);
-      const afterTransform = this.content.toLocal(position);
+        const beforeTransform = this.content.toLocal(position);
+        this.clampZoom(zoom);
+        const afterTransform = this.content.toLocal(position);
 
-      this.position.x += (afterTransform.x - beforeTransform.x) * this.content.scale.x;
-      this.position.y += (afterTransform.y - beforeTransform.y) * this.content.scale.y;
+        this.position.x += (afterTransform.x - beforeTransform.x) * this.content.scale.x;
+        this.position.y += (afterTransform.y - beforeTransform.y) * this.content.scale.y;
 
-      this.emitTransformEvent();
+        this.emitTransformEvent();
+      }
     }
   }
 
@@ -259,9 +270,7 @@ export class PatternViewport extends Container {
   private handlePointerUp(e: FederatedPointerEvent) {
     const buttons = getMouseButtons(e);
     if (buttons.left) this.emitToolEvent(ToolEvent.ToolRelease, e);
-    else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
-    }
+    else if (buttons.right && MODIFIERS.mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
 
     // Clear the start point and dragging state on the next tick.
     // It is necessary to do this on the next tick to allow the `handleContextMenu` method to access the correct state,
@@ -300,9 +309,12 @@ export class PatternViewport extends Container {
 
   private handleWheel(e: WheelEvent) {
     e.preventDefault();
+
     // We use the mod3 to switch between scroll and zoom actions.
-    const action = MODIFIERS.mod3(e) ? (this.wheelAction === "scroll" ? "zoom" : "scroll") : this.wheelAction;
-    if (action === "scroll") this.handleWheelScroll(e);
+    const [wheelAction, altWheelAction] = [this.wheelAction, this.wheelAction === "scroll" ? "zoom" : "scroll"];
+    const actualWheelAction = MODIFIERS.mod3(e) ? altWheelAction : wheelAction;
+
+    if (actualWheelAction === "scroll") this.handleWheelScroll(e);
     else this.handleWheelZoom(e);
   }
 

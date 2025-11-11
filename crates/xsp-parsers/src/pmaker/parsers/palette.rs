@@ -1,4 +1,4 @@
-use byteorder::{LittleEndian, ReadBytesExt};
+use byteorder::{LittleEndian, ReadBytesExt as _};
 
 use crate::pmaker::PaletteItem;
 use crate::pmaker::error::{PmakerError, Result};
@@ -15,8 +15,8 @@ impl TryFrom<Option<&std::ffi::OsStr>> for PatternMakerPalette {
   fn try_from(value: Option<&std::ffi::OsStr>) -> Result<Self> {
     match value {
       Some(os_str) => match os_str.to_str() {
-        Some("Master") | Some("master") => Ok(PatternMakerPalette::Master),
-        Some("User") | Some("user") => Ok(PatternMakerPalette::User),
+        Some("Master" | "master") => Ok(Self::Master),
+        Some("User" | "user") => Ok(Self::User),
         _ => Err(PmakerError::InvalidPaletteType(os_str.to_string_lossy().to_string())),
       },
       None => Err(PmakerError::InvalidPaletteType("No palette type provided".into())),
@@ -47,7 +47,7 @@ pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> Result<Vec<Pale
 
   let mut palette = Vec::with_capacity(palette_size);
   for _ in 0..palette_size {
-    palette.push(read_palette_item(&mut cursor)?)
+    palette.push(read_palette_item(&mut cursor)?);
   }
 
   log::debug!("Palette parsed");

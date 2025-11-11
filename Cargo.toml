@@ -16,6 +16,49 @@ debug = "limited"
 strip = "debuginfo"
 split-debuginfo = "packed"
 
+[workspace.lints.clippy]
+correctness = { level = "deny", priority = -1 }
+suspicious = { level = "deny", priority = -1 }
+complexity = { level = "warn", priority = -1 }
+perf = { level = "warn", priority = -1 }
+style = { level = "warn", priority = -1 }
+
+pedantic = { level = "warn", priority = -1 }
+cast_lossless = "allow"
+cast_possible_truncation = "allow"
+cast_sign_loss = "allow"
+cast_precision_loss = "allow"
+cast_possible_wrap = "allow"
+default_trait_access = "allow"
+explicit_iter_loop = "allow"
+float_cmp = "allow"
+match_same_arms = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+needless_pass_by_value = "allow"
+struct_excessive_bools = "allow"
+single_char_pattern = "allow"
+too_many_lines = "allow"
+wildcard_imports = "allow"
+
+restriction = { level = "allow", priority = -1 }
+dbg_macro = "warn"
+print_stdout = "warn"
+print_stderr = "warn"
+semicolon_inside_block = "warn"
+todo = "warn"
+unused_trait_names = "warn"
+
+nursery = { level = "warn", priority = -1 }
+large_stack_frames = "allow"
+option_if_let_else = "allow"
+or_fun_call = "allow"
+significant_drop_tightening = "allow"
+
+cargo = { level = "allow", priority = -1 }
+redundant_feature_names = "deny"
+wildcard_dependencies = "deny"
+
 [workspace.dependencies]
 # Tauri
 tauri = { version = "2.9.2", features = ["config-json5"] }
@@ -31,7 +74,7 @@ tauri-plugin-process = "2.3.1"
 tauri-plugin-shell = "2.3.3"
 tauri-plugin-updater = "2.9.0"
 ## Third-party Tauri plugins
-tauri-plugin-prevent-default = "3.0.3"
+tauri-plugin-prevent-default = "4.0.2"
 tauri-plugin-pinia = "4.1.0"
 ## Custom Tauri plugins
 tauri-plugin-log = { path = "crates/tauri-plugin-log" }

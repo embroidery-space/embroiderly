@@ -57,7 +57,7 @@
   }
 
   onMounted(async () => {
-    await Promise.all([checkForUpdates()]);
+    await checkForUpdates();
   });
 
   onErrorCaptured((err, _component, info) => {

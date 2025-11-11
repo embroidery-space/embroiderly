@@ -6,7 +6,7 @@
 use std::io::{self, Read, Seek, SeekFrom};
 use std::sync::LazyLock;
 
-use byteorder::{LittleEndian, ReadBytesExt};
+use byteorder::{LittleEndian, ReadBytesExt as _};
 
 use crate::pmaker::error::{PmakerError, Result};
 use crate::pmaker::schemas::xsd::*;
@@ -19,7 +19,7 @@ mod tests;
 static PM_THREAD_BRANDS: LazyLock<std::collections::HashMap<u8, String>> = LazyLock::new(|| {
   let content = include_str!("../../resources/pmaker_thread_brands.txt");
   let entries = content.lines().map(|line| {
-    let mut parts = line.split(':').map(|part| part.trim());
+    let mut parts = line.split(':').map(str::trim);
     let id = parts.next().unwrap().parse().unwrap();
     let name = parts.next().unwrap().to_owned();
     (id, name)
@@ -270,7 +270,7 @@ fn skip_palette_items_notes<R: Read + Seek>(reader: &mut R, palette_size: usize)
 }
 
 fn read_palette_item_strands<R: Read>(reader: &mut R) -> io::Result<StitchStrands<Option<u8>>> {
-  fn map_strands(value: u16) -> Option<u8> {
+  const fn map_strands(value: u16) -> Option<u8> {
     if value == 0 { None } else { Some(value as u8) }
   }
 
@@ -371,8 +371,8 @@ fn read_node_formats<R: Read + Seek>(reader: &mut R, palette_size: usize) -> io:
     let thickness = reader.read_u16::<LittleEndian>()? as f32 / 10.0;
     formats.push(NodeStitchFormat {
       use_dot_style,
-      color,
       use_alt_color,
+      color,
       thickness,
     });
   }
@@ -404,11 +404,11 @@ fn read_font_formats<R: Read + Seek>(reader: &mut R, palette_size: usize) -> io:
 }
 
 fn read_symbols<R: Read>(reader: &mut R, palette_size: usize) -> io::Result<Vec<Symbols>> {
-  log::trace!("Reading symbols");
-
-  fn map_symbol(value: u16) -> Option<u16> {
+  const fn map_symbol(value: u16) -> Option<u16> {
     if value == 0xFFFF { None } else { Some(value) }
   }
+
+  log::trace!("Reading symbols");
 
   let mut symbols = Vec::with_capacity(palette_size);
   for _ in 0..palette_size {
@@ -488,8 +488,6 @@ fn read_pattern_and_print_settings<R: Read + Seek>(reader: &mut R) -> io::Result
 }
 
 fn read_grid<R: Read + Seek>(reader: &mut R) -> io::Result<Grid> {
-  log::trace!("Reading grid");
-
   fn read_grid_line_style<R: Read + Seek>(reader: &mut R) -> io::Result<GridLineStyle> {
     let thickness = (reader.read_u16::<LittleEndian>()? * 72) as f32 / 1000.0; // Convert to points.
     reader.seek_relative(2)?;
@@ -497,6 +495,8 @@ fn read_grid<R: Read + Seek>(reader: &mut R) -> io::Result<Grid> {
     reader.seek_relative(3)?;
     Ok(GridLineStyle { color, thickness })
   }
+
+  log::trace!("Reading grid");
 
   let major_lines_interval = reader.read_u16::<LittleEndian>()?;
   reader.seek_relative(2)?;
@@ -603,7 +603,7 @@ fn read_stitches<R: Read>(
   log::trace!("Reading stitches");
   let stitches_data = read_stitches_data(reader, total_stitches_count)?;
   let small_stitch_buffers = read_small_stitch_buffers(reader, small_stitches_count)?;
-  let stitches = map_stitches_data_into_stitches(stitches_data, small_stitch_buffers, coord_factor)?;
+  let stitches = map_stitches_data_into_stitches(stitches_data, small_stitch_buffers, coord_factor);
   Ok(stitches)
 }
 
@@ -706,7 +706,7 @@ fn read_small_stitch_buffers<R: Read>(reader: &mut R, small_stitches_count: usiz
   Ok(small_stitch_buffers)
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum XsdSmallStitchKind {
   HalfTop,
   HalfBottom,
@@ -725,7 +725,7 @@ fn map_stitches_data_into_stitches(
   stitches_data: Vec<i32>,
   small_stitch_buffers: Vec<[u8; 10]>,
   coord_factor: usize,
-) -> io::Result<(Vec<FullStitch>, Vec<PartStitch>)> {
+) -> (Vec<FullStitch>, Vec<PartStitch>) {
   let mut fullstitches = Vec::new();
   let mut partstitches = Vec::new();
 
@@ -759,14 +759,14 @@ fn map_stitches_data_into_stitches(
       (1, 4, 6, XsdSmallStitchKind::PetiteTopRight),
       (1, 8, 7, XsdSmallStitchKind::PetiteBottomRight),
     ] {
-      let (x, y) = adjust_small_stitch_coors(x, y, kind)?;
+      let (x, y) = adjust_small_stitch_coors(x, y, kind);
       if small_stitch_buffer[significant_byte_index] & bitand_arg != 0 {
         fullstitches.push(FullStitch {
           x,
           y,
           palindex: small_stitch_buffer[palindex_index],
           kind: FullStitchKind::Petite,
-        })
+        });
       }
     }
 
@@ -779,7 +779,7 @@ fn map_stitches_data_into_stitches(
       (0, 32, 7, XsdSmallStitchKind::QuarterBottomRight),
     ] {
       if small_stitch_buffer[significant_byte_index] & bitand_arg != 0 {
-        let (x, y) = adjust_small_stitch_coors(x, y, kind.clone())?;
+        let (x, y) = adjust_small_stitch_coors(x, y, kind);
         let direction = match kind {
           XsdSmallStitchKind::HalfTop | XsdSmallStitchKind::QuarterTopLeft | XsdSmallStitchKind::QuarterBottomRight => {
             PartStitchDirection::Backward
@@ -796,24 +796,25 @@ fn map_stitches_data_into_stitches(
           palindex: small_stitch_buffer[palindex_index],
           direction,
           kind,
-        })
+        });
       }
     }
   }
 
-  Ok((fullstitches, partstitches))
+  (fullstitches, partstitches)
 }
 
 /// Adjusts the coordinates of the small stitch.
 /// The XSD format contains coordinates without additional offsets relative to the cell.
 /// But this is important for us.
-fn adjust_small_stitch_coors(x: f32, y: f32, kind: XsdSmallStitchKind) -> io::Result<(f32, f32)> {
+fn adjust_small_stitch_coors(x: f32, y: f32, kind: XsdSmallStitchKind) -> (f32, f32) {
+  #[expect(clippy::match_same_arms)]
   match kind {
-    XsdSmallStitchKind::QuarterTopLeft | XsdSmallStitchKind::PetiteTopLeft => Ok((x, y)),
-    XsdSmallStitchKind::QuarterTopRight | XsdSmallStitchKind::PetiteTopRight => Ok((x + 0.5, y)),
-    XsdSmallStitchKind::QuarterBottomLeft | XsdSmallStitchKind::PetiteBottomLeft => Ok((x, y + 0.5)),
-    XsdSmallStitchKind::QuarterBottomRight | XsdSmallStitchKind::PetiteBottomRight => Ok((x + 0.5, y + 0.5)),
-    _ => Ok((x, y)),
+    XsdSmallStitchKind::QuarterTopLeft | XsdSmallStitchKind::PetiteTopLeft => (x, y),
+    XsdSmallStitchKind::QuarterTopRight | XsdSmallStitchKind::PetiteTopRight => (x + 0.5, y),
+    XsdSmallStitchKind::QuarterBottomLeft | XsdSmallStitchKind::PetiteBottomLeft => (x, y + 0.5),
+    XsdSmallStitchKind::QuarterBottomRight | XsdSmallStitchKind::PetiteBottomRight => (x + 0.5, y + 0.5),
+    _ => (x, y),
   }
 }
 
@@ -901,12 +902,12 @@ enum XsdJointKind {
 impl From<u16> for XsdJointKind {
   fn from(value: u16) -> Self {
     match value {
-      1 => XsdJointKind::FrenchKnot,
-      2 => XsdJointKind::Back,
-      3 => XsdJointKind::Curve,
-      4 => XsdJointKind::Special,
-      5 => XsdJointKind::Straight,
-      6 => XsdJointKind::Bead,
+      1 => Self::FrenchKnot,
+      2 => Self::Back,
+      3 => Self::Curve,
+      4 => Self::Special,
+      5 => Self::Straight,
+      6 => Self::Bead,
       _ => unreachable!("Invalid joint kind {value}"),
     }
   }
@@ -915,6 +916,7 @@ impl From<u16> for XsdJointKind {
 type Joints = (Vec<LineStitch>, Vec<NodeStitch>, Vec<SpecialStitch>, Vec<CurvedStitch>);
 
 /// Reads the french knots, beads, back, straight and special stitches and curved stitches used in the pattern.
+#[expect(clippy::too_many_lines)]
 fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<Joints> {
   log::trace!("Reading joints");
 
@@ -1020,10 +1022,10 @@ fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<
         specialstitches.push(SpecialStitch {
           x,
           y,
-          palindex,
-          modindex,
           rotation,
           flip,
+          palindex,
+          modindex,
         });
       }
 

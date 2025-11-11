@@ -34,7 +34,7 @@ pub fn export_pattern<R: tauri::Runtime>(
     .path()
     .with_extension(PatternFormat::default().to_string());
   let previous_file_path = patproj.file_path.clone();
-  patproj.file_path = tempfile_path.to_path_buf().clone();
+  patproj.file_path.clone_from(&tempfile_path);
   embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
   patproj.file_path = previous_file_path;
 

@@ -2,6 +2,9 @@
 name = "embroiderly"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [features]
 test = []
 

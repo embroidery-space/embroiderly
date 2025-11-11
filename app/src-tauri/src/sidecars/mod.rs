@@ -41,7 +41,7 @@ pub struct ExitStatus {
 
 impl ExitStatus {
   /// Returns the exit code of the process, if any.
-  pub fn code(&self) -> Option<i32> {
+  pub const fn code(&self) -> Option<i32> {
     self.code
   }
 

@@ -15,8 +15,8 @@ pub struct PdfExportSidecar<R: tauri::Runtime> {
 }
 
 impl<R: tauri::Runtime> PdfExportSidecar<R> {
-  /// Create a new sidecar instance with the given app handle.
-  pub fn new(app_handle: tauri::AppHandle<R>) -> Self {
+  /// Create a new `PublishSidecar` instance with the given app handle.
+  pub const fn new(app_handle: tauri::AppHandle<R>) -> Self {
     Self {
       app_handle,
       pattern_path: None,
@@ -38,7 +38,7 @@ impl<R: tauri::Runtime> PdfExportSidecar<R> {
   }
 
   /// Set the PDF export options.
-  pub fn options(mut self, options: PdfExportOptions) -> Self {
+  pub const fn options(mut self, options: PdfExportOptions) -> Self {
     self.options = Some(options);
     self
   }

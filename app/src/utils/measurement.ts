@@ -9,7 +9,7 @@ export function mm2inches(mm: number) {
 }
 
 export function mm2px(mm: number) {
-  return mm * 3.7795275591;
+  return mm * 3.779_527_559_1;
 }
 
 export function size2stitches(size: number, count: number) {

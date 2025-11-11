@@ -3,6 +3,9 @@ name = "tauri-plugin-sentry"
 links = "tauri-plugin-sentry"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [build-dependencies]
 tauri-plugin = { workspace = true }
 

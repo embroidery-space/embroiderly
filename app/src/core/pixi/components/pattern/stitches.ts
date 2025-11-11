@@ -185,7 +185,7 @@ export class StitchesHint extends Container {
   }
 
   private clear(options?: DestroyOptions) {
-    this.removeChildren().forEach((child) => child.destroy(options));
+    for (const child of this.removeChildren()) child.destroy(options);
     return this.addChild(new Graphics());
   }
 

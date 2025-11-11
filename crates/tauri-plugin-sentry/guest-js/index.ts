@@ -30,15 +30,9 @@ function makeTauriTransport(options: BaseTransportOptions) {
 /** Send a breadcrumb to the Tauri backend. */
 function sendBreadcrumbToRust(breadcrumb: Breadcrumb) {
   // Ignore IPC breadcrumbs so we don't get into an infinite loop.
-  if (
-    typeof breadcrumb.data?.url === "string" &&
-    (breadcrumb.data.url.startsWith("ipc://") || breadcrumb.data.url.match(/^https?:\/\/ipc\.localhost/))
-  ) {
-    return null;
+  if (!/^(ipc:\/\/|https?:\/\/ipc\.localhost)/.test(breadcrumb.data?.url)) {
+    // eslint-disable-next-line no-console
+    addBreadcrumb(breadcrumb).catch((e) => console.error("Failed to add breadcrumb to Tauri:", e));
   }
-
-  // eslint-disable-next-line no-console
-  addBreadcrumb(breadcrumb).catch((e) => console.error("Failed to add breadcrumb to Tauri:", e));
-
   return null;
 }

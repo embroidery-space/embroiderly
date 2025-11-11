@@ -15,7 +15,7 @@ pub struct ImageImportSidecar<R: tauri::Runtime> {
 
 impl<R: tauri::Runtime> ImageImportSidecar<R> {
   /// Create a new sidecar instance with the given app handle.
-  pub fn new(app_handle: tauri::AppHandle<R>) -> Self {
+  pub const fn new(app_handle: tauri::AppHandle<R>) -> Self {
     Self {
       app_handle,
       image_path: None,
@@ -37,7 +37,7 @@ impl<R: tauri::Runtime> ImageImportSidecar<R> {
   }
 
   /// Set the image import options.
-  pub fn options(mut self, options: ImageImportOptions) -> Self {
+  pub const fn options(mut self, options: ImageImportOptions) -> Self {
     self.options = Some(options);
     self
   }

@@ -145,162 +145,176 @@
     { immediate: true },
   );
 
-  const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => [
-    [
-      {
-        label: fluent.$t("label-palette-edit"),
-        onSelect: (event) => {
-          event.preventDefault();
-          paletteIsBeingEdited.value = true;
+  const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
+    const {
+      columnsNumber,
+      colorOnly,
+      showStitchSymbols,
+      stitchSymbolsOnContrastBackground,
+      showColorBrands,
+      showColorNumbers,
+      showColorNames,
+    } = paletteDisplaySettings.value;
+    return [
+      [
+        {
+          label: fluent.$t("label-palette-edit"),
+          onSelect: (event) => {
+            event.preventDefault();
+            paletteIsBeingEdited.value = true;
+          },
         },
-      },
-    ],
-    [
-      {
-        label: fluent.$t("label-palette-display-options"),
-        children: [
-          [
-            {
-              label: fluent.$t("label-display-options-columns-number"),
-              children: [1, 2, 3, 4, 5, 6, 7, 8].map<ContextMenuItem>((n) => ({
-                label: n.toString(),
+      ],
+      [
+        {
+          label: fluent.$t("label-palette-display-options"),
+          children: [
+            [
+              {
+                label: fluent.$t("label-display-options-columns-number"),
+                children: [1, 2, 3, 4, 5, 6, 7, 8].map<ContextMenuItem>((n) => ({
+                  label: n.toString(),
+                  type: "checkbox",
+                  checked: columnsNumber === n,
+                  onSelect: (event) => {
+                    event.preventDefault();
+                    paletteDisplaySettings.value = {
+                      ...paletteDisplaySettings.value,
+                      columnsNumber: n,
+                    };
+                  },
+                })),
+              },
+            ],
+            [
+              {
+                label: fluent.$t("label-display-options-color-only"),
                 type: "checkbox",
-                checked: paletteDisplaySettings.value.columnsNumber === n,
+                checked: colorOnly,
                 onSelect: (event) => {
                   event.preventDefault();
                   paletteDisplaySettings.value = {
                     ...paletteDisplaySettings.value,
-                    columnsNumber: n,
+                    colorOnly: !colorOnly,
                   };
                 },
-              })),
+              },
+            ],
+            [
+              {
+                label: fluent.$t("label-display-options-show-stitch-symbols"),
+                type: "checkbox",
+                checked: showStitchSymbols,
+                disabled: colorOnly,
+                onSelect: (event) => {
+                  event.preventDefault();
+                  paletteDisplaySettings.value = {
+                    ...paletteDisplaySettings.value,
+                    showStitchSymbols: !showStitchSymbols,
+                  };
+                },
+              },
+              {
+                label: fluent.$t("label-display-options-stitch-symbols-on-contrast-background"),
+                type: "checkbox",
+                checked: stitchSymbolsOnContrastBackground,
+                disabled: colorOnly,
+                onSelect: (event) => {
+                  event.preventDefault();
+                  paletteDisplaySettings.value = {
+                    ...paletteDisplaySettings.value,
+                    stitchSymbolsOnContrastBackground: !stitchSymbolsOnContrastBackground,
+                  };
+                },
+              },
+            ],
+            [
+              {
+                label: fluent.$t("label-display-options-show-brand"),
+                type: "checkbox",
+                checked: showColorBrands,
+                disabled: colorOnly,
+                onSelect: (event) => {
+                  event.preventDefault();
+                  paletteDisplaySettings.value = {
+                    ...paletteDisplaySettings.value,
+                    showColorBrands: !showColorBrands,
+                  };
+                },
+              },
+              {
+                label: fluent.$t("label-display-options-show-number"),
+                type: "checkbox",
+                checked: showColorNumbers,
+                disabled: colorOnly,
+                onSelect: (event) => {
+                  event.preventDefault();
+                  paletteDisplaySettings.value = {
+                    ...paletteDisplaySettings.value,
+                    showColorNumbers: !showColorNumbers,
+                  };
+                },
+              },
+              {
+                label: fluent.$t("label-display-options-show-name"),
+                type: "checkbox",
+                checked: showColorNames,
+                disabled: colorOnly,
+                onSelect: (event) => {
+                  event.preventDefault();
+                  paletteDisplaySettings.value = {
+                    ...paletteDisplaySettings.value,
+                    showColorNames: !showColorNames,
+                  };
+                },
+              },
+            ],
+          ],
+        },
+      ],
+    ];
+  });
+  const paletteEditingContextMenuOptions = computed<ContextMenuItem[][]>(() => {
+    const palsize = patternsStore.pattern?.palette.length ?? 0;
+    return [
+      palettePanelsMenuOptions.value,
+      [
+        {
+          label: fluent.$t("label-palette-sort-by"),
+          disabled: !palsize,
+          children: [
+            {
+              label: fluent.$t("label-palette-sort-by-brand-and-number"),
+              onSelect: () => patternsStore.sortPaletteBy(SortPaletteBy.BrandAndNumber),
             },
           ],
-          [
-            {
-              label: fluent.$t("label-display-options-color-only"),
-              type: "checkbox",
-              checked: paletteDisplaySettings.value.colorOnly,
-              onSelect: (event) => {
-                event.preventDefault();
-                paletteDisplaySettings.value = {
-                  ...paletteDisplaySettings.value,
-                  colorOnly: !paletteDisplaySettings.value.colorOnly,
-                };
-              },
-            },
-          ],
-          [
-            {
-              label: fluent.$t("label-display-options-show-stitch-symbols"),
-              type: "checkbox",
-              checked: paletteDisplaySettings.value.showStitchSymbols,
-              disabled: paletteDisplaySettings.value.colorOnly,
-              onSelect: (event) => {
-                event.preventDefault();
-                paletteDisplaySettings.value = {
-                  ...paletteDisplaySettings.value,
-                  showStitchSymbols: !paletteDisplaySettings.value.showStitchSymbols,
-                };
-              },
-            },
-            {
-              label: fluent.$t("label-display-options-stitch-symbols-on-contrast-background"),
-              type: "checkbox",
-              checked: paletteDisplaySettings.value.stitchSymbolsOnContrastBackground,
-              disabled: paletteDisplaySettings.value.colorOnly,
-              onSelect: (event) => {
-                event.preventDefault();
-                paletteDisplaySettings.value = {
-                  ...paletteDisplaySettings.value,
-                  stitchSymbolsOnContrastBackground: !paletteDisplaySettings.value.stitchSymbolsOnContrastBackground,
-                };
-              },
-            },
-          ],
-          [
-            {
-              label: fluent.$t("label-display-options-show-brand"),
-              type: "checkbox",
-              checked: paletteDisplaySettings.value.showColorBrands,
-              disabled: paletteDisplaySettings.value.colorOnly,
-              onSelect: (event) => {
-                event.preventDefault();
-                paletteDisplaySettings.value = {
-                  ...paletteDisplaySettings.value,
-                  showColorBrands: !paletteDisplaySettings.value.showColorBrands,
-                };
-              },
-            },
-            {
-              label: fluent.$t("label-display-options-show-number"),
-              type: "checkbox",
-              checked: paletteDisplaySettings.value.showColorNumbers,
-              disabled: paletteDisplaySettings.value.colorOnly,
-              onSelect: (event) => {
-                event.preventDefault();
-                paletteDisplaySettings.value = {
-                  ...paletteDisplaySettings.value,
-                  showColorNumbers: !paletteDisplaySettings.value.showColorNumbers,
-                };
-              },
-            },
-            {
-              label: fluent.$t("label-display-options-show-name"),
-              type: "checkbox",
-              checked: paletteDisplaySettings.value.showColorNames,
-              disabled: paletteDisplaySettings.value.colorOnly,
-              onSelect: (event) => {
-                event.preventDefault();
-                paletteDisplaySettings.value = {
-                  ...paletteDisplaySettings.value,
-                  showColorNames: !paletteDisplaySettings.value.showColorNames,
-                };
-              },
-            },
-          ],
-        ],
-      },
-    ],
-  ]);
-  const paletteEditingContextMenuOptions = computed<ContextMenuItem[][]>(() => [
-    palettePanelsMenuOptions.value,
-    [
-      {
-        label: fluent.$t("label-palette-sort-by"),
-        disabled: !patternsStore.pattern?.palette.length,
-        children: [
-          {
-            label: fluent.$t("label-palette-sort-by-brand-and-number"),
-            onSelect: () => patternsStore.sortPaletteBy(SortPaletteBy.BrandAndNumber),
+        },
+      ],
+      [
+        {
+          label: fluent.$t("label-palette-delete-selected", {
+            selected: appStateStore.selectedPaletteItemIndex === undefined ? 0 : 1,
+          }),
+          disabled: !palsize || appStateStore.selectedPaletteItemIndex === undefined,
+          onSelect: () => {
+            if (appStateStore.selectedPaletteItemIndex !== undefined) {
+              patternsStore.removePaletteItem(appStateStore.selectedPaletteItemIndex);
+            }
           },
-        ],
-      },
-    ],
-    [
-      {
-        label: fluent.$t("label-palette-delete-selected", {
-          selected: appStateStore.selectedPaletteItemIndex !== undefined ? 1 : 0,
-        }),
-        disabled: !patternsStore.pattern?.palette.length || appStateStore.selectedPaletteItemIndex === undefined,
-        onSelect: () => {
-          if (appStateStore.selectedPaletteItemIndex !== undefined) {
-            patternsStore.removePaletteItem(appStateStore.selectedPaletteItemIndex);
-          }
         },
-      },
-      {
-        label: fluent.$t("label-palette-delete-all"),
-        disabled: !patternsStore.pattern?.palette.length,
-        onSelect: () => {
-          if (patternsStore.pattern?.palette.length) {
-            patternsStore.removePaletteItem(...new Array(patternsStore.pattern.palette.length).keys());
-          }
+        {
+          label: fluent.$t("label-palette-delete-all"),
+          disabled: !palsize,
+          onSelect: () => {
+            if (palsize) {
+              patternsStore.removePaletteItem(...Array.from({ length: palsize }).keys());
+            }
+          },
         },
-      },
-    ],
-    [{ label: fluent.$t("label-save-changes"), onSelect: () => (paletteIsBeingEdited.value = false) }],
-  ]);
+      ],
+      [{ label: fluent.$t("label-save-changes"), onSelect: () => (paletteIsBeingEdited.value = false) }],
+    ];
+  });
 
   const palettePanelsMenuOptions = computed<DropdownMenuItem[]>(() => [
     {

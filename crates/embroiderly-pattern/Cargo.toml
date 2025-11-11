@@ -2,6 +2,9 @@
 name = "embroiderly_pattern"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [features]
 borsh = ["dep:borsh", "uuid/borsh", "ordered-float/borsh"]
 serde = ["dep:serde", "uuid/serde"]

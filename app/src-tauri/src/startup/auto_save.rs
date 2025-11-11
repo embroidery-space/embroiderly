@@ -1,4 +1,4 @@
-use tauri::Manager;
+use tauri::Manager as _;
 
 use crate::commands;
 use crate::state::{HistoryState, PatternsState};

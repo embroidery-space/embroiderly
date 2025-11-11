@@ -13,18 +13,22 @@ pub struct PartStitch {
 }
 
 impl PartStitch {
+  #[must_use]
   pub fn is_on_top_left(&self) -> bool {
     self.x.fract() < 0.5 && self.y.fract() < 0.5
   }
 
+  #[must_use]
   pub fn is_on_top_right(&self) -> bool {
     self.x.fract() >= 0.5 && self.y.fract() < 0.5
   }
 
+  #[must_use]
   pub fn is_on_bottom_right(&self) -> bool {
     self.x.fract() >= 0.5 && self.y.fract() >= 0.5
   }
 
+  #[must_use]
   pub fn is_on_bottom_left(&self) -> bool {
     self.x.fract() < 0.5 && self.y.fract() >= 0.5
   }
@@ -83,9 +87,9 @@ pub enum PartStitchDirection {
 impl From<(Coord, Coord)> for PartStitchDirection {
   fn from((x, y): (Coord, Coord)) -> Self {
     if (x.fract() < 0.5 && y.fract() < 0.5) || (x.fract() >= 0.5 && y.fract() >= 0.5) {
-      PartStitchDirection::Backward
+      Self::Backward
     } else {
-      PartStitchDirection::Forward
+      Self::Forward
     }
   }
 }
@@ -93,8 +97,8 @@ impl From<(Coord, Coord)> for PartStitchDirection {
 impl From<pmaker::PartStitchDirection> for PartStitchDirection {
   fn from(direction: pmaker::PartStitchDirection) -> Self {
     match direction {
-      pmaker::PartStitchDirection::Forward => PartStitchDirection::Forward,
-      pmaker::PartStitchDirection::Backward => PartStitchDirection::Backward,
+      pmaker::PartStitchDirection::Forward => Self::Forward,
+      pmaker::PartStitchDirection::Backward => Self::Backward,
     }
   }
 }
@@ -109,8 +113,8 @@ pub enum PartStitchKind {
 impl From<FullStitchKind> for PartStitchKind {
   fn from(kind: FullStitchKind) -> Self {
     match kind {
-      FullStitchKind::Full => PartStitchKind::Half,
-      FullStitchKind::Petite => PartStitchKind::Quarter,
+      FullStitchKind::Full => Self::Half,
+      FullStitchKind::Petite => Self::Quarter,
     }
   }
 }
@@ -118,8 +122,8 @@ impl From<FullStitchKind> for PartStitchKind {
 impl From<pmaker::PartStitchKind> for PartStitchKind {
   fn from(kind: pmaker::PartStitchKind) -> Self {
     match kind {
-      pmaker::PartStitchKind::Half => PartStitchKind::Half,
-      pmaker::PartStitchKind::Quarter => PartStitchKind::Quarter,
+      pmaker::PartStitchKind::Half => Self::Half,
+      pmaker::PartStitchKind::Quarter => Self::Quarter,
     }
   }
 }

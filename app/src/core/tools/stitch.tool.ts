@@ -34,6 +34,7 @@ export class StitchTool implements PatternEditorTool {
     return this.prevStitchState === undefined;
   }
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   async main({ pattern, start, end, modifiers, api, ui }: PatternEditorToolContext) {
     if (!patternContainsPoint(pattern.fabric, start, end)) return;
 
@@ -180,6 +181,7 @@ export class StitchTool implements PatternEditorTool {
  * @param tool The tool being used.
  * @returns The adjusted point.
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function adjustStitchCoordinate(point: Point, tool: StitchKind): Point {
   const { x, y } = point;
   const [intX, intY] = [Math.trunc(x), Math.trunc(y)];
@@ -204,8 +206,8 @@ function adjustStitchCoordinate(point: Point, tool: StitchKind): Point {
     case NodeStitchKind.FrenchKnot:
     case NodeStitchKind.Bead: {
       return new Point(
-        fracX > 0.5 ? intX + 1 : fracX > 0.25 ? intX + 0.5 : intX,
-        fracY > 0.5 ? intY + 1 : fracY > 0.25 ? intY + 0.5 : intY,
+        fracX > 0.5 ? intX + 1 : fracX > 0.25 ? intX + 0.5 : intX, // eslint-disable-line sonarjs/no-nested-conditional
+        fracY > 0.5 ? intY + 1 : fracY > 0.25 ? intY + 0.5 : intY, // eslint-disable-line sonarjs/no-nested-conditional
       );
     }
   }

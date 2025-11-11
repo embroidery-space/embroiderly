@@ -52,7 +52,7 @@ fn create_base_dispatch(log_file_path: std::path::PathBuf) -> anyhow::Result<fer
         record.target(),
         record.level(),
         message
-      ))
+      ));
     })
     .level(DEFAULT_LOG_LEVEL.to_level_filter())
     .chain(
