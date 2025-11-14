@@ -90,6 +90,10 @@ export async function loadPalette(paletteGroup: string, paletteName: string) {
   return deserializeBrandPalette(new Uint8Array(buffer));
 }
 
+export function getPaletteSize(paletteGroup: string, paletteName: string) {
+  return invoke<number>("get_palette_size", { paletteGroup, paletteName });
+}
+
 export async function resolvePalettePath(paletteGroup: string, paletteName: string) {
   return await invoke<string>("resolve_palette_path", { paletteGroup, paletteName });
 }
@@ -127,7 +131,23 @@ export function getImageDimensions(imagePath: string) {
   return invoke<[width: number, height: number]>("get_image_dimensions", { imagePath });
 }
 
-export async function importPatternFromImage(imagePath: string, palettePath: string, options: object) {
+export interface ImageImportOptions {
+  patternSize: [number, number];
+  paletteSize: number;
+
+  quantization: QuantizationOptions;
+  dithering?: DitheringOptions;
+}
+
+export interface QuantizationOptions {
+  samplingFactor: number;
+}
+
+export interface DitheringOptions {
+  errorDiffusion: number;
+}
+
+export async function importPatternFromImage(imagePath: string, palettePath: string, options: ImageImportOptions) {
   const buffer = await invoke<ArrayBuffer>("import_pattern_from_image", { imagePath, palettePath, options });
   return Pattern.deserialize(new Uint8Array(buffer));
 }

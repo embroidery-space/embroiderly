@@ -144,12 +144,28 @@ pub fn load_palette<R: tauri::Runtime>(
   palette_name: String,
   app_handle: tauri::AppHandle<R>,
 ) -> Result<Vec<u8>> {
-  let palette_path = resolve_palette_path_inner(palette_group, palette_name, app_handle)?;
-  let palette: Vec<BrandPaletteItem> = {
-    let content = std::fs::read_to_string(palette_path)?;
-    serde_json::from_str(&content).map_err(|e| anyhow::anyhow!("Failed to parse palette JSON: {e}"))?
-  };
+  let palette = load_palette_inner(palette_group, palette_name, app_handle)?;
   Ok(borsh::to_vec(&palette)?)
+}
+
+fn load_palette_inner<R: tauri::Runtime>(
+  palette_group: FileGroup,
+  palette_name: String,
+  app_handle: tauri::AppHandle<R>,
+) -> Result<Vec<BrandPaletteItem>> {
+  let palette_path = resolve_palette_path_inner(palette_group, palette_name, app_handle)?;
+  let palette_content = std::fs::read_to_string(palette_path)?;
+  Ok(serde_json::from_str(&palette_content).map_err(|e| anyhow::anyhow!("Failed to parse palette JSON: {e}"))?)
+}
+
+#[tauri::command]
+pub fn get_palette_size<R: tauri::Runtime>(
+  palette_group: FileGroup,
+  palette_name: String,
+  app_handle: tauri::AppHandle<R>,
+) -> Result<usize> {
+  let palette = load_palette_inner(palette_group, palette_name, app_handle)?;
+  Ok(palette.len())
 }
 
 #[tauri::command]

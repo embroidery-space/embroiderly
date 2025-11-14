@@ -1,8 +1,8 @@
 <template>
-  <UModal title="Image Import" :ui="{ content: 'size-[90%]', body: 'py-0!' }">
+  <UModal title="Image Import" :ui="{ content: 'size-[90%]', body: 'p-0!' }">
     <template #body>
-      <div class="flex h-full gap-x-4">
-        <div class="space-y-2 py-4 sm:py-6">
+      <div class="flex h-full">
+        <div class="space-y-2 p-4 sm:p-6">
           <UFieldGroup class="w-full">
             <UButton :label="$t('label-choose-file')" @click="chooseImage" />
             <UInput :model-value="imagePath" readonly class="w-full" />
@@ -14,7 +14,7 @@
                 v-model="imageImportOptions.patternSize[0]"
                 :increment="false"
                 :decrement="false"
-                :max="imageDimensions[0]"
+                v-bind="patternSizeBounds.width"
               />
             </UFormField>
 
@@ -23,41 +23,100 @@
                 v-model="imageImportOptions.patternSize[1]"
                 :increment="false"
                 :decrement="false"
-                :max="imageDimensions[1]"
+                v-bind="patternSizeBounds.height"
               />
             </UFormField>
           </div>
 
-          <div class="flex items-end gap-x-2">
-            <UFormField label="Palette" class="w-full">
-              <USelectMenu
-                v-model="selectedPaletteKey"
-                :items="paletteOptions"
-                value-key="value"
-                size="xl"
-                variant="subtle"
-                class="w-full"
-              />
-            </UFormField>
+          <UFormField label="Palette" class="w-full">
+            <USelectMenu
+              v-model="selectedPaletteKey"
+              :items="paletteOptions"
+              value-key="value"
+              size="xl"
+              variant="subtle"
+              class="w-full"
+            />
+          </UFormField>
 
-            <UFormField label="Palette Size" class="w-full">
-              <UInputNumber v-model="imageImportOptions.paletteSize" :increment="false" :decrement="false" />
+          <UFormField label="Palette Size">
+            <div class="flex items-center gap-x-2">
+              <UInputNumber
+                v-model="imageImportOptions.paletteSize"
+                :increment="false"
+                :decrement="false"
+                v-bind="paletteSizeBounds"
+              />
+              <USlider v-model="imageImportOptions.paletteSize" tooltip v-bind="paletteSizeBounds" class="w-full" />
+            </div>
+          </UFormField>
+
+          <FormFieldset legend="Colors Reduction" class="w-full space-y-2">
+            <UFormField label="Sampling Precision" class="w-full">
+              <div class="flex items-center gap-x-2">
+                <UInputNumber
+                  v-model="imageImportOptions.quantization.samplingFactor"
+                  :increment="false"
+                  :decrement="false"
+                  :min="0"
+                  :max="1"
+                  :step="0.1"
+                  :format-options="{ maximumFractionDigits: 3 }"
+                />
+                <USlider
+                  v-model="imageImportOptions.quantization.samplingFactor"
+                  tooltip
+                  :min="0"
+                  :max="1"
+                  :step="0.1"
+                  class="w-full"
+                />
+              </div>
             </UFormField>
-          </div>
+          </FormFieldset>
+
+          <FormFieldset legend="Dithering" class="w-full space-y-2">
+            <UCheckbox v-model="applyDithering" label="Apply dithering" />
+
+            <UFormField label="Dithering Strength" class="w-full">
+              <div class="flex items-center gap-x-2">
+                <UInputNumber
+                  v-model="imageImportOptions.dithering.errorDiffusion"
+                  :disabled="!applyDithering"
+                  :increment="false"
+                  :decrement="false"
+                  :min="0"
+                  :max="1"
+                  :step="0.01"
+                  :format-options="{ minimumFractionDigits: 2, maximumFractionDigits: 2 }"
+                />
+                <USlider
+                  v-model="imageImportOptions.dithering.errorDiffusion"
+                  tooltip
+                  :disabled="!applyDithering"
+                  :min="0"
+                  :max="1"
+                  :step="0.1"
+                  class="w-full"
+                />
+              </div>
+            </UFormField>
+          </FormFieldset>
         </div>
 
-        <USeparator decorative orientation="vertical" />
+        <USeparator decorative orientation="vertical" size="sm" />
 
-        <div class="flex w-full items-center justify-center py-4 sm:py-6">
-          <!-- <UEmpty
-            v-if="imageImportOptionsInvalid"
+        <div class="flex w-full items-center justify-center">
+          <UEmpty
+            v-if="!imageImportOptionsValid"
             title="No image"
             description="The image import options are invalid."
-          /> -->
+          />
           <canvas
             ref="canvas"
             v-element-size="useDebounceFn(({ width, height }) => patternApplication.resize(width, height), 100)"
             class="size-full"
+            :class="{ hidden: !imageImportOptionsValid }"
           ></canvas>
         </div>
       </div>
@@ -72,24 +131,26 @@
 <script setup lang="ts">
   import type { SelectMenuItem } from "@nuxt/ui";
   import { vElementSize } from "@vueuse/components";
-  import { computedAsync, useDebounceFn, watchDebounced } from "@vueuse/core";
+  import { computedAsync, useDebounceFn } from "@vueuse/core";
   import { useTemplateRef } from "vue";
-  import { ref, reactive, onMounted, onUnmounted, shallowRef, computed } from "vue";
+  import { ref, reactive, onMounted, onUnmounted, shallowRef, computed, watchPostEffect } from "vue";
 
   import { FilesApi } from "~/api";
+  import type { ImageImportOptions } from "~/api";
   import { LayersVisibility } from "~/core/pattern";
   import { PatternApplication, PatternView } from "~/core/pixi";
 
-  type Size = [width: number, height: number];
-
-  interface ImageImportOptions {
-    patternSize: [number, number];
-    paletteSize: number;
-  }
+  /** The maximum palette size acceptable for quantization. */
+  const MAX_PALETTE_SIZE = 256;
 
   interface ImportImageModalProps {
     imagePath: string;
-    imageDimensions: Size;
+    imageDimensions: [width: number, height: number];
+  }
+
+  interface ValueBounds {
+    min: number;
+    max: number;
   }
 
   const filePicker = useFilePicker();
@@ -100,20 +161,18 @@
 
   const canvas = useTemplateRef("canvas");
 
+  const patternApplication = new PatternApplication();
+  const patternApplicationInitialized = ref(false);
+
   const imagePath = ref(props.imagePath);
+  const imageDimensions = ref(props.imageDimensions);
   async function chooseImage() {
     const path = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
-    if (path !== null) imagePath.value = path;
+    if (path !== null) {
+      imagePath.value = path;
+      imageDimensions.value = await FilesApi.getImageDimensions(path);
+    }
   }
-
-  const imageImportOptions = reactive<ImageImportOptions>({
-    patternSize: [0, 0],
-    paletteSize: 0,
-  });
-  const imageImportOptionsInvalid = computed(() => {
-    const { patternSize, paletteSize } = imageImportOptions;
-    return !patternSize[0] || !patternSize[1] || !paletteSize;
-  });
 
   const selectedPaletteKey = ref("system/DMC");
   const selectedPalettePath = computedAsync(async () => {
@@ -134,44 +193,95 @@
     paletteOptions.value = [systemPalettes, customPalettes];
   }
 
-  const patternApplication = new PatternApplication();
-  const patternApplicationInitialized = ref(false);
+  const applyDithering = ref(true);
+  const imageImportOptions = reactive<Required<ImageImportOptions>>({
+    patternSize: [Math.round(imageDimensions.value[0] * 0.1), Math.round(imageDimensions.value[1] * 0.1)],
+    paletteSize: 32,
+    quantization: {
+      samplingFactor: 1,
+    },
+    dithering: {
+      errorDiffusion: 0.875,
+    },
+  });
+
+  const patternSizeBounds = computed<{ width: ValueBounds; height: ValueBounds }>(() => {
+    const width = { min: 1, max: imageDimensions.value[1] };
+    const height = { min: 1, max: imageDimensions.value[0] };
+    return { width, height };
+  });
+  const paletteSizeBounds = computedAsync<ValueBounds>(
+    async () => {
+      const [brand, name] = selectedPaletteKey.value.split("/") as [string, string];
+      const selectedPaletteSize = await FilesApi.getPaletteSize(brand, name);
+      return { min: 1, max: Math.min(selectedPaletteSize, MAX_PALETTE_SIZE) };
+    },
+    { min: 1, max: MAX_PALETTE_SIZE },
+  );
+
+  const imageImportOptionsValid = computed(() => {
+    function checkValueInBounds(value: number, bounds: ValueBounds): boolean {
+      return value >= bounds.min && value <= bounds.max;
+    }
+
+    const { patternSize, paletteSize, quantization, dithering } = imageImportOptions;
+
+    // Validate pattern dimensions.
+    if (!checkValueInBounds(patternSize[0], patternSizeBounds.value.width)) return false;
+    if (!checkValueInBounds(patternSize[1], patternSizeBounds.value.height)) return false;
+
+    // Validate palette size.
+    if (!checkValueInBounds(paletteSize, paletteSizeBounds.value)) return false;
+
+    // Validate quantization options.
+    if (!checkValueInBounds(quantization.samplingFactor, { min: 0, max: 1 })) return false;
+
+    // Validate dithering options.
+    if (applyDithering.value && !checkValueInBounds(dithering.errorDiffusion, { min: 0, max: 1 })) return false;
+
+    return true;
+  });
 
   const importingPattern = ref(false);
-  async function importPatternFromImage() {
-    if (!patternApplicationInitialized.value) {
-      await patternApplication.init(canvas.value!);
-      patternApplicationInitialized.value = true;
-    }
+  const importPatternFromImage = useDebounceFn(
+    async (options: ImageImportOptions) => {
+      if (!patternApplicationInitialized.value) {
+        await patternApplication.init(canvas.value!);
+        patternApplicationInitialized.value = true;
+      }
 
-    importingPattern.value = true;
-    try {
-      const pattern = await FilesApi.importPatternFromImage(
-        imagePath.value,
-        selectedPalettePath.value,
-        imageImportOptions,
-      );
-      patternApplication.view = new PatternView(pattern);
+      importingPattern.value = true;
+      try {
+        const pattern = await FilesApi.importPatternFromImage(imagePath.value, selectedPalettePath.value, options);
+        patternApplication.view = new PatternView(pattern);
 
-      // Configure the pattern view.
-      patternApplication.view.setShowSymbols(false);
-      patternApplication.view.setLayersVisibility({
-        ...LayersVisibility.default(false),
-        fullstitches: true,
-      });
-    } finally {
-      importingPattern.value = false;
-    }
-  }
-
-  watchDebounced(
-    [imagePath, selectedPalettePath, imageImportOptions],
-    async () => {
-      if (imageImportOptionsInvalid.value) return;
-      await importPatternFromImage();
+        // Configure the pattern view.
+        patternApplication.view.setShowSymbols(false);
+        patternApplication.view.setLayersVisibility({
+          ...LayersVisibility.default(false),
+          fullstitches: true,
+        });
+      } finally {
+        importingPattern.value = false;
+      }
     },
-    { debounce: 1000 },
+    100,
+    { maxWait: 500 },
   );
+
+  // Update the pattern preview on every change of options.
+  watchPostEffect(async () => {
+    if (!imageImportOptionsValid.value) return;
+
+    const options = {
+      ...imageImportOptions,
+      dithering:
+        applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
+          ? imageImportOptions.dithering
+          : undefined,
+    };
+    await importPatternFromImage(options);
+  });
 
   onMounted(async () => {
     await loadPalettesList();
