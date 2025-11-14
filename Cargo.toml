@@ -107,7 +107,7 @@ typst-as-lib = "0.15.0"
 # Image processing
 image = "0.25.8"
 palette = "0.7.6"
-kmeans_colors = { version = "0.7.1", default-features = false, features = ["palette_color"] }
+quantette = "0.5.1"
 
 # Archiving
 zip = { version = "6.0.0", features = [
@@ -157,7 +157,6 @@ rstest = "0.26.1"
 
 # Other
 alphanumeric-sort = "1.5.3"
-ordermap = "0.5.8"
 ordered-float = "5.1.0"
 dyn-clone = "1.0.20"
 paste = "1.0.15"

@@ -303,7 +303,7 @@ impl std::ops::IndexMut<u32> for Palette {
 /// Represents a _working_ palette item.
 ///
 /// It contains all the properties from [`BrandPaletteItem`] plus project-specific display properties.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteItem {
   pub brand: String,
@@ -376,10 +376,24 @@ impl From<xspro::PaletteItem> for PaletteItem {
   }
 }
 
+impl PartialEq for PaletteItem {
+  fn eq(&self, other: &Self) -> bool {
+    self.brand == other.brand && self.number == other.number
+  }
+}
+impl Eq for PaletteItem {}
+
+impl std::hash::Hash for PaletteItem {
+  fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+    self.brand.hash(state);
+    self.number.hash(state);
+  }
+}
+
 /// Represents a _brand_ palette item.
 ///
 /// It contains only essential properties for clearly identifying colors from manufacturer catalogs or custom collections.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BrandPaletteItem {
@@ -426,6 +440,20 @@ impl From<xspro::PaletteItem> for BrandPaletteItem {
       color: palitem.color,
       blends: None,
     }
+  }
+}
+
+impl PartialEq for BrandPaletteItem {
+  fn eq(&self, other: &Self) -> bool {
+    self.brand == other.brand && self.number == other.number
+  }
+}
+impl Eq for BrandPaletteItem {}
+
+impl std::hash::Hash for BrandPaletteItem {
+  fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+    self.brand.hash(state);
+    self.number.hash(state);
   }
 }
 
