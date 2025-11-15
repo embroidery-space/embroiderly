@@ -1,0 +1,7 @@
+# Auto-generated type declarations.
+auto-imports.d.ts
+components.d.ts
+*.tsbuildinfo
+
+# Auto-generated merged Fluent translation files.
+src/locales/*.ftl

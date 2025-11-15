@@ -8,9 +8,10 @@ import { defineConfig } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 import { NuxtUIConfig } from "./ui.config";
+import fluentMerge from "./vite-plugins/fluent-merge";
 
 export default defineConfig({
-  plugins: [vue(), ui(NuxtUIConfig), tailwindcss(), vueDevTools()],
+  plugins: [fluentMerge(), vue(), ui(NuxtUIConfig), tailwindcss(), vueDevTools()],
   clearScreen: false,
   resolve: { alias: { "~": fileURLToPath(new URL("src", import.meta.url)) } },
   envPrefix: ["VITE_", "TAURI_ENV_"],
