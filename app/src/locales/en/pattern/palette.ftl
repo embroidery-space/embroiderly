@@ -44,7 +44,7 @@ palette-catalog = Colors
 
 palette-catalog-menu-import-palettes = Import Palettes
 
-label-palette-catalog-search =
+palette-catalog-search =
   .placeholder = Search...
 
 palette-catalog-import-success = Palettes imported successfully

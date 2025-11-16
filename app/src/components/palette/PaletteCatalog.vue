@@ -35,7 +35,7 @@
       <template #filter>
         <UInput
           v-model="searchQuery"
-          v-bind="$ta('label-palette-catalog-search')"
+          v-bind="$ta('palette-catalog-search')"
           size="md"
           variant="outline"
           leading-icon="i-lucide:search"
@@ -163,12 +163,12 @@
       await refreshPalettesList();
 
       if (failedFiles.length) {
-        const failedFilesMessage = fluent.$ta("palette-catalog-import-failed-files", {
-          failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
-        });
-        const { title, description } = failedFilesMessage as { title: string; description: string };
-        confirm.open({ title, message: description });
-      } else toast.add({ title: fluent.$t("message-palette-import-success"), color: "success" });
+        confirm.open(
+          fluent.$ta("palette-catalog-import-failed-files", {
+            failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
+          }),
+        );
+      } else toast.add({ title: fluent.$t("palette-catalog-import-success"), color: "success" });
     } catch (err) {
       error(`Failed to import palettes: ${err}`);
       toast.add({ title: fluent.$t("palette-catalog-import-failure"), color: "error" });

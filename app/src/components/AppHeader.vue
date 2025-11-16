@@ -184,9 +184,9 @@
 
     const accepted = await confirm.open({
       title,
-      message: description,
-      acceptLabel: fluent.$t("label-copy"),
-      rejectLabel: fluent.$t("label-close"),
+      description,
+      yesButton: { label: fluent.$t("modal-copy") },
+      noButton: { label: fluent.$t("modal-close") },
     }).result;
     if (accepted) await writeText(description);
   }

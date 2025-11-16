@@ -160,14 +160,12 @@
       await refreshFontsList();
 
       if (failedFiles.length) {
-        const failedFilesMessage = fluent.$ta("stitch-symbols-import-failed-files", {
-          failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
-        });
-        const { title, description } = failedFilesMessage as { title: string; description: string };
-        confirm.open({ title, message: description });
-      } else {
-        toast.add({ title: fluent.$t("stitch-symbols-import-success"), color: "success" });
-      }
+        confirm.open(
+          fluent.$ta("stitch-symbols-import-failed-files", {
+            failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
+          }),
+        );
+      } else toast.add({ title: fluent.$t("stitch-symbols-import-success"), color: "success" });
     } catch (err) {
       error(`Failed to import symbol fonts: ${err}`);
       toast.add({ title: fluent.$t("stitch-symbols-import-failure"), color: "error" });

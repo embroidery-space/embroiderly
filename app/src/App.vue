@@ -28,9 +28,7 @@
         .map(({ title }) => `- ${title}`)
         .join("\n");
 
-      const unsavedPatternsMessage = fluent.$ta("unsaved-patterns", { patterns });
-      const { title, description } = unsavedPatternsMessage as { title: string; description: string };
-      const savePatterns = await confirm.open({ title, message: description }).result;
+      const savePatterns = await confirm.open(fluent.$ta("unsaved-patterns", { patterns })).result;
 
       // If the user dismissed the dialog, prevent the window from closing.
       if (savePatterns === undefined) return e.preventDefault();

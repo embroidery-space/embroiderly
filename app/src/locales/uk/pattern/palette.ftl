@@ -47,7 +47,7 @@ palette-catalog = Кольори
 
 palette-catalog-menu-import-palettes = Імпортувати палітри
 
-label-palette-catalog-search =
+palette-catalog-search =
   .placeholder = Пошук...
 
 palette-catalog-import-success = Палітри успішно імпортовані

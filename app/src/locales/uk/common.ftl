@@ -15,7 +15,10 @@ history-redo = Повторити
 ## Modal windows.
 
 modal-save = Зберегти
+modal-copy = Копіювати
+
 modal-cancel = Скасувати
+modal-close = Закрити
 
 ## Confirmation dialogs.
 

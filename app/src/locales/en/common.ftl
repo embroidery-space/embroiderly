@@ -15,7 +15,10 @@ history-redo = Redo
 ## Modal windows.
 
 modal-save = Save
+modal-copy = Copy
+
 modal-cancel = Cancel
+modal-close = Close
 
 ## Confirmation dialogs.
 

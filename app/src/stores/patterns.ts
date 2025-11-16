@@ -100,16 +100,16 @@ export const usePatternsStore = defineStore(
         if (error instanceof PatternErrorUnsupportedPatternType) {
           confirm.open({
             title: fluent.$t("error"),
-            message: fluent.$t("pattern-open-unsupported-type"),
-            acceptLabel: fluent.$t("confirm-ok"),
-            rejectLabel: null,
+            description: fluent.$t("pattern-open-unsupported-type"),
+            yesButton: { label: fluent.$t("confirm-ok") },
+            noButton: null,
           });
           return;
         }
         if (error instanceof PatternErrorBackupFileExists) {
           const accepted = await confirm.open({
             title: fluent.$t("error"),
-            message: fluent.$t("pattern-backup-file-exists"),
+            description: fluent.$t("pattern-backup-file-exists"),
           }).result;
           await openPattern(path, { restoreFromBackup: accepted });
           return;
@@ -145,9 +145,9 @@ export const usePatternsStore = defineStore(
         if (error instanceof PatternErrorUnsupportedPatternType) {
           confirm.open({
             title: fluent.$t("error"),
-            message: fluent.$t("pattern-save-unsupported-type"),
-            acceptLabel: fluent.$t("confirm-ok"),
-            rejectLabel: null,
+            description: fluent.$t("pattern-save-unsupported-type"),
+            yesButton: { label: fluent.$t("confirm-ok") },
+            noButton: null,
           });
         } else {
           toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
@@ -222,9 +222,7 @@ export const usePatternsStore = defineStore(
         else pattern.value = undefined;
       } catch (error) {
         if (error instanceof PatternErrorUnsavedChanges) {
-          const unsavedChangesMessage = fluent.$ta("unsaved-changes");
-          const { title, description } = unsavedChangesMessage as { title: string; description: string };
-          const accepted = await confirm.open({ title, message: description }).result;
+          const accepted = await confirm.open(fluent.$ta("unsaved-changes")).result;
 
           // If the user dismisses the dialog, prevent the window from closing.
           if (accepted === undefined) return;
