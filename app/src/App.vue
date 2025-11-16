@@ -28,10 +28,9 @@
         .map(({ title }) => `- ${title}`)
         .join("\n");
 
-      const savePatterns = await confirm.open({
-        title: fluent.$t("title-unsaved-changes"),
-        message: fluent.$t("message-unsaved-patterns", { patterns }),
-      }).result;
+      const unsavedPatternsMessage = fluent.$ta("unsaved-patterns", { patterns });
+      const { title, description } = unsavedPatternsMessage as { title: string; description: string };
+      const savePatterns = await confirm.open({ title, message: description }).result;
 
       // If the user dismissed the dialog, prevent the window from closing.
       if (savePatterns === undefined) return e.preventDefault();
@@ -55,6 +54,6 @@
   onErrorCaptured((err, _component, info) => {
     // Log the error, notify the user, and let it be propagated further so that Sentry can handle it.
     error(`Error (${info}): ${err instanceof Error ? err.message : err}`);
-    toast.add({ type: "background", color: "error", title: fluent.$t("title-error") });
+    toast.add({ type: "background", color: "error", title: fluent.$t("error") });
   });
 </script>

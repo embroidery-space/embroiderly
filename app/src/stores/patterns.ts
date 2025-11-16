@@ -99,17 +99,17 @@ export const usePatternsStore = defineStore(
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
           confirm.open({
-            title: fluent.$t("title-error"),
-            message: fluent.$t("message-error-unsupported-pattern-type"),
-            acceptLabel: fluent.$t("label-ok"),
+            title: fluent.$t("error"),
+            message: fluent.$t("pattern-open-unsupported-type"),
+            acceptLabel: fluent.$t("confirm-ok"),
             rejectLabel: null,
           });
           return;
         }
         if (error instanceof PatternErrorBackupFileExists) {
           const accepted = await confirm.open({
-            title: fluent.$t("title-error"),
-            message: fluent.$t("message-error-backup-file-exists"),
+            title: fluent.$t("error"),
+            message: fluent.$t("pattern-backup-file-exists"),
           }).result;
           await openPattern(path, { restoreFromBackup: accepted });
           return;
@@ -144,13 +144,13 @@ export const usePatternsStore = defineStore(
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
           confirm.open({
-            title: fluent.$t("title-error"),
-            message: fluent.$t("message-error-unsupported-pattern-type-for-saving"),
-            acceptLabel: fluent.$t("label-ok"),
+            title: fluent.$t("error"),
+            message: fluent.$t("pattern-save-unsupported-type"),
+            acceptLabel: fluent.$t("confirm-ok"),
             rejectLabel: null,
           });
         } else {
-          toast.add({ color: "error", title: fluent.$t("message-pattern-save-failed"), duration: 3000 });
+          toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
         }
       } finally {
         loading.value = false;
@@ -158,7 +158,7 @@ export const usePatternsStore = defineStore(
     }
     appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
       if (patternId === pattern.value?.id) {
-        toast.add({ type: "background", color: "success", title: fluent.$t("message-pattern-saved"), duration: 3000 });
+        toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
       }
     });
 
@@ -203,9 +203,9 @@ export const usePatternsStore = defineStore(
       try {
         loading.value = true;
         await PatternApi.exportPattern(pattern.value.id, filePath, options);
-        toast.add({ color: "success", title: fluent.$t("message-pattern-exported"), duration: 3000 });
+        toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
       } catch {
-        toast.add({ color: "error", title: fluent.$t("message-pattern-export-failed"), duration: 3000 });
+        toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
       } finally {
         loading.value = false;
       }
@@ -222,10 +222,9 @@ export const usePatternsStore = defineStore(
         else pattern.value = undefined;
       } catch (error) {
         if (error instanceof PatternErrorUnsavedChanges) {
-          const accepted = await confirm.open({
-            title: fluent.$t("title-unsaved-changes"),
-            message: fluent.$t("message-unsaved-changes"),
-          }).result;
+          const unsavedChangesMessage = fluent.$ta("unsaved-changes");
+          const { title, description } = unsavedChangesMessage as { title: string; description: string };
+          const accepted = await confirm.open({ title, message: description }).result;
 
           // If the user dismisses the dialog, prevent the window from closing.
           if (accepted === undefined) return;

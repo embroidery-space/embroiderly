@@ -1,7 +1,7 @@
 <template>
-  <PanelSection :title="$t('label-palette-display-options')">
+  <PanelSection :title="$t('palette-display-options')">
     <div class="flex flex-col gap-y-2 p-2">
-      <UFormField :label="$t('label-display-options-columns-number')" class="w-full">
+      <UFormField :label="$t('palette-columns-number')" class="w-full">
         <UInputNumber
           :model-value="props.settings.columnsNumber"
           orientation="vertical"
@@ -14,7 +14,7 @@
 
       <USwitch
         :model-value="props.settings.colorOnly"
-        :label="$t('label-display-options-color-only')"
+        :label="$t('palette-color-only')"
         @update:model-value="(value) => updateSettings('colorOnly', value)"
       />
 
@@ -22,31 +22,31 @@
         <UCheckbox
           :model-value="props.settings.showStitchSymbols"
           :disabled="props.settings.colorOnly"
-          :label="$t('label-display-options-show-stitch-symbols')"
+          :label="$t('palette-show-stitch-symbols')"
           @update:model-value="(value) => updateSettings('showStitchSymbols', value as boolean)"
         />
         <UCheckbox
           :model-value="props.settings.stitchSymbolsOnContrastBackground"
           :disabled="props.settings.colorOnly || !props.settings.showStitchSymbols"
-          :label="$t('label-display-options-stitch-symbols-on-contrast-background')"
+          :label="$t('palette-contrast-stitch-symbols')"
           @update:model-value="(value) => updateSettings('stitchSymbolsOnContrastBackground', value as boolean)"
         />
         <UCheckbox
           :model-value="props.settings.showColorBrands"
           :disabled="props.settings.colorOnly"
-          :label="$t('label-display-options-show-brand')"
+          :label="$t('palette-show-brand')"
           @update:model-value="(value) => updateSettings('showColorBrands', value as boolean)"
         />
         <UCheckbox
           :model-value="props.settings.showColorNumbers"
           :disabled="props.settings.colorOnly"
-          :label="$t('label-display-options-show-number')"
+          :label="$t('palette-show-number')"
           @update:model-value="(value) => updateSettings('showColorNumbers', value as boolean)"
         />
         <UCheckbox
           :model-value="props.settings.showColorNames"
           :disabled="props.settings.colorOnly"
-          :label="$t('label-display-options-show-name')"
+          :label="$t('palette-show-name')"
           @update:model-value="(value) => updateSettings('showColorNames', value as boolean)"
         />
       </div>

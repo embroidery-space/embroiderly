@@ -116,8 +116,6 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
         toast.add({
           type,
           color: "info",
-          title: fluent.$t("title-update-available"),
-          description: fluent.$t("message-update-available", { currentVersion, version, date }),
           actions: [
             {
               label: fluent.$t("label-update-now"),
@@ -132,14 +130,14 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
               },
             },
           ],
+          ...fluent.$ta("updater-update-available", { currentVersion, version, date }),
         });
       } else {
         if (!options?.auto) {
           toast.add({
             type,
             color: "info",
-            title: fluent.$t("title-no-updates-available"),
-            description: fluent.$t("message-no-updates-available"),
+            ...fluent.$ta("updater-no-updates-available"),
           });
         }
       }

@@ -6,14 +6,14 @@
     <template #footer>
       <UButton
         v-if="props.rejectLabel !== null"
-        :label="props.rejectLabel ?? $t('label-no')"
+        :label="props.rejectLabel ?? $t('confirm-no')"
         color="neutral"
         variant="outline"
         @click="emit('close', false)"
       />
       <UButton
         v-if="props.acceptLabel !== null"
-        :label="props.acceptLabel ?? $t('label-yes')"
+        :label="props.acceptLabel ?? $t('confirm-yes')"
         @click="emit('close', true)"
       />
     </template>

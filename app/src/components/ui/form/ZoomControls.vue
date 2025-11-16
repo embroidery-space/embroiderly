@@ -18,7 +18,7 @@
     </UFieldGroup>
 
     <div class="flex grow items-center gap-x-1">
-      <UTooltip :text="fluent.$t('label-zoom-out')" :delay-duration="200" :kbds="['ctrl', '-']">
+      <UTooltip :text="$t('canvas-zoom-out')" :delay-duration="200" :kbds="['ctrl', '-']">
         <UButton color="neutral" variant="ghost" icon="i-lucide:zoom-out" size="xs" @click="zoomOut" />
       </UTooltip>
 
@@ -32,7 +32,7 @@
         @update:model-value="emit('update:model-value', $event as number)"
       />
 
-      <UTooltip :text="fluent.$t('label-zoom-in')" :delay-duration="200" :kbds="['ctrl', '+']">
+      <UTooltip :text="$t('canvas-zoom-in')" :delay-duration="200" :kbds="['ctrl', '+']">
         <UButton color="neutral" variant="ghost" icon="i-lucide:zoom-in" size="xs" @click="zoomIn" />
       </UTooltip>
     </div>
@@ -61,9 +61,9 @@
   }>();
 
   const zoomOptions = computed<DropdownMenuItem[]>(() => [
-    { label: fluent.$t("label-fit"), kbds: ["ctrl", "0"], onSelect: () => emit("update:model-value", "fit") },
-    { label: fluent.$t("label-fit-width"), onSelect: () => emit("update:model-value", "fit-width") },
-    { label: fluent.$t("label-fit-height"), onSelect: () => emit("update:model-value", "fit-height") },
+    { label: fluent.$t("canvas-zoom-fit"), kbds: ["ctrl", "0"], onSelect: () => emit("update:model-value", "fit") },
+    { label: fluent.$t("canvas-zoom-fit-width"), onSelect: () => emit("update:model-value", "fit-width") },
+    { label: fluent.$t("canvas-zoom-fit-height"), onSelect: () => emit("update:model-value", "fit-height") },
   ]);
 
   function zoomIn() {

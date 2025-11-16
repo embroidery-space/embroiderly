@@ -44,7 +44,7 @@
             </slot>
           </RListboxItem>
         </template>
-        <p v-else class="px-2">{{ $t("message-stitch-symbols-empty") }}</p>
+        <p v-else class="px-2">{{ $t("stitch-symbols-empty") }}</p>
       </RListboxContent>
     </RListboxRoot>
 

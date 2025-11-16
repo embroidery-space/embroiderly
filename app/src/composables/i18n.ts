@@ -1,10 +1,10 @@
-import { createSharedComposable } from "@vueuse/core";
 import { FluentBundle, FluentResource } from "@fluent/bundle";
 import { en as nuxtEnLocale, uk as nuxtUkLocale } from "@nuxt/ui/locale";
+import { createSharedComposable } from "@vueuse/core";
 import { ref, computed } from "vue";
 
-import appEnLocale from "~/locales/en.ftl?raw";
-import appUkLocale from "~/locales/uk.ftl?raw";
+import appEnLocale from "virtual:en.ftl";
+import appUkLocale from "virtual:uk.ftl";
 
 const DEFAULT_LOCALE = "en";
 

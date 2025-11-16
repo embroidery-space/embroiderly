@@ -22,7 +22,7 @@
           <div v-if="paletteIsBeingEdited" class="flex gap-x-1" @contextmenu.stop.prevent>
             <UButton
               icon="i-lucide:check"
-              :label="$t('label-save-changes')"
+              :label="$t('palette-save')"
               class="grow justify-center text-sm"
               @click="paletteIsBeingEdited = false"
             />
@@ -55,10 +55,10 @@
         <template #footer>
           <div class="flex items-center justify-between" @contextmenu.stop.prevent>
             <span class="text-sm text-nowrap">
-              {{ $t("label-palette-size", { size: patternsStore.pattern?.palette.length ?? 0 }) }}
+              {{ $t("palette-size", { size: patternsStore.pattern?.palette.length ?? 0 }) }}
             </span>
             <UTooltip
-              :text="paletteIsBeingEdited ? $t('label-save-changes') : $t('label-palette-edit')"
+              :text="paletteIsBeingEdited ? $t('palette-save') : $t('palette-edit')"
               :delay-duration="200"
               :disabled="paletteIsDisabled"
             >
@@ -158,7 +158,7 @@
     return [
       [
         {
-          label: fluent.$t("label-palette-edit"),
+          label: fluent.$t("palette-edit"),
           onSelect: (event) => {
             event.preventDefault();
             paletteIsBeingEdited.value = true;
@@ -167,11 +167,11 @@
       ],
       [
         {
-          label: fluent.$t("label-palette-display-options"),
+          label: fluent.$t("palette-display-options"),
           children: [
             [
               {
-                label: fluent.$t("label-display-options-columns-number"),
+                label: fluent.$t("palette-columns-number"),
                 children: [1, 2, 3, 4, 5, 6, 7, 8].map<ContextMenuItem>((n) => ({
                   label: n.toString(),
                   type: "checkbox",
@@ -188,7 +188,7 @@
             ],
             [
               {
-                label: fluent.$t("label-display-options-color-only"),
+                label: fluent.$t("palette-color-only"),
                 type: "checkbox",
                 checked: colorOnly,
                 onSelect: (event) => {
@@ -202,7 +202,7 @@
             ],
             [
               {
-                label: fluent.$t("label-display-options-show-stitch-symbols"),
+                label: fluent.$t("palette-show-stitch-symbols"),
                 type: "checkbox",
                 checked: showStitchSymbols,
                 disabled: colorOnly,
@@ -215,7 +215,7 @@
                 },
               },
               {
-                label: fluent.$t("label-display-options-stitch-symbols-on-contrast-background"),
+                label: fluent.$t("palette-contrast-stitch-symbols"),
                 type: "checkbox",
                 checked: stitchSymbolsOnContrastBackground,
                 disabled: colorOnly,
@@ -230,7 +230,7 @@
             ],
             [
               {
-                label: fluent.$t("label-display-options-show-brand"),
+                label: fluent.$t("palette-show-brand"),
                 type: "checkbox",
                 checked: showColorBrands,
                 disabled: colorOnly,
@@ -243,7 +243,7 @@
                 },
               },
               {
-                label: fluent.$t("label-display-options-show-number"),
+                label: fluent.$t("palette-show-number"),
                 type: "checkbox",
                 checked: showColorNumbers,
                 disabled: colorOnly,
@@ -256,7 +256,7 @@
                 },
               },
               {
-                label: fluent.$t("label-display-options-show-name"),
+                label: fluent.$t("palette-show-name"),
                 type: "checkbox",
                 checked: showColorNames,
                 disabled: colorOnly,
@@ -280,11 +280,11 @@
       palettePanelsMenuOptions.value,
       [
         {
-          label: fluent.$t("label-palette-sort-by"),
+          label: fluent.$t("palette-ctx-menu-sort-by"),
           disabled: !palsize,
           children: [
             {
-              label: fluent.$t("label-palette-sort-by-brand-and-number"),
+              label: fluent.$t("palette-ctx-menu-sort-by-brand-and-number"),
               onSelect: () => patternsStore.sortPaletteBy(SortPaletteBy.BrandAndNumber),
             },
           ],
@@ -292,7 +292,7 @@
       ],
       [
         {
-          label: fluent.$t("label-palette-delete-selected", {
+          label: fluent.$t("palette-ctx-menu-delete-selected", {
             selected: appStateStore.selectedPaletteItemIndex === undefined ? 0 : 1,
           }),
           disabled: !palsize || appStateStore.selectedPaletteItemIndex === undefined,
@@ -303,7 +303,7 @@
           },
         },
         {
-          label: fluent.$t("label-palette-delete-all"),
+          label: fluent.$t("palette-ctx-menu-delete-all"),
           disabled: !palsize,
           onSelect: () => {
             if (palsize) {
@@ -312,28 +312,27 @@
           },
         },
       ],
-      [{ label: fluent.$t("label-save-changes"), onSelect: () => (paletteIsBeingEdited.value = false) }],
+      [{ label: fluent.$t("palette-save"), onSelect: () => (paletteIsBeingEdited.value = false) }],
     ];
   });
 
   const palettePanelsMenuOptions = computed<DropdownMenuItem[]>(() => [
     {
-      label: fluent.$t("label-palette-display-options"),
+      label: fluent.$t("palette-display-options"),
       onSelect: () => {
         paletteIsBeingEdited.value = true;
         sectionVisibility.paletteDisplaySettings = !sectionVisibility.paletteDisplaySettings;
       },
     },
     {
-      label: fluent.$t("label-palette-colors"),
+      label: fluent.$t("palette-catalog"),
       onSelect: () => {
         paletteIsBeingEdited.value = true;
         sectionVisibility.paletteCatalog = !sectionVisibility.paletteCatalog;
       },
     },
-
     {
-      label: fluent.$t("label-stitch-symbols"),
+      label: fluent.$t("stitch-symbols"),
       onSelect: () => {
         paletteIsBeingEdited.value = true;
         sectionVisibility.stitchSymbols = !sectionVisibility.stitchSymbols;
@@ -343,7 +342,7 @@
 
   function handleSetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePoint: number }) {
     if (appStateStore.selectedPaletteItemIndex === undefined) {
-      toast.add({ title: fluent.$t("message-no-palette-item-selected"), color: "warning" });
+      toast.add({ title: fluent.$t("stitch-symbols-no-palitem-selected"), color: "warning" });
       return;
     }
 
@@ -352,7 +351,7 @@
       (pi) => pi.symbol?.font === fontFamily && pi.symbol?.code === codePoint,
     );
     if (existingItem && existingItem.index !== appStateStore.selectedPaletteItemIndex) {
-      toast.add({ title: fluent.$t("message-symbol-already-assigned"), color: "warning" });
+      toast.add({ title: fluent.$t("stitch-symbols-already-assigned"), color: "warning" });
       return;
     }
 

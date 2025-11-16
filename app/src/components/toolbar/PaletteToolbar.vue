@@ -44,23 +44,23 @@
   }>();
 
   const fullstitches = computed(() => [
-    { icon: "i-stitches:full", label: fluent.$t("label-stitch-full"), value: tools.FullStitch },
-    { icon: "i-stitches:petite", label: fluent.$t("label-stitch-petite"), value: tools.PetiteStitch },
+    { icon: "i-stitches:full", label: fluent.$t("stitch-full"), value: tools.FullStitch },
+    { icon: "i-stitches:petite", label: fluent.$t("stitch-petite"), value: tools.PetiteStitch },
   ]);
   const partstitches = computed(() => [
-    { icon: "i-stitches:half", label: fluent.$t("label-stitch-half"), value: tools.HalfStitch },
-    { icon: "i-stitches:quarter", label: fluent.$t("label-stitch-quarter"), value: tools.QuarterStitch },
+    { icon: "i-stitches:half", label: fluent.$t("stitch-half"), value: tools.HalfStitch },
+    { icon: "i-stitches:quarter", label: fluent.$t("stitch-quarter"), value: tools.QuarterStitch },
   ]);
   const linestitches = computed(() => [
-    { icon: "i-stitches:back", label: fluent.$t("label-stitch-back"), value: tools.BackStitch },
-    { icon: "i-stitches:straight", label: fluent.$t("label-stitch-straight"), value: tools.StraightStitch },
+    { icon: "i-stitches:back", label: fluent.$t("stitch-back"), value: tools.BackStitch },
+    { icon: "i-stitches:straight", label: fluent.$t("stitch-straight"), value: tools.StraightStitch },
   ]);
   const nodestitches = computed(() => [
-    { icon: "i-stitches:french-knot", label: fluent.$t("label-stitch-french-knot"), value: tools.FrenchKnot },
-    { icon: "i-stitches:bead", label: fluent.$t("label-stitch-bead"), value: tools.Bead },
+    { icon: "i-stitches:french-knot", label: fluent.$t("stitch-french-knot"), value: tools.FrenchKnot },
+    { icon: "i-stitches:bead", label: fluent.$t("stitch-bead"), value: tools.Bead },
   ]);
 
   const cursor = computed(() => [
-    { icon: "i-material-symbols:arrow-selector-tool", label: fluent.$t("label-tool-cursor"), value: tools.Cursor },
+    { icon: "i-material-symbols:arrow-selector-tool", label: fluent.$t("palette-toolbar-cursor"), value: tools.Cursor },
   ]);
 </script>

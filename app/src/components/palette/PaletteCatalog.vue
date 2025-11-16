@@ -1,5 +1,5 @@
 <template>
-  <PanelSection :title="$t('label-palette-colors')">
+  <PanelSection :title="$t('palette-catalog')">
     <PaletteList
       :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="results.map((r) => r.item)"
@@ -35,10 +35,10 @@
       <template #filter>
         <UInput
           v-model="searchQuery"
+          v-bind="$ta('label-palette-catalog-search')"
           size="md"
           variant="outline"
           leading-icon="i-lucide:search"
-          :placeholder="$t('label-palette-catalog-search-placeholder')"
           class="w-full"
         />
       </template>
@@ -107,7 +107,7 @@
 
   const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
     {
-      label: fluent.$t("label-palette-catalog-menu-import-palettes"),
+      label: fluent.$t("palette-catalog-menu-import-palettes"),
       onSelect: importPalettes,
       loading: importingPalettes.value,
     },
@@ -116,14 +116,14 @@
   async function refreshPalettesList() {
     const { system, custom } = await PaletteApi.getPalettesList();
 
-    const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("label-files-system"), type: "label" }];
+    const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
     for (const palette of system) {
       const paletteKey = `system/${palette}`;
       systemPalettes.push({ label: palette, value: paletteKey });
       paletteCatalog.set(paletteKey, undefined);
     }
 
-    const customPalettes: SelectMenuItem[] = [{ label: fluent.$t("label-files-custom"), type: "label" }];
+    const customPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
     for (const palette of custom) {
       const paletteKey = `custom/${palette}`;
       customPalettes.push({ label: palette, value: paletteKey });
@@ -145,7 +145,7 @@
       selectedPalette.value = palette;
     } catch (err) {
       error(`Failed to load palette ${paletteKey}: ${err}`);
-      toast.add({ title: fluent.$t("message-palette-load-error", { paletteKey }), color: "error" });
+      toast.add({ title: fluent.$t("palette-catalog-load-failure", { palette: paletteName }), color: "error" });
     } finally {
       loadingPalette.value = false;
     }
@@ -163,16 +163,15 @@
       await refreshPalettesList();
 
       if (failedFiles.length) {
-        confirm.open({
-          title: fluent.$t("title-failed-palette-files"),
-          message: fluent.$t("message-failed-palette-files", {
-            failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
-          }),
+        const failedFilesMessage = fluent.$ta("palette-catalog-import-failed-files", {
+          failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
         });
+        const { title, description } = failedFilesMessage as { title: string; description: string };
+        confirm.open({ title, message: description });
       } else toast.add({ title: fluent.$t("message-palette-import-success"), color: "success" });
     } catch (err) {
       error(`Failed to import palettes: ${err}`);
-      toast.add({ title: fluent.$t("message-palette-import-error"), color: "error" });
+      toast.add({ title: fluent.$t("palette-catalog-import-failure"), color: "error" });
     } finally {
       importingPalettes.value = false;
     }

@@ -5,10 +5,10 @@
     <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
 
     <div class="flex min-w-1/2 flex-col gap-6 overflow-auto p-8">
-      <span class="text-4xl">{{ $t("title-welcome") }}</span>
+      <span class="text-4xl">{{ $t("welcome") }}</span>
 
       <div>
-        <i18n tag="p" path="message-get-started">
+        <i18n tag="p" path="welcome-get-started">
           <template #button-open="{ buttonOpenLabel }">
             <UButton variant="link" :label="buttonOpenLabel" class="p-0" @click="() => patternsStore.openPattern()" />
           </template>
@@ -22,24 +22,24 @@
           </template>
           <br />
         </i18n>
-        <p>{{ $t("message-get-started-drag-and-drop") }}</p>
+        <p>{{ $t("welcome-get-started-dnd") }}</p>
       </div>
 
       <div class="flex flex-wrap justify-between gap-4">
         <div class="flex flex-col gap-y-1">
-          <span class="text-lg">{{ $t("label-start") }}</span>
+          <span class="text-lg">{{ $t("welcome-section-starting") }}</span>
           <div class="flex max-w-max flex-col gap-y-1">
             <UButton
               variant="ghost"
               icon="i-lucide:file-plus"
-              :label="$t('label-start-create')"
+              :label="$t('welcome-create-pattern')"
               class="justify-start"
               @click="() => patternsStore.openFabricModal()"
             />
             <UButton
               variant="ghost"
               icon="i-lucide:file-up"
-              :label="$t('label-start-open')"
+              :label="$t('welcome-open-pattern')"
               class="justify-start"
               @click="() => patternsStore.openPattern()"
             />
@@ -68,7 +68,7 @@
     </div>
 
     <div class="w-full py-2 text-center text-xs">
-      {{ $t("message-credits") }}
+      {{ $t("app-credits") }}
     </div>
   </div>
 </template>
@@ -85,28 +85,28 @@
 
   const infoSections = computed<InfoSection[]>(() => [
     {
-      title: fluent.$t("label-customize"),
+      title: fluent.$t("welcome-section-customization"),
       items: [
         {
-          title: fluent.$t("label-customize-settings"),
-          text: fluent.$t("message-customize-settings"),
+          title: fluent.$t("welcome-customization-settings-title"),
+          text: fluent.$t("welcome-customization-settings-descr"),
           command: () => settingsStore.openSettingsModal(),
         },
       ],
     },
     {
-      title: fluent.$t("label-learn-more"),
+      title: fluent.$t("welcome-section-info"),
       items: [
         {
-          title: fluent.$t("label-learn-more-documentation"),
-          text: fluent.$t("message-learn-more-documentation"),
+          title: fluent.$t("welcome-info-docs-title"),
+          text: fluent.$t("welcome-info-docs-descr"),
           url: "https://embroiderly.niusia.me",
         },
       ],
     },
     {
-      title: fluent.$t("label-get-help"),
-      items: [{ title: fluent.$t("label-get-help-telegram"), url: "https://t.me/embroiderly" }],
+      title: fluent.$t("welcome-section-help"),
+      items: [{ title: fluent.$t("welcome-help-tg"), url: "https://t.me/embroiderly" }],
     },
   ]);
 
