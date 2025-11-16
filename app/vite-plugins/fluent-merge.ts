@@ -39,7 +39,7 @@ export default function fluentMerge(options: FluentMergeOptions = {}): Plugin {
     const contents = await Promise.all(
       files.map(async (file) => {
         let content = await fs.readFile(file, "utf8");
-        if (stripComments) content = content.replaceAll(/^\s*#.*$/, "");
+        if (stripComments) content = content.replaceAll(/^\s*#.*$/g, "");
         return content.trim();
       }),
     );

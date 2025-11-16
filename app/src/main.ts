@@ -1,8 +1,8 @@
 import { defaultSentryOptions } from "@embroiderly/tauri-plugin-sentry";
 
 import ui from "@nuxt/ui/vue-plugin";
-import { createApp } from "vue";
 import { createFluentVue } from "fluent-vue";
+import { createApp } from "vue";
 
 import "./assets/styles.css";
 import "./assets/icons.ts";
