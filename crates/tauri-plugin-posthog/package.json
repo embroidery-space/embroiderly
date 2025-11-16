@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@tauri-apps/api": "2.9.0",
-    "posthog-js": "1.285.0"
+    "posthog-js": "1.290.0"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "12.3.0",
-    "rollup": "4.52.5",
+    "rollup": "4.53.2",
     "tslib": "2.8.1",
     "typescript": "5.9.3"
   }
