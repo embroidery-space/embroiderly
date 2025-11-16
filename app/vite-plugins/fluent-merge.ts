@@ -5,8 +5,9 @@ import type { Plugin, ResolvedConfig, ViteDevServer } from "vite";
 
 export interface FluentMergeOptions {
   localesDir?: string;
-  stripComments?: boolean;
 }
+
+const VIRTUAL_PREFIX = "virtual:";
 
 export default function fluentMerge(options: FluentMergeOptions = {}): Plugin {
   let server: ViteDevServer;
@@ -31,41 +32,42 @@ export default function fluentMerge(options: FluentMergeOptions = {}): Plugin {
     return files.sort();
   }
 
-  async function mergeLocale(localeDir: string, outputPath: string, stripComments: boolean): Promise<void> {
+  async function mergeLocale(localeDir: string, stripComments: boolean): Promise<string> {
     const files = await collectFluentFiles(localeDir);
-    if (files.length === 0) return;
+    if (files.length === 0) return "";
 
     const contents = await Promise.all(
       files.map(async (file) => {
         let content = await fs.readFile(file, "utf8");
-        if (stripComments) content = content.replaceAll(/^\s*#.*$/, "").trim();
+        if (stripComments) content = content.replaceAll(/^\s*#.*$/, "");
         return content.trim();
       }),
     );
 
     const merged = contents.join("\n\n");
-    await fs.writeFile(outputPath, merged, "utf8");
-
-    const relativePath = path.relative(config.root, outputPath);
-    console.log(`[fluent-merge] Merged ${files.length} file(s) → ${relativePath}`);
+    console.log(`[fluent-merge] Merged ${files.length} file(s)`);
+    return merged;
   }
 
-  async function processLocales(stripComments = false) {
+  async function loadLocale(localeName: string): Promise<string> {
+    const stripComments = config.command === "build";
+    const localesPath = path.join(config.root, localesDir);
+    const localeDir = path.join(localesPath, localeName);
+    try {
+      return await mergeLocale(localeDir, stripComments);
+    } catch (error) {
+      console.error(`[fluent-merge] Error loading locale ${localeName}:`, error);
+      return "";
+    }
+  }
+
+  async function discoverLocales(): Promise<string[]> {
     const localesPath = path.join(config.root, localesDir);
     try {
       const entries = await fs.readdir(localesPath, { withFileTypes: true });
-      for (const entry of entries) {
-        if (entry.isDirectory()) {
-          const localeName = entry.name;
-
-          const targetLocaleDir = path.join(localesPath, localeName);
-          const outputLocaleFile = path.join(localesPath, `${localeName}.ftl`);
-
-          await mergeLocale(targetLocaleDir, outputLocaleFile, stripComments);
-        }
-      }
-    } catch (error) {
-      console.error("[fluent-merge] Error processing locales:", error);
+      return entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
+    } catch {
+      return [];
     }
   }
 
@@ -77,22 +79,46 @@ export default function fluentMerge(options: FluentMergeOptions = {}): Plugin {
     },
 
     async buildStart() {
-      const stripComments = config.command === "build";
-      await processLocales(stripComments);
+      const locales = await discoverLocales();
+      for (const locale of locales) {
+        await loadLocale(locale);
+      }
+    },
+
+    resolveId(id) {
+      if (id.startsWith(VIRTUAL_PREFIX) && id.endsWith(".ftl")) {
+        return `\0${id}`;
+      }
+    },
+
+    async load(id) {
+      if (id.startsWith(`\0${VIRTUAL_PREFIX}`) && id.endsWith(".ftl")) {
+        const localeName = id.slice(`\0${VIRTUAL_PREFIX}`.length, -4);
+        const content = await loadLocale(localeName);
+        return `export default ${JSON.stringify(content)};`;
+      }
     },
 
     configureServer(devServer) {
       server = devServer;
 
-      server.watcher.add(`${path.join(config.root, localesDir)}/**/*.ftl`);
+      const localesPath = path.join(config.root, localesDir);
+
+      server.watcher.add(`${localesPath}/**/*.ftl`);
       server.watcher.on("change", async (filePath) => {
-        if (filePath.includes(localesDir) && filePath.endsWith(".ftl")) {
-          const relativePath = path.relative(config.root, filePath);
-          const isInSubfolder = relativePath.split(/[\\/]/).length > 3;
-          if (isInSubfolder) {
-            console.log(`[fluent-merge] File changed: ${relativePath}`);
-            await processLocales(false);
-          }
+        if (!filePath.endsWith(".ftl")) return;
+
+        const relativeToLocales = path.relative(localesPath, filePath);
+        const localeName = relativeToLocales.split(path.sep)[0];
+        if (localeName.endsWith(".ftl")) return;
+
+        console.log(`[fluent-merge] File changed: ${path.relative(config.root, filePath)}`);
+        await loadLocale(localeName);
+
+        const module = server.moduleGraph.getModuleById(`\0${VIRTUAL_PREFIX}${localeName}.ftl`);
+        if (module) {
+          server.moduleGraph.invalidateModule(module);
+          server.ws.send({ type: "full-reload", path: "*" });
         }
       });
     },
