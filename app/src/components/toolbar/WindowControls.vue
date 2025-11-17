@@ -1,16 +1,16 @@
 <template>
   <div class="flex items-center justify-center">
     <button
-      :title="$t('label-minimize')"
-      class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-black/[.06] focus-visible:bg-black/[.06] active:bg-black/[.12] dark:text-white dark:hover:bg-white/[.06] dark:active:bg-white/[.12]"
+      :title="$t('window-minimize')"
+      class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-black/6 focus-visible:bg-black/6 active:bg-black/12 dark:text-white dark:hover:bg-white/6 dark:active:bg-white/12"
       @click="appWindow.minimize()"
     >
       <UIcon name="i-window:minimize" class="size-3" />
     </button>
 
     <button
-      :title="isMaximized ? $t('label-restore') : $t('label-maximize')"
-      class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-black/[.06] focus-visible:bg-black/[.06] active:bg-black/[.12] dark:text-white dark:hover:bg-white/[.06] dark:active:bg-white/[.12]"
+      :title="isMaximized ? $t('window-restore') : $t('window-maximize')"
+      class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-black/6 focus-visible:bg-black/6 active:bg-black/12 dark:text-white dark:hover:bg-white/6 dark:active:bg-white/12"
       @click="appWindow.toggleMaximize()"
     >
       <UIcon v-if="isMaximized" name="i-window:restore" class="size-3" />
@@ -18,7 +18,7 @@
     </button>
 
     <button
-      :title="$t('label-close')"
+      :title="$t('window-close')"
       class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-red-600 hover:text-white focus-visible:bg-red-600 focus-visible:text-white active:bg-red-700 dark:text-white"
       @click="appWindow.close()"
     >

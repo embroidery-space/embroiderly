@@ -47,7 +47,7 @@
             </slot>
           </RListboxItem>
         </template>
-        <p v-else class="px-2">{{ $t("message-palette-empty") }}</p>
+        <p v-else class="px-2">{{ $t("palette-empty") }}</p>
       </RListboxContent>
     </RListboxRoot>
 

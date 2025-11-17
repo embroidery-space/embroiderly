@@ -1,11 +1,11 @@
 <template>
-  <UModal :title="$t('title-publish-settings')" :ui="{ content: 'w-xl' }">
+  <UModal :title="$t('publish-settings')" :ui="{ content: 'w-xl' }">
     <template #body>
       <PdfPublishForm v-model="options" />
     </template>
     <template #footer>
-      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('label-save')" @click="updateOptions" />
+      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('modal-save')" @click="updateOptions" />
     </template>
   </UModal>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <UApp :locale="locale">
+  <UApp :locale="currentUiLocale">
     <RouterView />
   </UApp>
 </template>
@@ -7,21 +7,13 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-  import { computed, onMounted, onErrorCaptured } from "vue";
+  import { onMounted, onErrorCaptured } from "vue";
 
   import { FilesApi } from "./api/";
-  import { NUXT_LOCALES } from "./fluent.ts";
 
   const confirm = useConfirm();
   const toast = useToast();
-
-  const fluent = useFluent();
-  const locale = computed(() => {
-    const bundles = [...fluent.bundles.value];
-    const locale = bundles[0]!.locales[0]!;
-    // @ts-expect-error The `locale` code is always a valid key in `NUXT_LOCALES`.
-    return NUXT_LOCALES[locale];
-  });
+  const { fluent, currentUiLocale } = useI18n();
 
   const appStateStore = useAppStateStore();
   const settingsStore = useSettingsStore();
@@ -36,10 +28,7 @@
         .map(({ title }) => `- ${title}`)
         .join("\n");
 
-      const savePatterns = await confirm.open({
-        title: fluent.$t("title-unsaved-changes"),
-        message: fluent.$t("message-unsaved-patterns", { patterns }),
-      }).result;
+      const savePatterns = await confirm.open(fluent.$ta("unsaved-patterns", { patterns })).result;
 
       // If the user dismissed the dialog, prevent the window from closing.
       if (savePatterns === undefined) return e.preventDefault();
@@ -63,6 +52,6 @@
   onErrorCaptured((err, _component, info) => {
     // Log the error, notify the user, and let it be propagated further so that Sentry can handle it.
     error(`Error (${info}): ${err instanceof Error ? err.message : err}`);
-    toast.add({ type: "background", color: "error", title: fluent.$t("title-error") });
+    toast.add({ type: "background", color: "error", title: fluent.$t("error") });
   });
 </script>

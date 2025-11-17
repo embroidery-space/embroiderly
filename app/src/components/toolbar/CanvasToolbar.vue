@@ -1,7 +1,13 @@
 <template>
   <div class="flex flex-col gap-1 p-1">
     <UPopover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
-      <UTooltip arrow :text="$t('label-layers')" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
+      <UTooltip
+        arrow
+        :text="$t('canvas-toolbar-layers')"
+        :delay-duration="200"
+        :disabled="disabled"
+        :content="{ side: 'left' }"
+      >
         <UButton color="neutral" variant="ghost" icon="i-lucide:layers" :disabled="disabled" />
       </UTooltip>
 
@@ -26,7 +32,7 @@
       v-model="showSymbols"
       :option="{
         icon: 'i-stitches:symbol',
-        label: showSymbols ? fluent.$t('label-hide-symbols') : fluent.$t('label-show-symbols'),
+        label: showSymbols ? fluent.$t('canvas-toolbar-hide-symbols') : fluent.$t('canvas-toolbar-show-symbols'),
       }"
       :disabled="disabled"
     />
@@ -38,7 +44,7 @@
 
   import { DisplayMode, LayersVisibility } from "~/core/pattern/";
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
 
   const patternsStore = usePatternsStore();
 
@@ -55,9 +61,9 @@
     },
   });
   const displayModeOptions = computed(() => [
-    { icon: "i-stitches:mix", label: fluent.$t("label-view-as-mix"), value: DisplayMode.Mixed },
-    { icon: "i-stitches:square", label: fluent.$t("label-view-as-solid"), value: DisplayMode.Solid },
-    { icon: "i-stitches:full", label: fluent.$t("label-view-as-stitches"), value: DisplayMode.Stitches },
+    { icon: "i-stitches:mix", label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
+    { icon: "i-stitches:square", label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
+    { icon: "i-stitches:full", label: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
   ]);
 
   const showSymbols = computed({

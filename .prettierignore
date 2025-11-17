@@ -3,6 +3,10 @@
 **/dist/
 pnpm-lock.yaml
 
+# Auto-generated type declarations.
+*.d.ts
+*.tsbuildinfo
+
 **/target/
 Cargo.toml
 Cargo.lock

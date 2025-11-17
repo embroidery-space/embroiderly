@@ -87,6 +87,11 @@ export default defineConfigWithVueTs(
               pattern: "~/**",
               group: "internal",
             },
+            {
+              pattern: "virtual:*",
+              group: "internal",
+              position: "after",
+            },
           ],
           pathGroupsExcludedImportTypes: ["builtin"],
           "newlines-between": "always",
