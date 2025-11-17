@@ -3,10 +3,7 @@
     <template #body>
       <div class="flex h-full">
         <div class="space-y-2 p-4 sm:p-6">
-          <UFieldGroup class="w-full">
-            <UButton :label="$t('choose-file')" @click="chooseImage" />
-            <UInput :model-value="imagePath" readonly class="w-full" />
-          </UFieldGroup>
+          <FilePicker v-model="imagePath" :options="{ filters: ANY_IMAGE_FILTER }" class="w-full" />
 
           <div class="flex gap-x-2">
             <UFormField :label="$t('fabric-width')" class="w-full">
@@ -132,11 +129,21 @@
   import type { SelectMenuItem } from "@nuxt/ui";
   import { vElementSize } from "@vueuse/components";
   import { computedAsync, useDebounceFn } from "@vueuse/core";
-  import { useTemplateRef } from "vue";
-  import { ref, reactive, onMounted, onUnmounted, shallowRef, computed, watchPostEffect } from "vue";
+  import {
+    ref,
+    reactive,
+    onMounted,
+    onUnmounted,
+    shallowRef,
+    computed,
+    watchPostEffect,
+    useTemplateRef,
+    watch,
+  } from "vue";
 
   import { FilesApi } from "~/api";
   import type { ImageImportOptions } from "~/api";
+  import { ANY_IMAGE_FILTER } from "~/composables/file-picker.ts";
   import { LayersVisibility } from "~/core/pattern";
   import { PatternApplication, PatternView } from "~/core/pixi";
 
@@ -153,7 +160,6 @@
     max: number;
   }
 
-  const filePicker = useFilePicker();
   const fluent = useFluent();
 
   const props = defineProps<ImportImageModalProps>();
@@ -166,13 +172,9 @@
 
   const imagePath = ref(props.imagePath);
   const imageDimensions = ref(props.imageDimensions);
-  async function chooseImage() {
-    const path = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
-    if (path !== null) {
-      imagePath.value = path;
-      imageDimensions.value = await FilesApi.getImageDimensions(path);
-    }
-  }
+  watch(imagePath, async (newImagePath) => {
+    imageDimensions.value = await FilesApi.getImageDimensions(newImagePath);
+  });
 
   const selectedPaletteKey = ref("system/DMC");
   const selectedPalettePath = computedAsync(async () => {
