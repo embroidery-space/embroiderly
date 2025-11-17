@@ -5,25 +5,14 @@
         <div class="space-y-2 p-4 sm:p-6">
           <FilePicker v-model="imagePath" :options="{ filters: ANY_IMAGE_FILTER }" class="w-full" />
 
-          <div class="flex gap-x-2">
-            <UFormField :label="$t('fabric-width')" class="w-full">
-              <UInputNumber
-                v-model="imageImportOptions.patternSize[0]"
-                :increment="false"
-                :decrement="false"
-                v-bind="patternSizeBounds.width"
-              />
-            </UFormField>
-
-            <UFormField :label="$t('fabric-height')" class="w-full">
-              <UInputNumber
-                v-model="imageImportOptions.patternSize[1]"
-                :increment="false"
-                :decrement="false"
-                v-bind="patternSizeBounds.height"
-              />
-            </UFormField>
-          </div>
+          <DimensionsInput
+            v-model:width="imageImportOptions.patternSize[0]"
+            v-model:height="imageImportOptions.patternSize[1]"
+            :width-field-props="{ label: $t('fabric-width') }"
+            :height-field-props="{ label: $t('fabric-height') }"
+            :width-input-props="{ increment: false, decrement: false, ...patternSizeBounds.width }"
+            :height-input-props="{ increment: false, decrement: false, ...patternSizeBounds.height }"
+          />
 
           <UFormField :label="$t('image-import-palette')" class="w-full">
             <USelectMenu
