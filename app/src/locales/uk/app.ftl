@@ -11,6 +11,8 @@ app-menu-file-open = Відкрити
 app-menu-file-create = Створити
 app-menu-file-save = Зберегти
 app-menu-file-save-as = Зберегти як
+app-menu-file-import = Імпортувати
+app-menu-file-import-image = Зображення
 app-menu-file-export = Експортувати
 app-menu-file-close = Закрити
 

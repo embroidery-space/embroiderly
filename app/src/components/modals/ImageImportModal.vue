@@ -1,15 +1,15 @@
 <template>
-  <UModal title="Image Import" :ui="{ content: 'size-[90%]', body: 'p-0!' }">
+  <UModal :title="$t('image-import')" :ui="{ content: 'size-[90%]', body: 'p-0!' }">
     <template #body>
       <div class="flex h-full">
         <div class="space-y-2 p-4 sm:p-6">
           <UFieldGroup class="w-full">
-            <UButton :label="$t('label-choose-file')" @click="chooseImage" />
+            <UButton :label="$t('choose-file')" @click="chooseImage" />
             <UInput :model-value="imagePath" readonly class="w-full" />
           </UFieldGroup>
 
           <div class="flex gap-x-2">
-            <UFormField :label="$t('label-width')" class="w-full">
+            <UFormField :label="$t('fabric-width')" class="w-full">
               <UInputNumber
                 v-model="imageImportOptions.patternSize[0]"
                 :increment="false"
@@ -18,7 +18,7 @@
               />
             </UFormField>
 
-            <UFormField :label="$t('label-height')" class="w-full">
+            <UFormField :label="$t('fabric-height')" class="w-full">
               <UInputNumber
                 v-model="imageImportOptions.patternSize[1]"
                 :increment="false"
@@ -28,7 +28,7 @@
             </UFormField>
           </div>
 
-          <UFormField label="Palette" class="w-full">
+          <UFormField :label="$t('image-import-palette')" class="w-full">
             <USelectMenu
               v-model="selectedPaletteKey"
               :items="paletteOptions"
@@ -39,7 +39,7 @@
             />
           </UFormField>
 
-          <UFormField label="Palette Size">
+          <UFormField :label="$t('image-import-palette-size')" class="w-full">
             <div class="flex items-center gap-x-2">
               <UInputNumber
                 v-model="imageImportOptions.paletteSize"
@@ -51,8 +51,8 @@
             </div>
           </UFormField>
 
-          <FormFieldset legend="Colors Reduction" class="w-full space-y-2">
-            <UFormField label="Sampling Precision" class="w-full">
+          <FormFieldset :legend="$t('image-import-quant')" class="w-full space-y-2">
+            <UFormField :label="$t('image-import-quant-sampling')" class="w-full">
               <div class="flex items-center gap-x-2">
                 <UInputNumber
                   v-model="imageImportOptions.quantization.samplingFactor"
@@ -75,10 +75,10 @@
             </UFormField>
           </FormFieldset>
 
-          <FormFieldset legend="Dithering" class="w-full space-y-2">
-            <UCheckbox v-model="applyDithering" label="Apply dithering" />
+          <FormFieldset :legend="$t('image-import-dither')" class="w-full space-y-2">
+            <UCheckbox v-model="applyDithering" :label="$t('image-import-dither-enable')" />
 
-            <UFormField label="Dithering Strength" class="w-full">
+            <UFormField :label="$t('image-import-dither-error')" class="w-full">
               <div class="flex items-center gap-x-2">
                 <UInputNumber
                   v-model="imageImportOptions.dithering.errorDiffusion"
@@ -122,8 +122,8 @@
       </div>
     </template>
     <template #footer>
-      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('label-import-image')" />
+      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('image-import-import-image')" />
     </template>
   </UModal>
 </template>
@@ -184,10 +184,10 @@
   async function loadPalettesList() {
     const { system, custom } = await FilesApi.getPalettesList();
 
-    const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("label-files-system"), type: "label" }];
+    const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
     for (const palette of system) systemPalettes.push({ label: palette, value: `system/${palette}` });
 
-    const customPalettes: SelectMenuItem[] = [{ label: fluent.$t("label-files-custom"), type: "label" }];
+    const customPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
     for (const palette of custom) customPalettes.push({ label: palette, value: `custom/${palette}` });
 
     paletteOptions.value = [systemPalettes, customPalettes];

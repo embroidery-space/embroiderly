@@ -116,8 +116,10 @@
     ],
     [
       {
-        label: "Import",
-        children: [{ label: "Image", onSelect: () => patternsStore.openImageImportModal() }],
+        label: fluent.$t("app-menu-file-import"),
+        children: [
+          { label: fluent.$t("app-menu-file-import-image"), onSelect: () => patternsStore.openImageImportModal() },
+        ],
       },
       {
         label: fluent.$t("app-menu-file-export"),
