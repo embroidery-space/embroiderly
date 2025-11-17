@@ -1,19 +1,19 @@
 <template>
-  <UModal :title="$t('title-pdf-export')" :ui="{ content: 'w-xl' }">
+  <UModal :title="$t('pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
       <div class="flex flex-col gap-y-4">
         <UFieldGroup class="w-full">
-          <UButton :label="$t('label-choose-file')" @click="chooseFile" />
+          <UButton :label="$t('choose-file')" @click="chooseFile" />
           <UInput :model-value="pdfFile.base" readonly class="w-full" />
         </UFieldGroup>
 
         <div class="flex flex-col gap-y-1">
           <UCheckbox
             v-model="options.monochrome"
-            :label="$t('label-pdf-export-monochrome')"
+            :label="$t('pdf-export-monochrome')"
             :description="pdfFile.monochrome"
           />
-          <UCheckbox v-model="options.color" :label="$t('label-pdf-export-color')" :description="pdfFile.color" />
+          <UCheckbox v-model="options.color" :label="$t('pdf-export-color')" :description="pdfFile.color" />
         </div>
 
         <UCollapsible class="flex flex-col gap-x-2">
@@ -22,7 +22,7 @@
             color="neutral"
             variant="subtle"
             trailing-icon="i-lucide:chevron-down"
-            :label="$t('title-publish-settings')"
+            :label="$t('publish-settings')"
             :ui="{
               base: 'group',
               trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200',
@@ -35,16 +35,16 @@
       </div>
     </template>
     <template #footer>
-      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
       <UButton
-        :label="$t('label-save-settings')"
+        :label="$t('pdf-export-save-settings')"
         variant="outline"
         :icon="optionsUpdated ? 'i-lucide:check' : undefined"
         @click="updateOptions"
       />
       <UButton
         v-if="filePath"
-        :label="$t('label-export-document')"
+        :label="$t('pdf-export-export-document')"
         :loading="exportingPattern"
         @click="exportPattern"
       />

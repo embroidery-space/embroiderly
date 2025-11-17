@@ -72,7 +72,7 @@
   import type { PatternEditorToolContext } from "~/core/tools/";
   import { addSymbolFonts } from "~/utils/font-face";
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
   const toast = useToast();
 
   const appStateStore = useAppStateStore();
@@ -85,12 +85,12 @@
     [
       {
         icon: "i-lucide:image",
-        label: fluent.$t("label-set-reference-image"),
+        label: fluent.$t("canvas-ctx-menu-set-image"),
         onSelect: () => patternsStore.setReferenceImage(),
       },
       {
         icon: "i-lucide:image-off",
-        label: fluent.$t("label-remove-reference-image"),
+        label: fluent.$t("canvas-ctx-menu-remove-image"),
         color: "error",
         disabled: !patternsStore.pattern?.referenceImage,
         onSelect: () => patternsStore.removeReferenceImage(),
@@ -255,11 +255,9 @@
     addSymbolFonts(fontFaces);
 
     if (failedFonts.length) {
-      toast.add({
-        title: fluent.$t("title-error"),
-        description: fluent.$t("message-failed-symbol-fonts", { fonts: failedFonts.join(", ") }),
-        color: "error",
-      });
+      const failedFontsMessage = fluent.$ta("canvas-symbol-fonts-load-failure", { fonts: failedFonts.join(", ") });
+      const { title, description } = failedFontsMessage as { title: string; description: string };
+      toast.add({ title, description, color: "error" });
     }
   }
 

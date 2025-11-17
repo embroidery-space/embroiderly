@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
-    <FormFieldset :legend="$t('label-count-and-kind')">
-      <UFormField :label="$t('label-count')" class="w-full">
+    <FormFieldset :legend="$t('fabric-count-and-kind')">
+      <UFormField :label="$t('fabric-count')" class="w-full">
         <USelect
           v-model="fabric.spi[0]"
           :items="fabricCounts"
@@ -9,15 +9,15 @@
           @update:model-value="fabric.spi[1] = $event"
         />
       </UFormField>
-      <UFormField :label="$t('label-kind')" class="w-full">
+      <UFormField :label="$t('fabric-kind')" class="w-full">
         <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" />
       </UFormField>
     </FormFieldset>
 
-    <FormFieldset :legend="$t('label-size')">
+    <FormFieldset :legend="$t('fabric-size')">
       <div class="flex gap-4 pb-2">
         <div>
-          <UFormField :label="$t('label-width')" class="w-full">
+          <UFormField :label="$t('fabric-width')" class="w-full">
             <UInputNumber
               v-model="fabricSizeFinal.width"
               orientation="vertical"
@@ -25,7 +25,7 @@
               :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
             />
           </UFormField>
-          <UFormField :label="$t('label-height')" class="w-full">
+          <UFormField :label="$t('fabric-height')" class="w-full">
             <UInputNumber
               v-model="fabricSizeFinal.height"
               orientation="vertical"
@@ -39,7 +39,7 @@
 
       <p>
         {{
-          $t("message-total-size", {
+          $t("fabric-total-size", {
             width: fabricSizeFinal.width,
             height: fabricSizeFinal.height,
             widthInches: stitches2inches(fabricSizeFinal.width, fabric.spi[0]),
@@ -51,7 +51,7 @@
       </p>
     </FormFieldset>
 
-    <FormFieldset :legend="$t('label-color')" class="row-start-1 row-end-3 w-md">
+    <FormFieldset :legend="$t('fabric-color')" class="row-start-1 row-end-3 w-md">
       <PaletteList
         :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
         :options="fabricColors"
@@ -67,7 +67,7 @@
           }
         "
       />
-      <p class="mt-2">{{ $t("message-selected-color", { color: fabric.name }) }}</p>
+      <p class="mt-2">{{ $t("fabric-selected-color", { color: fabric.name }) }}</p>
     </FormFieldset>
   </div>
 </template>
@@ -83,16 +83,16 @@
 
   const fabric = defineModel<Fabric>({ required: true });
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
 
   const fabricCounts = ref([14, 16, 18, 20]);
 
   const fabricSizeMeasurement = ref<"stitches" | "inches" | "mm">("stitches");
   const fabricSizeFinal = reactive({ width: fabric.value.width, height: fabric.value.height });
   const fabricSizeOptions = computed(() => [
-    { label: fluent.$t("label-unit-stitches"), value: "stitches" },
-    { label: fluent.$t("label-unit-inches"), value: "inches" },
-    { label: fluent.$t("label-unit-mm"), value: "mm" },
+    { label: fluent.$t("unit-stitches"), value: "stitches" },
+    { label: fluent.$t("unit-inches"), value: "inches" },
+    { label: fluent.$t("unit-mm"), value: "mm" },
   ]);
 
   watch(fabricSizeMeasurement, (newMeasurement, oldMeasurement) => {
@@ -153,9 +153,9 @@
   });
 
   const fabricKinds = computed(() => [
-    { label: fluent.$t("label-kind-aida"), value: "Aida" },
-    { label: fluent.$t("label-kind-evenweave"), value: "Evenweave" },
-    { label: fluent.$t("label-kind-linen"), value: "Linen" },
+    { label: fluent.$t("fabric-kind-aida"), value: "Aida" },
+    { label: fluent.$t("fabric-kind-evenweave"), value: "Evenweave" },
+    { label: fluent.$t("fabric-kind-linen"), value: "Linen" },
   ]);
   const fabricColors: Ref<FabricColor[]> = ref([]);
   const FABRIC_COLORS_DISPLAY_SETTINGS = new PaletteSettings({

@@ -1,12 +1,12 @@
 <template>
-  <UModal :title="$t('title-fabric-properties')" :ui="{ body: '!pt-0' }">
+  <UModal :title="$t('fabric-properties')" :ui="{ body: '!pt-0' }">
     <template #body>
       <!-- @vue-expect-error For some reason, TypeScript can't resolve the type of the `Fabric.color` property. -->
       <FabricForm v-model="fabric" />
     </template>
     <template #footer>
-      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('label-save')" @click="updateFabric" />
+      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('modal-save')" @click="updateFabric" />
     </template>
   </UModal>
 </template>

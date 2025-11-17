@@ -1,5 +1,5 @@
 <template>
-  <PanelSection :title="$t('label-stitch-symbols')">
+  <PanelSection :title="$t('stitch-symbols')">
     <UContextMenu :items="contextMenuOptions">
       <SymbolsList
         v-model:selected-symbol="selectedSymbol"
@@ -34,7 +34,7 @@
 
         <template #footer>
           <span class="text-sm text-nowrap">
-            {{ $t("label-stitch-symbols-count", { total: selectedCodePoints.length, used: assignedSymbols.length }) }}
+            {{ $t("stitch-symbols-usage", { total: selectedCodePoints.length, used: assignedSymbols.length }) }}
           </span>
         </template>
       </SymbolsList>
@@ -51,7 +51,7 @@
 
   const confirm = useConfirm();
   const filePicker = useFilePicker();
-  const fluent = useFluent();
+  const { fluent } = useI18n();
   const toast = useToast();
 
   const { symbols = [] } = defineProps<{
@@ -77,12 +77,12 @@
     return [
       [
         {
-          label: fluent.$t("label-stitch-symbols-context-menu-set-symbol"),
+          label: fluent.$t("stitch-symbols-ctx-menu-set-symbol"),
           disabled: !hasTargetSymbol || isAssigned,
           onSelect: () => handleSetSymbol(targetSymbol!),
         },
         {
-          label: fluent.$t("label-stitch-symbols-context-menu-unset-symbol"),
+          label: fluent.$t("stitch-symbols-ctx-menu-unset-symbol"),
           disabled: !hasTargetSymbol || !isAssigned,
           onSelect: () => handleUnsetSymbol(targetSymbol!),
         },
@@ -101,7 +101,7 @@
 
   const symbolFontMenuOptions = computed<DropdownMenuItem[]>(() => [
     {
-      label: fluent.$t("label-stitch-symbols-menu-import-fonts"),
+      label: fluent.$t("stitch-symbols-menu-import-fonts"),
       onSelect: importSymbolFonts,
       loading: importingFonts.value,
     },
@@ -110,13 +110,13 @@
   async function refreshFontsList() {
     const { system, custom } = await FontsApi.getSymbolFontsList();
 
-    const systemFonts: SelectMenuItem[] = [{ label: fluent.$t("label-files-system"), type: "label" }];
+    const systemFonts: SelectMenuItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
     for (const fontFamily of system) {
       const fontKey = `system/${fontFamily}`;
       systemFonts.push({ label: fontFamily, value: fontKey });
     }
 
-    const customFonts: SelectMenuItem[] = [{ label: fluent.$t("label-files-custom"), type: "label" }];
+    const customFonts: SelectMenuItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
     for (const fontFamily of custom) {
       const fontKey = `custom/${fontFamily}`;
       customFonts.push({ label: fontFamily, value: fontKey });
@@ -142,7 +142,7 @@
       selectedCodePoints.value = codePoints;
     } catch (err) {
       error(`Failed to load font ${fontKey}: ${err}`);
-      toast.add({ title: fluent.$t("message-symbol-font-load-error", { fontKey }), color: "error" });
+      toast.add({ title: fluent.$t("stitch-symbol-font-load-failure", { font: fontFamily }), color: "error" });
     } finally {
       loadingFont.value = false;
     }
@@ -160,18 +160,15 @@
       await refreshFontsList();
 
       if (failedFiles.length) {
-        confirm.open({
-          title: fluent.$t("title-failed-font-files"),
-          message: fluent.$t("message-failed-font-files", {
+        confirm.open(
+          fluent.$ta("stitch-symbols-import-failed-files", {
             failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
           }),
-        });
-      } else {
-        toast.add({ title: fluent.$t("message-symbol-fonts-import-success"), color: "success" });
-      }
+        );
+      } else toast.add({ title: fluent.$t("stitch-symbols-import-success"), color: "success" });
     } catch (err) {
       error(`Failed to import symbol fonts: ${err}`);
-      toast.add({ title: fluent.$t("message-symbol-fonts-import-error"), color: "error" });
+      toast.add({ title: fluent.$t("stitch-symbols-import-failure"), color: "error" });
     } finally {
       importingFonts.value = false;
     }

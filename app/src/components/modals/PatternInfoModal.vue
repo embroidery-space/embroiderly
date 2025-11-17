@@ -1,11 +1,11 @@
 <template>
-  <UModal :title="$t('title-pattern-info')">
+  <UModal :title="$t('pattern-info')">
     <template #body>
       <PatternInfoForm v-model="patternInfo" />
     </template>
     <template #footer>
-      <UButton :label="$t('label-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('label-save')" @click="updatePatternInfo" />
+      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <UButton :label="$t('modal-save')" @click="updatePatternInfo" />
     </template>
   </UModal>
 </template>

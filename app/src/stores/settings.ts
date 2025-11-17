@@ -6,7 +6,6 @@ import { defineStore } from "pinia";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 
 import type { WheelAction } from "~/core/pixi/";
-import { LOCALES } from "~/fluent.ts";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
@@ -63,8 +62,8 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     defineAsyncComponent(() => import("~/components/modals/AppSettingsModal.vue")),
   );
 
+  const { fluent, setLocale } = useI18n();
   const toast = useToast();
-  const fluent = useFluent();
 
   const loadingUpdate = ref(false);
 
@@ -76,9 +75,9 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   watch(
     ui,
     async (newUi) => {
-      await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
       document.documentElement.style.fontSize = newUi.scale;
-      fluent.bundles.value = [LOCALES[newUi.language]];
+      setLocale(newUi.language);
+      await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
     },
     { immediate: true },
   );
@@ -117,8 +116,6 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
         toast.add({
           type,
           color: "info",
-          title: fluent.$t("title-update-available"),
-          description: fluent.$t("message-update-available", { currentVersion, version, date }),
           actions: [
             {
               label: fluent.$t("label-update-now"),
@@ -133,14 +130,14 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
               },
             },
           ],
+          ...fluent.$ta("updater-update-available", { currentVersion, version, date }),
         });
       } else {
         if (!options?.auto) {
           toast.add({
             type,
             color: "info",
-            title: fluent.$t("title-no-updates-available"),
-            description: fluent.$t("message-no-updates-available"),
+            ...fluent.$ta("updater-no-updates-available"),
           });
         }
       }

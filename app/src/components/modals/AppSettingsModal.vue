@@ -1,5 +1,5 @@
 <template>
-  <UModal :title="$t('title-settings')" :ui="{ content: 'w-xl' }">
+  <UModal :title="$t('settings')" :ui="{ content: 'w-xl' }">
     <template #body>
       <AppSettingsForm
         v-model:ui="settingsStore.ui"
