@@ -12,6 +12,7 @@
             :height-field-props="{ label: $t('fabric-height') }"
             :width-input-props="{ increment: false, decrement: false, ...patternSizeBounds.width }"
             :height-input-props="{ increment: false, decrement: false, ...patternSizeBounds.height }"
+            :aspect-ratio="imageDimensions[0] / imageDimensions[1]"
           />
 
           <UFormField :label="$t('image-import-palette')" class="w-full">
