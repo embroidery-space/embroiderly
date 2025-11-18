@@ -65,19 +65,15 @@
 
         <USeparator decorative orientation="vertical" size="sm" />
 
-        <div class="flex w-full items-center justify-center">
-          <UEmpty
-            v-if="!imageImportOptionsValid"
-            title="No image"
-            description="The image import options are invalid."
-          />
+        <BlockUI :blocked="importingPattern" class="size-full">
+          <UProgress v-if="importingPattern" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
           <canvas
             ref="canvas"
             v-element-size="useDebounceFn(({ width, height }) => patternApplication.resize(width, height), 100)"
             class="size-full"
             :class="{ hidden: !imageImportOptionsValid }"
           ></canvas>
-        </div>
+        </BlockUI>
       </div>
     </template>
     <template #footer>
