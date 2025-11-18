@@ -48,7 +48,7 @@
     "@iconify/vue": "5.0.0",
     "@pinia/testing": "1.0.3",
     "@tailwindcss/vite": "4.1.17",
-    "@tsconfig/node22": "22.0.5",
+    "@tsconfig/node24": "24.0.3",
     "@tsconfig/strictest": "2.0.8",
     "@types/jsdom": "27.0.0",
     "@types/node": "24.10.1",
