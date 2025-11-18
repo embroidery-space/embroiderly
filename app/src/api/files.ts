@@ -90,10 +90,6 @@ export async function loadPalette(paletteGroup: string, paletteName: string) {
   return deserializeBrandPalette(new Uint8Array(buffer));
 }
 
-export function getPaletteSize(paletteGroup: string, paletteName: string) {
-  return invoke<number>("get_palette_size", { paletteGroup, paletteName });
-}
-
 export async function resolvePalettePath(paletteGroup: string, paletteName: string) {
   return await invoke<string>("resolve_palette_path", { paletteGroup, paletteName });
 }

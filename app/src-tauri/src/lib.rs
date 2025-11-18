@@ -100,7 +100,6 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::files::palettes::import_palettes,
     commands::files::palettes::get_palettes_list,
     commands::files::palettes::load_palette,
-    commands::files::palettes::get_palette_size,
     commands::files::palettes::resolve_palette_path,
     // Symbol font files management.
     commands::files::fonts::get_symbol_fonts_list,

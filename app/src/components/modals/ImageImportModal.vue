@@ -16,13 +16,14 @@
           />
 
           <UFormField :label="$t('image-import-palette')" class="w-full">
-            <USelectMenu
-              v-model="selectedPaletteKey"
-              :items="paletteOptions"
-              value-key="value"
+            <PaletteSelect
               size="xl"
               variant="subtle"
               class="w-full"
+              @palette-selected="
+                async (group, name) => (selectedPalettePath = await FilesApi.resolvePalettePath(group, name))
+              "
+              @palette-loaded="(palette) => (selectedPaletteSize = palette.length)"
             />
           </UFormField>
 
@@ -84,20 +85,9 @@
 </template>
 
 <script setup lang="ts">
-  import type { SelectMenuItem } from "@nuxt/ui";
   import { vElementSize } from "@vueuse/components";
-  import { computedAsync, useDebounceFn } from "@vueuse/core";
-  import {
-    ref,
-    reactive,
-    onMounted,
-    onUnmounted,
-    shallowRef,
-    computed,
-    watchPostEffect,
-    useTemplateRef,
-    watch,
-  } from "vue";
+  import { useDebounceFn } from "@vueuse/core";
+  import { ref, reactive, onUnmounted, computed, watchPostEffect, useTemplateRef, watch } from "vue";
 
   import { FilesApi } from "~/api";
   import type { ImageImportOptions } from "~/api";
@@ -118,8 +108,6 @@
     max: number;
   }
 
-  const fluent = useFluent();
-
   const props = defineProps<ImportImageModalProps>();
   const emit = defineEmits<{ close: [] }>();
 
@@ -134,24 +122,8 @@
     imageDimensions.value = await FilesApi.getImageDimensions(newImagePath);
   });
 
-  const selectedPaletteKey = ref("system/DMC");
-  const selectedPalettePath = computedAsync(async () => {
-    const [brand, name] = selectedPaletteKey.value.split("/") as [string, string];
-    return await FilesApi.resolvePalettePath(brand, name);
-  }, "");
-  const paletteOptions = shallowRef<SelectMenuItem[][]>([]);
-
-  async function loadPalettesList() {
-    const { system, custom } = await FilesApi.getPalettesList();
-
-    const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
-    for (const palette of system) systemPalettes.push({ label: palette, value: `system/${palette}` });
-
-    const customPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
-    for (const palette of custom) customPalettes.push({ label: palette, value: `custom/${palette}` });
-
-    paletteOptions.value = [systemPalettes, customPalettes];
-  }
+  const selectedPaletteSize = ref(1);
+  const selectedPalettePath = ref("");
 
   const applyDithering = ref(true);
   const imageImportOptions = reactive<Required<ImageImportOptions>>({
@@ -170,14 +142,9 @@
     const height = { min: 1, max: imageDimensions.value[0] };
     return { width, height };
   });
-  const paletteSizeBounds = computedAsync<ValueBounds>(
-    async () => {
-      const [brand, name] = selectedPaletteKey.value.split("/") as [string, string];
-      const selectedPaletteSize = await FilesApi.getPaletteSize(brand, name);
-      return { min: 1, max: Math.min(selectedPaletteSize, MAX_PALETTE_SIZE) };
-    },
-    { min: 1, max: MAX_PALETTE_SIZE },
-  );
+  const paletteSizeBounds = computed<ValueBounds>(() => {
+    return { min: 1, max: Math.min(selectedPaletteSize.value, MAX_PALETTE_SIZE) };
+  });
 
   const imageImportOptionsValid = computed(() => {
     function checkValueInBounds(value: number, bounds: ValueBounds): boolean {
@@ -241,10 +208,6 @@
           : undefined,
     };
     await importPatternFromImage(options);
-  });
-
-  onMounted(async () => {
-    await loadPalettesList();
   });
 
   onUnmounted(() => {
