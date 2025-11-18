@@ -17,7 +17,7 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "@sentry/core": "10.24.0",
+    "@sentry/core": "10.25.0",
     "@tauri-apps/api": "2.9.0"
   },
   "devDependencies": {
