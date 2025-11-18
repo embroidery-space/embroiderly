@@ -27,38 +27,21 @@
           </UFormField>
 
           <UFormField :label="$t('image-import-palette-size')" class="w-full">
-            <div class="flex items-center gap-x-2">
-              <UInputNumber
-                v-model="imageImportOptions.paletteSize"
-                :increment="false"
-                :decrement="false"
-                v-bind="paletteSizeBounds"
-              />
-              <USlider v-model="imageImportOptions.paletteSize" tooltip v-bind="paletteSizeBounds" class="w-full" />
-            </div>
+            <InputNumberSlider v-model="imageImportOptions.paletteSize" v-bind="paletteSizeBounds" />
           </UFormField>
 
           <FormFieldset :legend="$t('image-import-quant')" class="w-full space-y-2">
             <UFormField :label="$t('image-import-quant-sampling')" class="w-full">
-              <div class="flex items-center gap-x-2">
-                <UInputNumber
-                  v-model="imageImportOptions.quantization.samplingFactor"
-                  :increment="false"
-                  :decrement="false"
-                  :min="0"
-                  :max="1"
-                  :step="0.1"
-                  :format-options="{ maximumFractionDigits: 3 }"
-                />
-                <USlider
-                  v-model="imageImportOptions.quantization.samplingFactor"
-                  tooltip
-                  :min="0"
-                  :max="1"
-                  :step="0.1"
-                  class="w-full"
-                />
-              </div>
+              <InputNumberSlider
+                v-model="imageImportOptions.quantization.samplingFactor"
+                :min="0"
+                :max="1"
+                :step="0.001"
+                :format-options="{
+                  style: 'percent',
+                  maximumFractionDigits: 1,
+                }"
+              />
             </UFormField>
           </FormFieldset>
 
@@ -66,27 +49,16 @@
             <UCheckbox v-model="applyDithering" :label="$t('image-import-dither-enable')" />
 
             <UFormField :label="$t('image-import-dither-error')" class="w-full">
-              <div class="flex items-center gap-x-2">
-                <UInputNumber
-                  v-model="imageImportOptions.dithering.errorDiffusion"
-                  :disabled="!applyDithering"
-                  :increment="false"
-                  :decrement="false"
-                  :min="0"
-                  :max="1"
-                  :step="0.01"
-                  :format-options="{ minimumFractionDigits: 2, maximumFractionDigits: 2 }"
-                />
-                <USlider
-                  v-model="imageImportOptions.dithering.errorDiffusion"
-                  tooltip
-                  :disabled="!applyDithering"
-                  :min="0"
-                  :max="1"
-                  :step="0.1"
-                  class="w-full"
-                />
-              </div>
+              <InputNumberSlider
+                v-model="imageImportOptions.dithering.errorDiffusion"
+                :min="0"
+                :max="1"
+                :step="0.001"
+                :format-options="{
+                  style: 'percent',
+                  maximumFractionDigits: 1,
+                }"
+              />
             </UFormField>
           </FormFieldset>
         </div>

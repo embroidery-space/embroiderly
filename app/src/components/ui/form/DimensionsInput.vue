@@ -33,11 +33,6 @@
   import { ref, watch } from "vue";
 
   interface DimensionsInputProps {
-    /** Width value. */
-    width: number;
-    /** Height value. */
-    height: number;
-
     /** Props for width `InputNumber` component. */
     widthInputProps?: InputNumberProps;
     /** Props for height `InputNumber` component. */
@@ -58,6 +53,8 @@
     aspectRatio?: number;
   }
 
+  const width = defineModel<number>("width", { required: true });
+  const height = defineModel<number>("height", { required: true });
   const props = withDefaults(defineProps<DimensionsInputProps>(), {
     widthInputProps: undefined,
     heightInputProps: undefined,
@@ -68,11 +65,6 @@
     orientation: "horizontal",
     aspectRatio: undefined,
   });
-
-  const emit = defineEmits<{
-    "update:width": [value: number | undefined];
-    "update:height": [value: number | undefined];
-  }>();
 
   const aspectRatioLocked = ref(props.aspectRatio !== undefined);
   const storedAspectRatio = ref(props.aspectRatio);
@@ -86,24 +78,22 @@
   });
 
   function calculateAspectRatio() {
-    if (props.width && props.height) {
-      return props.width / props.height;
+    if (width.value && height.value) {
+      return width.value / height.value;
     } else return undefined;
   }
 
   function handleWidthChange(newWidth: number) {
-    emit("update:width", newWidth);
+    width.value = newWidth;
     if (aspectRatioLocked.value && storedAspectRatio.value) {
-      const newHeight = Math.round(newWidth / storedAspectRatio.value);
-      emit("update:height", newHeight);
+      height.value = Math.round(newWidth / storedAspectRatio.value);
     }
   }
 
   function handleHeightChange(newHeight: number) {
-    emit("update:height", newHeight);
+    height.value = newHeight;
     if (aspectRatioLocked.value && storedAspectRatio.value) {
-      const newWidth = Math.round(newHeight * storedAspectRatio.value);
-      emit("update:width", newWidth);
+      width.value = Math.round(newHeight * storedAspectRatio.value);
     }
   }
 </script>
