@@ -6,6 +6,7 @@ pub use image::*;
 
 mod publish;
 pub use publish::*;
+use tauri::async_runtime::Receiver;
 use tauri_plugin_shell::process::{Command, CommandEvent};
 
 /// Trait for executing sidecar commands.
@@ -52,12 +53,34 @@ impl ExitStatus {
   }
 }
 
-/// Collects the **binary** output of a sidecar process.
-pub async fn collect_sidecar_binary_output(command: Command) -> Result<Output> {
+/// Spawns and collects the **binary** output of a sidecar process.
+pub async fn collect_sidecar_binary_output_from_command(command: Command) -> Result<Output> {
   let (mut rx, _child) = command
     .spawn()
     .map_err(|e| anyhow::anyhow!("Failed to spawn sidecar process: {e}"))?;
 
+  let mut code = None;
+  let mut stdout = Vec::new();
+  let mut stderr = Vec::new();
+
+  while let Some(event) = rx.recv().await {
+    match event {
+      CommandEvent::Terminated(payload) => code = payload.code,
+      CommandEvent::Stdout(line) => stdout.extend(line),
+      CommandEvent::Stderr(line) => stderr.extend(line),
+      _ => {}
+    }
+  }
+
+  Ok(Output {
+    status: ExitStatus { code },
+    stdout,
+    stderr,
+  })
+}
+
+/// Collects the **binary** output of an already spawned sidecar process.
+pub async fn collect_sidecar_binary_output_from_receiver(mut rx: Receiver<CommandEvent>) -> Result<Output> {
   let mut code = None;
   let mut stdout = Vec::new();
   let mut stderr = Vec::new();

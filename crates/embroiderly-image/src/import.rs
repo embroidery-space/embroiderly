@@ -2,8 +2,9 @@ use std::collections::HashMap;
 use std::str::FromStr as _;
 
 use embroiderly_pattern::{
-  BrandPaletteItem, Coord, Fabric, FullStitch, FullStitchKind, Palette, PaletteItem, Pattern, PatternInfo, Stitches,
+  BrandPaletteItem, Coord, Fabric, FullStitch, FullStitchKind, Palette, PaletteItem, Pattern, Stitches,
 };
+use image::{DynamicImage, GenericImageView};
 use palette::color_difference::EuclideanDistance as _;
 use palette::{Oklab, Srgb};
 use serde::{Deserialize, Serialize};
@@ -13,21 +14,21 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "camelCase")]
 pub struct ImageImportOptions {
   /// The pattern size in stitches.
-  pattern_size: (u16, u16),
+  pub pattern_size: (u16, u16),
   /// The number of colors in the palette.
-  palette_size: usize,
+  pub palette_size: usize,
 
   /// The image quantization options.
-  quantization: QuantizationOptions,
+  pub quantization: QuantizationOptions,
   /// The image dithering options.
-  dithering: Option<DitheringOptions>,
+  pub dithering: Option<DitheringOptions>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct QuantizationOptions {
-  sampling_factor: f32,
+  pub sampling_factor: f32,
 }
 
 impl From<QuantizationOptions> for quantette::QuantizeMethod {
@@ -41,7 +42,7 @@ impl From<QuantizationOptions> for quantette::QuantizeMethod {
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DitheringOptions {
-  error_diffusion: f32,
+  pub error_diffusion: f32,
 }
 
 impl From<DitheringOptions> for quantette::dither::FloydSteinberg {
@@ -54,48 +55,39 @@ impl From<DitheringOptions> for quantette::dither::FloydSteinberg {
 
 /// This function processes the provided image and converts it into the cross-stitch pattern with the specified target palette and options.
 pub fn convert_image_into_pattern(
-  image_path: std::path::PathBuf,
-  target_palette: Vec<BrandPaletteItem>,
+  image: &DynamicImage,
+  target_palette: &[(Oklab, BrandPaletteItem)],
   options: ImageImportOptions,
 ) -> anyhow::Result<Pattern> {
   // Validate input parameters.
   let (width, height) = options.pattern_size;
   anyhow::ensure!(width > 0 && height > 0, "Pattern dimensions must be greater than 0.");
+  anyhow::ensure!(
+    image.dimensions() == (width as u32, height as u32),
+    "The image must be resized to the specified dimensions."
+  );
 
-  let target_palette_size = target_palette.len();
-  let palette_size = std::cmp::min(options.palette_size, target_palette_size);
+  let palette_size = std::cmp::min(options.palette_size, target_palette.len());
   anyhow::ensure!(palette_size > 0, "Palette size must be greater than 0.");
 
-  log::debug!("Loading the target image into memory.");
-  let img = image::open(&image_path)?;
-
-  log::debug!("Resizing the image to {width}x{height} dimensions.");
-  let img = img.resize_exact(width as u32, height as u32, image::imageops::FilterType::Lanczos3);
-
   log::debug!("Quantizing image with palette size {palette_size}.",);
-  let img = quantette::ImageBuf::try_from(img.to_rgb8())?;
-  let img = quantette::Pipeline::new()
+  let image = quantette::ImageBuf::try_from(image.to_rgb8())?;
+  let image = quantette::Pipeline::new()
     .palette_size(quantette::PaletteSize::from_usize_clamped(palette_size))
     .quantize_method(options.quantization)
     .ditherer(options.dithering.map(|options| options.into()))
-    .input_image(img.as_ref())
+    .input_image(image.as_ref())
     .output_oklab_image();
 
-  log::debug!("Processing the target palette.",);
-  let Some(target_palette) = convert_palette_to_oklab(target_palette) else {
-    anyhow::bail!("Failed to process target palette");
-  };
-
   log::debug!("Converting image into pattern.");
-  let pattern_title = image_path.file_stem().unwrap().to_string_lossy().to_string();
-  let pattern = finalize_pattern(pattern_title, width, height, &img, &target_palette)?;
+  let pattern = finalize_pattern(width, height, &image, &target_palette)?;
 
   Ok(pattern)
 }
 
 /// Converts a vector of `BrandPaletteItem` to a vector of `(Oklab, BrandPaletteItem)` tuples.
 /// Returns `None`, if any color conversion fails.
-fn convert_palette_to_oklab(palette: Vec<BrandPaletteItem>) -> Option<Vec<(Oklab, BrandPaletteItem)>> {
+pub fn convert_palette_to_oklab(palette: Vec<BrandPaletteItem>) -> Option<Vec<(Oklab, BrandPaletteItem)>> {
   let thread_colors = palette
     .iter()
     .filter_map(|palitem| Srgb::from_str(&palitem.color).ok())
@@ -110,7 +102,6 @@ fn convert_palette_to_oklab(palette: Vec<BrandPaletteItem>) -> Option<Vec<(Oklab
 
 /// Finalizes a pattern by mapping the image to the target palette and creating a pattern object.
 fn finalize_pattern(
-  title: String,
   width: u16,
   height: u16,
   image: &quantette::ImageBuf<Oklab>,
@@ -169,7 +160,6 @@ fn finalize_pattern(
   }
 
   Ok(Pattern {
-    info: PatternInfo { title, ..Default::default() },
     fabric: Fabric {
       width,
       height,

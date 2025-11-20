@@ -2,6 +2,9 @@
 name = "embroiderly_image"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [dependencies]
 # CLI
 argh = { workspace = true }

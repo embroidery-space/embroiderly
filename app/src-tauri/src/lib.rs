@@ -52,7 +52,10 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
       Ok(())
     })
     .manage(RwLock::new(state::PatternManager::new()))
-    .manage(RwLock::new(state::HistoryManager::<R>::new()));
+    .manage(RwLock::new(state::HistoryManager::<R>::new()))
+    .manage(tauri::async_runtime::Mutex::new(
+      None::<sidecars::ImageImportSidecar<R>>,
+    ));
 
   #[cfg(debug_assertions)]
   {
@@ -108,7 +111,8 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::files::fonts::import_symbol_fonts,
     // Importing images into patterns.
     commands::files::import::get_image_dimensions,
-    commands::files::import::import_pattern_from_image,
+    commands::files::import::get_pattern_from_image,
+    // commands::files::import::finalize_image_import,
     // Exporting patterns into PDF documents.
     commands::files::export::export_pattern,
     // Core commands (patterns edititng).

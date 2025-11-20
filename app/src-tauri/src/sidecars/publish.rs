@@ -92,8 +92,7 @@ impl<R: tauri::Runtime> super::SidecarRunner for PdfExportSidecar<R> {
       .arg(&custom_fonts_dir);
 
     // Execute the command.
-    let output = super::collect_sidecar_binary_output(sidecar).await?;
-
+    let output = super::collect_sidecar_binary_output_from_command(sidecar).await?;
     super::handle_sidecar_output(&self.app_handle, output, "embroiderly_publish")
   }
 }
