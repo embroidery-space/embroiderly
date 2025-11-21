@@ -87,7 +87,7 @@
 <script setup lang="ts">
   import { vElementSize } from "@vueuse/components";
   import { useDebounceFn } from "@vueuse/core";
-  import { ref, reactive, onUnmounted, computed, watchPostEffect, useTemplateRef, watch } from "vue";
+  import { ref, reactive, onUnmounted, computed, useTemplateRef, watch } from "vue";
 
   import { FilesApi } from "~/api";
   import type { ImageImportOptions } from "~/api";
@@ -203,18 +203,22 @@
   );
 
   // Update the pattern preview on every change of options.
-  watchPostEffect(async () => {
-    if (!imageImportOptionsValid.value) return;
+  watch(
+    [imagePath, selectedPalettePath, imageImportOptions, imageImportOptionsValid, applyDithering],
+    async () => {
+      if (!imageImportOptionsValid.value) return;
 
-    const options = {
-      ...imageImportOptions,
-      dithering:
-        applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
-          ? imageImportOptions.dithering
-          : undefined,
-    };
-    await importPatternFromImage(options);
-  });
+      const options = {
+        ...imageImportOptions,
+        dithering:
+          applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
+            ? imageImportOptions.dithering
+            : undefined,
+      };
+      await importPatternFromImage(options);
+    },
+    { immediate: true, flush: "post" },
+  );
 
   async function handleFinalize() {
     const options = {
