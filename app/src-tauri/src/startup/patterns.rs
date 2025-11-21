@@ -2,7 +2,7 @@ use tauri::Manager as _;
 
 /// Copies sample patterns to the application document directory.
 /// This function creates the Embroiderly directory in the user's document directory and copies the sample patterns there if it doesn't exist.
-#[expect(dead_code)]
+#[allow(dead_code)]
 pub fn copy_sample_patterns<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
   let app_document_dir = crate::utils::path::app_document_dir(app_handle)?;
   if !app_document_dir.exists() {
