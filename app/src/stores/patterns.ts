@@ -67,6 +67,11 @@ export const usePatternsStore = defineStore(
     const loading = ref(false);
     const pattern = shallowRef<Pattern>();
 
+    function setPattern(newPattern: Pattern) {
+      pattern.value = newPattern;
+      appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+    }
+
     async function loadPattern(id: string) {
       try {
         loading.value = true;
@@ -463,6 +468,7 @@ export const usePatternsStore = defineStore(
       blocked,
       loading,
       pattern,
+      setPattern,
       loadPattern,
       openPattern,
       createPattern,

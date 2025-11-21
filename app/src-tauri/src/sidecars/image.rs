@@ -1,6 +1,3 @@
-use std::path::PathBuf;
-
-use embroiderly_image::ImageImportOptions;
 use tauri::async_runtime::Receiver;
 use tauri_plugin_shell::ShellExt as _;
 use tauri_plugin_shell::process::{CommandChild, CommandEvent};
@@ -10,88 +7,97 @@ use crate::error::{PatternError, Result};
 /// Manager for the long-lived image import sidecar process.
 pub struct ImageImportSidecar<R: tauri::Runtime> {
   app_handle: tauri::AppHandle<R>,
-  child: CommandChild,
-  rx: Receiver<CommandEvent>,
+  sidecar_handle: Option<(Receiver<CommandEvent>, CommandChild)>,
 }
 
 impl<R: tauri::Runtime> ImageImportSidecar<R> {
-  /// Create a new sidecar manager with the given app handle.
-  pub async fn new(app_handle: tauri::AppHandle<R>, image_path: PathBuf) -> Result<Self> {
-    let mut sidecar = app_handle
+  /// Create a new sidecar controller with the given app handle.
+  pub const fn new(app_handle: tauri::AppHandle<R>) -> Self {
+    Self { app_handle, sidecar_handle: None }
+  }
+}
+
+#[async_trait::async_trait]
+impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
+  async fn spawn(&mut self) -> Result<super::SidecarId> {
+    let mut sidecar = self
+      .app_handle
       .shell()
       .sidecar("embroiderly_image")
       .map_err(|e| PatternError::FailedToExport(e.into()))?;
 
+    // Important: set raw output handling.
+    sidecar = sidecar.set_raw_out(true);
+
     // Set logs directory.
     sidecar = sidecar.env(
       embroiderly_logger::EMBROIDERLY_LOG_DIR_ENV_VAR,
-      crate::utils::path::app_logs_dir(&app_handle)?,
+      crate::utils::path::app_logs_dir(&self.app_handle)?,
     );
 
     // Add the "import" subcommand.
-    sidecar = sidecar.arg("import").arg("--image").arg(image_path).set_raw_out(true);
+    sidecar = sidecar.arg("import");
 
     // Spawn the sidecar process.
     let (rx, child) = sidecar
       .spawn()
       .map_err(|e| PatternError::FailedToExport(anyhow::anyhow!("Failed to spawn sidecar: {e}")))?;
+    let id = child.pid();
 
-    Ok(Self { app_handle, child, rx })
+    // Store the sidecar handle.
+    self.sidecar_handle = Some((rx, child));
+
+    Ok(id)
   }
 
-  /// Send an updated message and receive the new pattern result.
-  pub async fn get_pattern(
-    &mut self,
-    image_path: PathBuf,
-    palette_path: PathBuf,
-    options: ImageImportOptions,
-  ) -> Result<Vec<u8>> {
-    // Compose the update message.
-    let update = {
-      let mut value = serde_json::json!({
-        "imagePath": image_path,
-        "palettePath": palette_path,
-        "options": options
-      })
-      .to_string();
-      value.push('\n');
-      value
+  async fn shutdown(&mut self) -> Result<super::Output> {
+    let Some((rx, child)) = self.sidecar_handle.take() else {
+      return Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar handle not set")).into());
     };
 
-    // Send the update message.
-    self
-      .child
-      .write(update.as_bytes())
-      .map_err(|e| PatternError::FailedToExport(anyhow::anyhow!("Failed to write command to stdin: {e}")))?;
+    child
+      .kill()
+      .map_err(|_| PatternError::FailedToExport(anyhow::anyhow!("Failed to shutdown sidecar process")))?;
 
-    self.receive_response().await
+    super::utils::collect_sidecar_binary_output_from_receiver(rx).await
   }
 
-  /// Receive a length-prefixed binary response from the sidecar via stdout.
-  async fn receive_response(&mut self) -> Result<Vec<u8>> {
+  async fn send_message(&mut self, message: Vec<u8>) -> Result<()> {
+    if let Some(sidecar_handle) = self.sidecar_handle.as_mut() {
+      let child = &mut sidecar_handle.1;
+      child
+        .write(&super::utils::with_newline(message))
+        .map_err(|e| PatternError::FailedToExport(anyhow::anyhow!("Failed to write message to stdin: {e}")).into())
+    } else {
+      Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar handle not set")).into())
+    }
+  }
+
+  // This sidecar uses length-prefixed raw binary buffers.
+  async fn get_response(&mut self) -> Result<Vec<u8>> {
     let mut buffer = Vec::new();
     let mut expected_length: Option<u64> = None;
 
-    while let Some(event) = self.rx.recv().await {
+    let Some(sidecar_handle) = self.sidecar_handle.as_mut() else {
+      return Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar handle not set")).into());
+    };
+    let rx = &mut sidecar_handle.0;
+
+    while let Some(event) = rx.recv().await {
       match event {
         CommandEvent::Stdout(chunk) => {
-          buffer.extend(chunk);
-
           // Try to read the length prefix if we haven't yet.
-          if expected_length.is_none() && buffer.len() >= 8 {
-            let length_bytes: [u8; 8] = buffer[0..8]
-              .try_into()
-              .map_err(|_| PatternError::FailedToExport(anyhow::anyhow!("Failed to read length prefix")))?;
-            expected_length = Some(u64::from_le_bytes(length_bytes));
+          if expected_length.is_none() {
+            let (header, body) = chunk.split_at(8);
+            expected_length = Some(u64::from_le_bytes(header.try_into().unwrap()));
+            buffer.extend(body);
+          } else {
+            buffer.extend(chunk);
           }
 
           // Check if we have received the complete payload.
-          if let Some(length) = expected_length {
-            let total_expected = 8 + length as usize;
-            if buffer.len() >= total_expected {
-              // Extract the payload (skip the 8-byte length prefix).
-              return Ok(buffer[8..total_expected].to_vec());
-            }
+          if expected_length.is_some_and(|length| buffer.len() >= length as usize) {
+            return Ok(buffer);
           }
         }
         CommandEvent::Terminated(_) => {
@@ -107,16 +113,5 @@ impl<R: tauri::Runtime> ImageImportSidecar<R> {
     }
 
     Err(PatternError::FailedToExport(anyhow::anyhow!("Failed to receive complete response from sidecar")).into())
-  }
-
-  /// Shutdown the sidecar process.
-  pub async fn shutdown(self) -> Result<super::Output> {
-    self
-      .child
-      .kill()
-      .map_err(|_| PatternError::FailedToExport(anyhow::anyhow!("Failed to shutdown sidecar process")))?;
-
-    let output = super::collect_sidecar_binary_output_from_receiver(self.rx).await?;
-    super::handle_sidecar_output(&self.app_handle, output, "embroiderly_image")
   }
 }

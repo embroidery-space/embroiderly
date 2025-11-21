@@ -64,6 +64,7 @@ tempfile = { workspace = true }
 walkdir = { workspace = true }
 
 # Other
+async-trait = { workspace = true }
 dyn-clone = { workspace = true }
 uuid = { workspace = true, features = ["borsh", "serde"] }
 rayon = { workspace = true }

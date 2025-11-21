@@ -143,8 +143,31 @@ export interface DitheringOptions {
   errorDiffusion: number;
 }
 
-export async function importPatternFromImage(imagePath: string, palettePath: string, options: ImageImportOptions) {
-  const buffer = await invoke<ArrayBuffer>("import_pattern_from_image", { imagePath, palettePath, options });
+export function startImageImportServer() {
+  return invoke<number>("start_image_import_server");
+}
+
+export function stopImageImportServer(id: number) {
+  return invoke<void>("stop_image_import_server", { id });
+}
+
+export async function getImageImportPreview(
+  id: number,
+  imagePath: string,
+  palettePath: string,
+  options: ImageImportOptions,
+) {
+  const buffer = await invoke<ArrayBuffer>("get_image_import_preview", { id, imagePath, palettePath, options });
+  return Pattern.deserialize(new Uint8Array(buffer));
+}
+
+export async function finalizeImageImport(
+  id: number,
+  imagePath: string,
+  palettePath: string,
+  options: ImageImportOptions,
+) {
+  const buffer = await invoke<ArrayBuffer>("finalize_image_import", { id, imagePath, palettePath, options });
   return Pattern.deserialize(new Uint8Array(buffer));
 }
 

@@ -79,7 +79,7 @@
     </template>
     <template #footer>
       <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('image-import-import-image')" />
+      <UButton :label="$t('image-import-import-image')" :disabled="!imageImportOptionsValid" @click="handleFinalize" />
     </template>
   </UModal>
 </template>
@@ -94,6 +94,7 @@
   import { ANY_IMAGE_FILTER } from "~/composables/file-picker.ts";
   import { LayersVisibility } from "~/core/pattern";
   import { PatternApplication, PatternView } from "~/core/pixi";
+  import { ImageImportSession } from "~/core/services/";
 
   /** The maximum palette size acceptable for quantization. */
   const MAX_PALETTE_SIZE = 256;
@@ -111,10 +112,14 @@
   const props = defineProps<ImportImageModalProps>();
   const emit = defineEmits<{ close: [] }>();
 
+  const patternsStore = usePatternsStore();
+
   const canvas = useTemplateRef("canvas");
 
   const patternApplication = new PatternApplication();
   const patternApplicationInitialized = ref(false);
+
+  const imageImportSession = new ImageImportSession();
 
   const imagePath = ref(props.imagePath);
   const imageDimensions = ref(props.imageDimensions);
@@ -174,12 +179,13 @@
     async (options: ImageImportOptions) => {
       if (!patternApplicationInitialized.value) {
         await patternApplication.init(canvas.value!);
+        await imageImportSession.start();
         patternApplicationInitialized.value = true;
       }
 
       importingPattern.value = true;
       try {
-        const pattern = await FilesApi.importPatternFromImage(imagePath.value, selectedPalettePath.value, options);
+        const pattern = await imageImportSession.getPreview(imagePath.value, selectedPalettePath.value, options);
         patternApplication.view = new PatternView(pattern);
 
         // Configure the pattern view.
@@ -210,7 +216,23 @@
     await importPatternFromImage(options);
   });
 
+  async function handleFinalize() {
+    const options = {
+      ...imageImportOptions,
+      dithering:
+        applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
+          ? imageImportOptions.dithering
+          : undefined,
+    };
+
+    const pattern = await imageImportSession.finalize(imagePath.value, selectedPalettePath.value, options);
+    patternsStore.setPattern(pattern);
+
+    emit("close");
+  }
+
   onUnmounted(() => {
+    imageImportSession.destroy();
     patternApplication.destroy();
   });
 </script>

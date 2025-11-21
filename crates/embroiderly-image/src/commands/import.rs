@@ -78,9 +78,9 @@ struct ImageImportUpdate {
 }
 
 /// Runs the long-lived import server that processes commands from stdin.
-pub fn run_import_server(image_path: PathBuf) -> anyhow::Result<()> {
+pub fn run_import_server() -> anyhow::Result<()> {
   log::info!("Embroiderly image import sidecar started");
-  let mut state = ImageImportState::new(image_path)?;
+  let mut state: Option<ImageImportState> = None;
 
   // Read incoming options updates from stdin line by line.
   let mut stdin = std::io::stdin().lock();
@@ -99,12 +99,13 @@ pub fn run_import_server(image_path: PathBuf) -> anyhow::Result<()> {
       options,
     } = serde_json::from_str(&line)?;
 
-    // Replace the state if the target image path has changed.
-    if state.image_path != image_path {
-      state = ImageImportState::new(image_path.clone())?;
+    // Initialize or replace the state if it's None or the image path has changed.
+    if state.as_ref().is_none_or(|s| s.image_path != image_path) {
+      state = Some(ImageImportState::new(image_path.clone())?);
     }
 
     let (image, palette) = {
+      let state = state.as_mut().unwrap();
       state.ensure_image(options.pattern_size);
       state.ensure_palette(&palette_path)?;
 
@@ -123,7 +124,7 @@ pub fn run_import_server(image_path: PathBuf) -> anyhow::Result<()> {
       embroiderly_pattern::PatternProject::new(pattern_path, pattern, Default::default(), Default::default())
     };
 
-    send_pattern_response(patproj)?
+    send_pattern_response(patproj)?;
   }
 
   log::info!("Embroiderly image import sidecar terminated");

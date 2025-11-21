@@ -4,7 +4,7 @@ use std::str::FromStr as _;
 use embroiderly_pattern::{
   BrandPaletteItem, Coord, Fabric, FullStitch, FullStitchKind, Palette, PaletteItem, Pattern, Stitches,
 };
-use image::{DynamicImage, GenericImageView};
+use image::{DynamicImage, GenericImageView as _};
 use palette::color_difference::EuclideanDistance as _;
 use palette::{Oklab, Srgb};
 use serde::{Deserialize, Serialize};
@@ -34,7 +34,7 @@ pub struct QuantizationOptions {
 impl From<QuantizationOptions> for quantette::QuantizeMethod {
   fn from(value: QuantizationOptions) -> Self {
     let kmeans_options = quantette::kmeans::KmeansOptions::new().sampling_factor(value.sampling_factor);
-    quantette::QuantizeMethod::Kmeans(kmeans_options)
+    Self::Kmeans(kmeans_options)
   }
 }
 
@@ -45,11 +45,12 @@ pub struct DitheringOptions {
   pub error_diffusion: f32,
 }
 
+#[expect(clippy::fallible_impl_from)]
 impl From<DitheringOptions> for quantette::dither::FloydSteinberg {
   fn from(value: DitheringOptions) -> Self {
     // Clamp the error diffusion value to the range `[0.0, 1.0]` to create the correct `FloydSteinberg` instance.
     let error_diffusion = value.error_diffusion.clamp(0.0, 1.0);
-    quantette::dither::FloydSteinberg::with_error_diffusion(error_diffusion).unwrap()
+    Self::with_error_diffusion(error_diffusion).unwrap()
   }
 }
 
@@ -75,18 +76,19 @@ pub fn convert_image_into_pattern(
   let image = quantette::Pipeline::new()
     .palette_size(quantette::PaletteSize::from_usize_clamped(palette_size))
     .quantize_method(options.quantization)
-    .ditherer(options.dithering.map(|options| options.into()))
+    .ditherer(options.dithering.map(std::convert::Into::into))
     .input_image(image.as_ref())
     .output_oklab_image();
 
   log::debug!("Converting image into pattern.");
-  let pattern = finalize_pattern(width, height, &image, &target_palette)?;
+  let pattern = finalize_pattern(width, height, &image, target_palette)?;
 
   Ok(pattern)
 }
 
 /// Converts a vector of `BrandPaletteItem` to a vector of `(Oklab, BrandPaletteItem)` tuples.
 /// Returns `None`, if any color conversion fails.
+#[must_use]
 pub fn convert_palette_to_oklab(palette: Vec<BrandPaletteItem>) -> Option<Vec<(Oklab, BrandPaletteItem)>> {
   let thread_colors = palette
     .iter()
@@ -126,7 +128,7 @@ fn finalize_pattern(
   let mut palitem_to_palindex: HashMap<BrandPaletteItem, usize> = HashMap::new();
 
   let width_usize = width as usize;
-  for (x, y, pixel) in pixels.iter().cloned().enumerate().map(|(i, pixel)| {
+  for (x, y, pixel) in pixels.iter().copied().enumerate().map(|(i, pixel)| {
     let x = i % width_usize;
     let y = i / width_usize;
     (x, y, pixel)
@@ -167,7 +169,7 @@ fn finalize_pattern(
     },
     palette: {
       // Convert the palette and sort it for better visualization.
-      let mut palette = Palette::from_iter(pattern_palette.into_iter().map(PaletteItem::from));
+      let mut palette: Palette = pattern_palette.into_iter().map(PaletteItem::from).collect();
       palette.sort_by_brand_and_number();
       palette
     },

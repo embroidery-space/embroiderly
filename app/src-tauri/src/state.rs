@@ -2,7 +2,6 @@ use std::collections::HashMap;
 
 use crate::core::history::History;
 pub use crate::core::pattern_manager::PatternManager;
-use crate::sidecars::ImageImportSidecar;
 
 pub struct HistoryManager<R: tauri::Runtime> {
   inner: HashMap<uuid::Uuid, History<R>>,
@@ -41,4 +40,3 @@ impl<R: tauri::Runtime> HistoryManager<R> {
 
 pub type PatternsState = std::sync::RwLock<PatternManager>;
 pub type HistoryState<R> = std::sync::RwLock<HistoryManager<R>>;
-pub type ImageImportSidecarState<R> = tauri::async_runtime::Mutex<Option<ImageImportSidecar<R>>>;

@@ -19,17 +19,13 @@ enum Command {
 /// Import and convert images into embroidery patterns.
 #[derive(FromArgs)]
 #[argh(subcommand, name = "import")]
-struct ImportCommand {
-  /// path to the source image file
-  #[argh(option)]
-  image: std::path::PathBuf,
-}
+struct ImportCommand {}
 
 fn main() -> anyhow::Result<()> {
   logger::init()?;
 
   let args: Args = argh::from_env();
   match args.command {
-    Command::Import(ImportCommand { image }) => commands::import::run_import_server(image),
+    Command::Import(ImportCommand {}) => commands::import::run_import_server(),
   }
 }
