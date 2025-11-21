@@ -1,8 +1,9 @@
 mod error;
 pub use error::*;
 
-mod export;
-pub use export::*;
+mod core;
+pub use core::*;
 
-mod import;
-pub use import::*;
+#[doc(hidden)]
+pub mod commands;
+pub use commands::import::{DitheringOptions, ImageImportOptions, ImageImportServerCommand, QuantizationOptions};

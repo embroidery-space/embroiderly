@@ -15,6 +15,20 @@ impl<R: tauri::Runtime> ImageImportSidecar<R> {
   pub const fn new(app_handle: tauri::AppHandle<R>) -> Self {
     Self { app_handle, sidecar_handle: None }
   }
+
+  fn receiver(&mut self) -> Result<&mut Receiver<CommandEvent>> {
+    match self.sidecar_handle.as_mut() {
+      Some(sidecar_handle) => Ok(&mut sidecar_handle.0),
+      None => Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into()),
+    }
+  }
+
+  fn child(&mut self) -> Result<&mut CommandChild> {
+    match self.sidecar_handle.as_mut() {
+      Some(sidecar_handle) => Ok(&mut sidecar_handle.1),
+      None => Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into()),
+    }
+  }
 }
 
 #[async_trait::async_trait]
@@ -51,26 +65,26 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
   }
 
   async fn shutdown(&mut self) -> Result<super::Output> {
-    let Some((rx, child)) = self.sidecar_handle.take() else {
+    {
+      let command = embroiderly_image::ImageImportServerCommand::Shutdown;
+      let payload = serde_json::to_vec(&command)
+        .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to serialize command: {e}")))?;
+      self.send_command(payload).await?;
+    }
+
+    let Some((rx, _child)) = self.sidecar_handle.take() else {
       return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into());
     };
 
-    child
-      .kill()
-      .map_err(|_| PatternError::FailedToImport(anyhow::anyhow!("Failed to shutdown sidecar process")))?;
-
-    super::utils::collect_sidecar_binary_output_from_receiver(rx).await
+    let output = super::utils::collect_sidecar_binary_output_from_receiver(rx).await?;
+    super::utils::handle_sidecar_output(&self.app_handle, output, "embroiderly_image")
   }
 
-  async fn send_message(&mut self, message: Vec<u8>) -> Result<()> {
-    if let Some(sidecar_handle) = self.sidecar_handle.as_mut() {
-      let child = &mut sidecar_handle.1;
-      child
-        .write(&super::utils::with_newline(message))
-        .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to write message to stdin: {e}")).into())
-    } else {
-      Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into())
-    }
+  async fn send_command(&mut self, payload: Vec<u8>) -> Result<()> {
+    self
+      .child()?
+      .write(&super::utils::with_newline(payload))
+      .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to write message to stdin: {e}")).into())
   }
 
   // This sidecar uses length-prefixed raw binary buffers.
@@ -78,11 +92,7 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
     let mut buffer = Vec::new();
     let mut expected_length: Option<u64> = None;
 
-    let Some(sidecar_handle) = self.sidecar_handle.as_mut() else {
-      return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into());
-    };
-    let rx = &mut sidecar_handle.0;
-
+    let rx = self.receiver()?;
     while let Some(event) = rx.recv().await {
       match event {
         CommandEvent::Stdout(chunk) => {

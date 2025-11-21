@@ -38,8 +38,8 @@ pub trait SidecarController: Send + Sync {
   /// Shut down the sidecar process.
   async fn shutdown(&mut self) -> Result<Output>;
 
-  /// Send a message to the sidecar process.
-  async fn send_message(&mut self, message: Vec<u8>) -> Result<()>;
+  /// Send a command to the sidecar process.
+  async fn send_command(&mut self, payload: Vec<u8>) -> Result<()>;
   /// Receive a response from the sidecar process.
   async fn get_response(&mut self) -> Result<Vec<u8>>;
 }

@@ -56,15 +56,16 @@ pub async fn get_image_import_preview(
   };
 
   let output = {
-    let payload = serde_json::json!({
-      "imagePath": image_path,
-      "palettePath": palette_path,
-      "options": options,
-    });
-    let payload = serde_json::to_vec(&payload).unwrap();
+    let command = embroiderly_image::ImageImportServerCommand::Update {
+      image_path,
+      palette_path,
+      options,
+    };
+    let payload = serde_json::to_vec(&command)
+      .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to serialize command: {e}")))?;
 
     let mut sidecar = sidecar.lock().await;
-    sidecar.send_message(payload).await?;
+    sidecar.send_command(payload).await?;
     sidecar.get_response().await?
   };
 
@@ -94,14 +95,15 @@ pub async fn finalize_image_import<R: tauri::Runtime>(
   let mut sidecar = sidecar.lock().await;
 
   let output = {
-    let payload = serde_json::json!({
-      "imagePath": image_path,
-      "palettePath": palette_path,
-      "options": options,
-    });
-    let payload = serde_json::to_vec(&payload).unwrap();
+    let command = embroiderly_image::ImageImportServerCommand::Update {
+      image_path,
+      palette_path,
+      options,
+    };
+    let payload = serde_json::to_vec(&command)
+      .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to serialize command: {e}")))?;
 
-    sidecar.send_message(payload).await?;
+    sidecar.send_command(payload).await?;
     sidecar.get_response().await?
   };
 
