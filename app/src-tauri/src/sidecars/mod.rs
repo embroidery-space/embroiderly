@@ -105,4 +105,10 @@ impl SidecarManager {
     let mut children = self.children.write().await;
     children.remove(&id)
   }
+
+  /// Extracts all registered sidecars, removing them from the manager.
+  pub async fn extract_all(&self) -> Vec<SharedSidecar> {
+    let mut children = self.children.write().await;
+    children.drain().map(|(_, sidecar)| sidecar).collect()
+  }
 }

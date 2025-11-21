@@ -1,5 +1,6 @@
 use std::sync::RwLock;
 
+use tauri::Manager as _;
 use tauri_plugin_posthog::PostHogExt as _;
 
 pub mod commands;
@@ -21,7 +22,19 @@ pub fn run() {
         startup::handle_file_associations(app_handle, urls.into_iter().map(|url| url.to_string())).unwrap();
         startup::create_webview_window(app_handle).unwrap();
       }
-      tauri::RunEvent::Exit => app_handle.capture_event(vendor::telemetry::AppEvent::AppExited),
+      tauri::RunEvent::Exit => {
+        // Shutdown all running sidecars gracefully.
+        let sidecar_manager = app_handle.state::<sidecars::SidecarManager>();
+        tauri::async_runtime::block_on(async {
+          let sidecars = sidecar_manager.extract_all().await;
+          for sidecar in sidecars {
+            let mut sidecar = sidecar.lock().await;
+            let _ = sidecar.shutdown().await;
+          }
+        });
+
+        app_handle.capture_event(vendor::telemetry::AppEvent::AppExited);
+      }
       _ => {}
     }
   });
