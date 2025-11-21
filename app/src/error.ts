@@ -22,6 +22,7 @@ export function toApplicationError(error: unknown): Error {
       if (code === "Err04") return new PatternErrorFailedToParse(message);
       if (code === "Err05") return new PatternErrorUnsavedChanges(message);
       if (code === "Err06") return new PatternErrorFailedToExport(message);
+      if (code === "Err07") return new PatternErrorFailedToImport(message);
     }
 
     return new UnknownError(err.message);
@@ -74,6 +75,13 @@ export class PatternErrorFailedToExport extends Error {
   constructor(message: string) {
     super(message);
     this.name = "PatternErrorFailedToExport";
+  }
+}
+
+export class PatternErrorFailedToImport extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PatternErrorFailedToImport";
   }
 }
 

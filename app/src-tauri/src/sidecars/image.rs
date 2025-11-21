@@ -24,7 +24,7 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
       .app_handle
       .shell()
       .sidecar("embroiderly_image")
-      .map_err(|e| PatternError::FailedToExport(e.into()))?;
+      .map_err(|e| PatternError::FailedToImport(e.into()))?;
 
     // Important: set raw output handling.
     sidecar = sidecar.set_raw_out(true);
@@ -41,7 +41,7 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
     // Spawn the sidecar process.
     let (rx, child) = sidecar
       .spawn()
-      .map_err(|e| PatternError::FailedToExport(anyhow::anyhow!("Failed to spawn sidecar: {e}")))?;
+      .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to spawn sidecar: {e}")))?;
     let id = child.pid();
 
     // Store the sidecar handle.
@@ -52,12 +52,12 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
 
   async fn shutdown(&mut self) -> Result<super::Output> {
     let Some((rx, child)) = self.sidecar_handle.take() else {
-      return Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar handle not set")).into());
+      return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into());
     };
 
     child
       .kill()
-      .map_err(|_| PatternError::FailedToExport(anyhow::anyhow!("Failed to shutdown sidecar process")))?;
+      .map_err(|_| PatternError::FailedToImport(anyhow::anyhow!("Failed to shutdown sidecar process")))?;
 
     super::utils::collect_sidecar_binary_output_from_receiver(rx).await
   }
@@ -67,9 +67,9 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
       let child = &mut sidecar_handle.1;
       child
         .write(&super::utils::with_newline(message))
-        .map_err(|e| PatternError::FailedToExport(anyhow::anyhow!("Failed to write message to stdin: {e}")).into())
+        .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to write message to stdin: {e}")).into())
     } else {
-      Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar handle not set")).into())
+      Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into())
     }
   }
 
@@ -79,7 +79,7 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
     let mut expected_length: Option<u64> = None;
 
     let Some(sidecar_handle) = self.sidecar_handle.as_mut() else {
-      return Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar handle not set")).into());
+      return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into());
     };
     let rx = &mut sidecar_handle.0;
 
@@ -102,16 +102,16 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
         }
         CommandEvent::Terminated(_) => {
           return Err(
-            PatternError::FailedToExport(anyhow::anyhow!("Sidecar terminated before sending complete response")).into(),
+            PatternError::FailedToImport(anyhow::anyhow!("Sidecar terminated before sending complete response")).into(),
           );
         }
         CommandEvent::Error(error) => {
-          return Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar error: {error}")).into());
+          return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar error: {error}")).into());
         }
         _ => {}
       }
     }
 
-    Err(PatternError::FailedToExport(anyhow::anyhow!("Failed to receive complete response from sidecar")).into())
+    Err(PatternError::FailedToImport(anyhow::anyhow!("Failed to receive complete response from sidecar")).into())
   }
 }

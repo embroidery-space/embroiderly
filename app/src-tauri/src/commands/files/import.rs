@@ -52,7 +52,7 @@ pub async fn get_image_import_preview(
   log::debug!("Converting image into pattern");
 
   let Some(sidecar) = sidecar_manager.get(id).await else {
-    return Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar not found")).into());
+    return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar not found")).into());
   };
 
   let output = {
@@ -89,7 +89,7 @@ pub async fn finalize_image_import<R: tauri::Runtime>(
   log::debug!("Finalizing image import");
 
   let Some(sidecar) = sidecar_manager.remove(id).await else {
-    return Err(PatternError::FailedToExport(anyhow::anyhow!("Sidecar not found")).into());
+    return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar not found")).into());
   };
   let mut sidecar = sidecar.lock().await;
 
