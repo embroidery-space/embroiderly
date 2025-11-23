@@ -1,24 +1,18 @@
-import { defaultSentryOptions } from "@embroiderly/tauri-plugin-sentry";
-
 import ui from "@nuxt/ui/vue-plugin";
+import { vueIntegration } from "@sentry/vue";
 import { createFluentVue } from "fluent-vue";
 import { createApp } from "vue";
 
-import "./assets/styles.css";
-import "./assets/icons.ts";
-
+import { router } from "./app/";
 import App from "./App.vue";
 import { ShortcutsDirective } from "./directives/";
-import { initLogger } from "./logger.ts";
-import { router } from "./router.ts";
+import { DiagnosticsService } from "./shared/services/";
 import { pinia } from "./stores/";
-import { sentry } from "./vendor/";
 
 const app = createApp(App);
 const fluent = createFluentVue({ bundles: [], componentTag: false });
 
-initLogger();
-sentry.init({ ...defaultSentryOptions, app });
+DiagnosticsService.addIntegration(vueIntegration({ app }));
 
 app.use(router);
 app.use(pinia);

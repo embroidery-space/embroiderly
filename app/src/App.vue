@@ -10,6 +10,7 @@
   import { onMounted, onErrorCaptured } from "vue";
 
   import { FilesApi } from "./api/";
+  import { LoggerService } from "./shared/services/";
 
   const confirm = useConfirm();
   const toast = useToast();
@@ -51,7 +52,7 @@
 
   onErrorCaptured((err, _component, info) => {
     // Log the error, notify the user, and let it be propagated further so that Sentry can handle it.
-    error(`Error (${info}): ${err instanceof Error ? err.message : err}`);
+    LoggerService.error(`Error (${info}): ${err instanceof Error ? err.message : err}`);
     toast.add({ type: "background", color: "error", title: fluent.$t("error") });
   });
 </script>

@@ -45,7 +45,7 @@
       </UContextMenu>
     </div>
 
-    <div class="flex w-full items-center justify-between border-t border-default px-2 py-1">
+    <div class="border-default flex w-full items-center justify-between border-t px-2 py-1">
       <div class="grow"></div>
       <ZoomControls
         :model-value="zoom"
@@ -70,6 +70,7 @@
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
   import { CursorTool } from "~/core/tools/";
   import type { PatternEditorToolContext } from "~/core/tools/";
+  import { LoggerService } from "~/shared/services";
   import { addSymbolFonts } from "~/utils/font-face";
 
   const { fluent } = useI18n();
@@ -247,7 +248,7 @@
         else {
           const fontName = fonts[index]!;
           failedFonts.push(fontName);
-          error(`Failed to load symbol font "${fontName}": ${result.reason}`);
+          LoggerService.error(`Failed to load symbol font "${fontName}": ${result.reason}`);
           return undefined;
         }
       })

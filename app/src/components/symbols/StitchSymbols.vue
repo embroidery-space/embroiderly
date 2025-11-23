@@ -47,6 +47,7 @@
   import { computed, onMounted, ref, shallowRef } from "vue";
 
   import { FilesApi } from "~/api";
+  import { LoggerService } from "~/shared/services";
   import { addSymbolFonts } from "~/utils/font-face";
 
   const confirm = useConfirm();
@@ -141,7 +142,7 @@
       }
       selectedCodePoints.value = codePoints;
     } catch (err) {
-      error(`Failed to load font ${fontKey}: ${err}`);
+      LoggerService.error(`Failed to load font ${fontKey}: ${err}`);
       toast.add({ title: fluent.$t("stitch-symbol-font-load-failure", { font: fontFamily }), color: "error" });
     } finally {
       loadingFont.value = false;
@@ -167,7 +168,7 @@
         );
       } else toast.add({ title: fluent.$t("stitch-symbols-import-success"), color: "success" });
     } catch (err) {
-      error(`Failed to import symbol fonts: ${err}`);
+      LoggerService.error(`Failed to import symbol fonts: ${err}`);
       toast.add({ title: fluent.$t("stitch-symbols-import-failure"), color: "error" });
     } finally {
       importingFonts.value = false;

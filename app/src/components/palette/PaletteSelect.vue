@@ -13,6 +13,7 @@
 
   import { FilesApi } from "~/api";
   import type { BrandPaletteItem } from "~/core/pattern";
+  import { LoggerService } from "~/shared/services";
 
   const emit = defineEmits<{
     paletteSelected: [group: string, name: string];
@@ -58,7 +59,7 @@
 
       emit("paletteLoaded", palette);
     } catch (err) {
-      error(`Failed to load palette ${key}: ${err}`);
+      LoggerService.error(`Failed to load palette ${key}: ${err}`);
       toast.add({ title: fluent.$t("palette-catalog-load-failure"), color: "error" });
     } finally {
       loadingPalette.value = false;

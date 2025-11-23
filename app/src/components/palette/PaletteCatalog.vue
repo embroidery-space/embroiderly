@@ -49,6 +49,7 @@
 
   import { FilesApi } from "~/api";
   import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/core/pattern/";
+  import { LoggerService } from "~/shared/services";
 
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
     columnsNumber: 4,
@@ -113,7 +114,7 @@
         );
       } else toast.add({ title: fluent.$t("palette-catalog-import-success"), color: "success" });
     } catch (err) {
-      error(`Failed to import palettes: ${err}`);
+      LoggerService.error(`Failed to import palettes: ${err}`);
       toast.add({ title: fluent.$t("palette-catalog-import-failure"), color: "error" });
     } finally {
       importingPalettes.value = false;
