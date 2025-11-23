@@ -11,20 +11,7 @@
     >
       <template #header>
         <div class="flex gap-x-1">
-          <USelectMenu
-            v-model="selectedPaletteKey"
-            :loading="loadingPalette"
-            :items="paletteCatalogOptions"
-            value-key="value"
-            size="md"
-            class="w-full"
-            @update:model-value="
-              async (key: string) => {
-                const [brand, name] = key.split('/') as [string, string];
-                await loadPalette(brand, name);
-              }
-            "
-          />
+          <PaletteSelect ref="palette-select" size="md" class="w-full" @palette-loaded="selectedPalette = $event" />
 
           <UDropdownMenu :items="paletteCatalogMenuOptions">
             <UButton :loading="importingPalettes" color="neutral" variant="outline" icon="i-lucide:menu" />
@@ -55,12 +42,12 @@
 </template>
 
 <script setup lang="ts">
-  import type { DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
+  import type { DropdownMenuItem } from "@nuxt/ui";
   import { useFuse } from "@vueuse/integrations/useFuse";
-  import { onMounted, ref, computed, shallowRef } from "vue";
+  import { useTemplateRef, ref, computed, shallowRef } from "vue";
   import type { Ref } from "vue";
 
-  import { PaletteApi } from "~/api";
+  import { FilesApi } from "~/api";
   import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/core/pattern/";
 
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
@@ -84,16 +71,10 @@
     removePaletteItem: [palindex: number];
   }>();
 
-  const loadingPalette = ref(false);
-  const importingPalettes = ref(false);
-
-  const paletteCatalog = new Map<string, BrandPaletteItem[] | undefined>();
-  const paletteCatalogOptions = shallowRef<SelectMenuItem[][]>([]);
-
-  const selectedPaletteKey = ref("system/DMC");
-  const selectedPalette: Ref<BrandPaletteItem[]> = shallowRef([]);
+  const paletteSelect = useTemplateRef("palette-select");
 
   const searchQuery = ref("");
+  const selectedPalette: Ref<BrandPaletteItem[]> = shallowRef([]);
   const { results } = useFuse(searchQuery, selectedPalette, {
     matchAllWhenSearchEmpty: true,
     fuseOptions: {
@@ -113,45 +94,7 @@
     },
   ]);
 
-  async function refreshPalettesList() {
-    const { system, custom } = await PaletteApi.getPalettesList();
-
-    const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
-    for (const palette of system) {
-      const paletteKey = `system/${palette}`;
-      systemPalettes.push({ label: palette, value: paletteKey });
-      paletteCatalog.set(paletteKey, undefined);
-    }
-
-    const customPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
-    for (const palette of custom) {
-      const paletteKey = `custom/${palette}`;
-      customPalettes.push({ label: palette, value: paletteKey });
-      paletteCatalog.set(paletteKey, undefined);
-    }
-
-    paletteCatalogOptions.value = [systemPalettes, customPalettes];
-  }
-
-  async function loadPalette(paletteGroup: string, paletteName: string) {
-    const paletteKey = `${paletteGroup}/${paletteName}`;
-    try {
-      let palette = paletteCatalog.get(paletteKey);
-      if (!palette) {
-        loadingPalette.value = true;
-        palette = await PaletteApi.loadPalette(paletteGroup, paletteName);
-        paletteCatalog.set(paletteKey, palette);
-      }
-      selectedPalette.value = palette;
-    } catch (err) {
-      error(`Failed to load palette ${paletteKey}: ${err}`);
-      toast.add({ title: fluent.$t("palette-catalog-load-failure", { palette: paletteName }), color: "error" });
-    } finally {
-      loadingPalette.value = false;
-    }
-  }
-
-  /** Imports selected palette files. */
+  const importingPalettes = ref(false);
   async function importPalettes() {
     const paths = (await filePicker.open({ multiple: true, filters: filePicker.PALETTE_FILTER })) as string[] | null;
     if (!paths) return;
@@ -159,8 +102,8 @@
     try {
       importingPalettes.value = true;
 
-      const { failedFiles } = await PaletteApi.importPalettes(paths);
-      await refreshPalettesList();
+      const { failedFiles } = await FilesApi.importPalettes(paths);
+      await paletteSelect.value!.loadPalettesList();
 
       if (failedFiles.length) {
         confirm.open(
@@ -182,9 +125,4 @@
     if (palindex === -1) emit("removePaletteItem", palindex);
     else emit("addPaletteItem", option);
   }
-
-  onMounted(async () => {
-    await refreshPalettesList();
-    await loadPalette("system", "DMC"); // Load default system palette.
-  });
 </script>

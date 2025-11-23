@@ -11,15 +11,11 @@ export async function invoke<T>(cmd: string, args?: InvokeArgs, options?: Invoke
   }
 }
 
-export * as DisplayApi from "./display.ts";
+export * as FilesApi from "./files.ts";
+export type * from "./files.ts";
+
 export * as PatternApi from "./pattern.ts";
-export * as ImageApi from "./image.ts";
-export * as PaletteApi from "./palette.ts";
-export * as FabricApi from "./fabric.ts";
-export * as GridApi from "./grid.ts";
-export * as StitchesApi from "./stitches.ts";
-export * as PublishApi from "./publish.ts";
-export * as HistoryApi from "./history.ts";
-export * as PathApi from "./path.ts";
-export * as FontsApi from "./fonts.ts";
-export * as SystemApi from "./system.ts";
+export type * from "./pattern.ts";
+
+export * as UtilityApi from "./utils.ts";
+export type * from "./utils.ts";

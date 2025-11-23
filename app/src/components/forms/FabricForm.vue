@@ -16,24 +16,23 @@
 
     <FormFieldset :legend="$t('fabric-size')">
       <div class="flex gap-4 pb-2">
-        <div>
-          <UFormField :label="$t('fabric-width')" class="w-full">
-            <UInputNumber
-              v-model="fabricSizeFinal.width"
-              orientation="vertical"
-              :min="0.1"
-              :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
-            />
-          </UFormField>
-          <UFormField :label="$t('fabric-height')" class="w-full">
-            <UInputNumber
-              v-model="fabricSizeFinal.height"
-              orientation="vertical"
-              :min="0.1"
-              :step="fabricSizeMeasurement === 'inches' ? 0.1 : 1"
-            />
-          </UFormField>
-        </div>
+        <DimensionsInput
+          v-model:width="fabricSizeFinal.width"
+          v-model:height="fabricSizeFinal.height"
+          :width-field-props="{ label: $t('fabric-width') }"
+          :height-field-props="{ label: $t('fabric-height') }"
+          :width-input-props="{
+            orientation: 'vertical',
+            min: 0.1,
+            step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
+          }"
+          :height-input-props="{
+            orientation: 'vertical',
+            min: 0.1,
+            step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
+          }"
+          orientation="vertical"
+        />
         <URadioGroup v-model="fabricSizeMeasurement" :items="fabricSizeOptions" class="mt-6" />
       </div>
 
@@ -77,7 +76,7 @@
   import { computed, onMounted, reactive, ref, watch } from "vue";
   import type { Ref } from "vue";
 
-  import { FabricApi } from "~/api";
+  import { PatternApi } from "~/api";
   import { Fabric, PaletteSettings, FabricColor } from "~/core/pattern/";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/utils/measurement";
 
@@ -169,6 +168,6 @@
   });
 
   onMounted(async () => {
-    fabricColors.value = await FabricApi.loadFabricColors();
+    fabricColors.value = await PatternApi.loadFabricColors();
   });
 </script>

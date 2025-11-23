@@ -11,6 +11,8 @@ app-menu-file-open = Open
 app-menu-file-create = Create
 app-menu-file-save = Save
 app-menu-file-save-as = Save As
+app-menu-file-import = Import
+app-menu-file-import-image = Image
 app-menu-file-export = Export
 app-menu-file-close = Close
 

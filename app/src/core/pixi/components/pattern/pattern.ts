@@ -1,4 +1,5 @@
 import { Bounds, Container, Graphics, Rectangle, RenderLayer } from "pixi.js";
+import type { DestroyOptions } from "pixi.js";
 
 import {
   DisplayMode,
@@ -40,7 +41,7 @@ import {
 } from "./stitches.ts";
 
 export class PatternView extends Container {
-  private readonly palette: readonly PaletteItem[];
+  private palette: readonly PaletteItem[];
   private specialStitchModels: SpecialStitchModel[];
 
   private displayMode: DisplayMode | undefined;
@@ -137,6 +138,13 @@ export class PatternView extends Container {
     // Configure the stages and overlay.
     this.addChild(...Object.values(this.stages), this.overlay);
     this.overlay.attach(this.stages.referenceImage.controls);
+  }
+
+  override destroy(options?: DestroyOptions) {
+    this.palette = [];
+    this.specialStitchModels = [];
+
+    super.destroy(options);
   }
 
   setFabric(fabric: Fabric) {

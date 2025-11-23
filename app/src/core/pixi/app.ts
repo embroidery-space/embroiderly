@@ -111,7 +111,7 @@ export class PatternApplication extends EventTarget {
   set view(pattern: PatternView) {
     this.#pattern = pattern;
 
-    this.#viewport.removeChildren();
+    for (const child of this.#viewport.removeChildren()) child.destroy();
     this.#viewport.addChild(pattern);
 
     this.#viewport.resizePattern(pattern.width, pattern.height);

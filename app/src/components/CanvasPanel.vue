@@ -64,7 +64,7 @@
   import { useDebounceFn, useEventListener } from "@vueuse/core";
   import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
 
-  import { FontsApi } from "~/api";
+  import { FilesApi } from "~/api";
   import { PatternEvent } from "~/core/pattern/";
   import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
@@ -239,7 +239,7 @@
   }
 
   async function loadSymbolFonts(fonts: string[]) {
-    const results = await Promise.allSettled(fonts.map((font) => FontsApi.loadSymbolFont(font)));
+    const results = await Promise.allSettled(fonts.map((font) => FilesApi.loadSymbolFont(font)));
     const failedFonts: string[] = [];
     const fontFaces = results
       .map((result, index) => {

@@ -2,12 +2,6 @@ name: Build and Commit Sidecar Binaries
 
 on:
   workflow_dispatch:
-  workflow_call:
-    inputs:
-      app-version:
-        description: Application version for Sentry release
-        required: false
-        type: string
   push:
     branches: [dev]
     paths:
@@ -30,12 +24,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        sidecar: [embroiderly_publish]
+        sidecar: [embroiderly_image, embroiderly_publish]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: dtolnay/rust-toolchain@1.89.0 # stable
-      - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
+      - uses: ./.github/actions/setup-rust
 
       - name: Get target platform triple
         id: target
@@ -69,22 +62,11 @@ jobs:
           path: binaries/
           retention-days: 1
 
-      - name: Upload debug symbols for Sentry
-        if: inputs.app-version != ''
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        with:
-          name: sidecar-debug-symbols-${{ matrix.sidecar }}-${{ matrix.os }}
-          path: |
-            target/release/${{ matrix.sidecar }}.pdb
-            target/release/${{ matrix.sidecar }}.dwp
-          retention-days: 1
-
   commit:
     permissions:
       contents: write
     needs: build
     runs-on: ubuntu-latest
-    if: inputs.app-version == ''
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
@@ -117,46 +99,3 @@ jobs:
           commit_user_name: ${{ steps.gpg.outputs.name }}
           commit_user_email: ${{ steps.gpg.outputs.email }}
           push_options: --force
-
-  sentry:
-    needs: build
-    runs-on: ubuntu-latest
-    if: inputs.app-version != ''
-    strategy:
-      fail-fast: false
-      matrix:
-        sidecar: [embroiderly_publish]
-    defaults:
-      run:
-        shell: bash
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: embroidery-space
-      SENTRY_PROJECT: ${{ matrix.sidecar }}
-    steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: ./.github/actions/setup-node
-        with:
-          install-deps: false
-
-      - name: Install Sentry CLI
-        run: pnpm install -g @sentry/cli
-
-      - name: Create Sentry release
-        run: |
-          sentry-cli releases new "${{ inputs.app-version }}"
-          sentry-cli releases set-commits "${{ inputs.app-version }}" --auto || true
-
-      - name: Download debug symbols
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          pattern: sidecar-debug-symbols-${{ matrix.sidecar }}-*
-          merge-multiple: true
-
-      - name: Upload debug symbols to Sentry
-        run: |
-          find . -name "${{ matrix.sidecar }}.pdb" -exec sentry-cli debug-files upload {} + || true
-          find . -name "${{ matrix.sidecar }}.dwp" -exec sentry-cli debug-files upload {} + || true
-
-      - name: Finalize Sentry release
-        run: sentry-cli releases finalize "${{ inputs.app-version }}"

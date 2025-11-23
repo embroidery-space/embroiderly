@@ -4,19 +4,14 @@ use rayon::prelude::*;
 use tauri::Manager as _;
 use tauri_plugin_posthog::PostHogExt as _;
 
+use super::{GroupedFilesList, ImportFilesResponse};
 use crate::error::Result;
 use crate::utils::fonts::is_font_file;
 use crate::utils::path::app_data_dir;
 use crate::vendor::telemetry::AppEvent;
 
-#[derive(serde::Serialize)]
-pub struct SymbolFontsListResponse {
-  pub system: Vec<String>,
-  pub custom: Vec<String>,
-}
-
 #[tauri::command]
-pub fn get_symbol_fonts_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> Result<SymbolFontsListResponse> {
+pub fn get_symbol_fonts_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> Result<GroupedFilesList> {
   let mut system = Vec::new();
   let mut custom = Vec::new();
 
@@ -45,7 +40,7 @@ pub fn get_symbol_fonts_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>)
   system.sort();
   custom.sort();
 
-  Ok(SymbolFontsListResponse { system, custom })
+  Ok(GroupedFilesList { system, custom })
 }
 
 #[tauri::command]
@@ -133,17 +128,11 @@ pub fn load_symbol_font_code_points<R: tauri::Runtime>(
   Ok(code_points)
 }
 
-#[derive(serde::Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ImportSymbolFontsResponse {
-  pub failed_files: Vec<String>,
-}
-
 #[tauri::command]
 pub fn import_symbol_fonts<R: tauri::Runtime>(
   paths: Vec<String>,
   app_handle: tauri::AppHandle<R>,
-) -> Result<ImportSymbolFontsResponse> {
+) -> Result<ImportFilesResponse> {
   let fonts_dir = app_data_dir(&app_handle)?.join("fonts");
 
   // Ensure the fonts directory exists.
@@ -182,7 +171,7 @@ pub fn import_symbol_fonts<R: tauri::Runtime>(
     failed_files: failed_files.len(),
   });
 
-  Ok(ImportSymbolFontsResponse { failed_files })
+  Ok(ImportFilesResponse { failed_files })
 }
 
 fn process_and_save_font(file_path: &Path, fonts_dir: &Path) -> anyhow::Result<()> {

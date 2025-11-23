@@ -9,7 +9,7 @@
 
   import { onMounted, onErrorCaptured } from "vue";
 
-  import { PatternApi } from "./api/";
+  import { FilesApi } from "./api/";
 
   const confirm = useConfirm();
   const toast = useToast();
@@ -21,7 +21,7 @@
   const appWindow = getCurrentWebviewWindow();
 
   appWindow.onCloseRequested(async (e) => {
-    const unsavedPatterns = await PatternApi.getUnsavedPatterns();
+    const unsavedPatterns = await FilesApi.getUnsavedPatterns();
     if (unsavedPatterns.length) {
       const patterns = appStateStore.openedPatterns
         .filter(({ id }) => unsavedPatterns.includes(id))
@@ -33,8 +33,8 @@
       // If the user dismissed the dialog, prevent the window from closing.
       if (savePatterns === undefined) return e.preventDefault();
 
-      if (savePatterns) await PatternApi.saveAllPatterns();
-      await PatternApi.closeAllPatterns();
+      if (savePatterns) await FilesApi.saveAllPatterns();
+      await FilesApi.closeAllPatterns();
     }
   });
 

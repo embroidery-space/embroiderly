@@ -82,7 +82,7 @@
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { computed } from "vue";
 
-  import { SystemApi } from "~/api/";
+  import { UtilityApi } from "~/api/";
 
   const confirm = useConfirm();
 
@@ -115,6 +115,12 @@
       },
     ],
     [
+      {
+        label: fluent.$t("app-menu-file-import"),
+        children: [
+          { label: fluent.$t("app-menu-file-import-image"), onSelect: () => patternsStore.openImageImportModal() },
+        ],
+      },
       {
         label: fluent.$t("app-menu-file-export"),
         disabled: !patternsStore.pattern,
@@ -179,7 +185,7 @@
 
   async function showSystemInfo() {
     // @ts-expect-error Ignore the lack of index signature of the system info object.
-    const systemInfo = fluent.$ta("system-info", await SystemApi.getSystemInfo());
+    const systemInfo = fluent.$ta("system-info", await UtilityApi.getSystemInfo());
     const { title, description } = systemInfo as { title: string; description: string };
 
     const accepted = await confirm.open({

@@ -2,10 +2,7 @@
   <UModal :title="$t('pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
       <div class="flex flex-col gap-y-4">
-        <UFieldGroup class="w-full">
-          <UButton :label="$t('choose-file')" @click="chooseFile" />
-          <UInput :model-value="pdfFile.base" readonly class="w-full" />
-        </UFieldGroup>
+        <FilePicker v-model="filePath" mode="save" :options="{ filters: PDF_FILTER }" class="w-full" />
 
         <div class="flex flex-col gap-y-1">
           <UCheckbox
@@ -55,22 +52,22 @@
 <script setup lang="ts">
   import { basename } from "@tauri-apps/api/path";
 
-  import { asyncComputed, refAutoReset } from "@vueuse/core";
+  import { computedAsync, refAutoReset } from "@vueuse/core";
   import { ref } from "vue";
 
+  import { PDF_FILTER } from "~/composables/file-picker.ts";
   import { PdfExportOptions } from "~/core/pattern/";
 
   const props = defineProps<{ filePath: string; options: PdfExportOptions }>();
   const emit = defineEmits<{ close: [] }>();
 
   const patternsStore = usePatternsStore();
-  const filePicker = useFilePicker();
 
   // Copy the data from the props to a reactive object.
   const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
 
   const filePath = ref(props.filePath);
-  const pdfFile = asyncComputed(
+  const pdfFile = computedAsync(
     async () => {
       const fileName = filePath.value ? await basename(filePath.value, ".pdf") : "";
       return {
@@ -81,11 +78,6 @@
     },
     { base: "", monochrome: "", color: "" },
   );
-
-  async function chooseFile() {
-    const path = await filePicker.save(filePath.value, { filters: filePicker.PDF_FILTER });
-    if (path !== null) filePath.value = path;
-  }
 
   const optionsUpdated = refAutoReset(false, 1000);
   async function updateOptions() {

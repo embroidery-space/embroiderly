@@ -517,7 +517,7 @@ fn generates_svg_frames() {
     show_centering_marks: true,
     ..ImageExportOptions::default()
   };
-  let frames = export_pattern(&patproj, true, options).unwrap();
+  let frames = generate_svg(&patproj, true, options).unwrap();
   for (i, frame) in frames.into_iter().enumerate() {
     let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
       .join("testdata/images/frames")

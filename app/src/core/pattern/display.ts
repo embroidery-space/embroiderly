@@ -170,27 +170,28 @@ export class LayersVisibility {
     return new LayersVisibility(LayersVisibility.schema.deserialize(buffer));
   }
 
-  static default() {
+  /** Creates a new `LayersVisibility` instance with all layers set to the specified value. */
+  static default(value = true) {
     return new LayersVisibility({
-      referenceImage: true,
+      referenceImage: value,
 
-      fullstitches: true,
-      petitestitches: true,
+      fullstitches: value,
+      petitestitches: value,
 
-      halfstitches: true,
+      halfstitches: value,
 
-      quarterstitches: true,
+      quarterstitches: value,
 
-      backstitches: true,
-      straightstitches: true,
+      backstitches: value,
+      straightstitches: value,
 
-      frenchknots: true,
-      beads: true,
+      frenchknots: value,
+      beads: value,
 
-      specialstitches: true,
+      specialstitches: value,
 
-      grid: true,
-      rulers: true,
+      grid: value,
+      rulers: value,
     });
   }
 }

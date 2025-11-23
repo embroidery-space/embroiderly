@@ -5,7 +5,7 @@ mod file_associations;
 pub use file_associations::*;
 
 mod patterns;
-#[expect(unused_imports)]
+#[allow(unused_imports)]
 pub use patterns::*;
 
 mod webview;

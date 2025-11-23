@@ -66,7 +66,7 @@ fn create_base_dispatch(log_file_path: std::path::PathBuf) -> anyhow::Result<fer
   // In debug mode, also log to stderr.
   #[cfg(debug_assertions)]
   {
-    dispatch = dispatch.chain(fern::Dispatch::new().chain(std::io::stderr()));
+    dispatch = dispatch.chain(std::io::stderr());
   }
 
   Ok(dispatch)

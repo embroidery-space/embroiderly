@@ -4,25 +4,25 @@ import type { DialogFilter, OpenDialogOptions, SaveDialogOptions } from "@tauri-
 
 import { createSharedComposable, useLocalStorage } from "@vueuse/core";
 
-import { PathApi } from "~/api/";
+import { UtilityApi } from "~/api/";
 
-const ALL_FILES_FILTER: DialogFilter = { name: "All Files", extensions: ["*"] };
+export const ALL_FILES_FILTER: DialogFilter = { name: "All Files", extensions: ["*"] };
 
-const ANY_PATTERN_FILTER: DialogFilter[] = [
+export const ANY_PATTERN_FILTER: DialogFilter[] = [
   { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
   ALL_FILES_FILTER,
 ];
-const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
-const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
+export const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
+export const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
 
-const ANY_IMAGE_FILTER: DialogFilter[] = [
+export const ANY_IMAGE_FILTER: DialogFilter[] = [
   { name: "Images", extensions: ["png", "jpg", "jpeg", "webp"] },
   ALL_FILES_FILTER,
 ];
 
-const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
+export const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
 
-const PALETTE_FILTER = [
+export const PALETTE_FILTER = [
   { name: "All Palette Files", extensions: ["master", "user", "threads", "rng", "json"] },
   { name: "Pattern Maker Palettes", extensions: ["master", "user"] },
   { name: "Win/MacStitch Palettes", extensions: ["threads"] },
@@ -31,7 +31,7 @@ const PALETTE_FILTER = [
   ALL_FILES_FILTER,
 ];
 
-const FONT_FILTER = [
+export const FONT_FILTER = [
   { name: "All Font Files", extensions: ["ttf", "otf"] },
   { name: "TrueType Fonts", extensions: ["ttf"] },
   { name: "OpenType Fonts", extensions: ["otf"] },
@@ -72,8 +72,8 @@ export const useFilePicker = createSharedComposable(() => {
      * @param options The options for the dialog.
      * @returns The selected file path or null if canceled.
      */
-    open: async (options?: Omit<OpenDialogOptions, "defaultPath">) => {
-      lastOpenedFolder.value ??= await PathApi.getAppDocumentDir();
+    open: async (options?: FilePickerOpenOptions) => {
+      lastOpenedFolder.value ??= await UtilityApi.getAppDocumentDir();
 
       const path = await open({
         defaultPath: lastOpenedFolder.value,
@@ -95,7 +95,7 @@ export const useFilePicker = createSharedComposable(() => {
      * @param options The options for the dialog.
      * @returns The selected file path or null if canceled.
      */
-    save: async (target: string, options?: Omit<SaveDialogOptions, "defaultPath">) => {
+    save: async (target: string, options?: FilePickerSaveOptions) => {
       const path = await save({
         defaultPath: target,
         ...options,
@@ -109,3 +109,6 @@ export const useFilePicker = createSharedComposable(() => {
     },
   };
 });
+
+export type FilePickerOpenOptions = Omit<OpenDialogOptions, "defaultPath">;
+export type FilePickerSaveOptions = Omit<SaveDialogOptions, "defaultPath">;

@@ -3,17 +3,7 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { defineStore } from "pinia";
 import { defineAsyncComponent, ref, shallowRef, triggerRef } from "vue";
 
-import {
-  DisplayApi,
-  FabricApi,
-  GridApi,
-  HistoryApi,
-  ImageApi,
-  PaletteApi,
-  PatternApi,
-  PublishApi,
-  StitchesApi,
-} from "~/api";
+import { FilesApi, PatternApi } from "~/api";
 import {
   Pattern,
   PatternInfo,
@@ -40,7 +30,7 @@ import {
   PatternErrorUnsupportedPatternType,
 } from "~/error.ts";
 
-export type OpenPatternOptions = PatternApi.OpenPatternOptions & {
+export type OpenPatternOptions = FilesApi.OpenPatternOptions & {
   /**
    * Whether to assign the opened pattern to the current pattern in the app state.
    * @default true
@@ -58,6 +48,10 @@ export const usePatternsStore = defineStore(
     const fabricModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/FabricModal.vue")));
     const gridModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/GridModal.vue")));
     const publishModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/PublishModal.vue")));
+
+    const imageImportModal = overlay.create(
+      defineAsyncComponent(() => import("~/components/modals/ImageImportModal.vue")),
+    );
     const pdfExportModal = overlay.create(defineAsyncComponent(() => import("~/components/modals/PdfExportModal.vue")));
 
     const appWindow = getCurrentWebviewWindow();
@@ -73,10 +67,15 @@ export const usePatternsStore = defineStore(
     const loading = ref(false);
     const pattern = shallowRef<Pattern>();
 
+    function setPattern(newPattern: Pattern) {
+      pattern.value = newPattern;
+      appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
+    }
+
     async function loadPattern(id: string) {
       try {
         loading.value = true;
-        pattern.value = await PatternApi.loadPattern(id);
+        pattern.value = await FilesApi.loadPattern(id);
         appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
       } finally {
         loading.value = false;
@@ -93,7 +92,7 @@ export const usePatternsStore = defineStore(
 
       try {
         loading.value = true;
-        const _pattern = await PatternApi.openPattern(path, options);
+        const _pattern = await FilesApi.openPattern(path, options);
         appStateStore.addOpenedPattern(_pattern.id, _pattern.info.title);
         if (options?.assignToCurrent ?? true) pattern.value = _pattern;
       } catch (error) {
@@ -123,7 +122,7 @@ export const usePatternsStore = defineStore(
     async function createPattern(fabric: Fabric) {
       try {
         loading.value = true;
-        pattern.value = await PatternApi.createPattern(fabric);
+        pattern.value = await FilesApi.createPattern(fabric);
         appStateStore.addOpenedPattern(pattern.value.id, pattern.value.info.title);
       } finally {
         loading.value = false;
@@ -133,14 +132,14 @@ export const usePatternsStore = defineStore(
     async function savePattern(as = false) {
       if (!pattern.value) return;
       try {
-        let path = await PatternApi.getPatternFilePath(pattern.value.id);
+        let path = await FilesApi.getPatternFilePath(pattern.value.id);
         if (as) {
           const selectedPath = await filePicker.save(path, { filters: filePicker.EMBPROJ_FILTER });
           if (selectedPath === null) return;
           path = selectedPath;
         }
         loading.value = true;
-        await PatternApi.savePattern(pattern.value.id, path);
+        await FilesApi.savePattern(pattern.value.id, path);
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
           confirm.open({
@@ -162,25 +161,30 @@ export const usePatternsStore = defineStore(
       }
     });
 
+    async function openImageImportModal() {
+      const imagePath = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
+      if (imagePath === null) return;
+
+      const imageDimensions = await FilesApi.getImageDimensions(imagePath);
+      imageImportModal.open({ imagePath, imageDimensions });
+    }
+
     async function openExportModal(ext: "oxs" | "pdf") {
       if (!pattern.value) return;
-      try {
-        const filePath = (await PatternApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
-        switch (ext) {
-          case "oxs": {
-            await exportPatternAsOxs(filePath);
-            break;
-          }
-          case "pdf": {
-            pdfExportModal.open({
-              filePath,
-              options: pattern.value.pdfExportOptions,
-            });
-            break;
-          }
+
+      const filePath = (await FilesApi.getPatternFilePath(pattern.value.id)).replace(/\.[^.]+$/, `.${ext}`);
+      switch (ext) {
+        case "oxs": {
+          await exportPatternAsOxs(filePath);
+          break;
         }
-      } finally {
-        loading.value = false;
+        case "pdf": {
+          pdfExportModal.open({
+            filePath,
+            options: pattern.value.pdfExportOptions,
+          });
+          break;
+        }
       }
     }
 
@@ -192,7 +196,7 @@ export const usePatternsStore = defineStore(
 
       try {
         loading.value = true;
-        await PatternApi.savePattern(pattern.value.id, path);
+        await FilesApi.savePattern(pattern.value.id, path);
       } finally {
         loading.value = false;
       }
@@ -202,7 +206,7 @@ export const usePatternsStore = defineStore(
       if (!pattern.value) return;
       try {
         loading.value = true;
-        await PatternApi.exportPattern(pattern.value.id, filePath, options);
+        await FilesApi.exportPattern(pattern.value.id, filePath, options);
         toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
       } catch {
         toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
@@ -211,12 +215,12 @@ export const usePatternsStore = defineStore(
       }
     }
 
-    async function closePattern(id?: string, options?: PatternApi.ClosePatternOptions) {
+    async function closePattern(id?: string, options?: FilesApi.ClosePatternOptions) {
       if (!pattern.value) return;
       const patternId = id ?? pattern.value.id;
       try {
         loading.value = true;
-        await PatternApi.closePattern(patternId, options);
+        await FilesApi.closePattern(patternId, options);
         appStateStore.removeCurrentPattern();
         if (appStateStore.currentPattern) await loadPattern(appStateStore.currentPattern.id);
         else pattern.value = undefined;
@@ -229,8 +233,8 @@ export const usePatternsStore = defineStore(
 
           if (accepted) {
             const patternId = pattern.value!.id;
-            const filePath = await PatternApi.getPatternFilePath(patternId);
-            await PatternApi.savePattern(patternId, filePath);
+            const filePath = await FilesApi.getPatternFilePath(patternId);
+            await FilesApi.savePattern(patternId, filePath);
             await closePattern(patternId);
           } else await closePattern(patternId, { force: true });
 
@@ -248,11 +252,11 @@ export const usePatternsStore = defineStore(
       const selectedPath = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
       if (selectedPath === null) return;
 
-      await ImageApi.setReferenceImage(pattern.value.id, selectedPath);
+      await PatternApi.setReferenceImage(pattern.value.id, selectedPath);
     }
     async function removeReferenceImage() {
       if (!pattern.value) return;
-      await ImageApi.removeReferenceImage(pattern.value.id);
+      await PatternApi.removeReferenceImage(pattern.value.id);
     }
     appWindow.listen<string>("image:set", ({ payload }) => {
       if (!pattern.value) return;
@@ -262,7 +266,7 @@ export const usePatternsStore = defineStore(
 
     async function updateReferenceImageSettings(settings: ReferenceImageSettings) {
       if (!pattern.value) return;
-      await ImageApi.updateReferenceImageSettings(pattern.value.id, settings);
+      await PatternApi.updateReferenceImageSettings(pattern.value.id, settings);
     }
     appWindow.listen<string>(PatternEvent.UpdateReferenceImageSettings, ({ payload }) => {
       if (!pattern.value) return;
@@ -288,7 +292,7 @@ export const usePatternsStore = defineStore(
     }
     async function updateFabric(fabric: Fabric) {
       if (!pattern.value) return;
-      await FabricApi.updateFabric(pattern.value.id, fabric);
+      await PatternApi.updateFabric(pattern.value.id, fabric);
     }
     appWindow.listen<string>(PatternEvent.UpdateFabric, ({ payload }) => {
       if (!pattern.value) return;
@@ -301,7 +305,7 @@ export const usePatternsStore = defineStore(
     }
     async function updateGrid(grid: Grid) {
       if (!pattern.value) return;
-      await GridApi.updateGrid(pattern.value!.id, grid);
+      await PatternApi.updateGrid(pattern.value!.id, grid);
     }
     appWindow.listen<string>(PatternEvent.UpdateGrid, ({ payload }) => {
       if (!pattern.value) return;
@@ -310,7 +314,7 @@ export const usePatternsStore = defineStore(
 
     async function addPaletteItem(palitem: PaletteItem) {
       if (!pattern.value) return;
-      await PaletteApi.addPaletteItem(pattern.value.id, palitem);
+      await PatternApi.addPaletteItem(pattern.value.id, palitem);
     }
     appWindow.listen<string>(PatternEvent.AddPaletteItem, ({ payload }) => {
       if (!pattern.value) return;
@@ -321,7 +325,7 @@ export const usePatternsStore = defineStore(
 
     async function removePaletteItem(...paletteItemIndexes: number[]) {
       if (!pattern.value) return;
-      await PaletteApi.removePaletteItems(pattern.value.id, paletteItemIndexes);
+      await PatternApi.removePaletteItems(pattern.value.id, paletteItemIndexes);
     }
     appWindow.listen<number[]>(PatternEvent.RemovePaletteItem, ({ payload: palindexes }) => {
       if (!pattern.value) return;
@@ -334,7 +338,7 @@ export const usePatternsStore = defineStore(
 
     async function updatePaletteDisplaySettings(settings: PaletteSettings) {
       if (!pattern.value) return;
-      await PaletteApi.updatePaletteDisplaySettings(pattern.value.id, settings);
+      await PatternApi.updatePaletteDisplaySettings(pattern.value.id, settings);
     }
     appWindow.listen<string>(PatternEvent.UpdatePaletteDisplaySettings, ({ payload }) => {
       if (!pattern.value) return;
@@ -344,7 +348,7 @@ export const usePatternsStore = defineStore(
 
     async function sortPaletteBy(sortBy: SortPaletteBy) {
       if (!pattern.value) return;
-      await PaletteApi.sortPaletteBy(pattern.value.id, sortBy);
+      await PatternApi.sortPaletteBy(pattern.value.id, sortBy);
     }
     appWindow.listen<number[]>("palette:sort", ({ payload: positions }) => {
       if (!pattern.value) return;
@@ -354,7 +358,7 @@ export const usePatternsStore = defineStore(
 
     async function reorderPaletteItems(oldPosition: number, newPosition: number) {
       if (!pattern.value) return;
-      await PaletteApi.reorderPaletteItems(pattern.value.id, oldPosition, newPosition);
+      await PatternApi.reorderPaletteItems(pattern.value.id, oldPosition, newPosition);
     }
     appWindow.listen<number[]>("palette:reorder", ({ payload: positions }) => {
       if (!pattern.value) return;
@@ -364,7 +368,7 @@ export const usePatternsStore = defineStore(
 
     async function setPaletteItemSymbol(palindex: number, symbol?: Symbol) {
       if (!pattern.value) return;
-      await PaletteApi.setSymbol(pattern.value.id, palindex, symbol);
+      await PatternApi.setSymbol(pattern.value.id, palindex, symbol);
     }
     appWindow.listen<string>("palette:set_symbol", ({ payload }) => {
       if (!pattern.value) return;
@@ -378,11 +382,11 @@ export const usePatternsStore = defineStore(
 
     function addStitch(stitch: Stitch) {
       if (!pattern.value) return;
-      return StitchesApi.addStitch(pattern.value.id, stitch);
+      return PatternApi.addStitch(pattern.value.id, stitch);
     }
     function removeStitch(stitch: Stitch) {
       if (!pattern.value) return;
-      return StitchesApi.removeStitch(pattern.value.id, stitch);
+      return PatternApi.removeStitch(pattern.value.id, stitch);
     }
     appWindow.listen<string>(PatternEvent.AddStitch, ({ payload }) => {
       if (!pattern.value) return;
@@ -395,7 +399,7 @@ export const usePatternsStore = defineStore(
 
     function setDisplayMode(mode: DisplayMode | undefined) {
       if (!pattern.value) return;
-      if (mode) return DisplayApi.setDisplayMode(pattern.value.id, mode);
+      if (mode) return PatternApi.setDisplayMode(pattern.value.id, mode);
       else {
         pattern.value.displayMode = mode;
         return triggerRef(pattern);
@@ -409,7 +413,7 @@ export const usePatternsStore = defineStore(
 
     function showSymbols(value: boolean) {
       if (!pattern.value) return;
-      return DisplayApi.showSymbols(pattern.value.id, value);
+      return PatternApi.showSymbols(pattern.value.id, value);
     }
     appWindow.listen<boolean>(PatternEvent.UpdateShowSymbols, ({ payload: value }) => {
       if (!pattern.value) return;
@@ -419,7 +423,7 @@ export const usePatternsStore = defineStore(
 
     function setLayersVisibility(layersVisibility: LayersVisibility) {
       if (!pattern.value) return;
-      return DisplayApi.setLayersVisibility(pattern.value.id, layersVisibility);
+      return PatternApi.setLayersVisibility(pattern.value.id, layersVisibility);
     }
     appWindow.listen<string>(PatternEvent.UpdateLayersVisibility, ({ payload }) => {
       if (!pattern.value) return;
@@ -433,41 +437,43 @@ export const usePatternsStore = defineStore(
     }
     async function updatePdfExportOptions(options: PdfExportOptions) {
       if (!pattern.value) return;
-      await PublishApi.updatePdfExportOptions(pattern.value.id, options);
+      await PatternApi.updatePdfExportOptions(pattern.value.id, options);
     }
     appWindow.listen<string>(PatternEvent.UpdatePdfExportOptions, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.pdfExportOptions = PdfExportOptions.deserialize(payload);
     });
 
-    async function undo(options?: HistoryApi.UndoRedoOptions) {
+    async function undo(options?: PatternApi.UndoRedoOptions) {
       if (!pattern.value) return;
-      await HistoryApi.undo(pattern.value.id, options);
+      await PatternApi.undo(pattern.value.id, options);
     }
 
-    async function redo(options?: HistoryApi.UndoRedoOptions) {
+    async function redo(options?: PatternApi.UndoRedoOptions) {
       if (!pattern.value) return;
-      await HistoryApi.redo(pattern.value.id, options);
+      await PatternApi.redo(pattern.value.id, options);
     }
 
     async function startTransaction() {
       if (!pattern.value) return;
-      await HistoryApi.startTransaction(pattern.value.id);
+      await PatternApi.startTransaction(pattern.value.id);
     }
 
     async function endTransaction() {
       if (!pattern.value) return;
-      await HistoryApi.endTransaction(pattern.value.id);
+      await PatternApi.endTransaction(pattern.value.id);
     }
 
     return {
       blocked,
       loading,
       pattern,
+      setPattern,
       loadPattern,
       openPattern,
       createPattern,
       savePattern,
+      openImageImportModal,
       openExportModal,
       exportPatternAsOxs,
       exportPatternAsPdf,
