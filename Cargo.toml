@@ -137,7 +137,7 @@ log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 fern = "0.7.1"
 
 # Telemetry
-sentry = "0.45.0"
+sentry = "0.46.0"
 posthog-rs = {version = "0.3.7", default-features = false }
 
 # Identification
