@@ -14,7 +14,7 @@
   import { FilesApi } from "~/api";
   import type { BrandPaletteItem } from "~/core/pattern";
   import { useI18n } from "~/shared/composables/";
-  import { LoggerService } from "~/shared/services";
+  import { LoggerService } from "~/shared/services/";
 
   const emit = defineEmits<{
     paletteSelected: [group: string, name: string];

@@ -80,7 +80,7 @@
   import { Fabric, PaletteSettings, FabricColor } from "~/core/pattern/";
   import { DimensionsInput, FormFieldset } from "~/shared/components/";
   import { useI18n } from "~/shared/composables/";
-  import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/utils/measurement";
+  import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/shared/utils/";
 
   const fabric = defineModel<Fabric>({ required: true });
 

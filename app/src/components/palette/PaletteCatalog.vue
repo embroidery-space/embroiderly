@@ -51,7 +51,7 @@
   import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/core/pattern/";
   import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
   import { PALETTE_FILTER } from "~/shared/constants/";
-  import { LoggerService } from "~/shared/services";
+  import { LoggerService } from "~/shared/services/";
 
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
     columnsNumber: 4,

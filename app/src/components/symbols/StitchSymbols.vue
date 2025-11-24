@@ -49,8 +49,8 @@
   import { FilesApi } from "~/api";
   import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
   import { FONT_FILTER } from "~/shared/constants/";
-  import { LoggerService } from "~/shared/services";
-  import { addSymbolFonts } from "~/utils/font-face";
+  import { LoggerService } from "~/shared/services/";
+  import { addSymbolFonts } from "~/shared/utils/";
 
   const confirm = useConfirm();
   const filePicker = useFilePicker();

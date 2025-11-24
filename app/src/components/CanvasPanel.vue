@@ -71,8 +71,8 @@
   import { CursorTool } from "~/core/tools/";
   import type { PatternEditorToolContext } from "~/core/tools/";
   import { useI18n } from "~/shared/composables/";
-  import { LoggerService } from "~/shared/services";
-  import { addSymbolFonts } from "~/utils/font-face";
+  import { LoggerService } from "~/shared/services/";
+  import { addSymbolFonts } from "~/shared/utils/";
 
   const { fluent } = useI18n();
   const toast = useToast();
