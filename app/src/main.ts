@@ -5,7 +5,6 @@ import { createApp } from "vue";
 
 import { router } from "./app/";
 import App from "./App.vue";
-import { ShortcutsDirective } from "./directives/";
 import { DiagnosticsService } from "./shared/services/";
 import { pinia } from "./stores/";
 
@@ -18,6 +17,5 @@ app.use(router);
 app.use(pinia);
 app.use(fluent);
 app.use(ui);
-app.directive("shortcuts", ShortcutsDirective);
 
 app.mount("#app");
