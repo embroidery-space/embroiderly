@@ -22,7 +22,6 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
   },
   autoImport: {
     dirs: ["src/components/", "src/stores/"],
-    packagePresets: ["fluent-vue"],
   },
   theme: {
     colors: ["primary", "error", "success", "warning", "info", "help"],

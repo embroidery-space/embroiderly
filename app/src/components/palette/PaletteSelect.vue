@@ -13,6 +13,7 @@
 
   import { FilesApi } from "~/api";
   import type { BrandPaletteItem } from "~/core/pattern";
+  import { useI18n } from "~/shared/composables/";
   import { LoggerService } from "~/shared/services";
 
   const emit = defineEmits<{
@@ -20,7 +21,7 @@
     paletteLoaded: [paletteItems: BrandPaletteItem[]];
   }>();
 
-  const fluent = useFluent();
+  const { fluent } = useI18n();
   const toast = useToast();
 
   const paletteCatalog = new Map<string, BrandPaletteItem[]>();

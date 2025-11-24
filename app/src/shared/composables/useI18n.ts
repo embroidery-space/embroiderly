@@ -1,6 +1,7 @@
 import { FluentBundle, FluentResource } from "@fluent/bundle";
 import { en as nuxtEnLocale, uk as nuxtUkLocale } from "@nuxt/ui/locale";
 import { createSharedComposable } from "@vueuse/core";
+import { useFluent } from "fluent-vue";
 import { ref, computed } from "vue";
 
 import appEnLocale from "virtual:en.ftl";
