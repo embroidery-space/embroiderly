@@ -61,7 +61,7 @@ wildcard_dependencies = "deny"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.2", features = ["config-json5"] }
+tauri = { version = "2.9.3", features = ["config-json5"] }
 tauri-build = { version = "2.4.1", features = ["config-json5"] }
 tauri-plugin = { version = "2.5.1", features = ["build"] }
 ## Official Tauri plugins
@@ -92,7 +92,7 @@ xsp_parsers = { path = "crates/xsp-parsers" }
 byteorder = "1.5.0"
 encoding_rs = "0.8.35"
 hex = "0.4.3"
-quick-xml = "0.38.3"
+quick-xml = "0.38.4"
 
 # Fonts handling
 font-kit = "0.14.3"
@@ -105,7 +105,7 @@ typst-pdf = "0.14.0"
 typst-as-lib = "0.15.0"
 
 # Image processing
-image = "0.25.8"
+image = "0.25.9"
 palette = "0.7.6"
 quantette = "0.5.1"
 
@@ -156,7 +156,7 @@ rayon = "1.11.0"
 rstest = "0.26.1"
 
 # Other
-alphanumeric-sort = "1.5.3"
+alphanumeric-sort = "1.5.4"
 async-trait = "0.1.89"
 ordered-float = "5.1.0"
 dyn-clone = "1.0.20"
