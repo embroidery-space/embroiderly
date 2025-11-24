@@ -45,6 +45,7 @@
 
 <script lang="ts" setup>
   import type { PdfExportOptions } from "~/core/pattern/";
+  import { FormFieldset } from "~/shared/components/";
 
   const options = defineModel<PdfExportOptions>({ required: true });
 </script>

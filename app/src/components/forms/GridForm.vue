@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
   import { Grid } from "~/core/pattern/";
+  import { ColorPicker, FormFieldset } from "~/shared/components/";
 
   const grid = defineModel<Grid>({ required: true });
 </script>

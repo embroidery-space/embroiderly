@@ -56,6 +56,7 @@
   import { ref } from "vue";
 
   import { PdfExportOptions } from "~/core/pattern/";
+  import { FilePicker } from "~/shared/components/";
   import { PDF_FILTER } from "~/shared/constants/";
 
   const props = defineProps<{ filePath: string; options: PdfExportOptions }>();

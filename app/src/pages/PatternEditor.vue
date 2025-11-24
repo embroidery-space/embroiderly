@@ -37,6 +37,7 @@
   import { onMounted, ref, useTemplateRef } from "vue";
 
   import { FilesApi } from "~/api/index.ts";
+  import { BlockUI } from "~/shared/components/";
 
   const appWindow = getCurrentWebviewWindow();
 

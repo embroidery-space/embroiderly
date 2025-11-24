@@ -94,6 +94,7 @@
   import { LayersVisibility } from "~/core/pattern";
   import { PatternApplication, PatternView } from "~/core/pixi";
   import { ImageImportSession } from "~/core/services/";
+  import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "~/shared/components/";
   import { ANY_IMAGE_FILTER } from "~/shared/constants/";
 
   /** The maximum palette size acceptable for quantization. */
