@@ -43,6 +43,7 @@
   import { computed, ref, watch } from "vue";
 
   import { DisplayMode, LayersVisibility } from "~/core/pattern/";
+  import { useI18n } from "~/shared/composables/";
 
   const { fluent } = useI18n();
 

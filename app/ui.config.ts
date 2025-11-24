@@ -21,7 +21,7 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
     resolvers: [RekaResolver({ prefix: "R" })],
   },
   autoImport: {
-    dirs: ["src/components/", "src/composables/", "src/stores/"],
+    dirs: ["src/components/", "src/stores/"],
     packagePresets: ["fluent-vue"],
   },
   theme: {

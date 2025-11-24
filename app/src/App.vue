@@ -9,6 +9,8 @@
 
   import { onMounted, onErrorCaptured } from "vue";
 
+  import { useConfirm, useI18n } from "~/shared/composables/";
+
   import { FilesApi } from "./api/";
   import { LoggerService } from "./shared/services/";
 

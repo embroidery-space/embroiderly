@@ -55,8 +55,8 @@
   import { computedAsync, refAutoReset } from "@vueuse/core";
   import { ref } from "vue";
 
-  import { PDF_FILTER } from "~/composables/file-picker.ts";
   import { PdfExportOptions } from "~/core/pattern/";
+  import { PDF_FILTER } from "~/shared/constants/";
 
   const props = defineProps<{ filePath: string; options: PdfExportOptions }>();
   const emit = defineEmits<{ close: [] }>();

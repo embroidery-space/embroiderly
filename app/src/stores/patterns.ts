@@ -29,6 +29,8 @@ import {
   PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
 } from "~/error.ts";
+import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
+import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER, ANY_IMAGE_FILTER } from "~/shared/constants/";
 
 export type OpenPatternOptions = FilesApi.OpenPatternOptions & {
   /**
@@ -85,7 +87,7 @@ export const usePatternsStore = defineStore(
     async function openPattern(filePath?: string, options?: OpenPatternOptions) {
       let path = filePath;
       if (!path) {
-        const selectedPath = await filePicker.open({ filters: filePicker.ANY_PATTERN_FILTER });
+        const selectedPath = await filePicker.open({ filters: ANY_PATTERN_FILTER });
         if (selectedPath === null) return;
         path = selectedPath;
       }
@@ -134,7 +136,7 @@ export const usePatternsStore = defineStore(
       try {
         let path = await FilesApi.getPatternFilePath(pattern.value.id);
         if (as) {
-          const selectedPath = await filePicker.save(path, { filters: filePicker.EMBPROJ_FILTER });
+          const selectedPath = await filePicker.save(path, { filters: EMBPROJ_FILTER });
           if (selectedPath === null) return;
           path = selectedPath;
         }
@@ -162,7 +164,7 @@ export const usePatternsStore = defineStore(
     });
 
     async function openImageImportModal() {
-      const imagePath = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
+      const imagePath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
       if (imagePath === null) return;
 
       const imageDimensions = await FilesApi.getImageDimensions(imagePath);
@@ -191,7 +193,7 @@ export const usePatternsStore = defineStore(
     async function exportPatternAsOxs(filePath: string) {
       if (!pattern.value) return;
 
-      const path = await filePicker.save(filePath, { filters: filePicker.OXS_FILTER });
+      const path = await filePicker.save(filePath, { filters: OXS_FILTER });
       if (path === null) return;
 
       try {
@@ -249,7 +251,7 @@ export const usePatternsStore = defineStore(
     async function setReferenceImage() {
       if (!pattern.value) return;
 
-      const selectedPath = await filePicker.open({ filters: filePicker.ANY_IMAGE_FILTER });
+      const selectedPath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
       if (selectedPath === null) return;
 
       await PatternApi.setReferenceImage(pattern.value.id, selectedPath);

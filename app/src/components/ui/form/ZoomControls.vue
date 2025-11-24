@@ -43,7 +43,8 @@
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { computed } from "vue";
 
-  import type { ZoomState } from "~/core/pixi//";
+  import type { ZoomState } from "~/core/pixi/";
+  import { useI18n } from "~/shared/composables/";
 
   const { fluent } = useI18n();
 

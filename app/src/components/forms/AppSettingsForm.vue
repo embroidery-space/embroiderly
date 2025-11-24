@@ -75,6 +75,7 @@
   import type { TabsItem } from "@nuxt/ui";
   import { computed } from "vue";
 
+  import { useI18n } from "~/shared/composables/";
   import type { OtherOptions, UiOptions, UpdaterOptions, ViewportOptions } from "~/stores/settings.ts";
 
   const ui = defineModel<UiOptions>("ui", { required: true });

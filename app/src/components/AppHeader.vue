@@ -83,13 +83,13 @@
   import { computed } from "vue";
 
   import { UtilityApi } from "~/api/";
+  import { useConfirm, useI18n } from "~/shared/composables/";
 
   const confirm = useConfirm();
+  const { fluent } = useI18n();
 
   const patternsStore = usePatternsStore();
   const settingsStore = useSettingsStore();
-
-  const { fluent } = useI18n();
 
   const fileOptions = computed<DropdownMenuItem[][]>(() => [
     [

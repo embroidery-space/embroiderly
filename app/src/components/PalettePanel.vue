@@ -120,6 +120,7 @@
   import { computed, reactive, ref, watch } from "vue";
 
   import { PaletteSettings, SortPaletteBy, Symbol } from "~/core/pattern/";
+  import { useI18n } from "~/shared/composables/";
   import { vShortcuts } from "~/shared/directives/";
 
   const appStateStore = useAppStateStore();

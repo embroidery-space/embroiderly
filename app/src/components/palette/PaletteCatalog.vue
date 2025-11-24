@@ -49,6 +49,8 @@
 
   import { FilesApi } from "~/api";
   import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/core/pattern/";
+  import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
+  import { PALETTE_FILTER } from "~/shared/constants/";
   import { LoggerService } from "~/shared/services";
 
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
@@ -97,7 +99,7 @@
 
   const importingPalettes = ref(false);
   async function importPalettes() {
-    const paths = (await filePicker.open({ multiple: true, filters: filePicker.PALETTE_FILTER })) as string[] | null;
+    const paths = (await filePicker.open({ multiple: true, filters: PALETTE_FILTER })) as string[] | null;
     if (!paths) return;
 
     try {

@@ -33,6 +33,7 @@
   import { computed } from "vue";
 
   import { tools } from "~/core/tools/";
+  import { useI18n } from "~/shared/composables/";
 
   const { fluent } = useI18n();
 

@@ -6,7 +6,8 @@
 </template>
 
 <script setup lang="ts" generic="Mode extends 'open' | 'save'">
-  import type { FilePickerOpenOptions, FilePickerSaveOptions } from "~/composables/file-picker.ts";
+  import type { FilePickerOpenOptions, FilePickerSaveOptions } from "~/shared/composables/";
+  import { useFilePicker } from "~/shared/composables/";
 
   interface FilePickerProps {
     mode?: Mode;

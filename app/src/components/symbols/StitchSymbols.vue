@@ -47,6 +47,8 @@
   import { computed, onMounted, ref, shallowRef } from "vue";
 
   import { FilesApi } from "~/api";
+  import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
+  import { FONT_FILTER } from "~/shared/constants/";
   import { LoggerService } from "~/shared/services";
   import { addSymbolFonts } from "~/utils/font-face";
 
@@ -151,7 +153,7 @@
 
   /** Imports selected symbol fonts. */
   async function importSymbolFonts() {
-    const paths = (await filePicker.open({ multiple: true, filters: filePicker.FONT_FILTER })) as string[] | null;
+    const paths = (await filePicker.open({ multiple: true, filters: FONT_FILTER })) as string[] | null;
     if (!paths) return;
 
     try {

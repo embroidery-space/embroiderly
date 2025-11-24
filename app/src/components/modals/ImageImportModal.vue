@@ -91,10 +91,10 @@
 
   import { FilesApi } from "~/api";
   import type { ImageImportOptions } from "~/api";
-  import { ANY_IMAGE_FILTER } from "~/composables/file-picker.ts";
   import { LayersVisibility } from "~/core/pattern";
   import { PatternApplication, PatternView } from "~/core/pixi";
   import { ImageImportSession } from "~/core/services/";
+  import { ANY_IMAGE_FILTER } from "~/shared/constants/";
 
   /** The maximum palette size acceptable for quantization. */
   const MAX_PALETTE_SIZE = 256;
