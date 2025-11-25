@@ -9,7 +9,7 @@
         :min="min"
         :max="max"
         :ui="{ base: 'px-2', increment: 'hidden', decrement: 'hidden' }"
-        @update:model-value="emit('update:model-value', $event)"
+        @update:model-value="emit('update:model-value', $event!)"
       />
 
       <UDropdownMenu :items="zoomOptions">
