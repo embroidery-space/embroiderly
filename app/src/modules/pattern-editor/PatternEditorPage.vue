@@ -7,17 +7,12 @@
           <PalettePanel />
         </RSplitterPanel>
         <RSplitterResizeHandle class="border-2 border-default" />
-        <RSplitterPanel class="relative">
-          <BlockUI :blocked="patternsStore.loading || patternsStore.blocked || isDragging" class="size-full">
-            <div
-              v-if="isDragging"
-              class="absolute top-1/2 left-1/2 z-10 flex -translate-1/2 items-center justify-center rounded-full bg-default p-6"
-            >
-              <UIcon name="i-lucide:upload" class="size-16" />
-            </div>
-
-            <WelcomePanel v-if="!patternsStore.pattern" class="size-full" />
-            <CanvasPanel ref="pattern-canvas" />
+        <RSplitterPanel>
+          <BlockUI :blocked="patternsStore.loading || patternsStore.blocked" class="size-full">
+            <DropZone class="size-full" @drop="handleFilesDrop">
+              <WelcomePanel v-if="!patternsStore.pattern" class="size-full" />
+              <CanvasPanel ref="pattern-canvas" />
+            </DropZone>
           </BlockUI>
         </RSplitterPanel>
       </RSplitterGroup>
@@ -29,10 +24,10 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-  import { onMounted, ref, useTemplateRef } from "vue";
+  import { onMounted, useTemplateRef } from "vue";
 
   import { FilesApi } from "~/api/index.ts";
-  import { BlockUI } from "~/shared/components/";
+  import { BlockUI, DropZone } from "~/shared/components/";
 
   import { PageHeader } from "./components/";
 
@@ -44,31 +39,13 @@
 
   const patternCanvas = useTemplateRef("pattern-canvas");
 
-  const isDragging = ref(false);
-  appWindow.onDragDropEvent(async ({ payload }) => {
-    switch (payload.type) {
-      case "over": {
-        isDragging.value = true;
-        break;
-      }
-
-      case "drop": {
-        isDragging.value = false;
-        const paths: [number, string][] = payload.paths.map((path, index) => [index, path]);
-        for (const [index, path] of paths) {
-          // Assign only the last opened pattern to not abuse the `PatternCanvas`.
-          const assignToCurrent = paths.length - 1 === index;
-          await patternsStore.openPattern(path, { assignToCurrent });
-        }
-        break;
-      }
-
-      default: {
-        isDragging.value = false;
-        break;
-      }
+  async function handleFilesDrop(paths: string[]) {
+    for (const [index, path] of paths.entries()) {
+      // Assign only the last opened pattern to not abuse the `PatternCanvas`.
+      const assignToCurrent = paths.length - 1 === index;
+      await patternsStore.openPattern(path, { assignToCurrent });
     }
-  });
+  }
 
   defineShortcuts({
     ctrl_shift_z: () => patternsStore.undo({ single: true }),
