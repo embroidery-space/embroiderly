@@ -22,16 +22,22 @@
 </template>
 
 <script lang="ts" setup>
+  import type { UnlistenFn } from "@tauri-apps/api/event";
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+  import type { CloseRequestedEvent } from "@tauri-apps/api/window";
 
-  import { onMounted, useTemplateRef } from "vue";
+  import { onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 
   import { FilesApi } from "~/api/index.ts";
   import { BlockUI, DropZone } from "~/shared/components/";
+  import { useConfirm, useI18n } from "~/shared/composables/";
 
   import { PageHeader } from "./components/";
 
   const appWindow = getCurrentWebviewWindow();
+
+  const confirm = useConfirm();
+  const { fluent } = useI18n();
 
   const appStateStore = useAppStateStore();
   const patternsStore = usePatternsStore();
@@ -47,12 +53,34 @@
     }
   }
 
+  const windowCloseListener = ref<UnlistenFn>();
+  async function handleWindowClose(event: CloseRequestedEvent) {
+    const unsavedPatterns = await FilesApi.getUnsavedPatterns();
+    if (unsavedPatterns.length) {
+      const patterns = appStateStore.openedPatterns
+        .filter(({ id }) => unsavedPatterns.includes(id))
+        .map(({ title }) => `- ${title}`)
+        .join("\n");
+
+      const savePatterns = await confirm.open(fluent.$ta("unsaved-patterns", { patterns })).result;
+
+      // If the user dismissed the dialog, prevent the window from closing.
+      if (savePatterns === undefined) return event.preventDefault();
+
+      if (savePatterns) await FilesApi.saveAllPatterns();
+      await FilesApi.closeAllPatterns();
+    }
+  }
+
   defineShortcuts({
     ctrl_shift_z: () => patternsStore.undo({ single: true }),
     ctrl_shift_y: () => patternsStore.redo({ single: true }),
   });
 
   onMounted(async () => {
+    // 0. Initialize the window close listener.
+    windowCloseListener.value = await appWindow.onCloseRequested(handleWindowClose);
+
     // 1. Initialize the pattern canvas.
     await patternCanvas.value!.initPatternApplication({
       render: {
@@ -77,5 +105,9 @@
 
     // 4. Make the app window visible (it is invisible by default).
     await appWindow.show();
+  });
+
+  onUnmounted(() => {
+    windowCloseListener.value?.();
   });
 </script>
