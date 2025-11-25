@@ -28,23 +28,27 @@
 </template>
 
 <script setup lang="ts">
+  import type { UnlistenFn } from "@tauri-apps/api/event";
   import { getCurrentWindow } from "@tauri-apps/api/window";
 
-  import { onUnmounted, ref } from "vue";
+  import { onMounted, onUnmounted, ref } from "vue";
+
+  const appWindow = getCurrentWindow();
 
   // New window is maximized by default.
   const isMaximized = ref(true);
+  const resizeListener = ref<UnlistenFn>();
 
-  const appWindow = getCurrentWindow();
-  const maxWindowSize = await appWindow.innerSize();
-
-  const unlistenResized = await appWindow.onResized(({ payload }) => {
-    // For some reason, the event is fired twice on Linux.
-    // This is a workaround to prevent the icon from flickering.
-    isMaximized.value = maxWindowSize.width === payload.width && maxWindowSize.height === payload.height;
+  onMounted(async () => {
+    const maxWindowSize = await appWindow.innerSize();
+    resizeListener.value = await appWindow.onResized(({ payload }) => {
+      // For some reason, the event is fired twice on Linux.
+      // This is a workaround to prevent the icon from flickering.
+      isMaximized.value = maxWindowSize.width === payload.width && maxWindowSize.height === payload.height;
+    });
   });
 
   onUnmounted(() => {
-    unlistenResized();
+    if (resizeListener.value) resizeListener.value();
   });
 </script>
