@@ -61,8 +61,8 @@ wildcard_dependencies = "deny"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.2", features = ["config-json5"] }
-tauri-build = { version = "2.4.1", features = ["config-json5"] }
+tauri = { version = "2.9.2", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
+tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
 tauri-plugin = { version = "2.5.1", features = ["build"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.2"
