@@ -28,7 +28,7 @@ import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
-} from "~/error.ts";
+} from "~/shared/api/";
 import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
 import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER, ANY_IMAGE_FILTER } from "~/shared/constants/";
 

@@ -1,4 +1,4 @@
-import { invoke } from "./index.ts";
+import { invoke } from "~/shared/api/";
 
 // === Paths ===
 

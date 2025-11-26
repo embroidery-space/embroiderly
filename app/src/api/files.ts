@@ -1,6 +1,5 @@
 import { Pattern, Fabric, deserializeBrandPalette } from "~/core/pattern/";
-
-import { invoke } from "./index.ts";
+import { invoke } from "~/shared/api/";
 
 export interface GroupedFilesList {
   system: string[];

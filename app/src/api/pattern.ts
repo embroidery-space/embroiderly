@@ -16,8 +16,7 @@ import {
   PdfExportOptions,
 } from "~/core/pattern/";
 import type { Stitch } from "~/core/pattern/";
-
-import { invoke } from "./index.ts";
+import { invoke } from "~/shared/api/";
 
 // === Pattern Info ===
 
