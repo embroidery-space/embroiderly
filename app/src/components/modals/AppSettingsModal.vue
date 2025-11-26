@@ -13,5 +13,7 @@
 </template>
 
 <script setup lang="ts">
+  import { useSettingsStore } from "~/shared/stores/";
+
   const settingsStore = useSettingsStore();
 </script>

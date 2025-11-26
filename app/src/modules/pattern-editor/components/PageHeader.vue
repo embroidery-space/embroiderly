@@ -39,6 +39,7 @@
   import { WindowTitlebar } from "~/shared/components/";
   import type { WindowMenuItem } from "~/shared/components/";
   import { useConfirm, useI18n } from "~/shared/composables/";
+  import { useSettingsStore } from "~/shared/stores/";
 
   const confirm = useConfirm();
   const { fluent } = useI18n();

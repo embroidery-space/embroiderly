@@ -31,6 +31,7 @@
   import { FilesApi } from "~/api/index.ts";
   import { BlockUI, DropZone } from "~/shared/components/";
   import { useConfirm, useI18n } from "~/shared/composables/";
+  import { useSettingsStore } from "~/shared/stores/";
 
   import { PageHeader } from "./components/";
 

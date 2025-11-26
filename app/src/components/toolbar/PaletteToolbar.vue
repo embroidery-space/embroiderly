@@ -34,6 +34,7 @@
 
   import { tools } from "~/core/tools/";
   import { useI18n } from "~/shared/composables/";
+  import { useSettingsStore } from "~/shared/stores/";
 
   const { fluent } = useI18n();
 

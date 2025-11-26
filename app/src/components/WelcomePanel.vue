@@ -79,6 +79,7 @@
   import { computed } from "vue";
 
   import { useI18n } from "~/shared/composables/";
+  import { useSettingsStore } from "~/shared/stores/";
 
   const settingsStore = useSettingsStore();
   const patternsStore = usePatternsStore();
