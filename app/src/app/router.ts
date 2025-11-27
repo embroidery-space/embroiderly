@@ -1,6 +1,18 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 export const router = createRouter({
-  history: createWebHistory(),
-  routes: [{ path: "/", component: () => import("~/modules/pattern-editor/PatternEditorPage.vue") }],
+  history: createWebHashHistory(),
+  routes: [
+    {
+      name: "dashboard",
+      path: "/",
+      redirect: "/pattern-editor",
+    },
+    {
+      name: "pattern-editor",
+      path: "/pattern-editor/:patternId?",
+      component: () => import("~/modules/pattern-editor/PatternEditorPage.vue"),
+      props: true,
+    },
+  ],
 });

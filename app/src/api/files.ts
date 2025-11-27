@@ -24,14 +24,12 @@ export interface OpenPatternOptions {
   restoreFromBackup?: boolean;
 }
 
-export async function openPattern(filePath: string, options?: OpenPatternOptions) {
-  const buffer = await invoke<ArrayBuffer>("open_pattern", { filePath, ...options });
-  return Pattern.deserialize(new Uint8Array(buffer));
+export function openPattern(filePath: string, options?: OpenPatternOptions) {
+  return invoke<string>("open_pattern", { filePath, ...options });
 }
 
-export async function createPattern(fabric: Fabric) {
-  const buffer = await invoke<ArrayBuffer>("create_pattern", Fabric.serialize(fabric));
-  return Pattern.deserialize(new Uint8Array(buffer));
+export function createPattern(fabric: Fabric) {
+  return invoke<string>("create_pattern", Fabric.serialize(fabric));
 }
 
 export function savePattern(patternId: string, filePath: string) {
@@ -160,14 +158,8 @@ export async function getImageImportPreview(
   return Pattern.deserialize(new Uint8Array(buffer));
 }
 
-export async function finalizeImageImport(
-  id: number,
-  imagePath: string,
-  palettePath: string,
-  options: ImageImportOptions,
-) {
-  const buffer = await invoke<ArrayBuffer>("finalize_image_import", { id, imagePath, palettePath, options });
-  return Pattern.deserialize(new Uint8Array(buffer));
+export function finalizeImageImport(id: number, imagePath: string, palettePath: string, options: ImageImportOptions) {
+  return invoke<string>("finalize_image_import", { id, imagePath, palettePath, options });
 }
 
 // === Exporting pattern into PDF documents ===

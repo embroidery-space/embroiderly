@@ -74,7 +74,7 @@ pub async fn get_image_import_preview(
 }
 
 /// Fetches the final image import result, stores it in app state, and stops the sidecar.
-/// Returns the pattern imported from the image.
+/// Returns the ID of the pattern imported from the image.
 #[expect(clippy::too_many_arguments)]
 #[tauri::command]
 pub async fn finalize_image_import<R: tauri::Runtime>(
@@ -86,7 +86,7 @@ pub async fn finalize_image_import<R: tauri::Runtime>(
   history: tauri::State<'_, HistoryState<R>>,
   patterns: tauri::State<'_, PatternsState>,
   sidecar_manager: tauri::State<'_, SidecarManager>,
-) -> Result<tauri::ipc::Response> {
+) -> Result<String> {
   log::debug!("Finalizing image import");
 
   let Some(sidecar) = sidecar_manager.remove(id).await else {
@@ -106,13 +106,15 @@ pub async fn finalize_image_import<R: tauri::Runtime>(
     sidecar.send_command(payload).await?;
     sidecar.get_response().await?
   };
-
   let patproj: embroiderly_pattern::PatternProject = borsh::from_slice(&output)?;
+
+  let pattern_id = patproj.id;
+
   history.write().unwrap().create(patproj.id);
   patterns.write().unwrap().add_pattern(patproj);
 
   sidecar.shutdown().await?;
 
   log::debug!("Image import finalized successfully");
-  Ok(tauri::ipc::Response::new(output))
+  Ok(pattern_id.to_string())
 }

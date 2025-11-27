@@ -8,9 +8,10 @@
         </RSplitterPanel>
         <RSplitterResizeHandle class="border-2 border-default" />
         <RSplitterPanel>
-          <BlockUI :blocked="patternsStore.loading || patternsStore.blocked" class="size-full">
+          <!-- <BlockUI :blocked="patternsStore.loading || patternsStore.blocked" class="size-full"> -->
+          <BlockUI :blocked="false" class="size-full">
             <DropZone class="size-full" @drop="handleFilesDrop">
-              <WelcomePanel v-if="!patternsStore.pattern" class="size-full" />
+              <WelcomePanel v-if="!patternStore.pattern" class="size-full" />
               <CanvasPanel ref="pattern-canvas" />
             </DropZone>
           </BlockUI>
@@ -26,56 +27,74 @@
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import type { CloseRequestedEvent } from "@tauri-apps/api/window";
 
-  import { onMounted, onUnmounted, ref, useTemplateRef } from "vue";
+  import { onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import { useRouter } from "vue-router";
 
-  import { FilesApi } from "~/api/index.ts";
   import { BlockUI, DropZone } from "~/shared/components/";
   import { useConfirm, useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
 
   import { PageHeader } from "./components/";
+  import { usePatternFileStore, usePatternStore } from "./stores/";
 
   const appWindow = getCurrentWebviewWindow();
+
+  const props = defineProps<{ patternId?: string }>();
+
+  const router = useRouter();
 
   const confirm = useConfirm();
   const { fluent } = useI18n();
 
-  const appStateStore = useAppStateStore();
-  const patternsStore = usePatternsStore();
+  // const appStateStore = useAppStateStore();
+  const patternStore = usePatternStore();
+  const patternFileStore = usePatternFileStore();
   const settingsStore = useSettingsStore();
 
   const patternCanvas = useTemplateRef("pattern-canvas");
 
+  watch(
+    () => props.patternId,
+    async (patternId) => {
+      if (patternId) patternStore.pattern = await patternFileStore.loadPattern(patternId);
+      else patternStore.pattern = undefined;
+    },
+    { immediate: true },
+  );
+
   async function handleFilesDrop(paths: string[]) {
     for (const [index, path] of paths.entries()) {
-      // Assign only the last opened pattern to not abuse the `PatternCanvas`.
-      const assignToCurrent = paths.length - 1 === index;
-      await patternsStore.openPattern(path, { assignToCurrent });
+      const patternId = await patternFileStore.openPattern(path);
+      if (index === paths.length - 1) {
+        router.push({ name: "pattern-editor", params: { patternId } });
+      }
     }
   }
 
   const windowCloseListener = ref<UnlistenFn>();
   async function handleWindowClose(event: CloseRequestedEvent) {
-    const unsavedPatterns = await FilesApi.getUnsavedPatterns();
+    const unsavedPatterns = await patternFileStore.getUnsavedPatterns();
     if (unsavedPatterns.length) {
-      const patterns = appStateStore.openedPatterns
-        .filter(({ id }) => unsavedPatterns.includes(id))
-        .map(({ title }) => `- ${title}`)
-        .join("\n");
-
+      const patterns = unsavedPatterns.map(({ title }) => `- ${title}`).join("\n");
       const savePatterns = await confirm.open(fluent.$ta("unsaved-patterns", { patterns })).result;
 
       // If the user dismissed the dialog, prevent the window from closing.
       if (savePatterns === undefined) return event.preventDefault();
 
-      if (savePatterns) await FilesApi.saveAllPatterns();
-      await FilesApi.closeAllPatterns();
+      if (savePatterns) await patternFileStore.saveAllPatterns();
+      await patternFileStore.closeAllPatterns();
     }
   }
 
+  // appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
+  //   if (patternId === pattern.value?.id) {
+  //     toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
+  //   }
+  // });
+
   defineShortcuts({
-    ctrl_shift_z: () => patternsStore.undo({ single: true }),
-    ctrl_shift_y: () => patternsStore.redo({ single: true }),
+    ctrl_shift_z: () => patternStore.undo({ single: true }),
+    ctrl_shift_y: () => patternStore.redo({ single: true }),
   });
 
   onMounted(async () => {
@@ -93,18 +112,9 @@
     });
 
     // 2. Initially load opened patterns.
-    if (!appStateStore.openedPatterns.length) {
-      // If there are no opened patterns, it means the app was just started.
-      // So we should load those patterns that were opened via file associations.
-      const openedPatterns = await FilesApi.getOpenedPatterns();
-      for (const [id, title] of openedPatterns) appStateStore.addOpenedPattern(id, title);
-    }
+    await patternFileStore.fetchOpenedPatterns();
 
-    // 3. Load the current pattern if it exists.
-    const currentPattern = appStateStore.currentPattern;
-    if (currentPattern) await patternsStore.loadPattern(currentPattern.id);
-
-    // 4. Make the app window visible (it is invisible by default).
+    // 3. Make the app window visible (it is invisible by default).
     await appWindow.show();
   });
 

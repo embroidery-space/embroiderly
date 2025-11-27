@@ -3,7 +3,7 @@ import type { ImageImportOptions } from "~/api";
 import type { Pattern } from "~/core/pattern";
 
 /** Manages the lifecycle of an image import session. */
-export class ImageImportSession {
+export class ImageImportService {
   #id: number | null = null;
 
   /**
@@ -37,7 +37,7 @@ export class ImageImportSession {
    * @param palettePath - Path to the palette file
    * @param options - Image import options
    */
-  async finalize(imagePath: string, palettePath: string, options: ImageImportOptions): Promise<Pattern> {
+  async finalize(imagePath: string, palettePath: string, options: ImageImportOptions): Promise<string> {
     if (this.#id === null) throw new Error("Session not started. Call start() first.");
     const pattern = await FilesApi.finalizeImageImport(this.#id, imagePath, palettePath, options);
 

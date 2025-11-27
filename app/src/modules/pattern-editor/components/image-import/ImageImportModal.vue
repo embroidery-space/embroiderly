@@ -93,7 +93,7 @@
   import type { ImageImportOptions } from "~/api";
   import { LayersVisibility } from "~/core/pattern";
   import { PatternApplication, PatternView } from "~/core/pixi";
-  import { ImageImportSession } from "~/core/services/";
+  import { ImageImportService } from "~/modules/pattern-editor/services/";
   import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "~/shared/components/";
   import { ANY_IMAGE_FILTER } from "~/shared/constants/";
 
@@ -111,16 +111,14 @@
   }
 
   const props = defineProps<ImportImageModalProps>();
-  const emit = defineEmits<{ close: [] }>();
-
-  const patternsStore = usePatternsStore();
+  const emit = defineEmits<{ close: [patternId?: string] }>();
 
   const canvas = useTemplateRef("canvas");
 
   const patternApplication = new PatternApplication();
   const patternApplicationInitialized = ref(false);
 
-  const imageImportSession = new ImageImportSession();
+  const imageImportService = new ImageImportService();
 
   const imagePath = ref(props.imagePath);
   const imageDimensions = ref(props.imageDimensions);
@@ -180,13 +178,13 @@
     async (options: ImageImportOptions) => {
       if (!patternApplicationInitialized.value) {
         await patternApplication.init(canvas.value!);
-        await imageImportSession.start();
+        await imageImportService.start();
         patternApplicationInitialized.value = true;
       }
 
       importingPattern.value = true;
       try {
-        const pattern = await imageImportSession.getPreview(imagePath.value, selectedPalettePath.value, options);
+        const pattern = await imageImportService.getPreview(imagePath.value, selectedPalettePath.value, options);
         patternApplication.view = new PatternView(pattern);
 
         // Configure the pattern view.
@@ -230,14 +228,12 @@
           : undefined,
     };
 
-    const pattern = await imageImportSession.finalize(imagePath.value, selectedPalettePath.value, options);
-    patternsStore.setPattern(pattern);
-
-    emit("close");
+    const patternId = await imageImportService.finalize(imagePath.value, selectedPalettePath.value, options);
+    emit("close", patternId);
   }
 
   onUnmounted(() => {
-    imageImportSession.destroy();
+    imageImportService.destroy();
     patternApplication.destroy();
   });
 </script>

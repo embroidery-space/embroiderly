@@ -26,7 +26,7 @@
             }"
           />
           <template #content>
-            <PdfPublishForm v-model="options" />
+            <PdfExportOptionsForm v-model="options" />
           </template>
         </UCollapsible>
       </div>
@@ -56,13 +56,17 @@
   import { ref } from "vue";
 
   import { PdfExportOptions } from "~/core/pattern/";
+  import { usePatternFileStore, usePatternStore } from "~/modules/pattern-editor/stores/";
   import { FilePicker } from "~/shared/components/";
   import { PDF_FILTER } from "~/shared/constants/";
+
+  import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 
   const props = defineProps<{ filePath: string; options: PdfExportOptions }>();
   const emit = defineEmits<{ close: [] }>();
 
-  const patternsStore = usePatternsStore();
+  const patternStore = usePatternStore();
+  const patternFileStore = usePatternFileStore();
 
   // Copy the data from the props to a reactive object.
   const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
@@ -82,7 +86,7 @@
 
   const optionsUpdated = refAutoReset(false, 1000);
   async function updateOptions() {
-    await patternsStore.updatePdfExportOptions(options.value);
+    await patternStore.updatePdfExportOptions(options.value);
     optionsUpdated.value = true;
   }
 
@@ -90,7 +94,7 @@
   async function exportPattern() {
     try {
       exportingPattern.value = true;
-      await patternsStore.exportPatternAsPdf(filePath.value, options.value);
+      await patternFileStore.exportPatternAsPdf(patternStore.pattern!.id, filePath.value, options.value);
     } finally {
       exportingPattern.value = false;
     }

@@ -5,26 +5,18 @@
     </template>
     <template #footer>
       <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('modal-save')" @click="updatePatternInfo" />
+      <UButton :label="$t('modal-save')" @click="emit('close', patternInfo)" />
     </template>
   </UModal>
 </template>
 
 <script setup lang="ts">
-  import { ref } from "vue";
+  import { ref, toRaw } from "vue";
 
   import { PatternInfo } from "~/core/pattern/";
 
   const props = defineProps<{ patternInfo: PatternInfo }>();
-  const emit = defineEmits<{ close: [] }>();
+  const emit = defineEmits<{ close: [patternInfo?: PatternInfo] }>();
 
-  const patternsStore = usePatternsStore();
-
-  // Copy the data from the props to a reactive object.
-  const patternInfo = ref<PatternInfo>(new PatternInfo(props.patternInfo));
-
-  async function updatePatternInfo() {
-    await patternsStore.updatePatternInfo(patternInfo.value);
-    emit("close");
-  }
+  const patternInfo = ref<PatternInfo>(new PatternInfo(toRaw(props.patternInfo)));
 </script>

@@ -2,18 +2,18 @@
   <WindowTitlebar :items="menuItems">
     <template #end>
       <div class="flex items-center gap-2">
-        <template v-if="patternsStore.pattern !== undefined">
+        <template v-if="patternStore.pattern">
           <ToolButton
             :label="$t('history-undo')"
             icon="i-lucide:undo"
             :kbds="['ctrl', 'z']"
-            :on-click="patternsStore.undo"
+            :on-click="patternStore.undo"
           />
           <ToolButton
             :label="$t('history-redo')"
             icon="i-lucide:redo"
             :kbds="['ctrl', 'y']"
-            :on-click="patternsStore.redo"
+            :on-click="patternStore.redo"
           />
           <USeparator orientation="vertical" />
         </template>
@@ -34,17 +34,26 @@
 
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { computed } from "vue";
+  import { useRouter } from "vue-router";
 
-  import { UtilityApi } from "~/api/";
+  import { FilesApi, UtilityApi } from "~/api/";
+  import { Fabric } from "~/core/pattern/";
+  import { useEditorModals } from "~/modules/pattern-editor/composables/";
+  import { usePatternFileStore, usePatternStore } from "~/modules/pattern-editor/stores/";
   import { WindowTitlebar } from "~/shared/components/";
   import type { WindowMenuItem } from "~/shared/components/";
   import { useConfirm, useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
 
+  const router = useRouter();
+
   const confirm = useConfirm();
+  const modals = useEditorModals();
+
   const { fluent } = useI18n();
 
-  const patternsStore = usePatternsStore();
+  const patternStore = usePatternStore();
+  const patternFileStore = usePatternFileStore();
   const settingsStore = useSettingsStore();
 
   const menuItems = computed<WindowMenuItem[]>(() => [
@@ -52,25 +61,38 @@
       label: fluent.$t("app-menu-file"),
       children: [
         [
-          { label: fluent.$t("app-menu-file-open"), kbds: ["ctrl", "o"], onSelect: () => patternsStore.openPattern() },
+          {
+            label: fluent.$t("app-menu-file-open"),
+            kbds: ["ctrl", "o"],
+            async onSelect() {
+              const patternId = await patternFileStore.openPattern();
+              router.push({ name: "pattern-editor", params: { patternId } });
+            },
+          },
           {
             label: fluent.$t("app-menu-file-create"),
             kbds: ["ctrl", "n"],
-            onSelect: () => patternsStore.openFabricModal(),
+            async onSelect() {
+              const fabric = await modals.openFabricModal(Fabric.default());
+              if (!fabric) return;
+
+              const patternId = await patternFileStore.createPattern(fabric);
+              router.push({ name: "pattern-editor", params: { patternId } });
+            },
           },
         ],
         [
           {
             label: fluent.$t("app-menu-file-save"),
             kbds: ["ctrl", "s"],
-            disabled: !patternsStore.pattern,
-            onSelect: () => patternsStore.savePattern(),
+            disabled: !patternStore.pattern,
+            onSelect: () => patternFileStore.savePattern(patternStore.pattern!.id),
           },
           {
             label: fluent.$t("app-menu-file-save-as"),
             kbds: ["ctrl", "shift", "s"],
-            disabled: !patternsStore.pattern,
-            onSelect: () => patternsStore.savePattern(true),
+            disabled: !patternStore.pattern,
+            onSelect: () => patternFileStore.savePattern(patternStore.pattern!.id, true),
           },
         ],
         [
@@ -80,18 +102,34 @@
               [
                 {
                   label: fluent.$t("app-menu-file-import-image"),
-                  onSelect: () => patternsStore.openImageImportModal(),
+                  async onSelect() {
+                    const patternId = await modals.openImageImportModal();
+                    router.push({ name: "pattern-editor", params: { patternId } });
+                  },
                 },
               ],
             ],
           },
           {
             label: fluent.$t("app-menu-file-export"),
-            disabled: !patternsStore.pattern,
+            disabled: !patternStore.pattern,
             children: [
               [
-                { label: "OXS", onSelect: () => patternsStore.openExportModal("oxs") },
-                { label: "PDF", onSelect: () => patternsStore.openExportModal("pdf") },
+                {
+                  label: "OXS",
+                  async onSelect() {
+                    const patternId = patternStore.pattern!.id;
+                    const filePath = (await FilesApi.getPatternFilePath(patternId)).replace(/\.[^.]+$/, ".oxs");
+                    await patternFileStore.exportPatternAsOxs(patternId, filePath);
+                  },
+                },
+                {
+                  label: "PDF",
+                  async onSelect() {
+                    const { id, pdfExportOptions } = patternStore.pattern!;
+                    await modals.openPdfExportModal(id, pdfExportOptions);
+                  },
+                },
               ],
             ],
           },
@@ -100,25 +138,55 @@
           {
             label: fluent.$t("app-menu-file-close"),
             kbds: ["ctrl", "w"],
-            disabled: !patternsStore.pattern,
-            onSelect: () => patternsStore.closePattern(),
+            disabled: !patternStore.pattern,
+            async onSelect() {
+              await patternFileStore.closePattern(patternStore.pattern!.id);
+
+              const openedPatternsNumber = patternFileStore.openedPatterns.length;
+              const patternId = patternFileStore.openedPatterns[openedPatternsNumber - 1]?.id;
+
+              router.push({ name: "pattern-editor", params: { patternId: patternId } });
+            },
           },
         ],
       ],
     },
     {
       label: fluent.$t("app-menu-pattern"),
-      visible: patternsStore.pattern !== undefined,
+      visible: patternStore.pattern !== undefined,
       children: [
         [
-          { label: fluent.$t("pattern-info"), onSelect: () => patternsStore.openPatternInfoModal() },
+          {
+            label: fluent.$t("pattern-info"),
+            async onSelect() {
+              const patternInfo = await modals.openPatternInfoModal(patternStore.pattern!.info);
+              if (patternInfo) await patternStore.updatePatternInfo(patternInfo);
+            },
+          },
           {
             label: fluent.$t("fabric-properties"),
-            onSelect: () => patternsStore.openFabricModal(patternsStore.pattern?.fabric),
+            async onSelect() {
+              const fabric = await modals.openFabricModal(patternStore.pattern!.fabric);
+              if (fabric) await patternStore.updateFabric(fabric);
+            },
           },
-          { label: fluent.$t("grid-properties"), onSelect: () => patternsStore.openGridModal() },
+          {
+            label: fluent.$t("grid-properties"),
+            async onSelect() {
+              const grid = await modals.openGridModal(patternStore.pattern!.grid);
+              if (grid) await patternStore.updateGrid(grid);
+            },
+          },
         ],
-        [{ label: fluent.$t("publish-settings"), onSelect: () => patternsStore.openPublishModal() }],
+        [
+          {
+            label: fluent.$t("publish-settings"),
+            async onSelect() {
+              const options = await modals.openPdfExportOptionsModal(patternStore.pattern!.pdfExportOptions);
+              if (options) await patternStore.updatePdfExportOptions(options);
+            },
+          },
+        ],
       ],
     },
     {
