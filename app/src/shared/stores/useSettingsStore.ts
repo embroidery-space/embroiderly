@@ -60,13 +60,11 @@ export interface OtherOptions {
 export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const overlay = useOverlay();
   const appSettingModal = overlay.create(
-    defineAsyncComponent(() => import("~/components/modals/AppSettingsModal.vue")),
+    defineAsyncComponent(() => import("~/shared/components/settings/AppSettingsModal.vue")),
   );
 
   const { fluent, setLocale } = useI18n();
   const toast = useToast();
-
-  const loadingUpdate = ref(false);
 
   const ui = reactive<UiOptions>({
     theme: "system",
@@ -106,6 +104,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     appSettingModal.open();
   }
 
+  const loadingUpdate = ref(false);
   async function checkForUpdates(options?: CheckForUpdatesOptions) {
     const type = options?.auto ? "background" : "foreground";
     try {
