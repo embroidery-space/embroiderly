@@ -58,6 +58,8 @@
   import { ref, computed, toRaw, useTemplateRef } from "vue";
   import type { MaybeRefOrGetter } from "vue";
 
+  import { useEditorStateStore, usePatternStore } from "~/modules/pattern-editor/stores/";
+
   interface ToolOption {
     label: string;
     icon: string;
@@ -72,8 +74,8 @@
   }>();
   const emit = defineEmits(["update:modelValue"]);
 
-  const appStateStore = useAppStateStore();
-  const patternsStore = usePatternsStore();
+  const editorStateStore = useEditorStateStore();
+  const patternStore = usePatternStore();
 
   const optionsMenuOpen = ref(false);
   const currentOption = computed<ToolOption>(() => {
@@ -82,9 +84,9 @@
 
   const selected = computed(() => currentOption.value.value === toRaw(props.modelValue) && !props.disabled);
   const selectionColor = computed<string>(() => {
-    const palindex = appStateStore.selectedPaletteItemIndex;
-    if (!props.usePalitemColor || !patternsStore.pattern || palindex === undefined) return "var(--text-dimmed)";
-    return patternsStore.pattern.palette.items[palindex]!.hex;
+    const palindex = editorStateStore.selectedPaletteItemIndex;
+    if (!props.usePalitemColor || !patternStore.pattern || palindex === undefined) return "var(--text-dimmed)";
+    return patternStore.pattern.palette.items[palindex]!.hex;
   });
 
   // Suppress the error by casting to `MaybeRefOrGetter`.

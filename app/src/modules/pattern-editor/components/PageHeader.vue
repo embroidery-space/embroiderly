@@ -45,6 +45,8 @@
   import { useConfirm, useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
 
+  import { ToolButton } from "./toolbar/";
+
   const router = useRouter();
 
   const confirm = useConfirm();
@@ -145,7 +147,7 @@
               const openedPatternsNumber = patternFileStore.openedPatterns.length;
               const patternId = patternFileStore.openedPatterns[openedPatternsNumber - 1]?.id;
 
-              router.push({ name: "pattern-editor", params: { patternId: patternId } });
+              router.push({ name: "pattern-editor", params: { patternId } });
             },
           },
         ],

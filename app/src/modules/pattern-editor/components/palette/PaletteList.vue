@@ -65,6 +65,8 @@
 
   import { BasePaletteItem, PaletteSettings } from "~/core/pattern/";
 
+  import PaletteListItem from "./PaletteListItem.vue";
+
   interface PaletteListProps<T> {
     options?: T[];
     optionValue?: (option: T) => V;

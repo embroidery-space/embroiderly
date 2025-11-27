@@ -1,5 +1,5 @@
 <template>
-  <PanelSection :title="$t('palette-display-options')">
+  <PaletteSection :title="$t('palette-display-options')">
     <div class="flex flex-col gap-y-2 p-2">
       <UFormField :label="$t('palette-columns-number')" class="w-full">
         <UInputNumber
@@ -51,11 +51,13 @@
         />
       </div>
     </div>
-  </PanelSection>
+  </PaletteSection>
 </template>
 
 <script setup lang="ts">
   import { PaletteSettings } from "~/core/pattern/";
+
+  import { PaletteSection } from ".";
 
   const props = defineProps<{ settings: PaletteSettings }>();
   const emit = defineEmits<{ (event: "update:settings", data: PaletteSettings): void }>();

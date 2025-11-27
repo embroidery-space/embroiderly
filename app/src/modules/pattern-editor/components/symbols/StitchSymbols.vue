@@ -1,5 +1,5 @@
 <template>
-  <PanelSection :title="$t('stitch-symbols')">
+  <PaletteSection :title="$t('stitch-symbols')">
     <UContextMenu :items="contextMenuOptions">
       <SymbolsList
         v-model:selected-symbol="selectedSymbol"
@@ -39,7 +39,7 @@
         </template>
       </SymbolsList>
     </UContextMenu>
-  </PanelSection>
+  </PaletteSection>
 </template>
 
 <script setup lang="ts">
@@ -51,6 +51,10 @@
   import { FONT_FILTER } from "~/shared/constants/";
   import { LoggerService } from "~/shared/services/";
   import { addSymbolFonts } from "~/shared/utils/";
+
+  import { PaletteSection } from "../palette/";
+
+  import SymbolsList from "./SymbolsList.vue";
 
   const confirm = useConfirm();
   const filePicker = useFilePicker();

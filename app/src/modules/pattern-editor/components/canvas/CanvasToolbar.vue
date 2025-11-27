@@ -12,7 +12,7 @@
       </UTooltip>
 
       <template #content>
-        <LayersForm v-model="layers" />
+        <CanvasLayers v-model="layers" />
       </template>
     </UPopover>
 
@@ -43,22 +43,27 @@
   import { computed, ref, watch } from "vue";
 
   import { DisplayMode, LayersVisibility } from "~/core/pattern/";
+  import { usePatternStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
+
+  import { ToolSelector, ToolToggle } from "../toolbar/";
+
+  import CanvasLayers from "./CanvasLayers.vue";
 
   const { fluent } = useI18n();
 
-  const patternsStore = usePatternsStore();
+  const patternStore = usePatternStore();
 
-  const disabled = computed(() => patternsStore.pattern === undefined);
+  const disabled = computed(() => patternStore.pattern === undefined);
 
-  const layers = ref(new LayersVisibility(patternsStore.pattern?.layersVisibility || LayersVisibility.default()));
-  watch(layers, (newLayers) => patternsStore.setLayersVisibility(newLayers), { deep: true });
+  const layers = ref(new LayersVisibility(patternStore.pattern?.layersVisibility || LayersVisibility.default()));
+  watch(layers, (newLayers) => patternStore.setLayersVisibility(newLayers), { deep: true });
 
   const displayMode = computed({
-    get: () => patternsStore.pattern?.displayMode,
+    get: () => patternStore.pattern?.displayMode,
     set: async (value) => {
-      const mode = value === patternsStore.pattern?.displayMode ? undefined : value;
-      await patternsStore.setDisplayMode(mode);
+      const mode = value === patternStore.pattern?.displayMode ? undefined : value;
+      await patternStore.setDisplayMode(mode);
     },
   });
   const displayModeOptions = computed(() => [
@@ -68,7 +73,7 @@
   ]);
 
   const showSymbols = computed({
-    get: () => patternsStore.pattern?.showSymbols ?? false,
-    set: patternsStore.showSymbols,
+    get: () => patternStore.pattern?.showSymbols ?? false,
+    set: patternStore.showSymbols,
   });
 </script>

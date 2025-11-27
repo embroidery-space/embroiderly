@@ -55,6 +55,8 @@
 </template>
 
 <script setup lang="ts">
+  import SymbolsListItem from "./SymbolsListItem.vue";
+
   interface SymbolsListProps {
     assignedSymbols: number[];
     options?: number[];

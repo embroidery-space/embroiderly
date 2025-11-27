@@ -2,8 +2,8 @@
   <div class="flex size-full flex-col">
     <div class="relative">
       <UTabs
-        :model-value="appStateStore.currentPattern?.id"
-        :items="appStateStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
+        :model-value="patternStore.pattern?.id"
+        :items="patternFileStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
         :content="false"
         color="neutral"
         activation-mode="manual"
@@ -25,14 +25,14 @@
             icon="i-lucide:x"
             class="p-0"
             :class="{
-              'text-inverted': appStateStore.currentPattern!.id === item.value,
-              'text-default': appStateStore.currentPattern!.id !== item.value,
+              'text-inverted': patternStore.pattern?.id === item.value,
+              'text-default': patternStore.pattern?.id !== item.value,
             }"
-            @click.stop="patternsStore.closePattern(item.value)"
+            @click.stop="closePattern(item.value)"
           />
         </template>
       </UTabs>
-      <UProgress v-if="patternsStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
+      <UProgress v-if="patternFileStore.loading" size="sm" :ui="{ root: 'absolute top-full', base: 'rounded-none' }" />
     </div>
 
     <div class="w-full grow overflow-hidden">
@@ -47,7 +47,7 @@
 
     <div class="flex w-full items-center justify-between border-t border-default px-2 py-1">
       <div class="grow"></div>
-      <ZoomControls
+      <CanvasZoomControls
         :model-value="zoom"
         :min="MIN_SCALE"
         :max="MAX_SCALE"
@@ -63,6 +63,7 @@
   import { vElementSize } from "@vueuse/components";
   import { useDebounceFn, useEventListener } from "@vueuse/core";
   import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import { useRouter } from "vue-router";
 
   import { FilesApi } from "~/api";
   import { PatternEvent } from "~/core/pattern/";
@@ -70,15 +71,20 @@
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
   import { CursorTool } from "~/core/tools/";
   import type { PatternEditorToolContext } from "~/core/tools/";
+  import { CanvasZoomControls } from "~/modules/pattern-editor/components/canvas/";
+  import { useEditorStateStore, usePatternStore, usePatternFileStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { LoggerService } from "~/shared/services/";
   import { addSymbolFonts } from "~/shared/utils/";
 
+  const router = useRouter();
+
   const { fluent } = useI18n();
   const toast = useToast();
 
-  const appStateStore = useAppStateStore();
-  const patternsStore = usePatternsStore();
+  const editorStateStore = useEditorStateStore();
+  const patternStore = usePatternStore();
+  const patternFileStore = usePatternFileStore();
 
   const patternApplication = new PatternApplication();
 
@@ -88,28 +94,34 @@
       {
         icon: "i-lucide:image",
         label: fluent.$t("canvas-ctx-menu-set-image"),
-        onSelect: () => patternsStore.setReferenceImage(),
+        // onSelect: () => patternStore.setReferenceImage(),
       },
       {
         icon: "i-lucide:image-off",
         label: fluent.$t("canvas-ctx-menu-remove-image"),
         color: "error",
-        disabled: !patternsStore.pattern?.referenceImage,
-        onSelect: () => patternsStore.removeReferenceImage(),
+        disabled: !patternStore.pattern?.referenceImage,
+        // onSelect: () => patternStore.removeReferenceImage(),
       },
     ],
   ]);
 
   const zoom = ref(1);
 
-  async function switchPattern(id: string) {
-    if (appStateStore.currentPattern!.id !== id) {
-      patternsStore.loadPattern(id);
-    }
+  function switchPattern(patternId: string) {
+    router.push({ name: "pattern-editor", params: { patternId } });
+  }
+  async function closePattern(patternId: string) {
+    await patternFileStore.closePattern(patternId);
+
+    const openedPatternsNumber = patternFileStore.openedPatterns.length;
+    const lastPatternId = patternFileStore.openedPatterns[openedPatternsNumber - 1]?.id;
+
+    router.push({ name: "pattern-editor", params: { patternId: lastPatternId } });
   }
 
   watch(
-    () => patternsStore.pattern,
+    () => patternStore.pattern,
     async (pattern, oldPattern) => {
       if (!pattern || pattern.id === oldPattern?.id) return;
 
@@ -135,9 +147,9 @@
   );
 
   watch(
-    () => appStateStore.selectedTool,
+    () => editorStateStore.selectedTool,
     (_tool, prevTool) => {
-      if (!patternsStore.pattern) return;
+      if (!patternStore.pattern) return;
 
       if (prevTool instanceof CursorTool) {
         // Blur the reference image when the cursor tool is deselected.
@@ -156,26 +168,26 @@
   }
 
   useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolMainAction, async (e) => {
-    const pattern = patternsStore.pattern;
+    const pattern = patternStore.pattern;
     if (!pattern) return;
 
-    await appStateStore.selectedTool.main(createPatternEditorToolContext(e.detail));
+    await editorStateStore.selectedTool.main(createPatternEditorToolContext(e.detail));
   });
 
   useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolAntiAction, async (e) => {
-    const pattern = patternsStore.pattern;
+    const pattern = patternStore.pattern;
     if (!pattern) return;
 
-    await appStateStore.selectedTool.anti?.(createPatternEditorToolContext(e.detail));
+    await editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(e.detail));
   });
 
   useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolRelease, async (e) => {
-    const pattern = patternsStore.pattern;
+    const pattern = patternStore.pattern;
     if (!pattern) return;
 
     if (e.detail.event.type !== "pointerupoutside") {
       // Call the `release` method only if the pointer is not released outside.
-      await appStateStore.selectedTool.release?.(createPatternEditorToolContext(e.detail));
+      await editorStateStore.selectedTool.release?.(createPatternEditorToolContext(e.detail));
     }
   });
 
@@ -189,29 +201,29 @@
   function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorToolContext {
     return {
       ...detail,
-      pattern: patternsStore.pattern!,
+      pattern: patternStore.pattern!,
       api: {
         async addStitch(stitch) {
-          const palindex = appStateStore.selectedPaletteItemIndex;
+          const palindex = editorStateStore.selectedPaletteItemIndex;
           if (palindex !== undefined) {
             stitch.palindex = palindex;
-            await patternsStore.addStitch(stitch);
+            await patternStore.addStitch(stitch);
           }
         },
         async removeStitch(stitch) {
-          const palindex = appStateStore.selectedPaletteItemIndex;
+          const palindex = editorStateStore.selectedPaletteItemIndex;
           if (palindex !== undefined) {
             stitch.palindex = palindex;
-            await patternsStore.removeStitch(stitch);
+            await patternStore.removeStitch(stitch);
           }
         },
 
         async updateReferenceImageSettings(settings) {
-          await patternsStore.updateReferenceImageSettings(settings);
+          await patternStore.updateReferenceImageSettings(settings);
         },
 
-        startTransaction: patternsStore.startTransaction,
-        endTransaction: patternsStore.endTransaction,
+        startTransaction: patternStore.startTransaction,
+        endTransaction: patternStore.endTransaction,
       },
       ui: {
         referenceImage: {
@@ -222,14 +234,14 @@
 
         hint: {
           drawLine(stitch) {
-            const palindex = appStateStore.selectedPaletteItemIndex;
+            const palindex = editorStateStore.selectedPaletteItemIndex;
             if (palindex !== undefined) {
               stitch.palindex = palindex;
               patternApplication.view!.drawLineHint(stitch);
             }
           },
           drawNode(stitch) {
-            const palindex = appStateStore.selectedPaletteItemIndex;
+            const palindex = editorStateStore.selectedPaletteItemIndex;
             if (palindex !== undefined) {
               stitch.palindex = palindex;
               patternApplication.view!.drawNodeHint(stitch);

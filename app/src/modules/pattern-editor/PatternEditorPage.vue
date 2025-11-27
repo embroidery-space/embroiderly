@@ -8,8 +8,7 @@
         </RSplitterPanel>
         <RSplitterResizeHandle class="border-2 border-default" />
         <RSplitterPanel>
-          <!-- <BlockUI :blocked="patternsStore.loading || patternsStore.blocked" class="size-full"> -->
-          <BlockUI :blocked="false" class="size-full">
+          <BlockUI :blocked="patternFileStore.loading" class="size-full">
             <DropZone class="size-full" @drop="handleFilesDrop">
               <WelcomePanel v-if="!patternStore.pattern" class="size-full" />
               <CanvasPanel ref="pattern-canvas" />
@@ -35,6 +34,8 @@
   import { useSettingsStore } from "~/shared/stores/";
 
   import { PageHeader } from "./components/";
+  import { CanvasToolbar } from "./components/canvas/";
+  import { CanvasPanel, PalettePanel, WelcomePanel } from "./components/panels/";
   import { usePatternFileStore, usePatternStore } from "./stores/";
 
   const appWindow = getCurrentWebviewWindow();

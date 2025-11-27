@@ -9,14 +9,14 @@
       @update:open="(isOpen) => !isOpen && updatePaletteDisplaySettings()"
     >
       <PaletteList
-        v-model="appStateStore.selectedPaletteItemIndex"
-        :options="patternsStore.pattern?.palette.itemsInVisualOrder"
+        v-model="editorStateStore.selectedPaletteItemIndex"
+        :options="patternStore.pattern?.palette.itemsInVisualOrder"
         :option-value="(pi) => pi.index"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
         :draggable="paletteIsBeingEdited"
         class="grow"
-        @reorder="({ oldPosition, newPosition }) => patternsStore.reorderPaletteItems(oldPosition, newPosition)"
+        @reorder="({ oldPosition, newPosition }) => patternStore.reorderPaletteItems(oldPosition, newPosition)"
       >
         <template #header>
           <div v-if="paletteIsBeingEdited" class="flex gap-x-1" @contextmenu.stop.prevent>
@@ -55,7 +55,7 @@
         <template #footer>
           <div class="flex items-center justify-between" @contextmenu.stop.prevent>
             <span class="text-sm text-nowrap">
-              {{ $t("palette-size", { size: patternsStore.pattern?.palette.length ?? 0 }) }}
+              {{ $t("palette-size", { size: patternStore.pattern?.palette.length ?? 0 }) }}
             </span>
             <UTooltip
               :text="paletteIsBeingEdited ? $t('palette-save') : $t('palette-edit')"
@@ -89,18 +89,18 @@
     />
 
     <PaletteCatalog
-      v-if="patternsStore.pattern?.palette && sectionVisibility.paletteCatalog"
-      :palette="patternsStore.pattern.palette.items"
+      v-if="patternStore.pattern?.palette && sectionVisibility.paletteCatalog"
+      :palette="patternStore.pattern.palette.items"
       class="min-w-max border-l border-default"
       @close="sectionVisibility.paletteCatalog = false"
-      @add-palette-item="patternsStore.addPaletteItem"
-      @remove-palette-item="patternsStore.removePaletteItem"
+      @add-palette-item="patternStore.addPaletteItem"
+      @remove-palette-item="patternStore.removePaletteItem"
     />
 
     <StitchSymbols
-      v-if="patternsStore.pattern?.palette && sectionVisibility.stitchSymbols"
+      v-if="patternStore.pattern?.palette && sectionVisibility.stitchSymbols"
       :symbols="
-        patternsStore.pattern.palette.items
+        patternStore.pattern.palette.items
           .filter((pi) => pi.symbol !== undefined)
           .map((pi) => ({
             codePoint: pi.symbol!.code,
@@ -120,16 +120,20 @@
   import { computed, reactive, ref, watch } from "vue";
 
   import { PaletteSettings, SortPaletteBy, Symbol } from "~/core/pattern/";
+  import { useEditorStateStore, usePatternStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { vShortcuts } from "~/shared/directives/";
 
-  const appStateStore = useAppStateStore();
-  const patternsStore = usePatternsStore();
+  import { PaletteCatalog, PaletteDisplaySettings, PaletteList, PaletteListItem, PaletteToolbar } from "../palette/";
+  import { StitchSymbols } from "../symbols/";
+
+  const editorStateStore = useEditorStateStore();
+  const patternStore = usePatternStore();
 
   const { fluent } = useI18n();
   const toast = useToast();
 
-  const paletteIsDisabled = computed(() => !patternsStore.pattern);
+  const paletteIsDisabled = computed(() => !patternStore.pattern);
   const paletteIsBeingEdited = ref(false);
 
   const sectionVisibility = reactive({
@@ -140,7 +144,7 @@
 
   const paletteDisplaySettings = ref(PaletteSettings.default());
   watch(
-    () => patternsStore.pattern?.paletteDisplaySettings,
+    () => patternStore.pattern?.paletteDisplaySettings,
     (settings) => {
       if (settings) paletteDisplaySettings.value = settings;
     },
@@ -277,7 +281,7 @@
     ];
   });
   const paletteEditingContextMenuOptions = computed<ContextMenuItem[][]>(() => {
-    const palsize = patternsStore.pattern?.palette.length ?? 0;
+    const palsize = patternStore.pattern?.palette.length ?? 0;
     return [
       palettePanelsMenuOptions.value,
       [
@@ -287,7 +291,7 @@
           children: [
             {
               label: fluent.$t("palette-ctx-menu-sort-by-brand-and-number"),
-              onSelect: () => patternsStore.sortPaletteBy(SortPaletteBy.BrandAndNumber),
+              onSelect: () => patternStore.sortPaletteBy(SortPaletteBy.BrandAndNumber),
             },
           ],
         },
@@ -295,12 +299,12 @@
       [
         {
           label: fluent.$t("palette-ctx-menu-delete-selected", {
-            selected: appStateStore.selectedPaletteItemIndex === undefined ? 0 : 1,
+            selected: editorStateStore.selectedPaletteItemIndex === undefined ? 0 : 1,
           }),
-          disabled: !palsize || appStateStore.selectedPaletteItemIndex === undefined,
+          disabled: !palsize || editorStateStore.selectedPaletteItemIndex === undefined,
           onSelect: () => {
-            if (appStateStore.selectedPaletteItemIndex !== undefined) {
-              patternsStore.removePaletteItem(appStateStore.selectedPaletteItemIndex);
+            if (editorStateStore.selectedPaletteItemIndex !== undefined) {
+              patternStore.removePaletteItem(editorStateStore.selectedPaletteItemIndex);
             }
           },
         },
@@ -309,7 +313,7 @@
           disabled: !palsize,
           onSelect: () => {
             if (palsize) {
-              patternsStore.removePaletteItem(...Array.from({ length: palsize }).keys());
+              patternStore.removePaletteItem(...Array.from({ length: palsize }).keys());
             }
           },
         },
@@ -343,36 +347,35 @@
   ]);
 
   function handleSetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePoint: number }) {
-    if (appStateStore.selectedPaletteItemIndex === undefined) {
+    if (editorStateStore.selectedPaletteItemIndex === undefined) {
       toast.add({ title: fluent.$t("stitch-symbols-no-palitem-selected"), color: "warning" });
       return;
     }
 
     // Check if this symbol is already assigned to another palette item.
-    const existingItem = patternsStore.pattern?.palette.items.find(
+    const existingItem = patternStore.pattern?.palette.items.find(
       (pi) => pi.symbol?.font === fontFamily && pi.symbol?.code === codePoint,
     );
-    if (existingItem && existingItem.index !== appStateStore.selectedPaletteItemIndex) {
+    if (existingItem && existingItem.index !== editorStateStore.selectedPaletteItemIndex) {
       toast.add({ title: fluent.$t("stitch-symbols-already-assigned"), color: "warning" });
       return;
     }
 
     const symbol = new Symbol({ code: codePoint, font: fontFamily });
-    patternsStore.setPaletteItemSymbol(appStateStore.selectedPaletteItemIndex, symbol);
+    patternStore.setPaletteItemSymbol(editorStateStore.selectedPaletteItemIndex, symbol);
   }
 
   function handleUnsetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePoint: number }) {
     // Find the palette item that has this symbol.
-    const paletteItem = patternsStore.pattern?.palette.items.find(
+    const paletteItem = patternStore.pattern?.palette.items.find(
       (pi) => pi.symbol?.font === fontFamily && pi.symbol?.code === codePoint,
     );
     if (!paletteItem) return;
 
-    patternsStore.setPaletteItemSymbol(paletteItem.index, undefined);
+    patternStore.setPaletteItemSymbol(paletteItem.index, undefined);
   }
 
   watch(paletteIsBeingEdited, async (value) => {
-    patternsStore.blocked = value;
     if (!value) {
       sectionVisibility.paletteDisplaySettings = false;
       sectionVisibility.paletteCatalog = false;
@@ -382,6 +385,6 @@
   });
 
   async function updatePaletteDisplaySettings() {
-    await patternsStore.updatePaletteDisplaySettings(paletteDisplaySettings.value);
+    await patternStore.updatePaletteDisplaySettings(paletteDisplaySettings.value);
   }
 </script>

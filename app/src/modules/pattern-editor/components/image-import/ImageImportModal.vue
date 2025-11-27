@@ -97,6 +97,8 @@
   import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "~/shared/components/";
   import { ANY_IMAGE_FILTER } from "~/shared/constants/";
 
+  import { PaletteSelect } from "../palette/";
+
   /** The maximum palette size acceptable for quantization. */
   const MAX_PALETTE_SIZE = 256;
 

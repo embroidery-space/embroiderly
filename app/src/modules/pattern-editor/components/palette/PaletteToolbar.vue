@@ -1,31 +1,31 @@
 <template>
   <div class="inline-grid grid-cols-[repeat(4,2rem)] gap-2">
     <ToolSelector
-      v-model="appStateStore.selectedTool"
+      v-model="editorStateStore.selectedTool"
       :options="fullstitches"
       :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
       :disabled="disabled"
     />
     <ToolSelector
-      v-model="appStateStore.selectedTool"
+      v-model="editorStateStore.selectedTool"
       :options="partstitches"
       :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
       :disabled="disabled"
     />
     <ToolSelector
-      v-model="appStateStore.selectedTool"
+      v-model="editorStateStore.selectedTool"
       :options="linestitches"
       :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
       :disabled="disabled"
     />
     <ToolSelector
-      v-model="appStateStore.selectedTool"
+      v-model="editorStateStore.selectedTool"
       :options="nodestitches"
       :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
       :disabled="disabled"
     />
 
-    <ToolSelector v-model="appStateStore.selectedTool" :options="cursor" :disabled="disabled" />
+    <ToolSelector v-model="editorStateStore.selectedTool" :options="cursor" :disabled="disabled" />
   </div>
 </template>
 
@@ -33,12 +33,15 @@
   import { computed } from "vue";
 
   import { tools } from "~/core/tools/";
+  import { useEditorStateStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
 
+  import { ToolSelector } from "../toolbar/";
+
   const { fluent } = useI18n();
 
-  const appStateStore = useAppStateStore();
+  const editorStateStore = useEditorStateStore();
   const settingsStore = useSettingsStore();
 
   const { disabled } = defineProps<{

@@ -1,5 +1,5 @@
 <template>
-  <PanelSection :title="$t('palette-catalog')">
+  <PaletteSection :title="$t('palette-catalog')">
     <PaletteList
       :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="results.map((r) => r.item)"
@@ -38,7 +38,7 @@
         />
       </template>
     </PaletteList>
-  </PanelSection>
+  </PaletteSection>
 </template>
 
 <script setup lang="ts">
@@ -52,6 +52,8 @@
   import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
   import { PALETTE_FILTER } from "~/shared/constants/";
   import { LoggerService } from "~/shared/services/";
+
+  import { PaletteSection, PaletteList, PaletteListItem, PaletteSelect } from ".";
 
   const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
     columnsNumber: 4,

@@ -82,6 +82,8 @@
   import { useI18n } from "~/shared/composables/";
   import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/shared/utils/";
 
+  import { PaletteList } from "../palette/";
+
   const fabric = defineModel<Fabric>({ required: true });
 
   const { fluent } = useI18n();
