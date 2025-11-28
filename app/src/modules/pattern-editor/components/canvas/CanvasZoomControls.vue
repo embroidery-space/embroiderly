@@ -8,7 +8,7 @@
         size="xs"
         :min="min"
         :max="max"
-        :ui="{ base: 'px-2', increment: 'hidden', decrement: 'hidden' }"
+        :ui="{ base: 'ps-2 pe-2', increment: 'hidden', decrement: 'hidden' }"
         @update:model-value="emit('update:model-value', $event!)"
       />
 

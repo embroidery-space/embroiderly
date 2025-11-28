@@ -127,7 +127,7 @@
 
   function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
     const palindex = palette.findIndex((palitem) => palitem.compare(option));
-    if (palindex === -1) emit("removePaletteItem", palindex);
-    else emit("addPaletteItem", option);
+    if (palindex === -1) emit("addPaletteItem", option);
+    else emit("removePaletteItem", palindex);
   }
 </script>

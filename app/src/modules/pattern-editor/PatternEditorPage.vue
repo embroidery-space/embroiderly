@@ -99,9 +99,6 @@
   });
 
   onMounted(async () => {
-    // 0. Initialize the window close listener.
-    windowCloseListener.value = await appWindow.onCloseRequested(handleWindowClose);
-
     // 1. Initialize the pattern canvas.
     await patternCanvas.value!.initPatternApplication({
       render: {
@@ -117,6 +114,9 @@
 
     // 3. Make the app window visible (it is invisible by default).
     await appWindow.show();
+
+    // 4. Initialize the window close listener.
+    windowCloseListener.value = await appWindow.onCloseRequested(handleWindowClose);
   });
 
   onUnmounted(() => {

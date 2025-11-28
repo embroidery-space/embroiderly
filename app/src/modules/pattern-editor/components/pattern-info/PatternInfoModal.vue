@@ -15,6 +15,8 @@
 
   import { PatternInfo } from "~/core/pattern/";
 
+  import PatternInfoForm from "./PatternInfoForm.vue";
+
   const props = defineProps<{ patternInfo: PatternInfo }>();
   const emit = defineEmits<{ close: [patternInfo?: PatternInfo] }>();
 
