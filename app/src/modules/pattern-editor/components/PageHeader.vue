@@ -36,14 +36,16 @@
   import { computed } from "vue";
   import { useRouter } from "vue-router";
 
-  import { FilesApi, UtilityApi } from "~/api/";
   import { Fabric } from "~/core/pattern/";
   import { useEditorModals } from "~/modules/pattern-editor/composables/";
   import { usePatternFileStore, usePatternStore } from "~/modules/pattern-editor/stores/";
+  import { SystemApi } from "~/shared/api";
   import { WindowTitlebar } from "~/shared/components/";
   import type { WindowMenuItem } from "~/shared/components/";
   import { useConfirm, useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
+
+  import { FilesApi } from "../api/";
 
   import { ToolButton } from "./toolbar/";
 
@@ -232,7 +234,7 @@
 
   async function showSystemInfo() {
     // @ts-expect-error Ignore the lack of index signature of the system info object.
-    const systemInfo = fluent.$ta("system-info", await UtilityApi.getSystemInfo());
+    const systemInfo = fluent.$ta("system-info", await SystemApi.getSystemInfo());
     const { title, description } = systemInfo as { title: string; description: string };
 
     const accepted = await confirm.open({

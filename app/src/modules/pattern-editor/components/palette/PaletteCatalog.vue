@@ -47,8 +47,8 @@
   import { useTemplateRef, ref, computed, shallowRef } from "vue";
   import type { Ref } from "vue";
 
-  import { FilesApi } from "~/api";
   import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/core/pattern/";
+  import { FilesApi } from "~/modules/pattern-editor/api";
   import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
   import { PALETTE_FILTER } from "~/shared/constants/";
   import { LoggerService } from "~/shared/services/";

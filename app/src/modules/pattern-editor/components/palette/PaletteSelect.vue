@@ -11,8 +11,8 @@
   import type { SelectMenuItem } from "@nuxt/ui";
   import { ref, onMounted, shallowRef, watch } from "vue";
 
-  import { FilesApi } from "~/api";
   import type { BrandPaletteItem } from "~/core/pattern";
+  import { FilesApi } from "~/modules/pattern-editor/api";
   import { useI18n } from "~/shared/composables/";
   import { LoggerService } from "~/shared/services/";
 

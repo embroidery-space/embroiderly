@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { FilesApi } from "~/api/";
 import type { Fabric, PdfExportOptions } from "~/core/pattern/";
 import {
   PatternErrorBackupFileExists,
@@ -10,6 +9,8 @@ import {
 } from "~/shared/api/";
 import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
 import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/shared/constants/";
+
+import { FilesApi } from "../api/";
 
 export const usePatternFileStore = defineStore(
   "embroiderly-pattern-files",

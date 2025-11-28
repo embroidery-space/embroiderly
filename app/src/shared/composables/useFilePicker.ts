@@ -4,7 +4,7 @@ import type { DialogFilter, OpenDialogOptions, SaveDialogOptions } from "@tauri-
 
 import { createSharedComposable, useLocalStorage } from "@vueuse/core";
 
-import { UtilityApi } from "~/api/";
+import { PathApi } from "~/shared/api/";
 
 // A utility filter that is appended to any "open" query to allow user to pick any file.
 const ALL_FILES_FILTER: DialogFilter = { name: "All Files", extensions: ["*"] };
@@ -28,7 +28,7 @@ export const useFilePicker = createSharedComposable(() => {
      * @returns The selected file path or null if canceled.
      */
     open: async (options: FilePickerOpenOptions = {}) => {
-      lastOpenedFolder.value ??= await UtilityApi.getAppDocumentDir();
+      lastOpenedFolder.value ??= await PathApi.getAppDocumentDir();
 
       const { title, multiple = false, directory, recursive, canCreateDirectories } = options;
       const filters = options.filters ? [...options.filters, ALL_FILES_FILTER] : [ALL_FILES_FILTER];

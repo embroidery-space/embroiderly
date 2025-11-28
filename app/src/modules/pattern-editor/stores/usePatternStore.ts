@@ -3,7 +3,6 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { defineStore } from "pinia";
 import { shallowRef, triggerRef } from "vue";
 
-import { PatternApi } from "~/api/";
 import {
   PatternEvent,
   ReferenceImage,
@@ -24,6 +23,8 @@ import {
   deserializeStitches,
 } from "~/core/pattern/";
 import type { Stitch } from "~/core/pattern/";
+
+import { PatternApi } from "../api/";
 
 export const usePatternStore = defineStore(
   "embroiderly-pattern",

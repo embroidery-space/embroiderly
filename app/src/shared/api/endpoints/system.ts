@@ -1,12 +1,4 @@
-import { invoke } from "~/shared/api/";
-
-// === Paths ===
-
-export function getAppDocumentDir() {
-  return invoke<string>("get_app_document_dir");
-}
-
-// === System ===
+import { invoke } from "../client.ts";
 
 export interface SystemInfo {
   osType: string;

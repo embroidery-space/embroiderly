@@ -6,7 +6,7 @@ export interface GroupedFilesList {
   custom: string[];
 }
 
-// === Pattern files management ===
+// === Pattern files management === //
 
 export async function loadPattern(patternId: string) {
   const buffer = await invoke<ArrayBuffer>("load_pattern", { patternId });
@@ -72,7 +72,7 @@ export function getPatternFilePath(patternId: string) {
   return invoke<string>("get_pattern_file_path", { patternId });
 }
 
-// === Palette files management ===
+// === Palette files management === //
 
 export function importPalettes(paths: string[]) {
   return invoke<{ failedFiles: string[] }>("import_palettes", { paths });
@@ -91,7 +91,7 @@ export async function resolvePalettePath(paletteGroup: string, paletteName: stri
   return await invoke<string>("resolve_palette_path", { paletteGroup, paletteName });
 }
 
-// === Symbol font files management ===
+// === Symbol font files management === //
 
 export function getSymbolFontsList() {
   return invoke<GroupedFilesList>("get_symbol_fonts_list");
@@ -118,7 +118,7 @@ export function importSymbolFonts(paths: string[]) {
   return invoke<ImportSymbolFontsResponse>("import_symbol_fonts", { paths });
 }
 
-// === Importing images into patterns ===
+// === Importing images into patterns === //
 
 export function getImageDimensions(imagePath: string) {
   return invoke<[width: number, height: number]>("get_image_dimensions", { imagePath });
@@ -162,7 +162,7 @@ export function finalizeImageImport(id: number, imagePath: string, palettePath: 
   return invoke<string>("finalize_image_import", { id, imagePath, palettePath, options });
 }
 
-// === Exporting pattern into PDF documents ===
+// === Exporting pattern into PDF documents === //
 
 export function exportPattern(patternId: string, filePath: string, options: object) {
   return invoke<void>("export_pattern", { patternId, filePath, options });

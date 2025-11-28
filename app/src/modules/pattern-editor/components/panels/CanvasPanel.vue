@@ -65,12 +65,12 @@
   import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
-  import { FilesApi } from "~/api";
   import { PatternEvent } from "~/core/pattern/";
   import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
   import { CursorTool } from "~/core/tools/";
   import type { PatternEditorToolContext } from "~/core/tools/";
+  import { FilesApi } from "~/modules/pattern-editor/api/";
   import { CanvasZoomControls } from "~/modules/pattern-editor/components/canvas/";
   import { useEditorStateStore, usePatternStore, usePatternFileStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";

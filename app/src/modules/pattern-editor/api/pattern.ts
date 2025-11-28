@@ -18,13 +18,13 @@ import {
 import type { Stitch } from "~/core/pattern/";
 import { invoke } from "~/shared/api/";
 
-// === Pattern Info ===
+// === Pattern Info === //
 
 export function updatePatternInfo(patternId: string, info: PatternInfo) {
   return invoke<void>("update_pattern_info", PatternInfo.serialize(info), { headers: { patternId } });
 }
 
-// === Reference Image ===
+// === Reference Image === //
 
 export function setReferenceImage(patternId: string, filePath: string) {
   return invoke<void>("set_reference_image", { filePath }, { headers: { patternId } });
@@ -40,7 +40,7 @@ export function updateReferenceImageSettings(patternId: string, settings: Refere
   });
 }
 
-// === Display Settings ===
+// === Display Settings === //
 
 export function setDisplayMode(patternId: string, mode: DisplayMode) {
   return invoke<void>("set_display_mode", { mode }, { headers: { patternId } });
@@ -54,7 +54,7 @@ export function setLayersVisibility(patternId: string, visibility: LayersVisibil
   return invoke<void>("set_layers_visibility", LayersVisibility.serialize(visibility), { headers: { patternId } });
 }
 
-// === Fabric Properties ===
+// === Fabric Properties === //
 
 export function updateFabric(patternId: string, fabric: Fabric) {
   return invoke<void>("update_fabric", Fabric.serialize(fabric), { headers: { patternId } });
@@ -65,13 +65,13 @@ export async function loadFabricColors(): Promise<FabricColor[]> {
   return deserializeFabricColors(new Uint8Array(buffer));
 }
 
-// === Grid Properties ===
+// === Grid Properties === //
 
 export function updateGrid(patternId: string, grid: Grid) {
   return invoke<void>("update_grid", Grid.serialize(grid), { headers: { patternId } });
 }
 
-// === Palette Management ===
+// === Palette Management === //
 
 export function addPaletteItem(patternId: string, paletteItem: PaletteItem) {
   return invoke<void>("add_palette_item", PaletteItem.serialize(paletteItem), { headers: { patternId } });
@@ -99,7 +99,7 @@ export function setSymbol(patternId: string, palindex: number, symbol?: Symbol) 
   return invoke<void>("set_symbol", SetSymbolData.serialize({ palindex, symbol }), { headers: { patternId } });
 }
 
-// === Stitches Management ===
+// === Stitches Management === //
 
 export function addStitch(patternId: string, stitch: Stitch) {
   return invoke<void>("add_stitch", serializeStitch(stitch), { headers: { patternId } });
@@ -109,13 +109,13 @@ export function removeStitch(patternId: string, stitch: Stitch) {
   return invoke<void>("remove_stitch", serializeStitch(stitch), { headers: { patternId } });
 }
 
-// === Publish Settings ===
+// === Publish Settings === //
 
 export function updatePdfExportOptions(patternId: string, options: PdfExportOptions) {
   return invoke<void>("update_pdf_export_options", PdfExportOptions.serialize(options), { headers: { patternId } });
 }
 
-// === History Management ===
+// === History Management === //
 
 export interface UndoRedoOptions {
   /** Whether to undo/redo a single action or the entire transaction. */

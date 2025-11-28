@@ -1,10 +1,11 @@
 import { createSharedComposable } from "@vueuse/core";
 import { defineAsyncComponent } from "vue";
 
-import { FilesApi } from "~/api/";
 import { Fabric, Grid, PatternInfo, PdfExportOptions } from "~/core/pattern/";
 import { useFilePicker } from "~/shared/composables/";
 import { ANY_IMAGE_FILTER } from "~/shared/constants/";
+
+import { FilesApi } from "../api/";
 
 export const useEditorModals = createSharedComposable(() => {
   const overlay = useOverlay();
