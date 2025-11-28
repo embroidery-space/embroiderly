@@ -63,7 +63,6 @@ export const usePatternStore = defineStore(
     appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
       if (!pattern.value) return;
       pattern.value.info = PatternInfo.deserialize(payload);
-      // appStateStore.updateOpenedPattern(pattern.value.id, pattern.value.info.title);
     });
 
     async function updateFabric(fabric: Fabric) {
@@ -103,7 +102,6 @@ export const usePatternStore = defineStore(
       if (!pattern.value) return;
       for (const palindex of palindexes.reverse()) {
         pattern.value.palette.remove(palindex);
-        // if (appStateStore.selectedPaletteItemIndex === palindex) appStateStore.selectedPaletteItemIndex = undefined;
       }
       triggerRef(pattern);
     });

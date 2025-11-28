@@ -77,12 +77,14 @@
   import { CursorTool } from "~/modules/pattern-editor/lib/tools/";
   import type { PatternEditorToolContext } from "~/modules/pattern-editor/lib/tools/";
   import { useEditorStateStore, usePatternStore, usePatternFileStore } from "~/modules/pattern-editor/stores/";
-  import { useI18n } from "~/shared/composables/";
+  import { useFilePicker, useI18n } from "~/shared/composables/";
+  import { ANY_IMAGE_FILTER } from "~/shared/constants";
   import { LoggerService } from "~/shared/services/";
   import { addSymbolFonts } from "~/shared/utils/";
 
   const router = useRouter();
 
+  const filePicker = useFilePicker();
   const { fluent } = useI18n();
   const toast = useToast();
 
@@ -98,14 +100,17 @@
       {
         icon: "i-lucide:image",
         label: fluent.$t("canvas-ctx-menu-set-image"),
-        // onSelect: () => patternStore.setReferenceImage(),
+        async onSelect() {
+          const selectedPath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
+          if (selectedPath) patternStore.setReferenceImage(selectedPath);
+        },
       },
       {
         icon: "i-lucide:image-off",
         label: fluent.$t("canvas-ctx-menu-remove-image"),
         color: "error",
         disabled: !patternStore.pattern?.referenceImage,
-        // onSelect: () => patternStore.removeReferenceImage(),
+        onSelect: () => patternStore.removeReferenceImage(),
       },
     ],
   ]);
