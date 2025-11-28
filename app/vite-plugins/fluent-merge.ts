@@ -32,14 +32,21 @@ export default function fluentMerge(options: FluentMergeOptions = {}): Plugin {
     return files.sort();
   }
 
-  async function mergeLocale(localeDir: string, stripComments: boolean): Promise<string> {
+  async function mergeLocale(localeDir: string, minimize: boolean): Promise<string> {
     const files = await collectFluentFiles(localeDir);
     if (files.length === 0) return "";
 
     const contents = await Promise.all(
       files.map(async (file) => {
         let content = await fs.readFile(file, "utf8");
-        if (stripComments) content = content.replaceAll(/^\s*#.*$/g, "");
+
+        if (minimize) {
+          // Remove all comments.
+          content = content.replaceAll(/^#.*$/gm, "");
+          // Remove extra empty lines.
+          content = content.replaceAll(/^[\r\n]+/gm, "\n");
+        }
+
         return content.trim();
       }),
     );
@@ -50,11 +57,11 @@ export default function fluentMerge(options: FluentMergeOptions = {}): Plugin {
   }
 
   async function loadLocale(localeName: string): Promise<string> {
-    const stripComments = config.command === "build";
+    const minimize = config.command === "build";
     const localesPath = path.join(config.root, localesDir);
     const localeDir = path.join(localesPath, localeName);
     try {
-      return await mergeLocale(localeDir, stripComments);
+      return await mergeLocale(localeDir, minimize);
     } catch (error) {
       console.error(`[fluent-merge] Error loading locale ${localeName}:`, error);
       return "";

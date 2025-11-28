@@ -11,7 +11,7 @@ import { NuxtUIConfig } from "./ui.config";
 import fluentMerge from "./vite-plugins/fluent-merge";
 
 export default defineConfig({
-  plugins: [fluentMerge({ localesDir: "./src/app/locales/" }), vue(), ui(NuxtUIConfig), tailwindcss(), vueDevTools()],
+  plugins: [vue(), ui(NuxtUIConfig), tailwindcss(), fluentMerge({ localesDir: "./src/app/locales/" }), vueDevTools()],
   clearScreen: false,
   resolve: { alias: { "~": fileURLToPath(new URL("src", import.meta.url)) } },
   envPrefix: ["VITE_", "TAURI_ENV_"],
