@@ -18,19 +18,20 @@
 
 <script setup lang="ts">
   import type { PhysicalPosition } from "@tauri-apps/api/dpi";
-  import type { UnlistenFn } from "@tauri-apps/api/event";
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-  import { onMounted, onUnmounted, ref, useTemplateRef } from "vue";
+  import { ref, useTemplateRef } from "vue";
+
+  import { useTauriListener } from "~/shared/composables/";
+
+  const appWindow = getCurrentWebviewWindow();
 
   const emit = defineEmits<{
     drop: [paths: string[]];
   }>();
 
   const container = useTemplateRef<HTMLElement>("container");
-
   const dragging = ref(false);
-  const dragDropListener = ref<UnlistenFn>();
 
   /**
    * Check if the given position is within the target container.
@@ -46,11 +47,8 @@
     return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
   }
 
-  onMounted(async () => {
-    const appWindow = getCurrentWebviewWindow();
-
-    const scaleFactor = await appWindow.scaleFactor();
-    dragDropListener.value = await appWindow.onDragDropEvent(async ({ payload }) => {
+  useTauriListener(
+    appWindow.onDragDropEvent(async ({ payload }) => {
       switch (payload.type) {
         case "over": {
           dragging.value = true;
@@ -59,9 +57,12 @@
 
         case "drop": {
           dragging.value = false;
+
+          const scaleFactor = await appWindow.scaleFactor();
           if (checkPositionIsWithinContainer(payload.position, scaleFactor)) {
             emit("drop", payload.paths);
           }
+
           break;
         }
 
@@ -70,10 +71,6 @@
           break;
         }
       }
-    });
-  });
-
-  onUnmounted(() => {
-    dragDropListener.value?.();
-  });
+    }),
+  );
 </script>

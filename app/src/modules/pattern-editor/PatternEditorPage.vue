@@ -22,15 +22,13 @@
 </template>
 
 <script lang="ts" setup>
-  import type { UnlistenFn } from "@tauri-apps/api/event";
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-  import type { CloseRequestedEvent } from "@tauri-apps/api/window";
 
-  import { onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import { onMounted, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
   import { BlockUI, DropZone } from "~/shared/components/";
-  import { useConfirm, useI18n } from "~/shared/composables/";
+  import { useConfirm, useI18n, useTauriListener } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
 
   import { PageHeader } from "./components/";
@@ -45,6 +43,7 @@
   const router = useRouter();
 
   const confirm = useConfirm();
+  const toast = useToast();
   const { fluent } = useI18n();
 
   // const appStateStore = useAppStateStore();
@@ -72,26 +71,29 @@
     }
   }
 
-  const windowCloseListener = ref<UnlistenFn>();
-  async function handleWindowClose(event: CloseRequestedEvent) {
-    const unsavedPatterns = await patternFileStore.getUnsavedPatterns();
-    if (unsavedPatterns.length) {
-      const patterns = unsavedPatterns.map(({ title }) => `- ${title}`).join("\n");
-      const savePatterns = await confirm.open(fluent.$ta("unsaved-patterns", { patterns })).result;
+  useTauriListener(
+    appWindow.onCloseRequested(async (event) => {
+      const unsavedPatterns = await patternFileStore.getUnsavedPatterns();
+      if (unsavedPatterns.length) {
+        const patterns = unsavedPatterns.map(({ title }) => `- ${title}`).join("\n");
+        const savePatterns = await confirm.open(fluent.$ta("unsaved-patterns", { patterns })).result;
 
-      // If the user dismissed the dialog, prevent the window from closing.
-      if (savePatterns === undefined) return event.preventDefault();
+        // If the user dismissed the dialog, prevent the window from closing.
+        if (savePatterns === undefined) return event.preventDefault();
 
-      if (savePatterns) await patternFileStore.saveAllPatterns();
-      await patternFileStore.closeAllPatterns();
-    }
-  }
+        if (savePatterns) await patternFileStore.saveAllPatterns();
+        await patternFileStore.closeAllPatterns();
+      }
+    }),
+  );
 
-  // appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
-  //   if (patternId === pattern.value?.id) {
-  //     toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
-  //   }
-  // });
+  useTauriListener(
+    appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
+      if (patternId === patternStore.pattern?.id) {
+        toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
+      }
+    }),
+  );
 
   defineShortcuts({
     ctrl_shift_z: () => patternStore.undo({ single: true }),
@@ -114,12 +116,5 @@
 
     // 3. Make the app window visible (it is invisible by default).
     await appWindow.show();
-
-    // 4. Initialize the window close listener.
-    windowCloseListener.value = await appWindow.onCloseRequested(handleWindowClose);
-  });
-
-  onUnmounted(() => {
-    windowCloseListener.value?.();
   });
 </script>
