@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-  import type { LayersVisibility } from "~/core/pattern/";
+  import type { LayersVisibility } from "~/modules/pattern-editor/lib/pattern/";
 
   const layers = defineModel<LayersVisibility>({ required: true });
 </script>

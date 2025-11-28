@@ -13,7 +13,7 @@
 <script setup lang="ts">
   import { ref, toRaw } from "vue";
 
-  import { Fabric } from "~/core/pattern/";
+  import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
 
   import FabricForm from "./FabricForm.vue";
 

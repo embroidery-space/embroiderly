@@ -5,7 +5,7 @@ import { check } from "@tauri-apps/plugin-updater";
 import { defineStore } from "pinia";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 
-import type { WheelAction } from "~/core/pixi/";
+import type { WheelAction } from "~/modules/pattern-editor/lib/pixi/";
 import { useI18n } from "~/shared/composables/";
 
 export type Theme = "light" | "dark" | "system";

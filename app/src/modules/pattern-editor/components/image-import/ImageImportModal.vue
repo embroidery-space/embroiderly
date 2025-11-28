@@ -89,10 +89,10 @@
   import { useDebounceFn } from "@vueuse/core";
   import { ref, reactive, onUnmounted, computed, useTemplateRef, watch } from "vue";
 
-  import { LayersVisibility } from "~/core/pattern";
-  import { PatternApplication, PatternView } from "~/core/pixi";
   import { FilesApi } from "~/modules/pattern-editor/api";
   import type { ImageImportOptions } from "~/modules/pattern-editor/api";
+  import { LayersVisibility } from "~/modules/pattern-editor/lib/pattern";
+  import { PatternApplication, PatternView } from "~/modules/pattern-editor/lib/pixi";
   import { ImageImportService } from "~/modules/pattern-editor/services/";
   import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "~/shared/components/";
   import { ANY_IMAGE_FILTER } from "~/shared/constants/";

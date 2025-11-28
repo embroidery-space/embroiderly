@@ -74,8 +74,8 @@
   import { computed } from "vue";
   import { useRouter } from "vue-router";
 
-  import { Fabric } from "~/core/pattern/";
   import { useEditorModals } from "~/modules/pattern-editor/composables/";
+  import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
   import { usePatternFileStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";

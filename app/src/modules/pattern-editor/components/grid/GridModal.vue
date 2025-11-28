@@ -13,7 +13,7 @@
 <script setup lang="ts">
   import { ref, toRaw } from "vue";
 
-  import { Grid } from "~/core/pattern/";
+  import { Grid } from "~/modules/pattern-editor/lib/pattern/";
 
   import GridForm from "./GridForm.vue";
 

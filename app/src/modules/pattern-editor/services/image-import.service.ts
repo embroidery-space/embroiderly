@@ -1,6 +1,6 @@
-import type { Pattern } from "~/core/pattern";
 import { FilesApi } from "~/modules/pattern-editor/api/";
 import type { ImageImportOptions } from "~/modules/pattern-editor/api/";
+import type { Pattern } from "~/modules/pattern-editor/lib/pattern";
 
 /** Manages the lifecycle of an image import session. */
 export class ImageImportService {

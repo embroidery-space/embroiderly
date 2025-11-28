@@ -42,7 +42,7 @@
 <script setup lang="ts">
   import { computed, ref, watch } from "vue";
 
-  import { DisplayMode, LayersVisibility } from "~/core/pattern/";
+  import { DisplayMode, LayersVisibility } from "~/modules/pattern-editor/lib/pattern/";
   import { usePatternStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
 

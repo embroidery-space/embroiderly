@@ -65,13 +65,17 @@
   import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
-  import { PatternEvent } from "~/core/pattern/";
-  import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/core/pixi/";
-  import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/core/pixi/";
-  import { CursorTool } from "~/core/tools/";
-  import type { PatternEditorToolContext } from "~/core/tools/";
   import { FilesApi } from "~/modules/pattern-editor/api/";
   import { CanvasZoomControls } from "~/modules/pattern-editor/components/canvas/";
+  import { PatternEvent } from "~/modules/pattern-editor/lib/pattern/";
+  import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/modules/pattern-editor/lib/pixi/";
+  import type {
+    PatternApplicationOptions,
+    ToolEventDetail,
+    TransformEventDetail,
+  } from "~/modules/pattern-editor/lib/pixi/";
+  import { CursorTool } from "~/modules/pattern-editor/lib/tools/";
+  import type { PatternEditorToolContext } from "~/modules/pattern-editor/lib/tools/";
   import { useEditorStateStore, usePatternStore, usePatternFileStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { LoggerService } from "~/shared/services/";

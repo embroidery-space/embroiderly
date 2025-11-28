@@ -13,7 +13,7 @@
 <script setup lang="ts">
   import { ref, toRaw } from "vue";
 
-  import { PatternInfo } from "~/core/pattern/";
+  import { PatternInfo } from "~/modules/pattern-editor/lib/pattern/";
 
   import PatternInfoForm from "./PatternInfoForm.vue";
 

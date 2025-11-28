@@ -119,7 +119,7 @@
   import type { ContextMenuItem, DropdownMenuItem } from "@nuxt/ui";
   import { computed, reactive, ref, watch } from "vue";
 
-  import { PaletteSettings, SortPaletteBy, Symbol } from "~/core/pattern/";
+  import { PaletteSettings, SortPaletteBy, Symbol } from "~/modules/pattern-editor/lib/pattern/";
   import { useEditorStateStore, usePatternStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { vShortcuts } from "~/shared/directives/";

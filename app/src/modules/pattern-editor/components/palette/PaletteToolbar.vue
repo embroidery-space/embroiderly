@@ -32,7 +32,7 @@
 <script lang="ts" setup>
   import { computed } from "vue";
 
-  import { tools } from "~/core/tools/";
+  import { tools } from "~/modules/pattern-editor/lib/tools/";
   import { useEditorStateStore } from "~/modules/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";

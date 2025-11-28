@@ -7,9 +7,9 @@ import {
   NodeStitch,
   NodeStitchKind,
   ReferenceImageSettings,
-} from "~/core/pattern/";
-import type { Stitch } from "~/core/pattern/";
-import type { ToolEventDetail } from "~/core/pixi/";
+} from "~/modules/pattern-editor/lib/pattern/";
+import type { Stitch } from "~/modules/pattern-editor/lib/pattern/";
+import type { ToolEventDetail } from "~/modules/pattern-editor/lib/pixi/";
 
 import { CursorTool } from "./cursor.tool.ts";
 import { StitchTool } from "./stitch.tool.ts";

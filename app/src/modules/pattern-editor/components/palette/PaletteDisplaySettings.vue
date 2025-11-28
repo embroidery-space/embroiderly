@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-  import { PaletteSettings } from "~/core/pattern/";
+  import { PaletteSettings } from "~/modules/pattern-editor/lib/pattern/";
 
   import { PaletteSection } from ".";
 

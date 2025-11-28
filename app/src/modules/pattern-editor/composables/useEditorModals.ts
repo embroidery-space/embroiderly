@@ -1,7 +1,7 @@
 import { createSharedComposable } from "@vueuse/core";
 import { defineAsyncComponent } from "vue";
 
-import { Fabric, Grid, PatternInfo, PdfExportOptions } from "~/core/pattern/";
+import { Fabric, Grid, PatternInfo, PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
 import { useFilePicker } from "~/shared/composables/";
 import { ANY_IMAGE_FILTER } from "~/shared/constants/";
 
