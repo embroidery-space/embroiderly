@@ -1,7 +1,7 @@
 import { createSharedComposable } from "@vueuse/core";
 import { defineAsyncComponent } from "vue";
 
-import { Fabric, Grid, PatternInfo, PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
+import { Fabric, Grid, PatternInfo, PdfExportOptions } from "~/pattern-editor/lib/pattern/";
 import { useFilePicker } from "~/shared/composables/";
 import { ANY_IMAGE_FILTER } from "~/shared/constants/";
 
@@ -13,7 +13,7 @@ export const useEditorModals = createSharedComposable(() => {
   const filePicker = useFilePicker();
 
   const imageImportModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/image-import/ImageImportModal.vue")),
+    defineAsyncComponent(() => import("~/pattern-editor/components/image-import/ImageImportModal.vue")),
   );
   async function openImageImportModal() {
     const imagePath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
@@ -24,7 +24,7 @@ export const useEditorModals = createSharedComposable(() => {
   }
 
   const pdfExportModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/pdf-export/PdfExportModal.vue")),
+    defineAsyncComponent(() => import("~/pattern-editor/components/pdf-export/PdfExportModal.vue")),
   );
   async function openPdfExportModal(patternId: string, options: PdfExportOptions) {
     const filePath = (await FilesApi.getPatternFilePath(patternId)).replace(/\.[^.]+$/, ".pdf");
@@ -32,28 +32,28 @@ export const useEditorModals = createSharedComposable(() => {
   }
 
   const patternInfoModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/pattern-info/PatternInfoModal.vue")),
+    defineAsyncComponent(() => import("~/pattern-editor/components/pattern-info/PatternInfoModal.vue")),
   );
   async function openPatternInfoModal(patternInfo: PatternInfo) {
     return patternInfoModal.open({ patternInfo }).result;
   }
 
   const fabricModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/fabric/FabricModal.vue")),
+    defineAsyncComponent(() => import("~/pattern-editor/components/fabric/FabricModal.vue")),
   );
   function openFabricModal(fabric: Fabric) {
     return fabricModal.open({ fabric }).result;
   }
 
   const gridModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/grid/GridModal.vue")),
+    defineAsyncComponent(() => import("~/pattern-editor/components/grid/GridModal.vue")),
   );
   function openGridModal(grid: Grid) {
     return gridModal.open({ grid }).result;
   }
 
   const pdfExportOptionsModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/pdf-export/PdfExportOptionsModal.vue")),
+    defineAsyncComponent(() => import("~/pattern-editor/components/pdf-export/PdfExportOptionsModal.vue")),
   );
   async function openPdfExportOptionsModal(options: PdfExportOptions) {
     return pdfExportOptionsModal.open({ options }).result;

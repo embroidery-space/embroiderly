@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Grid } from "~/modules/pattern-editor/lib/pattern/";
+  import { Grid } from "~/pattern-editor/lib/pattern/";
   import { ColorPicker, FormFieldset } from "~/shared/components/";
 
   const grid = defineModel<Grid>({ required: true });

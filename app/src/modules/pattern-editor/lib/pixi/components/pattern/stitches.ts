@@ -20,14 +20,14 @@ import {
   LineStitch,
   NodeStitch,
   Symbol,
-} from "~/modules/pattern-editor/lib/pattern/";
-import type { Stitch } from "~/modules/pattern-editor/lib/pattern/";
-import { TextureManager } from "~/modules/pattern-editor/lib/pixi/";
+} from "~/pattern-editor/lib/pattern/";
+import type { Stitch } from "~/pattern-editor/lib/pattern/";
+import { TextureManager } from "~/pattern-editor/lib/pixi/";
 import {
   DEFAULT_CONTAINER_OPTIONS,
   DEFAULT_TEXT_STYLE_OPTIONS,
   STITCH_SCALE_FACTOR,
-} from "~/modules/pattern-editor/lib/pixi/constants.ts";
+} from "~/pattern-editor/lib/pixi/constants.ts";
 
 export interface StitchContainer<G> {
   /**

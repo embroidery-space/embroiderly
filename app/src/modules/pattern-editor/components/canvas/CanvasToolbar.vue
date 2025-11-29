@@ -42,8 +42,8 @@
 <script setup lang="ts">
   import { computed, ref, watch } from "vue";
 
-  import { DisplayMode, LayersVisibility } from "~/modules/pattern-editor/lib/pattern/";
-  import { usePatternStore } from "~/modules/pattern-editor/stores/";
+  import { DisplayMode, LayersVisibility } from "~/pattern-editor/lib/pattern/";
+  import { usePatternStore } from "~/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
 
   import { ToolSelector, ToolToggle } from "../toolbar/";

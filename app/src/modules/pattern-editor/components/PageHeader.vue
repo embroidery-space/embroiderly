@@ -36,9 +36,9 @@
   import { computed } from "vue";
   import { useRouter } from "vue-router";
 
-  import { useEditorModals } from "~/modules/pattern-editor/composables/";
-  import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
-  import { usePatternFileStore, usePatternStore } from "~/modules/pattern-editor/stores/";
+  import { useEditorModals } from "~/pattern-editor/composables/";
+  import { Fabric } from "~/pattern-editor/lib/pattern/";
+  import { usePatternFileStore, usePatternStore } from "~/pattern-editor/stores/";
   import { SystemApi } from "~/shared/api";
   import { WindowTitlebar } from "~/shared/components/";
   import type { WindowMenuItem } from "~/shared/components/";

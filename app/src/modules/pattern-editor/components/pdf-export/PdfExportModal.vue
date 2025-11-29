@@ -55,8 +55,8 @@
   import { computedAsync, refAutoReset } from "@vueuse/core";
   import { ref } from "vue";
 
-  import { PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
-  import { usePatternFileStore, usePatternStore } from "~/modules/pattern-editor/stores/";
+  import { PdfExportOptions } from "~/pattern-editor/lib/pattern/";
+  import { usePatternFileStore, usePatternStore } from "~/pattern-editor/stores/";
   import { FilePicker } from "~/shared/components/";
   import { PDF_FILTER } from "~/shared/constants/";
 

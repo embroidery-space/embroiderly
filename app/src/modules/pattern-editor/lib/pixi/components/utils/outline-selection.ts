@@ -1,12 +1,8 @@
 import { Color, Container, FederatedPointerEvent, Graphics, GraphicsContext, Point, Rectangle } from "pixi.js";
 import type { ContainerOptions, DestroyOptions, Size, StrokeStyle } from "pixi.js";
 
-import { DEFAULT_CONTAINER_OPTIONS } from "~/modules/pattern-editor/lib/pixi/";
-import {
-  checkIfHorizontallyOriented,
-  getCursorForRotation,
-  getMouseButtons,
-} from "~/modules/pattern-editor/lib/pixi/utils/";
+import { DEFAULT_CONTAINER_OPTIONS } from "~/pattern-editor/lib/pixi/";
+import { checkIfHorizontallyOriented, getCursorForRotation, getMouseButtons } from "~/pattern-editor/lib/pixi/utils/";
 
 export const SELECTION_STROKE_COLOR = new Color("#b48ead");
 export const SELECTION_EDGE_STOKE: StrokeStyle = { width: 0.1, color: SELECTION_STROKE_COLOR };

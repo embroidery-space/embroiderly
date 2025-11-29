@@ -46,7 +46,7 @@
   import type { ContextMenuItem, DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
   import { computed, onMounted, ref, shallowRef } from "vue";
 
-  import { FilesApi } from "~/modules/pattern-editor/api";
+  import { FilesApi } from "~/pattern-editor/api";
   import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
   import { FONT_FILTER } from "~/shared/constants/";
   import { LoggerService } from "~/shared/services/";

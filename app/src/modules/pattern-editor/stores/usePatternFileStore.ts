@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import type { Fabric, PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
+import type { Fabric, PdfExportOptions } from "~/pattern-editor/lib/pattern/";
 import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,

@@ -10,9 +10,9 @@ import {
   LineStitchKind,
   NodeStitch,
   NodeStitchKind,
-} from "~/modules/pattern-editor/lib/pattern/";
-import type { StitchKind, Stitch } from "~/modules/pattern-editor/lib/pattern/";
-import { StitchGraphics } from "~/modules/pattern-editor/lib/pixi/";
+} from "~/pattern-editor/lib/pattern/";
+import type { StitchKind, Stitch } from "~/pattern-editor/lib/pattern/";
+import { StitchGraphics } from "~/pattern-editor/lib/pixi/";
 
 import type { PatternEditorTool, PatternEditorToolContext } from "./index.ts";
 

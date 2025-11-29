@@ -21,10 +21,10 @@ import {
   ReferenceImageSettings,
   SpecialStitch,
   SpecialStitchModel,
-} from "~/modules/pattern-editor/lib/pattern/";
-import type { Stitch } from "~/modules/pattern-editor/lib/pattern/";
-import { STITCH_SCALE_FACTOR } from "~/modules/pattern-editor/lib/pixi/constants.ts";
-import { TextureManager } from "~/modules/pattern-editor/lib/pixi/texture-manager.ts";
+} from "~/pattern-editor/lib/pattern/";
+import type { Stitch } from "~/pattern-editor/lib/pattern/";
+import { STITCH_SCALE_FACTOR } from "~/pattern-editor/lib/pixi/constants.ts";
+import { TextureManager } from "~/pattern-editor/lib/pixi/texture-manager.ts";
 
 import { FabricView } from "./fabric.ts";
 import { GridView } from "./grid.ts";

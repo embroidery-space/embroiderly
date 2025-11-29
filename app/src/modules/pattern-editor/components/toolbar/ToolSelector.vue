@@ -58,7 +58,7 @@
   import { ref, computed, toRaw, useTemplateRef } from "vue";
   import type { MaybeRefOrGetter } from "vue";
 
-  import { useEditorStateStore, usePatternStore } from "~/modules/pattern-editor/stores/";
+  import { useEditorStateStore, usePatternStore } from "~/pattern-editor/stores/";
 
   interface ToolOption {
     label: string;

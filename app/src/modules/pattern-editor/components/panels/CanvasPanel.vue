@@ -65,18 +65,14 @@
   import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
-  import { FilesApi } from "~/modules/pattern-editor/api/";
-  import { CanvasZoomControls } from "~/modules/pattern-editor/components/canvas/";
-  import { PatternEvent } from "~/modules/pattern-editor/lib/pattern/";
-  import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/modules/pattern-editor/lib/pixi/";
-  import type {
-    PatternApplicationOptions,
-    ToolEventDetail,
-    TransformEventDetail,
-  } from "~/modules/pattern-editor/lib/pixi/";
-  import { CursorTool } from "~/modules/pattern-editor/lib/tools/";
-  import type { PatternEditorToolContext } from "~/modules/pattern-editor/lib/tools/";
-  import { useEditorStateStore, usePatternStore, usePatternFileStore } from "~/modules/pattern-editor/stores/";
+  import { FilesApi } from "~/pattern-editor/api/";
+  import { CanvasZoomControls } from "~/pattern-editor/components/canvas/";
+  import { PatternEvent } from "~/pattern-editor/lib/pattern/";
+  import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/pattern-editor/lib/pixi/";
+  import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/pattern-editor/lib/pixi/";
+  import { CursorTool } from "~/pattern-editor/lib/tools/";
+  import type { PatternEditorToolContext } from "~/pattern-editor/lib/tools/";
+  import { useEditorStateStore, usePatternStore, usePatternFileStore } from "~/pattern-editor/stores/";
   import { useFilePicker, useI18n } from "~/shared/composables/";
   import { ANY_IMAGE_FILTER } from "~/shared/constants";
   import { LoggerService } from "~/shared/services/";

@@ -13,7 +13,7 @@
 <script setup lang="ts">
   import { ref, toRaw } from "vue";
 
-  import { PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
+  import { PdfExportOptions } from "~/pattern-editor/lib/pattern/";
 
   import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 
