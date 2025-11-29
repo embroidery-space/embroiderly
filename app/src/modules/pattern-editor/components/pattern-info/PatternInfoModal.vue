@@ -5,7 +5,7 @@
     </template>
     <template #footer>
       <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('modal-save')" @click="emit('close', patternInfo)" />
+      <UButton loading-auto :label="$t('modal-save')" @click="handleSave" />
     </template>
   </UModal>
 </template>
@@ -17,8 +17,16 @@
 
   import PatternInfoForm from "./PatternInfoForm.vue";
 
-  const props = defineProps<{ patternInfo: PatternInfo }>();
-  const emit = defineEmits<{ close: [patternInfo?: PatternInfo] }>();
+  const props = defineProps<{
+    patternInfo: PatternInfo;
+    onSave?: (patternInfo: PatternInfo) => void | Promise<void>;
+  }>();
+  const emit = defineEmits<{ close: [] }>();
 
   const patternInfo = ref<PatternInfo>(new PatternInfo(toRaw(props.patternInfo)));
+
+  async function handleSave() {
+    await props.onSave?.(patternInfo.value);
+    emit("close");
+  }
 </script>

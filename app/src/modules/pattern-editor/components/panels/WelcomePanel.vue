@@ -139,10 +139,12 @@
   }
 
   async function createPattern() {
-    const fabric = await modals.openFabricModal(Fabric.default());
-    if (!fabric) return;
-
-    const patternId = await patternFileStore.createPattern(fabric);
-    router.push({ name: "pattern-editor", params: { patternId } });
+    modals.fabricModal.open({
+      fabric: Fabric.default(),
+      async onSave(fabric) {
+        const patternId = await patternFileStore.createPattern(fabric);
+        router.push({ name: "pattern-editor", params: { patternId } });
+      },
+    });
   }
 </script>

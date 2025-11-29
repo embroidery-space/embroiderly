@@ -34,17 +34,13 @@
     <template #footer>
       <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
       <UButton
-        :label="$t('pdf-export-save-settings')"
+        loading-auto
         variant="outline"
+        :label="$t('pdf-export-save-settings')"
         :icon="optionsUpdated ? 'i-lucide:check' : undefined"
         @click="updateOptions"
       />
-      <UButton
-        v-if="filePath"
-        :label="$t('pdf-export-export-document')"
-        :loading="exportingPattern"
-        @click="exportPattern"
-      />
+      <UButton v-if="filePath" loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern" />
     </template>
   </UModal>
 </template>
@@ -56,17 +52,18 @@
   import { ref } from "vue";
 
   import { PdfExportOptions } from "~/pattern-editor/lib/pattern/";
-  import { usePatternFileStore, usePatternStore } from "~/pattern-editor/stores/";
   import { FilePicker } from "~/shared/components/";
   import { PDF_FILTER } from "~/shared/constants/";
 
   import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 
-  const props = defineProps<{ filePath: string; options: PdfExportOptions }>();
+  const props = defineProps<{
+    filePath: string;
+    options: PdfExportOptions;
+    onOptionsUpdate?: (options: PdfExportOptions) => void | Promise<void>;
+    onDocumentExport?: (filePath: string, options: PdfExportOptions) => void | Promise<void>;
+  }>();
   const emit = defineEmits<{ close: [] }>();
-
-  const patternStore = usePatternStore();
-  const patternFileStore = usePatternFileStore();
 
   // Copy the data from the props to a reactive object.
   const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
@@ -86,17 +83,11 @@
 
   const optionsUpdated = refAutoReset(false, 1000);
   async function updateOptions() {
-    await patternStore.updatePdfExportOptions(options.value);
+    await props.onOptionsUpdate?.(options.value);
     optionsUpdated.value = true;
   }
 
-  const exportingPattern = ref(false);
   async function exportPattern() {
-    try {
-      exportingPattern.value = true;
-      await patternFileStore.exportPatternAsPdf(patternStore.pattern!.id, filePath.value, options.value);
-    } finally {
-      exportingPattern.value = false;
-    }
+    await props.onDocumentExport?.(filePath.value, options.value);
   }
 </script>

@@ -5,7 +5,7 @@
     </template>
     <template #footer>
       <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('modal-save')" @click="emit('close', fabric as Fabric)" />
+      <UButton loading-auto :label="$t('modal-save')" @click="handleSave" />
     </template>
   </UModal>
 </template>
@@ -17,8 +17,13 @@
 
   import FabricForm from "./FabricForm.vue";
 
-  const props = defineProps<{ fabric: Fabric }>();
-  const emit = defineEmits<{ close: [fabric?: Fabric] }>();
+  const props = defineProps<{ fabric: Fabric; onSave?: (fabric: Fabric) => void | Promise<void> }>();
+  const emit = defineEmits<{ close: [] }>();
 
   const fabric = ref<Fabric>(new Fabric(toRaw(props.fabric)));
+
+  async function handleSave() {
+    await props.onSave?.(fabric.value as Fabric);
+    emit("close");
+  }
 </script>

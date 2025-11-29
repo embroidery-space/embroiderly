@@ -42,7 +42,8 @@
   import { SystemApi } from "~/shared/api";
   import { WindowTitlebar } from "~/shared/components/";
   import type { WindowMenuItem } from "~/shared/components/";
-  import { useConfirm, useI18n } from "~/shared/composables/";
+  import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
+  import { ANY_IMAGE_FILTER } from "~/shared/constants";
   import { useSettingsStore } from "~/shared/stores/";
 
   import { FilesApi } from "../api/";
@@ -52,9 +53,10 @@
   const router = useRouter();
 
   const confirm = useConfirm();
-  const modals = useEditorModals();
-
+  const filePicker = useFilePicker();
   const { fluent } = useI18n();
+
+  const modals = useEditorModals();
 
   const patternStore = usePatternStore();
   const patternFileStore = usePatternFileStore();
@@ -76,12 +78,14 @@
           {
             label: fluent.$t("app-menu-file-create"),
             kbds: ["ctrl", "n"],
-            async onSelect() {
-              const fabric = await modals.openFabricModal(Fabric.default());
-              if (!fabric) return;
-
-              const patternId = await patternFileStore.createPattern(fabric);
-              router.push({ name: "pattern-editor", params: { patternId } });
+            onSelect() {
+              modals.fabricModal.open({
+                fabric: Fabric.default(),
+                async onSave(fabric) {
+                  const patternId = await patternFileStore.createPattern(fabric);
+                  router.push({ name: "pattern-editor", params: { patternId } });
+                },
+              });
             },
           },
         ],
@@ -107,7 +111,13 @@
                 {
                   label: fluent.$t("app-menu-file-import-image"),
                   async onSelect() {
-                    const patternId = await modals.openImageImportModal();
+                    const imagePath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
+                    if (imagePath === null) return;
+
+                    const patternId = await modals.imageImportModal.open({
+                      imagePath,
+                      imageDimensions: await FilesApi.getImageDimensions(imagePath),
+                    }).result;
                     router.push({ name: "pattern-editor", params: { patternId } });
                   },
                 },
@@ -131,7 +141,14 @@
                   label: "PDF",
                   async onSelect() {
                     const { id, pdfExportOptions } = patternStore.pattern!;
-                    await modals.openPdfExportModal(id, pdfExportOptions);
+                    const filePath = (await FilesApi.getPatternFilePath(id)).replace(/\.[^.]+$/, ".pdf");
+                    modals.pdfExportModal.open({
+                      filePath,
+                      options: pdfExportOptions,
+                      onOptionsUpdate: patternStore.updatePdfExportOptions,
+                      onDocumentExport: (filePath, options) =>
+                        patternFileStore.exportPatternAsPdf(id, filePath, options),
+                    });
                   },
                 },
               ],
@@ -162,32 +179,40 @@
         [
           {
             label: fluent.$t("pattern-info"),
-            async onSelect() {
-              const patternInfo = await modals.openPatternInfoModal(patternStore.pattern!.info);
-              if (patternInfo) await patternStore.updatePatternInfo(patternInfo);
+            onSelect() {
+              modals.patternInfoModal.open({
+                patternInfo: patternStore.pattern!.info,
+                onSave: patternStore.updatePatternInfo,
+              });
             },
           },
           {
             label: fluent.$t("fabric-properties"),
-            async onSelect() {
-              const fabric = await modals.openFabricModal(patternStore.pattern!.fabric);
-              if (fabric) await patternStore.updateFabric(fabric);
+            onSelect() {
+              modals.fabricModal.open({
+                fabric: patternStore.pattern!.fabric,
+                onSave: patternStore.updateFabric,
+              });
             },
           },
           {
             label: fluent.$t("grid-properties"),
-            async onSelect() {
-              const grid = await modals.openGridModal(patternStore.pattern!.grid);
-              if (grid) await patternStore.updateGrid(grid);
+            onSelect() {
+              modals.gridModal.open({
+                grid: patternStore.pattern!.grid,
+                onSave: patternStore.updateGrid,
+              });
             },
           },
         ],
         [
           {
             label: fluent.$t("publish-settings"),
-            async onSelect() {
-              const options = await modals.openPdfExportOptionsModal(patternStore.pattern!.pdfExportOptions);
-              if (options) await patternStore.updatePdfExportOptions(options);
+            onSelect() {
+              modals.pdfExportOptionsModal.open({
+                options: patternStore.pattern!.pdfExportOptions,
+                onSave: patternStore.updatePdfExportOptions,
+              });
             },
           },
         ],

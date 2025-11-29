@@ -79,7 +79,12 @@
     </template>
     <template #footer>
       <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton :label="$t('image-import-import-image')" :disabled="!imageImportOptionsValid" @click="handleFinalize" />
+      <UButton
+        loading-auto
+        :label="$t('image-import-import-image')"
+        :disabled="!imageImportOptionsValid"
+        @click="handleFinalize"
+      />
     </template>
   </UModal>
 </template>
