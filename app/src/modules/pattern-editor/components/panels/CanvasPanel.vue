@@ -48,7 +48,7 @@
     <div class="flex w-full items-center justify-between border-t border-default px-2 py-1">
       <div class="grow"></div>
       <CanvasZoomControls
-        :model-value="zoom"
+        :model-value="editorStateStore.canvasZoom"
         :min="MIN_SCALE"
         :max="MAX_SCALE"
         class="w-full max-w-3xs"
@@ -62,7 +62,7 @@
   import type { ContextMenuItem } from "@nuxt/ui";
   import { vElementSize } from "@vueuse/components";
   import { useDebounceFn, useEventListener } from "@vueuse/core";
-  import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
+  import { computed, onUnmounted, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
   import { FilesApi } from "~/pattern-editor/api/";
@@ -110,8 +110,6 @@
       },
     ],
   ]);
-
-  const zoom = ref(1);
 
   function switchPattern(patternId: string) {
     router.push({ name: "pattern-editor", params: { patternId } });
@@ -199,7 +197,7 @@
   useEventListener<CustomEvent<TransformEventDetail>>(patternApplication, ToolEvent.Transform, async ({ detail }) => {
     if (!patternApplication.view) return;
 
-    zoom.value = Math.round(detail.scale);
+    editorStateStore.canvasZoom = Math.round(detail.scale);
     patternApplication.view.adjustZoom(detail.scale, detail.bounds);
   });
 

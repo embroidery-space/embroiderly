@@ -24,10 +24,13 @@ export const useEditorStateStore = defineStore(
 
     const paletteMode = ref(PaletteMode.Regular);
 
+    const canvasZoom = ref(1);
+
     return {
       selectedTool,
       selectedPaletteItemIndex,
       paletteMode,
+      canvasZoom,
     };
   },
   { tauri: { save: false, sync: false } },
