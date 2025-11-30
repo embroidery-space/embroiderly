@@ -1,7 +1,7 @@
 <template>
   <div ref="container" :aria-busy="dragging" class="relative">
     <!-- Overlay -->
-    <div v-if="dragging" class="absolute top-0 left-0 z-0 size-full bg-black/50"></div>
+    <div v-if="dragging" class="absolute top-0 left-0 z-1 size-full bg-black/50"></div>
 
     <!-- Upload Icon -->
     <div
