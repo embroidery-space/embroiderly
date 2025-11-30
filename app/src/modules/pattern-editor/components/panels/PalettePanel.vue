@@ -1,11 +1,15 @@
 <template>
   <div
-    v-shortcuts.escape="() => (paletteIsBeingEdited = false)"
+    v-shortcuts.escape="() => (editorStateStore.paletteMode = PaletteMode.Regular)"
     class="flex h-full"
-    :class="{ 'border-2 border-primary': paletteIsBeingEdited }"
+    :class="{ 'border-2 border-primary': editorStateStore.paletteMode === PaletteMode.Editing }"
   >
     <UContextMenu
-      :items="paletteIsBeingEdited ? paletteEditingContextMenuOptions : paletteContextMenuOptions"
+      :items="
+        editorStateStore.paletteMode === PaletteMode.Editing
+          ? paletteEditingContextMenuOptions
+          : paletteContextMenuOptions
+      "
       @update:open="(isOpen) => !isOpen && updatePaletteDisplaySettings()"
     >
       <PaletteList
@@ -14,17 +18,21 @@
         :option-value="(pi) => pi.index"
         :display-settings="paletteDisplaySettings"
         :disabled="paletteIsDisabled"
-        :draggable="paletteIsBeingEdited"
+        :draggable="editorStateStore.paletteMode === PaletteMode.Editing"
         class="grow"
         @reorder="({ oldPosition, newPosition }) => patternStore.reorderPaletteItems(oldPosition, newPosition)"
       >
         <template #header>
-          <div v-if="paletteIsBeingEdited" class="flex gap-x-1" @contextmenu.stop.prevent>
+          <div
+            v-if="editorStateStore.paletteMode === PaletteMode.Editing"
+            class="flex gap-x-1"
+            @contextmenu.stop.prevent
+          >
             <UButton
               icon="i-lucide:check"
               :label="$t('palette-save')"
               class="grow justify-center text-sm"
-              @click="paletteIsBeingEdited = false"
+              @click="editorStateStore.paletteMode = PaletteMode.Regular"
             />
             <UDropdownMenu :items="palettePanelsMenuOptions">
               <UButton icon="i-lucide:menu" />
@@ -58,7 +66,7 @@
               {{ $t("palette-size", { size: patternStore.pattern?.palette.length ?? 0 }) }}
             </span>
             <UTooltip
-              :text="paletteIsBeingEdited ? $t('palette-save') : $t('palette-edit')"
+              :text="editorStateStore.paletteMode === PaletteMode.Editing ? $t('palette-save') : $t('palette-edit')"
               :delay-duration="200"
               :disabled="paletteIsDisabled"
             >
@@ -67,10 +75,10 @@
                 color="neutral"
                 size="xs"
                 :disabled="paletteIsDisabled"
-                :icon="paletteIsBeingEdited ? 'i-lucide:check' : 'i-lucide:pen'"
+                :icon="editorStateStore.paletteMode === PaletteMode.Editing ? 'i-lucide:check' : 'i-lucide:pen'"
                 @click="
                   () => {
-                    paletteIsBeingEdited = !paletteIsBeingEdited;
+                    editorStateStore.paletteMode = PaletteMode.Regular;
                     sectionVisibility.paletteCatalog = true;
                   }
                 "
@@ -120,7 +128,7 @@
   import { computed, reactive, ref, watch } from "vue";
 
   import { PaletteSettings, SortPaletteBy, Symbol } from "~/pattern-editor/lib/pattern/";
-  import { useEditorStateStore, usePatternStore } from "~/pattern-editor/stores/";
+  import { PaletteMode, useEditorStateStore, usePatternStore } from "~/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { vShortcuts } from "~/shared/directives/";
 
@@ -134,7 +142,6 @@
   const toast = useToast();
 
   const paletteIsDisabled = computed(() => !patternStore.pattern);
-  const paletteIsBeingEdited = ref(false);
 
   const sectionVisibility = reactive({
     paletteDisplaySettings: false,
@@ -167,7 +174,7 @@
           label: fluent.$t("palette-edit"),
           onSelect: (event) => {
             event.preventDefault();
-            paletteIsBeingEdited.value = true;
+            editorStateStore.paletteMode = PaletteMode.Editing;
           },
         },
       ],
@@ -318,7 +325,7 @@
           },
         },
       ],
-      [{ label: fluent.$t("palette-save"), onSelect: () => (paletteIsBeingEdited.value = false) }],
+      [{ label: fluent.$t("palette-save"), onSelect: () => (editorStateStore.paletteMode = PaletteMode.Regular) }],
     ];
   });
 
@@ -326,21 +333,21 @@
     {
       label: fluent.$t("palette-display-options"),
       onSelect: () => {
-        paletteIsBeingEdited.value = true;
+        editorStateStore.paletteMode = PaletteMode.Editing;
         sectionVisibility.paletteDisplaySettings = !sectionVisibility.paletteDisplaySettings;
       },
     },
     {
       label: fluent.$t("palette-catalog"),
       onSelect: () => {
-        paletteIsBeingEdited.value = true;
+        editorStateStore.paletteMode = PaletteMode.Editing;
         sectionVisibility.paletteCatalog = !sectionVisibility.paletteCatalog;
       },
     },
     {
       label: fluent.$t("stitch-symbols"),
       onSelect: () => {
-        paletteIsBeingEdited.value = true;
+        editorStateStore.paletteMode = PaletteMode.Editing;
         sectionVisibility.stitchSymbols = !sectionVisibility.stitchSymbols;
       },
     },
@@ -375,14 +382,17 @@
     patternStore.setPaletteItemSymbol(paletteItem.index, undefined);
   }
 
-  watch(paletteIsBeingEdited, async (value) => {
-    if (!value) {
-      sectionVisibility.paletteDisplaySettings = false;
-      sectionVisibility.paletteCatalog = false;
-      sectionVisibility.stitchSymbols = false;
-      await updatePaletteDisplaySettings();
-    }
-  });
+  watch(
+    () => editorStateStore.paletteMode,
+    async (value) => {
+      if (value === PaletteMode.Regular) {
+        sectionVisibility.paletteDisplaySettings = false;
+        sectionVisibility.paletteCatalog = false;
+        sectionVisibility.stitchSymbols = false;
+        await updatePaletteDisplaySettings();
+      }
+    },
+  );
 
   async function updatePaletteDisplaySettings() {
     await patternStore.updatePaletteDisplaySettings(paletteDisplaySettings.value);

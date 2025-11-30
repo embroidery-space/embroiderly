@@ -8,7 +8,10 @@
         </RSplitterPanel>
         <RSplitterResizeHandle class="border-2 border-default" />
         <RSplitterPanel>
-          <BlockUI :blocked="patternFileStore.loading" class="size-full">
+          <BlockUI
+            :blocked="patternFileStore.loading || editorStateStore.paletteMode === PaletteMode.Editing"
+            class="size-full"
+          >
             <DropZone class="size-full" @drop="handleFilesDrop">
               <WelcomePanel v-if="!patternStore.pattern" class="size-full" />
               <CanvasPanel ref="pattern-canvas" />
@@ -34,7 +37,7 @@
   import { PageHeader } from "./components/";
   import { CanvasToolbar } from "./components/canvas/";
   import { CanvasPanel, PalettePanel, WelcomePanel } from "./components/panels/";
-  import { usePatternFileStore, usePatternStore } from "./stores/";
+  import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore } from "./stores/";
 
   const appWindow = getCurrentWebviewWindow();
 
@@ -46,7 +49,7 @@
   const toast = useToast();
   const { fluent } = useI18n();
 
-  // const appStateStore = useAppStateStore();
+  const editorStateStore = useEditorStateStore();
   const patternStore = usePatternStore();
   const patternFileStore = usePatternFileStore();
   const settingsStore = useSettingsStore();
