@@ -14,7 +14,6 @@
     "@embroiderly/tauri-plugin-sentry": "workspace:*",
     "@fluent/bundle": "0.19.1",
     "@nuxt/ui": "4.2.1",
-    "@pixi/devtools": "2.0.1",
     "@sentry/browser": "10.27.0",
     "@sentry/vue": "10.27.0",
     "@stdlib/math-base-special-roundn": "0.2.2",
@@ -47,6 +46,7 @@
   "devDependencies": {
     "@iconify/vue": "5.0.0",
     "@pinia/testing": "1.0.3",
+    "@pixi/devtools": "2.0.1",
     "@tailwindcss/vite": "4.1.17",
     "@tsconfig/node24": "24.0.3",
     "@tsconfig/strictest": "2.0.8",

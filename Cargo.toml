@@ -61,9 +61,9 @@ wildcard_dependencies = "deny"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.3", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
+tauri = { version = "2.9.4", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
 tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
-tauri-plugin = { version = "2.5.1", features = ["build"] }
+tauri-plugin = { version = "2.5.2", features = ["build"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.2"
 tauri-plugin-dialog = "2.4.2"
@@ -74,7 +74,7 @@ tauri-plugin-process = "2.3.1"
 tauri-plugin-shell = "2.3.3"
 tauri-plugin-updater = "2.9.0"
 ## Third-party Tauri plugins
-tauri-plugin-prevent-default = "4.0.2"
+tauri-plugin-prevent-default = "4.0.3"
 tauri-plugin-pinia = "4.1.0"
 ## Custom Tauri plugins
 tauri-plugin-log = { path = "crates/tauri-plugin-log" }
@@ -116,7 +116,7 @@ zip = { version = "6.0.0", default-features = false, features = [ "zstd", "time"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.145"
 base64 = "0.22.1"
-borsh = { version = "1.5.7", features = ["derive"] }
+borsh = { version = "1.6.0", features = ["derive"] }
 
 # CLI
 argh = { version = "0.1.13", default-features = false }
