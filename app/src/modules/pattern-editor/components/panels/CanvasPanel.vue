@@ -59,6 +59,8 @@
 </template>
 
 <script lang="ts" setup>
+  import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+
   import type { ContextMenuItem } from "@nuxt/ui";
   import { vElementSize } from "@vueuse/components";
   import { useDebounceFn, useEventListener } from "@vueuse/core";
@@ -67,7 +69,7 @@
 
   import { FilesApi } from "~/pattern-editor/api/";
   import { CanvasZoomControls } from "~/pattern-editor/components/canvas/";
-  import { PatternEvent } from "~/pattern-editor/lib/pattern/";
+  import { PatternEvent, PatternInfo } from "~/pattern-editor/lib/pattern/";
   import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/pattern-editor/lib/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/pattern-editor/lib/pixi/";
   import { CursorTool } from "~/pattern-editor/lib/tools/";
@@ -77,6 +79,8 @@
   import { ANY_IMAGE_FILTER } from "~/shared/constants";
   import { LoggerService } from "~/shared/services/";
   import { addSymbolFonts } from "~/shared/utils/";
+
+  const appWindow = getCurrentWebviewWindow();
 
   const router = useRouter();
 
@@ -122,6 +126,12 @@
 
     router.push({ name: "pattern-editor", params: { patternId: lastPatternId } });
   }
+
+  appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
+    if (!patternStore.pattern) return;
+    const patternInfo = PatternInfo.deserialize(payload);
+    patternFileStore.updateOpenedPattern(patternStore.pattern.id, patternInfo.title);
+  });
 
   watch(
     () => patternStore.pattern,

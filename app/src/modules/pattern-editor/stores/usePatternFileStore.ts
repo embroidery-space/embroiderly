@@ -33,6 +33,11 @@ export const usePatternFileStore = defineStore(
       if (index !== -1) openedPatterns.value.splice(index, 1);
     }
 
+    function updateOpenedPattern(id: string, title: string) {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
+      if (pattern) pattern.title = title;
+    }
+
     async function loadPattern(id: string) {
       try {
         loading.value = true;
@@ -185,6 +190,7 @@ export const usePatternFileStore = defineStore(
     return {
       openedPatterns,
       loading,
+      updateOpenedPattern,
       loadPattern,
       openPattern,
       createPattern,
