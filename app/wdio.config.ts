@@ -43,6 +43,7 @@ export const config: WebdriverIO.Config = {
     "./tests/specs/pattern-info-management.spec.ts",
     "./tests/specs/history-management.spec.ts",
   ],
+  reporters: ["spec"],
 
   maxInstances: 1,
   capabilities: [
@@ -56,12 +57,14 @@ export const config: WebdriverIO.Config = {
 
   services: [["visual", visualServiceConfig]],
 
-  reporters: ["spec"],
   framework: "mocha",
   mochaOpts: {
     ui: "bdd",
     timeout: 60000,
   },
+
+  waitforInterval: process.env.GITHUB_ACTIONS ? 1000 : 500,
+  waitforTimeout: process.env.GITHUB_ACTIONS ? 20000 : 5000,
 
   onPrepare() {
     // Ensure the temporary directory exists.
