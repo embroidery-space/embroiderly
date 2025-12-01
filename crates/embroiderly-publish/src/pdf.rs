@@ -5,31 +5,31 @@ pub fn export_pattern<P: AsRef<std::path::Path>>(
   patproj: &PatternProject,
   file_path: P,
   options: PdfExportOptions,
-  symbol_fonts_dir: std::path::PathBuf,
+  symbol_fonts_dir: Vec<std::path::PathBuf>,
 ) -> Result<()> {
   log::debug!("Exporting Pattern({:?}) to PDF", patproj.id);
   let file_path = file_path.as_ref();
 
   if options.monochrome {
     log::debug!("Exporting monochrome Pattern({:?})", patproj.id);
-    let frames = super::svg::export_pattern(patproj, false, options.frame_options)?;
+    let frames = embroiderly_image::svg::generate_svg(patproj, false, options.frame_options)?;
     let file_path = file_path.with_file_name(format!(
       "{}.monochrome.{}",
       file_path.file_stem().unwrap_or_default().to_string_lossy(),
       file_path.extension().unwrap_or_default().to_string_lossy()
     ));
-    export_pattern_inner(patproj, file_path, frames, options, symbol_fonts_dir.clone())?;
+    export_pattern_inner(patproj, file_path, frames, options, &symbol_fonts_dir)?;
   }
 
   if options.color {
     log::debug!("Exporting color Pattern({:?})", patproj.id);
-    let frames = super::svg::export_pattern(patproj, true, options.frame_options)?;
+    let frames = embroiderly_image::svg::generate_svg(patproj, true, options.frame_options)?;
     let file_path = file_path.with_file_name(format!(
       "{}.color.{}",
       file_path.file_stem().unwrap_or_default().to_string_lossy(),
       file_path.extension().unwrap_or_default().to_string_lossy()
     ));
-    export_pattern_inner(patproj, file_path, frames, options, symbol_fonts_dir)?;
+    export_pattern_inner(patproj, file_path, frames, options, &symbol_fonts_dir)?;
   }
 
   log::debug!("Pattern({:?}) exported to PDF", patproj.id);
@@ -41,7 +41,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   file_path: P,
   frames: Vec<Vec<u8>>,
   options: PdfExportOptions,
-  symbol_fonts_dir: std::path::PathBuf,
+  symbol_fonts_dir: &[std::path::PathBuf],
 ) -> Result<()> {
   let PatternProject { pattern, .. } = patproj;
 
@@ -60,16 +60,11 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   };
   let typst_template = typst_as_lib::TypstEngine::builder()
     .main_file(include_str!("../templates/pattern.typ"))
-    .search_fonts_with(typst_as_lib::typst_kit_options::TypstKitFontOptions::default().include_dirs([symbol_fonts_dir]))
-    .with_static_file_resolver(
-      frames
-        .into_iter()
-        .map(|(name, content)| {
-          use typst::syntax::{FileId, VirtualPath};
-          (FileId::new(None, VirtualPath::new(name)), content)
-        })
-        .collect::<Vec<_>>(),
-    )
+    .search_fonts_with(typst_as_lib::typst_kit_options::TypstKitFontOptions::default().include_dirs(symbol_fonts_dir))
+    .with_static_file_resolver(frames.into_iter().map(|(name, content)| {
+      use typst::syntax::{FileId, VirtualPath};
+      (FileId::new(None, VirtualPath::new(name)), content)
+    }))
     .build();
 
   let doc = {
@@ -82,7 +77,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
 
   let pdf_options = Default::default();
   let pdf_bytes =
-    typst_pdf::pdf(&doc, &pdf_options).map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {:?}", warnings))?;
+    typst_pdf::pdf(&doc, &pdf_options).map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))?;
 
   std::fs::write(file_path, pdf_bytes)?;
   Ok(())

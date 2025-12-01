@@ -18,11 +18,13 @@ pub struct Pattern {
 }
 
 impl Pattern {
+  #[must_use]
   pub fn new(fabric: Fabric) -> Self {
-    Pattern { fabric, ..Pattern::default() }
+    Self { fabric, ..Self::default() }
   }
 
   /// Returns the number of full and petite stitches in the pattern.
+  #[must_use]
   pub fn full_stitches_number(&self) -> (usize, usize) {
     let mut full = 0;
     let mut petite = 0;
@@ -36,6 +38,7 @@ impl Pattern {
   }
 
   /// Returns the number of half and quarter stitches in the pattern.
+  #[must_use]
   pub fn part_stitches_number(&self) -> (usize, usize) {
     let mut half = 0;
     let mut quarter = 0;
@@ -49,6 +52,7 @@ impl Pattern {
   }
 
   /// Returns the number of back and straight stitches in the pattern.
+  #[must_use]
   pub fn line_stitches_number(&self) -> (usize, usize) {
     let mut back = 0;
     let mut straight = 0;
@@ -62,6 +66,7 @@ impl Pattern {
   }
 
   /// Returns the number of french knots and beads in the pattern.
+  #[must_use]
   pub fn node_stitches_number(&self) -> (usize, usize) {
     let mut knot = 0;
     let mut bead = 0;
@@ -75,6 +80,7 @@ impl Pattern {
   }
 
   /// Get a stitch from the pattern.
+  #[must_use]
   pub fn get_stitch(&self, stitch: &Stitch) -> Option<Stitch> {
     // This method accepts a reference stitch which may not contain all the stitch properties.
     // We use this method to find the actual stitch.
@@ -112,6 +118,7 @@ impl Pattern {
   }
 
   /// Check if the pattern contains a stitch.
+  #[must_use]
   pub fn contains_stitch(&self, stitch: &Stitch) -> bool {
     match stitch {
       Stitch::Full(fullstitch) => self.fullstitches.contains(fullstitch),
@@ -167,7 +174,7 @@ impl Pattern {
                 .map(Stitch::Part),
             );
           }
-        };
+        }
         if let Some(fullstitch) = self.fullstitches.insert(fullstitch) {
           conflicts.push(Stitch::Full(fullstitch));
         }
@@ -206,7 +213,7 @@ impl Pattern {
                 .map(Stitch::Part),
             );
           }
-        };
+        }
         if let Some(partstitch) = self.partstitches.insert(partstitch) {
           conflicts.push(Stitch::Part(partstitch));
         }
@@ -221,7 +228,7 @@ impl Pattern {
           conflicts.push(Stitch::Line(line));
         }
       }
-    };
+    }
     conflicts
   }
 
@@ -236,10 +243,10 @@ impl Pattern {
   pub fn remove_stitch(&mut self, stitch: Stitch) -> Option<Stitch> {
     log::trace!("Removing stitch");
     match stitch {
-      Stitch::Full(fullstitch) => self.fullstitches.remove(&fullstitch).map(|fs| fs.into()),
-      Stitch::Part(partstitch) => self.partstitches.remove(&partstitch).map(|ps| ps.into()),
-      Stitch::Node(node) => self.nodestitches.remove(&node).map(|node| node.into()),
-      Stitch::Line(line) => self.linestitches.remove(&line).map(|line| line.into()),
+      Stitch::Full(fullstitch) => self.fullstitches.remove(&fullstitch).map(Into::into),
+      Stitch::Part(partstitch) => self.partstitches.remove(&partstitch).map(Into::into),
+      Stitch::Node(node) => self.nodestitches.remove(&node).map(Into::into),
+      Stitch::Line(line) => self.linestitches.remove(&line).map(Into::into),
     }
   }
 
@@ -318,7 +325,7 @@ impl Pattern {
     let mut partstitches = Vec::new();
     let mut linestitches = Vec::new();
     let mut nodestitches = Vec::new();
-    for stitch in stitches.into_iter() {
+    for stitch in stitches {
       match stitch {
         Stitch::Full(fullstitch) => fullstitches.push(fullstitch),
         Stitch::Part(partstitch) => partstitches.push(partstitch),
@@ -334,7 +341,7 @@ impl Pattern {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PatternInfo {
   pub title: String,
@@ -367,7 +374,7 @@ impl From<pmaker::PatternInfo> for PatternInfo {
 
 pub type StitchesPerInch = (u8, u8);
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Fabric {
   pub width: u16,
@@ -390,12 +397,12 @@ impl Fabric {
 impl Default for Fabric {
   fn default() -> Self {
     Self {
-      width: Fabric::DEFAULT_WIDTH,
-      height: Fabric::DEFAULT_HEIGHT,
-      spi: (Fabric::DEFAULT_SPI, Fabric::DEFAULT_SPI),
-      kind: String::from(Fabric::DEFAULT_KIND),
-      name: String::from(Fabric::DEFAULT_NAME),
-      color: String::from(Fabric::DEFAULT_COLOR),
+      width: Self::DEFAULT_WIDTH,
+      height: Self::DEFAULT_HEIGHT,
+      spi: (Self::DEFAULT_SPI, Self::DEFAULT_SPI),
+      kind: String::from(Self::DEFAULT_KIND),
+      name: String::from(Self::DEFAULT_NAME),
+      color: String::from(Self::DEFAULT_COLOR),
     }
   }
 }
@@ -414,7 +421,7 @@ impl From<pmaker::Fabric> for Fabric {
 }
 
 /// Represents a fabric color item.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct FabricColor {

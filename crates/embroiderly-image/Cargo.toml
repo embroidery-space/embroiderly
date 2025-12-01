@@ -1,0 +1,41 @@
+[package]
+name = "embroiderly_image"
+edition = { workspace = true }
+
+[lints]
+workspace = true
+
+[dependencies]
+# CLI
+argh = { workspace = true }
+
+# Embroiderly Core
+embroiderly_parsers = { workspace = true }
+embroiderly_pattern = { workspace = true }
+embroiderly_logger = { workspace = true }
+
+# De/serialization
+borsh = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Writing SVG files
+quick-xml = { workspace = true }
+
+# Image processing
+image = { workspace = true }
+palette = { workspace = true }
+quantette = { workspace = true }
+
+# Logging
+log = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Other
+ordered-float = { workspace = true }
+
+[dev-dependencies]
+prettydiff = { workspace = true }

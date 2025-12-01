@@ -29,14 +29,13 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
           EMBROIDERLY_POSTHOG_API_KEY: ${{ secrets.EMBROIDERLY_POSTHOG_API_KEY }}
           EMBROIDERLY_SENTRY_DSN: ${{ secrets.EMBROIDERLY_SENTRY_DSN }}
-          EMBROIDERLY_PUBLISH_SENTRY_DSN: ${{ secrets.EMBROIDERLY_PUBLISH_SENTRY_DSN }}
         with:
           tagName: v__VERSION__
           releaseName: Embroiderly v__VERSION__
           updaterJsonPreferNsis: true
 
       - name: Upload debug symbols
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: debug-symbols-${{ matrix.platform }}
           path: |
@@ -79,7 +78,7 @@ jobs:
           sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" ./app/dist
 
       - name: Download debug symbols
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           pattern: debug-symbols-*
           merge-multiple: true
@@ -91,12 +90,3 @@ jobs:
 
       - name: Finalize Sentry release
         run: sentry-cli releases finalize "${{ needs.release.outputs.app-version }}"
-
-  build-sidecars:
-    needs: release
-    permissions:
-      contents: write
-    uses: ./.github/workflows/build-sidecars.yml
-    with:
-      app-version: ${{ needs.release.outputs.app-version }}
-    secrets: inherit

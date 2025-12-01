@@ -1,0 +1,54 @@
+use embroiderly_parsers::PatternFormat;
+use embroiderly_pattern::PdfExportOptions;
+use tauri::Emitter as _;
+use tauri_plugin_posthog::PostHogExt as _;
+
+use crate::error::Result;
+use crate::sidecars::SidecarRunner as _;
+use crate::state::PatternsState;
+use crate::vendor::telemetry::AppEvent;
+
+#[tauri::command]
+pub fn export_pattern<R: tauri::Runtime>(
+  pattern_id: uuid::Uuid,
+  file_path: std::path::PathBuf,
+  options: PdfExportOptions,
+  app_handle: tauri::AppHandle<R>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<()> {
+  log::debug!("Exporting Pattern({pattern_id:?})");
+
+  let package_info = {
+    let package_info = app_handle.package_info();
+    embroiderly_parsers::PackageInfo {
+      name: package_info.name.clone(),
+      version: package_info.version.to_string(),
+    }
+  };
+
+  let mut patterns = patterns.write().unwrap();
+  let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
+
+  // Create a temporary file to not conflict with the existing file.
+  let tempfile_path = tempfile::NamedTempFile::new()?
+    .path()
+    .with_extension(PatternFormat::default().to_string());
+  let previous_file_path = patproj.file_path.clone();
+  patproj.file_path.clone_from(&tempfile_path);
+  embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
+  patproj.file_path = previous_file_path;
+
+  crate::sidecars::PdfExportSidecar::new(app_handle.clone())
+    .pattern_path(tempfile_path)
+    .output_path(file_path)
+    .options(options)
+    .run()?;
+
+  app_handle.emit("app:pattern-exported", &pattern_id)?;
+
+  app_handle.capture_event(AppEvent::PatternExportedAsPdf {
+    settings: patproj.publish_settings.pdf,
+  });
+
+  Ok(())
+}

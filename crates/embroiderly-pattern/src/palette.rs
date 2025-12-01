@@ -52,7 +52,8 @@ pub struct Palette {
 
 impl Palette {
   /// Creates a new empty palette.
-  pub fn new() -> Self {
+  #[must_use]
+  pub const fn new() -> Self {
     Self {
       items: Vec::new(),
       positions: Vec::new(),
@@ -62,18 +63,21 @@ impl Palette {
   // === Access Methods ===
 
   /// Returns the number of palette items.
+  #[must_use]
   pub fn len(&self) -> usize {
     debug_assert_eq!(self.items.len(), self.positions.len(),);
     self.items.len()
   }
 
   /// Returns `true` if the palette is empty.
+  #[must_use]
   pub fn is_empty(&self) -> bool {
     debug_assert_eq!(self.items.is_empty(), self.positions.is_empty(),);
     self.items.is_empty()
   }
 
   /// Returns a reference to a palette item by its actual index.
+  #[must_use]
   pub fn get(&self, index: u32) -> Option<&PaletteItem> {
     self.items.get(index as usize)
   }
@@ -84,6 +88,7 @@ impl Palette {
   }
 
   /// Returns `true` if a palette item exists in the palette.
+  #[must_use]
   pub fn contains(&self, item: &PaletteItem) -> bool {
     self.items.contains(item)
   }
@@ -161,6 +166,7 @@ impl Palette {
   // === Ordering Methods ===
 
   /// Returns the current visual positions.
+  #[must_use]
   pub fn positions(&self) -> &[u32] {
     &self.positions
   }
@@ -212,11 +218,13 @@ impl Palette {
   // === Utility Methods ===
 
   /// Returns the number of blend colors in the palette.
+  #[must_use]
   pub fn blends_number(&self) -> usize {
     self.items.iter().filter(|palitem| palitem.is_blend()).count()
   }
 
   /// Returns the thread brands used in the palette.
+  #[must_use]
   pub fn used_brands(&self) -> Vec<String> {
     self
       .items
@@ -228,6 +236,7 @@ impl Palette {
   }
 
   /// Returns the symbol font names used in the palette.
+  #[must_use]
   pub fn used_symbol_fonts(&self) -> Vec<String> {
     self
       .items
@@ -294,7 +303,7 @@ impl std::ops::IndexMut<u32> for Palette {
 /// Represents a _working_ palette item.
 ///
 /// It contains all the properties from [`BrandPaletteItem`] plus project-specific display properties.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct PaletteItem {
   pub brand: String,
@@ -307,6 +316,7 @@ pub struct PaletteItem {
 
 impl PaletteItem {
   /// Returns true if the palette item is a blend.
+  #[must_use]
   pub fn is_blend(&self) -> bool {
     self.blends.as_ref().is_some_and(|blends| !blends.is_empty())
   }
@@ -366,10 +376,24 @@ impl From<xspro::PaletteItem> for PaletteItem {
   }
 }
 
+impl PartialEq for PaletteItem {
+  fn eq(&self, other: &Self) -> bool {
+    self.brand == other.brand && self.number == other.number
+  }
+}
+impl Eq for PaletteItem {}
+
+impl std::hash::Hash for PaletteItem {
+  fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+    self.brand.hash(state);
+    self.number.hash(state);
+  }
+}
+
 /// Represents a _brand_ palette item.
 ///
 /// It contains only essential properties for clearly identifying colors from manufacturer catalogs or custom collections.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BrandPaletteItem {
@@ -419,14 +443,29 @@ impl From<xspro::PaletteItem> for BrandPaletteItem {
   }
 }
 
+impl PartialEq for BrandPaletteItem {
+  fn eq(&self, other: &Self) -> bool {
+    self.brand == other.brand && self.number == other.number
+  }
+}
+impl Eq for BrandPaletteItem {}
+
+impl std::hash::Hash for BrandPaletteItem {
+  fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+    self.brand.hash(state);
+    self.number.hash(state);
+  }
+}
+
 /// Represents a symbol used in a palette item.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Symbol {
   pub char: char,
   pub font: String,
 }
 
 impl Symbol {
+  #[must_use]
   pub fn new(char: char, font: String) -> Option<Self> {
     // Check if the symbol code is a valid Unicode character.
     // We support only a part of the BMP supported by XML 1.0.
@@ -461,7 +500,7 @@ impl borsh::BorshDeserialize for Symbol {
 }
 
 /// Represents a blend component of a palette item.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Blend {
@@ -496,6 +535,7 @@ impl From<pmaker::Bead> for Bead {
 }
 
 #[cfg(feature = "serde")]
+#[expect(clippy::ref_option)]
 fn blends_empty(blends: &Option<Vec<Blend>>) -> bool {
-  blends.as_ref().is_none_or(|blends| blends.is_empty())
+  blends.as_ref().is_none_or(Vec::is_empty)
 }

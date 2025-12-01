@@ -1,13 +1,16 @@
 [package]
-name = "embroiderly-parsers"
+name = "embroiderly_parsers"
 edition = { workspace = true }
+
+[lints]
+workspace = true
 
 [dependencies]
 # Embroiderly Core
-embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
+embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
 
 # Parsing pattern files
-xsp-parsers = { workspace = true }
+xsp_parsers = { workspace = true }
 quick-xml = { workspace = true }
 
 # Archiving

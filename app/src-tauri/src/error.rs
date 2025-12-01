@@ -87,6 +87,9 @@ pub enum PatternError {
 
   #[error("Err06: Failed to export pattern: {0}")]
   FailedToExport(#[source] anyhow::Error),
+
+  #[error("Err07: Failed to import image: {0}")]
+  FailedToImport(#[source] anyhow::Error),
 }
 
 impl From<embroiderly_parsers::Error> for PatternError {

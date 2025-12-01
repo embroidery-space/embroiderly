@@ -2,7 +2,7 @@ use std::sync::OnceLock;
 
 use anyhow::Result;
 use embroiderly_pattern::{PatternProject, ReferenceImage, ReferenceImageSettings};
-use tauri::{Emitter, WebviewWindow};
+use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
 use crate::utils::base64;
@@ -18,7 +18,7 @@ pub struct SetReferenceImageAction {
 }
 
 impl SetReferenceImageAction {
-  pub fn new(image: Option<ReferenceImage>) -> Self {
+  pub const fn new(image: Option<ReferenceImage>) -> Self {
     Self {
       image,
       old_image: OnceLock::new(),
@@ -47,7 +47,7 @@ impl<R: tauri::Runtime> Action<R> for SetReferenceImageAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_image = self.old_image.get().unwrap();
     window.emit("image:set", base64::encode(borsh::to_vec(&old_image)?))?;
-    patproj.reference_image = old_image.clone();
+    patproj.reference_image.clone_from(old_image);
     Ok(())
   }
 }
@@ -59,7 +59,7 @@ pub struct UpdateReferenceImageSettingsAction {
 }
 
 impl UpdateReferenceImageSettingsAction {
-  pub fn new(settings: ReferenceImageSettings) -> Self {
+  pub const fn new(settings: ReferenceImageSettings) -> Self {
     Self {
       settings,
       old_settings: OnceLock::new(),

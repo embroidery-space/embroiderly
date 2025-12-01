@@ -109,35 +109,35 @@ pub enum AppEvent {
 impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
   fn event_name(&self) -> &str {
     match self {
-      AppEvent::AppStarted => "app_started",
-      AppEvent::AppExited => "app_exited",
+      Self::AppStarted => "app_started",
+      Self::AppExited => "app_exited",
 
-      AppEvent::PatternCreated { .. } => "pattern_created",
-      AppEvent::PatternOpened { .. } => "pattern_opened",
-      AppEvent::PatternSaved { .. } => "pattern_saved",
-      AppEvent::PatternClosed => "pattern_closed",
+      Self::PatternCreated { .. } => "pattern_created",
+      Self::PatternOpened { .. } => "pattern_opened",
+      Self::PatternSaved { .. } => "pattern_saved",
+      Self::PatternClosed => "pattern_closed",
 
-      AppEvent::PatternExportedAsPdf { .. } => "pattern_exported_as_pdf",
-      AppEvent::PdfExportSettingsUpdated { .. } => "pdf_export_settings_updated",
+      Self::PatternExportedAsPdf { .. } => "pattern_exported_as_pdf",
+      Self::PdfExportSettingsUpdated { .. } => "pdf_export_settings_updated",
 
-      AppEvent::ReferenceImageSet { .. } => "reference_image_set",
-      AppEvent::ReferenceImageRemoved => "reference_image_removed",
-      AppEvent::ReferenceImageSettingsUpdated { .. } => "reference_image_settings_updated",
+      Self::ReferenceImageSet { .. } => "reference_image_set",
+      Self::ReferenceImageRemoved => "reference_image_removed",
+      Self::ReferenceImageSettingsUpdated { .. } => "reference_image_settings_updated",
 
-      AppEvent::PaletteItemAdded { .. } => "palette_item_added",
-      AppEvent::PaletteItemRemoved { .. } => "palette_item_removed",
-      AppEvent::PaletteDisplaySettingsUpdated { .. } => "palette_display_settings_updated",
-      AppEvent::PaletteSorted { .. } => "palette_sorted",
+      Self::PaletteItemAdded { .. } => "palette_item_added",
+      Self::PaletteItemRemoved { .. } => "palette_item_removed",
+      Self::PaletteDisplaySettingsUpdated { .. } => "palette_display_settings_updated",
+      Self::PaletteSorted { .. } => "palette_sorted",
 
-      AppEvent::FabricUpdated { .. } => "fabric_updated",
-      AppEvent::GridUpdated { .. } => "grid_updated",
+      Self::FabricUpdated { .. } => "fabric_updated",
+      Self::GridUpdated { .. } => "grid_updated",
 
-      AppEvent::DisplayModeChanged { .. } => "display_mode_changed",
-      AppEvent::SymbolsVisibilityChanged { .. } => "symbols_visibility_changed",
-      AppEvent::LayersVisibilityChanged { .. } => "layers_visibility_changed",
+      Self::DisplayModeChanged { .. } => "display_mode_changed",
+      Self::SymbolsVisibilityChanged { .. } => "symbols_visibility_changed",
+      Self::LayersVisibilityChanged { .. } => "layers_visibility_changed",
 
-      AppEvent::PalettesImported { .. } => "palettes_imported",
-      AppEvent::SymbolFontsImported { .. } => "symbol_fonts_imported",
+      Self::PalettesImported { .. } => "palettes_imported",
+      Self::SymbolFontsImported { .. } => "symbol_fonts_imported",
     }
   }
 
@@ -145,13 +145,13 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
     use serde_json::json;
 
     match self {
-      AppEvent::PatternCreated { fabric } => vec![
+      Self::PatternCreated { fabric } => vec![
         ("fabric_dimensions", json!((fabric.width, fabric.height))),
         ("fabric_spi", json!(fabric.spi)),
         ("fabric_kind", json!(fabric.kind)),
         ("fabric_color", json!(fabric.color)),
       ],
-      AppEvent::PatternOpened {
+      Self::PatternOpened {
         format,
         fabric,
         palette_size,
@@ -204,9 +204,9 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ),
         ("reference_image_size", json!(reference_image_size)),
       ],
-      AppEvent::PatternSaved { format } => vec![("format", json!(format.to_string()))],
+      Self::PatternSaved { format } => vec![("format", json!(format.to_string()))],
 
-      AppEvent::PatternExportedAsPdf { settings } | AppEvent::PdfExportSettingsUpdated { settings } => vec![
+      Self::PatternExportedAsPdf { settings } | Self::PdfExportSettingsUpdated { settings } => vec![
         ("export_monochrome", json!(settings.monochrome)),
         ("export_color", json!(settings.color)),
         ("center_frames", json!(settings.center_frames)),
@@ -227,12 +227,12 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ),
       ],
 
-      AppEvent::ReferenceImageSet { format, dimensions, size } => vec![
+      Self::ReferenceImageSet { format, dimensions, size } => vec![
         ("format", json!(image::ImageFormat::extensions_str(*format)[0])),
         ("dimensions", json!(format!("{}x{}", dimensions.0, dimensions.1))),
         ("size", json!(size)),
       ],
-      AppEvent::ReferenceImageSettingsUpdated { settings } => vec![
+      Self::ReferenceImageSettingsUpdated { settings } => vec![
         ("x", json!(settings.x)),
         ("y", json!(settings.y)),
         ("width", json!(settings.width)),
@@ -241,24 +241,24 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("opactity", json!(settings.opacity)),
       ],
 
-      AppEvent::PaletteItemAdded { brand, is_blend, blends_number } => vec![
+      Self::PaletteItemAdded { brand, is_blend, blends_number } => vec![
         ("brand", json!(brand)),
         ("is_blend", json!(is_blend)),
         ("blends_number", json!(blends_number)),
       ],
-      AppEvent::PaletteItemRemoved { brand, is_blend, blends_number } => vec![
+      Self::PaletteItemRemoved { brand, is_blend, blends_number } => vec![
         ("brand", json!(brand)),
         ("is_blend", json!(is_blend)),
         ("blends_number", json!(blends_number)),
       ],
-      AppEvent::PaletteDisplaySettingsUpdated { settings } => vec![
+      Self::PaletteDisplaySettingsUpdated { settings } => vec![
         ("columns_number", json!(settings.columns_number)),
         ("color_only", json!(settings.color_only)),
         ("show_color_brands", json!(settings.show_color_brands)),
         ("show_color_numbers", json!(settings.show_color_numbers)),
         ("show_color_names", json!(settings.show_color_names)),
       ],
-      AppEvent::PaletteSorted {
+      Self::PaletteSorted {
         sort_by,
         palette_size,
         blends_number,
@@ -270,7 +270,7 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("used_palette_brands", json!(used_palette_brands)),
       ],
 
-      AppEvent::FabricUpdated { fabric } => vec![
+      Self::FabricUpdated { fabric } => vec![
         (
           "fabric_dimensions",
           json!(format!("{}x{}", fabric.width, fabric.height)),
@@ -279,7 +279,7 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("fabric_kind", json!(fabric.kind)),
         ("fabric_color", json!(fabric.color)),
       ],
-      AppEvent::GridUpdated { grid } => vec![
+      Self::GridUpdated { grid } => vec![
         ("major_lines_interval", json!(grid.major_lines_interval)),
         ("minor_lines_thickness", json!(grid.minor_lines.thickness)),
         ("minor_lines_color", json!(grid.minor_lines.color)),
@@ -287,9 +287,9 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("major_lines_color", json!(grid.major_lines.color)),
       ],
 
-      AppEvent::DisplayModeChanged { mode } => vec![("display_mode", json!(mode.to_string()))],
-      AppEvent::SymbolsVisibilityChanged { visible } => vec![("symbols_visible", json!(visible))],
-      AppEvent::LayersVisibilityChanged { visibility } => vec![
+      Self::DisplayModeChanged { mode } => vec![("display_mode", json!(mode.to_string()))],
+      Self::SymbolsVisibilityChanged { visible } => vec![("symbols_visible", json!(visible))],
+      Self::LayersVisibilityChanged { visibility } => vec![
         ("reference_image_visible", json!(visibility.reference_image)),
         ("full_stitches_visible", json!(visibility.fullstitches)),
         ("petite_stitches_visible", json!(visibility.petitestitches)),
@@ -304,11 +304,11 @@ impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
         ("rulers_visible", json!(visibility.rulers)),
       ],
 
-      AppEvent::PalettesImported { total_files, failed_files } => vec![
+      Self::PalettesImported { total_files, failed_files } => vec![
         ("total_files", json!(total_files)),
         ("failed_files", json!(failed_files)),
       ],
-      AppEvent::SymbolFontsImported { total_files, failed_files } => vec![
+      Self::SymbolFontsImported { total_files, failed_files } => vec![
         ("total_files", json!(total_files)),
         ("failed_files", json!(failed_files)),
       ],

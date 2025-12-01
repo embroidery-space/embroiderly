@@ -13,7 +13,7 @@ pub fn auto_save_interval<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -
 }
 
 /// Returns whether diagnostics are enabled from user settings.
-#[allow(unused_variables)]
+#[allow(unused_variables, clippy::missing_const_for_fn)]
 pub fn telemetry_diagnostics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> bool {
   #[cfg(not(debug_assertions))]
   let diagnostics_enabled = app_handle
@@ -29,7 +29,7 @@ pub fn telemetry_diagnostics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppH
 }
 
 /// Returns whether metrics collection is enabled from user settings.
-#[allow(unused_variables)]
+#[allow(unused_variables, clippy::missing_const_for_fn)]
 pub fn telemetry_metrics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> bool {
   #[cfg(not(debug_assertions))]
   let metrics_enabled = app_handle

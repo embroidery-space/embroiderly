@@ -1,6 +1,9 @@
 [package]
-name = "xsp-parsers"
+name = "xsp_parsers"
 edition = { workspace = true }
+
+[lints]
+workspace = true
 
 [dependencies]
 # Parsing pattern files

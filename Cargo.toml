@@ -16,10 +16,53 @@ debug = "limited"
 strip = "debuginfo"
 split-debuginfo = "packed"
 
+[workspace.lints.clippy]
+correctness = { level = "deny", priority = -1 }
+suspicious = { level = "deny", priority = -1 }
+complexity = { level = "warn", priority = -1 }
+perf = { level = "warn", priority = -1 }
+style = { level = "warn", priority = -1 }
+
+pedantic = { level = "warn", priority = -1 }
+cast_lossless = "allow"
+cast_possible_truncation = "allow"
+cast_sign_loss = "allow"
+cast_precision_loss = "allow"
+cast_possible_wrap = "allow"
+default_trait_access = "allow"
+explicit_iter_loop = "allow"
+float_cmp = "allow"
+match_same_arms = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+needless_pass_by_value = "allow"
+struct_excessive_bools = "allow"
+single_char_pattern = "allow"
+too_many_lines = "allow"
+wildcard_imports = "allow"
+
+restriction = { level = "allow", priority = -1 }
+dbg_macro = "warn"
+print_stdout = "warn"
+print_stderr = "warn"
+semicolon_inside_block = "warn"
+todo = "warn"
+unused_trait_names = "warn"
+
+nursery = { level = "warn", priority = -1 }
+large_stack_frames = "allow"
+option_if_let_else = "allow"
+or_fun_call = "allow"
+significant_drop_tightening = "allow"
+
+cargo = { level = "allow", priority = -1 }
+redundant_feature_names = "deny"
+wildcard_dependencies = "deny"
+
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.1", features = ["config-json5"] }
-tauri-build = { version = "2.4.1", features = ["config-json5"] }
+tauri = { version = "2.9.3", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
+tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
 tauri-plugin = { version = "2.5.1", features = ["build"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.2"
@@ -31,7 +74,7 @@ tauri-plugin-process = "2.3.1"
 tauri-plugin-shell = "2.3.3"
 tauri-plugin-updater = "2.9.0"
 ## Third-party Tauri plugins
-tauri-plugin-prevent-default = "3.0.3"
+tauri-plugin-prevent-default = "4.0.2"
 tauri-plugin-pinia = "4.1.0"
 ## Custom Tauri plugins
 tauri-plugin-log = { path = "crates/tauri-plugin-log" }
@@ -39,16 +82,17 @@ tauri-plugin-sentry = { path = "crates/tauri-plugin-sentry" }
 tauri-plugin-posthog = { path = "crates/tauri-plugin-posthog" }
 
 # Embroiderly Core
-embroiderly-parsers = { path = "crates/embroiderly-parsers" }
-embroiderly-pattern = { path = "crates/embroiderly-pattern" }
-embroiderly-logger = { path = "crates/embroiderly-logger" }
-xsp-parsers = { path = "crates/xsp-parsers" }
+embroiderly_image = { path = "crates/embroiderly-image" }
+embroiderly_parsers = { path = "crates/embroiderly-parsers" }
+embroiderly_pattern = { path = "crates/embroiderly-pattern" }
+embroiderly_logger = { path = "crates/embroiderly-logger" }
+xsp_parsers = { path = "crates/xsp-parsers" }
 
 # Parsing pattern files
 byteorder = "1.5.0"
 encoding_rs = "0.8.35"
 hex = "0.4.3"
-quick-xml = "0.38.3"
+quick-xml = "0.38.4"
 
 # Fonts handling
 font-kit = "0.14.3"
@@ -61,13 +105,12 @@ typst-pdf = "0.14.0"
 typst-as-lib = "0.15.0"
 
 # Image processing
-image = "0.25.8"
+image = "0.25.9"
+palette = "0.7.6"
+quantette = "0.5.1"
 
 # Archiving
-zip = { version = "6.0.0", features = [
-  "zstd",
-  "time",
-], default-features = false }
+zip = { version = "6.0.0", default-features = false, features = [ "zstd", "time", ] }
 
 # De/serialization
 serde = { version = "1.0.228", features = ["derive"] }
@@ -76,10 +119,7 @@ base64 = "0.22.1"
 borsh = { version = "1.5.7", features = ["derive"] }
 
 # CLI
-clap = { version = "4.5.50", default-features = false, features = [
-  "std",
-  "derive",
-] }
+argh = { version = "0.1.13", default-features = false }
 
 # Error handling
 anyhow = "1.0.100"
@@ -94,11 +134,11 @@ log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 fern = "0.7.1"
 
 # Telemetry
-sentry = "0.45.0"
+sentry = "0.46.0"
 posthog-rs = {version = "0.3.7", default-features = false }
 
 # Identification
-machine-uid = "0.5.3"
+machine-uid = "0.5.4"
 uuid = { version = "1.18.1", features = ["v4", "v7"] }
 
 # File system utilities
@@ -113,8 +153,9 @@ rayon = "1.11.0"
 rstest = "0.26.1"
 
 # Other
-alphanumeric-sort = "1.5.3"
-ordered-float = { version = "5.1.0" }
+alphanumeric-sort = "1.5.4"
+async-trait = "0.1.89"
+ordered-float = "5.1.0"
 dyn-clone = "1.0.20"
 paste = "1.0.15"
 prettydiff = { version = "0.9.0", default-features = false }

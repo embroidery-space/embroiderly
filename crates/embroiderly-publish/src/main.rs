@@ -1,38 +1,40 @@
-use clap::Parser;
+use argh::FromArgs;
+use embroiderly_publish::Error;
 
 /// A utility program to export embroidery patterns to various formats.
-#[derive(Debug, Parser)]
+#[derive(FromArgs)]
 struct Args {
-  /// Path to the pattern file
-  #[arg(long)]
+  /// path to the pattern file
+  #[argh(option)]
   pattern: std::path::PathBuf,
 
-  /// Path to the output file
-  #[arg(long)]
+  /// path to the output file
+  #[argh(option)]
   output: std::path::PathBuf,
 
-  /// Options for the export process in JSON format
-  #[arg(long)]
+  /// options for the export process in JSON format
+  #[argh(option)]
   options: String,
 
-  /// Path to the Embroiderly symbol fonts directory
-  #[arg(long, default_value = "./resources/fonts/")]
-  symbol_fonts_dir: std::path::PathBuf,
+  /// path to the Embroiderly symbol fonts directory
+  #[argh(option)]
+  symbol_fonts_dir: Vec<std::path::PathBuf>,
 }
 
 fn main() -> anyhow::Result<()> {
   embroiderly_publish::logger::init()?;
-  let _telemetry = embroiderly_publish::telemetry::init()?;
 
-  let args = Args::parse();
+  let Args {
+    pattern,
+    output,
+    options,
+    symbol_fonts_dir,
+  } = argh::from_env();
 
-  let patproj = embroiderly_parsers::parse_pattern(args.pattern)?;
-  embroiderly_publish::export_pattern(
-    &patproj,
-    args.output,
-    serde_json::from_str(&args.options)?,
-    args.symbol_fonts_dir,
-  )?;
+  let patproj = embroiderly_parsers::parse_pattern(pattern)?;
+  let options = serde_json::from_str(&options).map_err(Error::InvalidPdfExportOptions)?;
+
+  embroiderly_publish::export_pattern(&patproj, output, options, symbol_fonts_dir)?;
 
   Ok(())
 }

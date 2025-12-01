@@ -1,6 +1,6 @@
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
-  "files": ["ui.config.ts", "vite.config.ts", "vitest.config.ts", "wdio.config.ts"],
+  "extends": "@tsconfig/node24/tsconfig.json",
+  "include": ["vite-plugins/**/*.ts", "ui.config.ts", "vite.config.ts", "vitest.config.ts", "wdio.config.ts"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

@@ -32,6 +32,6 @@ fn parse_palette_item(line: &str) -> Option<PaletteItem> {
     brand: brand.trim().to_owned(),
     number: number.trim().to_owned(),
     name: parts[1].trim().to_owned(),
-    color: format!("{:06X}", color),
+    color: format!("{color:06X}"),
   })
 }

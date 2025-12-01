@@ -2,7 +2,7 @@ use std::sync::OnceLock;
 
 use anyhow::Result;
 use embroiderly_pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch, Symbol};
-use tauri::{Emitter, WebviewWindow};
+use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
 use crate::utils::base64;
@@ -24,7 +24,7 @@ pub struct AddPaletteItemAction {
 }
 
 impl AddPaletteItemAction {
-  pub fn new(palitem: PaletteItem) -> Self {
+  pub const fn new(palitem: PaletteItem) -> Self {
     Self { palitem }
   }
 }
@@ -71,8 +71,8 @@ struct RemovePaletteItemActionMetadata {
 
 impl RemovePaletteItemsAction {
   pub fn new(palindexes: Vec<u32>) -> Self {
-    let mut palindexes = palindexes.clone();
-    palindexes.sort();
+    let mut palindexes = palindexes;
+    palindexes.sort_unstable();
     Self {
       palindexes,
       metadata: OnceLock::new(),
@@ -122,7 +122,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
 
       window.emit(
         "palette:add_palette_item",
-        base64::encode(borsh::to_vec(&AddedPaletteItemData { palindex, palitem })?),
+        base64::encode(borsh::to_vec(&AddedPaletteItemData { palitem, palindex })?),
       )?;
     }
 
@@ -151,7 +151,7 @@ pub struct UpdatePaletteDisplaySettingsAction {
 }
 
 impl UpdatePaletteDisplaySettingsAction {
-  pub fn new(settings: PaletteSettings) -> Self {
+  pub const fn new(settings: PaletteSettings) -> Self {
     Self {
       settings,
       old_settings: OnceLock::new(),
@@ -198,7 +198,7 @@ pub struct SortPaletteAction {
 }
 
 impl SortPaletteAction {
-  pub fn new(sort_by: SortPaletteBy) -> Self {
+  pub const fn new(sort_by: SortPaletteBy) -> Self {
     Self {
       sort_by,
       old_positions: OnceLock::new(),
@@ -249,7 +249,7 @@ pub struct ReorderPaletteItemsAction {
 }
 
 impl ReorderPaletteItemsAction {
-  pub fn new(old_position: u32, new_position: u32) -> Self {
+  pub const fn new(old_position: u32, new_position: u32) -> Self {
     Self {
       old_position,
       new_position,
@@ -300,7 +300,7 @@ pub struct SetSymbolAction {
 }
 
 impl SetSymbolAction {
-  pub fn new(palindex: u32, symbol: Option<Symbol>) -> Self {
+  pub const fn new(palindex: u32, symbol: Option<Symbol>) -> Self {
     Self {
       palindex,
       symbol,
@@ -325,7 +325,7 @@ impl<R: tauri::Runtime> Action<R> for SetSymbolAction {
     }
 
     if let Some(palitem) = patproj.pattern.palette.get_mut(self.palindex) {
-      palitem.symbol = self.symbol.clone();
+      palitem.symbol.clone_from(&self.symbol);
     }
 
     window.emit(
@@ -347,7 +347,7 @@ impl<R: tauri::Runtime> Action<R> for SetSymbolAction {
     let old_symbol = self.old_symbol.get().unwrap();
 
     if let Some(palitem) = patproj.pattern.palette.get_mut(self.palindex) {
-      palitem.symbol = old_symbol.clone();
+      palitem.symbol.clone_from(old_symbol);
     }
 
     window.emit(

@@ -2,7 +2,7 @@ use std::sync::OnceLock;
 
 use anyhow::Result;
 use embroiderly_pattern::{Grid, PatternProject};
-use tauri::{Emitter, WebviewWindow};
+use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
 use crate::utils::base64;
@@ -18,7 +18,7 @@ pub struct UpdateGridPropertiesAction {
 }
 
 impl UpdateGridPropertiesAction {
-  pub fn new(grid: Grid) -> Self {
+  pub const fn new(grid: Grid) -> Self {
     Self { grid, old_grid: OnceLock::new() }
   }
 }

@@ -16,7 +16,7 @@ export enum LogLevel {
  * @param message - The log message.
  */
 export async function log(level: LogLevel, message: string) {
-  const location = getCallerLocation(new Error().stack);
+  const location = getCallerLocation(new Error(message).stack);
   return invoke<void>("plugin:log|log", { level, message, location });
 }
 

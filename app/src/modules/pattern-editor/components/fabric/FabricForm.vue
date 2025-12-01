@@ -1,0 +1,185 @@
+<template>
+  <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
+    <FormFieldset :legend="$t('fabric-count-and-kind')">
+      <UFormField :label="$t('fabric-count')" class="w-full">
+        <USelect
+          v-model="fabric.spi[0]"
+          :items="fabricCounts"
+          class="w-full"
+          data-testid="fabric-count-select"
+          @update:model-value="fabric.spi[1] = $event"
+        />
+      </UFormField>
+      <UFormField :label="$t('label-kind')" class="w-full">
+        <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" data-testid="fabric-kind-select" />
+      </UFormField>
+    </FormFieldset>
+
+    <FormFieldset :legend="$t('fabric-size')">
+      <div class="flex gap-4 pb-2">
+        <DimensionsInput
+          v-model:width="fabricSizeFinal.width"
+          v-model:height="fabricSizeFinal.height"
+          data-testid="fabric-dimensions-input"
+          :width-field-props="{ label: $t('fabric-width') }"
+          :height-field-props="{ label: $t('fabric-height') }"
+          :width-input-props="{
+            orientation: 'vertical',
+            min: 0.1,
+            step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
+          }"
+          :height-input-props="{
+            orientation: 'vertical',
+            min: 0.1,
+            step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
+          }"
+          orientation="vertical"
+        />
+        <URadioGroup
+          v-model="fabricSizeMeasurement"
+          data-testid="fabric-unit-radio-group"
+          :items="fabricSizeOptions"
+          class="mt-6"
+        />
+      </div>
+
+      <p>
+        {{
+          $t("fabric-total-size", {
+            width: fabricSizeFinal.width,
+            height: fabricSizeFinal.height,
+            widthInches: stitches2inches(fabricSizeFinal.width, fabric.spi[0]),
+            heightInches: stitches2inches(fabricSizeFinal.height, fabric.spi[1]),
+            widthMm: stitches2mm(fabricSizeFinal.width, fabric.spi[0]),
+            heightMm: stitches2mm(fabricSizeFinal.height, fabric.spi[1]),
+          })
+        }}
+      </p>
+    </FormFieldset>
+
+    <FormFieldset :legend="$t('fabric-color')" class="row-start-1 row-end-3 w-md">
+      <PaletteList
+        :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
+        :options="fabricColors"
+        :option-value="(color) => ({ name: color.name, color: color.color.toHex().substring(1).toUpperCase() })"
+        :display-settings="FABRIC_COLORS_DISPLAY_SETTINGS"
+        data-testid="fabric-colors-listbox"
+        @update:model-value="
+          (value) => {
+            const item = Array.isArray(value) ? value[0] : value;
+            if (item) {
+              fabric.name = item.name;
+              fabric.color = new Color(item.color);
+            }
+          }
+        "
+      />
+      <p class="mt-2">{{ $t("fabric-selected-color", { color: fabric.name }) }}</p>
+    </FormFieldset>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import { Color } from "pixi.js";
+  import { computed, onMounted, reactive, ref, watch } from "vue";
+  import type { Ref } from "vue";
+
+  import { PatternApi } from "~/pattern-editor/api/";
+  import { Fabric, PaletteSettings, FabricColor } from "~/pattern-editor/lib/pattern/";
+  import { DimensionsInput, FormFieldset } from "~/shared/components/";
+  import { useI18n } from "~/shared/composables/";
+  import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/shared/utils/";
+
+  import { PaletteList } from "../palette/";
+
+  const fabric = defineModel<Fabric>({ required: true });
+
+  const { fluent } = useI18n();
+
+  const fabricCounts = ref([14, 16, 18, 20]);
+
+  const fabricSizeMeasurement = ref<"stitches" | "inches" | "mm">("stitches");
+  const fabricSizeFinal = reactive({ width: fabric.value.width, height: fabric.value.height });
+  const fabricSizeOptions = computed(() => [
+    { label: fluent.$t("unit-stitches"), value: "stitches" },
+    { label: fluent.$t("unit-inches"), value: "inches" },
+    { label: fluent.$t("unit-mm"), value: "mm" },
+  ]);
+
+  watch(fabricSizeMeasurement, (newMeasurement, oldMeasurement) => {
+    const { width, height } = fabricSizeFinal;
+    switch (newMeasurement) {
+      case "stitches": {
+        if (oldMeasurement === "inches") {
+          fabricSizeFinal.width = size2stitches(width, fabric.value.spi[0]);
+          fabricSizeFinal.height = size2stitches(height, fabric.value.spi[1]);
+        } else {
+          fabricSizeFinal.width = size2stitches(mm2inches(width), fabric.value.spi[0]);
+          fabricSizeFinal.height = size2stitches(mm2inches(height), fabric.value.spi[1]);
+        }
+        break;
+      }
+      case "inches": {
+        if (oldMeasurement === "stitches") {
+          fabricSizeFinal.width = stitches2inches(width, fabric.value.spi[0]);
+          fabricSizeFinal.height = stitches2inches(height, fabric.value.spi[1]);
+        } else {
+          fabricSizeFinal.width = mm2inches(width);
+          fabricSizeFinal.height = mm2inches(height);
+        }
+        break;
+      }
+      case "mm": {
+        if (oldMeasurement === "stitches") {
+          fabricSizeFinal.width = stitches2mm(width, fabric.value.spi[0]);
+          fabricSizeFinal.height = stitches2mm(height, fabric.value.spi[1]);
+        } else {
+          fabricSizeFinal.width = inches2mm(width);
+          fabricSizeFinal.height = inches2mm(height);
+        }
+        break;
+      }
+    }
+  });
+
+  watch(fabricSizeFinal, (size) => {
+    const { width, height } = size;
+    switch (fabricSizeMeasurement.value) {
+      case "stitches": {
+        fabric.value.width = width;
+        fabric.value.height = height;
+        break;
+      }
+      case "inches": {
+        fabric.value.width = size2stitches(width, fabric.value.spi[0]);
+        fabric.value.height = size2stitches(height, fabric.value.spi[1]);
+        break;
+      }
+      case "mm": {
+        fabric.value.width = size2stitches(mm2inches(width), fabric.value.spi[0]);
+        fabric.value.height = size2stitches(mm2inches(height), fabric.value.spi[1]);
+        break;
+      }
+    }
+  });
+
+  const fabricKinds = computed(() => [
+    { label: fluent.$t("fabric-kind-aida"), value: "Aida" },
+    { label: fluent.$t("fabric-kind-evenweave"), value: "Evenweave" },
+    { label: fluent.$t("fabric-kind-linen"), value: "Linen" },
+  ]);
+  const fabricColors: Ref<FabricColor[]> = ref([]);
+  const FABRIC_COLORS_DISPLAY_SETTINGS = new PaletteSettings({
+    columnsNumber: 8,
+    colorOnly: true,
+    showStitchSymbols: false,
+    stitchSymbolsOnContrastBackground: false,
+    showColorBrands: false,
+    showColorNumbers: false,
+    showColorNames: false,
+  });
+
+  onMounted(async () => {
+    fabricColors.value = await PatternApi.loadFabricColors();
+  });
+</script>

@@ -1,10 +1,10 @@
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { cwd } from "node:process";
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
 
 import typescript from "@rollup/plugin-typescript";
 
-const pkg = JSON.parse(readFileSync(join(cwd(), "package.json"), "utf8"));
+const pkg = JSON.parse(fs.readFileSync(path.join(process.cwd(), "package.json"), "utf8"));
 
 export default {
   input: "guest-js/index.ts",
@@ -12,7 +12,7 @@ export default {
   plugins: [
     typescript({
       declaration: true,
-      declarationDir: dirname(pkg.exports.import),
+      declarationDir: path.dirname(pkg.exports.import),
     }),
   ],
   external: [/^@tauri-apps\/api/, ...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],

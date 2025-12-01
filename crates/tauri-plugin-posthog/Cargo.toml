@@ -3,6 +3,9 @@ name = "tauri-plugin-posthog"
 links = "tauri-plugin-posthog"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [build-dependencies]
 tauri-plugin = { workspace = true }
 
