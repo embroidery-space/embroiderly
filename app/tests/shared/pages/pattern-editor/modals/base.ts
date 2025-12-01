@@ -1,4 +1,4 @@
-/** Base class for modal dialog page objects. */
+/** Base class for modal objects. */
 export class BaseModal {
   protected modalSelector: string;
 

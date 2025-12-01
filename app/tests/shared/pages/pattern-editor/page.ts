@@ -10,42 +10,42 @@ class PatternEditorPage {
 
   /** Returns a button that triggers the _File_ dropdown menu. */
   get fileMenuButton() {
-    return $("button*=File");
+    return $(`button*=File`);
   }
 
   /** Returns a button within the _File_ dropdown menu that opens the _Fabric Properties_ modal. */
   get fileCreateMenuItem() {
-    return $("button*=Create");
+    return $(`//div[@role="menuitem"][contains(., "Create")]`);
   }
 
   /** Returns a button that triggers the _Pattern_ dropdown menu. */
   get patternMenuButton() {
-    return $("button*=Pattern");
+    return $(`button*=Pattern`);
   }
 
   /** Returns a button within the _Pattern_ dropdown menu that opens the _Pattern Info_ modal. */
   get patternInfoMenuItem() {
-    return $("button*=Pattern Information");
+    return $(`//div[@role="menuitem"][contains(., "Pattern Information")]`);
   }
 
   /** Returns a button within the _Pattern_ dropdown menu that opens the _Fabric Properties_ modal. */
   get patternFabricMenuItem() {
-    return $("button*=Fabric Properties");
+    return $(`//div[@role="menuitem"][contains(., "Fabric Properties")]`);
   }
 
   /** Returns a button within the _Pattern_ dropdown menu that opens the _Grid Properties_ modal. */
   get patternGridMenuItem() {
-    return $("button*=Grid Properties");
+    return $(`//div[@role="menuitem"][contains(., "Grid Properties")]`);
   }
 
   /** Returns the canvas element. */
   get canvas() {
-    return $("canvas");
+    return $(`canvas`);
   }
 
   /** Returns the welcome panel (shown when no pattern is opened). */
   get welcomePanel() {
-    return $('[data-testid="welcome-panel"]');
+    return $(`[data-testid="welcome-panel"]`);
   }
 
   /**
@@ -95,12 +95,12 @@ class PatternEditorPage {
 
   /** All pattern tabs. */
   get tabs() {
-    return $$('//div[@role="tablist"]//button[@role="tab"]');
+    return $$(`//div[@role="tablist"]//button[@role="tab"]`);
   }
 
   /** An active pattern tab. */
   get activeTab() {
-    return $('//div[@role="tablist"]//button[@role="tab"][@aria-selected="true"]');
+    return $(`//div[@role="tablist"]//button[@role="tab"][@aria-selected="true"]`);
   }
 
   /** Clicks a pattern tab by index (0-based). */

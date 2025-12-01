@@ -23,11 +23,11 @@ export class FabricModal extends BaseModal {
   }
 
   get widthInput() {
-    return this.modal.$(`[data-testid="fabric-width-input"]`);
+    return this.modal.$(`[data-testid="fabric-dimensions-input"]`).$(`[data-testid="width-input"]`);
   }
 
   get heightInput() {
-    return this.modal.$(`[data-testid="fabric-height-input"]`);
+    return this.modal.$(`[data-testid="fabric-dimensions-input"]`).$(`[data-testid="height-input"]`);
   }
 
   get colorsListbox() {

@@ -13,7 +13,7 @@
             :on-click="patternStore.undo"
           />
           <ToolButton
-            data-testid="undo-button"
+            data-testid="redo-button"
             tooltip-side="bottom"
             :tooltip-arrow="false"
             icon="i-lucide:redo"

@@ -10,7 +10,7 @@
           @update:model-value="fabric.spi[1] = $event"
         />
       </UFormField>
-      <UFormField :label="$t('label-kind')" class="w-full">
+      <UFormField :label="$t('fabric-kind')" class="w-full">
         <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" data-testid="fabric-kind-select" />
       </UFormField>
     </FormFieldset>
@@ -27,11 +27,13 @@
             orientation: 'vertical',
             min: 0.1,
             step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
+            stepSnapping: false,
           }"
           :height-input-props="{
             orientation: 'vertical',
             min: 0.1,
             step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
+            stepSnapping: false,
           }"
           orientation="vertical"
         />
