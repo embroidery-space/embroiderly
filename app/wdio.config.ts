@@ -63,7 +63,7 @@ export const config: WebdriverIO.Config = {
     timeout: 60000,
   },
 
-  onPrepare: () => {
+  onPrepare() {
     // Ensure the temporary directory exists.
     if (!fs.existsSync(TESTS_TEMP_PATH)) fs.mkdirSync(TESTS_TEMP_PATH);
 
@@ -82,7 +82,7 @@ export const config: WebdriverIO.Config = {
     });
   },
 
-  beforeSession: () => {
+  beforeSession() {
     const tauriDriverArgs = [];
 
     // Ensure we are running `tauri-driver` before the session starts so that we can proxy the webdriver requests.
@@ -105,7 +105,24 @@ export const config: WebdriverIO.Config = {
     });
   },
 
-  afterSession: () => {
+  async before() {
+    // Force disable all CSS animations and transitions during CI.
+    if (process.env.GITHUB_ACTIONS) {
+      await browser.execute(() => {
+        const style = document.createElement("style");
+        style.innerHTML = `
+                *, *::before, *::after {
+                  animation: none !important;
+                  transition: none !important;
+                }
+              `;
+
+        document.head.append(style);
+      });
+    }
+  },
+
+  afterSession() {
     // Clean up the `tauri-driver` process we spawned at the start of the session.
     closeTauriDriver();
   },
