@@ -30,13 +30,13 @@ pub fn open_pattern<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> Result<tauri::ipc::Response> {
+) -> Result<String> {
   log::debug!("Opening pattern");
 
   let mut patterns = patterns.write().unwrap();
   if let Some(pattern) = patterns.get_pattern_by_path(&file_path) {
     log::debug!("Pattern({:?}) already opened", pattern.id);
-    return Ok(tauri::ipc::Response::new(borsh::to_vec(&pattern)?));
+    return Ok(pattern.id.to_string());
   }
 
   let backup_file_path = backup_file_path(&file_path, "bak");
@@ -46,12 +46,12 @@ pub fn open_pattern<R: tauri::Runtime>(
         let pattern = embroiderly_parsers::parse_pattern(backup_file_path)?;
         log::debug!("Pattern({:?}) restored from backup", pattern.id);
 
-        let response = tauri::ipc::Response::new(borsh::to_vec(&pattern)?);
+        let pattern_id = pattern.id;
 
         history.write().unwrap().create(pattern.id);
         patterns.add_pattern(pattern);
 
-        return Ok(response);
+        return Ok(pattern_id.to_string());
       }
       Some(false) => {}
       None => return Err(PatternError::BackupFileExists.into()),
@@ -96,12 +96,12 @@ pub fn open_pattern<R: tauri::Runtime>(
     });
   }
 
-  let response = tauri::ipc::Response::new(borsh::to_vec(&patproj)?);
+  let pattern_id = patproj.id;
 
   history.write().unwrap().create(patproj.id);
   patterns.add_pattern(patproj);
 
-  Ok(response)
+  Ok(pattern_id.to_string())
 }
 
 #[tauri::command]
@@ -110,7 +110,7 @@ pub fn create_pattern<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
-) -> Result<tauri::ipc::Response> {
+) -> Result<String> {
   if let tauri::ipc::InvokeBody::Raw(data) = request.body() {
     log::debug!("Creating new pattern");
 
@@ -125,12 +125,12 @@ pub fn create_pattern<R: tauri::Runtime>(
       fabric: patproj.pattern.fabric.clone(),
     });
 
-    let response = tauri::ipc::Response::new(borsh::to_vec(&patproj)?);
+    let pattern_id = patproj.id;
 
     history.write().unwrap().create(patproj.id);
     patterns.write().unwrap().add_pattern(patproj);
 
-    Ok(response)
+    Ok(pattern_id.to_string())
   } else {
     Err(CommandError::InvalidRequestBody.into())
   }

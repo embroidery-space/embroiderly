@@ -20,10 +20,6 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
   components: {
     resolvers: [RekaResolver({ prefix: "R" })],
   },
-  autoImport: {
-    dirs: ["src/components/", "src/composables/", "src/stores/"],
-    packagePresets: ["fluent-vue"],
-  },
   theme: {
     colors: ["primary", "error", "success", "warning", "info", "help"],
   },

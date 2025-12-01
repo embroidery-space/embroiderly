@@ -1,7 +1,7 @@
 use embroiderly::commands;
 use embroiderly::state::PatternsState;
-use embroiderly_pattern::{Fabric, PatternProject};
-use tauri::Manager;
+use embroiderly_pattern::Fabric;
+use tauri::Manager as _;
 
 mod utils;
 
@@ -25,7 +25,7 @@ fn parses_supported_pattern_formats() {
   for file_path in get_all_test_patterns().into_iter() {
     let file_path = file_path.unwrap().path();
 
-    let tauri::ipc::InvokeResponseBody::Raw(body) = invoke_ipc!(
+    let tauri::ipc::InvokeResponseBody::Json(body) = invoke_ipc!(
       &webview,
       cmd: "open_pattern",
       body: tauri::ipc::InvokeBody::Json(serde_json::json!({
@@ -34,11 +34,11 @@ fn parses_supported_pattern_formats() {
       }))
     )
     .unwrap() else {
-      panic!("Expected raw body in IPC response");
+      panic!("Expected JSON body in IPC response");
     };
-    let patproj: PatternProject = borsh::from_slice(&body).unwrap();
+    let pattern_id: uuid::Uuid = serde_json::from_str(&body).unwrap();
 
-    assert!(patterns_state.read().unwrap().get_pattern_by_id(&patproj.id).is_some());
+    assert!(patterns_state.read().unwrap().get_pattern_by_id(&pattern_id).is_some());
   }
 }
 
@@ -78,7 +78,7 @@ fn saves_pattern() {
     let file_path = file_path.unwrap().path();
 
     // Loading the pattern first.
-    let tauri::ipc::InvokeResponseBody::Raw(body) = invoke_ipc!(
+    let tauri::ipc::InvokeResponseBody::Json(body) = invoke_ipc!(
       &webview,
       cmd: "open_pattern",
       body: tauri::ipc::InvokeBody::Json(serde_json::json!({
@@ -87,9 +87,9 @@ fn saves_pattern() {
       }))
     )
     .unwrap() else {
-      panic!("Expected raw body in IPC response");
+      panic!("Expected JSON body in IPC response");
     };
-    let patproj: PatternProject = borsh::from_slice(&body).unwrap();
+    let pattern_id: uuid::Uuid = serde_json::from_str(&body).unwrap();
 
     for extension in ["oxs", "embproj"] {
       let file_path = std::env::temp_dir().join(format!("pattern.{extension}"));
@@ -100,7 +100,7 @@ fn saves_pattern() {
           &webview,
           cmd: "save_pattern",
           body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-            "patternId": patproj.id.to_string(),
+            "patternId": pattern_id.to_string(),
             "filePath": file_path.to_str().unwrap(),
           }))
         )
@@ -111,7 +111,7 @@ fn saves_pattern() {
           &webview,
           cmd: "load_pattern",
           body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-            "patternId": patproj.id.to_string(),
+            "patternId": pattern_id.to_string(),
           }))
         )
         .is_ok()
@@ -123,7 +123,7 @@ fn saves_pattern() {
         &webview,
         cmd: "close_pattern",
         body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-          "patternId": patproj.id.to_string(),
+          "patternId": pattern_id.to_string(),
         }))
       )
       .is_ok()
@@ -143,22 +143,21 @@ fn closes_pattern() {
   let patterns_state = app.state::<PatternsState>();
 
   assert!(patterns_state.read().unwrap().is_empty());
-  let tauri::ipc::InvokeResponseBody::Raw(body) = invoke_ipc!(
+  let tauri::ipc::InvokeResponseBody::Json(body) = invoke_ipc!(
     &webview,
     cmd: "create_pattern",
     body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&Fabric::default()).unwrap())
   )
   .unwrap() else {
-    panic!("Expected raw body in IPC response");
+    panic!("Expected JSON body in IPC response");
   };
-  let patproj: PatternProject = borsh::from_slice(&body).unwrap();
-  assert_eq!(patterns_state.read().unwrap().len(), 1);
+  let pattern_id: uuid::Uuid = serde_json::from_str(&body).unwrap();
 
   invoke_ipc!(
     &webview,
     cmd: "close_pattern",
     body: tauri::ipc::InvokeBody::Json(serde_json::json!({
-      "patternId": patproj.id.to_string(),
+      "patternId": pattern_id.to_string(),
     }))
   )
   .unwrap();

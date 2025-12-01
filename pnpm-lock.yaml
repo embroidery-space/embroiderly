@@ -80,6 +80,9 @@ importers:
       '@pixi/devtools':
         specifier: 2.0.1
         version: 2.0.1(pixi.js@8.14.3)
+      '@sentry/browser':
+        specifier: 10.27.0
+        version: 10.27.0
       '@sentry/vue':
         specifier: 10.27.0
         version: 10.27.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.25(typescript@5.9.3)))(vue@3.5.25(typescript@5.9.3))

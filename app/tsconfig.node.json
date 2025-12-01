@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node24/tsconfig.json",
-  "files": ["vite.config.ts", "ui.config.ts"],
+  "include": ["vite-plugins/**/*.ts", "vite.config.ts", "ui.config.ts"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

@@ -7,10 +7,10 @@ type PostHogOptions = Parameters<InstanceType<typeof OriginalPostHog>["init"]>[1
 
 export interface EventObject {
   name: EventName;
-  properties: Properties;
+  properties?: Properties;
 }
 
-class PostHog extends OriginalPostHog {
+export class PostHog extends OriginalPostHog {
   constructor() {
     super();
   }
