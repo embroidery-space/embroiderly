@@ -17,7 +17,7 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "@tauri-apps/api": "2.9.0",
+    "@tauri-apps/api": "2.9.1",
     "stacktracey": "2.1.8"
   },
   "devDependencies": {

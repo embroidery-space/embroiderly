@@ -17,8 +17,8 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "@tauri-apps/api": "2.9.0",
-    "posthog-js": "1.295.0"
+    "@tauri-apps/api": "2.9.1",
+    "posthog-js": "1.298.1"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "12.3.0",
