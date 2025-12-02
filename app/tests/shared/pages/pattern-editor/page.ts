@@ -131,36 +131,6 @@ class PatternEditorPage {
     await this.tabs[index].$(".//button").click();
   }
 
-  /** Returns the Undo button in the header. */
-  get undoButton() {
-    return $(`[data-testid="undo-button"]`);
-  }
-
-  /** Clicks the _Undo_ button. */
-  async clickUndo() {
-    await this.undoButton.click();
-  }
-
-  /** Returns the Redo button in the header. */
-  get redoButton() {
-    return $(`[data-testid="redo-button"]`);
-  }
-
-  /** Clicks the _Redo_ button. */
-  async clickRedo() {
-    await this.redoButton.click();
-  }
-
-  /** Presses keyboard shortcut for _Undo_ (`Ctrl+Z`). */
-  async pressUndoShortcut() {
-    await browser.keys(["Control", "z"]);
-  }
-
-  /** Presses keyboard shortcut for _Redo_ (`Ctrl+Y`). */
-  async pressRedoShortcut() {
-    await browser.keys(["Control", "y"]);
-  }
-
   /**
    * Closes all opened patterns without saving changes.
    * This is a utility method for test cleanup and ensuring a clean state.

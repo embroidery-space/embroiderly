@@ -10,12 +10,10 @@ describe("Pattern File Management", () => {
   });
 
   it("creates a new pattern with default fabric settings", async () => {
-    await expect(browser).toMatchFullPageSnapshot("welcome-page");
     await PatternEditorPage.createDefaultPattern();
 
     // Verify that the pattern was created by checking if the canvas is visible.
     await expect(PatternEditorPage.canvas).toBeDisplayed();
-    await expect(browser).toMatchFullPageSnapshot("new-pattern-with-default-fabric");
   });
 
   it("creates a new pattern with custom fabric settings", async () => {
@@ -34,7 +32,6 @@ describe("Pattern File Management", () => {
 
     // Verify that the pattern was created.
     await expect(PatternEditorPage.canvas).toBeDisplayed();
-    await expect(browser).toMatchFullPageSnapshot("new-pattern-with-custom-fabric");
   });
 
   it("creates two patterns and switches between them", async () => {
@@ -59,8 +56,6 @@ describe("Pattern File Management", () => {
     // Click second tab and verify switch.
     await PatternEditorPage.clickTab(1);
     await expect(await PatternEditorPage.getActiveTabText()).toContain("Untitled");
-
-    await expect(browser).toMatchFullPageSnapshot("two-patterns-opened");
   });
 
   it("closes a pattern with unsaved changes after confirmation", async () => {

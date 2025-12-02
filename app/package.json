@@ -66,7 +66,6 @@
     "@wdio/local-runner": "9.21.0",
     "@wdio/mocha-framework": "9.21.0",
     "@wdio/spec-reporter": "9.20.0",
-    "@wdio/visual-service": "9.0.2",
     "jsdom": "27.2.0",
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3",

@@ -8,6 +8,6 @@
     "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": false,
     "paths": { "~/*": ["./src/*"] },
-    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/visual-service"]
+    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework"]
   }
 }

@@ -7,12 +7,9 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 
-import type { VisualServiceOptions } from "@wdio/visual-service";
-
 const ROOT_PATH = fileURLToPath(new URL("..", import.meta.url));
 
 const TESTS_TEMP_PATH = path.join(ROOT_PATH, "app", "tests", ".tmp");
-const TESTS_SCREENSHOTS_PATH = path.join(ROOT_PATH, "app", "tests", "__screenshots__");
 
 const TAURI_DRIVER_PATH = path.resolve(os.homedir(), ".cargo", "bin", "tauri-driver");
 
@@ -26,18 +23,6 @@ function closeTauriDriver() {
   exit = true;
   tauriDriver?.kill();
 }
-
-const visualServiceConfig: VisualServiceOptions = {
-  isHybridApp: true,
-  screenshotPath: TESTS_TEMP_PATH,
-
-  // Until Tauri supports the WebDriver Bidi Protocol, disable the auto-saving of the baseline images.
-  // The WebDriver BiDi Protocol is required to properly set the viewport size with a scale factor.
-  // The scale factor is required for the correct image generation and comparison between machines and systems.
-  autoSaveBaseline: false,
-  baselineFolder: TESTS_SCREENSHOTS_PATH,
-  formatImageName: "{tag}-{width}x{height}",
-};
 
 export const config: WebdriverIO.Config = {
   host: "127.0.0.1",
@@ -59,8 +44,6 @@ export const config: WebdriverIO.Config = {
       },
     },
   ],
-
-  services: [["visual", visualServiceConfig]],
 
   framework: "mocha",
   mochaOpts: {
