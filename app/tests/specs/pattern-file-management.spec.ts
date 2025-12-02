@@ -54,11 +54,11 @@ describe("Pattern File Management", () => {
 
     // Click first tab and verify switch.
     await PatternEditorPage.clickTab(0);
-    await expect(await PatternEditorPage.activeTab.getText()).toContain("Untitled");
+    await expect(await PatternEditorPage.getActiveTabText()).toContain("Untitled");
 
     // Click second tab and verify switch.
     await PatternEditorPage.clickTab(1);
-    await expect(await PatternEditorPage.activeTab.getText()).toContain("Untitled");
+    await expect(await PatternEditorPage.getActiveTabText()).toContain("Untitled");
 
     // await expect(browser).toMatchFullPageSnapshot("two-patterns-opened");
   });

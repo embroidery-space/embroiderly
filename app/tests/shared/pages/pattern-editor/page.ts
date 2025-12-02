@@ -98,21 +98,31 @@ class PatternEditorPage {
     return $$(`//div[@role="tablist"]//button[@role="tab"]`);
   }
 
-  /** An active pattern tab. */
-  get activeTab() {
-    return $(`//div[@role="tablist"]//button[@role="tab"][@aria-selected="true"]`);
-  }
-
   /** Clicks a pattern tab by index (0-based). */
   async clickTab(index: number) {
     await this.tabs[index].click();
   }
 
-  /** Gets the text of a pattern tab by index (0-based). */
-  async getTabText(index: number) {
-    const tab = this.tabs[index];
-    await tab.waitForDisplayed();
-    return await tab.getText();
+  /** Returns the text of a pattern tab by index (0-based). */
+  getTabText(index: number) {
+    // For some reason, the `.getText()` method always returns an empty string.
+    return this.tabs[index].$(".//span").getHTML({ includeSelectorTag: false });
+  }
+
+  /** An active pattern tab. */
+  get activeTab() {
+    return $(`//div[@role="tablist"]//button[@role="tab"][@aria-selected="true"]`);
+  }
+
+  /** Clicks an active pattern tab. */
+  async clickActiveTab() {
+    await this.activeTab.click();
+  }
+
+  /** Returns the text of an active pattern tab. */
+  getActiveTabText() {
+    // For some reason, the `.getText()` method always returns an empty string.
+    return this.activeTab.$(".//span").getHTML({ includeSelectorTag: false });
   }
 
   /** Clicks the close button on a pattern tab by index (0-based). */
