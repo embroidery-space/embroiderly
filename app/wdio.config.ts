@@ -65,11 +65,11 @@ export const config: WebdriverIO.Config = {
   framework: "mocha",
   mochaOpts: {
     ui: "bdd",
-    timeout: process.env.GITHUB_ACTIONS ? 600000 : 60000,
+    timeout: process.env.CI ? 600000 : 60000,
   },
 
-  waitforInterval: process.env.GITHUB_ACTIONS ? 1000 : 500,
-  waitforTimeout: process.env.GITHUB_ACTIONS ? 60000 : 5000,
+  waitforInterval: process.env.CI ? 1000 : 500,
+  waitforTimeout: process.env.CI ? 60000 : 5000,
 
   onPrepare() {
     // Ensure the temporary directory exists.
@@ -115,7 +115,7 @@ export const config: WebdriverIO.Config = {
 
   async before() {
     // Force disable all CSS animations and transitions during CI.
-    if (process.env.GITHUB_ACTIONS) {
+    if (process.env.CI) {
       await browser.execute(() => {
         const style = document.createElement("style");
         style.innerHTML = `
