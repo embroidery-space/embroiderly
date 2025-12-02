@@ -7,12 +7,12 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 
-// import type { VisualServiceOptions } from "@wdio/visual-service";
+import type { VisualServiceOptions } from "@wdio/visual-service";
 
 const ROOT_PATH = fileURLToPath(new URL("..", import.meta.url));
 
 const TESTS_TEMP_PATH = path.join(ROOT_PATH, "app", "tests", ".tmp");
-// const TESTS_SCREENSHOTS_PATH = path.join(ROOT_PATH, "app", "tests", "__screenshots__");
+const TESTS_SCREENSHOTS_PATH = path.join(ROOT_PATH, "app", "tests", "__screenshots__");
 
 const TAURI_DRIVER_PATH = path.resolve(os.homedir(), ".cargo", "bin", "tauri-driver");
 
@@ -27,12 +27,12 @@ function closeTauriDriver() {
   tauriDriver?.kill();
 }
 
-// const visualServiceConfig: VisualServiceOptions = {
-//   isHybridApp: true,
-//   screenshotPath: TESTS_TEMP_PATH,
-//   baselineFolder: TESTS_SCREENSHOTS_PATH,
-//   formatImageName: "{tag}-{width}x{height}",
-// };
+const visualServiceConfig: VisualServiceOptions = {
+  isHybridApp: true,
+  screenshotPath: TESTS_TEMP_PATH,
+  baselineFolder: TESTS_SCREENSHOTS_PATH,
+  formatImageName: "{tag}-{width}x{height}",
+};
 
 export const config: WebdriverIO.Config = {
   host: "127.0.0.1",
@@ -55,7 +55,7 @@ export const config: WebdriverIO.Config = {
     },
   ],
 
-  // services: [["visual", visualServiceConfig]],
+  services: [["visual", visualServiceConfig]],
 
   framework: "mocha",
   mochaOpts: {
