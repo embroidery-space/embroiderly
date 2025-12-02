@@ -60,11 +60,11 @@ export const config: WebdriverIO.Config = {
   framework: "mocha",
   mochaOpts: {
     ui: "bdd",
-    timeout: 60000,
+    timeout: process.env.GITHUB_ACTIONS ? 600000 : 60000,
   },
 
   waitforInterval: process.env.GITHUB_ACTIONS ? 1000 : 500,
-  waitforTimeout: process.env.GITHUB_ACTIONS ? 20000 : 5000,
+  waitforTimeout: process.env.GITHUB_ACTIONS ? 60000 : 5000,
 
   onPrepare() {
     // Ensure the temporary directory exists.
