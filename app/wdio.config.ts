@@ -30,6 +30,11 @@ function closeTauriDriver() {
 const visualServiceConfig: VisualServiceOptions = {
   isHybridApp: true,
   screenshotPath: TESTS_TEMP_PATH,
+
+  // Until Tauri supports the WebDriver Bidi Protocol, disables auto-saving of the baseline images.
+  // The WebDriver BiDi Protocol is required to properly set the viewport size with a scale factor.
+  // The scale factor is required for the correct image generation and comparison between machines and systems.
+  autoSaveBaseline: false,
   baselineFolder: TESTS_SCREENSHOTS_PATH,
   formatImageName: "{tag}-{width}x{height}",
 };
