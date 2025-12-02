@@ -30,7 +30,7 @@ jobs:
 
       - name: Install system webdriver (Linux)
         if: matrix.platform == 'ubuntu-latest'
-        run: sudo apt-get install -y webkit2gtk-driver xvfb
+        run: sudo apt-get install -y webkit2gtk-driver xvfb xdg-user-dirs
 
       - name: Install system webdriver (Windows)
         if: matrix.platform == 'windows-latest'
@@ -38,7 +38,10 @@ jobs:
 
       - name: Run WebdriverIO test suite (Linux)
         if: matrix.platform == 'ubuntu-latest'
-        run: xvfb-run pnpm --filter @embroiderly/app test:e2e
+        run: |
+          xdg-user-dirs-update
+          source ${HOME}/.config/user-dirs.dirs
+          xvfb-run pnpm --filter @embroiderly/app test:e2e
 
       - name: Run WebdriverIO test suite (Windows)
         if: matrix.platform == 'windows-latest'
