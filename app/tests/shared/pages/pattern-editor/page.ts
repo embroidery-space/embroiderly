@@ -109,8 +109,10 @@ class PatternEditorPage {
   }
 
   /** Gets the text of a pattern tab by index (0-based). */
-  getTabText(index: number) {
-    return this.tabs[index].getText();
+  async getTabText(index: number) {
+    const tab = this.tabs[index];
+    await tab.waitForDisplayed();
+    return await tab.getText();
   }
 
   /** Clicks the close button on a pattern tab by index (0-based). */
