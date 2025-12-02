@@ -31,7 +31,7 @@ const visualServiceConfig: VisualServiceOptions = {
   isHybridApp: true,
   screenshotPath: TESTS_TEMP_PATH,
 
-  // Until Tauri supports the WebDriver Bidi Protocol, disables auto-saving of the baseline images.
+  // Until Tauri supports the WebDriver Bidi Protocol, disable the auto-saving of the baseline images.
   // The WebDriver BiDi Protocol is required to properly set the viewport size with a scale factor.
   // The scale factor is required for the correct image generation and comparison between machines and systems.
   autoSaveBaseline: false,
