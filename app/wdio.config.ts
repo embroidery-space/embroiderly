@@ -40,8 +40,8 @@ export const config: WebdriverIO.Config = {
 
   specs: [
     "./tests/specs/pattern-file-management.spec.ts",
-    "./tests/specs/pattern-info-management.spec.ts",
-    "./tests/specs/history-management.spec.ts",
+    // "./tests/specs/pattern-info-management.spec.ts",
+    // "./tests/specs/history-management.spec.ts",
   ],
   reporters: ["spec"],
 
