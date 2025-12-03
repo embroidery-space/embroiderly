@@ -70,7 +70,7 @@ jobs:
       - name: Build frontend with source maps
         env:
           TAURI_ENV_DEBUG: "true"
-        run: pnpm build
+        run: pnpm build-only
 
       - name: Upload source maps to Sentry
         run: |

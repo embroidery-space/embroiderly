@@ -1,0 +1,13 @@
+{
+  "extends": ["@tsconfig/strictest/tsconfig.json"],
+  "include": ["tests/**/*.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "exactOptionalPropertyTypes": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "strictPropertyInitialization": false,
+    "noUncheckedIndexedAccess": false,
+    "paths": { "~/*": ["./src/*"] },
+    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework"]
+  }
+}

@@ -1,16 +1,21 @@
 <template>
   <div class="flex flex-col gap-y-2">
-    <UFormField :label="$t('pattern-info-title')" class="w-full">
-      <UInput v-model="patternInfo.title" class="w-full" />
+    <UFormField :label="$t('label-pattern-title')" class="w-full">
+      <UInput v-model="patternInfo.title" data-testid="pattern-title-input" class="w-full" />
     </UFormField>
-    <UFormField :label="$t('pattern-info-author')" class="w-full">
-      <UInput v-model="patternInfo.author" class="w-full" />
+    <UFormField :label="$t('label-pattern-author')" class="w-full">
+      <UInput v-model="patternInfo.author" data-testid="pattern-author-input" class="w-full" />
     </UFormField>
-    <UFormField :label="$t('pattern-info-copyright')" class="w-full">
-      <UInput v-model="patternInfo.copyright" class="w-full" />
+    <UFormField :label="$t('label-pattern-copyright')" class="w-full">
+      <UInput v-model="patternInfo.copyright" data-testid="pattern-copyright-input" class="w-full" />
     </UFormField>
-    <UFormField :label="$t('pattern-info-description')" class="w-full">
-      <UTextarea v-model="patternInfo.description" autoresize class="w-full" />
+    <UFormField :label="$t('label-pattern-description')" class="w-full">
+      <UTextarea
+        v-model="patternInfo.description"
+        data-testid="pattern-description-textarea"
+        autoresize
+        class="w-full"
+      />
     </UFormField>
   </div>
 </template>

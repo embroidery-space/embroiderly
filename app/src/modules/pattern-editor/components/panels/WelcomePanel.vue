@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-between">
+  <div class="flex flex-col items-center justify-between" data-testid="welcome-panel">
     <!-- This div is needed to correctly justify containers. -->
     <div></div>
     <UProgress v-if="patternFileStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />

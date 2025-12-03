@@ -5,7 +5,7 @@
   version: "0.6.3",
   build: {
     beforeDevCommand: "pnpm dev",
-    beforeBuildCommand: "pnpm build",
+    beforeBuildCommand: "pnpm build-only",
     frontendDist: "../dist",
     devUrl: "http://localhost:1420",
     removeUnusedCommands: true,

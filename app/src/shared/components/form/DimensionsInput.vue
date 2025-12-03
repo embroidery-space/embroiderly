@@ -7,7 +7,12 @@
     }"
   >
     <UFormField v-bind="widthFieldProps">
-      <UInputNumber v-bind="widthInputProps" :model-value="width" @update:model-value="handleWidthChange($event!)" />
+      <UInputNumber
+        v-bind="widthInputProps"
+        data-testid="width-input"
+        :model-value="width"
+        @update:model-value="handleWidthChange($event!)"
+      />
     </UFormField>
 
     <UButton
@@ -23,7 +28,12 @@
     />
 
     <UFormField v-bind="heightFieldProps">
-      <UInputNumber v-bind="heightInputProps" :model-value="height" @update:model-value="handleHeightChange($event!)" />
+      <UInputNumber
+        v-bind="heightInputProps"
+        data-testid="height-input"
+        :model-value="height"
+        @update:model-value="handleHeightChange($event!)"
+      />
     </UFormField>
   </div>
 </template>

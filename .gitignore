@@ -1,4 +1,7 @@
 target/
+logs/
+
+.tmp/
 
 node_modules/
 dist/

@@ -4,14 +4,20 @@
       <div class="flex items-center gap-2">
         <template v-if="patternStore.pattern">
           <ToolButton
-            :label="$t('history-undo')"
+            data-testid="undo-button"
+            tooltip-side="bottom"
+            :tooltip-arrow="false"
             icon="i-lucide:undo"
+            :label="$t('history-undo')"
             :kbds="['ctrl', 'z']"
             :on-click="patternStore.undo"
           />
           <ToolButton
-            :label="$t('history-redo')"
+            data-testid="redo-button"
+            tooltip-side="bottom"
+            :tooltip-arrow="false"
             icon="i-lucide:redo"
+            :label="$t('history-redo')"
             :kbds="['ctrl', 'y']"
             :on-click="patternStore.redo"
           />
