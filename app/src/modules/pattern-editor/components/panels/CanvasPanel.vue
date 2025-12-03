@@ -37,11 +37,18 @@
 
     <div class="w-full grow overflow-hidden">
       <UContextMenu :items="canvasContextMenuOptions">
-        <canvas
-          ref="canvas"
-          v-element-size="useDebounceFn(({ width, height }) => patternApplication.resize(width, height), 100)"
+        <PatternCanvas
+          ref="patternCanvas"
+          v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
+          :pattern="patternStore.pattern!"
+          :options="props.options"
+          enable-tool-events
           class="size-full"
-        ></canvas>
+          @tool-main-action="handleToolMainAction"
+          @tool-anti-action="handleToolAntiAction"
+          @tool-release="handleToolRelease"
+          @transform="handleTransform"
+        />
       </UContextMenu>
     </div>
 
@@ -52,7 +59,7 @@
         :min="MIN_SCALE"
         :max="MAX_SCALE"
         class="w-full max-w-3xs"
-        @update:model-value="(value) => patternApplication.setZoom(value)"
+        @update:model-value="(value) => patternCanvas?.setCanvasZoom(value)"
       />
     </div>
   </div>
@@ -63,14 +70,14 @@
 
   import type { ContextMenuItem } from "@nuxt/ui";
   import { vElementSize } from "@vueuse/components";
-  import { useDebounceFn, useEventListener } from "@vueuse/core";
-  import { computed, onUnmounted, useTemplateRef, watch } from "vue";
+  import { useDebounceFn } from "@vueuse/core";
+  import { computed, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
   import { FilesApi } from "~/pattern-editor/api/";
-  import { CanvasZoomControls } from "~/pattern-editor/components/canvas/";
+  import { CanvasZoomControls, PatternCanvas } from "~/pattern-editor/components/canvas/";
   import { PatternEvent, PatternInfo } from "~/pattern-editor/lib/pattern/";
-  import { PatternApplication, ToolEvent, MAX_SCALE, MIN_SCALE, PatternView } from "~/pattern-editor/lib/pixi/";
+  import { MAX_SCALE, MIN_SCALE } from "~/pattern-editor/lib/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/pattern-editor/lib/pixi/";
   import { CursorTool } from "~/pattern-editor/lib/tools/";
   import type { PatternEditorToolContext } from "~/pattern-editor/lib/tools/";
@@ -79,6 +86,8 @@
   import { ANY_IMAGE_FILTER } from "~/shared/constants";
   import { LoggerService } from "~/shared/services/";
   import { addSymbolFonts } from "~/shared/utils/";
+
+  const props = defineProps<{ options?: PatternApplicationOptions }>();
 
   const appWindow = getCurrentWebviewWindow();
 
@@ -92,9 +101,7 @@
   const patternStore = usePatternStore();
   const patternFileStore = usePatternFileStore();
 
-  const patternApplication = new PatternApplication();
-
-  const canvas = useTemplateRef("canvas");
+  const patternCanvas = useTemplateRef<InstanceType<typeof PatternCanvas>>("patternCanvas");
   const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
     [
       {
@@ -139,23 +146,6 @@
       if (!pattern || pattern.id === oldPattern?.id) return;
 
       await loadSymbolFonts(pattern.allSymbolFonts);
-
-      const patternView = new PatternView(pattern);
-      patternApplication.view = patternView;
-
-      pattern.addEventListener(PatternEvent.UpdateReferenceImage, (e) => {
-        const image = (e as CustomEvent).detail;
-        if (image) patternView.setReferenceImage(image);
-        else patternView.removeReferenceImage();
-      });
-      pattern.addEventListener(PatternEvent.UpdateReferenceImageSettings, (e) => (patternView.referenceImageSettings = (e as CustomEvent).detail)); // prettier-ignore
-      pattern.addEventListener(PatternEvent.UpdateFabric, (e) => patternView.setFabric((e as CustomEvent).detail)); // prettier-ignore
-      pattern.addEventListener(PatternEvent.UpdateGrid, (e) => patternView.setGrid((e as CustomEvent).detail)); // prettier-ignore
-      pattern.addEventListener(PatternEvent.AddStitch, (e) => patternView.addStitch((e as CustomEvent).detail)); // prettier-ignore
-      pattern.addEventListener(PatternEvent.RemoveStitch, (e) => patternView.removeStitch((e as CustomEvent).detail)); // prettier-ignore
-      pattern.addEventListener(PatternEvent.UpdateDisplayMode, (e) => patternView.setDisplayMode((e as CustomEvent).detail)); // prettier-ignore
-      pattern.addEventListener(PatternEvent.UpdateShowSymbols, (e) => patternView.setShowSymbols((e as CustomEvent).detail)); // prettier-ignore
-      pattern.addEventListener(PatternEvent.UpdateLayersVisibility, (e) => patternView.setLayersVisibility((e as CustomEvent).detail)); // prettier-ignore
     },
   );
 
@@ -166,50 +156,42 @@
 
       if (prevTool instanceof CursorTool) {
         // Blur the reference image when the cursor tool is deselected.
-        patternApplication.view?.blurReferenceImage();
+        patternCanvas.value?.blurReferenceImage();
       }
     },
     { immediate: true },
   );
 
-  /**
-   * Initialize the pattern application.
-   * It sets up the Pixi.js `Application`, configures stages, and prepares the texture manager.
-   */
-  async function initPatternApplication(options?: PatternApplicationOptions) {
-    await patternApplication.init(canvas.value!, options);
+  async function handleToolMainAction(detail: ToolEventDetail) {
+    const pattern = patternStore.pattern;
+    if (!pattern) return;
+
+    await editorStateStore.selectedTool.main(createPatternEditorToolContext(detail));
   }
 
-  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolMainAction, async (e) => {
+  async function handleToolAntiAction(detail: ToolEventDetail) {
     const pattern = patternStore.pattern;
     if (!pattern) return;
 
-    await editorStateStore.selectedTool.main(createPatternEditorToolContext(e.detail));
-  });
+    await editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(detail));
+  }
 
-  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolAntiAction, async (e) => {
+  async function handleToolRelease(detail: ToolEventDetail) {
     const pattern = patternStore.pattern;
     if (!pattern) return;
 
-    await editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(e.detail));
-  });
-
-  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolRelease, async (e) => {
-    const pattern = patternStore.pattern;
-    if (!pattern) return;
-
-    if (e.detail.event.type !== "pointerupoutside") {
+    if (detail.event.type !== "pointerupoutside") {
       // Call the `release` method only if the pointer is not released outside.
-      await editorStateStore.selectedTool.release?.(createPatternEditorToolContext(e.detail));
+      await editorStateStore.selectedTool.release?.(createPatternEditorToolContext(detail));
     }
-  });
+  }
 
-  useEventListener<CustomEvent<TransformEventDetail>>(patternApplication, ToolEvent.Transform, async ({ detail }) => {
-    if (!patternApplication.view) return;
+  function handleTransform(detail: TransformEventDetail) {
+    if (!patternCanvas.value) return;
 
     editorStateStore.canvasZoom = Math.round(detail.scale);
-    patternApplication.view.adjustZoom(detail.scale, detail.bounds);
-  });
+    patternCanvas.value.adjustZoom(detail.scale, detail.bounds);
+  }
 
   function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorToolContext {
     return {
@@ -240,9 +222,9 @@
       },
       ui: {
         referenceImage: {
-          getSettings: () => patternApplication.view?.referenceImageSettings,
-          focus: () => patternApplication.view?.focusReferenceImage(),
-          blur: () => patternApplication.view?.blurReferenceImage(),
+          getSettings: () => patternCanvas.value?.getReferenceImageSettings(),
+          focus: () => patternCanvas.value?.focusReferenceImage(),
+          blur: () => patternCanvas.value?.blurReferenceImage(),
         },
 
         hint: {
@@ -250,14 +232,14 @@
             const palindex = editorStateStore.selectedPaletteItemIndex;
             if (palindex !== undefined) {
               stitch.palindex = palindex;
-              patternApplication.view!.drawLineHint(stitch);
+              patternCanvas.value?.drawLineHint(stitch);
             }
           },
           drawNode(stitch) {
             const palindex = editorStateStore.selectedPaletteItemIndex;
             if (palindex !== undefined) {
               stitch.palindex = palindex;
-              patternApplication.view!.drawNodeHint(stitch);
+              patternCanvas.value?.drawNodeHint(stitch);
             }
           },
         },
@@ -287,10 +269,4 @@
       toast.add({ title, description, color: "error" });
     }
   }
-
-  defineExpose({ initPatternApplication });
-
-  onUnmounted(() => {
-    patternApplication.destroy();
-  });
 </script>

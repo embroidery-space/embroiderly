@@ -14,7 +14,16 @@
           >
             <DropZone class="size-full" @drop="handleFilesDrop">
               <WelcomePanel v-if="!patternStore.pattern" class="size-full" />
-              <CanvasPanel ref="pattern-canvas" />
+              <CanvasPanel
+                :options="{
+                  render: {
+                    antialias: settingsStore.viewport.antialias,
+                  },
+                  viewport: {
+                    wheelAction: settingsStore.viewport.wheelAction,
+                  },
+                }"
+              />
             </DropZone>
           </BlockUI>
         </RSplitterPanel>
@@ -27,7 +36,7 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-  import { onMounted, useTemplateRef, watch } from "vue";
+  import { onMounted, watch } from "vue";
   import { useRouter } from "vue-router";
 
   import { BlockUI, DropZone } from "~/shared/components/";
@@ -53,8 +62,6 @@
   const patternStore = usePatternStore();
   const patternFileStore = usePatternFileStore();
   const settingsStore = useSettingsStore();
-
-  const patternCanvas = useTemplateRef("pattern-canvas");
 
   watch(
     () => props.patternId,
@@ -104,20 +111,7 @@
   });
 
   onMounted(async () => {
-    // 1. Initialize the pattern canvas.
-    await patternCanvas.value!.initPatternApplication({
-      render: {
-        antialias: settingsStore.viewport.antialias,
-      },
-      viewport: {
-        wheelAction: settingsStore.viewport.wheelAction,
-      },
-    });
-
-    // 2. Initially load opened patterns.
     await patternFileStore.fetchOpenedPatterns();
-
-    // 3. Make the app window visible (it is invisible by default).
     await appWindow.show();
   });
 </script>
