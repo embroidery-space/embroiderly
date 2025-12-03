@@ -1,14 +1,9 @@
 name: CI (integration)
 on:
+  workflow_dispatch:
   pull_request:
-    branches: [main, dev]
+    branches: [main]
     types: [opened, reopened, edited, synchronize]
-    paths:
-      - "app/**"
-      - "crates/**"
-      - package.json
-      - Cargo.toml
-      - .github/workflows/ci.integration.yml
 permissions:
   contents: read
 concurrency:
