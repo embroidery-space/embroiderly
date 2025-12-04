@@ -171,12 +171,27 @@ export class SelectionControls extends Container {
   protected readonly bEdge = new Graphics({ label: "bottom" });
   protected readonly lEdge = new Graphics({ label: "left" });
 
-  protected readonly tlCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "top-left" });
-  protected readonly trCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "top-right" });
-  protected readonly blCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "bottom-left" });
-  protected readonly brCorner = new Graphics({ context: SELECTION_CORNER_CONTROL_CONTEXT, label: "bottom-right" });
+  protected readonly tlCorner = new Graphics({
+    label: "top-left",
+    context: SELECTION_CORNER_CONTROL_CONTEXT.clone(),
+  });
+  protected readonly trCorner = new Graphics({
+    label: "top-right",
+    context: SELECTION_CORNER_CONTROL_CONTEXT.clone(),
+  });
+  protected readonly blCorner = new Graphics({
+    label: "bottom-left",
+    context: SELECTION_CORNER_CONTROL_CONTEXT.clone(),
+  });
+  protected readonly brCorner = new Graphics({
+    label: "bottom-right",
+    context: SELECTION_CORNER_CONTROL_CONTEXT.clone(),
+  });
 
-  protected readonly rotationControl = new Graphics({ context: SELECTION_ROTATION_CONTROL_CONTEXT, label: "rotation" });
+  protected readonly rotationControl = new Graphics({
+    label: "rotation",
+    context: SELECTION_ROTATION_CONTROL_CONTEXT.clone(),
+  });
 
   constructor() {
     super({
@@ -212,10 +227,10 @@ export class SelectionControls extends Container {
   render(size: Size, rotation: number) {
     const { width: w, height: h } = size;
 
-    this.tEdge.clear().moveTo(0, 0).lineTo(w, 0).fill("white").stroke(SELECTION_EDGE_STOKE);
-    this.rEdge.clear().moveTo(w, 0).lineTo(w, h).fill("white").stroke(SELECTION_EDGE_STOKE);
-    this.bEdge.clear().moveTo(0, h).lineTo(w, h).fill("white").stroke(SELECTION_EDGE_STOKE);
-    this.lEdge.clear().moveTo(0, 0).lineTo(0, h).fill("white").stroke(SELECTION_EDGE_STOKE);
+    this.tEdge.clear().moveTo(0, 0).lineTo(w, 0).fill("white").stroke(structuredClone(SELECTION_EDGE_STOKE));
+    this.rEdge.clear().moveTo(w, 0).lineTo(w, h).fill("white").stroke(structuredClone(SELECTION_EDGE_STOKE));
+    this.bEdge.clear().moveTo(0, h).lineTo(w, h).fill("white").stroke(structuredClone(SELECTION_EDGE_STOKE));
+    this.lEdge.clear().moveTo(0, 0).lineTo(0, h).fill("white").stroke(structuredClone(SELECTION_EDGE_STOKE));
 
     this.tEdge.cursor = this.bEdge.cursor = getCursorForRotation("ns-resize", rotation);
     this.lEdge.cursor = this.rEdge.cursor = getCursorForRotation("ew-resize", rotation);
