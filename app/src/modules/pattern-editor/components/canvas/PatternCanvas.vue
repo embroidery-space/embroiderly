@@ -8,7 +8,7 @@
 
   import { PatternEvent } from "~/pattern-editor/lib/pattern/";
   import type { LayersVisibility, LineStitch, NodeStitch, Pattern } from "~/pattern-editor/lib/pattern/";
-  import { PatternApplication, PatternView, ToolEvent } from "~/pattern-editor/lib/pixi/";
+  import { PatternApplication, ToolEvent } from "~/pattern-editor/lib/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/pattern-editor/lib/pixi/";
 
   interface PatternCanvasProps {
@@ -34,67 +34,70 @@
   const canvas = useTemplateRef("canvas");
 
   const patternApplication = new PatternApplication();
+
   let patternAbortController: AbortController | undefined;
+  function updatePatternView(pattern: Pattern) {
+    if (!patternApplication.initialized) return;
+
+    patternAbortController?.abort();
+    patternAbortController = new AbortController();
+
+    const patternView = patternApplication.setView(pattern);
+
+    const { signal } = patternAbortController;
+
+    pattern.addEventListener(
+      PatternEvent.UpdateReferenceImage,
+      (e) => {
+        const image = (e as CustomEvent).detail;
+        if (image) patternView.setReferenceImage(image);
+        else patternView.removeReferenceImage();
+      },
+      { signal },
+    );
+    pattern.addEventListener(
+      PatternEvent.UpdateReferenceImageSettings,
+      (e) => (patternView.referenceImageSettings = (e as CustomEvent).detail),
+      { signal },
+    );
+
+    pattern.addEventListener(PatternEvent.UpdateFabric, (e) => patternView.setFabric((e as CustomEvent).detail), {
+      signal,
+    });
+    pattern.addEventListener(PatternEvent.UpdateGrid, (e) => patternView.setGrid((e as CustomEvent).detail), {
+      signal,
+    });
+
+    pattern.addEventListener(PatternEvent.AddStitch, (e) => patternView.addStitch((e as CustomEvent).detail), {
+      signal,
+    });
+    pattern.addEventListener(PatternEvent.RemoveStitch, (e) => patternView.removeStitch((e as CustomEvent).detail), {
+      signal,
+    });
+
+    pattern.addEventListener(
+      PatternEvent.UpdateDisplayMode,
+      (e) => patternView.setDisplayMode((e as CustomEvent).detail),
+      { signal },
+    );
+    pattern.addEventListener(
+      PatternEvent.UpdateShowSymbols,
+      (e) => patternView.setShowSymbols((e as CustomEvent).detail),
+      { signal },
+    );
+    pattern.addEventListener(
+      PatternEvent.UpdateLayersVisibility,
+      (e) => patternView.setLayersVisibility((e as CustomEvent).detail),
+      { signal },
+    );
+  }
 
   watch(
     () => props.pattern,
     async (pattern, oldPattern) => {
       if (!pattern || pattern.id === oldPattern?.id) return;
-
-      patternAbortController?.abort();
-      patternAbortController = new AbortController();
-
-      const patternView = new PatternView(pattern);
-      patternApplication.view = patternView;
-
-      const { signal } = patternAbortController;
-
-      pattern.addEventListener(
-        PatternEvent.UpdateReferenceImage,
-        (e) => {
-          const image = (e as CustomEvent).detail;
-          if (image) patternView.setReferenceImage(image);
-          else patternView.removeReferenceImage();
-        },
-        { signal },
-      );
-      pattern.addEventListener(
-        PatternEvent.UpdateReferenceImageSettings,
-        (e) => (patternView.referenceImageSettings = (e as CustomEvent).detail),
-        { signal },
-      );
-
-      pattern.addEventListener(PatternEvent.UpdateFabric, (e) => patternView.setFabric((e as CustomEvent).detail), {
-        signal,
-      });
-      pattern.addEventListener(PatternEvent.UpdateGrid, (e) => patternView.setGrid((e as CustomEvent).detail), {
-        signal,
-      });
-
-      pattern.addEventListener(PatternEvent.AddStitch, (e) => patternView.addStitch((e as CustomEvent).detail), {
-        signal,
-      });
-      pattern.addEventListener(PatternEvent.RemoveStitch, (e) => patternView.removeStitch((e as CustomEvent).detail), {
-        signal,
-      });
-
-      pattern.addEventListener(
-        PatternEvent.UpdateDisplayMode,
-        (e) => patternView.setDisplayMode((e as CustomEvent).detail),
-        { signal },
-      );
-      pattern.addEventListener(
-        PatternEvent.UpdateShowSymbols,
-        (e) => patternView.setShowSymbols((e as CustomEvent).detail),
-        { signal },
-      );
-      pattern.addEventListener(
-        PatternEvent.UpdateLayersVisibility,
-        (e) => patternView.setLayersVisibility((e as CustomEvent).detail),
-        { signal },
-      );
+      updatePatternView(pattern);
     },
-    { immediate: true },
   );
 
   useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolMainAction, (e) => {
@@ -128,6 +131,7 @@
 
   onMounted(async () => {
     await patternApplication.init(canvas.value!, props.options);
+    if (props.pattern) updatePatternView(props.pattern);
   });
 
   onUnmounted(() => {

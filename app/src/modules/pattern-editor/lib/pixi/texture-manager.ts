@@ -14,18 +14,18 @@ const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
  * Manages the textures used to render stitches.
  * This class is responsible for creating and caching stitch textures.
  */
-class TextureManagerClass {
-  #renderer!: Renderer;
-  #textureSourceOptions!: TextureSourceOptions;
+export class TextureManager {
+  #renderer: Renderer;
+  #textureSourceOptions: TextureSourceOptions;
 
   #cache = new Map<string, unknown>();
 
   /**
-   * Initializes the texture manager.
+   * Creates a new texture manager instance.
    * @param renderer The Pixi.js renderer instance (e.g. `app.renderer`).
    * @param textureSourceOptions Options for the texture source.
    */
-  init(renderer: Renderer, textureSourceOptions?: TextureSourceOptions) {
+  constructor(renderer: Renderer, textureSourceOptions?: TextureSourceOptions) {
     this.#renderer = renderer;
     this.#textureSourceOptions = { ...DEFAULT_TEXTURE_SOURCE_OPTIONS, ...textureSourceOptions };
   }
@@ -118,13 +118,8 @@ class TextureManagerClass {
     // Clear the cache and destroy all textures.
     for (const texture of this.#cache.values()) (texture as Texture | GraphicsContext).destroy(true);
     this.#cache.clear();
-
-    // Reset the renderer and texture source options.
-    this.#renderer = null as unknown as Renderer;
-    this.#textureSourceOptions = null as unknown as TextureSourceOptions;
   }
 }
-export const TextureManager = new TextureManagerClass();
 
 function createFullStitchSolidFigure() {
   return new Graphics().rect(0, 0, 100, 100).fill(0xffffff).stroke({ width: 2, alignment: 0.5, color: 0x000000 });
