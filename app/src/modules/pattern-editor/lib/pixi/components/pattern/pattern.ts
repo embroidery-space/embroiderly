@@ -423,6 +423,7 @@ export class PatternView extends Container {
   /**
    * Adjusts the zoom level of the pattern view.
    * @param zoom - The zoom level in range 1 to 100.
+   * @param bounds - The bounds of the viewport to adjust the ruler position.
    */
   adjustZoom(zoom: number, bounds?: Bounds) {
     this.stages.grid.renderGrid();

@@ -187,10 +187,7 @@
   }
 
   function handleTransform(detail: TransformEventDetail) {
-    if (!patternCanvas.value) return;
-
     editorStateStore.canvasZoom = Math.round(detail.scale);
-    patternCanvas.value.adjustZoom(detail.scale, detail.bounds);
   }
 
   function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorToolContext {

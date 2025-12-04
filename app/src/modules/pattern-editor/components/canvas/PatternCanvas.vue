@@ -8,7 +8,7 @@
 
   import { PatternEvent } from "~/pattern-editor/lib/pattern/";
   import type { LayersVisibility, LineStitch, NodeStitch, Pattern } from "~/pattern-editor/lib/pattern/";
-  import { Bounds, PatternApplication, PatternView, ToolEvent } from "~/pattern-editor/lib/pixi/";
+  import { PatternApplication, PatternView, ToolEvent } from "~/pattern-editor/lib/pixi/";
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/pattern-editor/lib/pixi/";
 
   interface PatternCanvasProps {
@@ -97,32 +97,23 @@
     { immediate: true },
   );
 
-  useEventListener<CustomEvent<ToolEventDetail>>(
-    patternApplication,
-    ToolEvent.ToolMainAction,
-    (e) => props.enableToolEvents && emit("tool-main-action", e.detail),
-  );
-  useEventListener<CustomEvent<ToolEventDetail>>(
-    patternApplication,
-    ToolEvent.ToolAntiAction,
-    (e) => props.enableToolEvents && emit("tool-anti-action", e.detail),
-  );
-  useEventListener<CustomEvent<ToolEventDetail>>(
-    patternApplication,
-    ToolEvent.ToolRelease,
-    (e) => props.enableToolEvents && emit("tool-release", e.detail),
-  );
-  useEventListener<CustomEvent<TransformEventDetail>>(
-    patternApplication,
-    ToolEvent.Transform,
-    (e) => props.enableToolEvents && emit("transform", e.detail),
-  );
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolMainAction, (e) => {
+    if (props.enableToolEvents) emit("tool-main-action", e.detail);
+  });
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolAntiAction, (e) => {
+    if (props.enableToolEvents) emit("tool-anti-action", e.detail);
+  });
+  useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolRelease, (e) => {
+    if (props.enableToolEvents) emit("tool-release", e.detail);
+  });
+  useEventListener<CustomEvent<TransformEventDetail>>(patternApplication, ToolEvent.Transform, (e) => {
+    patternApplication.view?.adjustZoom(e.detail.scale, e.detail.bounds);
+    if (props.enableToolEvents) emit("transform", e.detail);
+  });
 
   defineExpose({
     setCanvasZoom: patternApplication.setZoom.bind(patternApplication),
     resizeCanvas: patternApplication.resize.bind(patternApplication),
-
-    adjustZoom: (zoom: number, bounds?: Bounds) => patternApplication.view?.adjustZoom(zoom, bounds),
 
     setShowSymbols: (value: boolean) => patternApplication.view?.setShowSymbols(value),
     setLayersVisibility: (value: LayersVisibility) => patternApplication.view?.setLayersVisibility(value),
