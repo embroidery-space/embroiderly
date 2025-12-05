@@ -6,6 +6,7 @@ import { Pattern } from "~/pattern-editor/lib/pattern/";
 
 import { PatternView } from "./components/";
 import { TextureManager } from "./texture-manager.ts";
+import type { TextureManagerOptions } from "./texture-manager.ts";
 import { ToolEvent, PatternViewport } from "./viewport.ts";
 import type { ToolEventDetail, ViewportOptions, ZoomState } from "./viewport.ts";
 
@@ -15,6 +16,8 @@ export interface PatternApplicationOptions {
   render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;
   /** Options for the custom viewport. */
   viewport?: ViewportOptions;
+  /** Options for the texture manager. */
+  textureManager?: TextureManagerOptions;
 }
 
 const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
@@ -65,7 +68,7 @@ export class PatternApplication extends EventTarget {
     this.#viewport.init(this.#pixi.renderer.events.domElement, options?.viewport);
 
     // Initialize the texture manager.
-    this.#textureManager = new TextureManager(this.#pixi.renderer);
+    this.#textureManager = new TextureManager(this.#pixi.renderer, options?.textureManager);
 
     // Replace the default stage with our viewport.
     this.#pixi.stage = this.#viewport;

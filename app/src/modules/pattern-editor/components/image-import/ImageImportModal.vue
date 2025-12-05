@@ -72,6 +72,7 @@
             ref="pattern-canvas"
             v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
             :pattern="previewPattern"
+            :options="{ textureManager: { outlineStitches: false } }"
             class="size-full"
             :class="{ hidden: !imageImportOptionsValid }"
           />
@@ -98,7 +99,7 @@
   import { FilesApi } from "~/pattern-editor/api";
   import type { ImageImportOptions } from "~/pattern-editor/api";
   import { PatternCanvas } from "~/pattern-editor/components/canvas";
-  import type { Pattern } from "~/pattern-editor/lib/pattern";
+  import { LayersVisibility, Pattern } from "~/pattern-editor/lib/pattern";
   import { ImageImportService } from "~/pattern-editor/services/";
   import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "~/shared/components/";
   import { ANY_IMAGE_FILTER } from "~/shared/constants/";
@@ -192,6 +193,13 @@
       importingPattern.value = true;
       try {
         previewPattern.value = await imageImportService.getPreview(imagePath.value, selectedPalettePath.value, options);
+
+        // Configure the pattern view.
+        previewPattern.value.showSymbols = false;
+        previewPattern.value.layersVisibility = new LayersVisibility({
+          ...LayersVisibility.default(false),
+          fullstitches: true,
+        });
       } finally {
         importingPattern.value = false;
       }
