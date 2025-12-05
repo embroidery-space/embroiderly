@@ -55,7 +55,7 @@
 
 <script setup lang="ts">
   import { unrefElement } from "@vueuse/core";
-  import { ref, computed, toRaw, useTemplateRef } from "vue";
+  import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
   import type { MaybeRefOrGetter } from "vue";
 
   import { useEditorStateStore, usePatternStore } from "~/pattern-editor/stores/";
@@ -78,9 +78,23 @@
   const patternStore = usePatternStore();
 
   const optionsMenuOpen = ref(false);
+
+  // Track the last selected option from this group.
+  const lastSelectedOption = ref<ToolOption>(props.options[0]!);
+
   const currentOption = computed<ToolOption>(() => {
-    return props.options.find(({ value }) => value === toRaw(props.modelValue)) ?? props.options[0]!;
+    const rawModelValue = toRaw(props.modelValue);
+    const foundOption = props.options.find(({ value }) => value === rawModelValue);
+    return foundOption ?? lastSelectedOption.value;
   });
+
+  watch(
+    () => toRaw(props.modelValue),
+    (rawModelValue) => {
+      const foundOption = props.options.find(({ value }) => value === rawModelValue);
+      if (foundOption) lastSelectedOption.value = foundOption;
+    },
+  );
 
   const selected = computed(() => currentOption.value.value === toRaw(props.modelValue) && !props.disabled);
   const selectionColor = computed<string>(() => {

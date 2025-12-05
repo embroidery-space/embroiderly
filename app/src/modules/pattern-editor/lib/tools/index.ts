@@ -2,6 +2,7 @@ import {
   Pattern,
   FullStitchKind,
   PartStitchKind,
+  PartStitchDirection,
   LineStitch,
   LineStitchKind,
   NodeStitch,
@@ -12,15 +13,30 @@ import type { Stitch } from "~/pattern-editor/lib/pattern/";
 import type { ToolEventDetail } from "~/pattern-editor/lib/pixi/";
 
 import { CursorTool } from "./cursor.tool.ts";
-import { StitchTool } from "./stitch.tool.ts";
+import { StitchTool, StitchCorner } from "./stitch.tool.ts";
 
 export const tools = Object.freeze({
   FullStitch: new StitchTool(FullStitchKind.Full),
+
   PetiteStitch: new StitchTool(FullStitchKind.Petite),
+  PetiteStitchTL: new StitchTool(FullStitchKind.Petite, { corner: StitchCorner.TopLeft }),
+  PetiteStitchTR: new StitchTool(FullStitchKind.Petite, { corner: StitchCorner.TopRight }),
+  PetiteStitchBR: new StitchTool(FullStitchKind.Petite, { corner: StitchCorner.BottomRight }),
+  PetiteStitchBL: new StitchTool(FullStitchKind.Petite, { corner: StitchCorner.BottomLeft }),
+
   HalfStitch: new StitchTool(PartStitchKind.Half),
+  HalfStitchForward: new StitchTool(PartStitchKind.Half, { direction: PartStitchDirection.Forward }),
+  HalfStitchBackward: new StitchTool(PartStitchKind.Half, { direction: PartStitchDirection.Backward }),
+
   QuarterStitch: new StitchTool(PartStitchKind.Quarter),
+  QuarterStitchTL: new StitchTool(PartStitchKind.Quarter, { corner: StitchCorner.TopLeft }),
+  QuarterStitchTR: new StitchTool(PartStitchKind.Quarter, { corner: StitchCorner.TopRight }),
+  QuarterStitchBR: new StitchTool(PartStitchKind.Quarter, { corner: StitchCorner.BottomRight }),
+  QuarterStitchBL: new StitchTool(PartStitchKind.Quarter, { corner: StitchCorner.BottomLeft }),
+
   BackStitch: new StitchTool(LineStitchKind.Back),
   StraightStitch: new StitchTool(LineStitchKind.Straight),
+
   Bead: new StitchTool(NodeStitchKind.Bead),
   FrenchKnot: new StitchTool(NodeStitchKind.FrenchKnot),
 
