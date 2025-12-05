@@ -53,7 +53,7 @@
     { icon: "i-stitches:petite", label: fluent.$t("stitch-petite"), value: tools.PetiteStitch },
   ]);
   const partstitches = computed(() => [
-    { icon: "i-stitches:half", label: fluent.$t("stitch-half"), value: tools.HalfStitch },
+    { icon: "i-stitches:half-forward", label: fluent.$t("stitch-half"), value: tools.HalfStitch },
     { icon: "i-stitches:quarter", label: fluent.$t("stitch-quarter"), value: tools.QuarterStitch },
   ]);
   const linestitches = computed(() => [
