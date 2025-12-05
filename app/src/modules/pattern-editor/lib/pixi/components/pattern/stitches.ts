@@ -11,7 +11,6 @@ import type {
 } from "pixi.js";
 
 import {
-  Bead,
   FullStitch,
   FullStitchKind,
   PartStitch,
@@ -22,7 +21,6 @@ import {
   Symbol,
 } from "~/pattern-editor/lib/pattern/";
 import type { Stitch } from "~/pattern-editor/lib/pattern/";
-import { TextureManager } from "~/pattern-editor/lib/pixi/";
 import {
   DEFAULT_CONTAINER_OPTIONS,
   DEFAULT_TEXT_STYLE_OPTIONS,
@@ -208,10 +206,10 @@ export class StitchesHint extends Container {
       .stroke({ width: 0.2, color, cap: "round" });
   }
 
-  drawNode(stitch: NodeStitch, color: ColorSource, bead?: Bead) {
-    const { x, y, kind, rotated } = stitch;
+  drawNode(stitch: NodeStitch, color: ColorSource, texture: GraphicsContext) {
+    const { x, y, rotated } = stitch;
     const graphics = this.clear({ context: false });
-    graphics.context = TextureManager.getNodeTexture(kind, bead);
+    graphics.context = texture;
     graphics.pivot.set(this.width / 2, this.height / 2);
     graphics.scale.set(STITCH_SCALE_FACTOR);
     graphics.position.set(x, y);

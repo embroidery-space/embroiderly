@@ -41,6 +41,8 @@ import {
 } from "./stitches.ts";
 
 export class PatternView extends Container {
+  #textureManager: TextureManager;
+
   private palette: readonly PaletteItem[];
   private specialStitchModels: SpecialStitchModel[];
 
@@ -99,8 +101,9 @@ export class PatternView extends Container {
   };
   private overlay = new RenderLayer();
 
-  constructor(pattern: Pattern) {
+  constructor(pattern: Pattern, textureManager: TextureManager) {
     super({ label: "Pattern", isRenderGroup: true });
+    this.#textureManager = textureManager;
 
     this.palette = pattern.palette.items;
 
@@ -269,7 +272,7 @@ export class PatternView extends Container {
     const { x, y, palindex, kind, rotated } = stitch;
     const palitem = this.palette[palindex]!;
 
-    const graphics = new StitchGraphics(stitch, TextureManager.getNodeTexture(kind));
+    const graphics = new StitchGraphics(stitch, this.#textureManager.getNodeTexture(kind));
     graphics.eventMode = "static";
     graphics.tint = palitem.color;
     graphics.pivot.set(graphics.width / 2, graphics.height / 2);
@@ -338,10 +341,16 @@ export class PatternView extends Container {
     this.displayMode = this.showSymbols ? displayMode : (displayMode ?? this.previousDisplayMode);
     if (displayMode) {
       this.previousDisplayMode = displayMode;
-      this.stages.fullstitches.texture = TextureManager.getFullStitchTexture(displayMode, FullStitchKind.Full);
-      this.stages.petitestitches.texture = TextureManager.getFullStitchTexture(displayMode, FullStitchKind.Petite);
-      this.stages.halfstitches.texture = TextureManager.getPartStitchTexture(displayMode, PartStitchKind.Half);
-      this.stages.quarterstitches.texture = TextureManager.getPartStitchTexture(displayMode, PartStitchKind.Quarter);
+      this.stages.fullstitches.texture = this.#textureManager.getFullStitchTexture(displayMode, FullStitchKind.Full);
+      this.stages.petitestitches.texture = this.#textureManager.getFullStitchTexture(
+        displayMode,
+        FullStitchKind.Petite,
+      );
+      this.stages.halfstitches.texture = this.#textureManager.getPartStitchTexture(displayMode, PartStitchKind.Half);
+      this.stages.quarterstitches.texture = this.#textureManager.getPartStitchTexture(
+        displayMode,
+        PartStitchKind.Quarter,
+      );
     }
 
     const visible = Boolean(this.displayMode);
@@ -417,12 +426,13 @@ export class PatternView extends Container {
 
   drawNodeHint(stitch: NodeStitch) {
     const palitem = this.palette[stitch.palindex]!;
-    this.stages.stitchesHint.drawNode(stitch, palitem.color);
+    this.stages.stitchesHint.drawNode(stitch, palitem.color, this.#textureManager.getNodeTexture(stitch.kind));
   }
 
   /**
    * Adjusts the zoom level of the pattern view.
    * @param zoom - The zoom level in range 1 to 100.
+   * @param bounds - The bounds of the viewport to adjust the ruler position.
    */
   adjustZoom(zoom: number, bounds?: Bounds) {
     this.stages.grid.renderGrid();

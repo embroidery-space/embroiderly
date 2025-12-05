@@ -124,7 +124,7 @@
                       imagePath,
                       imageDimensions: await FilesApi.getImageDimensions(imagePath),
                     }).result;
-                    router.push({ name: "pattern-editor", params: { patternId } });
+                    if (patternId) router.push({ name: "pattern-editor", params: { patternId } });
                   },
                 },
               ],

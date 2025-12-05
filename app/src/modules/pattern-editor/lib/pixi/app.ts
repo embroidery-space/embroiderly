@@ -2,8 +2,11 @@ import { initDevtools } from "@pixi/devtools";
 import { Application } from "pixi.js";
 import type { ApplicationOptions } from "pixi.js";
 
-import type { PatternView } from "./components/";
+import { Pattern } from "~/pattern-editor/lib/pattern/";
+
+import { PatternView } from "./components/";
 import { TextureManager } from "./texture-manager.ts";
+import type { TextureManagerOptions } from "./texture-manager.ts";
 import { ToolEvent, PatternViewport } from "./viewport.ts";
 import type { ToolEventDetail, ViewportOptions, ZoomState } from "./viewport.ts";
 
@@ -13,6 +16,8 @@ export interface PatternApplicationOptions {
   render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;
   /** Options for the custom viewport. */
   viewport?: ViewportOptions;
+  /** Options for the texture manager. */
+  textureManager?: TextureManagerOptions;
 }
 
 const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
@@ -26,10 +31,14 @@ const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
 };
 
 export class PatternApplication extends EventTarget {
+  initialized = false;
+
   #pixi = new Application();
   #viewport = new PatternViewport();
 
-  #pattern: PatternView | undefined;
+  #textureManager: TextureManager;
+
+  #pattern?: PatternView;
 
   constructor() {
     super();
@@ -59,13 +68,15 @@ export class PatternApplication extends EventTarget {
     this.#viewport.init(this.#pixi.renderer.events.domElement, options?.viewport);
 
     // Initialize the texture manager.
-    TextureManager.init(this.#pixi.renderer);
+    this.#textureManager = new TextureManager(this.#pixi.renderer, options?.textureManager);
 
     // Replace the default stage with our viewport.
     this.#pixi.stage = this.#viewport;
 
     // Init devtools last, so it has access to the fully initialized application.
     if (import.meta.env.DEV) initDevtools({ app: this.#pixi });
+
+    this.initialized = true;
   }
 
   /** Destroys the pattern canvas. */
@@ -75,15 +86,8 @@ export class PatternApplication extends EventTarget {
     this.#viewport.off(ToolEvent.ToolRelease, this.handleToolRelease, this);
     this.#viewport.off(ToolEvent.Transform, this.handleTransform, this);
 
-    this.#pixi.destroy(undefined, {
-      children: true,
-      context: true,
-      style: true,
-      texture: false,
-      textureSource: false,
-    });
-
-    TextureManager.destroy();
+    this.#textureManager?.destroy();
+    this.#pixi.destroy(undefined, true);
   }
 
   private handleToolMainAction(detail: ToolEventDetail) {
@@ -100,22 +104,25 @@ export class PatternApplication extends EventTarget {
   }
 
   /** The current pattern view. */
-  get view(): PatternView | undefined {
+  get view() {
     return this.#pattern;
   }
 
   /**
-   * Sets the pattern view to display in the viewport.
+   * Sets the pattern to display in the viewport.
    * @param pattern The pattern to display.
+   * @returns The created pattern view.
    */
-  set view(pattern: PatternView) {
-    this.#pattern = pattern;
+  setView(pattern: Pattern) {
+    if (!this.initialized) throw new Error("The PatternApplicaiton must be initialized first");
 
-    for (const child of this.#viewport.removeChildren()) child.destroy();
-    this.#viewport.addChild(pattern);
+    for (const child of this.#viewport.removeChildren()) child.destroy({ children: true, context: true });
+    this.#pattern = this.#viewport.addChild(new PatternView(pattern, this.#textureManager));
 
-    this.#viewport.resizePattern(pattern.width, pattern.height);
+    this.#viewport.resizePattern(this.#pattern.width, this.#pattern.height);
     this.#viewport.fit();
+
+    return this.#pattern;
   }
 
   /**

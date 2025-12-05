@@ -68,12 +68,14 @@
 
         <BlockUI :blocked="importingPattern" class="size-full">
           <UProgress v-if="importingPattern" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
-          <canvas
-            ref="canvas"
-            v-element-size="useDebounceFn(({ width, height }) => patternApplication.resize(width, height), 100)"
+          <PatternCanvas
+            ref="pattern-canvas"
+            v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
+            :pattern="previewPattern"
+            :options="{ textureManager: { outlineStitches: false } }"
             class="size-full"
             :class="{ hidden: !imageImportOptionsValid }"
-          ></canvas>
+          />
         </BlockUI>
       </div>
     </template>
@@ -92,12 +94,12 @@
 <script setup lang="ts">
   import { vElementSize } from "@vueuse/components";
   import { useDebounceFn } from "@vueuse/core";
-  import { ref, reactive, onUnmounted, computed, useTemplateRef, watch } from "vue";
+  import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
 
   import { FilesApi } from "~/pattern-editor/api";
   import type { ImageImportOptions } from "~/pattern-editor/api";
-  import { LayersVisibility } from "~/pattern-editor/lib/pattern";
-  import { PatternApplication, PatternView } from "~/pattern-editor/lib/pixi";
+  import { PatternCanvas } from "~/pattern-editor/components/canvas";
+  import { LayersVisibility, Pattern } from "~/pattern-editor/lib/pattern";
   import { ImageImportService } from "~/pattern-editor/services/";
   import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "~/shared/components/";
   import { ANY_IMAGE_FILTER } from "~/shared/constants/";
@@ -120,10 +122,8 @@
   const props = defineProps<ImportImageModalProps>();
   const emit = defineEmits<{ close: [patternId?: string] }>();
 
-  const canvas = useTemplateRef("canvas");
-
-  const patternApplication = new PatternApplication();
-  const patternApplicationInitialized = ref(false);
+  const patternCanvas = useTemplateRef("pattern-canvas");
+  const previewPattern = shallowRef<Pattern>();
 
   const imageImportService = new ImageImportService();
 
@@ -180,23 +180,23 @@
     return true;
   });
 
+  const imageImportServiceStarted = ref(false);
+
   const importingPattern = ref(false);
   const importPatternFromImage = useDebounceFn(
     async (options: ImageImportOptions) => {
-      if (!patternApplicationInitialized.value) {
-        await patternApplication.init(canvas.value!);
+      if (!imageImportServiceStarted.value) {
         await imageImportService.start();
-        patternApplicationInitialized.value = true;
+        imageImportServiceStarted.value = true;
       }
 
       importingPattern.value = true;
       try {
-        const pattern = await imageImportService.getPreview(imagePath.value, selectedPalettePath.value, options);
-        patternApplication.view = new PatternView(pattern);
+        previewPattern.value = await imageImportService.getPreview(imagePath.value, selectedPalettePath.value, options);
 
         // Configure the pattern view.
-        patternApplication.view.setShowSymbols(false);
-        patternApplication.view.setLayersVisibility({
+        previewPattern.value.showSymbols = false;
+        previewPattern.value.layersVisibility = new LayersVisibility({
           ...LayersVisibility.default(false),
           fullstitches: true,
         });
@@ -241,6 +241,5 @@
 
   onUnmounted(() => {
     imageImportService.destroy();
-    patternApplication.destroy();
   });
 </script>
