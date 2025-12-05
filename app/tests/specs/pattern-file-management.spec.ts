@@ -62,7 +62,7 @@ describe("Pattern File Management", () => {
     // Create default pattern.
     await PatternEditorPage.createDefaultPattern();
     await expect(PatternEditorPage.canvas).toBeDisplayed();
-    await expect(PatternEditorPage.welcomePanel).not.toBeDisplayedInViewport();
+    await expect(PatternEditorPage.welcomeScreen).not.toBeDisplayedInViewport();
 
     // Make changes to the pattern (update fabric).
     await PatternEditorPage.openFabricPropertiesDialog();
@@ -85,6 +85,6 @@ describe("Pattern File Management", () => {
 
     // Verify pattern is closed and welcome panel is visible.
     await expect(PatternEditorPage.canvas).not.toBeDisplayedInViewport();
-    await expect(PatternEditorPage.welcomePanel).toBeDisplayedInViewport();
+    await expect(PatternEditorPage.welcomeScreen).toBeDisplayedInViewport();
   });
 });

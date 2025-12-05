@@ -1,9 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-between" data-testid="welcome-panel">
-    <!-- This div is needed to correctly justify containers. -->
-    <div></div>
-    <UProgress v-if="patternFileStore.loading" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
-
+  <EditorWorkspaceLayout data-testid="welcome-screen">
     <div class="flex min-w-1/2 flex-col gap-6 overflow-auto p-8">
       <span class="text-4xl">{{ $t("welcome") }}</span>
 
@@ -62,10 +58,12 @@
       </div>
     </div>
 
-    <div class="w-full py-2 text-center text-xs">
-      {{ $t("app-credits") }}
-    </div>
-  </div>
+    <template #footer>
+      <div class="w-full py-2 text-center text-xs">
+        {{ $t("app-credits") }}
+      </div>
+    </template>
+  </EditorWorkspaceLayout>
 </template>
 
 <script setup lang="ts">
@@ -79,6 +77,8 @@
   import { usePatternFileStore } from "~/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
+
+  import { EditorWorkspaceLayout } from "./layout/";
 
   const router = useRouter();
 

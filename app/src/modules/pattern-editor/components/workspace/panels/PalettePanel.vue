@@ -127,13 +127,18 @@
   import type { ContextMenuItem, DropdownMenuItem } from "@nuxt/ui";
   import { computed, reactive, ref, watch } from "vue";
 
+  import {
+    PaletteCatalog,
+    PaletteDisplaySettings,
+    PaletteList,
+    PaletteListItem,
+    PaletteToolbar,
+  } from "~/pattern-editor/components/palette/";
+  import { StitchSymbols } from "~/pattern-editor/components/symbols/";
   import { PaletteSettings, SortPaletteBy, Symbol } from "~/pattern-editor/lib/pattern/";
   import { PaletteMode, useEditorStateStore, usePatternStore } from "~/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { vShortcuts } from "~/shared/directives/";
-
-  import { PaletteCatalog, PaletteDisplaySettings, PaletteList, PaletteListItem, PaletteToolbar } from "../palette/";
-  import { StitchSymbols } from "../symbols/";
 
   const editorStateStore = useEditorStateStore();
   const patternStore = usePatternStore();

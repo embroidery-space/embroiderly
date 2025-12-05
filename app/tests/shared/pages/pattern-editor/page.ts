@@ -44,8 +44,8 @@ class PatternEditorPage {
   }
 
   /** Returns the welcome panel (shown when no pattern is opened). */
-  get welcomePanel() {
-    return $(`[data-testid="welcome-panel"]`);
+  get welcomeScreen() {
+    return $(`[data-testid="welcome-screen"]`);
   }
 
   /**
@@ -153,7 +153,7 @@ class PatternEditorPage {
     }
 
     // Verify welcome panel is displayed.
-    await this.welcomePanel.waitForDisplayed();
+    await this.welcomeScreen.waitForDisplayed();
   }
 }
 

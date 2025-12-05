@@ -8,13 +8,10 @@
         </RSplitterPanel>
         <RSplitterResizeHandle class="border-2 border-default" />
         <RSplitterPanel>
-          <BlockUI
-            :blocked="patternFileStore.loading || editorStateStore.paletteMode === PaletteMode.Editing"
-            class="size-full"
-          >
+          <BlockUI :blocked="editorStateStore.paletteMode === PaletteMode.Editing" class="size-full">
             <DropZone class="size-full" @drop="handleFilesDrop">
-              <WelcomePanel v-if="!patternStore.pattern" class="size-full" />
-              <CanvasPanel
+              <WelcomeScreen v-if="!patternStore.pattern" class="size-full" />
+              <PatternWorkspace
                 :options="{
                   render: {
                     antialias: settingsStore.viewport.antialias,
@@ -45,7 +42,7 @@
 
   import { PageHeader } from "./components/";
   import { CanvasToolbar } from "./components/canvas/";
-  import { CanvasPanel, PalettePanel, WelcomePanel } from "./components/panels/";
+  import { PalettePanel, PatternWorkspace, WelcomeScreen } from "./components/workspace/";
   import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore } from "./stores/";
 
   const appWindow = getCurrentWebviewWindow();
