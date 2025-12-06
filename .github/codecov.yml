@@ -1,0 +1,29 @@
+codecov:
+  branch: dev
+
+coverage:
+  status:
+    project:
+      default:
+        only_pulls: false
+    patch:
+      defautlt:
+        only_pulls: true
+
+  flags:
+    frontend:
+      paths:
+        - app/src/
+      carryforward: true
+    backend:
+      paths:
+        - app/src-tauri/src/
+        - crates/**/src/
+      carryforward: true
+
+  ignore:
+    - "**/node_modules/**"
+    - "**/target/**"
+    - "**/tests/**"
+    - "**/*.test.ts"
+    - "**/*.test.rs"
