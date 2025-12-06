@@ -4,37 +4,37 @@
       <ToolSelector
         v-model="editorStateStore.selectedTool"
         :options="fullstitches"
-        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :selection-color="selectionColor"
         :disabled="disabled"
       />
       <ToolSelector
         v-model="editorStateStore.selectedTool"
         :options="petitestitches"
-        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :selection-color="selectionColor"
         :disabled="disabled"
       />
       <ToolSelector
         v-model="editorStateStore.selectedTool"
         :options="halfstitches"
-        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :selection-color="selectionColor"
         :disabled="disabled"
       />
       <ToolSelector
         v-model="editorStateStore.selectedTool"
         :options="quarterstitches"
-        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :selection-color="selectionColor"
         :disabled="disabled"
       />
       <ToolSelector
         v-model="editorStateStore.selectedTool"
         :options="linestitches"
-        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :selection-color="selectionColor"
         :disabled="disabled"
       />
       <ToolSelector
         v-model="editorStateStore.selectedTool"
         :options="nodestitches"
-        :use-palitem-color="settingsStore.other.usePaletteItemColorForStitchTools"
+        :selection-color="selectionColor"
         :disabled="disabled"
       />
     </div>
@@ -49,7 +49,7 @@
   import { computed } from "vue";
 
   import { tools } from "~/pattern-editor/lib/tools/";
-  import { useEditorStateStore } from "~/pattern-editor/stores/";
+  import { useEditorStateStore, usePatternStore } from "~/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
 
@@ -58,11 +58,21 @@
   const { fluent } = useI18n();
 
   const editorStateStore = useEditorStateStore();
+  const patternStore = usePatternStore();
   const settingsStore = useSettingsStore();
 
   const { disabled } = defineProps<{
     disabled?: boolean;
   }>();
+
+  const selectionColor = computed(() => {
+    if (!settingsStore.other.usePaletteItemColorForStitchTools) return undefined;
+
+    const palindex = editorStateStore.selectedPaletteItemIndex;
+    if (!patternStore.pattern || palindex === undefined) return undefined;
+
+    return patternStore.pattern.palette.items[palindex]?.hex;
+  });
 
   const fullstitches = computed(() => [
     { icon: "i-stitches:full", label: fluent.$t("stitch-full"), value: tools.FullStitch },

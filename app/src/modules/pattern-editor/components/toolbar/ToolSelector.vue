@@ -8,7 +8,7 @@
         :disabled="disabled"
         class="p-1.5"
         :class="{ 'bg-elevated hover:bg-accented': selected }"
-        :style="{ color: selected ? selectionColor : undefined }"
+        :style="{ color: selected ? (selectionColor ?? 'var(--text-dimmed)') : undefined }"
         :ui="{ leadingIcon: 'size-5' }"
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
@@ -58,8 +58,6 @@
   import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
   import type { MaybeRefOrGetter } from "vue";
 
-  import { useEditorStateStore, usePatternStore } from "~/pattern-editor/stores/";
-
   interface ToolOption {
     label: string;
     icon: string;
@@ -70,12 +68,9 @@
     modelValue: unknown;
     options: ToolOption[];
     disabled?: boolean;
-    usePalitemColor?: boolean;
+    selectionColor?: string;
   }>();
   const emit = defineEmits(["update:modelValue"]);
-
-  const editorStateStore = useEditorStateStore();
-  const patternStore = usePatternStore();
 
   const optionsMenuOpen = ref(false);
 
@@ -97,11 +92,6 @@
   );
 
   const selected = computed(() => currentOption.value.value === toRaw(props.modelValue) && !props.disabled);
-  const selectionColor = computed<string>(() => {
-    const palindex = editorStateStore.selectedPaletteItemIndex;
-    if (!props.usePalitemColor || !patternStore.pattern || palindex === undefined) return "var(--text-dimmed)";
-    return patternStore.pattern.palette.items[palindex]!.hex;
-  });
 
   // Suppress the error by casting to `MaybeRefOrGetter`.
   const dropdownButton = useTemplateRef("dropdown-button") as MaybeRefOrGetter;
