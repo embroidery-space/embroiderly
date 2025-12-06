@@ -10,6 +10,7 @@ on:
       - "Cargo.*"
       - rustfmt.toml
       - .github/workflows/ci.backend.yml
+      - .github/codecov.yml
 permissions:
   contents: read
 concurrency:
