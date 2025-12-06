@@ -1,6 +1,6 @@
 <template>
-  <div class="inline-flex flex-col gap-2">
-    <div class="inline-flex gap-2">
+  <div class="flex flex-col gap-2">
+    <div class="flex gap-2">
       <ToolSelector
         v-model="editorStateStore.selectedTool"
         :options="fullstitches"
@@ -39,7 +39,7 @@
       />
     </div>
 
-    <div class="inline-flex gap-2">
+    <div class="flex gap-2">
       <ToolSelector v-model="editorStateStore.selectedTool" :options="cursor" :disabled="disabled" />
     </div>
   </div>
