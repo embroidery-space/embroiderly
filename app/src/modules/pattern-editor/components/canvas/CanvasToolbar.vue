@@ -18,22 +18,21 @@
 
     <USeparator />
 
-    <ToolSelector
-      v-for="option in displayModeOptions"
-      :key="option.value"
-      v-model="displayMode"
-      :options="[option]"
+    <ToolToggleGroup
+      :model-value="patternStore.pattern?.displayMode"
+      :options="displayModeOptions"
       :disabled="disabled"
+      orientation="vertical"
+      class="flex flex-col gap-1"
+      @update:model-value="patternStore.setDisplayMode"
     />
 
     <USeparator />
 
     <ToolToggle
       v-model="showSymbols"
-      :option="{
-        icon: 'i-stitches:symbol',
-        label: showSymbols ? fluent.$t('canvas-toolbar-hide-symbols') : fluent.$t('canvas-toolbar-show-symbols'),
-      }"
+      icon="i-stitches:symbol"
+      :label="showSymbols ? fluent.$t('canvas-toolbar-hide-symbols') : fluent.$t('canvas-toolbar-show-symbols')"
       :disabled="disabled"
     />
   </div>
@@ -46,7 +45,7 @@
   import { usePatternStore } from "~/pattern-editor/stores/";
   import { useI18n } from "~/shared/composables/";
 
-  import { ToolSelector, ToolToggle } from "../toolbar/";
+  import { ToolToggle, ToolToggleGroup } from "../toolbar/";
 
   import CanvasLayers from "./CanvasLayers.vue";
 
@@ -59,13 +58,6 @@
   const layers = ref(new LayersVisibility(patternStore.pattern?.layersVisibility || LayersVisibility.default()));
   watch(layers, (newLayers) => patternStore.setLayersVisibility(newLayers), { deep: true });
 
-  const displayMode = computed({
-    get: () => patternStore.pattern?.displayMode,
-    set: async (value) => {
-      const mode = value === patternStore.pattern?.displayMode ? undefined : value;
-      await patternStore.setDisplayMode(mode);
-    },
-  });
   const displayModeOptions = computed(() => [
     { icon: "i-stitches:mix", label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
     { icon: "i-stitches:square", label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
