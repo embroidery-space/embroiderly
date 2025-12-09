@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - uses: ./.github/actions/setup-node
       - name: Test
-        run: pnpm --filter @embroiderly/app test:unit --coverage
+        run: pnpm test --coverage
       - name: Upload coverage to Codecov
         if: matrix.platform == 'ubuntu-latest'
         uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
