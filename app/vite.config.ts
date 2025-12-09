@@ -60,7 +60,10 @@ export default defineConfig({
             provider: webdriverio(),
             instances: [
               { browser: "edge" }, // Windows.
-              // { browser: "safari" }, // Linux.
+              // Since we currently do not support macOS
+              // and there is no way to install Safari on other platforms,
+              // keep this option commented for the future.
+              // { browser: "safari" }, // macOS and Linux.
             ],
           },
         },
