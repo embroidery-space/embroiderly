@@ -8,6 +8,6 @@
     "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": false,
     "paths": { "~/*": ["./src/*"] },
-    "types": ["node", "jsdom"]
+    "types": ["node", "vitest-browser-vue"]
   }
 }

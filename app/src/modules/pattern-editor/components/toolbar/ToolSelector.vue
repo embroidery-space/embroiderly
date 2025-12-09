@@ -2,6 +2,7 @@
   <div class="relative">
     <UTooltip arrow :text="currentOption.label" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
       <UButton
+        data-testid="tool-selector-main-button"
         color="neutral"
         :variant="selected ? 'solid' : 'ghost'"
         :icon="currentOption.icon"
@@ -20,6 +21,7 @@
       <UButton
         v-if="options.length > 1"
         ref="dropdown-button"
+        data-testid="tool-selector-dropdown-button"
         variant="link"
         color="neutral"
         :disabled="disabled"

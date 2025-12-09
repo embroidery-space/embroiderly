@@ -3,14 +3,18 @@
 **/dist/
 pnpm-lock.yaml
 
-# Auto-generated type declarations.
-*.d.ts
-*.tsbuildinfo
-
 **/target/
 Cargo.toml
 Cargo.lock
 rustfmt.toml
+
+## Test
+**/tests/.tmp/
+**/coverage/
+
+# Auto-generated type declarations.
+*.d.ts
+*.tsbuildinfo
 
 # Rust
 app/src-tauri/
