@@ -99,8 +99,8 @@ font-kit = "0.14.3"
 ttf-parser = "0.25.1"
 
 # Typst
-typst = "0.14.0"
-typst-pdf = "0.14.0"
+typst = "0.14.1"
+typst-pdf = "0.14.1"
 ## Third-party Typst libraries
 typst-as-lib = "0.15.0"
 
@@ -129,7 +129,7 @@ thiserror = "2.0.17"
 time = { version = "0.3.44", features = ["formatting", "macros"] }
 
 # Logging
-log = "0.4.28"
+log = "0.4.29"
 log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 fern = "0.7.1"
 
@@ -139,7 +139,7 @@ posthog-rs = {version = "0.3.7", default-features = false }
 
 # Identification
 machine-uid = "0.5.4"
-uuid = { version = "1.18.1", features = ["v4", "v7"] }
+uuid = { version = "1.19.0", features = ["v4", "v7"] }
 
 # File system utilities
 tempfile = "3.23.0"
