@@ -7,7 +7,7 @@
     "build": "vite build && npm run check-types",
     "build-only": "vite build",
     "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
-    "test": "pnpm test:unit && pnpm test:e2e",
+    "test": "pnpm test:unit && pnpm test:components && pnpm test:e2e",
     "test:unit": "vitest run --project unit",
     "test:components": "vitest run --project components",
     "test:e2e": "wdio run wdio.config.ts"

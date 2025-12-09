@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative inline-block">
     <UTooltip arrow :text="currentOption.label" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
       <UButton
         data-testid="tool-selector-main-button"
