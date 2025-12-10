@@ -1,37 +1,37 @@
 <template>
   <div class="flex flex-col gap-2">
     <div class="flex gap-2">
-      <ToolSelector
+      <ToolSelect
         v-model="editorStateStore.selectedTool"
         :options="fullstitches"
         :selection-color="selectionColor"
         :disabled="disabled"
       />
-      <ToolSelector
+      <ToolSelect
         v-model="editorStateStore.selectedTool"
         :options="petitestitches"
         :selection-color="selectionColor"
         :disabled="disabled"
       />
-      <ToolSelector
+      <ToolSelect
         v-model="editorStateStore.selectedTool"
         :options="halfstitches"
         :selection-color="selectionColor"
         :disabled="disabled"
       />
-      <ToolSelector
+      <ToolSelect
         v-model="editorStateStore.selectedTool"
         :options="quarterstitches"
         :selection-color="selectionColor"
         :disabled="disabled"
       />
-      <ToolSelector
+      <ToolSelect
         v-model="editorStateStore.selectedTool"
         :options="linestitches"
         :selection-color="selectionColor"
         :disabled="disabled"
       />
-      <ToolSelector
+      <ToolSelect
         v-model="editorStateStore.selectedTool"
         :options="nodestitches"
         :selection-color="selectionColor"
@@ -40,7 +40,7 @@
     </div>
 
     <div class="flex gap-2">
-      <ToolSelector v-model="editorStateStore.selectedTool" :options="cursor" :disabled="disabled" />
+      <ToolSelect v-model="editorStateStore.selectedTool" :options="cursor" :disabled="disabled" />
     </div>
   </div>
 </template>
@@ -53,7 +53,7 @@
   import { useI18n } from "~/shared/composables/";
   import { useSettingsStore } from "~/shared/stores/";
 
-  import { ToolSelector } from "../toolbar/";
+  import { ToolSelect } from "../toolbar/";
 
   const { fluent } = useI18n();
 

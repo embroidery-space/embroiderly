@@ -3,7 +3,7 @@ import { expect, test, describe, vi } from "vitest";
 import { page } from "vitest/browser";
 import { defineComponent } from "vue";
 
-import ToolSelector from "./ToolSelector.vue";
+import ToolSelect from "./ToolSelect.vue";
 
 const SINGLE_OPTION = [{ label: "Pencil", icon: "i-lucide:pencil", value: "pencil" }];
 const MULTIPLE_OPTIONS = [
@@ -12,16 +12,16 @@ const MULTIPLE_OPTIONS = [
   { label: "Brush", icon: "i-lucide:brush", value: "brush" },
 ];
 
-const ToolSelectorWrapper = defineComponent({
-  components: { UApp, ToolSelector },
+const ToolSelectWrapper = defineComponent({
+  components: { UApp, ToolSelect },
   inheritAttrs: false,
-  template: `<UApp> <ToolSelector v-bind="$attrs" /> </UApp>`,
+  template: `<UApp> <ToolSelect v-bind="$attrs" /> </UApp>`,
 });
 
-describe("ToolSelector", () => {
+describe("ToolSelect", () => {
   describe("Rendering States", () => {
     test("renders a single option without a dropdown button", async () => {
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: SINGLE_OPTION,
@@ -36,7 +36,7 @@ describe("ToolSelector", () => {
     });
 
     test("renders multiple options with a dropdown button", async () => {
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: MULTIPLE_OPTIONS,
@@ -55,7 +55,7 @@ describe("ToolSelector", () => {
     test("a click on the main button emits the model value update", async () => {
       const onUpdate = vi.fn();
 
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: MULTIPLE_OPTIONS,
@@ -73,7 +73,7 @@ describe("ToolSelector", () => {
     test("a click on the disabled button does not emit the model value update", async () => {
       const onUpdate = vi.fn();
 
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: MULTIPLE_OPTIONS,
@@ -92,7 +92,7 @@ describe("ToolSelector", () => {
 
   describe("Dropdown Interaction", () => {
     test("a click on the dropdown button opens the dropdown menu", async () => {
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: MULTIPLE_OPTIONS,
@@ -110,7 +110,7 @@ describe("ToolSelector", () => {
     });
 
     test("a right-click on the main button opens the dropdown menu", async () => {
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: MULTIPLE_OPTIONS,
@@ -128,7 +128,7 @@ describe("ToolSelector", () => {
     });
 
     test("a right-click on the single-option main button does nothing", async () => {
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: SINGLE_OPTION,
@@ -143,7 +143,7 @@ describe("ToolSelector", () => {
     });
 
     test("a long-press on the main button opens the dropdown menu", async () => {
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: MULTIPLE_OPTIONS,
@@ -158,7 +158,7 @@ describe("ToolSelector", () => {
     });
 
     test("a long-press on the single-option main button does nothing", async () => {
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: SINGLE_OPTION,
@@ -176,7 +176,7 @@ describe("ToolSelector", () => {
     test("a click on an option from dropdown menu selects it", async () => {
       const onUpdate = vi.fn();
 
-      const screen = page.render(ToolSelectorWrapper, {
+      const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           options: MULTIPLE_OPTIONS,
