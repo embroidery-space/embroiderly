@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-  import { PatternInfo } from "~/pattern-editor/lib/pattern/";
+  import { PatternInfo } from "#pattern-editor/lib/pattern/";
 
   const patternInfo = defineModel<PatternInfo>({ required: true });
 </script>

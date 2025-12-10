@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useSettingsStore } from "~/shared/stores/";
+  import { useSettingsStore } from "#shared/stores/";
 
   import AppSettingsForm from "./AppSettingsForm.vue";
 

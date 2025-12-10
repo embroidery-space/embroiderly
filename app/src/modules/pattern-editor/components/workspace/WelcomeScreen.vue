@@ -72,11 +72,11 @@
   import { computed } from "vue";
   import { useRouter } from "vue-router";
 
-  import { useEditorModals } from "~/pattern-editor/composables/";
-  import { Fabric } from "~/pattern-editor/lib/pattern/";
-  import { usePatternFileStore } from "~/pattern-editor/stores/";
-  import { useI18n } from "~/shared/composables/";
-  import { useSettingsStore } from "~/shared/stores/";
+  import { useEditorModals } from "#pattern-editor/composables/";
+  import { Fabric } from "#pattern-editor/lib/pattern/";
+  import { usePatternFileStore } from "#pattern-editor/stores/";
+  import { useI18n } from "#shared/composables/";
+  import { useSettingsStore } from "#shared/stores/";
 
   import { EditorWorkspaceLayout } from "./layout/";
 

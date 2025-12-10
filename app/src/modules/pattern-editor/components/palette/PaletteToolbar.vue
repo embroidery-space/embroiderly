@@ -48,10 +48,10 @@
 <script lang="ts" setup>
   import { computed } from "vue";
 
-  import { tools } from "~/pattern-editor/lib/tools/";
-  import { useEditorStateStore, usePatternStore } from "~/pattern-editor/stores/";
-  import { useI18n } from "~/shared/composables/";
-  import { useSettingsStore } from "~/shared/stores/";
+  import { tools } from "#pattern-editor/lib/tools/";
+  import { useEditorStateStore, usePatternStore } from "#pattern-editor/stores/";
+  import { useI18n } from "#shared/composables/";
+  import { useSettingsStore } from "#shared/stores/";
 
   import { ToolSelect } from "../toolbar/";
   import type { ToolSelectItem } from "../toolbar/";

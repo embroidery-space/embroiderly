@@ -96,13 +96,13 @@
   import { useDebounceFn } from "@vueuse/core";
   import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
 
-  import { FilesApi } from "~/pattern-editor/api";
-  import type { ImageImportOptions } from "~/pattern-editor/api";
-  import { PatternCanvas } from "~/pattern-editor/components/canvas";
-  import { LayersVisibility, Pattern } from "~/pattern-editor/lib/pattern";
-  import { ImageImportService } from "~/pattern-editor/services/";
-  import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "~/shared/components/";
-  import { ANY_IMAGE_FILTER } from "~/shared/constants/";
+  import { FilesApi } from "#pattern-editor/api";
+  import type { ImageImportOptions } from "#pattern-editor/api";
+  import { PatternCanvas } from "#pattern-editor/components/canvas";
+  import { LayersVisibility, Pattern } from "#pattern-editor/lib/pattern";
+  import { ImageImportService } from "#pattern-editor/services/";
+  import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "#shared/components/";
+  import { ANY_IMAGE_FILTER } from "#shared/constants/";
 
   import { PaletteSelect } from "../palette/";
 

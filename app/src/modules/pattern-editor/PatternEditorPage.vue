@@ -36,9 +36,9 @@
   import { onMounted, watch } from "vue";
   import { useRouter } from "vue-router";
 
-  import { BlockUI, DropZone } from "~/shared/components/";
-  import { useConfirm, useI18n, useTauriListener } from "~/shared/composables/";
-  import { useSettingsStore } from "~/shared/stores/";
+  import { BlockUI, DropZone } from "#shared/components/";
+  import { useConfirm, useI18n, useTauriListener } from "#shared/composables/";
+  import { useSettingsStore } from "#shared/stores/";
 
   import { PageHeader } from "./components/";
   import { CanvasToolbar } from "./components/canvas/";

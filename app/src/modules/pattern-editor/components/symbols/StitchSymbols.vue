@@ -46,11 +46,11 @@
   import type { ContextMenuItem, DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
   import { computed, onMounted, ref, shallowRef } from "vue";
 
-  import { FilesApi } from "~/pattern-editor/api";
-  import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
-  import { FONT_FILTER } from "~/shared/constants/";
-  import { LoggerService } from "~/shared/services/";
-  import { addSymbolFonts } from "~/shared/utils/";
+  import { FilesApi } from "#pattern-editor/api";
+  import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+  import { FONT_FILTER } from "#shared/constants/";
+  import { LoggerService } from "#shared/services/";
+  import { addSymbolFonts } from "#shared/utils/";
 
   import { PaletteSection } from "../palette/";
 

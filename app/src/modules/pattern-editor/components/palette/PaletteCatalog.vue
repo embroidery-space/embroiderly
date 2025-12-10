@@ -47,11 +47,11 @@
   import { useTemplateRef, ref, computed, shallowRef } from "vue";
   import type { Ref } from "vue";
 
-  import { FilesApi } from "~/pattern-editor/api";
-  import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/pattern-editor/lib/pattern/";
-  import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
-  import { PALETTE_FILTER } from "~/shared/constants/";
-  import { LoggerService } from "~/shared/services/";
+  import { FilesApi } from "#pattern-editor/api";
+  import { BrandPaletteItem, PaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
+  import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+  import { PALETTE_FILTER } from "#shared/constants/";
+  import { LoggerService } from "#shared/services/";
 
   import { PaletteSection, PaletteList, PaletteListItem, PaletteSelect } from ".";
 

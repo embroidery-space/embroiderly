@@ -35,7 +35,7 @@
 <script setup lang="ts">
   import { useRouter } from "vue-router";
 
-  import { usePatternFileStore, usePatternStore } from "~/pattern-editor/stores";
+  import { usePatternFileStore, usePatternStore } from "#pattern-editor/stores";
 
   const router = useRouter();
 

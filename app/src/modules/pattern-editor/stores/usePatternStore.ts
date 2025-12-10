@@ -21,8 +21,8 @@ import {
   PdfExportOptions,
   PatternInfo,
   deserializeStitches,
-} from "~/pattern-editor/lib/pattern/";
-import type { Stitch } from "~/pattern-editor/lib/pattern/";
+} from "#pattern-editor/lib/pattern/";
+import type { Stitch } from "#pattern-editor/lib/pattern/";
 
 import { PatternApi } from "../api/";
 
