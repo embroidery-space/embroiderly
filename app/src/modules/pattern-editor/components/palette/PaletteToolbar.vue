@@ -121,7 +121,7 @@
     {
       value: tools.HalfStitch,
       label: fluent.$t("stitch-half"),
-      icon: "i-stitches:half-forward",
+      icon: "i-stitches:half",
       kbds: ["h"],
     },
     {

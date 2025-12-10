@@ -150,6 +150,9 @@ addCollection({
       body: '<path fill="currentColor" d="M2 13h3l1.5 1.5L8 13h3v3l-1.5 1.5L11 19v3H8l-1.5-1.5L5 22H2v-3l1.5-1.5L2 16v-3Z"/>',
     },
 
+    half: {
+      body: '<path fill="currentColor" d="M22 16v6h-6l-2.5-2.5 6-6L22 16ZM8 2l2.5 2.5-6 6L2 8V2h6ZM2 16 16 2h6v6L8 22H2v-6Z"/>',
+    },
     "half-forward": {
       body: '<path fill="currentColor" d="M2 14 14 2h8v8L10 22H2v-8Z"/>',
     },
