@@ -16,17 +16,53 @@ import { StitchGraphics } from "~/pattern-editor/lib/pixi/";
 
 import type { PatternEditorTool, PatternEditorToolContext } from "./index.ts";
 
+// Corner position for petite and quarter stitches.
+export enum StitchCorner {
+  TopLeft = "TopLeft",
+  TopRight = "TopRight",
+  BottomRight = "BottomRight",
+  BottomLeft = "BottomLeft",
+}
+
+// Options for positioning stitches.
+export interface StitchOptions {
+  // Direction for half stitches (Forward or Backward).
+  direction?: PartStitchDirection;
+  // Corner position for petite and quarter stitches.
+  corner?: StitchCorner;
+}
+
 export class StitchTool implements PatternEditorTool {
   readonly name: string;
 
   private readonly kind: StitchKind;
+  private readonly options?: StitchOptions;
   private prevStitchState?: Stitch;
 
-  constructor(kind: StitchKind) {
+  constructor(kind: StitchKind, options?: StitchOptions) {
     this.kind = kind;
+    this.options = options;
+
     if (kind === NodeStitchKind.FrenchKnot) this.name = "french-knot";
     else if (kind === NodeStitchKind.Bead) this.name = "bead";
-    else this.name = [kind, "stitch"].join("-").toLowerCase();
+    else {
+      // Generate name with position suffix if applicable.
+      let baseName = [kind, "stitch"].join("-").toLowerCase();
+
+      if (options?.direction) {
+        baseName += `-${options.direction.toLowerCase()}`;
+      } else if (options?.corner) {
+        const cornerMap: Record<StitchCorner, string> = {
+          [StitchCorner.TopLeft]: "tl",
+          [StitchCorner.TopRight]: "tr",
+          [StitchCorner.BottomRight]: "br",
+          [StitchCorner.BottomLeft]: "bl",
+        };
+        baseName += `-${cornerMap[options.corner]}`;
+      }
+
+      this.name = baseName;
+    }
   }
 
   /** Whether this is the first run in a sequence of the tool. */
@@ -40,7 +76,7 @@ export class StitchTool implements PatternEditorTool {
 
     if (this.isFirstRun) await api.startTransaction();
 
-    const { x, y } = adjustStitchCoordinate(end, this.kind);
+    const { x, y } = adjustStitchCoordinate(end, this.kind, this.options?.corner);
 
     switch (this.kind) {
       case FullStitchKind.Full:
@@ -62,10 +98,25 @@ export class StitchTool implements PatternEditorTool {
       case PartStitchKind.Half:
       case PartStitchKind.Quarter: {
         const [fracX, fracY] = [end.x % 1, end.y % 1];
-        const direction =
-          (fracX < 0.5 && fracY > 0.5) || (fracX > 0.5 && fracY < 0.5)
-            ? PartStitchDirection.Forward
-            : PartStitchDirection.Backward;
+        let direction: PartStitchDirection;
+
+        // For quarter stitches with specified corner, determine direction based on corner position.
+        if (this.kind === PartStitchKind.Quarter && this.options?.corner) {
+          // TL and BR: backward, TR and BL: forward.
+          direction =
+            this.options.corner === StitchCorner.TopLeft || this.options.corner === StitchCorner.BottomRight
+              ? PartStitchDirection.Backward
+              : PartStitchDirection.Forward;
+        } else if (this.options?.direction) {
+          // Use options direction if specified (for half stitches).
+          direction = this.options.direction;
+        } else {
+          // Calculate dynamically based on cursor position.
+          direction =
+            (fracX < 0.5 && fracY > 0.5) || (fracX > 0.5 && fracY < 0.5)
+              ? PartStitchDirection.Forward
+              : PartStitchDirection.Backward;
+        }
 
         const stitch = new PartStitch({ x, y, palindex: 0, kind: this.kind, direction });
         this.prevStitchState ??= stitch;
@@ -179,10 +230,11 @@ export class StitchTool implements PatternEditorTool {
  * Adjusts the stitch coordinates based on the tool being used.
  * @param point The point to adjust.
  * @param tool The tool being used.
+ * @param corner Optional corner position for petite/quarter stitches.
  * @returns The adjusted point.
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity
-function adjustStitchCoordinate(point: Point, tool: StitchKind): Point {
+function adjustStitchCoordinate(point: Point, tool: StitchKind, corner?: StitchCorner): Point {
   const { x, y } = point;
   const [intX, intY] = [Math.trunc(x), Math.trunc(y)];
   const [fracX, fracY] = [x - intX, y - intY];
@@ -193,6 +245,19 @@ function adjustStitchCoordinate(point: Point, tool: StitchKind): Point {
     }
     case FullStitchKind.Petite:
     case PartStitchKind.Quarter: {
+      // Use specified corner if provided, otherwise calculate dynamically.
+      if (corner !== undefined) {
+        switch (corner) {
+          case StitchCorner.TopLeft:
+            return new Point(intX, intY);
+          case StitchCorner.TopRight:
+            return new Point(intX + 0.5, intY);
+          case StitchCorner.BottomRight:
+            return new Point(intX + 0.5, intY + 0.5);
+          case StitchCorner.BottomLeft:
+            return new Point(intX, intY + 0.5);
+        }
+      }
       return new Point(fracX > 0.5 ? intX + 0.5 : intX, fracY > 0.5 ? intY + 0.5 : intY);
     }
     case LineStitchKind.Back: {

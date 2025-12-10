@@ -133,27 +133,63 @@ addCollection({
     full: {
       body: '<path fill="currentColor" d="M16 2h6v6l-4 4 4 4v6h-6l-4-4-4 4H2v-6l4-4-4-4V2h6l4 4 4-4Z"/>',
     },
+
     petite: {
       body: '<path fill="currentColor" d="M2 13h3l1.5 1.5L8 13h3v3l-1.5 1.5L11 19v3H8l-1.5-1.5L5 22H2v-3l1.5-1.5L2 16v-3Zm11 0h3l1.5 1.5L19 13h3v3l-1.5 1.5L22 19v3h-3l-1.5-1.5L16 22h-3v-3l1.5-1.5L13 16v-3Zm0-11h3l1.5 1.5L19 2h3v3l-1.5 1.5L22 8v3h-3l-1.5-1.5L16 11h-3V8l1.5-1.5L13 5V2ZM2 2h3l1.5 1.5L8 2h3v3L9.5 6.5 11 8v3H8L6.5 9.5 5 11H2V8l1.5-1.5L2 5V2Z"/>',
     },
+    "petite-tl": {
+      body: '<path fill="currentColor" d="M2 2h3l1.5 1.5L8 2h3v3L9.5 6.5 11 8v3H8L6.5 9.5 5 11H2V8l1.5-1.5L2 5V2Z"/>',
+    },
+    "petite-tr": {
+      body: '<path fill="currentColor" d="M13 2h3l1.5 1.5L19 2h3v3l-1.5 1.5L22 8v3h-3l-1.5-1.5L16 11h-3V8l1.5-1.5L13 5V2Z"/>',
+    },
+    "petite-br": {
+      body: '<path fill="currentColor" d="M13 13h3l1.5 1.5L19 13h3v3l-1.5 1.5L22 19v3h-3l-1.5-1.5L16 22h-3v-3l1.5-1.5L13 16v-3Z"/>',
+    },
+    "petite-bl": {
+      body: '<path fill="currentColor" d="M2 13h3l1.5 1.5L8 13h3v3l-1.5 1.5L11 19v3H8l-1.5-1.5L5 22H2v-3l1.5-1.5L2 16v-3Z"/>',
+    },
+
     half: {
+      body: '<path fill="currentColor" d="M22 16v6h-6l-2.5-2.5 6-6L22 16ZM8 2l2.5 2.5-6 6L2 8V2h6ZM2 16 16 2h6v6L8 22H2v-6Z"/>',
+    },
+    "half-forward": {
       body: '<path fill="currentColor" d="M2 14 14 2h8v8L10 22H2v-8Z"/>',
     },
+    "half-backward": {
+      body: '<path fill="currentColor" d="M22 14 10 2H2v8l12 12h8v-8Z"/>',
+    },
+
     quarter: {
       body: '<path fill="currentColor" d="m2 18 5-5h4v4l-5 5H2v-4Zm16 4-5-5v-4h4l5 5v4h-4ZM13 7l5-5h4v4l-5 5h-4V7Zm-6 4L2 6V2h4l5 5.2V11H7Z"/>',
     },
+    "quarter-tl": {
+      body: '<path fill="currentColor" d="M7 11 2 6V2h4l5 5.2V11H7Z"/>',
+    },
+    "quarter-tr": {
+      body: '<path fill="currentColor" d="m13 7 5-5h4v4l-5 5h-4V7Z"/>',
+    },
+    "quarter-br": {
+      body: '<path fill="currentColor" d="m18 22-5-5v-4h4l5 5v4h-4Z"/>',
+    },
+    "quarter-bl": {
+      body: '<path fill="currentColor" d="m2 18 5-5h4v4l-5 5H2v-4Z"/>',
+    },
+
     back: {
       body: '<path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M6 4a2 2 0 1 0-4 0v16a1.994 1.994 0 0 0 .728 1.543c.343.284.783.455 1.263.457H20a2 2 0 1 0 0-4H8.828L21.414 5.414a2 2 0 1 0-2.828-2.828L6 15.172V4Z"/>',
     },
     straight: {
       body: '<path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M3.268 2.036a1 1 0 0 0-.536 1.928l14.143 3.928-14.07 3.127a1 1 0 0 0 0 1.962l14.07 3.127-14.143 3.928a1 1 0 1 0 .536 1.927l17.98-4.994a1.001 1.001 0 0 0-.051-1.95L7.61 12l13.587-3.02a.998.998 0 0 0 .494-.257 1.002 1.002 0 0 0-.443-1.692L3.268 2.036Z"/>',
     },
+
     "french-knot": {
       body: '<circle fill="currentColor" cx="12" cy="12" r="8"/>',
     },
     bead: {
       body: '<rect fill="currentColor" width="12" height="20" x="6" y="2" rx="4"/>',
     },
+
     mix: {
       body: '<path fill="currentColor" d="M13 13h9v9h-9zM2 2h9v9H2zm0 16 5-5h4v4l-5 5H2v-4ZM13 7l5-5h4v4l-5.2 5H13V7Z"/>',
     },

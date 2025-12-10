@@ -28,7 +28,7 @@ export const config: WebdriverIO.Config = {
   host: "127.0.0.1",
   port: 4444,
 
-  specs: ["./tests/specs/pattern-file-management.spec.ts", "./tests/specs/pattern-info-management.spec.ts"],
+  specs: ["./tests/e2e/specs/pattern-file-management.spec.ts", "./tests/e2e/specs/pattern-info-management.spec.ts"],
   reporters: ["spec"],
 
   maxInstances: 1,
