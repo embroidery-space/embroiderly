@@ -39,7 +39,7 @@ export default defineConfig({
         test: {
           name: "unit",
           include: ["./src/**/*.test.ts"],
-          exclude: ["./src/shared/components/**/*.test.ts", "./src/modules/**/components/**/*.test.ts"],
+          exclude: ["./src/shared/components/**/*.test.ts", "./src/modules/*/components/**/*.test.ts"],
         },
       },
       {
@@ -53,7 +53,7 @@ export default defineConfig({
         test: {
           name: "components",
           include: ["./src/shared/components/**/*.test.ts", "./src/modules/*/components/**/*.test.ts"],
-          setupFiles: ["./test-setup.ts", "vitest-browser-vue"],
+          setupFiles: ["./tests/components/test-setup.ts", "vitest-browser-vue"],
           browser: {
             enabled: true,
             headless: isCI,
