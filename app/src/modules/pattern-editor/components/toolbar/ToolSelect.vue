@@ -1,30 +1,35 @@
 <template>
   <div class="relative inline-block">
-    <UTooltip arrow :text="currentOption.label" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
+    <UTooltip
+      arrow
+      :text="currentOption.label"
+      :delay-duration="200"
+      :disabled="props.disabled"
+      :content="{ side: 'left' }"
+    >
       <UButton
         data-testid="tool-selector-main-button"
         color="neutral"
         :variant="selected ? 'solid' : 'ghost'"
         :icon="currentOption.icon"
-        :disabled="disabled"
+        :disabled="props.disabled"
         class="p-1.5"
         :class="{ 'bg-elevated hover:bg-accented': selected }"
-        :style="{ color: selected ? (selectionColor ?? 'var(--text-dimmed)') : undefined }"
+        :style="{ color: selected ? (props.selectionColor ?? 'var(--text-dimmed)') : undefined }"
         :ui="{ leadingIcon: 'size-5' }"
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
       />
     </UTooltip>
 
-    <!-- @vue-ignore -->
-    <UDropdownMenu v-model:open="optionsMenuOpen" :items="options">
+    <UDropdownMenu v-model:open="dropdownMenuOpen" :items="items">
       <UButton
-        v-if="options.length > 1"
+        v-if="items.length > 1"
         ref="dropdown-button"
         data-testid="tool-selector-dropdown-button"
         variant="link"
         color="neutral"
-        :disabled="disabled"
+        :disabled="props.disabled"
         icon="i-lucide:chevron-down"
         :ui="{
           base: 'absolute bottom-0 right-0 size-3 rounded-sm border-none p-0',
@@ -33,69 +38,76 @@
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
       />
-
-      <template #item="{ item }">
-        <div
-          class="flex items-center gap-x-2"
-          @pointerup="
-            () => {
-              emit('update:modelValue', item.value);
-              optionsMenuOpen = false;
-            }
-          "
-        >
-          <UIcon v-if="typeof item.icon === 'string'" :name="item.icon" />
-          <div v-else class="size-6">
-            <component :is="item.icon"></component>
-          </div>
-          <span>{{ item.label }}</span>
-        </div>
-      </template>
     </UDropdownMenu>
   </div>
 </template>
 
 <script setup lang="ts">
+  import type { DropdownMenuItem } from "@nuxt/ui";
   import { unrefElement } from "@vueuse/core";
   import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
   import type { MaybeRefOrGetter } from "vue";
 
-  interface ToolOption {
+  export interface ToolSelectItem {
+    value: unknown;
     label: string;
     icon: string;
-    value: unknown;
+    kbds?: string[];
   }
 
-  const props = defineProps<{
-    modelValue: unknown;
-    options: ToolOption[];
-    disabled?: boolean;
-    selectionColor?: string;
+  const props = withDefaults(
+    defineProps<{
+      modelValue: unknown;
+      items: ToolSelectItem[];
+      disabled?: boolean;
+      selectionColor?: string;
+    }>(),
+    {
+      disabled: false,
+      selectionColor: "var(--text-dimmed)",
+    },
+  );
+  const emit = defineEmits<{
+    "update:modelValue": [value: unknown];
   }>();
-  const emit = defineEmits(["update:modelValue"]);
 
-  const optionsMenuOpen = ref(false);
+  const items = computed<DropdownMenuItem[]>(() => {
+    return props.items.map((item) => ({
+      ...item,
+      onSelect() {
+        emit("update:modelValue", item.value);
+        dropdownMenuOpen.value = false;
+      },
+    }));
+  });
+  defineShortcuts(
+    Object.fromEntries(
+      items.value
+        .filter((item) => item.kbds?.length && item.onSelect)
+        .map((item) => [item.kbds!.join("-"), item.onSelect!]),
+    ),
+  );
 
   // Track the last selected option from this group.
-  const lastSelectedOption = ref<ToolOption>(props.options[0]!);
+  const lastSelectedOption = ref<ToolSelectItem>(props.items[0]!);
 
-  const currentOption = computed<ToolOption>(() => {
+  const currentOption = computed<ToolSelectItem>(() => {
     const rawModelValue = toRaw(props.modelValue);
-    const foundOption = props.options.find(({ value }) => value === rawModelValue);
+    const foundOption = props.items.find(({ value }) => value === rawModelValue);
     return foundOption ?? lastSelectedOption.value;
   });
 
   watch(
     () => toRaw(props.modelValue),
     (rawModelValue) => {
-      const foundOption = props.options.find(({ value }) => value === rawModelValue);
+      const foundOption = props.items.find(({ value }) => value === rawModelValue);
       if (foundOption) lastSelectedOption.value = foundOption;
     },
   );
 
   const selected = computed(() => currentOption.value.value === toRaw(props.modelValue) && !props.disabled);
 
-  // Suppress the error by casting to `MaybeRefOrGetter`.
+  const dropdownMenuOpen = ref(false);
   const dropdownButton = useTemplateRef("dropdown-button") as MaybeRefOrGetter;
   const dropdownButtonElement = computed(() => unrefElement(dropdownButton));
 
@@ -104,7 +116,7 @@
 
   function handlePointerDown(e: PointerEvent) {
     if (props.disabled) return;
-    if (props.options.length > 1) {
+    if (props.items.length > 1) {
       timeout = setTimeout(() => {
         hasLongPressed = true;
         handleLongPress(e, hasLongPressed);
@@ -129,8 +141,8 @@
   function handleLongPress(e: PointerEvent, isLongPress: boolean) {
     const isDropdownButtonClick = dropdownButtonElement.value && dropdownButtonElement.value.contains(e.target);
     if ((e.button === 0 && (isLongPress || isDropdownButtonClick)) || e.button === 2) {
-      if (props.options.length === 1) return;
-      optionsMenuOpen.value = true;
+      if (props.items.length === 1) return;
+      dropdownMenuOpen.value = true;
     } else emit("update:modelValue", currentOption.value.value);
   }
 </script>

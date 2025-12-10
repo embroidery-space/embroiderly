@@ -5,8 +5,8 @@ import { defineComponent } from "vue";
 
 import ToolSelect from "./ToolSelect.vue";
 
-const SINGLE_OPTION = [{ label: "Pencil", icon: "i-lucide:pencil", value: "pencil" }];
-const MULTIPLE_OPTIONS = [
+const SINGLE_ITEM = [{ label: "Pencil", icon: "i-lucide:pencil", value: "pencil" }];
+const MULTIPLE_ITEMS = [
   { label: "Pencil", icon: "i-lucide:pencil", value: "pencil" },
   { label: "Eraser", icon: "i-lucide:eraser", value: "eraser" },
   { label: "Brush", icon: "i-lucide:brush", value: "brush" },
@@ -24,7 +24,7 @@ describe("ToolSelect", () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: SINGLE_OPTION,
+          items: SINGLE_ITEM,
         },
       });
 
@@ -39,7 +39,7 @@ describe("ToolSelect", () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: MULTIPLE_OPTIONS,
+          items: MULTIPLE_ITEMS,
         },
       });
 
@@ -58,7 +58,7 @@ describe("ToolSelect", () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: MULTIPLE_OPTIONS,
+          items: MULTIPLE_ITEMS,
           "onUpdate:modelValue": onUpdate,
         },
       });
@@ -67,7 +67,7 @@ describe("ToolSelect", () => {
       await expect.element(mainButton).toBeEnabled();
 
       await mainButton.click();
-      expect(onUpdate).toHaveBeenCalledWith(MULTIPLE_OPTIONS[0].value);
+      expect(onUpdate).toHaveBeenCalledWith(MULTIPLE_ITEMS[0].value);
     });
 
     test("a click on the disabled button does not emit the model value update", async () => {
@@ -76,7 +76,7 @@ describe("ToolSelect", () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: MULTIPLE_OPTIONS,
+          items: MULTIPLE_ITEMS,
           disabled: true,
           "onUpdate:modelValue": onUpdate,
         },
@@ -95,7 +95,7 @@ describe("ToolSelect", () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: MULTIPLE_OPTIONS,
+          items: MULTIPLE_ITEMS,
         },
       });
 
@@ -106,14 +106,14 @@ describe("ToolSelect", () => {
       await expect.element(dropdownMenu).toBeInTheDocument();
 
       const dropdownMenuItems = screen.getByRole("menuitem");
-      await expect.element(dropdownMenuItems).toHaveLength(MULTIPLE_OPTIONS.length);
+      await expect.element(dropdownMenuItems).toHaveLength(MULTIPLE_ITEMS.length);
     });
 
     test("a right-click on the main button opens the dropdown menu", async () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: MULTIPLE_OPTIONS,
+          items: MULTIPLE_ITEMS,
         },
       });
 
@@ -124,14 +124,14 @@ describe("ToolSelect", () => {
       await expect.element(dropdownMenu).toBeInTheDocument();
 
       const dropdownMenuItems = screen.getByRole("menuitem");
-      await expect.element(dropdownMenuItems).toHaveLength(MULTIPLE_OPTIONS.length);
+      await expect.element(dropdownMenuItems).toHaveLength(MULTIPLE_ITEMS.length);
     });
 
     test("a right-click on the single-option main button does nothing", async () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: SINGLE_OPTION,
+          items: SINGLE_ITEM,
         },
       });
 
@@ -146,7 +146,7 @@ describe("ToolSelect", () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: MULTIPLE_OPTIONS,
+          items: MULTIPLE_ITEMS,
         },
       });
 
@@ -161,7 +161,7 @@ describe("ToolSelect", () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: SINGLE_OPTION,
+          items: SINGLE_ITEM,
           "onUpdate:modelValue": vi.fn(),
         },
       });
@@ -179,7 +179,7 @@ describe("ToolSelect", () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
-          options: MULTIPLE_OPTIONS,
+          items: MULTIPLE_ITEMS,
           "onUpdate:modelValue": onUpdate,
         },
       });
@@ -195,7 +195,7 @@ describe("ToolSelect", () => {
       const targetDropdownMenuItem = screen.getByRole("menuitem").nth(1);
       await targetDropdownMenuItem.click();
 
-      expect(onUpdate).toHaveBeenCalledWith(MULTIPLE_OPTIONS[1].value);
+      expect(onUpdate).toHaveBeenCalledWith(MULTIPLE_ITEMS[1].value);
       await expect.element(dropdownMenu).not.toBeInTheDocument();
     });
   });
