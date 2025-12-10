@@ -14,9 +14,9 @@ import {
   SetSymbolData,
   serializeStitch,
   PdfExportOptions,
-} from "~/pattern-editor/lib/pattern/";
-import type { Stitch } from "~/pattern-editor/lib/pattern/";
-import { invoke } from "~/shared/api/";
+} from "#pattern-editor/lib/pattern/";
+import type { Stitch } from "#pattern-editor/lib/pattern/";
+import { invoke } from "#shared/api/";
 
 // === Pattern Info === //
 

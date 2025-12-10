@@ -8,8 +8,8 @@
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
     "paths": {
-      "~/pattern-editor/*": ["./src/modules/pattern-editor/*"],
-      "~/shared/*": ["./src/shared/*"]
+      "#pattern-editor/*": ["./src/modules/pattern-editor/*"],
+      "#shared/*": ["./src/shared/*"]
     },
     "types": []
   }

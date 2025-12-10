@@ -2,7 +2,7 @@ import { initDevtools } from "@pixi/devtools";
 import { Application } from "pixi.js";
 import type { ApplicationOptions } from "pixi.js";
 
-import { Pattern } from "~/pattern-editor/lib/pattern/";
+import { Pattern } from "#pattern-editor/lib/pattern/";
 
 import { PatternView } from "./components/";
 import { TextureManager } from "./texture-manager.ts";

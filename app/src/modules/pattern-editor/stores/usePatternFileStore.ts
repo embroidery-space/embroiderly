@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import type { Fabric, PdfExportOptions } from "~/pattern-editor/lib/pattern/";
+import type { Fabric, PdfExportOptions } from "#pattern-editor/lib/pattern/";
 import {
   PatternErrorBackupFileExists,
   PatternErrorUnsavedChanges,
   PatternErrorUnsupportedPatternType,
-} from "~/shared/api/";
-import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
-import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/shared/constants/";
+} from "#shared/api/";
+import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "#shared/constants/";
 
 import { FilesApi } from "../api/";
 

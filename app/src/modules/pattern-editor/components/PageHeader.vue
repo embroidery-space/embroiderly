@@ -42,15 +42,15 @@
   import { computed } from "vue";
   import { useRouter } from "vue-router";
 
-  import { useEditorModals } from "~/pattern-editor/composables/";
-  import { Fabric } from "~/pattern-editor/lib/pattern/";
-  import { usePatternFileStore, usePatternStore } from "~/pattern-editor/stores/";
-  import { SystemApi } from "~/shared/api";
-  import { WindowTitlebar } from "~/shared/components/";
-  import type { WindowMenuItem } from "~/shared/components/";
-  import { useConfirm, useFilePicker, useI18n } from "~/shared/composables/";
-  import { ANY_IMAGE_FILTER } from "~/shared/constants";
-  import { useSettingsStore } from "~/shared/stores/";
+  import { useEditorModals } from "#pattern-editor/composables/";
+  import { Fabric } from "#pattern-editor/lib/pattern/";
+  import { usePatternFileStore, usePatternStore } from "#pattern-editor/stores/";
+  import { SystemApi } from "#shared/api";
+  import { WindowTitlebar } from "#shared/components/";
+  import type { WindowMenuItem } from "#shared/components/";
+  import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+  import { ANY_IMAGE_FILTER } from "#shared/constants";
+  import { useSettingsStore } from "#shared/stores/";
 
   import { FilesApi } from "../api/";
 

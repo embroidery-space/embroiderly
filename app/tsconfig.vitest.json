@@ -7,7 +7,6 @@
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": false,
-    "paths": { "~/*": ["./src/*"] },
     "types": ["node", "vitest-browser-vue"]
   }
 }

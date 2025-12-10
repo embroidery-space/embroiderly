@@ -7,9 +7,9 @@
 <script lang="ts" setup>
   import { onMounted, onErrorCaptured } from "vue";
 
-  import { useI18n } from "~/shared/composables/";
-  import { LoggerService } from "~/shared/services/";
-  import { useSettingsStore } from "~/shared/stores/";
+  import { useI18n } from "#shared/composables/";
+  import { LoggerService } from "#shared/services/";
+  import { useSettingsStore } from "#shared/stores/";
 
   const toast = useToast();
   const { fluent, currentUiLocale } = useI18n();

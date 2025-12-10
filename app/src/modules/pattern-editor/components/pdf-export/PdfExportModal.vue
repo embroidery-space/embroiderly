@@ -51,9 +51,9 @@
   import { computedAsync, refAutoReset } from "@vueuse/core";
   import { ref } from "vue";
 
-  import { PdfExportOptions } from "~/pattern-editor/lib/pattern/";
-  import { FilePicker } from "~/shared/components/";
-  import { PDF_FILTER } from "~/shared/constants/";
+  import { PdfExportOptions } from "#pattern-editor/lib/pattern/";
+  import { FilePicker } from "#shared/components/";
+  import { PDF_FILTER } from "#shared/constants/";
 
   import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 

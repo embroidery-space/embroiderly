@@ -63,7 +63,7 @@
   import type { AcceptableValue } from "reka-ui";
   import { nextTick, watchEffect, useTemplateRef } from "vue";
 
-  import { BasePaletteItem, PaletteSettings } from "~/pattern-editor/lib/pattern/";
+  import { BasePaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
 
   import PaletteListItem from "./PaletteListItem.vue";
 

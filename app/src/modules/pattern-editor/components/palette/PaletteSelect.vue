@@ -11,10 +11,10 @@
   import type { SelectMenuItem } from "@nuxt/ui";
   import { ref, onMounted, shallowRef, watch } from "vue";
 
-  import { FilesApi } from "~/pattern-editor/api";
-  import type { BrandPaletteItem } from "~/pattern-editor/lib/pattern";
-  import { useI18n } from "~/shared/composables/";
-  import { LoggerService } from "~/shared/services/";
+  import { FilesApi } from "#pattern-editor/api";
+  import type { BrandPaletteItem } from "#pattern-editor/lib/pattern";
+  import { useI18n } from "#shared/composables/";
+  import { LoggerService } from "#shared/services/";
 
   const emit = defineEmits<{
     paletteSelected: [group: string, name: string];

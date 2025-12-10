@@ -32,7 +32,7 @@
 
   import { ref } from "vue";
 
-  import { useTauriListener } from "~/shared/composables";
+  import { useTauriListener } from "#shared/composables";
 
   const appWindow = getCurrentWebviewWindow();
 

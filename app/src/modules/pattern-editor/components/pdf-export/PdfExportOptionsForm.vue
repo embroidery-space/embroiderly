@@ -44,8 +44,8 @@
 </template>
 
 <script lang="ts" setup>
-  import type { PdfExportOptions } from "~/pattern-editor/lib/pattern/";
-  import { FormFieldset } from "~/shared/components/";
+  import type { PdfExportOptions } from "#pattern-editor/lib/pattern/";
+  import { FormFieldset } from "#shared/components/";
 
   const options = defineModel<PdfExportOptions>({ required: true });
 </script>
