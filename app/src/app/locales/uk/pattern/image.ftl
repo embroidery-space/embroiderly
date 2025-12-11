@@ -13,3 +13,5 @@ image-import-quant-sampling = Точність вибірки
 image-import-dither = Дизеринг
 image-import-dither-enable = Застосувати дизеринг
 image-import-dither-error = Інтенсивність дизерингу
+
+image-import-pattern-properties = Розмір палітри: { $paletteSize }. Загалом стібків: { $totalStitches }.

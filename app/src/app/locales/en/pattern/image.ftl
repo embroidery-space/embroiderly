@@ -13,3 +13,5 @@ image-import-quant-sampling = Sampling Precision
 image-import-dither = Dithering
 image-import-dither-enable = Apply dithering
 image-import-dither-error = Dithering Strength
+
+image-import-pattern-properties = Palette size: { $paletteSize }. Total stitches: { $totalStitches }.
