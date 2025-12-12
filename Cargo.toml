@@ -85,7 +85,7 @@ tauri-plugin-posthog = { path = "crates/tauri-plugin-posthog" }
 embroiderly_image = { path = "crates/embroiderly-image" }
 embroiderly_parsers = { path = "crates/embroiderly-parsers" }
 embroiderly_pattern = { path = "crates/embroiderly-pattern" }
-embroiderly_logger = { path = "crates/embroiderly-logger" }
+embroiderly_tracing = { path = "crates/embroiderly-tracing" }
 xsp_parsers = { path = "crates/xsp-parsers" }
 
 # Parsing pattern files
@@ -125,13 +125,13 @@ argh = { version = "0.1.13", default-features = false }
 anyhow = "1.0.100"
 thiserror = "2.0.17"
 
-# Time handling
-time = { version = "0.3.44", features = ["formatting", "macros"] }
-
 # Logging
 log = "0.4.29"
-log-panics = { version = "2.1.0", features = ["with-backtrace"] }
-fern = "0.7.1"
+
+# Tracing
+tracing = "0.1.43"
+tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
+tracing-panic = "0.1.2"
 
 # Telemetry
 sentry = "0.46.0"

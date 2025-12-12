@@ -12,7 +12,7 @@ argh = { workspace = true }
 # Embroiderly Core
 embroiderly_parsers = { workspace = true }
 embroiderly_pattern = { workspace = true }
-embroiderly_logger = { workspace = true }
+embroiderly_tracing = { workspace = true }
 
 # De/serialization
 borsh = { workspace = true }

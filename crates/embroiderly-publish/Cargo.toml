@@ -13,7 +13,7 @@ argh = { workspace = true }
 embroiderly_image = { workspace = true }
 embroiderly_parsers = { workspace = true }
 embroiderly_pattern = { workspace = true }
-embroiderly_logger = { workspace = true }
+embroiderly_tracing = { workspace = true }
 
 # De/serialization
 serde_json = { workspace = true }

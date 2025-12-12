@@ -3,8 +3,6 @@ use embroiderly_pattern::{PatternProject, PdfExportOptions};
 mod error;
 pub use error::*;
 
-pub mod logger;
-
 pub mod pdf;
 
 mod format;
