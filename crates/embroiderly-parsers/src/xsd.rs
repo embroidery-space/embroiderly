@@ -2,13 +2,10 @@ use anyhow::Result;
 use embroiderly_pattern::*;
 use xsp_parsers::pmaker;
 
+#[tracing::instrument(name = "parse_xsd", skip_all)]
 pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
-  log::debug!("Parsing XSD file");
-
   let file_path = file_path.as_ref();
   let xsd_pattern = pmaker::parse_pattern(file_path)?;
-
-  log::debug!("XSD file parsed");
 
   let pattern = Pattern {
     info: xsd_pattern.info.into(),
