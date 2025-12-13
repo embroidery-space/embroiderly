@@ -1,9 +1,9 @@
 use tracing_subscriber::layer::SubscriberExt as _;
 use tracing_subscriber::util::SubscriberInitExt as _;
 
-pub const WEBVIEW_TARGET: &str = "webview";
-
 pub const EMBROIDERLY_LOGS_DIR_ENV_VAR: &str = "EMBROIDERLY_LOGS_DIR";
+
+const DEFAULT_LOG_LEVEL: tracing::Level = tracing::Level::INFO;
 
 #[cfg(debug_assertions)]
 const APPLICATION_LOG_LEVEL: tracing::Level = tracing::Level::TRACE;
@@ -15,10 +15,15 @@ pub fn init(binary_name: &str, logs_dir: std::path::PathBuf) -> anyhow::Result<(
     std::fs::create_dir_all(&logs_dir)?;
   }
 
-  let logging_filter = tracing_subscriber::EnvFilter::builder()
-    .with_default_directive(format!("{binary_name}={APPLICATION_LOG_LEVEL}").parse().unwrap())
-    .with_env_var(format!("{}_LOG", binary_name.to_uppercase()))
-    .from_env_lossy();
+  let logging_filter = tracing_subscriber::EnvFilter::try_from_env("EMBROIDERLY_LOG").unwrap_or_else(|_| {
+    let directives = [
+      format!("{DEFAULT_LOG_LEVEL}"),
+      format!("embroiderly*={APPLICATION_LOG_LEVEL}"),
+      format!("webview={APPLICATION_LOG_LEVEL}"),
+      format!("xsp_parsers={APPLICATION_LOG_LEVEL}"),
+    ];
+    tracing_subscriber::EnvFilter::new(directives.join(","))
+  });
 
   let stderr_layer = tracing_subscriber::fmt::layer()
     .compact()
