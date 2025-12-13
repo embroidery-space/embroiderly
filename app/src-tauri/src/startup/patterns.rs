@@ -8,9 +8,9 @@ pub fn copy_sample_patterns<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>)
   if !app_document_dir.exists() {
     // Create the Embroiderly directory in the user's document directory
     // and copy the sample patterns there if it doesn't exist.
-    log::debug!("Creating an app document directory",);
+    tracing::debug!(target: "startup", "Creating an app document directory",);
     std::fs::create_dir(&app_document_dir)?;
-    log::debug!("Copying sample patterns to the app document directory");
+    tracing::debug!(target: "startup", "Copying sample patterns to the app document directory");
     let patterns_path = app_handle
       .path()
       .resolve("resources/patterns/", tauri::path::BaseDirectory::Resource)?;

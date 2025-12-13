@@ -8,12 +8,13 @@ pub struct SystemInfo {
   webview_version: String,
 }
 
+#[tracing::instrument(level = "trace", skip_all)]
 #[tauri::command]
 pub fn get_system_info<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> SystemInfo {
   let webview_version = match tauri::webview_version() {
     Ok(version) => version,
     Err(e) => {
-      log::error!("Failed to get webview version: {e}");
+      tracing::error!("Failed to get webview version: {e}");
       String::new()
     }
   };

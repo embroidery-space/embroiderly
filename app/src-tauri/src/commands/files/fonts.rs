@@ -10,6 +10,7 @@ use crate::utils::fonts::is_font_file;
 use crate::utils::path::app_data_dir;
 use crate::vendor::telemetry::AppEvent;
 
+#[tracing::instrument(level = "trace", skip_all)]
 #[tauri::command]
 pub fn get_symbol_fonts_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> Result<GroupedFilesList> {
   let mut system = Vec::new();
@@ -43,6 +44,7 @@ pub fn get_symbol_fonts_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>)
   Ok(GroupedFilesList { system, custom })
 }
 
+#[tracing::instrument(level = "trace", skip(app_handle))]
 #[tauri::command]
 pub fn load_symbol_font_content<R: tauri::Runtime>(
   font_family: String,
@@ -93,6 +95,7 @@ fn load_symbol_font_data<R: tauri::Runtime>(font_family: &str, app_handle: &taur
   })
 }
 
+#[tracing::instrument(level = "trace", skip(app_handle), fields(symbols_count))]
 #[tauri::command]
 pub fn load_symbol_font_code_points<R: tauri::Runtime>(
   font_family: String,
@@ -125,9 +128,12 @@ pub fn load_symbol_font_code_points<R: tauri::Runtime>(
   let mut code_points: Vec<u32> = code_points.into_iter().collect();
   code_points.sort_unstable();
 
+  tracing::Span::current().record("symbols_count", code_points.len());
+
   Ok(code_points)
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(total_files, failed_files))]
 #[tauri::command]
 pub fn import_symbol_fonts<R: tauri::Runtime>(
   paths: Vec<String>,
@@ -166,6 +172,9 @@ pub fn import_symbol_fonts<R: tauri::Runtime>(
     })
     .collect();
 
+  tracing::Span::current().record("total_files", total_files);
+  tracing::Span::current().record("failed_files", failed_files.len());
+
   app_handle.capture_event(AppEvent::SymbolFontsImported {
     total_files,
     failed_files: failed_files.len(),
@@ -197,11 +206,11 @@ fn process_and_save_font(file_path: &Path, fonts_dir: &Path) -> anyhow::Result<(
       }
 
       // Give up.
-      log::error!(
-        "Failed to get font family name. Platform: {:?}, encoding: {}, is Unicode: {}",
-        name.platform_id,
-        name.encoding_id,
-        name.is_unicode()
+      tracing::error!(
+        platform_id = ?name.platform_id,
+        encoding_id = name.encoding_id,
+        is_unicode = name.is_unicode(),
+        "Failed to get font family name",
       );
       None
     })
@@ -214,7 +223,6 @@ fn process_and_save_font(file_path: &Path, fonts_dir: &Path) -> anyhow::Result<(
     .ok_or_else(|| anyhow::anyhow!("Invalid font file extension"))?;
   let output_path = fonts_dir.join(format!("{font_family}.{extension}"));
   if output_path.exists() {
-    log::error!("Font with family name '{font_family}' already exists");
     return Err(anyhow::anyhow!(
       r#"Font with family name "{font_family}" already exists"#
     ));

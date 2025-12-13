@@ -17,6 +17,9 @@ macro_rules! parse_command_payload {
       return Err(CommandError::MissingPatternIdHeader.into());
     };
     let pattern_id = uuid::Uuid::parse_str(pattern_id.to_str().unwrap())?;
+
+    tracing::Span::current().record("pattern_id", &tracing::field::debug(&pattern_id));
+
     (pattern_id,)
   }};
   ($request:expr, $data_type:ty) => {{
@@ -27,11 +30,14 @@ macro_rules! parse_command_payload {
     };
     let pattern_id = uuid::Uuid::parse_str(pattern_id.to_str().unwrap())?;
 
-    let tauri::ipc::InvokeBody::Raw(payload) = $request.body() else {
+    let tauri::ipc::InvokeBody::Raw(body) = $request.body() else {
       return Err(CommandError::InvalidRequestBody.into());
     };
-    let data = borsh::from_slice::<$data_type>(&payload)?;
+    let body = borsh::from_slice::<$data_type>(&body)?;
 
-    (pattern_id, data)
+    tracing::Span::current().record("pattern_id", &tracing::field::debug(&pattern_id));
+    tracing::Span::current().record("body", &tracing::field::debug(&body));
+
+    (pattern_id, body)
   }};
 }

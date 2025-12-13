@@ -8,6 +8,7 @@ use crate::sidecars::SidecarRunner as _;
 use crate::state::PatternsState;
 use crate::vendor::telemetry::AppEvent;
 
+#[tracing::instrument(level = "trace", skip(app_handle, patterns))]
 #[tauri::command]
 pub fn export_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
@@ -16,8 +17,6 @@ pub fn export_pattern<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
-  log::debug!("Exporting Pattern({pattern_id:?})");
-
   let package_info = {
     let package_info = app_handle.package_info();
     embroiderly_parsers::PackageInfo {
@@ -45,7 +44,6 @@ pub fn export_pattern<R: tauri::Runtime>(
     .run()?;
 
   app_handle.emit("app:pattern-exported", &pattern_id)?;
-
   app_handle.capture_event(AppEvent::PatternExportedAsPdf {
     settings: patproj.publish_settings.pdf,
   });

@@ -57,7 +57,7 @@ anyhow = { workspace = true }
 thiserror = { workspace = true }
 
 # Logging
-log = { workspace = true }
+tracing = { workspace = true }
 
 # File system utilities
 tempfile = { workspace = true }

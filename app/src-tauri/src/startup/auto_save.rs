@@ -9,15 +9,18 @@ use crate::state::{HistoryState, PatternsState};
 pub fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) {
   let interval = crate::utils::settings::auto_save_interval(app_handle);
   if interval.is_zero() {
-    log::debug!("Auto-save is disabled.");
+    tracing::info!(target: "startup", "Auto-save is disabled.");
     return;
   }
+
+  tracing::info!(target: "startup", "Auto-save is enabled.");
 
   let app_handle = app_handle.clone();
   std::thread::spawn(move || {
     loop {
       std::thread::sleep(interval);
-      log::debug!("Auto-saving patterns...");
+
+      let _guard = tracing::debug_span!("auto_save").entered();
 
       let patterns = app_handle.state::<PatternsState>();
       let patterns = patterns
@@ -34,11 +37,9 @@ pub fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::A
           app_handle.state::<HistoryState<R>>(),
           app_handle.state::<PatternsState>(),
         ) {
-          log::error!("Failed to auto-save Pattern({pattern_id:?}): {err:?}");
+          tracing::error!(?pattern_id, "Failed to auto-save pattern: {err:?}");
         }
       }
-
-      log::debug!("Auto-save completed.");
     }
   });
 }
