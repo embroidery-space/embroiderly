@@ -1,11 +1,63 @@
 name: Release
 on:
+  # Push to main: builds sidecars, builds app, publishes GitHub release, uploads debug symbols to Sentry.
   push:
     branches: [main]
+  # PR to main: builds sidecars and app only (validates the build works).
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, edited, synchronize]
+permissions:
+  contents: read
 env:
   CARGO_TERM_COLOR: always
 jobs:
+  build-sidecars:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        sidecar: [embroiderly_image, embroiderly_publish]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: ./.github/actions/setup-rust
+
+      - name: Get target platform triple
+        id: target
+        shell: bash
+        run: |
+          TRIPLE=$(rustc -vV | grep 'host:' | sed 's/host: //')
+          echo "TRIPLE=${TRIPLE}" >> $GITHUB_OUTPUT
+
+          EXT=""
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            EXT=".exe"
+          fi
+          echo "EXT=${EXT}" >> $GITHUB_OUTPUT
+
+      - name: Build sidecar binary
+        run: cargo build -p ${{ matrix.sidecar }} --release
+
+      # Tauri expects sidecar binaries named as `{name}-{target-triple}[.exe]`.
+      - name: Prepare binary for upload
+        shell: bash
+        run: |
+          mkdir -p binaries/${{ matrix.sidecar }}
+
+          SOURCE_FILE="target/release/${{ matrix.sidecar }}${{ steps.target.outputs.EXT }}"
+          DEST_FILE="binaries/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
+          mv "$SOURCE_FILE" "$DEST_FILE"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: sidecar-binary-${{ matrix.sidecar }}-${{ matrix.os }}
+          path: binaries/
+          retention-days: 1
+
   release:
+    needs: build-sidecars
     permissions:
       contents: write
     strategy:
@@ -20,6 +72,14 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/setup-rust
 
+      # Overwrites stub binaries with the actual sidecar binaries.
+      - name: Download sidecar binaries
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          pattern: sidecar-binary-*
+          path: app/src-tauri/binaries/
+          merge-multiple: true
+
       - name: Build the application
         id: tauri
         uses: tauri-apps/tauri-action@19b93bb55601e3e373a93cfb6eb4242e45f5af20 # v0.6.0
@@ -30,11 +90,14 @@ jobs:
           EMBROIDERLY_POSTHOG_API_KEY: ${{ secrets.EMBROIDERLY_POSTHOG_API_KEY }}
           EMBROIDERLY_SENTRY_DSN: ${{ secrets.EMBROIDERLY_SENTRY_DSN }}
         with:
-          tagName: v__VERSION__
-          releaseName: Embroiderly v__VERSION__
+          # Empty tagName/releaseName skips release creation (PR builds).
+          tagName: ${{ github.event_name == 'push' && 'v__VERSION__' || '' }}
+          releaseName: ${{ github.event_name == 'push' && 'Embroiderly v__VERSION__' || '' }}
           updaterJsonPreferNsis: true
 
+      # Debug symbols are only needed for release builds.
       - name: Upload debug symbols
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: debug-symbols-${{ matrix.platform }}
@@ -44,6 +107,7 @@ jobs:
           retention-days: 1
 
   sentry:
+    if: github.event_name == 'push'
     needs: release
     runs-on: ubuntu-latest
     defaults:
