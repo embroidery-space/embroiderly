@@ -20,14 +20,20 @@ pub fn init(binary_name: &str, logs_dir: std::path::PathBuf) -> anyhow::Result<(
     .with_env_var(format!("{}_LOG", binary_name.to_uppercase()))
     .from_env_lossy();
 
-  let stderr_layer = tracing_subscriber::fmt::layer().compact().with_writer(std::io::stderr);
-  let file_layer = tracing_subscriber::fmt::layer().compact().with_writer(
-    std::fs::OpenOptions::new()
-      .write(true)
-      .create(true)
-      .truncate(true)
-      .open(logs_dir.join(format!("{binary_name}.log")))?,
-  );
+  let stderr_layer = tracing_subscriber::fmt::layer()
+    .compact()
+    .with_span_events(tracing_subscriber::fmt::format::FmtSpan::ACTIVE)
+    .with_writer(std::io::stderr);
+  let file_layer = tracing_subscriber::fmt::layer()
+    .compact()
+    .with_span_events(tracing_subscriber::fmt::format::FmtSpan::ACTIVE)
+    .with_writer(
+      std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .open(logs_dir.join(format!("{binary_name}.log")))?,
+    );
 
   tracing_subscriber::registry()
     .with(logging_filter)
