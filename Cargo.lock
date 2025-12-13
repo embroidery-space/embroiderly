@@ -1827,7 +1827,6 @@ dependencies = [
  "anyhow",
  "borsh",
  "image",
- "log",
  "ordered-float",
  "rstest",
  "serde",

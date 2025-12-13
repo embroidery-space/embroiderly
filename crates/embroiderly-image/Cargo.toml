@@ -27,7 +27,7 @@ image = { workspace = true }
 palette = { workspace = true }
 quantette = { workspace = true }
 
-# Logging
+# Tracing
 tracing = { workspace = true }
 
 # Error handling

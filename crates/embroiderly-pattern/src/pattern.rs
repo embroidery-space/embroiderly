@@ -137,7 +137,6 @@ impl Pattern {
 
   /// Adds a stitch to the pattern and returns any conflicts that may have arisen.
   pub fn add_stitch(&mut self, stitch: Stitch) -> Vec<Stitch> {
-    log::trace!("Adding stitch");
     let mut conflicts = Vec::new();
     match stitch {
       Stitch::Full(fullstitch) => {
@@ -241,7 +240,6 @@ impl Pattern {
 
   /// Removes and returns a stitch from the pattern.
   pub fn remove_stitch(&mut self, stitch: Stitch) -> Option<Stitch> {
-    log::trace!("Removing stitch");
     match stitch {
       Stitch::Full(fullstitch) => self.fullstitches.remove(&fullstitch).map(Into::into),
       Stitch::Part(partstitch) => self.partstitches.remove(&partstitch).map(Into::into),
@@ -252,7 +250,6 @@ impl Pattern {
 
   /// Removes and returns all stitches with a given palette index from the pattern.
   pub fn remove_stitches_by_palindexes(&mut self, palindexes: &[u32]) -> Vec<Stitch> {
-    log::trace!("Removing stitches by palette index");
     let mut conflicts = Vec::new();
     conflicts.extend(
       self
@@ -287,7 +284,6 @@ impl Pattern {
 
   /// Removes all stitches that are outside the bounds of the pattern.
   pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<Stitch> {
-    log::trace!("Removing stitches outside bounds");
     let mut conflicts = Vec::new();
     conflicts.extend(
       self

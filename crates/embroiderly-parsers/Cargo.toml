@@ -20,7 +20,7 @@ zip = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
 
-# Logging
+# Tracing
 tracing = { workspace = true }
 
 # Other
