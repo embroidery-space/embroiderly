@@ -28,7 +28,7 @@ palette = { workspace = true }
 quantette = { workspace = true }
 
 # Logging
-log = { workspace = true }
+tracing = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

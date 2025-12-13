@@ -8,12 +8,12 @@ use quick_xml::events::{BytesDecl, BytesText, Event};
 #[path = "svg.test.rs"]
 mod tests;
 
+#[tracing::instrument(skip(patproj))]
 pub fn generate_svg(
   patproj: &PatternProject,
   color: bool,
   options: ImageExportOptions,
 ) -> anyhow::Result<Vec<Vec<u8>>> {
-  log::debug!("Generating SVG frames for the pattern");
   let mut frames = Vec::new();
 
   let (pattern_width, pattern_height) = (patproj.pattern.fabric.width, patproj.pattern.fabric.height);
@@ -140,7 +140,8 @@ pub fn generate_svg(
     }
   }
 
-  log::debug!("Generated {} frames", frames.len());
+  tracing::debug!("Generated {} frames", frames.len());
+
   Ok(frames)
 }
 

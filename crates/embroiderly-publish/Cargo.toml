@@ -25,7 +25,7 @@ typst-pdf = { workspace = true }
 typst-as-lib = { workspace = true, features = ["typst-kit-fonts"] }
 
 # Logging
-log = { workspace = true }
+tracing = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

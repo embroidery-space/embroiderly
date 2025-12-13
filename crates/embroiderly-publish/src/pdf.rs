@@ -1,38 +1,35 @@
 use anyhow::Result;
 use embroiderly_pattern::*;
 
-pub fn export_pattern<P: AsRef<std::path::Path>>(
+#[tracing::instrument(skip_all, fields(?file_path, ?options))]
+pub fn export_pattern(
   patproj: &PatternProject,
-  file_path: P,
+  file_path: std::path::PathBuf,
   options: PdfExportOptions,
   symbol_fonts_dir: Vec<std::path::PathBuf>,
 ) -> Result<()> {
-  log::debug!("Exporting Pattern({:?}) to PDF", patproj.id);
-  let file_path = file_path.as_ref();
-
   if options.monochrome {
-    log::debug!("Exporting monochrome Pattern({:?})", patproj.id);
+    tracing::trace!("Exporting monochrome document");
     let frames = embroiderly_image::svg::generate_svg(patproj, false, options.frame_options)?;
     let file_path = file_path.with_file_name(format!(
       "{}.monochrome.{}",
       file_path.file_stem().unwrap_or_default().to_string_lossy(),
       file_path.extension().unwrap_or_default().to_string_lossy()
     ));
-    export_pattern_inner(patproj, file_path, frames, options, &symbol_fonts_dir)?;
+    export_pattern_inner(patproj, &file_path, frames, options, &symbol_fonts_dir)?;
   }
 
   if options.color {
-    log::debug!("Exporting color Pattern({:?})", patproj.id);
+    tracing::trace!("Exporting color document");
     let frames = embroiderly_image::svg::generate_svg(patproj, true, options.frame_options)?;
     let file_path = file_path.with_file_name(format!(
       "{}.color.{}",
       file_path.file_stem().unwrap_or_default().to_string_lossy(),
       file_path.extension().unwrap_or_default().to_string_lossy()
     ));
-    export_pattern_inner(patproj, file_path, frames, options, &symbol_fonts_dir)?;
+    export_pattern_inner(patproj, &file_path, frames, options, &symbol_fonts_dir)?;
   }
 
-  log::debug!("Pattern({:?}) exported to PDF", patproj.id);
   Ok(())
 }
 
@@ -70,7 +67,7 @@ fn export_pattern_inner<P: AsRef<std::path::Path>>(
   let doc = {
     let result = typst_template.compile_with_input(typst_content);
     for warning in &result.warnings {
-      log::warn!("Typst compilation warning: {warning:?}");
+      tracing::warn!("Typst compilation warning: {warning:?}");
     }
     result.output?
   };
