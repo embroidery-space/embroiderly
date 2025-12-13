@@ -26,6 +26,7 @@ pub fn init(binary_name: &str, logs_dir: std::path::PathBuf) -> anyhow::Result<(
     .with_writer(std::io::stderr);
   let file_layer = tracing_subscriber::fmt::layer()
     .compact()
+    .with_ansi(false)
     .with_span_events(tracing_subscriber::fmt::format::FmtSpan::ACTIVE)
     .with_writer(
       std::fs::OpenOptions::new()
