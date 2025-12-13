@@ -1,11 +1,16 @@
+const WEBVIEW_TARGET: &str = "webview";
+
 #[tauri::command]
-pub fn log(level: String, message: String, location: Option<String>) {
-  match std::str::FromStr::from_str(&level) {
-    Ok(tracing::Level::ERROR) => tracing::error!(target: "webview", location, message),
-    Ok(tracing::Level::WARN) => tracing::warn!(target: "webview", location, message),
-    Ok(tracing::Level::INFO) => tracing::info!(target: "webview", location, message),
-    Ok(tracing::Level::DEBUG) => tracing::debug!(target: "webview", location, message),
-    Ok(tracing::Level::TRACE) => tracing::trace!(target: "webview", location, message),
-    Err(_) => {}
-  }
+pub async fn log(level: String, message: String, location: Option<String>) {
+  let level = std::str::FromStr::from_str(&level).unwrap();
+  let target = if let Some(location) = location {
+    format!("{WEBVIEW_TARGET}:{location}")
+  } else {
+    WEBVIEW_TARGET.to_string()
+  };
+
+  let mut builder = log::RecordBuilder::new();
+  builder.level(level).target(&target);
+
+  log::logger().log(&builder.args(format_args!("{message}")).build());
 }

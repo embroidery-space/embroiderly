@@ -14,4 +14,4 @@ tauri-plugin = { workspace = true }
 tauri = { workspace = true }
 
 # Logging
-tracing = { workspace = true }
+log = { workspace = true }
