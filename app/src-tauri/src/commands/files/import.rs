@@ -2,6 +2,7 @@ use crate::error::{PatternError, Result};
 use crate::sidecars::{ImageImportSidecar, SidecarController as _, SidecarId, SidecarManager};
 use crate::state::{HistoryState, PatternsState};
 
+#[tracing::instrument(level = "trace", ret)]
 #[tauri::command]
 pub fn get_image_dimensions(image_path: std::path::PathBuf) -> Result<(u32, u32)> {
   Ok(image::image_dimensions(image_path)?)
@@ -9,38 +10,34 @@ pub fn get_image_dimensions(image_path: std::path::PathBuf) -> Result<(u32, u32)
 
 /// Starts the image import sidecar in the "server" mode.
 /// Returns the ID of the sidecar.
+#[tracing::instrument(level = "trace", ret, skip_all)]
 #[tauri::command]
 pub async fn start_image_import_server<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
   sidecar_manager: tauri::State<'_, SidecarManager>,
 ) -> Result<SidecarId> {
-  log::debug!("Starting image import server");
-
   let mut sidecar = ImageImportSidecar::new(app_handle);
   let id = sidecar.spawn().await?;
 
   sidecar_manager.insert(id, Box::new(sidecar)).await;
 
-  log::debug!("Image import server started");
   Ok(id)
 }
 
 /// Stops the running image import sidecar by its ID.
+#[tracing::instrument(level = "trace", skip(sidecar_manager))]
 #[tauri::command]
 pub async fn stop_image_import_server(id: SidecarId, sidecar_manager: tauri::State<'_, SidecarManager>) -> Result<()> {
-  log::debug!("Stopping image import server");
-
   if let Some(sidecar) = sidecar_manager.remove(id).await {
     let mut sidecar = sidecar.lock().await;
     sidecar.shutdown().await?;
   }
-
-  log::debug!("Image import server stopped");
   Ok(())
 }
 
 /// Sends updated parameters to the specified image import sidecar.
 /// Returns the pattern imported from the image.
+#[tracing::instrument(level = "trace", skip(sidecar_manager))]
 #[tauri::command]
 pub async fn get_image_import_preview(
   id: SidecarId,
@@ -49,8 +46,6 @@ pub async fn get_image_import_preview(
   options: embroiderly_image::ImageImportOptions,
   sidecar_manager: tauri::State<'_, SidecarManager>,
 ) -> Result<tauri::ipc::Response> {
-  log::debug!("Converting image into pattern");
-
   let Some(sidecar) = sidecar_manager.get(id).await else {
     return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar not found")).into());
   };
@@ -69,13 +64,13 @@ pub async fn get_image_import_preview(
     sidecar.get_response().await?
   };
 
-  log::debug!("Image converted into pattern");
   Ok(tauri::ipc::Response::new(output))
 }
 
 /// Fetches the final image import result, stores it in app state, and stops the sidecar.
 /// Returns the ID of the pattern imported from the image.
 #[expect(clippy::too_many_arguments)]
+#[tracing::instrument(level = "trace", skip(_app_handle, history, patterns, sidecar_manager))]
 #[tauri::command]
 pub async fn finalize_image_import<R: tauri::Runtime>(
   id: SidecarId,
@@ -87,8 +82,6 @@ pub async fn finalize_image_import<R: tauri::Runtime>(
   patterns: tauri::State<'_, PatternsState>,
   sidecar_manager: tauri::State<'_, SidecarManager>,
 ) -> Result<String> {
-  log::debug!("Finalizing image import");
-
   let Some(sidecar) = sidecar_manager.remove(id).await else {
     return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar not found")).into());
   };
@@ -115,6 +108,5 @@ pub async fn finalize_image_import<R: tauri::Runtime>(
 
   sidecar.shutdown().await?;
 
-  log::debug!("Image import finalized successfully");
   Ok(pattern_id.to_string())
 }

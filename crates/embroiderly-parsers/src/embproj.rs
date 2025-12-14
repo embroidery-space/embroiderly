@@ -21,7 +21,7 @@ macro_rules! read_zip_file {
     $archive.by_name($name).map(|mut file| {
       let mut buf = Vec::new();
       if let Err(e) = file.read_to_end(&mut buf) {
-        log::error!("Failed to read zip file {}: {}", $name, e);
+        tracing::error!("Failed to read zip file {}: {}", $name, e);
       }
 
       std::io::BufReader::new(std::io::Cursor::new(buf))
@@ -29,8 +29,8 @@ macro_rules! read_zip_file {
   }};
 }
 
+#[tracing::instrument(name = "parse_embproj", skip_all)]
 pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
-  log::info!("Parsing the EMBPROJ pattern file");
   let file_path = file_path.as_ref();
   let file = std::fs::File::open(file_path)?;
   let mut archive = zip::ZipArchive::new(file)?;
@@ -72,8 +72,8 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
   Ok(patproj)
 }
 
+#[tracing::instrument(name = "save_embproj", skip_all)]
 pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<()> {
-  log::info!("Saving the EMBPROJ pattern file");
   let file = std::fs::OpenOptions::new()
     .create(true)
     .write(true)

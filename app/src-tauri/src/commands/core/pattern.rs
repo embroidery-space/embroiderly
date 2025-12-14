@@ -5,6 +5,7 @@ use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
 #[tauri::command]
 pub fn update_pattern_info<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,

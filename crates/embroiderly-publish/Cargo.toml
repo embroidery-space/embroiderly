@@ -13,7 +13,7 @@ argh = { workspace = true }
 embroiderly_image = { workspace = true }
 embroiderly_parsers = { workspace = true }
 embroiderly_pattern = { workspace = true }
-embroiderly_logger = { workspace = true }
+embroiderly_tracing = { workspace = true }
 
 # De/serialization
 serde_json = { workspace = true }
@@ -24,8 +24,8 @@ typst-pdf = { workspace = true }
 ## Third-party Typst libraries
 typst-as-lib = { workspace = true, features = ["typst-kit-fonts"] }
 
-# Logging
-log = { workspace = true }
+# Tracing
+tracing = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

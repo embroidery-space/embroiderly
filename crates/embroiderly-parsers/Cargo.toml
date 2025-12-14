@@ -20,8 +20,8 @@ zip = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
 
-# Logging
-log = { workspace = true }
+# Tracing
+tracing = { workspace = true }
 
 # Other
 tempfile = { workspace = true }

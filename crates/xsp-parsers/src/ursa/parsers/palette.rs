@@ -4,8 +4,8 @@ use crate::ursa::schemas::palette::PaletteItem;
 #[path = "palette.test.rs"]
 mod tests;
 
+#[tracing::instrument(name = "parse_ursa_palette", skip_all)]
 pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> std::io::Result<Vec<PaletteItem>> {
-  log::debug!("Parsing Ursa's palette file");
   let content = std::fs::read_to_string(file_path.as_ref())?;
 
   let mut palette = Vec::new();
@@ -15,7 +15,6 @@ pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> std::io::Result
     }
   }
 
-  log::debug!("Palette parsed");
   Ok(palette)
 }
 

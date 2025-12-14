@@ -1,8 +1,6 @@
 use argh::FromArgs;
 use embroiderly_image::commands;
 
-mod logger;
-
 /// A utility program for image operations in embroidery patterns.
 #[derive(FromArgs)]
 struct Args {
@@ -22,7 +20,10 @@ enum Command {
 struct ImportCommand {}
 
 fn main() -> anyhow::Result<()> {
-  logger::init()?;
+  embroiderly_tracing::init(
+    "embroiderly_image",
+    std::env::var(embroiderly_tracing::EMBROIDERLY_LOGS_DIR_ENV_VAR)?.into(),
+  )?;
 
   let args: Args = argh::from_env();
   match args.command {

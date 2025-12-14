@@ -8,7 +8,7 @@ pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Resu
   let client = if let Some(api_key) = option_env!("EMBROIDERLY_POSTHOG_API_KEY")
     && crate::utils::settings::telemetry_metrics_enabled(app_handle)
   {
-    log::info!("Telemetry: Metrics is enabled.");
+    tracing::info!(target: "telemetry", "Metrics is enabled.");
     posthog::client(
       posthog::ClientOptionsBuilder::default()
         .api_endpoint("https://eu.i.posthog.com/i/v0/e/".into())
@@ -16,7 +16,7 @@ pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Resu
         .build()?,
     )
   } else {
-    log::info!("Telemetry: Metrics is disabled.");
+    tracing::info!(target: "telemetry", "Metrics is disabled.");
     posthog::client("dummy-key")
   };
 

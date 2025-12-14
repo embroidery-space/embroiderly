@@ -9,20 +9,19 @@ use crate::state::{HistoryState, PatternsState};
 use crate::utils::path::{app_document_dir, backup_file_path};
 use crate::vendor::telemetry::AppEvent;
 
+#[tracing::instrument(level = "trace", skip(patterns))]
 #[tauri::command]
 pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Result<tauri::ipc::Response> {
-  log::debug!("Loading Pattern({pattern_id:?})");
-
   let patterns = patterns.read().unwrap();
   if let Some(pattern) = patterns.get_pattern_by_id(&pattern_id) {
-    log::debug!("Pattern({pattern_id:?}) loaded");
     Ok(tauri::ipc::Response::new(borsh::to_vec(&pattern)?))
   } else {
-    log::error!("Pattern({pattern_id:?}) not found");
+    tracing::trace!("Pattern not found");
     Err(PatternError::PatternNotFound(pattern_id).into())
   }
 }
 
+#[tracing::instrument(level = "trace", skip(app_handle, history, patterns))]
 #[tauri::command]
 pub fn open_pattern<R: tauri::Runtime>(
   file_path: std::path::PathBuf,
@@ -31,11 +30,9 @@ pub fn open_pattern<R: tauri::Runtime>(
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<String> {
-  log::debug!("Opening pattern");
-
   let mut patterns = patterns.write().unwrap();
   if let Some(pattern) = patterns.get_pattern_by_path(&file_path) {
-    log::debug!("Pattern({:?}) already opened", pattern.id);
+    tracing::trace!("Pattern already opened");
     return Ok(pattern.id.to_string());
   }
 
@@ -44,7 +41,7 @@ pub fn open_pattern<R: tauri::Runtime>(
     match restore_from_backup {
       Some(true) => {
         let pattern = embroiderly_parsers::parse_pattern(backup_file_path)?;
-        log::debug!("Pattern({:?}) restored from backup", pattern.id);
+        tracing::trace!("Pattern restored from backup");
 
         let pattern_id = pattern.id;
 
@@ -68,7 +65,6 @@ pub fn open_pattern<R: tauri::Runtime>(
     let (french_knots_number, beads_number) = patproj.pattern.node_stitches_number();
     let special_stitches_number = patproj.pattern.specialstitches.len();
 
-    log::debug!("Pattern({:?}) opened", patproj.id);
     app_handle.capture_event(AppEvent::PatternOpened {
       format: PatternFormat::try_from(file_path.extension())
         .expect("After parsing, the pattern format is always valid"),
@@ -104,6 +100,7 @@ pub fn open_pattern<R: tauri::Runtime>(
   Ok(pattern_id.to_string())
 }
 
+#[tracing::instrument(level = "trace", skip_all)]
 #[tauri::command]
 pub fn create_pattern<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,
@@ -112,15 +109,12 @@ pub fn create_pattern<R: tauri::Runtime>(
   patterns: tauri::State<PatternsState>,
 ) -> Result<String> {
   if let tauri::ipc::InvokeBody::Raw(data) = request.body() {
-    log::debug!("Creating new pattern");
-
     let fabric: Fabric = borsh::from_slice(data)?;
     let pattern = Pattern::new(fabric);
     let file_path = app_document_dir(&app_handle)?.join(format!("{}.{}", pattern.info.title, PatternFormat::default()));
 
     let patproj = PatternProject::new(file_path, pattern, Default::default(), Default::default());
 
-    log::debug!("Pattern({:?}) created", patproj.id);
     app_handle.capture_event(AppEvent::PatternCreated {
       fabric: patproj.pattern.fabric.clone(),
     });
@@ -136,6 +130,7 @@ pub fn create_pattern<R: tauri::Runtime>(
   }
 }
 
+#[tracing::instrument(level = "trace", skip(app_handle, history, patterns))]
 #[tauri::command]
 pub fn save_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
@@ -144,8 +139,6 @@ pub fn save_pattern<R: tauri::Runtime>(
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
-  log::debug!("Saving Pattern({pattern_id:?})");
-
   let mut patterns = patterns.write().unwrap();
 
   let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
@@ -164,16 +157,16 @@ pub fn save_pattern<R: tauri::Runtime>(
     let new_file_path = backup_file_path(&file_path, "new");
     let backup_file_path = backup_file_path(&file_path, "bak");
 
-    log::trace!("Saving the pattern to a temporary file.");
+    tracing::trace!("Saving the pattern to a temporary file.");
     patproj.file_path.clone_from(&new_file_path);
     embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
 
-    log::trace!("Backing up the previous file.");
+    tracing::trace!("Backing up the previous file.");
     if previous_file_path.exists() {
       std::fs::rename(&previous_file_path, &backup_file_path)?;
     }
 
-    log::trace!("Renaming the new file to the target file name.");
+    tracing::trace!("Renaming the new file to the target file name.");
     std::fs::rename(&new_file_path, &file_path)?;
     patproj.file_path = file_path;
   } else {
@@ -182,7 +175,6 @@ pub fn save_pattern<R: tauri::Runtime>(
     patproj.file_path = previous_file_path;
   }
 
-  log::debug!("Pattern saved {pattern_id:?}");
   app_handle.capture_event(AppEvent::PatternSaved { format });
 
   let mut history = history.write().unwrap();
@@ -192,14 +184,13 @@ pub fn save_pattern<R: tauri::Runtime>(
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all)]
 #[tauri::command]
 pub fn save_all_patterns<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
-  log::debug!("Saving all patterns");
-
   let patterns_to_save = patterns
     .read()
     .unwrap()
@@ -216,10 +207,10 @@ pub fn save_all_patterns<R: tauri::Runtime>(
     )?;
   }
 
-  log::debug!("All patterns saved");
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip(app_handle, history, patterns))]
 #[tauri::command]
 pub fn close_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
@@ -228,8 +219,6 @@ pub fn close_pattern<R: tauri::Runtime>(
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
-  log::debug!("Closing Pattern({pattern_id:?})");
-
   if !force.unwrap_or(false) {
     let history = history.read().unwrap();
     if let Some(history) = history.get(&pattern_id)
@@ -247,20 +236,18 @@ pub fn close_pattern<R: tauri::Runtime>(
     std::fs::remove_file(backup_file_path)?;
   }
 
-  log::debug!("Pattern({pattern_id:?}) closed");
   app_handle.capture_event(AppEvent::PatternClosed);
 
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all)]
 #[tauri::command]
 pub fn close_all_patterns<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
-  log::debug!("Closing all patterns");
-
   let patterns_to_close = patterns.read().unwrap().patterns().map(|p| p.id).collect::<Vec<_>>();
   for pattern_id in patterns_to_close {
     close_pattern(
@@ -272,17 +259,15 @@ pub fn close_all_patterns<R: tauri::Runtime>(
     )?;
   }
 
-  log::debug!("All patterns closed");
   Ok(())
 }
 
 /// Returns a list of opened patterns with their IDs and titles.
 /// This is used on the first app startup to initially load those patterns which were opened using file associations.
+#[tracing::instrument(level = "trace", skip_all)]
 #[tauri::command]
 #[must_use]
 pub fn get_opened_patterns(patterns: tauri::State<PatternsState>) -> Vec<(String, String)> {
-  log::debug!("Getting opened patterns");
-
   let patterns = patterns.read().unwrap();
   patterns
     .patterns()
@@ -290,14 +275,13 @@ pub fn get_opened_patterns(patterns: tauri::State<PatternsState>) -> Vec<(String
     .collect()
 }
 
+#[tracing::instrument(level = "trace", skip_all)]
 #[tauri::command]
 pub fn get_unsaved_patterns<R: tauri::Runtime>(
   // This argument is required to resolve a strange type error.
   _window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
 ) -> Vec<uuid::Uuid> {
-  log::debug!("Getting unsaved patterns");
-
   let history = history.read().unwrap();
   history
     .iter()
@@ -311,6 +295,7 @@ pub fn get_unsaved_patterns<R: tauri::Runtime>(
     .collect()
 }
 
+#[tracing::instrument(level = "trace", skip(patterns))]
 #[tauri::command]
 #[must_use]
 pub fn get_pattern_file_path(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> String {

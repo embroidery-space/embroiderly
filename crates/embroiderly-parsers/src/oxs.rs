@@ -64,9 +64,8 @@ pub fn parse_pattern_from_reader<R: io::BufRead>(reader: R) -> Result<PatternPro
   ))
 }
 
+#[tracing::instrument(name = "parse_oxs", skip_all)]
 fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern> {
-  log::trace!("Parsing OXS file");
-
   let reader_config = reader.config_mut();
   reader_config.expand_empty_elements = true;
   reader_config.check_end_names = true;
@@ -83,7 +82,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
     {
       Event::Start(ref e) => {
         let name = e.name();
-        log::trace!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
+        tracing::trace!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
 
         match name.as_ref() {
           b"properties" => {
@@ -92,7 +91,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             let oxs_version = attributes.get("oxsversion").unwrap_or("1.0");
             let software = attributes.get("software").unwrap_or("Unknown");
             let software_version = attributes.get("software_version").unwrap_or("Unknown");
-            log::trace!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
+            tracing::trace!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
 
             let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes);
             pattern.info = pattern_info;
@@ -162,7 +161,6 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
     buf.clear();
   }
 
-  log::trace!("OXS file parsed");
   Ok(pattern)
 }
 
@@ -181,13 +179,12 @@ pub fn save_pattern_to_vec(patproj: &PatternProject, package_info: &PackageInfo)
   Ok(buf)
 }
 
+#[tracing::instrument(name = "save_oxs", skip_all)]
 fn save_pattern_inner<W: io::Write>(
   writer: &mut W,
   patproj: &PatternProject,
   package_info: &PackageInfo,
 ) -> io::Result<()> {
-  log::trace!("Saving OXS file");
-
   let PatternProject { pattern, .. } = patproj;
 
   // Create a mapping from actual index to visual position for efficient lookups when writing stitches.
@@ -261,7 +258,6 @@ fn save_pattern_inner<W: io::Write>(
     Ok(())
   })?;
 
-  log::trace!("OXS file saved");
   Ok(())
 }
 
@@ -443,7 +439,7 @@ fn read_palette<R: io::BufRead>(
   }
 
   if palette_size.is_some_and(|x| x != palette.len()) {
-    log::warn!("The specified palette size does not match the actual palette size");
+    tracing::warn!("The specified palette size does not match the actual palette size");
   }
 
   Ok((fabric, palette))
@@ -648,7 +644,7 @@ fn read_part_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Part
             });
           }
           _ => {
-            log::warn!("Unknown partstitch direction: {direction_value}");
+            tracing::warn!(direction_value, "Unknown partstitch direction");
           }
         }
       }

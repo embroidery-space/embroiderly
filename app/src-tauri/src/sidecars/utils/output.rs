@@ -64,7 +64,7 @@ pub fn handle_sidecar_output<R: tauri::Runtime>(
     let exit_code = output.status.code();
 
     let error_message = format!("Sidecar '{sidecar_name}' failed with exit code {exit_code:?}");
-    log::error!("{error_message}");
+    tracing::error!(error_message);
 
     // Capture error to Sentry with sidecar log file attachment.
     if crate::utils::settings::telemetry_diagnostics_enabled(app_handle) {

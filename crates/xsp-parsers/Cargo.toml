@@ -11,8 +11,8 @@ byteorder = { workspace = true }
 encoding_rs = { workspace = true }
 hex = { workspace = true }
 
-# Logging
-log = { workspace = true }
+# Tracing
+tracing = { workspace = true }
 
 # Error handling
 thiserror = { workspace = true }

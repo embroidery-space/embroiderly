@@ -24,8 +24,8 @@ impl TryFrom<Option<&std::ffi::OsStr>> for PatternMakerPalette {
   }
 }
 
+#[tracing::instrument(name = "parse_pmaker_palette", skip_all)]
 pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> Result<Vec<PaletteItem>> {
-  log::debug!("Parsing Pattern Maker's palette");
   let file_path = file_path.as_ref();
 
   let buf = std::fs::read(file_path)?;
@@ -36,11 +36,11 @@ pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> Result<Vec<Pale
 
   match PatternMakerPalette::try_from(file_path.extension())? {
     PatternMakerPalette::Master => {
-      log::debug!("Parsing master palette");
+      tracing::debug!("Parsing master palette");
       cursor.set_position(0x08);
     }
     PatternMakerPalette::User => {
-      log::debug!("Parsing user palette");
+      tracing::debug!("Parsing user palette");
       cursor.set_position(0x06);
     }
   }
@@ -50,6 +50,5 @@ pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> Result<Vec<Pale
     palette.push(read_palette_item(&mut cursor)?);
   }
 
-  log::debug!("Palette parsed");
   Ok(palette)
 }

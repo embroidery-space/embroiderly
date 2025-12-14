@@ -16,7 +16,7 @@ pub struct GroupedFilesList {
   pub custom: Vec<String>,
 }
 
-#[derive(serde::Deserialize)]
+#[derive(Debug, serde::Deserialize)]
 pub enum FileGroup {
   #[serde(rename = "system")]
   System,

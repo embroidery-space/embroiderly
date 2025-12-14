@@ -35,7 +35,7 @@ tauri-plugin-posthog = { workspace = true }
 embroiderly_image = { workspace = true }
 embroiderly_parsers = { workspace = true }
 embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
-embroiderly_logger = { workspace = true }
+embroiderly_tracing = { workspace = true }
 xsp_parsers = { workspace = true }
 
 # Fonts parsing
@@ -56,8 +56,8 @@ borsh = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
 
-# Logging
-log = { workspace = true }
+# Tracing
+tracing = { workspace = true }
 
 # File system utilities
 tempfile = { workspace = true }

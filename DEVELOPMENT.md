@@ -15,10 +15,10 @@ app/                      # Main application (Vue frontend + Tauri backend)
 
 crates/                   # Shared Rust libraries and Tauri plugins.
 ├── embroiderly-image/    # Image import functionality.
-├── embroiderly-logger/   # Shared logger configuration.
 ├── embroiderly-parsers/  # Cross-stitch pattern file parsers.
 ├── embroiderly-pattern/  # Internal pattern representation.
 ├── embroiderly-publish/  # Pattern export functionality.
+├── embroiderly-tracing/  # Shared tracing configuration.
 ├── tauri-plugin-log/     # Custom Tauri logging plugin.
 ├── tauri-plugin-sentry/  # Custom Tauri plugin for Sentry integration.
 ├── tauri-plugin-posthog/ # Custom Tauri plugin for PostHog integration.

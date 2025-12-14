@@ -22,7 +22,10 @@ struct Args {
 }
 
 fn main() -> anyhow::Result<()> {
-  embroiderly_publish::logger::init()?;
+  embroiderly_tracing::init(
+    "embroiderly_publish",
+    std::env::var(embroiderly_tracing::EMBROIDERLY_LOGS_DIR_ENV_VAR)?.into(),
+  )?;
 
   let Args {
     pattern,

@@ -8,9 +8,8 @@ use crate::xspro::schemas::palette::PaletteItem;
 const PALETTE_BRAND_LENGTH: usize = 28;
 const COLOR_NUMBER_LENGTH: usize = 28;
 
+#[tracing::instrument(name = "parse_xspro_palette", skip_all)]
 pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> io::Result<Vec<PaletteItem>> {
-  log::debug!("Parsing XSPro's palette file");
-
   let file_path = file_path.as_ref();
   let filename = file_path.file_name().map(|s| s.to_string_lossy().to_string());
 
@@ -28,7 +27,6 @@ pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> io::Result<Vec<
     )?);
   }
 
-  log::debug!("Palette parsed");
   Ok(palette)
 }
 

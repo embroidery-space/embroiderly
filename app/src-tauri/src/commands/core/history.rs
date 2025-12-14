@@ -2,6 +2,7 @@ use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, ?single))]
 #[tauri::command]
 pub fn undo<R: tauri::Runtime>(
   single: Option<bool>,
@@ -29,6 +30,7 @@ pub fn undo<R: tauri::Runtime>(
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, ?single))]
 #[tauri::command]
 pub fn redo<R: tauri::Runtime>(
   single: Option<bool>,
@@ -56,6 +58,7 @@ pub fn redo<R: tauri::Runtime>(
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id))]
 #[tauri::command]
 pub fn start_transaction<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,
@@ -70,6 +73,7 @@ pub fn start_transaction<R: tauri::Runtime>(
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id))]
 #[tauri::command]
 pub fn end_transaction<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,

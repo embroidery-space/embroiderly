@@ -84,7 +84,7 @@ struct ImageImportState {
 impl ImageImportState {
   /// Create a new state by loading the image from the given path.
   fn new(image_path: PathBuf) -> anyhow::Result<Self> {
-    log::debug!("Loading the original image into memory.");
+    tracing::debug!("Loading the original image into memory.");
     let image = image::open(&image_path)?;
 
     Ok(Self {
@@ -99,7 +99,7 @@ impl ImageImportState {
     if !self.preprocessed_images.contains_key(&dimensions) {
       let (width, height) = dimensions;
 
-      log::debug!("Resizing image to {width}x{height} dimensions.");
+      tracing::debug!("Resizing image to {width}x{height} dimensions.");
       let image = self
         .image
         .resize_exact(width as u32, height as u32, image::imageops::FilterType::Lanczos3);
@@ -110,7 +110,7 @@ impl ImageImportState {
 
   fn ensure_palette(&mut self, palette_path: &PathBuf) -> anyhow::Result<()> {
     if !self.preprocessed_palettes.contains_key(palette_path) {
-      log::debug!("Loading and preprocessing palette.");
+      tracing::debug!("Loading and preprocessing palette.");
       let palette = serde_json::from_slice(&std::fs::read(palette_path)?)?;
       let palette =
         convert_palette_to_oklab(palette).ok_or_else(|| anyhow::anyhow!("Failed to process target palette"))?;
@@ -133,7 +133,7 @@ impl ImageImportState {
 
 /// Runs the long-lived import server that processes commands from stdin.
 pub fn run_image_import_server() -> anyhow::Result<()> {
-  log::info!("Embroiderly image import sidecar started");
+  tracing::info!("Embroiderly image import sidecar started");
   let mut state: Option<ImageImportState> = None;
 
   // Read incoming options updates from stdin line by line.
@@ -143,7 +143,7 @@ pub fn run_image_import_server() -> anyhow::Result<()> {
 
     let bytes_read = stdin.read_line(&mut line)?;
     if bytes_read == 0 {
-      log::info!("EOF reached, shutting down sidecar");
+      tracing::trace!("EOF reached, shutting down sidecar");
       break;
     }
 
@@ -154,7 +154,7 @@ pub fn run_image_import_server() -> anyhow::Result<()> {
         palette_path,
         options,
       } => {
-        log::debug!("Received update command, processing the image");
+        let _guard = tracing::trace_span!("update_command", ?image_path, ?palette_path, ?options).entered();
 
         // Initialize or replace the state if it's None or the image path has changed.
         if state.as_ref().is_none_or(|s| s.image_path != image_path) {
@@ -184,13 +184,13 @@ pub fn run_image_import_server() -> anyhow::Result<()> {
         send_pattern_response(patproj)?;
       }
       ImageImportServerCommand::Shutdown => {
-        log::debug!("Shutdown command received, terminating the process");
+        tracing::trace!("Shutdown command received, terminating the process");
         break;
       }
     }
   }
 
-  log::info!("Embroiderly image import sidecar terminated");
+  tracing::info!("Embroiderly image import sidecar terminated");
   Ok(())
 }
 
@@ -227,7 +227,7 @@ fn convert_image_into_pattern(
   let palette_size = std::cmp::min(options.palette_size, target_palette.len());
   anyhow::ensure!(palette_size > 0, "Palette size must be greater than 0.");
 
-  log::debug!("Quantizing image with palette size {palette_size}.",);
+  tracing::trace!("Quantizing image with palette size {palette_size}.",);
   let image = quantette::ImageBuf::try_from(image.to_rgb8())?;
   let image = quantette::Pipeline::new()
     .palette_size(quantette::PaletteSize::from_usize_clamped(palette_size))
@@ -236,7 +236,7 @@ fn convert_image_into_pattern(
     .input_image(image.as_ref())
     .output_oklab_image();
 
-  log::debug!("Converting image into pattern.");
+  tracing::trace!("Converting image into pattern.");
   let pattern = finalize_pattern(width, height, &image, target_palette)?;
 
   Ok(pattern)
@@ -328,6 +328,6 @@ fn send_pattern_response(patproj: embroiderly_pattern::PatternProject) -> anyhow
   stdout.write_all(&buffer)?;
   stdout.flush()?;
 
-  log::debug!("Sent pattern response ({buffer_len} bytes)");
+  tracing::trace!("Sent pattern response ({buffer_len} bytes)");
   Ok(())
 }

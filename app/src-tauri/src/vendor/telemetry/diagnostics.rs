@@ -11,10 +11,10 @@ pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Resu
   let client = if let Some(dsn) = option_env!("EMBROIDERLY_SENTRY_DSN")
     && crate::utils::settings::telemetry_diagnostics_enabled(app_handle)
   {
-    log::info!("Telemetry: Diagnostics is enabled.");
+    tracing::info!(target: "telemetry", "Diagnostics is enabled.");
     sentry::init((dsn, client_options))
   } else {
-    log::info!("Telemetry: Diagnostics is disabled.");
+    tracing::info!(target: "telemetry", "Diagnostics is disabled.");
     sentry::init(client_options)
   };
 

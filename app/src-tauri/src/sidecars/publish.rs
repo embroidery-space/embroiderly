@@ -74,7 +74,7 @@ impl<R: tauri::Runtime> super::SidecarRunner for PdfExportSidecar<R> {
 
     // Set logs directory.
     sidecar = sidecar.env(
-      embroiderly_logger::EMBROIDERLY_LOG_DIR_ENV_VAR,
+      embroiderly_tracing::EMBROIDERLY_LOGS_DIR_ENV_VAR,
       crate::utils::path::app_logs_dir(&self.app_handle)?,
     );
 

@@ -7,6 +7,7 @@ use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 use crate::vendor::telemetry::AppEvent;
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body = mode))]
 #[tauri::command]
 pub fn set_display_mode<R: tauri::Runtime>(
   mode: String,
@@ -33,6 +34,7 @@ pub fn set_display_mode<R: tauri::Runtime>(
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body = value))]
 #[tauri::command]
 pub fn show_symbols<R: tauri::Runtime>(
   value: bool,
@@ -58,6 +60,7 @@ pub fn show_symbols<R: tauri::Runtime>(
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
 #[tauri::command]
 pub fn set_layers_visibility<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
