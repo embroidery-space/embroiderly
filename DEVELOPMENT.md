@@ -14,6 +14,8 @@ app/                      # Main application (Vue frontend + Tauri backend)
 └── src-tauri/            # Backend source code.
 
 crates/                   # Shared Rust libraries and Tauri plugins.
+├── embroiderly-image/    # Image import functionality.
+├── embroiderly-logger/   # Shared logger configuration.
 ├── embroiderly-parsers/  # Cross-stitch pattern file parsers.
 ├── embroiderly-pattern/  # Internal pattern representation.
 ├── embroiderly-publish/  # Pattern export functionality.
@@ -61,6 +63,7 @@ Once you are done, run the application via `pnpm tauri dev` and build it via `pn
 - `pnpm lint:fix` - Fix linting.
 - `pnpm test` - Run all tests.
 - `pnpm --filter @embroiderly/app test:unit` - Run unit tests.
+- `pnpm --filter @embroiderly/app test:components` - Run component tests.
 - `pnpm --filter @embroiderly/app test:e2e` - Run end-to-end tests (see [instructions](#integration-testing) below).
 
 **Backend:**
@@ -70,9 +73,36 @@ Once you are done, run the application via `pnpm tauri dev` and build it via `pn
 - `cargo clippy -- -D warnings` - Check linting.
 - `cargo nextest run --locked --no-fail-fast -F embroiderly/test` - Run all tests.
 
+## Sidecars Development
+
+The `app/src-tauri/binaries/` directory contains **stub files** that are placeholders for the actual sidecar binaries.
+These stubs are committed to the repository so that the project structure is complete, but they are not valid executables.
+
+If you run the application without building the sidecars first, you will get a runtime error when the application tries to execute them.
+
+To build the sidecars, run:
+
+```sh
+cargo build -p embroiderly_image
+cargo build -p embroiderly_publish
+```
+
+The binaries will appear in `target/debug/` and the application will use them during development.
+
+> [!IMPORTANT]
+> Sidecars must be rebuilt each time their code changes.
+> The application does not automatically detect source changes --- it only sees the compiled binaries.
+
+Alternatively, you can run sidecars directly:
+
+```sh
+cargo run -p embroiderly_image -- [args]
+cargo run -p embroiderly_publish -- [args]
+```
+
 ## Tests Organization
 
-Unit-tests are extracted into separate files near the source file in the form of `<source-file>.test.{ts,rs}`.
+Unit and component tests are extracted into separate files near the source file in the form of `<source-file>.test.{ts,rs}`.
 
 Integration tests are store separately in the `tests/` directory:
 
