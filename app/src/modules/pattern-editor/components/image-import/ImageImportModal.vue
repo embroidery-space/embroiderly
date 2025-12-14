@@ -66,28 +66,26 @@
 
         <USeparator decorative orientation="vertical" size="sm" />
 
-        <BlockUI :blocked="importingPattern" class="size-full">
-          <DropZone class="flex size-full flex-col" @drop="imagePath = $event[0]!">
-            <UProgress v-if="importingPattern" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
+        <BlockUI ref="drop-zone" :blocked="importingPattern || isOverDropZone" class="flex size-full flex-col">
+          <UProgress v-if="importingPattern" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
 
-            <PatternCanvas
-              ref="pattern-canvas"
-              v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
-              :pattern="previewPattern"
-              :options="{ textureManager: { outlineStitches: false } }"
-              class="min-h-0 flex-1"
-              :class="{ hidden: !imageImportOptionsValid }"
-            />
+          <PatternCanvas
+            ref="pattern-canvas"
+            v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
+            :pattern="previewPattern"
+            :options="{ textureManager: { outlineStitches: false } }"
+            class="min-h-0 flex-1"
+            :class="{ hidden: !imageImportOptionsValid }"
+          />
 
-            <div v-if="previewPattern" class="border-t border-default px-2 py-1 text-sm">
-              {{
-                $t("image-import-pattern-properties", {
-                  paletteSize: previewPattern.palette.length,
-                  totalStitches: previewPattern.fullstitches.length,
-                })
-              }}
-            </div>
-          </DropZone>
+          <div v-if="previewPattern" class="border-t border-default px-2 py-1 text-sm">
+            {{
+              $t("image-import-pattern-properties", {
+                paletteSize: previewPattern.palette.length,
+                totalStitches: previewPattern.fullstitches.length,
+              })
+            }}
+          </div>
         </BlockUI>
       </div>
     </template>
@@ -113,7 +111,8 @@
   import { PatternCanvas } from "#pattern-editor/components/canvas";
   import { LayersVisibility, Pattern } from "#pattern-editor/lib/pattern";
   import { ImageImportService } from "#pattern-editor/services/";
-  import { BlockUI, DimensionsInput, DropZone, FilePicker, FormFieldset, InputNumberSlider } from "#shared/components/";
+  import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "#shared/components/";
+  import { useDragDrop } from "#shared/composables/";
   import { ANY_IMAGE_FILTER } from "#shared/constants/";
 
   import { PaletteSelect } from "../palette/";
@@ -143,6 +142,11 @@
   const imageDimensions = ref(props.imageDimensions);
   watch(imagePath, async (newImagePath) => {
     imageDimensions.value = await FilesApi.getImageDimensions(newImagePath);
+  });
+
+  const dropZoneContainer = useTemplateRef("drop-zone");
+  const { isOverDropZone } = useDragDrop(dropZoneContainer, (paths) => {
+    imagePath.value = paths[0]!;
   });
 
   const selectedPaletteSize = ref(1);

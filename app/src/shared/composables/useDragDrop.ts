@@ -1,37 +1,28 @@
-<template>
-  <div ref="container" :aria-busy="dragging" class="relative">
-    <!-- Overlay -->
-    <div v-if="dragging" class="absolute top-0 left-0 z-1 size-full bg-black/50"></div>
+import type { PhysicalPosition } from "@tauri-apps/api/dpi";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-    <!-- Upload Icon -->
-    <div
-      v-if="dragging"
-      class="absolute top-1/2 left-1/2 z-10 flex -translate-1/2 items-center justify-center rounded-full bg-default p-6"
-    >
-      <UIcon name="i-lucide:upload" class="size-16" />
-    </div>
+import { unrefElement } from "@vueuse/core";
+import type { MaybeComputedElementRef, MaybeElement } from "@vueuse/core";
+import { computed, ref } from "vue";
 
-    <!-- Content -->
-    <slot />
-  </div>
-</template>
+import { useTauriListener } from "#shared/composables/";
 
-<script setup lang="ts">
-  import type { PhysicalPosition } from "@tauri-apps/api/dpi";
-  import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-
-  import { ref, useTemplateRef } from "vue";
-
-  import { useTauriListener } from "#shared/composables/";
-
+/**
+ * Composable for handling drag-and-drop operations.
+ * Only processes drops when the drop position is within the target container and the container is visible.
+ * @param target - The target element that should accept drops.
+ * @param onDrop - Callback function invoked with file paths when a valid drop occurs.
+ * @returns Object containing the `isOverDropZone` ref that tracks the current drag state.
+ */
+export function useDragDrop(
+  target: MaybeComputedElementRef<MaybeElement | null | undefined>,
+  onDrop: (paths: string[]) => void,
+) {
   const appWindow = getCurrentWebviewWindow();
 
-  const emit = defineEmits<{
-    drop: [paths: string[]];
-  }>();
+  const element = computed(() => unrefElement(target));
 
-  const container = useTemplateRef<HTMLElement>("container");
-  const dragging = ref(false);
+  const isOverDropZone = ref(false);
 
   /**
    * Check if the given position is within the target container and the container is visible at that position.
@@ -40,12 +31,12 @@
    * @param scaleFactor - The scale factor.
    */
   function checkPositionIsWithinContainer(position: PhysicalPosition, scaleFactor: number) {
-    if (!container.value) return false;
+    if (!element.value) return false;
 
     const { x, y } = position.toLogical(scaleFactor);
-    const rect = container.value.getBoundingClientRect();
+    const rect = element.value.getBoundingClientRect();
 
-    // Check if position is within the drop zone bounds.
+    // Only continue if position is within the drop zone bounds.
     if (!(x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom)) {
       return false;
     }
@@ -56,7 +47,7 @@
     if (!elementAtPoint) return false;
 
     // Only process if the top element is this container or one of its descendants.
-    return container.value === elementAtPoint || container.value.contains(elementAtPoint);
+    return element.value === elementAtPoint || element.value.contains(elementAtPoint);
   }
 
   useTauriListener(
@@ -72,25 +63,27 @@
 
           case "over": {
             if (scaleFactor !== null) {
-              dragging.value = checkPositionIsWithinContainer(payload.position, scaleFactor);
+              isOverDropZone.value = checkPositionIsWithinContainer(payload.position, scaleFactor);
             }
             break;
           }
 
           case "drop": {
-            dragging.value = false;
+            isOverDropZone.value = false;
             if (scaleFactor !== null && checkPositionIsWithinContainer(payload.position, scaleFactor)) {
-              emit("drop", payload.paths);
+              onDrop(payload.paths);
             }
             break;
           }
 
           case "leave": {
-            dragging.value = false;
+            isOverDropZone.value = false;
             break;
           }
         }
       });
     })(),
   );
-</script>
+
+  return { isOverDropZone };
+}
