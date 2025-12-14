@@ -18,20 +18,14 @@ pub fn init(binary_name: &str, logs_dir: std::path::PathBuf) -> anyhow::Result<(
   let logging_filter = tracing_subscriber::EnvFilter::try_from_env("EMBROIDERLY_LOG").unwrap_or_else(|_| {
     let directives = [
       format!("{DEFAULT_LOG_LEVEL}"),
-      format!("embroiderly*={APPLICATION_LOG_LEVEL}"),
+      format!("embroiderly={APPLICATION_LOG_LEVEL}"),
       format!("webview={APPLICATION_LOG_LEVEL}"),
       format!("xsp_parsers={APPLICATION_LOG_LEVEL}"),
     ];
     tracing_subscriber::EnvFilter::new(directives.join(","))
   });
 
-  let stderr_layer = tracing_subscriber::fmt::layer()
-    .compact()
-    .with_ansi(cfg!(debug_assertions))
-    .with_span_events(tracing_subscriber::fmt::format::FmtSpan::ACTIVE)
-    .with_writer(std::io::stderr);
   let file_layer = tracing_subscriber::fmt::layer()
-    .compact()
     .with_ansi(false)
     .with_span_events(tracing_subscriber::fmt::format::FmtSpan::ACTIVE)
     .with_writer(
@@ -41,11 +35,15 @@ pub fn init(binary_name: &str, logs_dir: std::path::PathBuf) -> anyhow::Result<(
         .truncate(true)
         .open(logs_dir.join(format!("{binary_name}.log")))?,
     );
+  let stderr_layer = tracing_subscriber::fmt::layer()
+    .with_ansi(cfg!(debug_assertions))
+    .with_span_events(tracing_subscriber::fmt::format::FmtSpan::ACTIVE)
+    .with_writer(std::io::stderr);
 
   tracing_subscriber::registry()
     .with(logging_filter)
-    .with(stderr_layer)
     .with(file_layer)
+    .with(stderr_layer)
     .init();
   std::panic::set_hook(Box::new(tracing_panic::panic_hook));
 
