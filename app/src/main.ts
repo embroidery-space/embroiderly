@@ -5,6 +5,7 @@ import { createApp } from "vue";
 
 import { router, pinia } from "./app/";
 import App from "./App.vue";
+import { shortcuts } from "./plugins/";
 import { DiagnosticsService } from "./shared/services/";
 
 const app = createApp(App);
@@ -16,5 +17,6 @@ app.use(router);
 app.use(pinia);
 app.use(fluent);
 app.use(ui);
+app.use(shortcuts);
 
 app.mount("#app");

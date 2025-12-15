@@ -36,6 +36,7 @@
   import { onMounted, watch } from "vue";
   import { useRouter } from "vue-router";
 
+  import { useShortcuts } from "#plugins/shortcuts/";
   import { BlockUI, DropZone } from "#shared/components/";
   import { useConfirm, useI18n, useTauriListener } from "#shared/composables/";
   import { useSettingsStore } from "#shared/stores/";
@@ -102,7 +103,7 @@
     }),
   );
 
-  defineShortcuts({
+  useShortcuts({
     ctrl_shift_z: () => patternStore.undo({ single: true }),
     ctrl_shift_y: () => patternStore.redo({ single: true }),
   });

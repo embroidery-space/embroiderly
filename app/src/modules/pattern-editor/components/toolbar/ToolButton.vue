@@ -23,6 +23,8 @@
 <script lang="ts" setup>
   import type { KbdProps } from "@nuxt/ui";
 
+  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
+
   interface ToolButtonProps {
     label: string;
     icon: string;
@@ -50,7 +52,5 @@
     tooltipSide = "left",
   } = defineProps<ToolButtonProps>();
 
-  if (kbds?.length) {
-    defineShortcuts(extractShortcuts([{ kbds, onClick }]));
-  }
+  useShortcuts(extractShortcuts([{ kbds, onClick }]));
 </script>
