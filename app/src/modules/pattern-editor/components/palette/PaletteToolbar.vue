@@ -50,6 +50,7 @@
 
   import { tools } from "#pattern-editor/lib/tools/";
   import { useEditorStateStore, usePatternStore } from "#pattern-editor/stores/";
+  import { useShortcuts } from "#plugins/shortcuts/";
   import { useI18n } from "#shared/composables/";
   import { useSettingsStore } from "#shared/stores/";
 
@@ -209,4 +210,13 @@
       kbds: ["c"],
     },
   ]);
+
+  // Define shorter key sequences for enabling top-left and bottom-left positional stitch tools if the user hasn't typed the full shortcut.
+  useShortcuts({
+    "p-t": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
+    "p-b": () => (editorStateStore.selectedTool = tools.PetiteStitchBL),
+
+    "q-t": () => (editorStateStore.selectedTool = tools.QuarterStitchTL),
+    "q-b": () => (editorStateStore.selectedTool = tools.QuarterStitchBL),
+  });
 </script>
