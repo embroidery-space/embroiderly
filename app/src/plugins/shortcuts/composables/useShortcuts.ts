@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { inject, onScopeDispose, toValue, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
@@ -14,10 +12,7 @@ import type { ShortcutValue } from "../types.ts";
  */
 export function useShortcuts(shortcuts: MaybeRefOrGetter<Record<string, ShortcutValue>>): void {
   const ctx = inject(SHORTCUTS_INJECTION_KEY);
-  if (!ctx) {
-    console.warn("[shortcuts] Plugin not installed. Call app.use(shortcutsPlugin) first.");
-    return;
-  }
+  if (!ctx) throw new Error("Shortcuts plugin not installed. Call app.use(shortcuts) first.");
 
   let currentIds = new Set<string>();
   const stopWatch = watch(
