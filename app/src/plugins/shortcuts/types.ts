@@ -8,7 +8,7 @@ export interface ShortcutConfig {
 
 export type ShortcutValue = ShortcutHandler | ShortcutConfig;
 
-export interface ShortcutsPluginOptions {
+export interface ShortcutsOptions {
   /** Timeout in milliseconds for sequence chains. @default 500 */
   chainDelay?: number;
   /** HTML tags to ignore when processing shortcuts. @default ["INPUT", "TEXTAREA", "SELECT"] */

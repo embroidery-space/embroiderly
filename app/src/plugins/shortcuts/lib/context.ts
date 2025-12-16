@@ -1,20 +1,20 @@
-import type { ShortcutConfig, ShortcutsPluginOptions } from "../types.ts";
+import type { ShortcutConfig, ShortcutsOptions } from "../types.ts";
 
-const DEFAULT_OPTIONS: Required<ShortcutsPluginOptions> = {
+const DEFAULT_OPTIONS: Required<ShortcutsOptions> = {
   chainDelay: 500,
   excludeTags: ["INPUT", "TEXTAREA", "SELECT"],
 };
 
-/** Provides the shared configuration and state for the shortcuts plugin. */
+/** Provides the shared configuration and state for the shortcuts. */
 export class ShortcutsContext {
-  readonly options: Required<ShortcutsPluginOptions>;
+  readonly options: Required<ShortcutsOptions>;
 
   readonly combinationsRegistry = new Map<string, ShortcutConfig>();
   readonly sequencesRegistry = new Map<string, ShortcutConfig>();
 
   readonly sequenceState = new SequenceState();
 
-  constructor(options?: ShortcutsPluginOptions) {
+  constructor(options?: ShortcutsOptions) {
     this.options = { ...DEFAULT_OPTIONS, ...options };
   }
 }

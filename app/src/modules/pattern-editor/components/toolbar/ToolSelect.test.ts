@@ -3,6 +3,8 @@ import { expect, test, describe, vi } from "vitest";
 import { page } from "vitest/browser";
 import { defineComponent } from "vue";
 
+import { ShortcutsProvider } from "#plugins/shortcuts/";
+
 import ToolSelect from "./ToolSelect.vue";
 
 const SINGLE_ITEM = [{ label: "Pencil", icon: "i-lucide:pencil", value: "pencil" }];
@@ -13,9 +15,13 @@ const MULTIPLE_ITEMS = [
 ];
 
 const ToolSelectWrapper = defineComponent({
-  components: { UApp, ToolSelect },
+  components: { UApp, ShortcutsProvider, ToolSelect },
   inheritAttrs: false,
-  template: `<UApp> <ToolSelect v-bind="$attrs" /> </UApp>`,
+  template: `<UApp>
+  <ShortcutsProvider>
+    <ToolSelect v-bind="$attrs" />
+  </ShortcutsProvider>
+</UApp>`,
 });
 
 describe("ToolSelect", () => {

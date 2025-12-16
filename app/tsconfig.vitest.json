@@ -7,6 +7,9 @@
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": false,
-    "types": ["node", "vitest-browser-vue"]
+    "types": ["node", "vitest-browser-vue"],
+    "paths": {
+      "#plugins/*": ["./src/plugins/*"]
+    }
   }
 }

@@ -12,7 +12,7 @@ import type { ShortcutValue } from "../types.ts";
  */
 export function useShortcuts(shortcuts: MaybeRefOrGetter<Record<string, ShortcutValue>>): void {
   const ctx = inject(SHORTCUTS_INJECTION_KEY);
-  if (!ctx) throw new Error("Shortcuts plugin not installed. Call app.use(shortcuts) first.");
+  if (!ctx) throw new Error("ShortcutsProvider not found. Wrap your app with the ShortcutsProvider component.");
 
   let currentIds = new Set<string>();
   const stopWatch = watch(
