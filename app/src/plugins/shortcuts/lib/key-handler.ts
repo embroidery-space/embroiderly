@@ -1,24 +1,7 @@
-import type { ShortcutConfig, ShortcutsContext } from "../types.ts";
+import type { ShortcutConfig } from "../types.ts";
 
+import type { ShortcutsContext } from "./context.ts";
 import { MODIFIER_ORDER } from "./key-mapping.ts";
-
-interface SequenceState {
-  buffer: string[];
-  timer: ReturnType<typeof setTimeout> | null;
-}
-
-const sequenceState: SequenceState = {
-  buffer: [],
-  timer: null,
-};
-
-function clearSequenceState() {
-  if (sequenceState.timer !== null) {
-    clearTimeout(sequenceState.timer);
-    sequenceState.timer = null;
-  }
-  sequenceState.buffer = [];
-}
 
 export function createKeydownHandler(ctx: ShortcutsContext) {
   return (event: KeyboardEvent) => {
@@ -39,7 +22,7 @@ function checkCombination(event: KeyboardEvent, ctx: ShortcutsContext) {
   event.preventDefault();
   entry.handler();
 
-  clearSequenceState();
+  ctx.sequenceState.clear();
 
   return true;
 }
@@ -47,17 +30,13 @@ function checkCombination(event: KeyboardEvent, ctx: ShortcutsContext) {
 function checkSequence(event: KeyboardEvent, ctx: ShortcutsContext) {
   if (event.repeat) return;
   if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
-    clearSequenceState();
+    ctx.sequenceState.clear();
     return;
   }
 
-  if (sequenceState.timer !== null) {
-    clearTimeout(sequenceState.timer);
-    sequenceState.timer = null;
-  }
-
-  sequenceState.buffer.push(event.code);
-  const currentSequence = sequenceState.buffer.join("-");
+  ctx.sequenceState.clearTimer();
+  ctx.sequenceState.pushKey(event.code);
+  const currentSequence = ctx.sequenceState.getCurrentSequence();
 
   let hasExactMatch = false;
   let hasPrefixMatch = false;
@@ -72,18 +51,20 @@ function checkSequence(event: KeyboardEvent, ctx: ShortcutsContext) {
   }
 
   if (hasPrefixMatch) {
-    sequenceState.timer = setTimeout(() => {
-      if (hasExactMatch && exactEntry && !shouldIgnoreEvent(event, ctx.options.excludeTags, exactEntry)) {
-        exactEntry.handler();
-      }
-      clearSequenceState();
-    }, ctx.options.chainDelay);
+    ctx.sequenceState.setTimer(
+      setTimeout(() => {
+        if (hasExactMatch && exactEntry && !shouldIgnoreEvent(event, ctx.options.excludeTags, exactEntry)) {
+          exactEntry.handler();
+        }
+        ctx.sequenceState.clear();
+      }, ctx.options.chainDelay),
+    );
   } else {
     if (exactEntry && !shouldIgnoreEvent(event, ctx.options.excludeTags, exactEntry)) {
       event.preventDefault();
       exactEntry.handler();
     }
-    clearSequenceState();
+    ctx.sequenceState.clear();
   }
 }
 

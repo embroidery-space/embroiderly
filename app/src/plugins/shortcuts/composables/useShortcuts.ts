@@ -4,8 +4,9 @@ import { inject, onScopeDispose, toValue, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
 import { SHORTCUTS_INJECTION_KEY } from "../constants.ts";
+import type { ShortcutsContext } from "../lib/";
 import { parseShortcutKey } from "../lib/";
-import type { ShortcutsContext, ShortcutValue } from "../types.ts";
+import type { ShortcutValue } from "../types.ts";
 
 /**
  * Registers keyboard shortcuts for the current component scope.

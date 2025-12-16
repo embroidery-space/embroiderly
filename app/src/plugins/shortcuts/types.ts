@@ -14,9 +14,3 @@ export interface ShortcutsPluginOptions {
   /** HTML tags to ignore when processing shortcuts. @default ["INPUT", "TEXTAREA", "SELECT"] */
   excludeTags?: string[];
 }
-
-export interface ShortcutsContext {
-  readonly options: Required<ShortcutsPluginOptions>;
-  readonly combinationsRegistry: Map<string, ShortcutConfig>;
-  readonly sequencesRegistry: Map<string, ShortcutConfig>;
-}
