@@ -251,7 +251,7 @@
       ],
     },
   ]);
-  useShortcuts(extractShortcuts(menuItems.value));
+  useShortcuts(extractShortcuts(menuItems));
 
   const manageOptions = computed<DropdownMenuItem[][]>(() => [
     [{ label: fluent.$t("settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettingsModal() }],

@@ -76,7 +76,7 @@
     emit("update:model-value", Math.max(zoom - 10, min));
   }
 
-  useShortcuts(extractShortcuts(zoomOptions.value));
+  useShortcuts(extractShortcuts(zoomOptions));
   useShortcuts({
     // Use `=` instead of `+` for defining a shortcut since `+` is triggered by the `Shift` key.
     "ctrl_=": zoomIn,

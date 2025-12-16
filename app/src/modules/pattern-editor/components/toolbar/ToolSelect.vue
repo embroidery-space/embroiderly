@@ -82,7 +82,7 @@
       },
     }));
   });
-  useShortcuts(extractShortcuts(items.value, "-"));
+  useShortcuts(extractShortcuts(items, "-"));
 
   // Track the last selected option from this group.
   const lastSelectedOption = ref<ToolSelectItem>(props.items[0]!);
