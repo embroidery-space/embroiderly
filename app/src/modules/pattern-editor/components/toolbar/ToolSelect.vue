@@ -48,6 +48,8 @@
   import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
   import type { MaybeRefOrGetter } from "vue";
 
+  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
+
   export interface ToolSelectItem {
     value: unknown;
     label: string;
@@ -80,13 +82,7 @@
       },
     }));
   });
-  defineShortcuts(
-    Object.fromEntries(
-      items.value
-        .filter((item) => item.kbds?.length && item.onSelect)
-        .map((item) => [item.kbds!.join("-"), item.onSelect!]),
-    ),
-  );
+  useShortcuts(extractShortcuts(items, "-"));
 
   // Track the last selected option from this group.
   const lastSelectedOption = ref<ToolSelectItem>(props.items[0]!);

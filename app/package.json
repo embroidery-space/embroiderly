@@ -14,6 +14,7 @@
   },
   "imports": {
     "#pattern-editor/*": "./src/modules/pattern-editor/*",
+    "#plugins/*": "./src/plugins/*",
     "#shared/*": "./src/shared/*"
   },
   "dependencies": {

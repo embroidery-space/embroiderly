@@ -45,6 +45,7 @@
   import { useEditorModals } from "#pattern-editor/composables/";
   import { Fabric } from "#pattern-editor/lib/pattern/";
   import { usePatternFileStore, usePatternStore } from "#pattern-editor/stores/";
+  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
   import { SystemApi } from "#shared/api";
   import { WindowTitlebar } from "#shared/components/";
   import type { WindowMenuItem } from "#shared/components/";
@@ -250,6 +251,7 @@
       ],
     },
   ]);
+  useShortcuts(extractShortcuts(menuItems));
 
   const manageOptions = computed<DropdownMenuItem[][]>(() => [
     [{ label: fluent.$t("settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettingsModal() }],
@@ -260,8 +262,6 @@
       },
     ],
   ]);
-
-  defineShortcuts(extractShortcuts(menuItems.value));
 
   async function showSystemInfo() {
     // @ts-expect-error Ignore the lack of index signature of the system info object.

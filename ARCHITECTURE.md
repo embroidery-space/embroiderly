@@ -36,6 +36,8 @@ src/
 ├── app/               # Application configuration and assets.
 ├── modules/           # Core modules.
 │   └── <module-name>/ # Each module has a structure similar to the `shared/` folder and contains a root page component.
+├── plugins/           # Custom Vue.js plugins.
+│   └── <plugin-name>/ # Each plugin has a structure similar to the `shared/` folder and exports public items.
 ├── shared/            # Shared components, utils, etc.
 │   ├── api/
 │   ├── components/

@@ -44,6 +44,7 @@
   import { computed } from "vue";
 
   import type { ZoomState } from "#pattern-editor/lib/pixi/";
+  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
   import { useI18n } from "#shared/composables/";
 
   const { fluent } = useI18n();
@@ -75,8 +76,8 @@
     emit("update:model-value", Math.max(zoom - 10, min));
   }
 
-  defineShortcuts(extractShortcuts(zoomOptions.value));
-  defineShortcuts({
+  useShortcuts(extractShortcuts(zoomOptions));
+  useShortcuts({
     // Use `=` instead of `+` for defining a shortcut since `+` is triggered by the `Shift` key.
     "ctrl_=": zoomIn,
     "ctrl_-": zoomOut,
