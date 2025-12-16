@@ -1,8 +1,9 @@
 <template>
   <div
-    v-shortcuts.escape="() => (editorStateStore.paletteMode = PaletteMode.Regular)"
-    class="flex h-full"
+    tabindex="-1"
+    class="flex h-full outline-none"
     :class="{ 'border-2 border-primary': editorStateStore.paletteMode === PaletteMode.Editing }"
+    @keydown.escape="editorStateStore.paletteMode = PaletteMode.Regular"
   >
     <UContextMenu
       :items="
@@ -138,7 +139,6 @@
   import { PaletteSettings, SortPaletteBy, Symbol } from "#pattern-editor/lib/pattern/";
   import { PaletteMode, useEditorStateStore, usePatternStore } from "#pattern-editor/stores/";
   import { useI18n } from "#shared/composables/";
-  import { vShortcuts } from "#shared/directives/";
 
   const editorStateStore = useEditorStateStore();
   const patternStore = usePatternStore();
