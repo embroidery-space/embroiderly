@@ -61,7 +61,7 @@ wildcard_dependencies = "deny"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.4", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
+tauri = { version = "2.9.5", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
 tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
 tauri-plugin = { version = "2.5.2", features = ["build"] }
 ## Official Tauri plugins
@@ -99,8 +99,8 @@ font-kit = "0.14.3"
 ttf-parser = "0.25.1"
 
 # Typst
-typst = "0.14.1"
-typst-pdf = "0.14.1"
+typst = "0.14.2"
+typst-pdf = "0.14.2"
 ## Third-party Typst libraries
 typst-as-lib = "0.15.0"
 
@@ -151,7 +151,7 @@ rayon = "1.11.0"
 rstest = "0.26.1"
 
 # Other
-alphanumeric-sort = "1.5.4"
+alphanumeric-sort = "1.5.5"
 async-trait = "0.1.89"
 ordered-float = "5.1.0"
 dyn-clone = "1.0.20"
