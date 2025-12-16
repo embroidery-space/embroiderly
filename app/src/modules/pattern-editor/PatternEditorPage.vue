@@ -8,20 +8,22 @@
         </RSplitterPanel>
         <RSplitterResizeHandle class="border-2 border-default" />
         <RSplitterPanel>
-          <BlockUI :blocked="editorStateStore.paletteMode === PaletteMode.Editing" class="size-full">
-            <DropZone class="size-full" @drop="handleFilesDrop">
-              <WelcomeScreen v-if="!patternStore.pattern" class="size-full" />
-              <PatternWorkspace
-                :options="{
-                  render: {
-                    antialias: settingsStore.viewport.antialias,
-                  },
-                  viewport: {
-                    wheelAction: settingsStore.viewport.wheelAction,
-                  },
-                }"
-              />
-            </DropZone>
+          <BlockUI
+            ref="drop-zone"
+            :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
+            class="size-full"
+          >
+            <WelcomeScreen v-if="!patternStore.pattern" class="size-full" />
+            <PatternWorkspace
+              :options="{
+                render: {
+                  antialias: settingsStore.viewport.antialias,
+                },
+                viewport: {
+                  wheelAction: settingsStore.viewport.wheelAction,
+                },
+              }"
+            />
           </BlockUI>
         </RSplitterPanel>
       </RSplitterGroup>
@@ -33,12 +35,12 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-  import { onMounted, watch } from "vue";
+  import { onMounted, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
   import { useShortcuts } from "#plugins/shortcuts/";
-  import { BlockUI, DropZone } from "#shared/components/";
-  import { useConfirm, useI18n, useTauriListener } from "#shared/composables/";
+  import { BlockUI } from "#shared/components/";
+  import { useConfirm, useDragDrop, useI18n, useTauriListener } from "#shared/composables/";
   import { useSettingsStore } from "#shared/stores/";
 
   import { PageHeader } from "./components/";
@@ -61,6 +63,16 @@
   const patternFileStore = usePatternFileStore();
   const settingsStore = useSettingsStore();
 
+  const dropZoneContainer = useTemplateRef("drop-zone");
+  const { isOverDropZone } = useDragDrop(dropZoneContainer, async (paths) => {
+    for (const [index, path] of paths.entries()) {
+      const patternId = await patternFileStore.openPattern(path);
+      if (index === paths.length - 1) {
+        router.push({ name: "pattern-editor", params: { patternId } });
+      }
+    }
+  });
+
   watch(
     () => props.patternId,
     async (patternId) => {
@@ -69,15 +81,6 @@
     },
     { immediate: true },
   );
-
-  async function handleFilesDrop(paths: string[]) {
-    for (const [index, path] of paths.entries()) {
-      const patternId = await patternFileStore.openPattern(path);
-      if (index === paths.length - 1) {
-        router.push({ name: "pattern-editor", params: { patternId } });
-      }
-    }
-  }
 
   useTauriListener(
     appWindow.onCloseRequested(async (event) => {
