@@ -1,4 +1,5 @@
-import { posthog, type PostHog, type EventName, type Properties } from "posthog-js/dist/module.no-external";
+import { posthog } from "posthog-js/dist/module.no-external";
+import type { PostHog, EventName, Properties } from "posthog-js/dist/module.no-external";
 import { captureEvent } from "tauri-plugin-better-posthog";
 
 /** A service for collecting usage metrics and analytics. */
@@ -50,6 +51,7 @@ class MetricsServiceClass {
         (captureResult) => {
           if (captureResult) {
             const { event, properties } = captureResult;
+            // eslint-disable-next-line no-console
             captureEvent(event, properties).catch(console.error);
           }
           // Return `null` to prevent `posthog-js` from sending directly.
