@@ -15,7 +15,10 @@ export class ShortcutsContext {
   readonly sequenceState = new SequenceState();
 
   constructor(options?: ShortcutsOptions) {
-    this.options = { ...DEFAULT_OPTIONS, ...options };
+    this.options = {
+      chainDelay: options?.chainDelay ?? DEFAULT_OPTIONS.chainDelay,
+      excludeTags: options?.excludeTags ?? DEFAULT_OPTIONS.excludeTags,
+    };
   }
 }
 
