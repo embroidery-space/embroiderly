@@ -1,11 +1,11 @@
 use embroiderly_pattern::{DisplayMode, LayersVisibility};
-use tauri_plugin_posthog::PostHogExt as _;
+use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::{Action as _, SetDisplayModeAction, SetLayersVisibilityAction, ShowSymbolsAction};
 use crate::error::Result;
 use crate::parse_command_payload;
+use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
-use crate::vendor::telemetry::AppEvent;
 
 #[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body = mode))]
 #[tauri::command]

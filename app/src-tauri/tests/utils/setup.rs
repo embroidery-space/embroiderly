@@ -24,8 +24,8 @@ macro_rules! setup_test_app {
       .setup(|app| {
         let app_handle = app.handle();
 
-        embroiderly::vendor::logger::init(app_handle)?;
-        embroiderly::vendor::telemetry::init(app_handle)?;
+        embroiderly::services::logger::init(app_handle)?;
+        embroiderly::services::telemetry::init(app_handle)?;
 
         Ok(())
       })
@@ -57,8 +57,8 @@ macro_rules! setup_test_app {
       .setup(|app| {
         let app_handle = app.handle();
 
-        embroiderly::vendor::logger::init(app_handle)?;
-        embroiderly::vendor::telemetry::init(app_handle)?;
+        embroiderly::services::logger::init(app_handle)?;
+        embroiderly::services::telemetry::init(app_handle)?;
 
         Ok(())
       })

@@ -1,12 +1,13 @@
-import { posthog, PostHog } from "@embroiderly/tauri-plugin-posthog";
-import type { EventObject } from "@embroiderly/tauri-plugin-posthog";
+import { posthog } from "posthog-js/dist/module.no-external";
+import type { PostHog, EventName, Properties } from "posthog-js/dist/module.no-external";
+import { captureEvent } from "tauri-plugin-better-posthog";
 
 /** A service for collecting usage metrics and analytics. */
 class MetricsServiceClass {
   #posthog: PostHog;
 
   constructor() {
-    this.#posthog = posthog.init({
+    this.#posthog = posthog.init("phc_dummy_api_key", {
       // Disable web navigation capturing (we track sessions manually).
       capture_pageview: false,
       capture_pageleave: false,
@@ -44,11 +45,24 @@ class MetricsServiceClass {
       advanced_disable_toolbar_metrics: true,
       advanced_disable_feature_flags_on_first_load: true,
       advanced_only_evaluate_survey_feature_flags: true,
+
+      before_send: [
+        // Route all events through the Rust backend.
+        (captureResult) => {
+          if (captureResult) {
+            const { event, properties } = captureResult;
+            // eslint-disable-next-line no-console
+            captureEvent(event, properties).catch(console.error);
+          }
+          // Return `null` to prevent `posthog-js` from sending directly.
+          return null;
+        },
+      ],
     });
   }
 
-  captureEvent(event: EventObject) {
-    this.#posthog.capture(event);
+  captureEvent(name: EventName, properties?: Properties) {
+    this.#posthog.capture(name, properties);
   }
 }
 

@@ -1,5 +1,5 @@
 use embroiderly_pattern::{PaletteItem, PaletteSettings};
-use tauri_plugin_posthog::PostHogExt as _;
+use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::{
   Action as _, AddPaletteItemAction, RemovePaletteItemsAction, ReorderPaletteItemsAction, SetSymbolAction,
@@ -7,8 +7,8 @@ use crate::core::actions::{
 };
 use crate::error::Result;
 use crate::parse_command_payload;
+use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
-use crate::vendor::telemetry::AppEvent;
 
 #[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
 #[tauri::command]
@@ -71,7 +71,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
           blends_number: palitem.blends.as_ref().map(Vec::len),
         })
     })
-    .collect();
+    .collect::<Vec<_>>();
 
   let action = RemovePaletteItemsAction::new(palette_item_indexes);
   action.perform(&window, patproj)?;
@@ -79,7 +79,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
-  app_handle.capture_batch(events);
+  app_handle.batch_events(&events);
 
   Ok(())
 }

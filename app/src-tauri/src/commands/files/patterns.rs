@@ -1,13 +1,13 @@
 use embroiderly_parsers::PatternFormat;
 use embroiderly_pattern::{Fabric, Pattern, PatternProject, ReferenceImage};
 use tauri::Emitter as _;
-use tauri_plugin_posthog::PostHogExt as _;
+use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::CheckpointAction;
 use crate::error::{CommandError, PatternError, Result};
+use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 use crate::utils::path::{app_document_dir, backup_file_path};
-use crate::vendor::telemetry::AppEvent;
 
 #[tracing::instrument(level = "trace", skip(patterns))]
 #[tauri::command]

@@ -1,12 +1,12 @@
 use embroiderly_parsers::PatternFormat;
 use embroiderly_pattern::PdfExportOptions;
 use tauri::Emitter as _;
-use tauri_plugin_posthog::PostHogExt as _;
+use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::error::Result;
+use crate::services::telemetry::AppEvent;
 use crate::sidecars::SidecarRunner as _;
 use crate::state::PatternsState;
-use crate::vendor::telemetry::AppEvent;
 
 #[tracing::instrument(level = "trace", skip(app_handle, patterns))]
 #[tauri::command]

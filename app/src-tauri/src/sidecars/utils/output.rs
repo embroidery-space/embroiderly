@@ -2,8 +2,8 @@ use tauri::async_runtime::Receiver;
 use tauri_plugin_shell::process::{Command, CommandEvent};
 
 use crate::error::Result;
+use crate::services::telemetry::sentry;
 use crate::sidecars::{ExitStatus, Output};
-use crate::vendor::telemetry::sentry;
 
 /// Spawns and collects the **binary** output of a sidecar process.
 pub async fn collect_sidecar_binary_output_from_command(command: Command) -> Result<Output> {
