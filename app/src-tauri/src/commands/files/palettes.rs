@@ -7,9 +7,9 @@ use tauri_plugin_better_posthog::PostHogExt as _;
 
 use super::{FileGroup, GroupedFilesList, ImportFilesResponse};
 use crate::error::Result;
+use crate::services::telemetry::AppEvent;
 use crate::utils::palette::is_palette_file;
 use crate::utils::path::app_data_dir;
-use crate::vendor::telemetry::AppEvent;
 
 #[tracing::instrument(level = "trace", skip_all, fields(total_files, failed_files))]
 #[tauri::command]

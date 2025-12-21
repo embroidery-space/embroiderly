@@ -7,8 +7,8 @@ use crate::core::actions::{
 };
 use crate::error::Result;
 use crate::parse_command_payload;
+use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
-use crate::vendor::telemetry::AppEvent;
 
 #[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
 #[tauri::command]

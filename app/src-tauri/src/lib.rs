@@ -6,11 +6,11 @@ use tauri_plugin_better_posthog::PostHogExt as _;
 pub mod commands;
 mod core;
 mod error;
+pub mod services;
 mod sidecars;
 mod startup;
 pub mod state;
 mod utils;
-pub mod vendor;
 
 /// Runs the application.
 pub fn run() {
@@ -33,7 +33,7 @@ pub fn run() {
           }
         });
 
-        app_handle.capture_event(vendor::telemetry::AppEvent::AppExited);
+        app_handle.capture_event(services::telemetry::AppEvent::AppExited);
       }
       _ => {}
     }
@@ -46,10 +46,10 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     .setup(|app| {
       let app_handle = app.handle();
 
-      vendor::logger::init(app_handle)?;
-      vendor::telemetry::init(app_handle)?;
+      services::logger::init(app_handle)?;
+      services::telemetry::init(app_handle)?;
 
-      app_handle.capture_event(vendor::telemetry::AppEvent::AppStarted);
+      app_handle.capture_event(services::telemetry::AppEvent::AppStarted);
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {

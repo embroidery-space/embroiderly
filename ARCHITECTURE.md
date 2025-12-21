@@ -62,10 +62,10 @@ On the backend, there is no clearly established architecture.
 src/
 ├── commands/ # Public API.
 ├── core/     # Core modules.
+├── services/ # External services.
 ├── sidecars/ # Sidecar wrappers.
 ├── startup/  # Tasks executed on the app launch.
 ├── utils/    # Shared utils.
-├── vendor/   # Vendor-specific modules.
 ├── error.rs  # Application errors.
 ├── lib.rs
 ├── main.rs
