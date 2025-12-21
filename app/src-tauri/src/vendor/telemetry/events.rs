@@ -106,8 +106,8 @@ pub enum AppEvent {
   },
 }
 
-impl tauri_plugin_posthog::ToPostHogEvent for AppEvent {
-  fn event_name(&self) -> &str {
+impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
+  fn name(&self) -> &str {
     match self {
       Self::AppStarted => "app_started",
       Self::AppExited => "app_exited",

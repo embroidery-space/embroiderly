@@ -1,5 +1,4 @@
-pub use tauri_plugin_posthog::posthog;
-pub use tauri_plugin_sentry::sentry;
+pub use {better_posthog as posthog, sentry};
 
 mod diagnostics;
 mod events;

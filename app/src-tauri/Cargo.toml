@@ -24,12 +24,12 @@ tauri-plugin-process = { workspace = true }
 tauri-plugin-shell = { workspace = true }
 tauri-plugin-updater = { workspace = true }
 ## Third-party plugins
+tauri-plugin-better-posthog = { workspace = true }
 tauri-plugin-prevent-default = { workspace = true }
 tauri-plugin-pinia = { workspace = true }
 ## Custom Tauri plugins
 tauri-plugin-log = { workspace = true }
 tauri-plugin-sentry = { workspace = true }
-tauri-plugin-posthog = { workspace = true }
 
 # Embroiderly Core
 embroiderly_image = { workspace = true }
@@ -58,6 +58,10 @@ thiserror = { workspace = true }
 
 # Tracing
 tracing = { workspace = true }
+
+# Telemetry
+better-posthog = { workspace = true }
+sentry = { workspace = true }
 
 # File system utilities
 tempfile = { workspace = true }

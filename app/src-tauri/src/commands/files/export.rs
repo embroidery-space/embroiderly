@@ -1,7 +1,7 @@
 use embroiderly_parsers::PatternFormat;
 use embroiderly_pattern::PdfExportOptions;
 use tauri::Emitter as _;
-use tauri_plugin_posthog::PostHogExt as _;
+use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::error::Result;
 use crate::sidecars::SidecarRunner as _;

@@ -2,7 +2,7 @@ use std::path::{Path, PathBuf};
 
 use rayon::prelude::*;
 use tauri::Manager as _;
-use tauri_plugin_posthog::PostHogExt as _;
+use tauri_plugin_better_posthog::PostHogExt as _;
 
 use super::{GroupedFilesList, ImportFilesResponse};
 use crate::error::Result;
