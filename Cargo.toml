@@ -80,7 +80,6 @@ tauri-plugin-pinia = "4.1.0"
 ## Custom Tauri plugins
 tauri-plugin-log = { path = "crates/tauri-plugin-log" }
 tauri-plugin-sentry = { path = "crates/tauri-plugin-sentry" }
-tauri-plugin-posthog = { path = "crates/tauri-plugin-posthog" }
 
 # Embroiderly Core
 embroiderly_image = { path = "crates/embroiderly-image" }
@@ -135,10 +134,8 @@ tracing-panic = "0.1.2"
 # Telemetry
 better-posthog = "0.2.1"
 sentry = "0.46.0"
-posthog-rs = {version = "0.3.7", default-features = false }
 
 # Identification
-machine-uid = "0.5.4"
 uuid = { version = "1.19.0", features = ["v4", "v7"] }
 
 # File system utilities
@@ -160,4 +157,3 @@ dyn-clone = "1.0.20"
 paste = "1.0.15"
 prettydiff = { version = "0.9.0", default-features = false }
 rand = "0.9.2"
-sha2 = "0.10.9"
