@@ -116,7 +116,7 @@ export class PatternApplication extends EventTarget {
   setView(pattern: Pattern) {
     if (!this.initialized) throw new Error("The PatternApplicaiton must be initialized first");
 
-    for (const child of this.#viewport.removeChildren()) child.destroy({ children: true, context: true });
+    for (const child of this.#viewport.removeChildren()) child.destroy({ children: true });
     this.#pattern = this.#viewport.addChild(new PatternView(pattern, this.#textureManager));
 
     this.#viewport.resizePattern(this.#pattern.width, this.#pattern.height);
