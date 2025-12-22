@@ -288,13 +288,14 @@ export class PatternViewport extends Container {
    * @param event - The original pointer event.
    */
   private emitToolEvent(type: ToolEvent, event: FederatedPointerEvent) {
+    if (this.startPoint === undefined) return;
     const point = this.content.toLocal(event.global);
     const modifiers: ModifiersState = {
       mod1: MODIFIERS.mod1(event),
       mod2: MODIFIERS.mod2(event),
       mod3: MODIFIERS.mod3(event),
     };
-    const detail: ToolEventDetail = { event, modifiers, start: this.startPoint!, end: point };
+    const detail: ToolEventDetail = { event, modifiers, start: this.startPoint, end: point };
     this.emit(type, detail);
   }
 
