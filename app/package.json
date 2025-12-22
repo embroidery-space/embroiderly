@@ -21,9 +21,9 @@
     "@embroiderly/tauri-plugin-log": "workspace:*",
     "@embroiderly/tauri-plugin-sentry": "workspace:*",
     "@fluent/bundle": "0.19.1",
-    "@nuxt/ui": "4.2.1",
-    "@sentry/browser": "10.30.0",
-    "@sentry/vue": "10.30.0",
+    "@nuxt/ui": "4.3.0",
+    "@sentry/browser": "10.32.1",
+    "@sentry/vue": "10.32.1",
     "@stdlib/math-base-special-roundn": "0.2.2",
     "@tauri-apps/api": "2.9.1",
     "@tauri-apps/plugin-clipboard-manager": "2.3.2",
@@ -44,12 +44,12 @@
     "pinia": "3.0.4",
     "pinia-plugin-persistedstate": "4.7.1",
     "pixi.js": "8.14.3",
-    "posthog-js": "1.306.1",
+    "posthog-js": "1.309.1",
     "reka-ui": "2.6.1",
     "sortablejs": "1.15.6",
     "tauri-plugin-better-posthog": "0.1.1",
     "uuid": "13.0.0",
-    "vue": "3.5.25",
+    "vue": "3.5.26",
     "vue-router": "4.6.4"
   },
   "devDependencies": {
@@ -60,11 +60,11 @@
     "@tsconfig/node24": "24.0.3",
     "@tsconfig/strictest": "2.0.8",
     "@types/mocha": "10.0.10",
-    "@types/node": "24.10.1",
+    "@types/node": "24.10.4",
     "@types/sortablejs": "1.15.9",
     "@vitejs/plugin-vue": "6.0.3",
-    "@vitest/browser-webdriverio": "4.0.15",
-    "@vitest/coverage-v8": "4.0.15",
+    "@vitest/browser-webdriverio": "4.0.16",
+    "@vitest/coverage-v8": "4.0.16",
     "@vue/test-utils": "2.4.6",
     "@vue/tsconfig": "0.8.1",
     "@wdio/cli": "9.21.1",
@@ -76,8 +76,8 @@
     "typescript": "5.9.3",
     "vite": "7.3.0",
     "vite-plugin-vue-devtools": "8.0.5",
-    "vitest": "4.0.15",
+    "vitest": "4.0.16",
     "vitest-browser-vue": "2.0.1",
-    "vue-tsc": "3.1.8"
+    "vue-tsc": "3.2.1"
   }
 }
