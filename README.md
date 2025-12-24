@@ -50,10 +50,6 @@ We plan to improve this kind of software's already established basic functionali
 
 </details>
 
-## Installation
-
-Information on how to install Embroiderly can be found in the [installation guide](./INSTALLATION.md).
-
 ## Contributing
 
 We are open to any contribution to this project.

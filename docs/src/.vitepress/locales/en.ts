@@ -2,6 +2,11 @@ import type { LocaleConfig } from "vitepress";
 
 import { socials } from "../shared/";
 
+const download = {
+  text: "Download",
+  link: "/en/download",
+};
+
 export const docsEn: LocaleConfig = {
   en: {
     label: "English",
@@ -9,6 +14,7 @@ export const docsEn: LocaleConfig = {
     title: "Embroiderly",
     description: "A free, open-source, cross-platform desktop application for designing cross-stitch patterns.",
     themeConfig: {
+      nav: [download],
       outline: {
         level: [1, 6],
         label: "On this page",
