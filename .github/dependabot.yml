@@ -5,12 +5,7 @@ updates:
     schedule:
       interval: monthly
   - package-ecosystem: npm
-    directories:
-      - /
-      - /app
-      - /crates/tauri-plugin-log
-      - /crates/tauri-plugin-sentry
-      - /crates/tauri-plugin-posthog
+    directory: /
     schedule:
       interval: weekly
     groups:

@@ -4,6 +4,8 @@ logs/
 .tmp/
 
 node_modules/
+
+cache/
 dist/
 
 coverage/

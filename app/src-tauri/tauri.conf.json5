@@ -4,8 +4,8 @@
   identifier: "me.niusia.embroiderly",
   version: "0.6.3",
   build: {
-    beforeDevCommand: "pnpm dev",
-    beforeBuildCommand: "pnpm build-only",
+    beforeDevCommand: "pnpm app:dev",
+    beforeBuildCommand: "pnpm app:build-only",
     frontendDist: "../dist",
     devUrl: "http://localhost:1420",
     removeUnusedCommands: true,

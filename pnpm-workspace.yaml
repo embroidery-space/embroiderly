@@ -1,3 +1,4 @@
 packages:
   - app
+  - docs
   - crates/tauri-plugin-*
