@@ -4,6 +4,9 @@ import { defineConfig } from "vitepress";
 import * as locales from "./locales/";
 
 export default defineConfig({
+  outDir: "./dist/",
+  cacheDir: "./cache/",
+
   cleanUrls: true,
   lastUpdated: true,
 

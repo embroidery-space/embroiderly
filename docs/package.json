@@ -3,9 +3,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "vitepress dev src/",
-    "build": "vitepress build src/",
-    "preview": "vitepress preview src/"
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
   },
   "dependencies": {
     "vue": "3.5.26"
