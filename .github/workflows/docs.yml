@@ -24,7 +24,7 @@ jobs:
       - name: Install Typst
         uses: taiki-e/install-action@4575ae687efd0e2c78240087f26013fb2484987f # v2.62.6
         with:
-          tool: typst
+          tool: typst-cli
 
       - name: Build Documentation
         run: pnpm run docs:build
