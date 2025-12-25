@@ -14,6 +14,10 @@ const guide = {
       text: "Overview",
       link: "/en/guide/overview",
     },
+    {
+      text: "Getting Started",
+      link: "/en/guide/getting-started",
+    },
   ],
 };
 

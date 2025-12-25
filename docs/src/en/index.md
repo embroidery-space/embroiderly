@@ -10,4 +10,7 @@ hero:
     - theme: alt
       text: Overview
       link: ./guide/overview
+    - theme: alt
+      text: Get Started
+      link: ./guide/getting-started
 ---
