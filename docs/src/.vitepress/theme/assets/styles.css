@@ -1,0 +1,13 @@
+figure {
+  display: flex;
+  flex-flow: column;
+  margin: auto;
+
+  img {
+    border: 1px var(--vp-c-divider) solid;
+  }
+
+  figcaption {
+    text-align: center;
+  }
+}

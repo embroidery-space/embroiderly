@@ -7,6 +7,16 @@ const download = {
   link: "/en/download",
 };
 
+const guide = {
+  text: "Guide",
+  items: [
+    {
+      text: "Overview",
+      link: "/en/guide/overview",
+    },
+  ],
+};
+
 export const docsEn: LocaleConfig = {
   en: {
     label: "English",
@@ -14,7 +24,10 @@ export const docsEn: LocaleConfig = {
     title: "Embroiderly",
     description: "A free, open-source, cross-platform desktop application for designing cross-stitch patterns.",
     themeConfig: {
-      nav: [download],
+      nav: [download, guide],
+      sidebar: {
+        "/en/guide/": [{ collapsed: false, ...guide }],
+      },
       outline: {
         level: [1, 6],
         label: "On this page",
