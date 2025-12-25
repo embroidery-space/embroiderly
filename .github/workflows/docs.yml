@@ -54,9 +54,9 @@ jobs:
 
           COMMENT_ID=$(gh pr view ${{ github.event.pull_request.number }} --json comments --jq ".comments[] | select(.body | contains(\"$TAG\")) | .id" | head -n 1)
           if [ -z "$COMMENT_ID" ]; then
-            gh pr comment ${{ github.event.pull_request.number }} --body "$TAG$MESSAGE"
+            gh pr comment ${{ github.event.pull_request.number }} --body "${MESSAGE}"$'\n'"${TAG}"
           else
-            gh api repos/:owner/:repo/issues/comments/$COMMENT_ID -X PATCH -f body="$TAG$MESSAGE"
+            gh api repos/:owner/:repo/issues/comments/$COMMENT_ID -X PATCH -f body="${MESSAGE}"$'\n'"${TAG}"
           fi
         env:
           GH_TOKEN: ${{ github.token }}
