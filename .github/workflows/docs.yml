@@ -11,6 +11,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: docs/
     steps:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - uses: ./.github/actions/setup-node
@@ -19,7 +23,6 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y fonts-inter
-        shell: bash
 
       - name: Install Typst
         uses: taiki-e/install-action@4575ae687efd0e2c78240087f26013fb2484987f # v2.62.6
@@ -27,11 +30,22 @@ jobs:
           tool: typst-cli
 
       - name: Build Documentation
-        run: pnpm run docs:build
+        run: pnpm run build
 
+      # On main, deploy to the production environment.
       - name: Deploy to Cloudflare
+        if: github.ref == 'refs/heads/main'
         uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3.14.1
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: deploy --env ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
+          command: deploy
+
+      # On other branches, deploy to the preview environment.
+      - name: Deploy to Cloudflare
+        if: github.ref != 'refs/heads/main'
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3.14.1
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: versions upload
