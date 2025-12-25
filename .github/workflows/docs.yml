@@ -8,6 +8,11 @@ on:
     paths:
       - "docs/**"
       - .github/docs.yml
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.ref }}-docs
+  cancel-in-progress: true
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -32,20 +37,10 @@ jobs:
       - name: Build Documentation
         run: pnpm run build
 
-      # On main, deploy to the production environment.
       - name: Deploy to Cloudflare
-        if: github.ref == 'refs/heads/main'
         uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3.14.1
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: deploy
-
-      # On other branches, deploy to the preview environment.
-      - name: Deploy to Cloudflare
-        if: github.ref != 'refs/heads/main'
-        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3.14.1
-        with:
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: versions upload
+          workingDirectory: docs/
