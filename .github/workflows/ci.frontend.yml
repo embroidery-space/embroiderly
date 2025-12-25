@@ -6,6 +6,7 @@ on:
     paths:
       - "app/**"
       - "!app/src-tauri/**"
+      - "docs/**"
       - package.json
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
