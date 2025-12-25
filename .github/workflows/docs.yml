@@ -1,0 +1,37 @@
+name: Documentation
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, dev]
+    types: [opened, reopened, edited, synchronize]
+    paths:
+      - "docs/**"
+      - .github/docs.yml
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: ./.github/actions/setup-node
+
+      - name: Install Inter Font
+        run: |
+          sudo apt update
+          sudo apt install -y fonts-inter
+        shell: bash
+
+      - name: Install Typst
+        uses: taiki-e/install-action@4575ae687efd0e2c78240087f26013fb2484987f # v2.62.6
+        with:
+          tool: typst
+
+      - name: Build Documentation
+        run: pnpm run docs:build
+
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3.14.1
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy --env ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
