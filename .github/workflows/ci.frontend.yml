@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - uses: ./.github/actions/setup-node
       - name: Check types
-        run: pnpm build
+        run: pnpm app:build
       - name: Check formatting
         run: pnpm fmt
       - name: Check linting
