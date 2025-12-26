@@ -41,6 +41,7 @@
       fill: color.lighten(95%),
       inset: (x: 1em, y: 0.8em),
       radius: (right: 4pt),
+      breakable: false
     )
   } else {
     // Regular blockquote.
