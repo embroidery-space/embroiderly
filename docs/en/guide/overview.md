@@ -14,8 +14,8 @@ Embroiderly is built with modern technologies and with performance and accessabi
 Whether you're a professional designer working on complex patterns or a hobbyist exploring the art of embroidery, Embroiderly provides an intuitive and powerful environment for bringing your creative visions to life.
 
 <figure>
-  <img src="/images/guide/overview/welcome-screen.jpg">
-  <figcaption>Welcome screen.</figcaption>
+  <img src="/images/guide/overview/welcome-screen.png">
+  <figcaption>The Embroiderly welcome screen.</figcaption>
 </figure>
 
 ## Key Features

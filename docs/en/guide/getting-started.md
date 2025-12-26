@@ -18,7 +18,7 @@ Embroiderly is available for Windows 10/11 and Linux (via `.deb` and `.rpm` pack
 When you open Embroiderly and load a pattern, you'll see the main editor interface.
 
 <figure>
-  <img src="/images/guide/getting-started/main-interface.jpg" alt="Embroiderly main interface with an opened pattern">
+  <img src="/images/guide/getting-started/main-interface.png">
   <figcaption>The Embroiderly pattern editor interface showing all major components.</figcaption>
 </figure>
 
