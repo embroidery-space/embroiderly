@@ -18,6 +18,10 @@ const guide = {
       text: "Getting Started",
       link: "/en/guide/getting-started",
     },
+    {
+      text: "Palette & Symbols",
+      link: "/en/guide/palette-and-symbols",
+    },
   ],
 };
 

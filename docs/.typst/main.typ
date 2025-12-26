@@ -23,7 +23,8 @@
 #cmarker.render(
   markdown.pagebreak
   + markdown.read("../" + lang + "/guide/overview.md")
-  + markdown.read("../" + lang + "/guide/getting-started.md"),
+  + markdown.read("../" + lang + "/guide/getting-started.md")
+  + markdown.read("../" + lang + "/guide/palette-and-symbols.md"),
   scope: (
     image: (source, alt: none, format: auto) => image("../public/" + source, alt: alt, format: format),
     quote: admonitions.quote,

@@ -1,9 +1,13 @@
 figure {
   display: flex;
   flex-flow: column;
+  width: fit-content;
+  max-width: 100%;
   margin: auto;
 
   img {
+    max-width: 100%;
+    height: auto;
     border: 1px var(--vp-c-divider) solid;
   }
 
