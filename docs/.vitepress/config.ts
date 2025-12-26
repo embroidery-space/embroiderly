@@ -1,6 +1,8 @@
 import child from "node:child_process";
+import fs from "node:fs/promises";
 import { promisify } from "node:util";
 
+import imagemin from "unplugin-imagemin/vite";
 import { cloudflareRedirect } from "vite-plugin-cloudflare-redirect";
 import { defineConfig } from "vitepress";
 
@@ -36,7 +38,15 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [cloudflareRedirect()],
+    plugins: [
+      cloudflareRedirect(),
+      imagemin({
+        conversion: [
+          { from: "jpg", to: "webp" },
+          { from: "png", to: "webp" },
+        ],
+      }),
+    ],
   },
 
   async buildEnd() {
@@ -48,5 +58,8 @@ export default defineConfig({
         exec(`typst compile .typst/main.typ dist/${lang}/embroiderly.pdf --root . --input lang=${lang}`),
       ),
     );
+
+    // Remove old images. They are processed by `imagemin` and stored in `dist/assets/`.
+    await fs.rm("dist/images", { recursive: true, force: true });
   },
 });

@@ -11,6 +11,7 @@
     "vue": "3.5.26"
   },
   "devDependencies": {
+    "unplugin-imagemin": "0.7.0",
     "vite-plugin-cloudflare-redirect": "1.0.2",
     "vitepress": "1.6.4",
     "wrangler": "4.54.0"
