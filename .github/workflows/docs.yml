@@ -10,7 +10,6 @@ on:
       - .github/docs.yml
 permissions:
   contents: read
-  pull-requests: write
 concurrency:
   group: ${{ github.ref }}-docs
   cancel-in-progress: true
@@ -46,19 +45,3 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: ${{ github.ref == 'refs/heads/main' && 'deploy' || 'versions upload' }}
           workingDirectory: docs/
-
-      - name: Post Comment
-        run: |
-          TAG="<!--embroiderly-documentation-->"
-          MESSAGE="See the Embroiderly Documentation preview at <$DEPLOY_URL>."
-
-          COMMENT_ID=$(gh pr view ${{ github.event.pull_request.number }} --json comments --jq ".comments[] | select(.body | contains(\"$TAG\")) | .id" | head -n 1)
-          if [ -z "$COMMENT_ID" ]; then
-            gh pr comment ${{ github.event.pull_request.number }} --body "${MESSAGE}"$'\n'"${TAG}"
-          else
-            gh api repos/:owner/:repo/issues/comments/$COMMENT_ID -X PATCH -f body="${MESSAGE}"$'\n'"${TAG}"
-          fi
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          DEPLOY_URL: ${{ steps.deploy.outputs.deployment-url }}
