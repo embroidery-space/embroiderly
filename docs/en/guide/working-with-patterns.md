@@ -14,7 +14,7 @@ You'll learn how to use stitch tools, navigate the canvas, and customize your wo
 ## Understanding the Canvas Workspace
 
 The canvas workspace is where you design your patterns.
-It consists of several key areas described in the [Getting Started](./getting-started#understanding-the-interface) chapter.
+It consists of several key areas described in the [Understanding the Interface](./getting-started#understanding-the-interface) section.
 
 When you have a pattern open, is is displayed on a canvas.
 The workspace provides tools for drawing stitches, navigating your pattern, and controlling how it's displayed.

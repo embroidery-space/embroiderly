@@ -18,7 +18,22 @@
   content
 }
 
+// Rewrites relative links to anchor-only links.
+// Example: [text](./page#anchor) -> [text](#anchor)
+//
+// To generate a PDF, we merge all pages into a single string, so there are no more "pages," but only titles and their anchors.
+// So, we need to fix links, so that they point to correct sections.
+#let _rewrite-relative-links(content) = {
+  content.replace(
+    regex("\]\([^)]*/[^)#]*(#[^)]*)\)"),
+    m => "](" + m.captures.first() + ")"
+  )
+}
+
 // A custom function to read and preprocess Markdown files.
 #let read(path) = {
-  _remove-frontmatter(std.read(path))
+  let content = std.read(path)
+  content = _remove-frontmatter(content)
+  content = _rewrite-relative-links(content)
+  content
 }
