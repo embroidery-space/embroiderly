@@ -8,7 +8,6 @@ figure {
   img {
     max-width: 100%;
     height: auto;
-    border: 1px var(--vp-c-divider) solid;
   }
 
   figcaption {

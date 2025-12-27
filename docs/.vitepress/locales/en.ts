@@ -22,6 +22,10 @@ const guide = {
       text: "Palette & Symbols",
       link: "/en/guide/palette-and-symbols",
     },
+    {
+      text: "Working with Patterns",
+      link: "/en/guide/working-with-patterns",
+    },
   ],
 };
 
