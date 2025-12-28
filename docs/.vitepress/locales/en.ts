@@ -26,6 +26,10 @@ const guide = {
       text: "Working with Patterns",
       link: "/en/guide/working-with-patterns",
     },
+    {
+      text: "Working with Images",
+      link: "/en/guide/working-with-images",
+    },
   ],
 };
 
