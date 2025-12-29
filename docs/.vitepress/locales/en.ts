@@ -88,3 +88,29 @@ export const docsEn: LocaleConfig = {
     },
   },
 };
+
+export const searchEn = {
+  en: {
+    translations: {
+      button: {
+        buttonText: "Search",
+        buttonAriaLabel: "Search",
+      },
+      modal: {
+        backButtonTitle: "Close search",
+        displayDetails: "Display detailed list",
+        noResultsText: "No results for",
+        resetButtonTitle: "Reset search",
+        footer: {
+          navigateText: "to navigate",
+          navigateUpKeyAriaLabel: "arrow up",
+          navigateDownKeyAriaLabel: "arrow down",
+          selectText: "to select",
+          selectKeyAriaLabel: "enter",
+          closeText: "to close",
+          closeKeyAriaLabel: "escape",
+        },
+      },
+    },
+  },
+};

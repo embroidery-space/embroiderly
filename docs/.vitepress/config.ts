@@ -28,13 +28,21 @@ export default defineConfig({
   },
 
   themeConfig: {
+    externalLinkIcon: true,
     siteTitle: "Embroiderly",
     logo: {
       light: "/app-logo.dark.svg",
       dark: "/app-logo.light.svg",
       alt: "Embroiderly Logo",
     },
-    externalLinkIcon: true,
+    search: {
+      provider: "local",
+      options: {
+        locales: {
+          ...locales.searchEn,
+        },
+      },
+    },
   },
 
   vite: {
