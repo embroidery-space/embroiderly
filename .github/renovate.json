@@ -1,15 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": ["replacements:all", "workarounds:all"],
+  "ignorePaths": ["**/node_modules/**", "**/testdata/**", "**/tests/**"],
+  "dependencyDashboard": true,
   "minimumReleaseAge": "3 days",
+  "semanticCommitType": "chore",
   "packageRules": [
     {
-      "description": "Ungroup monorepos so they follow custom group rules instead",
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": null
-    },
-    {
-      "extends": ["schedule:monthly", "helpers:pinGitHubActionDigests"],
+      "extends": ["schedule:monthly", "helpers:githubDigestChangelogs", "helpers:pinGitHubActionDigests"],
       "matchManagers": ["github-actions"]
     },
     {
