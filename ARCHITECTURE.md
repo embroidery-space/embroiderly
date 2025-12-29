@@ -31,7 +31,7 @@ Currently, there is only one module - _Pattern Editor_.
 
 **Directory Structure:**
 
-```
+```txt
 src/
 ├── app/               # Application configuration and assets.
 ├── modules/           # Core modules.
@@ -58,7 +58,7 @@ On the backend, there is no clearly established architecture.
 
 **Directory Structure:**
 
-```
+```txt
 src/
 ├── commands/ # Public API.
 ├── core/     # Core modules.

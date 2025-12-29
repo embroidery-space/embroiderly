@@ -243,7 +243,7 @@ The zoom controls in the footer provide precise zoom management.
   <figcaption>Canvas zoom controls showing fit options and current zoom level.</figcaption>
 </figure>
 
-**Preset Fit Options**
+**Preset Fit Options:**
 
 - **Fit.** Scales the pattern to fit entirely within the visible canvas area
 - **Fit Width.** Scales the pattern to match the canvas width
@@ -326,7 +326,7 @@ Antialiasing is a graphics technique that smooths jagged edges on stitches and p
 When diagonal lines and curves are displayed on a screen, they can appear jagged or "stair-stepped"---this is called aliasing.
 Antialiasing reduces these jagged edges by blending the colors of pixels along object edges, creating smoother and more realistic-looking graphics.
 
-**When to Use Antialiasing**
+**When to Use Antialiasing:**
 
 - **Enabled (default).** Provides smoother, more polished visuals that are easier on the eyes during extended design sessions
 - **Disabled.** May improve performance on older computers or when working with very large patterns

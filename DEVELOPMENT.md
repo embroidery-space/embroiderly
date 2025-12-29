@@ -1,29 +1,9 @@
 # Development Process
 
 This document describes the process of how we are working on Embroiderly.
+Follow it to start working on your ideas, improvements, and fixes.
 
-You can follow it to start working on your ideas, improvements, and fixes.
-
-## Project Structure
-
-This project uses a **pnpm workspace** structure:
-
-```
-app/                      # Main application (Vue frontend + Tauri backend)
-├── src/                  # Frontend source code.
-└── src-tauri/            # Backend source code.
-
-crates/                   # Shared Rust libraries and Tauri plugins.
-├── embroiderly-image/    # Image import functionality.
-├── embroiderly-parsers/  # Cross-stitch pattern file parsers.
-├── embroiderly-pattern/  # Internal pattern representation.
-├── embroiderly-publish/  # Pattern export functionality.
-├── embroiderly-tracing/  # Shared tracing configuration.
-├── tauri-plugin-log/     # Custom Tauri logging plugin.
-├── tauri-plugin-sentry/  # Custom Tauri plugin for Sentry integration.
-├── tauri-plugin-posthog/ # Custom Tauri plugin for PostHog integration.
-└── xsp-parsers/          # Parsers of external cross-stitch pattern formats.
-```
+> See [ARCHITECTURE.md](./ARCHITECTURE.md) to learn more about the project structure.
 
 ## Prerequisites
 
