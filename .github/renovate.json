@@ -4,6 +4,11 @@
   "minimumReleaseAge": "3 days",
   "packageRules": [
     {
+      "description": "Ungroup monorepos so they follow custom group rules instead",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": null
+    },
+    {
       "extends": ["schedule:monthly", "helpers:pinGitHubActionDigests"],
       "matchManagers": ["github-actions"]
     },
