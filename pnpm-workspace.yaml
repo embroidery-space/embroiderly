@@ -10,3 +10,6 @@ ignoredBuiltDependencies:
   - geckodriver
   - unrs-resolver
   - vue-demi
+
+minimumReleaseAge: 4320 # 3 days in minutes
+trustPolicy: no-downgrade
