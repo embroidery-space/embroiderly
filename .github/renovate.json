@@ -14,12 +14,14 @@
     },
     {
       "groupName": "npm minor/patch",
+      "groupSlug": "npm-minor-patch",
       "extends": ["schedule:weekly", "helpers:disableTypesNodeMajor"],
       "matchManagers": ["npm"],
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "groupName": "cargo minor/patch",
+      "groupSlug": "cargo-minor-patch",
       "extends": ["schedule:weekly"],
       "matchManagers": ["cargo"],
       "matchUpdateTypes": ["minor", "patch"]
