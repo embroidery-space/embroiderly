@@ -26,7 +26,8 @@
   + markdown.read("../" + lang + "/guide/getting-started.md")
   + markdown.read("../" + lang + "/guide/palette-and-symbols.md")
   + markdown.read("../" + lang + "/guide/working-with-patterns.md")
-  + markdown.read("../" + lang + "/guide/working-with-images.md"),
+  + markdown.read("../" + lang + "/guide/working-with-images.md")
+  + markdown.read("../" + lang + "/guide/publishing-patterns.md"),
   scope: (
     image: (source, alt: none, format: auto) => image("../public/" + source, alt: alt, format: format),
     quote: admonitions.quote,
