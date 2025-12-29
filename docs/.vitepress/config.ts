@@ -5,6 +5,7 @@ import { promisify } from "node:util";
 import imagemin from "unplugin-imagemin/vite";
 import { cloudflareRedirect } from "vite-plugin-cloudflare-redirect";
 import { defineConfig } from "vitepress";
+import llmstxt from "vitepress-plugin-llms";
 
 import * as locales from "./locales/";
 
@@ -46,6 +47,11 @@ export default defineConfig({
           { from: "png", to: "webp" },
         ],
       }),
+      llmstxt({
+        workDir: "en/",
+        domain: "https://embroiderly.niusia.me/en",
+        ignoreFiles: ["download.md"],
+      }),
     ],
   },
 
@@ -60,6 +66,10 @@ export default defineConfig({
     );
 
     // Remove old images. They are processed by `imagemin` and stored in `dist/assets/`.
-    await fs.rm("dist/images", { recursive: true, force: true });
+    await fs.rm("dist/images/", { recursive: true, force: true });
+
+    // Move llms-txt files to `dist/en/` for better apearance of build assets.
+    await fs.cp("dist/guide/", "dist/en/guide/", { recursive: true, force: true });
+    await fs.rm("dist/guide/", { recursive: true, force: true });
   },
 });

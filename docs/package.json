@@ -14,6 +14,7 @@
     "unplugin-imagemin": "0.7.0",
     "vite-plugin-cloudflare-redirect": "1.0.2",
     "vitepress": "1.6.4",
+    "vitepress-plugin-llms": "1.10.0",
     "wrangler": "4.54.0"
   }
 }
