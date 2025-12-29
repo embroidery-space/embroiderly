@@ -3,7 +3,6 @@ import fs from "node:fs/promises";
 import { promisify } from "node:util";
 
 import imagemin from "unplugin-imagemin/vite";
-import { cloudflareRedirect } from "vite-plugin-cloudflare-redirect";
 import { defineConfig } from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
 
@@ -40,7 +39,6 @@ export default defineConfig({
 
   vite: {
     plugins: [
-      cloudflareRedirect(),
       imagemin({
         conversion: [
           { from: "jpg", to: "webp" },

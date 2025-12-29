@@ -114,7 +114,7 @@ zip = { version = "7.0.0", default-features = false, features = [ "zstd", "time"
 
 # De/serialization
 serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.145"
+serde_json = "1.0.148"
 base64 = "0.22.1"
 borsh = { version = "1.6.0", features = ["derive"] }
 
@@ -127,7 +127,7 @@ thiserror = "2.0.17"
 
 # Logging & Tracing
 log = "0.4.29"
-tracing = "0.1.43"
+tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
 tracing-panic = "0.1.2"
 
@@ -139,7 +139,7 @@ sentry = "0.46.0"
 uuid = { version = "1.19.0", features = ["v4", "v7"] }
 
 # File system utilities
-tempfile = "3.23.0"
+tempfile = "3.24.0"
 walkdir = "2.5.0"
 
 # Iterator utilities

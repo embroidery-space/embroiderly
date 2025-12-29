@@ -2,3 +2,21 @@ packages:
   - app
   - docs
   - crates/tauri-plugin-*
+
+minimumReleaseAge: 4320 # 3 days in minutes
+
+strictDepBuilds: true
+ignoredBuiltDependencies:
+  - core-js
+  - esbuild
+  - edgedriver
+  - geckodriver
+  - sharp
+  - unrs-resolver
+  - vue-demi
+  - workerd
+
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - eslint-plugin-wdio
+  - "@wdio/*"
