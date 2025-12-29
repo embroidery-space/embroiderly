@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "minimumReleaseAge": "3 days",
+  "packageRules": [
+    {
+      "extends": ["schedule:monthly", "helpers:pinGitHubActionDigests"],
+      "matchManagers": ["github-actions"]
+    },
+    {
+      "groupName": "npm minor/patch",
+      "extends": ["schedule:weekly", "helpers:disableTypesNodeMajor"],
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "groupName": "cargo minor/patch",
+      "extends": ["schedule:weekly"],
+      "matchManagers": ["cargo"],
+      "matchUpdateTypes": ["minor", "patch"]
+    }
+  ]
+}
