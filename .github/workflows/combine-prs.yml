@@ -1,4 +1,4 @@
-name: Combine Dependabot PRs
+name: Combine Dependency Update PRs
 on:
   workflow_dispatch:
 permissions:
@@ -13,7 +13,7 @@ jobs:
         with:
           combine_branch_name: dependency-updates
           pr_title: "chore: update dependencies"
-          pr_body_header: Combined Dependabot PRs
+          pr_body_header: Combined Dependency Update PRs
           min_combine_number: 1
           labels: dependencies
           ci_required: false # If anything, we will resolve conflicts manually.
