@@ -19,6 +19,10 @@ const guide = {
       link: "/en/guide/getting-started",
     },
     {
+      text: "Pattern Options",
+      link: "/en/guide/pattern-options",
+    },
+    {
       text: "Palette & Symbols",
       link: "/en/guide/palette-and-symbols",
     },
