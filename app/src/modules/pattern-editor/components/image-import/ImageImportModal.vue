@@ -1,5 +1,5 @@
 <template>
-  <UModal :title="$t('image-import')" :ui="{ content: 'size-[90%]', body: 'p-0!' }">
+  <UModal :title="$t('image-import')" :ui="{ content: 'size-full', body: 'p-0!' }">
     <template #body>
       <div class="flex h-full">
         <div class="space-y-2 p-4 sm:p-6">
