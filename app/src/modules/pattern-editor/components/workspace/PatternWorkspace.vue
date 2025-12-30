@@ -49,7 +49,7 @@
   import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "#pattern-editor/lib/pixi/";
   import { CursorTool } from "#pattern-editor/lib/tools/";
   import type { PatternEditorToolContext } from "#pattern-editor/lib/tools/";
-  import { useEditorStateStore, usePatternStore, usePatternFileStore } from "#pattern-editor/stores/";
+  import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "#pattern-editor/stores/";
   import { useFilePicker, useI18n } from "#shared/composables/";
   import { ANY_IMAGE_FILTER } from "#shared/constants";
   import { LoggerService } from "#shared/services/";
@@ -122,6 +122,8 @@
     const pattern = patternStore.pattern;
     if (!pattern) return;
 
+    if (editorStateStore.paletteMode === PaletteMode.Editing) return;
+
     await editorStateStore.selectedTool.main(createPatternEditorToolContext(detail));
   }
 
@@ -129,12 +131,16 @@
     const pattern = patternStore.pattern;
     if (!pattern) return;
 
+    if (editorStateStore.paletteMode === PaletteMode.Editing) return;
+
     await editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(detail));
   }
 
   async function handleToolRelease(detail: ToolEventDetail) {
     const pattern = patternStore.pattern;
     if (!pattern) return;
+
+    if (editorStateStore.paletteMode === PaletteMode.Editing) return;
 
     if (detail.event.type !== "pointerupoutside") {
       // Call the `release` method only if the pointer is not released outside.
