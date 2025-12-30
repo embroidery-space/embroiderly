@@ -31,8 +31,12 @@ const guide = {
       link: "/en/guide/working-with-patterns",
     },
     {
-      text: "Working with Images",
-      link: "/en/guide/working-with-images",
+      text: "Importing Images",
+      link: "/en/guide/importing-images",
+    },
+    {
+      text: "Reference Images",
+      link: "/en/guide/reference-images",
     },
     {
       text: "Publishing Patterns",
