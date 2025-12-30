@@ -48,10 +48,8 @@ export class Rulers extends Container {
    * @param bounds - The bounds of the viewport to adjust the ruler position.
    */
   renderRulers(zoom?: number, bounds?: Bounds) {
-    if (zoom && zoom !== this.#previousZoom) {
-      this.#previousZoom = zoom;
-      this.drawRulers(calculateRulersScale(zoom));
-    }
+    if (zoom !== undefined && zoom !== this.#previousZoom) this.#previousZoom = zoom;
+    this.drawRulers(calculateRulersScale(this.#previousZoom));
 
     if (bounds) {
       this.#adjustHorizontalRuler(bounds, zoom);
