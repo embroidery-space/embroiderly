@@ -46,10 +46,10 @@ export const docsEn: LocaleConfig = {
     themeConfig: {
       nav: [download, guide],
       sidebar: {
-        "/en/guide/": [{ collapsed: false, ...guide }],
+        "/en/guide/": [guide],
       },
       outline: {
-        level: [1, 6],
+        level: [2, 6],
         label: "On this page",
       },
       docFooter: {
