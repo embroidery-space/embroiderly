@@ -1,6 +1,4 @@
-import type { LocaleConfig } from "vitepress";
-
-import { socials } from "../shared/";
+import { html, licenses, socials } from "../shared/";
 
 const download = {
   text: "Download",
@@ -37,7 +35,7 @@ const guide = {
   ],
 };
 
-export const docsEn: LocaleConfig = {
+export const docsEn = {
   en: {
     label: "English",
     lang: "en-US",
@@ -81,9 +79,9 @@ export const docsEn: LocaleConfig = {
         quote: "", // Don't specify the quote.
       },
       footer: {
-        message: `This website is released under the <a href="https://github.com/embroidery-space/embroiderly/blob/main/docs/LICENSE">CC-BY-SA-4.0 License</a>.
-          </br>Embroiderly is released under the <a href="https://github.com/embroidery-space/embroiderly/blob/main/LICENSE">GPL-3.0-or-later License</a>.`,
-        copyright: `Copyright © 2024-present <a href="https://github.com/niusia-ua">Nazar Antoniuk</a> and Embroiderly contributors`,
+        message: `This website is released under the ${html.link(licenses.docs.spdx, licenses.docs.link)} license.
+          </br>Embroiderly is released under the ${html.link(licenses.app.spdx, licenses.app.link)} license.`,
+        copyright: `Copyright © 2024-present ${html.link("Nazar Antoniuk", "https://github.com/niusia-ua")} and Embroiderly contributors`,
       },
     },
   },
