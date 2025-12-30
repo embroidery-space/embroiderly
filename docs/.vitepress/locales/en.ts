@@ -1,3 +1,5 @@
+import { LocaleConfig } from "vitepress";
+
 import { html, licenses, socials } from "../shared/";
 
 const download = {
@@ -35,7 +37,7 @@ const guide = {
   ],
 };
 
-export const docsEn = {
+export const docsEn: LocaleConfig = {
   en: {
     label: "English",
     lang: "en-US",
@@ -55,10 +57,10 @@ export const docsEn = {
         next: "Next page",
       },
       lastUpdatedText: "Last updated",
-      darkModeSwitchLabel: "Appearance", // Only displayed in the mobile view.
-      sidebarMenuLabel: "Menu", // Only displayed in the mobile view.
-      returnToTopLabel: "Return to top", // Only displayed in the mobile view.
-      langMenuLabel: "Change language", // Aria-label.
+      sidebarMenuLabel: "Menu",
+      returnToTopLabel: "Return to top",
+      langMenuLabel: "Change language",
+      darkModeSwitchLabel: "Appearance",
       lightModeSwitchTitle: "Switch to light theme",
       darkModeSwitchTitle: "Switch to dark theme",
       socialLinks: [
@@ -75,7 +77,7 @@ export const docsEn = {
         code: "404",
         title: "PAGE NOT FOUND",
         linkText: "Go to home",
-        linkLabel: "Go to home", // Aria-label.
+        linkLabel: "Go to home",
         quote: "", // Don't specify the quote.
       },
       footer: {
