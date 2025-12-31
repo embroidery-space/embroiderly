@@ -78,6 +78,7 @@
     async (patternId) => {
       if (patternId) patternStore.pattern = await patternFileStore.loadPattern(patternId);
       else patternStore.pattern = undefined;
+      editorStateStore.$reset();
     },
     { immediate: true },
   );
