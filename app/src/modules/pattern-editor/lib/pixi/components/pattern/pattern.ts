@@ -47,9 +47,6 @@ export class PatternView extends Container {
   private specialStitchModels: SpecialStitchModel[];
 
   private displayMode: DisplayMode | undefined;
-  private previousDisplayMode: DisplayMode;
-
-  private showSymbols: boolean;
   private layersVisibility: LayersVisibility;
 
   private stages = {
@@ -157,10 +154,11 @@ export class PatternView extends Container {
     // Set the container bounds.
     this.boundsArea = new Rectangle(0, 0, width, height);
 
+    // If the grid is set, adjust it to the new fabric.
     const grid = this.stages.grid.original;
     if (grid) {
-      // If the grid is set, adjust it to the new fabric.
       this.stages.grid.setGrid(width, height, grid);
+      this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
     }
   }
 
@@ -338,9 +336,8 @@ export class PatternView extends Container {
   }
 
   setDisplayMode(displayMode: DisplayMode | undefined) {
-    this.displayMode = this.showSymbols ? displayMode : (displayMode ?? this.previousDisplayMode);
+    this.displayMode = displayMode;
     if (displayMode) {
-      this.previousDisplayMode = displayMode;
       this.stages.fullstitches.texture = this.#textureManager.getFullStitchTexture(displayMode, FullStitchKind.Full);
       this.stages.petitestitches.texture = this.#textureManager.getFullStitchTexture(
         displayMode,
@@ -361,11 +358,8 @@ export class PatternView extends Container {
   }
 
   setShowSymbols(value: boolean) {
-    this.showSymbols = value;
     this.stages.symbols.visible = value;
     this.stages.symbols.renderable = value;
-
-    // If the display mode is set, update it since it depends on the `showSymbols` value.
     this.setDisplayMode(this.displayMode);
   }
 

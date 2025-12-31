@@ -3,6 +3,8 @@ import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 import type { ColorSource } from "pixi.js";
 
+import type { Eq } from "#shared/types/";
+
 import { PaletteSettings } from "./display.ts";
 
 export enum SortPaletteBy {
@@ -68,7 +70,7 @@ export class Symbol {
 }
 
 /** Represents a base palette item. */
-export abstract class BasePaletteItem {
+export abstract class BasePaletteItem implements Eq<BasePaletteItem> {
   /**
    * An index of this palette item in the palette.
    * It is used to correctly identify an element when rendering a palette item using `v-for`.
@@ -104,13 +106,7 @@ export abstract class BasePaletteItem {
   /** Return the color title. */
   abstract getTitle(options?: PaletteSettings): string;
 
-  /**
-   * Compare this palette item with another.
-   *
-   * Use this method for comparing following a custom logic.
-   * That is, the method's implementation may compare palette items only by a specific fields, but not by all fields or by a refernce.
-   */
-  abstract compare(other: this): boolean;
+  abstract eq(other: this): boolean;
 }
 
 /**
@@ -171,7 +167,7 @@ export class BrandPaletteItem extends BasePaletteItem {
     return components.join(" ");
   }
 
-  compare(other: BrandPaletteItem): boolean {
+  eq(other: BrandPaletteItem) {
     return this.brand === other.brand && this.number === other.number;
   }
 }

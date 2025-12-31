@@ -55,7 +55,7 @@ export const NuxtUIConfig: Parameters<typeof ui>[0] = {
       variants: {
         fullscreen: {
           false: {
-            content: "max-w-[90%] min-w-md max-h-[90%] w-auto",
+            content: "max-w-[90%] max-h-[90%] min-w-md size-max",
           },
         },
       },
