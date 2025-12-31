@@ -26,11 +26,21 @@ export const useEditorStateStore = defineStore(
 
     const canvasZoom = ref(1);
 
+    function $reset() {
+      selectedTool.value = tools.FullStitch;
+      selectedPaletteItemIndex.value = undefined;
+
+      paletteMode.value = PaletteMode.Regular;
+
+      canvasZoom.value = 1;
+    }
+
     return {
       selectedTool,
       selectedPaletteItemIndex,
       paletteMode,
       canvasZoom,
+      $reset,
     };
   },
   { tauri: { save: false, sync: false } },

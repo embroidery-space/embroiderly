@@ -227,10 +227,10 @@ export class SelectionControls extends Container {
   render(size: Size, rotation: number) {
     const { width: w, height: h } = size;
 
-    this.tEdge.clear().moveTo(0, 0).lineTo(w, 0).fill("white").stroke(structuredClone(SELECTION_EDGE_STOKE));
-    this.rEdge.clear().moveTo(w, 0).lineTo(w, h).fill("white").stroke(structuredClone(SELECTION_EDGE_STOKE));
-    this.bEdge.clear().moveTo(0, h).lineTo(w, h).fill("white").stroke(structuredClone(SELECTION_EDGE_STOKE));
-    this.lEdge.clear().moveTo(0, 0).lineTo(0, h).fill("white").stroke(structuredClone(SELECTION_EDGE_STOKE));
+    this.tEdge.clear().moveTo(0, 0).lineTo(w, 0).fill("white").stroke(SELECTION_EDGE_STOKE);
+    this.rEdge.clear().moveTo(w, 0).lineTo(w, h).fill("white").stroke(SELECTION_EDGE_STOKE);
+    this.bEdge.clear().moveTo(0, h).lineTo(w, h).fill("white").stroke(SELECTION_EDGE_STOKE);
+    this.lEdge.clear().moveTo(0, 0).lineTo(0, h).fill("white").stroke(SELECTION_EDGE_STOKE);
 
     this.tEdge.cursor = this.bEdge.cursor = getCursorForRotation("ns-resize", rotation);
     this.lEdge.cursor = this.rEdge.cursor = getCursorForRotation("ew-resize", rotation);

@@ -180,7 +180,7 @@ export class StitchTool implements PatternEditorTool {
     if (!patternContainsPoint(pattern.fabric, point)) return;
 
     if (event.target instanceof StitchGraphics) {
-      await api.removeStitch(event.target.stitch);
+      await api.removeStitch(event.target.stitch.clone());
     } else {
       for (const kind of [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter]) {
         const { x, y } = adjustStitchCoordinate(point, kind);

@@ -157,10 +157,11 @@ export class PatternView extends Container {
     // Set the container bounds.
     this.boundsArea = new Rectangle(0, 0, width, height);
 
+    // If the grid is set, adjust it to the new fabric.
     const grid = this.stages.grid.original;
     if (grid) {
-      // If the grid is set, adjust it to the new fabric.
       this.stages.grid.setGrid(width, height, grid);
+      this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
     }
   }
 

@@ -33,7 +33,7 @@
       <template #option="{ option, displaySettings }">
         <PaletteListItem
           :palette-item="option"
-          :selected="palette.some((palitem) => palitem.compare(option))"
+          :selected="palette.some((palitem) => palitem.eq(option))"
           :display-settings="displaySettings"
         />
       </template>
@@ -126,7 +126,7 @@
   }
 
   function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
-    const palindex = palette.findIndex((palitem) => palitem.compare(option));
+    const palindex = palette.findIndex((palitem) => palitem.eq(option));
     if (palindex === -1) emit("addPaletteItem", option);
     else emit("removePaletteItem", palindex);
   }
