@@ -7,4 +7,8 @@ export const socials = {
     icon: "telegram",
     link: "https://t.me/embroiderly",
   },
+  facebook: {
+    icon: "facebook",
+    link: "https://facebook.com/groups/embroiderly",
+  },
 };

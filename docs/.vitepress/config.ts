@@ -8,7 +8,7 @@ import llmstxt from "vitepress-plugin-llms";
 
 import * as locales from "./locales/";
 
-const LANGUAGES = Object.freeze(["en"]);
+const LANGUAGES = ["en"];
 
 export default defineConfig({
   outDir: "./dist/",

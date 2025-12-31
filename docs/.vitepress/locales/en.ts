@@ -85,11 +85,15 @@ export const docsEn: LocaleConfig = {
       socialLinks: [
         {
           ...socials.github,
-          ariaLabel: "Link to the Embroiderly repository on GitHub",
+          ariaLabel: "Link to the Embroiderly source code on GitHub",
         },
         {
           ...socials.telegram,
-          ariaLabel: "Link to the Embroiderly community group in Telegram",
+          ariaLabel: "Link to the Embroiderly community on Telegram",
+        },
+        {
+          ...socials.facebook,
+          ariaLabel: "Link to the Embroiderly community on Facebook",
         },
       ],
       notFound: {
