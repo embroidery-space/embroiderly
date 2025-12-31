@@ -9,6 +9,7 @@ import llmstxt from "vitepress-plugin-llms";
 import * as locales from "./locales/";
 
 const LANGUAGES = ["en"];
+const HOSTNAME = "https://embroiderly.niusia.me";
 
 export default defineConfig({
   outDir: "./dist/",
@@ -45,6 +46,10 @@ export default defineConfig({
     },
   },
 
+  sitemap: {
+    hostname: HOSTNAME,
+  },
+
   vite: {
     plugins: [
       imagemin({
@@ -55,7 +60,7 @@ export default defineConfig({
       }),
       llmstxt({
         workDir: "en/",
-        domain: "https://embroiderly.niusia.me/en",
+        domain: HOSTNAME,
         ignoreFiles: ["download.md"],
       }),
     ],
@@ -73,9 +78,5 @@ export default defineConfig({
 
     // Remove old images. They are processed by `imagemin` and stored in `dist/assets/`.
     await fs.rm("dist/images/", { recursive: true, force: true });
-
-    // Move llms-txt files to `dist/en/` for better apearance of build assets.
-    await fs.cp("dist/guide/", "dist/en/guide/", { recursive: true, force: true });
-    await fs.rm("dist/guide/", { recursive: true, force: true });
   },
 });
