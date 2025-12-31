@@ -55,6 +55,16 @@ const reference = {
   ],
 };
 
+const resources = {
+  text: "Resources",
+  items: [
+    {
+      text: "Contacts",
+      link: "/en/resources/contacts",
+    },
+  ],
+};
+
 export const docsEn: LocaleConfig = {
   en: {
     label: "English",
@@ -62,10 +72,11 @@ export const docsEn: LocaleConfig = {
     title: "Embroiderly",
     description: "A free, open-source, cross-platform desktop application for designing cross-stitch patterns.",
     themeConfig: {
-      nav: [download, guide, reference],
+      nav: [download, guide, reference, resources],
       sidebar: {
         "/en/guide/": [guide],
         "/en/reference/": [reference],
+        "/en/resources/": [resources],
       },
       outline: {
         level: [2, 6],
