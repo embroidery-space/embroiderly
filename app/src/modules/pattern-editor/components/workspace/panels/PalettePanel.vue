@@ -6,6 +6,7 @@
     @keydown.escape="editorStateStore.paletteMode = PaletteMode.Regular"
   >
     <UContextMenu
+      :disabled="paletteIsDisabled"
       :items="
         editorStateStore.paletteMode === PaletteMode.Editing
           ? paletteEditingContextMenuOptions
