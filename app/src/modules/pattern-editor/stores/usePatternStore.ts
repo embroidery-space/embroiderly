@@ -169,7 +169,7 @@ export const usePatternStore = defineStore(
 
     function setDisplayMode(mode: DisplayMode | undefined) {
       if (!pattern.value) return;
-      if (mode) return PatternApi.setDisplayMode(pattern.value.id, mode);
+      if (mode && mode !== pattern.value.displayMode) return PatternApi.setDisplayMode(pattern.value.id, mode);
       else {
         pattern.value.displayMode = mode;
         return triggerRef(pattern);
