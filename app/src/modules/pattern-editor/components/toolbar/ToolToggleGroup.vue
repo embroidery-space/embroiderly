@@ -4,17 +4,15 @@
     <template v-for="(option, index) in options" :key="index">
       <UTooltip arrow :text="option.label" :disabled="disabled" :delay-duration="200" :content="{ side: 'left' }">
         <RToggleGroupItem :value="option.value" :disabled="disabled" as-child>
-          <template #default="{ pressed }">
-            <UButton
-              color="neutral"
-              variant="ghost"
-              :icon="option.icon"
-              :disabled="disabled"
-              class="p-1.5 text-dimmed"
-              :class="{ 'bg-elevated hover:bg-accented': pressed }"
-              :ui="{ leadingIcon: 'size-5' }"
-            />
-          </template>
+          <UButton
+            color="neutral"
+            variant="ghost"
+            :icon="option.icon"
+            :disabled="disabled"
+            class="p-1.5 text-dimmed"
+            :class="{ 'bg-elevated hover:bg-accented': option.value === value }"
+            :ui="{ leadingIcon: 'size-5' }"
+          />
         </RToggleGroupItem>
       </UTooltip>
     </template>

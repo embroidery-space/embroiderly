@@ -65,6 +65,8 @@ export class Pattern extends EventTarget {
   #displaySettings: DisplaySettings;
   #publishSettings: PublishSettings;
 
+  #effectiveDisplayMode: DisplayMode | undefined;
+
   constructor(data: b.infer<typeof Pattern.schema>) {
     super();
 
@@ -84,6 +86,8 @@ export class Pattern extends EventTarget {
 
     this.#displaySettings = new DisplaySettings(data.displaySettings);
     this.#publishSettings = new PublishSettings(data.publishSettings);
+
+    this.#effectiveDisplayMode = this.#displaySettings.displayMode;
   }
 
   static readonly schema = b.struct({
@@ -210,12 +214,19 @@ export class Pattern extends EventTarget {
     this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: stitch }));
   }
 
+  /**
+   * Returns the effective display mode.
+   * - When symbols are hidden, always returns a valid display mode (never `undefined`)
+   * - When symbols are shown, returns the effective mode (can be `undefined` to hide stitches)
+   */
   get displayMode() {
-    return this.#displaySettings.displayMode;
+    return this.showSymbols ? this.#effectiveDisplayMode : this.#displaySettings.displayMode;
   }
   set displayMode(mode: DisplayMode | undefined) {
-    if (this.#displaySettings.displayMode !== mode && mode !== undefined) this.#displaySettings.displayMode = mode;
-    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplayMode, { detail: mode }));
+    this.#effectiveDisplayMode = mode;
+    if (mode !== undefined) this.#displaySettings.displayMode = mode;
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplayMode, { detail: this.displayMode }));
   }
 
   get showSymbols() {
@@ -223,7 +234,8 @@ export class Pattern extends EventTarget {
   }
   set showSymbols(value: boolean) {
     this.#displaySettings.showSymbols = value;
-    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateShowSymbols, { detail: value }));
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateShowSymbols, { detail: this.showSymbols }));
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplayMode, { detail: this.displayMode }));
   }
 
   get layersVisibility() {
