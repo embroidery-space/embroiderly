@@ -7,7 +7,7 @@
     :ui="{ content: 'text-base' }"
   >
     <div
-      class="flex min-h-8 items-center rounded-md px-2 py-1 outline-2 -outline-offset-4 outline-solid"
+      class="flex min-h-8 items-center rounded-md px-2 py-1 outline-2 -outline-offset-4 outline-solid data-highlighted:ring-2 data-highlighted:ring-primary"
       :style="{
         backgroundColor: paletteItem.hex,
         color: `${paletteItem.contrastColor} !important`,
