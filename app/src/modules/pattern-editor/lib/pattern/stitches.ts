@@ -1,11 +1,13 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 
+import type { Clone, Eq } from "#shared/types/";
+
 export enum FullStitchKind {
   Full = "Full",
   Petite = "Petite",
 }
-export class FullStitch {
+export class FullStitch implements Clone<FullStitch>, Eq<FullStitch> {
   x: number;
   y: number;
   palindex: number;
@@ -24,6 +26,14 @@ export class FullStitch {
     palindex: b.u32(),
     kind: b.nativeEnum(FullStitchKind),
   });
+
+  clone() {
+    return new FullStitch(this);
+  }
+
+  eq(other: FullStitch) {
+    return this.y === other.y && this.x === this.y && this.kind === other.kind;
+  }
 }
 
 export enum PartStitchDirection {
@@ -34,7 +44,7 @@ export enum PartStitchKind {
   Half = "Half",
   Quarter = "Quarter",
 }
-export class PartStitch {
+export class PartStitch implements Clone<PartStitch>, Eq<PartStitch> {
   x: number;
   y: number;
   palindex: number;
@@ -56,21 +66,29 @@ export class PartStitch {
     direction: b.nativeEnum(PartStitchDirection),
     kind: b.nativeEnum(PartStitchKind),
   });
+
+  clone() {
+    return new PartStitch(this);
+  }
+
+  eq(other: PartStitch) {
+    return this.y === other.y && this.x === this.y && this.kind === other.kind && this.direction === other.direction;
+  }
 }
 
 export enum LineStitchKind {
   Back = "Back",
   Straight = "Straight",
 }
-export class LineStitch {
+export class LineStitch implements Clone<LineStitch>, Eq<LineStitch> {
   x: [number, number];
   y: [number, number];
   palindex: number;
   kind: LineStitchKind;
 
   constructor(data: b.infer<typeof LineStitch.schema>) {
-    this.x = data.x;
-    this.y = data.y;
+    this.x = [...data.x];
+    this.y = [...data.y];
     this.palindex = data.palindex;
     this.kind = data.kind;
   }
@@ -81,13 +99,21 @@ export class LineStitch {
     palindex: b.u32(),
     kind: b.nativeEnum(LineStitchKind),
   });
+
+  clone() {
+    return new LineStitch(this);
+  }
+
+  eq(other: LineStitch) {
+    return this.y[0] === other.y[0] && this.y[1] === other.y[1] && this.x[0] === other.x[0] && this.x[1] === other.x[1];
+  }
 }
 
 export enum NodeStitchKind {
   FrenchKnot = "FrenchKnot",
   Bead = "Bead",
 }
-export class NodeStitch {
+export class NodeStitch implements Clone<NodeStitch>, Eq<NodeStitch> {
   x: number;
   y: number;
   rotated: boolean;
@@ -109,6 +135,14 @@ export class NodeStitch {
     palindex: b.u32(),
     kind: b.nativeEnum(NodeStitchKind),
   });
+
+  clone() {
+    return new NodeStitch(this);
+  }
+
+  eq(other: NodeStitch) {
+    return this.y === other.y && this.x === other.x;
+  }
 }
 
 export class CurvedStitch {

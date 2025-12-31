@@ -1,6 +1,5 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
-import { dequal } from "dequal/lite";
 import { stringify as stringifyUuid } from "uuid";
 
 import { DisplayMode, DisplaySettings, Grid, LayersVisibility, PaletteSettings } from "./display.ts";
@@ -197,8 +196,9 @@ export class Pattern extends EventTarget {
    * @param stitch The stitch to remove.
    */
   removeStitch(stitch: Stitch) {
-    function removeStitchFromArray(array: Stitch[], stitch: Stitch) {
-      const index = array.findIndex((item) => dequal(item, stitch));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function removeStitchFromArray(array: any[], stitch: any) {
+      const index = array.findIndex((item) => item.eq(stitch));
       if (index !== -1) array.splice(index, 1);
     }
 
