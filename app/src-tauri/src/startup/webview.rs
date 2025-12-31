@@ -8,8 +8,7 @@ pub fn create_webview_window<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> an
       .min_inner_size(640.0, 480.0)
       .maximized(true)
       .decorations(false)
-      .visible(cfg!(debug_assertions))
-      .additional_browser_args("--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,ElasticOverscroll");
+      .visible(cfg!(debug_assertions));
 
     // We enable browser extensions only for development.
     #[cfg(all(debug_assertions, target_os = "windows"))]
