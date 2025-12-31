@@ -80,8 +80,9 @@
                 :icon="editorStateStore.paletteMode === PaletteMode.Editing ? 'i-lucide:check' : 'i-lucide:pen'"
                 @click="
                   () => {
-                    editorStateStore.paletteMode = PaletteMode.Regular;
-                    sectionVisibility.paletteCatalog = true;
+                    editorStateStore.paletteMode =
+                      editorStateStore.paletteMode === PaletteMode.Editing ? PaletteMode.Regular : PaletteMode.Editing;
+                    sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
                   }
                 "
               />
