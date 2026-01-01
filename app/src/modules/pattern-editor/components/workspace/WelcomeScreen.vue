@@ -124,7 +124,10 @@
     },
     {
       title: fluent.$t("welcome-section-help"),
-      items: [{ title: fluent.$t("welcome-help-tg"), url: "https://t.me/embroiderly" }],
+      items: [
+        { title: fluent.$t("welcome-help-tg"), url: "https://t.me/embroiderly" },
+        { title: fluent.$t("welcome-help-fb"), url: "https://facebook.com/groups/embroiderly" },
+      ],
     },
   ]);
 

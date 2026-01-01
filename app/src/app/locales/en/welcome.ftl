@@ -22,3 +22,4 @@ welcome-info-docs-descr = Learn how to use { -app-name } by reading our guide.
 
 welcome-section-help = Get Help
 welcome-help-tg = Telegram Chat
+welcome-help-fb = Facebook Group
