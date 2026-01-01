@@ -61,7 +61,8 @@ export default defineConfig({
       llmstxt({
         workDir: "en/",
         domain: HOSTNAME,
-        ignoreFiles: ["download.md", "resources/changelog/*"],
+        excludeIndexPage: false,
+        ignoreFiles: ["resources/changelog/*"],
       }),
     ],
   },

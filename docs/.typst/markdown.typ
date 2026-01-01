@@ -1,5 +1,5 @@
 // A special instruction to add a page break between groups of chapters.
-#let pagebreak = "<!--raw-typst #pagebreak() -->\n"
+#let pagebreak = "<!--raw-typst #pagebreak() -->\n\n"
 
 // Removes the frontmatter from the provided Markdown text.
 #let _remove-frontmatter(content) = {

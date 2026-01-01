@@ -22,7 +22,8 @@
 
 #cmarker.render(
   markdown.pagebreak
-  + markdown.read("../" + lang + "/guide/overview.md")
+  + markdown.read("../" + lang + "/index.md").slice(1) // Start from the second char to turn `##` heading into `#`.
+  + markdown.pagebreak
   + markdown.read("../" + lang + "/guide/getting-started.md")
   + markdown.read("../" + lang + "/guide/pattern-options.md")
   + markdown.read("../" + lang + "/guide/palette-and-symbols.md")
@@ -31,6 +32,7 @@
   + markdown.read("../" + lang + "/guide/reference-images.md")
   + markdown.read("../" + lang + "/guide/publishing-patterns.md")
   + markdown.pagebreak
+  + markdown.read("../" + lang + "/reference/pattern-formats.md")
   + markdown.read("../" + lang + "/reference/shortcuts.md"),
   scope: (
     image: (source, alt: none, format: auto) => image("../public/" + source, alt: alt, format: format),

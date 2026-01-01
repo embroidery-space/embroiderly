@@ -11,10 +11,6 @@ const guide = {
   text: "Guide",
   items: [
     {
-      text: "Overview",
-      link: "/en/guide/overview",
-    },
-    {
       text: "Getting Started",
       link: "/en/guide/getting-started",
     },
@@ -48,6 +44,10 @@ const guide = {
 const reference = {
   text: "Reference",
   items: [
+    {
+      text: "Pattern Formats",
+      link: "/en/reference/pattern-formats",
+    },
     {
       text: "Shortcuts",
       link: "/en/reference/shortcuts",
