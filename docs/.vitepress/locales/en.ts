@@ -62,6 +62,10 @@ const resources = {
       text: "Contacts",
       link: "/en/resources/contacts",
     },
+    {
+      text: "Changelog",
+      link: "en/resources/changelog",
+    },
   ],
 };
 
