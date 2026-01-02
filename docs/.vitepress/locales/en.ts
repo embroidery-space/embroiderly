@@ -4,7 +4,7 @@ import { html, licenses, socials } from "../shared/";
 
 const download = {
   text: "Download",
-  link: "/en/download",
+  link: "/download",
 };
 
 const guide = {
@@ -12,31 +12,31 @@ const guide = {
   items: [
     {
       text: "Overview",
-      link: "/en/guide/",
+      link: "/guide/",
     },
     {
       text: "Pattern Options",
-      link: "/en/guide/pattern-options",
+      link: "/guide/pattern-options",
     },
     {
       text: "Palette & Symbols",
-      link: "/en/guide/palette-and-symbols",
+      link: "/guide/palette-and-symbols",
     },
     {
       text: "Working with Patterns",
-      link: "/en/guide/working-with-patterns",
+      link: "/guide/working-with-patterns",
     },
     {
       text: "Importing Images",
-      link: "/en/guide/importing-images",
+      link: "/guide/importing-images",
     },
     {
       text: "Reference Images",
-      link: "/en/guide/reference-images",
+      link: "/guide/reference-images",
     },
     {
       text: "Publishing Patterns",
-      link: "/en/guide/publishing-patterns",
+      link: "/guide/publishing-patterns",
     },
   ],
 };
@@ -46,11 +46,11 @@ const reference = {
   items: [
     {
       text: "Pattern Formats",
-      link: "/en/reference/pattern-formats",
+      link: "/reference/pattern-formats",
     },
     {
       text: "Shortcuts",
-      link: "/en/reference/shortcuts",
+      link: "/reference/shortcuts",
     },
   ],
 };
@@ -60,17 +60,17 @@ const resources = {
   items: [
     {
       text: "Contacts",
-      link: "/en/resources/contacts",
+      link: "/resources/contacts",
     },
     {
       text: "Changelog",
-      link: "en/resources/changelog",
+      link: "/resources/changelog",
     },
   ],
 };
 
 export const docsEn: LocaleConfig = {
-  en: {
+  root: {
     label: "English",
     lang: "en-US",
     title: "Embroiderly",
@@ -78,9 +78,9 @@ export const docsEn: LocaleConfig = {
     themeConfig: {
       nav: [download, guide, reference, resources],
       sidebar: {
-        "/en/guide/": [guide],
-        "/en/reference/": [reference],
-        "/en/resources/": [resources],
+        "/guide/": [guide],
+        "/reference/": [reference],
+        "/resources/": [resources],
       },
       outline: {
         level: [2, 6],
@@ -128,7 +128,7 @@ export const docsEn: LocaleConfig = {
 };
 
 export const searchEn = {
-  en: {
+  root: {
     translations: {
       button: {
         buttonText: "Search",

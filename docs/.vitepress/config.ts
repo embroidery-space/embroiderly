@@ -28,6 +28,10 @@ export default defineConfig({
     ...locales.docsEn,
   },
 
+  rewrites: {
+    "en/:rest*": ":rest*",
+  },
+
   themeConfig: {
     externalLinkIcon: true,
     siteTitle: "Embroiderly",
@@ -73,7 +77,7 @@ export default defineConfig({
     console.info("Compiling docs into PDFs using Typst");
     await Promise.all(
       LANGUAGES.map((lang) =>
-        exec(`typst compile .typst/main.typ dist/${lang}/embroiderly.pdf --root . --input lang=${lang}`),
+        exec(`typst compile .typst/main.typ dist/embroiderly.${lang}.pdf --root . --input lang=${lang}`),
       ),
     );
 
