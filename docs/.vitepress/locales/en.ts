@@ -11,8 +11,8 @@ const guide = {
   text: "Guide",
   items: [
     {
-      text: "Getting Started",
-      link: "/en/guide/getting-started",
+      text: "Overview",
+      link: "/en/guide/",
     },
     {
       text: "Pattern Options",

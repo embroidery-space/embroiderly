@@ -8,21 +8,21 @@ head:
 
 # Reference Images
 
-Reference images let you display a picture on your canvas as a visual guide while drawing your pattern.
+Reference images let you display a picture on the canvas as a visual guide while drawing your pattern.
 This is useful when you want to trace over an image or use it as inspiration while working.
 
-Unlike imported patterns, reference images don't automatically convert to stitches.
-They appear beneath all stitches on your canvas, allowing you to trace over them manually while always seeing your work on top.
+Unlike imported patterns, reference images aren't converted into stitches.
+Instead, they appear beneath all stitches on the canvas, allowing you to trace over them manually while always seeing your work on top.
 
-## Adding a Reference Image
+## Adding Reference Images
 
 To add a reference image to your pattern:
 
-1. Right-click anywhere on the canvas
-2. Select **Set Reference Image** from the menu
-3. Choose an image file from your computer
+1. Right-click anywhere on the canvas.
+2. Select **Set Reference Image** from the context menu.
+3. Choose an image file from your computer.
 
-The image appears on your canvas, positioned at the top-left corner and scaled to approximately match your pattern dimensions.
+The image appears on the canvas, positioned at the top-left corner and scaled to approximately match your pattern dimensions.
 
 > [!NOTE]
 > Only one reference image can be active at a time.
@@ -32,10 +32,10 @@ The image appears on your canvas, positioned at the top-left corner and scaled t
 
 To remove a reference image:
 
-1. Right-click on the canvas
-2. Select **Remove Reference Image**
+1. Right-click on the canvas.
+2. Select **Remove Reference Image** from the context menu.
 
-The reference image is deleted immediately.
+The reference image is removed immediately.
 This doesn't affect any stitches you've already drawn.
 
 ## Manipulating Reference Images
@@ -47,8 +47,6 @@ The **Cursor** tool lets you adjust your reference image's position, size, rotat
   <figcaption>The Cursor tool in the palette toolbar.</figcaption>
 </figure>
 
-Select the Cursor tool from the palette toolbar (press `C`) to begin working with your reference image.
-
 ### Focusing the Image
 
 Click directly on the reference image to focus it.
@@ -56,7 +54,7 @@ When focused, the image gains a selection outline with control handles around it
 
 <figure>
   <img src="/images/guide/reference-images/reference-image-focused.png">
-  <figcaption>A focused reference image with visible selection controls and opacity slider.</figcaption>
+  <figcaption>A focused reference image with a visible selection, control handles, and opacity slider.</figcaption>
 </figure>
 
 Click anywhere outside the reference image to unfocus it and hide the controls.
@@ -65,22 +63,22 @@ Click anywhere outside the reference image to unfocus it and hide the controls.
 
 To move the reference image:
 
-1. Focus the image by clicking on it
-2. Click and drag anywhere inside the selection outline
-3. Release the mouse button to place it
+1. Focus the image.
+2. Click and drag anywhere inside the selection.
+3. Release to place it.
 
 The image moves freely across your canvas.
-You can position it anywhere, even partially outside the visible pattern area.
+You can position it anywhere, even partially outside the pattern area.
 
 ### Resizing the Image
 
 To resize the reference image:
 
-1. Focus the image by clicking on it
-2. Click and drag any corner handle or edge
-3. Release to finish resizing
+1. Focus the image.
+2. Click and drag any corner handle or edge.
+3. Release to finish resizing.
 
-As you drag, the opposite corner or edge remains anchored in place while the image scales.
+As you drag, the opposite corner or edge remains anchored in place while the image resizes.
 You can resize the image to any dimension, from very small to much larger than your pattern.
 
 > [!WARNING]
@@ -91,10 +89,10 @@ You can resize the image to any dimension, from very small to much larger than y
 
 To rotate the reference image:
 
-1. Focus the image by clicking on it
-2. Locate the rotation control (a small dot at the middle of the top edge)
-3. Click and drag the rotation control
-4. Release to finish rotating
+1. Focus the image.
+2. Locate the rotation control (a small dot at the middle of the top edge).
+3. Click and drag the rotation control.
+4. Release to finish rotating.
 
 The image rotates around its center point.
 You can rotate to any angle, allowing you to align the reference image with your pattern grid however you need.
@@ -105,25 +103,19 @@ The opacity slider controls how transparent the reference image appears.
 
 To adjust opacity:
 
-1. Focus the image by clicking on it
-2. Locate the opacity slider at the bottom-right (it looks like a sun icon)
-3. Click and drag the slider left (more transparent) or right (more opaque)
+1. Focus the image.
+2. Locate the opacity slider at the bottom-right (it looks like a sun icon).
+3. Click and drag the slider left (more transparent) or right (more opaque).
 
-Lower opacity makes the reference image more subtle, which can be helpful when you want to focus primarily on your stitches while still seeing the reference guide beneath them.
-
-Higher opacity makes the reference image more prominent and easier to see in detail.
-
-Since reference images are always rendered beneath your stitches, your embroidery work remains visible on top regardless of the opacity setting.
+Since reference images are always rendered beneath your stitches, your work remains visible on top regardless of the opacity setting.
 
 ## Reference Image Persistence
 
-Reference images are saved as part of your pattern file.
-
-When you save your pattern, Embroiderly includes the image itself (embedded in your `.embproj` file) and all of its settings.
+When you save your pattern, Embroiderly includes the image itself (embedded in the `.embproj` file) and all of its settings.
 
 When you reopen the pattern later, your reference image appears exactly as you left it.
-You don't need to keep the original image file---everything is stored in your pattern.
+You don't need to keep the original image file---everything is stored within the pattern file.
 
 > [!NOTE]
 > Reference images increase your pattern file size.
-> Large photos may create notably bigger `.embproj` files.
+> Large photos may create notably bigger pattern files.

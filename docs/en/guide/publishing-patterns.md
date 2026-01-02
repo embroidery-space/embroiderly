@@ -9,21 +9,21 @@ head:
 # Publishing Patterns
 
 Once you've finished designing your pattern, you can export it as a PDF document.
-This professional format is perfect for printing, sharing with others, or selling your patterns.
+This format is perfect for printing, sharing with others, or selling your patterns.
 
-## Exporting to PDF
+## Exporting as PDF
 
 To export your pattern as a PDF:
 
-1. Open your pattern in the pattern editor
-2. Click **File → Export → PDF** in the menu bar
-3. Choose a destination for your PDF file
-4. Adjust the export settings if needed (see [PDF Export Settings](#pdf-export-settings) below)
-5. Click **Export Document** to generate the PDF
+1. Open your pattern in the pattern editor.
+2. Click **File** → **Export** → **PDF** in the menu bar.
+3. Choose a destination for the PDF file.
+4. Adjust the export settings if needed (see [PDF Export Settings](#pdf-export-settings) below).
+5. Click **Export Document** to generate the PDF.
 
 <figure>
   <img src="/images/guide/publishing-patterns/pdf-export-modal.png">
-  <figcaption>The PDF export window showing the publish settings.</figcaption>
+  <figcaption>The PDF Export window showing the publish settings.</figcaption>
 </figure>
 
 ### Color Modes
@@ -36,13 +36,13 @@ You can generate the PDF document in two variants:
 
 ## PDF Content
 
-Each exported PDF includes:
+Each exported PDF document includes:
 
-- **Pattern information** - title, author, copyright, fabric details, and description
-- **Thread palette** - a table with symbols, brands, numbers, and color names
-- **Pattern frames** - visual sections of your pattern, split across multiple pages if needed
+- **Pattern information**. Title, author, copyright, fabric details, and description.
+- **Thread palette**. A table with symbols, brands, numbers, and color names.
+- **Pattern frames**. Visual sections of your pattern, split across multiple pages if needed.
 
-To see what a finished PDF looks like, check out the [sample patterns](#sample-pattern-pdfs) at the end of this chapter.
+To see what a finished PDF document looks like, check out [sample patterns](#sample-pattern-pdfs) at the end of this chapter.
 
 ## PDF Export Settings
 
@@ -50,18 +50,18 @@ You can adjust export settings in two ways:
 
 ### While Exporting
 
-When you open the **PDF Export** dialog, click **Publish Settings** to expand the settings panel.
+When you open the PDF Export windows, click Publish Settings to expand the settings menu.
 This lets you preview how different settings affect your export before generating the final document.
 
 After you're satisfied with the settings, you can:
 
-- Click **Export Document** to generate the PDF with the current settings without saving them
-- Click **Save Settings** to save your settings for future exports, then click **Export Document**
+- Click **Export Document** to generate the PDF with the current settings without saving them.
+- Click **Save Settings** to save your settings for future exports, then click **Export Document**.
 
 ### In Pattern Properties
 
-For a more permanent configuration, open **Pattern → Publish Settings** from the menu bar.
-This opens a dedicated modal where you can configure all export options and save them as part of your pattern.
+For a separate configuration, open **Pattern** → **Publish Settings** from the menu bar.
+This opens a dedicated modal where you can configure all export options.
 
 These saved settings will be used as defaults every time you export this pattern to PDF.
 
@@ -69,18 +69,18 @@ These saved settings will be used as defaults every time you export this pattern
 
 ### Print Options
 
-- **Center Frames.** Centers pattern frames on each page (disabled by default).
-- **Enumerate Frames.** Displays frame numbers (e.g., "Frame 1/6") at the bottom of each page (enabled by default).
+- **Center Frames**. Centers pattern frames on each page (disabled by default).
+- **Enumerate Frames**. Displays frame numbers (e.g., "Frame 1/6") at the bottom of each page (enabled by default).
 
 ### Frame Settings
 
 Frames are visual sections of your pattern split across multiple pages for large designs.
 
-- **Frame Size.** Maximum dimensions of each frame in stitches (default is 30x40 stitches).
-- **Cell Size.** Size of each stitch cell in pixels (default is 14 pixels).
-- **Preserved Overlap.** Number of overlapping rows/columns between adjacent frames (default is 3).
-- **Show Grid Line Numbers.** Displays numbers along the edges to mark grid lines (enabled by default).
-- **Show Centering Marks.** Displays markers for horizontal and vertical center lines (enabled by default).
+- **Frame Size**. Maximum dimensions of each frame in stitches (default is 30x40 stitches).
+- **Cell Size**. Size of each stitch cell in pixels (default is 14 pixels).
+- **Preserved Overlap**. Number of overlapping rows/columns between adjacent frames (default is 3).
+- **Show Grid Line Numbers**. Displays numbers along the edges to mark grid lines (enabled by default).
+- **Show Centering Marks**. Displays markers for horizontal and vertical center lines (enabled by default).
 
 ## Sample Pattern PDFs
 

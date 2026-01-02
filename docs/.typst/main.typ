@@ -22,9 +22,7 @@
 
 #cmarker.render(
   markdown.pagebreak
-  + markdown.read("../" + lang + "/index.md").slice(1) // Start from the second char to turn `##` heading into `#`.
-  + markdown.pagebreak
-  + markdown.read("../" + lang + "/guide/getting-started.md")
+  + markdown.read("../" + lang + "/guide/index.md")
   + markdown.read("../" + lang + "/guide/pattern-options.md")
   + markdown.read("../" + lang + "/guide/palette-and-symbols.md")
   + markdown.read("../" + lang + "/guide/working-with-patterns.md")
