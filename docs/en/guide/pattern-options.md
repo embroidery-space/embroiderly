@@ -13,7 +13,7 @@ You can access these options through the **Pattern** menu in the menu bar.
 
 <figure>
   <img src="/images/guide/pattern-options/pattern-menu.png"/>
-  <figcaption>The Pattern menu in the menu bar.</figcaption>
+  <figcaption>The <b>Pattern</b> menu in the menu bar.</figcaption>
 </figure>
 
 ## Pattern Information
@@ -23,7 +23,7 @@ This information is embedded in your pattern file and exported PDF documents.
 
 <figure>
   <img src="/images/guide/pattern-options/pattern-info-modal.png"/>
-  <figcaption>The Pattern Information window showing pattern title, author, copyright, and description.</figcaption>
+  <figcaption>The <b>Pattern Information</b> window showing pattern title, author, copyright, and description.</figcaption>
 </figure>
 
 The **Pattern Information** window contains a form with four text fields:
@@ -42,7 +42,7 @@ These settings determine the final size of your pattern and how it appears on th
 
 <figure>
   <img src="/images/guide/pattern-options/fabric-modal.png" />
-  <figcaption>The Fabric Properties window showing fabric count, kind, size, and color options.</figcaption>
+  <figcaption>The <b>Fabric Properties</b> window showing fabric count, kind, size, and color options.</figcaption>
 </figure>
 
 ### Fabric Count and Kind
@@ -88,7 +88,7 @@ You can customize the grid's appearance by adjusting line intervals, thickness, 
 
 <figure>
   <img src="/images/guide/pattern-options/grid-modal.png"/>
-  <figcaption>The Grid Properties window showing major and minor lines settings.</figcaption>
+  <figcaption>The <b>Grid Properties</b> window showing major and minor lines settings.</figcaption>
 </figure>
 
 The **Major Lines Interval** controls how often major lines appear.

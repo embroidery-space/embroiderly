@@ -76,7 +76,7 @@ Alternatively, you can enter the [editing mode](#entering-the-editing-mode), the
 
 <figure>
   <img src="/images/guide/palette-and-symbols/display-settings-panel.png">
-  <figcaption>The Display Settings panel with all customization options.</figcaption>
+  <figcaption>The <b>Display Settings</b> panel with all customization options.</figcaption>
 </figure>
 
 Both the context menu and panel methods work equally well---choose whichever you find more comfortable.
@@ -188,17 +188,17 @@ This menu provides quick access to all palette editing features without using th
 
 ### Adding Colors from the Catalog
 
-To add new colors to your working palette, you can use the Palette Catalog.
+To add new colors to your working palette, you can use the **Palette Catalog**.
 
 1. Enter the editing mode.
 2. Click the menu button in the header and select **Colors**, or right-click and select it from the context menu.
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog.png">
-  <figcaption>The Palette Catalog showing available DMC thread colors.</figcaption>
+  <figcaption>The <b>Palette Catalog</b> showing available DMC thread colors.</figcaption>
 </figure>
 
-The Palette Catalog panel shows all colors available from the currently selected palette file.
+The **Palette Catalog** panel shows all colors available from the currently selected palette file.
 By default, this is the DMC color catalog (the most popular embroidery thread brand).
 
 Colors already in your working palette are shown with an outline.
@@ -219,14 +219,14 @@ Type a thread number (like "310") or color name (like "black") to filter the col
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog-search.png">
-  <figcaption>Searching for DMC 310 in the Palette Catalog.</figcaption>
+  <figcaption>Searching for DMC 310 in the <b>Palette Catalog</b>.</figcaption>
 </figure>
 
 The search matches anywhere in the thread number or name, ignoring accents and diacritics.
 
 ### Removing Colors
 
-Besides removing colors through the Palette Catalog, you can also remove them directly from your working palette while in the editing mode.
+Besides removing colors through the **Palette Catalog**, you can also remove them directly from your working palette while in the editing mode.
 
 **To remove the selected color:**
 
@@ -257,7 +257,7 @@ This is helpful for organizing colors logically, especially in patterns using th
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-sorting.png">
-  <figcaption>The Sort By submenu in the editing mode.</figcaption>
+  <figcaption>The <b>Sort By</b> submenu in the editing mode.</figcaption>
 </figure>
 
 The palette is reordered alphanumerically: first by the thread brand, then by the thread number within each brand.
@@ -287,7 +287,7 @@ You can also import your custom palette files.
 
 To switch to a different thread catalog:
 
-1. Open the Palette Catalog panel.
+1. Open the **Palette Catalog** panel.
 2. Click the dropdown menu at the top of the panel.
 3. Select a different palette from the list.
 
@@ -307,14 +307,14 @@ When you select a different palette, the color list updates to show all colors f
 
 You can import additional palette files to expand your available thread colors.
 
-1. Open the Palette Catalog panel.
+1. Open the **Palette Catalog** panel.
 2. Click the menu button next to the palette selector.
 3. Select **Import Palettes**.
 4. Choose one or more palette files from your computer.
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog-menu.png">
-  <figcaption>The catalog menu with the Import Palettes option.</figcaption>
+  <figcaption>The catalog menu with the <b>Import Palettes</b> option.</figcaption>
 </figure>
 
 Embroiderly supports these palette file formats:
@@ -346,10 +346,10 @@ They're especially useful when printing patterns on paper.
 
 <figure>
   <img src="/images/guide/palette-and-symbols/stitch-symbols.png">
-  <figcaption>The Symbols panel showing all available font characters.</figcaption>
+  <figcaption>The <b>Symbols</b> panel showing all available font characters.</figcaption>
 </figure>
 
-The Symbols panel displays all available characters from the currently selected symbol font.
+The **Symbols** panel displays all available characters from the currently selected symbol font.
 Characters that are already assigned to palette items show with a purple color and small triangular indicator in the top right corner.
 
 The footer shows how many symbols are used out of the total available.
@@ -359,7 +359,7 @@ The footer shows how many symbols are used out of the total available.
 To assign a symbol to a palette item:
 
 1. Select the color in your working palette.
-2. Find the desired symbol in the Symbols panel.
+2. Find the desired symbol in the **Symbols** panel.
 3. **Double-click** the symbol character.
 
 The symbol is immediately assigned to the selected color and appears in the palette list (if you have **Show stitch symbols** option enabled).
@@ -367,14 +367,14 @@ The symbol is immediately assigned to the selected color and appears in the pale
 You can also use the right-click context menu:
 
 1. Select the color in your working palette.
-2. Right-click on a symbol in the Symbols panel.
+2. Right-click on a symbol in the **Symbols** panel.
 3. Select **Set Symbol**.
 
 ### Unassigning Symbols
 
 To remove a symbol from a palette item:
 
-1. Right-click on the assigned symbol in the Symbols panel.
+1. Right-click on the assigned symbol in the **Symbols** panel.
 2. Select **Unset Symbol**.
 
 <figure>
@@ -392,7 +392,7 @@ Just like palette catalogs, you can switch between different symbol fonts and im
 
 To change the symbol font:
 
-1. Open the Symbols panel.
+1. Open the **Symbols** panel.
 2. Click the dropdown menu at the top of the panel.
 3. Select a different font from the list.
 
@@ -416,7 +416,7 @@ When you switch fonts, the symbol grid updates to show all available characters 
 
 To import new symbol fonts:
 
-1. Open the Symbols panel.
+1. Open the **Symbols** panel.
 2. Click the menu button next to the font selector.
 3. Select **Import Fonts**.
 4. Choose one or more TrueType (`.ttf`) or OpenType (`.otf`) font files.

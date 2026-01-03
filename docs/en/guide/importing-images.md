@@ -17,16 +17,16 @@ To import an image:
 1. Select **File** -> **Import** -> **Image** in the menu bar.
 2. Choose the image file you want to convert.
 
-The Image Import window opens with your selected image ready to process.
+The **Image Import** window opens with your selected image ready to process.
 
 <figure>
   <img src="/images/guide/importing-images/image-import-modal.png">
-  <figcaption>The Image Import window showing options and live preview.</figcaption>
+  <figcaption>The <b>Image Import</b> window showing options and live preview.</figcaption>
 </figure>
 
 > You can also select a different image or drag and drop it into the preview area to replace the current image.
 
-The import window is divided into two main sections.
+The **Image Import** window is divided into two main sections.
 
 The **left panel** contains all import options.
 You can adjust these settings to fine-tune how your image converts into the pattern.
@@ -43,7 +43,7 @@ These numbers help you estimate the complexity and time required to complete the
 
 ## Pattern Size
 
-The **Width** and **Height** fields determine how many stitches your pattern will contain.
+The **Width** and **Height** parameters determine how many stitches your pattern will contain.
 
 Embroiderly automatically calculates an initial size based on your image dimensions, scaled down to approximately 10% of the original.
 For example, a 1000x800 pixel image starts at roughly 100x80 stitches.
@@ -68,7 +68,7 @@ Embroiderly includes both system palettes (pre-installed thread palettes from ma
 
 ## Palette Size
 
-This palette size field specifies the maximum number of different thread colors in the final pattern.
+This palette size parameter specifies the maximum number of different thread colors in the final pattern.
 
 Fewer colors create simpler patterns that are quicker to stitch but may lose subtle color details.
 More colors preserve details and smooth gradients but make the pattern more complex.

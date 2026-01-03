@@ -14,3 +14,10 @@ figure {
     text-align: center;
   }
 }
+
+strong,
+b,
+.vp-doc strong,
+.vp-doc b {
+  font-weight: 700;
+}

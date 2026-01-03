@@ -44,7 +44,7 @@ The **Cursor** tool lets you adjust your reference image's position, size, rotat
 
 <figure>
   <img src="/images/guide/reference-images/cursor-tool.png">
-  <figcaption>The Cursor tool in the palette toolbar.</figcaption>
+  <figcaption>The <b>Cursor</b> tool in the palette toolbar.</figcaption>
 </figure>
 
 ### Focusing the Image

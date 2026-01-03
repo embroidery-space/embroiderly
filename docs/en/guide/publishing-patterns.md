@@ -23,7 +23,7 @@ To export your pattern as a PDF:
 
 <figure>
   <img src="/images/guide/publishing-patterns/pdf-export-modal.png">
-  <figcaption>The PDF Export window showing the publish settings.</figcaption>
+  <figcaption>The <b>PDF Export</b> window showing the publish settings.</figcaption>
 </figure>
 
 ### Color Modes
@@ -50,7 +50,7 @@ You can adjust export settings in two ways:
 
 ### While Exporting
 
-When you open the PDF Export windows, click Publish Settings to expand the settings menu.
+When you open the **PDF Export** windows, click Publish Settings to expand the settings menu.
 This lets you preview how different settings affect your export before generating the final document.
 
 After you're satisfied with the settings, you can:
