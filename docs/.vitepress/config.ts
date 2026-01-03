@@ -18,6 +18,7 @@ export default defineConfig({
 
   cleanUrls: true,
   lastUpdated: true,
+  metaChunk: true,
 
   markdown: {
     typographer: true,
