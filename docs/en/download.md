@@ -10,11 +10,7 @@ sidebar: false
 lastUpdated: false
 ---
 
-<script setup>
-import DownloadPage from '../.vitepress/pages/DownloadPage.vue'
-</script>
-
-<DownloadPage
+<DownloadWidget
   title="Download Embroiderly"
   description="A free and open-source cross-stitch pattern design software"
 />
