@@ -30,3 +30,19 @@ features:
     details: Speed up your workflow with keyboard shortcuts
     link: ./reference/shortcuts
 ---
+
+<hr>
+
+<VPSwiper
+  :slides="[
+    '/images/overview/welcome-screen.png',
+    '/images/overview/pattern-editor.png',
+    '/images/overview/palette-editing.png',
+    '/images/overview/pattern-info.png',
+    '/images/overview/fabric-properties.png',
+    '/images/overview/grid-properties.png',
+    '/images/overview/pdf-export.png',
+    '/images/overview/image-import.png',
+  ]"
+  :no-fullscreen="true"
+/>
