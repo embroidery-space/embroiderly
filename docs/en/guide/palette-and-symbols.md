@@ -86,7 +86,7 @@ The available palette display settings include:
 - **Number of columns**. Sets how many columns the palette list uses (1-8 columns).
 - **Color only**. Hides all text information and symbols, showing just the color tiles.
 - **Show stitch symbols**. Toggles the visibility of symbols assigned to palette items.
-- **Contrast stitch symbols**. Places symbols on a white background for better visibility against thread colors.
+- **Contrasting stitch symbols**. Places symbols on a white background for better visibility against thread colors.
 - **Show thread brand**, **Show color number**, and **Show color name**. Control which text information appears for each palette item.
 
 All changes apply immediately so you can see the results as you adjust settings.
@@ -100,7 +100,7 @@ Palette display settings are saved with your pattern, so each project can have i
 ## Selecting Colors
 
 To use a color for drawing, click on any item in the palette list.
-The selected color is indicated by a contrast outline.
+The selected color is indicated with a contrasting outline.
 
 Only one color can be selected at a time.
 When you select a different color, the previous one is automatically deselected.
