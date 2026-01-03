@@ -8,7 +8,7 @@
     for index in range(1, lines.len()) {
       if lines.at(index).trim() == "---" {
         if index + 1 < lines.len() {
-          return lines.slice(index + 2).join("\n")
+          return lines.slice(index + 1).join("\n")
         } else {
           return ""
         }
