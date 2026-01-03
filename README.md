@@ -1,4 +1,3 @@
-<!-- markdownlint-disable-next-line first-line-heading -->
 <div align="center">
 
 # Embroiderly
