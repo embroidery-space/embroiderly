@@ -6,8 +6,10 @@ import llmstxt from "vitepress-plugin-llms";
 
 import * as locales from "./locales/";
 
-const LANGUAGES = ["en"];
 const HOSTNAME = "https://embroiderly.niusia.me";
+
+const LANGUAGES = ["en"];
+const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`);
 
 export default defineConfig({
   outDir: "./dist/",
@@ -43,6 +45,14 @@ export default defineConfig({
       options: {
         locales: {
           ...locales.searchEn,
+        },
+        async _render(src, env, md) {
+          const html = await md.renderAsync(src, env);
+
+          const relativePath = env.relativePath.replace(LANGUAGE_PREFIX_REGEXP, "");
+          if (relativePath.startsWith("resources/")) return "";
+
+          return html;
         },
       },
     },
