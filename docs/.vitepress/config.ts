@@ -57,8 +57,7 @@ export default defineConfig({
       llmstxt({
         workDir: "en/",
         domain: HOSTNAME,
-        excludeIndexPage: false, // Not all index files should be excluded.
-        ignoreFiles: ["index.md", "resources/*"],
+        ignoreFiles: ["resources/**/*"],
       }),
     ],
   },
