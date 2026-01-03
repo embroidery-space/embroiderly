@@ -15,8 +15,3 @@ ignoredBuiltDependencies:
   - unrs-resolver
   - vue-demi
   - workerd
-
-trustPolicy: no-downgrade
-trustPolicyExclude:
-  - eslint-plugin-wdio
-  - "@wdio/*"

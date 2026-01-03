@@ -1,6 +1,5 @@
 ---
 layout: home
-title: Embroiderly
 hero:
   name: Embroiderly
   tagline: A free, open-source, cross-platform desktop application for designing cross-stitch patterns

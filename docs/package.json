@@ -11,7 +11,6 @@
     "vue": "3.5.26"
   },
   "devDependencies": {
-    "unplugin-imagemin": "0.7.0",
     "vitepress": "2.0.0-alpha.15",
     "vitepress-plugin-llms": "1.10.0",
     "wrangler": "4.54.0"

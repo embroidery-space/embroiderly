@@ -1,8 +1,6 @@
 import child from "node:child_process";
-import fs from "node:fs/promises";
 import { promisify } from "node:util";
 
-import imagemin from "unplugin-imagemin/vite";
 import { defineConfig } from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
 
@@ -56,17 +54,11 @@ export default defineConfig({
 
   vite: {
     plugins: [
-      imagemin({
-        conversion: [
-          { from: "jpg", to: "webp" },
-          { from: "png", to: "webp" },
-        ],
-      }),
       llmstxt({
         workDir: "en/",
         domain: HOSTNAME,
-        excludeIndexPage: false,
-        ignoreFiles: ["resources/changelog/*"],
+        excludeIndexPage: false, // Not all index files should be excluded.
+        ignoreFiles: ["index.md", "resources/*"],
       }),
     ],
   },
@@ -80,8 +72,5 @@ export default defineConfig({
         exec(`typst compile .typst/main.typ dist/embroiderly.${lang}.pdf --root . --input lang=${lang}`),
       ),
     );
-
-    // Remove old images. They are processed by `imagemin` and stored in `dist/assets/`.
-    await fs.rm("dist/images/", { recursive: true, force: true });
   },
 });
