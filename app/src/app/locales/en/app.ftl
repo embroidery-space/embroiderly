@@ -22,9 +22,10 @@ app-menu-tools = Tools
 app-menu-manage = Manage
 
 app-menu-help = Help
-app-menu-help-learn-more = Learn More
-app-menu-help-license = License
 app-menu-help-about = About
+app-menu-help-guide = Guide
+app-menu-help-license = License
+app-menu-help-website = Website
 
 ## System info.
 

@@ -15,6 +15,8 @@
     "docs:dev": "pnpm --filter @embroiderly/docs dev",
     "docs:build": "pnpm --filter @embroiderly/docs build",
     "docs:preview": "pnpm --filter @embroiderly/docs preview",
+    "|----- PRODUCTION -----|": "",
+    "embroiderly:help": "pnpm docs:build && cp docs/dist/embroiderly.*.pdf app/src-tauri/help/",
     "|----- UTILS -----|": "",
     "check-types": "pnpm -r check-types",
     "fmt": "prettier --check .",

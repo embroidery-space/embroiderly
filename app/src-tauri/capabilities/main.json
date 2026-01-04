@@ -22,6 +22,7 @@
     "clipboard-manager:allow-write-text",
     "dialog:allow-open",
     "dialog:allow-save",
+    { "identifier": "opener:allow-open-path", "allow": [{ "path": "$RESOURCE/help/*.pdf" }] },
     "opener:allow-open-url",
     "opener:allow-default-urls",
     "process:allow-restart",
