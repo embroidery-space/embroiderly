@@ -1,4 +1,4 @@
-#import "@preview/cmarker:0.1.7"
+#import "@preview/cmarker:0.1.8"
 
 #import "admonitions.typ"
 #import "markdown.typ"
