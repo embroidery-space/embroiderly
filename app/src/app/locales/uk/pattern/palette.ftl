@@ -74,7 +74,7 @@ stitch-symbols-usage = { $total ->
 }
 stitch-symbols-empty = Символи відсутні
 
-stitch-symbols-menu-import-fonts = Імпортувати символьні шрифти
+stitch-symbols-menu-import-fonts = Імпортувати шрифти
 
 stitch-symbols-ctx-menu-set-symbol = Встановити символ
 stitch-symbols-ctx-menu-unset-symbol = Прибрати символ

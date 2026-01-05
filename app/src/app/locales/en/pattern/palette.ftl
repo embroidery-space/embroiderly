@@ -70,7 +70,7 @@ stitch-symbols-usage = { $total ->
 }
 stitch-symbols-empty = No symbols available
 
-stitch-symbols-menu-import-fonts = Import Symbol Fonts
+stitch-symbols-menu-import-fonts = Import Fonts
 
 stitch-symbols-ctx-menu-set-symbol = Set Symbol
 stitch-symbols-ctx-menu-unset-symbol = Unset Symbol

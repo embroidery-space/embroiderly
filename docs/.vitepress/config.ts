@@ -8,13 +8,12 @@ import * as locales from "./locales/";
 
 const HOSTNAME = "https://embroiderly.niusia.me";
 
-const LANGUAGES = ["en"];
+const LANGUAGES = ["en", "uk"];
 const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`);
 
 export default defineConfig({
   outDir: "./dist/",
   cacheDir: "./cache/",
-  srcExclude: ["./*.md"],
 
   cleanUrls: true,
   lastUpdated: true,
@@ -27,6 +26,7 @@ export default defineConfig({
 
   locales: {
     ...locales.docsEn,
+    ...locales.docsUk,
   },
 
   rewrites: {
@@ -46,6 +46,7 @@ export default defineConfig({
       options: {
         locales: {
           ...locales.searchEn,
+          ...locales.searchUk,
         },
         async _render(src, env, md) {
           const html = await md.renderAsync(src, env);
