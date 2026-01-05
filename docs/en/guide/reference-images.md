@@ -1,9 +1,5 @@
 ---
 description: Learn how to use reference images as visual guides while designing cross-stitch patterns in Embroiderly.
-head:
-  - - meta
-    - name: keywords
-      content: reference image, image tracing, visual guide, canvas overlay, image manipulation
 ---
 
 # Reference Images

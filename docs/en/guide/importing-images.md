@@ -1,9 +1,5 @@
 ---
 description: Learn how to import images and convert them into cross-stitch patterns in Embroiderly.
-head:
-  - - meta
-    - name: keywords
-      content: image import, pattern from photo, dithering, color quantization, image to pattern, photo conversion
 ---
 
 # Importing Images

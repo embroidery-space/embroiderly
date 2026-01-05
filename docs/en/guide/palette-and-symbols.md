@@ -1,9 +1,5 @@
 ---
 description: Learn how to manage thread colors and stitch symbols in your cross-stitch patterns in Embroiderly.
-head:
-  - - meta
-    - name: keywords
-      content: embroidery palette, thread colors, color catalog, stitch symbols
 ---
 
 # Palette & Symbols
@@ -145,7 +141,7 @@ When you enter the editing mode, the palette panel's appearance changes:
 
 ### Exiting the Editing Mode
 
-When you're done editing your palette, exit the editing mode by:
+When you're done editing your palette,you can exit the editing mode by:
 
 - clicking the Save Palette button in the palette header,
 - clicking the save icon (checkmark) in the palette footer,
@@ -198,7 +194,7 @@ To add new colors to your working palette, you can use the **Palette Catalog**.
   <figcaption>The <b>Palette Catalog</b> showing available DMC thread colors.</figcaption>
 </figure>
 
-The **Palette Catalog** panel shows all colors available from the currently selected palette file.
+The **Colors** panel shows all colors available from the currently selected palette file.
 By default, this is the DMC color catalog (the most popular embroidery thread brand).
 
 Colors already in your working palette are shown with an outline.
@@ -379,7 +375,7 @@ To remove a symbol from a palette item:
 
 <figure>
   <img src="/images/guide/palette-and-symbols/symbol-menu.png">
-  <figcaption>The context menu for an assigned symbol showing the Unset Symbol option.</figcaption>
+  <figcaption>The context menu for an assigned symbol showing the **Unset Symbol** option.</figcaption>
 </figure>
 
 The symbol is removed from the palette item, and it becomes available for use again.

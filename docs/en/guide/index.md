@@ -1,9 +1,5 @@
 ---
 description: Start working with Embroiderly for designing cross-stitch patterns.
-head:
-  - - meta
-    - name: keywords
-      content: embroiderly tutorial, download embroiderly, cross-stitch software guide
 ---
 
 # Overview

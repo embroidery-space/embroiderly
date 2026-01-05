@@ -1,9 +1,5 @@
 ---
 description: Learn how to configure pattern information, fabric properties, and grid display settings in Embroiderly.
-head:
-  - - meta
-    - name: keywords
-      content: embroiderly pattern options, fabric properties, grid settings, cross-stitch pattern information
 ---
 
 # Pattern Options

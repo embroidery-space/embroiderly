@@ -1,9 +1,5 @@
 ---
 description: Learn how to export your cross-stitch patterns as PDF documents in Embroiderly.
-head:
-  - - meta
-    - name: keywords
-      content: embroiderly pdf export, cross-stitch pattern export, pattern publishing, embroidery pdf settings
 ---
 
 # Publishing Patterns

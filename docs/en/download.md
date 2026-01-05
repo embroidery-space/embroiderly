@@ -1,10 +1,6 @@
 ---
 title: Download
 description: Download Embroiderly - a free and open-source cross-stitch pattern design software.
-head:
-  - - meta
-    - name: keywords
-      content: download embroiderly, pattern maker, cross-stitch software, windows embroidery software, linux embroidery software
 aside: false
 sidebar: false
 lastUpdated: false

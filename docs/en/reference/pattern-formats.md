@@ -1,9 +1,5 @@
 ---
 description: Cross-stitch pattern file formats supported by Embroiderly.
-head:
-  - - meta
-    - name: keywords
-      content: cross-stitch pattern formats, EMBPROJ, OXS, XSD, pattern file compatibility, cross-stitch file types
 ---
 
 # Supported Pattern File Formats

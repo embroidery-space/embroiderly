@@ -1,9 +1,5 @@
 ---
 description: Master pattern editing in Embroiderly - learn about stitch tools, canvas navigation, drawing techniques, and display controls for creating cross-stitch patterns.
-head:
-  - - meta
-    - name: keywords
-      content: embroiderly tutorial, stitch tools, canvas navigation, cross-stitch drawing, pattern editing
 ---
 
 # Working with Patterns

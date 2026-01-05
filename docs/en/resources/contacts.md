@@ -1,15 +1,11 @@
 ---
 description: Get in touch with the Embroiderly team and other users.
-head:
-  - - meta
-    - name: keywords
-      content: contact, email, help, support
 ---
 
 # Contacts
 
 Have a question, suggestion, or need help?
-We're here to assist you.
+We're here to assist you!
 
 ## Email
 
