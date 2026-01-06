@@ -52,7 +52,7 @@ You can disable this feature in the application settings if you prefer the stand
 
 <figure>
   <img src="/images/guide/working-with-patterns/tool-color-setting.png">
-  <figcaption>The setting to enable or disable tool color highlighting in the Other tab.</figcaption>
+  <figcaption>The setting for the tool color highlighting in the <strong>Other</strong> tab.</figcaption>
 </figure>
 
 ### Full Stitch
@@ -77,7 +77,7 @@ Embroiderly provides two ways to place petite stitches:
 The half stitch is one diagonal line of a full stitch---either forward (`/`) or backward (`\`).
 
 1. **Dynamic Direction**.
-   The direction is determined by your cursor position within the cell.
+   The direction is determined by the cursor position within the cell.
 2. **Fixed Direction**.
    Select either forward or backward variants to always draw in that direction.
 
@@ -88,23 +88,20 @@ It goes from a corner to the center of a grid cell.
 
 Like petite stitches, quarter stitches can be placed dynamically or in fixed positions.
 
-1. **Dynamic Placement**.
-2. **Fixed Position**.
-
 ### Back Stitch
 
 The back stitch creates small line segments used for outlines and details.
 Each segment connects two adjacent grid points (corners of cells).
 
 Back stitches are exactly one cell or one diagonal length.
-They snap to the corners of grid cells.
+They always snap to the corners of grid cells.
 
 When drawing multiple back stitches in a sequence, the next stitch automatically starts where the previous one ended, making it easy to create continuous outlines.
 
 ### Straight Stitch
 
 The straight stitch creates longer decorative lines that can span multiple cells.
-Unlike back stitches, straight stitches can pass through cell centers and sides.
+Unlike back stitches, straight stitches can pass through the centers of cells and sides.
 
 Straight stitches use a click-and-drag approach:
 
@@ -117,13 +114,12 @@ Straight stitches use a click-and-drag approach:
 French knots create small decorative knots on the fabric.
 
 French knots use the same click-and-drag approach as straight stitches.
-You'll see a preview as you move the cursor, then release to place the knot.
 
 ### Bead
 
 Beads are small decorative elements similar to French knots.
 
-Beads work the same way as French knots---you'll see a preview as you drag, then release to place the bead.
+Beads work the same way as French knots.
 
 Hold `Ctrl` while drawing to rotate the bead 90 degrees.
 
@@ -147,16 +143,14 @@ There are two ways to remove stitches:
 1. **Alt + Left-Click**.
    Hold `Alt` and left-click to erase stitches as you draw.
    This works with any stitch tool selected.
-1. **Ctrl + Right-Click**.
+2. **Ctrl + Right-Click**.
    Hold `Ctrl` and right-click to erase stitches.
-
-The eraser removes stitches under your cursor in all stitch types.
 
 ### Position Locking
 
 For dynamic stitch variants (petite, half, and quarter stitches), you can lock the position or direction to match your previous stitch.
 
-While drawing with a dynamic tool, hold `Ctrl` to make each new stitch use the same position/direction as the last one you drew.
+While drawing with a dynamic stitch tool, hold `Ctrl` to make each new stitch use the same position/direction as the last one you drew.
 
 This is useful when you want to maintain consistency across multiple stitches without switching to a fixed-position tool variant.
 
@@ -179,12 +173,12 @@ Scroll the mouse wheel to:
 - zoom in to work on fine details, or
 - zoom out to see your entire pattern.
 
-The zoom centers on your cursor position, keeping the area under your mouse in view.
+The zoom centers on the cursor position, keeping the area under your mouse in view.
 
 By default, the mouse wheel performs zooming.
 Hold `Alt` while scrolling to switch to panning mode temporarily.
 
-If you've [set mouse wheel to scroll](#mouse-wheel-action) in the application settings, the behavior reverses---scroll normally to pan, `Alt` + scroll to zoom.
+If you've [set mouse wheel to scroll](#mouse-wheel-action) in the application settings, the behavior reverses.
 
 > On touchpads, two-finger scrolling works the same way as the mouse wheel.
 
@@ -243,7 +237,7 @@ Control which pattern elements appear on the canvas using the **Layers** panel.
   <figcaption>The layers panel containing checkboxes for stitch types and canvas elements.</figcaption>
 </figure>
 
-Uncheck any layer to hide those elements.
+Uncheck any layer to hide the corresponding elements.
 This is useful when you want to focus on specific stitch types or reduce visual clutter.
 
 ### Symbols Display
@@ -272,9 +266,9 @@ Access these settings from **Settings** -> **Viewport**.
 
 ### Antialiasing
 
-Antialiasing is a graphics technique that smooths jagged edges on stitches and pattern elements.
+[Antialiasing](https://en.wikipedia.org/wiki/Anti-aliasing_filter) is a graphics technique that smooths jagged edges on stitches and pattern elements.
 
-When diagonal lines and curves are displayed on a screen, they can appear jagged or "stair-stepped"---this is called aliasing.
+When diagonal or curved lines are displayed on a screen, they can appear jagged or "stair-stepped"---this is called [aliasing](https://en.wikipedia.org/wiki/Aliasing).
 Antialiasing reduces these jagged edges by blending the colors of pixels along object edges, creating smoother and more realistic-looking graphics.
 
 When to Use Antialiasing:
