@@ -4,6 +4,3 @@ gen/
 # Browser extensions
 extensions/*
 !extensions/README.md
-
-# Auto-generated Embroiderly documentation
-help/*.pdf
