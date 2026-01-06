@@ -72,7 +72,7 @@ description: Дізнайтеся, як керувати кольорами ни
 
 <figure>
   <img src="/images/guide/palette-and-symbols/display-settings-panel.png">
-  <figcaption>Панель <b>Налаштування відображення</b> з усіма параметрами.</figcaption>
+  <figcaption>Панель <strong>Налаштування відображення</strong> з усіма параметрами.</figcaption>
 </figure>
 
 Обидва методи працюють однаково добре, тож обирайте той, який вам зручніший.
@@ -191,7 +191,7 @@ description: Дізнайтеся, як керувати кольорами ни
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog.png">
-  <figcaption><b>Каталог палітр</b>, що відображає доступні кольори ниток DMC.</figcaption>
+  <figcaption><strong>Каталог палітр</strong>, що відображає доступні кольори ниток DMC.</figcaption>
 </figure>
 
 Панель **Кольори** показує всі кольори, доступні у вибраному наразі файлі палітри.
@@ -215,7 +215,7 @@ description: Дізнайтеся, як керувати кольорами ни
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog-search.png">
-  <figcaption>Пошук DMC 310 у <b>Каталозі палітр</b>.</figcaption>
+  <figcaption>Пошук DMC 310 у <strong>Каталозі палітр</strong>.</figcaption>
 </figure>
 
 Пошук знаходить збіги в будь-якій частині номера або назви нитки, ігноруючи наголоси та діакритичні знаки.
@@ -253,7 +253,7 @@ description: Дізнайтеся, як керувати кольорами ни
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-sorting.png">
-  <figcaption>Підменю <b>Сортувати за</b> у режимі редагування.</figcaption>
+  <figcaption>Підменю <strong>Сортувати за</strong> у режимі редагування.</figcaption>
 </figure>
 
 Палітра буде впорядкована у лексикографічному порядку: спочатку за брендами ниток, а потім за номерами в межах кожного бренду.
@@ -310,7 +310,7 @@ Embroiderly постачається з кількома попередньо в
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog-menu.png">
-  <figcaption>Меню каталогу з опцією <b>Імпортувати палітри</b>.</figcaption>
+  <figcaption>Меню каталогу з опцією <strong>Імпортувати палітри</strong>.</figcaption>
 </figure>
 
 Embroiderly підтримує такі формати файлів палітр:
@@ -342,7 +342,7 @@ Embroiderly підтримує такі формати файлів палітр
 
 <figure>
   <img src="/images/guide/palette-and-symbols/stitch-symbols.png">
-  <figcaption>Панель <b>Символи</b>, що відображає всі доступні символи шрифту.</figcaption>
+  <figcaption>Панель <strong>Символи</strong>, що відображає всі доступні символи шрифту.</figcaption>
 </figure>
 
 Панель **Символів** відображає всі доступні символи з вибраного наразі шрифту.

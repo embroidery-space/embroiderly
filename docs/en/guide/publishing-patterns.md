@@ -19,7 +19,7 @@ To export your pattern as a PDF:
 
 <figure>
   <img src="/images/guide/publishing-patterns/pdf-export-modal.png">
-  <figcaption>The <b>PDF Export</b> window showing the publish settings.</figcaption>
+  <figcaption>The <strong>PDF Export</strong> window showing the publish settings.</figcaption>
 </figure>
 
 ### Color Modes

@@ -17,7 +17,7 @@ The **Image Import** window opens with your selected image ready to process.
 
 <figure>
   <img src="/images/guide/importing-images/image-import-modal.png">
-  <figcaption>The <b>Image Import</b> window showing options and live preview.</figcaption>
+  <figcaption>The <strong>Image Import</strong> window showing options and live preview.</figcaption>
 </figure>
 
 > You can also select a different image or drag and drop it into the preview area to replace the current image.

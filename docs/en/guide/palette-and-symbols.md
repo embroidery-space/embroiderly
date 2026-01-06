@@ -72,7 +72,7 @@ Alternatively, you can enter the [editing mode](#entering-the-editing-mode), the
 
 <figure>
   <img src="/images/guide/palette-and-symbols/display-settings-panel.png">
-  <figcaption>The <b>Display Settings</b> panel with all customization options.</figcaption>
+  <figcaption>The <strong>Display Settings</strong> panel with all customization options.</figcaption>
 </figure>
 
 Both the context menu and panel methods work equally well---choose whichever you find more comfortable.
@@ -191,7 +191,7 @@ To add new colors to your working palette, you can use the **Palette Catalog**.
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog.png">
-  <figcaption>The <b>Palette Catalog</b> showing available DMC thread colors.</figcaption>
+  <figcaption>The <strong>Palette Catalog</strong> showing available DMC thread colors.</figcaption>
 </figure>
 
 The **Colors** panel shows all colors available from the currently selected palette file.
@@ -215,7 +215,7 @@ Type a thread number (like "310") or color name (like "black") to filter the col
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog-search.png">
-  <figcaption>Searching for DMC 310 in the <b>Palette Catalog</b>.</figcaption>
+  <figcaption>Searching for DMC 310 in the <strong>Palette Catalog</strong>.</figcaption>
 </figure>
 
 The search matches anywhere in the thread number or name, ignoring accents and diacritics.
@@ -253,7 +253,7 @@ This is helpful for organizing colors logically, especially in patterns using th
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-sorting.png">
-  <figcaption>The <b>Sort By</b> submenu in the editing mode.</figcaption>
+  <figcaption>The <strong>Sort By</strong> submenu in the editing mode.</figcaption>
 </figure>
 
 The palette is reordered alphanumerically: first by the thread brand, then by the thread number within each brand.
@@ -310,7 +310,7 @@ You can import additional palette files to expand your available thread colors.
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-catalog-menu.png">
-  <figcaption>The catalog menu with the <b>Import Palettes</b> option.</figcaption>
+  <figcaption>The catalog menu with the <strong>Import Palettes</strong> option.</figcaption>
 </figure>
 
 Embroiderly supports these palette file formats:
@@ -342,7 +342,7 @@ They're especially useful when printing patterns on paper.
 
 <figure>
   <img src="/images/guide/palette-and-symbols/stitch-symbols.png">
-  <figcaption>The <b>Symbols</b> panel showing all available font characters.</figcaption>
+  <figcaption>The <strong>Symbols</strong> panel showing all available font characters.</figcaption>
 </figure>
 
 The **Symbols** panel displays all available characters from the currently selected symbol font.
