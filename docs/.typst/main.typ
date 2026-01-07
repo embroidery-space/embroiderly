@@ -8,7 +8,6 @@
 #set page(
   paper: "a4",
   margin: auto,
-  numbering: "1"
 )
 
 #set text(
@@ -17,6 +16,10 @@
 )
 
 #outline()
+#pagebreak()
+
+#counter(page).update(1)
+#set page(numbering: "1")
 
 #show link: underline
 
