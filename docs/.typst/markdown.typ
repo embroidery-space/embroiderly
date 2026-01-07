@@ -18,15 +18,17 @@
   content
 }
 
+#let _relative_link_re = regex("\[([^\]]+)\]\([^):#]*(#[^)]+)\)")
+
 // Rewrites relative links to anchor-only links.
-// Example: [text](./page#anchor) -> [text](#anchor)
+// Example: `[text](./page#anchor)` -> `[text](#anchor)`
 //
 // To generate a PDF, we merge all pages into a single string, so there are no more "pages," but only titles and their anchors.
 // So, we need to fix links, so that they point to correct sections.
 #let _rewrite-relative-links(content) = {
   content.replace(
-    regex("\]\([^)]*/[^)#]*(#[^)]*)\)"),
-    m => "](" + m.captures.first() + ")"
+    _relative_link_re,
+    m => "[" + m.captures.at(0) + "](" + m.captures.at(1) + ")"
   )
 }
 

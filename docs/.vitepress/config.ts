@@ -5,6 +5,7 @@ import { defineConfig } from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
 
 import * as locales from "./locales/";
+import { betterAnchors } from "./plugins/";
 
 const HOSTNAME = "https://embroiderly.niusia.me";
 
@@ -22,6 +23,9 @@ export default defineConfig({
   markdown: {
     typographer: true,
     image: { lazyLoading: true },
+    config(md) {
+      md.use(betterAnchors);
+    },
   },
 
   locales: {
