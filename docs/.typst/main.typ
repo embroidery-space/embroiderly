@@ -1,9 +1,17 @@
+#let lang = sys.inputs.at("lang", default: "en")
+
 #import "@preview/cmarker:0.1.8"
 
 #import "admonitions.typ"
 #import "markdown.typ"
 
-#let lang = sys.inputs.at("lang", default: "en")
+#import "locales/" + lang + ".typ": strings
+#import "titlepage.typ": titlepage
+
+#set document(
+  title: [#strings.document-title],
+  author: strings.document-author,
+)
 
 #set page(
   paper: "a4",
@@ -15,13 +23,15 @@
   lang: lang,
 )
 
-#outline()
+#show link: underline
+
+#titlepage()
 #pagebreak()
+
+#outline()
 
 #counter(page).update(1)
 #set page(numbering: "1")
-
-#show link: underline
 
 #cmarker.render(
   markdown.pagebreak
