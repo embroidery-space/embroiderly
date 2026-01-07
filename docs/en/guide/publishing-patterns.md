@@ -12,7 +12,7 @@ This format is perfect for printing, sharing with others, or selling your patter
 To export your pattern as a PDF:
 
 1. Open your pattern in the pattern editor.
-2. Click **File** → **Export** → **PDF** in the menu bar.
+2. Select **File** → **Export** → **PDF** in the menu bar.
 3. Choose a destination for the PDF file.
 4. Adjust the export settings if needed (see [PDF Export Settings](#pdf-export-settings) below).
 5. Click **Export Document** to generate the PDF.
@@ -26,9 +26,9 @@ To export your pattern as a PDF:
 
 You can generate the PDF document in two variants:
 
-- A **black-and-white version** where stitches are displayed as symbols only.
+- A **black-and-white variant** where stitches are displayed as symbols only.
   > Line stitches, French knots, and beads remain in color for better visibility.
-- A **full-color version** showing stitches in their actual thread colors along with symbols.
+- A **full-color variant** showing stitches in their actual thread colors along with symbols.
 
 ## PDF Content
 
@@ -46,7 +46,7 @@ You can adjust export settings in two ways:
 
 ### While Exporting
 
-When you open the **PDF Export** windows, click Publish Settings to expand the settings menu.
+When you open the **PDF Export** windows, click **Publish Settings** to expand the settings menu.
 This lets you preview how different settings affect your export before generating the final document.
 
 After you're satisfied with the settings, you can:
@@ -57,7 +57,7 @@ After you're satisfied with the settings, you can:
 ### In Pattern Properties
 
 For a separate configuration, open **Pattern** → **Publish Settings** from the menu bar.
-This opens a dedicated modal where you can configure all export options.
+This opens a dedicated window where you can configure all export options.
 
 These saved settings will be used as defaults every time you export this pattern to PDF.
 
@@ -70,7 +70,7 @@ These saved settings will be used as defaults every time you export this pattern
 
 ### Frame Settings
 
-Frames are visual sections of your pattern split across multiple pages for large designs.
+Frames are parts of your pattern split across multiple pages for large designs.
 
 - **Frame Size**. Maximum dimensions of each frame in stitches (default is 30x40 stitches).
 - **Cell Size**. Size of each stitch cell in pixels (default is 14 pixels).
@@ -80,5 +80,5 @@ Frames are visual sections of your pattern split across multiple pages for large
 
 ## Sample Pattern PDFs
 
-- [Color version](https://embroiderly.niusia.me/piggies.color.pdf)
-- [Monochrome version](https://embroiderly.niusia.me/piggies.monochrome.pdf)
+- [Color variant](https://embroiderly.niusia.me/piggies.color.pdf)
+- [Monochrome variant](https://embroiderly.niusia.me/piggies.monochrome.pdf)
