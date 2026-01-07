@@ -58,13 +58,13 @@ Click the lock icon to disable this feature if you need to stretch or compress t
 The palette selector determines which thread colors are available for the conversion.
 
 Click the palette selector to browse available palettes.
-Embroiderly includes both system palettes (pre-installed thread palettes from major manufacturers) and custom palettes (ones you've imported yourself).
+Embroiderly provides both system palettes (pre-installed thread palettes from major manufacturers) and custom palettes (ones you've imported yourself).
 
 > For more information about palette catalogs and how to import custom palettes, see the [Palette & Symbols](./palette-and-symbols#managing-palette-files) chapter.
 
 ## Palette Size
 
-This palette size parameter specifies the maximum number of different thread colors in the final pattern.
+The palette size parameter specifies the maximum number of different thread colors in the final pattern.
 
 Fewer colors create simpler patterns that are quicker to stitch but may lose subtle color details.
 More colors preserve details and smooth gradients but make the pattern more complex.
@@ -79,7 +79,7 @@ The image import process provides two advanced option groups that control how yo
 
 Color reduction determines how Embroiderly analyzes and simplifies the colors in your image.
 
-The conversion process uses a technique called [color quantization](https://en.wikipedia.org/wiki/Color_quantization) to reduce thousands or millions of colors in your image down to a manageable palette.
+The conversion process uses a technique called [color quantization](https://en.wikipedia.org/wiki/Color_quantization) to reduce thousands or millions of colors in your image down to a simplified palette.
 This works by grouping similar colors together and finding the best representative colors for your pattern.
 
 #### Sampling Precision
@@ -103,7 +103,7 @@ Higher precision values (like 100%) analyze more pixels, which produces more acc
 When dithering _is disabled_, solid areas of each color are placed next to each other.
 This creates sharp boundaries between colors and may produce visible "bands" in gradients.
 
-When dithering _is enabled_, Embroiderly places stitches of different colors adjacent to each other in a scattered or chessboard-like pattern.
+When dithering _is enabled_, Embroiderly places stitches of different colors adjacent to each other in a scattered pattern.
 Each individual stitch still uses a single thread color, but when you view the pattern from a distance, your eyes optically blend these neighboring stitches together.
 This creates the appearance of smoother color transitions and intermediate colors that aren't actually in your palette.
 
@@ -112,7 +112,7 @@ This creates the appearance of smoother color transitions and intermediate color
 Check this box to enable dithering for the pattern.
 Uncheck it to convert the image without any dithering.
 
-#### Error Diffusion
+#### Dithering Strength
 
 This parameter controls how aggressively Embroiderly applies dithering.
 
@@ -120,7 +120,7 @@ Lower values (like 25%) apply subtle dithering.
 Color transitions remain relatively smooth, but you may still notice some banding in gradients.
 
 Higher values (like 87.5%, the default) apply stronger dithering.
-This creates the smoothest gradients and best color blending, though individual stitches may look more speckled when viewed up close.
+This creates better gradients and blending.
 
 <figure>
   <img src="/images/guide/importing-images/dithering-strength-comparison.png">

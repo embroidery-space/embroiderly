@@ -50,7 +50,7 @@ When focused, the image gains a selection outline with control handles around it
 
 <figure>
   <img src="/images/guide/reference-images/reference-image-focused.png">
-  <figcaption>A focused reference image with a visible selection, control handles, and opacity slider.</figcaption>
+  <figcaption>A focused reference image with a visible selection, control handles, and transparency slider.</figcaption>
 </figure>
 
 Click anywhere outside the reference image to unfocus it and hide the controls.
@@ -61,10 +61,10 @@ To move the reference image:
 
 1. Focus the image.
 2. Click and drag anywhere inside the selection.
-3. Release to place it.
+3. Release to place the image.
 
 The image moves freely across your canvas.
-You can position it anywhere, even partially outside the pattern area.
+You can position it anywhere, even partially outside the pattern.
 
 ### Resizing the Image
 
@@ -93,21 +93,21 @@ To rotate the reference image:
 The image rotates around its center point.
 You can rotate to any angle, allowing you to align the reference image with your pattern grid however you need.
 
-### Adjusting Opacity
+### Adjusting Transparency
 
-The opacity slider controls how transparent the reference image appears.
+The transparency slider controls how transparent the reference image appears.
 
-To adjust opacity:
+To adjust transparency:
 
 1. Focus the image.
-2. Locate the opacity slider at the bottom-right (it looks like a sun icon).
+2. Locate the transparency slider at the bottom-right (it looks like a sun icon).
 3. Click and drag the slider left (more transparent) or right (more opaque).
 
-Since reference images are always rendered beneath your stitches, your work remains visible on top regardless of the opacity setting.
+Since reference images are always rendered beneath your stitches, your work remains visible on top regardless of the transparency setting.
 
 ## Reference Image Persistence
 
-When you save your pattern, Embroiderly includes the image itself (embedded in the `.embproj` file) and all of its settings.
+When you save your pattern, Embroiderly includes the image itself (embedded in the `.embproj` file) and all of its settings into it.
 
 When you reopen the pattern later, your reference image appears exactly as you left it.
 You don't need to keep the original image file---everything is stored within the pattern file.
