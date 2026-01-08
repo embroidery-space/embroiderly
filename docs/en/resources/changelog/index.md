@@ -1,6 +1,6 @@
 ---
 prev:
-  text: Контакти
+  text: Contacts
   link: ../contacts
 next: false
 ---
