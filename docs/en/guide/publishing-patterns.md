@@ -27,7 +27,7 @@ To export your pattern as a PDF:
 You can generate the PDF document in two variants:
 
 - A **black-and-white variant** where stitches are displayed as symbols only.
-  > Line stitches, French knots, and beads remain in color for better visibility.
+  > [Line](./working-with-patterns#line-stitches) and [node](./working-with-patterns#node-stitches) stitches remain in color for better visibility.
 - A **full-color variant** showing stitches in their actual thread colors along with symbols.
 
 ## PDF Content

@@ -88,7 +88,12 @@ It goes from a corner to the center of a grid cell.
 
 Like petite stitches, quarter stitches can be placed dynamically or in fixed positions.
 
-### Back Stitch
+### Line Stitches
+
+Line stitches are linear elements for outlines and details.
+This is Embroiderly's common term for back and straight stitches.
+
+#### Back Stitch
 
 The back stitch creates small line segments used for outlines and details.
 Each segment connects two adjacent grid points (corners of cells).
@@ -98,7 +103,7 @@ They always snap to the corners of grid cells.
 
 When drawing multiple back stitches in a sequence, the next stitch automatically starts where the previous one ended, making it easy to create continuous outlines.
 
-### Straight Stitch
+#### Straight Stitch
 
 The straight stitch creates longer decorative lines that can span multiple cells.
 Unlike back stitches, straight stitches can pass through the centers of cells and sides.
@@ -109,13 +114,18 @@ Straight stitches use a click-and-drag approach:
 2. Drag to where you want it to end (you'll see a preview).
 3. Release to place the stitch.
 
-### French Knot
+### Node Stitches
+
+Node stitches are small decorative elements on the fabric.
+This is Embroiderly's common term for French knots and beads.
+
+#### French Knot
 
 French knots create small decorative knots on the fabric.
 
 French knots use the same click-and-drag approach as straight stitches.
 
-### Bead
+#### Bead
 
 Beads are small decorative elements similar to French knots.
 
@@ -220,7 +230,7 @@ Three stitches display modes change how stitches are rendered on the canvas.
 3. **Stitches**. Renders stitches with their structural details visible.
    This mode is useful for understanding exactly how each stitch is constructed.
 
-> Line stitches (back and straight) and node stitches (French knots and beads) aren't affected by the stitches display modes.
+> Line and node stitches aren't affected by the stitches display modes.
 > They always render with their characteristic appearance.
 
 <figure>
