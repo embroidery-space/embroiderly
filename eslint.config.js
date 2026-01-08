@@ -70,6 +70,16 @@ export default defineConfigWithVueTs(
     },
     rules: { "no-console": ["warn"] },
   },
+  {
+    files: ["scripts/**/*.js"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      globals: {
+        ...globals.builtin,
+        ...globals.node,
+      },
+    },
+  },
 
   // Testing.
   {

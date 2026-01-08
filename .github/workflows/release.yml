@@ -12,52 +12,7 @@ permissions:
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  build-sidecars:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        sidecar: [embroiderly_image, embroiderly_publish]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-      - uses: ./.github/actions/setup-rust
-
-      - name: Get target platform triple
-        id: target
-        shell: bash
-        run: |
-          TRIPLE=$(rustc -vV | grep 'host:' | sed 's/host: //')
-          echo "TRIPLE=${TRIPLE}" >> $GITHUB_OUTPUT
-
-          EXT=""
-          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            EXT=".exe"
-          fi
-          echo "EXT=${EXT}" >> $GITHUB_OUTPUT
-
-      - name: Build sidecar binary
-        run: cargo build -p ${{ matrix.sidecar }} --release
-
-      # Tauri expects sidecar binaries named as `{name}-{target-triple}[.exe]`.
-      - name: Prepare binary for upload
-        shell: bash
-        run: |
-          mkdir -p binaries/${{ matrix.sidecar }}
-
-          SOURCE_FILE="target/release/${{ matrix.sidecar }}${{ steps.target.outputs.EXT }}"
-          DEST_FILE="binaries/${{ matrix.sidecar }}-${{ steps.target.outputs.TRIPLE }}${{ steps.target.outputs.EXT }}"
-          mv "$SOURCE_FILE" "$DEST_FILE"
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
-        with:
-          name: sidecar-binary-${{ matrix.sidecar }}-${{ matrix.os }}
-          path: binaries/
-          retention-days: 1
-
   release:
-    needs: build-sidecars
     permissions:
       contents: write
     strategy:
@@ -78,14 +33,6 @@ jobs:
       - uses: typst-community/setup-typst@48aeee7543d37f01afd1ffb27307dc277387ba13 # v4.3.1
       - uses: fontist/setup-fontist@8fcbe38d74da10b3083cacb83d1ba9b310d128ce # v2.0.1
       - run: fontist install Inter
-
-      # Overwrites stub binaries with the actual sidecar binaries.
-      - name: Download sidecar binaries
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
-        with:
-          pattern: sidecar-binary-*
-          path: app/src-tauri/binaries/
-          merge-multiple: true
 
       - name: Build the application
         id: tauri
