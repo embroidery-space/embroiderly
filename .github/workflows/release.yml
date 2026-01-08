@@ -69,8 +69,15 @@ jobs:
       app-version: ${{ steps.tauri.outputs.appVersion }}
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/setup-rust
+
+      # Install Typst and Inter font for building the documentation as PDF.
+      - uses: typst-community/setup-typst@48aeee7543d37f01afd1ffb27307dc277387ba13 # v4.3.1
+      - uses: fontist/setup-fontist@8fcbe38d74da10b3083cacb83d1ba9b310d128ce # v2.0.1
+      - run: fontist install Inter
 
       # Overwrites stub binaries with the actual sidecar binaries.
       - name: Download sidecar binaries

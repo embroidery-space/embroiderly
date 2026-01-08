@@ -12,6 +12,9 @@ const HOSTNAME = "https://embroiderly.niusia.me";
 const LANGUAGES = ["en", "uk"];
 const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`);
 
+const isCI = process.env.CI === "true";
+const isTauri = process.env.TAURI_ENV_DEBUG !== undefined;
+
 export default defineConfig({
   outDir: "./dist/",
   cacheDir: "./cache/",
@@ -81,11 +84,14 @@ export default defineConfig({
   async buildEnd() {
     const exec = promisify(child.exec);
 
-    console.info("Compiling docs into PDFs using Typst");
-    await Promise.all(
-      LANGUAGES.map((lang) =>
-        exec(`typst compile .typst/main.typ dist/embroiderly.${lang}.pdf --root . --input lang=${lang}`),
-      ),
-    );
+    // Compile the documentation as PDF only during development or when releasing the application.
+    if (!isCI || isTauri) {
+      console.info("Compiling docs as PDFs using Typst");
+      await Promise.all(
+        LANGUAGES.map((lang) =>
+          exec(`typst compile .typst/main.typ dist/embroiderly.${lang}.pdf --root . --input lang=${lang}`),
+        ),
+      );
+    }
   },
 });

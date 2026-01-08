@@ -5,7 +5,8 @@
   version: "0.6.3",
   build: {
     beforeDevCommand: "pnpm app:dev",
-    beforeBuildCommand: "pnpm embroiderly:help && pnpm app:build-only",
+    beforeBuildCommand: "pnpm app:build-only",
+    beforeBundleCommand: "pnpm embroiderly:help",
     frontendDist: "../dist",
     devUrl: "http://localhost:1420",
     removeUnusedCommands: true,
