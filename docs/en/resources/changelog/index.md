@@ -1,3 +1,10 @@
+---
+prev:
+  text: Контакти
+  link: ../contacts
+next: false
+---
+
 # Changelog
 
 - [`v0.7.0`](./v0.7.0)

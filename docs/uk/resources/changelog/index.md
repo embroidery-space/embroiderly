@@ -1,3 +1,10 @@
+---
+prev:
+  text: Contacts
+  link: ../contacts
+next: false
+---
+
 # Змінопис
 
 - [`v0.7.0`](./v0.7.0)

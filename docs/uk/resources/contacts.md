@@ -1,5 +1,10 @@
 ---
 description: Будьте на звʼязку з командою Embroiderly та іншими користувачами.
+
+prev: false
+next:
+  text: Змінопис
+  link: ./changelog
 ---
 
 # Контакти

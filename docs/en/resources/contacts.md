@@ -1,5 +1,10 @@
 ---
 description: Get in touch with the Embroiderly team and other users.
+
+prev: false
+next:
+  text: Changelog
+  link: ./changelog
 ---
 
 # Contacts
