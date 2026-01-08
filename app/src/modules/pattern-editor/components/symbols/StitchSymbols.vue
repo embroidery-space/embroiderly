@@ -103,7 +103,7 @@
   const loadedFonts = new Map<string, number[]>();
   const symbolFontOptions = shallowRef<SelectMenuItem[][]>([]);
 
-  const selectedFontKey = ref("system/Ursasoftware");
+  const selectedFontKey = ref("system/ursasoftware");
   const selectedCodePoints = shallowRef<number[]>([]);
 
   const symbolFontMenuOptions = computed<DropdownMenuItem[]>(() => [
