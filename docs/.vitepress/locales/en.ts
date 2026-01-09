@@ -93,6 +93,7 @@ export const docsEn: LocaleConfig = {
       lastUpdatedText: "Last updated",
       sidebarMenuLabel: "Menu",
       returnToTopLabel: "Return to top",
+      skipToContentLabel: "Skip to content",
       langMenuLabel: "Change language",
       darkModeSwitchLabel: "Appearance",
       lightModeSwitchTitle: "Switch to light theme",

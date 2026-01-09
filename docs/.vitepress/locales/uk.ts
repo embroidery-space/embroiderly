@@ -94,6 +94,7 @@ export const docsUk: LocaleConfig = {
       lastUpdatedText: "Востаннє оновлено",
       sidebarMenuLabel: "Меню",
       returnToTopLabel: "До гори",
+      skipToContentLabel: "Перейти до вмісту",
       langMenuLabel: "Змінити мову",
       darkModeSwitchLabel: "Вигляд",
       lightModeSwitchTitle: "Переключитися на світлу тему",
