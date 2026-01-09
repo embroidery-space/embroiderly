@@ -6,6 +6,7 @@ on:
     paths:
       - "app/**"
       - "!app/src-tauri/**"
+      - "docs/**"
       - package.json
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
@@ -26,7 +27,7 @@ jobs:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/setup-node
       - name: Check types
-        run: pnpm build
+        run: pnpm app:build
       - name: Check formatting
         run: pnpm fmt
       - name: Check linting

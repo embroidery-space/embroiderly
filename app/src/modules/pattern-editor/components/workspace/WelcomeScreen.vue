@@ -67,7 +67,8 @@
 </template>
 
 <script setup lang="ts">
-  import { openUrl } from "@tauri-apps/plugin-opener";
+  import { resolveResource } from "@tauri-apps/api/path";
+  import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
   import { computed } from "vue";
   import { useRouter } from "vue-router";
@@ -108,7 +109,7 @@
         {
           title: fluent.$t("welcome-customization-settings-title"),
           text: fluent.$t("welcome-customization-settings-descr"),
-          command: () => settingsStore.openSettingsModal(),
+          command: settingsStore.openSettingsModal,
         },
       ],
     },
@@ -118,13 +119,19 @@
         {
           title: fluent.$t("welcome-info-docs-title"),
           text: fluent.$t("welcome-info-docs-descr"),
-          url: "https://embroiderly.niusia.me",
+          async command() {
+            const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
+            await openPath(documentPath);
+          },
         },
       ],
     },
     {
       title: fluent.$t("welcome-section-help"),
-      items: [{ title: fluent.$t("welcome-help-tg"), url: "https://t.me/embroiderly" }],
+      items: [
+        { title: fluent.$t("welcome-help-tg"), url: "https://t.me/embroiderly" },
+        { title: fluent.$t("welcome-help-fb"), url: "https://facebook.com/groups/embroiderly" },
+      ],
     },
   ]);
 

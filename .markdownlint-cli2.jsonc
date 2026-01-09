@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/main/schema/markdownlint-cli2-config-schema.json",
+  "config": {
+    "line-length": false,
+    "first-line-h1": false,
+    "no-inline-html": false,
+    "no-alt-text": false,
+  },
+  "gitignore": true,
+  "globs": ["**/*.md"],
+  "ignores": [".github/"],
+}

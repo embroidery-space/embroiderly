@@ -20,10 +20,10 @@ palette-toolbar-cursor = Cursor
 
 palette-display-options = Display Settings
 
-palette-columns-number = Columns Number
+palette-columns-number = Number of columns
 palette-color-only = Color only
 palette-show-stitch-symbols = Show stitch symbols
-palette-contrast-stitch-symbols = Place stitch symbols on contrast background
+palette-contrast-stitch-symbols = Contrasting stitch symbols
 palette-show-brand = Show thread brands
 palette-show-number = Show color numbers
 palette-show-name = Show color names
@@ -70,7 +70,7 @@ stitch-symbols-usage = { $total ->
 }
 stitch-symbols-empty = No symbols available
 
-stitch-symbols-menu-import-fonts = Import Symbol Fonts
+stitch-symbols-menu-import-fonts = Import Fonts
 
 stitch-symbols-ctx-menu-set-symbol = Set Symbol
 stitch-symbols-ctx-menu-unset-symbol = Unset Symbol

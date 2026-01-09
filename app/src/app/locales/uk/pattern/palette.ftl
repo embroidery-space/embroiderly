@@ -24,7 +24,7 @@ palette-display-options = Налаштування відображення
 palette-columns-number = Кількість стовпців
 palette-color-only = Тільки колір
 palette-show-stitch-symbols = Відображати символи стібків
-palette-contrast-stitch-symbols = Розмістити символи стібків на контрастному фоні
+palette-contrast-stitch-symbols = Контрастні символи стібків
 palette-show-brand = Відображати бренди ниток
 palette-show-number = Відображати номери кольорів
 palette-show-name = Відображати назви кольорів
@@ -74,7 +74,7 @@ stitch-symbols-usage = { $total ->
 }
 stitch-symbols-empty = Символи відсутні
 
-stitch-symbols-menu-import-fonts = Імпортувати символьні шрифти
+stitch-symbols-menu-import-fonts = Імпортувати шрифти
 
 stitch-symbols-ctx-menu-set-symbol = Встановити символ
 stitch-symbols-ctx-menu-unset-symbol = Прибрати символ

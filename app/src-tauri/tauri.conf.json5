@@ -4,8 +4,9 @@
   identifier: "me.niusia.embroiderly",
   version: "0.6.3",
   build: {
-    beforeDevCommand: "pnpm dev",
-    beforeBuildCommand: "pnpm build-only",
+    beforeDevCommand: "pnpm app:dev",
+    beforeBuildCommand: "pnpm app:build-only",
+    beforeBundleCommand: "pnpm embroiderly:all",
     frontendDist: "../dist",
     devUrl: "http://localhost:1420",
     removeUnusedCommands: true,
@@ -14,7 +15,7 @@
     active: true,
     createUpdaterArtifacts: true,
     targets: ["nsis", "rpm", "deb"],
-    resources: ["./resources/**/*"],
+    resources: ["./resources/**/*", "./help/*.pdf"],
     externalBin: ["./binaries/embroiderly_image", "./binaries/embroiderly_publish"],
     icon: [
       "./icons/32x32.png",

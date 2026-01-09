@@ -35,8 +35,9 @@
 </template>
 
 <script setup lang="ts">
+  import { resolveResource } from "@tauri-apps/api/path";
   import { writeText } from "@tauri-apps/plugin-clipboard-manager";
-  import { openUrl } from "@tauri-apps/plugin-opener";
+  import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { computed } from "vue";
@@ -240,14 +241,28 @@
     {
       label: fluent.$t("app-menu-help"),
       children: [
+        [{ label: fluent.$t("app-menu-help-about"), onSelect: showSystemInfo }],
         [
-          { label: fluent.$t("app-menu-help-learn-more"), onSelect: () => openUrl("https://embroiderly.niusia.me") },
+          {
+            label: fluent.$t("app-menu-help-guide"),
+            async onSelect() {
+              const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
+              await openPath(documentPath);
+            },
+          },
           {
             label: fluent.$t("app-menu-help-license"),
-            onSelect: () => openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE"),
+            async onSelect() {
+              await openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE");
+            },
+          },
+          {
+            label: fluent.$t("app-menu-help-website"),
+            async onSelect() {
+              await openUrl(`https://embroiderly.niusia.me`);
+            },
           },
         ],
-        [{ label: fluent.$t("app-menu-help-about"), onSelect: () => showSystemInfo() }],
       ],
     },
   ]);

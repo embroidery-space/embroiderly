@@ -70,6 +70,20 @@ export default defineConfigWithVueTs(
     },
     rules: { "no-console": ["warn"] },
   },
+  {
+    files: ["scripts/**/*.js"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      globals: {
+        ...globals.builtin,
+        ...globals.node,
+      },
+    },
+    rules: {
+      "sonarjs/os-command": "off",
+      "unicorn/no-process-exit": "off",
+    },
+  },
 
   // Testing.
   {

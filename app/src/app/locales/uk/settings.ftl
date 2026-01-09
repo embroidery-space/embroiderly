@@ -25,9 +25,9 @@ settings-viewport-hint = Ці налаштування вимагають пер
 
 settings-viewport-antialias = Згладжування
 
-settings-viewport-wheel-action = Дія колеса миші
-settings-viewport-wheel-action-zoom = Зум
-settings-viewport-wheel-action-scroll = Прокрутка
+settings-viewport-wheel-action = Дія коліщатка миші
+settings-viewport-wheel-action-zoom = Масштабування
+settings-viewport-wheel-action-scroll = Прокручування
 
 settings-updater = Оновлювач
 

@@ -1,6 +1,9 @@
 packages:
   - app
+  - docs
   - crates/tauri-plugin-*
+
+minimumReleaseAge: 4320 # 3 days in minutes
 
 strictDepBuilds: true
 ignoredBuiltDependencies:
@@ -8,8 +11,7 @@ ignoredBuiltDependencies:
   - esbuild
   - edgedriver
   - geckodriver
+  - sharp
   - unrs-resolver
   - vue-demi
-
-minimumReleaseAge: 4320 # 3 days in minutes
-trustPolicy: no-downgrade
+  - workerd
