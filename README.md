@@ -4,7 +4,15 @@
 
 A free, open-source, cross-platform desktop application for designing cross-stitch patterns.
 
+[Download] | [Get Started] | [Contacts] | [Contributing] | [Changelog]
+
 </div>
+
+[Download]: https://embroiderly.niusia.me/download
+[Get Started]: https://embroiderly.niusia.me/guide/
+[Contacts]: https://embroiderly.niusia.me/resources/contacts
+[Contributing]: https://embroiderly.niusia.me/resources/contributing
+[Changelog]: https://embroiderly.niusia.me/resources/changelog
 
 ## License
 
