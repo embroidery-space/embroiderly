@@ -41,13 +41,22 @@ export default defineConfig({
   },
 
   themeConfig: {
-    externalLinkIcon: true,
     siteTitle: "Embroiderly",
     logo: {
       light: "/app-logo.dark.svg",
       dark: "/app-logo.light.svg",
       alt: "Embroiderly Logo",
     },
+
+    externalLinkIcon: true,
+    lastUpdated: {
+      formatOptions: {
+        forceLocale: true,
+        dateStyle: "long",
+        timeStyle: "short",
+      },
+    },
+
     search: {
       provider: "local",
       options: {
