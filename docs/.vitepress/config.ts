@@ -13,7 +13,7 @@ const LANGUAGES = ["en", "uk"];
 const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`);
 
 const isCI = process.env.CI === "true";
-const isTauri = process.env.TAURI_ENV_DEBUG !== undefined;
+const isTauri = process.env.TAURI_ENV_TARGET_TRIPLE !== undefined;
 
 export default defineConfig({
   outDir: "./dist/",
