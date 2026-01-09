@@ -34,7 +34,7 @@ It's organized into three main sections: the header, the palette list, and the f
 The **header** contains tools for drawing stitches and manipulating the pattern.
 
 The **palette list** displays all thread colors currently in your working palette.
-Each color is shown as a tile with the thread's color, optional stitch symbol, and text information based on your palette display settings.
+Each color is shown as a tile with the thread's color, stitch symbol, and text information based on your palette display settings.
 
 The **footer** shows the total number of colors in your palette and provides a quick button to enter the editing mode.
 
@@ -43,7 +43,7 @@ The **footer** shows the total number of colors in your palette and provides a q
 Each item in the palette list displays:
 
 - a colored background showing the thread's color,
-- an optional stitch symbol,
+- a stitch symbol,
 - a label containing the thread's brand, number, and name, and
 - an outline if the color is selected.
 
