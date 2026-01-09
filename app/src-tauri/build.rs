@@ -1,9 +1,14 @@
 fn main() {
+  let attributes = tauri_build::Attributes::new()
+    .plugin("log", tauri_build::InlinedPlugin::new().commands(&["log"]))
+    .plugin(
+      "sentry",
+      tauri_build::InlinedPlugin::new().commands(&["envelope", "add_breadcrumb"]),
+    );
+
   #[cfg(all(target_os = "windows", target_env = "msvc", feature = "test"))]
   {
-    use tauri_build::WindowsAttributes;
-
-    let attributes = tauri_build::Attributes::new().windows_attributes(WindowsAttributes::new_without_app_manifest());
+    let attributes = attributes.windows_attributes(tauri_build::WindowsAttributes::new_without_app_manifest());
     tauri_build::try_build(attributes).expect("failed to run tauri-build");
 
     let manifest = std::env::current_dir()
@@ -21,5 +26,5 @@ fn main() {
 
   // Keep the default build script for other cases.
   #[cfg(not(all(target_os = "windows", target_env = "msvc", feature = "test")))]
-  tauri_build::build();
+  tauri_build::try_build(attributes).expect("failed to run tauri-build");
 }

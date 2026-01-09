@@ -27,9 +27,6 @@ tauri-plugin-updater = { workspace = true }
 tauri-plugin-better-posthog = { workspace = true }
 tauri-plugin-prevent-default = { workspace = true }
 tauri-plugin-pinia = { workspace = true }
-## Custom Tauri plugins
-tauri-plugin-log = { workspace = true }
-tauri-plugin-sentry = { workspace = true }
 
 # Embroiderly Core
 embroiderly_image = { workspace = true }
@@ -56,7 +53,8 @@ borsh = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
 
-# Tracing
+# Logging & Tracing
+log = { workspace = true }
 tracing = { workspace = true }
 
 # Telemetry

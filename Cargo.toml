@@ -63,7 +63,6 @@ wildcard_dependencies = "deny"
 # Tauri
 tauri = { version = "2.9.5", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
 tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
-tauri-plugin = { version = "2.5.2", features = ["build"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.2"
 tauri-plugin-dialog = "2.4.2"
@@ -77,9 +76,6 @@ tauri-plugin-updater = "2.9.0"
 tauri-plugin-better-posthog = "0.1.1"
 tauri-plugin-prevent-default = "4.0.3"
 tauri-plugin-pinia = "4.1.0"
-## Custom Tauri plugins
-tauri-plugin-log = { path = "crates/tauri-plugin-log" }
-tauri-plugin-sentry = { path = "crates/tauri-plugin-sentry" }
 
 # Embroiderly Core
 embroiderly_image = { path = "crates/embroiderly-image" }

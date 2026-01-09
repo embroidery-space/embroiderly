@@ -1,4 +1,3 @@
-pub use sentry;
 use tauri::Manager as _;
 
 mod commands;

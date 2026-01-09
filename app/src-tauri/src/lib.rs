@@ -6,6 +6,7 @@ use tauri_plugin_better_posthog::PostHogExt as _;
 pub mod commands;
 mod core;
 mod error;
+mod plugins;
 pub mod services;
 mod sidecars;
 mod startup;
