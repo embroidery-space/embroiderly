@@ -30,7 +30,7 @@
   "devDependencies": {
     "@eslint/js": "9.39.2",
     "@tauri-apps/cli": "2.9.6",
-    "@vitest/eslint-plugin": "1.6.4",
+    "@vitest/eslint-plugin": "1.6.5",
     "@vue/eslint-config-prettier": "10.2.0",
     "@vue/eslint-config-typescript": "14.6.0",
     "eslint": "9.39.2",
@@ -41,7 +41,7 @@
     "eslint-plugin-sonarjs": "3.0.5",
     "eslint-plugin-unicorn": "62.0.0",
     "eslint-plugin-vue": "10.6.2",
-    "eslint-plugin-wdio": "9.16.2",
+    "eslint-plugin-wdio": "9.23.0",
     "eslint-plugin-yml": "1.19.1",
     "globals": "16.5.0",
     "markdownlint-cli2": "0.20.0",
