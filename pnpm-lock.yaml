@@ -71,19 +71,13 @@ importers:
 
   app:
     dependencies:
-      '@embroiderly/tauri-plugin-log':
-        specifier: workspace:*
-        version: link:../crates/tauri-plugin-log
-      '@embroiderly/tauri-plugin-sentry':
-        specifier: workspace:*
-        version: link:../crates/tauri-plugin-sentry
       '@fluent/bundle':
         specifier: 0.19.1
         version: 0.19.1
       '@nuxt/ui':
         specifier: 4.3.0
         version: 4.3.0(fffcd5c408c3913a54dd0f71830f94c7)
-      '@sentry/browser':
+      '@sentry/core':
         specifier: 10.32.1
         version: 10.32.1
       '@sentry/vue':
@@ -158,6 +152,9 @@ importers:
       sortablejs:
         specifier: 1.15.6
         version: 1.15.6
+      stacktracey:
+        specifier: 2.1.8
+        version: 2.1.8
       tauri-plugin-better-posthog:
         specifier: 0.1.1
         version: 0.1.1

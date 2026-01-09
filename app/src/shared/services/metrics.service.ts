@@ -2,7 +2,6 @@ import { posthog } from "posthog-js/dist/module.no-external";
 import type { PostHog, EventName, Properties } from "posthog-js/dist/module.no-external";
 import { captureEvent } from "tauri-plugin-better-posthog";
 
-/** A service for collecting usage metrics and analytics. */
 class MetricsServiceClass {
   #posthog: PostHog;
 
@@ -65,5 +64,4 @@ class MetricsServiceClass {
     this.#posthog.capture(name, properties);
   }
 }
-
 export const MetricsService = new MetricsServiceClass();

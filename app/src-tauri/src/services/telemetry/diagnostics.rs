@@ -19,7 +19,7 @@ pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Resu
   };
 
   // Set up Tauri plugin.
-  app_handle.plugin(tauri_plugin_sentry::init(&client))?;
+  app_handle.plugin(crate::plugins::sentry::init(&client))?;
 
   // The client guard must be kept valid for the entire application run time for the correct work.
   // We can't do this since we have to init the Sentry client in an inner scope to access the user's settings.
