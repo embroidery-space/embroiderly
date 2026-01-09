@@ -8,14 +8,12 @@ const isDebug = process.env.TAURI_ENV_DEBUG === "true";
 const targetTriple = process.env.TAURI_ENV_TARGET_TRIPLE;
 if (targetTriple === undefined) {
   console.error("TAURI_ENV_TARGET_TRIPLE must be set!");
-  // eslint-disable-next-line unicorn/no-process-exit
   process.exit(1);
 }
 
 const command = ["cargo", "build", ...SIDECARS.map((sidecar) => `-p ${sidecar}`), isDebug ? "" : "-r"]
   .join(" ")
   .trimEnd();
-// eslint-disable-next-line sonarjs/os-command
 execSync(command, { encoding: "utf8", stdio: "inherit" });
 
 const binaryExt = process.platform === "win32" ? ".exe" : "";

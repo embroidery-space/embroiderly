@@ -79,6 +79,10 @@ export default defineConfigWithVueTs(
         ...globals.node,
       },
     },
+    rules: {
+      "sonarjs/os-command": "off",
+      "unicorn/no-process-exit": "off",
+    },
   },
 
   // Testing.
