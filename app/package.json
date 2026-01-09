@@ -41,12 +41,12 @@
     "fuse.js": "7.1.0",
     "pinia": "3.0.4",
     "pinia-plugin-persistedstate": "4.7.1",
-    "pixi.js": "8.14.3",
-    "posthog-js": "1.310.2",
+    "pixi.js": "8.15.0",
+    "posthog-js": "1.314.0",
     "reka-ui": "2.7.0",
     "sortablejs": "1.15.6",
     "stacktracey": "2.1.8",
-    "tauri-plugin-better-posthog": "0.1.1",
+    "tauri-plugin-better-posthog": "0.1.2",
     "uuid": "13.0.0",
     "vue": "3.5.26",
     "vue-router": "4.6.4"
@@ -66,10 +66,10 @@
     "@vitest/coverage-v8": "4.0.16",
     "@vue/test-utils": "2.4.6",
     "@vue/tsconfig": "0.8.1",
-    "@wdio/cli": "9.22.0",
-    "@wdio/globals": "9.17.0",
-    "@wdio/local-runner": "9.22.0",
-    "@wdio/mocha-framework": "9.22.0",
+    "@wdio/cli": "9.23.0",
+    "@wdio/globals": "9.23.0",
+    "@wdio/local-runner": "9.23.0",
+    "@wdio/mocha-framework": "9.23.0",
     "@wdio/spec-reporter": "9.20.0",
     "tailwindcss": "4.1.18",
     "typescript": "5.9.3",
@@ -77,6 +77,6 @@
     "vite-plugin-vue-devtools": "8.0.5",
     "vitest": "4.0.16",
     "vitest-browser-vue": "2.0.1",
-    "vue-tsc": "3.2.1"
+    "vue-tsc": "3.2.2"
   }
 }
