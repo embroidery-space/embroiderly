@@ -1,7 +1,6 @@
 packages:
   - app
   - docs
-  - crates/tauri-plugin-*
 
 minimumReleaseAge: 4320 # 3 days in minutes
 

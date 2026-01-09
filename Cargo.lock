@@ -7182,15 +7182,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tauri-plugin-log"
-version = "0.0.0"
-dependencies = [
- "log",
- "tauri",
- "tauri-plugin",
-]
-
-[[package]]
 name = "tauri-plugin-opener"
 version = "2.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7262,16 +7253,6 @@ version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d55511a7bf6cd70c8767b02c97bf8134fa434daf3926cfc1be0a0f94132d165a"
 dependencies = [
- "tauri",
- "tauri-plugin",
-]
-
-[[package]]
-name = "tauri-plugin-sentry"
-version = "0.0.0"
-dependencies = [
- "sentry",
- "serde",
  "tauri",
  "tauri-plugin",
 ]

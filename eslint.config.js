@@ -60,7 +60,7 @@ export default defineConfigWithVueTs(
 
   // Custom rules.
   {
-    files: ["app/src/**/*.{ts,vue}", "crates/**/guest-js/**/*.ts"],
+    files: ["app/src/**/*.{ts,vue}"],
     languageOptions: {
       ecmaVersion: "latest",
       globals: {
