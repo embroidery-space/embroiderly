@@ -46,7 +46,7 @@
     "reka-ui": "2.7.0",
     "sortablejs": "1.15.6",
     "stacktracey": "2.1.8",
-    "tauri-plugin-better-posthog": "0.1.1",
+    "tauri-plugin-better-posthog": "0.1.2",
     "uuid": "13.0.0",
     "vue": "3.5.26",
     "vue-router": "4.6.4"

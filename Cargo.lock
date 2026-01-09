@@ -612,9 +612,9 @@ checksum = "55248b47b0caf0546f7988906588779981c43bb1bc9d0c44087278f80cdb44ba"
 
 [[package]]
 name = "better-posthog"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d4f860494b3e174a4debc5c9eeffd47405c7dd84b925c2b0e63e59d0fe9b2ebe"
+checksum = "61355fa95ce72e84cd587f7f5c97fd76f2fb8f795edca76ee29b0b36d89b5cae"
 dependencies = [
  "log",
  "os_info",
@@ -6328,9 +6328,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.148"
+version = "1.0.149"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3084b546a1dd6289475996f182a22aba973866ea8e8b02c51d9f46b1336a22da"
+checksum = "83fc039473c5595ace860d8c4fafa220ff474b3fc6bfdb4293327f1a37e94d86"
 dependencies = [
  "itoa",
  "memchr",
@@ -7113,9 +7113,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-better-posthog"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c686d5cb5a397c7130217a52231641f4780b0b2bfc604564f5a5c8477951e08"
+checksum = "15dd6f7bbe0fd626b1941cd0899d602678571c2770e3ea0d42c7791019828c10"
 dependencies = [
  "better-posthog",
  "log",
