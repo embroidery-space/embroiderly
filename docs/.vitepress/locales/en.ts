@@ -63,6 +63,10 @@ const resources = {
       link: "/resources/contacts",
     },
     {
+      text: "Contributing",
+      link: "/resources/contributing",
+    },
+    {
       text: "Changelog",
       link: "/resources/changelog",
     },

@@ -63,6 +63,10 @@ const resources = {
       link: "/uk/resources/contacts",
     },
     {
+      text: "Контрибʼютинг",
+      link: "/uk/resources/contributing",
+    },
+    {
       text: "Змінопис",
       link: "/uk/resources/changelog",
     },
