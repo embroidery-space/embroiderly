@@ -1,15 +1,19 @@
 [package]
-name = "embroiderly-publish"
+name = "embroiderly_publish"
 edition = { workspace = true }
+
+[lints]
+workspace = true
 
 [dependencies]
 # CLI
-clap = { workspace = true }
+argh = { workspace = true }
 
 # Embroiderly Core
-embroiderly-parsers = { workspace = true }
-embroiderly-pattern = { workspace = true }
-embroiderly-logger = { workspace = true }
+embroiderly_image = { workspace = true }
+embroiderly_parsers = { workspace = true }
+embroiderly_pattern = { workspace = true }
+embroiderly_tracing = { workspace = true }
 
 # De/serialization
 serde_json = { workspace = true }
@@ -20,18 +24,9 @@ typst-pdf = { workspace = true }
 ## Third-party Typst libraries
 typst-as-lib = { workspace = true, features = ["typst-kit-fonts"] }
 
-# Writing SVG files
-quick-xml = { workspace = true }
-
-# Logging
-log = { workspace = true }
-
-# Telemetry
-sentry = { workspace = true }
+# Tracing
+tracing = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }
 thiserror = { workspace = true }
-
-[dev-dependencies]
-prettydiff = { workspace = true }

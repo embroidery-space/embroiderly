@@ -12,6 +12,9 @@ use crate::PackageInfo;
 #[path = "oxs.test.rs"]
 mod tests;
 
+/// Default symbol font used when no font is specified in OXS files.
+const DEFAULT_SYMBOL_FONT: &str = "Ursasoftware";
+
 /// Tries to get a value using the provided expression.
 /// If the result is `Some(value)`, returns the unwrapped value.
 /// Otherwise, continues the current loop.
@@ -61,9 +64,8 @@ pub fn parse_pattern_from_reader<R: io::BufRead>(reader: R) -> Result<PatternPro
   ))
 }
 
+#[tracing::instrument(name = "parse_oxs", skip_all)]
 fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern> {
-  log::trace!("Parsing OXS file");
-
   let reader_config = reader.config_mut();
   reader_config.expand_empty_elements = true;
   reader_config.check_end_names = true;
@@ -80,7 +82,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
     {
       Event::Start(ref e) => {
         let name = e.name();
-        log::trace!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
+        tracing::trace!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
 
         match name.as_ref() {
           b"properties" => {
@@ -89,9 +91,9 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             let oxs_version = attributes.get("oxsversion").unwrap_or("1.0");
             let software = attributes.get("software").unwrap_or("Unknown");
             let software_version = attributes.get("software_version").unwrap_or("Unknown");
-            log::trace!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
+            tracing::trace!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
 
-            let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes)?;
+            let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes);
             pattern.info = pattern_info;
             pattern.fabric.width = pattern_width;
             pattern.fabric.height = pattern_height;
@@ -106,7 +108,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
               kind: fabric.kind,
               ..pattern.fabric
             };
-            pattern.palette = palette;
+            pattern.palette = palette.into();
           }
           b"fullstitches" => pattern.fullstitches.extend(
             read_full_stitches(reader)?
@@ -159,7 +161,6 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
     buf.clear();
   }
 
-  log::trace!("OXS file parsed");
   Ok(pattern)
 }
 
@@ -178,14 +179,20 @@ pub fn save_pattern_to_vec(patproj: &PatternProject, package_info: &PackageInfo)
   Ok(buf)
 }
 
+#[tracing::instrument(name = "save_oxs", skip_all)]
 fn save_pattern_inner<W: io::Write>(
   writer: &mut W,
   patproj: &PatternProject,
   package_info: &PackageInfo,
 ) -> io::Result<()> {
-  log::trace!("Saving OXS file");
+  let PatternProject { pattern, .. } = patproj;
 
-  let PatternProject { pattern, display_settings, .. } = patproj;
+  // Create a mapping from actual index to visual position for efficient lookups when writing stitches.
+  // This allows us to convert stitch palindex values (which reference actual indexes) to visual positions.
+  let mut index_to_position = vec![0u32; pattern.palette.len()];
+  for (position, &index) in pattern.palette.positions().iter().enumerate() {
+    index_to_position[index as usize] = position as u32;
+  }
 
   // In the development mode, we want to have a pretty-printed XML file for easy debugging.
   #[cfg(debug_assertions)]
@@ -205,26 +212,52 @@ fn save_pattern_inner<W: io::Write>(
       pattern.palette.len(),
       package_info,
     )?;
-    write_palette(
+    write_palette(writer, &pattern.fabric, &pattern.palette)?;
+    write_full_stitches(
       writer,
-      &pattern.fabric,
-      &pattern.palette,
-      &display_settings.default_symbol_font,
+      pattern
+        .fullstitches
+        .iter()
+        .filter(|stitch| stitch.kind == FullStitchKind::Full)
+        .map(|stitch| FullStitch {
+          palindex: index_to_position[stitch.palindex as usize],
+          ..*stitch
+        }),
     )?;
-    write_full_stitches(writer, &pattern.fullstitches)?;
-    write_line_stitches(writer, &pattern.linestitches)?;
+    write_line_stitches(
+      writer,
+      pattern.linestitches.iter().map(|stitch| LineStitch {
+        palindex: index_to_position[stitch.palindex as usize],
+        ..*stitch
+      }),
+    )?;
     write_ornaments(
       writer,
-      &pattern.fullstitches,
-      &pattern.partstitches,
-      &pattern.nodestitches,
-      &pattern.specialstitches,
+      pattern
+        .fullstitches
+        .iter()
+        .filter(|stitch| stitch.kind == FullStitchKind::Petite)
+        .map(|stitch| FullStitch {
+          palindex: index_to_position[stitch.palindex as usize],
+          ..*stitch
+        }),
+      pattern.partstitches.iter().map(|stitch| PartStitch {
+        palindex: index_to_position[stitch.palindex as usize],
+        ..*stitch
+      }),
+      pattern.nodestitches.iter().map(|stitch| NodeStitch {
+        palindex: index_to_position[stitch.palindex as usize],
+        ..*stitch
+      }),
+      pattern.specialstitches.iter().map(|stitch| SpecialStitch {
+        palindex: index_to_position[stitch.palindex as usize],
+        ..*stitch
+      }),
     )?;
     write_special_stitch_models(writer, &pattern.special_stitch_models)?;
     Ok(())
   })?;
 
-  log::trace!("OXS file saved");
   Ok(())
 }
 
@@ -252,9 +285,7 @@ fn write_format<W: io::Write>(writer: &mut Writer<W>) -> io::Result<()> {
   Ok(())
 }
 
-fn read_pattern_properties(
-  attributes: AttributesMap,
-) -> Result<(u16, u16, PatternInfo, StitchesPerInch, Option<usize>)> {
+fn read_pattern_properties(attributes: AttributesMap) -> (u16, u16, PatternInfo, StitchesPerInch, Option<usize>) {
   let pattern_width = attributes.get_parsed("chartwidth").unwrap_or(Fabric::DEFAULT_WIDTH);
   let pattern_height = attributes.get_parsed("chartheight").unwrap_or(Fabric::DEFAULT_HEIGHT);
 
@@ -275,7 +306,7 @@ fn read_pattern_properties(
 
   let palette_size = attributes.get_parsed("palettecount");
 
-  Ok((pattern_width, pattern_height, info, spi, palette_size))
+  (pattern_width, pattern_height, info, spi, palette_size)
 }
 
 fn write_pattern_properties<W: io::Write>(
@@ -382,14 +413,21 @@ fn read_palette<R: io::BufRead>(
             blends.push(Blend { brand, number });
           }
 
+          let color = attributes.get_color("color").unwrap_or("FF00FF").to_owned();
+          let blends = if blends.is_empty() { None } else { Some(blends) };
+
+          let symbol = attributes.get_symbol("symbol").and_then(|code| {
+            let font = attributes.get("fontname").unwrap_or(DEFAULT_SYMBOL_FONT).to_owned();
+            Symbol::new(code, font)
+          });
+
           palette.push(PaletteItem {
             brand,
             number,
             name,
-            color: attributes.get_color("color").unwrap_or("FF00FF").to_owned(),
-            blends: if blends.is_empty() { None } else { Some(blends) },
-            symbol: attributes.get_parsed("symbol"),
-            symbol_font: attributes.get("fontname").map(|s| s.to_owned()),
+            color,
+            blends,
+            symbol,
           });
         }
       }
@@ -401,18 +439,13 @@ fn read_palette<R: io::BufRead>(
   }
 
   if palette_size.is_some_and(|x| x != palette.len()) {
-    log::warn!("The specified palette size does not match the actual palette size");
+    tracing::warn!("The specified palette size does not match the actual palette size");
   }
 
   Ok((fabric, palette))
 }
 
-fn write_palette<W: io::Write>(
-  writer: &mut Writer<W>,
-  fabric: &Fabric,
-  palette: &[PaletteItem],
-  default_symbol_font: &str,
-) -> io::Result<()> {
+fn write_palette<W: io::Write>(writer: &mut Writer<W>, fabric: &Fabric, palette: &Palette) -> io::Result<()> {
   writer.create_element("palette").write_inner_content(|writer| {
     writer
       .create_element("palette_item")
@@ -424,23 +457,22 @@ fn write_palette<W: io::Write>(
       ])
       .write_empty()?;
 
-    for (index, palitem) in palette.iter().enumerate() {
+    // Write palette items in visual order (following positions).
+    for (visual_position, &actual_index) in palette.positions().iter().enumerate() {
+      let palitem = &palette[actual_index];
       let mut attributes = vec![
-        ("index", (index + 1).to_string()),
+        ("index", (visual_position + 1).to_string()),
         (
           "number",
           format!("{} {}", palitem.brand, palitem.number).trim().to_owned(),
         ),
         ("name", palitem.name.clone()),
         ("color", palitem.color.clone()),
-        (
-          "fontname",
-          palitem.symbol_font.as_deref().unwrap_or(default_symbol_font).to_owned(),
-        ),
       ];
 
-      if let Some(s) = &palitem.symbol {
-        attributes.push(("symbol", s.to_string()));
+      if let Some(symbol) = &palitem.symbol {
+        attributes.push(("symbol", (symbol.char as u32).to_string()));
+        attributes.push(("fontname", symbol.font.clone()));
       }
 
       let element = writer
@@ -494,9 +526,12 @@ fn read_full_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Full
   Ok(fullstitches)
 }
 
-fn write_full_stitches<W: io::Write>(writer: &mut Writer<W>, fullstitches: &Stitches<FullStitch>) -> io::Result<()> {
+fn write_full_stitches<W: io::Write>(
+  writer: &mut Writer<W>,
+  fullstitches: impl Iterator<Item = FullStitch>,
+) -> io::Result<()> {
   writer.create_element("fullstitches").write_inner_content(|writer| {
-    for fullstitch in fullstitches.iter().filter(|stitch| stitch.kind == FullStitchKind::Full) {
+    for fullstitch in fullstitches {
       writer
         .create_element("stitch")
         .with_attributes([
@@ -589,7 +624,7 @@ fn read_part_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Part
                   kind: PartStitchKind::Quarter,
                 });
               }
-            };
+            }
           }
           // Half stitches
           3 | 4 => {
@@ -609,7 +644,7 @@ fn read_part_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Part
             });
           }
           _ => {
-            log::warn!("Unknown partstitch direction: {direction_value}");
+            tracing::warn!(direction_value, "Unknown partstitch direction");
           }
         }
       }
@@ -691,9 +726,12 @@ fn read_line_stitch(attributes: AttributesMap) -> Result<Option<OxsLineStitch>> 
   Ok(stitch)
 }
 
-fn write_line_stitches<W: io::Write>(writer: &mut Writer<W>, linestitches: &Stitches<LineStitch>) -> io::Result<()> {
+fn write_line_stitches<W: io::Write>(
+  writer: &mut Writer<W>,
+  linestitches: impl Iterator<Item = LineStitch>,
+) -> io::Result<()> {
   writer.create_element("backstitches").write_inner_content(|writer| {
-    for linestitch in linestitches.iter().cloned() {
+    for linestitch in linestitches {
       write_line_stitch(writer, OxsLineStitch::LineStitch(linestitch))?;
     }
     Ok(())
@@ -720,7 +758,6 @@ fn write_line_stitch<W: io::Write>(writer: &mut Writer<W>, stitch: OxsLineStitch
     OxsLineStitch::CurvedStitch(curvedstitch) => {
       let attributes = curvedstitch
         .points
-        .clone()
         .into_iter()
         .enumerate()
         .flat_map(|(i, (x, y))| {
@@ -750,7 +787,7 @@ fn write_line_stitch<W: io::Write>(writer: &mut Writer<W>, stitch: OxsLineStitch
   Ok(())
 }
 
-#[allow(clippy::type_complexity)]
+#[expect(clippy::type_complexity)]
 fn read_ornaments<R: io::BufRead>(
   reader: &mut Reader<R>,
 ) -> Result<(Vec<FullStitch>, Vec<PartStitch>, Vec<NodeStitch>, Vec<SpecialStitch>)> {
@@ -770,7 +807,7 @@ fn read_ornaments<R: io::BufRead>(
           Some(OxsOrnament::Node(stitch)) => nodestitches.push(stitch),
           Some(OxsOrnament::Special(stitch)) => specialstitches.push(stitch),
           None => {}
-        };
+        }
       }
       Event::End(ref e) if e.name().as_ref() == b"ornaments_inc_knots_and_beads" => break,
       _ => {}
@@ -804,21 +841,21 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
         palindex,
         kind: FullStitchKind::Petite,
       })));
-    } else {
-      let (x_fract, y_fract) = (x.fract(), y.fract());
-      let direction = if x_fract == 0.0 && y_fract == 0.0 || x_fract == 0.5 && y_fract == 0.5 {
-        PartStitchDirection::Backward
-      } else {
-        PartStitchDirection::Forward
-      };
-      return Ok(Some(OxsOrnament::Part(PartStitch {
-        x,
-        y,
-        palindex,
-        direction,
-        kind: PartStitchKind::Quarter,
-      })));
     }
+
+    let (x_fract, y_fract) = (x.fract(), y.fract());
+    let direction = if x_fract == 0.0 && y_fract == 0.0 || x_fract == 0.5 && y_fract == 0.5 {
+      PartStitchDirection::Backward
+    } else {
+      PartStitchDirection::Forward
+    };
+    return Ok(Some(OxsOrnament::Part(PartStitch {
+      x,
+      y,
+      palindex,
+      direction,
+      kind: PartStitchKind::Quarter,
+    })));
   }
 
   if kind == "tent" {
@@ -869,31 +906,27 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
 
 fn write_ornaments<W: io::Write>(
   writer: &mut Writer<W>,
-  fullstitches: &Stitches<FullStitch>,
-  partstitches: &Stitches<PartStitch>,
-  nodestitches: &Stitches<NodeStitch>,
-  specialstitches: &Stitches<SpecialStitch>,
+  fullstitches: impl Iterator<Item = FullStitch>,
+  partstitches: impl Iterator<Item = PartStitch>,
+  nodestitches: impl Iterator<Item = NodeStitch>,
+  specialstitches: impl Iterator<Item = SpecialStitch>,
 ) -> io::Result<()> {
   writer
     .create_element("ornaments_inc_knots_and_beads")
     .write_inner_content(|writer| {
-      for fullstitch in fullstitches
-        .iter()
-        .filter(|stitch| stitch.kind == FullStitchKind::Petite)
-        .cloned()
-      {
+      for fullstitch in fullstitches {
         write_ornament(writer, OxsOrnament::Full(fullstitch))?;
       }
 
-      for partstitch in partstitches.iter().cloned() {
+      for partstitch in partstitches {
         write_ornament(writer, OxsOrnament::Part(partstitch))?;
       }
 
-      for nodestitch in nodestitches.iter().cloned() {
+      for nodestitch in nodestitches {
         write_ornament(writer, OxsOrnament::Node(nodestitch))?;
       }
 
-      for specialstitch in specialstitches.iter().cloned() {
+      for specialstitch in specialstitches {
         write_ornament(writer, OxsOrnament::Special(specialstitch))?;
       }
 
@@ -1001,7 +1034,7 @@ fn read_special_stitch_models<R: io::BufRead>(reader: &mut Reader<R>) -> Result<
                 Some(OxsLineStitch::LineStitch(stitch)) => linestitches.push(stitch),
                 Some(OxsLineStitch::CurvedStitch(stitch)) => curvedstitches.push(stitch),
                 None => {}
-              };
+              }
             }
             Event::Start(ref e) if e.name().as_ref() == b"object" => {
               let attributes = AttributesMap::try_from(e.attributes())?;
@@ -1051,11 +1084,11 @@ fn write_special_stitch_models<W: io::Write>(
             ("height", spsmodel.height.to_string().as_str()),
           ])
           .write_inner_content(|writer| {
-            for linestitch in spsmodel.linestitches.iter().cloned() {
+            for linestitch in spsmodel.linestitches.iter().copied() {
               write_line_stitch(writer, OxsLineStitch::LineStitch(linestitch))?;
             }
 
-            for nodestitch in spsmodel.nodestitches.iter().cloned() {
+            for nodestitch in spsmodel.nodestitches.iter().copied() {
               write_ornament(writer, OxsOrnament::Node(nodestitch))?;
             }
 
@@ -1082,9 +1115,10 @@ pub mod utils {
 
   impl AttributesMap {
     pub fn get(&self, key: &str) -> Option<&str> {
-      self.inner.get(key).map(|s| s.as_str())
+      self.inner.get(key).map(std::string::String::as_str)
     }
 
+    #[must_use]
     pub fn get_coord(&self, key: &str) -> Option<Coord> {
       self.get(key).and_then(|s| {
         let normalized = s.replace(',', ".");
@@ -1092,6 +1126,7 @@ pub mod utils {
       })
     }
 
+    #[must_use]
     pub fn get_palindex(&self, key: &str) -> Option<u32> {
       match self.get(key).and_then(|s| s.parse::<u32>().ok()) {
         Some(palindex) if palindex != 0 => Some(palindex - 1),
@@ -1099,6 +1134,7 @@ pub mod utils {
       }
     }
 
+    #[must_use]
     pub fn get_color(&self, key: &str) -> Option<&str> {
       let color = self.get(key);
       if color.is_some_and(|c| c.is_empty() || c == "nil") {
@@ -1108,12 +1144,14 @@ pub mod utils {
       }
     }
 
+    #[must_use]
     pub fn get_objecttype(&self, key: &str) -> Option<String> {
       self
         .get(key)
         .and_then(|s| if s.is_empty() { None } else { Some(s.to_owned()) })
     }
 
+    #[must_use]
     pub fn get_bool(&self, key: &str) -> Option<bool> {
       self.get(key).and_then(|s| {
         let normalized = s.to_lowercase();
@@ -1121,8 +1159,22 @@ pub mod utils {
       })
     }
 
+    #[must_use]
     pub fn get_parsed<T: std::str::FromStr>(&self, key: &str) -> Option<T> {
       self.get(key).and_then(|s| s.parse::<T>().ok())
+    }
+
+    #[must_use]
+    pub fn get_symbol(&self, key: &str) -> Option<char> {
+      self.get(key).and_then(|s| {
+        if s.chars().count() == 1 {
+          // First try to parse as a single character.
+          s.chars().next()
+        } else {
+          // Try to parse as a numeric char code.
+          s.parse::<u32>().ok().and_then(char::from_u32)
+        }
+      })
     }
   }
 
@@ -1137,7 +1189,7 @@ pub mod utils {
         let value = String::from_utf8(attr.value.to_vec())?;
         map.insert(key, value);
       }
-      Ok(AttributesMap { inner: map })
+      Ok(Self { inner: map })
     }
   }
 }

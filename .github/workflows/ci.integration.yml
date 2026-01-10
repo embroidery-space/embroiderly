@@ -1,0 +1,43 @@
+name: CI (integration)
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, edited, synchronize]
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.ref }}-integration
+  cancel-in-progress: true
+jobs:
+  test-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-rust
+        with:
+          tools: tauri-driver
+
+      - name: Install system webdriver (Linux)
+        if: matrix.platform == 'ubuntu-latest'
+        run: sudo apt-get install -y webkit2gtk-driver xvfb xdg-user-dirs
+
+      - name: Install system webdriver (Windows)
+        if: matrix.platform == 'windows-latest'
+        run: cargo install --git https://github.com/chippers/msedgedriver-tool
+
+      - name: Run WebdriverIO test suite (Linux)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          xdg-user-dirs-update
+          source ${HOME}/.config/user-dirs.dirs
+          xvfb-run pnpm --filter @embroiderly/app test:e2e
+
+      - name: Run WebdriverIO test suite (Windows)
+        if: matrix.platform == 'windows-latest'
+        run: pnpm --filter @embroiderly/app test:e2e

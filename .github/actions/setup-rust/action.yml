@@ -1,0 +1,39 @@
+name: Setup Rust
+description: Sets up Rust toolchain with system dependencies and caching
+inputs:
+  stable-components:
+    description: Stable Rust components to install (comma-separated list)
+    required: false
+    default: ""
+  nightly-components:
+    description: Nightly Rust components to install (comma-separated list)
+    required: false
+    default: ""
+  tools:
+    description: Tools to install (comma-separated list)
+    required: false
+    default: ""
+runs:
+  using: composite
+  steps:
+    - name: Install system dependencies (Ubuntu-only)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt update
+        sudo apt install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      shell: bash
+    # Nightly Rust must be installed first.
+    - if: inputs.nightly-components != ''
+      uses: dtolnay/rust-toolchain@nightly
+      with:
+        components: ${{ inputs.nightly-components }}
+    # Stable Rust must be installed last, so that it is specified as the default one.
+    - uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: 1.92.0 # stable
+        components: ${{ inputs.stable-components }}
+    - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
+    - uses: taiki-e/install-action@4575ae687efd0e2c78240087f26013fb2484987f # v2.62.6
+      if: inputs.tools != ''
+      with:
+        tool: ${{ inputs.tools }}

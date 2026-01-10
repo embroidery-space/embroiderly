@@ -1,9 +1,0 @@
-node_modules/
-
-dist/
-dist-js/
-
-target/
-
-permissions/*
-!permissions/default.toml

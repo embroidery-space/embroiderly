@@ -2,6 +2,9 @@
 name = "embroiderly"
 edition = { workspace = true }
 
+[lints]
+workspace = true
+
 [features]
 test = []
 
@@ -21,17 +24,21 @@ tauri-plugin-process = { workspace = true }
 tauri-plugin-shell = { workspace = true }
 tauri-plugin-updater = { workspace = true }
 ## Third-party plugins
+tauri-plugin-better-posthog = { workspace = true }
 tauri-plugin-prevent-default = { workspace = true }
 tauri-plugin-pinia = { workspace = true }
-## Custom Tauri plugins
-tauri-plugin-log = { workspace = true }
-tauri-plugin-sentry = { workspace = true }
-tauri-plugin-posthog = { workspace = true }
 
 # Embroiderly Core
-embroiderly-parsers = { workspace = true }
-embroiderly-pattern = { workspace = true, features = ["borsh", "serde"] }
-embroiderly-logger = { workspace = true }
+embroiderly_image = { workspace = true }
+embroiderly_parsers = { workspace = true }
+embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
+embroiderly_tracing = { workspace = true }
+xsp_parsers = { workspace = true }
+
+# Fonts parsing
+font-kit = { workspace = true }
+ttf-parser = { workspace = true }
+encoding_rs = { workspace = true }
 
 # Image processing
 image = { workspace = true }
@@ -46,14 +53,24 @@ borsh = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
 
-# Logging
+# Logging & Tracing
 log = { workspace = true }
+tracing = { workspace = true }
+
+# Telemetry
+better-posthog = { workspace = true }
+sentry = { workspace = true }
+
+# File system utilities
+tempfile = { workspace = true }
+walkdir = { workspace = true }
 
 # Other
+async-trait = { workspace = true }
 dyn-clone = { workspace = true }
-tempfile = { workspace = true }
-convert_case = { workspace = true }
 uuid = { workspace = true, features = ["borsh", "serde"] }
+rayon = { workspace = true }
 
 [dev-dependencies]
 rand = { workspace = true }
+rstest = { workspace = true }

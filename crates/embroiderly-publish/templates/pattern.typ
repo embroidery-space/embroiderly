@@ -29,8 +29,10 @@
       number: string, // e.g., "310"
       name: string, // e.g., "Black"
       color: string, // a hex color code, e.g., "#000000"
-      symbol_font: string, // optional, e.g., "CrossStitch3"
-      symbol: string, // the stitch symbol or an empty string if not specified
+      symbol: { // optional symbol object
+        char: string, // the stitch symbol character
+        font: string, // e.g., "CrossStitch3"
+      } | none,
     }[],
     images: string[], // an array of virtual image paths, e.g., ["image1.png", "image2.png"]
     options: { // print options
@@ -103,13 +105,11 @@
   ..for palitem in pattern.palette {
     (
       [
-        #set text(font: if palitem.symbol_font != none {
-          palitem.symbol_font
-        } else {
-          pattern.default_symbol_font
-        })
-        #set align(center)
-        #palitem.symbol
+        #if palitem.symbol != none {
+          set text(font: palitem.symbol.font)
+          set align(center)
+          palitem.symbol.char
+        }
       ],
       [#palitem.brand],
       [#palitem.number],

@@ -2,61 +2,79 @@ use anyhow::Result;
 use embroiderly_pattern::*;
 use xsp_parsers::pmaker;
 
+#[tracing::instrument(name = "parse_xsd", skip_all)]
 pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
-  log::debug!("Parsing XSD file");
-
   let file_path = file_path.as_ref();
   let xsd_pattern = pmaker::parse_pattern(file_path)?;
-
-  log::debug!("XSD file parsed");
 
   let pattern = Pattern {
     info: xsd_pattern.info.into(),
     fabric: xsd_pattern.fabric.into(),
-    palette: {
-      let mut palette = xsd_pattern
-        .palette
-        .into_iter()
-        .map(|palitem| palitem.into())
-        .collect::<Vec<_>>();
+    palette: xsd_pattern
+      .palette
+      .into_iter()
+      .enumerate()
+      .map(|(i, palitem)| {
+        let pmaker::PaletteItem {
+          brand,
+          number,
+          name,
+          color,
+          blends,
+          ..
+        } = palitem;
+        let blends = blends.map(|blends| blends.into_iter().map(Blend::from).collect());
 
-      for (i, (symbols, formats)) in xsd_pattern.symbols.iter().zip(xsd_pattern.formats.iter()).enumerate() {
-        let palitem: &mut PaletteItem = palette.get_mut(i).unwrap();
+        let symbol = xsd_pattern
+          .symbols
+          .get(i)
+          .and_then(|symbols| symbols.full)
+          .and_then(|code| char::try_from(code as u32).ok())
+          .and_then(|code| {
+            let font = xsd_pattern
+              .formats
+              .get(i)
+              .and_then(|format| format.font.font_name.clone())
+              .unwrap_or_else(|| xsd_pattern.pattern_settings.default_stitch_font.clone());
+            Symbol::new(code, font)
+          });
 
-        palitem.symbol_font = formats.font.font_name.clone();
-        if let Some(code) = symbols.full {
-          palitem.symbol = Some(Symbol::Code(code));
+        PaletteItem {
+          brand,
+          number,
+          name,
+          color,
+          blends,
+          symbol,
         }
-      }
-
-      palette
-    },
+      })
+      .collect(),
     fullstitches: Stitches::from_iter(
       xsd_pattern
         .fullstitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
     partstitches: Stitches::from_iter(
       xsd_pattern
         .partstitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
     linestitches: Stitches::from_iter(
       xsd_pattern
         .linestitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
     nodestitches: Stitches::from_iter(
       xsd_pattern
         .nodestitches
         .into_iter()
-        .map(|stitch| stitch.try_into())
+        .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
     specialstitches: Stitches::from_iter(
@@ -75,11 +93,10 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
     special_stitch_models: xsd_pattern
       .special_stitch_models
       .into_iter()
-      .map(|model| model.try_into())
+      .map(TryInto::try_into)
       .collect::<Result<Vec<_>, _>>()?,
   };
   let display_settings = DisplaySettings {
-    default_symbol_font: xsd_pattern.pattern_settings.default_stitch_font,
     grid: xsd_pattern.grid.into(),
     display_mode: DisplayMode::from_pattern_maker(xsd_pattern.pattern_settings.view),
     ..Default::default()

@@ -1,87 +1,125 @@
 # Development Process
 
 This document describes the process of how we are working on Embroiderly.
+Follow it to start working on your ideas, improvements, and fixes.
 
-You can follow it to start working on your ideas, improvements, fixes, etc.
-
-## Project Structure
-
-This project uses a **pnpm workspace** structure:
-
-```
-app/ # Main application (Vue frontend + Tauri backend)
-├── src/ # Frontend source code.
-└── src-tauri/ # Backend source code.
-
-crates/ # Shared Rust libraries and Tauri plugins.
-├── embroiderly-parsers/ # Cross-stitch pattern file parsers.
-├── embroiderly-pattern/ # Internal pattern representation.
-├── embroiderly-publish/ # Pattern export functionality.
-├── tauri-plugin-log/ # Custom Tauri logging plugin.
-├── tauri-plugin-sentry/ # Custom Tauri plugin for Sentry integration.
-├── tauri-plugin-posthog/ # Custom Tauri plugin for PostHog integration.
-└── xsp-parsers/ # Parsers of external cross-stitch pattern formats.
-```
+> See [ARCHITECTURE.md](./ARCHITECTURE.md) to learn more about the project structure.
 
 ## Prerequisites
 
-To get started working on Embroiderly, you will first need to install a few dependencies:
+Before starting, make sure you have everything needed to work on Embroiderly.
 
-1. [System Dependencies](https://tauri.app/start/prerequisites/#system-dependencies).
+1. Install [system dependencies](https://tauri.app/start/prerequisites/#system-dependencies).
 
-2. [Rust](https://rust-lang.org/tools/install) and [Node.js](https://nodejs.org/en/download).
+1. Install stable and nightly (only the `fmt` component) [Rust](https://rust-lang.org/tools/install).
 
-   We are using the latest stable Rust version and the latest LTS Node.js version.
-   Also, we are using the nightly Rust edition for running its tooling with unstable features.
+1. Install Rust tools: [`cargo-nextest`](https://nexte.st)
 
-3. **pnpm** and Cargo dependencies.
+1. Install [Node.js v24](https://nodejs.org/en/download)
 
-   Install pnpm using corepack (see [official documentation](https://pnpm.io/installation#using-corepack)):
+1. Install **pnpm** using Corepack (see the [official documentation](https://pnpm.io/installation#using-corepack)):
 
    ```sh
    corepack enable pnpm
    ```
 
-   Then install project dependencies:
+Once you are done, run the application via `pnpm tauri dev` and build it via `pnpm tauri build`.
 
-   ```sh
-   pnpm install
-   ```
+## Common commands
 
-   Cargo dependencies will be installed during the first run of the project.
+**Tauri:**
 
-## Running and Building Application
+> Refer to the [Tauri CLI reference](https://tauri.app/reference/cli) for all commands and their options.
 
-Refer to the [reference](https://tauri.app/reference/cli) to see available commands.
+- `pnpm tauri dev` - Run the application in development mode.
+- `pnpm tauri build` - Build the application and bundle into the installer.
 
-## A Few Words About Testing
+**Frontend:**
 
-All unit tests are extracted into separate files titled `[filename].test.{ts,rs}`.
-All end-to-end tests are located under the `tests/` folder.
+- `pnpm build` - Build the frontend and check types.
+- `pnpm fmt` - Check formatting.
+- `pnpm fmt:fix` - Fix formatting.
+- `pnpm lint` - Check linting.
+- `pnpm lint:fix` - Fix linting.
+- `pnpm test` - Run all tests.
+- `pnpm --filter @embroiderly/app test:unit` - Run unit tests.
+- `pnpm --filter @embroiderly/app test:components` - Run component tests.
+- `pnpm --filter @embroiderly/app test:e2e` - Run end-to-end tests (see [instructions](#integration-testing) below).
 
-## Organization Notes
+**Backend:**
 
-We are following [conventional commits](https://conventionalcommits.org/en/v1.0.0), [semantic branch names](https://gist.github.com/seunggabi/87f8c722d35cd07deb3f649d45a31082) and [semantic versioning](https://semver.org).
-However, in PRs, you can title commits as you want; in any case, they will be squashed.
+- `cargo check` - Check types.
+- `cargo +nightly fmt --check` - Check formatting.
+- `cargo clippy -- -D warnings` - Check linting.
+- `cargo nextest run --locked --no-fail-fast -F embroiderly/test` - Run all tests.
 
-## Before Submitting a PR
+## Sidecars Development
 
-Please make sure your code is well-formatted, linted and properly tested:
+The `app/src-tauri/binaries/` directory contains **stub files** that are placeholders for the actual sidecar binaries.
+These stubs are committed to the repository so that the project structure is complete, but they are not valid executables.
 
-- Check the frontend code:
+If you run the application without building the sidecars first, you will get a runtime error when the application tries to execute them.
 
-  ```sh
-  pnpm fmt
-  pnpm lint
-  pnpm test
-  ```
+To build the sidecars, run:
 
-- Check the backend code:
+```sh
+cargo build -p embroiderly_image
+cargo build -p embroiderly_publish
+```
 
-  ```sh
-  cargo +nightly fmt --check
-  cargo clippy --locked -- -D warnings
-  cargo nextest run --locked --no-fail-fast -F embroiderly/test
-  ```
+The binaries will appear in `target/debug/` and the application will use them during development.
 
-You can configure local Git hooks so these checks run on every commit/push.
+> [!IMPORTANT]
+> Sidecars must be rebuilt each time their code changes.
+> The application does not automatically detect source changes --- it only sees the compiled binaries.
+
+Alternatively, you can run sidecars directly:
+
+```sh
+cargo run -p embroiderly_image -- [args]
+cargo run -p embroiderly_publish -- [args]
+```
+
+## Tests Organization
+
+Unit and component tests are extracted into separate files near the source file in the form of `<source-file>.test.{ts,rs}`.
+
+Integration tests are store separately in the `tests/` directory:
+
+- `app/tests/` - Frontend integration tests.
+- `app/src-tauri/tests/` - Backend integration tests.
+
+## Integration Testing
+
+We use [WebdriverIO](https://webdriver.io) for integration testing.
+
+To run integration tests, you must install additional system dependencies and Rust tools.
+
+### On Linux
+
+Tauri uses `WebKitWebDriver` on Linux platforms.
+
+Some distributions bundle it with the regular WebKit package.
+Check if this binary exists already by running `which WebKitWebDriver`.
+
+Other platforms may have a separate package for them, such as `webkit2gtk-driver` on Debian-based distributions.
+
+### On Windows
+
+Tauri uses Microsoft Edge Driver on Windows.
+
+Install [`msedgedriver-tool`](https://github.com/chippers/msedgedriver-tool):
+
+```sh
+cargo install --git https://github.com/chippers/msedgedriver-tool
+```
+
+This tool will be used in [WebdriverIO setup](./app/wdio.config.ts) to automatically install the driver.
+
+Last, install [`tauri-driver`](https://github.com/tauri-apps/tauri/tree/dev/crates/tauri-driver):
+
+```sh
+cargo install tauri-driver
+```
+
+Then you can run end-to-end tests via `pnpm --filter @embroiderly/app test:e2e`.

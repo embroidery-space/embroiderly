@@ -48,8 +48,8 @@ pub enum NodeStitchKind {
 impl std::fmt::Display for NodeStitchKind {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
-      NodeStitchKind::FrenchKnot => write!(f, "knot"),
-      NodeStitchKind::Bead => write!(f, "bead"),
+      Self::FrenchKnot => write!(f, "knot"),
+      Self::Bead => write!(f, "bead"),
     }
   }
 }
@@ -59,11 +59,11 @@ impl std::str::FromStr for NodeStitchKind {
 
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     if s == "knot" {
-      return Ok(NodeStitchKind::FrenchKnot);
+      return Ok(Self::FrenchKnot);
     }
 
     if s.starts_with("bead") {
-      return Ok(NodeStitchKind::Bead);
+      return Ok(Self::Bead);
     }
 
     Err(anyhow::anyhow!("Unknown node kind: {s}"))
@@ -73,8 +73,8 @@ impl std::str::FromStr for NodeStitchKind {
 impl From<pmaker::NodeStitchKind> for NodeStitchKind {
   fn from(kind: pmaker::NodeStitchKind) -> Self {
     match kind {
-      pmaker::NodeStitchKind::FrenchKnot => NodeStitchKind::FrenchKnot,
-      pmaker::NodeStitchKind::Bead => NodeStitchKind::Bead,
+      pmaker::NodeStitchKind::FrenchKnot => Self::FrenchKnot,
+      pmaker::NodeStitchKind::Bead => Self::Bead,
     }
   }
 }

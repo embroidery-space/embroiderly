@@ -1,29 +1,20 @@
-import { createApp } from "vue";
 import ui from "@nuxt/ui/vue-plugin";
-import PrimeVue from "primevue/config";
-import { defaultSentryOptions } from "@embroiderly/tauri-plugin-sentry";
+import { vueIntegration } from "@sentry/vue";
+import { createFluentVue } from "fluent-vue";
+import { createApp } from "vue";
 
-import "./assets/styles.css";
-import "./assets/icons.ts";
-
-import { router } from "./router.ts";
-import { pinia } from "./stores/";
-import { ShortcutsDirective } from "./directives/";
-import { fluent } from "./fluent.ts";
-import { initLogger } from "./logger.ts";
-import { sentry } from "./vendor/";
+import { router, pinia } from "./app/";
 import App from "./App.vue";
+import { DiagnosticsService } from "./shared/services/";
 
 const app = createApp(App);
+const fluent = createFluentVue({ bundles: [], componentTag: false });
 
-initLogger();
-sentry.init({ ...defaultSentryOptions, app });
+DiagnosticsService.addIntegration(vueIntegration({ app }));
 
 app.use(router);
 app.use(pinia);
 app.use(fluent);
 app.use(ui);
-app.use(PrimeVue, { unstyled: true });
-app.directive("shortcuts", ShortcutsDirective);
 
 app.mount("#app");

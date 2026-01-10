@@ -1,12 +1,13 @@
 use embroiderly_pattern::{DisplayMode, LayersVisibility};
-use tauri_plugin_posthog::PostHogExt;
+use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::{Action as _, SetDisplayModeAction, SetLayersVisibilityAction, ShowSymbolsAction};
 use crate::error::Result;
 use crate::parse_command_payload;
+use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
-use crate::vendor::telemetry::AppEvent;
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body = mode))]
 #[tauri::command]
 pub fn set_display_mode<R: tauri::Runtime>(
   mode: String,
@@ -26,13 +27,14 @@ pub fn set_display_mode<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_event(AppEvent::DisplayModeChanged { mode });
 
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body = value))]
 #[tauri::command]
 pub fn show_symbols<R: tauri::Runtime>(
   value: bool,
@@ -51,13 +53,14 @@ pub fn show_symbols<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_event(AppEvent::SymbolsVisibilityChanged { visible: value });
 
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
 #[tauri::command]
 pub fn set_layers_visibility<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
@@ -75,7 +78,7 @@ pub fn set_layers_visibility<R: tauri::Runtime>(
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
-  history.get_mut(&pattern_id).push(Box::new(action));
+  history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
   app_handle.capture_event(AppEvent::LayersVisibilityChanged { visibility });
 

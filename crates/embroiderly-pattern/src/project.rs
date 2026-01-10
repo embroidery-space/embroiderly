@@ -15,6 +15,7 @@ pub struct PatternProject {
 }
 
 impl PatternProject {
+  #[must_use]
   pub fn new(
     file_path: std::path::PathBuf,
     pattern: Pattern,

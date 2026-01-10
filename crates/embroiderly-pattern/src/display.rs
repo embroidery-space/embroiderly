@@ -3,7 +3,6 @@ use xsp_parsers::pmaker;
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct DisplaySettings {
-  pub default_symbol_font: String,
   pub grid: Grid,
   pub display_mode: DisplayMode,
   pub show_symbols: bool,
@@ -14,7 +13,6 @@ pub struct DisplaySettings {
 impl Default for DisplaySettings {
   fn default() -> Self {
     Self {
-      default_symbol_font: String::from("Ursasoftware"),
       grid: Grid::default(),
       display_mode: DisplayMode::Solid,
       show_symbols: false,
@@ -85,11 +83,12 @@ pub enum DisplayMode {
 }
 
 impl DisplayMode {
-  pub fn from_pattern_maker(value: u16) -> Self {
+  #[must_use]
+  pub const fn from_pattern_maker(value: u16) -> Self {
     match value {
-      0 => DisplayMode::Stitches,
-      2 => DisplayMode::Solid,
-      _ => DisplayMode::Mixed,
+      0 => Self::Stitches,
+      2 => Self::Solid,
+      _ => Self::Mixed,
     }
   }
 }
@@ -97,9 +96,9 @@ impl DisplayMode {
 impl std::fmt::Display for DisplayMode {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
-      DisplayMode::Solid => write!(f, "Solid"),
-      DisplayMode::Stitches => write!(f, "Stitches"),
-      DisplayMode::Mixed => write!(f, "Mixed"),
+      Self::Solid => write!(f, "Solid"),
+      Self::Stitches => write!(f, "Stitches"),
+      Self::Mixed => write!(f, "Mixed"),
     }
   }
 }
@@ -109,10 +108,10 @@ impl std::str::FromStr for DisplayMode {
 
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     match s {
-      "Solid" => Ok(DisplayMode::Solid),
-      "Stitches" => Ok(DisplayMode::Stitches),
-      "Mixed" => Ok(DisplayMode::Mixed),
-      _ => Ok(DisplayMode::Mixed),
+      "Solid" => Ok(Self::Solid),
+      "Stitches" => Ok(Self::Stitches),
+      "Mixed" => Ok(Self::Mixed),
+      _ => Ok(Self::Mixed),
     }
   }
 }
@@ -122,6 +121,8 @@ impl std::str::FromStr for DisplayMode {
 pub struct PaletteSettings {
   pub columns_number: u8,
   pub color_only: bool,
+  pub show_stitch_symbols: bool,
+  pub stitch_symbols_on_contrast_background: bool,
   pub show_color_brands: bool,
   pub show_color_numbers: bool,
   pub show_color_names: bool,
@@ -130,6 +131,8 @@ pub struct PaletteSettings {
 impl PaletteSettings {
   pub const DEFAULT_COLUMNS_NUMBER: u8 = 1;
   pub const DEFAULT_COLOR_ONLY: bool = false;
+  pub const DEFAULT_SHOW_STITCH_SYMBOLS: bool = true;
+  pub const DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND: bool = true;
   pub const DEFAULT_SHOW_COLOR_BRANDS: bool = true;
   pub const DEFAULT_SHOW_COLOR_NUMBERS: bool = true;
   pub const DEFAULT_SHOW_COLOR_NAMES: bool = true;
@@ -138,11 +141,13 @@ impl PaletteSettings {
 impl Default for PaletteSettings {
   fn default() -> Self {
     Self {
-      columns_number: PaletteSettings::DEFAULT_COLUMNS_NUMBER,
-      color_only: PaletteSettings::DEFAULT_COLOR_ONLY,
-      show_color_brands: PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS,
-      show_color_numbers: PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS,
-      show_color_names: PaletteSettings::DEFAULT_SHOW_COLOR_NAMES,
+      columns_number: Self::DEFAULT_COLUMNS_NUMBER,
+      color_only: Self::DEFAULT_COLOR_ONLY,
+      show_stitch_symbols: Self::DEFAULT_SHOW_STITCH_SYMBOLS,
+      stitch_symbols_on_contrast_background: Self::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND,
+      show_color_brands: Self::DEFAULT_SHOW_COLOR_BRANDS,
+      show_color_numbers: Self::DEFAULT_SHOW_COLOR_NUMBERS,
+      show_color_names: Self::DEFAULT_SHOW_COLOR_NAMES,
     }
   }
 }

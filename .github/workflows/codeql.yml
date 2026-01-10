@@ -1,0 +1,47 @@
+name: CodeQL Analysis
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+    types: [opened, reopened, edited, synchronize]
+  schedule:
+    - cron: "0 12 * * 1" # Run at 12:00 UTC every Monday
+permissions:
+  security-events: write
+  contents: read
+  actions: read
+concurrency:
+  group: ${{ github.ref }}-codeql
+  cancel-in-progress: true
+env:
+  CARGO_TERM_COLOR: always
+jobs:
+  analyze:
+    # Skip CodeQL on dependency update branches.
+    if: |
+      startsWith(github.head_ref, 'dependabot/') == false
+      && github.head_ref != 'dependency-updates'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+            build-mode: none
+          - language: javascript-typescript
+            build-mode: none
+          - language: rust
+            build-mode: none
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@5d4e8d1aca955e8d8589aabd499c5cae939e33c7 # v4.31.9
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: +security-extended
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@5d4e8d1aca955e8d8589aabd499c5cae939e33c7 # v4.31.9
+        with:
+          category: "/language:${{ matrix.language }}"

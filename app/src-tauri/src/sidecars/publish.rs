@@ -1,22 +1,22 @@
 use std::path::PathBuf;
 
 use embroiderly_pattern::PdfExportOptions;
+use tauri::Manager as _;
 use tauri_plugin_shell::ShellExt as _;
 
-use super::SidecarRunner;
 use crate::error::{PatternError, Result};
 
-/// A utility struct for exporting the pattern as a PDF document using the `embroiderly-publish` sidecar.
-pub struct ExportPdfSidecar<R: tauri::Runtime> {
+/// A utility for exporting cross-stitch patterns as a PDF documents using the `embroiderly_publish` sidecar.
+pub struct PdfExportSidecar<R: tauri::Runtime> {
   app_handle: tauri::AppHandle<R>,
   pattern_path: Option<PathBuf>,
   output_path: Option<PathBuf>,
   options: Option<PdfExportOptions>,
 }
 
-impl<R: tauri::Runtime> ExportPdfSidecar<R> {
+impl<R: tauri::Runtime> PdfExportSidecar<R> {
   /// Create a new `PublishSidecar` instance with the given app handle.
-  pub fn new(app_handle: tauri::AppHandle<R>) -> Self {
+  pub const fn new(app_handle: tauri::AppHandle<R>) -> Self {
     Self {
       app_handle,
       pattern_path: None,
@@ -38,14 +38,14 @@ impl<R: tauri::Runtime> ExportPdfSidecar<R> {
   }
 
   /// Set the PDF export options.
-  pub fn options(mut self, options: PdfExportOptions) -> Self {
+  pub const fn options(mut self, options: PdfExportOptions) -> Self {
     self.options = Some(options);
     self
   }
 }
 
-impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
-  async fn run_async(self) -> Result<tauri_plugin_shell::process::Output> {
+impl<R: tauri::Runtime> super::SidecarRunner for PdfExportSidecar<R> {
+  async fn run_async(self) -> Result<super::Output> {
     let pattern_path = self
       .pattern_path
       .ok_or_else(|| PatternError::FailedToExport(anyhow::anyhow!("Pattern path is required")))?;
@@ -60,27 +60,23 @@ impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
           .map_err(|e| PatternError::FailedToExport(anyhow::anyhow!("Failed to serialize PDF export options: {e}")))
       })?;
 
+    let system_fonts_dir = self
+      .app_handle
+      .path()
+      .resolve("resources/fonts", tauri::path::BaseDirectory::Resource)?;
+    let custom_fonts_dir = crate::utils::path::app_data_dir(&self.app_handle)?.join("fonts");
+
     let mut sidecar = self
       .app_handle
       .shell()
-      .sidecar("embroiderly-publish")
+      .sidecar("embroiderly_publish")
       .map_err(|e| PatternError::FailedToExport(e.into()))?;
 
     // Set logs directory.
     sidecar = sidecar.env(
-      embroiderly_logger::EMBROIDERLY_LOG_DIR_ENV_VAR,
+      embroiderly_tracing::EMBROIDERLY_LOGS_DIR_ENV_VAR,
       crate::utils::path::app_logs_dir(&self.app_handle)?,
     );
-
-    // Set Sentry credentials.
-    if let Some(dsn) = std::option_env!("EMBROIDERLY_PUBLISH_SENTRY_DSN")
-      && crate::utils::settings::telemetry_diagnostics_enabled(&self.app_handle)
-    {
-      sidecar = sidecar.env("SENTRY_DSN", dsn).env(
-        "SENTRY_RELEASE_NAME",
-        crate::vendor::telemetry::sentry_release_name(self.app_handle.package_info()),
-      );
-    }
 
     // Set required arguments.
     sidecar = sidecar
@@ -89,12 +85,14 @@ impl<R: tauri::Runtime> SidecarRunner for ExportPdfSidecar<R> {
       .arg("--output")
       .arg(&output_path)
       .arg("--options")
-      .arg(&options);
+      .arg(&options)
+      .arg("--symbol-fonts-dir")
+      .arg(&system_fonts_dir)
+      .arg("--symbol-fonts-dir")
+      .arg(&custom_fonts_dir);
 
     // Execute the command.
-    sidecar
-      .output()
-      .await
-      .map_err(|e| PatternError::FailedToExport(e.into()).into())
+    let output = super::utils::collect_sidecar_binary_output_from_command(sidecar).await?;
+    super::utils::handle_sidecar_output(&self.app_handle, output, "embroiderly_publish")
   }
 }

@@ -5,6 +5,7 @@ use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
 #[tauri::command]
 pub fn add_stitch<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,
@@ -22,12 +23,13 @@ pub fn add_stitch<R: tauri::Runtime>(
     action.perform(&window, patproj)?;
 
     let mut history = history.write().unwrap();
-    history.get_mut(&pattern_id).push(Box::new(action));
+    history.get_mut(&pattern_id).unwrap().push(Box::new(action));
   }
 
   Ok(())
 }
 
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
 #[tauri::command]
 pub fn remove_stitch<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,
@@ -47,7 +49,7 @@ pub fn remove_stitch<R: tauri::Runtime>(
     action.perform(&window, patproj)?;
 
     let mut history = history.write().unwrap();
-    history.get_mut(&pattern_id).push(Box::new(action));
+    history.get_mut(&pattern_id).unwrap().push(Box::new(action));
   }
 
   Ok(())

@@ -1,22 +1,46 @@
 name: CI (frontend)
 on:
   pull_request:
-    branches: ["dev"]
-    types: ["opened", "reopened", "edited", "synchronize"]
+    branches: [main, dev]
+    types: [opened, reopened, edited, synchronize]
     paths:
       - "app/**"
       - "!app/src-tauri/**"
-      - "package*.json"
-      - "pnpm-lock.yaml"
-      - "pnpm-workspace.yaml"
-      - "eslint.config.js"
-      - ".prettierrc.json"
-      - ".prettierignore"
-      - ".github/workflows/ci.frontend.yml"
-      - ".github/workflows/audit.frontend.yml"
+      - "docs/**"
+      - package.json
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+      - eslint.config.js
+      - .prettierrc.json
+      - .prettierignore
+      - .github/workflows/ci.frontend.yml
+      - .github/codecov.yml
+permissions:
+  contents: read
 concurrency:
   group: ${{ github.ref }}-frontend
   cancel-in-progress: true
 jobs:
-  audit:
-    uses: ./.github/workflows/audit.frontend.yml
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: ./.github/actions/setup-node
+      - name: Check types
+        run: pnpm app:build
+      - name: Check formatting
+        run: pnpm fmt
+      - name: Check linting
+        run: pnpm lint
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: ./.github/actions/setup-node
+      - name: Test
+        run: pnpm test --coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+        with:
+          flags: frontend
+          token: ${{ secrets.CODECOV_TOKEN }}

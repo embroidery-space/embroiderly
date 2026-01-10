@@ -43,10 +43,6 @@ fn parse_display_settings_inner<R: io::BufRead>(
 ) -> Result<DisplaySettings> {
   let mut display_settings = DisplaySettings::default();
 
-  if let Some(default_symbol_font) = attributes.get("default_symbol_font") {
-    display_settings.default_symbol_font = default_symbol_font.to_owned();
-  }
-
   if let Some(display_mode) = attributes.get_parsed("display_mode") {
     display_settings.display_mode = display_mode;
   }
@@ -61,7 +57,7 @@ fn parse_display_settings_inner<R: io::BufRead>(
       Event::Start(ref e) => match e.name().as_ref() {
         b"palette_settings" => {
           let attributes = AttributesMap::try_from(e.attributes())?;
-          display_settings.palette_settings = read_palette_settings(attributes)?;
+          display_settings.palette_settings = read_palette_settings(attributes);
         }
         b"grid" => {
           let attributes = AttributesMap::try_from(e.attributes())?;
@@ -69,7 +65,7 @@ fn parse_display_settings_inner<R: io::BufRead>(
         }
         b"layers_visibility" => {
           let attributes = AttributesMap::try_from(e.attributes())?;
-          display_settings.layers_visibility = read_layers_visibility(attributes)?;
+          display_settings.layers_visibility = read_layers_visibility(attributes);
         }
         _ => {}
       },
@@ -95,7 +91,6 @@ pub fn save_display_settings_to_vec(display_settings: &DisplaySettings) -> Resul
     .create_element("display_settings")
     .with_attributes([
       ("display_mode", display_settings.display_mode.to_string().as_str()),
-      ("default_symbol_font", display_settings.default_symbol_font.as_str()),
       ("show_symbols", display_settings.show_symbols.to_string().as_str()),
     ])
     .write_inner_content(|writer| {
@@ -108,14 +103,20 @@ pub fn save_display_settings_to_vec(display_settings: &DisplaySettings) -> Resul
   Ok(writer.into_inner())
 }
 
-fn read_palette_settings(attributes: AttributesMap) -> Result<PaletteSettings> {
-  Ok(PaletteSettings {
+fn read_palette_settings(attributes: AttributesMap) -> PaletteSettings {
+  PaletteSettings {
     columns_number: attributes
       .get_parsed("columns_number")
       .unwrap_or(PaletteSettings::DEFAULT_COLUMNS_NUMBER),
     color_only: attributes
       .get_parsed("color_only")
       .unwrap_or(PaletteSettings::DEFAULT_COLOR_ONLY),
+    show_stitch_symbols: attributes
+      .get_parsed("show_stitch_symbols")
+      .unwrap_or(PaletteSettings::DEFAULT_SHOW_STITCH_SYMBOLS),
+    stitch_symbols_on_contrast_background: attributes
+      .get_parsed("stitch_symbols_on_contrast_background")
+      .unwrap_or(PaletteSettings::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND),
     show_color_brands: attributes
       .get_parsed("show_color_brands")
       .unwrap_or(PaletteSettings::DEFAULT_SHOW_COLOR_BRANDS),
@@ -125,15 +126,21 @@ fn read_palette_settings(attributes: AttributesMap) -> Result<PaletteSettings> {
     show_color_names: attributes
       .get_parsed("show_color_numbers")
       .unwrap_or(PaletteSettings::DEFAULT_SHOW_COLOR_NUMBERS),
-  })
+  }
 }
 
+#[expect(clippy::trivially_copy_pass_by_ref)]
 fn write_palette_settings<W: io::Write>(writer: &mut Writer<W>, settings: &PaletteSettings) -> io::Result<()> {
   writer
     .create_element("palette_settings")
     .with_attributes([
       ("columns_number", settings.columns_number.to_string().as_str()),
       ("color_only", settings.color_only.to_string().as_str()),
+      ("show_stitch_symbols", settings.show_stitch_symbols.to_string().as_str()),
+      (
+        "stitch_symbols_on_contrast_background",
+        settings.stitch_symbols_on_contrast_background.to_string().as_str(),
+      ),
       ("show_color_brands", settings.show_color_brands.to_string().as_str()),
       ("show_color_names", settings.show_color_names.to_string().as_str()),
       ("show_color_numbers", settings.show_color_numbers.to_string().as_str()),
@@ -143,18 +150,18 @@ fn write_palette_settings<W: io::Write>(writer: &mut Writer<W>, settings: &Palet
 }
 
 fn read_grid<R: io::BufRead>(reader: &mut Reader<R>, attributes: AttributesMap) -> Result<Grid> {
-  let mut grid = Grid::default();
-
-  if let Some(interval) = attributes.get_parsed("major_lines_interval") {
-    grid.major_lines_interval = interval;
-  }
-
   fn parse_grid_line(event: &BytesStart<'_>) -> Result<GridLine> {
     let attributes = AttributesMap::try_from(event.attributes())?;
     Ok(GridLine {
       color: attributes.get("color").unwrap_or("C8C8C8").to_string(),
       thickness: attributes.get_parsed("thickness").unwrap_or(0.072),
     })
+  }
+
+  let mut grid = Grid::default();
+
+  if let Some(interval) = attributes.get_parsed("major_lines_interval") {
+    grid.major_lines_interval = interval;
   }
 
   let mut buf = Vec::new();
@@ -198,8 +205,8 @@ fn write_grid<W: io::Write>(writer: &mut Writer<W>, grid: &Grid) -> io::Result<(
   Ok(())
 }
 
-fn read_layers_visibility(attributes: AttributesMap) -> Result<LayersVisibility> {
-  Ok(LayersVisibility {
+fn read_layers_visibility(attributes: AttributesMap) -> LayersVisibility {
+  LayersVisibility {
     reference_image: attributes.get_bool("reference_image").unwrap_or_default(),
     fullstitches: attributes.get_bool("fullstitches").unwrap_or_default(),
     petitestitches: attributes.get_bool("petitestitches").unwrap_or_default(),
@@ -212,7 +219,7 @@ fn read_layers_visibility(attributes: AttributesMap) -> Result<LayersVisibility>
     specialstitches: attributes.get_bool("specialstitches").unwrap_or_default(),
     grid: attributes.get_bool("grid").unwrap_or_default(),
     rulers: attributes.get_bool("rulers").unwrap_or_default(),
-  })
+  }
 }
 
 fn write_layers_visibility<W: io::Write>(writer: &mut Writer<W>, layers: &LayersVisibility) -> io::Result<()> {

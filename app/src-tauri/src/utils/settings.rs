@@ -4,7 +4,7 @@ use tauri_plugin_pinia::ManagerExt as _;
 pub fn auto_save_interval<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> std::time::Duration {
   let interval = app_handle
     .pinia()
-    .get("embroiderly-settings", "other")
+    .get_raw("embroiderly-settings", "other")
     .and_then(|v| v.get("autoSaveInterval").cloned())
     .and_then(|v| serde_json::from_value(v).ok())
     .unwrap_or(15)
@@ -13,12 +13,12 @@ pub fn auto_save_interval<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -
 }
 
 /// Returns whether diagnostics are enabled from user settings.
-#[allow(unused_variables)]
+#[allow(unused_variables, clippy::missing_const_for_fn)]
 pub fn telemetry_diagnostics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> bool {
   #[cfg(not(debug_assertions))]
   let diagnostics_enabled = app_handle
     .pinia()
-    .get("embroiderly-settings", "telemetry")
+    .get_raw("embroiderly-settings", "telemetry")
     .and_then(|v| v.get("diagnostics").cloned())
     .and_then(|v| serde_json::from_value(v).ok())
     .unwrap_or(false);
@@ -29,12 +29,12 @@ pub fn telemetry_diagnostics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppH
 }
 
 /// Returns whether metrics collection is enabled from user settings.
-#[allow(unused_variables)]
+#[allow(unused_variables, clippy::missing_const_for_fn)]
 pub fn telemetry_metrics_enabled<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> bool {
   #[cfg(not(debug_assertions))]
   let metrics_enabled = app_handle
     .pinia()
-    .get("embroiderly-settings", "telemetry")
+    .get_raw("embroiderly-settings", "telemetry")
     .and_then(|v| v.get("metrics").cloned())
     .and_then(|v| serde_json::from_value(v).ok())
     .unwrap_or(false);
