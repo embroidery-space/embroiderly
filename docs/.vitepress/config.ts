@@ -13,7 +13,7 @@ const LANGUAGES = ["en", "uk"];
 const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`);
 
 const isCI = process.env.CI === "true";
-const isTauri = process.env.TAURI_ENV_DEBUG !== undefined;
+const isTauri = process.env.TAURI_ENV_TARGET_TRIPLE !== undefined;
 
 export default defineConfig({
   outDir: "./dist/",
@@ -98,7 +98,9 @@ export default defineConfig({
       console.info("Compiling docs as PDFs using Typst");
       await Promise.all(
         LANGUAGES.map((lang) =>
-          exec(`typst compile .typst/main.typ dist/embroiderly.${lang}.pdf --root . --input lang=${lang}`),
+          exec(
+            `typst compile .typst/main.typ dist/embroiderly.${lang}.pdf --root . --input lang=${lang} --font-path .typst/fonts/`,
+          ),
         ),
       );
     }

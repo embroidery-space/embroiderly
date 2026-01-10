@@ -64,6 +64,7 @@ export const config: WebdriverIO.Config = {
 
     // Ensure the Tauri project is built since we expect this binary to exist for the webdriver sessions.
     spawnSync("pnpm", ["tauri", "build", "--debug", "--no-bundle"], {
+      cwd: ROOT_PATH,
       stdio: "inherit",
       shell: true,
     });

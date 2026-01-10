@@ -6,7 +6,7 @@
   block(height: 100%, width: 100%)[
     #set align(center)
 
-    #text(size: 3.5em, weight: "bold", font: "Inter")[Embroiderly]
+    #text(size: 3.5em, weight: "bold")[Embroiderly]
     #v(0.5em)
     #text(size: 1.5em, style: "italic", fill: gray.darken(20%))[#strings.tagline]
 
