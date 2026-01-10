@@ -28,11 +28,8 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/setup-rust
-
-      # Install Typst and Inter font for building the documentation as PDF.
-      - uses: typst-community/setup-typst@48aeee7543d37f01afd1ffb27307dc277387ba13 # v4.3.1
-      - uses: fontist/setup-fontist@8fcbe38d74da10b3083cacb83d1ba9b310d128ce # v2.0.1
-      - run: fontist install Inter
+        with:
+          tools: typst-cli
 
       - name: Build the application
         id: tauri
