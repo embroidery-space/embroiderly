@@ -118,7 +118,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
           color: "info",
           actions: [
             {
-              label: fluent.$t("label-update-now"),
+              label: fluent.$t("updater-update-now"),
               onClick: async () => {
                 try {
                   loadingUpdate.value = true;
