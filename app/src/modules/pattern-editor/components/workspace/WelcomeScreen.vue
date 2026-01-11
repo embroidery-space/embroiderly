@@ -35,6 +35,23 @@
               @click="openPattern"
             />
           </div>
+
+          <div v-if="patternFileStore.recentPatterns.length > 0" class="flex flex-col gap-y-1">
+            <span class="text-lg">{{ $t("welcome-section-recent") }}</span>
+            <div class="flex max-w-max flex-col gap-y-1">
+              <template v-for="filePath in patternFileStore.recentPatterns" :key="filePath">
+                <UTooltip arrow :text="filePath" :delay-duration="200" :content="{ side: 'right' }">
+                  <UButton
+                    variant="ghost"
+                    icon="i-lucide:file"
+                    :label="filePath.split(sep()).pop() || filePath"
+                    class="justify-start"
+                    @click="openRecentFile(filePath)"
+                  />
+                </UTooltip>
+              </template>
+            </div>
+          </div>
         </div>
 
         <div class="flex flex-col gap-y-5">
@@ -67,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-  import { resolveResource } from "@tauri-apps/api/path";
+  import { resolveResource, sep } from "@tauri-apps/api/path";
   import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
   import { computed } from "vue";
@@ -153,5 +170,10 @@
         router.push({ name: "pattern-editor", params: { patternId } });
       },
     });
+  }
+
+  async function openRecentFile(filePath: string) {
+    const patternId = await patternFileStore.openPattern(filePath);
+    if (patternId) router.push({ name: "pattern-editor", params: { patternId } });
   }
 </script>

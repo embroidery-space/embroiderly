@@ -12,6 +12,8 @@ import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "#shared/constant
 
 import { FilesApi } from "../api/";
 
+const MAX_RECENT_PATTERNS = 5;
+
 export const usePatternFileStore = defineStore(
   "embroiderly-pattern-files",
   () => {
@@ -21,6 +23,7 @@ export const usePatternFileStore = defineStore(
     const filePicker = useFilePicker();
 
     const openedPatterns = ref<{ id: string; title: string }[]>([]);
+    const recentPatterns = ref<string[]>([]);
     const loading = ref(false);
 
     function addOpenedPattern(id: string, title: string) {
@@ -36,6 +39,15 @@ export const usePatternFileStore = defineStore(
     function updateOpenedPattern(id: string, title: string) {
       const pattern = openedPatterns.value.find((p) => p.id === id);
       if (pattern) pattern.title = title;
+    }
+
+    function addRecentPattern(filePath: string) {
+      // Delete an existing entry to maintain the order.
+      const index = recentPatterns.value.indexOf(filePath);
+      if (index !== -1) recentPatterns.value.splice(index, 1);
+
+      recentPatterns.value.unshift(filePath);
+      recentPatterns.value = recentPatterns.value.slice(0, MAX_RECENT_PATTERNS);
     }
 
     async function loadPattern(id: string) {
@@ -57,7 +69,11 @@ export const usePatternFileStore = defineStore(
 
       try {
         loading.value = true;
-        return await FilesApi.openPattern(path, options);
+
+        const patternId = await FilesApi.openPattern(path, options);
+        addRecentPattern(path);
+
+        return patternId;
       } catch (error) {
         if (error instanceof PatternErrorUnsupportedPatternType) {
           confirm.open({
@@ -189,6 +205,7 @@ export const usePatternFileStore = defineStore(
 
     return {
       openedPatterns,
+      recentPatterns,
       loading,
       updateOpenedPattern,
       loadPattern,
@@ -204,5 +221,12 @@ export const usePatternFileStore = defineStore(
       closeAllPatterns,
     };
   },
-  { tauri: { save: false, sync: false } },
+  {
+    tauri: {
+      autoStart: true,
+      saveOnChange: true,
+      filterKeys: ["recentPatterns"],
+      filterKeysStrategy: "pick",
+    },
+  },
 );
