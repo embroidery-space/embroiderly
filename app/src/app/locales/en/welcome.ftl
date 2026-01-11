@@ -12,6 +12,8 @@ welcome-section-starting = Start
 welcome-open-pattern = Open Pattern
 welcome-create-pattern = Create Pattern
 
+welcome-section-recent = Recent Patterns
+
 welcome-section-customization = Customize
 welcome-customization-settings-title = Settings
 welcome-customization-settings-descr = Customize { -app-name } according to your preferences.
