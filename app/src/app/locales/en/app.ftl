@@ -14,7 +14,8 @@ app-menu-file-save-as = Save As
 app-menu-file-import = Import
 app-menu-file-import-image = Image
 app-menu-file-export = Export
-app-menu-file-close = Close
+app-menu-file-close = Close pattern
+app-menu-file-quit = Quit { -app-name }
 
 app-menu-pattern = Pattern
 
