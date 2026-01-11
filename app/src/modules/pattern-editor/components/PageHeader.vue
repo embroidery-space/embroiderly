@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
   import { resolveResource } from "@tauri-apps/api/path";
+  import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { writeText } from "@tauri-apps/plugin-clipboard-manager";
   import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
@@ -69,6 +70,8 @@
   const patternStore = usePatternStore();
   const patternFileStore = usePatternFileStore();
   const settingsStore = useSettingsStore();
+
+  const appWindow = getCurrentWebviewWindow();
 
   const menuItems = computed<WindowMenuItem[]>(() => [
     {
@@ -176,6 +179,13 @@
 
               router.push({ name: "pattern-editor", params: { patternId } });
             },
+          },
+        ],
+        [
+          {
+            label: fluent.$t("app-menu-file-quit"),
+            kbds: ["ctrl", "q"],
+            onSelect: () => appWindow.close(),
           },
         ],
       ],
