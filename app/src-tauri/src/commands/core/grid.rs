@@ -7,7 +7,7 @@ use crate::parse_command_payload;
 use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn update_grid<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,

@@ -7,7 +7,7 @@ use crate::parse_command_payload;
 use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn update_fabric<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
@@ -30,7 +30,7 @@ pub fn update_fabric<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace")]
+#[tracing::instrument(level = "trace", err)]
 #[tauri::command]
 pub fn load_fabric_colors() -> Result<tauri::ipc::Response> {
   let fabric_colors_path = crate::utils::path::resolve_app_resources("resources/fabric-colors.json")?;

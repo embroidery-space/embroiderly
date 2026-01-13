@@ -7,7 +7,7 @@ use crate::parse_command_payload;
 use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, ?file_path))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, ?file_path), err)]
 #[tauri::command]
 pub fn set_reference_image<R: tauri::Runtime>(
   file_path: std::path::PathBuf,
@@ -41,7 +41,7 @@ pub fn set_reference_image<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id), err)]
 #[tauri::command]
 pub fn remove_reference_image<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
@@ -66,7 +66,7 @@ pub fn remove_reference_image<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn update_reference_image_settings<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,

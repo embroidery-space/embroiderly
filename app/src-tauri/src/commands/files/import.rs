@@ -2,7 +2,7 @@ use crate::error::{Error, ErrorKind, Result};
 use crate::sidecars::{ImageImportSidecar, SidecarController as _, SidecarId, SidecarManager};
 use crate::state::{HistoryState, PatternsState};
 
-#[tracing::instrument(level = "trace", ret)]
+#[tracing::instrument(level = "trace", ret, err)]
 #[tauri::command]
 pub fn get_image_dimensions(image_path: std::path::PathBuf) -> Result<(u32, u32)> {
   Ok(image::image_dimensions(image_path)?)
@@ -10,7 +10,7 @@ pub fn get_image_dimensions(image_path: std::path::PathBuf) -> Result<(u32, u32)
 
 /// Starts the image import sidecar in the "server" mode.
 /// Returns the ID of the sidecar.
-#[tracing::instrument(level = "trace", ret, skip_all)]
+#[tracing::instrument(level = "trace", skip_all, ret, err)]
 #[tauri::command]
 pub async fn start_image_import_server<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
@@ -25,7 +25,7 @@ pub async fn start_image_import_server<R: tauri::Runtime>(
 }
 
 /// Stops the running image import sidecar by its ID.
-#[tracing::instrument(level = "trace", skip(sidecar_manager))]
+#[tracing::instrument(level = "trace", skip(sidecar_manager), err)]
 #[tauri::command]
 pub async fn stop_image_import_server(id: SidecarId, sidecar_manager: tauri::State<'_, SidecarManager>) -> Result<()> {
   if let Some(sidecar) = sidecar_manager.remove(id).await {
@@ -37,7 +37,7 @@ pub async fn stop_image_import_server(id: SidecarId, sidecar_manager: tauri::Sta
 
 /// Sends updated parameters to the specified image import sidecar.
 /// Returns the pattern imported from the image.
-#[tracing::instrument(level = "trace", skip(sidecar_manager))]
+#[tracing::instrument(level = "trace", skip(sidecar_manager), err)]
 #[tauri::command]
 pub async fn get_image_import_preview(
   id: SidecarId,
@@ -71,7 +71,7 @@ pub async fn get_image_import_preview(
 /// Fetches the final image import result, stores it in app state, and stops the sidecar.
 /// Returns the ID of the pattern imported from the image.
 #[expect(clippy::too_many_arguments)]
-#[tracing::instrument(level = "trace", skip(_app_handle, history, patterns, sidecar_manager))]
+#[tracing::instrument(level = "trace", skip(_app_handle, history, patterns, sidecar_manager), err)]
 #[tauri::command]
 pub async fn finalize_image_import<R: tauri::Runtime>(
   id: SidecarId,
