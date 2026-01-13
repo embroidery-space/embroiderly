@@ -4,7 +4,7 @@ use embroiderly_pattern::PdfExportOptions;
 use tauri::Manager as _;
 use tauri_plugin_shell::ShellExt as _;
 
-use crate::error::{PatternError, Result};
+use crate::error::{Error, ErrorKind, Result};
 
 /// A utility for exporting cross-stitch patterns as a PDF documents using the `embroiderly_publish` sidecar.
 pub struct PdfExportSidecar<R: tauri::Runtime> {
@@ -48,16 +48,20 @@ impl<R: tauri::Runtime> super::SidecarRunner for PdfExportSidecar<R> {
   async fn run_async(self) -> Result<super::Output> {
     let pattern_path = self
       .pattern_path
-      .ok_or_else(|| PatternError::FailedToExport(anyhow::anyhow!("Pattern path is required")))?;
+      .ok_or_else(|| Error::new(ErrorKind::FailedToExport).with_source(anyhow::anyhow!("Pattern path is required")))?;
     let output_path = self
       .output_path
-      .ok_or_else(|| PatternError::FailedToExport(anyhow::anyhow!("Output path is required")))?;
+      .ok_or_else(|| Error::new(ErrorKind::FailedToExport).with_source(anyhow::anyhow!("Output path is required")))?;
     let options = self
       .options
-      .ok_or_else(|| PatternError::FailedToExport(anyhow::anyhow!("PDF export options are required")))
+      .ok_or_else(|| {
+        Error::new(ErrorKind::FailedToExport).with_source(anyhow::anyhow!("PDF export options are required"))
+      })
       .and_then(|options| {
-        serde_json::to_string(&options)
-          .map_err(|e| PatternError::FailedToExport(anyhow::anyhow!("Failed to serialize PDF export options: {e}")))
+        serde_json::to_string(&options).map_err(|e| {
+          Error::new(ErrorKind::FailedToExport)
+            .with_source(anyhow::anyhow!("Failed to serialize PDF export options: {e}"))
+        })
       })?;
 
     let system_fonts_dir = self
@@ -70,7 +74,7 @@ impl<R: tauri::Runtime> super::SidecarRunner for PdfExportSidecar<R> {
       .app_handle
       .shell()
       .sidecar("embroiderly_publish")
-      .map_err(|e| PatternError::FailedToExport(e.into()))?;
+      .map_err(|e| Error::new(ErrorKind::FailedToExport).with_source(e))?;
 
     // Set logs directory.
     sidecar = sidecar.env(

@@ -4,7 +4,7 @@ use tauri::Emitter as _;
 use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::CheckpointAction;
-use crate::error::{CommandError, PatternError, Result};
+use crate::error::{Error, ErrorKind, Result};
 use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 use crate::utils::path::{app_document_dir, backup_file_path};
@@ -17,7 +17,7 @@ pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState
     Ok(tauri::ipc::Response::new(borsh::to_vec(&pattern)?))
   } else {
     tracing::trace!("Pattern not found");
-    Err(PatternError::PatternNotFound(pattern_id).into())
+    Err(Error::new(ErrorKind::PatternNotFound))
   }
 }
 
@@ -51,7 +51,7 @@ pub fn open_pattern<R: tauri::Runtime>(
         return Ok(pattern_id.to_string());
       }
       Some(false) => {}
-      None => return Err(PatternError::BackupFileExists.into()),
+      None => return Err(Error::new(ErrorKind::BackupFileExists)),
     }
   }
 
@@ -126,7 +126,7 @@ pub fn create_pattern<R: tauri::Runtime>(
 
     Ok(pattern_id.to_string())
   } else {
-    Err(CommandError::InvalidRequestBody.into())
+    Err(Error::new(ErrorKind::InvalidRequestBody))
   }
 }
 
@@ -224,7 +224,7 @@ pub fn close_pattern<R: tauri::Runtime>(
     if let Some(history) = history.get(&pattern_id)
       && history.has_unsaved_changes()
     {
-      return Err(PatternError::UnsavedChanges(pattern_id).into());
+      return Err(Error::new(ErrorKind::UnsavedChanges));
     }
   }
 

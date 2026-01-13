@@ -1,4 +1,4 @@
-use crate::error::{PatternError, Result};
+use crate::error::{Error, ErrorKind, Result};
 use crate::sidecars::{ImageImportSidecar, SidecarController as _, SidecarId, SidecarManager};
 use crate::state::{HistoryState, PatternsState};
 
@@ -47,7 +47,7 @@ pub async fn get_image_import_preview(
   sidecar_manager: tauri::State<'_, SidecarManager>,
 ) -> Result<tauri::ipc::Response> {
   let Some(sidecar) = sidecar_manager.get(id).await else {
-    return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar not found")).into());
+    return Err(Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Sidecar not found")));
   };
 
   let output = {
@@ -56,8 +56,9 @@ pub async fn get_image_import_preview(
       palette_path,
       options,
     };
-    let payload = serde_json::to_vec(&command)
-      .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to serialize command: {e}")))?;
+    let payload = serde_json::to_vec(&command).map_err(|e| {
+      Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Failed to serialize command: {e}"))
+    })?;
 
     let mut sidecar = sidecar.lock().await;
     sidecar.send_command(payload).await?;
@@ -83,7 +84,7 @@ pub async fn finalize_image_import<R: tauri::Runtime>(
   sidecar_manager: tauri::State<'_, SidecarManager>,
 ) -> Result<String> {
   let Some(sidecar) = sidecar_manager.remove(id).await else {
-    return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar not found")).into());
+    return Err(Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Sidecar not found")));
   };
   let mut sidecar = sidecar.lock().await;
 
@@ -93,8 +94,9 @@ pub async fn finalize_image_import<R: tauri::Runtime>(
       palette_path,
       options,
     };
-    let payload = serde_json::to_vec(&command)
-      .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to serialize command: {e}")))?;
+    let payload = serde_json::to_vec(&command).map_err(|e| {
+      Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Failed to serialize command: {e}"))
+    })?;
 
     sidecar.send_command(payload).await?;
     sidecar.get_response().await?

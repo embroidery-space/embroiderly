@@ -2,11 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 import type { Fabric, PdfExportOptions } from "#pattern-editor/lib/pattern/";
-import {
-  PatternErrorBackupFileExists,
-  PatternErrorUnsavedChanges,
-  PatternErrorUnsupportedPatternType,
-} from "#shared/api/";
+import { BackupFileExistsError, UnsavedChangesError, UnsupportedPatternTypeError } from "#shared/api/";
 import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
 import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "#shared/constants/";
 
@@ -75,7 +71,7 @@ export const usePatternFileStore = defineStore(
 
         return patternId;
       } catch (error) {
-        if (error instanceof PatternErrorUnsupportedPatternType) {
+        if (error instanceof UnsupportedPatternTypeError) {
           confirm.open({
             title: fluent.$t("error"),
             description: fluent.$t("pattern-open-unsupported-type"),
@@ -84,7 +80,7 @@ export const usePatternFileStore = defineStore(
           });
           return;
         }
-        if (error instanceof PatternErrorBackupFileExists) {
+        if (error instanceof BackupFileExistsError) {
           const accepted = await confirm.open({
             title: fluent.$t("error"),
             description: fluent.$t("pattern-backup-file-exists"),
@@ -119,7 +115,7 @@ export const usePatternFileStore = defineStore(
         loading.value = true;
         await FilesApi.savePattern(id, path);
       } catch (error) {
-        if (error instanceof PatternErrorUnsupportedPatternType) {
+        if (error instanceof UnsupportedPatternTypeError) {
           confirm.open({
             title: fluent.$t("error"),
             description: fluent.$t("pattern-save-unsupported-type"),
@@ -140,7 +136,7 @@ export const usePatternFileStore = defineStore(
         await FilesApi.closePattern(id, options);
         removeOpenedPattern(id);
       } catch (error) {
-        if (error instanceof PatternErrorUnsavedChanges) {
+        if (error instanceof UnsavedChangesError) {
           const accepted = await confirm.open(fluent.$ta("unsaved-changes")).result;
 
           // If the user dismisses the dialog, prevent the window from closing.

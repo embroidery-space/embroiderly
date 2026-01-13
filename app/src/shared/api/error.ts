@@ -1,94 +1,99 @@
 interface ApplicationError {
-  kind: "command" | "pattern" | "tauri" | "io" | "uuid" | "unknown";
+  kind: string;
   message: string;
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export function toApplicationError(error: unknown): Error {
   const isApplicationError = typeof error === "object" && error !== null && "kind" in error && "message" in error;
   if (isApplicationError) {
-    const err = error as ApplicationError;
-    const [code, message] = err.message.split(":").map((s) => s.trim()) as [string, string];
-
-    if (err.kind === "command") {
-      if (code === "Err01") return new CommandErrorInvalidRequestBody(message);
-      if (code === "Err02") return new CommandErrorMissingPatternIdHeader(message);
+    const { kind, message } = error as ApplicationError;
+    switch (kind) {
+      case "InvalidRequestBody":
+        return new InvalidRequestBodyError(message);
+      case "MissingPatternIdHeader":
+        return new MissingPatternIdHeaderError(message);
+      case "PatternNotFound":
+        return new PatternNotFoundError(message);
+      case "BackupFileExists":
+        return new BackupFileExistsError(message);
+      case "UnsupportedPatternType":
+        return new UnsupportedPatternTypeError(message);
+      case "FailedToParse":
+        return new FailedToParseError(message);
+      case "UnsavedChanges":
+        return new UnsavedChangesError(message);
+      case "FailedToExport":
+        return new FailedToExportError(message);
+      case "FailedToImport":
+        return new FailedToImportError(message);
+      default:
+        return new UnknownError(message);
     }
+  }
 
-    if (err.kind === "pattern") {
-      if (code === "Err01") return new PatternErrorPatternNotFound(message);
-      if (code === "Err02") return new PatternErrorBackupFileExists(message);
-      if (code === "Err03") return new PatternErrorUnsupportedPatternType(message);
-      if (code === "Err04") return new PatternErrorFailedToParse(message);
-      if (code === "Err05") return new PatternErrorUnsavedChanges(message);
-      if (code === "Err06") return new PatternErrorFailedToExport(message);
-      if (code === "Err07") return new PatternErrorFailedToImport(message);
-    }
-
-    return new UnknownError(err.message);
-  } else return error instanceof Error ? error : new Error(String(error));
+  return error instanceof Error ? error : new Error(String(error));
 }
 
-export class CommandErrorInvalidRequestBody extends Error {
+export class InvalidRequestBodyError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "CommandErrorInvalidRequestBody";
+    this.name = "InvalidRequestBodyError";
   }
 }
 
-export class CommandErrorMissingPatternIdHeader extends Error {
+export class MissingPatternIdHeaderError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "CommandErrorMissingPatternIdHeader";
+    this.name = "MissingPatternIdHeaderError";
   }
 }
 
-export class PatternErrorPatternNotFound extends Error {
+export class PatternNotFoundError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "PatternErrorPatternNotFound";
+    this.name = "PatternNotFoundError";
   }
 }
 
-export class PatternErrorBackupFileExists extends Error {
+export class BackupFileExistsError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "PatternErrorBackupFileExists";
+    this.name = "BackupFileExistsError";
   }
 }
 
-export class PatternErrorUnsupportedPatternType extends Error {
+export class UnsupportedPatternTypeError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "PatternErrorUnsupportedPatternType";
+    this.name = "UnsupportedPatternTypeError";
   }
 }
 
-export class PatternErrorFailedToParse extends Error {
+export class FailedToParseError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "PatternErrorFailedToParse";
+    this.name = "FailedToParseError";
   }
 }
 
-export class PatternErrorFailedToExport extends Error {
+export class FailedToExportError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "PatternErrorFailedToExport";
+    this.name = "FailedToExportError";
   }
 }
 
-export class PatternErrorFailedToImport extends Error {
+export class FailedToImportError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "PatternErrorFailedToImport";
+    this.name = "FailedToImportError";
   }
 }
 
-export class PatternErrorUnsavedChanges extends Error {
+export class UnsavedChangesError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "PatternErrorUnsavedChanges";
+    this.name = "UnsavedChangesError";
   }
 }
 
