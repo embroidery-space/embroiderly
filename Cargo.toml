@@ -65,12 +65,12 @@ tauri = { version = "2.9.5", default-features = false, features = ["compression"
 tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.2"
-tauri-plugin-dialog = "2.4.2"
+tauri-plugin-dialog = "2.5.0"
 tauri-plugin-fs = "2.0.3"
-tauri-plugin-opener = "2.5.2"
+tauri-plugin-opener = "2.5.3"
 tauri-plugin-os = "2.3.2"
 tauri-plugin-process = "2.3.1"
-tauri-plugin-shell = "2.3.3"
+tauri-plugin-shell = "2.3.4"
 tauri-plugin-updater = "2.9.0"
 ## Third-party Tauri plugins
 tauri-plugin-better-posthog = "0.1.2"
@@ -129,7 +129,7 @@ tracing-panic = "0.1.2"
 
 # Telemetry
 better-posthog = "0.2.2"
-sentry = "0.46.0"
+sentry = "0.46.1"
 
 # Identification
 uuid = { version = "1.19.0", features = ["v4", "v7"] }
