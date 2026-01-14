@@ -85,8 +85,7 @@ export const usePatternFileStore = defineStore(
             title: fluent.$t("error"),
             description: fluent.$t("pattern-backup-file-exists"),
           }).result;
-          await openPattern(path, { restoreFromBackup: accepted });
-          return;
+          return await openPattern(path, { restoreFromBackup: accepted });
         }
         throw error;
       } finally {
