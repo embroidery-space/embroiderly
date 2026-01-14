@@ -178,7 +178,9 @@ pub fn run_image_import_server() -> anyhow::Result<()> {
           }
 
           let pattern_path = image_path.with_extension(embroiderly_parsers::PatternFormat::default().to_string());
-          embroiderly_pattern::PatternProject::new(Some(pattern_path), pattern, Default::default(), Default::default())
+          embroiderly_pattern::PatternProject::builder(pattern)
+            .file_path(pattern_path)
+            .build()
         };
 
         send_pattern_response(patproj)?;

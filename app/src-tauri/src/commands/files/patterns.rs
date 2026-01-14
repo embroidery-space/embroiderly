@@ -109,11 +109,10 @@ pub fn create_pattern<R: tauri::Runtime>(
   patterns: tauri::State<PatternsState>,
 ) -> Result<String> {
   if let tauri::ipc::InvokeBody::Raw(data) = request.body() {
-    let fabric: Fabric = borsh::from_slice(data)?;
-    let pattern = Pattern::new(fabric);
-
-    let patproj = PatternProject::new(None, pattern, Default::default(), Default::default());
-
+    let patproj = {
+      let fabric: Fabric = borsh::from_slice(data)?;
+      PatternProject::new(Pattern::new(fabric))
+    };
     app_handle.capture_event(AppEvent::PatternCreated {
       fabric: patproj.pattern.fabric.clone(),
     });
