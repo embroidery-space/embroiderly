@@ -3,6 +3,7 @@
     <template #body>
       <AppSettingsForm
         v-model:ui="settingsStore.ui"
+        v-model:startup="settingsStore.startup"
         v-model:viewport="settingsStore.viewport"
         v-model:updater="settingsStore.updater"
         v-model:telemetry="settingsStore.telemetry"

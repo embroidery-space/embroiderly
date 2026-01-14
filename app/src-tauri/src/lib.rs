@@ -21,6 +21,7 @@ pub fn run() {
       #[cfg(any(target_os = "macos", target_os = "ios"))]
       tauri::RunEvent::Opened { urls } => {
         startup::handle_file_associations(app_handle, urls.into_iter().map(|url| url.to_string())).unwrap();
+        startup::handle_open_on_startup(app_handle);
         startup::create_webview_window(app_handle).unwrap();
       }
       tauri::RunEvent::Exit => {
@@ -55,6 +56,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
         startup::handle_file_associations(app_handle, std::env::args().skip(1))?;
+        startup::handle_open_on_startup(app_handle);
         startup::create_webview_window(app_handle)?;
       }
 

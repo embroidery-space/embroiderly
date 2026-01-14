@@ -195,7 +195,8 @@ export const usePatternFileStore = defineStore(
     }
 
     async function fetchOpenedPatterns() {
-      for (const [id, title] of await FilesApi.getOpenedPatterns()) {
+      const patterns = await FilesApi.getOpenedPatterns();
+      for (const [id, title] of patterns) {
         addOpenedPattern(id, title);
       }
     }

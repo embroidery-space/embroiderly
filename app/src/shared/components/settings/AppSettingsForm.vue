@@ -25,6 +25,23 @@
       </div>
     </template>
 
+    <template #startup>
+      <div class="flex flex-col gap-y-2">
+        <UFormField :label="$t('settings-startup-action')" class="w-full">
+          <USelect v-model="startup.action" :items="startupActionOptions" class="w-full" />
+        </UFormField>
+
+        <UFormField :label="$t('settings-startup-template-path')" class="w-full">
+          <FilePicker
+            v-model="startup.templatePath"
+            :options="{ filters: ANY_PATTERN_FILTER }"
+            :disabled="startup.action !== StartupAction.CustomTemplate"
+            class="w-full"
+          />
+        </UFormField>
+      </div>
+    </template>
+
     <template #viewport>
       <div class="flex flex-col gap-y-2">
         <p class="text-sm text-neutral-300">{{ $t("settings-viewport-hint") }}</p>
@@ -75,11 +92,21 @@
   import type { TabsItem } from "@nuxt/ui";
   import { computed } from "vue";
 
+  import { FilePicker } from "#shared/components/";
   import { useI18n } from "#shared/composables/";
-  import { useSettingsStore } from "#shared/stores/";
-  import type { OtherOptions, UiOptions, UpdaterOptions, ViewportOptions, TelemetryOptions } from "#shared/stores/";
+  import { ANY_PATTERN_FILTER } from "#shared/constants/";
+  import { StartupAction, useSettingsStore } from "#shared/stores/";
+  import type {
+    OtherOptions,
+    StartupOptions,
+    UiOptions,
+    UpdaterOptions,
+    ViewportOptions,
+    TelemetryOptions,
+  } from "#shared/stores/";
 
   const ui = defineModel<UiOptions>("ui", { required: true });
+  const startup = defineModel<StartupOptions>("startup", { required: true });
   const viewport = defineModel<ViewportOptions>("viewport", { required: true });
   const updater = defineModel<UpdaterOptions>("updater", { required: true });
   const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
@@ -90,6 +117,7 @@
 
   const tabs = computed<TabsItem[]>(() => [
     { label: fluent.$t("settings-interface"), slot: "ui" },
+    { label: fluent.$t("settings-startup"), slot: "startup" },
     { label: fluent.$t("settings-viewport"), slot: "viewport" },
     { label: fluent.$t("settings-updater"), slot: "updater" },
     { label: fluent.$t("settings-telemetry"), slot: "telemetry" },
@@ -114,6 +142,12 @@
   const languageOptions = computed(() => [
     { label: "English", value: "en" },
     { label: "Українська", value: "uk" },
+  ]);
+
+  const startupActionOptions = computed(() => [
+    { label: fluent.$t("settings-startup-action-nothing"), value: StartupAction.Nothing },
+    { label: fluent.$t("settings-startup-action-new-pattern"), value: StartupAction.NewPattern },
+    { label: fluent.$t("settings-startup-action-custom-template"), value: StartupAction.CustomTemplate },
   ]);
 
   const wheelActionOptions = computed(() => [

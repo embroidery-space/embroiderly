@@ -1,5 +1,40 @@
 use tauri_plugin_pinia::ManagerExt as _;
 
+/// The action to perform on application startup.
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, serde::Deserialize)]
+pub enum StartupAction {
+  /// Do nothing. Users will start on the welcome screen.
+  Nothing,
+
+  /// Create a new empty pattern and open it immediately in the pattern editor.
+  #[default]
+  NewPattern,
+
+  /// Load a copy of the specified pattern (the template pattern) and open it in the pattern editor.
+  CustomTemplate,
+}
+
+/// Returns the startup action from user settings.
+pub fn startup_action<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> StartupAction {
+  app_handle
+    .pinia()
+    .get_raw("embroiderly-settings", "startup")
+    .and_then(|v| v.get("action").cloned())
+    .and_then(|v| serde_json::from_value(v).ok())
+    .unwrap_or_default()
+}
+
+/// Returns the startup pattern template path from user settings.
+pub fn startup_template_path<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> Option<std::path::PathBuf> {
+  app_handle
+    .pinia()
+    .get_raw("embroiderly-settings", "startup")
+    .and_then(|v| v.get("templatePath").cloned())
+    .and_then(|v| serde_json::from_value::<String>(v).ok())
+    .filter(|s| !s.is_empty())
+    .map(std::path::PathBuf::from)
+}
+
 /// Returns the auto-save interval from user settings.
 pub fn auto_save_interval<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> std::time::Duration {
   let interval = app_handle

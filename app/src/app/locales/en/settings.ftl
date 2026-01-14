@@ -20,6 +20,15 @@ settings-scale-xx-large = Largest
 
 settings-language = Language
 
+settings-startup = Startup
+
+settings-startup-action = Open on Startup
+settings-startup-action-nothing = Nothing
+settings-startup-action-new-pattern = New Pattern
+settings-startup-action-custom-template = Custom Template
+
+settings-startup-template-path = Template File
+
 settings-viewport = Viewport
 settings-viewport-hint = These settings require a restart.
 

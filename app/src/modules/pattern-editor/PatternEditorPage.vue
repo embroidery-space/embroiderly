@@ -123,6 +123,11 @@
 
   onMounted(async () => {
     await patternFileStore.fetchOpenedPatterns();
+    if (!props.patternId && patternFileStore.openedPatterns.length) {
+      const pattern = patternFileStore.openedPatterns[0]!;
+      router.push({ name: "pattern-editor", params: { patternId: pattern.id } });
+    }
+
     await appWindow.show();
   });
 </script>

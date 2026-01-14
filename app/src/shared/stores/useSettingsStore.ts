@@ -18,6 +18,17 @@ export interface UiOptions {
   language: Language;
 }
 
+export enum StartupAction {
+  Nothing = "Nothing",
+  NewPattern = "NewPattern",
+  CustomTemplate = "CustomTemplate",
+}
+
+export interface StartupOptions {
+  action: StartupAction;
+  templatePath: string;
+}
+
 export interface ViewportOptions {
   antialias: boolean;
   wheelAction: WheelAction;
@@ -80,6 +91,11 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
     },
     { immediate: true },
   );
+
+  const startup = reactive<StartupOptions>({
+    action: StartupAction.NewPattern,
+    templatePath: "",
+  });
 
   const viewport = reactive<ViewportOptions>({
     antialias: true,
@@ -149,6 +165,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
   return {
     loadingUpdate,
     ui,
+    startup,
     viewport,
     updater,
     telemetry,
