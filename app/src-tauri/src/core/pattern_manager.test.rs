@@ -4,7 +4,7 @@ use uuid::Uuid;
 
 use super::*;
 
-fn create_test_pattern(id: Uuid, file_path: PathBuf) -> PatternProject {
+fn create_test_pattern(id: Uuid, file_path: Option<PathBuf>) -> PatternProject {
   PatternProject {
     id,
     file_path,
@@ -26,20 +26,20 @@ fn test_add_and_get_pattern() {
   let pattern_id = Uuid::new_v4();
   let pattern_path = PathBuf::from("pattern.xsd");
 
-  let pattern = create_test_pattern(pattern_id, pattern_path.clone());
+  let pattern = create_test_pattern(pattern_id, Some(pattern_path.clone()));
   pm.add_pattern(pattern);
 
   // Test get_pattern_by_id
   let retrieved_by_id = pm.get_pattern_by_id(&pattern_id);
   assert!(retrieved_by_id.is_some());
   assert_eq!(retrieved_by_id.unwrap().id, pattern_id);
-  assert_eq!(retrieved_by_id.unwrap().file_path, pattern_path);
+  assert_eq!(retrieved_by_id.unwrap().file_path, Some(pattern_path.clone()));
 
   // Test get_pattern_by_path
   let retrieved_by_path = pm.get_pattern_by_path(&pattern_path);
   assert!(retrieved_by_path.is_some());
   assert_eq!(retrieved_by_path.unwrap().id, pattern_id);
-  assert_eq!(retrieved_by_path.unwrap().file_path, pattern_path);
+  assert_eq!(retrieved_by_path.unwrap().file_path, Some(pattern_path));
 }
 
 #[test]
@@ -47,7 +47,7 @@ fn test_get_mut_pattern_by_id() {
   let mut pm = PatternManager::new();
 
   let pattern_id = Uuid::new_v4();
-  let pattern = create_test_pattern(pattern_id, PathBuf::from("pattern.xsd"));
+  let pattern = create_test_pattern(pattern_id, Some(PathBuf::from("pattern.xsd")));
   pm.add_pattern(pattern);
 
   let new_title = "Updated Pattern Title";
@@ -67,7 +67,7 @@ fn test_remove_pattern() {
   let pattern_id = Uuid::new_v4();
   let pattern_path = PathBuf::from("pattern.xsd");
 
-  let pattern = create_test_pattern(pattern_id, pattern_path.clone());
+  let pattern = create_test_pattern(pattern_id, Some(pattern_path.clone()));
   pm.add_pattern(pattern);
 
   // Ensure pattern is there before removal
@@ -106,11 +106,11 @@ fn test_add_multiple_patterns() {
   let mut pm = PatternManager::new();
   let pattern_id1 = Uuid::new_v4();
   let pattern_path1 = PathBuf::from("pattern1.xsd");
-  let pattern1 = create_test_pattern(pattern_id1, pattern_path1.clone());
+  let pattern1 = create_test_pattern(pattern_id1, Some(pattern_path1.clone()));
 
   let pattern_id2 = Uuid::new_v4();
   let pattern_path2 = PathBuf::from("pattern2.xsd");
-  let pattern2 = create_test_pattern(pattern_id2, pattern_path2.clone());
+  let pattern2 = create_test_pattern(pattern_id2, Some(pattern_path2.clone()));
 
   pm.add_pattern(pattern1);
   pm.add_pattern(pattern2);
@@ -119,4 +119,21 @@ fn test_add_multiple_patterns() {
   assert!(pm.get_pattern_by_path(&pattern_path1).is_some());
   assert!(pm.get_pattern_by_id(&pattern_id2).is_some());
   assert!(pm.get_pattern_by_path(&pattern_path2).is_some());
+}
+
+#[test]
+fn test_add_pattern_without_file_path() {
+  let mut pm = PatternManager::new();
+
+  let pattern_id = Uuid::new_v4();
+  let pattern = create_test_pattern(pattern_id, None);
+  pm.add_pattern(pattern);
+
+  // Pattern can be retrieved by ID
+  let retrieved = pm.get_pattern_by_id(&pattern_id);
+  assert!(retrieved.is_some());
+  assert_eq!(retrieved.unwrap().file_path, None);
+
+  // Pattern cannot be retrieved by path (it has no path)
+  assert!(pm.get_pattern_by_path(&PathBuf::from("any.xsd")).is_none());
 }

@@ -7,12 +7,7 @@ use tauri::Manager as _;
 /// Returns the ID of the created pattern.
 #[allow(unused)]
 pub fn create_test_pattern<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> uuid::Uuid {
-  let patproj = PatternProject::new(
-    std::path::PathBuf::from("test_pattern.embproj"),
-    Default::default(),
-    Default::default(),
-    Default::default(),
-  );
+  let patproj = PatternProject::new(Default::default());
   let pattern_id = patproj.id;
 
   let patterns_state = app_handle.state::<PatternsState>();

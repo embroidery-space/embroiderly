@@ -56,7 +56,7 @@ pub fn open_pattern<R: tauri::Runtime>(
   }
 
   let mut patproj = embroiderly_parsers::parse_pattern(file_path.clone())?;
-  patproj.file_path = file_path.with_extension(PatternFormat::default().to_string());
+  patproj.file_path = Some(file_path.with_extension(PatternFormat::default().to_string()));
 
   {
     let (full_stitches_number, petite_stitches_number) = patproj.pattern.full_stitches_number();
@@ -109,12 +109,10 @@ pub fn create_pattern<R: tauri::Runtime>(
   patterns: tauri::State<PatternsState>,
 ) -> Result<String> {
   if let tauri::ipc::InvokeBody::Raw(data) = request.body() {
-    let fabric: Fabric = borsh::from_slice(data)?;
-    let pattern = Pattern::new(fabric);
-    let file_path = app_document_dir(&app_handle)?.join(format!("{}.{}", pattern.info.title, PatternFormat::default()));
-
-    let patproj = PatternProject::new(file_path, pattern, Default::default(), Default::default());
-
+    let patproj = {
+      let fabric: Fabric = borsh::from_slice(data)?;
+      PatternProject::new(Pattern::new(fabric))
+    };
     app_handle.capture_event(AppEvent::PatternCreated {
       fabric: patproj.pattern.fabric.clone(),
     });
@@ -158,21 +156,20 @@ pub fn save_pattern<R: tauri::Runtime>(
     let backup_file_path = backup_file_path(&file_path, "bak");
 
     tracing::trace!("Saving the pattern to a temporary file.");
-    patproj.file_path.clone_from(&new_file_path);
-    embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
+    embroiderly_parsers::save_pattern(patproj, &new_file_path, &package_info)?;
 
     tracing::trace!("Backing up the previous file.");
-    if previous_file_path.exists() {
-      std::fs::rename(&previous_file_path, &backup_file_path)?;
+    if let Some(ref prev_path) = previous_file_path
+      && prev_path.exists()
+    {
+      std::fs::rename(prev_path, &backup_file_path)?;
     }
 
     tracing::trace!("Renaming the new file to the target file name.");
     std::fs::rename(&new_file_path, &file_path)?;
-    patproj.file_path = file_path;
+    patproj.file_path = Some(file_path);
   } else {
-    patproj.file_path.clone_from(&file_path);
-    embroiderly_parsers::save_pattern(patproj, &package_info, None)?;
-    patproj.file_path = previous_file_path;
+    embroiderly_parsers::save_pattern(patproj, &file_path, &package_info)?;
   }
 
   app_handle.capture_event(AppEvent::PatternSaved { format });
@@ -181,32 +178,6 @@ pub fn save_pattern<R: tauri::Runtime>(
   history.get_mut(&pattern_id).unwrap().push(Box::new(CheckpointAction));
 
   app_handle.emit("app:pattern-saved", &pattern_id)?;
-  Ok(())
-}
-
-#[tracing::instrument(level = "trace", skip_all, err)]
-#[tauri::command]
-pub fn save_all_patterns<R: tauri::Runtime>(
-  app_handle: tauri::AppHandle<R>,
-  history: tauri::State<HistoryState<R>>,
-  patterns: tauri::State<PatternsState>,
-) -> Result<()> {
-  let patterns_to_save = patterns
-    .read()
-    .unwrap()
-    .patterns()
-    .map(|p| (p.id, p.file_path.clone()))
-    .collect::<Vec<_>>();
-  for (pattern_id, file_path) in patterns_to_save {
-    save_pattern(
-      pattern_id,
-      file_path,
-      app_handle.clone(),
-      history.clone(),
-      patterns.clone(),
-    )?;
-  }
-
   Ok(())
 }
 
@@ -231,33 +202,14 @@ pub fn close_pattern<R: tauri::Runtime>(
   let patproj = patterns.write().unwrap().remove_pattern(&pattern_id).unwrap();
   let _history = history.write().unwrap().remove(&pattern_id);
 
-  let backup_file_path = backup_file_path(&patproj.file_path, "bak");
-  if backup_file_path.exists() {
-    std::fs::remove_file(backup_file_path)?;
+  if let Some(ref file_path) = patproj.file_path {
+    let backup_file_path = backup_file_path(file_path, "bak");
+    if backup_file_path.exists() {
+      std::fs::remove_file(backup_file_path)?;
+    }
   }
 
   app_handle.capture_event(AppEvent::PatternClosed);
-
-  Ok(())
-}
-
-#[tracing::instrument(level = "trace", skip_all, err)]
-#[tauri::command]
-pub fn close_all_patterns<R: tauri::Runtime>(
-  app_handle: tauri::AppHandle<R>,
-  history: tauri::State<HistoryState<R>>,
-  patterns: tauri::State<PatternsState>,
-) -> Result<()> {
-  let patterns_to_close = patterns.read().unwrap().patterns().map(|p| p.id).collect::<Vec<_>>();
-  for pattern_id in patterns_to_close {
-    close_pattern(
-      pattern_id,
-      Some(true),
-      app_handle.clone(),
-      history.clone(),
-      patterns.clone(),
-    )?;
-  }
 
   Ok(())
 }
@@ -266,7 +218,6 @@ pub fn close_all_patterns<R: tauri::Runtime>(
 /// This is used on the first app startup to initially load those patterns which were opened using file associations.
 #[tracing::instrument(level = "trace", skip_all)]
 #[tauri::command]
-#[must_use]
 pub fn get_opened_patterns(patterns: tauri::State<PatternsState>) -> Vec<(String, String)> {
   let patterns = patterns.read().unwrap();
   patterns
@@ -295,11 +246,27 @@ pub fn get_unsaved_patterns<R: tauri::Runtime>(
     .collect()
 }
 
-#[tracing::instrument(level = "trace", skip(patterns))]
+#[tracing::instrument(level = "trace", skip(patterns), ret)]
 #[tauri::command]
-#[must_use]
-pub fn get_pattern_file_path(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> String {
+pub fn get_pattern_file_path(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Option<String> {
   let patterns = patterns.read().unwrap();
   let patproj = patterns.get_pattern_by_id(&pattern_id).unwrap();
-  patproj.file_path.to_string_lossy().to_string()
+  patproj.file_path.as_ref().map(|p| p.to_string_lossy().to_string())
+}
+
+#[tracing::instrument(level = "trace", skip(app_handle, patterns), ret, err)]
+#[tauri::command]
+pub fn get_pattern_default_file_path<R: tauri::Runtime>(
+  pattern_id: uuid::Uuid,
+  app_handle: tauri::AppHandle<R>,
+  patterns: tauri::State<PatternsState>,
+) -> Result<String> {
+  let patterns = patterns.read().unwrap();
+  let patproj = patterns.get_pattern_by_id(&pattern_id).unwrap();
+  Ok(
+    app_document_dir(&app_handle)?
+      .join(format!("{}.{}", patproj.pattern.info.title, PatternFormat::default()))
+      .to_string_lossy()
+      .to_string(),
+  )
 }

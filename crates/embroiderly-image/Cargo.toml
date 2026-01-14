@@ -10,8 +10,7 @@ workspace = true
 argh = { workspace = true }
 
 # Embroiderly Core
-embroiderly_parsers = { workspace = true }
-embroiderly_pattern = { workspace = true }
+embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
 embroiderly_tracing = { workspace = true }
 
 # De/serialization
@@ -38,4 +37,5 @@ thiserror = { workspace = true }
 ordered-float = { workspace = true }
 
 [dev-dependencies]
+embroiderly_parsers = { workspace = true }
 prettydiff = { workspace = true }

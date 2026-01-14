@@ -85,8 +85,7 @@ export const usePatternFileStore = defineStore(
             title: fluent.$t("error"),
             description: fluent.$t("pattern-backup-file-exists"),
           }).result;
-          await openPattern(path, { restoreFromBackup: accepted });
-          return;
+          return await openPattern(path, { restoreFromBackup: accepted });
         }
         throw error;
       } finally {
@@ -103,17 +102,28 @@ export const usePatternFileStore = defineStore(
       }
     }
 
+    /**
+     * Saves the pattern to a file.
+     * @param id - The pattern ID to save.
+     * @param as - If true, always show the file picker (Save As).
+     * @returns `true` if the pattern was saved successfully, `false` if cancelled or failed.
+     */
     async function savePattern(id: string, as = false) {
       try {
         let path = await FilesApi.getPatternFilePath(id);
-        if (as) {
+        if (path === null || as) {
+          path ??= await FilesApi.getPatternDefaultFilePath(id);
+
           const selectedPath = await filePicker.save(path, { filters: EMBPROJ_FILTER });
-          if (selectedPath === null) return;
+          if (selectedPath === null) return false;
+
           path = selectedPath;
         }
 
         loading.value = true;
         await FilesApi.savePattern(id, path);
+
+        return true;
       } catch (error) {
         if (error instanceof UnsupportedPatternTypeError) {
           confirm.open({
@@ -125,6 +135,8 @@ export const usePatternFileStore = defineStore(
         } else {
           toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
         }
+
+        return false;
       } finally {
         loading.value = false;
       }
@@ -137,16 +149,18 @@ export const usePatternFileStore = defineStore(
         removeOpenedPattern(id);
       } catch (error) {
         if (error instanceof UnsavedChangesError) {
-          const accepted = await confirm.open(fluent.$ta("unsaved-changes")).result;
+          const pattern = openedPatterns.value.find((p) => p.id === id)!;
 
-          // If the user dismisses the dialog, prevent the window from closing.
+          const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
           if (accepted === undefined) return;
+          else if (accepted) {
+            const saved = await savePattern(id);
+            if (!saved) return;
 
-          if (accepted) {
-            const filePath = await FilesApi.getPatternFilePath(id);
-            await FilesApi.savePattern(id, filePath);
             await closePattern(id);
-          } else await closePattern(id, { force: true });
+          } else {
+            await closePattern(id, { force: true });
+          }
 
           return;
         }
@@ -191,14 +205,6 @@ export const usePatternFileStore = defineStore(
       return openedPatterns.value.filter((pattern) => patterns.includes(pattern.id));
     }
 
-    function saveAllPatterns() {
-      return FilesApi.saveAllPatterns();
-    }
-
-    function closeAllPatterns() {
-      return FilesApi.closeAllPatterns();
-    }
-
     return {
       openedPatterns,
       recentPatterns,
@@ -213,8 +219,6 @@ export const usePatternFileStore = defineStore(
       exportPatternAsPdf,
       getUnsavedPatterns,
       fetchOpenedPatterns,
-      saveAllPatterns,
-      closeAllPatterns,
     };
   },
   {

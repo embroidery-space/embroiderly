@@ -18,15 +18,11 @@ pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
   .map_err(Error::FailedToParse)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo, format: Option<PatternFormat>) -> Result<()> {
-  let file_path = match format {
-    Some(format) => patproj.file_path.with_extension(format.to_string()),
-    None => patproj.file_path.clone(),
-  };
+pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path, package_info: &PackageInfo) -> Result<()> {
   match PatternFormat::try_from(file_path.extension())? {
     PatternFormat::Xsd => Err(Error::UnsupportedPatternType(PatternFormat::Xsd.to_string()).into()),
-    PatternFormat::Oxs => oxs::save_pattern(patproj, package_info),
-    PatternFormat::EmbProj => embproj::save_pattern(patproj, package_info),
+    PatternFormat::Oxs => oxs::save_pattern(patproj, file_path, package_info),
+    PatternFormat::EmbProj => embproj::save_pattern(patproj, file_path, package_info),
   }
   .map_err(Error::FailedToParse)
 }

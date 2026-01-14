@@ -59,12 +59,5 @@ pattern-export-failure = Pattern Export Failed
 unsaved-changes =
   .title = Unsaved Changes
   .description =
-    The pattern has unsaved changes.
-    Do want to save it before closing?
-
-unsaved-patterns =
-  .title = Unsaved Patterns
-  .description =
-    You have patterns with unsaved changes:
-    { $patterns }.
-    Do you want to save them before closing the application?
+    The "{ $pattern }" pattern has unsaved changes.
+    Do you want to save it before closing?

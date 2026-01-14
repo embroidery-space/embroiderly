@@ -44,24 +44,14 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
     pattern.info.title = file_path.file_name().unwrap().to_string_lossy().to_string();
   }
 
-  Ok(PatternProject::new(
-    file_path.to_owned(),
-    pattern,
-    Default::default(),
-    Default::default(),
-  ))
+  Ok(PatternProject::builder(pattern).file_path(file_path).build())
 }
 
 pub fn parse_pattern_from_reader<R: io::BufRead>(reader: R) -> Result<PatternProject> {
   let mut reader = Reader::from_reader(reader);
 
   let pattern = parse_pattern_inner(&mut reader)?;
-  Ok(PatternProject::new(
-    Default::default(),
-    pattern,
-    Default::default(),
-    Default::default(),
-  ))
+  Ok(PatternProject::new(pattern))
 }
 
 #[tracing::instrument(name = "parse_oxs", skip_all)]
@@ -164,12 +154,12 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
   Ok(pattern)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<()> {
+pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path, package_info: &PackageInfo) -> Result<()> {
   let mut file = std::fs::OpenOptions::new()
     .create(true)
     .write(true)
     .truncate(true)
-    .open(&patproj.file_path)?;
+    .open(file_path)?;
   Ok(save_pattern_inner(&mut file, patproj, package_info)?)
 }
 

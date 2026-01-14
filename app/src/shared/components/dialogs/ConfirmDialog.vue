@@ -4,9 +4,10 @@
       <p class="whitespace-pre-line">{{ props.description }}</p>
     </template>
     <template #footer>
+      <UButton variant="outline" color="neutral" :label="$t('modal-cancel')" @click="emit('close')" />
       <UButton
         v-if="props.noButton !== null"
-        variant="outline"
+        variant="soft"
         color="neutral"
         :label="$t('confirm-no')"
         v-bind="props.noButton"

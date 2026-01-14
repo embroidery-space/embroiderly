@@ -105,12 +105,11 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::files::patterns::open_pattern,
     commands::files::patterns::create_pattern,
     commands::files::patterns::save_pattern,
-    commands::files::patterns::save_all_patterns,
     commands::files::patterns::close_pattern,
-    commands::files::patterns::close_all_patterns,
     commands::files::patterns::get_opened_patterns,
     commands::files::patterns::get_unsaved_patterns,
     commands::files::patterns::get_pattern_file_path,
+    commands::files::patterns::get_pattern_default_file_path,
     // Palette files management.
     commands::files::palettes::import_palettes,
     commands::files::palettes::get_palettes_list,
