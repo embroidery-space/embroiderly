@@ -2,7 +2,7 @@ use tauri::async_runtime::Receiver;
 use tauri_plugin_shell::ShellExt as _;
 use tauri_plugin_shell::process::{CommandChild, CommandEvent};
 
-use crate::error::{PatternError, Result};
+use crate::error::{Error, ErrorKind, Result};
 
 /// Manager for the long-lived image import sidecar process.
 pub struct ImageImportSidecar<R: tauri::Runtime> {
@@ -19,14 +19,14 @@ impl<R: tauri::Runtime> ImageImportSidecar<R> {
   fn receiver(&mut self) -> Result<&mut Receiver<CommandEvent>> {
     match self.sidecar_handle.as_mut() {
       Some(sidecar_handle) => Ok(&mut sidecar_handle.0),
-      None => Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into()),
+      None => Err(Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Sidecar handle not set"))),
     }
   }
 
   fn child(&mut self) -> Result<&mut CommandChild> {
     match self.sidecar_handle.as_mut() {
       Some(sidecar_handle) => Ok(&mut sidecar_handle.1),
-      None => Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into()),
+      None => Err(Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Sidecar handle not set"))),
     }
   }
 }
@@ -38,7 +38,7 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
       .app_handle
       .shell()
       .sidecar("embroiderly_image")
-      .map_err(|e| PatternError::FailedToImport(e.into()))?;
+      .map_err(|e| Error::new(ErrorKind::FailedToImport).with_source(e))?;
 
     // Important: set raw output handling.
     sidecar = sidecar.set_raw_out(true);
@@ -53,9 +53,9 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
     sidecar = sidecar.arg("import");
 
     // Spawn the sidecar process.
-    let (rx, child) = sidecar
-      .spawn()
-      .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to spawn sidecar: {e}")))?;
+    let (rx, child) = sidecar.spawn().map_err(|e| {
+      Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Failed to spawn sidecar: {e}"))
+    })?;
     let id = child.pid();
 
     // Store the sidecar handle.
@@ -67,13 +67,14 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
   async fn shutdown(&mut self) -> Result<super::Output> {
     {
       let command = embroiderly_image::ImageImportServerCommand::Shutdown;
-      let payload = serde_json::to_vec(&command)
-        .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to serialize command: {e}")))?;
+      let payload = serde_json::to_vec(&command).map_err(|e| {
+        Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Failed to serialize command: {e}"))
+      })?;
       self.send_command(payload).await?;
     }
 
     let Some((rx, _child)) = self.sidecar_handle.take() else {
-      return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar handle not set")).into());
+      return Err(Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Sidecar handle not set")));
     };
 
     let output = super::utils::collect_sidecar_binary_output_from_receiver(rx).await?;
@@ -81,10 +82,9 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
   }
 
   async fn send_command(&mut self, payload: Vec<u8>) -> Result<()> {
-    self
-      .child()?
-      .write(&super::utils::with_newline(payload))
-      .map_err(|e| PatternError::FailedToImport(anyhow::anyhow!("Failed to write message to stdin: {e}")).into())
+    self.child()?.write(&super::utils::with_newline(payload)).map_err(|e| {
+      Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Failed to write message to stdin: {e}"))
+    })
   }
 
   // This sidecar uses length-prefixed raw binary buffers.
@@ -112,16 +112,20 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
         }
         CommandEvent::Terminated(_) => {
           return Err(
-            PatternError::FailedToImport(anyhow::anyhow!("Sidecar terminated before sending complete response")).into(),
+            Error::new(ErrorKind::FailedToImport)
+              .with_source(anyhow::anyhow!("Sidecar terminated before sending complete response")),
           );
         }
         CommandEvent::Error(error) => {
-          return Err(PatternError::FailedToImport(anyhow::anyhow!("Sidecar error: {error}")).into());
+          return Err(Error::new(ErrorKind::FailedToImport).with_source(anyhow::anyhow!("Sidecar error: {error}")));
         }
         _ => {}
       }
     }
 
-    Err(PatternError::FailedToImport(anyhow::anyhow!("Failed to receive complete response from sidecar")).into())
+    Err(
+      Error::new(ErrorKind::FailedToImport)
+        .with_source(anyhow::anyhow!("Failed to receive complete response from sidecar")),
+    )
   }
 }

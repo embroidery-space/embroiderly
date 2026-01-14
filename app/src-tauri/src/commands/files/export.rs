@@ -8,7 +8,7 @@ use crate::services::telemetry::AppEvent;
 use crate::sidecars::SidecarRunner as _;
 use crate::state::PatternsState;
 
-#[tracing::instrument(level = "trace", skip(app_handle, patterns))]
+#[tracing::instrument(level = "trace", skip(app_handle, patterns), err)]
 #[tauri::command]
 pub fn export_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,

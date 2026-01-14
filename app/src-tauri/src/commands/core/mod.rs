@@ -11,10 +11,10 @@ pub mod stitches;
 #[macro_export]
 macro_rules! parse_command_payload {
   ($request:expr) => {{
-    use $crate::error::CommandError;
+    use $crate::error::{Error, ErrorKind};
 
     let Some(pattern_id) = $request.headers().get("patternId") else {
-      return Err(CommandError::MissingPatternIdHeader.into());
+      return Err(Error::new(ErrorKind::MissingPatternIdHeader));
     };
     let pattern_id = uuid::Uuid::parse_str(pattern_id.to_str().unwrap())?;
 
@@ -23,15 +23,15 @@ macro_rules! parse_command_payload {
     (pattern_id,)
   }};
   ($request:expr, $data_type:ty) => {{
-    use $crate::error::CommandError;
+    use $crate::error::{Error, ErrorKind};
 
     let Some(pattern_id) = $request.headers().get("patternId") else {
-      return Err(CommandError::MissingPatternIdHeader.into());
+      return Err(Error::new(ErrorKind::MissingPatternIdHeader));
     };
     let pattern_id = uuid::Uuid::parse_str(pattern_id.to_str().unwrap())?;
 
     let tauri::ipc::InvokeBody::Raw(body) = $request.body() else {
-      return Err(CommandError::InvalidRequestBody.into());
+      return Err(Error::new(ErrorKind::InvalidRequestBody));
     };
     let body = borsh::from_slice::<$data_type>(&body)?;
 

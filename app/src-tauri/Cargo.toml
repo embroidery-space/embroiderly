@@ -51,7 +51,6 @@ borsh = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }
-thiserror = { workspace = true }
 
 # Logging & Tracing
 log = { workspace = true }

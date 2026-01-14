@@ -10,7 +10,7 @@ use crate::parse_command_payload;
 use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn add_palette_item<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
@@ -42,7 +42,7 @@ pub fn add_palette_item<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body = ?palette_item_indexes))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body = ?palette_item_indexes), err)]
 #[tauri::command]
 pub fn remove_palette_items<R: tauri::Runtime>(
   palette_item_indexes: Vec<u32>,
@@ -84,7 +84,7 @@ pub fn remove_palette_items<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn update_palette_display_settings<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
@@ -114,7 +114,7 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, ?sort_by))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, ?sort_by), err)]
 #[tauri::command]
 pub fn sort_palette_by<R: tauri::Runtime>(
   sort_by: SortPaletteBy,
@@ -145,7 +145,7 @@ pub fn sort_palette_by<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, ?old_position, ?new_position))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, ?old_position, ?new_position), err)]
 #[tauri::command]
 pub fn reorder_palette_items<R: tauri::Runtime>(
   old_position: u32,
@@ -169,7 +169,7 @@ pub fn reorder_palette_items<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body))]
+#[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn set_symbol<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,

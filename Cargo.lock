@@ -1724,7 +1724,6 @@ dependencies = [
  "tauri-plugin-shell",
  "tauri-plugin-updater",
  "tempfile",
- "thiserror 2.0.17",
  "tracing",
  "ttf-parser",
  "uuid",

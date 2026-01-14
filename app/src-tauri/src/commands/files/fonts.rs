@@ -10,7 +10,7 @@ use crate::services::telemetry::AppEvent;
 use crate::utils::fonts::is_font_file;
 use crate::utils::path::app_data_dir;
 
-#[tracing::instrument(level = "trace", skip_all)]
+#[tracing::instrument(level = "trace", skip_all, err)]
 #[tauri::command]
 pub fn get_symbol_fonts_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>) -> Result<GroupedFilesList> {
   let mut system = Vec::new();
@@ -44,7 +44,7 @@ pub fn get_symbol_fonts_list<R: tauri::Runtime>(app_handle: tauri::AppHandle<R>)
   Ok(GroupedFilesList { system, custom })
 }
 
-#[tracing::instrument(level = "trace", skip(app_handle))]
+#[tracing::instrument(level = "trace", skip(app_handle), err)]
 #[tauri::command]
 pub fn load_symbol_font_content<R: tauri::Runtime>(
   font_family: String,
@@ -95,7 +95,7 @@ fn load_symbol_font_data<R: tauri::Runtime>(font_family: &str, app_handle: &taur
   })
 }
 
-#[tracing::instrument(level = "trace", skip(app_handle), fields(symbols_count))]
+#[tracing::instrument(level = "trace", skip(app_handle), fields(symbols_count), err)]
 #[tauri::command]
 pub fn load_symbol_font_code_points<R: tauri::Runtime>(
   font_family: String,
@@ -133,7 +133,7 @@ pub fn load_symbol_font_code_points<R: tauri::Runtime>(
   Ok(code_points)
 }
 
-#[tracing::instrument(level = "trace", skip_all, fields(total_files, failed_files))]
+#[tracing::instrument(level = "trace", skip_all, fields(total_files, failed_files), err)]
 #[tauri::command]
 pub fn import_symbol_fonts<R: tauri::Runtime>(
   paths: Vec<String>,

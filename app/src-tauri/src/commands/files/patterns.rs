@@ -4,12 +4,12 @@ use tauri::Emitter as _;
 use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::CheckpointAction;
-use crate::error::{CommandError, PatternError, Result};
+use crate::error::{Error, ErrorKind, Result};
 use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 use crate::utils::path::{app_document_dir, backup_file_path};
 
-#[tracing::instrument(level = "trace", skip(patterns))]
+#[tracing::instrument(level = "trace", skip(patterns), err)]
 #[tauri::command]
 pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState>) -> Result<tauri::ipc::Response> {
   let patterns = patterns.read().unwrap();
@@ -17,11 +17,11 @@ pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState
     Ok(tauri::ipc::Response::new(borsh::to_vec(&pattern)?))
   } else {
     tracing::trace!("Pattern not found");
-    Err(PatternError::PatternNotFound(pattern_id).into())
+    Err(Error::new(ErrorKind::PatternNotFound))
   }
 }
 
-#[tracing::instrument(level = "trace", skip(app_handle, history, patterns))]
+#[tracing::instrument(level = "trace", skip(app_handle, history, patterns), err)]
 #[tauri::command]
 pub fn open_pattern<R: tauri::Runtime>(
   file_path: std::path::PathBuf,
@@ -51,7 +51,7 @@ pub fn open_pattern<R: tauri::Runtime>(
         return Ok(pattern_id.to_string());
       }
       Some(false) => {}
-      None => return Err(PatternError::BackupFileExists.into()),
+      None => return Err(Error::new(ErrorKind::BackupFileExists)),
     }
   }
 
@@ -100,7 +100,7 @@ pub fn open_pattern<R: tauri::Runtime>(
   Ok(pattern_id.to_string())
 }
 
-#[tracing::instrument(level = "trace", skip_all)]
+#[tracing::instrument(level = "trace", skip_all, err)]
 #[tauri::command]
 pub fn create_pattern<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,
@@ -126,11 +126,11 @@ pub fn create_pattern<R: tauri::Runtime>(
 
     Ok(pattern_id.to_string())
   } else {
-    Err(CommandError::InvalidRequestBody.into())
+    Err(Error::new(ErrorKind::InvalidRequestBody))
   }
 }
 
-#[tracing::instrument(level = "trace", skip(app_handle, history, patterns))]
+#[tracing::instrument(level = "trace", skip(app_handle, history, patterns), err)]
 #[tauri::command]
 pub fn save_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
@@ -184,7 +184,7 @@ pub fn save_pattern<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all)]
+#[tracing::instrument(level = "trace", skip_all, err)]
 #[tauri::command]
 pub fn save_all_patterns<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
@@ -210,7 +210,7 @@ pub fn save_all_patterns<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip(app_handle, history, patterns))]
+#[tracing::instrument(level = "trace", skip(app_handle, history, patterns), err)]
 #[tauri::command]
 pub fn close_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
@@ -224,7 +224,7 @@ pub fn close_pattern<R: tauri::Runtime>(
     if let Some(history) = history.get(&pattern_id)
       && history.has_unsaved_changes()
     {
-      return Err(PatternError::UnsavedChanges(pattern_id).into());
+      return Err(Error::new(ErrorKind::UnsavedChanges));
     }
   }
 
@@ -241,7 +241,7 @@ pub fn close_pattern<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip_all)]
+#[tracing::instrument(level = "trace", skip_all, err)]
 #[tauri::command]
 pub fn close_all_patterns<R: tauri::Runtime>(
   app_handle: tauri::AppHandle<R>,
