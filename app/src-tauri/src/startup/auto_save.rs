@@ -27,7 +27,7 @@ pub fn run_auto_save_background_process<R: tauri::Runtime>(app_handle: &tauri::A
         .read()
         .unwrap()
         .patterns()
-        .map(|p| (p.id, p.file_path.clone()))
+        .filter_map(|p| p.file_path.clone().map(|path| (p.id, path)))
         .collect::<Vec<_>>();
       for (pattern_id, file_path) in patterns {
         if let Err(err) = commands::files::patterns::save_pattern(

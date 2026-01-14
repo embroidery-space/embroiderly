@@ -35,7 +35,7 @@
 <script lang="ts" setup>
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-  import { onMounted, useTemplateRef, watch } from "vue";
+  import { onMounted, toRaw, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
   import { useShortcuts } from "#plugins/shortcuts/";
@@ -86,15 +86,24 @@
   useTauriListener(
     appWindow.onCloseRequested(async (event) => {
       const unsavedPatterns = await patternFileStore.getUnsavedPatterns();
-      if (unsavedPatterns.length) {
-        const patterns = unsavedPatterns.map(({ title }) => `- ${title}`).join("\n");
-        const savePatterns = await confirm.open(fluent.$ta("unsaved-patterns", { patterns })).result;
-
-        // If the user dismissed the dialog, prevent the window from closing.
-        if (savePatterns === undefined) return event.preventDefault();
-
-        if (savePatterns) await patternFileStore.saveAllPatterns();
-        await patternFileStore.closeAllPatterns();
+      for (const pattern of structuredClone(toRaw(patternFileStore.openedPatterns))) {
+        const hasUnsavedChanges = unsavedPatterns.some((p) => p.id === pattern.id);
+        if (hasUnsavedChanges) {
+          const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
+          if (accepted === undefined) {
+            event.preventDefault();
+            return;
+          } else if (accepted) {
+            const saved = await patternFileStore.savePattern(pattern.id);
+            if (!saved) {
+              event.preventDefault();
+              return;
+            }
+          } else {
+            // The user doesn't want to save the pattern. Continue.
+          }
+        }
+        await patternFileStore.closePattern(pattern.id, { force: true });
       }
     }),
   );

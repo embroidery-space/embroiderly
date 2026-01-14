@@ -73,12 +73,12 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
 }
 
 #[tracing::instrument(name = "save_embproj", skip_all)]
-pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<()> {
+pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path, package_info: &PackageInfo) -> Result<()> {
   let file = std::fs::OpenOptions::new()
     .create(true)
     .write(true)
     .truncate(true)
-    .open(&patproj.file_path)?;
+    .open(file_path)?;
   let mut zip = zip::ZipWriter::new(file);
   let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Zstd);
 

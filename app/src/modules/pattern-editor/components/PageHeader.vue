@@ -144,17 +144,20 @@
                   label: "OXS",
                   async onSelect() {
                     const patternId = patternStore.pattern!.id;
-                    const filePath = (await FilesApi.getPatternFilePath(patternId)).replace(/\.[^.]+$/, ".oxs");
-                    await patternFileStore.exportPatternAsOxs(patternId, filePath);
+                    const filePath =
+                      (await FilesApi.getPatternFilePath(patternId)) ??
+                      (await FilesApi.getPatternDefaultFilePath(patternId));
+                    await patternFileStore.exportPatternAsOxs(patternId, filePath.replace(/\.[^.]+$/, ".oxs"));
                   },
                 },
                 {
                   label: "PDF",
                   async onSelect() {
                     const { id, pdfExportOptions } = patternStore.pattern!;
-                    const filePath = (await FilesApi.getPatternFilePath(id)).replace(/\.[^.]+$/, ".pdf");
+                    const filePath =
+                      (await FilesApi.getPatternFilePath(id)) ?? (await FilesApi.getPatternDefaultFilePath(id));
                     modals.pdfExportModal.open({
-                      filePath,
+                      filePath: filePath.replace(/\.[^.]+$/, ".pdf"),
                       options: pdfExportOptions,
                       onOptionsUpdate: patternStore.updatePdfExportOptions,
                       onDocumentExport: (filePath, options) =>

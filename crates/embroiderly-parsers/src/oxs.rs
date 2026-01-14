@@ -45,7 +45,7 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
   }
 
   Ok(PatternProject::new(
-    file_path.to_owned(),
+    Some(file_path.to_owned()),
     pattern,
     Default::default(),
     Default::default(),
@@ -164,12 +164,12 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
   Ok(pattern)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<()> {
+pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path, package_info: &PackageInfo) -> Result<()> {
   let mut file = std::fs::OpenOptions::new()
     .create(true)
     .write(true)
     .truncate(true)
-    .open(&patproj.file_path)?;
+    .open(file_path)?;
   Ok(save_pattern_inner(&mut file, patproj, package_info)?)
 }
 

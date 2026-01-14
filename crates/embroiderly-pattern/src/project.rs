@@ -7,7 +7,7 @@ use super::{Pattern, ReferenceImage};
 pub struct PatternProject {
   pub id: uuid::Uuid,
   #[cfg_attr(feature = "borsh", borsh(skip))]
-  pub file_path: std::path::PathBuf,
+  pub file_path: Option<std::path::PathBuf>,
   pub reference_image: Option<ReferenceImage>,
   pub pattern: Pattern,
   pub display_settings: DisplaySettings,
@@ -17,7 +17,7 @@ pub struct PatternProject {
 impl PatternProject {
   #[must_use]
   pub fn new(
-    file_path: std::path::PathBuf,
+    file_path: Option<std::path::PathBuf>,
     pattern: Pattern,
     display_settings: DisplaySettings,
     publish_settings: PublishSettings,

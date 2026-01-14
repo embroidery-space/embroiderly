@@ -36,10 +36,6 @@ export function savePattern(patternId: string, filePath: string) {
   return invoke<void>("save_pattern", { patternId, filePath });
 }
 
-export function saveAllPatterns() {
-  return invoke<void>("save_all_patterns");
-}
-
 export interface ClosePatternOptions {
   /**
    * Whether to bypass unsaved changes check and force close the pattern.
@@ -50,10 +46,6 @@ export interface ClosePatternOptions {
 
 export function closePattern(patternId: string, options?: ClosePatternOptions) {
   return invoke<void>("close_pattern", { patternId, ...options });
-}
-
-export function closeAllPatterns() {
-  return invoke<void>("close_all_patterns");
 }
 
 /**
@@ -69,7 +61,11 @@ export function getUnsavedPatterns() {
 }
 
 export function getPatternFilePath(patternId: string) {
-  return invoke<string>("get_pattern_file_path", { patternId });
+  return invoke<string | null>("get_pattern_file_path", { patternId });
+}
+
+export function getPatternDefaultFilePath(patternId: string) {
+  return invoke<string>("get_pattern_default_file_path", { patternId });
 }
 
 // === Palette files management === //

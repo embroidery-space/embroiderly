@@ -53,18 +53,20 @@ export const useFilePicker = createSharedComposable(() => {
 
     /**
      * Opens a save file dialog.
-     * @param target The default file path to save to.
+     * @param target The file path to save to.
      * @param options The options for the dialog.
      * @returns The selected file path or null if canceled.
      */
-    save: async (target: string, options?: FilePickerSaveOptions) => {
+    save: async (target?: string, options?: FilePickerSaveOptions) => {
+      lastSavedFolder.value ??= await PathApi.getAppDocumentDir();
+
       const path = await save({
-        defaultPath: target,
+        defaultPath: target ?? lastSavedFolder.value,
         ...options,
       });
 
       if (path) {
-        lastOpenedFolder.value = path.slice(0, Math.max(0, path.lastIndexOf(sep())));
+        lastSavedFolder.value = path.slice(0, Math.max(0, path.lastIndexOf(sep())));
       }
 
       return path;

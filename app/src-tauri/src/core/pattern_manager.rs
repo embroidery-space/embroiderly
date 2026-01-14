@@ -36,7 +36,9 @@ impl PatternManager {
   }
 
   pub fn add_pattern(&mut self, pattern: PatternProject) {
-    self.id_by_path.insert(pattern.file_path.clone(), pattern.id);
+    if let Some(ref file_path) = pattern.file_path {
+      self.id_by_path.insert(file_path.clone(), pattern.id);
+    }
     self.patterns_by_id.insert(pattern.id, pattern);
   }
 
@@ -56,8 +58,10 @@ impl PatternManager {
 
   pub fn remove_pattern(&mut self, id: &uuid::Uuid) -> Option<PatternProject> {
     let pattern = self.patterns_by_id.remove(id);
-    if let Some(pattern) = &pattern {
-      self.id_by_path.remove(&pattern.file_path);
+    if let Some(pattern) = &pattern
+      && let Some(ref file_path) = pattern.file_path
+    {
+      self.id_by_path.remove(file_path);
     }
     pattern
   }
