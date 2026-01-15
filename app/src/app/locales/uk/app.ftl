@@ -56,6 +56,9 @@ pattern-save-failure = Схему не вдалося зберегти
 pattern-export-success = Схему експортовано
 pattern-export-failure = Схему не вдалося експортувати
 
+startup-file-association-failure = Не вдалося відкрити цільову схему: { $filePath }.
+startup-template-failure = Не вдалося завантажити власний шаблон схеми: { $filePath }.
+
 unsaved-changes =
   .title = Незбережені зміни
   .description =

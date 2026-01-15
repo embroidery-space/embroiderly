@@ -1,7 +1,7 @@
 use embroiderly_pattern::{Pattern, PatternProject};
 use tauri::Manager as _;
 
-use crate::state::{HistoryState, PatternsState};
+use crate::state::{HistoryState, PatternsState, StartupNotification, StartupNotificationsState};
 use crate::utils::settings::StartupAction;
 
 /// Handles the "open on startup" setting.
@@ -53,6 +53,12 @@ fn load_template<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>, template_p
     }
     Err(err) => {
       tracing::error!(target: "startup", ?template_path, ?err, "Failed to load pattern template");
+
+      let notifications = app_handle.state::<StartupNotificationsState>();
+      notifications
+        .lock()
+        .unwrap()
+        .push(StartupNotification::TemplateFailed(template_path.to_path_buf()));
     }
   }
 }

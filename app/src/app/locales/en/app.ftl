@@ -56,6 +56,9 @@ pattern-save-failure = Pattern Save Failed
 pattern-export-success = Pattern Exported
 pattern-export-failure = Pattern Export Failed
 
+startup-file-association-failure = Failed to open the target pattern file: { $filePath }.
+startup-template-failure = Failed to load a custom pattern template: { $filePath }.
+
 unsaved-changes =
   .title = Unsaved Changes
   .description =
