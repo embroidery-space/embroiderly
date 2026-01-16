@@ -1,21 +1,30 @@
 use tauri::Manager as _;
 
+use crate::state::{HistoryState, PatternsState, StartupNotification, StartupNotificationsState};
+
 /// Handles file associations by loading pattern files.
 /// This function loads the specified pattern files into memory so they can be accessed from the frontend.
 pub fn handle_file_associations<R: tauri::Runtime>(
   app_handle: &tauri::AppHandle<R>,
   args: impl IntoIterator<Item = String>,
-) -> anyhow::Result<()> {
+) {
+  let notifications = app_handle.state::<StartupNotificationsState>();
+
   for file in collect_files_from_args(args) {
-    crate::commands::files::patterns::open_pattern(
-      file,
+    if let Err(err) = crate::commands::files::patterns::open_pattern(
+      file.clone(),
       Some(false),
       app_handle.clone(),
-      app_handle.state::<crate::state::HistoryState<R>>(),
-      app_handle.state::<crate::state::PatternsState>(),
-    )?;
+      app_handle.state::<HistoryState<R>>(),
+      app_handle.state::<PatternsState>(),
+    ) {
+      tracing::error!(target: "startup", ?file, ?err, "Failed to open pattern from file association");
+      notifications
+        .lock()
+        .unwrap()
+        .push(StartupNotification::FileAssociationFailed(file));
+    }
   }
-  Ok(())
 }
 
 /// Collects file paths from command line arguments.

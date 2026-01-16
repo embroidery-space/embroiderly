@@ -14,8 +14,9 @@ history-redo = Redo
 
 ## Modal windows.
 
-modal-save = Save
+modal-create = Create
 modal-copy = Copy
+modal-save = Save
 
 modal-cancel = Cancel
 modal-close = Close

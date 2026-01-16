@@ -36,7 +36,7 @@ Once you are done, run the application via `pnpm tauri dev` and build it via `pn
 
 **Frontend:**
 
-- `pnpm build` - Build the frontend and check types.
+- `pnpm check-types` - Check types.
 - `pnpm fmt` - Check formatting.
 - `pnpm fmt:fix` - Fix formatting.
 - `pnpm lint` - Check linting.

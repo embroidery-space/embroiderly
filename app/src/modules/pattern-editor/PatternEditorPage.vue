@@ -39,6 +39,7 @@
   import { useRouter } from "vue-router";
 
   import { useShortcuts } from "#plugins/shortcuts/";
+  import { StartupApi } from "#shared/api/";
   import { BlockUI } from "#shared/components/";
   import { useConfirm, useDragDrop, useI18n, useTauriListener } from "#shared/composables/";
   import { useSettingsStore } from "#shared/stores/";
@@ -123,6 +124,30 @@
 
   onMounted(async () => {
     await patternFileStore.fetchOpenedPatterns();
+    if (!props.patternId && patternFileStore.openedPatterns.length) {
+      const pattern = patternFileStore.openedPatterns[0]!;
+      router.push({ name: "pattern-editor", params: { patternId: pattern.id } });
+    }
+
+    const notifications = await StartupApi.getStartupNotifications();
+    for (const notification of notifications) {
+      let message: string;
+      if ("fileAssociationFailed" in notification) {
+        message = fluent.$t("startup-file-association-failure", { filePath: notification.fileAssociationFailed });
+      } else if ("templateFailed" in notification) {
+        message = fluent.$t("startup-template-failure", { filePath: notification.templateFailed });
+      } else {
+        throw new Error(`Unknown notification: ${JSON.stringify(notification)}`);
+      }
+
+      toast.add({
+        type: "foreground",
+        color: "error",
+        title: fluent.$t("error"),
+        description: message,
+      });
+    }
+
     await appWindow.show();
   });
 </script>

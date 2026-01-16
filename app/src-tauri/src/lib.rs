@@ -1,4 +1,4 @@
-use std::sync::RwLock;
+use std::sync::{Mutex, RwLock};
 
 use tauri::Manager as _;
 use tauri_plugin_better_posthog::PostHogExt as _;
@@ -20,7 +20,8 @@ pub fn run() {
       // Yeah, we don't currently support MacOS, but keep the code for future use.
       #[cfg(any(target_os = "macos", target_os = "ios"))]
       tauri::RunEvent::Opened { urls } => {
-        startup::handle_file_associations(app_handle, urls.into_iter().map(|url| url.to_string())).unwrap();
+        startup::handle_file_associations(app_handle, urls.into_iter().map(|url| url.to_string()));
+        startup::handle_open_on_startup(app_handle);
         startup::create_webview_window(app_handle).unwrap();
       }
       tauri::RunEvent::Exit => {
@@ -54,7 +55,8 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
-        startup::handle_file_associations(app_handle, std::env::args().skip(1))?;
+        startup::handle_file_associations(app_handle, std::env::args().skip(1));
+        startup::handle_open_on_startup(app_handle);
         startup::create_webview_window(app_handle)?;
       }
 
@@ -67,6 +69,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     })
     .manage(RwLock::new(state::PatternManager::new()))
     .manage(RwLock::new(state::HistoryManager::<R>::new()))
+    .manage(Mutex::new(state::StartupNotifications::new()))
     .manage(sidecars::SidecarManager::new());
 
   #[cfg(debug_assertions)]
@@ -154,6 +157,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::history::end_transaction,
     // Utility commands.
     commands::utils::path::get_app_document_dir,
+    commands::utils::startup::get_startup_notifications,
     commands::utils::system::get_system_info,
   ]);
 

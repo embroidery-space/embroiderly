@@ -14,8 +14,9 @@ history-redo = Повторити
 
 ## Modal windows.
 
-modal-save = Зберегти
+modal-create = Створити
 modal-copy = Копіювати
+modal-save = Зберегти
 
 modal-cancel = Скасувати
 modal-close = Закрити

@@ -1,5 +1,6 @@
 ### Translations for the fabric properties.
 
+pattern-creation = Нова схема
 fabric-properties = Параметри тканини
 
 fabric-size = Розмір

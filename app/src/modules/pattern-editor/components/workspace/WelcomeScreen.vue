@@ -163,7 +163,7 @@
   }
 
   async function createPattern() {
-    modals.fabricModal.open({
+    modals.patternCreationModal.open({
       fabric: Fabric.default(),
       async onSave(fabric) {
         const patternId = await patternFileStore.createPattern(fabric);

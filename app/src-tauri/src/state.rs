@@ -38,5 +38,37 @@ impl<R: tauri::Runtime> HistoryManager<R> {
   }
 }
 
+/// Stores notifications generated during startup for later retrieval by the frontend.
+pub struct StartupNotifications {
+  inner: Vec<StartupNotification>,
+}
+
+impl StartupNotifications {
+  /// Creates a new instance of `StartupNotifications`.
+  #[expect(clippy::new_without_default)]
+  #[must_use]
+  pub const fn new() -> Self {
+    Self { inner: Vec::new() }
+  }
+
+  /// Adds a new notification to the list.
+  pub fn push(&mut self, notification: StartupNotification) {
+    self.inner.push(notification);
+  }
+
+  /// Takes all notifications, clearing the internal storage.
+  pub fn take_all(&mut self) -> Vec<StartupNotification> {
+    std::mem::take(&mut self.inner)
+  }
+}
+
+#[derive(Debug, Clone, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum StartupNotification {
+  FileAssociationFailed(std::path::PathBuf),
+  TemplateFailed(std::path::PathBuf),
+}
+
 pub type PatternsState = std::sync::RwLock<PatternManager>;
 pub type HistoryState<R> = std::sync::RwLock<HistoryManager<R>>;
+pub type StartupNotificationsState = std::sync::Mutex<StartupNotifications>;

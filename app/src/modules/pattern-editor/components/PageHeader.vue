@@ -90,7 +90,7 @@
             label: fluent.$t("app-menu-file-create"),
             kbds: ["ctrl", "n"],
             onSelect() {
-              modals.fabricModal.open({
+              modals.patternCreationModal.open({
                 fabric: Fabric.default(),
                 async onSave(fabric) {
                   const patternId = await patternFileStore.createPattern(fabric);

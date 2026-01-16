@@ -20,6 +20,15 @@ settings-scale-xx-large = Найбільший
 
 settings-language = Мова
 
+settings-startup = Запуск
+
+settings-startup-action = Відкривати при запуску
+settings-startup-action-nothing = Нічого
+settings-startup-action-new-pattern = Нова схема
+settings-startup-action-custom-template = Власний шаблон
+
+settings-startup-template-path = Файл шаблону
+
 settings-viewport = Область перегляду
 settings-viewport-hint = Ці налаштування вимагають перезавантаження.
 
