@@ -1,5 +1,6 @@
 ### Translations for the fabric properties.
 
+pattern-creation = New Pattern
 fabric-properties = Fabric Properties
 
 fabric-size = Size
