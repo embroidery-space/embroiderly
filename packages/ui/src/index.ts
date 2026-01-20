@@ -1,1 +1,1 @@
-export { default as UButton } from "./components/Button.vue";
+export { default as UButton, type ButtonProps as UButtonProps } from "./components/Button.vue";
