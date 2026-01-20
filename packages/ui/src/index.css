@@ -1,5 +1,56 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import "./styles/palette.css";
+@import "./styles/ui.css";
+
 @source "./components/";
 @source "./theme/";
+
+@variant light (&:where(.light, .light *));
+@variant dark (&:where(.dark, .dark *));
+
+:root,
+:host,
+.light {
+  --ui-text-dimmed: #3b4252;
+  --ui-text-muted: #434c5e;
+  --ui-text-toned: #434c5e;
+  --ui-text: #2e3440;
+  --ui-text-highlighted: #2e3440;
+  --ui-text-inverted: var(--ui-bg);
+
+  --ui-bg: var(--ui-color-neutral-400);
+  --ui-bg-muted: var(--ui-color-neutral-500);
+  --ui-bg-elevated: var(--ui-color-neutral-500);
+  --ui-bg-accented: var(--ui-color-neutral-600);
+  --ui-bg-inverted: var(--ui-text);
+
+  --ui-border: var(--ui-color-neutral-600);
+  --ui-border-muted: var(--ui-color-neutral-700);
+  --ui-border-accented: var(--ui-color-neutral-800);
+  --ui-border-inverted: var(--ui-text);
+
+  --ui-radius: 0.25rem;
+  --ui-container: 80rem;
+}
+
+.dark {
+  --ui-text-dimmed: #d8dee9;
+  --ui-text-muted: #e5e9f0;
+  --ui-text-toned: #e5e9f0;
+  --ui-text: #eceff4;
+  --ui-text-highlighted: #eceff4;
+  --ui-text-inverted: var(--ui-bg);
+
+  --ui-bg: var(--ui-color-neutral-700);
+  --ui-bg-muted: var(--ui-color-neutral-600);
+  --ui-bg-elevated: var(--ui-color-neutral-600);
+  --ui-bg-accented: var(--ui-color-neutral-500);
+  --ui-bg-inverted: var(--ui-text);
+
+  --ui-border: var(--ui-color-neutral-500);
+  --ui-border-muted: var(--ui-color-neutral-600);
+  --ui-border-accented: var(--ui-color-neutral-400);
+  --ui-border-inverted: var(--ui-text);
+}

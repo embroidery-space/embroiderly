@@ -1,0 +1,5 @@
+@import "./src/index.css";
+
+.histoire-generic-render-story {
+  @apply size-full p-8 bg-default;
+}
