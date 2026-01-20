@@ -71,6 +71,19 @@ export default defineConfigWithVueTs(
     rules: { "no-console": ["warn"] },
   },
   {
+    files: ["packages/ui/**/*.vue"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      globals: {
+        ...globals.builtin,
+        ...globals.browser,
+      },
+    },
+    rules: {
+      "vue/multi-word-component-names": "off",
+    },
+  },
+  {
     files: ["scripts/**/*.js"],
     languageOptions: {
       ecmaVersion: "latest",

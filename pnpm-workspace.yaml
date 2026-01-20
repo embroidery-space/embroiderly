@@ -1,6 +1,7 @@
 packages:
   - app
   - docs
+  - "packages/*"
 
 minimumReleaseAge: 4320 # 3 days in minutes
 

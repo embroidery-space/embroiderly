@@ -1,0 +1,13 @@
+{
+  "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
+  "include": ["src/**/*.vue", "src/**/*.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+
+    "exactOptionalPropertyTypes": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "strictPropertyInitialization": false,
+
+    "types": ["vite/client"]
+  }
+}
