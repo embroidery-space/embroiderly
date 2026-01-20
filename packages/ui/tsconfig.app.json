@@ -8,6 +8,6 @@
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
 
-    "types": ["vite/client"]
+    "types": ["vite/client", "@histoire/plugin-vue/components"]
   }
 }
