@@ -52,6 +52,12 @@
     class?: string;
   }
 
+  export interface ButtonSlots {
+    leading(): any;
+    default(): any;
+    trailing(): any;
+  }
+
   const props = withDefaults(defineProps<ButtonProps>(), {
     as: "button",
 

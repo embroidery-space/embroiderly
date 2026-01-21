@@ -71,7 +71,7 @@ export default defineConfigWithVueTs(
     rules: { "no-console": ["warn"] },
   },
   {
-    files: ["packages/ui/**/*.vue"],
+    files: ["packages/ui/**/*.{ts,vue}"],
     languageOptions: {
       ecmaVersion: "latest",
       globals: {
@@ -80,8 +80,11 @@ export default defineConfigWithVueTs(
       },
     },
     rules: {
-      "vue/multi-word-component-names": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+
       "vue/require-default-prop": "off",
+      "vue/multi-word-component-names": "off",
+      "vue/no-reserved-component-names": "off",
     },
   },
   {

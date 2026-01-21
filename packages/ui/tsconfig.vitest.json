@@ -1,14 +1,14 @@
 {
   "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
-  "include": ["src/**/*.vue", "src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts"],
+  "include": ["src/**/*.spec.ts"],
   "compilerOptions": {
     "baseUrl": ".",
 
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
+    "noUncheckedIndexedAccess": false,
 
-    "types": ["vite/client", "@histoire/plugin-vue/components"]
+    "types": ["node", "vitest-browser-vue"]
   }
 }

@@ -4,10 +4,11 @@
   "type": "module",
   "main": "./src/index.ts",
   "scripts": {
-    "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
     "story:dev": "histoire dev",
     "story:build": "histoire build",
-    "story:preview": "histoire preview"
+    "story:preview": "histoire preview",
+    "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
+    "test": "vitest run"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
@@ -28,10 +29,13 @@
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.10.7",
     "@vitejs/plugin-vue": "6.0.3",
+    "@vitest/browser-playwright": "4.0.16",
     "@vue/tsconfig": "0.8.1",
     "histoire": "1.0.0-beta.1",
     "typescript": "5.9.3",
     "vite": "7.3.1",
+    "vitest": "4.0.16",
+    "vitest-browser-vue": "2.0.1",
     "vue-tsc": "3.2.2",
     "wrangler": "4.58.0"
   }
