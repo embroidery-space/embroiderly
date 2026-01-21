@@ -1,3 +1,4 @@
+export { default as UApp, type AppProps as UAppProps, type AppSlots as UAppSlots } from "./components/App.vue";
 export {
   default as UButton,
   type ButtonProps as UButtonProps,

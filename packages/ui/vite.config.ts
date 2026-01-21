@@ -27,8 +27,8 @@ export default defineConfig({
       title: "Embroiderly UI",
       favicon: "favicon.ico",
       logo: {
-        light: "./public/app-logo.dark.svg",
-        dark: "./public/app-logo.light.svg",
+        light: "./.histoire/images/app-logo.light.svg",
+        dark: "./.histoire/images/app-logo.dark.svg",
       },
       logoHref: "https://ui.embroiderly.niusia.me",
     },

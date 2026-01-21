@@ -1,4 +1,4 @@
-@import "./src/index.css";
+@import "../src/index.css";
 
 .histoire-generic-render-story:not(.__histoire-render-custom-controls) {
   @apply size-full flex items-center justify-center p-8 bg-default;
