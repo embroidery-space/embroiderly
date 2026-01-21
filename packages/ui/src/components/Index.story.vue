@@ -2,10 +2,11 @@
   <Story title="UI" :layout="{ type: 'single', iframe: false }">
     <Variant title="Colors">
       <span class="text-primary font-bold px-4 py-1.5 inline-block">Primary</span>
+      <span class="text-error font-bold px-4 py-1.5 inline-block">Error</span>
+      <span class="text-warning font-bold px-4 py-1.5 inline-block">Warning</span>
       <span class="text-success font-bold px-4 py-1.5 inline-block">Success</span>
       <span class="text-info font-bold px-4 py-1.5 inline-block">Info</span>
-      <span class="text-warning font-bold px-4 py-1.5 inline-block">Warning</span>
-      <span class="text-error font-bold px-4 py-1.5 inline-block">Error</span>
+      <span class="text-help font-bold px-4 py-1.5 inline-block">Help</span>
     </Variant>
 
     <Variant title="Text">
