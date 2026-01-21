@@ -7,6 +7,8 @@ export default defineConfig({
   plugins: [HstVue()],
   setupFile: "./histoire.setup.ts",
 
+  outDir: "./dist/",
+
   vite: {
     plugins: [vue(), tailwindcss()],
   },
