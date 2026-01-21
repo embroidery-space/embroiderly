@@ -9,6 +9,16 @@ export default defineConfig({
 
   outDir: "./dist/",
 
+  theme: {
+    title: "Embroiderly UI",
+    favicon: "favicon.ico",
+    logo: {
+      light: "./public/app-logo.dark.svg",
+      dark: "./public/app-logo.light.svg",
+    },
+    logoHref: "https://ui.embroiderly.niusia.me",
+  },
+
   vite: {
     plugins: [vue(), tailwindcss()],
   },
