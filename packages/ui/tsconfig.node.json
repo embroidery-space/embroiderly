@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node24/tsconfig.json",
-  "include": ["histoire.config.ts"],
+  "include": ["vite.config.ts"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
@@ -8,6 +8,6 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
 
-    "types": ["node"]
-  }
+    "types": ["node"],
+  },
 }
