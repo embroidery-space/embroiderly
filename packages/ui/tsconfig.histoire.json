@@ -1,7 +1,6 @@
 {
   "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
-  "include": ["src/**/*.vue", "src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.story.vue"],
+  "include": [".histoire/**/*.vue", "src/**/*.story.vue", "histoire.setup.ts"],
   "compilerOptions": {
     "baseUrl": ".",
 
@@ -9,6 +8,6 @@
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
 
-    "types": ["vite/client"]
+    "types": ["vite/client", "@histoire/plugin-vue/components"]
   }
 }
