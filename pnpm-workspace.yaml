@@ -3,14 +3,13 @@ packages:
   - docs
   - "packages/*"
 
-minimumReleaseAge: 4320 # 3 days in minutes
-
 strictDepBuilds: true
 ignoredBuiltDependencies:
   - core-js
-  - esbuild
   - edgedriver
+  - esbuild
   - geckodriver
+  - protobufjs
   - sharp
   - unrs-resolver
   - vue-demi
