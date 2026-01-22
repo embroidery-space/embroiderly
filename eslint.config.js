@@ -136,27 +136,14 @@ export default defineConfigWithVueTs(
   // TailwindCSS classes validation.
   {
     files: ["app/src/**/*.vue"],
-    plugins: { "better-tailwindcss": betterTailwindcss },
+    extends: [betterTailwindcss.configs["recommended"]],
     settings: {
       "better-tailwindcss": {
         entryPoint: fileURLToPath(new URL("app/src/app/assets/styles.css", import.meta.url)),
       },
     },
     rules: {
-      // Stylistic rules.
       "better-tailwindcss/enforce-consistent-line-wrapping": ["off"],
-      "better-tailwindcss/enforce-consistent-class-order": ["warn", { order: "official" }],
-      "better-tailwindcss/enforce-consistent-variable-syntax": ["warn"],
-      "better-tailwindcss/enforce-consistent-important-position": ["warn"],
-      "better-tailwindcss/enforce-shorthand-classes": ["warn"],
-      "better-tailwindcss/no-duplicate-classes": ["warn"],
-      "better-tailwindcss/no-deprecated-classes": ["warn"],
-      "better-tailwindcss/no-unnecessary-whitespace": ["warn"],
-
-      // Correctness rules.
-      "better-tailwindcss/no-unregistered-classes": ["warn"],
-      "better-tailwindcss/no-conflicting-classes": ["warn"],
-      "better-tailwindcss/no-restricted-classes": ["warn"],
     },
   },
 
