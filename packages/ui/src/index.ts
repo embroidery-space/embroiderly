@@ -4,6 +4,7 @@ export {
   type ButtonProps as UButtonProps,
   type ButtonSlots as UButtonSlots,
 } from "./components/Button.vue";
+export { default as UButtonIcon, type ButtonIconProps as UButtonIconProps } from "./components/ButtonIcon.vue";
 export {
   default as UTooltip,
   type TooltipProps as UTooltipProps,

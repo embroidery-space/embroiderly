@@ -7,8 +7,12 @@
     :class="cn(ui, props.class)"
   >
     <slot name="leading">
-      <Icon v-if="loading" aria-hidden="true" :icon="loadingIcon" :class="cn('animate-spin shrink-0', iconSizeClass)" />
-      <Icon v-else-if="leadingIcon" aria-hidden="true" :icon="leadingIcon" :class="cn('shrink-0', iconSizeClass)" />
+      <Icon
+        v-if="isLeading && leadingIconName"
+        aria-hidden="true"
+        :icon="leadingIconName"
+        :class="cn('shrink-0', iconSizeClass, { 'animate-spin': loading })"
+      />
     </slot>
 
     <slot>
@@ -17,10 +21,10 @@
 
     <slot name="trailing">
       <Icon
-        v-if="trailingIcon && !loading"
+        v-if="isTrailing && trailingIconName"
         aria-hidden="true"
-        :icon="trailingIcon"
-        :class="cn('shrink-0', iconSizeClass)"
+        :icon="trailingIconName"
+        :class="cn('shrink-0', iconSizeClass, { 'animate-spin': loading && !isLeading })"
       />
     </slot>
   </Primitive>
@@ -32,23 +36,38 @@
   import type { PrimitiveProps } from "reka-ui";
   import { computed } from "vue";
 
+  import { useComponentIcons } from "../composables/useComponentIcons.ts";
+  import type { UseComponentIconsProps } from "../composables/useComponentIcons.ts";
   import { buttonVariants } from "../theme/button.ts";
   import type { ButtonVariants } from "../theme/button.ts";
   import { cn } from "../utils/theme.ts";
 
-  export interface ButtonProps extends PrimitiveProps {
+  export interface ButtonProps extends PrimitiveProps, UseComponentIconsProps {
+    /**
+     * The style variant of the button.
+     * @default "solid"
+     */
     variant?: ButtonVariants["variant"];
+    /**
+     * The color scheme of the button.
+     * @default "primary"
+     */
     color?: ButtonVariants["color"];
+    /**
+     * The size of the button.
+     * @default "md"
+     */
     size?: ButtonVariants["size"];
 
+    /** Render the button with equal padding on all sides. */
+    square?: boolean;
+
+    /** The text label of the button. */
     label?: string;
-    loading?: boolean;
+    /** Whether the button is disabled. */
     disabled?: boolean;
 
-    leadingIcon?: string;
-    trailingIcon?: string;
-    loadingIcon?: string;
-
+    /** Additional CSS classes to apply to the button. */
     class?: string;
   }
 
@@ -73,9 +92,11 @@
       variant: props.variant,
       color: props.color,
       size: props.size,
+      square: props.square,
     });
   });
 
+  const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(props);
   const iconSizeClass = computed(() => {
     switch (props.size) {
       case "xs":

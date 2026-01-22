@@ -15,6 +15,8 @@
     variant: "solid",
     size: "md",
 
+    square: false,
+
     leadingIcon: "",
     trailingIcon: "",
 
@@ -36,6 +38,8 @@
         <HstSelect v-model="state.variant" title="Variant" :options="variants" />
         <HstSelect v-model="state.color" title="Color" :options="colors" />
         <HstSelect v-model="state.size" title="Size" :options="sizes" />
+
+        <HstCheckbox v-model="state.square" title="Square" />
 
         <HstText v-model="state.leadingIcon" title="Leading Icon" />
         <HstText v-model="state.trailingIcon" title="Trailing Icon" />
@@ -59,6 +63,14 @@
 
         <Button loading>Loading</Button>
         <Button disabled>Disabled</Button>
+      </div>
+    </Variant>
+
+    <Variant title="Square" auto-props-disabled>
+      <div class="flex items-center gap-2">
+        <template v-for="size in sizes" :key="size">
+          <Button :size="size" square icon="lucide:rocket" />
+        </template>
       </div>
     </Variant>
   </Story>

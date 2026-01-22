@@ -16,6 +16,19 @@ describe("Button", () => {
       `with neutral variant ${variant}`,
       { props: { label: "Button", variant, color: "neutral" } },
     ]),
+    ["with icon", { props: { label: "Button", icon: "lucide:rocket" } }],
+    ["with icon and leading", { props: { label: "Button", icon: "lucide:rocket", leading: true } }],
+    ["with icon and trailing", { props: { label: "Button", icon: "lucide:rocket", trailing: true } }],
+    ["with leading icon", { props: { label: "Button", leadingIcon: "lucide:rocket" } }],
+    ["with trailing icon", { props: { label: "Button", trailingIcon: "lucide:rocket" } }],
+    [
+      "with leading and trailing icons",
+      { props: { label: "Button", leadingIcon: "lucide:rocket", trailingIcon: "lucide:rocket" } },
+    ],
+    ...sizes.map((size: string) => [
+      `with square icon-only and size ${size}`,
+      { props: { square: true, size, icon: "lucide:rocket" } },
+    ]),
     [
       "with slots",
       {

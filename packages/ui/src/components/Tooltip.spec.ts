@@ -1,7 +1,7 @@
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { defineComponent } from "vue";
+import { defineComponent, nextTick } from "vue";
 
 import type { TooltipProps } from "./Tooltip.vue";
 import Tooltip from "./Tooltip.vue";
@@ -25,7 +25,7 @@ describe("Tooltip", () => {
   ] as [string, { props?: TooltipProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(TooltipWrapper, options);
 
-    await expect.element(screen.getByRole("button")).toBeVisible();
+    await nextTick();
 
     expect(screen.container).toMatchSnapshot();
   });

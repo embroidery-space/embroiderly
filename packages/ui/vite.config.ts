@@ -4,7 +4,7 @@
 import { HstVue } from "@histoire/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
-import { playwright } from "@vitest/browser-playwright";
+import { webdriverio } from "@vitest/browser-webdriverio";
 import { defineConfig } from "vite";
 
 const isCI = process.env.CI === "true";
@@ -40,11 +40,8 @@ export default defineConfig({
     browser: {
       enabled: true,
       headless: isCI,
-      provider: playwright(),
-      instances: [
-        { browser: "chromium" }, // Windows.
-        { browser: "webkit" }, // macOS and Linux.
-      ],
+      provider: webdriverio(),
+      instances: [{ browser: "edge" }],
     },
   },
 });

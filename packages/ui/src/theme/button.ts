@@ -24,6 +24,9 @@ export const buttonVariants = cva(
         lg: "px-3 py-2 gap-2",
         xl: "px-3 py-2 gap-2",
       },
+      square: {
+        true: "",
+      },
     },
     compoundVariants: [
       {
@@ -99,6 +102,12 @@ export const buttonVariants = cva(
         variant: "link",
         class: "text-muted hover:text-default active:text-default focus-visible:outline-inverted",
       },
+
+      { square: true, size: "xs", class: "p-1" },
+      { square: true, size: "sm", class: "p-1.5" },
+      { square: true, size: "md", class: "p-1.5" },
+      { square: true, size: "lg", class: "p-2" },
+      { square: true, size: "xl", class: "p-2" },
     ],
   },
 );

@@ -1,5 +1,101 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Button > renders correctly with icon 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+    
+    <span
+      class="truncate"
+    >
+      Button
+    </span>
+    
+    
+    <!--v-if-->
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with icon and leading 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+    
+    <span
+      class="truncate"
+    >
+      Button
+    </span>
+    
+    
+    <!--v-if-->
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with icon and trailing 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+  >
+    
+    <!--v-if-->
+    
+    
+    <span
+      class="truncate"
+    >
+      Button
+    </span>
+    
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+  </button>
+</div>
+`;
+
 exports[`Button > renders correctly with label 1`] = `
 <div>
   <button
@@ -8,6 +104,79 @@ exports[`Button > renders correctly with label 1`] = `
   >
     
     <!--v-if-->
+    
+    
+    <span
+      class="truncate"
+    >
+      Button
+    </span>
+    
+    
+    <!--v-if-->
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with leading and trailing icons 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+    
+    <span
+      class="truncate"
+    >
+      Button
+    </span>
+    
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with leading icon 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
     
     
     <span
@@ -428,6 +597,178 @@ exports[`Button > renders correctly with slots 1`] = `
     
     
     Trailing slot
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with square icon-only and size lg 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+    
+    <!--v-if-->
+    
+    
+    <!--v-if-->
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with square icon-only and size md 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+    
+    <!--v-if-->
+    
+    
+    <!--v-if-->
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with square icon-only and size sm 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-4"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+    
+    <!--v-if-->
+    
+    
+    <!--v-if-->
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with square icon-only and size xl 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-6"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+    
+    <!--v-if-->
+    
+    
+    <!--v-if-->
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with square icon-only and size xs 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1"
+  >
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-4"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
+    
+    
+    <!--v-if-->
+    
+    
+    <!--v-if-->
+    
+  </button>
+</div>
+`;
+
+exports[`Button > renders correctly with trailing icon 1`] = `
+<div>
+  <button
+    aria-disabled="false"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+  >
+    
+    <!--v-if-->
+    
+    
+    <span
+      class="truncate"
+    >
+      Button
+    </span>
+    
+    
+    <svg
+      aria-hidden="true"
+      class="shrink-0 size-5"
+      height="1em"
+      role="img"
+      viewBox="0 0 16 16"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    />
     
   </button>
 </div>
