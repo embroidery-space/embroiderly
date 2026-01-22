@@ -15,7 +15,6 @@ import vue from "eslint-plugin-vue";
 import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
 import globals from "globals";
-import yamlEslintParser from "yaml-eslint-parser";
 
 // Read the `.prettierignore` file and filter out empty lines and comments.
 const ignores = fs
@@ -150,8 +149,7 @@ export default defineConfigWithVueTs(
   // YAML validation.
   {
     files: ["pnpm-workspace.yaml", ".github/**/*.yml"],
-    extends: [yml.configs["flat/standard"]],
-    languageOptions: { parser: yamlEslintParser },
+    extends: [yml.configs.recommended],
     rules: {
       "yml/no-empty-mapping-value": "off",
     },
