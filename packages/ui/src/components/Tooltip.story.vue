@@ -26,7 +26,7 @@
 <template>
   <Story title="Tooltip" :layout="{ type: 'single', iframe: false }">
     <Variant title="Demo" auto-props-disabled>
-      <Tooltip v-bind="state">
+      <Tooltip v-bind="state" default-open>
         <Button label="Button" />
       </Tooltip>
     </Variant>

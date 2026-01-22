@@ -1,7 +1,7 @@
 <template>
-  <TooltipRoot v-bind="rootProps" :disabled="disabled || !text">
+  <TooltipRoot v-slot="{ open }" v-bind="rootProps" :disabled="disabled || !text">
     <TooltipTrigger as-child>
-      <slot />
+      <slot :open="open" />
     </TooltipTrigger>
 
     <TooltipPortal v-bind="portalProps">
@@ -16,8 +16,15 @@
 <script setup lang="ts">
   import { reactivePick } from "@vueuse/core";
   import defu from "defu";
-  import type { TooltipContentProps, TooltipRootProps } from "reka-ui";
-  import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger } from "reka-ui";
+  import type { TooltipContentProps, TooltipRootEmits, TooltipRootProps } from "reka-ui";
+  import {
+    TooltipArrow,
+    TooltipContent,
+    TooltipPortal,
+    TooltipRoot,
+    TooltipTrigger,
+    useForwardPropsEmits,
+  } from "reka-ui";
   import { computed, toRef } from "vue";
 
   import { usePortal } from "../composables/usePortal.ts";
@@ -43,6 +50,9 @@
     class?: string;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  export interface TooltipEmits extends TooltipRootEmits {}
+
   export interface TooltipSlots {
     default(): any;
   }
@@ -50,12 +60,19 @@
   const props = withDefaults(defineProps<TooltipProps>(), {
     portal: true,
   });
-  const rootProps = reactivePick(
-    props,
-    "delayDuration",
-    "disableHoverableContent",
-    "disableClosingTrigger",
-    "ignoreNonKeyboardFocus",
+  const emits = defineEmits<TooltipEmits>();
+
+  const rootProps = useForwardPropsEmits(
+    reactivePick(
+      props,
+      "open",
+      "defaultOpen",
+      "delayDuration",
+      "disableHoverableContent",
+      "disableClosingTrigger",
+      "ignoreNonKeyboardFocus",
+    ),
+    emits,
   );
   const contentProps = computed(
     () =>

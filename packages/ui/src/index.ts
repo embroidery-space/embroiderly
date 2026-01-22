@@ -7,5 +7,6 @@ export {
 export {
   default as UTooltip,
   type TooltipProps as UTooltipProps,
+  type TooltipEmits as UTooltipEmits,
   type TooltipSlots as UTooltipSlots,
 } from "./components/Tooltip.vue";
