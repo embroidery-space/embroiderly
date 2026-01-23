@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 
 import type { ButtonProps, ButtonSlots } from "./Button.vue";
@@ -46,4 +46,49 @@ describe("Button", () => {
       expect(screen.container).toMatchSnapshot();
     },
   );
+
+  describe("loading", () => {
+    test("handles auto loading correctly", async () => {
+      let resolvePromise: () => void;
+      const asyncHandler = vi.fn(() => new Promise<void>((resolve) => (resolvePromise = resolve)));
+
+      const screen = page.render(Button, {
+        props: {
+          label: "Submit",
+          loadingAuto: true,
+          onClick: asyncHandler,
+        },
+      });
+
+      const button = screen.getByRole("button");
+      await expect.element(button).not.toBeDisabled();
+
+      await button.click();
+
+      await expect.element(button).toBeDisabled();
+      expect(asyncHandler).toHaveBeenCalledTimes(1);
+
+      resolvePromise!();
+
+      await expect.element(button).not.toBeDisabled();
+    });
+
+    test("handles multiple click handlers", async () => {
+      const handler1 = vi.fn(() => Promise.resolve());
+      const handler2 = vi.fn(() => Promise.resolve());
+
+      const screen = page.render(Button, {
+        props: {
+          label: "Submit",
+          loadingAuto: true,
+          onClick: [handler1, handler2],
+        },
+      });
+
+      await screen.getByRole("button").click();
+
+      expect(handler1).toHaveBeenCalledTimes(1);
+      expect(handler2).toHaveBeenCalledTimes(1);
+    });
+  });
 });

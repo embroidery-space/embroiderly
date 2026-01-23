@@ -32,6 +32,7 @@ export default defineConfigWithVueTs(
 
   // High-quality code.
   {
+    ignores: ["**/*.test.ts", "**/*.spec.ts"],
     extends: [promise.configs["flat/recommended"], sonarjs.configs.recommended, unicorn.configs.unopinionated],
     rules: {
       "unicorn/prefer-ternary": "off",
@@ -103,11 +104,11 @@ export default defineConfigWithVueTs(
 
   // Testing.
   {
-    files: ["app/src/**/*.test.ts", "app/tests/**/*.ts"],
+    files: ["**/*.test.ts", "**/*.spec.ts"],
     plugins: { "no-only-tests": noOnlyTests },
   },
   {
-    files: ["app/src/**/*.test.ts"],
+    files: ["app/src/**/*.test.ts", "packages/**/*.spec.ts"],
     extends: [vitest.configs["recommended"]],
   },
   {

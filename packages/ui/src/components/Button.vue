@@ -1,40 +1,8 @@
-<template>
-  <Primitive
-    :as="as"
-    :as-child="asChild"
-    :disabled="disabled || loading"
-    :aria-disabled="disabled || loading"
-    :class="cn(ui, props.class)"
-  >
-    <slot name="leading">
-      <Icon
-        v-if="isLeading && leadingIconName"
-        aria-hidden="true"
-        :icon="leadingIconName"
-        :class="cn('shrink-0', iconSizeClass, { 'animate-spin': loading })"
-      />
-    </slot>
-
-    <slot>
-      <span v-if="label" class="truncate">{{ label }}</span>
-    </slot>
-
-    <slot name="trailing">
-      <Icon
-        v-if="isTrailing && trailingIconName"
-        aria-hidden="true"
-        :icon="trailingIconName"
-        :class="cn('shrink-0', iconSizeClass, { 'animate-spin': loading && !isLeading })"
-      />
-    </slot>
-  </Primitive>
-</template>
-
 <script setup lang="ts">
   import { Icon } from "@iconify/vue";
   import { Primitive } from "reka-ui";
   import type { PrimitiveProps } from "reka-ui";
-  import { computed } from "vue";
+  import { computed, ref } from "vue";
 
   import { useComponentIcons } from "../composables/useComponentIcons.ts";
   import type { UseComponentIconsProps } from "../composables/useComponentIcons.ts";
@@ -43,6 +11,9 @@
   import { cn } from "../utils/theme.ts";
 
   export interface ButtonProps extends PrimitiveProps, UseComponentIconsProps {
+    /** The text label of the button. */
+    label?: string;
+
     /**
      * The style variant of the button.
      * @default "solid"
@@ -59,15 +30,15 @@
      */
     size?: ButtonVariants["size"];
 
+    /** Set loading state automatically based on the `@click` promise state. */
+    loadingAuto?: boolean;
+
+    /** Whether the button is disabled. */
+    disabled?: boolean;
     /** Render the button with equal padding on all sides. */
     square?: boolean;
 
-    /** The text label of the button. */
-    label?: string;
-    /** Whether the button is disabled. */
-    disabled?: boolean;
-
-    /** Additional CSS classes to apply to the button. */
+    onClick?: ((event: MouseEvent) => void | Promise<void>) | Array<(event: MouseEvent) => void | Promise<void>>;
     class?: string;
   }
 
@@ -87,16 +58,22 @@
     loadingIcon: "lucide:loader-circle",
   });
 
-  const ui = computed(() => {
-    return buttonVariants({
-      variant: props.variant,
-      color: props.color,
-      size: props.size,
-      square: props.square,
-    });
-  });
+  const loadingAutoState = ref(false);
+  async function onClickWrapper(event: MouseEvent) {
+    loadingAutoState.value = true;
+    try {
+      const callbacks = Array.isArray(props.onClick) ? props.onClick : [props.onClick];
+      await Promise.all(callbacks.map((fn) => fn?.(event)));
+    } finally {
+      loadingAutoState.value = false;
+    }
+  }
 
-  const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(props);
+  const isLoading = computed(() => props.loading || (props.loadingAuto && loadingAutoState.value));
+
+  const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
+    computed(() => ({ ...props, loading: isLoading.value })),
+  );
   const iconSizeClass = computed(() => {
     switch (props.size) {
       case "xs":
@@ -113,4 +90,46 @@
         return "size-5";
     }
   });
+
+  const ui = computed(() => {
+    return buttonVariants({
+      variant: props.variant,
+      color: props.color,
+      size: props.size,
+      square: props.square,
+    });
+  });
 </script>
+
+<template>
+  <Primitive
+    :as="as"
+    :as-child="asChild"
+    :disabled="disabled || isLoading"
+    :aria-disabled="disabled || isLoading"
+    :class="cn(ui, props.class)"
+    @click="onClickWrapper"
+  >
+    <slot name="leading">
+      <Icon
+        v-if="isLeading && leadingIconName"
+        aria-hidden="true"
+        :icon="leadingIconName"
+        :class="cn('shrink-0', iconSizeClass, { 'animate-spin': isLoading })"
+      />
+    </slot>
+
+    <slot>
+      <span v-if="label" class="truncate">{{ label }}</span>
+    </slot>
+
+    <slot name="trailing">
+      <Icon
+        v-if="isTrailing && trailingIconName"
+        aria-hidden="true"
+        :icon="trailingIconName"
+        :class="cn('shrink-0', iconSizeClass, { 'animate-spin': isLoading && !isLeading })"
+      />
+    </slot>
+  </Primitive>
+</template>
