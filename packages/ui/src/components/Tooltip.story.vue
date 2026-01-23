@@ -24,21 +24,22 @@
 </script>
 
 <template>
-  <Story title="Tooltip" :layout="{ type: 'single', iframe: false }">
-    <Variant title="Demo" auto-props-disabled>
+  <Story id="tooltip" group="overlay" title="Tooltip" :layout="{ type: 'single', iframe: false }">
+    <Variant id="demo" title="Demo" auto-props-disabled>
       <Tooltip v-bind="state" default-open>
         <Button label="Button" />
       </Tooltip>
+
+      <template #controls>
+        <HstText v-model="state.text" title="text" />
+
+        <HstSelect v-model="state.content!.side" title="Variant" :options="sides" />
+        <HstNumber v-model="state.content!.sideOffset" title="Side Offset" />
+
+        <HstNumber v-model="state.delayDuration" title="Delay Duration" />
+
+        <HstCheckbox v-model="state.disabled" title="Disabled" />
+      </template>
     </Variant>
-    <template #controls>
-      <HstText v-model="state.text" title="text" />
-
-      <HstSelect v-model="state.content!.side" title="Variant" :options="sides" />
-      <HstNumber v-model="state.content!.sideOffset" title="Side Offset" />
-
-      <HstNumber v-model="state.delayDuration" title="Delay Duration" />
-
-      <HstCheckbox v-model="state.disabled" title="Disabled" />
-    </template>
   </Story>
 </template>

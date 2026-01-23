@@ -32,6 +32,20 @@ export default defineConfig({
       },
       logoHref: "https://ui.embroiderly.niusia.me",
     },
+
+    tree: {
+      groups: [
+        { id: "overview", title: "" },
+        { id: "general", title: "General" },
+        { id: "layout", title: "Layout" },
+        { id: "element", title: "Element" },
+        { id: "form", title: "Form" },
+        { id: "data", title: "Data" },
+        { id: "navigation", title: "Navigation" },
+        { id: "overlay", title: "Overlay" },
+        { id: "misc", title: "Misc" },
+      ],
+    },
   },
   test: {
     bail: isCI ? 1 : 0,

@@ -28,8 +28,8 @@
 </script>
 
 <template>
-  <Story title="Button" :layout="{ type: 'single', iframe: false }">
-    <Variant title="Demo" auto-props-disabled>
+  <Story id="button" group="element" title="Button" :layout="{ type: 'single', iframe: false }">
+    <Variant id="demo" title="Demo" auto-props-disabled>
       <Button v-bind="state" />
 
       <template #controls>
@@ -49,7 +49,7 @@
       </template>
     </Variant>
 
-    <Variant title="Colors & Variants" auto-props-disabled>
+    <Variant id="colors-and-variants" title="Colors & Variants" auto-props-disabled>
       <div class="grid grid-cols-6 grid-rows-2 gap-2">
         <template v-for="color in colors" :key="color">
           <template v-for="variant in variants" :key="variant">
@@ -66,7 +66,7 @@
       </div>
     </Variant>
 
-    <Variant title="Square" auto-props-disabled>
+    <Variant id="square" title="Square" auto-props-disabled>
       <div class="flex items-center gap-2">
         <template v-for="size in sizes" :key="size">
           <Button :size="size" square icon="lucide:rocket" />
