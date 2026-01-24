@@ -1,5 +1,17 @@
 // Layout.
 export { default as App, type AppProps, type AppSlots } from "./components/App/App.vue";
+export {
+  default as Splitter,
+  type SplitterProps,
+  type SplitterEmits,
+  type SplitterSlots,
+} from "./components/Splitter/Splitter.vue";
+export {
+  default as SplitterPanel,
+  type SplitterPanelProps,
+  type SplitterPanelEmits,
+  type SplitterPanelSlots,
+} from "./components/Splitter/SplitterPanel.vue";
 
 // Element.
 export { default as Button, type ButtonProps, type ButtonSlots } from "./components/Button/Button.vue";
