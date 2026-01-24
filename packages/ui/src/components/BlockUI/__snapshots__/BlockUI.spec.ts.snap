@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BlockUI > renders correctly when blocked 1`] = `
+<div>
+  <div
+    aria-busy="true"
+    class="relative"
+  >
+    
+    Content
+    
+    <div
+      class="absolute inset-0 flex items-center justify-center bg-black/50"
+    />
+  </div>
+</div>
+`;
+
+exports[`BlockUI > renders correctly when not blocked 1`] = `
+<div>
+  <div
+    aria-busy="false"
+    class="relative"
+  >
+    
+    Content
+    
+    <!--v-if-->
+  </div>
+</div>
+`;

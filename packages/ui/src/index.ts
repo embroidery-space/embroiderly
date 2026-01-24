@@ -7,6 +7,7 @@ export { default as ButtonIcon, type ButtonIconProps } from "./components/Button
 export { default as Icon, type IconProps } from "./components/Icon/Icon.vue";
 
 // Overlay.
+export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./components/BlockUI/BlockUI.vue";
 export {
   default as Tooltip,
   type TooltipProps,
