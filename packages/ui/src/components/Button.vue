@@ -6,29 +6,28 @@
 
   import { useComponentIcons } from "../composables/useComponentIcons.ts";
   import type { UseComponentIconsProps } from "../composables/useComponentIcons.ts";
-  import { buttonVariants } from "../theme/button.ts";
-  import type { ButtonVariants } from "../theme/button.ts";
-  import { cn } from "../utils/theme.ts";
+  import { buttonTheme } from "../theme/button.ts";
+  import type { ButtonThemeSlots, ButtonThemeVariants } from "../theme/button.ts";
 
   export interface ButtonProps extends PrimitiveProps, UseComponentIconsProps {
     /** The text label of the button. */
     label?: string;
 
     /**
-     * The style variant of the button.
-     * @default "solid"
-     */
-    variant?: ButtonVariants["variant"];
-    /**
      * The color scheme of the button.
      * @default "primary"
      */
-    color?: ButtonVariants["color"];
+    color?: ButtonThemeVariants["color"];
+    /**
+     * The style variant of the button.
+     * @default "solid"
+     */
+    variant?: ButtonThemeVariants["variant"];
     /**
      * The size of the button.
      * @default "md"
      */
-    size?: ButtonVariants["size"];
+    size?: ButtonThemeVariants["size"];
 
     /** Set loading state automatically based on the `@click` promise state. */
     loadingAuto?: boolean;
@@ -39,7 +38,9 @@
     square?: boolean;
 
     onClick?: ((event: MouseEvent) => void | Promise<void>) | Array<(event: MouseEvent) => void | Promise<void>>;
-    class?: string;
+
+    class?: any;
+    ui?: ButtonThemeSlots;
   }
 
   export interface ButtonSlots {
@@ -51,8 +52,8 @@
   const props = withDefaults(defineProps<ButtonProps>(), {
     as: "button",
 
-    variant: "solid",
     color: "primary",
+    variant: "solid",
     size: "md",
 
     loadingIcon: "lucide:loader-circle",
@@ -74,29 +75,18 @@
   const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
     computed(() => ({ ...props, loading: isLoading.value })),
   );
-  const iconSizeClass = computed(() => {
-    switch (props.size) {
-      case "xs":
-        return "size-4";
-      case "sm":
-        return "size-4";
-      case "md":
-        return "size-5";
-      case "lg":
-        return "size-5";
-      case "xl":
-        return "size-6";
-      default:
-        return "size-5";
-    }
-  });
 
   const ui = computed(() => {
-    return buttonVariants({
-      variant: props.variant,
+    return buttonTheme({
       color: props.color,
+      variant: props.variant,
       size: props.size,
+
+      loading: isLoading.value,
       square: props.square,
+
+      leading: isLeading.value,
+      trailing: isTrailing.value,
     });
   });
 </script>
@@ -107,7 +97,7 @@
     :as-child="asChild"
     :disabled="disabled || isLoading"
     :aria-disabled="disabled || isLoading"
-    :class="cn(ui, props.class)"
+    :class="ui.base({ class: [props.class, props.ui?.base] })"
     @click="onClickWrapper"
   >
     <slot name="leading">
@@ -115,12 +105,12 @@
         v-if="isLeading && leadingIconName"
         aria-hidden="true"
         :icon="leadingIconName"
-        :class="cn('shrink-0', iconSizeClass, { 'animate-spin': isLoading })"
+        :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
       />
     </slot>
 
     <slot>
-      <span v-if="label" class="truncate">{{ label }}</span>
+      <span v-if="label" :class="ui.label({ class: props.ui?.label })">{{ label }}</span>
     </slot>
 
     <slot name="trailing">
@@ -128,7 +118,7 @@
         v-if="isTrailing && trailingIconName"
         aria-hidden="true"
         :icon="trailingIconName"
-        :class="cn('shrink-0', iconSizeClass, { 'animate-spin': isLoading && !isLeading })"
+        :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
       />
     </slot>
   </Primitive>

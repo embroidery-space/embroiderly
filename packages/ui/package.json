@@ -12,10 +12,9 @@
   },
   "dependencies": {
     "@vueuse/core": "14.1.0",
-    "class-variance-authority": "0.7.1",
-    "clsx": "2.1.1",
     "defu": "6.1.4",
-    "tailwind-merge": "3.4.0"
+    "tailwind-merge": "3.4.0",
+    "tailwind-variants": "3.2.2"
   },
   "peerDependencies": {
     "reka-ui": "2.7.0",

@@ -1,114 +1,182 @@
-import { cva } from "class-variance-authority";
-import type { VariantProps } from "class-variance-authority";
+import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
-export const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2",
-  {
-    variants: {
-      color: {
-        primary: "",
-        neutral: "",
+export const buttonTheme = tv({
+  slots: {
+    base: "inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2",
+    label: "truncate",
+    leadingIcon: "shrink-0",
+    trailingIcon: "shrink-0",
+  },
+  variants: {
+    color: {
+      primary: {},
+      neutral: {},
+    },
+    variant: {
+      solid: {},
+      outline: {
+        base: "ring ring-inset",
       },
-      variant: {
-        solid: "",
-        outline: "ring ring-inset",
-        soft: "",
-        subtle: "ring ring-inset",
-        ghost: "disabled:bg-transparent aria-disabled:bg-transparent",
-        link: "",
+      soft: {},
+      subtle: {
+        base: "ring ring-inset",
       },
-      size: {
-        xs: "px-2 py-1 gap-1",
-        sm: "px-2.5 py-1.5 gap-1.5",
-        md: "px-2.5 py-1.5 gap-1.5",
-        lg: "px-3 py-2 gap-2",
-        xl: "px-3 py-2 gap-2",
+      ghost: {
+        base: "disabled:bg-transparent aria-disabled:bg-transparent",
       },
-      square: {
-        true: "",
+      link: {},
+    },
+    size: {
+      xs: {
+        base: "px-2 py-1 gap-1",
+        leadingIcon: "size-4",
+        trailingIcon: "size-4",
+      },
+      sm: {
+        base: "px-2.5 py-1.5 gap-1.5",
+        leadingIcon: "size-4",
+        trailingIcon: "size-4",
+      },
+      md: {
+        base: "px-2.5 py-1.5 gap-1.5",
+        leadingIcon: "size-5",
+        trailingIcon: "size-5",
+      },
+      lg: {
+        base: "px-3 py-2 gap-2",
+        leadingIcon: "size-5",
+        trailingIcon: "size-5",
+      },
+      xl: {
+        base: "px-3 py-2 gap-2",
+        leadingIcon: "size-6",
+        trailingIcon: "size-6",
       },
     },
-    compoundVariants: [
-      {
-        color: "primary",
-        variant: "solid",
-        class:
-          "bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary",
-      },
-      {
-        color: "neutral",
-        variant: "solid",
-        class:
-          "bg-inverted text-inverted hover:bg-inverted/90 active:bg-inverted/90 focus-visible:outline-inverted disabled:bg-inverted aria-disabled:bg-inverted",
-      },
-
-      {
-        color: "primary",
-        variant: "outline",
-        class:
-          "ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary disabled:bg-transparent",
-      },
-      {
-        color: "neutral",
-        variant: "outline",
-        class:
-          "ring-accented text-default bg-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted disabled:bg-default",
-      },
-
-      {
-        color: "primary",
-        variant: "soft",
-        class:
-          "text-primary bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10",
-      },
-      {
-        color: "neutral",
-        variant: "soft",
-        class:
-          "text-default bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated",
-      },
-
-      {
-        color: "primary",
-        variant: "subtle",
-        class:
-          "text-primary ring-primary/25 bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10",
-      },
-      {
-        color: "neutral",
-        variant: "subtle",
-        class:
-          "text-default ring-accented bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated",
-      },
-
-      {
-        color: "primary",
-        variant: "ghost",
-        class: "text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary",
-      },
-      {
-        color: "neutral",
-        variant: "ghost",
-        class: "text-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted",
-      },
-
-      {
-        color: "primary",
-        variant: "link",
-        class: "text-primary hover:text-primary/75 active:text-primary/75 focus-visible:outline-primary",
-      },
-      {
-        color: "neutral",
-        variant: "link",
-        class: "text-muted hover:text-default active:text-default focus-visible:outline-inverted",
-      },
-
-      { square: true, size: "xs", class: "p-1" },
-      { square: true, size: "sm", class: "p-1.5" },
-      { square: true, size: "md", class: "p-1.5" },
-      { square: true, size: "lg", class: "p-2" },
-      { square: true, size: "xl", class: "p-2" },
-    ],
+    loading: {
+      true: {},
+    },
+    square: {
+      true: {},
+    },
+    leading: {
+      true: {},
+    },
+    trailing: {
+      true: {},
+    },
   },
-);
-export type ButtonVariants = VariantProps<typeof buttonVariants>;
+  compoundVariants: [
+    {
+      color: "primary",
+      variant: "solid",
+      class: {
+        base: "bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary",
+      },
+    },
+    {
+      color: "neutral",
+      variant: "solid",
+      class: {
+        base: "bg-inverted text-inverted hover:bg-inverted/90 active:bg-inverted/90 focus-visible:outline-inverted disabled:bg-inverted aria-disabled:bg-inverted",
+      },
+    },
+
+    {
+      color: "primary",
+      variant: "outline",
+      class: {
+        base: "ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary disabled:bg-transparent",
+      },
+    },
+    {
+      color: "neutral",
+      variant: "outline",
+      class: {
+        base: "ring-accented text-default bg-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted disabled:bg-default",
+      },
+    },
+
+    {
+      color: "primary",
+      variant: "soft",
+      class: {
+        base: "text-primary bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10",
+      },
+    },
+    {
+      color: "neutral",
+      variant: "soft",
+      class: {
+        base: "text-default bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated",
+      },
+    },
+
+    {
+      color: "primary",
+      variant: "subtle",
+      class: {
+        base: "text-primary ring-primary/25 bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10",
+      },
+    },
+    {
+      color: "neutral",
+      variant: "subtle",
+      class: {
+        base: "text-default ring-accented bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated",
+      },
+    },
+
+    {
+      color: "primary",
+      variant: "ghost",
+      class: {
+        base: "text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary",
+      },
+    },
+    {
+      color: "neutral",
+      variant: "ghost",
+      class: {
+        base: "text-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted",
+      },
+    },
+
+    {
+      color: "primary",
+      variant: "link",
+      class: {
+        base: "text-primary hover:text-primary/75 active:text-primary/75 focus-visible:outline-primary",
+      },
+    },
+    {
+      color: "neutral",
+      variant: "link",
+      class: {
+        base: "text-muted hover:text-default active:text-default focus-visible:outline-inverted",
+      },
+    },
+
+    { square: true, size: "xs", class: { base: "p-1" } },
+    { square: true, size: "sm", class: { base: "p-1.5" } },
+    { square: true, size: "md", class: { base: "p-1.5" } },
+    { square: true, size: "lg", class: { base: "p-2" } },
+    { square: true, size: "xl", class: { base: "p-2" } },
+
+    {
+      loading: true,
+      leading: true,
+      class: { leadingIcon: "animate-spin" },
+    },
+    {
+      loading: true,
+      leading: false,
+      trailing: true,
+      class: { trailingIcon: "animate-spin" },
+    },
+  ],
+});
+
+export type ButtonThemeVariants = VariantProps<typeof buttonTheme>;
+export type ButtonThemeSlots = Partial<(typeof buttonTheme)["slots"]>;

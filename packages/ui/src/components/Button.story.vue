@@ -15,13 +15,12 @@
     variant: "solid",
     size: "md",
 
-    square: false,
-
     leadingIcon: "",
     trailingIcon: "",
 
     loading: false,
     disabled: false,
+    square: false,
   });
 
   defineExpose({ state });
@@ -39,13 +38,12 @@
         <HstSelect v-model="state.color" title="Color" :options="colors" />
         <HstSelect v-model="state.size" title="Size" :options="sizes" />
 
-        <HstCheckbox v-model="state.square" title="Square" />
-
         <HstText v-model="state.leadingIcon" title="Leading Icon" />
         <HstText v-model="state.trailingIcon" title="Trailing Icon" />
 
         <HstCheckbox v-model="state.loading" title="Loading" />
         <HstCheckbox v-model="state.disabled" title="Disabled" />
+        <HstCheckbox v-model="state.square" title="Square" />
       </template>
     </Variant>
 

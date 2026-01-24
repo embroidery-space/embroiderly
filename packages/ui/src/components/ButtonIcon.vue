@@ -42,6 +42,7 @@
     loadingIcon: props.loadingIcon,
 
     class: props.class,
+    ui: props.ui,
   }));
   const tooltipProps = computed<TooltipProps>(() => ({
     ...props.tooltipOptions,

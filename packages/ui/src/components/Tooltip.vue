@@ -1,18 +1,3 @@
-<template>
-  <TooltipRoot v-slot="{ open }" v-bind="rootProps" :disabled="disabled || !text">
-    <TooltipTrigger as-child>
-      <slot :open="open" />
-    </TooltipTrigger>
-
-    <TooltipPortal v-bind="portalProps">
-      <TooltipContent v-bind="contentProps" :class="cn(tooltipStyles.content, props.class)">
-        <span class="truncate">{{ text }}</span>
-        <TooltipArrow :class="tooltipStyles.arrow" />
-      </TooltipContent>
-    </TooltipPortal>
-  </TooltipRoot>
-</template>
-
 <script setup lang="ts">
   import { reactivePick } from "@vueuse/core";
   import defu from "defu";
@@ -28,8 +13,8 @@
   import { computed, toRef } from "vue";
 
   import { usePortal } from "../composables/usePortal.ts";
-  import { tooltipStyles } from "../theme/tooltip.ts";
-  import { cn } from "../utils/theme.ts";
+  import { tooltipTheme } from "../theme/tooltip.ts";
+  import type { TooltipThemeSlots } from "../theme/tooltip.ts";
 
   export interface TooltipProps extends TooltipRootProps {
     /** The text content of the tooltip. */
@@ -47,7 +32,8 @@
      */
     portal?: boolean | string | HTMLElement;
 
-    class?: string;
+    class?: any;
+    ui?: TooltipThemeSlots;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -83,4 +69,22 @@
       }) as TooltipContentProps,
   );
   const portalProps = usePortal(toRef(() => props.portal));
+
+  // eslint-disable-next-line vue/no-dupe-keys
+  const ui = tooltipTheme();
 </script>
+
+<template>
+  <TooltipRoot v-slot="{ open }" v-bind="rootProps" :disabled="disabled || !text">
+    <TooltipTrigger as-child>
+      <slot :open="open" />
+    </TooltipTrigger>
+
+    <TooltipPortal v-bind="portalProps">
+      <TooltipContent v-bind="contentProps" :class="ui.content({ class: [props.class, props.ui?.content] })">
+        <span :class="ui.text({ class: props.ui?.text })">{{ text }}</span>
+        <TooltipArrow :class="ui.arrow({ class: props.ui?.arrow })" />
+      </TooltipContent>
+    </TooltipPortal>
+  </TooltipRoot>
+</template>
