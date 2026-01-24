@@ -4,10 +4,11 @@
   import type { PrimitiveProps } from "reka-ui";
   import { computed, ref } from "vue";
 
-  import { useComponentIcons } from "../composables/useComponentIcons.ts";
-  import type { UseComponentIconsProps } from "../composables/useComponentIcons.ts";
-  import { buttonTheme } from "../theme/button.ts";
-  import type { ButtonThemeSlots, ButtonThemeVariants } from "../theme/button.ts";
+  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
+  import type { UseComponentIconsProps } from "../../composables/useComponentIcons.ts";
+
+  import { ButtonTheme } from "./Button.theme.ts";
+  import type { ButtonThemeSlots, ButtonThemeVariants } from "./Button.theme.ts";
 
   export interface ButtonProps extends PrimitiveProps, UseComponentIconsProps {
     /** The text label of the button. */
@@ -77,7 +78,7 @@
   );
 
   const ui = computed(() => {
-    return buttonTheme({
+    return ButtonTheme({
       color: props.color,
       variant: props.variant,
       size: props.size,

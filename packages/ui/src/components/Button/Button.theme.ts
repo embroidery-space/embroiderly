@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
-export const buttonTheme = tv({
+export const ButtonTheme = tv({
   slots: {
     base: "inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2",
     label: "truncate",
@@ -178,5 +178,5 @@ export const buttonTheme = tv({
   ],
 });
 
-export type ButtonThemeVariants = VariantProps<typeof buttonTheme>;
-export type ButtonThemeSlots = Partial<(typeof buttonTheme)["slots"]>;
+export type ButtonThemeVariants = VariantProps<typeof ButtonTheme>;
+export type ButtonThemeSlots = Partial<(typeof ButtonTheme)["slots"]>;

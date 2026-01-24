@@ -12,9 +12,10 @@
   } from "reka-ui";
   import { computed, toRef } from "vue";
 
-  import { usePortal } from "../composables/usePortal.ts";
-  import { tooltipTheme } from "../theme/tooltip.ts";
-  import type { TooltipThemeSlots } from "../theme/tooltip.ts";
+  import { usePortal } from "../../composables/usePortal.ts";
+
+  import { TooltipTheme } from "./Tooltip.theme.ts";
+  import type { TooltipThemeSlots } from "./Tooltip.theme.ts";
 
   export interface TooltipProps extends TooltipRootProps {
     /** The text content of the tooltip. */
@@ -71,7 +72,7 @@
   const portalProps = usePortal(toRef(() => props.portal));
 
   // eslint-disable-next-line vue/no-dupe-keys
-  const ui = tooltipTheme();
+  const ui = TooltipTheme();
 </script>
 
 <template>

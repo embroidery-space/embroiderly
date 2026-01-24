@@ -10,7 +10,7 @@
   import { ConfigProvider, TooltipProvider } from "reka-ui";
   import { provide, toRef } from "vue";
 
-  import { GLOBAL_PORTAL, PORTAL_TARGET_INJECTION_KEY } from "../composables/usePortal.ts";
+  import { GLOBAL_PORTAL, PORTAL_TARGET_INJECTION_KEY } from "../../composables/usePortal.ts";
 
   export interface AppProps {
     portal?: boolean | string | HTMLElement;

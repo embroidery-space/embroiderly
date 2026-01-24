@@ -7,10 +7,10 @@
 <script setup lang="ts">
   import { computed } from "vue";
 
-  import type { ButtonProps } from "./Button.vue";
-  import Button from "./Button.vue";
-  import type { TooltipProps } from "./Tooltip.vue";
-  import Tooltip from "./Tooltip.vue";
+  import type { ButtonProps } from "../Button/Button.vue";
+  import Button from "../Button/Button.vue";
+  import type { TooltipProps } from "../Tooltip/Tooltip.vue";
+  import Tooltip from "../Tooltip/Tooltip.vue";
 
   export interface ButtonIconProps
     extends

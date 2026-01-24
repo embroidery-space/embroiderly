@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { reactive } from "vue";
 
-  import Button from "./Button.vue";
+  import Button from "../Button/Button.vue";
+
   import type { TooltipProps } from "./Tooltip.vue";
   import Tooltip from "./Tooltip.vue";
 

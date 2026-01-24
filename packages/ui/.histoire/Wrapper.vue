@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-  import App from "../src/components/App.vue";
+  import { App } from "../src/";
 </script>
