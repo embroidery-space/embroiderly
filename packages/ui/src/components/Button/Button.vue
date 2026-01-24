@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { Icon } from "@iconify/vue";
   import { Primitive } from "reka-ui";
   import type { PrimitiveProps } from "reka-ui";
   import { computed, ref } from "vue";
 
   import { useComponentIcons } from "../../composables/useComponentIcons.ts";
   import type { UseComponentIconsProps } from "../../composables/useComponentIcons.ts";
+  import Icon from "../Icon/Icon.vue";
 
   import { ButtonTheme } from "./Button.theme.ts";
   import type { ButtonThemeSlots, ButtonThemeVariants } from "./Button.theme.ts";
@@ -105,7 +105,7 @@
       <Icon
         v-if="isLeading && leadingIconName"
         aria-hidden="true"
-        :icon="leadingIconName"
+        :name="leadingIconName"
         :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
       />
     </slot>
@@ -118,7 +118,7 @@
       <Icon
         v-if="isTrailing && trailingIconName"
         aria-hidden="true"
-        :icon="trailingIconName"
+        :name="trailingIconName"
         :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
       />
     </slot>

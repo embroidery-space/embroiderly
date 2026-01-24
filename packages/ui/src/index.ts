@@ -3,7 +3,8 @@ export { default as App, type AppProps, type AppSlots } from "./components/App/A
 
 // Element.
 export { default as Button, type ButtonProps, type ButtonSlots } from "./components/Button/Button.vue";
-export { default as UButtonIcon, type ButtonIconProps } from "./components/ButtonIcon/ButtonIcon.vue";
+export { default as ButtonIcon, type ButtonIconProps } from "./components/ButtonIcon/ButtonIcon.vue";
+export { default as Icon, type IconProps } from "./components/Icon/Icon.vue";
 
 // Overlay.
 export {
