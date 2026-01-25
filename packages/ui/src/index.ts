@@ -26,6 +26,11 @@ export {
   type InputNumberProps,
   type InputNumberEmits,
 } from "./components/InputNumber/InputNumber.vue";
+export {
+  default as InputNumberSlider,
+  type InputNumberSliderProps,
+  type InputNumberSliderEmits,
+} from "./components/InputNumberSlider/InputNumberSlider.vue";
 export { default as Slider, type SliderProps, type SliderEmits } from "./components/Slider/Slider.vue";
 
 // Overlay.

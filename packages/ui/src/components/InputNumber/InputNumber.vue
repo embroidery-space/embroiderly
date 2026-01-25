@@ -63,7 +63,7 @@
 
   defineOptions({ inheritAttrs: false });
 
-  const modelValue = defineModel<number | null>();
+  const modelValue = defineModel<number>();
   const props = withDefaults(defineProps<InputNumberProps>(), {
     as: "div",
 
