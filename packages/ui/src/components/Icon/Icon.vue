@@ -10,5 +10,5 @@
 </script>
 
 <template>
-  <IconifyIcon :icon="name" />
+  <IconifyIcon :icon="name" mode="svg" />
 </template>
