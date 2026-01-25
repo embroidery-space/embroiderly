@@ -24,7 +24,6 @@ describe("Tooltip", () => {
     ["with class", { props: { ...props, class: "text-sm" } }],
   ] as [string, { props?: TooltipProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(TooltipWrapper, options);
-
     await nextTick();
 
     expect(screen.container).toMatchSnapshot();

@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { nextTick } from "vue";
 import { Key } from "webdriverio";
 
 import type { InputProps, InputSlots } from "./Input.vue";
@@ -22,12 +23,16 @@ describe("Input", () => {
     ["with trailing slot", { slots: { trailing: () => "Trailing slot" } }],
   ] as [string, { props?: InputProps; slots?: Partial<InputSlots> }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(Input, options);
+    await nextTick();
+
     expect(screen.container).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
       const screen = page.render(Input);
+      await nextTick();
+
       const input = screen.getByRole("textbox");
 
       await userEvent.fill(input, "qwerty");
@@ -37,6 +42,8 @@ describe("Input", () => {
 
     test("blur event", async () => {
       const screen = page.render(Input);
+      await nextTick();
+
       const input = screen.getByRole("textbox");
 
       await userEvent.click(input);
@@ -47,6 +54,8 @@ describe("Input", () => {
 
     test("change event", async () => {
       const screen = page.render(Input);
+      await nextTick();
+
       const input = screen.getByRole("textbox");
 
       await userEvent.fill(input, "qwerty");

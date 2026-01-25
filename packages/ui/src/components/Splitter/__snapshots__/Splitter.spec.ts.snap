@@ -16,9 +16,9 @@ exports[`Splitter > renders correctly with horizontal direction 1`] = `
       data-panel=""
       data-panel-group-id="reka-splitter-group-v-0"
       data-panel-id="reka-splitter-panel-v-1"
-      data-panel-size="1.0"
+      data-panel-size="50.0"
       id="reka-splitter-panel-v-1"
-      style="flex: 1 1 0px; overflow: hidden;"
+      style="flex: 50 1 0px; overflow: hidden;"
     >
       
       
@@ -27,6 +27,10 @@ exports[`Splitter > renders correctly with horizontal direction 1`] = `
       
     </div>
     <div
+      aria-controls="reka-splitter-panel-v-1"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
       class="border-2 border-default"
       data-orientation="horizontal"
       data-panel-group-id="reka-splitter-group-v-0"
@@ -50,9 +54,9 @@ exports[`Splitter > renders correctly with horizontal direction 1`] = `
       data-panel=""
       data-panel-group-id="reka-splitter-group-v-0"
       data-panel-id="reka-splitter-panel-v-3"
-      data-panel-size="1.0"
+      data-panel-size="50.0"
       id="reka-splitter-panel-v-3"
-      style="flex: 1 1 0px; overflow: hidden;"
+      style="flex: 50 1 0px; overflow: hidden;"
     >
       
       
@@ -84,9 +88,9 @@ exports[`Splitter > renders correctly with three panels 1`] = `
       data-panel=""
       data-panel-group-id="reka-splitter-group-v-0"
       data-panel-id="reka-splitter-panel-v-1"
-      data-panel-size="1.0"
+      data-panel-size="33.3"
       id="reka-splitter-panel-v-1"
-      style="flex: 1 1 0px; overflow: hidden;"
+      style="flex: 33.3 1 0px; overflow: hidden;"
     >
       
       
@@ -95,6 +99,10 @@ exports[`Splitter > renders correctly with three panels 1`] = `
       
     </div>
     <div
+      aria-controls="reka-splitter-panel-v-1"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="33"
       class="border-2 border-default"
       data-orientation="horizontal"
       data-panel-group-id="reka-splitter-group-v-0"
@@ -118,9 +126,9 @@ exports[`Splitter > renders correctly with three panels 1`] = `
       data-panel=""
       data-panel-group-id="reka-splitter-group-v-0"
       data-panel-id="reka-splitter-panel-v-3"
-      data-panel-size="1.0"
+      data-panel-size="33.3"
       id="reka-splitter-panel-v-3"
-      style="flex: 1 1 0px; overflow: hidden;"
+      style="flex: 33.3 1 0px; overflow: hidden;"
     >
       
       
@@ -129,6 +137,10 @@ exports[`Splitter > renders correctly with three panels 1`] = `
       
     </div>
     <div
+      aria-controls="reka-splitter-panel-v-3"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="33"
       class="border-2 border-default"
       data-orientation="horizontal"
       data-panel-group-id="reka-splitter-group-v-0"
@@ -152,9 +164,9 @@ exports[`Splitter > renders correctly with three panels 1`] = `
       data-panel=""
       data-panel-group-id="reka-splitter-group-v-0"
       data-panel-id="reka-splitter-panel-v-5"
-      data-panel-size="1.0"
+      data-panel-size="33.3"
       id="reka-splitter-panel-v-5"
-      style="flex: 1 1 0px; overflow: hidden;"
+      style="flex: 33.3 1 0px; overflow: hidden;"
     >
       
       
@@ -186,9 +198,9 @@ exports[`Splitter > renders correctly with vertical direction 1`] = `
       data-panel=""
       data-panel-group-id="reka-splitter-group-v-0"
       data-panel-id="reka-splitter-panel-v-1"
-      data-panel-size="1.0"
+      data-panel-size="50.0"
       id="reka-splitter-panel-v-1"
-      style="flex: 1 1 0px; overflow: hidden;"
+      style="flex: 50 1 0px; overflow: hidden;"
     >
       
       
@@ -197,6 +209,10 @@ exports[`Splitter > renders correctly with vertical direction 1`] = `
       
     </div>
     <div
+      aria-controls="reka-splitter-panel-v-1"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
       class="border-2 border-default"
       data-orientation="vertical"
       data-panel-group-id="reka-splitter-group-v-0"
@@ -220,9 +236,9 @@ exports[`Splitter > renders correctly with vertical direction 1`] = `
       data-panel=""
       data-panel-group-id="reka-splitter-group-v-0"
       data-panel-id="reka-splitter-panel-v-3"
-      data-panel-size="1.0"
+      data-panel-size="50.0"
       id="reka-splitter-panel-v-3"
-      style="flex: 1 1 0px; overflow: hidden;"
+      style="flex: 50 1 0px; overflow: hidden;"
     >
       
       

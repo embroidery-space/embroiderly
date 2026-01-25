@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { h } from "vue";
+import { h, nextTick } from "vue";
 
 import type { SplitterProps } from "./Splitter.vue";
 import Splitter from "./Splitter.vue";
@@ -19,6 +19,8 @@ describe("Splitter", () => {
     "renders correctly %s",
     async (_, options) => {
       const screen = page.render(Splitter, options);
+      await nextTick();
+
       expect(screen.container).toMatchSnapshot();
     },
   );
@@ -28,7 +30,10 @@ describe("Splitter", () => {
       props: { direction: "horizontal" },
       slots: { default: createPanels(panelCount) },
     });
+    await nextTick();
+
     const handles = screen.getByRole("separator");
+
     expect(handles.length).toBe(panelCount - 1);
   });
 });

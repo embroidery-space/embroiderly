@@ -410,18 +410,7 @@ exports[`InputNumber > renders correctly with name 1`] = `
       </button>
     </div>
     
-    
-    <!-- We render single input if it's required -->
-    
-    <input
-      data-hidden=""
-      name="name"
-      style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); white-space: nowrap; overflow-wrap: normal; top: -1px; left: -1px;"
-      tabindex="-1"
-      type="text"
-    />
-    
-    
+    <!--v-if-->
   </div>
 </div>
 `;

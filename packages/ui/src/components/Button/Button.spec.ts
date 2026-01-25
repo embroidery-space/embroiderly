@@ -1,5 +1,6 @@
 import { describe, expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
+import { nextTick } from "vue";
 
 import type { ButtonProps, ButtonSlots } from "./Button.vue";
 import Button from "./Button.vue";
@@ -43,6 +44,8 @@ describe("Button", () => {
     "renders correctly %s",
     async (_, options) => {
       const screen = page.render(Button, options);
+      await nextTick();
+
       expect(screen.container).toMatchSnapshot();
     },
   );
@@ -59,6 +62,7 @@ describe("Button", () => {
           onClick: asyncHandler,
         },
       });
+      await nextTick();
 
       const button = screen.getByRole("button");
       await expect.element(button).not.toBeDisabled();
@@ -84,6 +88,7 @@ describe("Button", () => {
           onClick: [handler1, handler2],
         },
       });
+      await nextTick();
 
       await screen.getByRole("button").click();
 

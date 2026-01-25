@@ -38,7 +38,6 @@ describe("ButtonIcon", () => {
     ["with custom class", { props: { ...props, class: "font-medium" } }],
   ] as [string, { props: ButtonIconProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(ButtonIconWrapper, options);
-
     await nextTick();
 
     expect(screen.container).toMatchSnapshot();

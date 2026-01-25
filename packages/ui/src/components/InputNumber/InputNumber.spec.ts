@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { nextTick } from "vue";
 import { Key } from "webdriverio";
 
 import type { InputNumberProps } from "./InputNumber.vue";
@@ -26,12 +27,16 @@ describe("InputNumber", () => {
     ["with ui", { props: { ui: { base: "rounded-full" } } }],
   ] as [string, { props?: InputNumberProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(InputNumber, options);
+    await nextTick();
+
     expect(screen.container).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
       const screen = page.render(InputNumber);
+      await nextTick();
+
       const input = screen.getByRole("spinbutton");
 
       await userEvent.fill(input, "42");
@@ -42,6 +47,8 @@ describe("InputNumber", () => {
 
     test("blur event", async () => {
       const screen = page.render(InputNumber);
+      await nextTick();
+
       const input = screen.getByRole("spinbutton");
 
       await userEvent.click(input);
@@ -52,6 +59,8 @@ describe("InputNumber", () => {
 
     test("change event", async () => {
       const screen = page.render(InputNumber);
+      await nextTick();
+
       const input = screen.getByRole("spinbutton");
 
       await userEvent.fill(input, "42");
@@ -64,6 +73,7 @@ describe("InputNumber", () => {
   describe("increment/decrement buttons", () => {
     test("increment button increases value", async () => {
       const screen = page.render(InputNumber, { props: { modelValue: 5 } });
+      await nextTick();
 
       const incrementButton = screen.getByRole("button", { name: "Increment" });
       await expect.element(incrementButton).toBeInTheDocument();
@@ -75,6 +85,7 @@ describe("InputNumber", () => {
 
     test("decrement button decreases value", async () => {
       const screen = page.render(InputNumber, { props: { modelValue: 5 } });
+      await nextTick();
 
       const decrementButton = screen.getByRole("button", { name: "Decrement" });
       await expect.element(decrementButton).toBeInTheDocument();
@@ -86,6 +97,7 @@ describe("InputNumber", () => {
 
     test("buttons are hidden when increment=false and decrement=false", async () => {
       const screen = page.render(InputNumber, { props: { increment: false, decrement: false } });
+      await nextTick();
 
       await expect.element(screen.getByRole("button", { name: "Increment" })).not.toBeInTheDocument();
       await expect.element(screen.getByRole("button", { name: "Decrement" })).not.toBeInTheDocument();

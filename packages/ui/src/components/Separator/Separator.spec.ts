@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
+import { nextTick } from "vue";
 
 import type { SeparatorProps } from "./Separator.vue";
 import Separator from "./Separator.vue";
@@ -16,6 +17,8 @@ describe("Separator", () => {
     ["with ui", { props: { ui: { base: "border-primary" } } }],
   ] as [string, { props?: SeparatorProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(Separator, options);
+    await nextTick();
+
     expect(screen.container).toMatchSnapshot();
   });
 });
