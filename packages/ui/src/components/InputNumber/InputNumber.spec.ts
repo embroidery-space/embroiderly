@@ -37,7 +37,6 @@ describe("InputNumber", () => {
       await userEvent.fill(input, "42");
       await userEvent.keyboard(Key.Enter);
 
-      console.log(screen.emitted());
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });
 
