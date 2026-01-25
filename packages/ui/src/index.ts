@@ -26,6 +26,7 @@ export {
   type InputNumberProps,
   type InputNumberEmits,
 } from "./components/InputNumber/InputNumber.vue";
+export { default as Slider, type SliderProps, type SliderEmits } from "./components/Slider/Slider.vue";
 
 // Overlay.
 export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./components/BlockUI/BlockUI.vue";
