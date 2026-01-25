@@ -1,0 +1,240 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Input > renders correctly with class 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary absolute"
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with default slot 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      type="text"
+    />
+    
+    Default slot
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with disabled 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      disabled=""
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with id 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      id="id"
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with leading slot 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary ps-11"
+      type="text"
+    />
+    
+    
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+    >
+      
+      Leading slot
+      
+    </span>
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with name 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      name="name"
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with placeholder 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      placeholder="Search..."
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with readonly 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      readonly=""
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 pe-2.5 py-1.5 text-sm gap-1.5 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2 pe-2 py-1 text-xs gap-1 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with trailing slot 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-11"
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <span
+      class="absolute inset-y-0 end-0 flex items-center pe-3"
+    >
+      
+      Trailing slot
+      
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <input
+      class="w-full border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary rounded-full"
+      type="text"
+    />
+    
+    
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>
+`;

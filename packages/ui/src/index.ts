@@ -18,6 +18,9 @@ export { default as Button, type ButtonProps, type ButtonSlots } from "./compone
 export { default as ButtonIcon, type ButtonIconProps } from "./components/ButtonIcon/ButtonIcon.vue";
 export { default as Icon, type IconProps } from "./components/Icon/Icon.vue";
 
+// Form.
+export { default as Input, type InputProps, type InputEmits, type InputSlots } from "./components/Input/Input.vue";
+
 // Overlay.
 export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./components/BlockUI/BlockUI.vue";
 export {

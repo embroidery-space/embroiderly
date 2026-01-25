@@ -37,6 +37,7 @@
     "vitest": "4.0.17",
     "vitest-browser-vue": "2.0.1",
     "vue-tsc": "3.2.2",
+    "webdriverio": "9.23.2",
     "wrangler": "4.59.2"
   }
 }
