@@ -1,0 +1,1302 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InputNumber > renders correctly with class 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary absolute"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with disabled 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    data-disabled=""
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      data-disabled=""
+      disabled=""
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="true"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        data-disabled=""
+        disabled=""
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="true"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        data-disabled=""
+        disabled=""
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with id 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      id="id"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with min and max 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with name 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    
+    <!-- We render single input if it's required -->
+    
+    <input
+      data-hidden=""
+      name="name"
+      style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); white-space: nowrap; overflow-wrap: normal; top: -1px; left: -1px;"
+      tabindex="-1"
+      type="text"
+    />
+    
+    
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with placeholder 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      placeholder="Enter a number..."
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with readonly 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    data-readonly=""
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      data-readonly=""
+      inputmode="decimal"
+      readonly=""
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="true"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        data-disabled=""
+        disabled=""
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="true"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        data-disabled=""
+        disabled=""
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 pe-8 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1.5"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-4"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1.5"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-4"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2 pe-7 py-1 text-xs focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 text-xs text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-3"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 text-xs text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-3"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with step 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary rounded-full"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with variant outline 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-default ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly with variant subtle 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly without buttons 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-3"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <!--v-if-->
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly without decrement 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <button
+        aria-disabled="false"
+        aria-label="Increment"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--v-if-->
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputNumber > renders correctly without increment 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    role="group"
+  >
+    
+    <input
+      aria-roledescription="Number field"
+      autocomplete="off"
+      autocorrect="off"
+      class="w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      inputmode="decimal"
+      role="spinbutton"
+      spellcheck="false"
+      tabindex="0"
+      type="text"
+      value=""
+    />
+    <div
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+    >
+      <!--v-if-->
+      <button
+        aria-disabled="false"
+        aria-label="Decrement"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        tabindex="-1"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-5"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </div>
+    
+    <!--v-if-->
+  </div>
+</div>
+`;

@@ -32,6 +32,7 @@
   }
 
   export interface InputEmits {
+    "update:modelValue": [value: string];
     blur: [event: FocusEvent];
     change: [event: Event];
   }
