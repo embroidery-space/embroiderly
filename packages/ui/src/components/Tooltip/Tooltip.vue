@@ -82,7 +82,7 @@
     </TooltipTrigger>
 
     <TooltipPortal v-bind="portalProps">
-      <TooltipContent v-bind="contentProps" :class="ui.content({ class: [props.class, props.ui?.content] })">
+      <TooltipContent v-bind="contentProps" :class="ui.content({ class: [props.ui?.content, props.class] })">
         <span :class="ui.text({ class: props.ui?.text })">{{ text }}</span>
         <TooltipArrow :class="ui.arrow({ class: props.ui?.arrow })" />
       </TooltipContent>

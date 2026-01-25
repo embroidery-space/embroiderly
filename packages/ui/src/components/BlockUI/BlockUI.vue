@@ -1,5 +1,5 @@
 <template>
-  <div :aria-busy="blocked" :class="ui.base({ class: [props.class, props.ui?.base] })">
+  <div :aria-busy="blocked" :class="ui.base({ class: [props.ui?.base, props.class] })">
     <slot />
     <div v-if="blocked" :class="ui.mask({ class: props.ui?.mask })" />
   </div>

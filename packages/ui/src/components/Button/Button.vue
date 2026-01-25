@@ -98,7 +98,7 @@
     :as-child="asChild"
     :disabled="disabled || isLoading"
     :aria-disabled="disabled || isLoading"
-    :class="ui.base({ class: [props.class, props.ui?.base] })"
+    :class="ui.base({ class: [props.ui?.base, props.class] })"
     @click="onClickWrapper"
   >
     <slot name="leading">

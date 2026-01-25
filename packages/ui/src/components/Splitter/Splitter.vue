@@ -49,7 +49,7 @@
 </script>
 
 <template>
-  <SplitterGroup v-bind="forwarded" :class="ui.base({ class: [props.class, props.ui?.base] })">
+  <SplitterGroup v-bind="forwarded" :class="ui.base({ class: [props.ui?.base, props.class] })">
     <template v-for="(panel, index) in panels" :key="index">
       <component :is="panel" :class="ui.panel({ class: props.ui?.panel })" />
       <SplitterResizeHandle v-if="index < panels.length - 1" :class="ui.handle({ class: props.ui?.handle })" />

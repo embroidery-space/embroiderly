@@ -49,6 +49,6 @@
     :as-child="asChild"
     :decorative="decorative"
     :orientation="orientation"
-    :class="ui.base({ class: [props.class, props.ui?.base] })"
+    :class="ui.base({ class: [props.ui?.base, props.class] })"
   />
 </template>

@@ -82,7 +82,7 @@
       :minlength="minlength"
       :disabled="disabled"
       :readonly="readonly"
-      :class="ui.base({ class: [props.class, props.ui?.base] })"
+      :class="ui.base({ class: [props.ui?.base, props.class] })"
       v-bind="$attrs"
       @blur="emits('blur', $event)"
       @change="emits('change', $event)"
