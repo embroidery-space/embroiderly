@@ -5,7 +5,7 @@ import type { ButtonProps, ButtonSlots } from "./Button.vue";
 import Button from "./Button.vue";
 
 describe("Button", () => {
-  const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const sizes = ["sm", "md", "lg"] as const;
   const variants = ["solid", "outline", "soft", "subtle", "ghost", "link"] as const;
 
   test.each([

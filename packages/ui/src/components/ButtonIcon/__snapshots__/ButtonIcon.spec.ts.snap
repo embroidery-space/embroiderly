@@ -9,14 +9,14 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-inverted text-inverted hover:bg-inverted/90 active:bg-inverted/90 focus-visible:outline-inverted disabled:bg-inverted aria-disabled:bg-inverted p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-inverted text-inverted hover:bg-inverted/90 active:bg-inverted/90 focus-visible:outline-inverted disabled:bg-inverted aria-disabled:bg-inverted p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -109,14 +109,14 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -209,14 +209,14 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5 font-medium"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5 font-medium"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -309,14 +309,14 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -409,7 +409,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="true"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
     disabled=""
@@ -417,7 +417,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -510,7 +510,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="true"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
     disabled=""
@@ -518,7 +518,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5 animate-spin"
+      class="shrink-0 size-4 animate-spin"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -611,7 +611,7 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -711,14 +711,14 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -811,14 +811,14 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-4"
+      class="shrink-0 size-3"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -911,14 +911,14 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-6"
+      class="shrink-0"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1011,14 +1011,14 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-4"
+      class="shrink-0"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1111,14 +1111,14 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1211,14 +1211,14 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-primary hover:text-primary/75 active:text-primary/75 focus-visible:outline-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-primary hover:text-primary/75 active:text-primary/75 focus-visible:outline-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1311,14 +1311,14 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset gap-1.5 ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary disabled:bg-transparent p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset gap-1.5 text-sm ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary disabled:bg-transparent p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1411,14 +1411,14 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-primary bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10 p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-primary bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10 p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1511,14 +1511,14 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1611,14 +1611,14 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset gap-1.5 text-primary ring-primary/25 bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10 p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset gap-1.5 text-sm text-primary ring-primary/25 bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10 p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"

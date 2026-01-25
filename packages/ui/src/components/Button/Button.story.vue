@@ -6,7 +6,7 @@
 
   const colors = ["primary", "neutral"] as const;
   const variants = ["solid", "outline", "soft", "subtle", "ghost", "link"] as const;
-  const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const sizes = ["sm", "md", "lg"] as const;
 
   const state = reactive<ButtonProps>({
     label: "Button",

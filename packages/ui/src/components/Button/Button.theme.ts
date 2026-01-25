@@ -28,30 +28,20 @@ export const ButtonTheme = tv({
       link: {},
     },
     size: {
-      xs: {
-        base: "px-2 py-1 gap-1",
-        leadingIcon: "size-4",
-        trailingIcon: "size-4",
-      },
       sm: {
-        base: "px-2.5 py-1.5 gap-1.5",
-        leadingIcon: "size-4",
-        trailingIcon: "size-4",
+        base: "px-2 py-1 gap-1 text-xs",
+        leadingIcon: "size-3",
+        trailingIcon: "size-3",
       },
       md: {
-        base: "px-2.5 py-1.5 gap-1.5",
-        leadingIcon: "size-5",
-        trailingIcon: "size-5",
+        base: "px-2.5 py-1.5 gap-1.5 text-sm",
+        leadingIcon: "size-4",
+        trailingIcon: "size-4",
       },
       lg: {
-        base: "px-3 py-2 gap-2",
+        base: "px-3 py-2 gap-2 text-base",
         leadingIcon: "size-5",
         trailingIcon: "size-5",
-      },
-      xl: {
-        base: "px-3 py-2 gap-2",
-        leadingIcon: "size-6",
-        trailingIcon: "size-6",
       },
     },
     loading: {
@@ -158,11 +148,9 @@ export const ButtonTheme = tv({
       },
     },
 
-    { square: true, size: "xs", class: { base: "p-1" } },
-    { square: true, size: "sm", class: { base: "p-1.5" } },
+    { square: true, size: "sm", class: { base: "p-1" } },
     { square: true, size: "md", class: { base: "p-1.5" } },
     { square: true, size: "lg", class: { base: "p-2" } },
-    { square: true, size: "xl", class: { base: "p-2" } },
 
     {
       loading: true,

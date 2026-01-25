@@ -4,12 +4,12 @@ exports[`Button > renders correctly with icon 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -36,12 +36,12 @@ exports[`Button > renders correctly with icon and leading 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -68,7 +68,7 @@ exports[`Button > renders correctly with icon and trailing 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <!--v-if-->
@@ -83,7 +83,7 @@ exports[`Button > renders correctly with icon and trailing 1`] = `
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -100,7 +100,7 @@ exports[`Button > renders correctly with label 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <!--v-if-->
@@ -123,12 +123,12 @@ exports[`Button > renders correctly with leading and trailing icons 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -147,7 +147,7 @@ exports[`Button > renders correctly with leading and trailing icons 1`] = `
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -164,12 +164,12 @@ exports[`Button > renders correctly with leading icon 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -196,7 +196,7 @@ exports[`Button > renders correctly with neutral variant ghost 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-transparent aria-disabled:bg-transparent px-2.5 py-1.5 gap-1.5 text-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-transparent aria-disabled:bg-transparent px-2.5 py-1.5 gap-1.5 text-sm text-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted"
   >
     
     <!--v-if-->
@@ -219,7 +219,7 @@ exports[`Button > renders correctly with neutral variant link 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-muted hover:text-default active:text-default focus-visible:outline-inverted"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted"
   >
     
     <!--v-if-->
@@ -242,7 +242,7 @@ exports[`Button > renders correctly with neutral variant outline 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset px-2.5 py-1.5 gap-1.5 ring-accented text-default bg-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted disabled:bg-default"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset px-2.5 py-1.5 gap-1.5 text-sm ring-accented text-default bg-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted disabled:bg-default"
   >
     
     <!--v-if-->
@@ -265,7 +265,7 @@ exports[`Button > renders correctly with neutral variant soft 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-default bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm text-default bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated"
   >
     
     <!--v-if-->
@@ -288,7 +288,7 @@ exports[`Button > renders correctly with neutral variant solid 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-inverted text-inverted hover:bg-inverted/90 active:bg-inverted/90 focus-visible:outline-inverted disabled:bg-inverted aria-disabled:bg-inverted"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-inverted text-inverted hover:bg-inverted/90 active:bg-inverted/90 focus-visible:outline-inverted disabled:bg-inverted aria-disabled:bg-inverted"
   >
     
     <!--v-if-->
@@ -311,7 +311,7 @@ exports[`Button > renders correctly with neutral variant subtle 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset px-2.5 py-1.5 gap-1.5 text-default ring-accented bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset px-2.5 py-1.5 gap-1.5 text-sm text-default ring-accented bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated"
   >
     
     <!--v-if-->
@@ -334,7 +334,7 @@ exports[`Button > renders correctly with primary variant ghost 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-transparent aria-disabled:bg-transparent px-2.5 py-1.5 gap-1.5 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-transparent aria-disabled:bg-transparent px-2.5 py-1.5 gap-1.5 text-sm text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary"
   >
     
     <!--v-if-->
@@ -357,7 +357,7 @@ exports[`Button > renders correctly with primary variant link 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-primary hover:text-primary/75 active:text-primary/75 focus-visible:outline-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm text-primary hover:text-primary/75 active:text-primary/75 focus-visible:outline-primary"
   >
     
     <!--v-if-->
@@ -380,7 +380,7 @@ exports[`Button > renders correctly with primary variant outline 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset px-2.5 py-1.5 gap-1.5 ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary disabled:bg-transparent"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset px-2.5 py-1.5 gap-1.5 text-sm ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary disabled:bg-transparent"
   >
     
     <!--v-if-->
@@ -403,7 +403,7 @@ exports[`Button > renders correctly with primary variant soft 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-primary bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm text-primary bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10"
   >
     
     <!--v-if-->
@@ -426,7 +426,7 @@ exports[`Button > renders correctly with primary variant solid 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <!--v-if-->
@@ -449,7 +449,7 @@ exports[`Button > renders correctly with primary variant subtle 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset px-2.5 py-1.5 gap-1.5 text-primary ring-primary/25 bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset px-2.5 py-1.5 gap-1.5 text-sm text-primary ring-primary/25 bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10"
   >
     
     <!--v-if-->
@@ -472,7 +472,7 @@ exports[`Button > renders correctly with size lg 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-3 py-2 gap-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-3 py-2 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <!--v-if-->
@@ -495,7 +495,7 @@ exports[`Button > renders correctly with size md 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <!--v-if-->
@@ -518,53 +518,7 @@ exports[`Button > renders correctly with size sm 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
-  >
-    
-    <!--v-if-->
-    
-    
-    <span
-      class="truncate"
-    >
-      Button
-    </span>
-    
-    
-    <!--v-if-->
-    
-  </button>
-</div>
-`;
-
-exports[`Button > renders correctly with size xl 1`] = `
-<div>
-  <button
-    aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-3 py-2 gap-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
-  >
-    
-    <!--v-if-->
-    
-    
-    <span
-      class="truncate"
-    >
-      Button
-    </span>
-    
-    
-    <!--v-if-->
-    
-  </button>
-</div>
-`;
-
-exports[`Button > renders correctly with size xs 1`] = `
-<div>
-  <button
-    aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2 py-1 gap-1 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2 py-1 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <!--v-if-->
@@ -587,7 +541,7 @@ exports[`Button > renders correctly with slots 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     Leading slot
@@ -606,7 +560,7 @@ exports[`Button > renders correctly with square icon-only and size lg 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
   >
     
     <svg
@@ -634,12 +588,12 @@ exports[`Button > renders correctly with square icon-only and size md 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -662,68 +616,12 @@ exports[`Button > renders correctly with square icon-only and size sm 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1"
   >
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-4"
-      height="1em"
-      role="img"
-      viewBox="0 0 16 16"
-      width="1em"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-    />
-    
-    
-    <!--v-if-->
-    
-    
-    <!--v-if-->
-    
-  </button>
-</div>
-`;
-
-exports[`Button > renders correctly with square icon-only and size xl 1`] = `
-<div>
-  <button
-    aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
-  >
-    
-    <svg
-      aria-hidden="true"
-      class="shrink-0 size-6"
-      height="1em"
-      role="img"
-      viewBox="0 0 16 16"
-      width="1em"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-    />
-    
-    
-    <!--v-if-->
-    
-    
-    <!--v-if-->
-    
-  </button>
-</div>
-`;
-
-exports[`Button > renders correctly with square icon-only and size xs 1`] = `
-<div>
-  <button
-    aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1"
-  >
-    
-    <svg
-      aria-hidden="true"
-      class="shrink-0 size-4"
+      class="shrink-0 size-3"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -746,7 +644,7 @@ exports[`Button > renders correctly with trailing icon 1`] = `
 <div>
   <button
     aria-disabled="false"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 px-2.5 py-1.5 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
   >
     
     <!--v-if-->
@@ -761,7 +659,7 @@ exports[`Button > renders correctly with trailing icon 1`] = `
     
     <svg
       aria-hidden="true"
-      class="shrink-0 size-5"
+      class="shrink-0 size-4"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
