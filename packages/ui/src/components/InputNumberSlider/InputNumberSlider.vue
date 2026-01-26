@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import type { NumberFieldRootProps } from "reka-ui";
   import { computed } from "vue";
 
   import InputNumber from "../InputNumber/InputNumber.vue";
@@ -11,11 +10,11 @@
   import type { InputNumberSliderThemeSlots, InputNumberSliderThemeVariants } from "./InputNumberSlider.theme.ts";
 
   export interface InputNumberSliderProps extends Pick<
-    NumberFieldRootProps,
-    "name" | "disabled" | "min" | "max" | "step" | "formatOptions"
+    InputNumberProps,
+    "as" | "asChild" | "id" | "disabled" | "min" | "max" | "step" | "formatOptions"
   > {
     /**
-     * The size of the component.
+     * The size of the input.
      * @default "md"
      */
     size?: InputNumberSliderThemeVariants["size"];
@@ -31,10 +30,7 @@
      */
     decrement?: boolean;
 
-    /**
-     * Show tooltip on slider thumb with current value.
-     * @default false
-     */
+    /** Show tooltip on slider thumb with current value. */
     tooltip?: SliderProps["tooltip"];
 
     /**
@@ -51,10 +47,6 @@
 
     class?: any;
     ui?: InputNumberSliderThemeSlots;
-  }
-
-  export interface InputNumberSliderEmits {
-    "update:modelValue": [value: number | undefined];
   }
 
   const modelValue = defineModel<number>();
@@ -76,8 +68,7 @@
   <div :class="ui.root({ class: [props.ui?.root, props.class] })">
     <InputNumber
       v-model="modelValue"
-      :name="name"
-      :disabled="disabled"
+      v-bind="inputOptions"
       :size="size"
       :min="min"
       :max="max"
@@ -85,10 +76,11 @@
       :format-options="formatOptions"
       :increment="increment"
       :decrement="decrement"
-      v-bind="inputOptions"
+      :disabled="disabled"
     />
     <Slider
       v-model="modelValue"
+      v-bind="sliderOptions"
       :disabled="disabled"
       :size="size"
       :min="min"
@@ -96,7 +88,6 @@
       :step="step"
       :tooltip="tooltip"
       class="w-full"
-      v-bind="sliderOptions"
     />
   </div>
 </template>

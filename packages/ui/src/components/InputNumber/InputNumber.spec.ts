@@ -12,15 +12,12 @@ describe("InputNumber", () => {
 
   test.each([
     ["with id", { props: { id: "id" } }],
-    ["with name", { props: { name: "name" } }],
-    ["with placeholder", { props: { placeholder: "Enter a number..." } }],
     ["with disabled", { props: { disabled: true } }],
-    ["with readonly", { props: { readonly: true } }],
     ["with min and max", { props: { min: 0, max: 100 } }],
     ["with step", { props: { step: 5 } }],
     ["without increment", { props: { increment: false } }],
     ["without decrement", { props: { decrement: false } }],
-    ["without buttons", { props: { increment: false, decrement: false } }],
+    ["without increment and decrement", { props: { increment: false, decrement: false } }],
     ...sizes.map((size: string) => [`with size ${size}`, { props: { size } }]),
     ...variants.map((variant: string) => [`with variant ${variant}`, { props: { variant } }]),
     ["with class", { props: { class: "absolute" } }],
@@ -43,30 +40,6 @@ describe("InputNumber", () => {
       await userEvent.keyboard(Key.Enter);
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
-    });
-
-    test("blur event", async () => {
-      const screen = page.render(InputNumber);
-      await nextTick();
-
-      const input = screen.getByRole("spinbutton");
-
-      await userEvent.click(input);
-      await userEvent.click(screen.baseElement);
-
-      expect(screen.emitted()).toHaveProperty("blur");
-    });
-
-    test("change event", async () => {
-      const screen = page.render(InputNumber);
-      await nextTick();
-
-      const input = screen.getByRole("spinbutton");
-
-      await userEvent.fill(input, "42");
-      await userEvent.keyboard(Key.Enter);
-
-      expect(screen.emitted()).toHaveProperty("change");
     });
   });
 

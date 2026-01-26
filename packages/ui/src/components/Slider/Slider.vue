@@ -9,10 +9,7 @@
   import { SliderTheme } from "./Slider.theme.ts";
   import type { SliderThemeSlots, SliderThemeVariants } from "./Slider.theme.ts";
 
-  export interface SliderProps extends Pick<
-    SliderRootProps,
-    "as" | "asChild" | "name" | "disabled" | "min" | "max" | "step"
-  > {
+  export interface SliderProps extends Pick<SliderRootProps, "as" | "asChild" | "disabled" | "min" | "max" | "step"> {
     /**
      * The color scheme of the slider.
      * @default "primary"
@@ -24,19 +21,11 @@
      */
     size?: SliderThemeVariants["size"];
 
-    /**
-     * Show tooltip on thumb with current value.
-     * @default false
-     */
+    /** Show tooltip on thumb with current value. */
     tooltip?: boolean | TooltipProps;
 
     class?: any;
     ui?: SliderThemeSlots;
-  }
-
-  export interface SliderEmits {
-    "update:modelValue": [value: number];
-    change: [event: Event];
   }
 
   const modelValue = defineModel<number>();
@@ -44,9 +33,8 @@
     color: "primary",
     size: "md",
   });
-  const emits = defineEmits<SliderEmits>();
 
-  // Convert single value to array for Reka UI SliderRoot.
+  // Convert single value to array for Reka UI.
   const sliderValue = computed({
     get() {
       return modelValue.value === undefined ? undefined : [modelValue.value];
@@ -62,15 +50,10 @@
     return SliderTheme({
       color: props.color,
       size: props.size,
+
       disabled: props.disabled,
     });
   });
-
-  function onChange(value: number[]) {
-    // @ts-expect-error - `target` does not exist in type `EventInit`.
-    const event = new Event("change", { target: { value: value[0] } });
-    emits("change", event);
-  }
 </script>
 
 <template>
@@ -78,13 +61,11 @@
     v-model="sliderValue"
     :as="as"
     :as-child="asChild"
-    :name="name"
     :min="min"
     :max="max"
     :step="step"
     :disabled="disabled"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
-    @value-commit="onChange"
   >
     <SliderTrack :class="ui.track({ class: props.ui?.track })">
       <SliderRange :class="ui.range({ class: props.ui?.range })" />

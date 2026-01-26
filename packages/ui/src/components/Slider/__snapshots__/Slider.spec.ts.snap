@@ -220,60 +220,6 @@ exports[`Slider > renders correctly with min and max 1`] = `
 </div>
 `;
 
-exports[`Slider > renders correctly with name 1`] = `
-<div>
-  
-  <span
-    aria-disabled="false"
-    class="relative flex w-full items-center select-none touch-none"
-    data-orientation="horizontal"
-    data-slider-impl=""
-    dir="ltr"
-    style="--reka-slider-thumb-transform: translateX(-50%);"
-  >
-    
-    
-    
-    <span
-      class="relative bg-accented overflow-hidden rounded-full grow h-2"
-      data-orientation="horizontal"
-    >
-      
-      <span
-        class="absolute h-full rounded-full bg-primary"
-        data-orientation="horizontal"
-        style="left: 0%; right: 100%;"
-      >
-        
-        
-      </span>
-      
-    </span>
-    <span
-      aria-label="Slider thumb"
-      aria-orientation="horizontal"
-      aria-valuemax="100"
-      aria-valuemin="0"
-      aria-valuenow="0"
-      class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      role="slider"
-      style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
-      tabindex="0"
-    >
-      
-      
-    </span>
-    
-    <!--v-if-->
-    
-    
-  </span>
-  
-</div>
-`;
-
 exports[`Slider > renders correctly with size lg 1`] = `
 <div>
   

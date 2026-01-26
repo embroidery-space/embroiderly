@@ -4,7 +4,7 @@ import type { VariantProps } from "tailwind-variants";
 export const InputNumberTheme = tv({
   slots: {
     root: "relative inline-flex items-center",
-    base: "w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 read-only:cursor-default transition-colors",
+    base: "w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors",
     buttons: "absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80",
   },
   variants: {

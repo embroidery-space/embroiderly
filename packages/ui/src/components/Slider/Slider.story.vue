@@ -7,6 +7,7 @@
 
   const sizes = ["sm", "md", "lg"] as const;
 
+  const value = ref(50);
   const state = reactive<SliderProps>({
     size: "md",
 
@@ -14,11 +15,10 @@
     max: 100,
     step: 1,
 
-    disabled: false,
     tooltip: false,
-  });
 
-  const value = ref(50);
+    disabled: false,
+  });
 
   defineExpose({ state });
 </script>
@@ -30,8 +30,7 @@
         <Slider
           v-model="value"
           v-bind="state"
-          @update:model-value="logEvent('update:model-value', $event)"
-          @change="logEvent('change', $event)"
+          @update:model-value="logEvent('update:model-value', { value: $event })"
         />
       </div>
 
@@ -43,6 +42,7 @@
         <HstNumber v-model="state.step" title="Step" />
 
         <HstCheckbox v-model="state.tooltip as boolean" title="Tooltip" />
+
         <HstCheckbox v-model="state.disabled" title="Disabled" />
       </template>
     </Variant>

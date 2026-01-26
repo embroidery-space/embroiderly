@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { logEvent } from "histoire/client";
   import { reactive, ref } from "vue";
 
   import type { InputNumberSliderProps } from "./InputNumberSlider.vue";
@@ -6,6 +7,7 @@
 
   const sizes = ["sm", "md", "lg"] as const;
 
+  const value = ref(50);
   const state = reactive<InputNumberSliderProps>({
     size: "md",
 
@@ -15,12 +17,11 @@
 
     increment: false,
     decrement: false,
+
     tooltip: false,
 
     disabled: false,
   });
-
-  const value = ref(50);
 
   defineExpose({ state, value });
 </script>
@@ -28,7 +29,12 @@
 <template>
   <Story id="input-number-slider" group="form" title="InputNumberSlider" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <InputNumberSlider v-model="value" v-bind="state" class="w-96" />
+      <InputNumberSlider
+        v-model="value"
+        v-bind="state"
+        class="w-96"
+        @update:model-value="logEvent('update:modelValue', { value: $event })"
+      />
 
       <template #controls>
         <HstSelect v-model="state.size" title="Size" :options="sizes" />
@@ -39,6 +45,7 @@
 
         <HstCheckbox v-model="state.increment" title="Increment" />
         <HstCheckbox v-model="state.decrement" title="Decrement" />
+
         <HstCheckbox v-model="state.tooltip as boolean" title="Tooltip" />
 
         <HstCheckbox v-model="state.disabled" title="Disabled" />

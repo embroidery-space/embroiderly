@@ -8,9 +8,8 @@
   const sizes = ["sm", "md", "lg"] as const;
   const variants = ["subtle", "outline"] as const;
 
+  const value = ref(5);
   const state = reactive<InputNumberProps>({
-    placeholder: "Enter a number...",
-
     size: "md",
     variant: "subtle",
 
@@ -18,14 +17,11 @@
     max: 10,
     step: 1,
 
-    readonly: false,
-    disabled: false,
-
     increment: true,
     decrement: true,
-  });
 
-  const value = ref(5);
+    disabled: false,
+  });
 
   defineExpose({ state });
 </script>
@@ -36,14 +32,10 @@
       <InputNumber
         v-model="value"
         v-bind="state"
-        @update:model-value="logEvent('update:model-value', $event)"
-        @blur="logEvent('blur', $event)"
-        @change="logEvent('change', $event)"
+        @update:model-value="logEvent('update:model-value', { value: $event })"
       />
 
       <template #controls>
-        <HstText v-model="state.placeholder" title="Placeholder" />
-
         <HstSelect v-model="state.size" title="Size" :options="sizes" />
         <HstSelect v-model="state.variant" title="Variant" :options="variants" />
 
@@ -51,11 +43,10 @@
         <HstNumber v-model="state.max" title="Max" />
         <HstNumber v-model="state.step" title="Step" />
 
-        <HstCheckbox v-model="state.readonly" title="Readonly" />
-        <HstCheckbox v-model="state.disabled" title="Disabled" />
-
         <HstCheckbox v-model="state.increment" title="Increment" />
         <HstCheckbox v-model="state.decrement" title="Decrement" />
+
+        <HstCheckbox v-model="state.disabled" title="Disabled" />
       </template>
     </Variant>
 
@@ -78,7 +69,6 @@
     <Variant id="states" title="States" auto-props-disabled>
       <div class="flex flex-col gap-2">
         <InputNumber placeholder="Default" />
-        <InputNumber placeholder="Readonly" readonly />
         <InputNumber placeholder="Disabled" disabled />
       </div>
     </Variant>

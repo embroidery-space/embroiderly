@@ -1,19 +1,17 @@
 <script setup lang="ts">
   import { NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput, NumberFieldRoot } from "reka-ui";
-  import type { NumberFieldRootProps, PrimitiveProps } from "reka-ui";
+  import type { NumberFieldRootProps } from "reka-ui";
   import { computed } from "vue";
 
-  import type { InputHTMLAttributes } from "../../types/html.ts";
   import Button from "../Button/Button.vue";
 
   import { InputNumberTheme } from "./InputNumber.theme.ts";
   import type { InputNumberThemeSlots, InputNumberThemeVariants } from "./InputNumber.theme.ts";
 
-  export interface InputNumberProps
-    extends
-      Pick<PrimitiveProps, "as" | "asChild">,
-      Pick<NumberFieldRootProps, "id" | "name" | "readonly" | "disabled" | "min" | "max" | "step" | "formatOptions">,
-      /* @vue-ignore */ Pick<InputHTMLAttributes, "placeholder" | "autofocus"> {
+  export interface InputNumberProps extends Pick<
+    NumberFieldRootProps,
+    "as" | "asChild" | "id" | "disabled" | "min" | "max" | "step" | "formatOptions"
+  > {
     /**
      * The color scheme of the input.
      * @default "primary"
@@ -55,12 +53,6 @@
     ui?: InputNumberThemeSlots;
   }
 
-  export interface InputNumberEmits {
-    "update:modelValue": [value: number | null];
-    blur: [event: FocusEvent];
-    change: [event: Event];
-  }
-
   defineOptions({ inheritAttrs: false });
 
   const modelValue = defineModel<number>();
@@ -76,7 +68,6 @@
     incrementIcon: "lucide:chevron-up",
     decrementIcon: "lucide:chevron-down",
   });
-  const emits = defineEmits<InputNumberEmits>();
 
   const hasButtons = computed(() => props.increment || props.decrement);
 
@@ -85,6 +76,7 @@
       color: props.color,
       variant: props.variant,
       size: props.size,
+
       hasButtons: hasButtons.value,
     });
   });
@@ -101,18 +93,9 @@
     :step="step"
     :format-options="formatOptions"
     :disabled="disabled"
-    :readonly="readonly"
-    :name="name"
-    :class="ui.root({ class: props.ui?.root })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <NumberFieldInput
-      :placeholder="placeholder"
-      :autofocus="autofocus"
-      :class="ui.base({ class: [props.ui?.base, props.class] })"
-      v-bind="$attrs"
-      @blur="emits('blur', $event)"
-      @change="emits('change', $event)"
-    />
+    <NumberFieldInput v-bind="$attrs" :class="ui.base({ class: props.ui?.base })" />
 
     <div v-if="hasButtons" :class="ui.buttons({ class: props.ui?.buttons })">
       <NumberFieldIncrement v-if="increment" as-child :disabled="disabled">

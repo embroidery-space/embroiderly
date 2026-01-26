@@ -21,18 +21,13 @@ export { default as Separator, type SeparatorProps } from "./components/Separato
 
 // Form.
 export { default as Checkbox, type CheckboxProps } from "./components/Checkbox/Checkbox.vue";
-export { default as Input, type InputProps, type InputEmits, type InputSlots } from "./components/Input/Input.vue";
-export {
-  default as InputNumber,
-  type InputNumberProps,
-  type InputNumberEmits,
-} from "./components/InputNumber/InputNumber.vue";
+export { default as Input, type InputProps, type InputSlots } from "./components/Input/Input.vue";
+export { default as InputNumber, type InputNumberProps } from "./components/InputNumber/InputNumber.vue";
 export {
   default as InputNumberSlider,
   type InputNumberSliderProps,
-  type InputNumberSliderEmits,
 } from "./components/InputNumberSlider/InputNumberSlider.vue";
-export { default as Slider, type SliderProps, type SliderEmits } from "./components/Slider/Slider.vue";
+export { default as Slider, type SliderProps } from "./components/Slider/Slider.vue";
 
 // Overlay.
 export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./components/BlockUI/BlockUI.vue";

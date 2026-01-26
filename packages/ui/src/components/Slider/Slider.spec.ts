@@ -20,7 +20,6 @@ describe("Slider", () => {
 
   test.each([
     ["with id", { props: { id: "volume" } }],
-    ["with name", { props: { name: "volume" } }],
     ["with disabled", { props: { disabled: true } }],
     ["with min and max", { props: { min: 0, max: 50 } }],
     ["with step", { props: { step: 10 } }],
@@ -46,19 +45,6 @@ describe("Slider", () => {
       await userEvent.keyboard(Key.ArrowRight);
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
-    });
-
-    test("change event", async () => {
-      const screen = page.render(Slider, { props: { modelValue: 50 } });
-      await nextTick();
-
-      const slider = screen.getByRole("slider");
-
-      await userEvent.click(slider);
-      await userEvent.keyboard(Key.ArrowRight);
-      await userEvent.keyboard(Key.Enter);
-
-      expect(screen.emitted()).toHaveProperty("change");
     });
   });
 });

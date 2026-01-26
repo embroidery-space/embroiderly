@@ -19,7 +19,6 @@ describe("InputNumberSlider", () => {
   const sizes = ["sm", "md", "lg"] as const;
 
   test.each([
-    ["with name", { props: { name: "quantity" } }],
     ["with disabled", { props: { disabled: true } }],
     ["with min and max", { props: { min: 0, max: 50 } }],
     ["with step", { props: { step: 5 } }],
