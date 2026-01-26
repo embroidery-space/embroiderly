@@ -27,6 +27,11 @@ export {
   default as InputNumberSlider,
   type InputNumberSliderProps,
 } from "./components/InputNumberSlider/InputNumberSlider.vue";
+export {
+  default as RadioGroup,
+  type RadioGroupProps,
+  type RadioGroupItem,
+} from "./components/RadioGroup/RadioGroup.vue";
 export { default as Slider, type SliderProps } from "./components/Slider/Slider.vue";
 
 // Overlay.

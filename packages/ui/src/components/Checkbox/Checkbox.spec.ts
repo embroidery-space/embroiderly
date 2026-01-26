@@ -1,4 +1,4 @@
-import { describe, it, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { nextTick } from "vue";
 
@@ -8,7 +8,7 @@ import type { CheckboxProps } from "./Checkbox.vue";
 describe("Checkbox", () => {
   const sizes = ["sm", "md", "lg"] as const;
 
-  it.each([
+  test.each([
     ["with id", { props: { id: "id" } }],
     ["with disabled", { props: { disabled: true } }],
     ["with icon", { props: { icon: "lucide:rocket" } }],

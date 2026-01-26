@@ -1,0 +1,1185 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RadioGroup > renders correctly with class 1`] = `
+<div>
+  <div
+    aria-required="false"
+    class="flex flex-col items-start absolute"
+    dir="ltr"
+    id="v-0"
+    role="radiogroup"
+    style="outline: none;"
+    tabindex="0"
+  >
+    
+    
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 1"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:1"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="1"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:1"
+        >
+          
+          Option 1
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 2"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:2"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="2"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:2"
+        >
+          
+          Option 2
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 3"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:3"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="3"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:3"
+        >
+          
+          Option 3
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`RadioGroup > renders correctly with description 1`] = `
+<div>
+  <div
+    aria-required="false"
+    class="relative flex flex-col items-start"
+    dir="ltr"
+    id="v-0"
+    role="radiogroup"
+    style="outline: none;"
+    tabindex="0"
+  >
+    
+    
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 1"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:1"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="1"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:1"
+        >
+          
+          Option 1
+          
+        </label>
+        <p
+          class="text-muted"
+        >
+          Description 0
+        </p>
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 2"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:2"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="2"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:2"
+        >
+          
+          Option 2
+          
+        </label>
+        <p
+          class="text-muted"
+        >
+          Description 1
+        </p>
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 3"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:3"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="3"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:3"
+        >
+          
+          Option 3
+          
+        </label>
+        <p
+          class="text-muted"
+        >
+          Description 2
+        </p>
+      </div>
+    </div>
+    
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`RadioGroup > renders correctly with disabled 1`] = `
+<div>
+  <div
+    aria-required="false"
+    class="relative flex flex-col items-start"
+    data-disabled=""
+    dir="ltr"
+    id="v-0"
+    role="radiogroup"
+    style="outline: none;"
+    tabindex="-1"
+  >
+    
+    
+    <div
+      class="flex items-start text-base opacity-75"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 1"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5 cursor-not-allowed"
+          data-disabled=""
+          data-reka-collection-item=""
+          data-state="unchecked"
+          disabled=""
+          id="v-0:1"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="1"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default cursor-not-allowed"
+          for="v-0:1"
+        >
+          
+          Option 1
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base opacity-75"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 2"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5 cursor-not-allowed"
+          data-disabled=""
+          data-reka-collection-item=""
+          data-state="unchecked"
+          disabled=""
+          id="v-0:2"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="2"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default cursor-not-allowed"
+          for="v-0:2"
+        >
+          
+          Option 2
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base opacity-75"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 3"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5 cursor-not-allowed"
+          data-disabled=""
+          data-reka-collection-item=""
+          data-state="unchecked"
+          disabled=""
+          id="v-0:3"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="3"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default cursor-not-allowed"
+          for="v-0:3"
+        >
+          
+          Option 3
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`RadioGroup > renders correctly with items 1`] = `
+<div>
+  <div
+    aria-required="false"
+    class="relative flex flex-col items-start"
+    dir="ltr"
+    id="v-0"
+    role="radiogroup"
+    style="outline: none;"
+    tabindex="0"
+  >
+    
+    
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 1"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:1"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="1"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:1"
+        >
+          
+          Option 1
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 2"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:2"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="2"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:2"
+        >
+          
+          Option 2
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 3"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:3"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="3"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:3"
+        >
+          
+          Option 3
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`RadioGroup > renders correctly with size lg 1`] = `
+<div>
+  <div
+    aria-required="false"
+    class="relative flex flex-col items-start"
+    dir="ltr"
+    id="v-0"
+    role="radiogroup"
+    style="outline: none;"
+    tabindex="0"
+  >
+    
+    
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="true"
+          aria-label="Option 1"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-active=""
+          data-reka-collection-item=""
+          data-state="checked"
+          id="v-0:1"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="1"
+        >
+          
+          
+          <span
+            class="flex size-full items-center justify-center after:rounded-full after:bg-default bg-primary after:size-2"
+            data-state="checked"
+          >
+            
+            
+          </span>
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:1"
+        >
+          
+          Option 1
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 2"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:2"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="2"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:2"
+        >
+          
+          Option 2
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 3"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:3"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="3"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:3"
+        >
+          
+          Option 3
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`RadioGroup > renders correctly with size md 1`] = `
+<div>
+  <div
+    aria-required="false"
+    class="relative flex flex-col items-start"
+    dir="ltr"
+    id="v-0"
+    role="radiogroup"
+    style="outline: none;"
+    tabindex="0"
+  >
+    
+    
+    <div
+      class="flex items-start text-sm"
+    >
+      <div
+        class="flex items-center h-5"
+      >
+        <button
+          aria-checked="true"
+          aria-label="Option 1"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-4"
+          data-active=""
+          data-reka-collection-item=""
+          data-state="checked"
+          id="v-0:1"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="1"
+        >
+          
+          
+          <span
+            class="flex size-full items-center justify-center after:rounded-full after:bg-default bg-primary after:size-1.5"
+            data-state="checked"
+          >
+            
+            
+          </span>
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:1"
+        >
+          
+          Option 1
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-sm"
+    >
+      <div
+        class="flex items-center h-5"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 2"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-4"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:2"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="2"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:2"
+        >
+          
+          Option 2
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-sm"
+    >
+      <div
+        class="flex items-center h-5"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 3"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-4"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:3"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="3"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:3"
+        >
+          
+          Option 3
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`RadioGroup > renders correctly with size sm 1`] = `
+<div>
+  <div
+    aria-required="false"
+    class="relative flex flex-col items-start"
+    dir="ltr"
+    id="v-0"
+    role="radiogroup"
+    style="outline: none;"
+    tabindex="0"
+  >
+    
+    
+    <div
+      class="flex items-start text-xs"
+    >
+      <div
+        class="flex items-center h-4"
+      >
+        <button
+          aria-checked="true"
+          aria-label="Option 1"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-3"
+          data-active=""
+          data-reka-collection-item=""
+          data-state="checked"
+          id="v-0:1"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="1"
+        >
+          
+          
+          <span
+            class="flex size-full items-center justify-center after:rounded-full after:bg-default bg-primary after:size-1"
+            data-state="checked"
+          >
+            
+            
+          </span>
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:1"
+        >
+          
+          Option 1
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-xs"
+    >
+      <div
+        class="flex items-center h-4"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 2"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-3"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:2"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="2"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:2"
+        >
+          
+          Option 2
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-xs"
+    >
+      <div
+        class="flex items-center h-4"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 3"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-3"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:3"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="3"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="ms-2 w-full"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:3"
+        >
+          
+          Option 3
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`RadioGroup > renders correctly with ui 1`] = `
+<div>
+  <div
+    aria-required="false"
+    class="relative flex flex-col items-start"
+    dir="ltr"
+    id="v-0"
+    role="radiogroup"
+    style="outline: none;"
+    tabindex="0"
+  >
+    
+    
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 1"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:1"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="1"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="w-full ms-4"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:1"
+        >
+          
+          Option 1
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 2"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:2"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="2"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="w-full ms-4"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:2"
+        >
+          
+          Option 2
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    <div
+      class="flex items-start text-base"
+    >
+      <div
+        class="flex items-center h-6"
+      >
+        <button
+          aria-checked="false"
+          aria-label="Option 3"
+          class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+          data-reka-collection-item=""
+          data-state="unchecked"
+          id="v-0:3"
+          required="false"
+          role="radio"
+          tabindex="-1"
+          type="button"
+          value="3"
+        >
+          
+          
+          <!---->
+          
+          
+          <!--v-if-->
+        </button>
+      </div>
+      <div
+        class="w-full ms-4"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0:3"
+        >
+          
+          Option 3
+          
+        </label>
+        <!--v-if-->
+      </div>
+    </div>
+    
+    
+    <!--v-if-->
+  </div>
+</div>
+`;
