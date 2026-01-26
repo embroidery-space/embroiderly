@@ -2,53 +2,53 @@
   <Story id="design-tokens" group="general" title="Design Tokens" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
       <div class="space-y-6">
-        <h3 class="text-lg font-semibold mb-3">Colors</h3>
-        <div class="flex gap-x-2 items-center">
-          <span class="text-primary font-bold px-4 py-1.5 inline-block">Primary</span>
-          <span class="text-error font-bold px-4 py-1.5 inline-block">Error</span>
-          <span class="text-warning font-bold px-4 py-1.5 inline-block">Warning</span>
-          <span class="text-success font-bold px-4 py-1.5 inline-block">Success</span>
-          <span class="text-info font-bold px-4 py-1.5 inline-block">Info</span>
-          <span class="text-help font-bold px-4 py-1.5 inline-block">Help</span>
+        <h3 class="mb-3 text-lg font-semibold">Colors</h3>
+        <div class="flex items-center gap-x-2">
+          <span class="inline-block px-4 py-1.5 font-bold text-primary">Primary</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-error">Error</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-warning">Warning</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-success">Success</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-info">Info</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-help">Help</span>
         </div>
 
-        <h3 class="text-lg font-semibold mb-3">Text</h3>
-        <div class="flex gap-x-2 items-center">
-          <span class="text-dimmed font-bold px-4 py-1.5 inline-block">Dimmed</span>
-          <span class="text-muted font-bold px-4 py-1.5 inline-block">Muted</span>
-          <span class="text-toned font-bold px-4 py-1.5 inline-block">Toned</span>
-          <span class="text-default font-bold px-4 py-1.5 inline-block">Text</span>
-          <span class="text-highlighted font-bold px-4 py-1.5 inline-block">Highlighted</span>
-          <span class="text-inverted bg-inverted font-bold px-4 py-1.5 inline-block rounded-md">Inverted</span>
+        <h3 class="mb-3 text-lg font-semibold">Text</h3>
+        <div class="flex items-center gap-x-2">
+          <span class="inline-block px-4 py-1.5 font-bold text-dimmed">Dimmed</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-muted">Muted</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-toned">Toned</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-default">Text</span>
+          <span class="inline-block px-4 py-1.5 font-bold text-highlighted">Highlighted</span>
+          <span class="inline-block rounded-md bg-inverted px-4 py-1.5 font-bold text-inverted">Inverted</span>
         </div>
 
-        <h3 class="text-lg font-semibold mb-3">Background</h3>
-        <div class="flex gap-x-2 items-center">
-          <div class="bg-default font-bold px-4 py-1.5 inline-block rounded-md">Default</div>
-          <div class="bg-muted font-bold px-4 py-1.5 inline-block rounded-md">Muted</div>
-          <div class="bg-elevated font-bold px-4 py-1.5 inline-block rounded-md">Elevated</div>
-          <div class="bg-accented font-bold px-4 py-1.5 inline-block rounded-md">Accented</div>
-          <div class="bg-inverted text-inverted font-bold px-4 py-1.5 inline-block rounded-md">Inverted</div>
+        <h3 class="mb-3 text-lg font-semibold">Background</h3>
+        <div class="flex items-center gap-x-2">
+          <div class="inline-block rounded-md bg-default px-4 py-1.5 font-bold">Default</div>
+          <div class="inline-block rounded-md bg-muted px-4 py-1.5 font-bold">Muted</div>
+          <div class="inline-block rounded-md bg-elevated px-4 py-1.5 font-bold">Elevated</div>
+          <div class="inline-block rounded-md bg-accented px-4 py-1.5 font-bold">Accented</div>
+          <div class="inline-block rounded-md bg-inverted px-4 py-1.5 font-bold text-inverted">Inverted</div>
         </div>
 
-        <h3 class="text-lg font-semibold mb-3">Border</h3>
-        <div class="flex gap-x-2 items-center">
-          <div class="border border-default font-bold px-4 py-1.5 inline-block rounded-md">Default</div>
-          <div class="border border-muted font-bold px-4 py-1.5 inline-block rounded-md">Muted</div>
-          <div class="border border-accented font-bold px-4 py-1.5 inline-block rounded-md">Accented</div>
-          <div class="border border-inverted font-bold px-4 py-1.5 inline-block rounded-md">Inverted</div>
+        <h3 class="mb-3 text-lg font-semibold">Border</h3>
+        <div class="flex items-center gap-x-2">
+          <div class="inline-block rounded-md border border-default px-4 py-1.5 font-bold">Default</div>
+          <div class="inline-block rounded-md border border-muted px-4 py-1.5 font-bold">Muted</div>
+          <div class="inline-block rounded-md border border-accented px-4 py-1.5 font-bold">Accented</div>
+          <div class="inline-block rounded-md border border-inverted px-4 py-1.5 font-bold">Inverted</div>
         </div>
 
-        <h3 class="text-lg font-semibold mb-3">Radius</h3>
-        <div class="flex gap-x-2 items-center">
-          <div class="font-bold px-4 py-1.5 inline-block border-2 rounded-none">none</div>
-          <div class="font-bold px-4 py-1.5 inline-block border-2 rounded-xs">xs</div>
-          <div class="font-bold px-4 py-1.5 inline-block border-2 rounded-sm">sm</div>
-          <div class="font-bold px-4 py-1.5 inline-block border-2 rounded-md">md</div>
-          <div class="font-bold px-4 py-1.5 inline-block border-2 rounded-lg">lg</div>
-          <div class="font-bold px-4 py-1.5 inline-block border-2 rounded-xl">xl</div>
-          <div class="font-bold px-4 py-1.5 inline-block border-2 rounded-2xl">2xl</div>
-          <div class="font-bold px-4 py-1.5 inline-block border-2 rounded-3xl">3xl</div>
+        <h3 class="mb-3 text-lg font-semibold">Radius</h3>
+        <div class="flex items-center gap-x-2">
+          <div class="inline-block rounded-none border-2 px-4 py-1.5 font-bold">none</div>
+          <div class="inline-block rounded-xs border-2 px-4 py-1.5 font-bold">xs</div>
+          <div class="inline-block rounded-sm border-2 px-4 py-1.5 font-bold">sm</div>
+          <div class="inline-block rounded-md border-2 px-4 py-1.5 font-bold">md</div>
+          <div class="inline-block rounded-lg border-2 px-4 py-1.5 font-bold">lg</div>
+          <div class="inline-block rounded-xl border-2 px-4 py-1.5 font-bold">xl</div>
+          <div class="inline-block rounded-2xl border-2 px-4 py-1.5 font-bold">2xl</div>
+          <div class="inline-block rounded-3xl border-2 px-4 py-1.5 font-bold">3xl</div>
         </div>
       </div>
     </Variant>

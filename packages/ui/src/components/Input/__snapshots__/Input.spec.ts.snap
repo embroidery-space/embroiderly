@@ -7,7 +7,7 @@ exports[`Input > renders correctly with class 1`] = `
   >
     <!--v-if-->
     <input
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       type="text"
     />
     <!--v-if-->
@@ -22,7 +22,7 @@ exports[`Input > renders correctly with disabled 1`] = `
   >
     <!--v-if-->
     <input
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       disabled=""
       type="text"
     />
@@ -38,7 +38,7 @@ exports[`Input > renders correctly with id 1`] = `
   >
     <!--v-if-->
     <input
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       id="id"
       type="text"
     />
@@ -60,7 +60,7 @@ exports[`Input > renders correctly with leading slot 1`] = `
       
     </span>
     <input
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary ps-11"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
       type="text"
     />
     <!--v-if-->
@@ -75,7 +75,7 @@ exports[`Input > renders correctly with size lg 1`] = `
   >
     <!--v-if-->
     <input
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       type="text"
     />
     <!--v-if-->
@@ -90,7 +90,7 @@ exports[`Input > renders correctly with size md 1`] = `
   >
     <!--v-if-->
     <input
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 pe-2.5 py-1.5 text-sm gap-1.5 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       type="text"
     />
     <!--v-if-->
@@ -105,7 +105,7 @@ exports[`Input > renders correctly with size sm 1`] = `
   >
     <!--v-if-->
     <input
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2 pe-2 py-1 text-xs gap-1 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1 px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       type="text"
     />
     <!--v-if-->
@@ -120,7 +120,7 @@ exports[`Input > renders correctly with trailing slot 1`] = `
   >
     <!--v-if-->
     <input
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-11"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-11"
       type="text"
     />
     <span
@@ -141,7 +141,7 @@ exports[`Input > renders correctly with ui 1`] = `
   >
     <!--v-if-->
     <input
-      class="w-full border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-3 py-2 text-base gap-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary rounded-full"
+      class="w-full appearance-none border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset rounded-full"
       type="text"
     />
     <!--v-if-->

@@ -9,7 +9,7 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-inverted text-inverted hover:bg-inverted/90 active:bg-inverted/90 focus-visible:outline-inverted disabled:bg-inverted aria-disabled:bg-inverted p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-inverted text-inverted hover:bg-inverted/90 focus-visible:outline-inverted active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -40,7 +40,7 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -109,7 +109,7 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -140,7 +140,7 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -209,7 +209,7 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5 font-medium"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5 font-medium"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -240,7 +240,7 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -309,7 +309,7 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -340,7 +340,7 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -409,7 +409,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="true"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
     disabled=""
@@ -441,7 +441,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -510,7 +510,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="true"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
     disabled=""
@@ -542,7 +542,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -611,7 +611,7 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-2"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -642,7 +642,7 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -711,7 +711,7 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -742,7 +742,7 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -811,7 +811,7 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -842,7 +842,7 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -911,7 +911,7 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -942,7 +942,7 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1011,7 +1011,7 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -1042,7 +1042,7 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1111,7 +1111,7 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-primary hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10 p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -1142,7 +1142,7 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1211,7 +1211,7 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-primary hover:text-primary/75 active:text-primary/75 focus-visible:outline-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-primary hover:text-primary/75 focus-visible:outline-primary active:text-primary/75 p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -1242,7 +1242,7 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1311,7 +1311,7 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset gap-1.5 text-sm ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary disabled:bg-transparent p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 text-sm text-primary ring-primary/50 hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10 disabled:bg-transparent p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -1342,7 +1342,7 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1411,7 +1411,7 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-primary bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10 p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary/10 text-primary hover:bg-primary/15 focus-visible:outline-primary active:bg-primary/15 disabled:bg-primary/10 p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -1442,7 +1442,7 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1511,7 +1511,7 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -1542,7 +1542,7 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1611,7 +1611,7 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
     aria-describedby="reka-tooltip-content-v-0"
     aria-disabled="false"
     aria-label="Settings"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 ring ring-inset gap-1.5 text-sm text-primary ring-primary/25 bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10 p-1.5"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 text-sm bg-primary/10 text-primary ring-primary/25 hover:bg-primary/15 focus-visible:outline-primary active:bg-primary/15 disabled:bg-primary/10 p-1.5"
     data-grace-area-trigger=""
     data-state="instant-open"
   >
@@ -1642,7 +1642,7 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-tooltip-content-transform-origin) pointer-events-auto"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"

@@ -15,7 +15,7 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-2.5"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -29,7 +29,7 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -39,7 +39,7 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -59,7 +59,7 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -94,7 +94,7 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 pe-8 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -103,13 +103,13 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
         value=""
       />
       <div
-        class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1"
+        class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
       >
         <!--v-if-->
         <button
           aria-disabled="false"
           aria-label="Decrement"
-          class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1.5"
+          class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
           tabindex="-1"
           type="button"
         >
@@ -138,7 +138,7 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -148,7 +148,7 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -168,7 +168,7 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -204,7 +204,7 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-2.5"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         data-disabled=""
         disabled=""
         inputmode="decimal"
@@ -220,7 +220,7 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
     </div>
     <span
       aria-disabled="true"
-      class="relative flex items-center select-none touch-none opacity-75 cursor-not-allowed w-full"
+      class="relative flex touch-none items-center select-none cursor-not-allowed opacity-75 w-full"
       data-disabled=""
       data-orientation="horizontal"
       data-slider-impl=""
@@ -231,7 +231,7 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-disabled=""
         data-orientation="horizontal"
       >
@@ -288,7 +288,7 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 pe-8 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -297,12 +297,12 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
         value=""
       />
       <div
-        class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1"
+        class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
       >
         <button
           aria-disabled="false"
           aria-label="Increment"
-          class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1.5"
+          class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
           tabindex="-1"
           type="button"
         >
@@ -332,7 +332,7 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -342,7 +342,7 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -362,7 +362,7 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -397,7 +397,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 pe-8 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -406,12 +406,12 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
         value=""
       />
       <div
-        class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1"
+        class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
       >
         <button
           aria-disabled="false"
           aria-label="Increment"
-          class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1.5"
+          class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
           tabindex="-1"
           type="button"
         >
@@ -437,7 +437,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
         <button
           aria-disabled="false"
           aria-label="Decrement"
-          class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1.5"
+          class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
           tabindex="-1"
           type="button"
         >
@@ -466,7 +466,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -476,7 +476,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -496,7 +496,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -533,7 +533,7 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
         aria-valuemin="0"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-2.5"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -547,7 +547,7 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -557,7 +557,7 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -577,7 +577,7 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
         aria-valuemax="50"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -612,7 +612,7 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-3"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-3"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -626,7 +626,7 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -636,7 +636,7 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2.5"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2.5"
         data-orientation="horizontal"
       >
         
@@ -656,7 +656,7 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-5"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-5"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -691,7 +691,7 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-2.5"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -705,7 +705,7 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -715,7 +715,7 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -735,7 +735,7 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -770,7 +770,7 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-2"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1 ps-2 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -784,7 +784,7 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -794,7 +794,7 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-1.5"
+        class="relative grow overflow-hidden rounded-full bg-accented h-1.5"
         data-orientation="horizontal"
       >
         
@@ -814,7 +814,7 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-3"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-3"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -849,7 +849,7 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-2.5"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -863,7 +863,7 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -873,7 +873,7 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -893,7 +893,7 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"
@@ -928,7 +928,7 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-2.5"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -942,7 +942,7 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -952,7 +952,7 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -974,7 +974,7 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-grace-area-trigger=""
         data-orientation="horizontal"
         data-reka-collection-item=""
@@ -1015,7 +1015,7 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
         aria-roledescription="Number field"
         autocomplete="off"
         autocorrect="off"
-        class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-2.5"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         inputmode="decimal"
         role="spinbutton"
         spellcheck="false"
@@ -1029,7 +1029,7 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
     </div>
     <span
       aria-disabled="false"
-      class="relative flex items-center select-none touch-none w-full"
+      class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
       dir="ltr"
@@ -1039,7 +1039,7 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
       
       
       <span
-        class="relative bg-accented overflow-hidden rounded-full grow h-2"
+        class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
       >
         
@@ -1059,7 +1059,7 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow="0"
-        class="block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer ring-primary focus-visible:outline-primary size-4"
+        class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
         role="slider"

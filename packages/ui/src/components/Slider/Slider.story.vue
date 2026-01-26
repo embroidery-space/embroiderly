@@ -48,10 +48,10 @@
     </Variant>
 
     <Variant id="sizes" title="Sizes" auto-props-disabled>
-      <div class="flex flex-col gap-4 w-64">
+      <div class="flex w-64 flex-col gap-4">
         <template v-for="size in sizes" :key="size">
           <div class="space-y-2">
-            <span class="text-xs text-dimmed block">Size: {{ size }}</span>
+            <span class="block text-xs text-dimmed">Size: {{ size }}</span>
             <Slider :size="size" />
           </div>
         </template>

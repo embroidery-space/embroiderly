@@ -18,7 +18,7 @@
   <Story id="splitter" group="layout" title="Splitter" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
       <div class="size-96">
-        <Splitter v-bind="state" class="rounded border border-default">
+        <Splitter v-bind="state" class="rounded-sm border border-default">
           <SplitterPanel :min-size="20" class="flex items-center justify-center">Panel 1</SplitterPanel>
           <SplitterPanel :min-size="20" class="flex items-center justify-center">Panel 2</SplitterPanel>
         </Splitter>
@@ -31,7 +31,7 @@
 
     <Variant id="nested" title="Nested" auto-props-disabled>
       <div class="size-96">
-        <Splitter direction="horizontal" class="rounded border border-default">
+        <Splitter direction="horizontal" class="rounded-sm border border-default">
           <SplitterPanel :min-size="20" class="flex items-center justify-center">Panel 1</SplitterPanel>
           <SplitterPanel :min-size="30">
             <Splitter direction="vertical">
@@ -45,7 +45,7 @@
 
     <Variant id="collapsible" title="Collapsible" auto-props-disabled>
       <div class="size-96">
-        <Splitter direction="horizontal" class="rounded border border-default">
+        <Splitter direction="horizontal" class="rounded-sm border border-default">
           <SplitterPanel :min-size="15" :collapsed-size="5" collapsible class="flex items-center justify-center">
             Panel 1
           </SplitterPanel>

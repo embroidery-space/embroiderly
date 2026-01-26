@@ -3,7 +3,7 @@ import type { VariantProps } from "tailwind-variants";
 
 export const ButtonTheme = tv({
   slots: {
-    base: "inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2",
+    base: "inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75",
     label: "truncate",
     leadingIcon: "shrink-0",
     trailingIcon: "shrink-0",
@@ -29,17 +29,17 @@ export const ButtonTheme = tv({
     },
     size: {
       sm: {
-        base: "px-2 py-1 gap-1 text-xs",
+        base: "gap-1 px-2 py-1 text-xs",
         leadingIcon: "size-3",
         trailingIcon: "size-3",
       },
       md: {
-        base: "px-2.5 py-1.5 gap-1.5 text-sm",
+        base: "gap-1.5 px-2.5 py-1.5 text-sm",
         leadingIcon: "size-4",
         trailingIcon: "size-4",
       },
       lg: {
-        base: "px-3 py-2 gap-2 text-base",
+        base: "gap-2 px-3 py-2 text-base",
         leadingIcon: "size-5",
         trailingIcon: "size-5",
       },
@@ -62,14 +62,14 @@ export const ButtonTheme = tv({
       color: "primary",
       variant: "solid",
       class: {
-        base: "bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 focus-visible:outline-primary disabled:bg-primary aria-disabled:bg-primary",
+        base: "bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary",
       },
     },
     {
       color: "neutral",
       variant: "solid",
       class: {
-        base: "bg-inverted text-inverted hover:bg-inverted/90 active:bg-inverted/90 focus-visible:outline-inverted disabled:bg-inverted aria-disabled:bg-inverted",
+        base: "bg-inverted text-inverted hover:bg-inverted/90 focus-visible:outline-inverted active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted",
       },
     },
 
@@ -77,14 +77,14 @@ export const ButtonTheme = tv({
       color: "primary",
       variant: "outline",
       class: {
-        base: "ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary disabled:bg-transparent",
+        base: "text-primary ring-primary/50 hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10 disabled:bg-transparent",
       },
     },
     {
       color: "neutral",
       variant: "outline",
       class: {
-        base: "ring-accented text-default bg-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted disabled:bg-default",
+        base: "bg-default text-default ring-accented hover:bg-elevated focus-visible:outline-inverted active:bg-elevated disabled:bg-default",
       },
     },
 
@@ -92,14 +92,14 @@ export const ButtonTheme = tv({
       color: "primary",
       variant: "soft",
       class: {
-        base: "text-primary bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10",
+        base: "bg-primary/10 text-primary hover:bg-primary/15 focus-visible:outline-primary active:bg-primary/15 disabled:bg-primary/10",
       },
     },
     {
       color: "neutral",
       variant: "soft",
       class: {
-        base: "text-default bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated",
+        base: "bg-elevated text-default hover:bg-accented/75 focus-visible:outline-inverted active:bg-accented/75 disabled:bg-elevated",
       },
     },
 
@@ -107,14 +107,14 @@ export const ButtonTheme = tv({
       color: "primary",
       variant: "subtle",
       class: {
-        base: "text-primary ring-primary/25 bg-primary/10 hover:bg-primary/15 active:bg-primary/15 focus-visible:outline-primary disabled:bg-primary/10",
+        base: "bg-primary/10 text-primary ring-primary/25 hover:bg-primary/15 focus-visible:outline-primary active:bg-primary/15 disabled:bg-primary/10",
       },
     },
     {
       color: "neutral",
       variant: "subtle",
       class: {
-        base: "text-default ring-accented bg-elevated hover:bg-accented/75 active:bg-accented/75 focus-visible:outline-inverted disabled:bg-elevated",
+        base: "bg-elevated text-default ring-accented hover:bg-accented/75 focus-visible:outline-inverted active:bg-accented/75 disabled:bg-elevated",
       },
     },
 
@@ -122,14 +122,14 @@ export const ButtonTheme = tv({
       color: "primary",
       variant: "ghost",
       class: {
-        base: "text-primary hover:bg-primary/10 active:bg-primary/10 focus-visible:outline-primary",
+        base: "text-primary hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10",
       },
     },
     {
       color: "neutral",
       variant: "ghost",
       class: {
-        base: "text-default hover:bg-elevated active:bg-elevated focus-visible:outline-inverted",
+        base: "text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated",
       },
     },
 
@@ -137,14 +137,14 @@ export const ButtonTheme = tv({
       color: "primary",
       variant: "link",
       class: {
-        base: "text-primary hover:text-primary/75 active:text-primary/75 focus-visible:outline-primary",
+        base: "text-primary hover:text-primary/75 focus-visible:outline-primary active:text-primary/75",
       },
     },
     {
       color: "neutral",
       variant: "link",
       class: {
-        base: "text-muted hover:text-default active:text-default focus-visible:outline-inverted",
+        base: "text-muted hover:text-default focus-visible:outline-inverted active:text-default",
       },
     },
 

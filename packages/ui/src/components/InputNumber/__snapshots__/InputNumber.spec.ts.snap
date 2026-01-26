@@ -11,7 +11,7 @@ exports[`InputNumber > renders correctly with class 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -20,12 +20,12 @@ exports[`InputNumber > renders correctly with class 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -51,7 +51,7 @@ exports[`InputNumber > renders correctly with class 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -93,7 +93,7 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       data-disabled=""
       disabled=""
       inputmode="decimal"
@@ -104,12 +104,12 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="true"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         data-disabled=""
         disabled=""
         tabindex="-1"
@@ -137,7 +137,7 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
       <button
         aria-disabled="true"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         data-disabled=""
         disabled=""
         tabindex="-1"
@@ -180,7 +180,7 @@ exports[`InputNumber > renders correctly with id 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       id="id"
       inputmode="decimal"
       role="spinbutton"
@@ -190,12 +190,12 @@ exports[`InputNumber > renders correctly with id 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -221,7 +221,7 @@ exports[`InputNumber > renders correctly with id 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -264,7 +264,7 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
       aria-valuemin="0"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -273,12 +273,12 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -304,7 +304,7 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -345,7 +345,7 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -354,12 +354,12 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -385,7 +385,7 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -426,7 +426,7 @@ exports[`InputNumber > renders correctly with size md 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2.5 pe-8 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -435,12 +435,12 @@ exports[`InputNumber > renders correctly with size md 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1.5"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
         tabindex="-1"
         type="button"
       >
@@ -466,7 +466,7 @@ exports[`InputNumber > renders correctly with size md 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1.5 text-sm text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1.5"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
         tabindex="-1"
         type="button"
       >
@@ -507,7 +507,7 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-2 pe-7 py-1 text-xs focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1 ps-2 pe-7 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -516,12 +516,12 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 text-xs text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1"
         tabindex="-1"
         type="button"
       >
@@ -547,7 +547,7 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-1 text-xs text-muted hover:text-default active:text-default focus-visible:outline-inverted p-1"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1"
         tabindex="-1"
         type="button"
       >
@@ -588,7 +588,7 @@ exports[`InputNumber > renders correctly with step 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -597,12 +597,12 @@ exports[`InputNumber > renders correctly with step 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -628,7 +628,7 @@ exports[`InputNumber > renders correctly with step 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -669,7 +669,7 @@ exports[`InputNumber > renders correctly with ui 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary rounded-full"
+      class="w-full appearance-none border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset rounded-full"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -678,12 +678,12 @@ exports[`InputNumber > renders correctly with ui 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -709,7 +709,7 @@ exports[`InputNumber > renders correctly with ui 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -750,7 +750,7 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-default ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-default text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -759,12 +759,12 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -790,7 +790,7 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -831,7 +831,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -840,12 +840,12 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -871,7 +871,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -912,7 +912,7 @@ exports[`InputNumber > renders correctly without decrement 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -921,12 +921,12 @@ exports[`InputNumber > renders correctly without decrement 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -968,7 +968,7 @@ exports[`InputNumber > renders correctly without increment 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 pe-9 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -977,13 +977,13 @@ exports[`InputNumber > renders correctly without increment 1`] = `
       value=""
     />
     <div
-      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:py-0 [&>button]:scale-80 pe-1.5"
+      class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
     >
       <!--v-if-->
       <button
         aria-disabled="false"
         aria-label="Decrement"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 gap-2 text-base text-muted hover:text-default active:text-default focus-visible:outline-inverted p-2"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         tabindex="-1"
         type="button"
       >
@@ -1024,7 +1024,7 @@ exports[`InputNumber > renders correctly without increment and decrement 1`] = `
       aria-roledescription="Number field"
       autocomplete="off"
       autocorrect="off"
-      class="w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors text-highlighted bg-elevated ring ring-inset ring-accented ps-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary pe-3"
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-3"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"

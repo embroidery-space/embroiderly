@@ -11,7 +11,7 @@ exports[`Checkbox > renders correctly with class 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
         data-state="unchecked"
         id="v-0"
         role="checkbox"
@@ -40,7 +40,7 @@ exports[`Checkbox > renders correctly with description 1`] = `
         aria-checked="false"
         aria-label="Label"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
         data-state="unchecked"
         id="v-0"
         role="checkbox"
@@ -53,7 +53,7 @@ exports[`Checkbox > renders correctly with description 1`] = `
       </button>
     </div>
     <div
-      class="w-full ms-2 text-base"
+      class="ms-2 w-full text-base"
     >
       <label
         class="block font-medium text-default"
@@ -84,7 +84,7 @@ exports[`Checkbox > renders correctly with disabled 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5 cursor-not-allowed"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5 cursor-not-allowed"
         data-disabled=""
         data-state="unchecked"
         disabled=""
@@ -114,7 +114,7 @@ exports[`Checkbox > renders correctly with icon 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
         data-state="unchecked"
         id="v-0"
         role="checkbox"
@@ -142,7 +142,7 @@ exports[`Checkbox > renders correctly with id 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
         data-state="unchecked"
         id="id"
         role="checkbox"
@@ -171,7 +171,7 @@ exports[`Checkbox > renders correctly with label 1`] = `
         aria-checked="false"
         aria-label="Label"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
         data-state="unchecked"
         id="v-0"
         role="checkbox"
@@ -184,7 +184,7 @@ exports[`Checkbox > renders correctly with label 1`] = `
       </button>
     </div>
     <div
-      class="w-full ms-2 text-base"
+      class="ms-2 w-full text-base"
     >
       <label
         class="block font-medium text-default"
@@ -211,7 +211,7 @@ exports[`Checkbox > renders correctly with size lg 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
         data-state="unchecked"
         id="v-0"
         role="checkbox"
@@ -239,7 +239,7 @@ exports[`Checkbox > renders correctly with size md 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-4"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-4"
         data-state="unchecked"
         id="v-0"
         role="checkbox"
@@ -267,7 +267,7 @@ exports[`Checkbox > renders correctly with size sm 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-3"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-3"
         data-state="unchecked"
         id="v-0"
         role="checkbox"
@@ -295,7 +295,7 @@ exports[`Checkbox > renders correctly with ui 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
         data-state="unchecked"
         id="v-0"
         role="checkbox"

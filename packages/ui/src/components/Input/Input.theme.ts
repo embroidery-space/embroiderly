@@ -4,7 +4,7 @@ import type { VariantProps } from "tailwind-variants";
 export const InputTheme = tv({
   slots: {
     root: "relative inline-flex items-center",
-    base: "w-full rounded-md border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors",
+    base: "w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
     leading: "absolute inset-y-0 start-0 flex items-center",
     trailing: "absolute inset-y-0 end-0 flex items-center",
   },
@@ -14,22 +14,22 @@ export const InputTheme = tv({
     },
     variant: {
       subtle: {
-        base: "text-highlighted bg-elevated ring ring-inset ring-accented",
+        base: "bg-elevated text-highlighted ring ring-accented ring-inset",
       },
     },
     size: {
       sm: {
-        base: "ps-2 pe-2 py-1 text-xs gap-1",
+        base: "gap-1 px-2 py-1 text-xs",
         leading: "ps-2",
         trailing: "pe-2",
       },
       md: {
-        base: "ps-2.5 pe-2.5 py-1.5 text-sm gap-1.5",
+        base: "gap-1.5 px-2.5 py-1.5 text-sm",
         leading: "ps-2.5",
         trailing: "pe-2.5",
       },
       lg: {
-        base: "ps-3 pe-3 py-2 text-base gap-2",
+        base: "gap-2 px-3 py-2 text-base",
         leading: "ps-3",
         trailing: "pe-3",
       },
@@ -46,7 +46,7 @@ export const InputTheme = tv({
       color: "primary",
       variant: "subtle",
       class: {
-        base: "focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary",
+        base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
       },
     },
 

@@ -15,7 +15,7 @@
   <Story id="block-ui" group="overlay" title="BlockUI" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
       <BlockUI v-bind="state" :ui="{ mask: 'rounded-lg' }">
-        <div class="bg-inverted text-inverted rounded-lg p-2">
+        <div class="rounded-lg bg-inverted p-2 text-inverted">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto nemo consequatur dolor. Officia aut
           perspiciatis iure accusamus dolor sit alias autem. Odio et aut qui consequatur, laboriosam hic porro at!
         </div>

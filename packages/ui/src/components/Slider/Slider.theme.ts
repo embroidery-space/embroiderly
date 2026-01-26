@@ -3,10 +3,10 @@ import type { VariantProps } from "tailwind-variants";
 
 export const SliderTheme = tv({
   slots: {
-    root: "relative flex w-full items-center select-none touch-none",
-    track: "relative bg-accented overflow-hidden rounded-full grow",
+    root: "relative flex w-full touch-none items-center select-none",
+    track: "relative grow overflow-hidden rounded-full bg-accented",
     range: "absolute h-full rounded-full",
-    thumb: "block rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer",
+    thumb: "block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2",
   },
   variants: {
     color: {
@@ -31,7 +31,7 @@ export const SliderTheme = tv({
     },
     disabled: {
       true: {
-        root: "opacity-75 cursor-not-allowed",
+        root: "cursor-not-allowed opacity-75",
         thumb: "cursor-not-allowed",
       },
     },
