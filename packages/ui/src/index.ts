@@ -20,6 +20,7 @@ export { default as Icon, type IconProps } from "./components/Icon/Icon.vue";
 export { default as Separator, type SeparatorProps } from "./components/Separator/Separator.vue";
 
 // Form.
+export { default as Checkbox, type CheckboxProps } from "./components/Checkbox/Checkbox.vue";
 export { default as Input, type InputProps, type InputEmits, type InputSlots } from "./components/Input/Input.vue";
 export {
   default as InputNumber,

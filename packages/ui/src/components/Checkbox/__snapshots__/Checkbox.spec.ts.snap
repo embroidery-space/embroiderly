@@ -1,0 +1,313 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Checkbox > renders correctly with class 1`] = `
+<div>
+  <div
+    class="relative items-start inline-flex"
+  >
+    <div
+      class="flex items-center h-6"
+    >
+      <button
+        aria-checked="false"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        data-state="unchecked"
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with description 1`] = `
+<div>
+  <div
+    class="relative flex items-start"
+  >
+    <div
+      class="flex items-center h-6"
+    >
+      <button
+        aria-checked="false"
+        aria-label="Label"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        data-state="unchecked"
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <div
+      class="w-full ms-2 text-base"
+    >
+      <label
+        class="block font-medium text-default"
+        for="v-0"
+      >
+        
+        Label
+        
+      </label>
+      <p
+        class="text-muted"
+      >
+        Description
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with disabled 1`] = `
+<div>
+  <div
+    class="relative flex items-start opacity-75"
+  >
+    <div
+      class="flex items-center h-6"
+    >
+      <button
+        aria-checked="false"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5 cursor-not-allowed"
+        data-disabled=""
+        data-state="unchecked"
+        disabled=""
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with icon 1`] = `
+<div>
+  <div
+    class="relative flex items-start"
+  >
+    <div
+      class="flex items-center h-6"
+    >
+      <button
+        aria-checked="false"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        data-state="unchecked"
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with id 1`] = `
+<div>
+  <div
+    class="relative flex items-start"
+  >
+    <div
+      class="flex items-center h-6"
+    >
+      <button
+        aria-checked="false"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        data-state="unchecked"
+        id="id"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with label 1`] = `
+<div>
+  <div
+    class="relative flex items-start"
+  >
+    <div
+      class="flex items-center h-6"
+    >
+      <button
+        aria-checked="false"
+        aria-label="Label"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        data-state="unchecked"
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <div
+      class="w-full ms-2 text-base"
+    >
+      <label
+        class="block font-medium text-default"
+        for="v-0"
+      >
+        
+        Label
+        
+      </label>
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="relative flex items-start"
+  >
+    <div
+      class="flex items-center h-6"
+    >
+      <button
+        aria-checked="false"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        data-state="unchecked"
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="relative flex items-start"
+  >
+    <div
+      class="flex items-center h-5"
+    >
+      <button
+        aria-checked="false"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-4"
+        data-state="unchecked"
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="relative flex items-start"
+  >
+    <div
+      class="flex items-center h-4"
+    >
+      <button
+        aria-checked="false"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-3"
+        data-state="unchecked"
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Checkbox > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="relative flex items-start"
+  >
+    <div
+      class="flex items-center h-6"
+    >
+      <button
+        aria-checked="false"
+        aria-required="false"
+        class="rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+        data-state="unchecked"
+        id="v-0"
+        role="checkbox"
+        type="button"
+      >
+        
+        <!---->
+        
+        <!--v-if-->
+      </button>
+    </div>
+    <!--v-if-->
+  </div>
+</div>
+`;
