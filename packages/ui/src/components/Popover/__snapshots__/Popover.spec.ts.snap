@@ -1,0 +1,203 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Popover > renders correctly with arrow 1`] = `
+<div>
+  
+  
+  Trigger
+  <!--teleport start-->
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
+  >
+    <div
+      aria-labelledby="reka-popover-trigger-v-0"
+      class="pointer-events-auto origin-(--reka-popover-content-transform-origin) rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+      data-align="center"
+      data-dismissable-layer=""
+      data-side="bottom"
+      data-state="open"
+      id="reka-popover-content-v-1"
+      role="dialog"
+      style="--reka-popover-content-transform-origin: var(--reka-popper-transform-origin); --reka-popover-content-available-width: var(--reka-popper-available-width); --reka-popover-content-available-height: var(--reka-popper-available-height); --reka-popover-trigger-width: var(--reka-popper-anchor-width); --reka-popover-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
+      tabindex="-1"
+    >
+      
+      
+      
+      
+      
+      Content
+      
+      <span
+        style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
+      >
+        <svg
+          class="fill-default"
+          height="5"
+          preserveAspectRatio="none"
+          rounded="false"
+          style="display: block;"
+          viewBox="0 0 12 6"
+          width="10"
+        >
+          
+          <path
+            d="M0 0L6 6L12 0"
+          />
+          
+        </svg>
+      </span>
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;
+
+exports[`Popover > renders correctly with class 1`] = `
+<div>
+  
+  
+  Trigger
+  <!--teleport start-->
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
+  >
+    <div
+      aria-labelledby="reka-popover-trigger-v-0"
+      class="pointer-events-auto origin-(--reka-popover-content-transform-origin) rounded-md bg-default ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] shadow-xl"
+      data-align="center"
+      data-dismissable-layer=""
+      data-side="bottom"
+      data-state="open"
+      id="reka-popover-content-v-1"
+      role="dialog"
+      style="--reka-popover-content-transform-origin: var(--reka-popper-transform-origin); --reka-popover-content-available-width: var(--reka-popper-available-width); --reka-popover-content-available-height: var(--reka-popper-available-height); --reka-popover-trigger-width: var(--reka-popper-anchor-width); --reka-popover-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
+      tabindex="-1"
+    >
+      
+      
+      
+      
+      
+      Content
+      
+      <!--v-if-->
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;
+
+exports[`Popover > renders correctly with open 1`] = `
+<div>
+  
+  
+  Trigger
+  <!--teleport start-->
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
+  >
+    <div
+      aria-labelledby="reka-popover-trigger-v-0"
+      class="pointer-events-auto origin-(--reka-popover-content-transform-origin) rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+      data-align="center"
+      data-dismissable-layer=""
+      data-side="bottom"
+      data-state="open"
+      id="reka-popover-content-v-1"
+      role="dialog"
+      style="--reka-popover-content-transform-origin: var(--reka-popper-transform-origin); --reka-popover-content-available-width: var(--reka-popper-available-width); --reka-popover-content-available-height: var(--reka-popper-available-height); --reka-popover-trigger-width: var(--reka-popper-anchor-width); --reka-popover-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
+      tabindex="-1"
+    >
+      
+      
+      
+      
+      
+      Content
+      
+      <!--v-if-->
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;
+
+exports[`Popover > renders correctly with ui 1`] = `
+<div>
+  
+  
+  Trigger
+  <!--teleport start-->
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
+  >
+    <div
+      aria-labelledby="reka-popover-trigger-v-0"
+      class="pointer-events-auto origin-(--reka-popover-content-transform-origin) rounded-md bg-default ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] shadow-xl"
+      data-align="center"
+      data-dismissable-layer=""
+      data-side="bottom"
+      data-state="open"
+      id="reka-popover-content-v-1"
+      role="dialog"
+      style="--reka-popover-content-transform-origin: var(--reka-popper-transform-origin); --reka-popover-content-available-width: var(--reka-popper-available-width); --reka-popover-content-available-height: var(--reka-popper-available-height); --reka-popover-trigger-width: var(--reka-popper-anchor-width); --reka-popover-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
+      tabindex="-1"
+    >
+      
+      
+      
+      
+      
+      Content
+      
+      <!--v-if-->
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;

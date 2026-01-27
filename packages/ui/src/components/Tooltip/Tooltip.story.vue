@@ -13,7 +13,7 @@
 
     content: {
       side: "bottom",
-      sideOffset: 8,
+      sideOffset: 4,
     },
 
     delayDuration: 200,
