@@ -11,7 +11,7 @@ exports[`Switch > renders correctly with class 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-5 w-9"
+        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -20,7 +20,7 @@ exports[`Switch > renders correctly with class 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-4 data-[state=checked]:translate-x-4"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
           data-state="unchecked"
         >
           
@@ -47,7 +47,7 @@ exports[`Switch > renders correctly with description 1`] = `
         aria-checked="false"
         aria-label="Label"
         aria-required="false"
-        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-5 w-9"
+        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -56,7 +56,7 @@ exports[`Switch > renders correctly with description 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-4 data-[state=checked]:translate-x-4"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
           data-state="unchecked"
         >
           
@@ -98,7 +98,7 @@ exports[`Switch > renders correctly with disabled 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="inline-flex shrink-0 items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-5 w-9 cursor-not-allowed"
+        class="inline-flex shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9 cursor-not-allowed"
         data-disabled=""
         data-state="unchecked"
         disabled=""
@@ -109,7 +109,7 @@ exports[`Switch > renders correctly with disabled 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-4 data-[state=checked]:translate-x-4"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
           data-disabled=""
           data-state="unchecked"
         >
@@ -136,7 +136,7 @@ exports[`Switch > renders correctly with id 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-5 w-9"
+        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
         data-state="unchecked"
         id="id"
         role="switch"
@@ -145,7 +145,7 @@ exports[`Switch > renders correctly with id 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-4 data-[state=checked]:translate-x-4"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
           data-state="unchecked"
         >
           
@@ -172,7 +172,7 @@ exports[`Switch > renders correctly with label 1`] = `
         aria-checked="false"
         aria-label="Label"
         aria-required="false"
-        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-5 w-9"
+        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -181,7 +181,7 @@ exports[`Switch > renders correctly with label 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-4 data-[state=checked]:translate-x-4"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
           data-state="unchecked"
         >
           
@@ -219,7 +219,7 @@ exports[`Switch > renders correctly with size lg 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-6 w-11"
+        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-6 w-11"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -228,7 +228,7 @@ exports[`Switch > renders correctly with size lg 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-5 data-[state=checked]:translate-x-5"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-5 data-[state=checked]:translate-x-5"
           data-state="unchecked"
         >
           
@@ -254,7 +254,7 @@ exports[`Switch > renders correctly with size md 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-5 w-9"
+        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -263,7 +263,7 @@ exports[`Switch > renders correctly with size md 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-4 data-[state=checked]:translate-x-4"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
           data-state="unchecked"
         >
           
@@ -289,7 +289,7 @@ exports[`Switch > renders correctly with size sm 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-4 w-7"
+        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-4 w-7"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -298,7 +298,7 @@ exports[`Switch > renders correctly with size sm 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-3 data-[state=checked]:translate-x-3"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-3 data-[state=checked]:translate-x-3"
           data-state="unchecked"
         >
           
@@ -324,7 +324,7 @@ exports[`Switch > renders correctly with ui 1`] = `
       <button
         aria-checked="false"
         aria-required="false"
-        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented transition-colors duration-200 data-[state=checked]:bg-primary focus-visible:outline-primary h-5 w-9"
+        class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -333,7 +333,7 @@ exports[`Switch > renders correctly with ui 1`] = `
       >
         
         <span
-          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 data-[state=unchecked]:translate-x-0 transition-transform duration-200 size-4 data-[state=checked]:translate-x-4"
+          class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
           data-state="unchecked"
         >
           

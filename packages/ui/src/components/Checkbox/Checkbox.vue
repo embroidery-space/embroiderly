@@ -1,6 +1,7 @@
 <script setup lang="ts">
-  import { CheckboxRoot, CheckboxIndicator, Primitive, Label } from "reka-ui";
+  import { Primitive } from "reka-ui";
   import type { CheckboxRootProps } from "reka-ui";
+  import { Checkbox, Label } from "reka-ui/namespaced";
   import { computed, useId } from "vue";
 
   import Icon from "../Icon/Icon.vue";
@@ -60,17 +61,17 @@
 <template>
   <Primitive :as="as" :as-child="asChild" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div :class="ui.container({ class: props.ui?.container })">
-      <CheckboxRoot
+      <Checkbox.Root
         :id="id"
         v-model="modelValue"
         v-bind="$attrs"
         :disabled="disabled"
         :class="ui.base({ class: props.ui?.base })"
       >
-        <CheckboxIndicator :class="ui.indicator({ class: props.ui?.indicator })">
+        <Checkbox.Indicator :class="ui.indicator({ class: props.ui?.indicator })">
           <Icon :name="icon" :class="ui.icon({ class: props.ui?.icon })" />
-        </CheckboxIndicator>
-      </CheckboxRoot>
+        </Checkbox.Indicator>
+      </Checkbox.Root>
     </div>
 
     <div v-if="label || description" :class="ui.wrapper({ class: props.ui?.wrapper })">

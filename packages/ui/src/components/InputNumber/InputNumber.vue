@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput, NumberFieldRoot } from "reka-ui";
   import type { NumberFieldRootProps } from "reka-ui";
+  import { NumberField } from "reka-ui/namespaced";
   import { computed } from "vue";
 
   import Button from "../Button/Button.vue";
@@ -83,7 +83,7 @@
 </script>
 
 <template>
-  <NumberFieldRoot
+  <NumberField.Root
     :id="id"
     v-model="modelValue"
     :as="as"
@@ -95,16 +95,16 @@
     :disabled="disabled"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <NumberFieldInput v-bind="$attrs" :class="ui.base({ class: props.ui?.base })" />
+    <NumberField.Input v-bind="$attrs" :class="ui.base({ class: props.ui?.base })" />
 
     <div v-if="hasButtons" :class="ui.buttons({ class: props.ui?.buttons })">
-      <NumberFieldIncrement v-if="increment" as-child :disabled="disabled">
+      <NumberField.Increment v-if="increment" as-child :disabled="disabled">
         <Button square color="neutral" variant="link" :icon="incrementIcon" :size="size" aria-label="Increment" />
-      </NumberFieldIncrement>
+      </NumberField.Increment>
 
-      <NumberFieldDecrement v-if="decrement" as-child :disabled="disabled">
+      <NumberField.Decrement v-if="decrement" as-child :disabled="disabled">
         <Button square color="neutral" variant="link" :icon="decrementIcon" :size="size" aria-label="Decrement" />
-      </NumberFieldDecrement>
+      </NumberField.Decrement>
     </div>
-  </NumberFieldRoot>
+  </NumberField.Root>
 </template>

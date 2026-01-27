@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type { SliderRootProps } from "reka-ui";
-  import { SliderRange, SliderRoot, SliderThumb, SliderTrack } from "reka-ui";
+  import { Slider } from "reka-ui/namespaced";
   import { computed } from "vue";
 
   import Tooltip from "../Tooltip/Tooltip.vue";
@@ -57,7 +57,7 @@
 </script>
 
 <template>
-  <SliderRoot
+  <Slider.Root
     v-model="sliderValue"
     :as="as"
     :as-child="asChild"
@@ -67,9 +67,9 @@
     :disabled="disabled"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <SliderTrack :class="ui.track({ class: props.ui?.track })">
-      <SliderRange :class="ui.range({ class: props.ui?.range })" />
-    </SliderTrack>
+    <Slider.Track :class="ui.track({ class: props.ui?.track })">
+      <Slider.Range :class="ui.range({ class: props.ui?.range })" />
+    </Slider.Track>
 
     <Tooltip
       v-if="!!tooltip"
@@ -77,8 +77,8 @@
       :text="String(modelValue ?? min)"
       v-bind="typeof tooltip === 'object' ? tooltip : {}"
     >
-      <SliderThumb aria-label="Slider thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
+      <Slider.Thumb aria-label="Slider thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
     </Tooltip>
-    <SliderThumb v-else aria-label="Slider thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
-  </SliderRoot>
+    <Slider.Thumb v-else aria-label="Slider thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
+  </Slider.Root>
 </template>

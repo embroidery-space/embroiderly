@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type { PrimitiveProps } from "reka-ui";
-  import { Separator } from "reka-ui";
+  import { Separator } from "reka-ui/namespaced";
   import { computed } from "vue";
 
   import { SeparatorTheme } from "./Separator.theme.ts";

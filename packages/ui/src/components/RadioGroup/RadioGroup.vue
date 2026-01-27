@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type { AcceptableValue, RadioGroupRootProps } from "reka-ui";
-  import { RadioGroup as RekaRadioGroup, Label } from "reka-ui/namespaced";
+  import { RadioGroup, Label } from "reka-ui/namespaced";
   import { computed, useId } from "vue";
 
   import { RadioGroupTheme } from "./RagioGroup.theme.ts";
@@ -79,7 +79,7 @@
 </script>
 
 <template>
-  <RekaRadioGroup.Root
+  <RadioGroup.Root
     :id="id"
     v-model="modelValue"
     :as="as"
@@ -89,9 +89,9 @@
   >
     <div v-for="item in items" :key="item.id" :class="ui.item({ class: props.ui?.item })">
       <div :class="ui.container({ class: props.ui?.container })">
-        <RekaRadioGroup.Item :id="item.id" :value="item.value" :class="ui.base({ class: props.ui?.base })">
-          <RekaRadioGroup.Indicator :class="ui.indicator({ class: props.ui?.indicator })" />
-        </RekaRadioGroup.Item>
+        <RadioGroup.Item :id="item.id" :value="item.value" :class="ui.base({ class: props.ui?.base })">
+          <RadioGroup.Indicator :class="ui.indicator({ class: props.ui?.indicator })" />
+        </RadioGroup.Item>
       </div>
 
       <div v-if="item.label || item.description" :class="ui.wrapper({ class: props.ui?.wrapper })">
@@ -99,5 +99,5 @@
         <p v-if="item.description" :class="ui.description({ class: props.ui?.description })">{{ item.description }}</p>
       </div>
     </div>
-  </RekaRadioGroup.Root>
+  </RadioGroup.Root>
 </template>

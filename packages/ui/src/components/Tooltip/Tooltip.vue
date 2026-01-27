@@ -2,14 +2,8 @@
   import { reactivePick } from "@vueuse/core";
   import defu from "defu";
   import type { TooltipContentProps, TooltipRootEmits, TooltipRootProps } from "reka-ui";
-  import {
-    TooltipArrow,
-    TooltipContent,
-    TooltipPortal,
-    TooltipRoot,
-    TooltipTrigger,
-    useForwardPropsEmits,
-  } from "reka-ui";
+  import { useForwardPropsEmits } from "reka-ui";
+  import { Tooltip } from "reka-ui/namespaced";
   import { computed, toRef } from "vue";
 
   import { usePortal } from "../../composables/usePortal.ts";
@@ -76,16 +70,16 @@
 </script>
 
 <template>
-  <TooltipRoot v-slot="{ open }" v-bind="rootProps" :disabled="disabled || !text">
-    <TooltipTrigger as-child>
+  <Tooltip.Root v-slot="{ open }" v-bind="rootProps" :disabled="disabled || !text">
+    <Tooltip.Trigger as-child>
       <slot :open="open" />
-    </TooltipTrigger>
+    </Tooltip.Trigger>
 
-    <TooltipPortal v-bind="portalProps">
-      <TooltipContent v-bind="contentProps" :class="ui.content({ class: [props.ui?.content, props.class] })">
+    <Tooltip.Portal v-bind="portalProps">
+      <Tooltip.Content v-bind="contentProps" :class="ui.content({ class: [props.ui?.content, props.class] })">
         <span :class="ui.text({ class: props.ui?.text })">{{ text }}</span>
-        <TooltipArrow :class="ui.arrow({ class: props.ui?.arrow })" />
-      </TooltipContent>
-    </TooltipPortal>
-  </TooltipRoot>
+        <Tooltip.Arrow :class="ui.arrow({ class: props.ui?.arrow })" />
+      </Tooltip.Content>
+    </Tooltip.Portal>
+  </Tooltip.Root>
 </template>
