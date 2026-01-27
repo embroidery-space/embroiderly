@@ -33,6 +33,7 @@ export {
   type RadioGroupItem,
 } from "./components/RadioGroup/RadioGroup.vue";
 export { default as Slider, type SliderProps } from "./components/Slider/Slider.vue";
+export { default as Switch, type SwitchProps } from "./components/Switch/Switch.vue";
 
 // Overlay.
 export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./components/BlockUI/BlockUI.vue";
