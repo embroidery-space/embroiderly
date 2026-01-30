@@ -7230,9 +7230,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-better-posthog"
-version = "0.1.2"
+version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "15dd6f7bbe0fd626b1941cd0899d602678571c2770e3ea0d42c7791019828c10"
+checksum = "259220cba1150a4c57e2f402bea881319fa887c23c5da39e0695086cf615417c"
 dependencies = [
  "better-posthog",
  "log",
