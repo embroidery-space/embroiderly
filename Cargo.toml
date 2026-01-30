@@ -119,7 +119,7 @@ argh = { version = "0.1.13", default-features = false }
 
 # Error handling
 anyhow = "1.0.100"
-thiserror = "2.0.17"
+thiserror = "2.0.18"
 
 # Logging & Tracing
 log = "0.4.29"
@@ -128,11 +128,11 @@ tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
 tracing-panic = "0.1.2"
 
 # Telemetry
-better-posthog = "0.2.2"
+better-posthog = "0.2.3"
 sentry = "0.46.1"
 
 # Identification
-uuid = { version = "1.19.0", features = ["v4", "v7"] }
+uuid = { version = "1.20.0", features = ["v4", "v7"] }
 
 # File system utilities
 tempfile = "3.24.0"
