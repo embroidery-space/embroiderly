@@ -19,7 +19,7 @@
   "peerDependencies": {
     "reka-ui": "2.7.0",
     "tailwindcss": "4.1.18",
-    "vue": "3.5.26"
+    "vue": "3.5.27"
   },
   "devDependencies": {
     "@histoire/plugin-vue": "1.0.0-beta.1",
@@ -29,14 +29,14 @@
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.10.9",
     "@vitejs/plugin-vue": "6.0.3",
-    "@vitest/browser-webdriverio": "4.0.17",
+    "@vitest/browser-webdriverio": "4.0.18",
     "@vue/tsconfig": "0.8.1",
     "histoire": "1.0.0-beta.1",
     "typescript": "5.9.3",
     "vite": "7.3.1",
-    "vitest": "4.0.17",
-    "vitest-browser-vue": "2.0.1",
-    "vue-tsc": "3.2.2",
+    "vitest": "4.0.18",
+    "vitest-browser-vue": "2.0.2",
+    "vue-tsc": "3.2.3",
     "webdriverio": "9.23.2",
     "wrangler": "4.59.2"
   }
