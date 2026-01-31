@@ -1,0 +1,291 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InputColor > renders correctly with class 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center w-64"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+    >
+      
+      
+      
+      <button
+        aria-controls=""
+        aria-disabled="false"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+        data-state="closed"
+        id="reka-popover-trigger-v-0"
+        style="background-color: rgb(255, 0, 0);"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--teleport start-->
+      <!--teleport end-->
+      
+      
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      maxlength="7"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputColor > renders correctly with disabled 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+    >
+      
+      
+      
+      <button
+        aria-controls=""
+        aria-disabled="true"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+        data-state="closed"
+        disabled=""
+        id="reka-popover-trigger-v-0"
+        style="background-color: rgb(255, 0, 0);"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--teleport start-->
+      <!--teleport end-->
+      
+      
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      disabled=""
+      maxlength="7"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputColor > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+    >
+      
+      
+      
+      <button
+        aria-controls=""
+        aria-disabled="false"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+        data-state="closed"
+        id="reka-popover-trigger-v-0"
+        style="background-color: rgb(255, 0, 0);"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--teleport start-->
+      <!--teleport end-->
+      
+      
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      maxlength="7"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputColor > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-2.5"
+    >
+      
+      
+      
+      <button
+        aria-controls=""
+        aria-disabled="false"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5 rounded-sm"
+        data-state="closed"
+        id="reka-popover-trigger-v-0"
+        style="background-color: rgb(255, 0, 0);"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--teleport start-->
+      <!--teleport end-->
+      
+      
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-9"
+      maxlength="7"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputColor > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-2"
+    >
+      
+      
+      
+      <button
+        aria-controls=""
+        aria-disabled="false"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1 rounded-xs"
+        data-state="closed"
+        id="reka-popover-trigger-v-0"
+        style="background-color: rgb(255, 0, 0);"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--teleport start-->
+      <!--teleport end-->
+      
+      
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1 px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-7"
+      maxlength="7"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`InputColor > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center rounded-none"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+    >
+      
+      
+      
+      <button
+        aria-controls=""
+        aria-disabled="false"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+        data-state="closed"
+        id="reka-popover-trigger-v-0"
+        style="background-color: rgb(255, 0, 0);"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--teleport start-->
+      <!--teleport end-->
+      
+      
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      maxlength="7"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
