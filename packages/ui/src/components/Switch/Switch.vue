@@ -2,7 +2,9 @@
   import type { SwitchRootProps } from "reka-ui";
   import { Primitive } from "reka-ui";
   import { Switch, Label } from "reka-ui/namespaced";
-  import { computed, useId } from "vue";
+  import { computed } from "vue";
+
+  import { useFormField } from "../../composables/useFormField.ts";
 
   import { SwitchTheme } from "./Switch.theme";
   import type { SwitchThemeSlots, SwitchThemeVariants } from "./Switch.theme";
@@ -36,12 +38,12 @@
     size: "md",
   });
 
-  const id = computed(() => props.id ?? useId());
+  const { id, size, ariaAttrs } = useFormField(props);
 
   const ui = computed(() => {
     return SwitchTheme({
       color: props.color,
-      size: props.size,
+      size: size.value,
 
       disabled: props.disabled,
     });
@@ -54,7 +56,7 @@
       <Switch.Root
         :id="id"
         v-model="modelValue"
-        v-bind="$attrs"
+        v-bind="{ ...$attrs, ...ariaAttrs }"
         :disabled="disabled"
         :class="ui.base({ class: props.ui?.base })"
       >

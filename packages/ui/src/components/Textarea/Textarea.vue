@@ -3,6 +3,8 @@
   import type { PrimitiveProps } from "reka-ui";
   import { computed, nextTick, onMounted, useTemplateRef, watch } from "vue";
 
+  import { useFormField } from "../../composables/useFormField.ts";
+
   import { TextareaTheme } from "./Textarea.theme.ts";
   import type { TextareaThemeSlots, TextareaThemeVariants } from "./Textarea.theme.ts";
 
@@ -60,6 +62,8 @@
     maxrows: 0,
   });
 
+  const { id, size, ariaAttrs } = useFormField(props);
+
   watch(modelValue, () => {
     nextTick(autoResize);
   });
@@ -92,7 +96,7 @@
     return TextareaTheme({
       color: props.color,
       variant: props.variant,
-      size: props.size,
+      size: size.value,
 
       autoresize: props.autoresize,
     });
@@ -109,7 +113,7 @@
       :id="id"
       ref="textarea"
       v-model="modelValue"
-      v-bind="$attrs"
+      v-bind="{ ...$attrs, ...ariaAttrs }"
       :rows="rows"
       :disabled="disabled"
       :class="ui.base({ class: props.ui?.base })"

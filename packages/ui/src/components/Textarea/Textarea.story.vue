@@ -2,16 +2,18 @@
   import { logEvent } from "histoire/client";
   import { reactive, ref } from "vue";
 
+  import type { FormFieldProps } from "../FormField/FormField.vue";
+  import FormField from "../FormField/FormField.vue";
+
   import type { TextareaProps } from "./Textarea.vue";
   import Textarea from "./Textarea.vue";
 
   const sizes = ["sm", "md", "lg"] as const;
 
   const value = ref("");
-  const state = reactive<TextareaProps>({
+  const inputState = reactive<TextareaProps>({
     color: "primary",
     variant: "subtle",
-    size: "lg",
 
     rows: 3,
     maxrows: 0,
@@ -19,23 +21,41 @@
     autoresize: false,
     disabled: false,
   });
+  const formFieldState = reactive<FormFieldProps>({
+    size: "lg",
+    label: "",
+    description: "",
+    hint: "",
+    help: "",
+  });
 
-  defineExpose({ state });
+  defineExpose({ inputState, formFieldState });
 </script>
 
 <template>
   <Story id="textarea" group="form" title="Textarea" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <Textarea v-model="value" v-bind="state" @update:model-value="logEvent('update:modelValue', { value: $event })" />
+      <FormField v-bind="formFieldState">
+        <Textarea
+          v-model="value"
+          v-bind="inputState"
+          @update:model-value="logEvent('update:modelValue', { value: $event })"
+        />
+      </FormField>
 
       <template #controls>
-        <HstSelect v-model="state.size" title="Size" :options="sizes" />
+        <HstCheckbox v-model="inputState.disabled" title="Disabled" />
+        <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
 
-        <HstNumber v-model="state.rows" title="Rows" />
-        <HstNumber v-model="state.maxrows" title="Max Rows" />
+        <HstText v-model="formFieldState.label" title="Label" />
+        <HstText v-model="formFieldState.description" title="Description" />
+        <HstText v-model="formFieldState.hint" title="Hint" />
+        <HstText v-model="formFieldState.help" title="Help" />
 
-        <HstCheckbox v-model="state.autoresize" title="Autoresize" />
-        <HstCheckbox v-model="state.disabled" title="Disabled" />
+        <HstNumber v-model="inputState.rows" title="Rows" />
+        <HstNumber v-model="inputState.maxrows" title="Max Rows" />
+
+        <HstCheckbox v-model="inputState.autoresize" title="Autoresize" />
       </template>
     </Variant>
 

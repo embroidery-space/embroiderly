@@ -3,6 +3,7 @@
   import { Slider } from "reka-ui/namespaced";
   import { computed } from "vue";
 
+  import { useFormField } from "../../composables/useFormField.ts";
   import Tooltip from "../Tooltip/Tooltip.vue";
   import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 
@@ -10,6 +11,7 @@
   import type { SliderThemeSlots, SliderThemeVariants } from "./Slider.theme.ts";
 
   export interface SliderProps extends Pick<SliderRootProps, "as" | "asChild" | "disabled" | "min" | "max" | "step"> {
+    id?: string;
     /**
      * The color scheme of the slider.
      * @default "primary"
@@ -34,6 +36,8 @@
     size: "md",
   });
 
+  const { id, size, ariaAttrs } = useFormField(props);
+
   // Convert single value to array for Reka UI.
   const sliderValue = computed({
     get() {
@@ -49,7 +53,7 @@
   const ui = computed(() => {
     return SliderTheme({
       color: props.color,
-      size: props.size,
+      size: size.value,
 
       disabled: props.disabled,
     });
@@ -58,7 +62,9 @@
 
 <template>
   <Slider.Root
+    :id="id"
     v-model="sliderValue"
+    v-bind="ariaAttrs"
     :as="as"
     :as-child="asChild"
     :min="min"

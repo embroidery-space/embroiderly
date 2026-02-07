@@ -2,6 +2,9 @@
   import { logEvent } from "histoire/client";
   import { ref, reactive } from "vue";
 
+  import type { FormFieldProps } from "../FormField/FormField.vue";
+  import FormField from "../FormField/FormField.vue";
+
   import type { RadioGroupItem, RadioGroupProps } from "./RadioGroup.vue";
   import RadioGroup from "./RadioGroup.vue";
 
@@ -13,28 +16,30 @@
     { value: 3, label: "Option 3", description: "Description 3" },
   ]);
 
-  const state = reactive<RadioGroupProps>({
-    size: "md",
-
+  const inputState = reactive<RadioGroupProps>({
     disabled: false,
   });
+  const formFieldState = reactive<FormFieldProps>({
+    size: "md",
+  });
 
-  defineExpose({ state });
+  defineExpose({ inputState, formFieldState });
 </script>
 
 <template>
   <Story id="radio-group" group="form" title="RadioGroup" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <RadioGroup
-        v-bind="state"
-        :items="items"
-        @update:model-value="logEvent('update:model-value', { value: $event })"
-      />
+      <FormField v-bind="formFieldState">
+        <RadioGroup
+          v-bind="inputState"
+          :items="items"
+          @update:model-value="logEvent('update:model-value', { value: $event })"
+        />
+      </FormField>
 
       <template #controls>
-        <HstSelect v-model="state.size" title="Size" :options="sizes" />
-
-        <HstCheckbox v-model="state.disabled" title="Disabled" />
+        <HstCheckbox v-model="inputState.disabled" title="Disabled" />
+        <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
       </template>
     </Variant>
 

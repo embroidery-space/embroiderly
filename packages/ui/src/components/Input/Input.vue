@@ -3,6 +3,8 @@
   import type { PrimitiveProps } from "reka-ui";
   import { computed, useSlots } from "vue";
 
+  import { useFormField } from "../../composables/useFormField.ts";
+
   import { InputTheme } from "./Input.theme.ts";
   import type { InputThemeSlots, InputThemeVariants } from "./Input.theme.ts";
 
@@ -54,11 +56,13 @@
   });
   const slots = useSlots();
 
+  const { id, size, ariaAttrs } = useFormField(props);
+
   const ui = computed(() => {
     return InputTheme({
       color: props.color,
       variant: props.variant,
-      size: props.size,
+      size: size.value,
 
       leading: !!slots.leading,
       trailing: !!slots.trailing,
@@ -75,7 +79,7 @@
     <input
       :id="id"
       v-model="modelValue"
-      v-bind="$attrs"
+      v-bind="{ ...$attrs, ...ariaAttrs }"
       type="text"
       :minlength="minlength"
       :maxlength="maxlength"

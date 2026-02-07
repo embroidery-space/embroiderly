@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import type { AcceptableValue, RadioGroupRootProps } from "reka-ui";
   import { RadioGroup, Label } from "reka-ui/namespaced";
-  import { computed, useId } from "vue";
+  import { computed } from "vue";
+
+  import { useFormField } from "../../composables/useFormField.ts";
 
   import { RadioGroupTheme } from "./RagioGroup.theme.ts";
   import type { RadioGroupThemeSlots, RadioGroupThemeVariants } from "./RagioGroup.theme.ts";
@@ -43,7 +45,7 @@
     size: "lg",
   });
 
-  const id = computed(() => props.id ?? useId());
+  const { id, size, ariaAttrs } = useFormField(props);
 
   const items = computed(() => {
     if (!props.items) return [];
@@ -71,7 +73,7 @@
   const ui = computed(() => {
     return RadioGroupTheme({
       color: props.color,
-      size: props.size,
+      size: size.value,
 
       disabled: props.disabled,
     });
@@ -82,6 +84,7 @@
   <RadioGroup.Root
     :id="id"
     v-model="modelValue"
+    v-bind="ariaAttrs"
     :as="as"
     :as-child="asChild"
     :disabled="disabled"

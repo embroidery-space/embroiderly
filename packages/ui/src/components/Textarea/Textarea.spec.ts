@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { nextTick } from "vue";
+import { defineComponent, nextTick } from "vue";
+
+import FormField from "../FormField/FormField.vue";
 
 import type { TextareaProps } from "./Textarea.vue";
 import Textarea from "./Textarea.vue";
@@ -18,6 +20,21 @@ describe("Textarea", () => {
     ["with ui", { props: { ui: { base: "rounded-full" } } }],
   ] as [string, { props?: TextareaProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(Textarea, options);
+    await nextTick();
+
+    expect(screen.container).toMatchSnapshot();
+  });
+
+  test("renders correctly within FormField", async () => {
+    const Wrapper = defineComponent({
+      components: { FormField, Textarea },
+      template: `
+        <FormField label="Label" hint="Hint" description="Description" help="Help">
+          <Textarea />
+        </FormField>
+      `,
+    });
+    const screen = page.render(Wrapper);
     await nextTick();
 
     expect(screen.container).toMatchSnapshot();

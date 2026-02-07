@@ -4,6 +4,8 @@ import { page, userEvent } from "vitest/browser";
 import { defineComponent, nextTick } from "vue";
 import { Key } from "webdriverio";
 
+import FormField from "../FormField/FormField.vue";
+
 import type { SliderProps } from "./Slider.vue";
 import Slider from "./Slider.vue";
 
@@ -29,6 +31,21 @@ describe("Slider", () => {
     ["with ui", { props: { ui: { track: "bg-red-500" } } }],
   ] as [string, { props?: SliderProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(SliderWrapper, options);
+    await nextTick();
+
+    expect(screen.container).toMatchSnapshot();
+  });
+
+  test("renders correctly within FormField", async () => {
+    const Wrapper = defineComponent({
+      components: { FormField, Slider },
+      template: `
+        <FormField label="Label" hint="Hint" description="Description" help="Help">
+          <Slider />
+        </FormField>
+      `,
+    });
+    const screen = page.render(Wrapper);
     await nextTick();
 
     expect(screen.container).toMatchSnapshot();

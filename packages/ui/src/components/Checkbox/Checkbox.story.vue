@@ -2,35 +2,41 @@
   import { logEvent } from "histoire/client";
   import { reactive } from "vue";
 
+  import type { FormFieldProps } from "../FormField/FormField.vue";
+  import FormField from "../FormField/FormField.vue";
+
   import type { CheckboxProps } from "./Checkbox.vue";
   import Checkbox from "./Checkbox.vue";
 
   const sizes = ["sm", "md", "lg"] as const;
 
-  const state = reactive<CheckboxProps>({
+  const inputState = reactive<CheckboxProps>({
     label: "Checkbox",
     description: "Description",
 
-    size: "md",
-
     disabled: false,
   });
+  const formFieldState = reactive<FormFieldProps>({
+    size: "md",
+  });
 
-  defineExpose({ state });
+  defineExpose({ inputState, formFieldState });
 </script>
 
 <template>
   <Story id="checkbox" group="form" title="Checkbox" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <Checkbox v-bind="state" @update:model-value="logEvent('update:model-value', { value: $event })" />
+      <FormField v-bind="formFieldState">
+        <Checkbox v-bind="inputState" @update:model-value="logEvent('update:model-value', { value: $event })" />
+      </FormField>
 
       <template #controls>
-        <HstText v-model="state.label" title="Label" />
-        <HstText v-model="state.description" title="Description" />
+        <HstCheckbox v-model="inputState.disabled" title="Disabled" />
 
-        <HstSelect v-model="state.size" title="Size" :options="sizes" />
+        <HstText v-model="inputState.label" title="Label" />
+        <HstText v-model="inputState.description" title="Description" />
 
-        <HstCheckbox v-model="state.disabled" title="Disabled" />
+        <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
       </template>
     </Variant>
 

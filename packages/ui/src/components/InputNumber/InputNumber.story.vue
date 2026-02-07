@@ -2,6 +2,9 @@
   import { logEvent } from "histoire/client";
   import { reactive, ref } from "vue";
 
+  import type { FormFieldProps } from "../FormField/FormField.vue";
+  import FormField from "../FormField/FormField.vue";
+
   import type { InputNumberProps } from "./InputNumber.vue";
   import InputNumber from "./InputNumber.vue";
 
@@ -9,8 +12,7 @@
   const variants = ["subtle", "outline"] as const;
 
   const value = ref(5);
-  const state = reactive<InputNumberProps>({
-    size: "md",
+  const inputState = reactive<InputNumberProps>({
     variant: "subtle",
 
     min: 0,
@@ -22,31 +24,45 @@
 
     disabled: false,
   });
+  const formFieldState = reactive<FormFieldProps>({
+    size: "md",
+    label: "",
+    description: "",
+    hint: "",
+    help: "",
+  });
 
-  defineExpose({ state });
+  defineExpose({ inputState, formFieldState });
 </script>
 
 <template>
   <Story id="input-number" group="form" title="InputNumber" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <InputNumber
-        v-model="value"
-        v-bind="state"
-        @update:model-value="logEvent('update:model-value', { value: $event })"
-      />
+      <FormField v-bind="formFieldState">
+        <InputNumber
+          v-model="value"
+          v-bind="inputState"
+          @update:model-value="logEvent('update:model-value', { value: $event })"
+        />
+      </FormField>
 
       <template #controls>
-        <HstSelect v-model="state.size" title="Size" :options="sizes" />
-        <HstSelect v-model="state.variant" title="Variant" :options="variants" />
+        <HstCheckbox v-model="inputState.disabled" title="Disabled" />
 
-        <HstNumber v-model="state.min" title="Min" />
-        <HstNumber v-model="state.max" title="Max" />
-        <HstNumber v-model="state.step" title="Step" />
+        <HstText v-model="formFieldState.label" title="Label" />
+        <HstText v-model="formFieldState.description" title="Description" />
+        <HstText v-model="formFieldState.hint" title="Hint" />
+        <HstText v-model="formFieldState.help" title="Help" />
 
-        <HstCheckbox v-model="state.increment" title="Increment" />
-        <HstCheckbox v-model="state.decrement" title="Decrement" />
+        <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
+        <HstSelect v-model="inputState.variant" title="Variant" :options="variants" />
 
-        <HstCheckbox v-model="state.disabled" title="Disabled" />
+        <HstNumber v-model="inputState.min" title="Min" />
+        <HstNumber v-model="inputState.max" title="Max" />
+        <HstNumber v-model="inputState.step" title="Step" />
+
+        <HstCheckbox v-model="inputState.increment" title="Increment" />
+        <HstCheckbox v-model="inputState.decrement" title="Decrement" />
       </template>
     </Variant>
 

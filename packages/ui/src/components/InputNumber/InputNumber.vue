@@ -3,6 +3,7 @@
   import { NumberField } from "reka-ui/namespaced";
   import { computed } from "vue";
 
+  import { useFormField } from "../../composables/useFormField.ts";
   import Button from "../Button/Button.vue";
 
   import { InputNumberTheme } from "./InputNumber.theme.ts";
@@ -69,13 +70,15 @@
     decrementIcon: "lucide:chevron-down",
   });
 
+  const { id, size, ariaAttrs } = useFormField(props);
+
   const hasButtons = computed(() => props.increment || props.decrement);
 
   const ui = computed(() => {
     return InputNumberTheme({
       color: props.color,
       variant: props.variant,
-      size: props.size,
+      size: size.value,
 
       hasButtons: hasButtons.value,
     });
@@ -95,7 +98,7 @@
     :disabled="disabled"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <NumberField.Input v-bind="$attrs" :class="ui.base({ class: props.ui?.base })" />
+    <NumberField.Input v-bind="{ ...$attrs, ...ariaAttrs }" :class="ui.base({ class: props.ui?.base })" />
 
     <div v-if="hasButtons" :class="ui.buttons({ class: props.ui?.buttons })">
       <NumberField.Increment v-if="increment" as-child :disabled="disabled">

@@ -1,0 +1,495 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FormField > renders correctly with all elements 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <span
+          class="text-muted"
+          id="v-0-hint"
+        >
+          Hint
+        </span>
+      </div>
+      <p
+        class="text-muted"
+        id="v-0-description"
+      >
+        Description
+      </p>
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          aria-describedby="v-0-hint v-0-description v-0-help"
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <p
+        class="mt-1 text-muted"
+        id="v-0-help"
+      >
+        Help
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with class 1`] = `
+<div>
+  <div
+    class="text-base custom-class"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with description 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <!--v-if-->
+      </div>
+      <p
+        class="text-muted"
+        id="v-0-description"
+      >
+        Description
+      </p>
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          aria-describedby="v-0-description"
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with help 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          aria-describedby="v-0-help"
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <p
+        class="mt-1 text-muted"
+        id="v-0-help"
+      >
+        Help
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with hint 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <span
+          class="text-muted"
+          id="v-0-hint"
+        >
+          Hint
+        </span>
+      </div>
+      <!--v-if-->
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          aria-describedby="v-0-hint"
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with label 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="text-sm"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="text-xs"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormField > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="text-base rounded-lg"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+      >
+        <!--v-if-->
+        <input
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          type="text"
+        />
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;

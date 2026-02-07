@@ -2,8 +2,9 @@
   import { Primitive } from "reka-ui";
   import type { CheckboxRootProps } from "reka-ui";
   import { Checkbox, Label } from "reka-ui/namespaced";
-  import { computed, useId } from "vue";
+  import { computed } from "vue";
 
+  import { useFormField } from "../../composables/useFormField.ts";
   import Icon from "../Icon/Icon.vue";
 
   import { CheckboxTheme } from "./Checkbox.theme";
@@ -46,12 +47,12 @@
     icon: "lucide:check",
   });
 
-  const id = computed(() => props.id ?? useId());
+  const { id, size, ariaAttrs } = useFormField(props);
 
   const ui = computed(() => {
     return CheckboxTheme({
       color: props.color,
-      size: props.size,
+      size: size.value,
 
       disabled: props.disabled,
     });
@@ -64,7 +65,7 @@
       <Checkbox.Root
         :id="id"
         v-model="modelValue"
-        v-bind="$attrs"
+        v-bind="{ ...$attrs, ...ariaAttrs }"
         :disabled="disabled"
         :class="ui.base({ class: props.ui?.base })"
       >

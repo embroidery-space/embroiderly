@@ -12,6 +12,7 @@ exports[`InputNumber > renders correctly with class 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -96,6 +97,7 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       data-disabled=""
       disabled=""
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -265,6 +267,7 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -346,6 +349,7 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -427,6 +431,7 @@ exports[`InputNumber > renders correctly with size md 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -508,6 +513,7 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1 ps-2 pe-7 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -589,6 +595,7 @@ exports[`InputNumber > renders correctly with step 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -670,6 +677,7 @@ exports[`InputNumber > renders correctly with ui 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset rounded-full"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -751,6 +759,7 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-default text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -832,6 +841,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -901,6 +911,134 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
 </div>
 `;
 
+exports[`InputNumber > renders correctly within FormField 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+      >
+        <label
+          class="block font-medium text-default"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <span
+          class="text-muted"
+          id="v-0-hint"
+        >
+          Hint
+        </span>
+      </div>
+      <p
+        class="text-muted"
+        id="v-0-description"
+      >
+        Description
+      </p>
+    </div>
+    <div
+      class="mt-1"
+    >
+      
+      <div
+        class="relative inline-flex items-center"
+        role="group"
+      >
+        
+        <input
+          aria-describedby="v-0-hint v-0-description v-0-help"
+          aria-roledescription="Number field"
+          autocomplete="off"
+          autocorrect="off"
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          id="v-0"
+          inputmode="decimal"
+          role="spinbutton"
+          spellcheck="false"
+          tabindex="0"
+          type="text"
+          value=""
+        />
+        <div
+          class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+        >
+          <button
+            aria-disabled="false"
+            aria-label="Increment"
+            class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+            tabindex="-1"
+            type="button"
+          >
+            
+            <svg
+              aria-hidden="true"
+              class="shrink-0 size-5"
+              height="1em"
+              role="img"
+              viewBox="0 0 16 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            />
+            
+            
+            <!--v-if-->
+            
+            
+            <!--v-if-->
+            
+          </button>
+          <button
+            aria-disabled="false"
+            aria-label="Decrement"
+            class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+            tabindex="-1"
+            type="button"
+          >
+            
+            <svg
+              aria-hidden="true"
+              class="shrink-0 size-5"
+              height="1em"
+              role="img"
+              viewBox="0 0 16 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            />
+            
+            
+            <!--v-if-->
+            
+            
+            <!--v-if-->
+            
+          </button>
+        </div>
+        
+        <!--v-if-->
+      </div>
+      
+      <p
+        class="mt-1 text-muted"
+        id="v-0-help"
+      >
+        Help
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`InputNumber > renders correctly without decrement 1`] = `
 <div>
   <div
@@ -913,6 +1051,7 @@ exports[`InputNumber > renders correctly without decrement 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -969,6 +1108,7 @@ exports[`InputNumber > renders correctly without increment 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"
@@ -1025,6 +1165,7 @@ exports[`InputNumber > renders correctly without increment and decrement 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-2 ps-3 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-3"
+      id="v-0"
       inputmode="decimal"
       role="spinbutton"
       spellcheck="false"

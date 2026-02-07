@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { nextTick } from "vue";
+import { defineComponent, nextTick } from "vue";
+
+import FormField from "../FormField/FormField.vue";
 
 import Checkbox from "./Checkbox.vue";
 import type { CheckboxProps } from "./Checkbox.vue";
@@ -19,6 +21,21 @@ describe("Checkbox", () => {
     ["with ui", { props: { ui: { wrapper: "ms-4" } } }],
   ] as [string, { props?: CheckboxProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(Checkbox, options);
+    await nextTick();
+
+    expect(screen.container).toMatchSnapshot();
+  });
+
+  test("renders correctly within FormField", async () => {
+    const Wrapper = defineComponent({
+      components: { FormField, Checkbox },
+      template: `
+        <FormField>
+          <Checkbox label="Label" />
+        </FormField>
+      `,
+    });
+    const screen = page.render(Wrapper);
     await nextTick();
 
     expect(screen.container).toMatchSnapshot();

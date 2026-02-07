@@ -2,34 +2,48 @@
   import { logEvent } from "histoire/client";
   import { reactive, ref } from "vue";
 
+  import type { FormFieldProps } from "../FormField/FormField.vue";
+  import FormField from "../FormField/FormField.vue";
+
   import type { InputColorProps } from "./InputColor.vue";
   import InputColor from "./InputColor.vue";
 
   const sizes = ["sm", "md", "lg"] as const;
 
   const color = ref("FF0000");
-  const state = reactive<InputColorProps>({
-    size: "lg",
-
+  const inputState = reactive<InputColorProps>({
     disabled: false,
   });
+  const formFieldState = reactive<FormFieldProps>({
+    size: "md",
+    label: "",
+    description: "",
+    hint: "",
+    help: "",
+  });
 
-  defineExpose({ state });
+  defineExpose({ inputState, formFieldState });
 </script>
 
 <template>
   <Story id="input-color" group="form" title="InputColor" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <InputColor
-        v-model="color"
-        v-bind="state"
-        @update:model-value="logEvent('update:model-value', { value: $event })"
-      />
+      <FormField v-bind="formFieldState">
+        <InputColor
+          v-model="color"
+          v-bind="inputState"
+          @update:model-value="logEvent('update:model-value', { value: $event })"
+        />
+      </FormField>
 
       <template #controls>
-        <HstSelect v-model="state.size" title="Input Size" :options="sizes" />
+        <HstCheckbox v-model="inputState.disabled" title="Disabled" />
+        <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
 
-        <HstCheckbox v-model="state.disabled" title="Disabled" />
+        <HstText v-model="formFieldState.label" title="Label" />
+        <HstText v-model="formFieldState.description" title="Description" />
+        <HstText v-model="formFieldState.hint" title="Hint" />
+        <HstText v-model="formFieldState.help" title="Help" />
       </template>
     </Variant>
 

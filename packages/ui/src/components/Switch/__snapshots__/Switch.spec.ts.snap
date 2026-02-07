@@ -347,3 +347,68 @@ exports[`Switch > renders correctly with ui 1`] = `
   </div>
 </div>
 `;
+
+exports[`Switch > renders correctly within FormField 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <!--v-if-->
+      <!--v-if-->
+    </div>
+    <div
+      class=""
+    >
+      
+      <div
+        class="relative flex items-start"
+      >
+        <div
+          class="flex items-center h-5"
+        >
+          <button
+            aria-checked="false"
+            aria-label="Label"
+            aria-required="false"
+            class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
+            data-state="unchecked"
+            id="v-0"
+            role="switch"
+            type="button"
+            value="on"
+          >
+            
+            <span
+              class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
+              data-state="unchecked"
+            >
+              
+              
+            </span>
+            
+            <!--v-if-->
+          </button>
+        </div>
+        <div
+          class="ms-2 w-full text-sm"
+        >
+          <label
+            class="block font-medium text-default"
+            for="v-0"
+          >
+            
+            Label
+            
+          </label>
+          <!--v-if-->
+        </div>
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;

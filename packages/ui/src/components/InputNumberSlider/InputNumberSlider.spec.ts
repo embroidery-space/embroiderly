@@ -1,19 +1,15 @@
+/* eslint-disable vue/one-component-per-file */
+
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { defineComponent, nextTick } from "vue";
 import { Key } from "webdriverio";
 
+import FormField from "../FormField/FormField.vue";
+
 import type { InputNumberSliderProps } from "./InputNumberSlider.vue";
 import InputNumberSlider from "./InputNumberSlider.vue";
-
-const InputNumberSliderWrapper = defineComponent({
-  components: { TooltipProvider, InputNumberSlider },
-  inheritAttrs: false,
-  template: `<TooltipProvider>
-  <InputNumberSlider v-bind="$attrs" />
-</TooltipProvider>`,
-});
 
 describe("InputNumberSlider", () => {
   const sizes = ["sm", "md", "lg"] as const;
@@ -30,7 +26,32 @@ describe("InputNumberSlider", () => {
     ["with class", { props: { class: "w-64" } }],
     ["with ui", { props: { ui: { root: "gap-4" } } }],
   ] as [string, { props?: InputNumberSliderProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(InputNumberSliderWrapper, options);
+    const Wrapper = defineComponent({
+      components: { TooltipProvider, InputNumberSlider },
+      inheritAttrs: false,
+      template: `
+        <TooltipProvider>
+          <InputNumberSlider v-bind="$attrs" />
+        </TooltipProvider>
+      `,
+    });
+
+    const screen = page.render(Wrapper, options);
+    await nextTick();
+
+    expect(screen.container).toMatchSnapshot();
+  });
+
+  test("renders correctly within FormField", async () => {
+    const Wrapper = defineComponent({
+      components: { FormField, InputNumberSlider },
+      template: `
+        <FormField label="Label" hint="Hint" description="Description" help="Help">
+          <InputNumberSlider />
+        </FormField>
+      `,
+    });
+    const screen = page.render(Wrapper);
     await nextTick();
 
     expect(screen.container).toMatchSnapshot();

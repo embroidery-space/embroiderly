@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { computed } from "vue";
 
+  import { useFormField } from "../../composables/useFormField.ts";
   import Button from "../Button/Button.vue";
   import ColorPicker from "../ColorPicker/ColorPicker.vue";
   import type { ColorPickerProps } from "../ColorPicker/ColorPicker.vue";
@@ -23,6 +24,8 @@
     size: "lg",
   });
 
+  const { id, size, ariaAttrs } = useFormField(props);
+
   const hexColor = computed(() => (modelValue.value?.startsWith("#") ? modelValue.value : `#${modelValue.value}`));
 
   function onUpdate(value: string | undefined) {
@@ -33,7 +36,14 @@
 </script>
 
 <template>
-  <Input v-bind="{ ...props, ...$attrs }" :model-value="hexColor" :maxlength="7" @update:model-value="onUpdate">
+  <Input
+    v-bind="{ ...props, ...$attrs, ...ariaAttrs }"
+    :id="id"
+    :size="size"
+    :model-value="hexColor"
+    :maxlength="7"
+    @update:model-value="onUpdate"
+  >
     <template #leading>
       <Popover v-bind="popover" :content="{ sideOffset: 12 }" class="p-4">
         <Button

@@ -2,15 +2,16 @@
   import { logEvent } from "histoire/client";
   import { reactive, ref } from "vue";
 
+  import type { FormFieldProps } from "../FormField/FormField.vue";
+  import FormField from "../FormField/FormField.vue";
+
   import type { SliderProps } from "./Slider.vue";
   import Slider from "./Slider.vue";
 
   const sizes = ["sm", "md", "lg"] as const;
 
   const value = ref(50);
-  const state = reactive<SliderProps>({
-    size: "md",
-
+  const inputState = reactive<SliderProps>({
     min: 0,
     max: 100,
     step: 1,
@@ -19,31 +20,44 @@
 
     disabled: false,
   });
+  const formFieldState = reactive<FormFieldProps>({
+    size: "md",
+    label: "",
+    description: "",
+    hint: "",
+    help: "",
+  });
 
-  defineExpose({ state });
+  defineExpose({ inputState, formFieldState });
 </script>
 
 <template>
   <Story id="slider" group="form" title="Slider" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <div class="w-64">
-        <Slider
-          v-model="value"
-          v-bind="state"
-          @update:model-value="logEvent('update:model-value', { value: $event })"
-        />
-      </div>
+      <FormField v-bind="formFieldState">
+        <div class="w-64">
+          <Slider
+            v-model="value"
+            v-bind="inputState"
+            @update:model-value="logEvent('update:model-value', { value: $event })"
+          />
+        </div>
+      </FormField>
 
       <template #controls>
-        <HstSelect v-model="state.size" title="Size" :options="sizes" />
+        <HstCheckbox v-model="inputState.disabled" title="Disabled" />
+        <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
 
-        <HstNumber v-model="state.min" title="Min" />
-        <HstNumber v-model="state.max" title="Max" />
-        <HstNumber v-model="state.step" title="Step" />
+        <HstText v-model="formFieldState.label" title="Label" />
+        <HstText v-model="formFieldState.description" title="Description" />
+        <HstText v-model="formFieldState.hint" title="Hint" />
+        <HstText v-model="formFieldState.help" title="Help" />
 
-        <HstCheckbox v-model="state.tooltip as boolean" title="Tooltip" />
+        <HstNumber v-model="inputState.min" title="Min" />
+        <HstNumber v-model="inputState.max" title="Max" />
+        <HstNumber v-model="inputState.step" title="Step" />
 
-        <HstCheckbox v-model="state.disabled" title="Disabled" />
+        <HstCheckbox v-model="inputState.tooltip as boolean" title="Tooltip" />
       </template>
     </Variant>
 

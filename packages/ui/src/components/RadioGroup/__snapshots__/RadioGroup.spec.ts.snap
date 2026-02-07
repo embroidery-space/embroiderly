@@ -1183,3 +1183,122 @@ exports[`RadioGroup > renders correctly with ui 1`] = `
   </div>
 </div>
 `;
+
+exports[`RadioGroup > renders correctly within FormField 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <!--v-if-->
+      <!--v-if-->
+    </div>
+    <div
+      class=""
+    >
+      
+      <div
+        aria-required="false"
+        class="relative flex flex-col items-start"
+        dir="ltr"
+        id="v-0"
+        role="radiogroup"
+        style="outline: none;"
+        tabindex="0"
+      >
+        
+        
+        <div
+          class="flex items-start text-base"
+        >
+          <div
+            class="flex items-center h-6"
+          >
+            <button
+              aria-checked="false"
+              aria-label="Option 1"
+              class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+              data-reka-collection-item=""
+              data-state="unchecked"
+              id="v-0:Option 1"
+              required="false"
+              role="radio"
+              tabindex="-1"
+              type="button"
+              value="Option 1"
+            >
+              
+              
+              <!---->
+              
+              
+              <!--v-if-->
+            </button>
+          </div>
+          <div
+            class="ms-2 w-full"
+          >
+            <label
+              class="block font-medium text-default"
+              for="v-0:Option 1"
+            >
+              
+              Option 1
+              
+            </label>
+            <!--v-if-->
+          </div>
+        </div>
+        <div
+          class="flex items-start text-base"
+        >
+          <div
+            class="flex items-center h-6"
+          >
+            <button
+              aria-checked="false"
+              aria-label="Option 2"
+              class="overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+              data-reka-collection-item=""
+              data-state="unchecked"
+              id="v-0:Option 2"
+              required="false"
+              role="radio"
+              tabindex="-1"
+              type="button"
+              value="Option 2"
+            >
+              
+              
+              <!---->
+              
+              
+              <!--v-if-->
+            </button>
+          </div>
+          <div
+            class="ms-2 w-full"
+          >
+            <label
+              class="block font-medium text-default"
+              for="v-0:Option 2"
+            >
+              
+              Option 2
+              
+            </label>
+            <!--v-if-->
+          </div>
+        </div>
+        
+        
+        <!--v-if-->
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;

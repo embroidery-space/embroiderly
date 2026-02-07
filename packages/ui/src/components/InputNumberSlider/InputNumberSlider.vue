@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { computed } from "vue";
 
+  import { useFormField } from "../../composables/useFormField.ts";
   import InputNumber from "../InputNumber/InputNumber.vue";
   import type { InputNumberProps } from "../InputNumber/InputNumber.vue";
   import Slider from "../Slider/Slider.vue";
@@ -57,16 +58,20 @@
     decrement: false,
   });
 
-  const ui = computed(() => {
-    return InputNumberSliderTheme({
-      size: props.size,
-    });
-  });
+  const { id, size, groupAttrs } = useFormField(props);
+
+  // eslint-disable-next-line vue/no-dupe-keys
+  const ui = computed(() =>
+    InputNumberSliderTheme({
+      size: size.value,
+    }),
+  );
 </script>
 
 <template>
-  <div :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div v-bind="groupAttrs" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <InputNumber
+      :id="id"
       v-model="modelValue"
       v-bind="inputOptions"
       :size="size"

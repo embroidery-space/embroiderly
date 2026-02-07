@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { nextTick } from "vue";
+import { defineComponent, nextTick } from "vue";
+
+import FormField from "../FormField/FormField.vue";
 
 import type { InputColorProps } from "./InputColor.vue";
 import InputColor from "./InputColor.vue";
@@ -15,6 +17,21 @@ describe("InputColor", () => {
     ["with ui", { props: { ui: { root: "rounded-none" } } }],
   ] as [string, { props?: InputColorProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(InputColor, options);
+    await nextTick();
+
+    expect(screen.container).toMatchSnapshot();
+  });
+
+  test("renders correctly within FormField", async () => {
+    const Wrapper = defineComponent({
+      components: { FormField, InputColor },
+      template: `
+        <FormField label="Label" hint="Hint" description="Description" help="Help">
+          <InputColor />
+        </FormField>
+      `,
+    });
+    const screen = page.render(Wrapper);
     await nextTick();
 
     expect(screen.container).toMatchSnapshot();

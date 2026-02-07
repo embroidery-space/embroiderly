@@ -311,3 +311,61 @@ exports[`Checkbox > renders correctly with ui 1`] = `
   </div>
 </div>
 `;
+
+exports[`Checkbox > renders correctly within FormField 1`] = `
+<div>
+  <div
+    class="text-base"
+  >
+    <div
+      class=""
+    >
+      <!--v-if-->
+      <!--v-if-->
+    </div>
+    <div
+      class=""
+    >
+      
+      <div
+        class="relative flex items-start"
+      >
+        <div
+          class="flex items-center h-6"
+        >
+          <button
+            aria-checked="false"
+            aria-label="Label"
+            aria-required="false"
+            class="overflow-hidden rounded-sm ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5"
+            data-state="unchecked"
+            id="v-0"
+            role="checkbox"
+            type="button"
+          >
+            
+            <!---->
+            
+            <!--v-if-->
+          </button>
+        </div>
+        <div
+          class="ms-2 w-full text-base"
+        >
+          <label
+            class="block font-medium text-default"
+            for="v-0"
+          >
+            
+            Label
+            
+          </label>
+          <!--v-if-->
+        </div>
+      </div>
+      
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;

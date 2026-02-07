@@ -22,6 +22,7 @@ export { default as Separator, type SeparatorProps } from "./components/Separato
 // Form.
 export { default as Checkbox, type CheckboxProps } from "./components/Checkbox/Checkbox.vue";
 export { default as ColorPicker, type ColorPickerProps } from "./components/ColorPicker/ColorPicker.vue";
+export { default as FormField, type FormFieldProps } from "./components/FormField/FormField.vue";
 export { default as Input, type InputProps, type InputSlots } from "./components/Input/Input.vue";
 export { default as InputColor, type InputColorProps } from "./components/InputColor/InputColor.vue";
 export { default as InputNumber, type InputNumberProps } from "./components/InputNumber/InputNumber.vue";
