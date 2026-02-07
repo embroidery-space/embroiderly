@@ -1,3 +1,5 @@
+/* eslint-disable vue/one-component-per-file */
+
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -8,14 +10,6 @@ import FormField from "../FormField/FormField.vue";
 
 import type { SliderProps } from "./Slider.vue";
 import Slider from "./Slider.vue";
-
-const SliderWrapper = defineComponent({
-  components: { TooltipProvider, Slider },
-  inheritAttrs: false,
-  template: `<TooltipProvider>
-  <Slider v-bind="$attrs" />
-</TooltipProvider>`,
-});
 
 describe("Slider", () => {
   const sizes = ["sm", "md", "lg"] as const;
@@ -30,7 +24,14 @@ describe("Slider", () => {
     ["with class", { props: { class: "w-64" } }],
     ["with ui", { props: { ui: { track: "bg-red-500" } } }],
   ] as [string, { props?: SliderProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(SliderWrapper, options);
+    const Wrapper = defineComponent({
+      components: { TooltipProvider, Slider },
+      inheritAttrs: false,
+      template: `<TooltipProvider>
+      <Slider v-bind="$attrs" />
+    </TooltipProvider>`,
+    });
+    const screen = page.render(Wrapper, options);
     await nextTick();
 
     expect(screen.container).toMatchSnapshot();
