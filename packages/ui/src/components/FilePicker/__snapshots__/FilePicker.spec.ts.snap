@@ -1,0 +1,290 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FilePicker > renders correctly with class 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px w-64"
+  >
+    
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Choose File
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1 w-full"
+    >
+      <!--v-if-->
+      <input
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        id="v-0"
+        readonly=""
+        type="text"
+      />
+      <!--v-if-->
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`FilePicker > renders correctly with disabled 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    <button
+      aria-disabled="true"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+      disabled=""
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Choose File
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1 w-full"
+    >
+      <!--v-if-->
+      <input
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        disabled=""
+        id="v-0"
+        readonly=""
+        type="text"
+      />
+      <!--v-if-->
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`FilePicker > renders correctly with model value 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Choose File
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1 w-full"
+    >
+      <!--v-if-->
+      <input
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        id="v-0"
+        readonly=""
+        type="text"
+      />
+      <!--v-if-->
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`FilePicker > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 px-3 py-2 text-base not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Choose File
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1 w-full"
+    >
+      <!--v-if-->
+      <input
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        id="v-0"
+        readonly=""
+        type="text"
+      />
+      <!--v-if-->
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`FilePicker > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Choose File
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1 w-full"
+    >
+      <!--v-if-->
+      <input
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        id="v-0"
+        readonly=""
+        type="text"
+      />
+      <!--v-if-->
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`FilePicker > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 px-2 py-1 text-xs not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Choose File
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1 w-full"
+    >
+      <!--v-if-->
+      <input
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1 px-2 py-1 text-xs group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        id="v-0"
+        readonly=""
+        type="text"
+      />
+      <!--v-if-->
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`FilePicker > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px gap-4"
+  >
+    
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Choose File
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1 w-full"
+    >
+      <!--v-if-->
+      <input
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        id="v-0"
+        readonly=""
+        type="text"
+      />
+      <!--v-if-->
+    </div>
+    
+  </div>
+</div>
+`;
