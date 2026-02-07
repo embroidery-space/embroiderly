@@ -1,0 +1,97 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FormFieldSet > renders correctly with class 1`] = `
+<div>
+  <fieldset
+    class="mt-2 rounded-md border border-default px-4 pb-4 custom-class"
+  >
+    <legend
+      class="font-medium text-default text-base"
+    >
+      Legend
+    </legend>
+    
+    
+  </fieldset>
+</div>
+`;
+
+exports[`FormFieldSet > renders correctly with legend 1`] = `
+<div>
+  <fieldset
+    class="mt-2 rounded-md border border-default px-4 pb-4"
+  >
+    <legend
+      class="font-medium text-default text-base"
+    >
+      Legend
+    </legend>
+    
+    
+  </fieldset>
+</div>
+`;
+
+exports[`FormFieldSet > renders correctly with size lg 1`] = `
+<div>
+  <fieldset
+    class="mt-2 rounded-md border border-default px-4 pb-4"
+  >
+    <legend
+      class="font-medium text-default text-base"
+    >
+      Legend
+    </legend>
+    
+    
+  </fieldset>
+</div>
+`;
+
+exports[`FormFieldSet > renders correctly with size md 1`] = `
+<div>
+  <fieldset
+    class="mt-2 rounded-md border border-default px-4 pb-4"
+  >
+    <legend
+      class="font-medium text-default text-sm"
+    >
+      Legend
+    </legend>
+    
+    
+  </fieldset>
+</div>
+`;
+
+exports[`FormFieldSet > renders correctly with size sm 1`] = `
+<div>
+  <fieldset
+    class="mt-2 rounded-md border border-default px-4 pb-4"
+  >
+    <legend
+      class="font-medium text-default text-xs"
+    >
+      Legend
+    </legend>
+    
+    
+  </fieldset>
+</div>
+`;
+
+exports[`FormFieldSet > renders correctly with ui 1`] = `
+<div>
+  <fieldset
+    class="mt-2 border border-default px-4 pb-4 rounded-lg"
+  >
+    <legend
+      class="font-medium text-default text-base"
+    >
+      Legend
+    </legend>
+    
+    
+  </fieldset>
+</div>
+`;

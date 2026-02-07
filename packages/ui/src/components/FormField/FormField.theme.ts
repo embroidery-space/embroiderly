@@ -19,9 +19,6 @@ export const FormFieldTheme = tv({
       lg: { root: "text-base" },
     },
   },
-  defaultVariants: {
-    size: "lg",
-  },
 });
 
 export type FormFieldThemeVariants = VariantProps<typeof FormFieldTheme>;
