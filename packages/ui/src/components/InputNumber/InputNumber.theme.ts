@@ -37,6 +37,12 @@ export const InputNumberTheme = tv({
       true: {},
       false: {},
     },
+    fieldGroup: {
+      true: {
+        root: "group has-focus-visible:z-1",
+        base: "group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none",
+      },
+    },
   },
   compoundVariants: [
     {

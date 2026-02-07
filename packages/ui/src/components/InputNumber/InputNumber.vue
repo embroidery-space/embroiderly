@@ -4,6 +4,7 @@
   import { computed } from "vue";
 
   import { useFormField } from "../../composables/useFormField.ts";
+  import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
   import Button from "../Button/Button.vue";
 
   import { InputNumberTheme } from "./InputNumber.theme.ts";
@@ -62,7 +63,6 @@
 
     color: "primary",
     variant: "subtle",
-    size: "lg",
 
     increment: true,
     decrement: true,
@@ -70,7 +70,9 @@
     decrementIcon: "lucide:chevron-down",
   });
 
-  const { id, size, ariaAttrs } = useFormField(props);
+  const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
+  const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
+  const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
 
   const hasButtons = computed(() => props.increment || props.decrement);
 
@@ -81,6 +83,8 @@
       size: size.value,
 
       hasButtons: hasButtons.value,
+
+      fieldGroup: fieldGroup.value,
     });
   });
 </script>

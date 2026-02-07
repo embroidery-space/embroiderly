@@ -56,6 +56,11 @@ export const ButtonTheme = tv({
     trailing: {
       true: {},
     },
+    fieldGroup: {
+      true: {
+        base: "not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1",
+      },
+    },
   },
   compoundVariants: [
     {

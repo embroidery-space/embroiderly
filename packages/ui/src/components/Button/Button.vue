@@ -5,6 +5,7 @@
 
   import { useComponentIcons } from "../../composables/useComponentIcons.ts";
   import type { UseComponentIconsProps } from "../../composables/useComponentIcons.ts";
+  import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
   import Icon from "../Icon/Icon.vue";
 
   import { ButtonTheme } from "./Button.theme.ts";
@@ -55,10 +56,12 @@
 
     color: "primary",
     variant: "solid",
-    size: "md",
 
     loadingIcon: "lucide:loader-circle",
   });
+
+  const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
+  const size = computed(() => props.size ?? fieldGroupSize.value ?? "md");
 
   const loadingAutoState = ref(false);
   async function onClickWrapper(event: MouseEvent) {
@@ -81,13 +84,15 @@
     return ButtonTheme({
       color: props.color,
       variant: props.variant,
-      size: props.size,
+      size: size.value,
 
       loading: isLoading.value,
       square: props.square,
 
       leading: isLeading.value,
       trailing: isTrailing.value,
+
+      fieldGroup: fieldGroup.value,
     });
   });
 </script>

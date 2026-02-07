@@ -389,7 +389,7 @@ exports[`FormField > renders correctly with size md 1`] = `
       >
         <!--v-if-->
         <input
-          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
           id="v-0"
           type="text"
         />
@@ -435,7 +435,7 @@ exports[`FormField > renders correctly with size sm 1`] = `
       >
         <!--v-if-->
         <input
-          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1 px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
           id="v-0"
           type="text"
         />

@@ -4,6 +4,7 @@
   import { computed, useSlots } from "vue";
 
   import { useFormField } from "../../composables/useFormField.ts";
+  import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
 
   import { InputTheme } from "./Input.theme.ts";
   import type { InputThemeSlots, InputThemeVariants } from "./Input.theme.ts";
@@ -52,11 +53,12 @@
 
     color: "primary",
     variant: "subtle",
-    size: "lg",
   });
   const slots = useSlots();
 
-  const { id, size, ariaAttrs } = useFormField(props);
+  const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
+  const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
+  const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
 
   const ui = computed(() => {
     return InputTheme({
@@ -66,6 +68,8 @@
 
       leading: !!slots.leading,
       trailing: !!slots.trailing,
+
+      fieldGroup: fieldGroup.value,
     });
   });
 </script>

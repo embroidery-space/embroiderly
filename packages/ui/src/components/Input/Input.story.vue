@@ -2,8 +2,10 @@
   import { logEvent } from "histoire/client";
   import { reactive, ref } from "vue";
 
+  import Button from "../Button/Button.vue";
   import type { FormFieldProps } from "../FormField/FormField.vue";
   import FormField from "../FormField/FormField.vue";
+  import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
   import Icon from "../Icon/Icon.vue";
 
   import type { InputProps } from "./Input.vue";
@@ -85,6 +87,13 @@
           </template>
         </Input>
       </div>
+    </Variant>
+
+    <Variant id="field-group" title="Field Group" auto-props-disabled>
+      <FormFieldGroup>
+        <Input />
+        <Button label="Submit" />
+      </FormFieldGroup>
     </Variant>
   </Story>
 </template>

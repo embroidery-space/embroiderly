@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { reactive } from "vue";
 
+  import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
+
   import type { ButtonProps } from "./Button.vue";
   import Button from "./Button.vue";
 
@@ -70,6 +72,14 @@
           <Button :size="size" square icon="lucide:rocket" />
         </template>
       </div>
+    </Variant>
+
+    <Variant id="field-group" title="Field Group" auto-props-disabled>
+      <FormFieldGroup>
+        <Button label="First" variant="outline" color="neutral" />
+        <Button label="Second" variant="outline" color="neutral" />
+        <Button label="Third" variant="outline" color="neutral" />
+      </FormFieldGroup>
     </Variant>
   </Story>
 </template>

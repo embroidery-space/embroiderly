@@ -1,0 +1,213 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FormFieldGroup > renders correctly with Button children 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        First
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Second
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Third
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    
+  </div>
+</div>
+`;
+
+exports[`FormFieldGroup > renders correctly with Input and Button children 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1"
+    >
+      <!--v-if-->
+      <input
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        id="v-0"
+        type="text"
+      />
+      <!--v-if-->
+    </div>
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Submit
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    
+  </div>
+</div>
+`;
+
+exports[`FormFieldGroup > renders correctly with InputNumber and Button children 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    <div
+      class="relative inline-flex items-center group has-focus-visible:z-1"
+      role="group"
+    >
+      
+      <input
+        aria-roledescription="Number field"
+        aria-valuenow="5"
+        autocomplete="off"
+        autocorrect="off"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        id="v-0"
+        inputmode="decimal"
+        role="spinbutton"
+        spellcheck="false"
+        tabindex="0"
+        type="text"
+        value="5"
+      />
+      <!--v-if-->
+      
+      <!--v-if-->
+    </div>
+    <button
+      aria-disabled="false"
+      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    >
+      
+      <!--v-if-->
+      
+      
+      <span
+        class="truncate"
+      >
+        Apply
+      </span>
+      
+      
+      <!--v-if-->
+      
+    </button>
+    
+  </div>
+</div>
+`;
+
+exports[`FormFieldGroup > renders correctly with class 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px custom-class"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`FormFieldGroup > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`FormFieldGroup > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`FormFieldGroup > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`FormFieldGroup > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="relative inline-flex -space-x-px rounded-lg"
+  >
+    
+    
+  </div>
+</div>
+`;
