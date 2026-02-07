@@ -26,6 +26,10 @@ export { default as FormField, type FormFieldProps } from "./components/FormFiel
 export { default as FormFieldSet, type FormFieldSetProps } from "./components/FormFieldSet/FormFieldSet.vue";
 export { default as Input, type InputProps, type InputSlots } from "./components/Input/Input.vue";
 export { default as InputColor, type InputColorProps } from "./components/InputColor/InputColor.vue";
+export {
+  default as InputDimensions,
+  type InputDimensionsProps,
+} from "./components/InputDimensions/InputDimensions.vue";
 export { default as InputNumber, type InputNumberProps } from "./components/InputNumber/InputNumber.vue";
 export {
   default as InputNumberSlider,
