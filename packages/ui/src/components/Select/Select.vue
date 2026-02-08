@@ -1,12 +1,16 @@
 <script setup lang="ts">
+  import defu from "defu";
   import { useFilter } from "reka-ui";
   import { Combobox } from "reka-ui/namespaced";
   import { computed, ref, toRef } from "vue";
 
   import { useFormField } from "../../composables/useFormField.ts";
   import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
+  import { useLocale } from "../../composables/useLocale.ts";
   import { usePortal } from "../../composables/usePortal.ts";
   import Icon from "../Icon/Icon.vue";
+  import Input from "../Input/Input.vue";
+  import type { InputProps } from "../Input/Input.vue";
 
   import { SelectTheme } from "./Select.theme.ts";
   import type { SelectThemeSlots, SelectThemeVariants } from "./Select.theme.ts";
@@ -27,7 +31,7 @@
      * Pass an object with `placeholder` to customize the search input placeholder.
      * @default false
      */
-    searchInput?: boolean | { placeholder?: string };
+    searchInput?: boolean | InputProps;
 
     /**
      * The color scheme of the select.
@@ -70,15 +74,17 @@
     portal: true,
   });
 
+  const { contains } = useFilter({ sensitivity: "base" });
+  const { t } = useLocale();
+
   const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
   const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
   const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
   const portalProps = usePortal(toRef(() => props.portal));
+  const searchInputProps = toRef(() => defu(props.searchInput, { placeholder: t("select.search") }) as InputProps);
 
   const open = ref(false);
   const searchValue = ref("");
-
-  const { contains } = useFilter({ sensitivity: "base" });
 
   const normalizedItems = computed<{ label: string; value: string | number }[]>(() => {
     if (!props.items) return [];
@@ -99,11 +105,6 @@
     if (modelValue.value == null) return undefined;
     const found = normalizedItems.value.find((item) => item.value === modelValue.value);
     return found?.label;
-  });
-
-  const searchInputPlaceholder = computed(() => {
-    if (typeof props.searchInput === "object") return props.searchInput.placeholder;
-    return undefined;
   });
 
   const ui = computed(() => {
@@ -154,15 +155,20 @@
         :collision-padding="4"
         :class="ui.content({ class: props.ui?.content })"
       >
-        <Combobox.Input
-          v-if="searchInput"
-          v-model="searchValue"
-          :placeholder="searchInputPlaceholder"
-          :class="ui.input({ class: props.ui?.input })"
-        />
+        <Combobox.Input v-if="!!searchInput" v-model="searchValue" as-child>
+          <Input
+            v-bind="searchInputProps"
+            autofocus
+            autocomplete="off"
+            :size="size"
+            :class="ui.input({ class: props.ui?.input })"
+          />
+        </Combobox.Input>
 
         <Combobox.Viewport :class="ui.viewport({ class: props.ui?.viewport })">
-          <Combobox.Empty :class="ui.empty({ class: props.ui?.empty })">No results</Combobox.Empty>
+          <Combobox.Empty :class="ui.empty({ class: props.ui?.empty })">
+            {{ searchValue ? t("select.noMatches") : t("select.noData") }}
+          </Combobox.Empty>
 
           <Combobox.Group :class="ui.group({ class: props.ui?.group })">
             <Combobox.Item

@@ -28,11 +28,6 @@
      */
     size?: InputThemeVariants["size"];
 
-    /** The minimum length of the input value. */
-    minlength?: number;
-    /** The maximum length of the input value. */
-    maxlength?: number;
-
     /** Whether the input is disabled. */
     disabled?: boolean;
 
@@ -85,8 +80,6 @@
       v-model="modelValue"
       v-bind="{ ...$attrs, ...ariaAttrs }"
       type="text"
-      :minlength="minlength"
-      :maxlength="maxlength"
       :disabled="disabled"
       :class="ui.base({ class: props.ui?.base })"
     />

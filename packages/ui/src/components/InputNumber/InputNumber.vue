@@ -5,6 +5,7 @@
 
   import { useFormField } from "../../composables/useFormField.ts";
   import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
+  import { useLocale } from "../../composables/useLocale.ts";
   import Button from "../Button/Button.vue";
 
   import { InputNumberTheme } from "./InputNumber.theme.ts";
@@ -70,6 +71,8 @@
     decrementIcon: "lucide:chevron-down",
   });
 
+  const { t } = useLocale();
+
   const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
   const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
   const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
@@ -106,11 +109,25 @@
 
     <div v-if="hasButtons" :class="ui.buttons({ class: props.ui?.buttons })">
       <NumberField.Increment v-if="increment" as-child :disabled="disabled">
-        <Button square color="neutral" variant="link" :icon="incrementIcon" :size="size" aria-label="Increment" />
+        <Button
+          square
+          color="neutral"
+          variant="link"
+          :icon="incrementIcon"
+          :size="size"
+          :aria-label="t('inputNumber.increment')"
+        />
       </NumberField.Increment>
 
       <NumberField.Decrement v-if="decrement" as-child :disabled="disabled">
-        <Button square color="neutral" variant="link" :icon="decrementIcon" :size="size" aria-label="Decrement" />
+        <Button
+          square
+          color="neutral"
+          variant="link"
+          :icon="decrementIcon"
+          :size="size"
+          :aria-label="t('inputNumber.decrement')"
+        />
       </NumberField.Decrement>
     </div>
   </NumberField.Root>
