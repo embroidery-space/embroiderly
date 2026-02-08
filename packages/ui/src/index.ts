@@ -46,6 +46,7 @@ export {
   type RadioGroupProps,
   type RadioGroupItem,
 } from "./components/RadioGroup/RadioGroup.vue";
+export { default as Select, type SelectProps, type SelectItem } from "./components/Select/Select.vue";
 export { default as Slider, type SliderProps } from "./components/Slider/Slider.vue";
 export { default as Switch, type SwitchProps } from "./components/Switch/Switch.vue";
 export { default as Textarea, type TextareaProps } from "./components/Textarea/Textarea.vue";
