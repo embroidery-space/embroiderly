@@ -56,8 +56,6 @@
 
     color: "primary",
     variant: "solid",
-
-    loadingIcon: "lucide:loader-circle",
   });
 
   const { fieldGroup, fieldGroupSize } = useFormFieldGroup();

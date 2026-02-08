@@ -3,6 +3,7 @@
   import { NumberField } from "reka-ui/namespaced";
   import { computed } from "vue";
 
+  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
   import { useFormField } from "../../composables/useFormField.ts";
   import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
   import { useLocale } from "../../composables/useLocale.ts";
@@ -43,12 +44,12 @@
     decrement?: boolean;
     /**
      * The icon for the increment button.
-     * @default "lucide:chevron-up"
+     * @default "icons.chevronUp"
      */
     incrementIcon?: string;
     /**
      * The icon for the decrement button.
-     * @default "lucide:chevron-down"
+     * @default "icons.chevronDown"
      */
     decrementIcon?: string;
 
@@ -67,10 +68,9 @@
 
     increment: true,
     decrement: true,
-    incrementIcon: "lucide:chevron-up",
-    decrementIcon: "lucide:chevron-down",
   });
 
+  const { icons } = useComponentIcons();
   const { t } = useLocale();
 
   const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
@@ -113,7 +113,7 @@
           square
           color="neutral"
           variant="link"
-          :icon="incrementIcon"
+          :icon="incrementIcon ?? icons.chevronUp"
           :size="size"
           :aria-label="t('inputNumber.increment')"
         />
@@ -124,7 +124,7 @@
           square
           color="neutral"
           variant="link"
-          :icon="decrementIcon"
+          :icon="decrementIcon ?? icons.chevronDown"
           :size="size"
           :aria-label="t('inputNumber.decrement')"
         />

@@ -4,6 +4,7 @@
   import { Combobox } from "reka-ui/namespaced";
   import { computed, ref, toRef } from "vue";
 
+  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
   import { useFormField } from "../../composables/useFormField.ts";
   import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
   import { useLocale } from "../../composables/useLocale.ts";
@@ -74,6 +75,7 @@
     portal: true,
   });
 
+  const { icons } = useComponentIcons();
   const { contains } = useFilter({ sensitivity: "base" });
   const { t } = useLocale();
 
@@ -143,8 +145,8 @@
         <span v-if="displayValue" :class="ui.value({ class: props.ui?.value })">{{ displayValue }}</span>
         <span v-else :class="ui.placeholder({ class: props.ui?.placeholder })">{{ placeholder }}</span>
 
-        <Icon v-if="loading" name="lucide:loader-circle" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" />
-        <Icon v-else name="lucide:chevron-down" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" />
+        <Icon v-if="loading" :name="icons.loading" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" />
+        <Icon v-else :name="icons.chevronDown" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" />
       </Combobox.Trigger>
     </Combobox.Anchor>
 
@@ -179,7 +181,7 @@
             >
               <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
               <Combobox.ItemIndicator>
-                <Icon name="lucide:check" :class="ui.itemIndicator({ class: props.ui?.itemIndicator })" />
+                <Icon :name="icons.check" :class="ui.itemIndicator({ class: props.ui?.itemIndicator })" />
               </Combobox.ItemIndicator>
             </Combobox.Item>
           </Combobox.Group>

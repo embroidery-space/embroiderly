@@ -4,6 +4,7 @@
   import { Checkbox, Label } from "reka-ui/namespaced";
   import { computed } from "vue";
 
+  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
   import { useFormField } from "../../composables/useFormField.ts";
   import Icon from "../Icon/Icon.vue";
 
@@ -29,7 +30,7 @@
 
     /**
      * The icon displayed when checked.
-     * @default "lucide:check"
+     * @default "icons.check"
      */
     icon?: string;
 
@@ -43,9 +44,9 @@
   const props = withDefaults(defineProps<CheckboxProps>(), {
     color: "primary",
     size: "lg",
-
-    icon: "lucide:check",
   });
+
+  const { icons } = useComponentIcons();
 
   const { id, size, ariaAttrs } = useFormField(props);
 
@@ -70,7 +71,7 @@
         :class="ui.base({ class: props.ui?.base })"
       >
         <Checkbox.Indicator :class="ui.indicator({ class: props.ui?.indicator })">
-          <Icon :name="icon" :class="ui.icon({ class: props.ui?.icon })" />
+          <Icon :name="icon ?? icons.check" :class="ui.icon({ class: props.ui?.icon })" />
         </Checkbox.Indicator>
       </Checkbox.Root>
     </div>

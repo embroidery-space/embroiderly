@@ -1,7 +1,10 @@
-import type { MaybeRefOrGetter } from "vue";
-import { computed, toValue } from "vue";
+import type { InjectionKey, MaybeRefOrGetter, Ref } from "vue";
+import { computed, inject, toRef, toValue } from "vue";
 
-export const DEFAULT_LOADING_ICON = "lucide:loader-circle";
+import { DEFAULT_ICONS } from "../icons.ts";
+import type { Icons } from "../types/icons.ts";
+
+export const iconsInjectionKey: InjectionKey<Ref<Icons | undefined>> = Symbol.for("embroiderly-ui.icons");
 
 export interface UseComponentIconsProps {
   /** Display an icon based on the `leading` and `trailing` props. */
@@ -21,13 +24,14 @@ export interface UseComponentIconsProps {
   loading?: boolean;
   /**
    * The icon when the `loading` prop is `true`.
-   * @default "lucide:loader-circle"
+   * @default "icons.loading"
    */
   loadingIcon?: string;
 }
 
-export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentIconsProps>) {
-  const props = computed(() => toValue(componentProps));
+export function useComponentIcons(componentProps?: MaybeRefOrGetter<UseComponentIconsProps>) {
+  const props = computed(() => (componentProps ? toValue(componentProps) : ({} as UseComponentIconsProps)));
+  const icons = toRef(inject<Icons>(iconsInjectionKey, DEFAULT_ICONS));
 
   const isLeading = computed(
     () =>
@@ -45,16 +49,17 @@ export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentI
   );
 
   const leadingIconName = computed(() =>
-    props.value.loading ? props.value.loadingIcon || DEFAULT_LOADING_ICON : props.value.leadingIcon || props.value.icon,
+    props.value.loading ? props.value.loadingIcon || icons.value.loading : props.value.leadingIcon || props.value.icon,
   );
 
   const trailingIconName = computed(() =>
     props.value.loading && !isLeading.value
-      ? props.value.loadingIcon || DEFAULT_LOADING_ICON
+      ? props.value.loadingIcon || icons.value.loading
       : props.value.trailingIcon || props.value.icon,
   );
 
   return {
+    icons,
     isLeading,
     isTrailing,
     leadingIconName,

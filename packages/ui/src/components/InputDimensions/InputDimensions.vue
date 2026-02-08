@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { computed, ref, watch } from "vue";
 
+  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
   import Button from "../Button/Button.vue";
   import FormField from "../FormField/FormField.vue";
   import type { FormFieldProps } from "../FormField/FormField.vue";
@@ -52,6 +53,8 @@
     size: "md",
     orientation: "horizontal",
   });
+
+  const { icons } = useComponentIcons();
 
   const aspectRatioLocked = ref(props.aspectRatio !== undefined);
   const storedAspectRatio = ref(props.aspectRatio);
@@ -105,7 +108,7 @@
 
     <Button
       square
-      :icon="aspectRatioLocked ? 'lucide:link' : 'lucide:unlink'"
+      :icon="aspectRatioLocked ? icons.link : icons.unlink"
       :color="aspectRatioLocked ? 'primary' : 'neutral'"
       variant="ghost"
       :size="size"

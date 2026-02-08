@@ -4,13 +4,17 @@
   import { ConfigProvider, TooltipProvider, useForwardProps } from "reka-ui";
   import { provide, toRef, useId } from "vue";
 
+  import { iconsInjectionKey } from "../../composables/useComponentIcons.ts";
   import { localeInjectionKey } from "../../composables/useLocale.ts";
   import { GLOBAL_PORTAL, PORTAL_TARGET_INJECTION_KEY } from "../../composables/usePortal.ts";
+  import { DEFAULT_ICONS } from "../../icons.ts";
+  import type { Icons } from "../../types/icons.ts";
   import type { Locale } from "../../types/locale.ts";
 
   export interface AppProps extends Omit<ConfigProviderProps, "dir" | "locale" | "useId"> {
     tooltip?: TooltipProviderProps;
     locale?: Locale;
+    icons?: Partial<Icons>;
     portal?: boolean | string | HTMLElement;
   }
 
@@ -27,6 +31,9 @@
 
   const locale = toRef(() => props.locale);
   provide(localeInjectionKey, locale);
+
+  const icons = toRef(() => ({ ...DEFAULT_ICONS, ...props.icons }));
+  provide(iconsInjectionKey, icons);
 
   const portal = toRef(() => props.portal);
   provide(PORTAL_TARGET_INJECTION_KEY, portal);
