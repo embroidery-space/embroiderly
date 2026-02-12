@@ -1,3 +1,23 @@
+@keyframes carousel {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes carousel-vertical {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
 @keyframes scale-in {
   from {
     opacity: 0;

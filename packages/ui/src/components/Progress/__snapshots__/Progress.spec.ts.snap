@@ -1,0 +1,226 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Progress > renders correctly with class 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full bg-accented w-full h-2 my-4"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`Progress > renders correctly with orientation horizontal 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`Progress > renders correctly with orientation vertical 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full bg-accented h-full w-2"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`Progress > renders correctly with size lg 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full bg-accented w-full h-3"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`Progress > renders correctly with size md 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`Progress > renders correctly with size sm 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full bg-accented w-full h-1"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`Progress > renders correctly with size xl 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full bg-accented w-full h-4"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`Progress > renders correctly with size xs 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full bg-accented w-full h-0.5"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`Progress > renders correctly with ui 1`] = `
+<div>
+  <div
+    aria-valuemax="100"
+    aria-valuemin="0"
+    class="relative overflow-hidden rounded-full w-full h-2 bg-default"
+    data-max="100"
+    data-state="indeterminate"
+    role="progressbar"
+    style="transform: translateZ(0px);"
+  >
+    
+    <div
+      class="size-full rounded-full bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]"
+      data-max="100"
+      data-state="indeterminate"
+    >
+      
+      
+    </div>
+    
+  </div>
+</div>
+`;

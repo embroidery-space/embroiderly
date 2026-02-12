@@ -1,0 +1,29 @@
+<script setup lang="ts">
+  import { reactive } from "vue";
+
+  import type { ProgressProps } from "./Progress.vue";
+  import Progress from "./Progress.vue";
+
+  const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+  const orientations = ["horizontal", "vertical"] as const;
+
+  const state = reactive<ProgressProps>({
+    orientation: "horizontal",
+  });
+
+  defineExpose({ state });
+</script>
+
+<template>
+  <Story id="progress" group="element" title="Progress" :layout="{ type: 'single', iframe: false }">
+    <Variant id="demo" title="Demo" auto-props-disabled>
+      <div class="flex gap-4" :class="state.orientation === 'horizontal' ? 'w-96 flex-col' : 'h-48 flex-row'">
+        <Progress v-for="size in sizes" :key="size" :size="size" v-bind="state" />
+      </div>
+
+      <template #controls>
+        <HstSelect v-model="state.orientation" title="Orientation" :options="orientations" />
+      </template>
+    </Variant>
+  </Story>
+</template>
