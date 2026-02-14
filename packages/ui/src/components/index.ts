@@ -41,5 +41,11 @@ export { default as Textarea, type TextareaProps } from "./Textarea/Textarea.vue
 
 // Overlay.
 export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./BlockUI/BlockUI.vue";
+export {
+  default as ContextMenu,
+  type ContextMenuProps,
+  type ContextMenuEmits,
+  type ContextMenuItem,
+} from "./ContextMenu/ContextMenu.vue";
 export { default as Popover, type PopoverProps, type PopoverEmits, type PopoverSlots } from "./Popover/Popover.vue";
 export { default as Tooltip, type TooltipProps, type TooltipEmits, type TooltipSlots } from "./Tooltip/Tooltip.vue";
