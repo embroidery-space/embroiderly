@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run check-types",
+    "build": "pnpm check-types && vite build",
     "build-only": "vite build",
     "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
     "test": "vitest run",
@@ -14,10 +14,10 @@
   },
   "imports": {
     "#pattern-editor/*": "./src/modules/pattern-editor/*",
-    "#plugins/*": "./src/plugins/*",
     "#shared/*": "./src/shared/*"
   },
   "dependencies": {
+    "@embroiderly/shortcuts": "workspace:*",
     "@fluent/bundle": "0.19.1",
     "@nuxt/ui": "4.4.0",
     "@sentry/core": "10.38.0",

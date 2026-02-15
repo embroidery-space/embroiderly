@@ -1,9 +1,9 @@
+import { ShortcutsProvider } from "@embroiderly/shortcuts";
+
 import UApp from "@nuxt/ui/components/App.vue";
 import { expect, test, describe, vi } from "vitest";
 import { page } from "vitest/browser";
 import { defineComponent } from "vue";
-
-import { ShortcutsProvider } from "#plugins/shortcuts/";
 
 import ToolSelect from "./ToolSelect.vue";
 

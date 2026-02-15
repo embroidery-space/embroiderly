@@ -43,12 +43,12 @@
 </template>
 
 <script setup lang="ts">
+  import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
+
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { unrefElement } from "@vueuse/core";
   import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
   import type { MaybeRefOrGetter } from "vue";
-
-  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
 
   export interface ToolSelectItem {
     value: unknown;

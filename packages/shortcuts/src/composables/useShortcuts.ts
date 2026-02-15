@@ -1,17 +1,18 @@
 import { inject, onScopeDispose, toValue, watch } from "vue";
-import type { MaybeRefOrGetter } from "vue";
+import type { InjectionKey, MaybeRefOrGetter } from "vue";
 
-import { SHORTCUTS_INJECTION_KEY } from "../constants.ts";
-import type { ShortcutsContext } from "../lib/";
-import { parseShortcutKey } from "../lib/";
+import type { ShortcutsContext } from "../lib/context.ts";
+import { parseShortcutKey } from "../lib/key-parser.ts";
 import type { ShortcutValue } from "../types.ts";
+
+export const SHORTCUTS_CONTEXT_INJECTION_KEY: InjectionKey<ShortcutsContext> = Symbol("embroiderly-shortcuts.context");
 
 /**
  * Registers keyboard shortcuts for the current component scope.
  * Shortcuts are automatically unregistered when the component is unmounted.
  */
 export function useShortcuts(shortcuts: MaybeRefOrGetter<Record<string, ShortcutValue>>): void {
-  const ctx = inject(SHORTCUTS_INJECTION_KEY);
+  const ctx = inject(SHORTCUTS_CONTEXT_INJECTION_KEY);
   if (!ctx) throw new Error("ShortcutsProvider not found. Wrap your app with the ShortcutsProvider component.");
 
   let currentIds = new Set<string>();

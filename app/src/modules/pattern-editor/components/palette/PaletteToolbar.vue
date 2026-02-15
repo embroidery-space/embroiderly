@@ -46,11 +46,12 @@
 </template>
 
 <script lang="ts" setup>
+  import { useShortcuts } from "@embroiderly/shortcuts";
+
   import { computed } from "vue";
 
   import { tools } from "#pattern-editor/lib/tools/";
   import { useEditorStateStore, usePatternStore } from "#pattern-editor/stores/";
-  import { useShortcuts } from "#plugins/shortcuts/";
   import { useI18n } from "#shared/composables/";
   import { useSettingsStore } from "#shared/stores/";
 

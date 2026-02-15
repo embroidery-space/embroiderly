@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+  import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
   import { resolveResource } from "@tauri-apps/api/path";
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
   import { writeText } from "@tauri-apps/plugin-clipboard-manager";
@@ -47,7 +48,6 @@
   import { useEditorModals } from "#pattern-editor/composables/";
   import { Fabric } from "#pattern-editor/lib/pattern/";
   import { usePatternFileStore, usePatternStore } from "#pattern-editor/stores/";
-  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
   import { SystemApi } from "#shared/api";
   import { WindowTitlebar } from "#shared/components/";
   import type { WindowMenuItem } from "#shared/components/";

@@ -40,11 +40,12 @@
 </template>
 
 <script lang="ts" setup>
+  import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
+
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { computed } from "vue";
 
   import type { ZoomState } from "#pattern-editor/lib/pixi/";
-  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
   import { useI18n } from "#shared/composables/";
 
   const { fluent } = useI18n();

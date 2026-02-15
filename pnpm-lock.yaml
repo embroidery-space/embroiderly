@@ -68,6 +68,9 @@ importers:
 
   app:
     dependencies:
+      '@embroiderly/shortcuts':
+        specifier: workspace:*
+        version: link:../packages/shortcuts
       '@fluent/bundle':
         specifier: 0.19.1
         version: 0.19.1
@@ -262,6 +265,43 @@ importers:
       wrangler:
         specifier: 4.61.1
         version: 4.61.1
+
+  packages/shortcuts:
+    dependencies:
+      '@vueuse/core':
+        specifier: 14.2.0
+        version: 14.2.0(vue@3.5.27(typescript@5.9.3))
+      vue:
+        specifier: 3.5.27
+        version: 3.5.27(typescript@5.9.3)
+    devDependencies:
+      '@tsconfig/node24':
+        specifier: 24.0.4
+        version: 24.0.4
+      '@tsconfig/strictest':
+        specifier: 2.0.8
+        version: 2.0.8
+      '@types/node':
+        specifier: 24.10.9
+        version: 24.10.9
+      '@vitejs/plugin-vue':
+        specifier: 6.0.3
+        version: 6.0.3(vite@7.3.1(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
+      '@vue/tsconfig':
+        specifier: 0.8.1
+        version: 0.8.1(typescript@5.9.3)(vue@3.5.27(typescript@5.9.3))
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vite:
+        specifier: 7.3.1
+        version: 7.3.1(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)
+      vitest:
+        specifier: 4.0.18
+        version: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.9)(@vitest/browser-webdriverio@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)
+      vue-tsc:
+        specifier: 3.2.4
+        version: 3.2.4(typescript@5.9.3)
 
   packages/ui:
     dependencies:

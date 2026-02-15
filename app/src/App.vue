@@ -7,9 +7,10 @@
 </template>
 
 <script lang="ts" setup>
+  import { ShortcutsProvider } from "@embroiderly/shortcuts";
+
   import { onMounted, onErrorCaptured } from "vue";
 
-  import { ShortcutsProvider } from "#plugins/shortcuts/";
   import { useI18n } from "#shared/composables/";
   import { LoggerService } from "#shared/services/";
   import { useSettingsStore } from "#shared/stores/";

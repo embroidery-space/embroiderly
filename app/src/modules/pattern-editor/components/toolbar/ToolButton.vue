@@ -21,9 +21,9 @@
 </template>
 
 <script lang="ts" setup>
-  import type { KbdProps } from "@nuxt/ui";
+  import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
 
-  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
+  import type { KbdProps } from "@nuxt/ui";
 
   interface ToolButtonProps {
     label: string;

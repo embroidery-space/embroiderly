@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { KEY_MAPPING, MODIFIER_MAPPING, MODIFIER_ORDER, MODIFIER_SET } from "./key-mapping";
 
 export interface ParsedShortcut {

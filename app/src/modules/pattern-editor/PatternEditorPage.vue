@@ -33,12 +33,12 @@
 </template>
 
 <script lang="ts" setup>
+  import { useShortcuts } from "@embroiderly/shortcuts";
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
   import { onMounted, toRaw, useTemplateRef, watch } from "vue";
   import { useRouter } from "vue-router";
 
-  import { useShortcuts } from "#plugins/shortcuts/";
   import { StartupApi } from "#shared/api/";
   import { BlockUI } from "#shared/components/";
   import { useConfirm, useDragDrop, useI18n, useTauriListener } from "#shared/composables/";
