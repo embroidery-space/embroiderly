@@ -22,6 +22,9 @@ export default defineConfig({
     sourcemap: isDebug,
     chunkSizeWarningLimit: 1000,
   },
+  resolve: {
+    dedupe: ["@vueuse/*", "reka-ui", "vue"],
+  },
   test: {
     bail: isCI ? 1 : 0,
     reporters: isCI ? ["verbose", "github-actions"] : ["verbose"],
