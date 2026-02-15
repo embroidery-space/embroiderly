@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "vitepress": "2.0.0-alpha.16",
-    "vitepress-plugin-llms": "1.10.0",
-    "wrangler": "4.61.1"
+    "vitepress-plugin-llms": "1.11.0",
+    "wrangler": "4.63.0"
   }
 }
