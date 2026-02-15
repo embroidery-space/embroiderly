@@ -47,5 +47,11 @@ export {
   type ContextMenuEmits,
   type ContextMenuItem,
 } from "./ContextMenu/ContextMenu.vue";
+export {
+  default as DropdownMenu,
+  type DropdownMenuProps,
+  type DropdownMenuEmits,
+  type DropdownMenuItem,
+} from "./DropdownMenu/DropdownMenu.vue";
 export { default as Popover, type PopoverProps, type PopoverEmits, type PopoverSlots } from "./Popover/Popover.vue";
 export { default as Tooltip, type TooltipProps, type TooltipEmits, type TooltipSlots } from "./Tooltip/Tooltip.vue";
