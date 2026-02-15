@@ -5,101 +5,101 @@ import { parseShortcutKey } from "./key-parser.ts";
 describe("parseShortcutKey", () => {
   describe("key combinations", () => {
     it("parses single modifier + key", () => {
-      const result = parseShortcutKey("ctrl_s");
-      expect(result).toEqual({ type: "combination", id: "Control_KeyS" });
+      const result = parseShortcutKey("ctrl+s");
+      expect(result).toEqual({ type: "combination", id: "Control+KeyS" });
     });
 
     it("parses multiple modifiers + key", () => {
-      const result = parseShortcutKey("ctrl_shift_s");
-      expect(result).toEqual({ type: "combination", id: "Control_Shift_KeyS" });
+      const result = parseShortcutKey("ctrl+shift+s");
+      expect(result).toEqual({ type: "combination", id: "Control+Shift+KeyS" });
     });
 
     it("parses all modifiers + key", () => {
-      const result = parseShortcutKey("ctrl_alt_meta_shift_z");
-      expect(result).toEqual({ type: "combination", id: "Alt_Control_Meta_Shift_KeyZ" });
+      const result = parseShortcutKey("ctrl+alt+meta+shift+z");
+      expect(result).toEqual({ type: "combination", id: "Alt+Control+Meta+Shift+KeyZ" });
     });
 
     it("normalizes modifier order alphabetically", () => {
-      const result = parseShortcutKey("shift_ctrl_s");
-      expect(result).toEqual({ type: "combination", id: "Control_Shift_KeyS" });
+      const result = parseShortcutKey("shift+ctrl+s");
+      expect(result).toEqual({ type: "combination", id: "Control+Shift+KeyS" });
     });
 
     it("handles case insensitivity", () => {
-      const result = parseShortcutKey("Ctrl_Shift_S");
-      expect(result).toEqual({ type: "combination", id: "Control_Shift_KeyS" });
+      const result = parseShortcutKey("Ctrl+Shift+S");
+      expect(result).toEqual({ type: "combination", id: "Control+Shift+KeyS" });
     });
 
     it("handles mixed case", () => {
-      const result = parseShortcutKey("cTrL_sHiFt_s");
-      expect(result).toEqual({ type: "combination", id: "Control_Shift_KeyS" });
+      const result = parseShortcutKey("cTrL+sHiFt+s");
+      expect(result).toEqual({ type: "combination", id: "Control+Shift+KeyS" });
     });
 
     describe("modifier aliases", () => {
       it("parses cmd as Meta", () => {
-        const result = parseShortcutKey("cmd_z");
-        expect(result).toEqual({ type: "combination", id: "Meta_KeyZ" });
+        const result = parseShortcutKey("cmd+z");
+        expect(result).toEqual({ type: "combination", id: "Meta+KeyZ" });
       });
 
       it("parses command as Meta", () => {
-        const result = parseShortcutKey("command_z");
-        expect(result).toEqual({ type: "combination", id: "Meta_KeyZ" });
+        const result = parseShortcutKey("command+z");
+        expect(result).toEqual({ type: "combination", id: "Meta+KeyZ" });
       });
 
       it("parses win as Meta", () => {
-        const result = parseShortcutKey("win_z");
-        expect(result).toEqual({ type: "combination", id: "Meta_KeyZ" });
+        const result = parseShortcutKey("win+z");
+        expect(result).toEqual({ type: "combination", id: "Meta+KeyZ" });
       });
 
       it("parses option as Alt", () => {
-        const result = parseShortcutKey("option_a");
-        expect(result).toEqual({ type: "combination", id: "Alt_KeyA" });
+        const result = parseShortcutKey("option+a");
+        expect(result).toEqual({ type: "combination", id: "Alt+KeyA" });
       });
 
       it("parses opt as Alt", () => {
-        const result = parseShortcutKey("opt_a");
-        expect(result).toEqual({ type: "combination", id: "Alt_KeyA" });
+        const result = parseShortcutKey("opt+a");
+        expect(result).toEqual({ type: "combination", id: "Alt+KeyA" });
       });
 
       it("parses control as Control", () => {
-        const result = parseShortcutKey("control_c");
-        expect(result).toEqual({ type: "combination", id: "Control_KeyC" });
+        const result = parseShortcutKey("control+c");
+        expect(result).toEqual({ type: "combination", id: "Control+KeyC" });
       });
     });
 
     describe("special keys", () => {
       it("parses function keys", () => {
-        const result = parseShortcutKey("ctrl_f1");
-        expect(result).toEqual({ type: "combination", id: "Control_F1" });
+        const result = parseShortcutKey("ctrl+f1");
+        expect(result).toEqual({ type: "combination", id: "Control+F1" });
       });
 
       it("parses navigation keys", () => {
-        const result = parseShortcutKey("ctrl_delete");
-        expect(result).toEqual({ type: "combination", id: "Control_Delete" });
+        const result = parseShortcutKey("ctrl+delete");
+        expect(result).toEqual({ type: "combination", id: "Control+Delete" });
       });
 
       it("parses arrow keys", () => {
-        const result = parseShortcutKey("shift_arrowup");
-        expect(result).toEqual({ type: "combination", id: "Shift_ArrowUp" });
+        const result = parseShortcutKey("shift+arrowup");
+        expect(result).toEqual({ type: "combination", id: "Shift+ArrowUp" });
       });
 
       it("parses digit keys", () => {
-        const result = parseShortcutKey("ctrl_1");
-        expect(result).toEqual({ type: "combination", id: "Control_Digit1" });
+        const result = parseShortcutKey("ctrl+1");
+        expect(result).toEqual({ type: "combination", id: "Control+Digit1" });
       });
 
       it("parses key aliases (esc)", () => {
-        const result = parseShortcutKey("ctrl_esc");
-        expect(result).toEqual({ type: "combination", id: "Control_Escape" });
+        const result = parseShortcutKey("ctrl+esc");
+        expect(result).toEqual({ type: "combination", id: "Control+Escape" });
       });
 
       it("parses key aliases (del)", () => {
-        const result = parseShortcutKey("shift_del");
-        expect(result).toEqual({ type: "combination", id: "Shift_Delete" });
+        const result = parseShortcutKey("shift+del");
+        expect(result).toEqual({ type: "combination", id: "Shift+Delete" });
       });
 
       it("parses key aliases (return)", () => {
-        const result = parseShortcutKey("ctrl_return");
-        expect(result).toEqual({ type: "combination", id: "Control_Enter" });
+        const result = parseShortcutKey("ctrl+return");
+        expect(result).toEqual({ type: "combination", id: "Control+Enter" });
       });
     });
   });
@@ -143,7 +143,7 @@ describe("parseShortcutKey", () => {
 
   describe("invalid inputs", () => {
     it("returns null for unknown key in combination", () => {
-      const result = parseShortcutKey("ctrl_invalidkey");
+      const result = parseShortcutKey("ctrl+invalidkey");
       expect(result).toBeNull();
     });
 
@@ -153,12 +153,12 @@ describe("parseShortcutKey", () => {
     });
 
     it("returns null for combination with no main key", () => {
-      const result = parseShortcutKey("ctrl_shift");
+      const result = parseShortcutKey("ctrl+shift");
       expect(result).toBeNull();
     });
 
     it("returns null for combination with only modifiers", () => {
-      const result = parseShortcutKey("ctrl_alt_shift_meta");
+      const result = parseShortcutKey("ctrl+alt+shift+meta");
       expect(result).toBeNull();
     });
 
@@ -168,15 +168,15 @@ describe("parseShortcutKey", () => {
     });
 
     it("returns null for unknown modifier in combination", () => {
-      const result = parseShortcutKey("invalidmod_s");
+      const result = parseShortcutKey("invalidmod+s");
       expect(result).toBeNull();
     });
   });
 
   describe("edge cases", () => {
     it("handles whitespace in combination", () => {
-      const result = parseShortcutKey("ctrl_ s ");
-      expect(result).toEqual({ type: "combination", id: "Control_KeyS" });
+      const result = parseShortcutKey("ctrl+ s ");
+      expect(result).toEqual({ type: "combination", id: "Control+KeyS" });
     });
 
     it("handles whitespace in sequence", () => {
@@ -185,7 +185,7 @@ describe("parseShortcutKey", () => {
     });
 
     it("distinguishes between combination and sequence separators", () => {
-      const combination = parseShortcutKey("ctrl_s");
+      const combination = parseShortcutKey("ctrl+s");
       expect(combination?.type).toBe("combination");
 
       const sequence = parseShortcutKey("g-g");
@@ -193,23 +193,23 @@ describe("parseShortcutKey", () => {
     });
 
     it("handles complex modifier ordering", () => {
-      const result = parseShortcutKey("meta_shift_alt_ctrl_z");
-      expect(result).toEqual({ type: "combination", id: "Alt_Control_Meta_Shift_KeyZ" });
+      const result = parseShortcutKey("meta+shift+alt+ctrl+z");
+      expect(result).toEqual({ type: "combination", id: "Alt+Control+Meta+Shift+KeyZ" });
     });
 
     it("parses numpad keys", () => {
-      const result = parseShortcutKey("ctrl_numpad0");
-      expect(result).toEqual({ type: "combination", id: "Control_Numpad0" });
+      const result = parseShortcutKey("ctrl+numpad0");
+      expect(result).toEqual({ type: "combination", id: "Control+Numpad0" });
     });
 
     it("parses punctuation keys", () => {
-      const result = parseShortcutKey("ctrl_comma");
-      expect(result).toEqual({ type: "combination", id: "Control_Comma" });
+      const result = parseShortcutKey("ctrl+comma");
+      expect(result).toEqual({ type: "combination", id: "Control+Comma" });
     });
 
     it("handles arrow key aliases", () => {
-      const result = parseShortcutKey("ctrl_up");
-      expect(result).toEqual({ type: "combination", id: "Control_ArrowUp" });
+      const result = parseShortcutKey("ctrl+up");
+      expect(result).toEqual({ type: "combination", id: "Control+ArrowUp" });
     });
   });
 });

@@ -1,3 +1,5 @@
+import { ShortcutsSeparator } from "../utils/extractShortcuts";
+
 import { KEY_MAPPING, MODIFIER_MAPPING, MODIFIER_ORDER, MODIFIER_SET } from "./key-mapping";
 
 export interface ParsedShortcut {
@@ -11,12 +13,12 @@ export interface ParsedShortcut {
  * @returns A parsed shortcut object or null if the key is invalid.
  */
 export function parseShortcutKey(key: string): ParsedShortcut | null {
-  return key.includes("_") ? parseCombination(key) : parseSequence(key);
+  return key.includes(ShortcutsSeparator.KeyCombination) ? parseCombination(key) : parseSequence(key);
 }
 
 /** Parses _key combinations_ (e.g., `ctrl_z`, `alt_shift_delete`) */
 function parseCombination(key: string): ParsedShortcut | null {
-  const parts = key.split("_");
+  const parts = key.split(ShortcutsSeparator.KeyCombination);
   const modifiers: string[] = [];
   let mainKey: string | null = null;
 
@@ -43,12 +45,12 @@ function parseCombination(key: string): ParsedShortcut | null {
   // Sort modifiers alphabetically for consistent ID
   modifiers.sort((a, b) => MODIFIER_ORDER.indexOf(a) - MODIFIER_ORDER.indexOf(b));
 
-  return { type: "combination", id: [...modifiers, mainKey].join("_") };
+  return { type: "combination", id: [...modifiers, mainKey].join(ShortcutsSeparator.KeyCombination) };
 }
 
 /** Parses _key sequences_ (e.g., `f-g`, `p-t-l`) */
 function parseSequence(key: string): ParsedShortcut | null {
-  const parts = key.split("-");
+  const parts = key.split(ShortcutsSeparator.KeySequence);
   const codes: string[] = [];
 
   for (const part of parts) {
@@ -60,7 +62,7 @@ function parseSequence(key: string): ParsedShortcut | null {
     codes.push(code);
   }
 
-  return { type: "sequence", id: codes.join("-") };
+  return { type: "sequence", id: codes.join(ShortcutsSeparator.KeySequence) };
 }
 
 function normalizeKey(key: string): string | null {

@@ -67,7 +67,7 @@ describe("createKeydownHandler", () => {
     it("executes handler when combination matches", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler }]]),
+        combinations: new Map([["Control+KeyS", { handler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
 
@@ -81,7 +81,7 @@ describe("createKeydownHandler", () => {
     it("handles multiple modifiers", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_Shift_KeyS", { handler }]]),
+        combinations: new Map([["Control+Shift+KeyS", { handler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
 
@@ -94,7 +94,7 @@ describe("createKeydownHandler", () => {
     it("handles all four modifiers", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Alt_Control_Meta_Shift_KeyZ", { handler }]]),
+        combinations: new Map([["Alt+Control+Meta+Shift+KeyZ", { handler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
 
@@ -113,7 +113,7 @@ describe("createKeydownHandler", () => {
     it("does not execute when combination is not registered", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler }]]),
+        combinations: new Map([["Control+KeyS", { handler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
 
@@ -127,7 +127,7 @@ describe("createKeydownHandler", () => {
     it("does not match when modifiers are different", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_Shift_KeyS", { handler }]]),
+        combinations: new Map([["Control+Shift+KeyS", { handler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
 
@@ -141,7 +141,7 @@ describe("createKeydownHandler", () => {
       const handler = vi.fn();
       // Alt comes before Control in alphabetical order.
       const ctx = createTestContext({
-        combinations: new Map([["Alt_Control_KeyA", { handler }]]),
+        combinations: new Map([["Alt+Control+KeyA", { handler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
 
@@ -155,7 +155,7 @@ describe("createKeydownHandler", () => {
     it("ignores events from excluded tags", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler }]]),
+        combinations: new Map([["Control+KeyS", { handler }]]),
         excludeTags: ["INPUT", "TEXTAREA", "SELECT"],
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -173,7 +173,7 @@ describe("createKeydownHandler", () => {
     it("allows shortcut in input when usingInput is true", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler, usingInput: true }]]),
+        combinations: new Map([["Control+KeyS", { handler, usingInput: true }]]),
         excludeTags: ["INPUT", "TEXTAREA", "SELECT"],
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -191,7 +191,7 @@ describe("createKeydownHandler", () => {
     it("allows shortcut in specific input when usingInput matches tag", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler, usingInput: "input" }]]),
+        combinations: new Map([["Control+KeyS", { handler, usingInput: "input" }]]),
         excludeTags: ["INPUT", "TEXTAREA", "SELECT"],
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -209,7 +209,7 @@ describe("createKeydownHandler", () => {
     it("ignores shortcut when usingInput does not match specific tag", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler, usingInput: "textarea" }]]),
+        combinations: new Map([["Control+KeyS", { handler, usingInput: "textarea" }]]),
         excludeTags: ["INPUT", "TEXTAREA", "SELECT"],
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -228,7 +228,7 @@ describe("createKeydownHandler", () => {
       const combinationHandler = vi.fn();
       const sequenceHandler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler: combinationHandler }]]),
+        combinations: new Map([["Control+KeyS", { handler: combinationHandler }]]),
         sequences: new Map([["KeyG-KeyG", { handler: sequenceHandler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -497,7 +497,7 @@ describe("createKeydownHandler", () => {
     it("does not ignore events from non-excluded tags", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler }]]),
+        combinations: new Map([["Control+KeyS", { handler }]]),
         excludeTags: ["INPUT", "TEXTAREA", "SELECT"],
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -515,7 +515,7 @@ describe("createKeydownHandler", () => {
     it("handles null target gracefully", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler }]]),
+        combinations: new Map([["Control+KeyS", { handler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
 
@@ -538,7 +538,7 @@ describe("createKeydownHandler", () => {
     it("compares tags case-insensitively", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler }]]),
+        combinations: new Map([["Control+KeyS", { handler }]]),
         excludeTags: ["INPUT"],
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -560,7 +560,7 @@ describe("createKeydownHandler", () => {
       const combinationHandler = vi.fn();
       const sequenceHandler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyG", { handler: combinationHandler }]]),
+        combinations: new Map([["Control+KeyG", { handler: combinationHandler }]]),
         sequences: new Map([["KeyG", { handler: sequenceHandler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -575,7 +575,7 @@ describe("createKeydownHandler", () => {
     it("falls through to sequence when no combination matches", () => {
       const sequenceHandler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyS", { handler: vi.fn() }]]),
+        combinations: new Map([["Control+KeyS", { handler: vi.fn() }]]),
         sequences: new Map([["KeyG", { handler: sequenceHandler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -590,7 +590,7 @@ describe("createKeydownHandler", () => {
       const combinationHandler = vi.fn();
       const sequenceHandler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyG", { handler: combinationHandler }]]),
+        combinations: new Map([["Control+KeyG", { handler: combinationHandler }]]),
         sequences: new Map([["KeyG-KeyG", { handler: sequenceHandler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
@@ -618,7 +618,7 @@ describe("createKeydownHandler", () => {
     it("handles key without modifiers when only combinations are registered", () => {
       const handler = vi.fn();
       const ctx = createTestContext({
-        combinations: new Map([["Control_KeyA", { handler }]]),
+        combinations: new Map([["Control+KeyA", { handler }]]),
       });
       const keydownHandler = createKeydownHandler(ctx);
 
@@ -633,8 +633,8 @@ describe("createKeydownHandler", () => {
       const handlerB = vi.fn();
       const ctx = createTestContext({
         combinations: new Map([
-          ["Control_KeyA", { handler: handlerA }],
-          ["Control_KeyB", { handler: handlerB }],
+          ["Control+KeyA", { handler: handlerA }],
+          ["Control+KeyB", { handler: handlerB }],
         ]),
       });
       const keydownHandler = createKeydownHandler(ctx);

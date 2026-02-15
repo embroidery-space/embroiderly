@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
+  import { useShortcuts, extractShortcuts, ShortcutsSeparator } from "@embroiderly/shortcuts";
 
   import type { DropdownMenuItem } from "@nuxt/ui";
   import { unrefElement } from "@vueuse/core";
@@ -82,7 +82,7 @@
       },
     }));
   });
-  useShortcuts(extractShortcuts(items, "-"));
+  useShortcuts(extractShortcuts(items, ShortcutsSeparator.KeySequence));
 
   // Track the last selected option from this group.
   const lastSelectedOption = ref<ToolSelectItem>(props.items[0]!);

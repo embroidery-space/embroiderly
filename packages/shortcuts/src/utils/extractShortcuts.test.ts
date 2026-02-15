@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 
-import { extractShortcuts } from "./extractShortcuts.ts";
+import { extractShortcuts, ShortcutsSeparator } from "./extractShortcuts.ts";
 
 describe("extractShortcuts", () => {
   describe("basic extraction", () => {
@@ -8,16 +8,16 @@ describe("extractShortcuts", () => {
       const handler = vi.fn();
       const items = [{ kbds: ["ctrl", "s"], onSelect: handler }];
 
-      const result = extractShortcuts(items, "_").value;
+      const result = extractShortcuts(items, ShortcutsSeparator.KeyCombination).value;
 
-      expect(result).toEqual({ ctrl_s: handler });
+      expect(result).toEqual({ "ctrl+s": handler });
     });
 
     it("extracts key sequences", () => {
       const handler = vi.fn();
       const items = [{ kbds: ["g", "d"], onSelect: handler }];
 
-      const result = extractShortcuts(items, "-").value;
+      const result = extractShortcuts(items, ShortcutsSeparator.KeySequence).value;
 
       expect(result).toEqual({ "g-d": handler });
     });
@@ -28,7 +28,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ ctrl_s: handler });
+      expect(result).toEqual({ "ctrl+s": handler });
     });
   });
 
@@ -39,7 +39,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result["ctrl_o"]).toBe(handler);
+      expect(result["ctrl+o"]).toBe(handler);
     });
 
     it("extracts shortcuts with onClick handler", () => {
@@ -48,7 +48,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result["ctrl_k"]).toBe(handler);
+      expect(result["ctrl+k"]).toBe(handler);
     });
 
     it("prefers onSelect over onClick when both specified", () => {
@@ -58,7 +58,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result["ctrl_b"]).toBe(onSelectHandler);
+      expect(result["ctrl+b"]).toBe(onSelectHandler);
     });
   });
 
@@ -79,7 +79,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ ctrl_o: handler1, ctrl_s: handler2 });
+      expect(result).toEqual({ "ctrl+o": handler1, "ctrl+s": handler2 });
     });
 
     it("traverses nested items", () => {
@@ -88,7 +88,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ ctrl_a: handler });
+      expect(result).toEqual({ "ctrl+a": handler });
     });
 
     it("handles deeply nested structures", () => {
@@ -110,7 +110,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ ctrl_1: handler1, ctrl_2: handler2 });
+      expect(result).toEqual({ "ctrl+1": handler1, "ctrl+2": handler2 });
     });
 
     it("handles mixed children and items properties", () => {
@@ -125,7 +125,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ ctrl_c: handler1, ctrl_i: handler2 });
+      expect(result).toEqual({ "ctrl+c": handler1, "ctrl+i": handler2 });
     });
   });
 
@@ -168,7 +168,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ ctrl_n: handler });
+      expect(result).toEqual({ "ctrl+n": handler });
     });
   });
 
@@ -179,14 +179,14 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ ctrl_shift_s: handler });
+      expect(result).toEqual({ "ctrl+shift+s": handler });
     });
 
     it("handles key sequences with dashes", () => {
       const handler = vi.fn();
       const items = [{ kbds: ["g", "g"], onSelect: handler }];
 
-      const result = extractShortcuts(items, "-").value;
+      const result = extractShortcuts(items, ShortcutsSeparator.KeySequence).value;
 
       expect(result).toEqual({ "g-g": handler });
     });

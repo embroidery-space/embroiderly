@@ -5,14 +5,24 @@ import type { MaybeRefOrGetter } from "vue";
 
 import type { ShortcutValue } from "../types.ts";
 
+export const enum ShortcutsSeparator {
+  /** Key combination separator (e.g., `Ctrl+Z`), */
+  KeyCombination = "+",
+  /** Key sequence separator (e.g., `G-D`), */
+  KeySequence = "-",
+}
+
 /**
- * Extracts shortcuts from Nuxt UI menu items.
+ * Extracts shortcuts from menu items.
  *
  * @param items - An array of menu item groups (e.g., from `DropdownMenu` or `ContextMenu`).
- * @param separator - A separator to use when joining keys. Use `_` for _key combinations_, and `-` for _key sequences_.
+ * @param separator - A separator to use when joining keys. Use `+` for _key combinations_, and `-` for _key sequences_.
  * @returns A computed value containing record of shortcut keys to handlers.
  */
-export function extractShortcuts(items: MaybeRefOrGetter<any[] | any[][]>, separator: "_" | "-" = "_") {
+export function extractShortcuts(
+  items: MaybeRefOrGetter<any[] | any[][]>,
+  separator: ShortcutsSeparator = ShortcutsSeparator.KeyCombination,
+) {
   return computed(() => {
     const shortcuts: Record<string, ShortcutValue> = {};
 

@@ -1,4 +1,5 @@
 import type { ShortcutConfig } from "../types.ts";
+import { ShortcutsSeparator } from "../utils/extractShortcuts.ts";
 
 import type { ShortcutsContext } from "./context.ts";
 import { MODIFIER_ORDER } from "./key-mapping.ts";
@@ -45,7 +46,7 @@ function checkSequence(event: KeyboardEvent, ctx: ShortcutsContext) {
     if (key === currentSequence) {
       hasExactMatch = true;
       exactEntry = entry;
-    } else if (key.startsWith(currentSequence + "-")) {
+    } else if (key.startsWith(currentSequence + ShortcutsSeparator.KeySequence)) {
       hasPrefixMatch = true;
     }
   }
@@ -83,7 +84,7 @@ function buildCombinationId(event: KeyboardEvent): string | null {
   // Sort modifiers alphabetically to ensure consistent ID generation.
   modifiers.sort((a, b) => MODIFIER_ORDER.indexOf(a) - MODIFIER_ORDER.indexOf(b));
 
-  return [...modifiers, event.code].join("_");
+  return [...modifiers, event.code].join(ShortcutsSeparator.KeyCombination);
 }
 
 function shouldIgnoreEvent(event: KeyboardEvent, excludeTags: string[], entry?: ShortcutConfig): boolean {

@@ -1,4 +1,5 @@
 import type { ShortcutConfig, ShortcutsOptions } from "../types.ts";
+import { ShortcutsSeparator } from "../utils/extractShortcuts.ts";
 
 const DEFAULT_OPTIONS: Required<ShortcutsOptions> = {
   chainDelay: 500,
@@ -34,7 +35,7 @@ export class SequenceState {
 
   /** Returns the current sequence as a hyphen-separated string. */
   getCurrentSequence() {
-    return this.#buffer.join("-");
+    return this.#buffer.join(ShortcutsSeparator.KeySequence);
   }
 
   /** Returns whether a sequence timer is currently active. */
