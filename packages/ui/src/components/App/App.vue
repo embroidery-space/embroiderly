@@ -1,4 +1,7 @@
 <script setup lang="ts">
+  import { ShortcutsProvider } from "@embroiderly/shortcuts";
+  import type { ShortcutsProviderProps } from "@embroiderly/shortcuts";
+
   import { reactivePick } from "@vueuse/core";
   import type { ConfigProviderProps, TooltipProviderProps } from "reka-ui";
   import { ConfigProvider, TooltipProvider, useForwardProps } from "reka-ui";
@@ -13,13 +16,12 @@
 
   export interface AppProps extends Omit<ConfigProviderProps, "dir" | "locale" | "useId"> {
     tooltip?: TooltipProviderProps;
+    shortcuts?: ShortcutsProviderProps | null;
+
     locale?: Locale;
     icons?: Partial<Icons>;
-    portal?: boolean | string | HTMLElement;
-  }
 
-  export interface AppSlots {
-    default(): any;
+    portal?: boolean | string | HTMLElement;
   }
 
   const props = withDefaults(defineProps<AppProps>(), {
@@ -28,6 +30,7 @@
 
   const configProps = useForwardProps(reactivePick(props, "scrollBody"));
   const tooltipProps = toRef(() => props.tooltip);
+  const shortcutsProps = toRef(() => props.shortcuts);
 
   const locale = toRef(() => props.locale);
   provide(localeInjectionKey, locale);
@@ -42,7 +45,11 @@
 <template>
   <ConfigProvider v-bind="configProps" :dir="locale?.dir" :locale="locale?.code" :use-id="useId">
     <TooltipProvider v-bind="tooltipProps">
-      <slot />
+      <ShortcutsProvider v-if="shortcutsProps" v-bind="shortcutsProps">
+        <slot />
+      </ShortcutsProvider>
+
+      <slot v-else />
     </TooltipProvider>
   </ConfigProvider>
 </template>

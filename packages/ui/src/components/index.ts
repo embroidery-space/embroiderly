@@ -1,5 +1,5 @@
 // Layout.
-export { default as App, type AppProps, type AppSlots } from "./App/App.vue";
+export { default as App, type AppProps } from "./App/App.vue";
 export {
   default as Splitter,
   type SplitterProps,

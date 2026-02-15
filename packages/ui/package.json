@@ -21,13 +21,14 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@vueuse/core": "catalog:",
     "color-convert": "catalog:",
     "defu": "catalog:",
     "tailwind-merge": "catalog:",
     "tailwind-variants": "catalog:"
   },
   "peerDependencies": {
+    "@embroiderly/shortcuts": "workspace:",
+    "@vueuse/core": "catalog:",
     "reka-ui": "catalog:",
     "tailwindcss": "catalog:",
     "vue": "catalog:"
