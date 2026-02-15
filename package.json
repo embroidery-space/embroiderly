@@ -23,8 +23,8 @@
     "check-types": "pnpm -r check-types",
     "fmt": "prettier --check .",
     "fmt:fix": "prettier --write .",
-    "lint": "eslint && markdownlint-cli2",
-    "lint:fix": "eslint --fix && markdownlint-cli2 --fix",
+    "lint": "eslint --concurrency auto && markdownlint-cli2",
+    "lint:fix": "eslint --concurrency auto --fix && markdownlint-cli2 --fix",
     "test": "pnpm -r --workspace-concurrency=1 test"
   },
   "devDependencies": {
