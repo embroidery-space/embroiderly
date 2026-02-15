@@ -17,6 +17,7 @@ export {
 export { default as Button, type ButtonProps, type ButtonSlots } from "./Button/Button.vue";
 export { default as ButtonIcon, type ButtonIconProps } from "./ButtonIcon/ButtonIcon.vue";
 export { default as Icon, type IconProps } from "./Icon/Icon.vue";
+export { default as Kbd, type KbdProps } from "./Kbd/Kbd.vue";
 export { default as Progress, type ProgressProps } from "./Progress/Progress.vue";
 export { default as Separator, type SeparatorProps } from "./Separator/Separator.vue";
 export { default as Tabs, type TabsProps, type TabsSlots, type TabsItem } from "./Tabs/Tabs.vue";

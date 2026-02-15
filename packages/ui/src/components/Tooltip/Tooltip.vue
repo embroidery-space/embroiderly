@@ -7,6 +7,8 @@
   import { computed, toRef } from "vue";
 
   import { usePortal } from "../../composables/usePortal.ts";
+  import { parseShortcutDisplay } from "../../utils/shortcut.ts";
+  import Kbd from "../Kbd/Kbd.vue";
 
   import { TooltipTheme } from "./Tooltip.theme.ts";
   import type { TooltipThemeSlots } from "./Tooltip.theme.ts";
@@ -14,6 +16,8 @@
   export interface TooltipProps extends TooltipRootProps {
     /** The text content of the tooltip. */
     text?: string;
+    /** Keyboard shortcut string displayed after text. */
+    shortcut?: string;
 
     /**
      * The content of the tooltip.
@@ -70,7 +74,7 @@
 </script>
 
 <template>
-  <Tooltip.Root v-slot="{ open }" v-bind="rootProps" :disabled="disabled || !text">
+  <Tooltip.Root v-slot="{ open }" v-bind="rootProps" :disabled="disabled || (!text && !shortcut)">
     <Tooltip.Trigger as-child>
       <slot :open="open" />
     </Tooltip.Trigger>
@@ -78,6 +82,9 @@
     <Tooltip.Portal v-bind="portalProps">
       <Tooltip.Content v-bind="contentProps" :class="ui.content({ class: [props.ui?.content, props.class] })">
         <span :class="ui.text({ class: props.ui?.text })">{{ text }}</span>
+        <span v-if="shortcut" :class="ui.kbds({ class: props.ui?.kbds })">
+          <Kbd v-for="(key, i) in parseShortcutDisplay(shortcut)" :key="i" :value="key" size="sm" />
+        </span>
         <Tooltip.Arrow :class="ui.arrow({ class: props.ui?.arrow })" />
       </Tooltip.Content>
     </Tooltip.Portal>

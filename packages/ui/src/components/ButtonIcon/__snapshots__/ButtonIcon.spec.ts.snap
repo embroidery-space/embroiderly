@@ -56,6 +56,7 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -156,6 +157,7 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -256,6 +258,7 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -356,6 +359,7 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -457,6 +461,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -558,6 +563,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -658,6 +664,7 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -758,6 +765,7 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -858,6 +866,7 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -958,6 +967,7 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -1058,6 +1068,7 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -1158,6 +1169,7 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -1258,6 +1270,7 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -1358,6 +1371,7 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -1458,6 +1472,7 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -1558,6 +1573,7 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >
@@ -1658,6 +1674,7 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
       >
         Settings
       </span>
+      <!--v-if-->
       <span
         style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
       >

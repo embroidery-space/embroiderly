@@ -32,6 +32,11 @@ export function extractShortcuts(
           const shortcutKey = item.kbds.join(separator).toLowerCase();
           shortcuts[shortcutKey] = item.onSelect || item.onClick;
         }
+
+        if (item.shortcut && (item.onSelect || item.onClick)) {
+          shortcuts[item.shortcut.toLowerCase()] = item.onSelect || item.onClick;
+        }
+
         if (item.children) traverse(item.children.flat());
         if (item.items) traverse(item.items.flat());
       }

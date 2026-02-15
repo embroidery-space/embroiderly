@@ -17,9 +17,9 @@
 
   const items = computed<ContextMenuItem[][]>(() => [
     [
-      { icon: "lucide:scissors", label: "Cut" },
-      { icon: "lucide:copy", label: "Copy" },
-      { icon: "lucide:clipboard", label: "Paste", disabled: true },
+      { icon: "lucide:scissors", label: "Cut", shortcut: "Ctrl+X" },
+      { icon: "lucide:copy", label: "Copy", shortcut: "Ctrl+C" },
+      { icon: "lucide:clipboard", label: "Paste", shortcut: "Ctrl+V", disabled: true },
     ],
     [
       { type: "label", label: "View" },
@@ -50,7 +50,13 @@
     [
       {
         label: "More Tools",
-        children: [[{ label: "Undo" }, { label: "Redo" }], [{ label: "Select All" }]],
+        children: [
+          [
+            { label: "Undo", shortcut: "Ctrl+Z" },
+            { label: "Redo", shortcut: "Ctrl+Shift+Z" },
+          ],
+          [{ label: "Select All", shortcut: "Ctrl+A" }],
+        ],
       },
     ],
   ]);

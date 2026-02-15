@@ -290,6 +290,7 @@ exports[`ContextMenu > renders correctly with class 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -345,6 +346,7 @@ exports[`ContextMenu > renders correctly with class 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -402,6 +404,7 @@ exports[`ContextMenu > renders correctly with class 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -449,6 +452,7 @@ exports[`ContextMenu > renders correctly with class 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -498,6 +502,197 @@ exports[`ContextMenu > renders correctly with disabled 1`] = `
   
   
   <!---->
+  
+  
+  
+  <!--teleport end-->
+  
+  
+  
+</div>
+`;
+
+exports[`ContextMenu > renders correctly with shortcuts 1`] = `
+<div>
+  
+  
+  
+  
+  
+  
+  <span
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    Trigger
+  </span>
+  
+  <!--teleport start-->
+  
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
+  >
+    <div
+      aria-orientation="vertical"
+      class="pointer-events-auto min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+      data-align="start"
+      data-dismissable-layer=""
+      data-orientation="vertical"
+      data-reka-menu-content=""
+      data-side="right"
+      data-state="open"
+      dir="ltr"
+      role="menu"
+      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
+      tabindex="-1"
+    >
+      
+      
+      
+      
+      
+      
+      
+      <!--v-if-->
+      <div
+        class="isolate p-1"
+        role="group"
+      >
+        
+        
+        
+        
+        <div
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          data-reka-collection-item=""
+          role="menuitem"
+          tabindex="-1"
+        >
+          
+          
+          
+          <!--v-if-->
+          <span
+            class="flex min-w-0 flex-1 flex-col"
+          >
+            <span
+              class="truncate"
+            >
+              Undo
+            </span>
+            <!--v-if-->
+          </span>
+          <span
+            class="ms-auto inline-flex items-center flex items-center gap-0.5"
+          >
+            
+            <kbd
+              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+            >
+              Ctrl+Z
+            </kbd>
+            
+          </span>
+          
+          
+          
+        </div>
+        
+        
+        <div
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          data-reka-collection-item=""
+          role="menuitem"
+          tabindex="-1"
+        >
+          
+          
+          
+          <!--v-if-->
+          <span
+            class="flex min-w-0 flex-1 flex-col"
+          >
+            <span
+              class="truncate"
+            >
+              Redo
+            </span>
+            <!--v-if-->
+          </span>
+          <span
+            class="ms-auto inline-flex items-center flex items-center gap-0.5"
+          >
+            
+            <kbd
+              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+            >
+              Ctrl+Shift+Z
+            </kbd>
+            
+          </span>
+          
+          
+          
+        </div>
+        
+        
+        <div
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          data-reka-collection-item=""
+          role="menuitem"
+          tabindex="-1"
+        >
+          
+          
+          
+          <!--v-if-->
+          <span
+            class="flex min-w-0 flex-1 flex-col"
+          >
+            <span
+              class="truncate"
+            >
+              Go to Definition
+            </span>
+            <!--v-if-->
+          </span>
+          <span
+            class="ms-auto inline-flex items-center flex items-center gap-0.5"
+          >
+            
+            <kbd
+              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+            >
+              G
+            </kbd>
+            <kbd
+              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+            >
+              D
+            </kbd>
+            
+          </span>
+          
+          
+          
+        </div>
+        
+        
+        
+        
+      </div>
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
   
   
   
@@ -590,6 +785,7 @@ exports[`ContextMenu > renders correctly with simple items 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -625,6 +821,7 @@ exports[`ContextMenu > renders correctly with simple items 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -662,6 +859,7 @@ exports[`ContextMenu > renders correctly with simple items 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -709,6 +907,7 @@ exports[`ContextMenu > renders correctly with simple items 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -844,6 +1043,7 @@ exports[`ContextMenu > renders correctly with size lg 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -899,6 +1099,7 @@ exports[`ContextMenu > renders correctly with size lg 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -956,6 +1157,7 @@ exports[`ContextMenu > renders correctly with size lg 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1003,6 +1205,7 @@ exports[`ContextMenu > renders correctly with size lg 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1138,6 +1341,7 @@ exports[`ContextMenu > renders correctly with size md 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1193,6 +1397,7 @@ exports[`ContextMenu > renders correctly with size md 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1250,6 +1455,7 @@ exports[`ContextMenu > renders correctly with size md 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1297,6 +1503,7 @@ exports[`ContextMenu > renders correctly with size md 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1432,6 +1639,7 @@ exports[`ContextMenu > renders correctly with size sm 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1487,6 +1695,7 @@ exports[`ContextMenu > renders correctly with size sm 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1544,6 +1753,7 @@ exports[`ContextMenu > renders correctly with size sm 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1591,6 +1801,7 @@ exports[`ContextMenu > renders correctly with size sm 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1911,6 +2122,7 @@ exports[`ContextMenu > renders correctly with ui 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1966,6 +2178,7 @@ exports[`ContextMenu > renders correctly with ui 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -2023,6 +2236,7 @@ exports[`ContextMenu > renders correctly with ui 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -2070,6 +2284,7 @@ exports[`ContextMenu > renders correctly with ui 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           

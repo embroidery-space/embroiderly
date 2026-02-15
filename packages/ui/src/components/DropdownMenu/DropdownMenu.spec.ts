@@ -62,6 +62,21 @@ describe("DropdownMenu", () => {
     ["with disabled", { props: { ...props, items: simpleItems, disabled: true } }],
     ...sizes.map((size) => [`with size ${size}`, { props: { ...props, items: simpleItems, size } }]),
     ["with class", { props: { ...props, items: simpleItems, class: "min-w-48" } }],
+    [
+      "with shortcuts",
+      {
+        props: {
+          ...props,
+          items: [
+            [
+              { label: "Undo", shortcut: "Ctrl+Z", onSelect: () => {} },
+              { label: "Redo", shortcut: "Ctrl+Shift+Z", onSelect: () => {} },
+              { label: "Go to Definition", shortcut: "G-D", onSelect: () => {} },
+            ],
+          ],
+        },
+      },
+    ],
     ["with ui", { props: { ...props, items: simpleItems, ui: { content: "min-w-48" } } }],
   ] as [string, { props?: DropdownMenuProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(DropdownMenuWrapper, options);

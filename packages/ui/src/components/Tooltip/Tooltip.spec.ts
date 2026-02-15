@@ -21,6 +21,8 @@ describe("Tooltip", () => {
 
   test.each([
     ["with text", { props }],
+    ["with shortcut", { props: { ...props, shortcut: "Ctrl+Z" } }],
+    ["with shortcut only", { props: { ...props, text: undefined, shortcut: "Ctrl+S" } }],
     ["with class", { props: { ...props, class: "text-sm" } }],
   ] as [string, { props?: TooltipProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(TooltipWrapper, options);

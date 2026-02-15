@@ -11,6 +11,7 @@ export const ContextMenuTheme = tv({
     item: "group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50",
     itemLeadingIcon: "shrink-0 text-dimmed group-data-highlighted:text-default",
     itemTrailing: "ms-auto inline-flex items-center",
+    itemKbd: "flex items-center gap-0.5",
     itemTrailingIcon: "shrink-0",
     itemLabel: "truncate",
     itemDescription: "truncate text-muted",

@@ -10,6 +10,7 @@
 
   const state = reactive<TooltipProps>({
     text: "Lorem ipsum",
+    shortcut: "Ctrl+B",
 
     content: {
       side: "bottom",
@@ -33,6 +34,7 @@
 
       <template #controls>
         <HstText v-model="state.text" title="text" />
+        <HstText v-model="state.shortcut" title="shortcut" />
 
         <HstSelect v-model="state.content!.side" title="Variant" :options="sides" />
         <HstNumber v-model="state.content!.sideOffset" title="Side Offset" />

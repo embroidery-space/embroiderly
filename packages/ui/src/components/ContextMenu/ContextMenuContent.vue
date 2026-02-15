@@ -4,7 +4,9 @@
 
   import { useComponentIcons } from "../../composables/useComponentIcons.ts";
   import { usePortal } from "../../composables/usePortal.ts";
+  import { parseShortcutDisplay } from "../../utils/shortcut.ts";
   import Icon from "../Icon/Icon.vue";
+  import Kbd from "../Kbd/Kbd.vue";
 
   import type { ContextMenuTheme } from "./ContextMenu.theme.ts";
   import type { ContextMenuItem } from "./ContextMenu.vue";
@@ -106,6 +108,10 @@
             <span v-if="item.label || item.description" class="flex min-w-0 flex-1 flex-col">
               <span v-if="item.label" :class="ui.itemLabel()">{{ item.label }}</span>
               <span v-if="item.description" :class="ui.itemDescription()">{{ item.description }}</span>
+            </span>
+
+            <span v-if="item.shortcut" :class="[ui.itemTrailing(), ui.itemKbd()]">
+              <Kbd v-for="(key, i) in parseShortcutDisplay(item.shortcut)" :key="i" :value="key" size="sm" />
             </span>
           </ContextMenu.Item>
         </template>

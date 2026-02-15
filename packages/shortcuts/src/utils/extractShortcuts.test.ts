@@ -172,6 +172,62 @@ describe("extractShortcuts", () => {
     });
   });
 
+  describe("shortcut string format", () => {
+    it("extracts shortcut string with combination", () => {
+      const handler = vi.fn();
+      const items = [{ shortcut: "Ctrl+Z", onSelect: handler }];
+
+      const result = extractShortcuts(items).value;
+
+      expect(result).toEqual({ "ctrl+z": handler });
+    });
+
+    it("extracts shortcut string with sequence", () => {
+      const handler = vi.fn();
+      const items = [{ shortcut: "G-D", onSelect: handler }];
+
+      const result = extractShortcuts(items).value;
+
+      expect(result).toEqual({ "g-d": handler });
+    });
+
+    it("extracts shortcut string with onClick handler", () => {
+      const handler = vi.fn();
+      const items = [{ shortcut: "Ctrl+S", onClick: handler }];
+
+      const result = extractShortcuts(items).value;
+
+      expect(result).toEqual({ "ctrl+s": handler });
+    });
+
+    it("prefers onSelect over onClick for shortcut string", () => {
+      const onSelectHandler = vi.fn();
+      const onClickHandler = vi.fn();
+      const items = [{ shortcut: "Ctrl+B", onSelect: onSelectHandler, onClick: onClickHandler }];
+
+      const result = extractShortcuts(items).value;
+
+      expect(result).toEqual({ "ctrl+b": onSelectHandler });
+    });
+
+    it("ignores shortcut string without handlers", () => {
+      const items = [{ shortcut: "Ctrl+N" }];
+
+      const result = extractShortcuts(items).value;
+
+      expect(result).toEqual({});
+    });
+
+    it("handles both kbds and shortcut at the same item", () => {
+      const handler = vi.fn();
+      const items = [{ kbds: ["ctrl", "z"], shortcut: "Ctrl+Z", onSelect: handler }];
+
+      const result = extractShortcuts(items).value;
+
+      expect(result).toEqual({ "ctrl+z": handler });
+    });
+  });
+
   describe("complex key combinations", () => {
     it("handles multi-key combinations with underscores", () => {
       const handler = vi.fn();

@@ -1,9 +1,3 @@
-<template>
-  <Tooltip v-bind="tooltipProps">
-    <Button v-bind="buttonProps" square :aria-label="tooltip" />
-  </Tooltip>
-</template>
-
 <script setup lang="ts">
   import { computed } from "vue";
 
@@ -15,7 +9,7 @@
   export interface ButtonIconProps
     extends
       Omit<ButtonProps, "label" | "leadingIcon" | "trailingIcon" | "leading" | "trailing" | "square">,
-      Pick<TooltipProps, "delayDuration"> {
+      Pick<TooltipProps, "delayDuration" | "shortcut"> {
     /** The icon to display. */
     icon: string;
     /** The tooltip text. */
@@ -48,8 +42,15 @@
     ...props.tooltipOptions,
 
     text: props.tooltip,
+    shortcut: props.shortcut,
 
     disabled: props.disabled,
     delayDuration: props.delayDuration,
   }));
 </script>
+
+<template>
+  <Tooltip v-bind="tooltipProps">
+    <Button v-bind="buttonProps" square :aria-label="tooltip" />
+  </Tooltip>
+</template>

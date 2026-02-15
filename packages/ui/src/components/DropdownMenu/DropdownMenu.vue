@@ -34,6 +34,9 @@
     /** Submenu items. Creates a nested submenu when provided. */
     children?: DropdownMenuItem[] | DropdownMenuItem[][];
 
+    /** Keyboard shortcut. */
+    shortcut?: string;
+
     /** Callback when the item is selected. Call `event.preventDefault()` to prevent the menu from closing. */
     onSelect?: (event: Event) => void;
     /** Callback when the checkbox checked state changes. Only used when `type` is `"checkbox"`. */

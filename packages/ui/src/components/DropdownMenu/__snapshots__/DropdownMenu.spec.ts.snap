@@ -300,6 +300,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -355,6 +356,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -412,6 +414,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -459,6 +462,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -508,6 +512,202 @@ exports[`DropdownMenu > renders correctly with disabled 1`] = `
   
   
   <!---->
+  
+  
+  
+  <!--teleport end-->
+  
+  
+  
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
+<div>
+  
+  
+  
+  <span
+    aria-controls="reka-dropdown-menu-content-v-1"
+    aria-expanded="true"
+    aria-haspopup="menu"
+    aria-hidden="true"
+    data-aria-hidden="true"
+    data-state="open"
+    disabled="false"
+    id="reka-dropdown-menu-trigger-v-0"
+    type="button"
+  >
+    Trigger
+  </span>
+  <!--teleport start-->
+  
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 30.4px); min-width: max-content; --reka-popper-transform-origin: 50% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 857.5999996066093px; --reka-popper-anchor-width: 49.212501525878906px; --reka-popper-anchor-height: 21.600000381469727px;"
+  >
+    <div
+      aria-labelledby="reka-dropdown-menu-trigger-v-0"
+      aria-orientation="vertical"
+      class="pointer-events-auto min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+      data-align="center"
+      data-dismissable-layer=""
+      data-orientation="vertical"
+      data-reka-menu-content=""
+      data-side="bottom"
+      data-state="open"
+      dir="ltr"
+      id="reka-dropdown-menu-content-v-1"
+      role="menu"
+      style="--reka-dropdown-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-dropdown-menu-content-available-width: var(--reka-popper-available-width); --reka-dropdown-menu-content-available-height: var(--reka-popper-available-height); --reka-dropdown-menu-trigger-width: var(--reka-popper-anchor-width); --reka-dropdown-menu-trigger-height: var(--reka-popper-anchor-height); outline: none; pointer-events: auto;"
+      tabindex="-1"
+    >
+      
+      
+      
+      
+      
+      
+      
+      <!--v-if-->
+      <div
+        class="isolate p-1"
+        role="group"
+      >
+        
+        
+        
+        
+        <div
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          data-reka-collection-item=""
+          role="menuitem"
+          tabindex="-1"
+        >
+          
+          
+          
+          <!--v-if-->
+          <span
+            class="flex min-w-0 flex-1 flex-col"
+          >
+            <span
+              class="truncate"
+            >
+              Undo
+            </span>
+            <!--v-if-->
+          </span>
+          <span
+            class="ms-auto inline-flex items-center flex items-center gap-0.5"
+          >
+            
+            <kbd
+              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+            >
+              Ctrl+Z
+            </kbd>
+            
+          </span>
+          
+          
+          
+        </div>
+        
+        
+        <div
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          data-reka-collection-item=""
+          role="menuitem"
+          tabindex="-1"
+        >
+          
+          
+          
+          <!--v-if-->
+          <span
+            class="flex min-w-0 flex-1 flex-col"
+          >
+            <span
+              class="truncate"
+            >
+              Redo
+            </span>
+            <!--v-if-->
+          </span>
+          <span
+            class="ms-auto inline-flex items-center flex items-center gap-0.5"
+          >
+            
+            <kbd
+              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+            >
+              Ctrl+Shift+Z
+            </kbd>
+            
+          </span>
+          
+          
+          
+        </div>
+        
+        
+        <div
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          data-reka-collection-item=""
+          role="menuitem"
+          tabindex="-1"
+        >
+          
+          
+          
+          <!--v-if-->
+          <span
+            class="flex min-w-0 flex-1 flex-col"
+          >
+            <span
+              class="truncate"
+            >
+              Go to Definition
+            </span>
+            <!--v-if-->
+          </span>
+          <span
+            class="ms-auto inline-flex items-center flex items-center gap-0.5"
+          >
+            
+            <kbd
+              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+            >
+              G
+            </kbd>
+            <kbd
+              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+            >
+              D
+            </kbd>
+            
+          </span>
+          
+          
+          
+        </div>
+        
+        
+        
+        
+      </div>
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
   
   
   
@@ -605,6 +805,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -640,6 +841,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -677,6 +879,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -724,6 +927,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -864,6 +1068,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -919,6 +1124,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -976,6 +1182,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1023,6 +1230,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1163,6 +1371,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1218,6 +1427,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1275,6 +1485,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1322,6 +1533,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1462,6 +1674,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1517,6 +1730,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1574,6 +1788,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1621,6 +1836,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -1951,6 +2167,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -2006,6 +2223,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -2063,6 +2281,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
@@ -2110,6 +2329,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
             </span>
             <!--v-if-->
           </span>
+          <!--v-if-->
           
           
           
