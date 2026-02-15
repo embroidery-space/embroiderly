@@ -21,34 +21,34 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@vueuse/core": "14.2.0",
-    "color-convert": "3.1.3",
-    "defu": "6.1.4",
-    "tailwind-merge": "3.4.0",
-    "tailwind-variants": "3.2.2"
+    "@vueuse/core": "catalog:",
+    "color-convert": "catalog:",
+    "defu": "catalog:",
+    "tailwind-merge": "catalog:",
+    "tailwind-variants": "catalog:"
   },
   "peerDependencies": {
-    "reka-ui": "2.8.0",
-    "tailwindcss": "4.1.18",
-    "vue": "3.5.27"
+    "reka-ui": "catalog:",
+    "tailwindcss": "catalog:",
+    "vue": "catalog:"
   },
   "devDependencies": {
-    "@histoire/plugin-vue": "1.0.0-beta.1",
-    "@iconify/vue": "5.0.0",
-    "@tailwindcss/vite": "4.1.18",
-    "@tsconfig/node24": "24.0.4",
-    "@tsconfig/strictest": "2.0.8",
-    "@types/node": "24.10.9",
-    "@vitejs/plugin-vue": "6.0.3",
-    "@vitest/browser-webdriverio": "4.0.18",
-    "@vue/tsconfig": "0.8.1",
-    "histoire": "1.0.0-beta.1",
-    "typescript": "5.9.3",
-    "vite": "7.3.1",
-    "vitest": "4.0.18",
-    "vitest-browser-vue": "2.0.2",
-    "vue-tsc": "3.2.4",
-    "webdriverio": "9.23.2",
-    "wrangler": "4.59.2"
+    "@histoire/plugin-vue": "catalog:",
+    "@iconify/vue": "catalog:",
+    "@tailwindcss/vite": "catalog:",
+    "@tsconfig/node24": "catalog:",
+    "@tsconfig/strictest": "catalog:",
+    "@types/node": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitest/browser-webdriverio": "catalog:",
+    "@vue/tsconfig": "catalog:",
+    "histoire": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-vue": "catalog:",
+    "vue-tsc": "catalog:",
+    "webdriverio": "catalog:",
+    "wrangler": "catalog:"
   }
 }

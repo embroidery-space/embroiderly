@@ -1,7 +1,7 @@
 {
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264",
+  "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc",
   "engines": {
     "node": ">=24"
   },
@@ -28,24 +28,24 @@
     "test": "pnpm -r --workspace-concurrency=1 test"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.2",
-    "@tauri-apps/cli": "2.9.6",
-    "@vitest/eslint-plugin": "1.6.6",
-    "@vue/eslint-config-prettier": "10.2.0",
-    "@vue/eslint-config-typescript": "14.6.0",
-    "eslint": "9.39.2",
-    "eslint-plugin-better-tailwindcss": "4.0.2",
-    "eslint-plugin-import-x": "4.16.1",
-    "eslint-plugin-no-only-tests": "3.3.0",
-    "eslint-plugin-promise": "7.2.1",
-    "eslint-plugin-sonarjs": "3.0.6",
-    "eslint-plugin-unicorn": "62.0.0",
-    "eslint-plugin-vue": "10.7.0",
-    "eslint-plugin-wdio": "9.23.0",
-    "eslint-plugin-yml": "3.0.0",
-    "globals": "17.3.0",
-    "markdownlint-cli2": "0.20.0",
-    "prettier": "3.8.1",
-    "tailwindcss": "4.1.18"
+    "@eslint/js": "catalog:",
+    "@tauri-apps/cli": "catalog:",
+    "@vitest/eslint-plugin": "catalog:",
+    "@vue/eslint-config-prettier": "catalog:",
+    "@vue/eslint-config-typescript": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-better-tailwindcss": "catalog:",
+    "eslint-plugin-import-x": "catalog:",
+    "eslint-plugin-no-only-tests": "catalog:",
+    "eslint-plugin-promise": "catalog:",
+    "eslint-plugin-sonarjs": "catalog:",
+    "eslint-plugin-unicorn": "catalog:",
+    "eslint-plugin-vue": "catalog:",
+    "eslint-plugin-wdio": "catalog:",
+    "eslint-plugin-yml": "catalog:",
+    "globals": "catalog:",
+    "markdownlint-cli2": "catalog:",
+    "prettier": "catalog:",
+    "tailwindcss": "catalog:"
   }
 }
