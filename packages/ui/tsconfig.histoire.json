@@ -2,6 +2,8 @@
   "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
   "include": [".histoire/**/*.vue", "src/**/*.story.vue", "histoire.setup.ts"],
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.histoire.tsbuildinfo",
+
     "baseUrl": ".",
 
     "exactOptionalPropertyTypes": false,

@@ -3,6 +3,8 @@
   "include": ["src/**/*.vue", "src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts", "src/**/*.story.vue"],
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
     "baseUrl": ".",
 
     "exactOptionalPropertyTypes": false,
