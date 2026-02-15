@@ -8,12 +8,12 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "@cssnr/vitepress-swiper": "0.2.1",
-    "vue": "3.5.27"
+    "@cssnr/vitepress-swiper": "catalog:",
+    "vue": "catalog:"
   },
   "devDependencies": {
-    "vitepress": "2.0.0-alpha.16",
-    "vitepress-plugin-llms": "1.11.0",
-    "wrangler": "4.63.0"
+    "vitepress": "catalog:",
+    "vitepress-plugin-llms": "catalog:",
+    "wrangler": "catalog:"
   }
 }

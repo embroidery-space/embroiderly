@@ -4,263 +4,506 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@cssnr/vitepress-swiper':
+      specifier: 0.2.1
+      version: 0.2.1
+    '@eslint/js':
+      specifier: 9.39.2
+      version: 9.39.2
+    '@fluent/bundle':
+      specifier: 0.19.1
+      version: 0.19.1
+    '@iconify/vue':
+      specifier: 5.0.0
+      version: 5.0.0
+    '@nuxt/ui':
+      specifier: 4.4.0
+      version: 4.4.0
+    '@pinia/testing':
+      specifier: 1.0.3
+      version: 1.0.3
+    '@pixi/devtools':
+      specifier: 2.0.1
+      version: 2.0.1
+    '@sentry/core':
+      specifier: 10.38.0
+      version: 10.38.0
+    '@sentry/vue':
+      specifier: 10.38.0
+      version: 10.38.0
+    '@stdlib/math-base-special-roundn':
+      specifier: 0.2.3
+      version: 0.2.3
+    '@tailwindcss/vite':
+      specifier: 4.1.18
+      version: 4.1.18
+    '@tauri-apps/api':
+      specifier: 2.10.1
+      version: 2.10.1
+    '@tauri-apps/cli':
+      specifier: 2.10.0
+      version: 2.10.0
+    '@tauri-apps/plugin-clipboard-manager':
+      specifier: 2.3.2
+      version: 2.3.2
+    '@tauri-apps/plugin-dialog':
+      specifier: 2.6.0
+      version: 2.6.0
+    '@tauri-apps/plugin-fs':
+      specifier: 2.4.5
+      version: 2.4.5
+    '@tauri-apps/plugin-opener':
+      specifier: 2.5.3
+      version: 2.5.3
+    '@tauri-apps/plugin-process':
+      specifier: 2.3.1
+      version: 2.3.1
+    '@tauri-apps/plugin-updater':
+      specifier: 2.10.0
+      version: 2.10.0
+    '@tauri-store/pinia':
+      specifier: 4.1.1
+      version: 4.1.1
+    '@tsconfig/node24':
+      specifier: 24.0.4
+      version: 24.0.4
+    '@tsconfig/strictest':
+      specifier: 2.0.8
+      version: 2.0.8
+    '@types/mocha':
+      specifier: 10.0.10
+      version: 10.0.10
+    '@types/node':
+      specifier: 24.10.12
+      version: 24.10.12
+    '@types/sortablejs':
+      specifier: 1.15.9
+      version: 1.15.9
+    '@vitejs/plugin-vue':
+      specifier: 6.0.4
+      version: 6.0.4
+    '@vitest/browser-webdriverio':
+      specifier: 4.0.18
+      version: 4.0.18
+    '@vitest/coverage-v8':
+      specifier: 4.0.18
+      version: 4.0.18
+    '@vitest/eslint-plugin':
+      specifier: 1.6.6
+      version: 1.6.6
+    '@vue/eslint-config-prettier':
+      specifier: 10.2.0
+      version: 10.2.0
+    '@vue/eslint-config-typescript':
+      specifier: 14.6.0
+      version: 14.6.0
+    '@vue/test-utils':
+      specifier: 2.4.6
+      version: 2.4.6
+    '@vue/tsconfig':
+      specifier: 0.8.1
+      version: 0.8.1
+    '@vueuse/components':
+      specifier: 14.2.0
+      version: 14.2.0
+    '@vueuse/core':
+      specifier: 14.2.0
+      version: 14.2.0
+    '@vueuse/integrations':
+      specifier: 14.2.0
+      version: 14.2.0
+    '@wdio/cli':
+      specifier: 9.23.3
+      version: 9.23.3
+    '@wdio/globals':
+      specifier: 9.23.0
+      version: 9.23.0
+    '@wdio/local-runner':
+      specifier: 9.23.3
+      version: 9.23.3
+    '@wdio/mocha-framework':
+      specifier: 9.23.3
+      version: 9.23.3
+    '@wdio/spec-reporter':
+      specifier: 9.23.3
+      version: 9.23.3
+    '@zorsh/zorsh':
+      specifier: 0.4.0
+      version: 0.4.0
+    base64-js:
+      specifier: 1.5.1
+      version: 1.5.1
+    dequal:
+      specifier: 2.0.3
+      version: 2.0.3
+    eslint:
+      specifier: 9.39.2
+      version: 9.39.2
+    eslint-plugin-better-tailwindcss:
+      specifier: 4.1.1
+      version: 4.1.1
+    eslint-plugin-import-x:
+      specifier: 4.16.1
+      version: 4.16.1
+    eslint-plugin-no-only-tests:
+      specifier: 3.3.0
+      version: 3.3.0
+    eslint-plugin-promise:
+      specifier: 7.2.1
+      version: 7.2.1
+    eslint-plugin-sonarjs:
+      specifier: 3.0.6
+      version: 3.0.6
+    eslint-plugin-unicorn:
+      specifier: 62.0.0
+      version: 62.0.0
+    eslint-plugin-vue:
+      specifier: 10.7.0
+      version: 10.7.0
+    eslint-plugin-wdio:
+      specifier: 9.23.0
+      version: 9.23.0
+    eslint-plugin-yml:
+      specifier: 3.1.2
+      version: 3.1.2
+    fluent-vue:
+      specifier: 3.8.1
+      version: 3.8.1
+    fuse.js:
+      specifier: 7.1.0
+      version: 7.1.0
+    globals:
+      specifier: 17.3.0
+      version: 17.3.0
+    markdownlint-cli2:
+      specifier: 0.20.0
+      version: 0.20.0
+    pinia:
+      specifier: 3.0.4
+      version: 3.0.4
+    pinia-plugin-persistedstate:
+      specifier: 4.7.1
+      version: 4.7.1
+    pixi.js:
+      specifier: 8.16.0
+      version: 8.16.0
+    posthog-js:
+      specifier: 1.342.1
+      version: 1.342.1
+    prettier:
+      specifier: 3.8.1
+      version: 3.8.1
+    reka-ui:
+      specifier: 2.8.0
+      version: 2.8.0
+    sortablejs:
+      specifier: 1.15.6
+      version: 1.15.6
+    stacktracey:
+      specifier: 2.1.8
+      version: 2.1.8
+    tailwindcss:
+      specifier: 4.1.18
+      version: 4.1.18
+    tauri-plugin-better-posthog:
+      specifier: 0.1.3
+      version: 0.1.3
+    typescript:
+      specifier: 5.9.3
+      version: 5.9.3
+    uuid:
+      specifier: 13.0.0
+      version: 13.0.0
+    vite:
+      specifier: 7.3.1
+      version: 7.3.1
+    vite-plugin-vue-devtools:
+      specifier: 8.0.6
+      version: 8.0.6
+    vitepress:
+      specifier: 2.0.0-alpha.16
+      version: 2.0.0-alpha.16
+    vitepress-plugin-llms:
+      specifier: 1.11.0
+      version: 1.11.0
+    vitest:
+      specifier: 4.0.18
+      version: 4.0.18
+    vitest-browser-vue:
+      specifier: 2.0.2
+      version: 2.0.2
+    vue:
+      specifier: 3.5.27
+      version: 3.5.27
+    vue-router:
+      specifier: 4.6.4
+      version: 4.6.4
+    vue-tsc:
+      specifier: 3.2.4
+      version: 3.2.4
+    wrangler:
+      specifier: 4.63.0
+      version: 4.63.0
+
 importers:
 
   .:
     devDependencies:
       '@eslint/js':
-        specifier: 9.39.2
+        specifier: 'catalog:'
         version: 9.39.2
       '@tauri-apps/cli':
-        specifier: 2.10.0
+        specifier: 'catalog:'
         version: 2.10.0
       '@vitest/eslint-plugin':
-        specifier: 1.6.6
+        specifier: 'catalog:'
         version: 1.6.6(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)(vitest@4.0.18)
       '@vue/eslint-config-prettier':
-        specifier: 10.2.0
+        specifier: 'catalog:'
         version: 10.2.0(eslint@9.39.2(jiti@2.6.1))(prettier@3.8.1)
       '@vue/eslint-config-typescript':
-        specifier: 14.6.0
+        specifier: 'catalog:'
         version: 14.6.0(eslint-plugin-vue@10.7.0(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.6.1))))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       eslint:
-        specifier: 9.39.2
+        specifier: 'catalog:'
         version: 9.39.2(jiti@2.6.1)
       eslint-plugin-better-tailwindcss:
-        specifier: 4.1.1
+        specifier: 'catalog:'
         version: 4.1.1(eslint@9.39.2(jiti@2.6.1))(tailwindcss@4.1.18)(typescript@5.9.3)
       eslint-plugin-import-x:
-        specifier: 4.16.1
+        specifier: 'catalog:'
         version: 4.16.1(@typescript-eslint/utils@8.52.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-no-only-tests:
-        specifier: 3.3.0
+        specifier: 'catalog:'
         version: 3.3.0
       eslint-plugin-promise:
-        specifier: 7.2.1
+        specifier: 'catalog:'
         version: 7.2.1(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-sonarjs:
-        specifier: 3.0.6
+        specifier: 'catalog:'
         version: 3.0.6(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-unicorn:
-        specifier: 62.0.0
+        specifier: 'catalog:'
         version: 62.0.0(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-vue:
-        specifier: 10.7.0
+        specifier: 'catalog:'
         version: 10.7.0(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.6.1)))
       eslint-plugin-wdio:
-        specifier: 9.23.0
+        specifier: 'catalog:'
         version: 9.23.0
       eslint-plugin-yml:
-        specifier: 3.1.2
+        specifier: 'catalog:'
         version: 3.1.2(eslint@9.39.2(jiti@2.6.1))
       globals:
-        specifier: 17.3.0
+        specifier: 'catalog:'
         version: 17.3.0
       markdownlint-cli2:
-        specifier: 0.20.0
+        specifier: 'catalog:'
         version: 0.20.0
       prettier:
-        specifier: 3.8.1
+        specifier: 'catalog:'
         version: 3.8.1
       tailwindcss:
-        specifier: 4.1.18
+        specifier: 'catalog:'
         version: 4.1.18
 
   app:
     dependencies:
       '@fluent/bundle':
-        specifier: 0.19.1
+        specifier: 'catalog:'
         version: 0.19.1
       '@nuxt/ui':
-        specifier: 4.4.0
+        specifier: 'catalog:'
         version: 4.4.0(@tiptap/extensions@3.18.0(@tiptap/core@3.18.0(@tiptap/pm@3.18.0))(@tiptap/pm@3.18.0))(@tiptap/y-tiptap@3.0.1(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.5)(y-protocols@1.0.7(yjs@13.6.28))(yjs@13.6.28))(change-case@5.4.4)(embla-carousel@8.6.0)(focus-trap@7.8.0)(magicast@0.5.1)(react@19.2.3)(sortablejs@1.15.6)(tailwindcss@4.1.18)(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(vite@7.3.1(@types/node@24.10.12)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))(vue-router@4.6.4(vue@3.5.27(typescript@5.9.3)))(vue@3.5.27(typescript@5.9.3))(yjs@13.6.28)(zod@4.3.6)
       '@sentry/core':
-        specifier: 10.38.0
+        specifier: 'catalog:'
         version: 10.38.0
       '@sentry/vue':
-        specifier: 10.38.0
+        specifier: 'catalog:'
         version: 10.38.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.27(typescript@5.9.3)))(vue@3.5.27(typescript@5.9.3))
       '@stdlib/math-base-special-roundn':
-        specifier: 0.2.3
+        specifier: 'catalog:'
         version: 0.2.3
       '@tauri-apps/api':
-        specifier: 2.10.1
+        specifier: 'catalog:'
         version: 2.10.1
       '@tauri-apps/plugin-clipboard-manager':
-        specifier: 2.3.2
+        specifier: 'catalog:'
         version: 2.3.2
       '@tauri-apps/plugin-dialog':
-        specifier: 2.6.0
+        specifier: 'catalog:'
         version: 2.6.0
       '@tauri-apps/plugin-fs':
-        specifier: 2.4.5
+        specifier: 'catalog:'
         version: 2.4.5
       '@tauri-apps/plugin-opener':
-        specifier: 2.5.3
+        specifier: 'catalog:'
         version: 2.5.3
       '@tauri-apps/plugin-process':
-        specifier: 2.3.1
+        specifier: 'catalog:'
         version: 2.3.1
       '@tauri-apps/plugin-updater':
-        specifier: 2.10.0
+        specifier: 'catalog:'
         version: 2.10.0
       '@tauri-store/pinia':
-        specifier: 4.1.1
+        specifier: 'catalog:'
         version: 4.1.1(typescript@5.9.3)
       '@vueuse/components':
-        specifier: 14.2.0
+        specifier: 'catalog:'
         version: 14.2.0(vue@3.5.27(typescript@5.9.3))
       '@vueuse/core':
-        specifier: 14.2.0
+        specifier: 'catalog:'
         version: 14.2.0(vue@3.5.27(typescript@5.9.3))
       '@vueuse/integrations':
-        specifier: 14.2.0
+        specifier: 'catalog:'
         version: 14.2.0(change-case@5.4.4)(focus-trap@7.8.0)(fuse.js@7.1.0)(sortablejs@1.15.6)(vue@3.5.27(typescript@5.9.3))
       '@zorsh/zorsh':
-        specifier: 0.4.0
+        specifier: 'catalog:'
         version: 0.4.0
       base64-js:
-        specifier: 1.5.1
+        specifier: 'catalog:'
         version: 1.5.1
       dequal:
-        specifier: 2.0.3
+        specifier: 'catalog:'
         version: 2.0.3
       fluent-vue:
-        specifier: 3.8.1
+        specifier: 'catalog:'
         version: 3.8.1(@fluent/bundle@0.19.1)(vue@3.5.27(typescript@5.9.3))
       fuse.js:
-        specifier: 7.1.0
+        specifier: 'catalog:'
         version: 7.1.0
       pinia:
-        specifier: 3.0.4
+        specifier: 'catalog:'
         version: 3.0.4(typescript@5.9.3)(vue@3.5.27(typescript@5.9.3))
       pinia-plugin-persistedstate:
-        specifier: 4.7.1
+        specifier: 'catalog:'
         version: 4.7.1(@nuxt/kit@4.3.0(magicast@0.5.1))(pinia@3.0.4(typescript@5.9.3)(vue@3.5.27(typescript@5.9.3)))
       pixi.js:
-        specifier: 8.16.0
+        specifier: 'catalog:'
         version: 8.16.0
       posthog-js:
-        specifier: 1.342.1
+        specifier: 'catalog:'
         version: 1.342.1
       reka-ui:
-        specifier: 2.8.0
+        specifier: 'catalog:'
         version: 2.8.0(vue@3.5.27(typescript@5.9.3))
       sortablejs:
-        specifier: 1.15.6
+        specifier: 'catalog:'
         version: 1.15.6
       stacktracey:
-        specifier: 2.1.8
+        specifier: 'catalog:'
         version: 2.1.8
       tauri-plugin-better-posthog:
-        specifier: 0.1.3
+        specifier: 'catalog:'
         version: 0.1.3
       uuid:
-        specifier: 13.0.0
+        specifier: 'catalog:'
         version: 13.0.0
       vue:
-        specifier: 3.5.27
+        specifier: 'catalog:'
         version: 3.5.27(typescript@5.9.3)
       vue-router:
-        specifier: 4.6.4
+        specifier: 'catalog:'
         version: 4.6.4(vue@3.5.27(typescript@5.9.3))
     devDependencies:
       '@iconify/vue':
-        specifier: 5.0.0
+        specifier: 'catalog:'
         version: 5.0.0(vue@3.5.27(typescript@5.9.3))
       '@pinia/testing':
-        specifier: 1.0.3
+        specifier: 'catalog:'
         version: 1.0.3(pinia@3.0.4(typescript@5.9.3)(vue@3.5.27(typescript@5.9.3)))
       '@pixi/devtools':
-        specifier: 2.0.1
+        specifier: 'catalog:'
         version: 2.0.1(pixi.js@8.16.0)
       '@tailwindcss/vite':
-        specifier: 4.1.18
+        specifier: 'catalog:'
         version: 4.1.18(vite@7.3.1(@types/node@24.10.12)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
       '@tsconfig/node24':
-        specifier: 24.0.4
+        specifier: 'catalog:'
         version: 24.0.4
       '@tsconfig/strictest':
-        specifier: 2.0.8
+        specifier: 'catalog:'
         version: 2.0.8
       '@types/mocha':
-        specifier: 10.0.10
+        specifier: 'catalog:'
         version: 10.0.10
       '@types/node':
-        specifier: 24.10.12
+        specifier: 'catalog:'
         version: 24.10.12
       '@types/sortablejs':
-        specifier: 1.15.9
+        specifier: 'catalog:'
         version: 1.15.9
       '@vitejs/plugin-vue':
-        specifier: 6.0.4
+        specifier: 'catalog:'
         version: 6.0.4(vite@7.3.1(@types/node@24.10.12)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
       '@vitest/browser-webdriverio':
-        specifier: 4.0.18
+        specifier: 'catalog:'
         version: 4.0.18(vite@7.3.1(@types/node@24.10.12)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.0.18)(webdriverio@9.23.3)
       '@vitest/coverage-v8':
-        specifier: 4.0.18
+        specifier: 'catalog:'
         version: 4.0.18(@vitest/browser@4.0.18(vite@7.3.1(@types/node@24.10.12)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.0.18))(vitest@4.0.18)
       '@vue/test-utils':
-        specifier: 2.4.6
+        specifier: 'catalog:'
         version: 2.4.6
       '@vue/tsconfig':
-        specifier: 0.8.1
+        specifier: 'catalog:'
         version: 0.8.1(typescript@5.9.3)(vue@3.5.27(typescript@5.9.3))
       '@wdio/cli':
-        specifier: 9.23.3
+        specifier: 'catalog:'
         version: 9.23.3(@types/node@24.10.12)(expect-webdriverio@5.6.4)
       '@wdio/globals':
-        specifier: 9.23.0
+        specifier: 'catalog:'
         version: 9.23.0(expect-webdriverio@5.6.4)(webdriverio@9.23.3)
       '@wdio/local-runner':
-        specifier: 9.23.3
+        specifier: 'catalog:'
         version: 9.23.3(@wdio/globals@9.23.0)(webdriverio@9.23.3)
       '@wdio/mocha-framework':
-        specifier: 9.23.3
+        specifier: 'catalog:'
         version: 9.23.3
       '@wdio/spec-reporter':
-        specifier: 9.23.3
+        specifier: 'catalog:'
         version: 9.23.3
       tailwindcss:
-        specifier: 4.1.18
+        specifier: 'catalog:'
         version: 4.1.18
       typescript:
-        specifier: 5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
       vite:
-        specifier: 7.3.1
+        specifier: 'catalog:'
         version: 7.3.1(@types/node@24.10.12)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)
       vite-plugin-vue-devtools:
-        specifier: 8.0.6
+        specifier: 'catalog:'
         version: 8.0.6(@nuxt/kit@4.3.0(magicast@0.5.1))(vite@7.3.1(@types/node@24.10.12)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
       vitest:
-        specifier: 4.0.18
+        specifier: 'catalog:'
         version: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.12)(@vitest/browser-webdriverio@4.0.18)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)
       vitest-browser-vue:
-        specifier: 2.0.2
+        specifier: 'catalog:'
         version: 2.0.2(vitest@4.0.18)(vue@3.5.27(typescript@5.9.3))
       vue-tsc:
-        specifier: 3.2.4
+        specifier: 'catalog:'
         version: 3.2.4(typescript@5.9.3)
 
   docs:
     dependencies:
       '@cssnr/vitepress-swiper':
-        specifier: 0.2.1
+        specifier: 'catalog:'
         version: 0.2.1(swiper@12.0.3)(vitepress@2.0.0-alpha.16(@types/node@24.10.12)(change-case@5.4.4)(fuse.js@7.1.0)(jiti@2.6.1)(lightningcss@1.31.1)(postcss@8.5.6)(sortablejs@1.15.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
       vue:
-        specifier: 3.5.27
+        specifier: 'catalog:'
         version: 3.5.27(typescript@5.9.3)
     devDependencies:
       vitepress:
-        specifier: 2.0.0-alpha.16
+        specifier: 'catalog:'
         version: 2.0.0-alpha.16(@types/node@24.10.12)(change-case@5.4.4)(fuse.js@7.1.0)(jiti@2.6.1)(lightningcss@1.31.1)(postcss@8.5.6)(sortablejs@1.15.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
       vitepress-plugin-llms:
-        specifier: 1.11.0
+        specifier: 'catalog:'
         version: 1.11.0
       wrangler:
-        specifier: 4.63.0
+        specifier: 'catalog:'
         version: 4.63.0
 
 packages:
