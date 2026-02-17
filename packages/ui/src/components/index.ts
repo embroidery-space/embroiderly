@@ -20,7 +20,6 @@ export { default as Icon, type IconProps } from "./Icon/Icon.vue";
 export { default as Kbd, type KbdProps } from "./Kbd/Kbd.vue";
 export { default as Progress, type ProgressProps } from "./Progress/Progress.vue";
 export { default as Separator, type SeparatorProps } from "./Separator/Separator.vue";
-export { default as Tabs, type TabsProps, type TabsSlots, type TabsItem } from "./Tabs/Tabs.vue";
 
 // Form.
 export { default as Checkbox, type CheckboxProps } from "./Checkbox/Checkbox.vue";
@@ -40,6 +39,10 @@ export { default as Slider, type SliderProps } from "./Slider/Slider.vue";
 export { default as Switch, type SwitchProps } from "./Switch/Switch.vue";
 export { default as Textarea, type TextareaProps } from "./Textarea/Textarea.vue";
 
+// Navigation.
+export { default as Menubar, type MenubarProps, type MenubarItem, type MenubarMenu } from "./Menubar/Menubar.vue";
+export { default as Tabs, type TabsProps, type TabsSlots, type TabsItem } from "./Tabs/Tabs.vue";
+
 // Overlay.
 export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./BlockUI/BlockUI.vue";
 export {
@@ -54,11 +57,5 @@ export {
   type DropdownMenuEmits,
   type DropdownMenuItem,
 } from "./DropdownMenu/DropdownMenu.vue";
-export {
-  default as Menubar,
-  type MenubarProps,
-  type MenubarItem,
-  type MenubarMenu,
-} from "./Menubar/Menubar.vue";
 export { default as Popover, type PopoverProps, type PopoverEmits, type PopoverSlots } from "./Popover/Popover.vue";
 export { default as Tooltip, type TooltipProps, type TooltipEmits, type TooltipSlots } from "./Tooltip/Tooltip.vue";
