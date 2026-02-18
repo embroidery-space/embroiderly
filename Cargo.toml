@@ -106,7 +106,7 @@ palette = "0.7.6"
 quantette = "0.5.1"
 
 # Archiving
-zip = { version = "7.4.0", default-features = false, features = [ "zstd", "time", ] }
+zip = { version = "8.0.0", default-features = false, features = [ "zstd", "time", ] }
 
 # De/serialization
 serde = { version = "1.0.228", features = ["derive"] }
