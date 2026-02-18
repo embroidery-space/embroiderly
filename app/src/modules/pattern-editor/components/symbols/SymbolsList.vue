@@ -1,3 +1,28 @@
+<script setup lang="ts">
+import SymbolsListItem from "./SymbolsListItem.vue";
+
+interface SymbolsListProps {
+  assignedSymbols: number[];
+  options?: number[];
+  fontFamily?: string;
+  disabled?: boolean;
+}
+
+const selectedSymbol = defineModel<number>("selectedSymbol");
+const { assignedSymbols, options = [], fontFamily = "", disabled = false } = defineProps<SymbolsListProps>();
+
+const emit = defineEmits<{
+  "option-dblclick": [
+    {
+      /** Original event */
+      originalEvent: Event;
+      /** Code point of the symbol */
+      codePoint: number;
+    },
+  ];
+}>();
+</script>
+
 <template>
   <div class="flex flex-col">
     <div v-if="$slots.header" class="border-b border-default px-2 py-1">
@@ -53,28 +78,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-  import SymbolsListItem from "./SymbolsListItem.vue";
-
-  interface SymbolsListProps {
-    assignedSymbols: number[];
-    options?: number[];
-    fontFamily?: string;
-    disabled?: boolean;
-  }
-
-  const selectedSymbol = defineModel<number>("selectedSymbol");
-  const { assignedSymbols, options = [], fontFamily = "", disabled = false } = defineProps<SymbolsListProps>();
-
-  const emit = defineEmits<{
-    "option-dblclick": [
-      {
-        /** Original event */
-        originalEvent: Event;
-        /** Code point of the symbol */
-        codePoint: number;
-      },
-    ];
-  }>();
-</script>

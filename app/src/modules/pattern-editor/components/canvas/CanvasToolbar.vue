@@ -1,3 +1,35 @@
+<script setup lang="ts">
+import { computed, ref, watch } from "vue";
+
+import { DisplayMode, LayersVisibility } from "#pattern-editor/lib/pattern/";
+import { usePatternStore } from "#pattern-editor/stores/";
+import { useI18n } from "#shared/composables/";
+
+import { ToolToggle, ToolToggleGroup } from "../toolbar/";
+
+import CanvasLayers from "./CanvasLayers.vue";
+
+const { fluent } = useI18n();
+
+const patternStore = usePatternStore();
+
+const disabled = computed(() => patternStore.pattern === undefined);
+
+const layers = ref(new LayersVisibility(patternStore.pattern?.layersVisibility || LayersVisibility.default()));
+watch(layers, (newLayers) => patternStore.setLayersVisibility(newLayers), { deep: true });
+
+const displayModeOptions = computed(() => [
+  { icon: "i-stitches:mix", label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
+  { icon: "i-stitches:square", label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
+  { icon: "i-stitches:full", label: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
+]);
+
+const showSymbols = computed({
+  get: () => patternStore.pattern?.showSymbols ?? false,
+  set: patternStore.showSymbols,
+});
+</script>
+
 <template>
   <div class="flex flex-col gap-1 p-1">
     <UPopover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
@@ -37,35 +69,3 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-  import { computed, ref, watch } from "vue";
-
-  import { DisplayMode, LayersVisibility } from "#pattern-editor/lib/pattern/";
-  import { usePatternStore } from "#pattern-editor/stores/";
-  import { useI18n } from "#shared/composables/";
-
-  import { ToolToggle, ToolToggleGroup } from "../toolbar/";
-
-  import CanvasLayers from "./CanvasLayers.vue";
-
-  const { fluent } = useI18n();
-
-  const patternStore = usePatternStore();
-
-  const disabled = computed(() => patternStore.pattern === undefined);
-
-  const layers = ref(new LayersVisibility(patternStore.pattern?.layersVisibility || LayersVisibility.default()));
-  watch(layers, (newLayers) => patternStore.setLayersVisibility(newLayers), { deep: true });
-
-  const displayModeOptions = computed(() => [
-    { icon: "i-stitches:mix", label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
-    { icon: "i-stitches:square", label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
-    { icon: "i-stitches:full", label: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
-  ]);
-
-  const showSymbols = computed({
-    get: () => patternStore.pattern?.showSymbols ?? false,
-    set: patternStore.showSymbols,
-  });
-</script>

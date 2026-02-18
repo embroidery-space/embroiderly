@@ -1,3 +1,48 @@
+<script lang="ts" setup>
+import type { DropdownMenuItem } from "@nuxt/ui";
+import { computed } from "vue";
+
+import type { ZoomState } from "#pattern-editor/lib/pixi/";
+import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
+import { useI18n } from "#shared/composables/";
+
+const {
+  modelValue: zoom,
+  min = 0,
+  max = 100,
+} = defineProps<{
+  modelValue: number;
+  min?: number;
+  max?: number;
+}>();
+const emit = defineEmits<{
+  "update:model-value": [ZoomState];
+}>();
+
+const { fluent } = useI18n();
+
+const zoomOptions = computed<DropdownMenuItem[]>(() => [
+  { label: fluent.$t("canvas-zoom-fit"), kbds: ["ctrl", "0"], onSelect: () => emit("update:model-value", "fit") },
+  { label: fluent.$t("canvas-zoom-fit-width"), onSelect: () => emit("update:model-value", "fit-width") },
+  { label: fluent.$t("canvas-zoom-fit-height"), onSelect: () => emit("update:model-value", "fit-height") },
+]);
+
+function zoomIn() {
+  emit("update:model-value", Math.min(zoom + 10, max));
+}
+
+function zoomOut() {
+  emit("update:model-value", Math.max(zoom - 10, min));
+}
+
+useShortcuts(extractShortcuts(zoomOptions));
+useShortcuts({
+  // Use `=` instead of `+` for defining a shortcut since `+` is triggered by the `Shift` key.
+  "ctrl_=": zoomIn,
+  "ctrl_-": zoomOut,
+});
+</script>
+
 <template>
   <div class="flex items-center gap-x-2">
     <UFieldGroup class="w-16">
@@ -38,48 +83,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  import type { DropdownMenuItem } from "@nuxt/ui";
-  import { computed } from "vue";
-
-  import type { ZoomState } from "#pattern-editor/lib/pixi/";
-  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
-  import { useI18n } from "#shared/composables/";
-
-  const { fluent } = useI18n();
-
-  const {
-    modelValue: zoom,
-    min = 0,
-    max = 100,
-  } = defineProps<{
-    modelValue: number;
-    min?: number;
-    max?: number;
-  }>();
-  const emit = defineEmits<{
-    "update:model-value": [ZoomState];
-  }>();
-
-  const zoomOptions = computed<DropdownMenuItem[]>(() => [
-    { label: fluent.$t("canvas-zoom-fit"), kbds: ["ctrl", "0"], onSelect: () => emit("update:model-value", "fit") },
-    { label: fluent.$t("canvas-zoom-fit-width"), onSelect: () => emit("update:model-value", "fit-width") },
-    { label: fluent.$t("canvas-zoom-fit-height"), onSelect: () => emit("update:model-value", "fit-height") },
-  ]);
-
-  function zoomIn() {
-    emit("update:model-value", Math.min(zoom + 10, max));
-  }
-
-  function zoomOut() {
-    emit("update:model-value", Math.max(zoom - 10, min));
-  }
-
-  useShortcuts(extractShortcuts(zoomOptions));
-  useShortcuts({
-    // Use `=` instead of `+` for defining a shortcut since `+` is triggered by the `Shift` key.
-    "ctrl_=": zoomIn,
-    "ctrl_-": zoomOut,
-  });
-</script>

@@ -1,3 +1,98 @@
+<script setup lang="ts">
+import { resolveResource, sep } from "@tauri-apps/api/path";
+import { openPath, openUrl } from "@tauri-apps/plugin-opener";
+
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+
+import { useEditorModals } from "#pattern-editor/composables/";
+import { Fabric } from "#pattern-editor/lib/pattern/";
+import { usePatternFileStore } from "#pattern-editor/stores/";
+import { useI18n } from "#shared/composables/";
+import { useSettingsStore } from "#shared/stores/";
+
+import { EditorWorkspaceLayout } from "./layout/";
+
+const router = useRouter();
+
+const patternFileStore = usePatternFileStore();
+const settingsStore = useSettingsStore();
+
+const modals = useEditorModals();
+
+const { fluent } = useI18n();
+
+interface InfoSection {
+  title: string;
+  items: InfoItemOptions[];
+}
+
+interface InfoItemOptions {
+  title: string;
+  text?: string;
+  url?: string;
+  command?: () => void;
+}
+
+const infoSections = computed<InfoSection[]>(() => [
+  {
+    title: fluent.$t("welcome-section-customization"),
+    items: [
+      {
+        title: fluent.$t("welcome-customization-settings-title"),
+        text: fluent.$t("welcome-customization-settings-descr"),
+        command: settingsStore.openSettingsModal,
+      },
+    ],
+  },
+  {
+    title: fluent.$t("welcome-section-info"),
+    items: [
+      {
+        title: fluent.$t("welcome-info-docs-title"),
+        text: fluent.$t("welcome-info-docs-descr"),
+        async command() {
+          const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
+          await openPath(documentPath);
+        },
+      },
+    ],
+  },
+  {
+    title: fluent.$t("welcome-section-help"),
+    items: [
+      { title: fluent.$t("welcome-help-tg"), url: "https://t.me/embroiderly" },
+      { title: fluent.$t("welcome-help-fb"), url: "https://facebook.com/groups/embroiderly" },
+    ],
+  },
+]);
+
+function handleInfoItemClick(item: InfoItemOptions) {
+  if (item.url) openUrl(item.url);
+  if (item.command) item.command();
+}
+
+async function openPattern() {
+  const patternId = await patternFileStore.openPattern();
+  router.push({ name: "pattern-editor", params: { patternId } });
+}
+
+function createPattern() {
+  modals.patternCreationModal.open({
+    fabric: Fabric.default(),
+    async onSave(fabric) {
+      const patternId = await patternFileStore.createPattern(fabric);
+      router.push({ name: "pattern-editor", params: { patternId } });
+    },
+  });
+}
+
+async function openRecentFile(filePath: string) {
+  const patternId = await patternFileStore.openPattern(filePath);
+  if (patternId) router.push({ name: "pattern-editor", params: { patternId } });
+}
+</script>
+
 <template>
   <EditorWorkspaceLayout data-testid="welcome-screen">
     <div class="flex min-w-1/2 flex-col gap-6 overflow-auto p-8">
@@ -82,98 +177,3 @@
     </template>
   </EditorWorkspaceLayout>
 </template>
-
-<script setup lang="ts">
-  import { resolveResource, sep } from "@tauri-apps/api/path";
-  import { openPath, openUrl } from "@tauri-apps/plugin-opener";
-
-  import { computed } from "vue";
-  import { useRouter } from "vue-router";
-
-  import { useEditorModals } from "#pattern-editor/composables/";
-  import { Fabric } from "#pattern-editor/lib/pattern/";
-  import { usePatternFileStore } from "#pattern-editor/stores/";
-  import { useI18n } from "#shared/composables/";
-  import { useSettingsStore } from "#shared/stores/";
-
-  import { EditorWorkspaceLayout } from "./layout/";
-
-  const router = useRouter();
-
-  const patternFileStore = usePatternFileStore();
-  const settingsStore = useSettingsStore();
-
-  const modals = useEditorModals();
-
-  const { fluent } = useI18n();
-
-  interface InfoSection {
-    title: string;
-    items: InfoItemOptions[];
-  }
-
-  interface InfoItemOptions {
-    title: string;
-    text?: string;
-    url?: string;
-    command?: () => void;
-  }
-
-  const infoSections = computed<InfoSection[]>(() => [
-    {
-      title: fluent.$t("welcome-section-customization"),
-      items: [
-        {
-          title: fluent.$t("welcome-customization-settings-title"),
-          text: fluent.$t("welcome-customization-settings-descr"),
-          command: settingsStore.openSettingsModal,
-        },
-      ],
-    },
-    {
-      title: fluent.$t("welcome-section-info"),
-      items: [
-        {
-          title: fluent.$t("welcome-info-docs-title"),
-          text: fluent.$t("welcome-info-docs-descr"),
-          async command() {
-            const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
-            await openPath(documentPath);
-          },
-        },
-      ],
-    },
-    {
-      title: fluent.$t("welcome-section-help"),
-      items: [
-        { title: fluent.$t("welcome-help-tg"), url: "https://t.me/embroiderly" },
-        { title: fluent.$t("welcome-help-fb"), url: "https://facebook.com/groups/embroiderly" },
-      ],
-    },
-  ]);
-
-  function handleInfoItemClick(item: InfoItemOptions) {
-    if (item.url) openUrl(item.url);
-    if (item.command) item.command();
-  }
-
-  async function openPattern() {
-    const patternId = await patternFileStore.openPattern();
-    router.push({ name: "pattern-editor", params: { patternId } });
-  }
-
-  function createPattern() {
-    modals.patternCreationModal.open({
-      fabric: Fabric.default(),
-      async onSave(fabric) {
-        const patternId = await patternFileStore.createPattern(fabric);
-        router.push({ name: "pattern-editor", params: { patternId } });
-      },
-    });
-  }
-
-  async function openRecentFile(filePath: string) {
-    const patternId = await patternFileStore.openPattern(filePath);
-    if (patternId) router.push({ name: "pattern-editor", params: { patternId } });
-  }
-</script>

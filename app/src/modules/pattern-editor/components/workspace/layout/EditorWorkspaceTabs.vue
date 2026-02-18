@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+
+import { usePatternFileStore, usePatternStore } from "#pattern-editor/stores";
+
+const router = useRouter();
+
+const patternStore = usePatternStore();
+const patternFileStore = usePatternFileStore();
+
+function switchPattern(patternId: string) {
+  router.push({ name: "pattern-editor", params: { patternId } });
+}
+
+async function closePattern(patternId: string) {
+  await patternFileStore.closePattern(patternId);
+
+  const openedPatternsNumber = patternFileStore.openedPatterns.length;
+  const lastPatternId = patternFileStore.openedPatterns[openedPatternsNumber - 1]?.id;
+
+  router.push({ name: "pattern-editor", params: { patternId: lastPatternId } });
+}
+</script>
+
 <template>
   <UTabs
     :model-value="patternStore.pattern?.id"
@@ -31,27 +55,3 @@
     </template>
   </UTabs>
 </template>
-
-<script setup lang="ts">
-  import { useRouter } from "vue-router";
-
-  import { usePatternFileStore, usePatternStore } from "#pattern-editor/stores";
-
-  const router = useRouter();
-
-  const patternStore = usePatternStore();
-  const patternFileStore = usePatternFileStore();
-
-  function switchPattern(patternId: string) {
-    router.push({ name: "pattern-editor", params: { patternId } });
-  }
-
-  async function closePattern(patternId: string) {
-    await patternFileStore.closePattern(patternId);
-
-    const openedPatternsNumber = patternFileStore.openedPatterns.length;
-    const lastPatternId = patternFileStore.openedPatterns[openedPatternsNumber - 1]?.id;
-
-    router.push({ name: "pattern-editor", params: { patternId: lastPatternId } });
-  }
-</script>

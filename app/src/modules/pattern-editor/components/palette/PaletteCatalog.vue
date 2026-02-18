@@ -1,3 +1,94 @@
+<script setup lang="ts">
+import type { DropdownMenuItem } from "@nuxt/ui";
+import { useFuse } from "@vueuse/integrations/useFuse";
+import { useTemplateRef, ref, computed, shallowRef } from "vue";
+import type { Ref } from "vue";
+
+import { FilesApi } from "#pattern-editor/api";
+import { BrandPaletteItem, PaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
+import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+import { PALETTE_FILTER } from "#shared/constants/";
+import { LoggerService } from "#shared/services/";
+
+import { PaletteSection, PaletteList, PaletteListItem, PaletteSelect } from ".";
+
+const { palette } = defineProps<{ palette: readonly PaletteItem[] }>();
+const emit = defineEmits<{
+  addPaletteItem: [palitem: PaletteItem];
+  removePaletteItem: [palindex: number];
+}>();
+
+const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
+  columnsNumber: 4,
+  colorOnly: false,
+  showStitchSymbols: false,
+  stitchSymbolsOnContrastBackground: false,
+  showColorBrands: false,
+  showColorNumbers: true,
+  showColorNames: false,
+});
+
+const confirm = useConfirm();
+const filePicker = useFilePicker();
+const { fluent } = useI18n();
+const toast = useToast();
+
+const paletteSelect = useTemplateRef("palette-select");
+
+const searchQuery = ref("");
+const selectedPalette: Ref<BrandPaletteItem[]> = shallowRef([]);
+const { results } = useFuse(searchQuery, selectedPalette, {
+  matchAllWhenSearchEmpty: true,
+  fuseOptions: {
+    keys: ["number", "name"],
+    threshold: 0, // Exact match.
+    ignoreLocation: true, // Anywhere in the string.
+    ignoreFieldNorm: true, // Range both short and long values similarly.
+    ignoreDiacritics: true,
+  },
+});
+
+const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
+  {
+    label: fluent.$t("palette-catalog-menu-import-palettes"),
+    onSelect: importPalettes,
+    loading: importingPalettes.value,
+  },
+]);
+
+const importingPalettes = ref(false);
+async function importPalettes() {
+  const paths = (await filePicker.open({ multiple: true, filters: PALETTE_FILTER })) as string[] | null;
+  if (!paths) return;
+
+  try {
+    importingPalettes.value = true;
+
+    const { failedFiles } = await FilesApi.importPalettes(paths);
+    await paletteSelect.value!.loadPalettesList();
+
+    if (failedFiles.length) {
+      confirm.open(
+        fluent.$ta("palette-catalog-import-failed-files", {
+          failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
+        }),
+      );
+    } else toast.add({ title: fluent.$t("palette-catalog-import-success"), color: "success" });
+  } catch (err) {
+    LoggerService.error(`Failed to import palettes: ${err}`);
+    toast.add({ title: fluent.$t("palette-catalog-import-failure"), color: "error" });
+  } finally {
+    importingPalettes.value = false;
+  }
+}
+
+function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
+  const palindex = palette.findIndex((palitem) => palitem.eq(option));
+  if (palindex === -1) emit("addPaletteItem", option);
+  else emit("removePaletteItem", palindex);
+}
+</script>
+
 <template>
   <PaletteSection :title="$t('palette-catalog')">
     <PaletteList
@@ -40,94 +131,3 @@
     </PaletteList>
   </PaletteSection>
 </template>
-
-<script setup lang="ts">
-  import type { DropdownMenuItem } from "@nuxt/ui";
-  import { useFuse } from "@vueuse/integrations/useFuse";
-  import { useTemplateRef, ref, computed, shallowRef } from "vue";
-  import type { Ref } from "vue";
-
-  import { FilesApi } from "#pattern-editor/api";
-  import { BrandPaletteItem, PaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
-  import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
-  import { PALETTE_FILTER } from "#shared/constants/";
-  import { LoggerService } from "#shared/services/";
-
-  import { PaletteSection, PaletteList, PaletteListItem, PaletteSelect } from ".";
-
-  const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
-    columnsNumber: 4,
-    colorOnly: false,
-    showStitchSymbols: false,
-    stitchSymbolsOnContrastBackground: false,
-    showColorBrands: false,
-    showColorNumbers: true,
-    showColorNames: false,
-  });
-
-  const confirm = useConfirm();
-  const filePicker = useFilePicker();
-  const { fluent } = useI18n();
-  const toast = useToast();
-
-  const { palette } = defineProps<{ palette: readonly PaletteItem[] }>();
-  const emit = defineEmits<{
-    addPaletteItem: [palitem: PaletteItem];
-    removePaletteItem: [palindex: number];
-  }>();
-
-  const paletteSelect = useTemplateRef("palette-select");
-
-  const searchQuery = ref("");
-  const selectedPalette: Ref<BrandPaletteItem[]> = shallowRef([]);
-  const { results } = useFuse(searchQuery, selectedPalette, {
-    matchAllWhenSearchEmpty: true,
-    fuseOptions: {
-      keys: ["number", "name"],
-      threshold: 0, // Exact match.
-      ignoreLocation: true, // Anywhere in the string.
-      ignoreFieldNorm: true, // Range both short and long values similarly.
-      ignoreDiacritics: true,
-    },
-  });
-
-  const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
-    {
-      label: fluent.$t("palette-catalog-menu-import-palettes"),
-      onSelect: importPalettes,
-      loading: importingPalettes.value,
-    },
-  ]);
-
-  const importingPalettes = ref(false);
-  async function importPalettes() {
-    const paths = (await filePicker.open({ multiple: true, filters: PALETTE_FILTER })) as string[] | null;
-    if (!paths) return;
-
-    try {
-      importingPalettes.value = true;
-
-      const { failedFiles } = await FilesApi.importPalettes(paths);
-      await paletteSelect.value!.loadPalettesList();
-
-      if (failedFiles.length) {
-        confirm.open(
-          fluent.$ta("palette-catalog-import-failed-files", {
-            failedFilesList: failedFiles.map((file) => `- ${file}`).join("\n"),
-          }),
-        );
-      } else toast.add({ title: fluent.$t("palette-catalog-import-success"), color: "success" });
-    } catch (err) {
-      LoggerService.error(`Failed to import palettes: ${err}`);
-      toast.add({ title: fluent.$t("palette-catalog-import-failure"), color: "error" });
-    } finally {
-      importingPalettes.value = false;
-    }
-  }
-
-  function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
-    const palindex = palette.findIndex((palitem) => palitem.eq(option));
-    if (palindex === -1) emit("addPaletteItem", option);
-    else emit("removePaletteItem", palindex);
-  }
-</script>

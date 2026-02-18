@@ -28,6 +28,19 @@ export default defineConfigWithVueTs(
   // Vue.js configs.
   vue.configs["flat/recommended"],
   vueTsConfigs.recommended,
+  {
+    files: ["**/*.vue"],
+    rules: {
+      "vue/block-order": ["error", { order: ["script", "template", "style"] }],
+      "vue/define-macros-order": [
+        "error",
+        { order: ["defineOptions", "defineModel", "defineProps", "defineEmits", "defineSlots"] },
+      ],
+      "vue/define-props-declaration": ["error", "type-based"],
+      "vue/define-emits-declaration": ["error", "type-literal"],
+      "vue/prefer-use-template-ref": "error",
+    },
+  },
 
   // Testing.
   {

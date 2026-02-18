@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const props = defineProps<{ title: string }>();
+const emit = defineEmits<{ close: [] }>();
+</script>
+
 <template>
   <div class="grid grid-rows-[auto_1fr]">
     <div class="flex items-center justify-between border-b border-default px-2 py-1">
@@ -7,8 +12,3 @@
     <slot></slot>
   </div>
 </template>
-
-<script setup lang="ts">
-  const props = defineProps<{ title: string }>();
-  const emit = defineEmits<{ close: [] }>();
-</script>
