@@ -212,12 +212,11 @@
     const fontFaces = results
       .map((result, index) => {
         if (result.status === "fulfilled") return result.value;
-        else {
           const fontName = fonts[index]!;
           failedFonts.push(fontName);
           LoggerService.error(`Failed to load symbol font "${fontName}": ${result.reason}`);
           return undefined;
-        }
+        
       })
       .filter((fontFace) => fontFace !== undefined);
     addSymbolFonts(fontFaces);

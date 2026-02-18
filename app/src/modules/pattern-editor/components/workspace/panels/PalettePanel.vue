@@ -138,7 +138,7 @@
     PaletteToolbar,
   } from "#pattern-editor/components/palette/";
   import { StitchSymbols } from "#pattern-editor/components/symbols/";
-  import { PaletteSettings, SortPaletteBy, Symbol } from "#pattern-editor/lib/pattern/";
+  import { PaletteSettings, SortPaletteBy, StitchSymbol } from "#pattern-editor/lib/pattern/";
   import { PaletteMode, useEditorStateStore, usePatternStore } from "#pattern-editor/stores/";
   import { useI18n } from "#shared/composables/";
 
@@ -375,7 +375,7 @@
       return;
     }
 
-    const symbol = new Symbol({ code: codePoint, font: fontFamily });
+    const symbol = new StitchSymbol({ code: codePoint, font: fontFamily });
     patternStore.setPaletteItemSymbol(editorStateStore.selectedPaletteItemIndex, symbol);
   }
 

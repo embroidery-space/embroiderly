@@ -94,7 +94,7 @@
 
   watch(
     () => props.pattern,
-    async (pattern, oldPattern) => {
+    (pattern, oldPattern) => {
       if (!pattern || pattern.id === oldPattern?.id) return;
       updatePatternView(pattern);
     },

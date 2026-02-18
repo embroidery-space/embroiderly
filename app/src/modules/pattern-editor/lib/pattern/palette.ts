@@ -52,12 +52,12 @@ export class Bead {
   }
 }
 
-export class Symbol {
+export class StitchSymbol {
   readonly code: number;
   readonly char: string;
   readonly font: string;
 
-  constructor(data: b.infer<typeof Symbol.schema>) {
+  constructor(data: b.infer<typeof StitchSymbol.schema>) {
     this.code = data.code;
     this.char = String.fromCodePoint(data.code);
     this.font = data.font;
@@ -178,12 +178,12 @@ export class BrandPaletteItem extends BasePaletteItem {
  * This class extends the `BrandPaletteItem` class and adds additional properties for advanced displaying purposes.
  */
 export class PaletteItem extends BrandPaletteItem {
-  symbol?: Symbol;
+  symbol?: StitchSymbol;
 
   constructor(index: number, data: b.infer<typeof PaletteItem.schema>) {
     super(index, data);
 
-    if (data.symbol) this.symbol = new Symbol(data.symbol);
+    if (data.symbol) this.symbol = new StitchSymbol(data.symbol);
   }
 
   static override readonly schema = b.struct({
@@ -192,7 +192,7 @@ export class PaletteItem extends BrandPaletteItem {
     name: b.string(),
     color: b.string(),
     blends: b.option(b.vec(Blend.schema)),
-    symbol: b.option(Symbol.schema),
+    symbol: b.option(StitchSymbol.schema),
   });
 
   static override serialize(data: PaletteItem) {
@@ -329,22 +329,22 @@ export class Palette {
   }
 }
 
-export class SetSymbolData {
+export class SetStitchSymbolData {
   palindex: number;
-  symbol?: Symbol;
+  symbol?: StitchSymbol;
 
-  constructor(data: b.infer<typeof SetSymbolData.schema>) {
+  constructor(data: b.infer<typeof SetStitchSymbolData.schema>) {
     this.palindex = data.palindex;
-    if (data.symbol) this.symbol = new Symbol(data.symbol);
+    if (data.symbol) this.symbol = new StitchSymbol(data.symbol);
   }
 
   static readonly schema = b.struct({
     palindex: b.u32(),
-    symbol: b.option(Symbol.schema),
+    symbol: b.option(StitchSymbol.schema),
   });
 
-  static serialize(data: SetSymbolData) {
-    return SetSymbolData.schema.serialize({
+  static serialize(data: SetStitchSymbolData) {
+    return SetStitchSymbolData.schema.serialize({
       palindex: data.palindex,
       symbol: data.symbol ?? null,
     });
@@ -352,7 +352,7 @@ export class SetSymbolData {
 
   static deserialize(data: Uint8Array | string) {
     const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new SetSymbolData(SetSymbolData.schema.deserialize(buffer));
+    return new SetStitchSymbolData(SetStitchSymbolData.schema.deserialize(buffer));
   }
 }
 

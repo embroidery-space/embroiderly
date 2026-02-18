@@ -121,6 +121,7 @@ export class Pattern extends EventTarget {
     this.#referenceImage = image;
     this.dispatchEvent(new CustomEvent(PatternEvent.UpdateReferenceImage, { detail: image }));
   }
+  // oxlint-disable-next-line accessor-pairs
   set referenceImageSettings(settings: ReferenceImageSettings) {
     if (!this.#referenceImage) return;
     this.#referenceImage.settings = settings;

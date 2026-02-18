@@ -14,8 +14,8 @@ import {
   AddedPaletteItemData,
   PaletteSettings,
   SortPaletteBy,
-  Symbol,
-  SetSymbolData,
+  StitchSymbol,
+  SetStitchSymbolData,
   DisplayMode,
   LayersVisibility,
   PdfExportOptions,
@@ -136,13 +136,13 @@ export const usePatternStore = defineStore(
       triggerRef(pattern);
     });
 
-    async function setPaletteItemSymbol(palindex: number, symbol?: Symbol) {
+    async function setPaletteItemSymbol(palindex: number, symbol?: StitchSymbol) {
       if (!pattern.value) return;
       await PatternApi.setSymbol(pattern.value.id, palindex, symbol);
     }
     appWindow.listen<string>("palette:set_symbol", ({ payload }) => {
       if (!pattern.value) return;
-      const { palindex, symbol } = SetSymbolData.deserialize(payload);
+      const { palindex, symbol } = SetStitchSymbolData.deserialize(payload);
       const item = pattern.value.palette.get(palindex);
       if (item) {
         item.symbol = symbol;
@@ -170,10 +170,9 @@ export const usePatternStore = defineStore(
     function setDisplayMode(mode: DisplayMode | undefined) {
       if (!pattern.value) return;
       if (mode && mode !== pattern.value.displayMode) return PatternApi.setDisplayMode(pattern.value.id, mode);
-      else {
         pattern.value.displayMode = mode;
         return triggerRef(pattern);
-      }
+      
     }
     appWindow.listen<DisplayMode>(PatternEvent.UpdateDisplayMode, ({ payload: mode }) => {
       if (!pattern.value) return;

@@ -18,7 +18,7 @@ import {
   PartStitchKind,
   LineStitch,
   NodeStitch,
-  Symbol,
+  StitchSymbol,
 } from "#pattern-editor/lib/pattern/";
 import type { Stitch } from "#pattern-editor/lib/pattern/";
 import {
@@ -125,7 +125,7 @@ export class StitchSymbolsContainer extends Container implements StitchContainer
 export class StitchSymbol extends Container {
   readonly stitch: FullStitch | PartStitch;
 
-  constructor(stitch: FullStitch | PartStitch, symbol?: Symbol) {
+  constructor(stitch: FullStitch | PartStitch, symbol?: StitchSymbol) {
     super({
       ...DEFAULT_CONTAINER_OPTIONS,
       x: stitch.x,

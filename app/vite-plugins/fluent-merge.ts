@@ -19,15 +19,17 @@ export default function fluentMerge(options: FluentMergeOptions = {}): Plugin {
     const files: string[] = [];
 
     const entries = await fs.readdir(dir, { withFileTypes: true });
-    for (const entry of entries) {
-      const fullPath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        const subFiles = await collectFluentFiles(fullPath);
-        files.push(...subFiles);
-      } else if (entry.isFile() && entry.name.endsWith(".ftl")) {
-        files.push(fullPath);
-      }
-    }
+    await Promise.all(
+      entries.map(async (entry) => {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          const subFiles = await collectFluentFiles(fullPath);
+          files.push(...subFiles);
+        } else if (entry.isFile() && entry.name.endsWith(".ftl")) {
+          files.push(fullPath);
+        }
+      }),
+    );
 
     return files.sort();
   }

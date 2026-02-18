@@ -90,7 +90,7 @@
   function calculateAspectRatio() {
     if (width.value && height.value) {
       return width.value / height.value;
-    } else return undefined;
+    }return undefined;
   }
 
   function handleWidthChange(newWidth: number) {

@@ -23,12 +23,11 @@
     "check-types": "pnpm -r check-types",
     "fmt": "prettier --check .",
     "fmt:fix": "prettier --write .",
-    "lint": "eslint && markdownlint-cli2",
-    "lint:fix": "eslint --fix && markdownlint-cli2 --fix",
+    "lint": "oxlint && eslint && markdownlint-cli2",
+    "lint:fix": "oxlint --fix && eslint --fix && markdownlint-cli2 --fix",
     "test": "pnpm -r test"
   },
   "devDependencies": {
-    "@eslint/js": "catalog:",
     "@tauri-apps/cli": "catalog:",
     "@vitest/eslint-plugin": "catalog:",
     "@vue/eslint-config-prettier": "catalog:",
@@ -37,14 +36,12 @@
     "eslint-plugin-better-tailwindcss": "catalog:",
     "eslint-plugin-import-x": "catalog:",
     "eslint-plugin-no-only-tests": "catalog:",
-    "eslint-plugin-promise": "catalog:",
-    "eslint-plugin-sonarjs": "catalog:",
-    "eslint-plugin-unicorn": "catalog:",
+    "eslint-plugin-oxlint": "catalog:",
     "eslint-plugin-vue": "catalog:",
     "eslint-plugin-wdio": "catalog:",
     "eslint-plugin-yml": "catalog:",
-    "globals": "catalog:",
     "markdownlint-cli2": "catalog:",
+    "oxlint": "catalog:",
     "prettier": "catalog:",
     "tailwindcss": "catalog:"
   }

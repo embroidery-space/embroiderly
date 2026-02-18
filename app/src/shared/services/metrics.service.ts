@@ -50,7 +50,7 @@ class MetricsServiceClass {
         (captureResult) => {
           if (captureResult) {
             const { event, properties } = captureResult;
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line no-console
             captureEvent(event, properties).catch(console.error);
           }
           // Return `null` to prevent `posthog-js` from sending directly.

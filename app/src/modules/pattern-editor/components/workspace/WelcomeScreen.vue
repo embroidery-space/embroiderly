@@ -162,7 +162,7 @@
     router.push({ name: "pattern-editor", params: { patternId } });
   }
 
-  async function createPattern() {
+  function createPattern() {
     modals.patternCreationModal.open({
       fabric: Fabric.default(),
       async onSave(fabric) {

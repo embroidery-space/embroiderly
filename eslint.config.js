@@ -1,20 +1,16 @@
 import fs from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 
-import js from "@eslint/js";
 import vitest from "@vitest/eslint-plugin";
-import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
+import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import importX from "eslint-plugin-import-x";
 import noOnlyTests from "eslint-plugin-no-only-tests";
-import promise from "eslint-plugin-promise";
-import sonarjs from "eslint-plugin-sonarjs";
-import unicorn from "eslint-plugin-unicorn";
+import oxlint from "eslint-plugin-oxlint";
 import vue from "eslint-plugin-vue";
 import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
-import globals from "globals";
 
 // Read the `.prettierignore` file and filter out empty lines and comments.
 const ignores = fs
@@ -28,61 +24,10 @@ ignores.push("app/auto-imports.d.ts", "app/components.d.ts");
 export default defineConfigWithVueTs(
   // Common options.
   { ignores },
-  js.configs.recommended,
-
-  // High-quality code.
-  {
-    extends: [promise.configs["flat/recommended"], sonarjs.configs.recommended, unicorn.configs.unopinionated],
-    rules: {
-      "unicorn/prefer-ternary": "off",
-      "unicorn/no-useless-undefined": "off",
-
-      // Enable when Vue.js base TS config's target supports these features.
-      "unicorn/no-array-reverse": "off",
-      "unicorn/no-array-sort": "off",
-
-      "unicorn/numeric-separators-style": [
-        "warn",
-        {
-          onlyIfContainsSeparator: true,
-        },
-      ],
-
-      "sonarjs/no-empty-test-file": "off",
-      "sonarjs/no-identical-functions": "off",
-    },
-  },
 
   // Vue.js configs.
   vue.configs["flat/recommended"],
   vueTsConfigs.recommended,
-
-  // Custom rules.
-  {
-    files: ["app/src/**/*.{ts,vue}"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      globals: {
-        ...globals.builtin,
-        ...globals.browser,
-      },
-    },
-    rules: { "no-console": ["warn"] },
-  },
-  {
-    files: ["scripts/**/*.js"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      globals: {
-        ...globals.builtin,
-        ...globals.node,
-      },
-    },
-    rules: {
-      "sonarjs/os-command": "off",
-      "unicorn/no-process-exit": "off",
-    },
-  },
 
   // Testing.
   {
@@ -155,6 +100,6 @@ export default defineConfigWithVueTs(
     },
   },
 
-  // Prettier intergation.
-  vuePrettierEslintConfig,
+  ...oxlint.buildFromOxlintConfigFile(".oxlintrc.json"),
+  skipFormatting,
 );
