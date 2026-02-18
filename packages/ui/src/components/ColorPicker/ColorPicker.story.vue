@@ -29,7 +29,7 @@
           @update:model-value="logEvent('update:model-value', { value: $event })"
         />
         <div class="mt-4 flex items-center gap-2">
-          <div class="size-8 rounded-sm border border-muted" :style="{ backgroundColor: color }" />
+          <div class="size-8 rounded-sm border border-default" :style="{ backgroundColor: color }" />
           <span class="font-mono text-sm">{{ color }}</span>
         </div>
       </div>

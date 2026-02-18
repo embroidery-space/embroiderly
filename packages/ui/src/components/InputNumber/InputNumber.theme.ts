@@ -13,10 +13,10 @@ export const InputNumberTheme = tv({
     },
     variant: {
       subtle: {
-        base: "bg-elevated text-highlighted ring ring-accented ring-inset",
+        base: "bg-elevated ring ring-accented ring-inset",
       },
       outline: {
-        base: "bg-default text-highlighted ring ring-accented ring-inset",
+        base: "bg-default ring ring-accented ring-inset",
       },
     },
     size: {

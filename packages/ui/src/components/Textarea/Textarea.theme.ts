@@ -12,7 +12,7 @@ export const TextareaTheme = tv({
     },
     variant: {
       subtle: {
-        base: "bg-elevated text-highlighted ring ring-accented ring-inset",
+        base: "bg-elevated ring ring-accented ring-inset",
       },
     },
     size: {

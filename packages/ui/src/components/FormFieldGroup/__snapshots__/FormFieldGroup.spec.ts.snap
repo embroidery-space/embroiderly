@@ -76,7 +76,7 @@ exports[`FormFieldGroup > renders correctly with Input and Button children 1`] =
     >
       <!--v-if-->
       <input
-        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
         id="v-0"
         type="text"
       />
@@ -121,7 +121,7 @@ exports[`FormFieldGroup > renders correctly with InputNumber and Button children
         aria-valuenow="5"
         autocomplete="off"
         autocorrect="off"
-        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated text-highlighted ring ring-accented ring-inset py-1.5 ps-2.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"

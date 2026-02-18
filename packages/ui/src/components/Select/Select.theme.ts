@@ -5,7 +5,7 @@ export const SelectTheme = tv({
   slots: {
     root: "relative inline-flex items-center",
     base: "inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
-    value: "truncate text-highlighted",
+    value: "truncate",
     placeholder: "truncate text-muted",
     trailingIcon: "shrink-0 text-muted",
     content:
@@ -15,7 +15,7 @@ export const SelectTheme = tv({
     item: "flex cursor-default items-center justify-between rounded-sm text-default outline-none select-none hover:bg-elevated data-highlighted:bg-elevated",
     itemLabel: "truncate",
     itemIndicator: "shrink-0 text-primary",
-    input: "w-full border-b border-default bg-default text-highlighted outline-none placeholder:text-muted",
+    input: "w-full border-b border-default bg-default outline-none placeholder:text-muted",
     empty: "text-center text-sm text-muted",
   },
   variants: {
@@ -24,7 +24,7 @@ export const SelectTheme = tv({
     },
     variant: {
       subtle: {
-        base: "bg-elevated text-highlighted ring ring-accented ring-inset",
+        base: "bg-elevated ring ring-accented ring-inset",
       },
     },
     size: {

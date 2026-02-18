@@ -20,7 +20,7 @@ exports[`Tooltip > renders correctly with class 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] text-sm"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] text-sm"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -101,7 +101,7 @@ exports[`Tooltip > renders correctly with shortcut 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -192,7 +192,7 @@ exports[`Tooltip > renders correctly with shortcut only 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -281,7 +281,7 @@ exports[`Tooltip > renders correctly with text 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"

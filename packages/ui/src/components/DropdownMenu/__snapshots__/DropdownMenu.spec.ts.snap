@@ -59,7 +59,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
         
         
         <div
-          class="flex w-full items-center font-semibold text-highlighted gap-1.5 p-1.5 text-sm"
+          class="flex w-full items-center font-semibold gap-1.5 p-1.5 text-sm"
         >
           
           
@@ -81,7 +81,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
         
         <div
           aria-checked="true"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           data-state="checked"
           role="menuitemcheckbox"
@@ -116,7 +116,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
         
         <div
           aria-checked="false"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           data-state="unchecked"
           role="menuitemcheckbox"
@@ -142,7 +142,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
         <div
           aria-checked="false"
           aria-disabled="true"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
           data-state="unchecked"
@@ -247,7 +247,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -308,7 +308,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -365,7 +365,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
         
         <div
           aria-disabled="true"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
           role="menuitem"
@@ -443,7 +443,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -581,7 +581,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -618,7 +618,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -655,7 +655,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -777,7 +777,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -813,7 +813,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -850,7 +850,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
         
         <div
           aria-disabled="true"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
           role="menuitem"
@@ -908,7 +908,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1015,7 +1015,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1076,7 +1076,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1133,7 +1133,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
         
         <div
           aria-disabled="true"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
           data-disabled=""
           data-reka-collection-item=""
           role="menuitem"
@@ -1211,7 +1211,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1318,7 +1318,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1379,7 +1379,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1436,7 +1436,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
         
         <div
           aria-disabled="true"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
           role="menuitem"
@@ -1514,7 +1514,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1621,7 +1621,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1682,7 +1682,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1739,7 +1739,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
         
         <div
           aria-disabled="true"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
           data-disabled=""
           data-reka-collection-item=""
           role="menuitem"
@@ -1817,7 +1817,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -1930,7 +1930,7 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
           aria-controls="reka-menu-sub-content-v-4"
           aria-expanded="false"
           aria-haspopup="menu"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           data-state="closed"
           id="reka-menu-sub-trigger-v-2"
@@ -1985,7 +1985,7 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
           aria-controls="reka-menu-sub-content-v-5"
           aria-expanded="false"
           aria-haspopup="menu"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           data-state="closed"
           id="reka-menu-sub-trigger-v-3"
@@ -2114,7 +2114,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -2175,7 +2175,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"
@@ -2232,7 +2232,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
         
         <div
           aria-disabled="true"
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
           role="menuitem"
@@ -2310,7 +2310,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
         
         
         <div
-          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:text-highlighted data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+          class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
           role="menuitem"
           tabindex="-1"

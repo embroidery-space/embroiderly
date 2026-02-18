@@ -40,7 +40,7 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -141,7 +141,7 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -242,7 +242,7 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -343,7 +343,7 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -445,7 +445,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -547,7 +547,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -648,7 +648,7 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -749,7 +749,7 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -850,7 +850,7 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -951,7 +951,7 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1052,7 +1052,7 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1153,7 +1153,7 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1254,7 +1254,7 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1355,7 +1355,7 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1456,7 +1456,7 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1557,7 +1557,7 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
@@ -1658,7 +1658,7 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
     style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
   >
     <div
-      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs text-highlighted shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
