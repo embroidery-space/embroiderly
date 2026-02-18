@@ -19,6 +19,8 @@
     "max-classes-per-file": "off",
     "max-lines": "off",
 
+    "typescript/ban-types": "off",
+
     // Enable when Vue.js base TS config target supports these features.
     "unicorn/no-array-reverse": "off",
     "unicorn/no-array-sort": "off",

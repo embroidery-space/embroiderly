@@ -10,8 +10,8 @@ import {
   PaletteItem,
   PaletteSettings,
   SortPaletteBy,
-  StitchSymbol,
-  SetStitchSymbolData,
+  Symbol,
+  SetSymbolData,
   serializeStitch,
   PdfExportOptions,
 } from "#pattern-editor/lib/pattern/";
@@ -95,8 +95,8 @@ export function reorderPaletteItems(patternId: string, oldPosition: number, newP
   return invoke<void>("reorder_palette_items", { oldPosition, newPosition }, { headers: { patternId } });
 }
 
-export function setSymbol(patternId: string, palindex: number, symbol?: StitchSymbol) {
-  return invoke<void>("set_symbol", SetStitchSymbolData.serialize({ palindex, symbol }), { headers: { patternId } });
+export function setSymbol(patternId: string, palindex: number, symbol?: Symbol) {
+  return invoke<void>("set_symbol", SetSymbolData.serialize({ palindex, symbol }), { headers: { patternId } });
 }
 
 // === Stitches Management === //

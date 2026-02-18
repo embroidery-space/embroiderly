@@ -2,8 +2,8 @@ import { inject, onScopeDispose, toValue, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
 import { SHORTCUTS_INJECTION_KEY } from "../constants.ts";
-import type { ShortcutsContext } from "../lib/";
 import { parseShortcutKey } from "../lib/";
+import type { ShortcutsContext } from "../lib/";
 import type { ShortcutValue } from "../types.ts";
 
 /**

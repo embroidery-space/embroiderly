@@ -70,7 +70,11 @@ export default defineConfigWithVueTs(
           ],
           pathGroupsExcludedImportTypes: ["builtin"],
           "newlines-between": "always",
-          alphabetize: { order: "asc", caseInsensitive: true },
+          alphabetize: {
+            order: "asc", // Value imports go first...
+            orderImportKind: "desc", // ...then go type imports.
+            caseInsensitive: true,
+          },
         },
       ],
       "import-x/consistent-type-specifier-style": ["warn", "prefer-top-level"],
@@ -100,6 +104,6 @@ export default defineConfigWithVueTs(
     },
   },
 
-  ...oxlint.buildFromOxlintConfigFile(".oxlintrc.json"),
+  ...oxlint.buildFromOxlintConfigFile("./.oxlintrc.json"),
   skipFormatting,
 );
