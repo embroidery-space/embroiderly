@@ -62,7 +62,7 @@ export default defineConfigWithVueTs(
   // I18n.
   {
     files: ["**/*.vue"],
-    ignores: ["**/*.story.vue"],
+    ignores: ["**/*.story.vue", "**/story/*.vue"],
     plugins: {
       "vue-i18n": vueI18n,
       "eslint-comments": eslintComments,

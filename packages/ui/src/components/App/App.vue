@@ -14,6 +14,8 @@ import { DEFAULT_ICONS } from "../../icons.ts";
 import type { Icons } from "../../types/icons.ts";
 import type { Locale } from "../../types/locale.ts";
 
+import OverlayProvider from "./OverlayProvider.vue";
+
 export interface AppProps extends Omit<ConfigProviderProps, "dir" | "locale" | "useId"> {
   tooltip?: TooltipProviderProps;
   shortcuts?: ShortcutsProviderProps | null;
@@ -50,6 +52,8 @@ provide(PORTAL_TARGET_INJECTION_KEY, portal);
       </ShortcutsProvider>
 
       <slot v-else />
+
+      <OverlayProvider />
     </TooltipProvider>
   </ConfigProvider>
 </template>

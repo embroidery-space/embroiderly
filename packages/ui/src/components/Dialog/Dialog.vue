@@ -37,12 +37,15 @@ export interface DialogProps extends Pick<DialogRootProps, "open" | "defaultOpen
 
 export interface DialogEmits {
   "update:open": [value: boolean];
+  close: [value: unknown];
+  "after:enter": [];
+  "after:leave": [];
 }
 
 export interface DialogSlots {
   default(props: { open: boolean }): any;
-  body(props: { close: () => void }): any;
-  footer(props: { close: () => void }): any;
+  body(props: { close: (value?: unknown) => void }): any;
+  footer(props: { close: (value?: unknown) => void }): any;
 }
 
 const props = withDefaults(defineProps<DialogProps>(), {
@@ -78,6 +81,8 @@ const ui = DialogTheme();
         @pointer-down-outside="!dismissible && $event.preventDefault()"
         @interact-outside="!dismissible && $event.preventDefault()"
         @escape-key-down="!dismissible && $event.preventDefault()"
+        @after-enter="emits('after:enter')"
+        @after-leave="emits('after:leave')"
       >
         <header data-slot="header" :class="ui.header({ class: props.ui?.header })">
           <div class="flex-1">
@@ -109,11 +114,27 @@ const ui = DialogTheme();
         </header>
 
         <div data-slot="body" :class="ui.body({ class: props.ui?.body })">
-          <slot name="body" :close="close" />
+          <slot
+            name="body"
+            :close="
+              (value?: unknown) => {
+                emits('close', value);
+                close();
+              }
+            "
+          />
         </div>
 
         <footer v-if="slots.footer" data-slot="footer" :class="ui.footer({ class: props.ui?.footer })">
-          <slot name="footer" :close="close" />
+          <slot
+            name="footer"
+            :close="
+              (value?: unknown) => {
+                emits('close', value);
+                close();
+              }
+            "
+          />
         </footer>
       </Dialog.Content>
     </Dialog.Portal>
