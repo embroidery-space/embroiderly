@@ -64,6 +64,8 @@ catalog:
 
   # Code Quality
   "eslint": 9.39.2
+  "@eslint-community/eslint-plugin-eslint-comments": 4.6.0
+  "@intlify/eslint-plugin-vue-i18n": 4.1.1
   "@vue/eslint-config-prettier": 10.2.0
   "@vue/eslint-config-typescript": 14.6.0
   "eslint-plugin-better-tailwindcss": 4.2.0

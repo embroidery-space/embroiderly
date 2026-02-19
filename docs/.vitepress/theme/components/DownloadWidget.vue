@@ -14,6 +14,7 @@ async function download(installer: "exe" | "deb" | "rpm") {
 }
 </script>
 
+<!-- eslint-disable vue-i18n/no-raw-text -->
 <template>
   <div class="download-page">
     <div class="download-hero">

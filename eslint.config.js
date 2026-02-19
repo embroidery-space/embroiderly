@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 
+import eslintComments from "@eslint-community/eslint-plugin-eslint-comments";
+import vueI18n from "@intlify/eslint-plugin-vue-i18n";
 import vitest from "@vitest/eslint-plugin";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
@@ -31,6 +33,10 @@ export default defineConfigWithVueTs(
   vueTsConfigs.recommended,
   {
     files: ["**/*.vue"],
+    plugins: {
+      "vue-i18n": vueI18n,
+      "eslint-comments": eslintComments,
+    },
     rules: {
       "vue/block-order": ["error", { order: ["script", "template", "style"] }],
       "vue/define-macros-order": [
@@ -40,6 +46,27 @@ export default defineConfigWithVueTs(
       "vue/define-props-declaration": ["error", "type-based"],
       "vue/define-emits-declaration": ["error", "type-literal"],
       "vue/prefer-use-template-ref": "error",
+
+      // Disallow raw text in Vue.js component and restrict disabling this rule.
+      "vue-i18n/no-raw-text": [
+        "error",
+        {
+          attributes: {
+            "/.+/": [
+              "title",
+              "label",
+              "description",
+              "help",
+              "hint",
+              "aria-label",
+              "aria-placeholder",
+              "placeholder",
+              "alt",
+            ],
+          },
+        },
+      ],
+      "eslint-comments/no-restricted-disable": ["error", "vue-i18n/no-raw-text"],
     },
   },
 

@@ -28,6 +28,8 @@
     "test": "pnpm -r test"
   },
   "devDependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "catalog:",
+    "@intlify/eslint-plugin-vue-i18n": "catalog:",
     "@tauri-apps/cli": "catalog:",
     "@vitest/eslint-plugin": "catalog:",
     "@vue/eslint-config-prettier": "catalog:",
