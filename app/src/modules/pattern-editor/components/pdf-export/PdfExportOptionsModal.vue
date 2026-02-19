@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import { ref, toRaw } from "vue";
+
+import { PdfExportOptions } from "#pattern-editor/lib/pattern/";
+
+import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
+
+const props = defineProps<{
+  options: PdfExportOptions;
+  onSave?: (options: PdfExportOptions) => void | Promise<void>;
+}>();
+const emit = defineEmits<{ close: [] }>();
+
+const options = ref<PdfExportOptions>(new PdfExportOptions(toRaw(props.options)));
+
+async function handleSave() {
+  await props.onSave?.(options.value);
+  emit("close");
+}
+</script>
+
 <template>
   <UModal :title="$t('publish-settings')" :ui="{ content: 'w-xl' }">
     <template #body>
@@ -9,24 +30,3 @@
     </template>
   </UModal>
 </template>
-
-<script setup lang="ts">
-  import { ref, toRaw } from "vue";
-
-  import { PdfExportOptions } from "#pattern-editor/lib/pattern/";
-
-  import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
-
-  const props = defineProps<{
-    options: PdfExportOptions;
-    onSave?: (options: PdfExportOptions) => void | Promise<void>;
-  }>();
-  const emit = defineEmits<{ close: [] }>();
-
-  const options = ref<PdfExportOptions>(new PdfExportOptions(toRaw(props.options)));
-
-  async function handleSave() {
-    await props.onSave?.(options.value);
-    emit("close");
-  }
-</script>

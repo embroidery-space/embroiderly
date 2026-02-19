@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { defineComponent, nextTick } from "vue";
 
-import type { DropdownMenuItem, DropdownMenuProps } from "./DropdownMenu.vue";
 import DropdownMenu from "./DropdownMenu.vue";
+import type { DropdownMenuItem, DropdownMenuProps } from "./DropdownMenu.vue";
 
 const DropdownMenuWrapper = defineComponent({
   components: { DropdownMenu },

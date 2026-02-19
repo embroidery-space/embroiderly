@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { ProgressProps } from "./Progress.vue";
 import Progress from "./Progress.vue";
+import type { ProgressProps } from "./Progress.vue";
 
 describe("Progress", () => {
   const sizes = ["xs", "sm", "md", "lg", "xl"] as const;

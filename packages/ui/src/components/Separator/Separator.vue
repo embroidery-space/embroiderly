@@ -1,46 +1,46 @@
 <script setup lang="ts">
-  import type { PrimitiveProps } from "reka-ui";
-  import { Separator } from "reka-ui/namespaced";
-  import { computed } from "vue";
+import type { PrimitiveProps } from "reka-ui";
+import { Separator } from "reka-ui/namespaced";
+import { computed } from "vue";
 
-  import { SeparatorTheme } from "./Separator.theme.ts";
-  import type { SeparatorThemeSlots, SeparatorThemeVariants } from "./Separator.theme.ts";
+import { SeparatorTheme } from "./Separator.theme.ts";
+import type { SeparatorThemeSlots, SeparatorThemeVariants } from "./Separator.theme.ts";
 
-  export interface SeparatorProps extends PrimitiveProps {
-    /**
-     * The orientation of the separator.
-     * @default "horizontal"
-     */
-    orientation?: SeparatorThemeVariants["orientation"];
-    /**
-     * The size of the separator.
-     * @default "xs"
-     */
-    size?: SeparatorThemeVariants["size"];
+export interface SeparatorProps extends PrimitiveProps {
+  /**
+   * The orientation of the separator.
+   * @default "horizontal"
+   */
+  orientation?: SeparatorThemeVariants["orientation"];
+  /**
+   * The size of the separator.
+   * @default "xs"
+   */
+  size?: SeparatorThemeVariants["size"];
 
-    /**
-     * Whether the separator is decorative.
-     * @default false
-     */
-    decorative?: boolean;
+  /**
+   * Whether the separator is decorative.
+   * @default false
+   */
+  decorative?: boolean;
 
-    class?: any;
-    ui?: SeparatorThemeSlots;
-  }
+  class?: any;
+  ui?: SeparatorThemeSlots;
+}
 
-  const props = withDefaults(defineProps<SeparatorProps>(), {
-    orientation: "horizontal",
-    size: "xs",
+const props = withDefaults(defineProps<SeparatorProps>(), {
+  orientation: "horizontal",
+  size: "xs",
 
-    decorative: false,
+  decorative: false,
+});
+
+const ui = computed(() => {
+  return SeparatorTheme({
+    orientation: props.orientation,
+    size: props.size,
   });
-
-  const ui = computed(() => {
-    return SeparatorTheme({
-      orientation: props.orientation,
-      size: props.size,
-    });
-  });
+});
 </script>
 
 <template>

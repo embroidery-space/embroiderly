@@ -1,3 +1,162 @@
+<script setup lang="ts">
+import { vElementSize } from "@vueuse/components";
+import { useDebounceFn } from "@vueuse/core";
+import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
+
+import { FilesApi } from "#pattern-editor/api";
+import type { ImageImportOptions } from "#pattern-editor/api";
+import { PatternCanvas } from "#pattern-editor/components/canvas";
+import { LayersVisibility, Pattern } from "#pattern-editor/lib/pattern";
+import { ImageImportService } from "#pattern-editor/services/";
+import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "#shared/components/";
+import { useDragDrop } from "#shared/composables/";
+import { ANY_IMAGE_FILTER } from "#shared/constants/";
+
+import { PaletteSelect } from "../palette/";
+
+interface ImportImageModalProps {
+  imagePath: string;
+  imageDimensions: [width: number, height: number];
+}
+
+interface ValueBounds {
+  min: number;
+  max: number;
+}
+
+const props = defineProps<ImportImageModalProps>();
+const emit = defineEmits<{ close: [patternId?: string] }>();
+
+/** The maximum palette size acceptable for quantization. */
+const MAX_PALETTE_SIZE = 256;
+
+const patternCanvas = useTemplateRef("pattern-canvas");
+const previewPattern = shallowRef<Pattern>();
+
+const imageImportService = new ImageImportService();
+
+const imagePath = ref(props.imagePath);
+const imageDimensions = ref(props.imageDimensions);
+watch(imagePath, async (newImagePath) => {
+  imageDimensions.value = await FilesApi.getImageDimensions(newImagePath);
+});
+
+const dropZoneContainer = useTemplateRef("drop-zone");
+const { isOverDropZone } = useDragDrop(dropZoneContainer, (paths) => {
+  imagePath.value = paths[0]!;
+});
+
+const selectedPaletteSize = ref(1);
+const selectedPalettePath = ref("");
+
+const applyDithering = ref(true);
+const imageImportOptions = reactive<Required<ImageImportOptions>>({
+  patternSize: [Math.round(imageDimensions.value[0] * 0.1), Math.round(imageDimensions.value[1] * 0.1)],
+  paletteSize: 32,
+  quantization: {
+    samplingFactor: 1,
+  },
+  dithering: {
+    errorDiffusion: 0.875,
+  },
+});
+
+const patternSizeBounds = computed<{ width: ValueBounds; height: ValueBounds }>(() => {
+  const width = { min: 1, max: imageDimensions.value[1] };
+  const height = { min: 1, max: imageDimensions.value[0] };
+  return { width, height };
+});
+const paletteSizeBounds = computed<ValueBounds>(() => {
+  return { min: 1, max: Math.min(selectedPaletteSize.value, MAX_PALETTE_SIZE) };
+});
+
+const imageImportOptionsValid = computed(() => {
+  function checkValueInBounds(value: number, bounds: ValueBounds): boolean {
+    return value >= bounds.min && value <= bounds.max;
+  }
+
+  const { patternSize, paletteSize, quantization, dithering } = imageImportOptions;
+
+  // Validate pattern dimensions.
+  if (!checkValueInBounds(patternSize[0], patternSizeBounds.value.width)) return false;
+  if (!checkValueInBounds(patternSize[1], patternSizeBounds.value.height)) return false;
+
+  // Validate palette size.
+  if (!checkValueInBounds(paletteSize, paletteSizeBounds.value)) return false;
+
+  // Validate quantization options.
+  if (!checkValueInBounds(quantization.samplingFactor, { min: 0, max: 1 })) return false;
+
+  // Validate dithering options.
+  if (applyDithering.value && !checkValueInBounds(dithering.errorDiffusion, { min: 0, max: 1 })) return false;
+
+  return true;
+});
+
+const imageImportServiceStarted = ref(false);
+
+const importingPattern = ref(false);
+const importPatternFromImage = useDebounceFn(
+  async (options: ImageImportOptions) => {
+    if (!imageImportServiceStarted.value) {
+      await imageImportService.start();
+      imageImportServiceStarted.value = true;
+    }
+
+    importingPattern.value = true;
+    try {
+      previewPattern.value = await imageImportService.getPreview(imagePath.value, selectedPalettePath.value, options);
+
+      // Configure the pattern view.
+      previewPattern.value.showSymbols = false;
+      previewPattern.value.layersVisibility = new LayersVisibility({
+        ...LayersVisibility.default(false),
+        fullstitches: true,
+      });
+    } finally {
+      importingPattern.value = false;
+    }
+  },
+  100,
+  { maxWait: 500 },
+);
+
+// Update the pattern preview on every change of options.
+watch(
+  [imagePath, selectedPalettePath, imageImportOptions, imageImportOptionsValid, applyDithering],
+  async () => {
+    if (!imageImportOptionsValid.value) return;
+
+    const options = {
+      ...imageImportOptions,
+      dithering:
+        applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
+          ? imageImportOptions.dithering
+          : undefined,
+    };
+    await importPatternFromImage(options);
+  },
+  { immediate: true, flush: "post" },
+);
+
+async function handleFinalize() {
+  const options = {
+    ...imageImportOptions,
+    dithering:
+      applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
+        ? imageImportOptions.dithering
+        : undefined,
+  };
+
+  const patternId = await imageImportService.finalize(imagePath.value, selectedPalettePath.value, options);
+  emit("close", patternId);
+}
+
+onUnmounted(() => {
+  imageImportService.destroy();
+});
+</script>
+
 <template>
   <UModal :title="$t('image-import')" :ui="{ content: 'size-full', body: 'p-0!' }">
     <template #body>
@@ -100,162 +259,3 @@
     </template>
   </UModal>
 </template>
-
-<script setup lang="ts">
-  import { vElementSize } from "@vueuse/components";
-  import { useDebounceFn } from "@vueuse/core";
-  import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
-
-  import { FilesApi } from "#pattern-editor/api";
-  import type { ImageImportOptions } from "#pattern-editor/api";
-  import { PatternCanvas } from "#pattern-editor/components/canvas";
-  import { LayersVisibility, Pattern } from "#pattern-editor/lib/pattern";
-  import { ImageImportService } from "#pattern-editor/services/";
-  import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "#shared/components/";
-  import { useDragDrop } from "#shared/composables/";
-  import { ANY_IMAGE_FILTER } from "#shared/constants/";
-
-  import { PaletteSelect } from "../palette/";
-
-  /** The maximum palette size acceptable for quantization. */
-  const MAX_PALETTE_SIZE = 256;
-
-  interface ImportImageModalProps {
-    imagePath: string;
-    imageDimensions: [width: number, height: number];
-  }
-
-  interface ValueBounds {
-    min: number;
-    max: number;
-  }
-
-  const props = defineProps<ImportImageModalProps>();
-  const emit = defineEmits<{ close: [patternId?: string] }>();
-
-  const patternCanvas = useTemplateRef("pattern-canvas");
-  const previewPattern = shallowRef<Pattern>();
-
-  const imageImportService = new ImageImportService();
-
-  const imagePath = ref(props.imagePath);
-  const imageDimensions = ref(props.imageDimensions);
-  watch(imagePath, async (newImagePath) => {
-    imageDimensions.value = await FilesApi.getImageDimensions(newImagePath);
-  });
-
-  const dropZoneContainer = useTemplateRef("drop-zone");
-  const { isOverDropZone } = useDragDrop(dropZoneContainer, (paths) => {
-    imagePath.value = paths[0]!;
-  });
-
-  const selectedPaletteSize = ref(1);
-  const selectedPalettePath = ref("");
-
-  const applyDithering = ref(true);
-  const imageImportOptions = reactive<Required<ImageImportOptions>>({
-    patternSize: [Math.round(imageDimensions.value[0] * 0.1), Math.round(imageDimensions.value[1] * 0.1)],
-    paletteSize: 32,
-    quantization: {
-      samplingFactor: 1,
-    },
-    dithering: {
-      errorDiffusion: 0.875,
-    },
-  });
-
-  const patternSizeBounds = computed<{ width: ValueBounds; height: ValueBounds }>(() => {
-    const width = { min: 1, max: imageDimensions.value[1] };
-    const height = { min: 1, max: imageDimensions.value[0] };
-    return { width, height };
-  });
-  const paletteSizeBounds = computed<ValueBounds>(() => {
-    return { min: 1, max: Math.min(selectedPaletteSize.value, MAX_PALETTE_SIZE) };
-  });
-
-  const imageImportOptionsValid = computed(() => {
-    function checkValueInBounds(value: number, bounds: ValueBounds): boolean {
-      return value >= bounds.min && value <= bounds.max;
-    }
-
-    const { patternSize, paletteSize, quantization, dithering } = imageImportOptions;
-
-    // Validate pattern dimensions.
-    if (!checkValueInBounds(patternSize[0], patternSizeBounds.value.width)) return false;
-    if (!checkValueInBounds(patternSize[1], patternSizeBounds.value.height)) return false;
-
-    // Validate palette size.
-    if (!checkValueInBounds(paletteSize, paletteSizeBounds.value)) return false;
-
-    // Validate quantization options.
-    if (!checkValueInBounds(quantization.samplingFactor, { min: 0, max: 1 })) return false;
-
-    // Validate dithering options.
-    if (applyDithering.value && !checkValueInBounds(dithering.errorDiffusion, { min: 0, max: 1 })) return false;
-
-    return true;
-  });
-
-  const imageImportServiceStarted = ref(false);
-
-  const importingPattern = ref(false);
-  const importPatternFromImage = useDebounceFn(
-    async (options: ImageImportOptions) => {
-      if (!imageImportServiceStarted.value) {
-        await imageImportService.start();
-        imageImportServiceStarted.value = true;
-      }
-
-      importingPattern.value = true;
-      try {
-        previewPattern.value = await imageImportService.getPreview(imagePath.value, selectedPalettePath.value, options);
-
-        // Configure the pattern view.
-        previewPattern.value.showSymbols = false;
-        previewPattern.value.layersVisibility = new LayersVisibility({
-          ...LayersVisibility.default(false),
-          fullstitches: true,
-        });
-      } finally {
-        importingPattern.value = false;
-      }
-    },
-    100,
-    { maxWait: 500 },
-  );
-
-  // Update the pattern preview on every change of options.
-  watch(
-    [imagePath, selectedPalettePath, imageImportOptions, imageImportOptionsValid, applyDithering],
-    async () => {
-      if (!imageImportOptionsValid.value) return;
-
-      const options = {
-        ...imageImportOptions,
-        dithering:
-          applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
-            ? imageImportOptions.dithering
-            : undefined,
-      };
-      await importPatternFromImage(options);
-    },
-    { immediate: true, flush: "post" },
-  );
-
-  async function handleFinalize() {
-    const options = {
-      ...imageImportOptions,
-      dithering:
-        applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
-          ? imageImportOptions.dithering
-          : undefined,
-    };
-
-    const patternId = await imageImportService.finalize(imagePath.value, selectedPalettePath.value, options);
-    emit("close", patternId);
-  }
-
-  onUnmounted(() => {
-    imageImportService.destroy();
-  });
-</script>

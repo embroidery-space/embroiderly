@@ -8,8 +8,8 @@ import Button from "../Button/Button.vue";
 import Input from "../Input/Input.vue";
 import InputNumber from "../InputNumber/InputNumber.vue";
 
-import type { FormFieldGroupProps } from "./FormFieldGroup.vue";
 import FormFieldGroup from "./FormFieldGroup.vue";
+import type { FormFieldGroupProps } from "./FormFieldGroup.vue";
 
 describe("FormFieldGroup", () => {
   const sizes = ["sm", "md", "lg"] as const;

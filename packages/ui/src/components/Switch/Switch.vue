@@ -1,53 +1,53 @@
 <script setup lang="ts">
-  import type { SwitchRootProps } from "reka-ui";
-  import { Primitive } from "reka-ui";
-  import { Switch, Label } from "reka-ui/namespaced";
-  import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import type { SwitchRootProps } from "reka-ui";
+import { Switch, Label } from "reka-ui/namespaced";
+import { computed } from "vue";
 
-  import { useFormField } from "../../composables/useFormField.ts";
+import { useFormField } from "../../composables/useFormField.ts";
 
-  import { SwitchTheme } from "./Switch.theme";
-  import type { SwitchThemeSlots, SwitchThemeVariants } from "./Switch.theme";
+import { SwitchTheme } from "./Switch.theme";
+import type { SwitchThemeSlots, SwitchThemeVariants } from "./Switch.theme";
 
-  export interface SwitchProps extends Pick<SwitchRootProps, "as" | "asChild" | "id" | "disabled"> {
-    /** The label of the switch. */
-    label?: string;
-    /** The description of the switch. */
-    description?: string;
+export interface SwitchProps extends Pick<SwitchRootProps, "as" | "asChild" | "id" | "disabled"> {
+  /** The label of the switch. */
+  label?: string;
+  /** The description of the switch. */
+  description?: string;
 
-    /**
-     * The color of the switch.
-     * @default "primary"
-     */
-    color?: SwitchThemeVariants["color"];
-    /**
-     * The size of the switch.
-     * @default "md"
-     */
-    size?: SwitchThemeVariants["size"];
+  /**
+   * The color of the switch.
+   * @default "primary"
+   */
+  color?: SwitchThemeVariants["color"];
+  /**
+   * The size of the switch.
+   * @default "md"
+   */
+  size?: SwitchThemeVariants["size"];
 
-    class?: any;
-    ui?: SwitchThemeSlots;
-  }
+  class?: any;
+  ui?: SwitchThemeSlots;
+}
 
-  defineOptions({ inheritAttrs: false });
+defineOptions({ inheritAttrs: false });
 
-  const modelValue = defineModel<boolean>();
-  const props = withDefaults(defineProps<SwitchProps>(), {
-    color: "primary",
-    size: "md",
+const modelValue = defineModel<boolean>();
+const props = withDefaults(defineProps<SwitchProps>(), {
+  color: "primary",
+  size: "md",
+});
+
+const { id, size, ariaAttrs } = useFormField(props);
+
+const ui = computed(() => {
+  return SwitchTheme({
+    color: props.color,
+    size: size.value,
+
+    disabled: props.disabled,
   });
-
-  const { id, size, ariaAttrs } = useFormField(props);
-
-  const ui = computed(() => {
-    return SwitchTheme({
-      color: props.color,
-      size: size.value,
-
-      disabled: props.disabled,
-    });
-  });
+});
 </script>
 
 <template>

@@ -1,3 +1,5 @@
+/* oxlint-disable no-console */
+
 import { ShortcutsSeparator } from "../utils/extractShortcuts";
 
 import { KEY_MAPPING, MODIFIER_MAPPING, MODIFIER_ORDER, MODIFIER_SET } from "./key-mapping";

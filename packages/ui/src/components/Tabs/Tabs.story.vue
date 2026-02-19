@@ -1,26 +1,26 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive } from "vue";
 
-  import type { TabsItem, TabsProps } from "./Tabs.vue";
-  import Tabs from "./Tabs.vue";
+import Tabs from "./Tabs.vue";
+import type { TabsItem, TabsProps } from "./Tabs.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
-  const orientations = ["horizontal", "vertical"] as const;
+const sizes = ["sm", "md", "lg"] as const;
+const orientations = ["horizontal", "vertical"] as const;
 
-  const items: TabsItem[] = [
-    { label: "Tab 1", content: "Lorem ipsum" },
-    { label: "Tab 2", content: "dolor sit amet" },
-    { label: "Tab 3", content: "consectetur adipiscing elit" },
-  ];
+const items: TabsItem[] = [
+  { label: "Tab 1", content: "Lorem ipsum" },
+  { label: "Tab 2", content: "dolor sit amet" },
+  { label: "Tab 3", content: "consectetur adipiscing elit" },
+];
 
-  const state = reactive<TabsProps>({
-    items,
-    orientation: "horizontal",
-    size: "md",
-  });
+const state = reactive<TabsProps>({
+  items,
+  orientation: "horizontal",
+  size: "md",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

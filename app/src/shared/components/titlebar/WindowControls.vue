@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+
+import { ref } from "vue";
+
+import { useTauriListener } from "#shared/composables";
+
+const appWindow = getCurrentWebviewWindow();
+
+// New window is maximized by default.
+const isMaximized = ref(true);
+useTauriListener(async () => {
+  const maxWindowSize = await appWindow.innerSize();
+  return await appWindow.onResized(({ payload }) => {
+    // For some reason, the event is fired twice on Linux.
+    // This is a workaround to prevent the icon from flickering.
+    isMaximized.value = maxWindowSize.width === payload.width && maxWindowSize.height === payload.height;
+  });
+});
+</script>
+
 <template>
   <div class="flex items-center justify-center">
     <button
@@ -26,24 +47,3 @@
     </button>
   </div>
 </template>
-
-<script setup lang="ts">
-  import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-
-  import { ref } from "vue";
-
-  import { useTauriListener } from "#shared/composables";
-
-  const appWindow = getCurrentWebviewWindow();
-
-  // New window is maximized by default.
-  const isMaximized = ref(true);
-  useTauriListener(async () => {
-    const maxWindowSize = await appWindow.innerSize();
-    return await appWindow.onResized(({ payload }) => {
-      // For some reason, the event is fired twice on Linux.
-      // This is a workaround to prevent the icon from flickering.
-      isMaximized.value = maxWindowSize.width === payload.width && maxWindowSize.height === payload.height;
-    });
-  });
-</script>

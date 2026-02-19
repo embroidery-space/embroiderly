@@ -1,20 +1,20 @@
 import fs from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 
-import js from "@eslint/js";
+import eslintComments from "@eslint-community/eslint-plugin-eslint-comments";
+import vueI18n from "@intlify/eslint-plugin-vue-i18n";
 import vitest from "@vitest/eslint-plugin";
-import vuePrettierEslintConfig from "@vue/eslint-config-prettier/skip-formatting";
+import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import importX from "eslint-plugin-import-x";
+import jsonc from "eslint-plugin-jsonc";
 import noOnlyTests from "eslint-plugin-no-only-tests";
-import promise from "eslint-plugin-promise";
-import sonarjs from "eslint-plugin-sonarjs";
-import unicorn from "eslint-plugin-unicorn";
+import oxlint from "eslint-plugin-oxlint";
+import toml from "eslint-plugin-toml";
 import vue from "eslint-plugin-vue";
 import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
-import globals from "globals";
 
 // Read the `.prettierignore` file and filter out empty lines and comments.
 const ignores = fs
@@ -28,57 +28,28 @@ ignores.push("app/auto-imports.d.ts", "app/components.d.ts");
 export default defineConfigWithVueTs(
   // Common options.
   { ignores },
-  js.configs.recommended,
-
-  // High-quality code.
-  {
-    ignores: ["**/*.test.ts", "**/*.spec.ts"],
-    extends: [promise.configs["flat/recommended"], sonarjs.configs.recommended, unicorn.configs.unopinionated],
-    rules: {
-      "unicorn/prefer-ternary": "off",
-      "unicorn/no-useless-undefined": "off",
-
-      // Enable when Vue.js base TS config's target supports these features.
-      "unicorn/no-array-reverse": "off",
-      "unicorn/no-array-sort": "off",
-
-      "unicorn/numeric-separators-style": [
-        "warn",
-        {
-          onlyIfContainsSeparator: true,
-        },
-      ],
-
-      "sonarjs/no-empty-test-file": "off",
-      "sonarjs/no-identical-functions": "off",
-    },
-  },
 
   // Vue.js configs.
   vue.configs["flat/recommended"],
   vueTsConfigs.recommended,
-
-  // Custom rules.
   {
-    files: ["app/src/**/*.{ts,vue}"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      globals: {
-        ...globals.builtin,
-        ...globals.browser,
-      },
+    files: ["**/*.vue"],
+    plugins: {
+      "vue-i18n": vueI18n,
+      "eslint-comments": eslintComments,
     },
-    rules: { "no-console": ["warn"] },
+    rules: {
+      "vue/block-order": ["error", { order: ["script", "template", "style"] }],
+      "vue/define-macros-order": [
+        "error",
+        { order: ["defineOptions", "defineModel", "defineProps", "defineEmits", "defineSlots"] },
+      ],
+      "vue/define-props-declaration": ["error", "type-based"],
+      "vue/define-emits-declaration": ["error", "type-literal"],
+    },
   },
   {
     files: ["packages/ui/**/*.{ts,vue}"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      globals: {
-        ...globals.builtin,
-        ...globals.browser,
-      },
-    },
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
 
@@ -87,18 +58,35 @@ export default defineConfigWithVueTs(
       "vue/no-reserved-component-names": "off",
     },
   },
+
+  // I18n.
   {
-    files: ["scripts/**/*.js"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      globals: {
-        ...globals.builtin,
-        ...globals.node,
-      },
+    files: ["**/*.vue"],
+    ignores: ["**/*.story.vue"],
+    plugins: {
+      "vue-i18n": vueI18n,
+      "eslint-comments": eslintComments,
     },
     rules: {
-      "sonarjs/os-command": "off",
-      "unicorn/no-process-exit": "off",
+      "vue-i18n/no-raw-text": [
+        "error",
+        {
+          attributes: {
+            "/.+/": [
+              "title",
+              "label",
+              "description",
+              "help",
+              "hint",
+              "aria-label",
+              "aria-placeholder",
+              "placeholder",
+              "alt",
+            ],
+          },
+        },
+      ],
+      "eslint-comments/no-restricted-disable": ["error", "vue-i18n/no-raw-text"],
     },
   },
 
@@ -143,7 +131,11 @@ export default defineConfigWithVueTs(
           ],
           pathGroupsExcludedImportTypes: ["builtin"],
           "newlines-between": "always",
-          alphabetize: { order: "asc", caseInsensitive: true },
+          alphabetize: {
+            order: "asc", // Value imports go first...
+            orderImportKind: "desc", // ...then go type imports.
+            caseInsensitive: true,
+          },
         },
       ],
       "import-x/consistent-type-specifier-style": ["warn", "prefer-top-level"],
@@ -176,15 +168,34 @@ export default defineConfigWithVueTs(
     },
   },
 
+  // JSONC validation.
+  {
+    files: ["**/*.json"],
+    ignores: [".oxlintrc.json"],
+    extends: [jsonc.configs["flat/recommended-with-json"], jsonc.configs["flat/prettier"]],
+  },
+  {
+    files: [".oxlintrc.json", "**/*.jsonc"],
+    extends: [jsonc.configs["flat/recommended-with-jsonc"], jsonc.configs["flat/prettier"]],
+  },
+  {
+    files: ["**/*.json5"],
+    extends: [jsonc.configs["flat/recommended-with-json5"], jsonc.configs["flat/prettier"]],
+  },
+  // TOML validation.
+  {
+    files: ["**/*.toml"],
+    extends: [toml.configs.standard],
+  },
   // YAML validation.
   {
-    files: ["pnpm-workspace.yaml", ".github/**/*.yml"],
-    extends: [yml.configs.recommended],
+    files: ["**/*.yml"],
+    extends: [yml.configs.standard, yml.configs.prettier],
     rules: {
       "yml/no-empty-mapping-value": "off",
     },
   },
 
-  // Prettier intergation.
-  vuePrettierEslintConfig,
+  ...oxlint.buildFromOxlintConfigFile(".oxlintrc.json"),
+  skipFormatting,
 );

@@ -1,6 +1,6 @@
+import { computed, inject } from "vue";
 import type { InjectionKey } from "vue";
 import type { Ref } from "vue";
-import { computed, inject } from "vue";
 
 export const GLOBAL_PORTAL = "body";
 export const PORTAL_TARGET_INJECTION_KEY: InjectionKey<Ref<boolean | string | HTMLElement>> =

@@ -3,8 +3,8 @@ import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { defineComponent, nextTick } from "vue";
 
-import type { ButtonIconProps } from "./ButtonIcon.vue";
 import ButtonIcon from "./ButtonIcon.vue";
+import type { ButtonIconProps } from "./ButtonIcon.vue";
 
 const ButtonIconWrapper = defineComponent({
   components: { TooltipProvider, ButtonIcon },

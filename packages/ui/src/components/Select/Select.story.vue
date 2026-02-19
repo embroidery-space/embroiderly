@@ -1,38 +1,38 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import type { FormFieldProps } from "../FormField/FormField.vue";
-  import FormField from "../FormField/FormField.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
 
-  import type { SelectItem, SelectProps } from "./Select.vue";
-  import Select from "./Select.vue";
+import Select from "./Select.vue";
+import type { SelectItem, SelectProps } from "./Select.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const items = ref<SelectItem[]>([
-    { label: "Backlog", value: "backlog" },
-    { label: "Todo", value: "todo" },
-    { label: "In Progress", value: "in-progress" },
-    { label: "Done", value: "done" },
-    { label: "Cancelled", value: "cancelled" },
-  ]);
+const items = ref<SelectItem[]>([
+  { label: "Backlog", value: "backlog" },
+  { label: "Todo", value: "todo" },
+  { label: "In Progress", value: "in-progress" },
+  { label: "Done", value: "done" },
+  { label: "Cancelled", value: "cancelled" },
+]);
 
-  const inputState = reactive<SelectProps>({
-    disabled: false,
-    loading: false,
-    searchInput: false,
-    placeholder: "Select a status...",
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "md",
-    label: "",
-    description: "",
-    hint: "",
-    help: "",
-  });
+const inputState = reactive<SelectProps>({
+  disabled: false,
+  loading: false,
+  searchInput: false,
+  placeholder: "Select a status...",
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "md",
+  label: "",
+  description: "",
+  hint: "",
+  help: "",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

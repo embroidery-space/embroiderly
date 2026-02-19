@@ -1,17 +1,17 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import type { SeparatorProps } from "./Separator.vue";
-  import Separator from "./Separator.vue";
+import Separator from "./Separator.vue";
+import type { SeparatorProps } from "./Separator.vue";
 
-  const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
-  const orientations = ["horizontal", "vertical"] as const;
+const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+const orientations = ["horizontal", "vertical"] as const;
 
-  const state = reactive<SeparatorProps>({
-    orientation: "vertical",
-  });
+const state = reactive<SeparatorProps>({
+  orientation: "vertical",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

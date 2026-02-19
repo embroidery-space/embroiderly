@@ -1,17 +1,17 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import type { ProgressProps } from "./Progress.vue";
-  import Progress from "./Progress.vue";
+import Progress from "./Progress.vue";
+import type { ProgressProps } from "./Progress.vue";
 
-  const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
-  const orientations = ["horizontal", "vertical"] as const;
+const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
+const orientations = ["horizontal", "vertical"] as const;
 
-  const state = reactive<ProgressProps>({
-    orientation: "horizontal",
-  });
+const state = reactive<ProgressProps>({
+  orientation: "horizontal",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

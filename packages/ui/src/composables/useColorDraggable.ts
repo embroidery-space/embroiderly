@@ -1,6 +1,6 @@
 import { useEventListener, useThrottleFn } from "@vueuse/core";
-import type { MaybeRefOrGetter, Ref } from "vue";
 import { ref, toValue, watch } from "vue";
+import type { MaybeRefOrGetter, Ref } from "vue";
 
 export interface UseColorDraggableOptions {
   /** The target element for dragging. */

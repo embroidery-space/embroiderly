@@ -1,34 +1,34 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import type { FormFieldProps } from "../FormField/FormField.vue";
-  import FormField from "../FormField/FormField.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
 
-  import type { SliderProps } from "./Slider.vue";
-  import Slider from "./Slider.vue";
+import Slider from "./Slider.vue";
+import type { SliderProps } from "./Slider.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const value = ref(50);
-  const inputState = reactive<SliderProps>({
-    min: 0,
-    max: 100,
-    step: 1,
+const value = ref(50);
+const inputState = reactive<SliderProps>({
+  min: 0,
+  max: 100,
+  step: 1,
 
-    tooltip: false,
+  tooltip: false,
 
-    disabled: false,
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "md",
-    label: "",
-    description: "",
-    hint: "",
-    help: "",
-  });
+  disabled: false,
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "md",
+  label: "",
+  description: "",
+  hint: "",
+  help: "",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

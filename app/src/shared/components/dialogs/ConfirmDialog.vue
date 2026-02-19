@@ -1,3 +1,29 @@
+<script lang="ts" setup>
+import type { ButtonProps } from "@nuxt/ui";
+
+interface ConfirmDialogProps {
+  /** Confirm dialog title. */
+  title?: string;
+  /** Confirm dialog description. */
+  description?: string;
+  /**
+   * Confirm dialog "Yes" button props.
+   * If `null`, the button is hidden.
+   */
+  yesButton?: ButtonProps | null;
+  /**
+   * Confirm dialog "No" button props.
+   * If `null`, the button is hidden.
+   */
+  noButton?: ButtonProps | null;
+}
+
+const props = defineProps<ConfirmDialogProps>();
+const emit = defineEmits<{
+  close: [value?: boolean];
+}>();
+</script>
+
 <template>
   <UModal :dismissible="false" :title="props.title" @close:prevent="emit('close')">
     <template v-if="props.description" #body>
@@ -24,29 +50,3 @@
     </template>
   </UModal>
 </template>
-
-<script lang="ts" setup>
-  import type { ButtonProps } from "@nuxt/ui";
-
-  interface ConfirmDialogProps {
-    /** Confirm dialog title. */
-    title?: string;
-    /** Confirm dialog description. */
-    description?: string;
-    /**
-     * Confirm dialog "Yes" button props.
-     * If `null`, the button is hidden.
-     */
-    yesButton?: ButtonProps | null;
-    /**
-     * Confirm dialog "No" button props.
-     * If `null`, the button is hidden.
-     */
-    noButton?: ButtonProps | null;
-  }
-
-  const props = defineProps<ConfirmDialogProps>();
-  const emit = defineEmits<{
-    close: [value?: boolean];
-  }>();
-</script>

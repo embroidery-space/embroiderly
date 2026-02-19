@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { MenubarMenu, MenubarProps } from "./Menubar.vue";
 import Menubar from "./Menubar.vue";
+import type { MenubarMenu, MenubarProps } from "./Menubar.vue";
 
 describe("Menubar", () => {
   const sizes = ["sm", "md", "lg"] as const;

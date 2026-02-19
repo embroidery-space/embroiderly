@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { KbdProps } from "./Kbd.vue";
 import Kbd from "./Kbd.vue";
+import type { KbdProps } from "./Kbd.vue";
 
 describe("Kbd", () => {
   const sizes = ["sm", "md", "lg"] as const;

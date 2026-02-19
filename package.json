@@ -1,7 +1,7 @@
 {
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc",
+  "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937",
   "engines": {
     "node": ">=24"
   },
@@ -23,12 +23,13 @@
     "check-types": "pnpm -r check-types",
     "fmt": "prettier --check .",
     "fmt:fix": "prettier --write .",
-    "lint": "eslint --concurrency auto && markdownlint-cli2",
-    "lint:fix": "eslint --concurrency auto --fix && markdownlint-cli2 --fix",
-    "test": "pnpm -r --workspace-concurrency=1 test"
+    "lint": "oxlint --format stylish && eslint --concurrency auto && markdownlint-cli2",
+    "lint:fix": "oxlint --fix --format stylish && eslint --fix --concurrency auto && markdownlint-cli2 --fix",
+    "test": "pnpm -r test"
   },
   "devDependencies": {
-    "@eslint/js": "catalog:",
+    "@eslint-community/eslint-plugin-eslint-comments": "catalog:",
+    "@intlify/eslint-plugin-vue-i18n": "catalog:",
     "@tauri-apps/cli": "catalog:",
     "@vitest/eslint-plugin": "catalog:",
     "@vue/eslint-config-prettier": "catalog:",
@@ -36,15 +37,15 @@
     "eslint": "catalog:",
     "eslint-plugin-better-tailwindcss": "catalog:",
     "eslint-plugin-import-x": "catalog:",
+    "eslint-plugin-jsonc": "catalog:",
     "eslint-plugin-no-only-tests": "catalog:",
-    "eslint-plugin-promise": "catalog:",
-    "eslint-plugin-sonarjs": "catalog:",
-    "eslint-plugin-unicorn": "catalog:",
+    "eslint-plugin-oxlint": "catalog:",
+    "eslint-plugin-toml": "catalog:",
     "eslint-plugin-vue": "catalog:",
     "eslint-plugin-wdio": "catalog:",
     "eslint-plugin-yml": "catalog:",
-    "globals": "catalog:",
     "markdownlint-cli2": "catalog:",
+    "oxlint": "catalog:",
     "prettier": "catalog:",
     "tailwindcss": "catalog:"
   }

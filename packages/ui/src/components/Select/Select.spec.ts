@@ -4,8 +4,8 @@ import { defineComponent, nextTick } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
-import type { SelectProps } from "./Select.vue";
 import Select from "./Select.vue";
+import type { SelectProps } from "./Select.vue";
 
 describe("Select", () => {
   const sizes = ["sm", "md", "lg"] as const;

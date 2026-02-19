@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { ColorPickerProps } from "./ColorPicker.vue";
 import ColorPicker from "./ColorPicker.vue";
+import type { ColorPickerProps } from "./ColorPicker.vue";
 
 describe("ColorPicker", () => {
   const sizes = ["sm", "md", "lg"] as const;

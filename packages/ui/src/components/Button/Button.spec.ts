@@ -2,8 +2,8 @@ import { describe, expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { ButtonProps, ButtonSlots } from "./Button.vue";
 import Button from "./Button.vue";
+import type { ButtonProps, ButtonSlots } from "./Button.vue";
 
 describe("Button", () => {
   const sizes = ["sm", "md", "lg"] as const;
@@ -53,7 +53,12 @@ describe("Button", () => {
   describe("loading", () => {
     test("handles auto loading correctly", async () => {
       let resolvePromise: () => void;
-      const asyncHandler = vi.fn(() => new Promise<void>((resolve) => (resolvePromise = resolve)));
+      const asyncHandler = vi.fn(
+        () =>
+          new Promise<void>((resolve) => {
+            resolvePromise = resolve;
+          }),
+      );
 
       const screen = page.render(Button, {
         props: {

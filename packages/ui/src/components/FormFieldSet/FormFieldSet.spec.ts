@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { FormFieldSetProps } from "./FormFieldSet.vue";
 import FormFieldSet from "./FormFieldSet.vue";
+import type { FormFieldSetProps } from "./FormFieldSet.vue";
 
 describe("FormFieldSet", () => {
   const sizes = ["sm", "md", "lg"] as const;

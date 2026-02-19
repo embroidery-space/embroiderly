@@ -1,3 +1,108 @@
+<script setup lang="ts">
+import { Color } from "pixi.js";
+import { computed, onMounted, reactive, ref, watch } from "vue";
+import type { Ref } from "vue";
+
+import { PatternApi } from "#pattern-editor/api/";
+import { Fabric, PaletteSettings, FabricColor } from "#pattern-editor/lib/pattern/";
+import { DimensionsInput, FormFieldset } from "#shared/components/";
+import { useI18n } from "#shared/composables/";
+import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#shared/utils/";
+
+import { PaletteList } from "../palette/";
+
+const fabric = defineModel<Fabric>({ required: true });
+
+const { fluent } = useI18n();
+
+const fabricCounts = ref([14, 16, 18, 20]);
+
+const fabricSizeMeasurement = ref<"stitches" | "inches" | "mm">("stitches");
+const fabricSizeFinal = reactive({ width: fabric.value.width, height: fabric.value.height });
+const fabricSizeOptions = computed(() => [
+  { label: fluent.$t("unit-stitches"), value: "stitches" },
+  { label: fluent.$t("unit-inches"), value: "inches" },
+  { label: fluent.$t("unit-mm"), value: "mm" },
+]);
+
+watch(fabricSizeMeasurement, (newMeasurement, oldMeasurement) => {
+  const { width, height } = fabricSizeFinal;
+  switch (newMeasurement) {
+    case "stitches": {
+      if (oldMeasurement === "inches") {
+        fabricSizeFinal.width = size2stitches(width, fabric.value.spi[0]);
+        fabricSizeFinal.height = size2stitches(height, fabric.value.spi[1]);
+      } else {
+        fabricSizeFinal.width = size2stitches(mm2inches(width), fabric.value.spi[0]);
+        fabricSizeFinal.height = size2stitches(mm2inches(height), fabric.value.spi[1]);
+      }
+      break;
+    }
+    case "inches": {
+      if (oldMeasurement === "stitches") {
+        fabricSizeFinal.width = stitches2inches(width, fabric.value.spi[0]);
+        fabricSizeFinal.height = stitches2inches(height, fabric.value.spi[1]);
+      } else {
+        fabricSizeFinal.width = mm2inches(width);
+        fabricSizeFinal.height = mm2inches(height);
+      }
+      break;
+    }
+    case "mm": {
+      if (oldMeasurement === "stitches") {
+        fabricSizeFinal.width = stitches2mm(width, fabric.value.spi[0]);
+        fabricSizeFinal.height = stitches2mm(height, fabric.value.spi[1]);
+      } else {
+        fabricSizeFinal.width = inches2mm(width);
+        fabricSizeFinal.height = inches2mm(height);
+      }
+      break;
+    }
+  }
+});
+
+watch(fabricSizeFinal, (size) => {
+  const { width, height } = size;
+  switch (fabricSizeMeasurement.value) {
+    case "stitches": {
+      fabric.value.width = width;
+      fabric.value.height = height;
+      break;
+    }
+    case "inches": {
+      fabric.value.width = size2stitches(width, fabric.value.spi[0]);
+      fabric.value.height = size2stitches(height, fabric.value.spi[1]);
+      break;
+    }
+    case "mm": {
+      fabric.value.width = size2stitches(mm2inches(width), fabric.value.spi[0]);
+      fabric.value.height = size2stitches(mm2inches(height), fabric.value.spi[1]);
+      break;
+    }
+  }
+});
+
+const fabricKinds = computed(() => [
+  { label: fluent.$t("fabric-kind-aida"), value: "Aida" },
+  { label: fluent.$t("fabric-kind-evenweave"), value: "Evenweave" },
+  { label: fluent.$t("fabric-kind-linen"), value: "Linen" },
+]);
+const fabricColors: Ref<FabricColor[]> = ref([]);
+const FABRIC_COLORS_DISPLAY_SETTINGS = new PaletteSettings({
+  columnsNumber: 8,
+  colorOnly: true,
+  showStitchSymbols: false,
+  stitchSymbolsOnContrastBackground: false,
+  showColorBrands: false,
+  showColorNumbers: false,
+  showColorNames: false,
+});
+
+onMounted(async () => {
+  fabricColors.value = await PatternApi.loadFabricColors();
+});
+</script>
+
 <template>
   <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
     <FormFieldset :legend="$t('fabric-count-and-kind')">
@@ -80,108 +185,3 @@
     </FormFieldset>
   </div>
 </template>
-
-<script setup lang="ts">
-  import { Color } from "pixi.js";
-  import { computed, onMounted, reactive, ref, watch } from "vue";
-  import type { Ref } from "vue";
-
-  import { PatternApi } from "#pattern-editor/api/";
-  import { Fabric, PaletteSettings, FabricColor } from "#pattern-editor/lib/pattern/";
-  import { DimensionsInput, FormFieldset } from "#shared/components/";
-  import { useI18n } from "#shared/composables/";
-  import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#shared/utils/";
-
-  import { PaletteList } from "../palette/";
-
-  const fabric = defineModel<Fabric>({ required: true });
-
-  const { fluent } = useI18n();
-
-  const fabricCounts = ref([14, 16, 18, 20]);
-
-  const fabricSizeMeasurement = ref<"stitches" | "inches" | "mm">("stitches");
-  const fabricSizeFinal = reactive({ width: fabric.value.width, height: fabric.value.height });
-  const fabricSizeOptions = computed(() => [
-    { label: fluent.$t("unit-stitches"), value: "stitches" },
-    { label: fluent.$t("unit-inches"), value: "inches" },
-    { label: fluent.$t("unit-mm"), value: "mm" },
-  ]);
-
-  watch(fabricSizeMeasurement, (newMeasurement, oldMeasurement) => {
-    const { width, height } = fabricSizeFinal;
-    switch (newMeasurement) {
-      case "stitches": {
-        if (oldMeasurement === "inches") {
-          fabricSizeFinal.width = size2stitches(width, fabric.value.spi[0]);
-          fabricSizeFinal.height = size2stitches(height, fabric.value.spi[1]);
-        } else {
-          fabricSizeFinal.width = size2stitches(mm2inches(width), fabric.value.spi[0]);
-          fabricSizeFinal.height = size2stitches(mm2inches(height), fabric.value.spi[1]);
-        }
-        break;
-      }
-      case "inches": {
-        if (oldMeasurement === "stitches") {
-          fabricSizeFinal.width = stitches2inches(width, fabric.value.spi[0]);
-          fabricSizeFinal.height = stitches2inches(height, fabric.value.spi[1]);
-        } else {
-          fabricSizeFinal.width = mm2inches(width);
-          fabricSizeFinal.height = mm2inches(height);
-        }
-        break;
-      }
-      case "mm": {
-        if (oldMeasurement === "stitches") {
-          fabricSizeFinal.width = stitches2mm(width, fabric.value.spi[0]);
-          fabricSizeFinal.height = stitches2mm(height, fabric.value.spi[1]);
-        } else {
-          fabricSizeFinal.width = inches2mm(width);
-          fabricSizeFinal.height = inches2mm(height);
-        }
-        break;
-      }
-    }
-  });
-
-  watch(fabricSizeFinal, (size) => {
-    const { width, height } = size;
-    switch (fabricSizeMeasurement.value) {
-      case "stitches": {
-        fabric.value.width = width;
-        fabric.value.height = height;
-        break;
-      }
-      case "inches": {
-        fabric.value.width = size2stitches(width, fabric.value.spi[0]);
-        fabric.value.height = size2stitches(height, fabric.value.spi[1]);
-        break;
-      }
-      case "mm": {
-        fabric.value.width = size2stitches(mm2inches(width), fabric.value.spi[0]);
-        fabric.value.height = size2stitches(mm2inches(height), fabric.value.spi[1]);
-        break;
-      }
-    }
-  });
-
-  const fabricKinds = computed(() => [
-    { label: fluent.$t("fabric-kind-aida"), value: "Aida" },
-    { label: fluent.$t("fabric-kind-evenweave"), value: "Evenweave" },
-    { label: fluent.$t("fabric-kind-linen"), value: "Linen" },
-  ]);
-  const fabricColors: Ref<FabricColor[]> = ref([]);
-  const FABRIC_COLORS_DISPLAY_SETTINGS = new PaletteSettings({
-    columnsNumber: 8,
-    colorOnly: true,
-    showStitchSymbols: false,
-    stitchSymbolsOnContrastBackground: false,
-    showColorBrands: false,
-    showColorNumbers: false,
-    showColorNames: false,
-  });
-
-  onMounted(async () => {
-    fabricColors.value = await PatternApi.loadFabricColors();
-  });
-</script>

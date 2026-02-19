@@ -1,52 +1,52 @@
 <script setup lang="ts">
-  import { computed } from "vue";
+import { computed } from "vue";
 
-  import type { ButtonProps } from "../Button/Button.vue";
-  import Button from "../Button/Button.vue";
-  import type { TooltipProps } from "../Tooltip/Tooltip.vue";
-  import Tooltip from "../Tooltip/Tooltip.vue";
+import Button from "../Button/Button.vue";
+import type { ButtonProps } from "../Button/Button.vue";
+import Tooltip from "../Tooltip/Tooltip.vue";
+import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 
-  export interface ButtonIconProps
-    extends
-      Omit<ButtonProps, "label" | "leadingIcon" | "trailingIcon" | "leading" | "trailing" | "square">,
-      Pick<TooltipProps, "delayDuration" | "shortcut"> {
-    /** The icon to display. */
-    icon: string;
-    /** The tooltip text. */
-    tooltip: string;
+export interface ButtonIconProps
+  extends
+    Omit<ButtonProps, "label" | "leadingIcon" | "trailingIcon" | "leading" | "trailing" | "square">,
+    Pick<TooltipProps, "delayDuration" | "shortcut"> {
+  /** The icon to display. */
+  icon: string;
+  /** The tooltip text. */
+  tooltip: string;
 
-    /** Additional options for the tooltip. */
-    tooltipOptions?: Omit<TooltipProps, "text" | "disabled" | "delayDuration">;
-  }
+  /** Additional options for the tooltip. */
+  tooltipOptions?: Omit<TooltipProps, "text" | "disabled" | "delayDuration">;
+}
 
-  const props = defineProps<ButtonIconProps>();
-  const buttonProps = computed<Partial<ButtonProps>>(() => ({
-    as: props.as,
-    asChild: props.asChild,
+const props = defineProps<ButtonIconProps>();
+const buttonProps = computed<Partial<ButtonProps>>(() => ({
+  as: props.as,
+  asChild: props.asChild,
 
-    icon: props.icon,
+  icon: props.icon,
 
-    variant: props.variant,
-    color: props.color,
-    size: props.size,
+  variant: props.variant,
+  color: props.color,
+  size: props.size,
 
-    loading: props.loading,
-    disabled: props.disabled,
+  loading: props.loading,
+  disabled: props.disabled,
 
-    loadingIcon: props.loadingIcon,
+  loadingIcon: props.loadingIcon,
 
-    class: props.class,
-    ui: props.ui,
-  }));
-  const tooltipProps = computed<TooltipProps>(() => ({
-    ...props.tooltipOptions,
+  class: props.class,
+  ui: props.ui,
+}));
+const tooltipProps = computed<TooltipProps>(() => ({
+  ...props.tooltipOptions,
 
-    text: props.tooltip,
-    shortcut: props.shortcut,
+  text: props.tooltip,
+  shortcut: props.shortcut,
 
-    disabled: props.disabled,
-    delayDuration: props.delayDuration,
-  }));
+  disabled: props.disabled,
+  delayDuration: props.delayDuration,
+}));
 </script>
 
 <template>

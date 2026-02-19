@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { h, nextTick } from "vue";
 
-import type { SplitterProps } from "./Splitter.vue";
 import Splitter from "./Splitter.vue";
+import type { SplitterProps } from "./Splitter.vue";
 import SplitterPanel from "./SplitterPanel.vue";
 
 function createPanels(count: number) {

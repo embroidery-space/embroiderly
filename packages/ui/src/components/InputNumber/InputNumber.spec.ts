@@ -5,8 +5,8 @@ import { Key } from "webdriverio";
 
 import FormField from "../FormField/FormField.vue";
 
-import type { InputNumberProps } from "./InputNumber.vue";
 import InputNumber from "./InputNumber.vue";
+import type { InputNumberProps } from "./InputNumber.vue";
 
 describe("InputNumber", () => {
   const sizes = ["sm", "md", "lg"] as const;

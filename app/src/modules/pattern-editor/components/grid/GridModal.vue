@@ -1,3 +1,21 @@
+<script setup lang="ts">
+import { ref, toRaw } from "vue";
+
+import { Grid } from "#pattern-editor/lib/pattern/";
+
+import GridForm from "./GridForm.vue";
+
+const props = defineProps<{ grid: Grid; onSave?: (grid: Grid) => void | Promise<void> }>();
+const emit = defineEmits<{ close: [] }>();
+
+const grid = ref<Grid>(new Grid(toRaw(props.grid)));
+
+async function handleSave() {
+  await props.onSave?.(grid.value);
+  emit("close");
+}
+</script>
+
 <template>
   <UModal :title="$t('grid-properties')">
     <template #body>
@@ -9,21 +27,3 @@
     </template>
   </UModal>
 </template>
-
-<script setup lang="ts">
-  import { ref, toRaw } from "vue";
-
-  import { Grid } from "#pattern-editor/lib/pattern/";
-
-  import GridForm from "./GridForm.vue";
-
-  const props = defineProps<{ grid: Grid; onSave?: (grid: Grid) => void | Promise<void> }>();
-  const emit = defineEmits<{ close: [] }>();
-
-  const grid = ref<Grid>(new Grid(toRaw(props.grid)));
-
-  async function handleSave() {
-    await props.onSave?.(grid.value);
-    emit("close");
-  }
-</script>

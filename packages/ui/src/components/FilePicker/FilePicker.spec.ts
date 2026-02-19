@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { FilePickerProps } from "./FilePicker.vue";
 import FilePicker from "./FilePicker.vue";
+import type { FilePickerProps } from "./FilePicker.vue";
 
 describe("FilePicker", () => {
   const sizes = ["sm", "md", "lg"] as const;

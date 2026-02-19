@@ -1,29 +1,29 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { ref, reactive } from "vue";
+import { logEvent } from "histoire/client";
+import { ref, reactive } from "vue";
 
-  import type { FormFieldProps } from "../FormField/FormField.vue";
-  import FormField from "../FormField/FormField.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
 
-  import type { RadioGroupItem, RadioGroupProps } from "./RadioGroup.vue";
-  import RadioGroup from "./RadioGroup.vue";
+import RadioGroup from "./RadioGroup.vue";
+import type { RadioGroupItem, RadioGroupProps } from "./RadioGroup.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const items = ref<RadioGroupItem[]>([
-    { value: 1, label: "Option 1", description: "Description 1" },
-    { value: 2, label: "Option 2", description: "Description 2" },
-    { value: 3, label: "Option 3", description: "Description 3" },
-  ]);
+const items = ref<RadioGroupItem[]>([
+  { value: 1, label: "Option 1", description: "Description 1" },
+  { value: 2, label: "Option 2", description: "Description 2" },
+  { value: 3, label: "Option 3", description: "Description 3" },
+]);
 
-  const inputState = reactive<RadioGroupProps>({
-    disabled: false,
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "md",
-  });
+const inputState = reactive<RadioGroupProps>({
+  disabled: false,
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "md",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

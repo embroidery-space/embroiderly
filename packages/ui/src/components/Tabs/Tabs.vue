@@ -1,79 +1,79 @@
 <script setup lang="ts">
-  import type { TabsRootProps } from "reka-ui";
-  import { Tabs } from "reka-ui/namespaced";
-  import { computed } from "vue";
+import type { TabsRootProps } from "reka-ui";
+import { Tabs } from "reka-ui/namespaced";
+import { computed } from "vue";
 
-  import { get } from "../../utils/object.ts";
+import { get } from "../../utils/object.ts";
 
-  import { TabsTheme } from "./Tabs.theme.ts";
-  import type { TabsThemeSlots, TabsThemeVariants } from "./Tabs.theme.ts";
+import { TabsTheme } from "./Tabs.theme.ts";
+import type { TabsThemeSlots, TabsThemeVariants } from "./Tabs.theme.ts";
 
-  export interface TabsItem {
-    label?: string;
-    value?: string | number;
-    slot?: string;
-    content?: string;
-    disabled?: boolean;
-  }
+export interface TabsItem {
+  label?: string;
+  value?: string | number;
+  slot?: string;
+  content?: string;
+  disabled?: boolean;
+}
 
-  export interface TabsProps extends Pick<
-    TabsRootProps<string | number>,
-    "defaultValue" | "activationMode" | "unmountOnHide"
-  > {
-    /** The items to display as tabs. */
-    items?: TabsItem[];
+export interface TabsProps extends Pick<
+  TabsRootProps<string | number>,
+  "defaultValue" | "activationMode" | "unmountOnHide"
+> {
+  /** The items to display as tabs. */
+  items?: TabsItem[];
 
-    /**
-     * The size of the tabs.
-     * @default "md"
-     */
-    size?: TabsThemeVariants["size"];
+  /**
+   * The size of the tabs.
+   * @default "md"
+   */
+  size?: TabsThemeVariants["size"];
 
-    /**
-     * The orientation of the tabs.
-     * @default "horizontal"
-     */
-    orientation?: TabsThemeVariants["orientation"];
+  /**
+   * The orientation of the tabs.
+   * @default "horizontal"
+   */
+  orientation?: TabsThemeVariants["orientation"];
 
-    /**
-     * Whether to render tab content panels.
-     * @default true
-     */
-    content?: boolean;
+  /**
+   * Whether to render tab content panels.
+   * @default true
+   */
+  content?: boolean;
 
-    class?: any;
-    ui?: TabsThemeSlots;
-  }
+  class?: any;
+  ui?: TabsThemeSlots;
+}
 
-  export interface TabsSlots {
-    "leading"(props: { item: TabsItem; index: number }): any;
-    "default"(props: { item: TabsItem; index: number }): any;
-    "trailing"(props: { item: TabsItem; index: number }): any;
-    "content"(props: { item: TabsItem; index: number }): any;
-    "list-leading"(props?: object): any;
-    "list-trailing"(props?: object): any;
-    [key: string]: (props: { item: TabsItem; index: number }) => any;
-  }
+export interface TabsSlots {
+  "leading"(props: { item: TabsItem; index: number }): any;
+  "default"(props: { item: TabsItem; index: number }): any;
+  "trailing"(props: { item: TabsItem; index: number }): any;
+  "content"(props: { item: TabsItem; index: number }): any;
+  "list-leading"(props?: object): any;
+  "list-trailing"(props?: object): any;
+  [key: string]: (props: { item: TabsItem; index: number }) => any;
+}
 
-  const modelValue = defineModel<string | number>();
-  const props = withDefaults(defineProps<TabsProps>(), {
-    defaultValue: "0",
+const modelValue = defineModel<string | number>();
+const props = withDefaults(defineProps<TabsProps>(), {
+  defaultValue: "0",
 
-    size: "md",
-    orientation: "horizontal",
+  size: "md",
+  orientation: "horizontal",
 
-    content: true,
+  content: true,
 
-    unmountOnHide: true,
+  unmountOnHide: true,
+});
+const slots = defineSlots<TabsSlots>();
+
+const ui = computed(() => {
+  return TabsTheme({
+    orientation: props.orientation,
+    size: props.size,
   });
-  const slots = defineSlots<TabsSlots>();
-
-  const ui = computed(() => {
-    return TabsTheme({
-      orientation: props.orientation,
-      size: props.size,
-    });
-  });
+});
 </script>
 
 <template>

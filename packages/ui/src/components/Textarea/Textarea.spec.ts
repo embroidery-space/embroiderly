@@ -4,8 +4,8 @@ import { defineComponent, nextTick } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
-import type { TextareaProps } from "./Textarea.vue";
 import Textarea from "./Textarea.vue";
+import type { TextareaProps } from "./Textarea.vue";
 
 describe("Textarea", () => {
   const sizes = ["sm", "md", "lg"] as const;

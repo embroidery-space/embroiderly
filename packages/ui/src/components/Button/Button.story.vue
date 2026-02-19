@@ -1,31 +1,31 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
+import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
 
-  import type { ButtonProps } from "./Button.vue";
-  import Button from "./Button.vue";
+import Button from "./Button.vue";
+import type { ButtonProps } from "./Button.vue";
 
-  const colors = ["primary", "neutral"] as const;
-  const variants = ["solid", "outline", "soft", "subtle", "ghost", "link"] as const;
-  const sizes = ["sm", "md", "lg"] as const;
+const colors = ["primary", "neutral"] as const;
+const variants = ["solid", "outline", "soft", "subtle", "ghost", "link"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const state = reactive<ButtonProps>({
-    label: "Button",
+const state = reactive<ButtonProps>({
+  label: "Button",
 
-    color: "primary",
-    variant: "solid",
-    size: "md",
+  color: "primary",
+  variant: "solid",
+  size: "md",
 
-    leadingIcon: "",
-    trailingIcon: "",
+  leadingIcon: "",
+  trailingIcon: "",
 
-    loading: false,
-    disabled: false,
-    square: false,
-  });
+  loading: false,
+  disabled: false,
+  square: false,
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

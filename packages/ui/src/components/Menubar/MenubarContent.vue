@@ -1,45 +1,45 @@
 <script setup lang="ts">
-  import { Menubar } from "reka-ui/namespaced";
-  import { toRef } from "vue";
+import { Menubar } from "reka-ui/namespaced";
+import { toRef } from "vue";
 
-  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-  import { usePortal } from "../../composables/usePortal.ts";
-  import { parseShortcutDisplay } from "../../utils/shortcut.ts";
-  import Icon from "../Icon/Icon.vue";
-  import Kbd from "../Kbd/Kbd.vue";
+import { useComponentIcons } from "../../composables/useComponentIcons.ts";
+import { usePortal } from "../../composables/usePortal.ts";
+import { parseShortcutDisplay } from "../../utils/shortcut.ts";
+import Icon from "../Icon/Icon.vue";
+import Kbd from "../Kbd/Kbd.vue";
 
-  import type { MenubarTheme } from "./Menubar.theme.ts";
-  import type { MenubarItem } from "./Menubar.vue";
+import type { MenubarTheme } from "./Menubar.theme.ts";
+import type { MenubarItem } from "./Menubar.vue";
 
-  interface MenubarContentInternalProps {
-    items: MenubarItem[][];
+interface MenubarContentInternalProps {
+  items: MenubarItem[][];
 
-    size?: string;
+  size?: string;
 
-    portal?: boolean | string | HTMLElement;
-    sub?: boolean;
+  portal?: boolean | string | HTMLElement;
+  sub?: boolean;
 
-    alignOffset?: number;
-    collisionPadding?: number | Partial<Record<"top" | "bottom" | "left" | "right", number>>;
-    side?: "top" | "right" | "bottom" | "left";
-    sideOffset?: number;
+  alignOffset?: number;
+  collisionPadding?: number | Partial<Record<"top" | "bottom" | "left" | "right", number>>;
+  side?: "top" | "right" | "bottom" | "left";
+  sideOffset?: number;
 
-    ui: ReturnType<typeof MenubarTheme>;
-  }
+  ui: ReturnType<typeof MenubarTheme>;
+}
 
-  const props = withDefaults(defineProps<MenubarContentInternalProps>(), {
-    sub: false,
-  });
+const props = withDefaults(defineProps<MenubarContentInternalProps>(), {
+  sub: false,
+});
 
-  const { icons } = useComponentIcons();
+const { icons } = useComponentIcons();
 
-  const portalProps = usePortal(toRef(() => props.portal ?? true));
+const portalProps = usePortal(toRef(() => props.portal ?? true));
 
-  function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarItem[][] {
-    if (!children?.length) return [];
-    if (Array.isArray(children[0])) return children as MenubarItem[][];
-    return [children as MenubarItem[]];
-  }
+function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarItem[][] {
+  if (!children?.length) return [];
+  if (Array.isArray(children[0])) return children as MenubarItem[][];
+  return [children as MenubarItem[]];
+}
 </script>
 
 <template>

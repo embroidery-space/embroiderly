@@ -1,17 +1,17 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import type { SplitterProps } from "./Splitter.vue";
-  import Splitter from "./Splitter.vue";
-  import SplitterPanel from "./SplitterPanel.vue";
+import Splitter from "./Splitter.vue";
+import type { SplitterProps } from "./Splitter.vue";
+import SplitterPanel from "./SplitterPanel.vue";
 
-  const directions = ["horizontal", "vertical"] as const;
+const directions = ["horizontal", "vertical"] as const;
 
-  const state = reactive<SplitterProps>({
-    direction: "horizontal",
-  });
+const state = reactive<SplitterProps>({
+  direction: "horizontal",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

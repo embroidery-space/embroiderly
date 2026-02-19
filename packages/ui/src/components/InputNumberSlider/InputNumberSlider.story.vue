@@ -1,37 +1,37 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import FormField from "../FormField/FormField.vue";
-  import type { FormFieldProps } from "../FormField/FormField.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
 
-  import type { InputNumberSliderProps } from "./InputNumberSlider.vue";
-  import InputNumberSlider from "./InputNumberSlider.vue";
+import InputNumberSlider from "./InputNumberSlider.vue";
+import type { InputNumberSliderProps } from "./InputNumberSlider.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const value = ref(50);
-  const inputState = reactive<InputNumberSliderProps>({
-    min: 0,
-    max: 100,
-    step: 1,
+const value = ref(50);
+const inputState = reactive<InputNumberSliderProps>({
+  min: 0,
+  max: 100,
+  step: 1,
 
-    increment: false,
-    decrement: false,
+  increment: false,
+  decrement: false,
 
-    tooltip: false,
+  tooltip: false,
 
-    disabled: false,
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "md",
-    label: "",
-    description: "",
-    hint: "",
-    help: "",
-  });
+  disabled: false,
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "md",
+  label: "",
+  description: "",
+  hint: "",
+  help: "",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

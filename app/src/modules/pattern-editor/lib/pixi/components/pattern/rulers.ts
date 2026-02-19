@@ -153,5 +153,6 @@ function calculateRulersScale(zoom?: number): number {
     const normalizedLog = Math.log(zoom) / Math.log(MAX_SCALE);
     const coefficient = max - (max - min) * normalizedLog;
     return STITCH_SCALE_FACTOR * coefficient;
-  } else return STITCH_SCALE_FACTOR;
+  }
+  return STITCH_SCALE_FACTOR;
 }

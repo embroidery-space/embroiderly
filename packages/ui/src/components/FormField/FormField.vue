@@ -1,64 +1,64 @@
 <script setup lang="ts">
-  import { Label, Primitive } from "reka-ui";
-  import type { PrimitiveProps } from "reka-ui";
-  import { computed, provide, ref, useId } from "vue";
+import { Label, Primitive } from "reka-ui";
+import type { PrimitiveProps } from "reka-ui";
+import { computed, provide, ref, useId } from "vue";
 
-  import { formFieldInjectionKey, inputIdInjectionKey } from "../../composables/useFormField.ts";
-  import type { FormFieldInjectedOptions } from "../../composables/useFormField.ts";
+import { formFieldInjectionKey, inputIdInjectionKey } from "../../composables/useFormField.ts";
+import type { FormFieldInjectedOptions } from "../../composables/useFormField.ts";
 
-  import { FormFieldTheme } from "./FormField.theme.ts";
-  import type { FormFieldThemeSlots, FormFieldThemeVariants } from "./FormField.theme.ts";
+import { FormFieldTheme } from "./FormField.theme.ts";
+import type { FormFieldThemeSlots, FormFieldThemeVariants } from "./FormField.theme.ts";
 
-  export interface FormFieldProps extends PrimitiveProps {
-    /** The label text for the field. */
-    label?: string;
-    /** A description shown below the label. */
-    description?: string;
-    /** Help text shown below the input. */
-    help?: string;
-    /** A hint shown next to the label. */
-    hint?: string;
+export interface FormFieldProps extends PrimitiveProps {
+  /** The label text for the field. */
+  label?: string;
+  /** A description shown below the label. */
+  description?: string;
+  /** Help text shown below the input. */
+  help?: string;
+  /** A hint shown next to the label. */
+  hint?: string;
 
-    /**
-     * The size of the form field.
-     * @default "lg"
-     */
-    size?: FormFieldThemeVariants["size"];
+  /**
+   * The size of the form field.
+   * @default "lg"
+   */
+  size?: FormFieldThemeVariants["size"];
 
-    class?: any;
-    ui?: FormFieldThemeSlots;
-  }
+  class?: any;
+  ui?: FormFieldThemeSlots;
+}
 
-  const props = withDefaults(defineProps<FormFieldProps>(), {
-    as: "div",
+const props = withDefaults(defineProps<FormFieldProps>(), {
+  as: "div",
 
-    size: "lg",
+  size: "lg",
+});
+
+const id = ref(useId());
+const ariaId = id.value;
+
+provide(inputIdInjectionKey, id);
+provide(
+  formFieldInjectionKey,
+  computed(
+    () =>
+      ({
+        ariaId,
+        label: props.label,
+        size: props.size,
+        hint: props.hint,
+        description: props.description,
+        help: props.help,
+      }) satisfies FormFieldInjectedOptions,
+  ),
+);
+
+const ui = computed(() => {
+  return FormFieldTheme({
+    size: props.size,
   });
-
-  const id = ref(useId());
-  const ariaId = id.value;
-
-  provide(inputIdInjectionKey, id);
-  provide(
-    formFieldInjectionKey,
-    computed(
-      () =>
-        ({
-          ariaId,
-          label: props.label,
-          size: props.size,
-          hint: props.hint,
-          description: props.description,
-          help: props.help,
-        }) satisfies FormFieldInjectedOptions,
-    ),
-  );
-
-  const ui = computed(() => {
-    return FormFieldTheme({
-      size: props.size,
-    });
-  });
+});
 </script>
 
 <template>

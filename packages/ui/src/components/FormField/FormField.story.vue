@@ -1,23 +1,23 @@
 <script setup lang="ts">
-  import { reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 
-  import Input from "../Input/Input.vue";
+import Input from "../Input/Input.vue";
 
-  import type { FormFieldProps } from "./FormField.vue";
-  import FormField from "./FormField.vue";
+import FormField from "./FormField.vue";
+import type { FormFieldProps } from "./FormField.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const value = ref("");
-  const state = reactive<FormFieldProps>({
-    size: "lg",
-    label: "Email address",
-    description: "",
-    hint: "",
-    help: "",
-  });
+const value = ref("");
+const state = reactive<FormFieldProps>({
+  size: "lg",
+  label: "Email address",
+  description: "",
+  hint: "",
+  help: "",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

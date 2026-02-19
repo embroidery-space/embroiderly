@@ -1,124 +1,124 @@
 <script setup lang="ts">
-  import defu from "defu";
-  import { useFilter } from "reka-ui";
-  import { Combobox } from "reka-ui/namespaced";
-  import { computed, ref, toRef } from "vue";
+import defu from "defu";
+import { useFilter } from "reka-ui";
+import { Combobox } from "reka-ui/namespaced";
+import { computed, ref, toRef } from "vue";
 
-  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-  import { useFormField } from "../../composables/useFormField.ts";
-  import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
-  import { useLocale } from "../../composables/useLocale.ts";
-  import { usePortal } from "../../composables/usePortal.ts";
-  import Icon from "../Icon/Icon.vue";
-  import Input from "../Input/Input.vue";
-  import type { InputProps } from "../Input/Input.vue";
+import { useComponentIcons } from "../../composables/useComponentIcons.ts";
+import { useFormField } from "../../composables/useFormField.ts";
+import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
+import { useLocale } from "../../composables/useLocale.ts";
+import { usePortal } from "../../composables/usePortal.ts";
+import Icon from "../Icon/Icon.vue";
+import Input from "../Input/Input.vue";
+import type { InputProps } from "../Input/Input.vue";
 
-  import { SelectTheme } from "./Select.theme.ts";
-  import type { SelectThemeSlots, SelectThemeVariants } from "./Select.theme.ts";
+import { SelectTheme } from "./Select.theme.ts";
+import type { SelectThemeSlots, SelectThemeVariants } from "./Select.theme.ts";
 
-  export type SelectItem = string | number | { label: string; value: string | number };
+export type SelectItem = string | number | { label: string; value: string | number };
 
-  export interface SelectProps {
-    id?: string;
+export interface SelectProps {
+  id?: string;
 
-    /** The items to display in the select. */
-    items?: SelectItem[];
+  /** The items to display in the select. */
+  items?: SelectItem[];
 
-    /** The placeholder text when no value is selected. */
-    placeholder?: string;
+  /** The placeholder text when no value is selected. */
+  placeholder?: string;
 
-    /**
-     * Whether to show a search input in the dropdown.
-     * Pass an object with `placeholder` to customize the search input placeholder.
-     * @default false
-     */
-    searchInput?: boolean | InputProps;
+  /**
+   * Whether to show a search input in the dropdown.
+   * Pass an object with `placeholder` to customize the search input placeholder.
+   * @default false
+   */
+  searchInput?: boolean | InputProps;
 
-    /**
-     * The color scheme of the select.
-     * @default "primary"
-     */
-    color?: SelectThemeVariants["color"];
-    /**
-     * The style variant of the select.
-     * @default "subtle"
-     */
-    variant?: SelectThemeVariants["variant"];
-    /**
-     * The size of the select.
-     * @default "lg"
-     */
-    size?: SelectThemeVariants["size"];
+  /**
+   * The color scheme of the select.
+   * @default "primary"
+   */
+  color?: SelectThemeVariants["color"];
+  /**
+   * The style variant of the select.
+   * @default "subtle"
+   */
+  variant?: SelectThemeVariants["variant"];
+  /**
+   * The size of the select.
+   * @default "lg"
+   */
+  size?: SelectThemeVariants["size"];
 
-    /** Whether the select is in a loading state. */
-    loading?: boolean;
-    /** Whether the select is disabled. */
-    disabled?: boolean;
+  /** Whether the select is in a loading state. */
+  loading?: boolean;
+  /** Whether the select is disabled. */
+  disabled?: boolean;
 
-    /**
-     * Render the dropdown in a portal.
-     * @default true
-     */
-    portal?: boolean | string | HTMLElement;
+  /**
+   * Render the dropdown in a portal.
+   * @default true
+   */
+  portal?: boolean | string | HTMLElement;
 
-    class?: any;
-    ui?: SelectThemeSlots;
-  }
+  class?: any;
+  ui?: SelectThemeSlots;
+}
 
-  defineOptions({ inheritAttrs: false });
+defineOptions({ inheritAttrs: false });
 
-  const modelValue = defineModel<string | number | undefined>();
-  const props = withDefaults(defineProps<SelectProps>(), {
-    color: "primary",
-    variant: "subtle",
+const modelValue = defineModel<string | number | undefined>();
+const props = withDefaults(defineProps<SelectProps>(), {
+  color: "primary",
+  variant: "subtle",
 
-    portal: true,
+  portal: true,
+});
+
+const { icons } = useComponentIcons();
+const { contains } = useFilter({ sensitivity: "base" });
+const { t } = useLocale();
+
+const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
+const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
+const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
+const portalProps = usePortal(toRef(() => props.portal));
+const searchInputProps = toRef(() => defu(props.searchInput, { placeholder: t("select.search") }) as InputProps);
+
+const open = ref(false);
+const searchValue = ref("");
+
+const normalizedItems = computed<{ label: string; value: string | number }[]>(() => {
+  if (!props.items) return [];
+  return props.items.map((item) => {
+    if (typeof item === "string" || typeof item === "number") {
+      return { label: String(item), value: item };
+    }
+    return item;
   });
+});
 
-  const { icons } = useComponentIcons();
-  const { contains } = useFilter({ sensitivity: "base" });
-  const { t } = useLocale();
+const filteredItems = computed(() => {
+  if (!props.searchInput || !searchValue.value) return normalizedItems.value;
+  return normalizedItems.value.filter((item) => contains(item.label, searchValue.value));
+});
 
-  const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-  const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
-  const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
-  const portalProps = usePortal(toRef(() => props.portal));
-  const searchInputProps = toRef(() => defu(props.searchInput, { placeholder: t("select.search") }) as InputProps);
+const displayValue = computed(() => {
+  if (modelValue.value === null) return undefined;
+  const found = normalizedItems.value.find((item) => item.value === modelValue.value);
+  return found?.label;
+});
 
-  const open = ref(false);
-  const searchValue = ref("");
-
-  const normalizedItems = computed<{ label: string; value: string | number }[]>(() => {
-    if (!props.items) return [];
-    return props.items.map((item) => {
-      if (typeof item === "string" || typeof item === "number") {
-        return { label: String(item), value: item };
-      }
-      return item;
-    });
+const ui = computed(() => {
+  return SelectTheme({
+    color: props.color,
+    variant: props.variant,
+    size: size.value,
+    loading: props.loading,
+    disabled: props.disabled,
+    fieldGroup: fieldGroup.value,
   });
-
-  const filteredItems = computed(() => {
-    if (!props.searchInput || !searchValue.value) return normalizedItems.value;
-    return normalizedItems.value.filter((item) => contains(item.label, searchValue.value));
-  });
-
-  const displayValue = computed(() => {
-    if (modelValue.value == null) return undefined;
-    const found = normalizedItems.value.find((item) => item.value === modelValue.value);
-    return found?.label;
-  });
-
-  const ui = computed(() => {
-    return SelectTheme({
-      color: props.color,
-      variant: props.variant,
-      size: size.value,
-      loading: props.loading,
-      disabled: props.disabled,
-      fieldGroup: fieldGroup.value,
-    });
-  });
+});
 </script>
 
 <template>

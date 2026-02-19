@@ -1,98 +1,98 @@
 <script setup lang="ts">
-  import { Primitive } from "reka-ui";
-  import type { PrimitiveProps } from "reka-ui";
-  import { computed, ref } from "vue";
+import { Primitive } from "reka-ui";
+import type { PrimitiveProps } from "reka-ui";
+import { computed, ref } from "vue";
 
-  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-  import type { UseComponentIconsProps } from "../../composables/useComponentIcons.ts";
-  import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
-  import Icon from "../Icon/Icon.vue";
+import { useComponentIcons } from "../../composables/useComponentIcons.ts";
+import type { UseComponentIconsProps } from "../../composables/useComponentIcons.ts";
+import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
+import Icon from "../Icon/Icon.vue";
 
-  import { ButtonTheme } from "./Button.theme.ts";
-  import type { ButtonThemeSlots, ButtonThemeVariants } from "./Button.theme.ts";
+import { ButtonTheme } from "./Button.theme.ts";
+import type { ButtonThemeSlots, ButtonThemeVariants } from "./Button.theme.ts";
 
-  export interface ButtonProps extends PrimitiveProps, UseComponentIconsProps {
-    /** The text label of the button. */
-    label?: string;
+export interface ButtonProps extends PrimitiveProps, UseComponentIconsProps {
+  /** The text label of the button. */
+  label?: string;
 
-    /**
-     * The color scheme of the button.
-     * @default "primary"
-     */
-    color?: ButtonThemeVariants["color"];
-    /**
-     * The style variant of the button.
-     * @default "solid"
-     */
-    variant?: ButtonThemeVariants["variant"];
-    /**
-     * The size of the button.
-     * @default "md"
-     */
-    size?: ButtonThemeVariants["size"];
+  /**
+   * The color scheme of the button.
+   * @default "primary"
+   */
+  color?: ButtonThemeVariants["color"];
+  /**
+   * The style variant of the button.
+   * @default "solid"
+   */
+  variant?: ButtonThemeVariants["variant"];
+  /**
+   * The size of the button.
+   * @default "md"
+   */
+  size?: ButtonThemeVariants["size"];
 
-    /** Set loading state automatically based on the `@click` promise state. */
-    loadingAuto?: boolean;
+  /** Set loading state automatically based on the `@click` promise state. */
+  loadingAuto?: boolean;
 
-    /** Whether the button is disabled. */
-    disabled?: boolean;
-    /** Render the button with equal padding on all sides. */
-    square?: boolean;
+  /** Whether the button is disabled. */
+  disabled?: boolean;
+  /** Render the button with equal padding on all sides. */
+  square?: boolean;
 
-    onClick?: ((event: MouseEvent) => void | Promise<void>) | Array<(event: MouseEvent) => void | Promise<void>>;
+  onClick?: ((event: MouseEvent) => void | Promise<void>) | Array<(event: MouseEvent) => void | Promise<void>>;
 
-    class?: any;
-    ui?: ButtonThemeSlots;
+  class?: any;
+  ui?: ButtonThemeSlots;
+}
+
+export interface ButtonSlots {
+  leading(): any;
+  default(): any;
+  trailing(): any;
+}
+
+const props = withDefaults(defineProps<ButtonProps>(), {
+  as: "button",
+
+  color: "primary",
+  variant: "solid",
+});
+
+const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
+const size = computed(() => props.size ?? fieldGroupSize.value ?? "md");
+
+const loadingAutoState = ref(false);
+async function onClickWrapper(event: MouseEvent) {
+  loadingAutoState.value = true;
+  try {
+    const callbacks = Array.isArray(props.onClick) ? props.onClick : [props.onClick];
+    await Promise.all(callbacks.map((fn) => fn?.(event)));
+  } finally {
+    loadingAutoState.value = false;
   }
+}
 
-  export interface ButtonSlots {
-    leading(): any;
-    default(): any;
-    trailing(): any;
-  }
+const isLoading = computed(() => props.loading || (props.loadingAuto && loadingAutoState.value));
 
-  const props = withDefaults(defineProps<ButtonProps>(), {
-    as: "button",
+const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
+  computed(() => ({ ...props, loading: isLoading.value })),
+);
 
-    color: "primary",
-    variant: "solid",
+const ui = computed(() => {
+  return ButtonTheme({
+    color: props.color,
+    variant: props.variant,
+    size: size.value,
+
+    loading: isLoading.value,
+    square: props.square,
+
+    leading: isLeading.value,
+    trailing: isTrailing.value,
+
+    fieldGroup: fieldGroup.value,
   });
-
-  const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-  const size = computed(() => props.size ?? fieldGroupSize.value ?? "md");
-
-  const loadingAutoState = ref(false);
-  async function onClickWrapper(event: MouseEvent) {
-    loadingAutoState.value = true;
-    try {
-      const callbacks = Array.isArray(props.onClick) ? props.onClick : [props.onClick];
-      await Promise.all(callbacks.map((fn) => fn?.(event)));
-    } finally {
-      loadingAutoState.value = false;
-    }
-  }
-
-  const isLoading = computed(() => props.loading || (props.loadingAuto && loadingAutoState.value));
-
-  const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
-    computed(() => ({ ...props, loading: isLoading.value })),
-  );
-
-  const ui = computed(() => {
-    return ButtonTheme({
-      color: props.color,
-      variant: props.variant,
-      size: size.value,
-
-      loading: isLoading.value,
-      square: props.square,
-
-      leading: isLeading.value,
-      trailing: isTrailing.value,
-
-      fieldGroup: fieldGroup.value,
-    });
-  });
+});
 </script>
 
 <template>

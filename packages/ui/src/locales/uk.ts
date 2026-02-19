@@ -5,6 +5,9 @@ export default Object.freeze<Locale>({
   code: "uk",
   dir: "ltr",
   messages: {
+    filePicker: {
+      chooseFile: "Вибрати файл",
+    },
     inputNumber: {
       increment: "Збільшити",
       decrement: "Зменшити",
@@ -13,6 +16,9 @@ export default Object.freeze<Locale>({
       search: "Пошук…",
       noData: "Немає даних",
       noMatches: "Збігів не знайдено",
+    },
+    slider: {
+      thumb: "Повзунок",
     },
   },
 });

@@ -1,35 +1,35 @@
 <script setup lang="ts">
-  import { Primitive } from "reka-ui";
-  import type { PrimitiveProps } from "reka-ui";
-  import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import type { PrimitiveProps } from "reka-ui";
+import { computed } from "vue";
 
-  import { FormFieldSetTheme } from "./FormFieldSet.theme.ts";
-  import type { FormFieldSetThemeSlots, FormFieldSetThemeVariants } from "./FormFieldSet.theme.ts";
+import { FormFieldSetTheme } from "./FormFieldSet.theme.ts";
+import type { FormFieldSetThemeSlots, FormFieldSetThemeVariants } from "./FormFieldSet.theme.ts";
 
-  export interface FormFieldSetProps extends PrimitiveProps {
-    /** The legend text for the fieldset. */
-    legend: string;
+export interface FormFieldSetProps extends PrimitiveProps {
+  /** The legend text for the fieldset. */
+  legend: string;
 
-    /**
-     * The size of the fieldset legend.
-     * @default "lg"
-     */
-    size?: FormFieldSetThemeVariants["size"];
+  /**
+   * The size of the fieldset legend.
+   * @default "lg"
+   */
+  size?: FormFieldSetThemeVariants["size"];
 
-    class?: any;
-    ui?: FormFieldSetThemeSlots;
-  }
+  class?: any;
+  ui?: FormFieldSetThemeSlots;
+}
 
-  const props = withDefaults(defineProps<FormFieldSetProps>(), {
-    as: "fieldset",
-    size: "lg",
+const props = withDefaults(defineProps<FormFieldSetProps>(), {
+  as: "fieldset",
+  size: "lg",
+});
+
+const ui = computed(() => {
+  return FormFieldSetTheme({
+    size: props.size,
   });
-
-  const ui = computed(() => {
-    return FormFieldSetTheme({
-      size: props.size,
-    });
-  });
+});
 </script>
 
 <template>

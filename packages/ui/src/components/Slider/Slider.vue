@@ -1,63 +1,66 @@
 <script setup lang="ts">
-  import type { SliderRootProps } from "reka-ui";
-  import { Slider } from "reka-ui/namespaced";
-  import { computed } from "vue";
+import type { SliderRootProps } from "reka-ui";
+import { Slider } from "reka-ui/namespaced";
+import { computed } from "vue";
 
-  import { useFormField } from "../../composables/useFormField.ts";
-  import Tooltip from "../Tooltip/Tooltip.vue";
-  import type { TooltipProps } from "../Tooltip/Tooltip.vue";
+import { useFormField } from "../../composables/useFormField.ts";
+import { useLocale } from "../../composables/useLocale.ts";
+import Tooltip from "../Tooltip/Tooltip.vue";
+import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 
-  import { SliderTheme } from "./Slider.theme.ts";
-  import type { SliderThemeSlots, SliderThemeVariants } from "./Slider.theme.ts";
+import { SliderTheme } from "./Slider.theme.ts";
+import type { SliderThemeSlots, SliderThemeVariants } from "./Slider.theme.ts";
 
-  export interface SliderProps extends Pick<SliderRootProps, "as" | "asChild" | "disabled" | "min" | "max" | "step"> {
-    id?: string;
-    /**
-     * The color scheme of the slider.
-     * @default "primary"
-     */
-    color?: SliderThemeVariants["color"];
-    /**
-     * The size of the slider.
-     * @default "md"
-     */
-    size?: SliderThemeVariants["size"];
+export interface SliderProps extends Pick<SliderRootProps, "as" | "asChild" | "disabled" | "min" | "max" | "step"> {
+  id?: string;
+  /**
+   * The color scheme of the slider.
+   * @default "primary"
+   */
+  color?: SliderThemeVariants["color"];
+  /**
+   * The size of the slider.
+   * @default "md"
+   */
+  size?: SliderThemeVariants["size"];
 
-    /** Show tooltip on thumb with current value. */
-    tooltip?: boolean | TooltipProps;
+  /** Show tooltip on thumb with current value. */
+  tooltip?: boolean | TooltipProps;
 
-    class?: any;
-    ui?: SliderThemeSlots;
-  }
+  class?: any;
+  ui?: SliderThemeSlots;
+}
 
-  const modelValue = defineModel<number>();
-  const props = withDefaults(defineProps<SliderProps>(), {
-    color: "primary",
-    size: "md",
+const modelValue = defineModel<number>();
+const props = withDefaults(defineProps<SliderProps>(), {
+  color: "primary",
+  size: "md",
+});
+
+const { t } = useLocale();
+
+const { id, size, ariaAttrs } = useFormField(props);
+
+// Convert single value to array for Reka UI.
+const sliderValue = computed({
+  get() {
+    return modelValue.value === undefined ? undefined : [modelValue.value];
+  },
+  set(value) {
+    if (value && value.length > 0) {
+      modelValue.value = value[0];
+    }
+  },
+});
+
+const ui = computed(() => {
+  return SliderTheme({
+    color: props.color,
+    size: size.value,
+
+    disabled: props.disabled,
   });
-
-  const { id, size, ariaAttrs } = useFormField(props);
-
-  // Convert single value to array for Reka UI.
-  const sliderValue = computed({
-    get() {
-      return modelValue.value === undefined ? undefined : [modelValue.value];
-    },
-    set(value) {
-      if (value && value.length > 0) {
-        modelValue.value = value[0];
-      }
-    },
-  });
-
-  const ui = computed(() => {
-    return SliderTheme({
-      color: props.color,
-      size: size.value,
-
-      disabled: props.disabled,
-    });
-  });
+});
 </script>
 
 <template>
@@ -83,8 +86,8 @@
       :text="String(modelValue ?? min)"
       v-bind="typeof tooltip === 'object' ? tooltip : {}"
     >
-      <Slider.Thumb aria-label="Slider thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
+      <Slider.Thumb :aria-label="t('slider.thumb')" :class="ui.thumb({ class: props.ui?.thumb })" />
     </Tooltip>
-    <Slider.Thumb v-else aria-label="Slider thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
+    <Slider.Thumb v-else :aria-label="t('slider.thumb')" :class="ui.thumb({ class: props.ui?.thumb })" />
   </Slider.Root>
 </template>

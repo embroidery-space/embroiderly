@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import ButtonIcon from "./ButtonIcon.vue";
+import ButtonIcon from "./ButtonIcon.vue";
 </script>
 
 <template>

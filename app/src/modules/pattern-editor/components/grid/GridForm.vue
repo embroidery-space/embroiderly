@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { Grid } from "#pattern-editor/lib/pattern/";
+import { ColorPicker, FormFieldset } from "#shared/components/";
+
+const grid = defineModel<Grid>({ required: true });
+</script>
+
 <template>
   <div>
     <div class="grid grid-cols-2 gap-4">
@@ -47,10 +54,3 @@
     </FormFieldset>
   </div>
 </template>
-
-<script setup lang="ts">
-  import { Grid } from "#pattern-editor/lib/pattern/";
-  import { ColorPicker, FormFieldset } from "#shared/components/";
-
-  const grid = defineModel<Grid>({ required: true });
-</script>

@@ -1,35 +1,35 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import type { FormFieldProps } from "../FormField/FormField.vue";
-  import FormField from "../FormField/FormField.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
 
-  import type { TextareaProps } from "./Textarea.vue";
-  import Textarea from "./Textarea.vue";
+import Textarea from "./Textarea.vue";
+import type { TextareaProps } from "./Textarea.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const value = ref("");
-  const inputState = reactive<TextareaProps>({
-    color: "primary",
-    variant: "subtle",
+const value = ref("");
+const inputState = reactive<TextareaProps>({
+  color: "primary",
+  variant: "subtle",
 
-    rows: 3,
-    maxrows: 0,
+  rows: 3,
+  maxrows: 0,
 
-    autoresize: false,
-    disabled: false,
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "lg",
-    label: "",
-    description: "",
-    hint: "",
-    help: "",
-  });
+  autoresize: false,
+  disabled: false,
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "lg",
+  label: "",
+  description: "",
+  hint: "",
+  help: "",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

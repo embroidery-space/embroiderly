@@ -1,63 +1,63 @@
 <script setup lang="ts">
-  import { Primitive } from "reka-ui";
-  import type { CheckboxRootProps } from "reka-ui";
-  import { Checkbox, Label } from "reka-ui/namespaced";
-  import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import type { CheckboxRootProps } from "reka-ui";
+import { Checkbox, Label } from "reka-ui/namespaced";
+import { computed } from "vue";
 
-  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-  import { useFormField } from "../../composables/useFormField.ts";
-  import Icon from "../Icon/Icon.vue";
+import { useComponentIcons } from "../../composables/useComponentIcons.ts";
+import { useFormField } from "../../composables/useFormField.ts";
+import Icon from "../Icon/Icon.vue";
 
-  import { CheckboxTheme } from "./Checkbox.theme";
-  import type { CheckboxThemeSlots, CheckboxThemeVariants } from "./Checkbox.theme";
+import { CheckboxTheme } from "./Checkbox.theme";
+import type { CheckboxThemeSlots, CheckboxThemeVariants } from "./Checkbox.theme";
 
-  export interface CheckboxProps extends Pick<CheckboxRootProps, "as" | "asChild" | "id" | "disabled"> {
-    /** The label of the checkbox. */
-    label?: string;
-    /** The description of the checkbox. */
-    description?: string;
+export interface CheckboxProps extends Pick<CheckboxRootProps, "as" | "asChild" | "id" | "disabled"> {
+  /** The label of the checkbox. */
+  label?: string;
+  /** The description of the checkbox. */
+  description?: string;
 
-    /**
-     * The color of the checkbox.
-     * @default "primary"
-     */
-    color?: CheckboxThemeVariants["color"];
-    /**
-     * The size of the checkbox.
-     * @default "lg"
-     */
-    size?: CheckboxThemeVariants["size"];
+  /**
+   * The color of the checkbox.
+   * @default "primary"
+   */
+  color?: CheckboxThemeVariants["color"];
+  /**
+   * The size of the checkbox.
+   * @default "lg"
+   */
+  size?: CheckboxThemeVariants["size"];
 
-    /**
-     * The icon displayed when checked.
-     * @default "icons.check"
-     */
-    icon?: string;
+  /**
+   * The icon displayed when checked.
+   * @default "icons.check"
+   */
+  icon?: string;
 
-    class?: any;
-    ui?: CheckboxThemeSlots;
-  }
+  class?: any;
+  ui?: CheckboxThemeSlots;
+}
 
-  defineOptions({ inheritAttrs: false });
+defineOptions({ inheritAttrs: false });
 
-  const modelValue = defineModel<boolean>();
-  const props = withDefaults(defineProps<CheckboxProps>(), {
-    color: "primary",
-    size: "lg",
+const modelValue = defineModel<boolean>();
+const props = withDefaults(defineProps<CheckboxProps>(), {
+  color: "primary",
+  size: "lg",
+});
+
+const { icons } = useComponentIcons();
+
+const { id, size, ariaAttrs } = useFormField(props);
+
+const ui = computed(() => {
+  return CheckboxTheme({
+    color: props.color,
+    size: size.value,
+
+    disabled: props.disabled,
   });
-
-  const { icons } = useComponentIcons();
-
-  const { id, size, ariaAttrs } = useFormField(props);
-
-  const ui = computed(() => {
-    return CheckboxTheme({
-      color: props.color,
-      size: size.value,
-
-      disabled: props.disabled,
-    });
-  });
+});
 </script>
 
 <template>

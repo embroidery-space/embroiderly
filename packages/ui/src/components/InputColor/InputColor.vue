@@ -1,38 +1,38 @@
 <script setup lang="ts">
-  import { computed } from "vue";
+import { computed } from "vue";
 
-  import { useFormField } from "../../composables/useFormField.ts";
-  import Button from "../Button/Button.vue";
-  import ColorPicker from "../ColorPicker/ColorPicker.vue";
-  import type { ColorPickerProps } from "../ColorPicker/ColorPicker.vue";
-  import Input from "../Input/Input.vue";
-  import type { InputProps } from "../Input/Input.vue";
-  import Popover from "../Popover/Popover.vue";
-  import type { PopoverProps } from "../Popover/Popover.vue";
+import { useFormField } from "../../composables/useFormField.ts";
+import Button from "../Button/Button.vue";
+import ColorPicker from "../ColorPicker/ColorPicker.vue";
+import type { ColorPickerProps } from "../ColorPicker/ColorPicker.vue";
+import Input from "../Input/Input.vue";
+import type { InputProps } from "../Input/Input.vue";
+import Popover from "../Popover/Popover.vue";
+import type { PopoverProps } from "../Popover/Popover.vue";
 
-  export interface InputColorProps extends InputProps {
-    /** Props to pass to the popover component. */
-    popover?: Partial<PopoverProps>;
-    /** Props to pass to the color picker component. */
-    picker?: Partial<ColorPickerProps>;
+export interface InputColorProps extends InputProps {
+  /** Props to pass to the popover component. */
+  popover?: Partial<PopoverProps>;
+  /** Props to pass to the color picker component. */
+  picker?: Partial<ColorPickerProps>;
+}
+
+defineOptions({ inheritAttrs: false });
+
+const modelValue = defineModel<string>({ default: "#FF0000" });
+const props = withDefaults(defineProps<InputColorProps>(), {
+  size: "lg",
+});
+
+const { id, size, ariaAttrs } = useFormField(props);
+
+const hexColor = computed(() => (modelValue.value?.startsWith("#") ? modelValue.value : `#${modelValue.value}`));
+
+function onUpdate(value: string | undefined) {
+  if (value && value.startsWith("#")) {
+    modelValue.value = value.slice(1);
   }
-
-  defineOptions({ inheritAttrs: false });
-
-  const modelValue = defineModel<string>({ default: "#FF0000" });
-  const props = withDefaults(defineProps<InputColorProps>(), {
-    size: "lg",
-  });
-
-  const { id, size, ariaAttrs } = useFormField(props);
-
-  const hexColor = computed(() => (modelValue.value?.startsWith("#") ? modelValue.value : `#${modelValue.value}`));
-
-  function onUpdate(value: string | undefined) {
-    if (value && value.startsWith("#")) {
-      modelValue.value = value.slice(1);
-    }
-  }
+}
 </script>
 
 <template>

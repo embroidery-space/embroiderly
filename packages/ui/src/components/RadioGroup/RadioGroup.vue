@@ -1,83 +1,83 @@
 <script setup lang="ts">
-  import type { AcceptableValue, RadioGroupRootProps } from "reka-ui";
-  import { RadioGroup, Label } from "reka-ui/namespaced";
-  import { computed } from "vue";
+import type { AcceptableValue, RadioGroupRootProps } from "reka-ui";
+import { RadioGroup, Label } from "reka-ui/namespaced";
+import { computed } from "vue";
 
-  import { useFormField } from "../../composables/useFormField.ts";
+import { useFormField } from "../../composables/useFormField.ts";
 
-  import { RadioGroupTheme } from "./RagioGroup.theme.ts";
-  import type { RadioGroupThemeSlots, RadioGroupThemeVariants } from "./RagioGroup.theme.ts";
+import { RadioGroupTheme } from "./RagioGroup.theme.ts";
+import type { RadioGroupThemeSlots, RadioGroupThemeVariants } from "./RagioGroup.theme.ts";
 
-  export type RadioGroupValue = AcceptableValue;
+export type RadioGroupValue = AcceptableValue;
 
-  export type RadioGroupItem =
-    | RadioGroupValue
-    | {
-        value?: RadioGroupValue;
-        label?: string;
-        description?: string;
+export type RadioGroupItem =
+  | RadioGroupValue
+  | {
+      value?: RadioGroupValue;
+      label?: string;
+      description?: string;
+    };
+
+export interface RadioGroupProps extends Pick<RadioGroupRootProps, "as" | "asChild" | "disabled"> {
+  id?: string;
+
+  /** The items to display in the radio group. */
+  items?: RadioGroupItem[];
+
+  /**
+   * The color of the radio buttons.
+   * @default "primary"
+   */
+  color?: RadioGroupThemeVariants["color"];
+  /**
+   * The size of the radio buttons.
+   * @default "lg"
+   */
+  size?: RadioGroupThemeVariants["size"];
+
+  class?: any;
+  ui?: RadioGroupThemeSlots;
+}
+
+const modelValue = defineModel<RadioGroupValue>();
+const props = withDefaults(defineProps<RadioGroupProps>(), {
+  color: "primary",
+  size: "lg",
+});
+
+const { id, size, ariaAttrs } = useFormField(props);
+
+const items = computed(() => {
+  if (!props.items) return [];
+  return props.items.map((item) => {
+    if (item === null) {
+      return {
+        id: `${id.value}:null`,
+        value: undefined,
+        label: undefined,
       };
+    }
 
-  export interface RadioGroupProps extends Pick<RadioGroupRootProps, "as" | "asChild" | "disabled"> {
-    id?: string;
+    if (typeof item === "string" || typeof item === "number" || typeof item === "bigint") {
+      return {
+        id: `${id.value}:${item}`,
+        value: String(item),
+        label: String(item),
+      };
+    }
 
-    /** The items to display in the radio group. */
-    items?: RadioGroupItem[];
-
-    /**
-     * The color of the radio buttons.
-     * @default "primary"
-     */
-    color?: RadioGroupThemeVariants["color"];
-    /**
-     * The size of the radio buttons.
-     * @default "lg"
-     */
-    size?: RadioGroupThemeVariants["size"];
-
-    class?: any;
-    ui?: RadioGroupThemeSlots;
-  }
-
-  const modelValue = defineModel<RadioGroupValue>();
-  const props = withDefaults(defineProps<RadioGroupProps>(), {
-    color: "primary",
-    size: "lg",
+    return { ...item, id: `${id.value}:${item.value}` };
   });
+});
 
-  const { id, size, ariaAttrs } = useFormField(props);
+const ui = computed(() => {
+  return RadioGroupTheme({
+    color: props.color,
+    size: size.value,
 
-  const items = computed(() => {
-    if (!props.items) return [];
-    return props.items.map((item) => {
-      if (item === null) {
-        return {
-          id: `${id.value}:null`,
-          value: undefined,
-          label: undefined,
-        };
-      }
-
-      if (typeof item === "string" || typeof item === "number" || typeof item === "bigint") {
-        return {
-          id: `${id.value}:${item}`,
-          value: String(item),
-          label: String(item),
-        };
-      }
-
-      return { ...item, id: `${id.value}:${item.value}` };
-    });
+    disabled: props.disabled,
   });
-
-  const ui = computed(() => {
-    return RadioGroupTheme({
-      color: props.color,
-      size: size.value,
-
-      disabled: props.disabled,
-    });
-  });
+});
 </script>
 
 <template>

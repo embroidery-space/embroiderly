@@ -1,12 +1,12 @@
 <script setup lang="ts">
-  import { Icon as IconifyIcon } from "@iconify/vue";
+import { Icon as IconifyIcon } from "@iconify/vue";
 
-  export interface IconProps {
-    /** The icon name from Iconify (e.g., "lucide:settings"). */
-    name: string;
-  }
+export interface IconProps {
+  /** The icon name from Iconify (e.g., "lucide:settings"). */
+  name: string;
+}
 
-  defineProps<IconProps>();
+defineProps<IconProps>();
 </script>
 
 <template>

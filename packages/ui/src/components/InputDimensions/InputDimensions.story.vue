@@ -1,27 +1,27 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import type { InputDimensionsProps } from "./InputDimensions.vue";
-  import InputDimensions from "./InputDimensions.vue";
+import InputDimensions from "./InputDimensions.vue";
+import type { InputDimensionsProps } from "./InputDimensions.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
-  const orientations = ["horizontal", "vertical"] as const;
+const sizes = ["sm", "md", "lg"] as const;
+const orientations = ["horizontal", "vertical"] as const;
 
-  const width = ref(800);
-  const height = ref(600);
-  const inputState = reactive<Omit<InputDimensionsProps, "class" | "ui">>({
-    size: "md",
-    orientation: "horizontal",
-    aspectRatio: undefined,
+const width = ref(800);
+const height = ref(600);
+const inputState = reactive<Omit<InputDimensionsProps, "class" | "ui">>({
+  size: "md",
+  orientation: "horizontal",
+  aspectRatio: undefined,
 
-    disabled: false,
+  disabled: false,
 
-    widthFieldOptions: { label: "Width" },
-    heightFieldOptions: { label: "Height" },
-  });
+  widthFieldOptions: { label: "Width" },
+  heightFieldOptions: { label: "Height" },
+});
 
-  defineExpose({ inputState });
+defineExpose({ inputState });
 </script>
 
 <template>

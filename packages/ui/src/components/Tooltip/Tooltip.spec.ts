@@ -3,8 +3,8 @@ import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { defineComponent, nextTick } from "vue";
 
-import type { TooltipProps } from "./Tooltip.vue";
 import Tooltip from "./Tooltip.vue";
+import type { TooltipProps } from "./Tooltip.vue";
 
 const TooltipWrapper = defineComponent({
   components: { TooltipProvider, Tooltip },

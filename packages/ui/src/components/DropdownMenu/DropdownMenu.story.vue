@@ -1,69 +1,69 @@
 <script setup lang="ts">
-  import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 
-  import Button from "../Button/Button.vue";
+import Button from "../Button/Button.vue";
 
-  import DropdownMenu from "./DropdownMenu.vue";
-  import type { DropdownMenuItem, DropdownMenuProps } from "./DropdownMenu.vue";
+import DropdownMenu from "./DropdownMenu.vue";
+import type { DropdownMenuItem, DropdownMenuProps } from "./DropdownMenu.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const state = reactive<DropdownMenuProps>({
-    size: "md",
+const state = reactive<DropdownMenuProps>({
+  size: "md",
 
-    disabled: false,
-  });
+  disabled: false,
+});
 
-  const showGrid = ref(true);
-  const showRulers = ref(false);
+const showGrid = ref(true);
+const showRulers = ref(false);
 
-  const items = computed<DropdownMenuItem[][]>(() => [
-    [
-      { icon: "lucide:scissors", label: "Cut", shortcut: "Ctrl+X" },
-      { icon: "lucide:copy", label: "Copy", shortcut: "Ctrl+C" },
-      { icon: "lucide:clipboard", label: "Paste", shortcut: "Ctrl+V", disabled: true },
-    ],
-    [
-      { type: "label", label: "View" },
-      { type: "separator" },
-      {
-        type: "checkbox",
-        label: "Show Grid",
-        checked: showGrid.value,
-        onUpdateChecked(checked: boolean) {
-          showGrid.value = checked;
-        },
-        onSelect(e: Event) {
-          e.preventDefault();
-        },
+const items = computed<DropdownMenuItem[][]>(() => [
+  [
+    { icon: "lucide:scissors", label: "Cut", shortcut: "Ctrl+X" },
+    { icon: "lucide:copy", label: "Copy", shortcut: "Ctrl+C" },
+    { icon: "lucide:clipboard", label: "Paste", shortcut: "Ctrl+V", disabled: true },
+  ],
+  [
+    { type: "label", label: "View" },
+    { type: "separator" },
+    {
+      type: "checkbox",
+      label: "Show Grid",
+      checked: showGrid.value,
+      onUpdateChecked(checked: boolean) {
+        showGrid.value = checked;
       },
-      {
-        type: "checkbox",
-        label: "Show Rulers",
-        checked: showRulers.value,
-        onUpdateChecked(checked: boolean) {
-          showRulers.value = checked;
-        },
-        onSelect(e: Event) {
-          e.preventDefault();
-        },
+      onSelect(e: Event) {
+        e.preventDefault();
       },
-    ],
-    [
-      {
-        label: "More Tools",
-        children: [
-          [
-            { label: "Undo", shortcut: "Ctrl+Z" },
-            { label: "Redo", shortcut: "Ctrl+Shift+Z" },
-          ],
-          [{ label: "Select All", shortcut: "Ctrl+A" }],
+    },
+    {
+      type: "checkbox",
+      label: "Show Rulers",
+      checked: showRulers.value,
+      onUpdateChecked(checked: boolean) {
+        showRulers.value = checked;
+      },
+      onSelect(e: Event) {
+        e.preventDefault();
+      },
+    },
+  ],
+  [
+    {
+      label: "More Tools",
+      children: [
+        [
+          { label: "Undo", shortcut: "Ctrl+Z" },
+          { label: "Redo", shortcut: "Ctrl+Shift+Z" },
         ],
-      },
-    ],
-  ]);
+        [{ label: "Select All", shortcut: "Ctrl+A" }],
+      ],
+    },
+  ],
+]);
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

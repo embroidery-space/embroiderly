@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { SeparatorProps } from "./Separator.vue";
 import Separator from "./Separator.vue";
+import type { SeparatorProps } from "./Separator.vue";
 
 describe("Separator", () => {
   const sizes = ["xs", "sm", "md", "lg", "xl"] as const;

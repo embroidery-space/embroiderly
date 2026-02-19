@@ -5,8 +5,8 @@ import { page, userEvent } from "vitest/browser";
 import { defineComponent, nextTick, ref } from "vue";
 import { Key } from "webdriverio";
 
-import type { InputDimensionsProps } from "./InputDimensions.vue";
 import InputDimensions from "./InputDimensions.vue";
+import type { InputDimensionsProps } from "./InputDimensions.vue";
 
 describe("InputDimensions", () => {
   const sizes = ["sm", "md", "lg"] as const;

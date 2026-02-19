@@ -1,44 +1,44 @@
 <script setup lang="ts">
-  import { ContextMenu } from "reka-ui/namespaced";
-  import { toRef } from "vue";
+import { ContextMenu } from "reka-ui/namespaced";
+import { toRef } from "vue";
 
-  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-  import { usePortal } from "../../composables/usePortal.ts";
-  import { parseShortcutDisplay } from "../../utils/shortcut.ts";
-  import Icon from "../Icon/Icon.vue";
-  import Kbd from "../Kbd/Kbd.vue";
+import { useComponentIcons } from "../../composables/useComponentIcons.ts";
+import { usePortal } from "../../composables/usePortal.ts";
+import { parseShortcutDisplay } from "../../utils/shortcut.ts";
+import Icon from "../Icon/Icon.vue";
+import Kbd from "../Kbd/Kbd.vue";
 
-  import type { ContextMenuTheme } from "./ContextMenu.theme.ts";
-  import type { ContextMenuItem } from "./ContextMenu.vue";
+import type { ContextMenuTheme } from "./ContextMenu.theme.ts";
+import type { ContextMenuItem } from "./ContextMenu.vue";
 
-  interface ContextMenuContentInternalProps {
-    items: ContextMenuItem[][];
+interface ContextMenuContentInternalProps {
+  items: ContextMenuItem[][];
 
-    size?: string;
+  size?: string;
 
-    portal?: boolean | string | HTMLElement;
-    sub?: boolean;
+  portal?: boolean | string | HTMLElement;
+  sub?: boolean;
 
-    alignOffset?: number;
-    collisionPadding?: number | Partial<Record<"top" | "bottom" | "left" | "right", number>>;
-    sideOffset?: number;
+  alignOffset?: number;
+  collisionPadding?: number | Partial<Record<"top" | "bottom" | "left" | "right", number>>;
+  sideOffset?: number;
 
-    ui: ReturnType<typeof ContextMenuTheme>;
-  }
+  ui: ReturnType<typeof ContextMenuTheme>;
+}
 
-  const props = withDefaults(defineProps<ContextMenuContentInternalProps>(), {
-    sub: false,
-  });
+const props = withDefaults(defineProps<ContextMenuContentInternalProps>(), {
+  sub: false,
+});
 
-  const { icons } = useComponentIcons();
+const { icons } = useComponentIcons();
 
-  const portalProps = usePortal(toRef(() => props.portal ?? true));
+const portalProps = usePortal(toRef(() => props.portal ?? true));
 
-  function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): ContextMenuItem[][] {
-    if (!children?.length) return [];
-    if (Array.isArray(children[0])) return children as ContextMenuItem[][];
-    return [children as ContextMenuItem[]];
-  }
+function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): ContextMenuItem[][] {
+  if (!children?.length) return [];
+  if (Array.isArray(children[0])) return children as ContextMenuItem[][];
+  return [children as ContextMenuItem[]];
+}
 </script>
 
 <template>

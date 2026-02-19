@@ -1,19 +1,19 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import type { FilePickerProps } from "./FilePicker.vue";
-  import FilePicker from "./FilePicker.vue";
+import FilePicker from "./FilePicker.vue";
+import type { FilePickerProps } from "./FilePicker.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const value = ref("/path/to/file.txt");
-  const state = reactive<FilePickerProps>({
-    size: "md",
-    disabled: false,
-  });
+const value = ref("/path/to/file.txt");
+const state = reactive<FilePickerProps>({
+  size: "md",
+  disabled: false,
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

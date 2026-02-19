@@ -8,8 +8,8 @@ import { Key } from "webdriverio";
 
 import FormField from "../FormField/FormField.vue";
 
-import type { InputNumberSliderProps } from "./InputNumberSlider.vue";
 import InputNumberSlider from "./InputNumberSlider.vue";
+import type { InputNumberSliderProps } from "./InputNumberSlider.vue";
 
 describe("InputNumberSlider", () => {
   const sizes = ["sm", "md", "lg"] as const;

@@ -1,22 +1,22 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import type { ColorPickerProps } from "./ColorPicker.vue";
-  import ColorPicker from "./ColorPicker.vue";
+import ColorPicker from "./ColorPicker.vue";
+import type { ColorPickerProps } from "./ColorPicker.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const color = ref("#FF0000");
-  const state = reactive<ColorPickerProps>({
-    size: "md",
+const color = ref("#FF0000");
+const state = reactive<ColorPickerProps>({
+  size: "md",
 
-    throttle: 50,
+  throttle: 50,
 
-    disabled: false,
-  });
+  disabled: false,
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

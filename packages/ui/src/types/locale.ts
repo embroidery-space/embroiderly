@@ -8,6 +8,9 @@ export interface Locale {
 export type Direction = "ltr" | "rtl";
 
 export type Messages = {
+  filePicker: {
+    chooseFile: string;
+  };
   inputNumber: {
     increment: string;
     decrement: string;
@@ -16,5 +19,8 @@ export type Messages = {
     search: string;
     noData: string;
     noMatches: string;
+  };
+  slider: {
+    thumb: string;
   };
 };

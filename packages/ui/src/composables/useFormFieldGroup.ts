@@ -1,5 +1,5 @@
-import type { ComputedRef, InjectionKey } from "vue";
 import { computed, inject } from "vue";
+import type { ComputedRef, InjectionKey } from "vue";
 
 export const formFieldGroupInjectionKey: InjectionKey<ComputedRef<{ size?: "sm" | "md" | "lg" }>> = Symbol(
   "embroiderly-ui.form-field-group",

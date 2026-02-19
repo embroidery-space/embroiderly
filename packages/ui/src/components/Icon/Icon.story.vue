@@ -1,14 +1,14 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import type { IconProps } from "./Icon.vue";
-  import Icon from "./Icon.vue";
+import Icon from "./Icon.vue";
+import type { IconProps } from "./Icon.vue";
 
-  const state = reactive<IconProps>({
-    name: "lucide:lightbulb",
-  });
+const state = reactive<IconProps>({
+  name: "lucide:lightbulb",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

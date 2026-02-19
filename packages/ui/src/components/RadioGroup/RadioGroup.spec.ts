@@ -16,18 +16,16 @@ describe("RadioGroup", () => {
     { value: "3", label: "Option 3" },
   ];
 
-  const props = { items };
-
   test.each([
-    ["with items", { props }],
+    ["with items", { props: { items } }],
     [
       "with description",
       { props: { items: items.map((opt, count) => ({ ...opt, description: `Description ${count}` })) } },
     ],
-    ["with disabled", { props: { ...props, disabled: true } }],
-    ...sizes.map((size: string) => [`with size ${size}`, { props: { ...props, size, defaultValue: "1" } }]),
-    ["with class", { props: { ...props, class: "absolute" } }],
-    ["with ui", { props: { ...props, ui: { wrapper: "ms-4" } } }],
+    ["with disabled", { props: { items, disabled: true } }],
+    ...sizes.map((size: string) => [`with size ${size}`, { props: { items, size, defaultValue: "1" } }]),
+    ["with class", { props: { items, class: "absolute" } }],
+    ["with ui", { props: { items, ui: { wrapper: "ms-4" } } }],
   ] as [string, { props?: RadioGroupProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(RadioGroup, options);
     await nextTick();
@@ -52,7 +50,7 @@ describe("RadioGroup", () => {
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(RadioGroup, { props });
+      const screen = page.render(RadioGroup, { props: { items } });
       await nextTick();
 
       const radio = screen.getByRole("radio").first();

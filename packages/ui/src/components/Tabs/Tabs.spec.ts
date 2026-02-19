@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { nextTick } from "vue";
 
-import type { TabsItem, TabsProps, TabsSlots } from "./Tabs.vue";
 import Tabs from "./Tabs.vue";
+import type { TabsItem, TabsProps, TabsSlots } from "./Tabs.vue";
 
 describe("Tabs", () => {
   const sizes = ["sm", "md", "lg"] as const;

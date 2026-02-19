@@ -1,19 +1,19 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import Input from "../Input/Input.vue";
+import Input from "../Input/Input.vue";
 
-  import type { FormFieldSetProps } from "./FormFieldSet.vue";
-  import FormFieldSet from "./FormFieldSet.vue";
+import FormFieldSet from "./FormFieldSet.vue";
+import type { FormFieldSetProps } from "./FormFieldSet.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const state = reactive<FormFieldSetProps>({
-    legend: "Legend",
-    size: "lg",
-  });
+const state = reactive<FormFieldSetProps>({
+  legend: "Legend",
+  size: "lg",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

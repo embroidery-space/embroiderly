@@ -1,24 +1,24 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import Button from "../Button/Button.vue";
+import Button from "../Button/Button.vue";
 
-  import type { PopoverProps } from "./Popover.vue";
-  import Popover from "./Popover.vue";
+import Popover from "./Popover.vue";
+import type { PopoverProps } from "./Popover.vue";
 
-  const sides = ["top", "right", "bottom", "left"] as const;
+const sides = ["top", "right", "bottom", "left"] as const;
 
-  const state = reactive<PopoverProps>({
-    content: {
-      side: "bottom",
-      sideOffset: 4,
-    },
+const state = reactive<PopoverProps>({
+  content: {
+    side: "bottom",
+    sideOffset: 4,
+  },
 
-    arrow: false,
-    modal: false,
-  });
+  arrow: false,
+  modal: false,
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

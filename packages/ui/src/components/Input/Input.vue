@@ -1,72 +1,72 @@
 <script setup lang="ts">
-  import { Primitive } from "reka-ui";
-  import type { PrimitiveProps } from "reka-ui";
-  import { computed, useSlots } from "vue";
+import { Primitive } from "reka-ui";
+import type { PrimitiveProps } from "reka-ui";
+import { computed, useSlots } from "vue";
 
-  import { useFormField } from "../../composables/useFormField.ts";
-  import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
+import { useFormField } from "../../composables/useFormField.ts";
+import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
 
-  import { InputTheme } from "./Input.theme.ts";
-  import type { InputThemeSlots, InputThemeVariants } from "./Input.theme.ts";
+import { InputTheme } from "./Input.theme.ts";
+import type { InputThemeSlots, InputThemeVariants } from "./Input.theme.ts";
 
-  export interface InputProps extends PrimitiveProps {
-    id?: string;
+export interface InputProps extends PrimitiveProps {
+  id?: string;
 
-    /**
-     * The color scheme of the input.
-     * @default "primary"
-     */
-    color?: InputThemeVariants["color"];
-    /**
-     * The style variant of the input.
-     * @default "subtle"
-     */
-    variant?: InputThemeVariants["variant"];
-    /**
-     * The size of the input.
-     * @default "lg"
-     */
-    size?: InputThemeVariants["size"];
+  /**
+   * The color scheme of the input.
+   * @default "primary"
+   */
+  color?: InputThemeVariants["color"];
+  /**
+   * The style variant of the input.
+   * @default "subtle"
+   */
+  variant?: InputThemeVariants["variant"];
+  /**
+   * The size of the input.
+   * @default "lg"
+   */
+  size?: InputThemeVariants["size"];
 
-    /** Whether the input is disabled. */
-    disabled?: boolean;
+  /** Whether the input is disabled. */
+  disabled?: boolean;
 
-    class?: any;
-    ui?: InputThemeSlots;
-  }
+  class?: any;
+  ui?: InputThemeSlots;
+}
 
-  export interface InputSlots {
-    leading(): any;
-    trailing(): any;
-  }
+export interface InputSlots {
+  leading(): any;
+  trailing(): any;
+}
 
-  defineOptions({ inheritAttrs: false });
+defineOptions({ inheritAttrs: false });
 
-  const modelValue = defineModel<string>();
-  const props = withDefaults(defineProps<InputProps>(), {
-    as: "div",
+const modelValue = defineModel<string>();
+const props = withDefaults(defineProps<InputProps>(), {
+  as: "div",
 
-    color: "primary",
-    variant: "subtle",
+  color: "primary",
+  variant: "subtle",
+});
+const slots = useSlots();
+
+const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
+const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
+const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
+
+const ui = computed(() => {
+  return InputTheme({
+    color: props.color,
+    variant: props.variant,
+    size: size.value,
+
+    leading: !!slots.leading,
+    trailing: !!slots.trailing,
+
+    fieldGroup: fieldGroup.value,
   });
-  const slots = useSlots();
-
-  const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-  const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
-  const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
-
-  const ui = computed(() => {
-    return InputTheme({
-      color: props.color,
-      variant: props.variant,
-      size: size.value,
-
-      leading: !!slots.leading,
-      trailing: !!slots.trailing,
-
-      fieldGroup: fieldGroup.value,
-    });
-  });
+});
 </script>
 
 <template>

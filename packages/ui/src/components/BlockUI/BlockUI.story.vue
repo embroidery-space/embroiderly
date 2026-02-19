@@ -1,14 +1,14 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import type { BlockUIProps } from "./BlockUI.vue";
-  import BlockUI from "./BlockUI.vue";
+import BlockUI from "./BlockUI.vue";
+import type { BlockUIProps } from "./BlockUI.vue";
 
-  const state = reactive<BlockUIProps>({
-    blocked: false,
-  });
+const state = reactive<BlockUIProps>({
+  blocked: false,
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

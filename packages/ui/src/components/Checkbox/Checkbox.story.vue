@@ -1,26 +1,26 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive } from "vue";
 
-  import type { FormFieldProps } from "../FormField/FormField.vue";
-  import FormField from "../FormField/FormField.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
 
-  import type { CheckboxProps } from "./Checkbox.vue";
-  import Checkbox from "./Checkbox.vue";
+import Checkbox from "./Checkbox.vue";
+import type { CheckboxProps } from "./Checkbox.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const inputState = reactive<CheckboxProps>({
-    label: "Checkbox",
-    description: "Description",
+const inputState = reactive<CheckboxProps>({
+  label: "Checkbox",
+  description: "Description",
 
-    disabled: false,
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "md",
-  });
+  disabled: false,
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "md",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

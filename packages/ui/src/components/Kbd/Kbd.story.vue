@@ -1,19 +1,19 @@
 <script setup lang="ts">
-  import { reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 
-  import { parseShortcutDisplay } from "../../utils/shortcut.ts";
+import { parseShortcutDisplay } from "../../utils/shortcut.ts";
 
-  import type { KbdProps } from "./Kbd.vue";
-  import Kbd from "./Kbd.vue";
+import Kbd from "./Kbd.vue";
+import type { KbdProps } from "./Kbd.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const value = ref("K");
-  const state = reactive<KbdProps>({
-    size: "md",
-  });
+const value = ref("K");
+const state = reactive<KbdProps>({
+  size: "md",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

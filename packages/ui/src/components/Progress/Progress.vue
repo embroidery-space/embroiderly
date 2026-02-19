@@ -1,37 +1,37 @@
 <script setup lang="ts">
-  import { Progress } from "reka-ui/namespaced";
-  import { computed } from "vue";
+import { Progress } from "reka-ui/namespaced";
+import { computed } from "vue";
 
-  import { ProgressTheme } from "./Progress.theme.ts";
-  import type { ProgressThemeSlots, ProgressThemeVariants } from "./Progress.theme.ts";
+import { ProgressTheme } from "./Progress.theme.ts";
+import type { ProgressThemeSlots, ProgressThemeVariants } from "./Progress.theme.ts";
 
-  export interface ProgressProps {
-    /**
-     * The orientation of the progress bar.
-     * @default "horizontal"
-     */
-    orientation?: ProgressThemeVariants["orientation"];
-    /**
-     * The size of the progress bar.
-     * @default "md"
-     */
-    size?: ProgressThemeVariants["size"];
+export interface ProgressProps {
+  /**
+   * The orientation of the progress bar.
+   * @default "horizontal"
+   */
+  orientation?: ProgressThemeVariants["orientation"];
+  /**
+   * The size of the progress bar.
+   * @default "md"
+   */
+  size?: ProgressThemeVariants["size"];
 
-    class?: any;
-    ui?: ProgressThemeSlots;
-  }
+  class?: any;
+  ui?: ProgressThemeSlots;
+}
 
-  const props = withDefaults(defineProps<ProgressProps>(), {
-    orientation: "horizontal",
-    size: "md",
+const props = withDefaults(defineProps<ProgressProps>(), {
+  orientation: "horizontal",
+  size: "md",
+});
+
+const ui = computed(() => {
+  return ProgressTheme({
+    orientation: props.orientation,
+    size: props.size,
   });
-
-  const ui = computed(() => {
-    return ProgressTheme({
-      orientation: props.orientation,
-      size: props.size,
-    });
-  });
+});
 </script>
 
 <template>

@@ -4,8 +4,8 @@ import { defineComponent, nextTick } from "vue";
 
 import Input from "../Input/Input.vue";
 
-import type { FormFieldProps } from "./FormField.vue";
 import FormField from "./FormField.vue";
+import type { FormFieldProps } from "./FormField.vue";
 
 const FormFieldWrapper = defineComponent({
   components: { FormField, Input },

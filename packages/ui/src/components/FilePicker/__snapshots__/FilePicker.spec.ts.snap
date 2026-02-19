@@ -17,7 +17,7 @@ exports[`FilePicker > renders correctly with class 1`] = `
       <span
         class="truncate"
       >
-        Choose File
+        Choose file
       </span>
       
       
@@ -59,7 +59,7 @@ exports[`FilePicker > renders correctly with disabled 1`] = `
       <span
         class="truncate"
       >
-        Choose File
+        Choose file
       </span>
       
       
@@ -101,7 +101,7 @@ exports[`FilePicker > renders correctly with model value 1`] = `
       <span
         class="truncate"
       >
-        Choose File
+        Choose file
       </span>
       
       
@@ -142,7 +142,7 @@ exports[`FilePicker > renders correctly with size lg 1`] = `
       <span
         class="truncate"
       >
-        Choose File
+        Choose file
       </span>
       
       
@@ -183,7 +183,7 @@ exports[`FilePicker > renders correctly with size md 1`] = `
       <span
         class="truncate"
       >
-        Choose File
+        Choose file
       </span>
       
       
@@ -224,7 +224,7 @@ exports[`FilePicker > renders correctly with size sm 1`] = `
       <span
         class="truncate"
       >
-        Choose File
+        Choose file
       </span>
       
       
@@ -265,7 +265,7 @@ exports[`FilePicker > renders correctly with ui 1`] = `
       <span
         class="truncate"
       >
-        Choose File
+        Choose file
       </span>
       
       

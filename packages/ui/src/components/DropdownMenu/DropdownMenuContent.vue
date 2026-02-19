@@ -1,45 +1,45 @@
 <script setup lang="ts">
-  import { DropdownMenu } from "reka-ui/namespaced";
-  import { toRef } from "vue";
+import { DropdownMenu } from "reka-ui/namespaced";
+import { toRef } from "vue";
 
-  import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-  import { usePortal } from "../../composables/usePortal.ts";
-  import { parseShortcutDisplay } from "../../utils/shortcut.ts";
-  import Icon from "../Icon/Icon.vue";
-  import Kbd from "../Kbd/Kbd.vue";
+import { useComponentIcons } from "../../composables/useComponentIcons.ts";
+import { usePortal } from "../../composables/usePortal.ts";
+import { parseShortcutDisplay } from "../../utils/shortcut.ts";
+import Icon from "../Icon/Icon.vue";
+import Kbd from "../Kbd/Kbd.vue";
 
-  import type { DropdownMenuTheme } from "./DropdownMenu.theme.ts";
-  import type { DropdownMenuItem } from "./DropdownMenu.vue";
+import type { DropdownMenuTheme } from "./DropdownMenu.theme.ts";
+import type { DropdownMenuItem } from "./DropdownMenu.vue";
 
-  interface DropdownMenuContentInternalProps {
-    items: DropdownMenuItem[][];
+interface DropdownMenuContentInternalProps {
+  items: DropdownMenuItem[][];
 
-    size?: string;
+  size?: string;
 
-    portal?: boolean | string | HTMLElement;
-    sub?: boolean;
+  portal?: boolean | string | HTMLElement;
+  sub?: boolean;
 
-    alignOffset?: number;
-    collisionPadding?: number | Partial<Record<"top" | "bottom" | "left" | "right", number>>;
-    side?: "top" | "right" | "bottom" | "left";
-    sideOffset?: number;
+  alignOffset?: number;
+  collisionPadding?: number | Partial<Record<"top" | "bottom" | "left" | "right", number>>;
+  side?: "top" | "right" | "bottom" | "left";
+  sideOffset?: number;
 
-    ui: ReturnType<typeof DropdownMenuTheme>;
-  }
+  ui: ReturnType<typeof DropdownMenuTheme>;
+}
 
-  const props = withDefaults(defineProps<DropdownMenuContentInternalProps>(), {
-    sub: false,
-  });
+const props = withDefaults(defineProps<DropdownMenuContentInternalProps>(), {
+  sub: false,
+});
 
-  const { icons } = useComponentIcons();
+const { icons } = useComponentIcons();
 
-  const portalProps = usePortal(toRef(() => props.portal ?? true));
+const portalProps = usePortal(toRef(() => props.portal ?? true));
 
-  function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]): DropdownMenuItem[][] {
-    if (!children?.length) return [];
-    if (Array.isArray(children[0])) return children as DropdownMenuItem[][];
-    return [children as DropdownMenuItem[]];
-  }
+function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]): DropdownMenuItem[][] {
+  if (!children?.length) return [];
+  if (Array.isArray(children[0])) return children as DropdownMenuItem[][];
+  return [children as DropdownMenuItem[]];
+}
 </script>
 
 <template>

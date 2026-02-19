@@ -8,8 +8,8 @@ import { Key } from "webdriverio";
 
 import FormField from "../FormField/FormField.vue";
 
-import type { SliderProps } from "./Slider.vue";
 import Slider from "./Slider.vue";
+import type { SliderProps } from "./Slider.vue";
 
 describe("Slider", () => {
   const sizes = ["sm", "md", "lg"] as const;

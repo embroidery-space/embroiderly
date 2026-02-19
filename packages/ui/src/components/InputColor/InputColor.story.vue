@@ -1,28 +1,28 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import type { FormFieldProps } from "../FormField/FormField.vue";
-  import FormField from "../FormField/FormField.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
 
-  import type { InputColorProps } from "./InputColor.vue";
-  import InputColor from "./InputColor.vue";
+import InputColor from "./InputColor.vue";
+import type { InputColorProps } from "./InputColor.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const color = ref("FF0000");
-  const inputState = reactive<InputColorProps>({
-    disabled: false,
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "md",
-    label: "",
-    description: "",
-    hint: "",
-    help: "",
-  });
+const color = ref("FF0000");
+const inputState = reactive<InputColorProps>({
+  disabled: false,
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "md",
+  label: "",
+  description: "",
+  hint: "",
+  help: "",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

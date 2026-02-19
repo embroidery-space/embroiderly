@@ -1,40 +1,40 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import Button from "../Button/Button.vue";
-  import type { FormFieldProps } from "../FormField/FormField.vue";
-  import FormField from "../FormField/FormField.vue";
-  import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
+import Button from "../Button/Button.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
+import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
 
-  import type { InputNumberProps } from "./InputNumber.vue";
-  import InputNumber from "./InputNumber.vue";
+import InputNumber from "./InputNumber.vue";
+import type { InputNumberProps } from "./InputNumber.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
-  const variants = ["subtle", "outline"] as const;
+const sizes = ["sm", "md", "lg"] as const;
+const variants = ["subtle", "outline"] as const;
 
-  const value = ref(5);
-  const inputState = reactive<InputNumberProps>({
-    variant: "subtle",
+const value = ref(5);
+const inputState = reactive<InputNumberProps>({
+  variant: "subtle",
 
-    min: 0,
-    max: 10,
-    step: 1,
+  min: 0,
+  max: 10,
+  step: 1,
 
-    increment: true,
-    decrement: true,
+  increment: true,
+  decrement: true,
 
-    disabled: false,
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "md",
-    label: "",
-    description: "",
-    hint: "",
-    help: "",
-  });
+  disabled: false,
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "md",
+  label: "",
+  description: "",
+  hint: "",
+  help: "",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

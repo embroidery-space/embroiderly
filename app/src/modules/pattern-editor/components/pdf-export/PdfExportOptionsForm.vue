@@ -1,3 +1,10 @@
+<script lang="ts" setup>
+import type { PdfExportOptions } from "#pattern-editor/lib/pattern/";
+import { FormFieldset } from "#shared/components/";
+
+const options = defineModel<PdfExportOptions>({ required: true });
+</script>
+
 <template>
   <div>
     <FormFieldset :legend="$t('publish-settings-print-options')" class="m-0!">
@@ -42,10 +49,3 @@
     </FormFieldset>
   </div>
 </template>
-
-<script lang="ts" setup>
-  import type { PdfExportOptions } from "#pattern-editor/lib/pattern/";
-  import { FormFieldset } from "#shared/components/";
-
-  const options = defineModel<PdfExportOptions>({ required: true });
-</script>

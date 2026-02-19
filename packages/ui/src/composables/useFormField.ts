@@ -1,5 +1,5 @@
-import type { ComputedRef, InjectionKey, Ref } from "vue";
 import { computed, inject, provide, useId } from "vue";
+import type { ComputedRef, InjectionKey, Ref } from "vue";
 
 export interface FormFieldInjectedOptions {
   ariaId: string;

@@ -1,5 +1,5 @@
-import type { InjectionKey, MaybeRefOrGetter, Ref } from "vue";
 import { computed, inject, toRef, toValue } from "vue";
+import type { InjectionKey, MaybeRefOrGetter, Ref } from "vue";
 
 import { DEFAULT_ICONS } from "../icons.ts";
 import type { Icons } from "../types/icons.ts";

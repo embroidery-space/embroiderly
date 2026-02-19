@@ -1,6 +1,3 @@
-/* eslint-disable unicorn/no-process-exit */
-/* eslint-disable sonarjs/no-os-command-from-path */
-
 import { ChildProcess, spawn, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";

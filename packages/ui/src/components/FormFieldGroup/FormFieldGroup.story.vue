@@ -1,20 +1,20 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+import { reactive } from "vue";
 
-  import Button from "../Button/Button.vue";
-  import Input from "../Input/Input.vue";
-  import InputNumber from "../InputNumber/InputNumber.vue";
+import Button from "../Button/Button.vue";
+import Input from "../Input/Input.vue";
+import InputNumber from "../InputNumber/InputNumber.vue";
 
-  import type { FormFieldGroupProps } from "./FormFieldGroup.vue";
-  import FormFieldGroup from "./FormFieldGroup.vue";
+import FormFieldGroup from "./FormFieldGroup.vue";
+import type { FormFieldGroupProps } from "./FormFieldGroup.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const state = reactive<FormFieldGroupProps>({
-    size: "md",
-  });
+const state = reactive<FormFieldGroupProps>({
+  size: "md",
+});
 
-  defineExpose({ state });
+defineExpose({ state });
 </script>
 
 <template>

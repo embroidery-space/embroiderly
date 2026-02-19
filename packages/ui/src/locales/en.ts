@@ -5,6 +5,9 @@ export default Object.freeze<Locale>({
   code: "en",
   dir: "ltr",
   messages: {
+    filePicker: {
+      chooseFile: "Choose file",
+    },
     inputNumber: {
       increment: "Increment",
       decrement: "Decrement",
@@ -13,6 +16,9 @@ export default Object.freeze<Locale>({
       search: "Search…",
       noData: "No data",
       noMatches: "No matches",
+    },
+    slider: {
+      thumb: "Thumb",
     },
   },
 });

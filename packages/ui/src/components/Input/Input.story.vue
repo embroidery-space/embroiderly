@@ -1,31 +1,31 @@
 <script setup lang="ts">
-  import { logEvent } from "histoire/client";
-  import { reactive, ref } from "vue";
+import { logEvent } from "histoire/client";
+import { reactive, ref } from "vue";
 
-  import Button from "../Button/Button.vue";
-  import type { FormFieldProps } from "../FormField/FormField.vue";
-  import FormField from "../FormField/FormField.vue";
-  import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
-  import Icon from "../Icon/Icon.vue";
+import Button from "../Button/Button.vue";
+import FormField from "../FormField/FormField.vue";
+import type { FormFieldProps } from "../FormField/FormField.vue";
+import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
+import Icon from "../Icon/Icon.vue";
 
-  import type { InputProps } from "./Input.vue";
-  import Input from "./Input.vue";
+import Input from "./Input.vue";
+import type { InputProps } from "./Input.vue";
 
-  const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-  const value = ref("Lorem ipsum");
-  const inputState = reactive<InputProps>({
-    disabled: false,
-  });
-  const formFieldState = reactive<FormFieldProps>({
-    size: "md",
-    label: "",
-    description: "",
-    hint: "",
-    help: "",
-  });
+const value = ref("Lorem ipsum");
+const inputState = reactive<InputProps>({
+  disabled: false,
+});
+const formFieldState = reactive<FormFieldProps>({
+  size: "md",
+  label: "",
+  description: "",
+  hint: "",
+  help: "",
+});
 
-  defineExpose({ inputState, formFieldState });
+defineExpose({ inputState, formFieldState });
 </script>
 
 <template>

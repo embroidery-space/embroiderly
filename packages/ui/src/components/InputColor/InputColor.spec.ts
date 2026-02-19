@@ -4,8 +4,8 @@ import { defineComponent, nextTick } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
-import type { InputColorProps } from "./InputColor.vue";
 import InputColor from "./InputColor.vue";
+import type { InputColorProps } from "./InputColor.vue";
 
 describe("InputColor", () => {
   const sizes = ["sm", "md", "lg"] as const;

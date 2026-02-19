@@ -4,8 +4,8 @@ import { defineComponent, nextTick } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
-import type { InputProps, InputSlots } from "./Input.vue";
 import Input from "./Input.vue";
+import type { InputProps, InputSlots } from "./Input.vue";
 
 describe("Input", () => {
   const sizes = ["sm", "md", "lg"] as const;
