@@ -8,6 +8,7 @@ exports[`Slider > renders correctly with class 1`] = `
     class="relative flex touch-none items-center select-none w-64"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -18,11 +19,13 @@ exports[`Slider > renders correctly with class 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full bg-accented h-2"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -39,6 +42,7 @@ exports[`Slider > renders correctly with class 1`] = `
       class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       tabindex="0"
@@ -64,6 +68,7 @@ exports[`Slider > renders correctly with disabled 1`] = `
     data-disabled=""
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -75,12 +80,14 @@ exports[`Slider > renders correctly with disabled 1`] = `
       class="relative grow overflow-hidden rounded-full bg-accented h-2"
       data-disabled=""
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-disabled=""
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -98,6 +105,7 @@ exports[`Slider > renders correctly with disabled 1`] = `
       data-disabled=""
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
     >
@@ -121,6 +129,7 @@ exports[`Slider > renders correctly with id 1`] = `
     class="relative flex w-full touch-none items-center select-none"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="volume"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -131,11 +140,13 @@ exports[`Slider > renders correctly with id 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full bg-accented h-2"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -152,6 +163,7 @@ exports[`Slider > renders correctly with id 1`] = `
       class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       tabindex="0"
@@ -176,6 +188,7 @@ exports[`Slider > renders correctly with min and max 1`] = `
     class="relative flex w-full touch-none items-center select-none"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -186,11 +199,13 @@ exports[`Slider > renders correctly with min and max 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full bg-accented h-2"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -207,6 +222,7 @@ exports[`Slider > renders correctly with min and max 1`] = `
       class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       tabindex="0"
@@ -231,6 +247,7 @@ exports[`Slider > renders correctly with size lg 1`] = `
     class="relative flex w-full touch-none items-center select-none"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -241,11 +258,13 @@ exports[`Slider > renders correctly with size lg 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full bg-accented h-2.5"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -262,6 +281,7 @@ exports[`Slider > renders correctly with size lg 1`] = `
       class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-5"
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       tabindex="0"
@@ -286,6 +306,7 @@ exports[`Slider > renders correctly with size md 1`] = `
     class="relative flex w-full touch-none items-center select-none"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -296,11 +317,13 @@ exports[`Slider > renders correctly with size md 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full bg-accented h-2"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -317,6 +340,7 @@ exports[`Slider > renders correctly with size md 1`] = `
       class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       tabindex="0"
@@ -341,6 +365,7 @@ exports[`Slider > renders correctly with size sm 1`] = `
     class="relative flex w-full touch-none items-center select-none"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -351,11 +376,13 @@ exports[`Slider > renders correctly with size sm 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full bg-accented h-1.5"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -372,6 +399,7 @@ exports[`Slider > renders correctly with size sm 1`] = `
       class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-3"
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       tabindex="0"
@@ -396,6 +424,7 @@ exports[`Slider > renders correctly with step 1`] = `
     class="relative flex w-full touch-none items-center select-none"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -406,11 +435,13 @@ exports[`Slider > renders correctly with step 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full bg-accented h-2"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -427,6 +458,7 @@ exports[`Slider > renders correctly with step 1`] = `
       class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       tabindex="0"
@@ -451,6 +483,7 @@ exports[`Slider > renders correctly with tooltip 1`] = `
     class="relative flex w-full touch-none items-center select-none"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -461,11 +494,13 @@ exports[`Slider > renders correctly with tooltip 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full bg-accented h-2"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -485,6 +520,7 @@ exports[`Slider > renders correctly with tooltip 1`] = `
       data-grace-area-trigger=""
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       data-state="closed"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
@@ -514,6 +550,7 @@ exports[`Slider > renders correctly with ui 1`] = `
     class="relative flex w-full touch-none items-center select-none"
     data-orientation="horizontal"
     data-slider-impl=""
+    data-slot="root"
     dir="ltr"
     id="v-0"
     style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -524,11 +561,13 @@ exports[`Slider > renders correctly with ui 1`] = `
     <span
       class="relative grow overflow-hidden rounded-full h-2 bg-red-500"
       data-orientation="horizontal"
+      data-slot="track"
     >
       
       <span
         class="absolute h-full rounded-full bg-primary"
         data-orientation="horizontal"
+        data-slot="range"
         style="left: 0%; right: 100%;"
       >
         
@@ -545,6 +584,7 @@ exports[`Slider > renders correctly with ui 1`] = `
       class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
       data-orientation="horizontal"
       data-reka-collection-item=""
+      data-slot="thumb"
       role="slider"
       style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       tabindex="0"
@@ -565,15 +605,19 @@ exports[`Slider > renders correctly within FormField 1`] = `
 <div>
   <div
     class="text-base"
+    data-slot="root"
   >
     <div
       class=""
+      data-slot="wrapper"
     >
       <div
         class="flex items-center justify-between gap-1"
+        data-slot="labelWrapper"
       >
         <label
           class="block font-medium text-default"
+          data-slot="label"
           for="v-0"
           id="v-0-label"
         >
@@ -583,6 +627,7 @@ exports[`Slider > renders correctly within FormField 1`] = `
         </label>
         <span
           class="text-muted"
+          data-slot="hint"
           id="v-0-hint"
         >
           Hint
@@ -590,6 +635,7 @@ exports[`Slider > renders correctly within FormField 1`] = `
       </div>
       <p
         class="text-muted"
+        data-slot="description"
         id="v-0-description"
       >
         Description
@@ -597,6 +643,7 @@ exports[`Slider > renders correctly within FormField 1`] = `
     </div>
     <div
       class="mt-1"
+      data-slot="container"
     >
       
       <span
@@ -605,6 +652,7 @@ exports[`Slider > renders correctly within FormField 1`] = `
         class="relative flex w-full touch-none items-center select-none"
         data-orientation="horizontal"
         data-slider-impl=""
+        data-slot="root"
         dir="ltr"
         id="v-0"
         style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -615,11 +663,13 @@ exports[`Slider > renders correctly within FormField 1`] = `
         <span
           class="relative grow overflow-hidden rounded-full bg-accented h-2"
           data-orientation="horizontal"
+          data-slot="track"
         >
           
           <span
             class="absolute h-full rounded-full bg-primary"
             data-orientation="horizontal"
+            data-slot="range"
             style="left: 0%; right: 100%;"
           >
             
@@ -636,6 +686,7 @@ exports[`Slider > renders correctly within FormField 1`] = `
           class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
           data-orientation="horizontal"
           data-reka-collection-item=""
+          data-slot="thumb"
           role="slider"
           style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
           tabindex="0"
@@ -651,6 +702,7 @@ exports[`Slider > renders correctly within FormField 1`] = `
       
       <p
         class="mt-1 text-muted"
+        data-slot="help"
         id="v-0-help"
       >
         Help

@@ -101,6 +101,7 @@ const ui = computed(() => {
     :as-child="asChild"
     :disabled="disabled || isLoading"
     :aria-disabled="disabled || isLoading"
+    data-slot="base"
     :class="ui.base({ class: [props.ui?.base, props.class] })"
     @click="onClickWrapper"
   >
@@ -109,12 +110,13 @@ const ui = computed(() => {
         v-if="isLeading && leadingIconName"
         aria-hidden="true"
         :name="leadingIconName"
+        data-slot="leadingIcon"
         :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
       />
     </slot>
 
     <slot>
-      <span v-if="label" :class="ui.label({ class: props.ui?.label })">{{ label }}</span>
+      <span v-if="label" data-slot="label" :class="ui.label({ class: props.ui?.label })">{{ label }}</span>
     </slot>
 
     <slot name="trailing">
@@ -122,6 +124,7 @@ const ui = computed(() => {
         v-if="isTrailing && trailingIconName"
         aria-hidden="true"
         :name="trailingIconName"
+        data-slot="trailingIcon"
         :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
       />
     </slot>

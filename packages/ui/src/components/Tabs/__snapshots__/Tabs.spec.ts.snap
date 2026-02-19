@@ -5,6 +5,7 @@ exports[`Tabs > renders correctly with class 1`] = `
   <div
     class="flex flex-col gap-2 w-96"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -12,6 +13,7 @@ exports[`Tabs > renders correctly with class 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -29,6 +31,7 @@ exports[`Tabs > renders correctly with class 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -40,6 +43,7 @@ exports[`Tabs > renders correctly with class 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -55,6 +59,7 @@ exports[`Tabs > renders correctly with class 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -66,6 +71,7 @@ exports[`Tabs > renders correctly with class 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -81,6 +87,7 @@ exports[`Tabs > renders correctly with class 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -92,6 +99,7 @@ exports[`Tabs > renders correctly with class 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -111,6 +119,7 @@ exports[`Tabs > renders correctly with class 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -127,6 +136,7 @@ exports[`Tabs > renders correctly with class 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -139,6 +149,7 @@ exports[`Tabs > renders correctly with class 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -158,6 +169,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -165,6 +177,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -182,6 +195,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -193,6 +207,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -208,6 +223,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -219,6 +235,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -234,6 +251,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -245,6 +263,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -264,6 +283,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -280,6 +300,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -292,6 +313,7 @@ exports[`Tabs > renders correctly with content slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -311,6 +333,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -318,6 +341,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -335,6 +359,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -346,6 +371,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -361,6 +387,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -372,6 +399,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -387,6 +415,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -398,6 +427,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -417,6 +447,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -433,6 +464,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -445,6 +477,7 @@ exports[`Tabs > renders correctly with custom slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -464,6 +497,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -471,6 +505,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -488,6 +523,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -499,6 +535,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Default slot
@@ -514,6 +551,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -525,6 +563,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Default slot
@@ -540,6 +579,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -551,6 +591,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Default slot
@@ -570,6 +611,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -586,6 +628,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -598,6 +641,7 @@ exports[`Tabs > renders correctly with default slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -617,6 +661,7 @@ exports[`Tabs > renders correctly with items 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -624,6 +669,7 @@ exports[`Tabs > renders correctly with items 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -641,6 +687,7 @@ exports[`Tabs > renders correctly with items 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -652,6 +699,7 @@ exports[`Tabs > renders correctly with items 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -667,6 +715,7 @@ exports[`Tabs > renders correctly with items 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -678,6 +727,7 @@ exports[`Tabs > renders correctly with items 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -693,6 +743,7 @@ exports[`Tabs > renders correctly with items 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -704,6 +755,7 @@ exports[`Tabs > renders correctly with items 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -723,6 +775,7 @@ exports[`Tabs > renders correctly with items 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -739,6 +792,7 @@ exports[`Tabs > renders correctly with items 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -751,6 +805,7 @@ exports[`Tabs > renders correctly with items 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -770,6 +825,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -777,6 +833,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -794,6 +851,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -806,6 +864,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -821,6 +880,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -833,6 +893,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -848,6 +909,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -860,6 +922,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -879,6 +942,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -895,6 +959,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -907,6 +972,7 @@ exports[`Tabs > renders correctly with leading slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -926,6 +992,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -933,6 +1000,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -950,6 +1018,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -961,6 +1030,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -976,6 +1046,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -987,6 +1058,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -1002,6 +1074,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -1013,6 +1086,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -1032,6 +1106,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -1048,6 +1123,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -1060,6 +1136,7 @@ exports[`Tabs > renders correctly with orientation horizontal 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -1079,6 +1156,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
   <div
     class="flex flex-row items-start gap-2"
     data-orientation="vertical"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -1086,6 +1164,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
       aria-orientation="vertical"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1 flex-col"
       data-orientation="vertical"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -1103,6 +1182,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
         data-active=""
         data-orientation="vertical"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -1114,6 +1194,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -1129,6 +1210,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="vertical"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -1140,6 +1222,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -1155,6 +1238,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="vertical"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -1166,6 +1250,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -1185,6 +1270,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="vertical"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -1201,6 +1287,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="vertical"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -1213,6 +1300,7 @@ exports[`Tabs > renders correctly with orientation vertical 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="vertical"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -1232,6 +1320,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -1239,6 +1328,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -1256,6 +1346,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -1267,6 +1358,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -1282,6 +1374,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-3 py-2 text-base"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -1293,6 +1386,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -1308,6 +1402,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-3 py-2 text-base"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -1319,6 +1414,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -1338,6 +1434,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -1354,6 +1451,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -1366,6 +1464,7 @@ exports[`Tabs > renders correctly with size lg 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -1385,6 +1484,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -1392,6 +1492,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -1409,6 +1510,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -1420,6 +1522,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -1435,6 +1538,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -1446,6 +1550,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -1461,6 +1566,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -1472,6 +1578,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -1491,6 +1598,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -1507,6 +1615,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -1519,6 +1628,7 @@ exports[`Tabs > renders correctly with size md 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -1538,6 +1648,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -1545,6 +1656,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -1562,6 +1674,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -1573,6 +1686,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -1588,6 +1702,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2 py-1 text-xs"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -1599,6 +1714,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -1614,6 +1730,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2 py-1 text-xs"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -1625,6 +1742,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -1644,6 +1762,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -1660,6 +1779,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -1672,6 +1792,7 @@ exports[`Tabs > renders correctly with size sm 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -1691,6 +1812,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -1698,6 +1820,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -1715,6 +1838,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -1726,6 +1850,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -1742,6 +1867,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -1753,6 +1879,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -1769,6 +1896,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -1780,6 +1908,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -1800,6 +1929,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -1816,6 +1946,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -1828,6 +1959,7 @@ exports[`Tabs > renders correctly with trailing slot 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -1847,6 +1979,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -1854,6 +1987,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -1871,6 +2005,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -1882,6 +2017,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -1897,6 +2033,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -1908,6 +2045,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -1923,6 +2061,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -1934,6 +2073,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -1953,6 +2093,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary w-full ring ring-default"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -1969,6 +2110,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary w-full ring ring-default"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -1981,6 +2123,7 @@ exports[`Tabs > renders correctly with ui 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary w-full ring ring-default"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -2000,6 +2143,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -2007,6 +2151,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -2024,6 +2169,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -2035,6 +2181,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -2050,6 +2197,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -2061,6 +2209,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -2076,6 +2225,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -2087,6 +2237,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3
@@ -2106,6 +2257,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-0"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="active"
       id="reka-tabs-v-0-content-0"
       role="tabpanel"
@@ -2122,6 +2274,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-1"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-1"
@@ -2138,6 +2291,7 @@ exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
       aria-labelledby="reka-tabs-v-0-trigger-2"
       class="focus-visible:outline-2 focus-visible:outline-primary"
       data-orientation="horizontal"
+      data-slot="content"
       data-state="inactive"
       hidden=""
       id="reka-tabs-v-0-content-2"
@@ -2161,6 +2315,7 @@ exports[`Tabs > renders correctly without content 1`] = `
   <div
     class="flex flex-col gap-2"
     data-orientation="horizontal"
+    data-slot="root"
     dir="ltr"
   >
     
@@ -2168,6 +2323,7 @@ exports[`Tabs > renders correctly without content 1`] = `
       aria-orientation="horizontal"
       class="relative inline-flex items-center gap-1 rounded-lg bg-accented p-1"
       data-orientation="horizontal"
+      data-slot="list"
       dir="ltr"
       role="tablist"
       style="outline: none;"
@@ -2184,6 +2340,7 @@ exports[`Tabs > renders correctly without content 1`] = `
         data-active=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="active"
         id="reka-tabs-v-0-trigger-0"
         role="tab"
@@ -2195,6 +2352,7 @@ exports[`Tabs > renders correctly without content 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab1
@@ -2209,6 +2367,7 @@ exports[`Tabs > renders correctly without content 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-1"
         role="tab"
@@ -2220,6 +2379,7 @@ exports[`Tabs > renders correctly without content 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab2
@@ -2234,6 +2394,7 @@ exports[`Tabs > renders correctly without content 1`] = `
         class="relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default px-2.5 py-1.5 text-sm"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="trigger"
         data-state="inactive"
         id="reka-tabs-v-0-trigger-2"
         role="tab"
@@ -2245,6 +2406,7 @@ exports[`Tabs > renders correctly without content 1`] = `
         
         <span
           class="truncate"
+          data-slot="label"
         >
           
           Tab3

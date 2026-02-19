@@ -4,6 +4,7 @@ exports[`Kbd > renders correctly with as 1`] = `
 <div>
   <span
     class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-5 min-w-5 text-[11px]"
+    data-slot="base"
   >
     K
   </span>
@@ -14,6 +15,7 @@ exports[`Kbd > renders correctly with class 1`] = `
 <div>
   <kbd
     class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans text-default ring ring-accented ring-inset h-5 min-w-5 text-[11px] font-bold"
+    data-slot="base"
   >
     K
   </kbd>
@@ -24,6 +26,7 @@ exports[`Kbd > renders correctly with size lg 1`] = `
 <div>
   <kbd
     class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-6 min-w-6 text-[12px]"
+    data-slot="base"
   >
     K
   </kbd>
@@ -34,6 +37,7 @@ exports[`Kbd > renders correctly with size md 1`] = `
 <div>
   <kbd
     class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-5 min-w-5 text-[11px]"
+    data-slot="base"
   >
     K
   </kbd>
@@ -44,6 +48,7 @@ exports[`Kbd > renders correctly with size sm 1`] = `
 <div>
   <kbd
     class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+    data-slot="base"
   >
     K
   </kbd>
@@ -54,6 +59,7 @@ exports[`Kbd > renders correctly with value 1`] = `
 <div>
   <kbd
     class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-5 min-w-5 text-[11px]"
+    data-slot="base"
   >
     K
   </kbd>

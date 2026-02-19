@@ -33,7 +33,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" :class="ui.base({ class: [props.ui?.base, props.class] })">
+  <Primitive :as="as" :as-child="asChild" data-slot="base" :class="ui.base({ class: [props.ui?.base, props.class] })">
     {{ value }}
   </Primitive>
 </template>

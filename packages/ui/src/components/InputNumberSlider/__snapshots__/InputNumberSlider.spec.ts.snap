@@ -5,9 +5,11 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
   
   <div
     class="flex items-center gap-x-2 w-64"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -16,6 +18,7 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -33,6 +36,7 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -43,11 +47,13 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -64,6 +70,7 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -86,9 +93,11 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -97,6 +106,7 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -107,12 +117,14 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
       />
       <div
         class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+        data-slot="buttons"
       >
         <!--v-if-->
         <button
           aria-disabled="false"
           aria-label="Decrement"
           class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+          data-slot="base"
           tabindex="-1"
           type="button"
         >
@@ -120,6 +132,7 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
           <svg
             aria-hidden="true"
             class="shrink-0 size-4"
+            data-slot="leadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 16 16"
@@ -144,6 +157,7 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -154,11 +168,13 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -175,6 +191,7 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -197,10 +214,12 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
       data-disabled=""
+      data-slot="root"
       role="group"
     >
       
@@ -210,6 +229,7 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
         data-disabled=""
+        data-slot="base"
         disabled=""
         id="v-0"
         inputmode="decimal"
@@ -229,6 +249,7 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
       data-disabled=""
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -240,12 +261,14 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-disabled=""
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-disabled=""
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -263,6 +286,7 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
         data-disabled=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
       >
@@ -284,9 +308,11 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -295,6 +321,7 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -305,11 +332,13 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
       />
       <div
         class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+        data-slot="buttons"
       >
         <button
           aria-disabled="false"
           aria-label="Increment"
           class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+          data-slot="base"
           tabindex="-1"
           type="button"
         >
@@ -317,6 +346,7 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
           <svg
             aria-hidden="true"
             class="shrink-0 size-4"
+            data-slot="leadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 16 16"
@@ -342,6 +372,7 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -352,11 +383,13 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -373,6 +406,7 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -395,9 +429,11 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -406,6 +442,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -416,11 +453,13 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
       />
       <div
         class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+        data-slot="buttons"
       >
         <button
           aria-disabled="false"
           aria-label="Increment"
           class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+          data-slot="base"
           tabindex="-1"
           type="button"
         >
@@ -428,6 +467,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
           <svg
             aria-hidden="true"
             class="shrink-0 size-4"
+            data-slot="leadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 16 16"
@@ -447,6 +487,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
           aria-disabled="false"
           aria-label="Decrement"
           class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+          data-slot="base"
           tabindex="-1"
           type="button"
         >
@@ -454,6 +495,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
           <svg
             aria-hidden="true"
             class="shrink-0 size-4"
+            data-slot="leadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 16 16"
@@ -478,6 +520,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -488,11 +531,13 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -509,6 +554,7 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -531,9 +577,11 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -544,6 +592,7 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -561,6 +610,7 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -571,11 +621,13 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -592,6 +644,7 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -614,9 +667,11 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -625,6 +680,7 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-3"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -642,6 +698,7 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -652,11 +709,13 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2.5"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -673,6 +732,7 @@ exports[`InputNumberSlider > renders correctly with size lg 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-5"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -695,9 +755,11 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -706,6 +768,7 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -723,6 +786,7 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -733,11 +797,13 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -754,6 +820,7 @@ exports[`InputNumberSlider > renders correctly with size md 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -776,9 +843,11 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -787,6 +856,7 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1 ps-2 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -804,6 +874,7 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -814,11 +885,13 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-1.5"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -835,6 +908,7 @@ exports[`InputNumberSlider > renders correctly with size sm 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-3"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -857,9 +931,11 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -868,6 +944,7 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -885,6 +962,7 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -895,11 +973,13 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -916,6 +996,7 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -938,9 +1019,11 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
   
   <div
     class="flex items-center gap-x-2"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -949,6 +1032,7 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -966,6 +1050,7 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -976,11 +1061,13 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -1000,6 +1087,7 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
         data-grace-area-trigger=""
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         data-state="closed"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
@@ -1027,9 +1115,11 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
   
   <div
     class="flex items-center gap-4"
+    data-slot="root"
   >
     <div
       class="relative inline-flex items-center"
+      data-slot="root"
       role="group"
     >
       
@@ -1038,6 +1128,7 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -1055,6 +1146,7 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
       class="relative flex touch-none items-center select-none w-full"
       data-orientation="horizontal"
       data-slider-impl=""
+      data-slot="root"
       dir="ltr"
       id="v-1"
       style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -1065,11 +1157,13 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
       <span
         class="relative grow overflow-hidden rounded-full bg-accented h-2"
         data-orientation="horizontal"
+        data-slot="track"
       >
         
         <span
           class="absolute h-full rounded-full bg-primary"
           data-orientation="horizontal"
+          data-slot="range"
           style="left: 0%; right: 100%;"
         >
           
@@ -1086,6 +1180,7 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
         class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
         data-orientation="horizontal"
         data-reka-collection-item=""
+        data-slot="thumb"
         role="slider"
         style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
         tabindex="0"
@@ -1107,15 +1202,19 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
 <div>
   <div
     class="text-base"
+    data-slot="root"
   >
     <div
       class=""
+      data-slot="wrapper"
     >
       <div
         class="flex items-center justify-between gap-1"
+        data-slot="labelWrapper"
       >
         <label
           class="block font-medium text-default"
+          data-slot="label"
           for="v-0"
           id="v-0-label"
         >
@@ -1125,6 +1224,7 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
         </label>
         <span
           class="text-muted"
+          data-slot="hint"
           id="v-0-hint"
         >
           Hint
@@ -1132,6 +1232,7 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
       </div>
       <p
         class="text-muted"
+        data-slot="description"
         id="v-0-description"
       >
         Description
@@ -1139,16 +1240,19 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
     </div>
     <div
       class="mt-1"
+      data-slot="container"
     >
       
       <div
         aria-describedby="v-0-hint v-0-description v-0-help"
         aria-labelledby="v-0-label"
         class="flex items-center gap-x-2"
+        data-slot="root"
         role="group"
       >
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1157,6 +1261,7 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -1174,6 +1279,7 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
           class="relative flex touch-none items-center select-none w-full"
           data-orientation="horizontal"
           data-slider-impl=""
+          data-slot="root"
           dir="ltr"
           id="v-1"
           style="--reka-slider-thumb-transform: translateX(-50%);"
@@ -1184,11 +1290,13 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
           <span
             class="relative grow overflow-hidden rounded-full bg-accented h-2"
             data-orientation="horizontal"
+            data-slot="track"
           >
             
             <span
               class="absolute h-full rounded-full bg-primary"
               data-orientation="horizontal"
+              data-slot="range"
               style="left: 0%; right: 100%;"
             >
               
@@ -1205,6 +1313,7 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
             class="block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 ring-primary focus-visible:outline-primary size-4"
             data-orientation="horizontal"
             data-reka-collection-item=""
+            data-slot="thumb"
             role="slider"
             style="transform: var(--reka-slider-thumb-transform); position: absolute; left: calc(0% + 0px);"
             tabindex="0"
@@ -1221,6 +1330,7 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
       
       <p
         class="mt-1 text-muted"
+        data-slot="help"
         id="v-0-help"
       >
         Help

@@ -9,6 +9,7 @@ exports[`FormFieldGroup > renders correctly with Button children 1`] = `
     <button
       aria-disabled="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+      data-slot="base"
     >
       
       <!--v-if-->
@@ -16,6 +17,7 @@ exports[`FormFieldGroup > renders correctly with Button children 1`] = `
       
       <span
         class="truncate"
+        data-slot="label"
       >
         First
       </span>
@@ -27,6 +29,7 @@ exports[`FormFieldGroup > renders correctly with Button children 1`] = `
     <button
       aria-disabled="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+      data-slot="base"
     >
       
       <!--v-if-->
@@ -34,6 +37,7 @@ exports[`FormFieldGroup > renders correctly with Button children 1`] = `
       
       <span
         class="truncate"
+        data-slot="label"
       >
         Second
       </span>
@@ -45,6 +49,7 @@ exports[`FormFieldGroup > renders correctly with Button children 1`] = `
     <button
       aria-disabled="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+      data-slot="base"
     >
       
       <!--v-if-->
@@ -52,6 +57,7 @@ exports[`FormFieldGroup > renders correctly with Button children 1`] = `
       
       <span
         class="truncate"
+        data-slot="label"
       >
         Third
       </span>
@@ -73,10 +79,12 @@ exports[`FormFieldGroup > renders correctly with Input and Button children 1`] =
     
     <div
       class="relative inline-flex items-center group has-focus-visible:z-1"
+      data-slot="root"
     >
       <!--v-if-->
       <input
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        data-slot="base"
         id="v-0"
         type="text"
       />
@@ -85,6 +93,7 @@ exports[`FormFieldGroup > renders correctly with Input and Button children 1`] =
     <button
       aria-disabled="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+      data-slot="base"
     >
       
       <!--v-if-->
@@ -92,6 +101,7 @@ exports[`FormFieldGroup > renders correctly with Input and Button children 1`] =
       
       <span
         class="truncate"
+        data-slot="label"
       >
         Submit
       </span>
@@ -113,6 +123,7 @@ exports[`FormFieldGroup > renders correctly with InputNumber and Button children
     
     <div
       class="relative inline-flex items-center group has-focus-visible:z-1"
+      data-slot="root"
       role="group"
     >
       
@@ -122,6 +133,7 @@ exports[`FormFieldGroup > renders correctly with InputNumber and Button children
         autocomplete="off"
         autocorrect="off"
         class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 text-sm group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-2.5"
+        data-slot="base"
         id="v-0"
         inputmode="decimal"
         role="spinbutton"
@@ -137,6 +149,7 @@ exports[`FormFieldGroup > renders correctly with InputNumber and Button children
     <button
       aria-disabled="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none focus-visible:z-1 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+      data-slot="base"
     >
       
       <!--v-if-->
@@ -144,6 +157,7 @@ exports[`FormFieldGroup > renders correctly with InputNumber and Button children
       
       <span
         class="truncate"
+        data-slot="label"
       >
         Apply
       </span>

@@ -4,9 +4,11 @@ exports[`FormFieldSet > renders correctly with class 1`] = `
 <div>
   <fieldset
     class="mt-2 rounded-md border border-default px-4 pb-4 custom-class"
+    data-slot="root"
   >
     <legend
       class="font-medium text-default text-base"
+      data-slot="legend"
     >
       Legend
     </legend>
@@ -20,9 +22,11 @@ exports[`FormFieldSet > renders correctly with legend 1`] = `
 <div>
   <fieldset
     class="mt-2 rounded-md border border-default px-4 pb-4"
+    data-slot="root"
   >
     <legend
       class="font-medium text-default text-base"
+      data-slot="legend"
     >
       Legend
     </legend>
@@ -36,9 +40,11 @@ exports[`FormFieldSet > renders correctly with size lg 1`] = `
 <div>
   <fieldset
     class="mt-2 rounded-md border border-default px-4 pb-4"
+    data-slot="root"
   >
     <legend
       class="font-medium text-default text-base"
+      data-slot="legend"
     >
       Legend
     </legend>
@@ -52,9 +58,11 @@ exports[`FormFieldSet > renders correctly with size md 1`] = `
 <div>
   <fieldset
     class="mt-2 rounded-md border border-default px-4 pb-4"
+    data-slot="root"
   >
     <legend
       class="font-medium text-default text-sm"
+      data-slot="legend"
     >
       Legend
     </legend>
@@ -68,9 +76,11 @@ exports[`FormFieldSet > renders correctly with size sm 1`] = `
 <div>
   <fieldset
     class="mt-2 rounded-md border border-default px-4 pb-4"
+    data-slot="root"
   >
     <legend
       class="font-medium text-default text-xs"
+      data-slot="legend"
     >
       Legend
     </legend>
@@ -84,9 +94,11 @@ exports[`FormFieldSet > renders correctly with ui 1`] = `
 <div>
   <fieldset
     class="mt-2 border border-default px-4 pb-4 rounded-lg"
+    data-slot="root"
   >
     <legend
       class="font-medium text-default text-base"
+      data-slot="legend"
     >
       Legend
     </legend>

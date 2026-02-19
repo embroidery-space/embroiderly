@@ -4,14 +4,17 @@ exports[`Switch > renders correctly with class 1`] = `
 <div>
   <div
     class="relative items-start inline-flex"
+    data-slot="root"
   >
     <div
       class="flex items-center h-5"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-required="false"
         class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
+        data-slot="base"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -21,6 +24,7 @@ exports[`Switch > renders correctly with class 1`] = `
         
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -39,15 +43,18 @@ exports[`Switch > renders correctly with description 1`] = `
 <div>
   <div
     class="relative flex items-start"
+    data-slot="root"
   >
     <div
       class="flex items-center h-5"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-label="Label"
         aria-required="false"
         class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
+        data-slot="base"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -57,6 +64,7 @@ exports[`Switch > renders correctly with description 1`] = `
         
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -68,9 +76,11 @@ exports[`Switch > renders correctly with description 1`] = `
     </div>
     <div
       class="ms-2 w-full text-sm"
+      data-slot="wrapper"
     >
       <label
         class="block font-medium text-default"
+        data-slot="label"
         for="v-0"
       >
         
@@ -79,6 +89,7 @@ exports[`Switch > renders correctly with description 1`] = `
       </label>
       <p
         class="text-muted"
+        data-slot="description"
       >
         Description
       </p>
@@ -91,15 +102,18 @@ exports[`Switch > renders correctly with disabled 1`] = `
 <div>
   <div
     class="relative flex items-start opacity-75"
+    data-slot="root"
   >
     <div
       class="flex items-center h-5"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-required="false"
         class="inline-flex shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9 cursor-not-allowed"
         data-disabled=""
+        data-slot="base"
         data-state="unchecked"
         disabled=""
         id="v-0"
@@ -111,6 +125,7 @@ exports[`Switch > renders correctly with disabled 1`] = `
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
           data-disabled=""
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -129,14 +144,17 @@ exports[`Switch > renders correctly with id 1`] = `
 <div>
   <div
     class="relative flex items-start"
+    data-slot="root"
   >
     <div
       class="flex items-center h-5"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-required="false"
         class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
+        data-slot="base"
         data-state="unchecked"
         id="id"
         role="switch"
@@ -146,6 +164,7 @@ exports[`Switch > renders correctly with id 1`] = `
         
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -164,15 +183,18 @@ exports[`Switch > renders correctly with label 1`] = `
 <div>
   <div
     class="relative flex items-start"
+    data-slot="root"
   >
     <div
       class="flex items-center h-5"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-label="Label"
         aria-required="false"
         class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
+        data-slot="base"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -182,6 +204,7 @@ exports[`Switch > renders correctly with label 1`] = `
         
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -193,9 +216,11 @@ exports[`Switch > renders correctly with label 1`] = `
     </div>
     <div
       class="ms-2 w-full text-sm"
+      data-slot="wrapper"
     >
       <label
         class="block font-medium text-default"
+        data-slot="label"
         for="v-0"
       >
         
@@ -212,14 +237,17 @@ exports[`Switch > renders correctly with size lg 1`] = `
 <div>
   <div
     class="relative flex items-start"
+    data-slot="root"
   >
     <div
       class="flex items-center h-6"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-required="false"
         class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-6 w-11"
+        data-slot="base"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -229,6 +257,7 @@ exports[`Switch > renders correctly with size lg 1`] = `
         
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-5 data-[state=checked]:translate-x-5"
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -247,14 +276,17 @@ exports[`Switch > renders correctly with size md 1`] = `
 <div>
   <div
     class="relative flex items-start"
+    data-slot="root"
   >
     <div
       class="flex items-center h-5"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-required="false"
         class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
+        data-slot="base"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -264,6 +296,7 @@ exports[`Switch > renders correctly with size md 1`] = `
         
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -282,14 +315,17 @@ exports[`Switch > renders correctly with size sm 1`] = `
 <div>
   <div
     class="relative flex items-start"
+    data-slot="root"
   >
     <div
       class="flex items-center h-4"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-required="false"
         class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-4 w-7"
+        data-slot="base"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -299,6 +335,7 @@ exports[`Switch > renders correctly with size sm 1`] = `
         
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-3 data-[state=checked]:translate-x-3"
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -317,14 +354,17 @@ exports[`Switch > renders correctly with ui 1`] = `
 <div>
   <div
     class="relative flex items-start"
+    data-slot="root"
   >
     <div
       class="flex items-center h-5"
+      data-slot="container"
     >
       <button
         aria-checked="false"
         aria-required="false"
         class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
+        data-slot="base"
         data-state="unchecked"
         id="v-0"
         role="switch"
@@ -334,6 +374,7 @@ exports[`Switch > renders correctly with ui 1`] = `
         
         <span
           class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
+          data-slot="thumb"
           data-state="unchecked"
         >
           
@@ -352,28 +393,34 @@ exports[`Switch > renders correctly within FormField 1`] = `
 <div>
   <div
     class="text-base"
+    data-slot="root"
   >
     <div
       class=""
+      data-slot="wrapper"
     >
       <!--v-if-->
       <!--v-if-->
     </div>
     <div
       class=""
+      data-slot="container"
     >
       
       <div
         class="relative flex items-start"
+        data-slot="root"
       >
         <div
           class="flex items-center h-5"
+          data-slot="container"
         >
           <button
             aria-checked="false"
             aria-label="Label"
             aria-required="false"
             class="inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented focus-visible:outline-primary data-[state=checked]:bg-primary h-5 w-9"
+            data-slot="base"
             data-state="unchecked"
             id="v-0"
             role="switch"
@@ -383,6 +430,7 @@ exports[`Switch > renders correctly within FormField 1`] = `
             
             <span
               class="pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 size-4 data-[state=checked]:translate-x-4"
+              data-slot="thumb"
               data-state="unchecked"
             >
               
@@ -394,9 +442,11 @@ exports[`Switch > renders correctly within FormField 1`] = `
         </div>
         <div
           class="ms-2 w-full text-sm"
+          data-slot="wrapper"
         >
           <label
             class="block font-medium text-default"
+            data-slot="label"
             for="v-0"
           >
             

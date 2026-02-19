@@ -140,13 +140,28 @@ const ui = computed(() => {
         :id="id"
         v-bind="{ ...$attrs, ...ariaAttrs }"
         :disabled="disabled"
+        data-slot="base"
         :class="ui.base({ class: [props.ui?.base, props.class] })"
       >
-        <span v-if="displayValue" :class="ui.value({ class: props.ui?.value })">{{ displayValue }}</span>
-        <span v-else :class="ui.placeholder({ class: props.ui?.placeholder })">{{ placeholder }}</span>
+        <span v-if="displayValue" data-slot="value" :class="ui.value({ class: props.ui?.value })">{{
+          displayValue
+        }}</span>
+        <span v-else data-slot="placeholder" :class="ui.placeholder({ class: props.ui?.placeholder })">{{
+          placeholder
+        }}</span>
 
-        <Icon v-if="loading" :name="icons.loading" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" />
-        <Icon v-else :name="icons.chevronDown" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" />
+        <Icon
+          v-if="loading"
+          :name="icons.loading"
+          data-slot="trailingIcon"
+          :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
+        />
+        <Icon
+          v-else
+          :name="icons.chevronDown"
+          data-slot="trailingIcon"
+          :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
+        />
       </Combobox.Trigger>
     </Combobox.Anchor>
 
@@ -155,6 +170,7 @@ const ui = computed(() => {
         position="popper"
         :side-offset="4"
         :collision-padding="4"
+        data-slot="content"
         :class="ui.content({ class: props.ui?.content })"
       >
         <Combobox.Input v-if="!!searchInput" v-model="searchValue" as-child>
@@ -163,25 +179,31 @@ const ui = computed(() => {
             autofocus
             autocomplete="off"
             :size="size"
+            data-slot="input"
             :class="ui.input({ class: props.ui?.input })"
           />
         </Combobox.Input>
 
-        <Combobox.Viewport :class="ui.viewport({ class: props.ui?.viewport })">
-          <Combobox.Empty :class="ui.empty({ class: props.ui?.empty })">
+        <Combobox.Viewport data-slot="viewport" :class="ui.viewport({ class: props.ui?.viewport })">
+          <Combobox.Empty data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
             {{ searchValue ? t("select.noMatches") : t("select.noData") }}
           </Combobox.Empty>
 
-          <Combobox.Group :class="ui.group({ class: props.ui?.group })">
+          <Combobox.Group data-slot="group" :class="ui.group({ class: props.ui?.group })">
             <Combobox.Item
               v-for="item in filteredItems"
               :key="item.value"
               :value="item.value"
+              data-slot="item"
               :class="ui.item({ class: props.ui?.item })"
             >
-              <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
+              <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
               <Combobox.ItemIndicator>
-                <Icon :name="icons.check" :class="ui.itemIndicator({ class: props.ui?.itemIndicator })" />
+                <Icon
+                  :name="icons.check"
+                  data-slot="itemIndicator"
+                  :class="ui.itemIndicator({ class: props.ui?.itemIndicator })"
+                />
               </Combobox.ItemIndicator>
             </Combobox.Item>
           </Combobox.Group>

@@ -24,6 +24,7 @@ exports[`Tooltip > renders correctly with class 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -33,6 +34,7 @@ exports[`Tooltip > renders correctly with class 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Tooltip
       </span>
@@ -42,6 +44,7 @@ exports[`Tooltip > renders correctly with class 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -105,6 +108,7 @@ exports[`Tooltip > renders correctly with shortcut 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -114,15 +118,18 @@ exports[`Tooltip > renders correctly with shortcut 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Tooltip
       </span>
       <span
         class="inline-flex shrink-0 items-center gap-0.5 before:me-0.5 before:content-['·']"
+        data-slot="kbds"
       >
         
         <kbd
           class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+          data-slot="base"
         >
           Ctrl+Z
         </kbd>
@@ -133,6 +140,7 @@ exports[`Tooltip > renders correctly with shortcut 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -196,6 +204,7 @@ exports[`Tooltip > renders correctly with shortcut only 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -205,13 +214,16 @@ exports[`Tooltip > renders correctly with shortcut only 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       />
       <span
         class="inline-flex shrink-0 items-center gap-0.5 before:me-0.5 before:content-['·']"
+        data-slot="kbds"
       >
         
         <kbd
           class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+          data-slot="base"
         >
           Ctrl+S
         </kbd>
@@ -222,6 +234,7 @@ exports[`Tooltip > renders correctly with shortcut only 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -285,6 +298,7 @@ exports[`Tooltip > renders correctly with text 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -294,6 +308,7 @@ exports[`Tooltip > renders correctly with text 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Tooltip
       </span>
@@ -303,6 +318,7 @@ exports[`Tooltip > renders correctly with text 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"

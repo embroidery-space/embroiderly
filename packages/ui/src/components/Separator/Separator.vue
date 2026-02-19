@@ -49,6 +49,7 @@ const ui = computed(() => {
     :as-child="asChild"
     :decorative="decorative"
     :orientation="orientation"
+    data-slot="base"
     :class="ui.base({ class: [props.ui?.base, props.class] })"
   />
 </template>

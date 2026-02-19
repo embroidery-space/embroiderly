@@ -25,7 +25,12 @@ const context = inject(SplitterContextKey, null);
 </script>
 
 <template>
-  <Splitter.Panel v-slot="slotProps" v-bind="forwarded" :class="context?.ui.panel({ class: props.class })">
+  <Splitter.Panel
+    v-slot="slotProps"
+    v-bind="forwarded"
+    data-slot="panel"
+    :class="context?.ui.panel({ class: props.class })"
+  >
     <slot v-bind="slotProps" />
   </Splitter.Panel>
 </template>

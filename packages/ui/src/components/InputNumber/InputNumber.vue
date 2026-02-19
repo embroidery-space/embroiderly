@@ -103,11 +103,16 @@ const ui = computed(() => {
     :step="step"
     :format-options="formatOptions"
     :disabled="disabled"
+    data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <NumberField.Input v-bind="{ ...$attrs, ...ariaAttrs }" :class="ui.base({ class: props.ui?.base })" />
+    <NumberField.Input
+      v-bind="{ ...$attrs, ...ariaAttrs }"
+      data-slot="base"
+      :class="ui.base({ class: props.ui?.base })"
+    />
 
-    <div v-if="hasButtons" :class="ui.buttons({ class: props.ui?.buttons })">
+    <div v-if="hasButtons" data-slot="buttons" :class="ui.buttons({ class: props.ui?.buttons })">
       <NumberField.Increment v-if="increment" as-child :disabled="disabled">
         <Button
           square

@@ -4,22 +4,27 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -28,6 +33,7 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -38,11 +44,13 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -50,6 +58,7 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -69,6 +78,7 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -76,6 +86,7 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -104,11 +115,13 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
       aria-label="Unlock aspect ratio"
       aria-pressed="true"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-primary hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10 p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -126,19 +139,23 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -147,6 +164,7 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -157,11 +175,13 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -169,6 +189,7 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -188,6 +209,7 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -195,6 +217,7 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -226,22 +249,27 @@ exports[`InputDimensions > renders correctly with class 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end w-64"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -250,6 +278,7 @@ exports[`InputDimensions > renders correctly with class 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -260,11 +289,13 @@ exports[`InputDimensions > renders correctly with class 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -272,6 +303,7 @@ exports[`InputDimensions > renders correctly with class 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -291,6 +323,7 @@ exports[`InputDimensions > renders correctly with class 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -298,6 +331,7 @@ exports[`InputDimensions > renders correctly with class 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -326,11 +360,13 @@ exports[`InputDimensions > renders correctly with class 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -348,19 +384,23 @@ exports[`InputDimensions > renders correctly with class 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -369,6 +409,7 @@ exports[`InputDimensions > renders correctly with class 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -379,11 +420,13 @@ exports[`InputDimensions > renders correctly with class 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -391,6 +434,7 @@ exports[`InputDimensions > renders correctly with class 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -410,6 +454,7 @@ exports[`InputDimensions > renders correctly with class 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -417,6 +462,7 @@ exports[`InputDimensions > renders correctly with class 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -448,23 +494,28 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
           data-disabled=""
+          data-slot="root"
           role="group"
         >
           
@@ -474,6 +525,7 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
             data-disabled=""
+            data-slot="base"
             disabled=""
             id="v-0"
             inputmode="decimal"
@@ -485,12 +537,14 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="true"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
               data-disabled=""
+              data-slot="base"
               disabled=""
               tabindex="-1"
               type="button"
@@ -499,6 +553,7 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -519,6 +574,7 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
               data-disabled=""
+              data-slot="base"
               disabled=""
               tabindex="-1"
               type="button"
@@ -527,6 +583,7 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -555,12 +612,14 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
       disabled=""
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -578,20 +637,24 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
           data-disabled=""
+          data-slot="root"
           role="group"
         >
           
@@ -601,6 +664,7 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
             data-disabled=""
+            data-slot="base"
             disabled=""
             id="v-1"
             inputmode="decimal"
@@ -612,12 +676,14 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="true"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
               data-disabled=""
+              data-slot="base"
               disabled=""
               tabindex="-1"
               type="button"
@@ -626,6 +692,7 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -646,6 +713,7 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
               data-disabled=""
+              data-slot="base"
               disabled=""
               tabindex="-1"
               type="button"
@@ -654,6 +722,7 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -685,22 +754,27 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -709,6 +783,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -719,11 +794,13 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -731,6 +808,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -750,6 +828,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -757,6 +836,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -785,11 +865,13 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -807,15 +889,19 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <div
           class="flex items-center justify-between gap-1"
+          data-slot="labelWrapper"
         >
           <label
             class="block font-medium text-default"
+            data-slot="label"
             for="v-1"
             id="v-1-label"
           >
@@ -825,6 +911,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
           </label>
           <span
             class="text-muted"
+            data-slot="hint"
             id="v-1-hint"
           >
             px
@@ -834,10 +921,12 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
       </div>
       <div
         class="mt-1"
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -847,6 +936,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -857,11 +947,13 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -869,6 +961,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -888,6 +981,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -895,6 +989,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -926,22 +1021,27 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -950,6 +1050,7 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -960,11 +1061,13 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -972,6 +1075,7 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -991,6 +1095,7 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -998,6 +1103,7 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1026,11 +1132,13 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -1048,19 +1156,23 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1071,6 +1183,7 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -1081,11 +1194,13 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1093,6 +1208,7 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1112,6 +1228,7 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1119,6 +1236,7 @@ exports[`InputDimensions > renders correctly with heightOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1150,22 +1268,27 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1174,6 +1297,7 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -1184,11 +1308,13 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1196,6 +1322,7 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1215,6 +1342,7 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1222,6 +1350,7 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1250,11 +1379,13 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -1272,19 +1403,23 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1293,6 +1428,7 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -1303,11 +1439,13 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1315,6 +1453,7 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1334,6 +1473,7 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1341,6 +1481,7 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1372,22 +1513,27 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
 <div>
   <div
     class="flex gap-2 relative flex-col pl-8"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1396,6 +1542,7 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -1406,11 +1553,13 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1418,6 +1567,7 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1437,6 +1587,7 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1444,6 +1595,7 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1472,11 +1624,13 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 absolute top-1/2 left-0 -translate-y-1/2"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -1494,19 +1648,23 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1515,6 +1673,7 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -1525,11 +1684,13 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1537,6 +1698,7 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1556,6 +1718,7 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1563,6 +1726,7 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1594,22 +1758,27 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-base"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1618,6 +1787,7 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -1628,11 +1798,13 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1640,6 +1812,7 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-5"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1659,6 +1832,7 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1666,6 +1840,7 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-5"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1694,11 +1869,13 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-2 text-base text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-2 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-5"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -1716,19 +1893,23 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
     </button>
     <div
       class="text-base"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1737,6 +1918,7 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -1747,11 +1929,13 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1759,6 +1943,7 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-5"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1778,6 +1963,7 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1785,6 +1971,7 @@ exports[`InputDimensions > renders correctly with size lg 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-5"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1816,22 +2003,27 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1840,6 +2032,7 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -1850,11 +2043,13 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1862,6 +2057,7 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1881,6 +2077,7 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1888,6 +2085,7 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -1916,11 +2114,13 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -1938,19 +2138,23 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -1959,6 +2163,7 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -1969,11 +2174,13 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -1981,6 +2188,7 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2000,6 +2208,7 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2007,6 +2216,7 @@ exports[`InputDimensions > renders correctly with size md 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2038,22 +2248,27 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-xs"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -2062,6 +2277,7 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1 ps-2 pe-7 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -2072,11 +2288,13 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2084,6 +2302,7 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-3"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2103,6 +2322,7 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2110,6 +2330,7 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-3"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2138,11 +2359,13 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1 text-xs text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-3"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -2160,19 +2383,23 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
     </button>
     <div
       class="text-xs"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -2181,6 +2408,7 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1 ps-2 pe-7 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -2191,11 +2419,13 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2203,6 +2433,7 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-3"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2222,6 +2453,7 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2229,6 +2461,7 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-3"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2260,22 +2493,27 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
 <div>
   <div
     class="flex flex-row items-end gap-4"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -2284,6 +2522,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -2294,11 +2533,13 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2306,6 +2547,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2325,6 +2567,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2332,6 +2575,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2360,11 +2604,13 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -2382,19 +2628,23 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -2403,6 +2653,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -2413,11 +2664,13 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2425,6 +2678,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2444,6 +2698,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2451,6 +2706,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2482,18 +2738,23 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <div
           class="flex items-center justify-between gap-1"
+          data-slot="labelWrapper"
         >
           <label
             class="block font-medium text-default"
+            data-slot="label"
             for="v-0"
             id="v-0-label"
           >
@@ -2503,6 +2764,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
           </label>
           <span
             class="text-muted"
+            data-slot="hint"
             id="v-0-hint"
           >
             px
@@ -2512,10 +2774,12 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
       </div>
       <div
         class="mt-1"
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -2525,6 +2789,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -2535,11 +2800,13 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2547,6 +2814,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2566,6 +2834,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2573,6 +2842,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2601,11 +2871,13 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -2623,19 +2895,23 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -2644,6 +2920,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -2654,11 +2931,13 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2666,6 +2945,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2685,6 +2965,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2692,6 +2973,7 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2723,22 +3005,27 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
 <div>
   <div
     class="flex gap-2 flex-row items-end"
+    data-slot="root"
   >
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -2749,6 +3036,7 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-0"
             inputmode="decimal"
             role="spinbutton"
@@ -2759,11 +3047,13 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2771,6 +3061,7 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2790,6 +3081,7 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2797,6 +3089,7 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2825,11 +3118,13 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
       aria-label="Lock aspect ratio"
       aria-pressed="false"
       class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 self-end"
+      data-slot="lockButton"
     >
       
       <svg
         aria-hidden="true"
         class="shrink-0 size-4"
+        data-slot="leadingIcon"
         height="1em"
         role="img"
         viewBox="0 0 16 16"
@@ -2847,19 +3142,23 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
     </button>
     <div
       class="text-sm"
+      data-slot="root"
     >
       <div
         class=""
+        data-slot="wrapper"
       >
         <!--v-if-->
         <!--v-if-->
       </div>
       <div
         class=""
+        data-slot="container"
       >
         
         <div
           class="relative inline-flex items-center"
+          data-slot="root"
           role="group"
         >
           
@@ -2868,6 +3167,7 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
             autocomplete="off"
             autocorrect="off"
             class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            data-slot="base"
             id="v-1"
             inputmode="decimal"
             role="spinbutton"
@@ -2878,11 +3178,13 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
           />
           <div
             class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+            data-slot="buttons"
           >
             <button
               aria-disabled="false"
               aria-label="Increment"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2890,6 +3192,7 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"
@@ -2909,6 +3212,7 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
               aria-disabled="false"
               aria-label="Decrement"
               class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+              data-slot="base"
               tabindex="-1"
               type="button"
             >
@@ -2916,6 +3220,7 @@ exports[`InputDimensions > renders correctly with widthOptions 1`] = `
               <svg
                 aria-hidden="true"
                 class="shrink-0 size-4"
+                data-slot="leadingIcon"
                 height="1em"
                 role="img"
                 viewBox="0 0 16 16"

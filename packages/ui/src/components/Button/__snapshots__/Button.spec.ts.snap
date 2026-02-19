@@ -5,11 +5,13 @@ exports[`Button > renders correctly with icon 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -21,6 +23,7 @@ exports[`Button > renders correctly with icon 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -37,11 +40,13 @@ exports[`Button > renders correctly with icon and leading 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -53,6 +58,7 @@ exports[`Button > renders correctly with icon and leading 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -69,6 +75,7 @@ exports[`Button > renders correctly with icon and trailing 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -76,6 +83,7 @@ exports[`Button > renders correctly with icon and trailing 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -84,6 +92,7 @@ exports[`Button > renders correctly with icon and trailing 1`] = `
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="trailingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -101,6 +110,7 @@ exports[`Button > renders correctly with label 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -108,6 +118,7 @@ exports[`Button > renders correctly with label 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -124,11 +135,13 @@ exports[`Button > renders correctly with leading and trailing icons 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -140,6 +153,7 @@ exports[`Button > renders correctly with leading and trailing icons 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -148,6 +162,7 @@ exports[`Button > renders correctly with leading and trailing icons 1`] = `
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="trailingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -165,11 +180,13 @@ exports[`Button > renders correctly with leading icon 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -181,6 +198,7 @@ exports[`Button > renders correctly with leading icon 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -197,6 +215,7 @@ exports[`Button > renders correctly with neutral variant ghost 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -204,6 +223,7 @@ exports[`Button > renders correctly with neutral variant ghost 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -220,6 +240,7 @@ exports[`Button > renders correctly with neutral variant link 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -227,6 +248,7 @@ exports[`Button > renders correctly with neutral variant link 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -243,6 +265,7 @@ exports[`Button > renders correctly with neutral variant outline 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm bg-default text-default ring-accented hover:bg-elevated focus-visible:outline-inverted active:bg-elevated disabled:bg-default"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -250,6 +273,7 @@ exports[`Button > renders correctly with neutral variant outline 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -266,6 +290,7 @@ exports[`Button > renders correctly with neutral variant soft 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-elevated text-default hover:bg-accented/75 focus-visible:outline-inverted active:bg-accented/75 disabled:bg-elevated"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -273,6 +298,7 @@ exports[`Button > renders correctly with neutral variant soft 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -289,6 +315,7 @@ exports[`Button > renders correctly with neutral variant solid 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-inverted text-inverted hover:bg-inverted/90 focus-visible:outline-inverted active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -296,6 +323,7 @@ exports[`Button > renders correctly with neutral variant solid 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -312,6 +340,7 @@ exports[`Button > renders correctly with neutral variant subtle 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm bg-elevated text-default ring-accented hover:bg-accented/75 focus-visible:outline-inverted active:bg-accented/75 disabled:bg-elevated"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -319,6 +348,7 @@ exports[`Button > renders correctly with neutral variant subtle 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -335,6 +365,7 @@ exports[`Button > renders correctly with primary variant ghost 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-primary hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -342,6 +373,7 @@ exports[`Button > renders correctly with primary variant ghost 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -358,6 +390,7 @@ exports[`Button > renders correctly with primary variant link 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm text-primary hover:text-primary/75 focus-visible:outline-primary active:text-primary/75"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -365,6 +398,7 @@ exports[`Button > renders correctly with primary variant link 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -381,6 +415,7 @@ exports[`Button > renders correctly with primary variant outline 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm text-primary ring-primary/50 hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10 disabled:bg-transparent"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -388,6 +423,7 @@ exports[`Button > renders correctly with primary variant outline 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -404,6 +440,7 @@ exports[`Button > renders correctly with primary variant soft 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary/10 text-primary hover:bg-primary/15 focus-visible:outline-primary active:bg-primary/15 disabled:bg-primary/10"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -411,6 +448,7 @@ exports[`Button > renders correctly with primary variant soft 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -427,6 +465,7 @@ exports[`Button > renders correctly with primary variant solid 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -434,6 +473,7 @@ exports[`Button > renders correctly with primary variant solid 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -450,6 +490,7 @@ exports[`Button > renders correctly with primary variant subtle 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm bg-primary/10 text-primary ring-primary/25 hover:bg-primary/15 focus-visible:outline-primary active:bg-primary/15 disabled:bg-primary/10"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -457,6 +498,7 @@ exports[`Button > renders correctly with primary variant subtle 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -473,6 +515,7 @@ exports[`Button > renders correctly with size lg 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 px-3 py-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -480,6 +523,7 @@ exports[`Button > renders correctly with size lg 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -496,6 +540,7 @@ exports[`Button > renders correctly with size md 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -503,6 +548,7 @@ exports[`Button > renders correctly with size md 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -519,6 +565,7 @@ exports[`Button > renders correctly with size sm 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 px-2 py-1 text-xs bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -526,6 +573,7 @@ exports[`Button > renders correctly with size sm 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -542,6 +590,7 @@ exports[`Button > renders correctly with slots 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     Leading slot
@@ -561,11 +610,13 @@ exports[`Button > renders correctly with square icon-only and size lg 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2"
+    data-slot="base"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-5"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -589,11 +640,13 @@ exports[`Button > renders correctly with square icon-only and size md 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
+    data-slot="base"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -617,11 +670,13 @@ exports[`Button > renders correctly with square icon-only and size sm 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1"
+    data-slot="base"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-3"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -645,6 +700,7 @@ exports[`Button > renders correctly with trailing icon 1`] = `
   <button
     aria-disabled="false"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+    data-slot="base"
   >
     
     <!--v-if-->
@@ -652,6 +708,7 @@ exports[`Button > renders correctly with trailing icon 1`] = `
     
     <span
       class="truncate"
+      data-slot="label"
     >
       Button
     </span>
@@ -660,6 +717,7 @@ exports[`Button > renders correctly with trailing icon 1`] = `
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="trailingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"

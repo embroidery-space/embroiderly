@@ -23,8 +23,8 @@ const ui = BlockUITheme();
 </script>
 
 <template>
-  <div :aria-busy="blocked" :class="ui.base({ class: [props.ui?.base, props.class] })">
+  <div :aria-busy="blocked" data-slot="base" :class="ui.base({ class: [props.ui?.base, props.class] })">
     <slot />
-    <div v-if="blocked" :class="ui.mask({ class: props.ui?.mask })" />
+    <div v-if="blocked" data-slot="mask" :class="ui.mask({ class: props.ui?.mask })" />
   </div>
 </template>

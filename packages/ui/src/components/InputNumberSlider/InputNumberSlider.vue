@@ -69,7 +69,7 @@ const ui = computed(() =>
 </script>
 
 <template>
-  <div v-bind="groupAttrs" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div v-bind="groupAttrs" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <InputNumber
       :id="id"
       v-model="modelValue"

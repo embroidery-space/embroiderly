@@ -11,12 +11,14 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-inverted text-inverted hover:bg-inverted/90 focus-visible:outline-inverted active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -44,6 +46,7 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -53,6 +56,7 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -62,6 +66,7 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -112,12 +117,14 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -145,6 +152,7 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -154,6 +162,7 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -163,6 +172,7 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -213,12 +223,14 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5 font-medium"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -246,6 +258,7 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -255,6 +268,7 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -264,6 +278,7 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -314,12 +329,14 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -347,6 +364,7 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -356,6 +374,7 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -365,6 +384,7 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -415,6 +435,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
     disabled=""
   >
@@ -422,6 +443,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -449,6 +471,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -458,6 +481,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -467,6 +491,7 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -517,6 +542,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
     disabled=""
   >
@@ -524,6 +550,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
     <svg
       aria-hidden="true"
       class="shrink-0 size-4 animate-spin"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -551,6 +578,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -560,6 +588,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -569,6 +598,7 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -619,12 +649,14 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-5"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -652,6 +684,7 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -661,6 +694,7 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -670,6 +704,7 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -720,12 +755,14 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -753,6 +790,7 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -762,6 +800,7 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -771,6 +810,7 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -821,12 +861,14 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-3"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -854,6 +896,7 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -863,6 +906,7 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -872,6 +916,7 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -922,12 +967,14 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -955,6 +1002,7 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -964,6 +1012,7 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -973,6 +1022,7 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -1023,12 +1073,14 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1056,6 +1108,7 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -1065,6 +1118,7 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -1074,6 +1128,7 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -1124,12 +1179,14 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-primary hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10 p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1157,6 +1214,7 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -1166,6 +1224,7 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -1175,6 +1234,7 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -1225,12 +1285,14 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-primary hover:text-primary/75 focus-visible:outline-primary active:text-primary/75 p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1258,6 +1320,7 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -1267,6 +1330,7 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -1276,6 +1340,7 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -1326,12 +1391,14 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 text-sm text-primary ring-primary/50 hover:bg-primary/10 focus-visible:outline-primary active:bg-primary/10 disabled:bg-transparent p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1359,6 +1426,7 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -1368,6 +1436,7 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -1377,6 +1446,7 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -1427,12 +1497,14 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary/10 text-primary hover:bg-primary/15 focus-visible:outline-primary active:bg-primary/15 disabled:bg-primary/10 p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1460,6 +1532,7 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -1469,6 +1542,7 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -1478,6 +1552,7 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -1528,12 +1603,14 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1561,6 +1638,7 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -1570,6 +1648,7 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -1579,6 +1658,7 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"
@@ -1629,12 +1709,14 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
     aria-label="Settings"
     class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 text-sm bg-primary/10 text-primary ring-primary/25 hover:bg-primary/15 focus-visible:outline-primary active:bg-primary/15 disabled:bg-primary/10 p-1.5"
     data-grace-area-trigger=""
+    data-slot="base"
     data-state="instant-open"
   >
     
     <svg
       aria-hidden="true"
       class="shrink-0 size-4"
+      data-slot="leadingIcon"
       height="1em"
       role="img"
       viewBox="0 0 16 16"
@@ -1662,6 +1744,7 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
       data-align="center"
       data-dismissable-layer=""
       data-side="bottom"
+      data-slot="content"
       data-state="instant-open"
       style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
     >
@@ -1671,6 +1754,7 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
       
       <span
         class="truncate"
+        data-slot="text"
       >
         Settings
       </span>
@@ -1680,6 +1764,7 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
       >
         <svg
           class="fill-default"
+          data-slot="arrow"
           height="5"
           preserveAspectRatio="none"
           rounded="false"

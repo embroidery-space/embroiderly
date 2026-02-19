@@ -116,6 +116,7 @@ const ui = computed(() => DropdownMenuTheme({ size: props.size }));
         :items="normalizedItems"
         :size="size"
         :portal="portal"
+        data-slot="content"
         :class="ui.content({ class: [props.ui?.content, props.class] })"
         :ui="ui"
       />

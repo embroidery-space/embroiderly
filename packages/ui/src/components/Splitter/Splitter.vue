@@ -50,10 +50,14 @@ function flattenChildren(children: VNode[]): VNode[] {
 </script>
 
 <template>
-  <Splitter.Group v-bind="forwarded" :class="ui.base({ class: [props.ui?.base, props.class] })">
+  <Splitter.Group v-bind="forwarded" data-slot="base" :class="ui.base({ class: [props.ui?.base, props.class] })">
     <template v-for="(panel, index) in panels" :key="index">
-      <component :is="panel" :class="ui.panel({ class: props.ui?.panel })" />
-      <Splitter.ResizeHandle v-if="index < panels.length - 1" :class="ui.handle({ class: props.ui?.handle })" />
+      <component :is="panel" data-slot="panel" :class="ui.panel({ class: props.ui?.panel })" />
+      <Splitter.ResizeHandle
+        v-if="index < panels.length - 1"
+        data-slot="handle"
+        :class="ui.handle({ class: props.ui?.handle })"
+      />
     </template>
   </Splitter.Group>
 </template>

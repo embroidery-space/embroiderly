@@ -88,18 +88,23 @@ const ui = computed(() => {
     :as="as"
     :as-child="asChild"
     :disabled="disabled"
+    data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <div v-for="item in items" :key="item.id" :class="ui.item({ class: props.ui?.item })">
-      <div :class="ui.container({ class: props.ui?.container })">
-        <RadioGroup.Item :id="item.id" :value="item.value" :class="ui.base({ class: props.ui?.base })">
-          <RadioGroup.Indicator :class="ui.indicator({ class: props.ui?.indicator })" />
+    <div v-for="item in items" :key="item.id" data-slot="item" :class="ui.item({ class: props.ui?.item })">
+      <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
+        <RadioGroup.Item :id="item.id" :value="item.value" data-slot="base" :class="ui.base({ class: props.ui?.base })">
+          <RadioGroup.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
         </RadioGroup.Item>
       </div>
 
-      <div v-if="item.label || item.description" :class="ui.wrapper({ class: props.ui?.wrapper })">
-        <Label v-if="item.label" :for="item.id" :class="ui.label({ class: props.ui?.label })">{{ item.label }}</Label>
-        <p v-if="item.description" :class="ui.description({ class: props.ui?.description })">{{ item.description }}</p>
+      <div v-if="item.label || item.description" data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+        <Label v-if="item.label" :for="item.id" data-slot="label" :class="ui.label({ class: props.ui?.label })">{{
+          item.label
+        }}</Label>
+        <p v-if="item.description" data-slot="description" :class="ui.description({ class: props.ui?.description })">
+          {{ item.description }}
+        </p>
       </div>
     </div>
   </RadioGroup.Root>

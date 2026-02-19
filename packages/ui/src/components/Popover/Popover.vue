@@ -70,9 +70,13 @@ const ui = PopoverTheme();
     </Popover.Trigger>
 
     <Popover.Portal v-bind="portalProps">
-      <Popover.Content v-bind="contentProps" :class="ui.content({ class: [props.ui?.content, props.class] })">
+      <Popover.Content
+        v-bind="contentProps"
+        data-slot="content"
+        :class="ui.content({ class: [props.ui?.content, props.class] })"
+      >
         <slot name="content" :close="close" />
-        <Popover.Arrow v-if="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
+        <Popover.Arrow v-if="arrow" data-slot="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
       </Popover.Content>
     </Popover.Portal>
   </Popover.Root>

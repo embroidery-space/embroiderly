@@ -108,7 +108,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <textarea
       :id="id"
       ref="textarea"
@@ -116,6 +116,7 @@ onMounted(() => {
       v-bind="{ ...$attrs, ...ariaAttrs }"
       :rows="rows"
       :disabled="disabled"
+      data-slot="base"
       :class="ui.base({ class: props.ui?.base })"
     />
   </Primitive>

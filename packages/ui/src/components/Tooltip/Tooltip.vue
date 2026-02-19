@@ -80,12 +80,16 @@ const ui = TooltipTheme();
     </Tooltip.Trigger>
 
     <Tooltip.Portal v-bind="portalProps">
-      <Tooltip.Content v-bind="contentProps" :class="ui.content({ class: [props.ui?.content, props.class] })">
-        <span :class="ui.text({ class: props.ui?.text })">{{ text }}</span>
-        <span v-if="shortcut" :class="ui.kbds({ class: props.ui?.kbds })">
+      <Tooltip.Content
+        v-bind="contentProps"
+        data-slot="content"
+        :class="ui.content({ class: [props.ui?.content, props.class] })"
+      >
+        <span data-slot="text" :class="ui.text({ class: props.ui?.text })">{{ text }}</span>
+        <span v-if="shortcut" data-slot="kbds" :class="ui.kbds({ class: props.ui?.kbds })">
           <Kbd v-for="(key, i) in parseShortcutDisplay(shortcut)" :key="i" :value="key" size="sm" />
         </span>
-        <Tooltip.Arrow :class="ui.arrow({ class: props.ui?.arrow })" />
+        <Tooltip.Arrow data-slot="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
       </Tooltip.Content>
     </Tooltip.Portal>
   </Tooltip.Root>

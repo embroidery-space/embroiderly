@@ -96,7 +96,7 @@ const ui = computed(() =>
 </script>
 
 <template>
-  <div :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <FormField v-bind="widthFieldOptions" :size="size">
       <InputNumber
         v-bind="widthOptions"
@@ -114,6 +114,7 @@ const ui = computed(() =>
       variant="ghost"
       :size="size"
       :disabled="disabled"
+      data-slot="lockButton"
       :class="ui.lockButton({ class: props.ui?.lockButton })"
       :aria-label="aspectRatioLocked ? 'Unlock aspect ratio' : 'Lock aspect ratio'"
       :aria-pressed="aspectRatioLocked"

@@ -37,9 +37,10 @@ const ui = computed(() => {
 <template>
   <Progress.Root
     :model-value="null"
+    data-slot="base"
     :class="ui.base({ class: [props.ui?.base, props.class] })"
     style="transform: translateZ(0)"
   >
-    <Progress.Indicator :class="ui.indicator({ class: props.ui?.indicator })" />
+    <Progress.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
   </Progress.Root>
 </template>

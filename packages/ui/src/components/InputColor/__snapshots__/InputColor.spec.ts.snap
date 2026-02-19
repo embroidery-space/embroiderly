@@ -4,9 +4,11 @@ exports[`InputColor > renders correctly with class 1`] = `
 <div>
   <div
     class="relative inline-flex items-center w-64"
+    data-slot="root"
   >
     <span
       class="absolute inset-y-0 start-0 flex items-center ps-3"
+      data-slot="leading"
     >
       
       
@@ -17,6 +19,7 @@ exports[`InputColor > renders correctly with class 1`] = `
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+        data-slot="base"
         data-state="closed"
         id="reka-popover-trigger-v-1"
         style="background-color: rgb(255, 0, 0);"
@@ -40,6 +43,7 @@ exports[`InputColor > renders correctly with class 1`] = `
     </span>
     <input
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      data-slot="base"
       id="v-0"
       maxlength="7"
       type="text"
@@ -53,9 +57,11 @@ exports[`InputColor > renders correctly with disabled 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <span
       class="absolute inset-y-0 start-0 flex items-center ps-3"
+      data-slot="leading"
     >
       
       
@@ -66,6 +72,7 @@ exports[`InputColor > renders correctly with disabled 1`] = `
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+        data-slot="base"
         data-state="closed"
         disabled=""
         id="reka-popover-trigger-v-1"
@@ -90,6 +97,7 @@ exports[`InputColor > renders correctly with disabled 1`] = `
     </span>
     <input
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      data-slot="base"
       disabled=""
       id="v-0"
       maxlength="7"
@@ -104,9 +112,11 @@ exports[`InputColor > renders correctly with size lg 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <span
       class="absolute inset-y-0 start-0 flex items-center ps-3"
+      data-slot="leading"
     >
       
       
@@ -117,6 +127,7 @@ exports[`InputColor > renders correctly with size lg 1`] = `
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+        data-slot="base"
         data-state="closed"
         id="reka-popover-trigger-v-1"
         style="background-color: rgb(255, 0, 0);"
@@ -140,6 +151,7 @@ exports[`InputColor > renders correctly with size lg 1`] = `
     </span>
     <input
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      data-slot="base"
       id="v-0"
       maxlength="7"
       type="text"
@@ -153,9 +165,11 @@ exports[`InputColor > renders correctly with size md 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <span
       class="absolute inset-y-0 start-0 flex items-center ps-2.5"
+      data-slot="leading"
     >
       
       
@@ -166,6 +180,7 @@ exports[`InputColor > renders correctly with size md 1`] = `
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1.5 rounded-sm"
+        data-slot="base"
         data-state="closed"
         id="reka-popover-trigger-v-1"
         style="background-color: rgb(255, 0, 0);"
@@ -189,6 +204,7 @@ exports[`InputColor > renders correctly with size md 1`] = `
     </span>
     <input
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-9"
+      data-slot="base"
       id="v-0"
       maxlength="7"
       type="text"
@@ -202,9 +218,11 @@ exports[`InputColor > renders correctly with size sm 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <span
       class="absolute inset-y-0 start-0 flex items-center ps-2"
+      data-slot="leading"
     >
       
       
@@ -215,6 +233,7 @@ exports[`InputColor > renders correctly with size sm 1`] = `
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-1 rounded-xs"
+        data-slot="base"
         data-state="closed"
         id="reka-popover-trigger-v-1"
         style="background-color: rgb(255, 0, 0);"
@@ -238,6 +257,7 @@ exports[`InputColor > renders correctly with size sm 1`] = `
     </span>
     <input
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-1 px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-7"
+      data-slot="base"
       id="v-0"
       maxlength="7"
       type="text"
@@ -251,9 +271,11 @@ exports[`InputColor > renders correctly with ui 1`] = `
 <div>
   <div
     class="relative inline-flex items-center rounded-none"
+    data-slot="root"
   >
     <span
       class="absolute inset-y-0 start-0 flex items-center ps-3"
+      data-slot="leading"
     >
       
       
@@ -264,6 +286,7 @@ exports[`InputColor > renders correctly with ui 1`] = `
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+        data-slot="base"
         data-state="closed"
         id="reka-popover-trigger-v-1"
         style="background-color: rgb(255, 0, 0);"
@@ -287,6 +310,7 @@ exports[`InputColor > renders correctly with ui 1`] = `
     </span>
     <input
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      data-slot="base"
       id="v-0"
       maxlength="7"
       type="text"
@@ -300,15 +324,19 @@ exports[`InputColor > renders correctly within FormField 1`] = `
 <div>
   <div
     class="text-base"
+    data-slot="root"
   >
     <div
       class=""
+      data-slot="wrapper"
     >
       <div
         class="flex items-center justify-between gap-1"
+        data-slot="labelWrapper"
       >
         <label
           class="block font-medium text-default"
+          data-slot="label"
           for="v-0"
           id="v-0-label"
         >
@@ -318,6 +346,7 @@ exports[`InputColor > renders correctly within FormField 1`] = `
         </label>
         <span
           class="text-muted"
+          data-slot="hint"
           id="v-0-hint"
         >
           Hint
@@ -325,6 +354,7 @@ exports[`InputColor > renders correctly within FormField 1`] = `
       </div>
       <p
         class="text-muted"
+        data-slot="description"
         id="v-0-description"
       >
         Description
@@ -332,13 +362,16 @@ exports[`InputColor > renders correctly within FormField 1`] = `
     </div>
     <div
       class="mt-1"
+      data-slot="container"
     >
       
       <div
         class="relative inline-flex items-center"
+        data-slot="root"
       >
         <span
           class="absolute inset-y-0 start-0 flex items-center ps-3"
+          data-slot="leading"
         >
           
           
@@ -349,6 +382,7 @@ exports[`InputColor > renders correctly within FormField 1`] = `
             aria-expanded="false"
             aria-haspopup="dialog"
             class="inline-flex items-center justify-center transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary p-2 rounded-md"
+            data-slot="base"
             data-state="closed"
             id="reka-popover-trigger-v-1"
             style="background-color: rgb(255, 0, 0);"
@@ -373,6 +407,7 @@ exports[`InputColor > renders correctly within FormField 1`] = `
         <input
           aria-describedby="v-0-hint v-0-description v-0-help"
           class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+          data-slot="base"
           id="v-0"
           maxlength="7"
           type="text"
@@ -382,6 +417,7 @@ exports[`InputColor > renders correctly within FormField 1`] = `
       
       <p
         class="mt-1 text-muted"
+        data-slot="help"
         id="v-0-help"
       >
         Help

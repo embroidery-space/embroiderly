@@ -74,10 +74,11 @@ const ui = computed(() => {
     :max="max"
     :step="step"
     :disabled="disabled"
+    data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <Slider.Track :class="ui.track({ class: props.ui?.track })">
-      <Slider.Range :class="ui.range({ class: props.ui?.range })" />
+    <Slider.Track data-slot="track" :class="ui.track({ class: props.ui?.track })">
+      <Slider.Range data-slot="range" :class="ui.range({ class: props.ui?.range })" />
     </Slider.Track>
 
     <Tooltip
@@ -86,8 +87,13 @@ const ui = computed(() => {
       :text="String(modelValue ?? min)"
       v-bind="typeof tooltip === 'object' ? tooltip : {}"
     >
-      <Slider.Thumb :aria-label="t('slider.thumb')" :class="ui.thumb({ class: props.ui?.thumb })" />
+      <Slider.Thumb :aria-label="t('slider.thumb')" data-slot="thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
     </Tooltip>
-    <Slider.Thumb v-else :aria-label="t('slider.thumb')" :class="ui.thumb({ class: props.ui?.thumb })" />
+    <Slider.Thumb
+      v-else
+      :aria-label="t('slider.thumb')"
+      data-slot="thumb"
+      :class="ui.thumb({ class: props.ui?.thumb })"
+    />
   </Slider.Root>
 </template>

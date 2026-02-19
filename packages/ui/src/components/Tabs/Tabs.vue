@@ -83,10 +83,11 @@ const ui = computed(() => {
     :orientation="orientation"
     :activation-mode="activationMode"
     :unmount-on-hide="unmountOnHide"
+    data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <Tabs.List :class="ui.list({ class: props.ui?.list })">
-      <Tabs.Indicator :class="ui.indicator({ class: props.ui?.indicator })" />
+    <Tabs.List data-slot="list" :class="ui.list({ class: props.ui?.list })">
+      <Tabs.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
 
       <slot name="list-leading" />
 
@@ -95,11 +96,12 @@ const ui = computed(() => {
         :key="index"
         :value="get(item, 'value') ?? String(index)"
         :disabled="item.disabled"
+        data-slot="trigger"
         :class="ui.trigger({ class: props.ui?.trigger })"
       >
         <slot name="leading" :item="item" :index="index" />
 
-        <span v-if="item.label || !!slots.default" :class="ui.label({ class: props.ui?.label })">
+        <span v-if="item.label || !!slots.default" data-slot="label" :class="ui.label({ class: props.ui?.label })">
           <slot :item="item" :index="index">{{ item.label }}</slot>
         </span>
 
@@ -114,6 +116,7 @@ const ui = computed(() => {
         v-for="(item, index) in items"
         :key="index"
         :value="get(item, 'value') ?? String(index)"
+        data-slot="content"
         :class="ui.content({ class: props.ui?.content })"
       >
         <slot :name="(item.slot || 'content') as keyof TabsSlots" :item="item" :index="index">

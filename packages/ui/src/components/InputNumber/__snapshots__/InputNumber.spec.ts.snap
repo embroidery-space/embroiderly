@@ -4,6 +4,7 @@ exports[`InputNumber > renders correctly with class 1`] = `
 <div>
   <div
     class="inline-flex items-center absolute"
+    data-slot="root"
     role="group"
   >
     
@@ -12,6 +13,7 @@ exports[`InputNumber > renders correctly with class 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -22,11 +24,13 @@ exports[`InputNumber > renders correctly with class 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -34,6 +38,7 @@ exports[`InputNumber > renders correctly with class 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -53,6 +58,7 @@ exports[`InputNumber > renders correctly with class 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -60,6 +66,7 @@ exports[`InputNumber > renders correctly with class 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -87,6 +94,7 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
   <div
     class="relative inline-flex items-center"
     data-disabled=""
+    data-slot="root"
     role="group"
   >
     
@@ -96,6 +104,7 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       data-disabled=""
+      data-slot="base"
       disabled=""
       id="v-0"
       inputmode="decimal"
@@ -107,12 +116,14 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="true"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         data-disabled=""
+        data-slot="base"
         disabled=""
         tabindex="-1"
         type="button"
@@ -121,6 +132,7 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -141,6 +153,7 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
         data-disabled=""
+        data-slot="base"
         disabled=""
         tabindex="-1"
         type="button"
@@ -149,6 +162,7 @@ exports[`InputNumber > renders correctly with disabled 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -175,6 +189,7 @@ exports[`InputNumber > renders correctly with id 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -183,6 +198,7 @@ exports[`InputNumber > renders correctly with id 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="id"
       inputmode="decimal"
       role="spinbutton"
@@ -193,11 +209,13 @@ exports[`InputNumber > renders correctly with id 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -205,6 +223,7 @@ exports[`InputNumber > renders correctly with id 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -224,6 +243,7 @@ exports[`InputNumber > renders correctly with id 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -231,6 +251,7 @@ exports[`InputNumber > renders correctly with id 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -257,6 +278,7 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -267,6 +289,7 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -277,11 +300,13 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -289,6 +314,7 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -308,6 +334,7 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -315,6 +342,7 @@ exports[`InputNumber > renders correctly with min and max 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -341,6 +369,7 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -349,6 +378,7 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -359,11 +389,13 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -371,6 +403,7 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -390,6 +423,7 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -397,6 +431,7 @@ exports[`InputNumber > renders correctly with size lg 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -423,6 +458,7 @@ exports[`InputNumber > renders correctly with size md 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -431,6 +467,7 @@ exports[`InputNumber > renders correctly with size md 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1.5 ps-2.5 pe-8 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -441,11 +478,13 @@ exports[`InputNumber > renders correctly with size md 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -453,6 +492,7 @@ exports[`InputNumber > renders correctly with size md 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-4"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -472,6 +512,7 @@ exports[`InputNumber > renders correctly with size md 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 text-sm text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1.5"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -479,6 +520,7 @@ exports[`InputNumber > renders correctly with size md 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-4"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -505,6 +547,7 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -513,6 +556,7 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-1 ps-2 pe-7 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -523,11 +567,13 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -535,6 +581,7 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-3"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -554,6 +601,7 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1 text-xs text-muted hover:text-default focus-visible:outline-inverted active:text-default p-1"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -561,6 +609,7 @@ exports[`InputNumber > renders correctly with size sm 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-3"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -587,6 +636,7 @@ exports[`InputNumber > renders correctly with step 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -595,6 +645,7 @@ exports[`InputNumber > renders correctly with step 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -605,11 +656,13 @@ exports[`InputNumber > renders correctly with step 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -617,6 +670,7 @@ exports[`InputNumber > renders correctly with step 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -636,6 +690,7 @@ exports[`InputNumber > renders correctly with step 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -643,6 +698,7 @@ exports[`InputNumber > renders correctly with step 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -669,6 +725,7 @@ exports[`InputNumber > renders correctly with ui 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -677,6 +734,7 @@ exports[`InputNumber > renders correctly with ui 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset rounded-full"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -687,11 +745,13 @@ exports[`InputNumber > renders correctly with ui 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -699,6 +759,7 @@ exports[`InputNumber > renders correctly with ui 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -718,6 +779,7 @@ exports[`InputNumber > renders correctly with ui 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -725,6 +787,7 @@ exports[`InputNumber > renders correctly with ui 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -751,6 +814,7 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -759,6 +823,7 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-default ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -769,11 +834,13 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -781,6 +848,7 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -800,6 +868,7 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -807,6 +876,7 @@ exports[`InputNumber > renders correctly with variant outline 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -833,6 +903,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -841,6 +912,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -851,11 +923,13 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -863,6 +937,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -882,6 +957,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -889,6 +965,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -915,15 +992,19 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
 <div>
   <div
     class="text-base"
+    data-slot="root"
   >
     <div
       class=""
+      data-slot="wrapper"
     >
       <div
         class="flex items-center justify-between gap-1"
+        data-slot="labelWrapper"
       >
         <label
           class="block font-medium text-default"
+          data-slot="label"
           for="v-0"
           id="v-0-label"
         >
@@ -933,6 +1014,7 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
         </label>
         <span
           class="text-muted"
+          data-slot="hint"
           id="v-0-hint"
         >
           Hint
@@ -940,6 +1022,7 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
       </div>
       <p
         class="text-muted"
+        data-slot="description"
         id="v-0-description"
       >
         Description
@@ -947,10 +1030,12 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
     </div>
     <div
       class="mt-1"
+      data-slot="container"
     >
       
       <div
         class="relative inline-flex items-center"
+        data-slot="root"
         role="group"
       >
         
@@ -960,6 +1045,7 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
           autocomplete="off"
           autocorrect="off"
           class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          data-slot="base"
           id="v-0"
           inputmode="decimal"
           role="spinbutton"
@@ -970,11 +1056,13 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
         />
         <div
           class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+          data-slot="buttons"
         >
           <button
             aria-disabled="false"
             aria-label="Increment"
             class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+            data-slot="base"
             tabindex="-1"
             type="button"
           >
@@ -982,6 +1070,7 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
             <svg
               aria-hidden="true"
               class="shrink-0 size-5"
+              data-slot="leadingIcon"
               height="1em"
               role="img"
               viewBox="0 0 16 16"
@@ -1001,6 +1090,7 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
             aria-disabled="false"
             aria-label="Decrement"
             class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+            data-slot="base"
             tabindex="-1"
             type="button"
           >
@@ -1008,6 +1098,7 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
             <svg
               aria-hidden="true"
               class="shrink-0 size-5"
+              data-slot="leadingIcon"
               height="1em"
               role="img"
               viewBox="0 0 16 16"
@@ -1030,6 +1121,7 @@ exports[`InputNumber > renders correctly within FormField 1`] = `
       
       <p
         class="mt-1 text-muted"
+        data-slot="help"
         id="v-0-help"
       >
         Help
@@ -1043,6 +1135,7 @@ exports[`InputNumber > renders correctly without decrement 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -1051,6 +1144,7 @@ exports[`InputNumber > renders correctly without decrement 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -1061,11 +1155,13 @@ exports[`InputNumber > renders correctly without decrement 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <button
         aria-disabled="false"
         aria-label="Increment"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -1073,6 +1169,7 @@ exports[`InputNumber > renders correctly without decrement 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -1100,6 +1197,7 @@ exports[`InputNumber > renders correctly without increment 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -1108,6 +1206,7 @@ exports[`InputNumber > renders correctly without increment 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 pe-9 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"
@@ -1118,12 +1217,14 @@ exports[`InputNumber > renders correctly without increment 1`] = `
     />
     <div
       class="absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0 pe-1.5"
+      data-slot="buttons"
     >
       <!--v-if-->
       <button
         aria-disabled="false"
         aria-label="Decrement"
         class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-2 text-base text-muted hover:text-default focus-visible:outline-inverted active:text-default p-2"
+        data-slot="base"
         tabindex="-1"
         type="button"
       >
@@ -1131,6 +1232,7 @@ exports[`InputNumber > renders correctly without increment 1`] = `
         <svg
           aria-hidden="true"
           class="shrink-0 size-5"
+          data-slot="leadingIcon"
           height="1em"
           role="img"
           viewBox="0 0 16 16"
@@ -1157,6 +1259,7 @@ exports[`InputNumber > renders correctly without increment and decrement 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
     role="group"
   >
     
@@ -1165,6 +1268,7 @@ exports[`InputNumber > renders correctly without increment and decrement 1`] = `
       autocomplete="off"
       autocorrect="off"
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset py-2 ps-3 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-3"
+      data-slot="base"
       id="v-0"
       inputmode="decimal"
       role="spinbutton"

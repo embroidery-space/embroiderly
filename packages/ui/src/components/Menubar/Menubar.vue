@@ -114,6 +114,7 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
     :default-value="defaultValue"
     :dir="dir"
     :loop="loop"
+    data-slot="root"
     :class="ui.root({ class: props.ui?.root })"
   >
     <slot :model-value="currentMenu">
@@ -125,6 +126,7 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
             :label="menu.label"
             :icon="menu.icon"
             :size="size"
+            data-slot="trigger"
             :class="ui.trigger({ class: props.ui?.trigger })"
           />
         </Menubar.Trigger>
@@ -135,6 +137,7 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
             :items="normalizeItems(menu.items)"
             :size="size"
             :portal="portal"
+            data-slot="content"
             :class="ui.content({ class: [props.ui?.content, props.class] })"
             :ui="ui"
           />

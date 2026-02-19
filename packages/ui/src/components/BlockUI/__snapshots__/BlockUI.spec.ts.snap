@@ -5,12 +5,14 @@ exports[`BlockUI > renders correctly when blocked 1`] = `
   <div
     aria-busy="true"
     class="relative"
+    data-slot="base"
   >
     
     Content
     
     <div
       class="absolute top-0 left-0 size-full bg-black/50"
+      data-slot="mask"
     />
   </div>
 </div>
@@ -21,6 +23,7 @@ exports[`BlockUI > renders correctly when not blocked 1`] = `
   <div
     aria-busy="false"
     class="relative"
+    data-slot="base"
   >
     
     Content

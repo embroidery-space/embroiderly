@@ -51,22 +51,25 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" :class="ui.root({ class: [props.ui?.root, props.class] })">
-    <div :class="ui.container({ class: props.ui?.container })">
+  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
       <Switch.Root
         :id="id"
         v-model="modelValue"
         v-bind="{ ...$attrs, ...ariaAttrs }"
         :disabled="disabled"
+        data-slot="base"
         :class="ui.base({ class: props.ui?.base })"
       >
-        <Switch.Thumb :class="ui.thumb({ class: props.ui?.thumb })" />
+        <Switch.Thumb data-slot="thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
       </Switch.Root>
     </div>
 
-    <div v-if="label || description" :class="ui.wrapper({ class: props.ui?.wrapper })">
-      <Label v-if="label" :for="id" :class="ui.label({ class: props.ui?.label })">{{ label }}</Label>
-      <p v-if="description" :class="ui.description({ class: props.ui?.description })">{{ description }}</p>
+    <div v-if="label || description" data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <Label v-if="label" :for="id" data-slot="label" :class="ui.label({ class: props.ui?.label })">{{ label }}</Label>
+      <p v-if="description" data-slot="description" :class="ui.description({ class: props.ui?.description })">
+        {{ description }}
+      </p>
     </div>
   </Primitive>
 </template>

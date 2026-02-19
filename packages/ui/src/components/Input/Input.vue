@@ -70,8 +70,8 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" :class="ui.root({ class: [props.ui?.root, props.class] })">
-    <span v-if="!!slots.leading" :class="ui.leading({ class: props.ui?.leading })">
+  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <span v-if="!!slots.leading" data-slot="leading" :class="ui.leading({ class: props.ui?.leading })">
       <slot name="leading" />
     </span>
 
@@ -81,10 +81,11 @@ const ui = computed(() => {
       v-bind="{ ...$attrs, ...ariaAttrs }"
       type="text"
       :disabled="disabled"
+      data-slot="base"
       :class="ui.base({ class: props.ui?.base })"
     />
 
-    <span v-if="!!slots.trailing" :class="ui.trailing({ class: props.ui?.trailing })">
+    <span v-if="!!slots.trailing" data-slot="trailing" :class="ui.trailing({ class: props.ui?.trailing })">
       <slot name="trailing" />
     </span>
   </Primitive>

@@ -35,6 +35,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -52,6 +53,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -60,6 +62,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
         
         <div
           class="flex w-full items-center font-semibold gap-1.5 p-1.5 text-sm"
+          data-slot="label"
         >
           
           
@@ -72,6 +75,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
         <div
           aria-orientation="horizontal"
           class="-mx-1 my-1 h-px bg-border"
+          data-slot="separator"
           role="separator"
         >
           
@@ -83,6 +87,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
           aria-checked="true"
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           data-state="checked"
           role="menuitemcheckbox"
           tabindex="-1"
@@ -93,12 +98,14 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
           
           <span
             class="truncate"
+            data-slot="itemLabel"
           >
             Show Grid
           </span>
           <svg
             aria-hidden="true"
             class="ms-auto inline-flex items-center shrink-0 size-5"
+            data-slot="itemTrailingIcon"
             data-state="checked"
             height="1em"
             role="img"
@@ -118,6 +125,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
           aria-checked="false"
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           data-state="unchecked"
           role="menuitemcheckbox"
           tabindex="-1"
@@ -128,6 +136,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
           
           <span
             class="truncate"
+            data-slot="itemLabel"
           >
             Show Rulers
           </span>
@@ -145,6 +154,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
+          data-slot="item"
           data-state="unchecked"
           role="menuitemcheckbox"
           tabindex="-1"
@@ -155,6 +165,7 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
           
           <span
             class="truncate"
+            data-slot="itemLabel"
           >
             Snap to Grid
           </span>
@@ -223,6 +234,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -240,6 +252,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -249,6 +262,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -258,6 +272,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -295,6 +310,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Cut
             </span>
@@ -310,6 +326,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -319,6 +336,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -351,6 +369,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Copy
             </span>
@@ -368,6 +387,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -377,6 +397,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -409,6 +430,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Paste
             </span>
@@ -429,6 +451,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
       <div
         aria-orientation="horizontal"
         class="-mx-1 my-1 h-px bg-border"
+        data-slot="separator"
         role="separator"
       >
         
@@ -436,6 +459,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
       </div>
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -445,6 +469,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -457,6 +482,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Select All
             </span>
@@ -557,6 +583,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -574,6 +601,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -583,6 +611,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -595,6 +624,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Undo
             </span>
@@ -602,10 +632,12 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           </span>
           <span
             class="ms-auto inline-flex items-center flex items-center gap-0.5"
+            data-slot="itemTrailing"
           >
             
             <kbd
               class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+              data-slot="base"
             >
               Ctrl+Z
             </kbd>
@@ -620,6 +652,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -632,6 +665,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Redo
             </span>
@@ -639,10 +673,12 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           </span>
           <span
             class="ms-auto inline-flex items-center flex items-center gap-0.5"
+            data-slot="itemTrailing"
           >
             
             <kbd
               class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+              data-slot="base"
             >
               Ctrl+Shift+Z
             </kbd>
@@ -657,6 +693,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -669,6 +706,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Go to Definition
             </span>
@@ -676,15 +714,18 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           </span>
           <span
             class="ms-auto inline-flex items-center flex items-center gap-0.5"
+            data-slot="itemTrailing"
           >
             
             <kbd
               class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+              data-slot="base"
             >
               G
             </kbd>
             <kbd
               class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+              data-slot="base"
             >
               D
             </kbd>
@@ -753,6 +794,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -770,6 +812,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -779,6 +822,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -788,6 +832,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           <svg
             aria-hidden="true"
             class="shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 16 16"
@@ -800,6 +845,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Cut
             </span>
@@ -815,6 +861,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -824,6 +871,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           <svg
             aria-hidden="true"
             class="shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 16 16"
@@ -836,6 +884,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Copy
             </span>
@@ -853,6 +902,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -862,6 +912,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           <svg
             aria-hidden="true"
             class="shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 16 16"
@@ -874,6 +925,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Paste
             </span>
@@ -894,6 +946,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
       <div
         aria-orientation="horizontal"
         class="-mx-1 my-1 h-px bg-border"
+        data-slot="separator"
         role="separator"
       >
         
@@ -901,6 +954,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
       </div>
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -910,6 +964,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -922,6 +977,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Select All
             </span>
@@ -991,6 +1047,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -1008,6 +1065,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -1017,6 +1075,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1026,6 +1085,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1063,6 +1123,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Cut
             </span>
@@ -1078,6 +1139,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1087,6 +1149,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1119,6 +1182,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Copy
             </span>
@@ -1136,6 +1200,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
           data-disabled=""
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1145,6 +1210,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1177,6 +1243,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Paste
             </span>
@@ -1197,6 +1264,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
       <div
         aria-orientation="horizontal"
         class="-mx-1 my-1 h-px bg-border"
+        data-slot="separator"
         role="separator"
       >
         
@@ -1204,6 +1272,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
       </div>
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -1213,6 +1282,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1225,6 +1295,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Select All
             </span>
@@ -1294,6 +1365,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -1311,6 +1383,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -1320,6 +1393,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1329,6 +1403,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1366,6 +1441,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Cut
             </span>
@@ -1381,6 +1457,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1390,6 +1467,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1422,6 +1500,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Copy
             </span>
@@ -1439,6 +1518,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1448,6 +1528,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1480,6 +1561,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Paste
             </span>
@@ -1500,6 +1582,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
       <div
         aria-orientation="horizontal"
         class="-mx-1 my-1 h-px bg-border"
+        data-slot="separator"
         role="separator"
       >
         
@@ -1507,6 +1590,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
       </div>
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -1516,6 +1600,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1528,6 +1613,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Select All
             </span>
@@ -1597,6 +1683,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -1614,6 +1701,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -1623,6 +1711,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1632,6 +1721,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-4"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1669,6 +1759,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Cut
             </span>
@@ -1684,6 +1775,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1693,6 +1785,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-4"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1725,6 +1818,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Copy
             </span>
@@ -1742,6 +1836,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
           data-disabled=""
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1751,6 +1846,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-4"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -1783,6 +1879,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Paste
             </span>
@@ -1803,6 +1900,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
       <div
         aria-orientation="horizontal"
         class="-mx-1 my-1 h-px bg-border"
+        data-slot="separator"
         role="separator"
       >
         
@@ -1810,6 +1908,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
       </div>
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -1819,6 +1918,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -1831,6 +1931,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Select All
             </span>
@@ -1900,6 +2001,7 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -1917,6 +2019,7 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -1932,6 +2035,7 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
           aria-haspopup="menu"
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           data-state="closed"
           id="reka-menu-sub-trigger-v-2"
           role="menuitem"
@@ -1943,15 +2047,18 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
           <!--v-if-->
           <span
             class="truncate"
+            data-slot="itemLabel"
           >
             File
           </span>
           <span
             class="ms-auto inline-flex items-center"
+            data-slot="itemTrailing"
           >
             <svg
               aria-hidden="true"
               class="shrink-0 size-5"
+              data-slot="itemTrailingIcon"
               height="1em"
               role="img"
               viewBox="0 0 16 16"
@@ -1987,6 +2094,7 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
           aria-haspopup="menu"
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           data-state="closed"
           id="reka-menu-sub-trigger-v-3"
           role="menuitem"
@@ -1998,15 +2106,18 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
           <!--v-if-->
           <span
             class="truncate"
+            data-slot="itemLabel"
           >
             Edit
           </span>
           <span
             class="ms-auto inline-flex items-center"
+            data-slot="itemTrailing"
           >
             <svg
               aria-hidden="true"
               class="shrink-0 size-5"
+              data-slot="itemTrailingIcon"
               height="1em"
               role="img"
               viewBox="0 0 16 16"
@@ -2090,6 +2201,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
       data-orientation="vertical"
       data-reka-menu-content=""
       data-side="bottom"
+      data-slot="content"
       data-state="open"
       dir="ltr"
       id="reka-dropdown-menu-content-v-1"
@@ -2107,6 +2219,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
       <!--v-if-->
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -2116,6 +2229,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -2125,6 +2239,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -2162,6 +2277,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Cut
             </span>
@@ -2177,6 +2293,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -2186,6 +2303,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -2218,6 +2336,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Copy
             </span>
@@ -2235,6 +2354,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-disabled=""
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -2244,6 +2364,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           <svg
             aria-hidden="true"
             class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
+            data-slot="itemLeadingIcon"
             height="1em"
             role="img"
             viewBox="0 0 24 24"
@@ -2276,6 +2397,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Paste
             </span>
@@ -2296,6 +2418,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
       <div
         aria-orientation="horizontal"
         class="-mx-1 my-1 h-px bg-border"
+        data-slot="separator"
         role="separator"
       >
         
@@ -2303,6 +2426,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
       </div>
       <div
         class="isolate p-1"
+        data-slot="group"
         role="group"
       >
         
@@ -2312,6 +2436,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
         <div
           class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
           data-reka-collection-item=""
+          data-slot="item"
           role="menuitem"
           tabindex="-1"
         >
@@ -2324,6 +2449,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           >
             <span
               class="truncate"
+              data-slot="itemLabel"
             >
               Select All
             </span>

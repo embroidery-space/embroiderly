@@ -62,25 +62,30 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" :class="ui.root({ class: [props.ui?.root, props.class] })">
-    <div :class="ui.wrapper({ class: props.ui?.wrapper })">
-      <div v-if="label" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })">
-        <Label :id="`${ariaId}-label`" :for="id" :class="ui.label({ class: props.ui?.label })">
+  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <div v-if="label" data-slot="labelWrapper" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })">
+        <Label :id="`${ariaId}-label`" :for="id" data-slot="label" :class="ui.label({ class: props.ui?.label })">
           {{ label }}
         </Label>
-        <span v-if="hint" :id="`${ariaId}-hint`" :class="ui.hint({ class: props.ui?.hint })">
+        <span v-if="hint" :id="`${ariaId}-hint`" data-slot="hint" :class="ui.hint({ class: props.ui?.hint })">
           {{ hint }}
         </span>
       </div>
 
-      <p v-if="description" :id="`${ariaId}-description`" :class="ui.description({ class: props.ui?.description })">
+      <p
+        v-if="description"
+        :id="`${ariaId}-description`"
+        data-slot="description"
+        :class="ui.description({ class: props.ui?.description })"
+      >
         {{ description }}
       </p>
     </div>
 
-    <div :class="[(label || description) && ui.container({ class: props.ui?.container })]">
+    <div :class="[(label || description) && ui.container({ class: props.ui?.container })]" data-slot="container">
       <slot />
-      <p v-if="help" :id="`${ariaId}-help`" :class="ui.help({ class: props.ui?.help })">
+      <p v-if="help" :id="`${ariaId}-help`" data-slot="help" :class="ui.help({ class: props.ui?.help })">
         {{ help }}
       </p>
     </div>

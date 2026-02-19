@@ -4,9 +4,11 @@ exports[`Textarea > renders correctly with autoresize 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base resize-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       rows="3"
       style=""
@@ -19,9 +21,11 @@ exports[`Textarea > renders correctly with class 1`] = `
 <div>
   <div
     class="inline-flex items-center absolute"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       rows="3"
     />
@@ -33,9 +37,11 @@ exports[`Textarea > renders correctly with disabled 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       disabled=""
       id="v-0"
       rows="3"
@@ -48,9 +54,11 @@ exports[`Textarea > renders correctly with id 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="id"
       rows="3"
     />
@@ -62,9 +70,11 @@ exports[`Textarea > renders correctly with rows 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       rows="5"
     />
@@ -76,9 +86,11 @@ exports[`Textarea > renders correctly with size lg 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       rows="3"
     />
@@ -90,9 +102,11 @@ exports[`Textarea > renders correctly with size md 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       rows="3"
     />
@@ -104,9 +118,11 @@ exports[`Textarea > renders correctly with size sm 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-1 px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
       id="v-0"
       rows="3"
     />
@@ -118,9 +134,11 @@ exports[`Textarea > renders correctly with ui 1`] = `
 <div>
   <div
     class="relative inline-flex items-center"
+    data-slot="root"
   >
     <textarea
       class="w-full appearance-none border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset rounded-full"
+      data-slot="base"
       id="v-0"
       rows="3"
     />
@@ -132,15 +150,19 @@ exports[`Textarea > renders correctly within FormField 1`] = `
 <div>
   <div
     class="text-base"
+    data-slot="root"
   >
     <div
       class=""
+      data-slot="wrapper"
     >
       <div
         class="flex items-center justify-between gap-1"
+        data-slot="labelWrapper"
       >
         <label
           class="block font-medium text-default"
+          data-slot="label"
           for="v-0"
           id="v-0-label"
         >
@@ -150,6 +172,7 @@ exports[`Textarea > renders correctly within FormField 1`] = `
         </label>
         <span
           class="text-muted"
+          data-slot="hint"
           id="v-0-hint"
         >
           Hint
@@ -157,6 +180,7 @@ exports[`Textarea > renders correctly within FormField 1`] = `
       </div>
       <p
         class="text-muted"
+        data-slot="description"
         id="v-0-description"
       >
         Description
@@ -164,14 +188,17 @@ exports[`Textarea > renders correctly within FormField 1`] = `
     </div>
     <div
       class="mt-1"
+      data-slot="container"
     >
       
       <div
         class="relative inline-flex items-center"
+        data-slot="root"
       >
         <textarea
           aria-describedby="v-0-hint v-0-description v-0-help"
           class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          data-slot="base"
           id="v-0"
           rows="3"
         />
@@ -179,6 +206,7 @@ exports[`Textarea > renders correctly within FormField 1`] = `
       
       <p
         class="mt-1 text-muted"
+        data-slot="help"
         id="v-0-help"
       >
         Help
