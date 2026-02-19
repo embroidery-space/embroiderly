@@ -5,6 +5,9 @@ export default Object.freeze<Locale>({
   code: "uk",
   dir: "ltr",
   messages: {
+    dialog: {
+      close: "Закрити",
+    },
     filePicker: {
       chooseFile: "Вибрати файл",
     },

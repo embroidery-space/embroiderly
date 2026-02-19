@@ -3,6 +3,7 @@ export interface Icons {
   chevronUp: string;
   chevronDown: string;
   chevronRight: string;
+  close: string;
   loading: string;
   link: string;
   unlink: string;

@@ -51,6 +51,7 @@ export {
   type ContextMenuEmits,
   type ContextMenuItem,
 } from "./ContextMenu/ContextMenu.vue";
+export { default as Dialog, type DialogProps, type DialogEmits, type DialogSlots } from "./Dialog/Dialog.vue";
 export {
   default as DropdownMenu,
   type DropdownMenuProps,

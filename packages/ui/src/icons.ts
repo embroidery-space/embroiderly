@@ -5,6 +5,7 @@ export const DEFAULT_ICONS = Object.freeze<Icons>({
   chevronUp: "lucide:chevron-up",
   chevronDown: "lucide:chevron-down",
   chevronRight: "lucide:chevron-right",
+  close: "lucide:x",
   loading: "lucide:loader-circle",
   link: "lucide:link",
   unlink: "lucide:unlink",

@@ -8,6 +8,9 @@ export interface Locale {
 export type Direction = "ltr" | "rtl";
 
 export type Messages = {
+  dialog: {
+    close: string;
+  };
   filePicker: {
     chooseFile: string;
   };
