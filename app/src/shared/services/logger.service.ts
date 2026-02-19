@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 
 import { invoke } from "@tauri-apps/api/core";
 
@@ -12,7 +12,7 @@ const enum LogLevel {
   Trace = "trace",
 }
 
-async function log(level: LogLevel, message: string) {
+function log(level: LogLevel, message: string) {
   const location = getCallerLocation(new Error(message).stack);
   return invoke<void>("plugin:log|log", { level, message, location });
 }

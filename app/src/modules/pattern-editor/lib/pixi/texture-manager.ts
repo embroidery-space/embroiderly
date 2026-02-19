@@ -63,12 +63,13 @@ export class TextureManager {
     const figure = (() => {
       if (mode === DisplayMode.Stitches) {
         if (kind === FullStitchKind.Full) return createFullStitchShapeFigure(options);
-        else return createPetiteStitchShapeFigure(options);
-      } else {
-        // In the solid and mixed mode, full stitches are rendered as solid figures.
-        if (kind === FullStitchKind.Full) return createFullStitchSolidFigure(options);
-        else return createPetiteStitchSolidFigure(options);
+        return createPetiteStitchShapeFigure(options);
       }
+
+      // In the solid and mixed mode, full stitches are rendered as solid figures.
+      if (kind === FullStitchKind.Full) return createFullStitchSolidFigure(options);
+
+      return createPetiteStitchSolidFigure(options);
     })();
     return this.#createTexture(figure);
   }
@@ -90,12 +91,13 @@ export class TextureManager {
     const figure = (() => {
       if (mode === DisplayMode.Solid) {
         if (kind === PartStitchKind.Half) return createHalfStitchSolidFigure(options);
-        else return createQuarterStitchSolidFigure(options);
-      } else {
-        // In the shape and mixed mode, part stitches are rendered as shape figures.
-        if (kind === PartStitchKind.Half) return createHalfStitchShapeFigure(options);
-        else return createQuarterStitchShapeFigure(options);
+        return createQuarterStitchSolidFigure(options);
       }
+
+      // In the shape and mixed mode, part stitches are rendered as shape figures.
+      if (kind === PartStitchKind.Half) return createHalfStitchShapeFigure(options);
+
+      return createQuarterStitchShapeFigure(options);
     })();
     return this.#createTexture(figure);
   }

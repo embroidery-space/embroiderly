@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { PatternInfo } from "#pattern-editor/lib/pattern/";
+
+const patternInfo = defineModel<PatternInfo>({ required: true });
+</script>
+
 <template>
   <div class="flex flex-col gap-y-2">
     <UFormField :label="$t('pattern-info-title')" class="w-full">
@@ -19,9 +25,3 @@
     </UFormField>
   </div>
 </template>
-
-<script setup lang="ts">
-  import { PatternInfo } from "#pattern-editor/lib/pattern/";
-
-  const patternInfo = defineModel<PatternInfo>({ required: true });
-</script>

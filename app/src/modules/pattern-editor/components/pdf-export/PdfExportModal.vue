@@ -1,3 +1,50 @@
+<script setup lang="ts">
+import { basename } from "@tauri-apps/api/path";
+
+import { computedAsync, refAutoReset } from "@vueuse/core";
+import { ref } from "vue";
+
+import { PdfExportOptions } from "#pattern-editor/lib/pattern/";
+import { FilePicker } from "#shared/components/";
+import { PDF_FILTER } from "#shared/constants/";
+
+import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
+
+const props = defineProps<{
+  filePath: string;
+  options: PdfExportOptions;
+  onOptionsUpdate?: (options: PdfExportOptions) => void | Promise<void>;
+  onDocumentExport?: (filePath: string, options: PdfExportOptions) => void | Promise<void>;
+}>();
+const emit = defineEmits<{ close: [] }>();
+
+// Copy the data from the props to a reactive object.
+const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
+
+const filePath = ref(props.filePath);
+const pdfFile = computedAsync(
+  async () => {
+    const fileName = filePath.value ? await basename(filePath.value, ".pdf") : "";
+    return {
+      base: `${fileName}.pdf`,
+      monochrome: `${fileName}.monochrome.pdf`,
+      color: `${fileName}.color.pdf`,
+    };
+  },
+  { base: "", monochrome: "", color: "" },
+);
+
+const optionsUpdated = refAutoReset(false, 1000);
+async function updateOptions() {
+  await props.onOptionsUpdate?.(options.value);
+  optionsUpdated.value = true;
+}
+
+async function exportPattern() {
+  await props.onDocumentExport?.(filePath.value, options.value);
+}
+</script>
+
 <template>
   <UModal :title="$t('pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
@@ -44,50 +91,3 @@
     </template>
   </UModal>
 </template>
-
-<script setup lang="ts">
-  import { basename } from "@tauri-apps/api/path";
-
-  import { computedAsync, refAutoReset } from "@vueuse/core";
-  import { ref } from "vue";
-
-  import { PdfExportOptions } from "#pattern-editor/lib/pattern/";
-  import { FilePicker } from "#shared/components/";
-  import { PDF_FILTER } from "#shared/constants/";
-
-  import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
-
-  const props = defineProps<{
-    filePath: string;
-    options: PdfExportOptions;
-    onOptionsUpdate?: (options: PdfExportOptions) => void | Promise<void>;
-    onDocumentExport?: (filePath: string, options: PdfExportOptions) => void | Promise<void>;
-  }>();
-  const emit = defineEmits<{ close: [] }>();
-
-  // Copy the data from the props to a reactive object.
-  const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
-
-  const filePath = ref(props.filePath);
-  const pdfFile = computedAsync(
-    async () => {
-      const fileName = filePath.value ? await basename(filePath.value, ".pdf") : "";
-      return {
-        base: `${fileName}.pdf`,
-        monochrome: `${fileName}.monochrome.pdf`,
-        color: `${fileName}.color.pdf`,
-      };
-    },
-    { base: "", monochrome: "", color: "" },
-  );
-
-  const optionsUpdated = refAutoReset(false, 1000);
-  async function updateOptions() {
-    await props.onOptionsUpdate?.(options.value);
-    optionsUpdated.value = true;
-  }
-
-  async function exportPattern() {
-    await props.onDocumentExport?.(filePath.value, options.value);
-  }
-</script>

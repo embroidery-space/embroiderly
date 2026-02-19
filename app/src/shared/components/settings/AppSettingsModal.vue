@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import { useSettingsStore } from "#shared/stores/";
+
+import AppSettingsForm from "./AppSettingsForm.vue";
+
+const settingsStore = useSettingsStore();
+</script>
+
 <template>
   <UModal :title="$t('settings')" :ui="{ content: 'w-xl' }">
     <template #body>
@@ -12,11 +20,3 @@
     </template>
   </UModal>
 </template>
-
-<script setup lang="ts">
-  import { useSettingsStore } from "#shared/stores/";
-
-  import AppSettingsForm from "./AppSettingsForm.vue";
-
-  const settingsStore = useSettingsStore();
-</script>

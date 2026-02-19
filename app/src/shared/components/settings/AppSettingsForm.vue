@@ -1,3 +1,71 @@
+<script setup lang="ts">
+import type { TabsItem } from "@nuxt/ui";
+import { computed } from "vue";
+
+import { FilePicker } from "#shared/components/";
+import { useI18n } from "#shared/composables/";
+import { ANY_PATTERN_FILTER } from "#shared/constants/";
+import { StartupAction, useSettingsStore } from "#shared/stores/";
+import type {
+  OtherOptions,
+  StartupOptions,
+  UiOptions,
+  UpdaterOptions,
+  ViewportOptions,
+  TelemetryOptions,
+} from "#shared/stores/";
+
+const ui = defineModel<UiOptions>("ui", { required: true });
+const startup = defineModel<StartupOptions>("startup", { required: true });
+const viewport = defineModel<ViewportOptions>("viewport", { required: true });
+const updater = defineModel<UpdaterOptions>("updater", { required: true });
+const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
+const other = defineModel<OtherOptions>("other", { required: true });
+
+const { fluent } = useI18n();
+const settingsStore = useSettingsStore();
+
+const tabs = computed<TabsItem[]>(() => [
+  { label: fluent.$t("settings-interface"), slot: "ui" },
+  { label: fluent.$t("settings-startup"), slot: "startup" },
+  { label: fluent.$t("settings-viewport"), slot: "viewport" },
+  { label: fluent.$t("settings-updater"), slot: "updater" },
+  { label: fluent.$t("settings-telemetry"), slot: "telemetry" },
+  { label: fluent.$t("settings-other"), slot: "other" },
+]);
+
+const themeIcon = computed(() => themeOptions.value.find((item) => item!.value === ui.value.theme)?.icon);
+const themeOptions = computed(() => [
+  { label: fluent.$t("settings-theme-dark"), value: "dark", icon: "i-lucide:moon" },
+  { label: fluent.$t("settings-theme-light"), value: "light", icon: "i-lucide:sun" },
+  { label: fluent.$t("settings-theme-system"), value: "system", icon: "i-lucide:laptop-minimal" },
+]);
+const scaleOptions = computed(() => [
+  { label: fluent.$t("settings-scale-xx-small"), value: "xx-small" },
+  { label: fluent.$t("settings-scale-x-small"), value: "x-small" },
+  { label: fluent.$t("settings-scale-small"), value: "small" },
+  { label: fluent.$t("settings-scale-medium"), value: "medium" },
+  { label: fluent.$t("settings-scale-large"), value: "large" },
+  { label: fluent.$t("settings-scale-x-large"), value: "x-large" },
+  { label: fluent.$t("settings-scale-xx-large"), value: "xx-large" },
+]);
+const languageOptions = computed(() => [
+  { label: "English", value: "en" },
+  { label: "Українська", value: "uk" },
+]);
+
+const startupActionOptions = computed(() => [
+  { label: fluent.$t("settings-startup-action-nothing"), value: StartupAction.Nothing },
+  { label: fluent.$t("settings-startup-action-new-pattern"), value: StartupAction.NewPattern },
+  { label: fluent.$t("settings-startup-action-custom-template"), value: StartupAction.CustomTemplate },
+]);
+
+const wheelActionOptions = computed(() => [
+  { label: fluent.$t("settings-viewport-wheel-action-zoom"), value: "zoom" },
+  { label: fluent.$t("settings-viewport-wheel-action-scroll"), value: "scroll" },
+]);
+</script>
+
 <template>
   <UTabs
     :items="tabs"
@@ -87,71 +155,3 @@
     </template>
   </UTabs>
 </template>
-
-<script setup lang="ts">
-  import type { TabsItem } from "@nuxt/ui";
-  import { computed } from "vue";
-
-  import { FilePicker } from "#shared/components/";
-  import { useI18n } from "#shared/composables/";
-  import { ANY_PATTERN_FILTER } from "#shared/constants/";
-  import { StartupAction, useSettingsStore } from "#shared/stores/";
-  import type {
-    OtherOptions,
-    StartupOptions,
-    UiOptions,
-    UpdaterOptions,
-    ViewportOptions,
-    TelemetryOptions,
-  } from "#shared/stores/";
-
-  const ui = defineModel<UiOptions>("ui", { required: true });
-  const startup = defineModel<StartupOptions>("startup", { required: true });
-  const viewport = defineModel<ViewportOptions>("viewport", { required: true });
-  const updater = defineModel<UpdaterOptions>("updater", { required: true });
-  const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
-  const other = defineModel<OtherOptions>("other", { required: true });
-
-  const { fluent } = useI18n();
-  const settingsStore = useSettingsStore();
-
-  const tabs = computed<TabsItem[]>(() => [
-    { label: fluent.$t("settings-interface"), slot: "ui" },
-    { label: fluent.$t("settings-startup"), slot: "startup" },
-    { label: fluent.$t("settings-viewport"), slot: "viewport" },
-    { label: fluent.$t("settings-updater"), slot: "updater" },
-    { label: fluent.$t("settings-telemetry"), slot: "telemetry" },
-    { label: fluent.$t("settings-other"), slot: "other" },
-  ]);
-
-  const themeIcon = computed(() => themeOptions.value.find((item) => item!.value === ui.value.theme)?.icon);
-  const themeOptions = computed(() => [
-    { label: fluent.$t("settings-theme-dark"), value: "dark", icon: "i-lucide:moon" },
-    { label: fluent.$t("settings-theme-light"), value: "light", icon: "i-lucide:sun" },
-    { label: fluent.$t("settings-theme-system"), value: "system", icon: "i-lucide:laptop-minimal" },
-  ]);
-  const scaleOptions = computed(() => [
-    { label: fluent.$t("settings-scale-xx-small"), value: "xx-small" },
-    { label: fluent.$t("settings-scale-x-small"), value: "x-small" },
-    { label: fluent.$t("settings-scale-small"), value: "small" },
-    { label: fluent.$t("settings-scale-medium"), value: "medium" },
-    { label: fluent.$t("settings-scale-large"), value: "large" },
-    { label: fluent.$t("settings-scale-x-large"), value: "x-large" },
-    { label: fluent.$t("settings-scale-xx-large"), value: "xx-large" },
-  ]);
-  const languageOptions = computed(() => [
-    { label: "English", value: "en" },
-    { label: "Українська", value: "uk" },
-  ]);
-
-  const startupActionOptions = computed(() => [
-    { label: fluent.$t("settings-startup-action-nothing"), value: StartupAction.Nothing },
-    { label: fluent.$t("settings-startup-action-new-pattern"), value: StartupAction.NewPattern },
-    { label: fluent.$t("settings-startup-action-custom-template"), value: StartupAction.CustomTemplate },
-  ]);
-
-  const wheelActionOptions = computed(() => [
-    { label: fluent.$t("settings-viewport-wheel-action-zoom"), value: "zoom" },
-    { label: fluent.$t("settings-viewport-wheel-action-scroll"), value: "scroll" },
-  ]);
-</script>

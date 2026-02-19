@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const value = defineModel<boolean>({ required: true });
+defineProps<{ icon: string; label?: string; disabled?: boolean }>();
+</script>
+
 <template>
   <UTooltip arrow :text="label" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
     <RToggle v-model="value" as-child>
@@ -13,8 +18,3 @@
     </RToggle>
   </UTooltip>
 </template>
-
-<script setup lang="ts">
-  const value = defineModel<boolean>({ required: true });
-  defineProps<{ icon: string; label?: string; disabled?: boolean }>();
-</script>

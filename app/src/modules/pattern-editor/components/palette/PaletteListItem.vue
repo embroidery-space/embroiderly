@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import type { BasePaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
+
+interface PaletteItemProps {
+  paletteItem: BasePaletteItem;
+  selected: boolean;
+  displaySettings: PaletteSettings;
+}
+
+const { paletteItem, selected, displaySettings } = defineProps<PaletteItemProps>();
+</script>
+
 <template>
   <UTooltip
     arrow
@@ -21,15 +33,3 @@
     </div>
   </UTooltip>
 </template>
-
-<script setup lang="ts">
-  import type { BasePaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
-
-  interface PaletteItemProps {
-    paletteItem: BasePaletteItem;
-    selected: boolean;
-    displaySettings: PaletteSettings;
-  }
-
-  const { paletteItem, selected, displaySettings } = defineProps<PaletteItemProps>();
-</script>

@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { PaletteSettings } from "#pattern-editor/lib/pattern/";
+
+import { PaletteSection } from ".";
+
+const props = defineProps<{ settings: PaletteSettings }>();
+const emit = defineEmits<{ "update:settings": [data: PaletteSettings] }>();
+
+function updateSettings<K extends keyof PaletteSettings>(key: K, value: PaletteSettings[K]) {
+  emit("update:settings", new PaletteSettings({ ...props.settings, [key]: value }));
+}
+</script>
+
 <template>
   <PaletteSection :title="$t('palette-display-options')">
     <div class="flex flex-col gap-y-2 p-2">
@@ -53,16 +66,3 @@
     </div>
   </PaletteSection>
 </template>
-
-<script setup lang="ts">
-  import { PaletteSettings } from "#pattern-editor/lib/pattern/";
-
-  import { PaletteSection } from ".";
-
-  const props = defineProps<{ settings: PaletteSettings }>();
-  const emit = defineEmits<{ (event: "update:settings", data: PaletteSettings): void }>();
-
-  function updateSettings<K extends keyof PaletteSettings>(key: K, value: PaletteSettings[K]) {
-    emit("update:settings", new PaletteSettings({ ...props.settings, [key]: value }));
-  }
-</script>

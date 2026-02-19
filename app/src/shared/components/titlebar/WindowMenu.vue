@@ -1,3 +1,29 @@
+<script setup lang="ts">
+export interface WindowMenuItem {
+  label: string;
+  kbds?: string[];
+  disabled?: boolean;
+  visible?: boolean;
+  onSelect?: (e: Event) => void;
+  children?: WindowMenuItem[] | WindowMenuItem[][];
+}
+
+interface Props {
+  items: WindowMenuItem[];
+}
+
+defineProps<Props>();
+
+/**
+ * Normalizes children to always be a 2D array for consistent rendering.
+ * Single array becomes a single group, 2D array remains as-is.
+ */
+function normalizeChildren(children: WindowMenuItem[] | WindowMenuItem[][]): WindowMenuItem[][] {
+  if (children.length === 0) return [];
+  return Array.isArray(children[0]) ? (children as WindowMenuItem[][]) : [children as WindowMenuItem[]];
+}
+</script>
+
 <template>
   <RMenubarRoot class="flex grow items-center gap-x-2">
     <RMenubarMenu v-for="(item, index) in items" :key="index">
@@ -84,29 +110,3 @@
     </RMenubarMenu>
   </RMenubarRoot>
 </template>
-
-<script setup lang="ts">
-  export interface WindowMenuItem {
-    label: string;
-    kbds?: string[];
-    disabled?: boolean;
-    visible?: boolean;
-    onSelect?: (e: Event) => void;
-    children?: WindowMenuItem[] | WindowMenuItem[][];
-  }
-
-  interface Props {
-    items: WindowMenuItem[];
-  }
-
-  defineProps<Props>();
-
-  /**
-   * Normalizes children to always be a 2D array for consistent rendering.
-   * Single array becomes a single group, 2D array remains as-is.
-   */
-  function normalizeChildren(children: WindowMenuItem[] | WindowMenuItem[][]): WindowMenuItem[][] {
-    if (children.length === 0) return [];
-    return Array.isArray(children[0]) ? (children as WindowMenuItem[][]) : [children as WindowMenuItem[]];
-  }
-</script>

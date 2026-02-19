@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import type { LayersVisibility } from "#pattern-editor/lib/pattern/";
+
+const layers = defineModel<LayersVisibility>({ required: true });
+</script>
+
 <template>
   <div class="flex flex-col gap-y-2">
     <div class="grid grid-cols-2 grid-rows-2 gap-2">
@@ -30,9 +36,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-  import type { LayersVisibility } from "#pattern-editor/lib/pattern/";
-
-  const layers = defineModel<LayersVisibility>({ required: true });
-</script>

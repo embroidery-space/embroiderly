@@ -47,6 +47,7 @@ export class Fabric {
 
 /** Represents a fabric color. */
 export class FabricColor extends BasePaletteItem {
+  // oxlint-disable-next-line no-useless-constructor
   constructor(index: number, data: b.infer<typeof FabricColor.schema>) {
     super(index, data);
   }
@@ -56,7 +57,6 @@ export class FabricColor extends BasePaletteItem {
     color: b.string(),
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTitle(_options?: PaletteSettings) {
     return this.name;
   }

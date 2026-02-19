@@ -1,3 +1,38 @@
+<script lang="ts" setup>
+import type { KbdProps } from "@nuxt/ui";
+
+import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
+
+interface ToolButtonProps {
+  label: string;
+  icon: string;
+
+  disabled?: boolean;
+
+  kbds?: KbdProps["value"][];
+  onClick: () => void; // We use the `onClick` prop to automatically bind a shortcut based on the `kbds` prop.
+
+  tooltipArrow?: boolean;
+  tooltipSide?: "top" | "right" | "bottom" | "left";
+}
+
+defineOptions({
+  inheritAttrs: false,
+});
+
+const {
+  label,
+  icon,
+  disabled = false,
+  kbds = [],
+  onClick,
+  tooltipArrow = true,
+  tooltipSide = "left",
+} = defineProps<ToolButtonProps>();
+
+useShortcuts(extractShortcuts([{ kbds, onClick }]));
+</script>
+
 <template>
   <UTooltip
     :arrow="tooltipArrow"
@@ -19,38 +54,3 @@
     />
   </UTooltip>
 </template>
-
-<script lang="ts" setup>
-  import type { KbdProps } from "@nuxt/ui";
-
-  import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
-
-  interface ToolButtonProps {
-    label: string;
-    icon: string;
-
-    disabled?: boolean;
-
-    kbds?: KbdProps["value"][];
-    onClick: () => void; // We use the `onClick` prop to automatically bind a shortcut based on the `kbds` prop.
-
-    tooltipArrow?: boolean;
-    tooltipSide?: "top" | "right" | "bottom" | "left";
-  }
-
-  defineOptions({
-    inheritAttrs: false,
-  });
-
-  const {
-    label,
-    icon,
-    disabled = false,
-    kbds = [],
-    onClick,
-    tooltipArrow = true,
-    tooltipSide = "left",
-  } = defineProps<ToolButtonProps>();
-
-  useShortcuts(extractShortcuts([{ kbds, onClick }]));
-</script>

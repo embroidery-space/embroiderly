@@ -1,3 +1,16 @@
+<script setup lang="ts" generic="TValue extends AcceptableValue">
+import type { AcceptableValue } from "reka-ui";
+
+interface ToolOption {
+  icon: string;
+  label: string;
+  value: TValue;
+}
+
+const value = defineModel<TValue>();
+defineProps<{ options: ToolOption[]; orientation?: "vertical" | "horizontal"; disabled?: boolean }>();
+</script>
+
 <template>
   <RToggleGroupRoot v-model="value" :orientation="orientation" :disabled="disabled" type="single" class="flex gap-1">
     <!-- @vue-ignore -->
@@ -18,16 +31,3 @@
     </template>
   </RToggleGroupRoot>
 </template>
-
-<script setup lang="ts" generic="TValue extends AcceptableValue">
-  import type { AcceptableValue } from "reka-ui";
-
-  interface ToolOption {
-    icon: string;
-    label: string;
-    value: TValue;
-  }
-
-  const value = defineModel<TValue>();
-  defineProps<{ options: ToolOption[]; orientation?: "vertical" | "horizontal"; disabled?: boolean }>();
-</script>

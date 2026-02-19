@@ -1,3 +1,5 @@
+# eslint-disable yml/spaced-comment, yml/plain-scalar
+
 packages:
   - app
   - docs
@@ -62,21 +64,22 @@ catalog:
 
   # Code Quality
   "eslint": 9.39.2
-  "@eslint/js": 9.39.2
-  "prettier": 3.8.1
+  "@eslint-community/eslint-plugin-eslint-comments": 4.6.0
+  "@intlify/eslint-plugin-vue-i18n": 4.1.1
   "@vue/eslint-config-prettier": 10.2.0
   "@vue/eslint-config-typescript": 14.6.0
   "eslint-plugin-better-tailwindcss": 4.2.0
   "eslint-plugin-import-x": 4.16.1
   "eslint-plugin-no-only-tests": 3.3.0
-  "eslint-plugin-promise": 7.2.1
-  "eslint-plugin-sonarjs": 3.0.7
-  "eslint-plugin-unicorn": 63.0.0
+  "eslint-plugin-oxlint": 1.48.0
   "eslint-plugin-vue": 10.8.0
   "eslint-plugin-wdio": 9.23.0
+  "eslint-plugin-jsonc": 2.21.1
+  "eslint-plugin-toml": 1.1.1
   "eslint-plugin-yml": 3.1.2
-  "globals": 17.3.0
   "markdownlint-cli2": 0.20.0
+  "oxlint": 1.48.0
+  "prettier": 3.8.1
 
   # Build tools
   "vite": 7.3.1

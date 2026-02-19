@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import { ref, toRaw } from "vue";
+
+import { PatternInfo } from "#pattern-editor/lib/pattern/";
+
+import PatternInfoForm from "./PatternInfoForm.vue";
+
+const props = defineProps<{
+  patternInfo: PatternInfo;
+  onSave?: (patternInfo: PatternInfo) => void | Promise<void>;
+}>();
+const emit = defineEmits<{ close: [] }>();
+
+const patternInfo = ref<PatternInfo>(new PatternInfo(toRaw(props.patternInfo)));
+
+async function handleSave() {
+  await props.onSave?.(patternInfo.value);
+  emit("close");
+}
+</script>
+
 <template>
   <UModal :title="$t('pattern-info')">
     <template #body>
@@ -9,24 +30,3 @@
     </template>
   </UModal>
 </template>
-
-<script setup lang="ts">
-  import { ref, toRaw } from "vue";
-
-  import { PatternInfo } from "#pattern-editor/lib/pattern/";
-
-  import PatternInfoForm from "./PatternInfoForm.vue";
-
-  const props = defineProps<{
-    patternInfo: PatternInfo;
-    onSave?: (patternInfo: PatternInfo) => void | Promise<void>;
-  }>();
-  const emit = defineEmits<{ close: [] }>();
-
-  const patternInfo = ref<PatternInfo>(new PatternInfo(toRaw(props.patternInfo)));
-
-  async function handleSave() {
-    await props.onSave?.(patternInfo.value);
-    emit("close");
-  }
-</script>

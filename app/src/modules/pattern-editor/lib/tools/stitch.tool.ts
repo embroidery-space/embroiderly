@@ -70,7 +70,6 @@ export class StitchTool implements PatternEditorTool {
     return this.prevStitchState === undefined;
   }
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   async main({ pattern, start, end, modifiers, api, ui }: PatternEditorToolContext) {
     if (!patternContainsPoint(pattern.fabric, start, end)) return;
 
@@ -182,19 +181,21 @@ export class StitchTool implements PatternEditorTool {
     if (event.target instanceof StitchGraphics) {
       await api.removeStitch(event.target.stitch.clone());
     } else {
-      for (const kind of [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter]) {
-        const { x, y } = adjustStitchCoordinate(point, kind);
-        if (kind === FullStitchKind.Full || kind === FullStitchKind.Petite) {
-          await api.removeStitch(new FullStitch({ x, y, kind, palindex: 0 }));
-        } else {
-          const [fractX, fractY] = [point.x - Math.trunc(x), point.y - Math.trunc(y)];
-          const direction =
-            (fractX < 0.5 && fractY > 0.5) || (fractX > 0.5 && fractY < 0.5)
-              ? PartStitchDirection.Forward
-              : PartStitchDirection.Backward;
-          await api.removeStitch(new PartStitch({ x, y, kind, direction, palindex: 0 }));
-        }
-      }
+      await Promise.all(
+        [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter].map(async (kind) => {
+          const { x, y } = adjustStitchCoordinate(point, kind);
+          if (kind === FullStitchKind.Full || kind === FullStitchKind.Petite) {
+            await api.removeStitch(new FullStitch({ x, y, kind, palindex: 0 }));
+          } else {
+            const [fractX, fractY] = [point.x - Math.trunc(x), point.y - Math.trunc(y)];
+            const direction =
+              (fractX < 0.5 && fractY > 0.5) || (fractX > 0.5 && fractY < 0.5)
+                ? PartStitchDirection.Forward
+                : PartStitchDirection.Backward;
+            await api.removeStitch(new PartStitch({ x, y, kind, direction, palindex: 0 }));
+          }
+        }),
+      );
     }
   }
 
@@ -233,7 +234,6 @@ export class StitchTool implements PatternEditorTool {
  * @param corner Optional corner position for petite/quarter stitches.
  * @returns The adjusted point.
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity
 function adjustStitchCoordinate(point: Point, tool: StitchKind, corner?: StitchCorner): Point {
   const { x, y } = point;
   const [intX, intY] = [Math.trunc(x), Math.trunc(y)];
@@ -271,8 +271,8 @@ function adjustStitchCoordinate(point: Point, tool: StitchKind, corner?: StitchC
     case NodeStitchKind.FrenchKnot:
     case NodeStitchKind.Bead: {
       return new Point(
-        fracX > 0.5 ? intX + 1 : fracX > 0.25 ? intX + 0.5 : intX, // eslint-disable-line sonarjs/no-nested-conditional
-        fracY > 0.5 ? intY + 1 : fracY > 0.25 ? intY + 0.5 : intY, // eslint-disable-line sonarjs/no-nested-conditional
+        fracX > 0.5 ? intX + 1 : fracX > 0.25 ? intX + 0.5 : intX,
+        fracY > 0.5 ? intY + 1 : fracY > 0.25 ? intY + 0.5 : intY,
       );
     }
   }
@@ -286,7 +286,7 @@ function adjustStitchCoordinate(point: Point, tool: StitchKind, corner?: StitchC
  */
 function orderPoints(start: Point, end: Point): [Point, Point] {
   if (start.y < end.y || (start.y === end.y && start.x < end.x)) return [start, end];
-  else return [end, start];
+  return [end, start];
 }
 
 /**
