@@ -23,8 +23,8 @@
     "check-types": "pnpm -r check-types",
     "fmt": "prettier --check .",
     "fmt:fix": "prettier --write .",
-    "lint": "oxlint && eslint && markdownlint-cli2",
-    "lint:fix": "oxlint --fix && eslint --fix && markdownlint-cli2 --fix",
+    "lint": "oxlint --format stylish && eslint && markdownlint-cli2",
+    "lint:fix": "oxlint --fix --format stylish && eslint --fix && markdownlint-cli2 --fix",
     "test": "pnpm -r test"
   },
   "devDependencies": {
