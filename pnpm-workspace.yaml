@@ -1,3 +1,5 @@
+# eslint-disable yml/spaced-comment, yml/plain-scalar
+
 packages:
   - app
   - docs
@@ -68,6 +70,7 @@ catalog:
   "eslint-plugin-import-x": 4.16.1
   "eslint-plugin-no-only-tests": 3.3.0
   "eslint-plugin-oxlint": 1.48.0
+  "eslint-plugin-toml": 1.1.1
   "eslint-plugin-vue": 10.8.0
   "eslint-plugin-wdio": 9.23.0
   "eslint-plugin-yml": 3.1.2

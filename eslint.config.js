@@ -8,6 +8,7 @@ import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import importX from "eslint-plugin-import-x";
 import noOnlyTests from "eslint-plugin-no-only-tests";
 import oxlint from "eslint-plugin-oxlint";
+import toml from "eslint-plugin-toml";
 import vue from "eslint-plugin-vue";
 import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
@@ -108,10 +109,16 @@ export default defineConfigWithVueTs(
     },
   },
 
+  // TOML validation.
+  {
+    files: ["**/*.toml"],
+    extends: [toml.configs.standard],
+  },
+
   // YAML validation.
   {
-    files: ["pnpm-workspace.yaml", ".github/**/*.yml"],
-    extends: [yml.configs.recommended],
+    files: ["**/*.yml"],
+    extends: [yml.configs.standard],
     rules: {
       "yml/no-empty-mapping-value": "off",
     },
