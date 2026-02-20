@@ -19,6 +19,7 @@ describe("Input", () => {
     ["with leading slot", { slots: { leading: () => "Leading slot" } }],
     ["with trailing slot", { slots: { trailing: () => "Trailing slot" } }],
   ] as [string, { props?: InputProps; slots?: Partial<InputSlots> }][])("renders correctly %s", async (_, options) => {
+    // @ts-expect-error Partial slots type is not compatible with `ComponentRenderOptions`.
     const screen = page.render(Input, options);
     await nextTick();
 

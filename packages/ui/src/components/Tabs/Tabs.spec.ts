@@ -29,7 +29,7 @@ describe("Tabs", () => {
     ["with content slot", { props: { items }, slots: { content: () => "Content slot" } }],
     ["with custom slot", { props: { items }, slots: { custom: () => "Custom slot" } }],
   ] as [string, { props?: TabsProps; slots?: Partial<TabsSlots> }][])("renders correctly %s", async (_, options) => {
-    // @ts-expect-error Incorrect slots type due to its dynamism.
+    // @ts-expect-error Partial slots type is not compatible with `ComponentRenderOptions`.
     const screen = page.render(Tabs, options);
     await nextTick();
 

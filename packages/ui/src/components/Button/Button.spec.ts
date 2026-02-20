@@ -43,6 +43,7 @@ describe("Button", () => {
   ] as [string, { props?: ButtonProps; slots?: Partial<ButtonSlots> }][])(
     "renders correctly %s",
     async (_, options) => {
+      // @ts-expect-error Partial slots type is not compatible with `ComponentRenderOptions`.
       const screen = page.render(Button, options);
       await nextTick();
 
