@@ -33,5 +33,7 @@ export type Messages = {
   };
   toast: {
     close: string;
+    focus: string;
+    notification: string;
   };
 };

@@ -4,6 +4,7 @@ import { ToastPortal, ToastProvider, ToastViewport, useForwardProps } from "reka
 import type { ToastProviderProps } from "reka-ui";
 import { computed, toRef } from "vue";
 
+import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
 import { useToast } from "../../composables/useToast.ts";
 
@@ -33,6 +34,7 @@ const props = withDefaults(defineProps<ToasterProps>(), {
 });
 defineSlots<ToasterSlots>();
 
+const { t } = useLocale();
 const { toasts, remove } = useToast();
 
 const providerProps = useForwardProps(reactivePick(props, "duration", "label", "swipeThreshold"));
@@ -51,7 +53,7 @@ function onUpdateOpen(value: boolean, id: string | number) {
 </script>
 
 <template>
-  <ToastProvider swipe-direction="right" v-bind="providerProps">
+  <ToastProvider swipe-direction="right" v-bind="providerProps" :label="t('toast.notification')">
     <slot />
 
     <Toast
@@ -71,8 +73,12 @@ function onUpdateOpen(value: boolean, id: string | number) {
       @update:open="onUpdateOpen($event, toast.id)"
     />
 
-    <ToastPortal data-slot="portal" v-bind="portalProps">
-      <ToastViewport data-slot="viewport" :class="ui.viewport({ class: [props.ui?.viewport, props.class] })" />
+    <ToastPortal v-bind="portalProps">
+      <ToastViewport
+        :label="t('toast.focus')"
+        data-slot="viewport"
+        :class="ui.viewport({ class: [props.ui?.viewport, props.class] })"
+      />
     </ToastPortal>
   </ToastProvider>
 </template>

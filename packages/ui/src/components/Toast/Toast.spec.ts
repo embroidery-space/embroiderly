@@ -35,7 +35,6 @@ describe("Toast", () => {
     ["with color neutral", { props: { ...props, color: "neutral" as const } }],
     ["with class", { props: { ...props, class: "w-96" } }],
     ["with ui", { props: { ...props, ui: { title: "font-bold" } } }],
-    // Slots
     ["with title slot", { props, slots: { title: () => "Title slot" } }],
     ["with description slot", { props, slots: { description: () => "Description slot" } }],
     ["with actions slot", { props, slots: { actions: () => "Actions slot" } }],

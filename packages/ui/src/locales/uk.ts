@@ -30,6 +30,8 @@ export default Object.freeze<Locale>({
     },
     toast: {
       close: "Закрити",
+      focus: "Повідомлення ({hotkey})",
+      notification: "Повідомлення",
     },
   },
 });
