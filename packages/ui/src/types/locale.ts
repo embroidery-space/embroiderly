@@ -31,4 +31,7 @@ export type Messages = {
   slider: {
     thumb: string;
   };
+  toast: {
+    close: string;
+  };
 };

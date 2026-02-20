@@ -4,7 +4,7 @@ import type { VariantProps } from "tailwind-variants";
 export const ProgressTheme = tv({
   slots: {
     base: "relative overflow-hidden rounded-full bg-accented",
-    indicator: "size-full rounded-full bg-primary",
+    indicator: "size-full rounded-full",
   },
   variants: {
     orientation: {
@@ -16,6 +16,15 @@ export const ProgressTheme = tv({
         base: "h-full",
         indicator: "data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite]",
       },
+    },
+    color: {
+      primary: { indicator: "bg-primary" },
+      error: { indicator: "bg-error" },
+      warning: { indicator: "bg-warning" },
+      success: { indicator: "bg-success" },
+      info: { indicator: "bg-info" },
+      help: { indicator: "bg-help" },
+      neutral: { indicator: "bg-inverted" },
     },
     size: {
       xs: {},

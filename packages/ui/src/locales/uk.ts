@@ -28,5 +28,8 @@ export default Object.freeze<Locale>({
     slider: {
       thumb: "Повзунок",
     },
+    toast: {
+      close: "Закрити",
+    },
   },
 });

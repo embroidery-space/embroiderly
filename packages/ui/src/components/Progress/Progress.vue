@@ -11,36 +11,67 @@ export interface ProgressProps {
    * @default "horizontal"
    */
   orientation?: ProgressThemeVariants["orientation"];
+
   /**
    * The size of the progress bar.
    * @default "md"
    */
   size?: ProgressThemeVariants["size"];
+  /**
+   * The color of the progress bar.
+   * @default "primary"
+   */
+  color?: ProgressThemeVariants["color"];
 
   class?: any;
   ui?: ProgressThemeSlots;
 }
 
+/**
+ * The progress value (0–100). When `null`, the progress bar is indeterminate.
+ * @default null
+ */
+const modelValue = defineModel<number | null>({ default: null });
 const props = withDefaults(defineProps<ProgressProps>(), {
   orientation: "horizontal",
   size: "md",
+  color: "primary",
+});
+
+const percent = computed(() => {
+  if (modelValue.value === null) return undefined;
+  return Math.max(0, Math.min(100, Math.round(modelValue.value)));
+});
+
+const indicatorStyle = computed(() => {
+  if (percent.value === undefined) return undefined;
+  if (props.orientation === "vertical") {
+    return { transform: `translateY(-${100 - percent.value}%)` };
+  }
+  return { transform: `translateX(-${100 - percent.value}%)` };
 });
 
 const ui = computed(() => {
   return ProgressTheme({
     orientation: props.orientation,
+
     size: props.size,
+    color: props.color,
   });
 });
 </script>
 
 <template>
   <Progress.Root
-    :model-value="null"
+    :model-value="modelValue"
     data-slot="base"
     :class="ui.base({ class: [props.ui?.base, props.class] })"
     style="transform: translateZ(0)"
   >
-    <Progress.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
+    <Progress.Indicator
+      data-slot="indicator"
+      :class="ui.indicator({ class: props.ui?.indicator })"
+      :style="indicatorStyle"
+    />
   </Progress.Root>
 </template>
