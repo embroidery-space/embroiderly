@@ -47,6 +47,7 @@ const props = withDefaults(defineProps<PopoverProps>(), {
   arrow: false,
 });
 const emits = defineEmits<PopoverEmits>();
+defineSlots<PopoverSlots>();
 
 const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen", "modal"), emits);
 const contentProps = computed(

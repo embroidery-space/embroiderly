@@ -78,11 +78,16 @@ export interface DropdownMenuProps extends Pick<DropdownMenuRootProps, "open" | 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DropdownMenuEmits extends DropdownMenuRootEmits {}
 
+export interface DropdownMenuSlots {
+  default(props: { open: boolean }): any;
+}
+
 const props = withDefaults(defineProps<DropdownMenuProps>(), {
   size: "md",
   portal: true,
 });
 const emits = defineEmits<DropdownMenuEmits>();
+defineSlots<DropdownMenuSlots>();
 
 const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen", "modal"), emits);
 const portalProps = usePortal(toRef(() => props.portal));

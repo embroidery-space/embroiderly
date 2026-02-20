@@ -20,10 +20,15 @@ export interface FormFieldSetProps extends PrimitiveProps {
   ui?: FormFieldSetThemeSlots;
 }
 
+export interface FormFieldSetSlots {
+  default(): any;
+}
+
 const props = withDefaults(defineProps<FormFieldSetProps>(), {
   as: "fieldset",
   size: "lg",
 });
+defineSlots<FormFieldSetSlots>();
 
 const ui = computed(() => {
   return FormFieldSetTheme({

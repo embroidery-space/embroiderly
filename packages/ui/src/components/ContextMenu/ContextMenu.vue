@@ -77,11 +77,16 @@ export interface ContextMenuEmits {
   "update:open": [value: boolean];
 }
 
+export interface ContextMenuSlots {
+  default(): any;
+}
+
 const props = withDefaults(defineProps<ContextMenuProps>(), {
   size: "md",
   portal: true,
 });
 const emits = defineEmits<ContextMenuEmits>();
+defineSlots<ContextMenuSlots>();
 
 const portalProps = usePortal(toRef(() => props.portal));
 const contentProps = computed(

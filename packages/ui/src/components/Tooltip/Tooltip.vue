@@ -46,6 +46,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
   portal: true,
 });
 const emits = defineEmits<TooltipEmits>();
+defineSlots<TooltipSlots>();
 
 const rootProps = useForwardPropsEmits(
   reactivePick(

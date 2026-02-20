@@ -34,10 +34,6 @@ export default defineConfigWithVueTs(
   vueTsConfigs.recommended,
   {
     files: ["**/*.vue"],
-    plugins: {
-      "vue-i18n": vueI18n,
-      "eslint-comments": eslintComments,
-    },
     rules: {
       "vue/block-order": ["error", { order: ["script", "template", "style"] }],
       "vue/define-macros-order": [
@@ -56,6 +52,8 @@ export default defineConfigWithVueTs(
       "vue/require-default-prop": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-reserved-component-names": "off",
+
+      "vue/require-explicit-slots": "error",
     },
   },
 

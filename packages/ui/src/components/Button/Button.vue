@@ -57,6 +57,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   color: "primary",
   variant: "solid",
 });
+defineSlots<ButtonSlots>();
 
 const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
 const size = computed(() => props.size ?? fieldGroupSize.value ?? "md");

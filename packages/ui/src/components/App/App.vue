@@ -29,9 +29,14 @@ export interface AppProps extends Omit<ConfigProviderProps, "dir" | "locale" | "
   portal?: boolean | string | HTMLElement;
 }
 
+export interface AppSlots {
+  default(): any;
+}
+
 const props = withDefaults(defineProps<AppProps>(), {
   portal: GLOBAL_PORTAL,
 });
+defineSlots<AppSlots>();
 
 const configProps = useForwardProps(reactivePick(props, "scrollBody"));
 const tooltipProps = toRef(() => props.tooltip);

@@ -29,11 +29,16 @@ export interface FormFieldProps extends PrimitiveProps {
   ui?: FormFieldThemeSlots;
 }
 
+export interface FormFieldSlots {
+  default(): any;
+}
+
 const props = withDefaults(defineProps<FormFieldProps>(), {
   as: "div",
 
   size: "lg",
 });
+defineSlots<FormFieldSlots>();
 
 const id = ref(useId());
 const ariaId = id.value;

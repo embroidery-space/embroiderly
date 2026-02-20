@@ -19,6 +19,7 @@ export interface SplitterPanelSlots {
 
 const props = defineProps<SplitterPanelProps>();
 const emits = defineEmits<SplitterPanelEmits>();
+defineSlots<SplitterPanelSlots>();
 
 const forwarded = useForwardPropsEmits(props, emits);
 const context = inject(SplitterContextKey, null);

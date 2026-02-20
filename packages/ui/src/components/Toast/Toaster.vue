@@ -22,11 +22,16 @@ export interface ToasterProps extends Pick<ToastProviderProps, "duration" | "lab
   ui?: ToasterThemeSlots;
 }
 
+export interface ToasterSlots {
+  default(): any;
+}
+
 const props = withDefaults(defineProps<ToasterProps>(), {
   duration: 5000,
 
   portal: true,
 });
+defineSlots<ToasterSlots>();
 
 const { toasts, remove } = useToast();
 

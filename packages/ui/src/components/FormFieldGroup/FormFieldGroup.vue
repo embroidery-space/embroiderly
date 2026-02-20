@@ -19,11 +19,16 @@ export interface FormFieldGroupProps extends PrimitiveProps {
   ui?: { base?: string };
 }
 
+export interface FormFieldGroupSlots {
+  default(): any;
+}
+
 const props = withDefaults(defineProps<FormFieldGroupProps>(), {
   as: "div",
 
   size: "md",
 });
+defineSlots<FormFieldGroupSlots>();
 
 provide(
   formFieldGroupInjectionKey,

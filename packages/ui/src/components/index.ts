@@ -1,5 +1,5 @@
 // Layout.
-export { default as App, type AppProps } from "./App/App.vue";
+export { default as App, type AppProps, type AppSlots } from "./App/App.vue";
 export {
   default as Splitter,
   type SplitterProps,
@@ -25,9 +25,17 @@ export { default as Separator, type SeparatorProps } from "./Separator/Separator
 export { default as Checkbox, type CheckboxProps } from "./Checkbox/Checkbox.vue";
 export { default as ColorPicker, type ColorPickerProps } from "./ColorPicker/ColorPicker.vue";
 export { default as FilePicker, type FilePickerProps, type FilePickerEmits } from "./FilePicker/FilePicker.vue";
-export { default as FormField, type FormFieldProps } from "./FormField/FormField.vue";
-export { default as FormFieldGroup, type FormFieldGroupProps } from "./FormFieldGroup/FormFieldGroup.vue";
-export { default as FormFieldSet, type FormFieldSetProps } from "./FormFieldSet/FormFieldSet.vue";
+export { default as FormField, type FormFieldProps, type FormFieldSlots } from "./FormField/FormField.vue";
+export {
+  default as FormFieldGroup,
+  type FormFieldGroupProps,
+  type FormFieldGroupSlots,
+} from "./FormFieldGroup/FormFieldGroup.vue";
+export {
+  default as FormFieldSet,
+  type FormFieldSetProps,
+  type FormFieldSetSlots,
+} from "./FormFieldSet/FormFieldSet.vue";
 export { default as Input, type InputProps, type InputSlots } from "./Input/Input.vue";
 export { default as InputColor, type InputColorProps } from "./InputColor/InputColor.vue";
 export { default as InputDimensions, type InputDimensionsProps } from "./InputDimensions/InputDimensions.vue";
@@ -40,7 +48,13 @@ export { default as Switch, type SwitchProps } from "./Switch/Switch.vue";
 export { default as Textarea, type TextareaProps } from "./Textarea/Textarea.vue";
 
 // Navigation.
-export { default as Menubar, type MenubarProps, type MenubarItem, type MenubarMenu } from "./Menubar/Menubar.vue";
+export {
+  default as Menubar,
+  type MenubarProps,
+  type MenubarSlots,
+  type MenubarItem,
+  type MenubarMenu,
+} from "./Menubar/Menubar.vue";
 export { default as Tabs, type TabsProps, type TabsSlots, type TabsItem } from "./Tabs/Tabs.vue";
 
 // Overlay.
@@ -55,6 +69,7 @@ export {
   default as ContextMenu,
   type ContextMenuProps,
   type ContextMenuEmits,
+  type ContextMenuSlots,
   type ContextMenuItem,
 } from "./ContextMenu/ContextMenu.vue";
 export { default as Dialog, type DialogProps, type DialogEmits, type DialogSlots } from "./Dialog/Dialog.vue";
@@ -62,6 +77,7 @@ export {
   default as DropdownMenu,
   type DropdownMenuProps,
   type DropdownMenuEmits,
+  type DropdownMenuSlots,
   type DropdownMenuItem,
 } from "./DropdownMenu/DropdownMenu.vue";
 export { default as Popover, type PopoverProps, type PopoverEmits, type PopoverSlots } from "./Popover/Popover.vue";

@@ -82,11 +82,16 @@ export interface MenubarProps extends Pick<MenubarRootProps, "defaultValue" | "d
   ui?: MenubarThemeSlots;
 }
 
+export interface MenubarSlots {
+  default(props: { modelValue: string }): any;
+}
+
 const modelValue = defineModel<string>();
 const props = withDefaults(defineProps<MenubarProps>(), {
   size: "md",
   portal: true,
 });
+defineSlots<MenubarSlots>();
 
 const portalProps = usePortal(toRef(() => props.portal));
 const contentProps = computed(

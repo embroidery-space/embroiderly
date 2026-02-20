@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Primitive } from "reka-ui";
 import type { PrimitiveProps } from "reka-ui";
-import { computed, useSlots } from "vue";
+import { computed } from "vue";
 
 import { useFormField } from "../../composables/useFormField.ts";
 import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
@@ -49,7 +49,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   color: "primary",
   variant: "subtle",
 });
-const slots = useSlots();
+const slots = defineSlots<InputSlots>();
 
 const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
 const { id, size: formFieldSize, ariaAttrs } = useFormField(props);

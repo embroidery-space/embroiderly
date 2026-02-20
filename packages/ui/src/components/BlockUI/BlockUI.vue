@@ -17,6 +17,7 @@ export interface BlockUISlots {
 const props = withDefaults(defineProps<BlockUIProps>(), {
   blocked: false,
 });
+defineSlots<BlockUISlots>();
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = BlockUITheme();
