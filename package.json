@@ -25,7 +25,7 @@
     "fmt:fix": "prettier --write .",
     "lint": "oxlint --format stylish && eslint --concurrency auto && markdownlint-cli2",
     "lint:fix": "oxlint --fix --format stylish && eslint --fix --concurrency auto && markdownlint-cli2 --fix",
-    "test": "pnpm -r test"
+    "test": "pnpm -r --workspace-concurrency 1 test"
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "catalog:",
