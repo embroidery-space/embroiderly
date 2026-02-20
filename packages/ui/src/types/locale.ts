@@ -8,6 +8,11 @@ export interface Locale {
 export type Direction = "ltr" | "rtl";
 
 export type Messages = {
+  confirmDialog: {
+    cancel: string;
+    no: string;
+    yes: string;
+  };
   dialog: {
     close: string;
   };

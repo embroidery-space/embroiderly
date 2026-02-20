@@ -1,10 +1,46 @@
 import { createSharedComposable } from "@vueuse/core";
 import { markRaw, reactive, shallowReactive } from "vue";
 import type { Component } from "vue";
+import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
 
-export interface OverlayOptions {
+type CloseEventArgTypeSimple<T> = T extends (event: "close", arg_0: infer Arg, ...args: any[]) => void ? Arg : never;
+
+/**
+ * This is a workaround for a design limitation in TypeScript.
+ *
+ * Conditional types only match the last function overload, not a union of all possible
+ * parameter types. This workaround forces TypeScript to properly extract the 'close'
+ * event argument type from component emits with multiple event signatures.
+ *
+ * @see https://github.com/microsoft/TypeScript/issues/32164
+ */
+type CloseEventArgTypeComplex<T> = T extends {
+  (event: "close", arg_0: infer Arg, ...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+  (...args: any[]): void;
+}
+  ? Arg
+  : never;
+
+type CloseEventArgType<T> = CloseEventArgTypeSimple<T> | CloseEventArgTypeComplex<T>;
+
+export interface OverlayOptions<OverlayProps = Record<string, unknown>> {
   defaultOpen?: boolean;
-  props?: Record<string, unknown>;
+  props?: OverlayProps;
   destroyOnClose?: boolean;
 }
 
@@ -17,19 +53,19 @@ export interface Overlay extends OverlayOptions {
   resolvePromise?: (value: unknown) => void;
 }
 
-export interface OverlayInstance {
+export interface OverlayInstance<T extends Component> {
   id: symbol;
   isMounted: boolean;
   isOpen: boolean;
-  originalProps?: Record<string, unknown>;
-  open: (props?: Record<string, unknown>) => OpenedOverlay;
-  close: (value?: unknown) => void;
-  patch: (props: Record<string, unknown>) => void;
+  originalProps?: ComponentProps<T>;
+  open: (props?: ComponentProps<T>) => OpenedOverlay<T>;
+  close: (value?: CloseEventArgType<ComponentEmit<T>>) => void;
+  patch: (props: Partial<ComponentProps<T>>) => void;
 }
 
-export type OpenedOverlay = Pick<OverlayInstance, "id" | "isMounted" | "isOpen"> & {
-  result: Promise<unknown>;
-} & Promise<unknown>;
+export type OpenedOverlay<T extends Component> = Pick<OverlayInstance<T>, "id" | "isMounted" | "isOpen"> & {
+  result: Promise<CloseEventArgType<ComponentEmit<T>>>;
+} & Promise<CloseEventArgType<ComponentEmit<T>>>;
 
 export const useOverlay = createSharedComposable(() => {
   const overlays = shallowReactive<Overlay[]>([]);
@@ -40,7 +76,7 @@ export const useOverlay = createSharedComposable(() => {
     return overlay;
   }
 
-  function create(component: Component, _options?: OverlayOptions): OverlayInstance {
+  function create<T extends Component>(component: T, _options?: OverlayOptions<ComponentProps<T>>): OverlayInstance<T> {
     const { props, defaultOpen, destroyOnClose } = _options ?? {};
 
     const options = reactive<Overlay>({
@@ -52,26 +88,28 @@ export const useOverlay = createSharedComposable(() => {
       originalProps: props ?? {},
       props: { ...props },
     });
-
     overlays.push(options);
 
     return {
-      ...options,
-      open: (props?) => open(options.id, props),
+      id: options.id,
+      isMounted: options.isMounted,
+      isOpen: options.isOpen,
+      originalProps: options.originalProps as ComponentProps<T> | undefined,
+      open: (props?) => open<T>(options.id, props),
       close: (value?) => close(options.id, value),
-      patch: (props) => patch(options.id, props),
+      patch: (props) => patch<T>(options.id, props),
     };
   }
 
-  function open(id: symbol, props?: Record<string, unknown>): OpenedOverlay {
+  function open<T extends Component>(id: symbol, props?: ComponentProps<T>): OpenedOverlay<T> {
     const overlay = getOverlay(id);
 
     overlay.props = props ? { ...overlay.originalProps, ...props } : { ...overlay.originalProps };
     overlay.isOpen = true;
     overlay.isMounted = true;
 
-    const result = new Promise<unknown>((resolve) => {
-      overlay.resolvePromise = resolve;
+    const result = new Promise<CloseEventArgType<ComponentEmit<T>>>((resolve) => {
+      overlay.resolvePromise = resolve as (value: unknown) => void;
     });
 
     return Object.assign(result, {
@@ -108,7 +146,7 @@ export const useOverlay = createSharedComposable(() => {
     }
   }
 
-  function patch(id: symbol, props: Record<string, unknown>): void {
+  function patch<T extends Component>(id: symbol, props: Partial<ComponentProps<T>>): void {
     const overlay = getOverlay(id);
 
     overlay.props = { ...overlay.props, ...props };

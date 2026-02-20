@@ -64,6 +64,7 @@ catalog:
   "sortablejs": 1.15.7
   "stacktracey": 2.1.8
   "uuid": 13.0.0
+  "vue-component-type-helpers": 3.2.4
 
   # Documentation
   "@cssnr/vitepress-swiper": 0.2.1

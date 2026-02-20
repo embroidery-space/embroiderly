@@ -5,6 +5,11 @@ export default Object.freeze<Locale>({
   code: "en",
   dir: "ltr",
   messages: {
+    confirmDialog: {
+      cancel: "Cancel",
+      no: "No",
+      yes: "Yes",
+    },
     dialog: {
       close: "Close",
     },

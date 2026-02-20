@@ -258,6 +258,9 @@ catalogs:
     vue:
       specifier: 3.5.28
       version: 3.5.28
+    vue-component-type-helpers:
+      specifier: 3.2.4
+      version: 3.2.4
     vue-router:
       specifier: 4.6.4
       version: 4.6.4
@@ -602,6 +605,9 @@ importers:
       vue:
         specifier: 'catalog:'
         version: 3.5.28(typescript@5.9.3)
+      vue-component-type-helpers:
+        specifier: 'catalog:'
+        version: 3.2.4
     devDependencies:
       '@histoire/plugin-vue':
         specifier: 'catalog:'

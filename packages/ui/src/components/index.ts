@@ -46,6 +46,12 @@ export { default as Tabs, type TabsProps, type TabsSlots, type TabsItem } from "
 // Overlay.
 export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./BlockUI/BlockUI.vue";
 export {
+  default as ConfirmDialog,
+  type ConfirmDialogProps,
+  type ConfirmDialogEmits,
+  type ConfirmDialogSlots,
+} from "./ConfirmDialog/ConfirmDialog.vue";
+export {
   default as ContextMenu,
   type ContextMenuProps,
   type ContextMenuEmits,

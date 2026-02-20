@@ -24,7 +24,8 @@
     "color-convert": "catalog:",
     "defu": "catalog:",
     "tailwind-merge": "catalog:",
-    "tailwind-variants": "catalog:"
+    "tailwind-variants": "catalog:",
+    "vue-component-type-helpers": "catalog:"
   },
   "peerDependencies": {
     "@embroiderly/shortcuts": "workspace:",
