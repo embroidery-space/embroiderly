@@ -48,7 +48,7 @@ const emits = defineEmits<ToastEmits>();
 const slots = defineSlots<ToastSlots>();
 
 const { icons } = useComponentIcons();
-const { t } = useLocale();
+const { messages } = useLocale();
 
 const rootProps = useForwardPropsEmits(reactivePick(props, "as", "defaultOpen", "open", "duration", "type"), emits);
 
@@ -110,7 +110,7 @@ const ui = computed(() => {
           color="neutral"
           variant="link"
           size="md"
-          :aria-label="t('toast.close')"
+          :aria-label="messages.toast.close"
           data-slot="close"
           :class="ui.close({ class: props.ui?.close })"
           @click.stop

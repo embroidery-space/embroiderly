@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<SliderProps>(), {
   size: "md",
 });
 
-const { t } = useLocale();
+const { messages } = useLocale();
 
 const { id, size, ariaAttrs } = useFormField(props);
 
@@ -87,11 +87,15 @@ const ui = computed(() => {
       :text="String(modelValue ?? min)"
       v-bind="typeof tooltip === 'object' ? tooltip : {}"
     >
-      <Slider.Thumb :aria-label="t('slider.thumb')" data-slot="thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
+      <Slider.Thumb
+        :aria-label="messages.slider.thumb"
+        data-slot="thumb"
+        :class="ui.thumb({ class: props.ui?.thumb })"
+      />
     </Tooltip>
     <Slider.Thumb
       v-else
-      :aria-label="t('slider.thumb')"
+      :aria-label="messages.slider.thumb"
       data-slot="thumb"
       :class="ui.thumb({ class: props.ui?.thumb })"
     />

@@ -3,8 +3,6 @@ import type { TabsRootProps } from "reka-ui";
 import { Tabs } from "reka-ui/namespaced";
 import { computed } from "vue";
 
-import { get } from "../../utils/object.ts";
-
 import { TabsTheme } from "./Tabs.theme.ts";
 import type { TabsThemeSlots, TabsThemeVariants } from "./Tabs.theme.ts";
 
@@ -94,7 +92,7 @@ const ui = computed(() => {
       <Tabs.Trigger
         v-for="(item, index) in items"
         :key="index"
-        :value="get(item, 'value') ?? String(index)"
+        :value="item.value ?? String(index)"
         :disabled="item.disabled"
         data-slot="trigger"
         :class="ui.trigger({ class: props.ui?.trigger })"
@@ -115,7 +113,7 @@ const ui = computed(() => {
       <Tabs.Content
         v-for="(item, index) in items"
         :key="index"
-        :value="get(item, 'value') ?? String(index)"
+        :value="item.value ?? String(index)"
         data-slot="content"
         :class="ui.content({ class: props.ui?.content })"
       >

@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<InputNumberProps>(), {
 });
 
 const { icons } = useComponentIcons();
-const { t } = useLocale();
+const { messages } = useLocale();
 
 const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
 const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
@@ -120,7 +120,7 @@ const ui = computed(() => {
           variant="link"
           :icon="incrementIcon ?? icons.chevronUp"
           :size="size"
-          :aria-label="t('inputNumber.increment')"
+          :aria-label="messages.inputNumber.increment"
         />
       </NumberField.Increment>
 
@@ -131,7 +131,7 @@ const ui = computed(() => {
           variant="link"
           :icon="decrementIcon ?? icons.chevronDown"
           :size="size"
-          :aria-label="t('inputNumber.decrement')"
+          :aria-label="messages.inputNumber.decrement"
         />
       </NumberField.Decrement>
     </div>

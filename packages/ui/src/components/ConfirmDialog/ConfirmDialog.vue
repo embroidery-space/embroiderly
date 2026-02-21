@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<ConfirmDialogProps>(), {
 const emits = defineEmits<ConfirmDialogEmits>();
 defineSlots<ConfirmDialogSlots>();
 
-const { t } = useLocale();
+const { messages } = useLocale();
 
 const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen"), emits);
 const portalProps = usePortal(toRef(() => props.portal));
@@ -99,14 +99,14 @@ function onClose(value?: boolean) {
 
         <footer data-slot="footer" :class="ui.footer({ class: props.ui?.footer })">
           <AlertDialog.Cancel as-child>
-            <Button color="neutral" variant="outline" :label="t('confirmDialog.cancel')" @click="onClose()" />
+            <Button color="neutral" variant="outline" :label="messages.confirmDialog.cancel" @click="onClose()" />
           </AlertDialog.Cancel>
 
           <AlertDialog.Action v-if="props.noButton !== null" as-child>
             <Button
               color="neutral"
               variant="soft"
-              :label="t('confirmDialog.no')"
+              :label="messages.confirmDialog.no"
               v-bind="props.noButton"
               @click="onClose(false)"
             />
@@ -116,7 +116,7 @@ function onClose(value?: boolean) {
             <Button
               color="primary"
               variant="solid"
-              :label="t('confirmDialog.yes')"
+              :label="messages.confirmDialog.yes"
               v-bind="props.yesButton"
               @click="onClose(true)"
             />

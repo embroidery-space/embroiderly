@@ -77,13 +77,15 @@ const props = withDefaults(defineProps<SelectProps>(), {
 
 const { icons } = useComponentIcons();
 const { contains } = useFilter({ sensitivity: "base" });
-const { t } = useLocale();
+const { messages } = useLocale();
 
 const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
 const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
 const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
 const portalProps = usePortal(toRef(() => props.portal));
-const searchInputProps = toRef(() => defu(props.searchInput, { placeholder: t("select.search") }) as InputProps);
+const searchInputProps = toRef(
+  () => defu(props.searchInput, { placeholder: messages.value.select.search }) as InputProps,
+);
 
 const open = ref(false);
 const searchValue = ref("");
@@ -186,7 +188,7 @@ const ui = computed(() => {
 
         <Combobox.Viewport data-slot="viewport" :class="ui.viewport({ class: props.ui?.viewport })">
           <Combobox.Empty data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
-            {{ searchValue ? t("select.noMatches") : t("select.noData") }}
+            {{ searchValue ? messages.select.noMatches : messages.select.noData }}
           </Combobox.Empty>
 
           <Combobox.Group data-slot="group" :class="ui.group({ class: props.ui?.group })">
