@@ -15,9 +15,9 @@ import type { ConfirmDialogThemeSlots } from "./ConfirmDialog.theme.ts";
 
 export interface ConfirmDialogProps extends Pick<AlertDialogRootProps, "open" | "defaultOpen"> {
   /** The title displayed in the confirm dialog header. */
-  title: string;
+  title?: string;
   /** The description displayed below the title. */
-  description: string;
+  description?: string;
 
   /** Props for the "Yes" button. If `null`, the button is hidden. */
   yesButton?: ButtonProps | null;

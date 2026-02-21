@@ -8,7 +8,7 @@ export const ConfirmDialogTheme = tv({
       "fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]",
     header: "flex min-h-12 items-center gap-1.5 p-4 pb-0",
     title: "font-semibold",
-    description: "mt-1 text-sm text-muted",
+    description: "mt-1 text-sm whitespace-pre-line text-muted",
     footer: "flex items-center justify-end gap-1.5 p-4",
   },
 });

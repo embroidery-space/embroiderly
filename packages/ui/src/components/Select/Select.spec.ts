@@ -5,15 +5,35 @@ import { defineComponent, nextTick } from "vue";
 import FormField from "../FormField/FormField.vue";
 
 import Select from "./Select.vue";
-import type { SelectProps } from "./Select.vue";
+import type { SelectItem, SelectProps } from "./Select.vue";
 
 describe("Select", () => {
   const sizes = ["sm", "md", "lg"] as const;
 
-  const items = [
+  const items: SelectItem[] = [
     { label: "Backlog", value: "backlog" },
     { label: "Todo", value: "todo" },
     { label: "In Progress", value: "in-progress" },
+    { label: "Done", value: "done" },
+  ];
+
+  const groupedItems: SelectItem[][] = [
+    [
+      { type: "label", label: "Active" },
+      { label: "Backlog", value: "backlog", icon: "lucide:circle-dashed" },
+      { label: "Todo", value: "todo", icon: "lucide:circle" },
+    ],
+    [
+      { type: "label", label: "Closed" },
+      { label: "Done", value: "done", icon: "lucide:circle-check" },
+      { label: "Cancelled", value: "cancelled", disabled: true },
+    ],
+  ];
+
+  const itemsWithSeparator: SelectItem[] = [
+    { label: "Backlog", value: "backlog" },
+    { label: "Todo", value: "todo" },
+    { type: "separator" },
     { label: "Done", value: "done" },
   ];
 
@@ -30,6 +50,10 @@ describe("Select", () => {
     ...sizes.map((size: string) => [`with size ${size}`, { props: { ...props, size } }]),
     ["with class", { props: { ...props, class: "absolute" } }],
     ["with ui", { props: { ...props, ui: { base: "rounded-full" } } }],
+    ["with grouped items", { props: { ...props, items: groupedItems } }],
+    ["with separator", { props: { ...props, items: itemsWithSeparator } }],
+    ["with icons", { props: { ...props, items: groupedItems, modelValue: "backlog" } }],
+    ["with disabled item", { props: { ...props, items: groupedItems } }],
   ] as [string, { props?: SelectProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(Select, options);
     await nextTick();

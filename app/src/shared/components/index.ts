@@ -1,4 +1,1 @@
-export * from "./dialogs/";
-export * from "./form/";
-export * from "./titlebar/";
-export * from "./utils/";
+export { default as WindowControls } from "./WindowControls.vue";

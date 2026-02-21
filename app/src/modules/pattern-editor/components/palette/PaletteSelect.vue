@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import type { SelectMenuItem } from "@nuxt/ui";
+import { Select, useToast } from "@embroiderly/ui";
+import type { SelectProps, SelectItem } from "@embroiderly/ui";
+
 import { ref, onMounted, shallowRef, watch } from "vue";
 
 import { FilesApi } from "#pattern-editor/api";
@@ -7,6 +9,7 @@ import type { BrandPaletteItem } from "#pattern-editor/lib/pattern";
 import { useI18n } from "#shared/composables/";
 import { LoggerService } from "#shared/services/";
 
+const props = defineProps<Pick<SelectProps, "color" | "variant" | "size">>();
 const emit = defineEmits<{
   paletteSelected: [group: string, name: string];
   paletteLoaded: [paletteItems: BrandPaletteItem[]];
@@ -16,7 +19,7 @@ const { fluent } = useI18n();
 const toast = useToast();
 
 const paletteCatalog = new Map<string, BrandPaletteItem[]>();
-const paletteCatalogOptions = shallowRef<SelectMenuItem[][]>([]);
+const paletteCatalogOptions = shallowRef<SelectItem[][]>([]);
 
 const selectedPaletteKey = ref("system/DMC");
 
@@ -26,10 +29,10 @@ watch(selectedPaletteKey, loadPalette, { immediate: true });
 async function loadPalettesList() {
   const { system, custom } = await FilesApi.getPalettesList();
 
-  const systemPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
+  const systemPalettes: SelectItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
   for (const palette of system) systemPalettes.push({ label: palette, value: `system/${palette}` });
 
-  const customPalettes: SelectMenuItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
+  const customPalettes: SelectItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
   for (const palette of custom) customPalettes.push({ label: palette, value: `custom/${palette}` });
 
   paletteCatalogOptions.value = [systemPalettes, customPalettes];
@@ -69,10 +72,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <USelectMenu
-    v-model="selectedPaletteKey"
-    :loading="loadingPalette"
-    :items="paletteCatalogOptions"
-    value-key="value"
-  />
+  <Select v-model="selectedPaletteKey" v-bind="props" :loading="loadingPalette" :items="paletteCatalogOptions" />
 </template>

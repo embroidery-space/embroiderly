@@ -323,7 +323,7 @@ exports[`InputColor > renders correctly with ui 1`] = `
 exports[`InputColor > renders correctly within FormField 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div

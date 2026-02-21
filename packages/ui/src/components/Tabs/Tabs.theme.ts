@@ -3,22 +3,21 @@ import type { VariantProps } from "tailwind-variants";
 
 export const TabsTheme = tv({
   slots: {
-    root: "flex",
-    list: "relative inline-flex items-center gap-1 rounded-lg bg-accented p-1",
-    indicator: "absolute rounded-md bg-default shadow-xs transition-[translate,width,height] duration-200",
+    root: "flex gap-2",
+    list: "relative inline-flex items-center rounded-lg bg-accented p-1",
+    indicator: "absolute rounded-md bg-inverted shadow-xs transition-[translate,width,height] duration-200",
     trigger:
-      "relative z-1 inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-default",
+      "relative inline-flex cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted",
     label: "truncate",
-    content: "focus-visible:outline-2 focus-visible:outline-primary",
+    content: "w-full focus-visible:outline-none",
   },
   variants: {
     orientation: {
       horizontal: {
-        root: "flex-col gap-2",
+        root: "flex-col",
         indicator: "inset-y-1 left-0 w-(--reka-tabs-indicator-size) translate-x-(--reka-tabs-indicator-position)",
       },
       vertical: {
-        root: "flex-row items-start gap-2",
         list: "flex-col",
         indicator: "inset-x-1 top-0 h-(--reka-tabs-indicator-size) translate-y-(--reka-tabs-indicator-position)",
       },

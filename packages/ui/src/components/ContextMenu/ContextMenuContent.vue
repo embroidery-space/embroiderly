@@ -48,96 +48,93 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
     :collision-padding="collisionPadding"
     :side-offset="sub ? (sideOffset ?? 0) : undefined"
   >
-    <template v-for="(group, groupIndex) in items" :key="`group-${groupIndex}`">
-      <ContextMenu.Separator v-if="groupIndex > 0" data-slot="separator" :class="ui.separator()" />
+    <ContextMenu.Group
+      v-for="(group, groupIndex) in items"
+      :key="`group-${groupIndex}`"
+      data-slot="group"
+      :class="ui.group()"
+    >
+      <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
+        <ContextMenu.Separator
+          v-if="item.type === 'separator'"
+          data-slot="separator"
+          :class="ui.separator({ class: item.class })"
+        />
 
-      <ContextMenu.Group data-slot="group" :class="ui.group()">
-        <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
-          <ContextMenu.Separator
-            v-if="item.type === 'separator'"
-            data-slot="separator"
-            :class="ui.separator({ class: item.class })"
-          />
+        <ContextMenu.Label v-else-if="item.type === 'label'" data-slot="label" :class="ui.label({ class: item.class })">
+          {{ item.label }}
+        </ContextMenu.Label>
 
-          <ContextMenu.Label
-            v-else-if="item.type === 'label'"
-            data-slot="label"
-            :class="ui.label({ class: item.class })"
-          >
-            {{ item.label }}
-          </ContextMenu.Label>
-
-          <ContextMenu.CheckboxItem
-            v-else-if="item.type === 'checkbox'"
-            :model-value="item.checked"
-            :disabled="item.disabled"
-            data-slot="item"
-            :class="ui.item({ class: item.class })"
-            @update:model-value="item.onUpdateChecked"
-            @select="item.onSelect"
-          >
-            <span data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
-            <ContextMenu.ItemIndicator as-child>
-              <Icon
-                :name="icons.check"
-                data-slot="itemTrailingIcon"
-                :class="[ui.itemTrailing(), ui.itemTrailingIcon()]"
-              />
-            </ContextMenu.ItemIndicator>
-          </ContextMenu.CheckboxItem>
-
-          <ContextMenu.Sub v-else-if="item.children?.length">
-            <ContextMenu.SubTrigger :disabled="item.disabled" data-slot="item" :class="ui.item({ class: item.class })">
-              <Icon v-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
-              <span data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
-              <span data-slot="itemTrailing" :class="ui.itemTrailing()">
-                <Icon :name="icons.chevronRight" data-slot="itemTrailingIcon" :class="ui.itemTrailingIcon()" />
-              </span>
-            </ContextMenu.SubTrigger>
-
-            <ContextMenu.Portal v-bind="portalProps">
-              <ContextMenuContent
-                sub
-                :items="normalizeChildren(item.children)"
-                :icons="icons"
-                :ui="ui"
-                :size="size"
-                :portal="portal"
-                :align-offset="-4"
-                data-slot="content"
-                :class="ui.content()"
-              />
-            </ContextMenu.Portal>
-          </ContextMenu.Sub>
-
-          <ContextMenu.Item
-            v-else
-            :disabled="item.disabled"
-            data-slot="item"
-            :class="ui.item({ class: item.class })"
-            @select="item.onSelect"
-          >
+        <ContextMenu.CheckboxItem
+          v-else-if="item.type === 'checkbox'"
+          :model-value="item.checked"
+          :disabled="item.disabled"
+          data-slot="item"
+          :class="ui.item({ class: item.class })"
+          @update:model-value="item.onUpdateChecked"
+          @select="item.onSelect"
+        >
+          <span data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
+          <ContextMenu.ItemIndicator as-child>
             <Icon
-              v-if="item.loading"
-              :name="icons.loading"
-              data-slot="itemLeadingIcon"
-              :class="[ui.itemLeadingIcon(), 'animate-spin']"
+              :name="icons.check"
+              data-slot="itemTrailingIcon"
+              :class="[ui.itemTrailing(), ui.itemTrailingIcon()]"
             />
-            <Icon v-else-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
+          </ContextMenu.ItemIndicator>
+        </ContextMenu.CheckboxItem>
 
-            <span v-if="item.label || item.description" class="flex min-w-0 flex-1 flex-col">
-              <span v-if="item.label" data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
-              <span v-if="item.description" data-slot="itemDescription" :class="ui.itemDescription()">{{
-                item.description
-              }}</span>
+        <ContextMenu.Sub v-else-if="item.children?.length">
+          <ContextMenu.SubTrigger :disabled="item.disabled" data-slot="item" :class="ui.item({ class: item.class })">
+            <Icon v-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
+            <span data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
+            <span data-slot="itemTrailing" :class="ui.itemTrailing()">
+              <Icon :name="icons.chevronRight" data-slot="itemTrailingIcon" :class="ui.itemTrailingIcon()" />
             </span>
+          </ContextMenu.SubTrigger>
 
-            <span v-if="item.shortcut" data-slot="itemTrailing" :class="[ui.itemTrailing(), ui.itemKbd()]">
-              <Kbd v-for="(key, i) in parseShortcutDisplay(item.shortcut)" :key="i" :value="key" size="sm" />
-            </span>
-          </ContextMenu.Item>
-        </template>
-      </ContextMenu.Group>
-    </template>
+          <ContextMenu.Portal v-bind="portalProps">
+            <ContextMenuContent
+              sub
+              :items="normalizeChildren(item.children)"
+              :icons="icons"
+              :ui="ui"
+              :size="size"
+              :portal="portal"
+              :align-offset="-4"
+              data-slot="content"
+              :class="ui.content()"
+            />
+          </ContextMenu.Portal>
+        </ContextMenu.Sub>
+
+        <ContextMenu.Item
+          v-else
+          :disabled="item.disabled"
+          data-slot="item"
+          :class="ui.item({ class: item.class })"
+          @select="item.onSelect"
+        >
+          <Icon
+            v-if="item.loading"
+            :name="icons.loading"
+            data-slot="itemLeadingIcon"
+            :class="[ui.itemLeadingIcon(), 'animate-spin']"
+          />
+          <Icon v-else-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
+
+          <span v-if="item.label || item.description" class="flex min-w-0 flex-1 flex-col">
+            <span v-if="item.label" data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
+            <span v-if="item.description" data-slot="itemDescription" :class="ui.itemDescription()">{{
+              item.description
+            }}</span>
+          </span>
+
+          <span v-if="item.shortcut" data-slot="itemTrailing" :class="[ui.itemTrailing(), ui.itemKbd()]">
+            <Kbd v-for="(key, i) in parseShortcutDisplay(item.shortcut)" :key="i" :value="key" size="sm" />
+          </span>
+        </ContextMenu.Item>
+      </template>
+    </ContextMenu.Group>
   </component>
 </template>

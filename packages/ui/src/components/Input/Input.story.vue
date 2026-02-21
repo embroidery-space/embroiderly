@@ -12,9 +12,15 @@ import Input from "./Input.vue";
 import type { InputProps } from "./Input.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
+const variants = ["subtle", "outline"] as const;
 
 const value = ref("Lorem ipsum");
 const inputState = reactive<InputProps>({
+  variant: "subtle",
+
+  leadingIcon: "",
+  trailingIcon: "",
+  loading: false,
   disabled: false,
 });
 const formFieldState = reactive<FormFieldProps>({
@@ -40,8 +46,12 @@ defineExpose({ inputState, formFieldState });
       </FormField>
 
       <template #controls>
+        <HstText v-model="inputState.leadingIcon" title="Leading Icon" />
+        <HstText v-model="inputState.trailingIcon" title="Trailing Icon" />
+        <HstCheckbox v-model="inputState.loading" title="Loading" />
         <HstCheckbox v-model="inputState.disabled" title="Disabled" />
         <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
+        <HstSelect v-model="inputState.variant" title="Variant" :options="variants" />
         <HstText v-model="formFieldState.label" title="Label" />
         <HstText v-model="formFieldState.description" title="Description" />
         <HstText v-model="formFieldState.hint" title="Hint" />
@@ -53,6 +63,14 @@ defineExpose({ inputState, formFieldState });
       <div class="flex flex-col gap-2">
         <template v-for="size in sizes" :key="size">
           <Input :model-value="`Size: ${size}`" :size="size" />
+        </template>
+      </div>
+    </Variant>
+
+    <Variant id="variants" title="Variants" auto-props-disabled>
+      <div class="flex flex-col gap-2">
+        <template v-for="variant in variants" :key="variant">
+          <Input :model-value="`Variant: ${variant}`" :variant="variant" />
         </template>
       </div>
     </Variant>

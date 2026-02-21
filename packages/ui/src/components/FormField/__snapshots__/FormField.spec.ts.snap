@@ -3,7 +3,7 @@
 exports[`FormField > renders correctly with all elements 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div
@@ -75,7 +75,7 @@ exports[`FormField > renders correctly with all elements 1`] = `
 exports[`FormField > renders correctly with class 1`] = `
 <div>
   <div
-    class="text-base custom-class"
+    class="custom-class"
     data-slot="root"
   >
     <div
@@ -128,7 +128,7 @@ exports[`FormField > renders correctly with class 1`] = `
 exports[`FormField > renders correctly with description 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div
@@ -188,7 +188,7 @@ exports[`FormField > renders correctly with description 1`] = `
 exports[`FormField > renders correctly with help 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div
@@ -248,7 +248,7 @@ exports[`FormField > renders correctly with help 1`] = `
 exports[`FormField > renders correctly with hint 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div
@@ -308,7 +308,7 @@ exports[`FormField > renders correctly with hint 1`] = `
 exports[`FormField > renders correctly with label 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div
@@ -520,7 +520,7 @@ exports[`FormField > renders correctly with size sm 1`] = `
 exports[`FormField > renders correctly with ui 1`] = `
 <div>
   <div
-    class="text-base rounded-lg"
+    class="rounded-lg"
     data-slot="root"
   >
     <div

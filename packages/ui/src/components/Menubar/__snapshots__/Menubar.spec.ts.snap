@@ -60,7 +60,7 @@ exports[`Menubar > renders correctly with checkbox menus 1`] = `
       <div
         aria-labelledby="reka-v-0"
         aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
         data-align="start"
         data-dismissable-layer=""
         data-orientation="vertical"
@@ -81,8 +81,6 @@ exports[`Menubar > renders correctly with checkbox menus 1`] = `
         
         
         
-        
-        <!--v-if-->
         <div
           class="isolate p-1"
           data-slot="group"
@@ -117,7 +115,7 @@ exports[`Menubar > renders correctly with checkbox menus 1`] = `
           
           <div
             aria-checked="true"
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             data-state="checked"
@@ -155,7 +153,7 @@ exports[`Menubar > renders correctly with checkbox menus 1`] = `
           
           <div
             aria-checked="false"
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             data-state="unchecked"
@@ -183,7 +181,6 @@ exports[`Menubar > renders correctly with checkbox menus 1`] = `
           
           
         </div>
-        
         
         
         
@@ -266,7 +263,7 @@ exports[`Menubar > renders correctly with class 1`] = `
       <div
         aria-labelledby="reka-v-0"
         aria-orientation="vertical"
-        class="pointer-events-auto origin-(--reka-menubar-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] min-w-48"
+        class="pointer-events-auto origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] min-w-48"
         data-align="start"
         data-dismissable-layer=""
         data-orientation="vertical"
@@ -287,8 +284,6 @@ exports[`Menubar > renders correctly with class 1`] = `
         
         
         
-        
-        <!--v-if-->
         <div
           class="isolate p-1"
           data-slot="group"
@@ -299,7 +294,7 @@ exports[`Menubar > renders correctly with class 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -340,7 +335,7 @@ exports[`Menubar > renders correctly with class 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -383,17 +378,6 @@ exports[`Menubar > renders correctly with class 1`] = `
           
           
         </div>
-        
-        
-        <div
-          aria-orientation="horizontal"
-          class="-mx-1 my-1 h-px bg-border"
-          data-slot="separator"
-          role="separator"
-        >
-          
-          
-        </div>
         <div
           class="isolate p-1"
           data-slot="group"
@@ -404,7 +388,7 @@ exports[`Menubar > renders correctly with class 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -447,7 +431,6 @@ exports[`Menubar > renders correctly with class 1`] = `
           
           
         </div>
-        
         
         
         
@@ -643,7 +626,7 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
       <div
         aria-labelledby="reka-v-0"
         aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
         data-align="start"
         data-dismissable-layer=""
         data-orientation="vertical"
@@ -664,8 +647,6 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
         
         
         
-        
-        <!--v-if-->
         <div
           class="isolate p-1"
           data-slot="group"
@@ -676,7 +657,7 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -717,7 +698,7 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -760,17 +741,6 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
           
           
         </div>
-        
-        
-        <div
-          aria-orientation="horizontal"
-          class="-mx-1 my-1 h-px bg-border"
-          data-slot="separator"
-          role="separator"
-        >
-          
-          
-        </div>
         <div
           class="isolate p-1"
           data-slot="group"
@@ -781,7 +751,7 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -824,7 +794,6 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
           
           
         </div>
-        
         
         
         
@@ -952,7 +921,7 @@ exports[`Menubar > renders correctly with size lg 1`] = `
       <div
         aria-labelledby="reka-v-0"
         aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
         data-align="start"
         data-dismissable-layer=""
         data-orientation="vertical"
@@ -973,8 +942,6 @@ exports[`Menubar > renders correctly with size lg 1`] = `
         
         
         
-        
-        <!--v-if-->
         <div
           class="isolate p-1"
           data-slot="group"
@@ -985,7 +952,7 @@ exports[`Menubar > renders correctly with size lg 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1026,7 +993,7 @@ exports[`Menubar > renders correctly with size lg 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1069,17 +1036,6 @@ exports[`Menubar > renders correctly with size lg 1`] = `
           
           
         </div>
-        
-        
-        <div
-          aria-orientation="horizontal"
-          class="-mx-1 my-1 h-px bg-border"
-          data-slot="separator"
-          role="separator"
-        >
-          
-          
-        </div>
         <div
           class="isolate p-1"
           data-slot="group"
@@ -1090,7 +1046,7 @@ exports[`Menubar > renders correctly with size lg 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1133,7 +1089,6 @@ exports[`Menubar > renders correctly with size lg 1`] = `
           
           
         </div>
-        
         
         
         
@@ -1261,7 +1216,7 @@ exports[`Menubar > renders correctly with size md 1`] = `
       <div
         aria-labelledby="reka-v-0"
         aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
         data-align="start"
         data-dismissable-layer=""
         data-orientation="vertical"
@@ -1282,8 +1237,6 @@ exports[`Menubar > renders correctly with size md 1`] = `
         
         
         
-        
-        <!--v-if-->
         <div
           class="isolate p-1"
           data-slot="group"
@@ -1294,7 +1247,7 @@ exports[`Menubar > renders correctly with size md 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1335,7 +1288,7 @@ exports[`Menubar > renders correctly with size md 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1378,17 +1331,6 @@ exports[`Menubar > renders correctly with size md 1`] = `
           
           
         </div>
-        
-        
-        <div
-          aria-orientation="horizontal"
-          class="-mx-1 my-1 h-px bg-border"
-          data-slot="separator"
-          role="separator"
-        >
-          
-          
-        </div>
         <div
           class="isolate p-1"
           data-slot="group"
@@ -1399,7 +1341,7 @@ exports[`Menubar > renders correctly with size md 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1442,7 +1384,6 @@ exports[`Menubar > renders correctly with size md 1`] = `
           
           
         </div>
-        
         
         
         
@@ -1570,7 +1511,7 @@ exports[`Menubar > renders correctly with size sm 1`] = `
       <div
         aria-labelledby="reka-v-0"
         aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
         data-align="start"
         data-dismissable-layer=""
         data-orientation="vertical"
@@ -1591,8 +1532,6 @@ exports[`Menubar > renders correctly with size sm 1`] = `
         
         
         
-        
-        <!--v-if-->
         <div
           class="isolate p-1"
           data-slot="group"
@@ -1603,7 +1542,7 @@ exports[`Menubar > renders correctly with size sm 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1644,7 +1583,7 @@ exports[`Menubar > renders correctly with size sm 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1687,17 +1626,6 @@ exports[`Menubar > renders correctly with size sm 1`] = `
           
           
         </div>
-        
-        
-        <div
-          aria-orientation="horizontal"
-          class="-mx-1 my-1 h-px bg-border"
-          data-slot="separator"
-          role="separator"
-        >
-          
-          
-        </div>
         <div
           class="isolate p-1"
           data-slot="group"
@@ -1708,7 +1636,7 @@ exports[`Menubar > renders correctly with size sm 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -1751,7 +1679,6 @@ exports[`Menubar > renders correctly with size sm 1`] = `
           
           
         </div>
-        
         
         
         
@@ -1879,7 +1806,7 @@ exports[`Menubar > renders correctly with submenu menus 1`] = `
       <div
         aria-labelledby="reka-v-0"
         aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
         data-align="start"
         data-dismissable-layer=""
         data-orientation="vertical"
@@ -1900,8 +1827,6 @@ exports[`Menubar > renders correctly with submenu menus 1`] = `
         
         
         
-        
-        <!--v-if-->
         <div
           class="isolate p-1"
           data-slot="group"
@@ -1918,7 +1843,7 @@ exports[`Menubar > renders correctly with submenu menus 1`] = `
             aria-controls="reka-menu-sub-content-v-4"
             aria-expanded="false"
             aria-haspopup="menu"
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-reka-menubar-subtrigger=""
             data-slot="item"
@@ -1974,7 +1899,6 @@ exports[`Menubar > renders correctly with submenu menus 1`] = `
           
           
         </div>
-        
         
         
         
@@ -2057,7 +1981,7 @@ exports[`Menubar > renders correctly with ui 1`] = `
       <div
         aria-labelledby="reka-v-0"
         aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
+        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
         data-align="start"
         data-dismissable-layer=""
         data-orientation="vertical"
@@ -2078,8 +2002,6 @@ exports[`Menubar > renders correctly with ui 1`] = `
         
         
         
-        
-        <!--v-if-->
         <div
           class="isolate p-1"
           data-slot="group"
@@ -2090,7 +2012,7 @@ exports[`Menubar > renders correctly with ui 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -2131,7 +2053,7 @@ exports[`Menubar > renders correctly with ui 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -2174,17 +2096,6 @@ exports[`Menubar > renders correctly with ui 1`] = `
           
           
         </div>
-        
-        
-        <div
-          aria-orientation="horizontal"
-          class="-mx-1 my-1 h-px bg-border"
-          data-slot="separator"
-          role="separator"
-        >
-          
-          
-        </div>
         <div
           class="isolate p-1"
           data-slot="group"
@@ -2195,7 +2106,7 @@ exports[`Menubar > renders correctly with ui 1`] = `
           
           
           <div
-            class="group relative flex w-full items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
+            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
             data-reka-collection-item=""
             data-slot="item"
             role="menuitem"
@@ -2238,7 +2149,6 @@ exports[`Menubar > renders correctly with ui 1`] = `
           
           
         </div>
-        
         
         
         

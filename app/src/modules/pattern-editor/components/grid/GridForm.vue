@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { FormField, FormFieldSet, InputColor, InputNumber } from "@embroiderly/ui";
+
 import { Grid } from "#pattern-editor/lib/pattern/";
-import { ColorPicker, FormFieldset } from "#shared/components/";
 
 const grid = defineModel<Grid>({ required: true });
 </script>
@@ -8,49 +9,48 @@ const grid = defineModel<Grid>({ required: true });
 <template>
   <div>
     <div class="grid grid-cols-2 gap-4">
-      <UFormField v-bind="$ta('grid-major-lines-interval')">
-        <UInputNumber
+      <FormField v-bind="$ta('grid-major-lines-interval')">
+        <InputNumber
           v-model="grid.majorLinesInterval"
           data-testid="grid-major-lines-interval-input"
-          orientation="vertical"
           :min="1"
           class="w-full"
         />
-      </UFormField>
+      </FormField>
     </div>
 
-    <FormFieldset :legend="$t('grid-major-lines')">
+    <FormFieldSet :legend="$t('grid-major-lines')">
       <div class="grid grid-cols-2 gap-4">
-        <UFormField v-bind="$ta('grid-thickness')">
-          <UInputNumber
+        <FormField v-bind="$ta('grid-thickness')">
+          <InputNumber
             v-model="grid.majorLines.thickness"
             data-testid="grid-major-lines-thickness-input"
-            orientation="vertical"
             :min="0.001"
             :step="0.01"
+            class="w-full"
           />
-        </UFormField>
-        <UFormField :label="$t('grid-color')">
-          <ColorPicker v-model="grid.majorLines.color" data-testid="grid-major-lines-color-input" />
-        </UFormField>
+        </FormField>
+        <FormField :label="$t('grid-color')">
+          <InputColor v-model="grid.majorLines.color" data-testid="grid-major-lines-color-input" />
+        </FormField>
       </div>
-    </FormFieldset>
+    </FormFieldSet>
 
-    <FormFieldset :legend="$t('grid-minor-lines')">
+    <FormFieldSet :legend="$t('grid-minor-lines')">
       <div class="grid grid-cols-2 gap-4">
-        <UFormField v-bind="$ta('grid-thickness')">
-          <UInputNumber
+        <FormField v-bind="$ta('grid-thickness')">
+          <InputNumber
             v-model="grid.minorLines.thickness"
             data-testid="grid-minor-lines-thickness-input"
-            orientation="vertical"
             :min="0.001"
             :step="0.01"
+            class="w-full"
           />
-        </UFormField>
-        <UFormField :label="$t('grid-color')">
-          <ColorPicker v-model="grid.minorLines.color" data-testid="grid-minor-lines-color-input" />
-        </UFormField>
+        </FormField>
+        <FormField :label="$t('grid-color')">
+          <InputColor v-model="grid.minorLines.color" data-testid="grid-minor-lines-color-input" />
+        </FormField>
       </div>
-    </FormFieldset>
+    </FormFieldSet>
   </div>
 </template>

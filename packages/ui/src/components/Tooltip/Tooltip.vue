@@ -76,7 +76,7 @@ const ui = TooltipTheme();
 
 <template>
   <Tooltip.Root v-slot="{ open }" v-bind="rootProps" :disabled="disabled || (!text && !shortcut)">
-    <Tooltip.Trigger as-child>
+    <Tooltip.Trigger v-bind="$attrs" as-child>
       <slot :open="open" />
     </Tooltip.Trigger>
 

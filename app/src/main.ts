@@ -1,4 +1,3 @@
-import ui from "@nuxt/ui/vue-plugin";
 import { vueIntegration } from "@sentry/vue";
 import { createFluentVue } from "fluent-vue";
 import { createApp } from "vue";
@@ -15,6 +14,5 @@ DiagnosticsService.addIntegration(vueIntegration({ app }));
 app.use(router);
 app.use(pinia);
 app.use(fluent);
-app.use(ui);
 
 app.mount("#app");

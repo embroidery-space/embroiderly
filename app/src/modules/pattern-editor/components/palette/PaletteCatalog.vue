@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import type { DropdownMenuItem } from "@nuxt/ui";
+import { Button, DropdownMenu, Input, useConfirm, useToast } from "@embroiderly/ui";
+import type { DropdownMenuItem } from "@embroiderly/ui";
+
 import { useFuse } from "@vueuse/integrations/useFuse";
 import { useTemplateRef, ref, computed, shallowRef } from "vue";
 import type { Ref } from "vue";
 
 import { FilesApi } from "#pattern-editor/api";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
-import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+import { useFilePicker, useI18n } from "#shared/composables/";
 import { PALETTE_FILTER } from "#shared/constants/";
 import { LoggerService } from "#shared/services/";
 
@@ -102,21 +104,27 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
     >
       <template #header>
         <div class="flex gap-x-1">
-          <PaletteSelect ref="palette-select" size="md" class="w-full" @palette-loaded="selectedPalette = $event" />
+          <PaletteSelect
+            ref="palette-select"
+            size="md"
+            variant="outline"
+            class="w-full"
+            @palette-loaded="selectedPalette = $event"
+          />
 
-          <UDropdownMenu :items="paletteCatalogMenuOptions">
-            <UButton :loading="importingPalettes" color="neutral" variant="outline" icon="i-lucide:menu" />
-          </UDropdownMenu>
+          <DropdownMenu :items="paletteCatalogMenuOptions">
+            <Button :loading="importingPalettes" color="neutral" variant="outline" icon="lucide:menu" />
+          </DropdownMenu>
         </div>
       </template>
 
       <template #filter>
-        <UInput
+        <Input
           v-model="searchQuery"
           v-bind="$ta('palette-catalog-search')"
           size="md"
           variant="outline"
-          leading-icon="i-lucide:search"
+          icon="lucide:search"
           class="w-full"
         />
       </template>

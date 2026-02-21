@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { InputDimensions, FormField, FormFieldSet, RadioGroup, Select } from "@embroiderly/ui";
+
 import { Color } from "pixi.js";
 import { computed, onMounted, reactive, ref, watch } from "vue";
 import type { Ref } from "vue";
 
 import { PatternApi } from "#pattern-editor/api/";
 import { Fabric, PaletteSettings, FabricColor } from "#pattern-editor/lib/pattern/";
-import { DimensionsInput, FormFieldset } from "#shared/components/";
 import { useI18n } from "#shared/composables/";
 import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#shared/utils/";
 
@@ -105,44 +106,42 @@ onMounted(async () => {
 
 <template>
   <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
-    <FormFieldset :legend="$t('fabric-count-and-kind')">
-      <UFormField :label="$t('fabric-count')" class="w-full">
-        <USelect
+    <FormFieldSet :legend="$t('fabric-count-and-kind')">
+      <FormField :label="$t('fabric-count')" class="w-full">
+        <Select
           v-model="fabric.spi[0]"
           :items="fabricCounts"
           class="w-full"
           data-testid="fabric-count-select"
-          @update:model-value="fabric.spi[1] = $event"
+          @update:model-value="fabric.spi[1] = $event as number"
         />
-      </UFormField>
-      <UFormField :label="$t('fabric-kind')" class="w-full">
-        <USelect v-model="fabric.kind" :items="fabricKinds" class="w-full" data-testid="fabric-kind-select" />
-      </UFormField>
-    </FormFieldset>
+      </FormField>
+      <FormField :label="$t('fabric-kind')" class="w-full">
+        <Select v-model="fabric.kind" :items="fabricKinds" class="w-full" data-testid="fabric-kind-select" />
+      </FormField>
+    </FormFieldSet>
 
-    <FormFieldset :legend="$t('fabric-size')">
+    <FormFieldSet :legend="$t('fabric-size')">
       <div class="flex gap-4 pb-2">
-        <DimensionsInput
+        <InputDimensions
           v-model:width="fabricSizeFinal.width"
           v-model:height="fabricSizeFinal.height"
           data-testid="fabric-dimensions-input"
-          :width-field-props="{ label: $t('fabric-width') }"
-          :height-field-props="{ label: $t('fabric-height') }"
-          :width-input-props="{
-            orientation: 'vertical',
-            min: 0.1,
-            step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
-            stepSnapping: false,
-          }"
-          :height-input-props="{
-            orientation: 'vertical',
-            min: 0.1,
-            step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
-            stepSnapping: false,
-          }"
           orientation="vertical"
+          :width-field-options="{ label: $t('fabric-width') }"
+          :height-field-options="{ label: $t('fabric-height') }"
+          :width-input-options="{
+            min: 0.1,
+            step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
+            stepSnapping: false,
+          }"
+          :height-input-options="{
+            min: 0.1,
+            step: fabricSizeMeasurement === 'inches' ? 0.1 : 1,
+            stepSnapping: false,
+          }"
         />
-        <URadioGroup
+        <RadioGroup
           v-model="fabricSizeMeasurement"
           data-testid="fabric-unit-radio-group"
           :items="fabricSizeOptions"
@@ -162,9 +161,9 @@ onMounted(async () => {
           })
         }}
       </p>
-    </FormFieldset>
+    </FormFieldSet>
 
-    <FormFieldset :legend="$t('fabric-color')" class="row-start-1 row-end-3 w-md">
+    <FormFieldSet :legend="$t('fabric-color')" class="row-start-1 row-end-3 w-md">
       <PaletteList
         :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
         :options="fabricColors"
@@ -182,6 +181,6 @@ onMounted(async () => {
         "
       />
       <p class="mt-2">{{ $t("fabric-selected-color", { color: fabric.name }) }}</p>
-    </FormFieldset>
+    </FormFieldSet>
   </div>
 </template>

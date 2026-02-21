@@ -5,14 +5,9 @@
 @import "./styles/ui.css";
 
 @source "./components/";
-@source "./theme/";
-
-@variant light (&:where(.light, .light *));
-@variant dark (&:where(.dark, .dark *));
 
 :root,
-:host,
-.light {
+:host {
   --ui-text: #2e3440;
   --ui-text-dimmed: #3b4252;
   --ui-text-muted: #434c5e;
@@ -32,19 +27,22 @@
   --ui-container: 80rem;
 }
 
-.dark {
-  --ui-text: #eceff4;
-  --ui-text-dimmed: #e5e9f0;
-  --ui-text-muted: #d8dee9;
-  --ui-text-inverted: var(--ui-bg);
+@media (prefers-color-scheme: dark) {
+  :root,
+  :host {
+    --ui-text: #eceff4;
+    --ui-text-dimmed: #e5e9f0;
+    --ui-text-muted: #d8dee9;
+    --ui-text-inverted: var(--ui-bg);
 
-  --ui-bg: var(--ui-color-neutral-700);
-  --ui-bg-elevated: var(--ui-color-neutral-600);
-  --ui-bg-accented: var(--ui-color-neutral-500);
-  --ui-bg-inverted: var(--ui-text);
+    --ui-bg: var(--ui-color-neutral-700);
+    --ui-bg-elevated: var(--ui-color-neutral-600);
+    --ui-bg-accented: var(--ui-color-neutral-500);
+    --ui-bg-inverted: var(--ui-text);
 
-  --ui-border: var(--ui-color-neutral-600);
-  --ui-border-elevated: var(--ui-color-neutral-500);
-  --ui-border-accented: var(--ui-color-neutral-400);
-  --ui-border-inverted: var(--ui-text);
+    --ui-border: var(--ui-color-neutral-600);
+    --ui-border-elevated: var(--ui-color-neutral-500);
+    --ui-border-accented: var(--ui-color-neutral-400);
+    --ui-border-inverted: var(--ui-text);
+  }
 }

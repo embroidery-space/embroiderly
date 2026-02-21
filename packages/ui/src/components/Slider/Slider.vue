@@ -34,7 +34,6 @@ export interface SliderProps extends Pick<SliderRootProps, "as" | "asChild" | "d
 const modelValue = defineModel<number>();
 const props = withDefaults(defineProps<SliderProps>(), {
   color: "primary",
-  size: "md",
 });
 
 const { messages } = useLocale();

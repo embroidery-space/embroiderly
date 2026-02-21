@@ -14,7 +14,7 @@ import type { InputNumberThemeSlots, InputNumberThemeVariants } from "./InputNum
 
 export interface InputNumberProps extends Pick<
   NumberFieldRootProps,
-  "as" | "asChild" | "id" | "disabled" | "min" | "max" | "step" | "formatOptions"
+  "as" | "asChild" | "id" | "disabled" | "min" | "max" | "step" | "stepSnapping" | "formatOptions"
 > {
   /**
    * The color scheme of the input.
@@ -59,7 +59,7 @@ export interface InputNumberProps extends Pick<
 
 defineOptions({ inheritAttrs: false });
 
-const modelValue = defineModel<number>();
+const modelValue = defineModel<number | null>();
 const props = withDefaults(defineProps<InputNumberProps>(), {
   as: "div",
 
@@ -101,6 +101,7 @@ const ui = computed(() => {
     :min="min"
     :max="max"
     :step="step"
+    :step-snapping="stepSnapping"
     :format-options="formatOptions"
     :disabled="disabled"
     data-slot="root"

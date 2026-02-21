@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Dialog } from "@embroiderly/ui";
+
 import { useSettingsStore } from "#shared/stores/";
 
 import AppSettingsForm from "./AppSettingsForm.vue";
@@ -7,7 +9,7 @@ const settingsStore = useSettingsStore();
 </script>
 
 <template>
-  <UModal :title="$t('settings')" :ui="{ content: 'w-xl' }">
+  <Dialog :title="$t('settings')" :ui="{ content: 'w-xl' }">
     <template #body>
       <AppSettingsForm
         v-model:ui="settingsStore.ui"
@@ -18,5 +20,5 @@ const settingsStore = useSettingsStore();
         v-model:other="settingsStore.other"
       />
     </template>
-  </UModal>
+  </Dialog>
 </template>

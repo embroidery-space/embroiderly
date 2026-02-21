@@ -13,10 +13,6 @@ rustfmt.toml
 **/tests/.tmp/
 **/coverage/
 
-# Auto-generated type declarations.
-*.d.ts
-*.tsbuildinfo
-
 # Rust
 app/src-tauri/
 

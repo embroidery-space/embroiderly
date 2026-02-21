@@ -22,9 +22,7 @@ export interface SplitterSlots {
   default(): any;
 }
 
-const props = withDefaults(defineProps<SplitterProps>(), {
-  direction: "horizontal",
-});
+const props = defineProps<SplitterProps>();
 const emits = defineEmits<SplitterEmits>();
 const slots = defineSlots<SplitterSlots>();
 

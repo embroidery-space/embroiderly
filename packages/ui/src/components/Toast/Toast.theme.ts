@@ -6,7 +6,7 @@ export const ToastTheme = tv({
     root: "group relative flex items-start gap-2.5 overflow-hidden rounded-lg bg-default p-4 shadow-lg ring ring-default focus:outline-none",
     wrapper: "flex w-0 flex-1 flex-col",
     title: "text-sm font-medium",
-    description: "text-sm text-muted",
+    description: "text-sm whitespace-pre-line text-muted",
     actions: "mt-2.5 flex shrink-0 items-start gap-1.5",
     progress: "absolute inset-x-0 bottom-0",
     close: "p-0",

@@ -9,6 +9,7 @@ import Select from "./Select.vue";
 import type { SelectItem, SelectProps } from "./Select.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
+const variants = ["subtle", "outline"] as const;
 
 const items = ref<SelectItem[]>([
   { label: "Backlog", value: "backlog" },
@@ -18,7 +19,23 @@ const items = ref<SelectItem[]>([
   { label: "Cancelled", value: "cancelled" },
 ]);
 
+const richItems = ref<SelectItem[][]>([
+  [
+    { type: "label", label: "Active" },
+    { label: "Backlog", value: "backlog", icon: "lucide:circle-dashed" },
+    { label: "Todo", value: "todo", icon: "lucide:circle" },
+    { label: "In Progress", value: "in-progress", icon: "lucide:circle-half" },
+  ],
+  [
+    { type: "label", label: "Closed" },
+    { label: "Done", value: "done", icon: "lucide:circle-check" },
+    { label: "Cancelled", value: "cancelled", icon: "lucide:circle-x", disabled: true },
+  ],
+]);
+
 const inputState = reactive<SelectProps>({
+  variant: "subtle",
+
   disabled: false,
   loading: false,
   searchInput: false,
@@ -41,8 +58,8 @@ defineExpose({ inputState, formFieldState });
       <FormField v-bind="formFieldState">
         <Select
           v-bind="inputState"
-          :items="items"
-          class="w-40"
+          :items="richItems"
+          class="w-48"
           @update:model-value="logEvent('update:model-value', { value: $event })"
         />
       </FormField>
@@ -52,6 +69,7 @@ defineExpose({ inputState, formFieldState });
         <HstCheckbox v-model="inputState.loading" title="Loading" />
         <HstCheckbox v-model="inputState.searchInput as boolean" title="Search Input" />
         <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
+        <HstSelect v-model="inputState.variant" title="Variant" :options="variants" />
         <HstText v-model="formFieldState.label" title="Label" />
         <HstText v-model="formFieldState.description" title="Description" />
         <HstText v-model="formFieldState.hint" title="Hint" />
@@ -63,6 +81,14 @@ defineExpose({ inputState, formFieldState });
       <div class="flex flex-col gap-2">
         <template v-for="size in sizes" :key="size">
           <Select :items="items" :size="size" :model-value="'todo'" class="w-40" />
+        </template>
+      </div>
+    </Variant>
+
+    <Variant id="variants" title="Variants" auto-props-disabled>
+      <div class="flex flex-col gap-2">
+        <template v-for="variant in variants" :key="variant">
+          <Select :items="items" :variant="variant" :model-value="'todo'" class="w-40" />
         </template>
       </div>
     </Variant>

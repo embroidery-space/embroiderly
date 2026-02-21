@@ -991,7 +991,7 @@ exports[`InputNumber > renders correctly with variant subtle 1`] = `
 exports[`InputNumber > renders correctly within FormField 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div

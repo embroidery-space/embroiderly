@@ -14,6 +14,9 @@ export const TextareaTheme = tv({
       subtle: {
         base: "bg-elevated ring ring-accented ring-inset",
       },
+      outline: {
+        base: "bg-default ring ring-accented ring-inset",
+      },
     },
     size: {
       sm: {
@@ -36,6 +39,13 @@ export const TextareaTheme = tv({
     {
       color: "primary",
       variant: "subtle",
+      class: {
+        base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
+      },
+    },
+    {
+      color: "primary",
+      variant: "outline",
       class: {
         base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
       },

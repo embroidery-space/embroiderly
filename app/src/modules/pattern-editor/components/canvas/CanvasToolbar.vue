@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ButtonIcon, Popover, Separator } from "@embroiderly/ui";
+
 import { computed, ref, watch } from "vue";
 
 import { DisplayMode, LayersVisibility } from "#pattern-editor/lib/pattern/";
@@ -19,9 +21,9 @@ const layers = ref(new LayersVisibility(patternStore.pattern?.layersVisibility |
 watch(layers, (newLayers) => patternStore.setLayersVisibility(newLayers), { deep: true });
 
 const displayModeOptions = computed(() => [
-  { icon: "i-stitches:mix", label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
-  { icon: "i-stitches:square", label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
-  { icon: "i-stitches:full", label: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
+  { icon: "stitches:mix", label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
+  { icon: "stitches:square", label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
+  { icon: "stitches:full", label: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
 ]);
 
 const showSymbols = computed({
@@ -32,23 +34,23 @@ const showSymbols = computed({
 
 <template>
   <div class="flex flex-col gap-1 p-1">
-    <UPopover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
-      <UTooltip
-        arrow
-        :text="$t('canvas-toolbar-layers')"
-        :delay-duration="200"
+    <Popover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
+      <ButtonIcon
+        color="neutral"
+        variant="ghost"
+        icon="lucide:layers"
         :disabled="disabled"
+        :tooltip="$t('canvas-toolbar-layers')"
+        :delay-duration="200"
         :content="{ side: 'left' }"
-      >
-        <UButton color="neutral" variant="ghost" icon="i-lucide:layers" :disabled="disabled" />
-      </UTooltip>
+      />
 
       <template #content>
         <CanvasLayers v-model="layers" />
       </template>
-    </UPopover>
+    </Popover>
 
-    <USeparator />
+    <Separator />
 
     <ToolToggleGroup
       :model-value="patternStore.pattern?.displayMode"
@@ -59,11 +61,11 @@ const showSymbols = computed({
       @update:model-value="patternStore.setDisplayMode"
     />
 
-    <USeparator />
+    <Separator />
 
     <ToolToggle
       v-model="showSymbols"
-      icon="i-stitches:symbol"
+      icon="stitches:symbol"
       :label="showSymbols ? fluent.$t('canvas-toolbar-hide-symbols') : fluent.$t('canvas-toolbar-show-symbols')"
       :disabled="disabled"
     />

@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import { ContextMenu, useToast } from "@embroiderly/ui";
+import type { ContextMenuItem } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-import type { ContextMenuItem } from "@nuxt/ui";
 import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
 import { computed, useTemplateRef, watch } from "vue";
@@ -37,7 +38,7 @@ const patternCanvas = useTemplateRef<InstanceType<typeof PatternCanvas>>("patter
 const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
   [
     {
-      icon: "i-lucide:image",
+      icon: "lucide:image",
       label: fluent.$t("canvas-ctx-menu-set-image"),
       async onSelect() {
         const selectedPath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
@@ -45,7 +46,7 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
       },
     },
     {
-      icon: "i-lucide:image-off",
+      icon: "lucide:image-off",
       label: fluent.$t("canvas-ctx-menu-remove-image"),
       color: "error",
       disabled: !patternStore.pattern?.referenceImage,
@@ -198,7 +199,7 @@ async function loadSymbolFonts(fonts: string[]) {
       <EditorWorkspaceTabs />
     </template>
 
-    <UContextMenu :items="canvasContextMenuOptions">
+    <ContextMenu :items="canvasContextMenuOptions">
       <PatternCanvas
         ref="patternCanvas"
         v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
@@ -211,7 +212,7 @@ async function loadSymbolFonts(fonts: string[]) {
         @tool-release="handleToolRelease"
         @transform="handleTransform"
       />
-    </UContextMenu>
+    </ContextMenu>
 
     <template #footer>
       <div class="flex items-center justify-between border-t border-default px-2 py-1">

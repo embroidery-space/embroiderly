@@ -1,2 +1,6 @@
-export { default as en } from "./en.ts";
-export { default as uk } from "./uk.ts";
+import type { Locale } from "../types/locale.ts";
+
+import en from "./en.ts";
+import uk from "./uk.ts";
+
+export const locales: Record<string, Locale> = { en, uk };

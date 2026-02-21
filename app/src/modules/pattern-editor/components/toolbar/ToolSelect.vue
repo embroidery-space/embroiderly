@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useShortcuts, extractShortcuts, ShortcutsSeparator } from "@embroiderly/shortcuts";
+import { Button, DropdownMenu, Tooltip } from "@embroiderly/ui";
+import type { DropdownMenuItem } from "@embroiderly/ui";
 
-import type { DropdownMenuItem } from "@nuxt/ui";
 import { unrefElement } from "@vueuse/core";
 import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
@@ -101,14 +102,8 @@ function handleLongPress(e: PointerEvent, isLongPress: boolean) {
 
 <template>
   <div class="relative inline-block">
-    <UTooltip
-      arrow
-      :text="currentOption.label"
-      :delay-duration="200"
-      :disabled="props.disabled"
-      :content="{ side: 'left' }"
-    >
-      <UButton
+    <Tooltip :text="currentOption.label" :delay-duration="200" :disabled="props.disabled" :content="{ side: 'left' }">
+      <Button
         data-testid="tool-selector-main-button"
         color="neutral"
         :variant="selected ? 'solid' : 'ghost'"
@@ -121,24 +116,22 @@ function handleLongPress(e: PointerEvent, isLongPress: boolean) {
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
       />
-    </UTooltip>
+    </Tooltip>
 
-    <UDropdownMenu v-model:open="dropdownMenuOpen" :items="items">
-      <UButton
+    <DropdownMenu v-model:open="dropdownMenuOpen" :items="items">
+      <Button
         v-if="items.length > 1"
         ref="dropdown-button"
         data-testid="tool-selector-dropdown-button"
         variant="link"
         color="neutral"
         :disabled="props.disabled"
-        icon="i-lucide:chevron-down"
+        icon="lucide:chevron-down"
         :ui="{
           base: 'absolute bottom-0 right-0 size-3 rounded-sm border-none p-0',
           leadingIcon: 'size-3 absolute left-1/2 top-1/2 -translate-1/2 -rotate-45',
         }"
-        @pointerdown="handlePointerDown"
-        @pointerup="handlePointerUp"
       />
-    </UDropdownMenu>
+    </DropdownMenu>
   </div>
 </template>

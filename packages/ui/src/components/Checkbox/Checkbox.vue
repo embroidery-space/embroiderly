@@ -43,7 +43,6 @@ defineOptions({ inheritAttrs: false });
 const modelValue = defineModel<boolean>();
 const props = withDefaults(defineProps<CheckboxProps>(), {
   color: "primary",
-  size: "lg",
 });
 
 const { icons } = useComponentIcons();

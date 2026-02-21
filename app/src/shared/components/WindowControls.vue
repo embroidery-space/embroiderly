@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { ref } from "vue";
@@ -26,7 +27,7 @@ useTauriListener(async () => {
       class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-black/6 focus-visible:bg-black/6 active:bg-black/12 dark:text-white dark:hover:bg-white/6 dark:active:bg-white/12"
       @click="appWindow.minimize()"
     >
-      <UIcon name="i-window:minimize" class="size-3" />
+      <Icon name="window:minimize" class="size-3" />
     </button>
 
     <button
@@ -34,8 +35,8 @@ useTauriListener(async () => {
       class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-black/6 focus-visible:bg-black/6 active:bg-black/12 dark:text-white dark:hover:bg-white/6 dark:active:bg-white/12"
       @click="appWindow.toggleMaximize()"
     >
-      <UIcon v-if="isMaximized" name="i-window:restore" class="size-3" />
-      <UIcon v-else name="i-window:maximize" class="size-3" />
+      <Icon v-if="isMaximized" name="window:restore" class="size-3" />
+      <Icon v-else name="window:maximize" class="size-3" />
     </button>
 
     <button
@@ -43,7 +44,7 @@ useTauriListener(async () => {
       class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-red-600 hover:text-white focus-visible:bg-red-600 focus-visible:text-white active:bg-red-700 dark:text-white"
       @click="appWindow.close()"
     >
-      <UIcon name="i-window:close" class="size-3" />
+      <Icon name="window:close" class="size-3" />
     </button>
   </div>
 </template>

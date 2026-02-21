@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Button, Dialog } from "@embroiderly/ui";
+
 import { ref, toRaw } from "vue";
 
 import { Grid } from "#pattern-editor/lib/pattern/";
@@ -17,13 +19,13 @@ async function handleSave() {
 </script>
 
 <template>
-  <UModal :title="$t('grid-properties')">
+  <Dialog :title="$t('grid-properties')">
     <template #body>
       <GridForm v-model="grid" />
     </template>
     <template #footer>
-      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton loading-auto :label="$t('modal-save')" @click="handleSave" />
+      <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <Button loading-auto :label="$t('modal-save')" @click="handleSave" />
     </template>
-  </UModal>
+  </Dialog>
 </template>

@@ -14,8 +14,7 @@ export const InputDimensionsTheme = tv({
     },
     orientation: {
       horizontal: {
-        root: "flex-row items-end",
-        lockButton: "self-end",
+        lockButton: "mb-0.5 self-end",
       },
       vertical: {
         root: "relative flex-col pl-8",

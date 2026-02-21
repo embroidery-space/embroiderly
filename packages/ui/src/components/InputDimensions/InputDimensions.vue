@@ -14,7 +14,7 @@ import type { InputDimensionsThemeSlots, InputDimensionsThemeVariants } from "./
 export interface InputDimensionsProps {
   /**
    * The size of the component.
-   * @default "md"
+   * @default "lg"
    */
   size?: InputDimensionsThemeVariants["size"];
 
@@ -33,15 +33,15 @@ export interface InputDimensionsProps {
   /** Whether the component is disabled. */
   disabled?: boolean;
 
-  /** Additional options for the width FormField wrapper. */
+  /** Additional options for the width `FormField` wrapper. */
   widthFieldOptions?: Omit<FormFieldProps, "size">;
-  /** Additional options for the height FormField wrapper. */
+  /** Additional options for the height `FormField` wrapper. */
   heightFieldOptions?: Omit<FormFieldProps, "size">;
 
-  /** Additional options for the width InputNumber component. */
-  widthOptions?: Omit<InputNumberProps, "modelValue" | "disabled" | "size">;
-  /** Additional options for the height InputNumber component. */
-  heightOptions?: Omit<InputNumberProps, "modelValue" | "disabled" | "size">;
+  /** Additional options for the width `InputNumber` component. */
+  widthInputOptions?: Omit<InputNumberProps, "modelValue" | "disabled" | "size">;
+  /** Additional options for the height `InputNumber` component. */
+  heightInputOptions?: Omit<InputNumberProps, "modelValue" | "disabled" | "size">;
 
   class?: any;
   ui?: InputDimensionsThemeSlots;
@@ -50,7 +50,7 @@ export interface InputDimensionsProps {
 const width = defineModel<number>("width");
 const height = defineModel<number>("height");
 const props = withDefaults(defineProps<InputDimensionsProps>(), {
-  size: "md",
+  size: "lg",
   orientation: "horizontal",
 });
 
@@ -99,7 +99,7 @@ const ui = computed(() =>
   <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <FormField v-bind="widthFieldOptions" :size="size">
       <InputNumber
-        v-bind="widthOptions"
+        v-bind="widthInputOptions"
         :size="size"
         :disabled="disabled"
         :model-value="width"
@@ -123,7 +123,7 @@ const ui = computed(() =>
 
     <FormField v-bind="heightFieldOptions" :size="size">
       <InputNumber
-        v-bind="heightOptions"
+        v-bind="heightInputOptions"
         :size="size"
         :disabled="disabled"
         :model-value="height"

@@ -42,7 +42,6 @@ export interface RadioGroupProps extends Pick<RadioGroupRootProps, "as" | "asChi
 const modelValue = defineModel<RadioGroupValue>();
 const props = withDefaults(defineProps<RadioGroupProps>(), {
   color: "primary",
-  size: "lg",
 });
 
 const { id, size, ariaAttrs } = useFormField(props);

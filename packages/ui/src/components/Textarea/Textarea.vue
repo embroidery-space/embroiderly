@@ -56,7 +56,6 @@ const props = withDefaults(defineProps<TextareaProps>(), {
 
   color: "primary",
   variant: "subtle",
-  size: "lg",
 
   rows: 3,
   maxrows: 0,

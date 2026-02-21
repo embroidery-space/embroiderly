@@ -35,7 +35,6 @@ defineOptions({ inheritAttrs: false });
 const modelValue = defineModel<boolean>();
 const props = withDefaults(defineProps<SwitchProps>(), {
   color: "primary",
-  size: "md",
 });
 
 const { id, size, ariaAttrs } = useFormField(props);

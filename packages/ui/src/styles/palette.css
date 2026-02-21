@@ -74,8 +74,7 @@
 }
 
 :root,
-:host,
-.light {
+:host {
   --ui-color-neutral-50: #f9fafb;
   --ui-color-neutral-100: #f5f7f9;
   --ui-color-neutral-200: #f2f4f8;
@@ -89,16 +88,19 @@
   --ui-color-neutral-950: #5c75a3;
 }
 
-.dark {
-  --ui-color-neutral-50: #e4e7ec;
-  --ui-color-neutral-100: #d5d9e1;
-  --ui-color-neutral-200: #b5bcca;
-  --ui-color-neutral-300: #8893aa;
-  --ui-color-neutral-400: #4c566a;
-  --ui-color-neutral-500: #434c5e;
-  --ui-color-neutral-600: #3b4252;
-  --ui-color-neutral-700: #2e3440;
-  --ui-color-neutral-800: #2b303b;
-  --ui-color-neutral-900: #22272f;
-  --ui-color-neutral-950: #171b21;
+@media (prefers-color-scheme: dark) {
+  :root,
+  :host {
+    --ui-color-neutral-50: #e4e7ec;
+    --ui-color-neutral-100: #d5d9e1;
+    --ui-color-neutral-200: #b5bcca;
+    --ui-color-neutral-300: #8893aa;
+    --ui-color-neutral-400: #4c566a;
+    --ui-color-neutral-500: #434c5e;
+    --ui-color-neutral-600: #3b4252;
+    --ui-color-neutral-700: #2e3440;
+    --ui-color-neutral-800: #2b303b;
+    --ui-color-neutral-900: #22272f;
+    --ui-color-neutral-950: #171b21;
+  }
 }

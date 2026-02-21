@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && pnpm check-types",
+    "build": "pnpm check-types && vite build",
     "build-only": "vite build",
     "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
     "test": "vitest run",
@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "@embroiderly/shortcuts": "workspace:",
+    "@embroiderly/ui": "workspace:",
     "@fluent/bundle": "catalog:",
-    "@nuxt/ui": "catalog:",
     "@sentry/core": "catalog:",
     "@sentry/vue": "catalog:",
     "@stdlib/math-base-special-roundn": "catalog:",

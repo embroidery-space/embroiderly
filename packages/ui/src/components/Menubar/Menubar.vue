@@ -52,6 +52,8 @@ export interface MenubarMenu {
   icon?: string;
   /** Whether the menu trigger is disabled. */
   disabled?: boolean;
+  /** Whether the menu trigger is hidden. */
+  hidden?: boolean;
   /** The items to display in this menu's dropdown. */
   items: MenubarItem[] | MenubarItem[][];
 }
@@ -123,7 +125,7 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
     :class="ui.root({ class: props.ui?.root })"
   >
     <slot :model-value="currentMenu">
-      <Menubar.Menu v-for="(menu, index) in menus" :key="index">
+      <Menubar.Menu v-for="(menu, index) in menus?.filter((menu) => !menu.hidden)" :key="index">
         <Menubar.Trigger as-child :disabled="menu.disabled">
           <Button
             color="neutral"

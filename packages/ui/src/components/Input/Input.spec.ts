@@ -16,6 +16,12 @@ describe("Input", () => {
     ...sizes.map((size: string) => [`with size ${size}`, { props: { size } }]),
     ["with class", { props: { class: "absolute" } }],
     ["with ui", { props: { ui: { base: "rounded-full" } } }],
+    ["with icon", { props: { icon: "lucide:rocket" } }],
+    ["with icon and leading", { props: { icon: "lucide:rocket", leading: true } }],
+    ["with icon and trailing", { props: { icon: "lucide:rocket", trailing: true } }],
+    ["with leading icon", { props: { leadingIcon: "lucide:rocket" } }],
+    ["with trailing icon", { props: { trailingIcon: "lucide:rocket" } }],
+    ["with leading and trailing icons", { props: { leadingIcon: "lucide:rocket", trailingIcon: "lucide:rocket" } }],
     ["with leading slot", { slots: { leading: () => "Leading slot" } }],
     ["with trailing slot", { slots: { trailing: () => "Trailing slot" } }],
   ] as [string, { props?: InputProps; slots?: Partial<InputSlots> }][])("renders correctly %s", async (_, options) => {

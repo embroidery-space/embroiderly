@@ -2,6 +2,7 @@
 import { insertNodeAt, removeNode, useSortable } from "@vueuse/integrations/useSortable";
 import { dequal } from "dequal/lite";
 import type { AcceptableValue } from "reka-ui";
+import { Listbox } from "reka-ui/namespaced";
 import { nextTick, watchEffect, useTemplateRef } from "vue";
 
 import { BasePaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
@@ -92,19 +93,19 @@ function optionIsSelected(option: T) {
       <slot name="header"></slot>
     </div>
 
-    <RListboxRoot
+    <Listbox.Root
       v-model="value as AcceptableValue"
       :disabled="disabled"
       :multiple="multiple"
       class="flex grow flex-col overflow-hidden data-disabled:cursor-not-allowed"
     >
       <div v-if="$slots.filter" class="shrink-0 border-b border-default px-2 py-1">
-        <RListboxFilter as-child>
+        <Listbox.Filter as-child>
           <slot name="filter"></slot>
-        </RListboxFilter>
+        </Listbox.Filter>
       </div>
 
-      <RListboxContent
+      <Listbox.Content
         ref="content"
         class="grid gap-1 overflow-y-auto p-1 outline-none"
         :style="{
@@ -112,7 +113,7 @@ function optionIsSelected(option: T) {
         }"
       >
         <template v-if="options.length">
-          <RListboxItem
+          <Listbox.Item
             v-for="option in options"
             :key="option.index"
             :value="optionValue?.(option) ?? option"
@@ -133,11 +134,11 @@ function optionIsSelected(option: T) {
                 :display-settings="displaySettings"
               />
             </slot>
-          </RListboxItem>
+          </Listbox.Item>
         </template>
         <p v-else class="px-2">{{ $t("palette-empty") }}</p>
-      </RListboxContent>
-    </RListboxRoot>
+      </Listbox.Content>
+    </Listbox.Root>
 
     <div v-if="$slots.footer" class="border-t border-default px-2 py-1">
       <slot name="footer"></slot>

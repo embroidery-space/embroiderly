@@ -11,19 +11,27 @@ import { iconsInjectionKey } from "../../composables/useComponentIcons.ts";
 import { localeInjectionKey } from "../../composables/useLocale.ts";
 import { GLOBAL_PORTAL, PORTAL_TARGET_INJECTION_KEY } from "../../composables/usePortal.ts";
 import { DEFAULT_ICONS } from "../../icons.ts";
+import { locales } from "../../locales/index.ts";
 import type { Icons } from "../../types/icons.ts";
-import type { Locale } from "../../types/locale.ts";
 import Toaster from "../Toast/Toaster.vue";
 import type { ToasterProps } from "../Toast/Toaster.vue";
 
 import OverlayProvider from "./OverlayProvider.vue";
 
 export interface AppProps extends Omit<ConfigProviderProps, "dir" | "locale" | "useId"> {
+  /** Tooltip options. */
   tooltip?: TooltipProviderProps;
+  /** Toast options. Pass `null` to disable toasts. */
   toaster?: ToasterProps | null;
+  /** Shortcut options. Pass `null` to disable shortcuts. */
   shortcuts?: ShortcutsProviderProps | null;
 
-  locale?: Locale;
+  /**
+   * The locale to use for the application.
+   * @default "en"
+   */
+  locale?: string;
+  /** Icons override. */
   icons?: Partial<Icons>;
 
   portal?: boolean | string | HTMLElement;
@@ -34,6 +42,7 @@ export interface AppSlots {
 }
 
 const props = withDefaults(defineProps<AppProps>(), {
+  locale: "en",
   portal: GLOBAL_PORTAL,
 });
 defineSlots<AppSlots>();
@@ -43,7 +52,7 @@ const tooltipProps = toRef(() => props.tooltip);
 const toasterProps = toRef(() => props.toaster);
 const shortcutsProps = toRef(() => props.shortcuts);
 
-const locale = toRef(() => props.locale);
+const locale = toRef(() => locales[props.locale]!);
 provide(localeInjectionKey, locale);
 
 const icons = toRef(() => ({ ...DEFAULT_ICONS, ...props.icons }));
@@ -54,16 +63,16 @@ provide(PORTAL_TARGET_INJECTION_KEY, portal);
 </script>
 
 <template>
-  <ConfigProvider v-bind="configProps" :dir="locale?.dir" :locale="locale?.code" :use-id="useId">
+  <ConfigProvider v-bind="configProps" :dir="locale.dir" :locale="locale.code" :use-id="useId">
     <TooltipProvider v-bind="tooltipProps">
       <Toaster v-if="toasterProps !== null" v-bind="toasterProps">
-        <ShortcutsProvider v-if="shortcutsProps" v-bind="shortcutsProps">
+        <ShortcutsProvider v-if="shortcutsProps !== null" v-bind="shortcutsProps">
           <slot />
         </ShortcutsProvider>
         <slot v-else />
       </Toaster>
       <template v-else>
-        <ShortcutsProvider v-if="shortcutsProps" v-bind="shortcutsProps">
+        <ShortcutsProvider v-if="shortcutsProps !== null" v-bind="shortcutsProps">
           <slot />
         </ShortcutsProvider>
         <slot v-else />

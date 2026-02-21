@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Button, Dialog } from "@embroiderly/ui";
+
 import { ref, toRaw } from "vue";
 
 import { PatternInfo } from "#pattern-editor/lib/pattern/";
@@ -20,13 +22,13 @@ async function handleSave() {
 </script>
 
 <template>
-  <UModal :title="$t('pattern-info')">
+  <Dialog :title="$t('pattern-info')">
     <template #body>
       <PatternInfoForm v-model="patternInfo" />
     </template>
     <template #footer>
-      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton loading-auto :label="$t('modal-save')" @click="handleSave" />
+      <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <Button loading-auto :label="$t('modal-save')" @click="handleSave" />
     </template>
-  </UModal>
+  </Dialog>
 </template>

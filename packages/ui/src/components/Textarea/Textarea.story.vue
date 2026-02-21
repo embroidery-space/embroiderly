@@ -9,6 +9,7 @@ import Textarea from "./Textarea.vue";
 import type { TextareaProps } from "./Textarea.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
+const variants = ["subtle", "outline"] as const;
 
 const value = ref("");
 const inputState = reactive<TextareaProps>({
@@ -46,6 +47,7 @@ defineExpose({ inputState, formFieldState });
       <template #controls>
         <HstCheckbox v-model="inputState.disabled" title="Disabled" />
         <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
+        <HstSelect v-model="inputState.variant" title="Variant" :options="variants" />
 
         <HstText v-model="formFieldState.label" title="Label" />
         <HstText v-model="formFieldState.description" title="Description" />
@@ -63,6 +65,14 @@ defineExpose({ inputState, formFieldState });
       <div class="flex flex-col gap-2">
         <template v-for="size in sizes" :key="size">
           <Textarea :size="size" :model-value="`Size: ${size}`" />
+        </template>
+      </div>
+    </Variant>
+
+    <Variant id="variants" title="Variants" auto-props-disabled>
+      <div class="flex flex-col gap-2">
+        <template v-for="variant in variants" :key="variant">
+          <Textarea :model-value="`Variant: ${variant}`" :variant="variant" />
         </template>
       </div>
     </Variant>

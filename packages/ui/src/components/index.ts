@@ -42,7 +42,7 @@ export { default as InputDimensions, type InputDimensionsProps } from "./InputDi
 export { default as InputNumber, type InputNumberProps } from "./InputNumber/InputNumber.vue";
 export { default as InputNumberSlider, type InputNumberSliderProps } from "./InputNumberSlider/InputNumberSlider.vue";
 export { default as RadioGroup, type RadioGroupProps, type RadioGroupItem } from "./RadioGroup/RadioGroup.vue";
-export { default as Select, type SelectProps, type SelectItem } from "./Select/Select.vue";
+export { default as Select, type SelectProps, type SelectItem, type SelectItemObject } from "./Select/Select.vue";
 export { default as Slider, type SliderProps } from "./Slider/Slider.vue";
 export { default as Switch, type SwitchProps } from "./Switch/Switch.vue";
 export { default as Textarea, type TextareaProps } from "./Textarea/Textarea.vue";

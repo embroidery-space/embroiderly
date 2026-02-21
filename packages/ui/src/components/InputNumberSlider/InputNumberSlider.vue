@@ -52,8 +52,6 @@ export interface InputNumberSliderProps extends Pick<
 
 const modelValue = defineModel<number>();
 const props = withDefaults(defineProps<InputNumberSliderProps>(), {
-  size: "md",
-
   increment: false,
   decrement: false,
 });

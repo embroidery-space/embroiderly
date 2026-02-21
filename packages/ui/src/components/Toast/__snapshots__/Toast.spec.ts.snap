@@ -242,7 +242,7 @@ exports[`Toast > renders correctly with actions and description 1`] = `
             
           </div>
           <div
-            class="text-sm text-muted mt-1"
+            class="text-sm whitespace-pre-line text-muted mt-1"
             data-slot="description"
           >
             
@@ -1279,7 +1279,7 @@ exports[`Toast > renders correctly with description 1`] = `
             
           </div>
           <div
-            class="text-sm text-muted mt-1"
+            class="text-sm whitespace-pre-line text-muted mt-1"
             data-slot="description"
           >
             
@@ -1433,7 +1433,7 @@ exports[`Toast > renders correctly with description slot 1`] = `
             
           </div>
           <div
-            class="text-sm text-muted mt-1"
+            class="text-sm whitespace-pre-line text-muted mt-1"
             data-slot="description"
           >
             
@@ -1734,7 +1734,7 @@ exports[`Toast > renders correctly with title and description 1`] = `
             
           </div>
           <div
-            class="text-sm text-muted mt-1"
+            class="text-sm whitespace-pre-line text-muted mt-1"
             data-slot="description"
           >
             

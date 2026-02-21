@@ -1321,7 +1321,7 @@ exports[`RadioGroup > renders correctly with ui 1`] = `
 exports[`RadioGroup > renders correctly within FormField 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div

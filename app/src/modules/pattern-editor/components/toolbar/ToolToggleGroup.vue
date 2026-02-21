@@ -1,5 +1,8 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
+import { Button, Tooltip } from "@embroiderly/ui";
+
 import type { AcceptableValue } from "reka-ui";
+import { ToggleGroup } from "reka-ui/namespaced";
 
 interface ToolOption {
   icon: string;
@@ -12,12 +15,12 @@ defineProps<{ options: ToolOption[]; orientation?: "vertical" | "horizontal"; di
 </script>
 
 <template>
-  <RToggleGroupRoot v-model="value" :orientation="orientation" :disabled="disabled" type="single" class="flex gap-1">
+  <ToggleGroup.Root v-model="value" :orientation="orientation" :disabled="disabled" type="single" class="flex gap-1">
     <!-- @vue-ignore -->
     <template v-for="(option, index) in options" :key="index">
-      <UTooltip arrow :text="option.label" :disabled="disabled" :delay-duration="200" :content="{ side: 'left' }">
-        <RToggleGroupItem :value="option.value" :disabled="disabled" as-child>
-          <UButton
+      <Tooltip :text="option.label" :disabled="disabled" :delay-duration="200" :content="{ side: 'left' }">
+        <ToggleGroup.Item :value="option.value" :disabled="disabled" as-child>
+          <Button
             color="neutral"
             variant="ghost"
             :icon="option.icon"
@@ -26,8 +29,8 @@ defineProps<{ options: ToolOption[]; orientation?: "vertical" | "horizontal"; di
             :class="{ 'bg-elevated hover:bg-accented': option.value === value }"
             :ui="{ leadingIcon: 'size-5' }"
           />
-        </RToggleGroupItem>
-      </UTooltip>
+        </ToggleGroup.Item>
+      </Tooltip>
     </template>
-  </RToggleGroupRoot>
+  </ToggleGroup.Root>
 </template>

@@ -16,13 +16,32 @@ import type { InputProps } from "../Input/Input.vue";
 import { SelectTheme } from "./Select.theme.ts";
 import type { SelectThemeSlots, SelectThemeVariants } from "./Select.theme.ts";
 
-export type SelectItem = string | number | { label: string; value: string | number };
+export interface SelectItemObject {
+  /** The type of the item. */
+  type?: "separator" | "label";
+
+  /** The label to display. */
+  label?: string;
+  /** The value of the item. Not used for `separator` and `label` types. */
+  value?: string | number;
+
+  /** An icon to display before the label. */
+  icon?: string;
+
+  /** Whether the item is disabled. */
+  disabled?: boolean;
+
+  /** Additional CSS class(es) for the item. */
+  class?: any;
+}
+
+export type SelectItem = string | number | SelectItemObject;
 
 export interface SelectProps {
   id?: string;
 
   /** The items to display in the select. */
-  items?: SelectItem[];
+  items?: SelectItem[] | SelectItem[][];
 
   /** The placeholder text when no value is selected. */
   placeholder?: string;
@@ -90,24 +109,29 @@ const searchInputProps = toRef(
 const open = ref(false);
 const searchValue = ref("");
 
-const normalizedItems = computed<{ label: string; value: string | number }[]>(() => {
-  if (!props.items) return [];
-  return props.items.map((item) => {
-    if (typeof item === "string" || typeof item === "number") {
-      return { label: String(item), value: item };
-    }
-    return item;
-  });
+const normalizedGroups = computed<SelectItemObject[][]>(() => {
+  if (!props.items?.length) return [];
+  if (Array.isArray(props.items[0])) {
+    return (props.items as SelectItem[][]).map((group) => group.map((item) => normalizeItem(item)));
+  }
+  return [(props.items as SelectItem[]).map((item) => normalizeItem(item))];
 });
 
-const filteredItems = computed(() => {
-  if (!props.searchInput || !searchValue.value) return normalizedItems.value;
-  return normalizedItems.value.filter((item) => contains(item.label, searchValue.value));
+const filteredGroups = computed<SelectItemObject[][]>(() => {
+  if (!props.searchInput || !searchValue.value) return normalizedGroups.value;
+  return normalizedGroups.value
+    .map((group) =>
+      group.filter((item) => {
+        if (item.type === "separator" || item.type === "label") return false;
+        return contains(item.label ?? "", searchValue.value);
+      }),
+    )
+    .filter((group) => group.length > 0);
 });
 
 const displayValue = computed(() => {
   if (modelValue.value === null) return undefined;
-  const found = normalizedItems.value.find((item) => item.value === modelValue.value);
+  const found = normalizedGroups.value.flat().find((item) => !item.type && item.value === modelValue.value);
   return found?.label;
 });
 
@@ -121,6 +145,13 @@ const ui = computed(() => {
     fieldGroup: fieldGroup.value,
   });
 });
+
+function normalizeItem(item: SelectItem): SelectItemObject {
+  if (typeof item === "string" || typeof item === "number") {
+    return { label: String(item), value: item };
+  }
+  return item;
+}
 </script>
 
 <template>
@@ -130,6 +161,7 @@ const ui = computed(() => {
     :disabled="disabled"
     :ignore-filter="!searchInput"
     :reset-search-term-on-blur="false"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     @update:open="
       (value) => {
         open = value;
@@ -143,14 +175,14 @@ const ui = computed(() => {
         v-bind="{ ...$attrs, ...ariaAttrs }"
         :disabled="disabled"
         data-slot="base"
-        :class="ui.base({ class: [props.ui?.base, props.class] })"
+        :class="ui.base({ class: [props.ui?.base] })"
       >
-        <span v-if="displayValue" data-slot="value" :class="ui.value({ class: props.ui?.value })">{{
-          displayValue
-        }}</span>
-        <span v-else data-slot="placeholder" :class="ui.placeholder({ class: props.ui?.placeholder })">{{
-          placeholder
-        }}</span>
+        <span v-if="displayValue" data-slot="value" :class="ui.value({ class: props.ui?.value })">
+          {{ displayValue }}
+        </span>
+        <span v-else data-slot="placeholder" :class="ui.placeholder({ class: props.ui?.placeholder })">
+          {{ placeholder }}
+        </span>
 
         <Icon
           v-if="loading"
@@ -191,23 +223,52 @@ const ui = computed(() => {
             {{ searchValue ? messages.select.noMatches : messages.select.noData }}
           </Combobox.Empty>
 
-          <Combobox.Group data-slot="group" :class="ui.group({ class: props.ui?.group })">
-            <Combobox.Item
-              v-for="item in filteredItems"
-              :key="item.value"
-              :value="item.value"
-              data-slot="item"
-              :class="ui.item({ class: props.ui?.item })"
-            >
-              <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
-              <Combobox.ItemIndicator>
+          <Combobox.Group
+            v-for="(group, groupIndex) in filteredGroups"
+            :key="`group-${groupIndex}`"
+            data-slot="group"
+            :class="ui.group({ class: props.ui?.group })"
+          >
+            <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
+              <Combobox.Separator
+                v-if="item.type === 'separator'"
+                data-slot="separator"
+                :class="ui.separator({ class: [props.ui?.separator, item.class] })"
+              />
+
+              <Combobox.Label
+                v-else-if="item.type === 'label'"
+                data-slot="label"
+                :class="ui.label({ class: [props.ui?.label, item.class] })"
+              >
+                {{ item.label }}
+              </Combobox.Label>
+
+              <Combobox.Item
+                v-else
+                :value="item.value!"
+                :disabled="item.disabled"
+                data-slot="item"
+                :class="ui.item({ class: [props.ui?.item, item.class] })"
+              >
                 <Icon
-                  :name="icons.check"
-                  data-slot="itemIndicator"
-                  :class="ui.itemIndicator({ class: props.ui?.itemIndicator })"
+                  v-if="item.icon"
+                  :name="item.icon"
+                  data-slot="itemLeadingIcon"
+                  :class="ui.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
                 />
-              </Combobox.ItemIndicator>
-            </Combobox.Item>
+                <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
+                  {{ item.label }}
+                </span>
+                <Combobox.ItemIndicator>
+                  <Icon
+                    :name="icons.check"
+                    data-slot="itemIndicator"
+                    :class="ui.itemIndicator({ class: props.ui?.itemIndicator })"
+                  />
+                </Combobox.ItemIndicator>
+              </Combobox.Item>
+            </template>
           </Combobox.Group>
         </Combobox.Viewport>
       </Combobox.Content>

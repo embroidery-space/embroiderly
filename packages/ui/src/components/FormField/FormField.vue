@@ -35,8 +35,6 @@ export interface FormFieldSlots {
 
 const props = withDefaults(defineProps<FormFieldProps>(), {
   as: "div",
-
-  size: "lg",
 });
 defineSlots<FormFieldSlots>();
 

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Tooltip } from "@embroiderly/ui";
+
 import type { BasePaletteItem, PaletteSettings } from "#pattern-editor/lib/pattern/";
 
 interface PaletteItemProps {
@@ -11,8 +13,7 @@ const { paletteItem, selected, displaySettings } = defineProps<PaletteItemProps>
 </script>
 
 <template>
-  <UTooltip
-    arrow
+  <Tooltip
     :text="paletteItem.getTitle()"
     :delay-duration="200"
     :content="{ side: 'left' }"
@@ -31,5 +32,5 @@ const { paletteItem, selected, displaySettings } = defineProps<PaletteItemProps>
         {{ paletteItem.getTitle(displaySettings) }}
       </span>
     </div>
-  </UTooltip>
+  </Tooltip>
 </template>

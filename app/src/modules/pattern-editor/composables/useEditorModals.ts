@@ -1,3 +1,5 @@
+import { useOverlay } from "@embroiderly/ui";
+
 import { createSharedComposable } from "@vueuse/core";
 import { defineAsyncComponent } from "vue";
 

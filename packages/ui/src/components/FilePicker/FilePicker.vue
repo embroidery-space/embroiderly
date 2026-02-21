@@ -35,7 +35,7 @@ const emit = defineEmits<FilePickerEmits>();
 const { messages } = useLocale();
 
 const { fieldGroupSize } = useFormFieldGroup();
-const size = computed(() => props.size ?? fieldGroupSize.value ?? "md");
+const size = computed(() => props.size ?? fieldGroupSize.value ?? "lg");
 
 const theme = computed(() => FilePickerTheme({ size: size.value, class: [props.ui?.base, props.class] }));
 </script>

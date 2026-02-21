@@ -5,7 +5,7 @@ defineSlots<{ default(): any }>();
 </script>
 
 <template>
-  <App :portal="false" :toasts="null">
+  <App :portal="false" :toaster="null">
     <slot />
   </App>
 </template>

@@ -54,7 +54,7 @@ exports[`ConfirmDialog > renders correctly with class 1`] = `
           
         </h2>
         <p
-          class="mt-1 text-sm text-muted"
+          class="mt-1 text-sm whitespace-pre-line text-muted"
           data-slot="description"
           id="reka-dialog-description-v-2"
         >
@@ -202,7 +202,7 @@ exports[`ConfirmDialog > renders correctly with noButton hidden 1`] = `
           
         </h2>
         <p
-          class="mt-1 text-sm text-muted"
+          class="mt-1 text-sm whitespace-pre-line text-muted"
           data-slot="description"
           id="reka-dialog-description-v-2"
         >
@@ -330,7 +330,7 @@ exports[`ConfirmDialog > renders correctly with title and description 1`] = `
           
         </h2>
         <p
-          class="mt-1 text-sm text-muted"
+          class="mt-1 text-sm whitespace-pre-line text-muted"
           data-slot="description"
           id="reka-dialog-description-v-2"
         >
@@ -478,7 +478,7 @@ exports[`ConfirmDialog > renders correctly with ui 1`] = `
           
         </h2>
         <p
-          class="mt-1 text-sm text-muted"
+          class="mt-1 text-sm whitespace-pre-line text-muted"
           data-slot="description"
           id="reka-dialog-description-v-2"
         >
@@ -626,7 +626,7 @@ exports[`ConfirmDialog > renders correctly with yesButton hidden 1`] = `
           
         </h2>
         <p
-          class="mt-1 text-sm text-muted"
+          class="mt-1 text-sm whitespace-pre-line text-muted"
           data-slot="description"
           id="reka-dialog-description-v-2"
         >

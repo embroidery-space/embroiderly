@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
+import { ButtonIcon, DropdownMenu, Menubar, Separator, useConfirm } from "@embroiderly/ui";
+import type { DropdownMenuItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
-import type { DropdownMenuItem } from "@nuxt/ui";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 
@@ -13,15 +14,12 @@ import { useEditorModals } from "#pattern-editor/composables/";
 import { Fabric } from "#pattern-editor/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "#pattern-editor/stores/";
 import { SystemApi } from "#shared/api";
-import { WindowTitlebar } from "#shared/components/";
-import type { WindowMenuItem } from "#shared/components/";
-import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+import { WindowControls } from "#shared/components/index.ts";
+import { useFilePicker, useI18n } from "#shared/composables/";
 import { ANY_IMAGE_FILTER } from "#shared/constants";
 import { useSettingsStore } from "#shared/stores/";
 
 import { FilesApi } from "../api/";
-
-import { ToolButton } from "./toolbar/";
 
 const router = useRouter();
 
@@ -37,10 +35,10 @@ const settingsStore = useSettingsStore();
 
 const appWindow = getCurrentWebviewWindow();
 
-const menuItems = computed<WindowMenuItem[]>(() => [
+const menus = computed<MenubarMenu[]>(() => [
   {
     label: fluent.$t("app-menu-file"),
-    children: [
+    items: [
       [
         {
           label: fluent.$t("app-menu-file-open"),
@@ -158,8 +156,8 @@ const menuItems = computed<WindowMenuItem[]>(() => [
   },
   {
     label: fluent.$t("app-menu-pattern"),
-    visible: patternStore.pattern !== undefined,
-    children: [
+    hidden: patternStore.pattern === undefined,
+    items: [
       [
         {
           label: fluent.$t("pattern-info"),
@@ -204,7 +202,7 @@ const menuItems = computed<WindowMenuItem[]>(() => [
   },
   {
     label: fluent.$t("app-menu-tools"),
-    children: [
+    items: [
       [{ label: fluent.$t("settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettingsModal() }],
       [
         {
@@ -216,7 +214,7 @@ const menuItems = computed<WindowMenuItem[]>(() => [
   },
   {
     label: fluent.$t("app-menu-help"),
-    children: [
+    items: [
       [{ label: fluent.$t("app-menu-help-about"), onSelect: showSystemInfo }],
       [
         {
@@ -242,7 +240,7 @@ const menuItems = computed<WindowMenuItem[]>(() => [
     ],
   },
 ]);
-useShortcuts(extractShortcuts(menuItems));
+useShortcuts(extractShortcuts(() => menus.value.map((menu) => menu.items)));
 
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
   [{ label: fluent.$t("settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettingsModal() }],
@@ -270,37 +268,45 @@ async function showSystemInfo() {
 </script>
 
 <template>
-  <WindowTitlebar :items="menuItems">
-    <template #end>
-      <div class="flex items-center gap-2">
+  <div class="flex border-b border-default">
+    <div data-tauri-drag-region class="flex grow items-center gap-x-2 px-2">
+      <Menubar :menus="menus" />
+
+      <div class="ml-auto flex items-center gap-2">
         <template v-if="patternStore.pattern">
-          <ToolButton
+          <ButtonIcon
             data-testid="undo-button"
-            tooltip-side="bottom"
-            :tooltip-arrow="false"
-            icon="i-lucide:undo"
-            :label="$t('history-undo')"
-            :kbds="['ctrl', 'z']"
-            :on-click="patternStore.undo"
+            icon="lucide:undo"
+            color="neutral"
+            variant="ghost"
+            :tooltip="$t('history-undo')"
+            shortcut="Ctrl+Z"
+            @click="() => patternStore.undo()"
           />
-          <ToolButton
+          <ButtonIcon
             data-testid="redo-button"
-            tooltip-side="bottom"
-            :tooltip-arrow="false"
-            icon="i-lucide:redo"
-            :label="$t('history-redo')"
-            :kbds="['ctrl', 'y']"
-            :on-click="patternStore.redo"
+            icon="lucide:redo"
+            color="neutral"
+            variant="ghost"
+            :tooltip="$t('history-redo')"
+            shortcut="Ctrl+Y"
+            @click="() => patternStore.redo()"
           />
-          <USeparator orientation="vertical" />
+          <Separator orientation="vertical" />
         </template>
 
-        <UDropdownMenu :items="manageOptions" :modal="false">
-          <UTooltip :text="$t('app-menu-manage')">
-            <UButton :loading="settingsStore.loadingUpdate" variant="ghost" color="neutral" icon="i-lucide:settings" />
-          </UTooltip>
-        </UDropdownMenu>
+        <DropdownMenu :items="manageOptions" :modal="false">
+          <ButtonIcon
+            :loading="settingsStore.loadingUpdate"
+            variant="ghost"
+            color="neutral"
+            icon="lucide:settings"
+            :tooltip="$t('app-menu-manage')"
+          />
+        </DropdownMenu>
       </div>
-    </template>
-  </WindowTitlebar>
+    </div>
+
+    <WindowControls />
+  </div>
 </template>

@@ -37,6 +37,111 @@ exports[`Input > renders correctly with disabled 1`] = `
 </div>
 `;
 
+exports[`Input > renders correctly with icon 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    data-slot="root"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+      data-slot="leading"
+    >
+      
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-dimmed size-5"
+        data-slot="leadingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      data-slot="base"
+      id="v-0"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with icon and leading 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    data-slot="root"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+      data-slot="leading"
+    >
+      
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-dimmed size-5"
+        data-slot="leadingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      data-slot="base"
+      id="v-0"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with icon and trailing 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    data-slot="root"
+  >
+    <!--v-if-->
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-11"
+      data-slot="base"
+      id="v-0"
+      type="text"
+    />
+    <span
+      class="absolute inset-y-0 end-0 flex items-center pe-3"
+      data-slot="trailing"
+    >
+      
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-dimmed size-5"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </span>
+  </div>
+</div>
+`;
+
 exports[`Input > renders correctly with id 1`] = `
 <div>
   <div
@@ -48,6 +153,93 @@ exports[`Input > renders correctly with id 1`] = `
       class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       data-slot="base"
       id="id"
+      type="text"
+    />
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with leading and trailing icons 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    data-slot="root"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+      data-slot="leading"
+    >
+      
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-dimmed size-5"
+        data-slot="leadingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11 pe-11"
+      data-slot="base"
+      id="v-0"
+      type="text"
+    />
+    <span
+      class="absolute inset-y-0 end-0 flex items-center pe-3"
+      data-slot="trailing"
+    >
+      
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-dimmed size-5"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with leading icon 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    data-slot="root"
+  >
+    <span
+      class="absolute inset-y-0 start-0 flex items-center ps-3"
+      data-slot="leading"
+    >
+      
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-dimmed size-5"
+        data-slot="leadingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </span>
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ps-11"
+      data-slot="base"
+      id="v-0"
       type="text"
     />
     <!--v-if-->
@@ -134,6 +326,41 @@ exports[`Input > renders correctly with size sm 1`] = `
 </div>
 `;
 
+exports[`Input > renders correctly with trailing icon 1`] = `
+<div>
+  <div
+    class="relative inline-flex items-center"
+    data-slot="root"
+  >
+    <!--v-if-->
+    <input
+      class="w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset pe-11"
+      data-slot="base"
+      id="v-0"
+      type="text"
+    />
+    <span
+      class="absolute inset-y-0 end-0 flex items-center pe-3"
+      data-slot="trailing"
+    >
+      
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-dimmed size-5"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </span>
+  </div>
+</div>
+`;
+
 exports[`Input > renders correctly with trailing slot 1`] = `
 <div>
   <div
@@ -180,7 +407,7 @@ exports[`Input > renders correctly with ui 1`] = `
 exports[`Input > renders correctly within FormField 1`] = `
 <div>
   <div
-    class="text-base"
+    class=""
     data-slot="root"
   >
     <div

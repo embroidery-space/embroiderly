@@ -34,7 +34,7 @@ const fullstitches = computed<ToolSelectItem[]>(() => [
   {
     value: tools.FullStitch,
     label: fluent.$t("stitch-full"),
-    icon: "i-stitches:full",
+    icon: "stitches:full",
     kbds: ["f"],
   },
 ]);
@@ -43,31 +43,31 @@ const petitestitches = computed<ToolSelectItem[]>(() => [
   {
     value: tools.PetiteStitch,
     label: fluent.$t("stitch-petite"),
-    icon: "i-stitches:petite",
+    icon: "stitches:petite",
     kbds: ["p"],
   },
   {
     value: tools.PetiteStitchTL,
     label: fluent.$t("stitch-petite-tl"),
-    icon: "i-stitches:petite-tl",
+    icon: "stitches:petite-tl",
     kbds: ["p", "t", "l"],
   },
   {
     value: tools.PetiteStitchTR,
     label: fluent.$t("stitch-petite-tr"),
-    icon: "i-stitches:petite-tr",
+    icon: "stitches:petite-tr",
     kbds: ["p", "t", "r"],
   },
   {
     value: tools.PetiteStitchBR,
     label: fluent.$t("stitch-petite-br"),
-    icon: "i-stitches:petite-br",
+    icon: "stitches:petite-br",
     kbds: ["p", "b", "r"],
   },
   {
     value: tools.PetiteStitchBL,
     label: fluent.$t("stitch-petite-bl"),
-    icon: "i-stitches:petite-bl",
+    icon: "stitches:petite-bl",
     kbds: ["p", "b", "l"],
   },
 ]);
@@ -76,19 +76,19 @@ const halfstitches = computed<ToolSelectItem[]>(() => [
   {
     value: tools.HalfStitch,
     label: fluent.$t("stitch-half"),
-    icon: "i-stitches:half",
+    icon: "stitches:half",
     kbds: ["h"],
   },
   {
     value: tools.HalfStitchForward,
     label: fluent.$t("stitch-half-forward"),
-    icon: "i-stitches:half-forward",
+    icon: "stitches:half-forward",
     kbds: ["h", "f"],
   },
   {
     value: tools.HalfStitchBackward,
     label: fluent.$t("stitch-half-backward"),
-    icon: "i-stitches:half-backward",
+    icon: "stitches:half-backward",
     kbds: ["h", "b"],
   },
 ]);
@@ -97,23 +97,23 @@ const quarterstitches = computed<ToolSelectItem[]>(() => [
   {
     value: tools.QuarterStitch,
     label: fluent.$t("stitch-quarter"),
-    icon: "i-stitches:quarter",
+    icon: "stitches:quarter",
     kbds: ["q"],
   },
   {
     value: tools.QuarterStitchTL,
     label: fluent.$t("stitch-quarter-tl"),
-    icon: "i-stitches:quarter-tl",
+    icon: "stitches:quarter-tl",
     kbds: ["q", "t", "l"],
   },
   {
     value: tools.QuarterStitchTR,
     label: fluent.$t("stitch-quarter-tr"),
-    icon: "i-stitches:quarter-tr",
+    icon: "stitches:quarter-tr",
     kbds: ["q", "t", "r"],
   },
   {
-    icon: "i-stitches:quarter-br",
+    icon: "stitches:quarter-br",
     label: fluent.$t("stitch-quarter-br"),
     value: tools.QuarterStitchBR,
     kbds: ["q", "b", "r"],
@@ -121,7 +121,7 @@ const quarterstitches = computed<ToolSelectItem[]>(() => [
   {
     value: tools.QuarterStitchBL,
     label: fluent.$t("stitch-quarter-bl"),
-    icon: "i-stitches:quarter-bl",
+    icon: "stitches:quarter-bl",
     kbds: ["q", "b", "l"],
   },
 ]);
@@ -130,13 +130,13 @@ const linestitches = computed<ToolSelectItem[]>(() => [
   {
     value: tools.BackStitch,
     label: fluent.$t("stitch-back"),
-    icon: "i-stitches:back",
+    icon: "stitches:back",
     kbds: ["s"],
   },
   {
     value: tools.StraightStitch,
     label: fluent.$t("stitch-straight"),
-    icon: "i-stitches:straight",
+    icon: "stitches:straight",
     kbds: ["s", "s"],
   },
 ]);
@@ -145,13 +145,13 @@ const nodestitches = computed<ToolSelectItem[]>(() => [
   {
     value: tools.FrenchKnot,
     label: fluent.$t("stitch-french-knot"),
-    icon: "i-stitches:french-knot",
+    icon: "stitches:french-knot",
     kbds: ["k"],
   },
   {
     value: tools.Bead,
     label: fluent.$t("stitch-bead"),
-    icon: "i-stitches:bead",
+    icon: "stitches:bead",
     kbds: ["b"],
   },
 ]);

@@ -1,3 +1,4 @@
+import { useOverlay, useToast } from "@embroiderly/ui";
 import { setTheme as setAppTheme } from "@tauri-apps/api/app";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";

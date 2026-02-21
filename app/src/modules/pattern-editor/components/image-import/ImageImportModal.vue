@@ -1,4 +1,18 @@
 <script setup lang="ts">
+import {
+  BlockUI,
+  Button,
+  Checkbox,
+  Dialog,
+  FilePicker,
+  FormField,
+  FormFieldSet,
+  InputDimensions,
+  InputNumberSlider,
+  Progress,
+  Separator,
+} from "@embroiderly/ui";
+
 import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
 import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
@@ -8,8 +22,7 @@ import type { ImageImportOptions } from "#pattern-editor/api";
 import { PatternCanvas } from "#pattern-editor/components/canvas";
 import { LayersVisibility, Pattern } from "#pattern-editor/lib/pattern";
 import { ImageImportService } from "#pattern-editor/services/";
-import { BlockUI, DimensionsInput, FilePicker, FormFieldset, InputNumberSlider } from "#shared/components/";
-import { useDragDrop } from "#shared/composables/";
+import { useDragDrop, useFilePicker } from "#shared/composables/";
 import { ANY_IMAGE_FILTER } from "#shared/constants/";
 
 import { PaletteSelect } from "../palette/";
@@ -29,6 +42,8 @@ const emit = defineEmits<{ close: [patternId?: string] }>();
 
 /** The maximum palette size acceptable for quantization. */
 const MAX_PALETTE_SIZE = 256;
+
+const filePicker = useFilePicker();
 
 const patternCanvas = useTemplateRef("pattern-canvas");
 const previewPattern = shallowRef<Pattern>();
@@ -158,25 +173,33 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <UModal :title="$t('image-import')" :ui="{ content: 'size-full', body: 'p-0!' }">
+  <Dialog :title="$t('image-import')" :ui="{ content: 'size-full', body: 'p-0!' }">
     <template #body>
       <div class="flex h-full">
         <div class="space-y-2 overflow-y-auto p-4 sm:p-6">
-          <FilePicker v-model="imagePath" :options="{ filters: ANY_IMAGE_FILTER }" class="w-full" />
+          <FilePicker
+            v-model="imagePath"
+            class="w-full"
+            @pick="
+              async () => {
+                const path = await filePicker.open({ filters: ANY_IMAGE_FILTER });
+                if (path) imagePath = path;
+              }
+            "
+          />
 
-          <DimensionsInput
+          <InputDimensions
             v-model:width="imageImportOptions.patternSize[0]"
             v-model:height="imageImportOptions.patternSize[1]"
-            :width-field-props="{ label: $t('fabric-width') }"
-            :height-field-props="{ label: $t('fabric-height') }"
-            :width-input-props="{ increment: false, decrement: false, ...patternSizeBounds.width }"
-            :height-input-props="{ increment: false, decrement: false, ...patternSizeBounds.height }"
+            :width-field-options="{ label: $t('fabric-width') }"
+            :height-field-options="{ label: $t('fabric-height') }"
+            :width-input-options="{ increment: false, decrement: false, ...patternSizeBounds.width }"
+            :height-input-options="{ increment: false, decrement: false, ...patternSizeBounds.height }"
             :aspect-ratio="imageDimensions[0] / imageDimensions[1]"
           />
 
-          <UFormField :label="$t('image-import-palette')" class="w-full">
+          <FormField :label="$t('image-import-palette')" class="w-full">
             <PaletteSelect
-              size="xl"
               variant="subtle"
               class="w-full"
               @palette-selected="
@@ -184,14 +207,14 @@ onUnmounted(() => {
               "
               @palette-loaded="(palette) => (selectedPaletteSize = palette.length)"
             />
-          </UFormField>
+          </FormField>
 
-          <UFormField :label="$t('image-import-palette-size')" class="w-full">
+          <FormField :label="$t('image-import-palette-size')" class="w-full">
             <InputNumberSlider v-model="imageImportOptions.paletteSize" v-bind="paletteSizeBounds" />
-          </UFormField>
+          </FormField>
 
-          <FormFieldset :legend="$t('image-import-quant')" class="w-full space-y-2">
-            <UFormField :label="$t('image-import-quant-sampling')" class="w-full">
+          <FormFieldSet :legend="$t('image-import-quant')" class="w-full space-y-2">
+            <FormField :label="$t('image-import-quant-sampling')" class="w-full">
               <InputNumberSlider
                 v-model="imageImportOptions.quantization.samplingFactor"
                 :min="0"
@@ -202,13 +225,13 @@ onUnmounted(() => {
                   maximumFractionDigits: 1,
                 }"
               />
-            </UFormField>
-          </FormFieldset>
+            </FormField>
+          </FormFieldSet>
 
-          <FormFieldset :legend="$t('image-import-dither')" class="w-full space-y-2">
-            <UCheckbox v-model="applyDithering" :label="$t('image-import-dither-enable')" />
+          <FormFieldSet :legend="$t('image-import-dither')" class="w-full space-y-2">
+            <Checkbox v-model="applyDithering" :label="$t('image-import-dither-enable')" />
 
-            <UFormField :label="$t('image-import-dither-error')" class="w-full">
+            <FormField :label="$t('image-import-dither-error')" class="w-full">
               <InputNumberSlider
                 v-model="imageImportOptions.dithering.errorDiffusion"
                 :min="0"
@@ -219,14 +242,14 @@ onUnmounted(() => {
                   maximumFractionDigits: 1,
                 }"
               />
-            </UFormField>
-          </FormFieldset>
+            </FormField>
+          </FormFieldSet>
         </div>
 
-        <USeparator decorative orientation="vertical" size="sm" />
+        <Separator decorative orientation="vertical" size="sm" />
 
         <BlockUI ref="drop-zone" :blocked="importingPattern || isOverDropZone" class="flex size-full flex-col">
-          <UProgress v-if="importingPattern" size="sm" :ui="{ root: 'absolute top-0', base: 'rounded-none' }" />
+          <Progress v-if="importingPattern" size="sm" class="absolute top-0 rounded-none" />
 
           <PatternCanvas
             ref="pattern-canvas"
@@ -249,13 +272,13 @@ onUnmounted(() => {
       </div>
     </template>
     <template #footer>
-      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton
+      <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <Button
         loading-auto
         :label="$t('image-import-import-image')"
         :disabled="!imageImportOptionsValid"
         @click="handleFinalize"
       />
     </template>
-  </UModal>
+  </Dialog>
 </template>

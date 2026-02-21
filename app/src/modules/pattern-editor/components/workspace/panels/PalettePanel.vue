@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import type { ContextMenuItem, DropdownMenuItem } from "@nuxt/ui";
+import { Button, ButtonIcon, ContextMenu, DropdownMenu, useToast } from "@embroiderly/ui";
+import type { ContextMenuItem, DropdownMenuItem } from "@embroiderly/ui";
+
 import { computed, reactive, ref, watch } from "vue";
 
 import {
@@ -285,7 +287,7 @@ async function updatePaletteDisplaySettings() {
     :class="{ 'border-2 border-primary': editorStateStore.paletteMode === PaletteMode.Editing }"
     @keydown.escape="editorStateStore.paletteMode = PaletteMode.Regular"
   >
-    <UContextMenu
+    <ContextMenu
       :disabled="paletteIsDisabled"
       :items="
         editorStateStore.paletteMode === PaletteMode.Editing
@@ -310,15 +312,15 @@ async function updatePaletteDisplaySettings() {
             class="flex gap-x-1"
             @contextmenu.stop.prevent
           >
-            <UButton
-              icon="i-lucide:check"
+            <Button
+              icon="lucide:check"
               :label="$t('palette-save')"
               class="grow justify-center text-sm"
               @click="editorStateStore.paletteMode = PaletteMode.Regular"
             />
-            <UDropdownMenu :items="palettePanelsMenuOptions">
-              <UButton icon="i-lucide:menu" />
-            </UDropdownMenu>
+            <DropdownMenu :items="palettePanelsMenuOptions">
+              <Button icon="lucide:menu" />
+            </DropdownMenu>
           </div>
           <PaletteToolbar v-else :disabled="paletteIsDisabled" @contextmenu.stop.prevent />
         </template>
@@ -347,30 +349,27 @@ async function updatePaletteDisplaySettings() {
             <span class="text-sm text-nowrap">
               {{ $t("palette-size", { size: patternStore.pattern?.palette.length ?? 0 }) }}
             </span>
-            <UTooltip
-              :text="editorStateStore.paletteMode === PaletteMode.Editing ? $t('palette-save') : $t('palette-edit')"
-              :delay-duration="200"
+
+            <ButtonIcon
+              variant="ghost"
+              color="neutral"
+              size="sm"
               :disabled="paletteIsDisabled"
-            >
-              <UButton
-                variant="ghost"
-                color="neutral"
-                size="xs"
-                :disabled="paletteIsDisabled"
-                :icon="editorStateStore.paletteMode === PaletteMode.Editing ? 'i-lucide:check' : 'i-lucide:pen'"
-                @click="
-                  () => {
-                    editorStateStore.paletteMode =
-                      editorStateStore.paletteMode === PaletteMode.Editing ? PaletteMode.Regular : PaletteMode.Editing;
-                    sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
-                  }
-                "
-              />
-            </UTooltip>
+              :icon="editorStateStore.paletteMode === PaletteMode.Editing ? 'lucide:check' : 'lucide:pen'"
+              :tooltip="editorStateStore.paletteMode === PaletteMode.Editing ? $t('palette-save') : $t('palette-edit')"
+              :delay-duration="200"
+              @click="
+                () => {
+                  editorStateStore.paletteMode =
+                    editorStateStore.paletteMode === PaletteMode.Editing ? PaletteMode.Regular : PaletteMode.Editing;
+                  sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
+                }
+              "
+            />
           </div>
         </template>
       </PaletteList>
-    </UContextMenu>
+    </ContextMenu>
 
     <PaletteDisplaySettings
       v-if="sectionVisibility.paletteDisplaySettings"
