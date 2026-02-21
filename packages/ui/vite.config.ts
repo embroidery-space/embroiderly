@@ -48,7 +48,7 @@ export default defineConfig({
   test: {
     bail: isCI ? 1 : 0,
     reporters: isCI ? ["verbose", "github-actions"] : ["verbose"],
-    setupFiles: ["./tests/components-setup.ts", "vitest-browser-vue"],
+    setupFiles: ["./vitest.setup.ts", "vitest-browser-vue"],
     browser: {
       enabled: true,
       headless: isCI,
