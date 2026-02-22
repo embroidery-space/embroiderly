@@ -1,12 +1,16 @@
 {
-  "extends": ["@tsconfig/strictest/tsconfig.json"],
-  "include": ["tests/**/*.ts"],
+  "extends": ["@tsconfig/node24/tsconfig.json", "@tsconfig/strictest/tsconfig.json"],
+  "include": ["wdio.config.ts", "tests/**/*.ts"],
+  "exclude": ["tests/components/"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.wdio.tsbuildinfo",
 
     "baseUrl": ".",
 
     "noEmit": true,
+
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
 
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,

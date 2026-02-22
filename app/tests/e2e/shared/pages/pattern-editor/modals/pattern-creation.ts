@@ -1,9 +1,9 @@
 import { BaseModal } from "./base";
 
-/** Page object for the _Fabric Properties_ modal. */
-export class FabricModal extends BaseModal {
+/** Page object for the _New Pattern_ modal. */
+export class PatternCreationModal extends BaseModal {
   constructor() {
-    super(`//div[@role="dialog"][.//h2[text()="Fabric Properties"]]`);
+    super(`//div[@role="dialog"][.//h2[text()="New Pattern"]]`, { save: "Create" });
   }
 
   get countSelect() {

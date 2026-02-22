@@ -1,10 +1,6 @@
 import { PatternEditorPage } from "../shared/pages/";
 
 describe("Pattern File Management", () => {
-  before(async () => {
-    await browser.setWindowSize(1920, 1080);
-  });
-
   afterEach(async () => {
     await PatternEditorPage.forceCloseAllPatterns();
   });
@@ -19,16 +15,16 @@ describe("Pattern File Management", () => {
   it("creates a new pattern with custom fabric settings", async () => {
     // Open the _Create Pattern_ dialog.
     await PatternEditorPage.openCreatePatternDialog();
-    await expect(PatternEditorPage.fabricModal.modal).toBeDisplayed();
+    await expect(PatternEditorPage.patternCreationModal.modal).toBeDisplayed();
 
     // Set custom fabric properties.
-    await PatternEditorPage.fabricModal.setSpi(18);
-    await PatternEditorPage.fabricModal.setKind("Linen");
-    await PatternEditorPage.fabricModal.setSize(60, 80);
-    await PatternEditorPage.fabricModal.selectColor("French Blue");
+    await PatternEditorPage.patternCreationModal.setSpi(18);
+    await PatternEditorPage.patternCreationModal.setKind("Linen");
+    await PatternEditorPage.patternCreationModal.setSize(60, 80);
+    await PatternEditorPage.patternCreationModal.selectColor("French Blue");
 
     // Save the fabric settings.
-    await PatternEditorPage.fabricModal.save();
+    await PatternEditorPage.patternCreationModal.save();
 
     // Verify that the pattern was created.
     await expect(PatternEditorPage.canvas).toBeDisplayed();

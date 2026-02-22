@@ -4,6 +4,8 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 
+import { PatternEditorPage } from "./tests/e2e/shared/pages/";
+
 const ROOT_PATH = fileURLToPath(new URL("..", import.meta.url));
 
 const TESTS_TEMP_PATH = path.join(ROOT_PATH, "app", "tests", ".tmp");
@@ -91,6 +93,9 @@ export const config: WebdriverIO.Config = {
   },
 
   async before() {
+    // Set window size.
+    await browser.setWindowSize(1920, 1080);
+
     // Force disable all CSS animations and transitions during CI.
     if (process.env.CI) {
       await browser.execute(() => {
@@ -107,6 +112,10 @@ export const config: WebdriverIO.Config = {
         document.head.append(style);
       });
     }
+
+    // Close an initial default pattern (wait a while to ensure it is open).
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    await PatternEditorPage.forceCloseAllPatterns();
   },
 
   afterSession() {
