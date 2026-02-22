@@ -94,6 +94,7 @@ export const config: WebdriverIO.Config = {
     // Force disable all CSS animations and transitions during CI.
     if (process.env.CI) {
       await browser.execute(() => {
+        // @ts-expect-error ...
         const style = document.createElement("style");
         style.innerHTML = `
                 *, *::before, *::after {
@@ -102,6 +103,7 @@ export const config: WebdriverIO.Config = {
                 }
               `;
 
+        // @ts-expect-error ...
         document.head.append(style);
       });
     }

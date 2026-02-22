@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "pnpm check-types && vite build",
     "build-only": "vite build",
-    "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
+    "check-types": "vue-tsc -b",
     "test": "vitest run",
     "test:unit": "vitest run --project unit",
     "test:components": "vitest run --project components",
