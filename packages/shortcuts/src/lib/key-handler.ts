@@ -29,8 +29,7 @@ function checkCombination(event: KeyboardEvent, ctx: ShortcutsContext) {
 }
 
 function checkSequence(event: KeyboardEvent, ctx: ShortcutsContext) {
-  if (event.repeat) return;
-  if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+  if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
     ctx.sequenceState.clear();
     return;
   }

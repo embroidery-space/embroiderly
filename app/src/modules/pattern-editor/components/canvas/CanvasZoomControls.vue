@@ -24,7 +24,7 @@ const emit = defineEmits<{
 const { fluent } = useI18n();
 
 const zoomOptions = computed<DropdownMenuItem[]>(() => [
-  { label: fluent.$t("canvas-zoom-fit"), kbds: ["ctrl", "0"], onSelect: () => emit("update:model-value", "fit") },
+  { label: fluent.$t("canvas-zoom-fit"), shortcut: "Ctrl+0", onSelect: () => emit("update:model-value", "fit") },
   { label: fluent.$t("canvas-zoom-fit-width"), onSelect: () => emit("update:model-value", "fit-width") },
   { label: fluent.$t("canvas-zoom-fit-height"), onSelect: () => emit("update:model-value", "fit-height") },
 ]);

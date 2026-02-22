@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
 import { ButtonIcon, DropdownMenu, Menubar, Separator, useConfirm } from "@embroiderly/ui";
-import type { DropdownMenuItem, MenubarMenu } from "@embroiderly/ui";
+import type { DropdownMenuItem, MenubarItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
@@ -42,7 +42,7 @@ const menus = computed<MenubarMenu[]>(() => [
       [
         {
           label: fluent.$t("app-menu-file-open"),
-          kbds: ["ctrl", "o"],
+          shortcut: "Ctrl+O",
           async onSelect() {
             const patternId = await patternFileStore.openPattern();
             router.push({ name: "pattern-editor", params: { patternId } });
@@ -50,7 +50,7 @@ const menus = computed<MenubarMenu[]>(() => [
         },
         {
           label: fluent.$t("app-menu-file-create"),
-          kbds: ["ctrl", "n"],
+          shortcut: "Ctrl+N",
           onSelect() {
             modals.patternCreationModal.open({
               fabric: Fabric.default(),
@@ -65,13 +65,13 @@ const menus = computed<MenubarMenu[]>(() => [
       [
         {
           label: fluent.$t("app-menu-file-save"),
-          kbds: ["ctrl", "s"],
+          shortcut: "Ctrl+S",
           disabled: !patternStore.pattern,
           onSelect: () => patternFileStore.savePattern(patternStore.pattern!.id),
         },
         {
           label: fluent.$t("app-menu-file-save-as"),
-          kbds: ["ctrl", "shift", "s"],
+          shortcut: "Ctrl+Shift+S",
           disabled: !patternStore.pattern,
           onSelect: () => patternFileStore.savePattern(patternStore.pattern!.id, true),
         },
@@ -133,7 +133,7 @@ const menus = computed<MenubarMenu[]>(() => [
       [
         {
           label: fluent.$t("app-menu-file-close"),
-          kbds: ["ctrl", "w"],
+          shortcut: "Ctrl+W",
           disabled: !patternStore.pattern,
           async onSelect() {
             await patternFileStore.closePattern(patternStore.pattern!.id);
@@ -148,7 +148,7 @@ const menus = computed<MenubarMenu[]>(() => [
       [
         {
           label: fluent.$t("app-menu-file-quit"),
-          kbds: ["ctrl", "q"],
+          shortcut: "Ctrl+Q",
           onSelect: () => appWindow.close(),
         },
       ],
@@ -203,7 +203,7 @@ const menus = computed<MenubarMenu[]>(() => [
   {
     label: fluent.$t("app-menu-tools"),
     items: [
-      [{ label: fluent.$t("settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettingsModal() }],
+      [{ label: fluent.$t("settings"), shortcut: "Ctrl+,", onSelect: () => settingsStore.openSettingsModal() }],
       [
         {
           label: fluent.$t("updater-check-for-updates"),
@@ -240,10 +240,10 @@ const menus = computed<MenubarMenu[]>(() => [
     ],
   },
 ]);
-useShortcuts(extractShortcuts(() => menus.value.map((menu) => menu.items)));
+useShortcuts(extractShortcuts(() => menus.value.flatMap((menu) => menu.items as MenubarItem[][])));
 
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
-  [{ label: fluent.$t("settings"), kbds: ["ctrl", ","], onSelect: () => settingsStore.openSettingsModal() }],
+  [{ label: fluent.$t("settings"), shortcut: "Ctrl+,", onSelect: () => settingsStore.openSettingsModal() }],
   [
     {
       label: fluent.$t("updater-check-for-updates"),

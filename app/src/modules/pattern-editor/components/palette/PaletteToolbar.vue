@@ -35,7 +35,7 @@ const fullstitches = computed<ToolSelectItem[]>(() => [
     value: tools.FullStitch,
     label: fluent.$t("stitch-full"),
     icon: "stitches:full",
-    kbds: ["f"],
+    shortcut: "F",
   },
 ]);
 
@@ -44,31 +44,31 @@ const petitestitches = computed<ToolSelectItem[]>(() => [
     value: tools.PetiteStitch,
     label: fluent.$t("stitch-petite"),
     icon: "stitches:petite",
-    kbds: ["p"],
+    shortcut: "P",
   },
   {
     value: tools.PetiteStitchTL,
     label: fluent.$t("stitch-petite-tl"),
     icon: "stitches:petite-tl",
-    kbds: ["p", "t", "l"],
+    shortcut: "P-T-L",
   },
   {
     value: tools.PetiteStitchTR,
     label: fluent.$t("stitch-petite-tr"),
     icon: "stitches:petite-tr",
-    kbds: ["p", "t", "r"],
+    shortcut: "P-T-R",
   },
   {
     value: tools.PetiteStitchBR,
     label: fluent.$t("stitch-petite-br"),
     icon: "stitches:petite-br",
-    kbds: ["p", "b", "r"],
+    shortcut: "P-B-R",
   },
   {
     value: tools.PetiteStitchBL,
     label: fluent.$t("stitch-petite-bl"),
     icon: "stitches:petite-bl",
-    kbds: ["p", "b", "l"],
+    shortcut: "P-B-L",
   },
 ]);
 
@@ -77,19 +77,19 @@ const halfstitches = computed<ToolSelectItem[]>(() => [
     value: tools.HalfStitch,
     label: fluent.$t("stitch-half"),
     icon: "stitches:half",
-    kbds: ["h"],
+    shortcut: "H",
   },
   {
     value: tools.HalfStitchForward,
     label: fluent.$t("stitch-half-forward"),
     icon: "stitches:half-forward",
-    kbds: ["h", "f"],
+    shortcut: "H-F",
   },
   {
     value: tools.HalfStitchBackward,
     label: fluent.$t("stitch-half-backward"),
     icon: "stitches:half-backward",
-    kbds: ["h", "b"],
+    shortcut: "H-B",
   },
 ]);
 
@@ -98,31 +98,31 @@ const quarterstitches = computed<ToolSelectItem[]>(() => [
     value: tools.QuarterStitch,
     label: fluent.$t("stitch-quarter"),
     icon: "stitches:quarter",
-    kbds: ["q"],
+    shortcut: "Q",
   },
   {
     value: tools.QuarterStitchTL,
     label: fluent.$t("stitch-quarter-tl"),
     icon: "stitches:quarter-tl",
-    kbds: ["q", "t", "l"],
+    shortcut: "Q-T-L",
   },
   {
     value: tools.QuarterStitchTR,
     label: fluent.$t("stitch-quarter-tr"),
     icon: "stitches:quarter-tr",
-    kbds: ["q", "t", "r"],
+    shortcut: "Q-T-R",
   },
   {
-    icon: "stitches:quarter-br",
-    label: fluent.$t("stitch-quarter-br"),
     value: tools.QuarterStitchBR,
-    kbds: ["q", "b", "r"],
+    label: fluent.$t("stitch-quarter-br"),
+    icon: "stitches:quarter-br",
+    shortcut: "Q-B-R",
   },
   {
     value: tools.QuarterStitchBL,
     label: fluent.$t("stitch-quarter-bl"),
     icon: "stitches:quarter-bl",
-    kbds: ["q", "b", "l"],
+    shortcut: "Q-B-L",
   },
 ]);
 
@@ -131,13 +131,13 @@ const linestitches = computed<ToolSelectItem[]>(() => [
     value: tools.BackStitch,
     label: fluent.$t("stitch-back"),
     icon: "stitches:back",
-    kbds: ["s"],
+    shortcut: "S",
   },
   {
     value: tools.StraightStitch,
     label: fluent.$t("stitch-straight"),
     icon: "stitches:straight",
-    kbds: ["s", "s"],
+    shortcut: "S-S",
   },
 ]);
 
@@ -146,13 +146,13 @@ const nodestitches = computed<ToolSelectItem[]>(() => [
     value: tools.FrenchKnot,
     label: fluent.$t("stitch-french-knot"),
     icon: "stitches:french-knot",
-    kbds: ["k"],
+    shortcut: "K",
   },
   {
     value: tools.Bead,
     label: fluent.$t("stitch-bead"),
     icon: "stitches:bead",
-    kbds: ["b"],
+    shortcut: "B",
   },
 ]);
 
@@ -160,18 +160,18 @@ const cursor = computed<ToolSelectItem[]>(() => [
   {
     value: tools.Cursor,
     label: fluent.$t("palette-toolbar-cursor"),
-    icon: "i-material-symbols:arrow-selector-tool",
-    kbds: ["c"],
+    icon: "material-symbols:arrow-selector-tool",
+    shortcut: "C",
   },
 ]);
 
 // Define shorter key sequences for enabling top-left and bottom-left positional stitch tools if the user hasn't typed the full shortcut.
 useShortcuts({
-  "p-t": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
-  "p-b": () => (editorStateStore.selectedTool = tools.PetiteStitchBL),
+  "P-T": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
+  "P-B": () => (editorStateStore.selectedTool = tools.PetiteStitchBL),
 
-  "q-t": () => (editorStateStore.selectedTool = tools.QuarterStitchTL),
-  "q-b": () => (editorStateStore.selectedTool = tools.QuarterStitchBL),
+  "Q-T": () => (editorStateStore.selectedTool = tools.QuarterStitchTL),
+  "Q-B": () => (editorStateStore.selectedTool = tools.QuarterStitchBL),
 });
 </script>
 
