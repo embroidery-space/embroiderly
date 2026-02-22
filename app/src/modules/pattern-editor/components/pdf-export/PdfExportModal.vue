@@ -72,7 +72,7 @@ async function exportPattern() {
           <Checkbox v-model="options.color" :label="$t('pdf-export-color')" :description="pdfFile.color" />
         </div>
 
-        <FormFieldSet :legend="$t('publish-settings')">
+        <FormFieldSet collapsible :legend="$t('publish-settings')">
           <PdfExportOptionsForm v-model="options" />
         </FormFieldSet>
       </div>

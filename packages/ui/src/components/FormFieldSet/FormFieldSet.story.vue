@@ -11,6 +11,7 @@ const sizes = ["sm", "md", "lg"] as const;
 const state = reactive<FormFieldSetProps>({
   legend: "Legend",
   size: "lg",
+  collapsible: false,
 });
 
 defineExpose({ state });
@@ -19,7 +20,7 @@ defineExpose({ state });
 <template>
   <Story id="form-field-set" group="form" title="FormFieldSet" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <FormFieldSet v-bind="state">
+      <FormFieldSet v-bind="state" class="w-sm">
         <div class="grid grid-cols-2 gap-4">
           <Input placeholder="Enter value" class="w-full" />
           <Input placeholder="Enter value" class="w-full" />
@@ -31,6 +32,7 @@ defineExpose({ state });
       <template #controls>
         <HstText v-model="state.legend" title="Legend" />
         <HstSelect v-model="state.size" title="Size" :options="sizes" />
+        <HstCheckbox v-model="state.collapsible" title="Collapsible" />
       </template>
     </Variant>
 

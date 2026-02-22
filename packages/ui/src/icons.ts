@@ -9,4 +9,6 @@ export const DEFAULT_ICONS = Object.freeze<Icons>({
   loading: "lucide:loader-circle",
   link: "lucide:link",
   unlink: "lucide:unlink",
+  minus: "lucide:minus",
+  plus: "lucide:plus",
 });

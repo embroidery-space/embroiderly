@@ -7,4 +7,6 @@ export interface Icons {
   loading: string;
   link: string;
   unlink: string;
+  minus: string;
+  plus: string;
 }
