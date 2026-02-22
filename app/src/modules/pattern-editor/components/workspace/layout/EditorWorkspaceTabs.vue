@@ -33,10 +33,10 @@ async function closePattern(patternId: string) {
     activation-mode="manual"
     :ui="{
       root: 'border-b border-default',
-      list: 'bg-transparent p-0',
-      indicator: 'h-full inset-0 rounded-b-none rounded-tl-none shadow-none z-0',
+      list: 'bg-transparent p-0 rounded-none',
+      indicator: 'h-full inset-0 rounded-none shadow-none z-0',
       trigger:
-        'grow-0 min-w-20 hover:data-[state=inactive]:bg-accented hover:cursor-pointer data-[state=inactive]:border-r border-default rounded-b-none rounded-tl-none',
+        'grow-0 min-w-20 hover:data-[state=inactive]:bg-accented hover:cursor-pointer data-[state=inactive]:border-r border-default rounded-none',
     }"
     @update:model-value="switchPattern($event as string)"
   >
