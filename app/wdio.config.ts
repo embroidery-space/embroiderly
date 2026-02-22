@@ -114,7 +114,9 @@ export const config: WebdriverIO.Config = {
     }
 
     // Close an initial default pattern (wait a while to ensure it is open).
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 500);
+    });
     await PatternEditorPage.forceCloseAllPatterns();
   },
 

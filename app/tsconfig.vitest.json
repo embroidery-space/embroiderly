@@ -13,9 +13,9 @@
 
     "paths": {
       "#pattern-editor/*": ["./src/modules/pattern-editor/*"],
-      "#shared/*": ["./src/shared/*"],
+      "#shared/*": ["./src/shared/*"]
     },
 
-    "types": ["node", "vitest-browser-vue", "vite/client"],
-  },
+    "types": ["node", "vitest-browser-vue", "vite/client"]
+  }
 }
