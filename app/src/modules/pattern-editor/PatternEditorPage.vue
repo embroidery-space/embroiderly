@@ -4,7 +4,6 @@ import { BlockUI, Splitter, SplitterPanel, useConfirm, useToast } from "@embroid
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { onMounted, toRaw, useTemplateRef, watch } from "vue";
-import { useRouter } from "vue-router";
 
 import { StartupApi } from "#shared/api/";
 import { useDragDrop, useI18n, useTauriListener } from "#shared/composables/";
@@ -15,11 +14,7 @@ import { CanvasToolbar } from "./components/canvas/";
 import { PalettePanel, PatternWorkspace, WelcomeScreen } from "./components/workspace/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore } from "./stores/";
 
-const props = defineProps<{ patternId?: string }>();
-
 const appWindow = getCurrentWebviewWindow();
-
-const router = useRouter();
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -34,14 +29,14 @@ const dropZoneContainer = useTemplateRef("drop-zone");
 const { isOverDropZone } = useDragDrop(dropZoneContainer, async (paths) => {
   for (const [index, path] of paths.entries()) {
     const patternId = await patternFileStore.openPattern(path);
-    if (index === paths.length - 1) {
-      router.push({ name: "pattern-editor", params: { patternId } });
+    if (index === paths.length - 1 && patternId) {
+      patternFileStore.switchPattern(patternId);
     }
   }
 });
 
 watch(
-  () => props.patternId,
+  () => patternFileStore.currentPatternId,
   async (patternId) => {
     if (patternId) patternStore.pattern = await patternFileStore.loadPattern(patternId);
     else patternStore.pattern = undefined;
@@ -90,9 +85,8 @@ useShortcuts({
 
 onMounted(async () => {
   await patternFileStore.fetchOpenedPatterns();
-  if (!props.patternId && patternFileStore.openedPatterns.length) {
-    const pattern = patternFileStore.openedPatterns[0]!;
-    router.push({ name: "pattern-editor", params: { patternId: pattern.id } });
+  if (!patternFileStore.currentPatternId && patternFileStore.openedPatterns.length) {
+    patternFileStore.switchPattern(patternFileStore.openedPatterns[0]!.id);
   }
 
   const notifications = await StartupApi.getStartupNotifications();

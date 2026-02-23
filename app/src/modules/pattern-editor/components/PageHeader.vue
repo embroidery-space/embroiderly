@@ -8,7 +8,6 @@ import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
-import { useRouter } from "vue-router";
 
 import { useEditorModals } from "#pattern-editor/composables/";
 import { Fabric } from "#pattern-editor/lib/pattern/";
@@ -20,8 +19,6 @@ import { ANY_IMAGE_FILTER } from "#shared/constants";
 import { useSettingsStore } from "#shared/stores/";
 
 import { FilesApi } from "../api/";
-
-const router = useRouter();
 
 const confirm = useConfirm();
 const filePicker = useFilePicker();
@@ -45,7 +42,7 @@ const menus = computed<MenubarMenu[]>(() => [
           shortcut: "Ctrl+O",
           async onSelect() {
             const patternId = await patternFileStore.openPattern();
-            router.push({ name: "pattern-editor", params: { patternId } });
+            if (patternId) patternFileStore.switchPattern(patternId);
           },
         },
         {
@@ -55,8 +52,7 @@ const menus = computed<MenubarMenu[]>(() => [
             modals.patternCreationModal.open({
               fabric: Fabric.default(),
               async onSave(fabric) {
-                const patternId = await patternFileStore.createPattern(fabric);
-                router.push({ name: "pattern-editor", params: { patternId } });
+                patternFileStore.switchPattern(await patternFileStore.createPattern(fabric));
               },
             });
           },
@@ -91,7 +87,7 @@ const menus = computed<MenubarMenu[]>(() => [
                     imagePath,
                     imageDimensions: await FilesApi.getImageDimensions(imagePath),
                   }).result;
-                  if (patternId) router.push({ name: "pattern-editor", params: { patternId } });
+                  if (patternId) patternFileStore.switchPattern(patternId);
                 },
               },
             ],
@@ -135,14 +131,7 @@ const menus = computed<MenubarMenu[]>(() => [
           label: fluent.$t("app-menu-file-close"),
           shortcut: "Ctrl+W",
           disabled: !patternStore.pattern,
-          async onSelect() {
-            await patternFileStore.closePattern(patternStore.pattern!.id);
-
-            const openedPatternsNumber = patternFileStore.openedPatterns.length;
-            const patternId = patternFileStore.openedPatterns[openedPatternsNumber - 1]?.id;
-
-            router.push({ name: "pattern-editor", params: { patternId } });
-          },
+          onSelect: () => patternFileStore.closePattern(patternStore.pattern!.id),
         },
       ],
       [

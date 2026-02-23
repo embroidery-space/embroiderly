@@ -20,9 +20,16 @@ export const usePatternFileStore = defineStore(
     const toast = useToast();
     const filePicker = useFilePicker();
 
+    const currentPatternId = ref<string>();
+
     const openedPatterns = ref<{ id: string; title: string }[]>([]);
     const recentPatterns = ref<string[]>([]);
+
     const loading = ref(false);
+
+    function switchPattern(id: string) {
+      currentPatternId.value = id;
+    }
 
     function addOpenedPattern(id: string, title: string) {
       if (openedPatterns.value.some((p) => p.id === id)) return;
@@ -147,8 +154,14 @@ export const usePatternFileStore = defineStore(
     async function closePattern(id: string, options?: FilesApi.ClosePatternOptions) {
       try {
         loading.value = true;
+
         await FilesApi.closePattern(id, options);
         removeOpenedPattern(id);
+
+        if (currentPatternId.value === id) {
+          const lastOpenedPattern = openedPatterns.value[openedPatterns.value.length - 1];
+          currentPatternId.value = lastOpenedPattern?.id;
+        }
       } catch (error) {
         if (error instanceof UnsavedChangesError) {
           const pattern = openedPatterns.value.find((p) => p.id === id)!;
@@ -209,9 +222,11 @@ export const usePatternFileStore = defineStore(
     }
 
     return {
+      currentPatternId,
       openedPatterns,
       recentPatterns,
       loading,
+      switchPattern,
       updateOpenedPattern,
       loadPattern,
       openPattern,

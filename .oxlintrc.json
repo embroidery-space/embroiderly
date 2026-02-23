@@ -24,6 +24,7 @@
     // Enable when Vue.js base TS config target supports these features.
     "unicorn/no-array-reverse": "off",
     "unicorn/no-array-sort": "off",
+    "unicorn/prefer-at": "off",
 
     "unicorn/no-useless-undefined": "off",
     "unicorn/consistent-function-scoping": "off",
