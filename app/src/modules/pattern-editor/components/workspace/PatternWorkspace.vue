@@ -7,18 +7,27 @@ import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
 import { computed, useTemplateRef, watch } from "vue";
 
-import { FilesApi } from "#pattern-editor/api/";
-import { CanvasZoomControls, PatternCanvas } from "#pattern-editor/components/canvas/";
-import { PatternEvent, PatternInfo } from "#pattern-editor/lib/pattern/";
-import { MAX_SCALE, MIN_SCALE } from "#pattern-editor/lib/pixi/";
-import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "#pattern-editor/lib/pixi/";
-import { CursorTool } from "#pattern-editor/lib/tools/";
-import type { PatternEditorToolContext } from "#pattern-editor/lib/tools/";
-import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "#pattern-editor/stores/";
-import { useFilePicker, useI18n } from "#shared/composables/";
-import { ANY_IMAGE_FILTER } from "#shared/constants";
-import { LoggerService } from "#shared/services/";
-import { addSymbolFonts } from "#shared/utils/";
+import { FilesApi } from "~/modules/pattern-editor/api/";
+import { CanvasZoomControls, PatternCanvas } from "~/modules/pattern-editor/components/canvas/";
+import { PatternEvent, PatternInfo } from "~/modules/pattern-editor/lib/pattern/";
+import { MAX_SCALE, MIN_SCALE } from "~/modules/pattern-editor/lib/pixi/";
+import type {
+  PatternApplicationOptions,
+  ToolEventDetail,
+  TransformEventDetail,
+} from "~/modules/pattern-editor/lib/pixi/";
+import { CursorTool } from "~/modules/pattern-editor/lib/tools/";
+import type { PatternEditorToolContext } from "~/modules/pattern-editor/lib/tools/";
+import {
+  PaletteMode,
+  useEditorStateStore,
+  usePatternStore,
+  usePatternFileStore,
+} from "~/modules/pattern-editor/stores/";
+import { useFilePicker, useI18n } from "~/shared/composables/";
+import { ANY_IMAGE_FILTER } from "~/shared/constants/";
+import { LoggerService } from "~/shared/services/";
+import { addSymbolFonts } from "~/shared/utils/";
 
 import { EditorWorkspaceLayout, EditorWorkspaceTabs } from "./layout/";
 

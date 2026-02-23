@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Checkbox } from "@embroiderly/ui";
 
-import type { LayersVisibility } from "#pattern-editor/lib/pattern/";
+import type { LayersVisibility } from "~/modules/pattern-editor/lib/pattern/";
 
 const layers = defineModel<LayersVisibility>({ required: true });
 </script>

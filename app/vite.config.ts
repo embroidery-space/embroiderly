@@ -1,5 +1,7 @@
 /// <reference types="vitest/config" />
 
+import { fileURLToPath, URL } from "node:url";
+
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { webdriverio } from "@vitest/browser-webdriverio";
@@ -22,6 +24,9 @@ export default defineConfig({
   },
   resolve: {
     dedupe: ["@iconify/vue", "@vueuse/*", "reka-ui", "vue"],
+    alias: {
+      "~": fileURLToPath(new URL("src", import.meta.url)),
+    },
   },
   test: {
     bail: isCI ? 1 : 0,

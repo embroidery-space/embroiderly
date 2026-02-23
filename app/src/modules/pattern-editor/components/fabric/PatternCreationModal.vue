@@ -3,7 +3,7 @@ import { Button, Dialog } from "@embroiderly/ui";
 
 import { ref, toRaw } from "vue";
 
-import { Fabric } from "#pattern-editor/lib/pattern/";
+import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
 
 import FabricForm from "./FabricForm.vue";
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FormField, FormFieldSet, InputColor, InputNumber } from "@embroiderly/ui";
 
-import { Grid } from "#pattern-editor/lib/pattern/";
+import { Grid } from "~/modules/pattern-editor/lib/pattern/";
 
 const grid = defineModel<Grid>({ required: true });
 </script>

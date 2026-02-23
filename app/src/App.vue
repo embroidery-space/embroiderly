@@ -3,9 +3,9 @@ import { App, useToast } from "@embroiderly/ui";
 
 import { onMounted, onErrorCaptured } from "vue";
 
-import { useI18n } from "#shared/composables/";
-import { LoggerService } from "#shared/services/";
-import { useSettingsStore } from "#shared/stores/";
+import { useI18n } from "~/shared/composables/";
+import { LoggerService } from "~/shared/services/";
+import { useSettingsStore } from "~/shared/stores/";
 
 import PatternEditorPage from "./modules/pattern-editor/PatternEditorPage.vue";
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Checkbox, FormField, InputNumber, Switch } from "@embroiderly/ui";
 
-import { PaletteSettings } from "#pattern-editor/lib/pattern/";
+import { PaletteSettings } from "~/modules/pattern-editor/lib/pattern/";
 
 import { PaletteSection } from ".";
 

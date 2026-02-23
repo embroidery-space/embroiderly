@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { tools } from "#pattern-editor/lib/tools/";
-import type { PatternEditorTool } from "#pattern-editor/lib/tools/";
+import { tools } from "~/modules/pattern-editor/lib/tools/";
+import type { PatternEditorTool } from "~/modules/pattern-editor/lib/tools/";
 
 export const enum PaletteMode {
   /** A regular palette mode in which users can select tools and color to draw patterns. */

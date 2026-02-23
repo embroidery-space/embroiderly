@@ -4,7 +4,7 @@ import type { DialogFilter, OpenDialogOptions, SaveDialogOptions } from "@tauri-
 
 import { createSharedComposable, useLocalStorage } from "@vueuse/core";
 
-import { PathApi } from "#shared/api/";
+import { PathApi } from "~/shared/api/";
 
 // A utility filter that is appended to any "open" query to allow user to pick any file.
 const ALL_FILES_FILTER: DialogFilter = { name: "All Files", extensions: ["*"] };

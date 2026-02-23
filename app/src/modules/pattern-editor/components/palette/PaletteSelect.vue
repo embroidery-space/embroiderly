@@ -4,10 +4,10 @@ import type { SelectProps, SelectItem } from "@embroiderly/ui";
 
 import { ref, onMounted, shallowRef, watch } from "vue";
 
-import { FilesApi } from "#pattern-editor/api";
-import type { BrandPaletteItem } from "#pattern-editor/lib/pattern";
-import { useI18n } from "#shared/composables/";
-import { LoggerService } from "#shared/services/";
+import { FilesApi } from "~/modules/pattern-editor/api/";
+import type { BrandPaletteItem } from "~/modules/pattern-editor/lib/pattern";
+import { useI18n } from "~/shared/composables/";
+import { LoggerService } from "~/shared/services/";
 
 const props = defineProps<Pick<SelectProps, "color" | "variant" | "size">>();
 const emit = defineEmits<{

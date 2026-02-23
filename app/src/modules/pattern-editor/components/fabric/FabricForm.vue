@@ -5,10 +5,10 @@ import { Color } from "pixi.js";
 import { computed, onMounted, reactive, ref, watch } from "vue";
 import type { Ref } from "vue";
 
-import { PatternApi } from "#pattern-editor/api/";
-import { Fabric, PaletteSettings, FabricColor } from "#pattern-editor/lib/pattern/";
-import { useI18n } from "#shared/composables/";
-import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "#shared/utils/";
+import { PatternApi } from "~/modules/pattern-editor/api/";
+import { Fabric, PaletteSettings, FabricColor } from "~/modules/pattern-editor/lib/pattern/";
+import { useI18n } from "~/shared/composables/";
+import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/shared/utils/";
 
 import { PaletteList } from "../palette/";
 

@@ -17,13 +17,13 @@ import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
 import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
 
-import { FilesApi } from "#pattern-editor/api";
-import type { ImageImportOptions } from "#pattern-editor/api";
-import { PatternCanvas } from "#pattern-editor/components/canvas";
-import { LayersVisibility, Pattern } from "#pattern-editor/lib/pattern";
-import { ImageImportService } from "#pattern-editor/services/";
-import { useDragDrop, useFilePicker } from "#shared/composables/";
-import { ANY_IMAGE_FILTER } from "#shared/constants/";
+import { FilesApi } from "~/modules/pattern-editor/api";
+import type { ImageImportOptions } from "~/modules/pattern-editor/api";
+import { PatternCanvas } from "~/modules/pattern-editor/components/canvas";
+import { LayersVisibility, Pattern } from "~/modules/pattern-editor/lib/pattern";
+import { ImageImportService } from "~/modules/pattern-editor/services/";
+import { useDragDrop, useFilePicker } from "~/shared/composables/";
+import { ANY_IMAGE_FILTER } from "~/shared/constants/";
 
 import { PaletteSelect } from "../palette/";
 

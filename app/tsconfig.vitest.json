@@ -12,8 +12,7 @@
     "noUncheckedIndexedAccess": false,
 
     "paths": {
-      "#pattern-editor/*": ["./src/modules/pattern-editor/*"],
-      "#shared/*": ["./src/shared/*"]
+      "~/*": ["./src/*"]
     },
 
     "types": ["node", "vitest-browser-vue", "vite/client"]

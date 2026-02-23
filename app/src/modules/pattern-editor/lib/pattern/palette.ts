@@ -3,7 +3,7 @@ import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 import type { ColorSource } from "pixi.js";
 
-import type { Eq } from "#shared/types/";
+import type { Eq } from "~/shared/types/";
 
 import { PaletteSettings } from "./display.ts";
 

@@ -115,7 +115,7 @@ export default defineConfigWithVueTs(
               position: "before",
             },
             {
-              pattern: "#*/**",
+              pattern: "~/**",
               group: "internal",
             },
             {

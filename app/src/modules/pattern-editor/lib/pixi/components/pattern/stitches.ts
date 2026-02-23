@@ -19,13 +19,13 @@ import {
   LineStitch,
   NodeStitch,
   Symbol,
-} from "#pattern-editor/lib/pattern/";
-import type { Stitch } from "#pattern-editor/lib/pattern/";
+} from "~/modules/pattern-editor/lib/pattern/";
+import type { Stitch } from "~/modules/pattern-editor/lib/pattern/";
 import {
   DEFAULT_CONTAINER_OPTIONS,
   DEFAULT_TEXT_STYLE_OPTIONS,
   STITCH_SCALE_FACTOR,
-} from "#pattern-editor/lib/pixi/constants.ts";
+} from "~/modules/pattern-editor/lib/pixi/constants.ts";
 
 export interface StitchContainer<G> {
   /**

@@ -5,11 +5,11 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
-import { useEditorModals } from "#pattern-editor/composables/";
-import { Fabric } from "#pattern-editor/lib/pattern/";
-import { usePatternFileStore } from "#pattern-editor/stores/";
-import { useI18n } from "#shared/composables/";
-import { useSettingsStore } from "#shared/stores/";
+import { useEditorModals } from "~/modules/pattern-editor/composables/";
+import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
+import { usePatternFileStore } from "~/modules/pattern-editor/stores/";
+import { useI18n } from "~/shared/composables/";
+import { useSettingsStore } from "~/shared/stores/";
 
 import { EditorWorkspaceLayout } from "./layout/";
 

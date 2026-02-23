@@ -4,9 +4,9 @@ import type { TabsItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
-import { useFilePicker, useI18n } from "#shared/composables/";
-import { ANY_PATTERN_FILTER } from "#shared/constants/";
-import { StartupAction, useSettingsStore } from "#shared/stores/";
+import { useFilePicker, useI18n } from "~/shared/composables/";
+import { ANY_PATTERN_FILTER } from "~/shared/constants/";
+import { StartupAction, useSettingsStore } from "~/shared/stores/";
 import type {
   OtherOptions,
   StartupOptions,
@@ -14,7 +14,7 @@ import type {
   UpdaterOptions,
   ViewportOptions,
   TelemetryOptions,
-} from "#shared/stores/";
+} from "~/shared/stores/";
 
 const ui = defineModel<UiOptions>("ui", { required: true });
 const startup = defineModel<StartupOptions>("startup", { required: true });

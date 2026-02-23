@@ -10,11 +10,11 @@ import {
   PaletteList,
   PaletteListItem,
   PaletteToolbar,
-} from "#pattern-editor/components/palette/";
-import { StitchSymbols } from "#pattern-editor/components/symbols/";
-import { PaletteSettings, SortPaletteBy, Symbol } from "#pattern-editor/lib/pattern/";
-import { PaletteMode, useEditorStateStore, usePatternStore } from "#pattern-editor/stores/";
-import { useI18n } from "#shared/composables/";
+} from "~/modules/pattern-editor/components/palette/";
+import { StitchSymbols } from "~/modules/pattern-editor/components/symbols/";
+import { PaletteSettings, SortPaletteBy, Symbol } from "~/modules/pattern-editor/lib/pattern/";
+import { PaletteMode, useEditorStateStore, usePatternStore } from "~/modules/pattern-editor/stores/";
+import { useI18n } from "~/shared/composables/";
 
 const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();

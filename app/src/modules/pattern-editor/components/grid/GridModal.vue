@@ -3,7 +3,7 @@ import { Button, Dialog } from "@embroiderly/ui";
 
 import { ref, toRaw } from "vue";
 
-import { Grid } from "#pattern-editor/lib/pattern/";
+import { Grid } from "~/modules/pattern-editor/lib/pattern/";
 
 import GridForm from "./GridForm.vue";
 

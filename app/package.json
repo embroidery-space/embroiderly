@@ -12,10 +12,6 @@
     "test:components": "vitest run --project components",
     "test:e2e": "wdio run wdio.config.ts"
   },
-  "imports": {
-    "#pattern-editor/*": "./src/modules/pattern-editor/*",
-    "#shared/*": "./src/shared/*"
-  },
   "dependencies": {
     "@embroiderly/shortcuts": "workspace:",
     "@embroiderly/ui": "workspace:",
