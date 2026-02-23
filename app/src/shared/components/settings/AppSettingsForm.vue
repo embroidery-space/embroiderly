@@ -5,7 +5,7 @@ import type { TabsItem } from "@embroiderly/ui";
 import { computed } from "vue";
 
 import { useFilePicker, useI18n } from "~/composables/";
-import { ANY_PATTERN_FILTER } from "~/shared/constants/";
+import { ANY_PATTERN_FILTER } from "~/constants/";
 import { StartupAction, useSettingsStore } from "~/shared/stores/";
 import type {
   OtherOptions,

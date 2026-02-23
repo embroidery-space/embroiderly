@@ -8,8 +8,8 @@ import type { Ref } from "vue";
 
 import { FilesApi } from "~/api/";
 import { useFilePicker, useI18n } from "~/composables/";
+import { PALETTE_FILTER } from "~/constants/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/modules/pattern-editor/lib/pattern/";
-import { PALETTE_FILTER } from "~/shared/constants/";
 import { LoggerService } from "~/shared/services/";
 
 import { PaletteSection, PaletteList, PaletteListItem, PaletteSelect } from ".";

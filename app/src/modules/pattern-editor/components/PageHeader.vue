@@ -12,10 +12,10 @@ import { computed } from "vue";
 import { SystemApi } from "~/api/";
 import { FilesApi } from "~/api/";
 import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
+import { ANY_IMAGE_FILTER } from "~/constants/";
 import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/modules/pattern-editor/stores/";
 import { WindowControls } from "~/shared/components/index.ts";
-import { ANY_IMAGE_FILTER } from "~/shared/constants";
 import { useSettingsStore } from "~/shared/stores/";
 
 const confirm = useConfirm();

@@ -6,8 +6,8 @@ import { ref } from "vue";
 import { BackupFileExistsError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/api/";
 import { FilesApi } from "~/api/";
 import { useFilePicker, useI18n } from "~/composables/";
+import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/constants/";
 import type { Fabric, PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
-import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/shared/constants/";
 
 const MAX_RECENT_PATTERNS = 5;
 
