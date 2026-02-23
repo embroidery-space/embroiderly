@@ -10,9 +10,8 @@ export const router = createRouter({
     },
     {
       name: "pattern-editor",
-      path: "/pattern-editor/:patternId?",
+      path: "/pattern-editor",
       component: () => import("#pattern-editor/PatternEditorPage.vue"),
-      props: true,
     },
   ],
 });

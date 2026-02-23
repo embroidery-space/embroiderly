@@ -1,27 +1,10 @@
 <script setup lang="ts">
 import { Button, Tabs } from "@embroiderly/ui";
 
-import { useRouter } from "vue-router";
-
 import { usePatternFileStore, usePatternStore } from "#pattern-editor/stores";
-
-const router = useRouter();
 
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
-
-function switchPattern(patternId: string) {
-  router.push({ name: "pattern-editor", params: { patternId } });
-}
-
-async function closePattern(patternId: string) {
-  await patternFileStore.closePattern(patternId);
-
-  const openedPatternsNumber = patternFileStore.openedPatterns.length;
-  const lastPatternId = patternFileStore.openedPatterns[openedPatternsNumber - 1]?.id;
-
-  router.push({ name: "pattern-editor", params: { patternId: lastPatternId } });
-}
 </script>
 
 <template>
@@ -38,7 +21,7 @@ async function closePattern(patternId: string) {
       trigger:
         'grow-0 min-w-20 hover:data-[state=inactive]:bg-accented hover:cursor-pointer data-[state=inactive]:border-r border-default rounded-none',
     }"
-    @update:model-value="switchPattern($event as string)"
+    @update:model-value="patternFileStore.switchPattern($event as string)"
   >
     <template #trailing="{ item }">
       <Button
@@ -50,7 +33,7 @@ async function closePattern(patternId: string) {
           'text-inverted': patternStore.pattern?.id === item.value,
           'text-default': patternStore.pattern?.id !== item.value,
         }"
-        @click.stop="closePattern(item.value as string)"
+        @click.stop="patternFileStore.closePattern(item.value as string)"
       />
     </template>
   </Tabs>

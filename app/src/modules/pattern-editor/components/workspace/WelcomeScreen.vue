@@ -4,7 +4,6 @@ import { resolveResource, sep } from "@tauri-apps/api/path";
 import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
-import { useRouter } from "vue-router";
 
 import { useEditorModals } from "#pattern-editor/composables/";
 import { Fabric } from "#pattern-editor/lib/pattern/";
@@ -13,8 +12,6 @@ import { useI18n } from "#shared/composables/";
 import { useSettingsStore } from "#shared/stores/";
 
 import { EditorWorkspaceLayout } from "./layout/";
-
-const router = useRouter();
 
 const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
@@ -75,22 +72,21 @@ function handleInfoItemClick(item: InfoItemOptions) {
 
 async function openPattern() {
   const patternId = await patternFileStore.openPattern();
-  router.push({ name: "pattern-editor", params: { patternId } });
+  if (patternId) patternFileStore.switchPattern(patternId);
 }
 
 function createPattern() {
   modals.patternCreationModal.open({
     fabric: Fabric.default(),
     async onSave(fabric) {
-      const patternId = await patternFileStore.createPattern(fabric);
-      router.push({ name: "pattern-editor", params: { patternId } });
+      patternFileStore.switchPattern(await patternFileStore.createPattern(fabric));
     },
   });
 }
 
 async function openRecentFile(filePath: string) {
   const patternId = await patternFileStore.openPattern(filePath);
-  if (patternId) router.push({ name: "pattern-editor", params: { patternId } });
+  if (patternId) patternFileStore.switchPattern(patternId);
 }
 </script>
 
