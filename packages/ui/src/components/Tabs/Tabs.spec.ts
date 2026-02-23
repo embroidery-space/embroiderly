@@ -33,7 +33,7 @@ describe("Tabs", () => {
     const screen = page.render(Tabs, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {

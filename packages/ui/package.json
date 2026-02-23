@@ -32,6 +32,7 @@
     "vue": "catalog:"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "catalog:",
     "@histoire/plugin-vue": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@tsconfig/node24": "catalog:",
@@ -46,6 +47,7 @@
     "vitest": "catalog:",
     "vitest-browser-vue": "catalog:",
     "vue-tsc": "catalog:",
+    "vue3-snapshot-serializer": "catalog:",
     "webdriverio": "catalog:",
     "wrangler": "catalog:"
   }

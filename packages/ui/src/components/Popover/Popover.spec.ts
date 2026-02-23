@@ -23,6 +23,6 @@ describe("Popover", () => {
     });
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

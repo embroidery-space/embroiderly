@@ -34,6 +34,7 @@ catalog:
 
   # Styling
   "@iconify/vue": 5.0.0
+  "@iconify-json/lucide": 1.2.93
   "tailwindcss": 4.1.18
   "tailwind-merge": 3.4.0
   "tailwind-variants": 3.2.2
@@ -114,6 +115,7 @@ catalog:
   "@vue/test-utils": 2.4.6
   "@pinia/testing": 1.0.3
   "vitest-browser-vue": 2.0.2
+  "vue3-snapshot-serializer": 2.13.1
 
   # WebdriverIO
   "webdriverio": 9.24.0

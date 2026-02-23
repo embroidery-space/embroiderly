@@ -13,6 +13,6 @@ describe("Icon", () => {
     const screen = page.render(Icon, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

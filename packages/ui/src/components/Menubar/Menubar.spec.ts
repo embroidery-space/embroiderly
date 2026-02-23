@@ -74,6 +74,6 @@ describe("Menubar", () => {
     await userEvent.click(trigger);
 
     await nextTick();
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

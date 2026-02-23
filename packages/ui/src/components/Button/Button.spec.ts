@@ -47,7 +47,7 @@ describe("Button", () => {
       const screen = page.render(Button, options);
       await nextTick();
 
-      expect(screen.container).toMatchSnapshot();
+      expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
 

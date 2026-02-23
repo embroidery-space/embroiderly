@@ -17,6 +17,6 @@ describe("Kbd", () => {
     const screen = page.render(Kbd, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

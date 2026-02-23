@@ -2,2216 +2,331 @@
 
 exports[`Menubar > renders correctly with checkbox menus 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="0"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-controls="reka-menubar-content-v-2"
-      aria-disabled="false"
-      aria-expanded="true"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-highlighted=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="open"
-      data-value="reka-v-0"
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="0"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        View
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="0">
+    <button aria-controls="reka-menubar-content-v-2" aria-disabled="false" aria-expanded="true" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-highlighted data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="open" data-value="reka-v-0" id="reka-v-0" role="menuitem" tabindex="0" type="button">
+      <span class="truncate" data-slot="label">View</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <div
-      data-reka-popper-content-wrapper=""
-      style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 40px); min-width: max-content; --reka-popper-transform-origin: 0% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 848px; --reka-popper-anchor-width: 49.525001525878906px; --reka-popper-anchor-height: 32px;"
-    >
-      <div
-        aria-labelledby="reka-v-0"
-        aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-        data-align="start"
-        data-dismissable-layer=""
-        data-orientation="vertical"
-        data-reka-menu-content=""
-        data-reka-menubar-content=""
-        data-side="bottom"
-        data-slot="content"
-        data-state="open"
-        dir="ltr"
-        id="reka-menubar-content-v-2"
-        role="menu"
-        style="--reka-menubar-content-transform-origin: var(--reka-popper-transform-origin); --reka-menubar-content-available-width: var(--reka-popper-available-width); --reka-menubar-content-available-height: var(--reka-popper-available-height); --reka-menubar-trigger-width: var(--reka-popper-anchor-width); --reka-menubar-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-        tabindex="-1"
-      >
-        
-        
-        
-        
-        
-        
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="flex w-full items-center font-semibold gap-1.5 p-1.5 text-sm"
-            data-slot="label"
-          >
-            
-            
-            Display
-            
-            
+    <div data-reka-popper-content-wrapper>
+      <div aria-labelledby="reka-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-reka-menubar-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-menubar-content-v-2" role="menu" tabindex="-1">
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label">Display</div>
+          <div aria-orientation="horizontal" class="-mx-1 bg-border h-px my-1" data-slot="separator" role="separator"></div>
+          <div aria-checked="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="checked" role="menuitemcheckbox" tabindex="-1">
+            <span class="truncate" data-slot="itemLabel">Show Grid</span>
+            <svg aria-hidden="true" class="iconify iconify--lucide inline-flex items-center ms-auto shrink-0 size-5" data-slot="itemTrailingIcon" data-state="checked" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
           </div>
-          
-          
-          <div
-            aria-orientation="horizontal"
-            class="-mx-1 my-1 h-px bg-border"
-            data-slot="separator"
-            role="separator"
-          >
-            
-            
+          <div aria-checked="false" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="unchecked" role="menuitemcheckbox" tabindex="-1">
+            <span class="truncate" data-slot="itemLabel">Show Rulers</span>
           </div>
-          
-          
-          <div
-            aria-checked="true"
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            data-state="checked"
-            role="menuitemcheckbox"
-            tabindex="-1"
-          >
-            
-            
-            
-            
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Show Grid
-            </span>
-            <svg
-              aria-hidden="true"
-              class="ms-auto inline-flex items-center shrink-0 size-5"
-              data-slot="itemTrailingIcon"
-              data-state="checked"
-              height="1em"
-              role="img"
-              viewBox="0 0 16 16"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            />
-            
-            
-            
-            
-          </div>
-          
-          
-          <div
-            aria-checked="false"
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            data-state="unchecked"
-            role="menuitemcheckbox"
-            tabindex="-1"
-          >
-            
-            
-            
-            
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Show Rulers
-            </span>
-            <!---->
-            
-            
-            
-            
-          </div>
-          
-          
-          
-          
         </div>
-        
-        
-        
-        
-        
-        
       </div>
     </div>
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;
 
 exports[`Menubar > renders correctly with class 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="0"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-controls="reka-menubar-content-v-4"
-      aria-disabled="false"
-      aria-expanded="true"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-highlighted=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="open"
-      data-value="reka-v-0"
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="0"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        File
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="0">
+    <button aria-controls="reka-menubar-content-v-4" aria-disabled="false" aria-expanded="true" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-highlighted data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="open" data-value="reka-v-0" id="reka-v-0" role="menuitem" tabindex="0" type="button">
+      <span class="truncate" data-slot="label">File</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <div
-      data-reka-popper-content-wrapper=""
-      style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 40px); min-width: max-content; --reka-popper-transform-origin: 0% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 848px; --reka-popper-anchor-width: 40.95000076293945px; --reka-popper-anchor-height: 32px;"
-    >
-      <div
-        aria-labelledby="reka-v-0"
-        aria-orientation="vertical"
-        class="pointer-events-auto origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] min-w-48"
-        data-align="start"
-        data-dismissable-layer=""
-        data-orientation="vertical"
-        data-reka-menu-content=""
-        data-reka-menubar-content=""
-        data-side="bottom"
-        data-slot="content"
-        data-state="open"
-        dir="ltr"
-        id="reka-menubar-content-v-4"
-        role="menu"
-        style="--reka-menubar-content-transform-origin: var(--reka-popper-transform-origin); --reka-menubar-content-available-width: var(--reka-popper-available-width); --reka-menubar-content-available-height: var(--reka-popper-available-height); --reka-menubar-trigger-width: var(--reka-popper-anchor-width); --reka-menubar-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-        tabindex="-1"
-      >
-        
-        
-        
-        
-        
-        
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                New
-              </span>
-              <!--v-if-->
+    <div data-reka-popper-content-wrapper>
+      <div aria-labelledby="reka-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-menubar-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-reka-menubar-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-menubar-content-v-4" role="menu" tabindex="-1">
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">New</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+N
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Open
-              </span>
-              <!--v-if-->
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+O
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Save
-              </span>
-              <!--v-if-->
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+S
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        
-        
-        
-        
-        
-        
       </div>
     </div>
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
-    <button
-      aria-disabled="false"
-      aria-expanded="false"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="closed"
-      data-value="reka-v-2"
-      id="reka-v-2"
-      role="menuitem"
-      tabindex="-1"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        Edit
-      </span>
-      
-      
-      <!--v-if-->
-      
+    <button aria-disabled="false" aria-expanded="false" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="closed" data-value="reka-v-2" id="reka-v-2" role="menuitem" tabindex="-1" type="button">
+      <span class="truncate" data-slot="label">Edit</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <!---->
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;
 
 exports[`Menubar > renders correctly with disabled menu 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="-1"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-disabled="true"
-      aria-expanded="false"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-disabled=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="closed"
-      data-value="reka-v-0"
-      disabled=""
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="-1"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        File
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="-1">
+    <button aria-disabled="true" aria-expanded="false" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-disabled data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="closed" data-value="reka-v-0" disabled id="reka-v-0" role="menuitem" tabindex="-1" type="button">
+      <span class="truncate" data-slot="label">File</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <!---->
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;
 
 exports[`Menubar > renders correctly with simple menus 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="0"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-controls="reka-menubar-content-v-4"
-      aria-disabled="false"
-      aria-expanded="true"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-highlighted=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="open"
-      data-value="reka-v-0"
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="0"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        File
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="0">
+    <button aria-controls="reka-menubar-content-v-4" aria-disabled="false" aria-expanded="true" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-highlighted data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="open" data-value="reka-v-0" id="reka-v-0" role="menuitem" tabindex="0" type="button">
+      <span class="truncate" data-slot="label">File</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <div
-      data-reka-popper-content-wrapper=""
-      style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 40px); min-width: max-content; --reka-popper-transform-origin: 0% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 848px; --reka-popper-anchor-width: 40.95000076293945px; --reka-popper-anchor-height: 32px;"
-    >
-      <div
-        aria-labelledby="reka-v-0"
-        aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-        data-align="start"
-        data-dismissable-layer=""
-        data-orientation="vertical"
-        data-reka-menu-content=""
-        data-reka-menubar-content=""
-        data-side="bottom"
-        data-slot="content"
-        data-state="open"
-        dir="ltr"
-        id="reka-menubar-content-v-4"
-        role="menu"
-        style="--reka-menubar-content-transform-origin: var(--reka-popper-transform-origin); --reka-menubar-content-available-width: var(--reka-popper-available-width); --reka-menubar-content-available-height: var(--reka-popper-available-height); --reka-menubar-trigger-width: var(--reka-popper-anchor-width); --reka-menubar-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-        tabindex="-1"
-      >
-        
-        
-        
-        
-        
-        
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                New
-              </span>
-              <!--v-if-->
+    <div data-reka-popper-content-wrapper>
+      <div aria-labelledby="reka-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-reka-menubar-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-menubar-content-v-4" role="menu" tabindex="-1">
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">New</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+N
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Open
-              </span>
-              <!--v-if-->
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+O
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Save
-              </span>
-              <!--v-if-->
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+S
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        
-        
-        
-        
-        
-        
       </div>
     </div>
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
-    <button
-      aria-disabled="false"
-      aria-expanded="false"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="closed"
-      data-value="reka-v-2"
-      id="reka-v-2"
-      role="menuitem"
-      tabindex="-1"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        Edit
-      </span>
-      
-      
-      <!--v-if-->
-      
+    <button aria-disabled="false" aria-expanded="false" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="closed" data-value="reka-v-2" id="reka-v-2" role="menuitem" tabindex="-1" type="button">
+      <span class="truncate" data-slot="label">Edit</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <!---->
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;
 
 exports[`Menubar > renders correctly with size lg 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="0"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-controls="reka-menubar-content-v-4"
-      aria-disabled="false"
-      aria-expanded="true"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-2 px-3 py-2 text-base text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-highlighted=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="open"
-      data-value="reka-v-0"
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="0"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        File
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="0">
+    <button aria-controls="reka-menubar-content-v-4" aria-disabled="false" aria-expanded="true" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-3 py-2 rounded-md text-base text-default transition-colors" data-highlighted data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="open" data-value="reka-v-0" id="reka-v-0" role="menuitem" tabindex="0" type="button">
+      <span class="truncate" data-slot="label">File</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <div
-      data-reka-popper-content-wrapper=""
-      style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 48px); min-width: max-content; --reka-popper-transform-origin: 0% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 840px; --reka-popper-anchor-width: 47.9375px; --reka-popper-anchor-height: 40px;"
-    >
-      <div
-        aria-labelledby="reka-v-0"
-        aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-        data-align="start"
-        data-dismissable-layer=""
-        data-orientation="vertical"
-        data-reka-menu-content=""
-        data-reka-menubar-content=""
-        data-side="bottom"
-        data-slot="content"
-        data-state="open"
-        dir="ltr"
-        id="reka-menubar-content-v-4"
-        role="menu"
-        style="--reka-menubar-content-transform-origin: var(--reka-popper-transform-origin); --reka-menubar-content-available-width: var(--reka-popper-available-width); --reka-menubar-content-available-height: var(--reka-popper-available-height); --reka-menubar-trigger-width: var(--reka-popper-anchor-width); --reka-menubar-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-        tabindex="-1"
-      >
-        
-        
-        
-        
-        
-        
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                New
-              </span>
-              <!--v-if-->
+    <div data-reka-popper-content-wrapper>
+      <div aria-labelledby="reka-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-reka-menubar-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-menubar-content-v-4" role="menu" tabindex="-1">
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">New</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+N
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Open
-              </span>
-              <!--v-if-->
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+O
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Save
-              </span>
-              <!--v-if-->
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+S
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        
-        
-        
-        
-        
-        
       </div>
     </div>
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
-    <button
-      aria-disabled="false"
-      aria-expanded="false"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-2 px-3 py-2 text-base text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="closed"
-      data-value="reka-v-2"
-      id="reka-v-2"
-      role="menuitem"
-      tabindex="-1"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        Edit
-      </span>
-      
-      
-      <!--v-if-->
-      
+    <button aria-disabled="false" aria-expanded="false" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-3 py-2 rounded-md text-base text-default transition-colors" data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="closed" data-value="reka-v-2" id="reka-v-2" role="menuitem" tabindex="-1" type="button">
+      <span class="truncate" data-slot="label">Edit</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <!---->
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;
 
 exports[`Menubar > renders correctly with size md 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="0"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-controls="reka-menubar-content-v-4"
-      aria-disabled="false"
-      aria-expanded="true"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-highlighted=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="open"
-      data-value="reka-v-0"
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="0"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        File
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="0">
+    <button aria-controls="reka-menubar-content-v-4" aria-disabled="false" aria-expanded="true" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-highlighted data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="open" data-value="reka-v-0" id="reka-v-0" role="menuitem" tabindex="0" type="button">
+      <span class="truncate" data-slot="label">File</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <div
-      data-reka-popper-content-wrapper=""
-      style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 40px); min-width: max-content; --reka-popper-transform-origin: 0% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 848px; --reka-popper-anchor-width: 40.95000076293945px; --reka-popper-anchor-height: 32px;"
-    >
-      <div
-        aria-labelledby="reka-v-0"
-        aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-        data-align="start"
-        data-dismissable-layer=""
-        data-orientation="vertical"
-        data-reka-menu-content=""
-        data-reka-menubar-content=""
-        data-side="bottom"
-        data-slot="content"
-        data-state="open"
-        dir="ltr"
-        id="reka-menubar-content-v-4"
-        role="menu"
-        style="--reka-menubar-content-transform-origin: var(--reka-popper-transform-origin); --reka-menubar-content-available-width: var(--reka-popper-available-width); --reka-menubar-content-available-height: var(--reka-popper-available-height); --reka-menubar-trigger-width: var(--reka-popper-anchor-width); --reka-menubar-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-        tabindex="-1"
-      >
-        
-        
-        
-        
-        
-        
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                New
-              </span>
-              <!--v-if-->
+    <div data-reka-popper-content-wrapper>
+      <div aria-labelledby="reka-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-reka-menubar-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-menubar-content-v-4" role="menu" tabindex="-1">
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">New</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+N
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Open
-              </span>
-              <!--v-if-->
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+O
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Save
-              </span>
-              <!--v-if-->
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+S
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        
-        
-        
-        
-        
-        
       </div>
     </div>
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
-    <button
-      aria-disabled="false"
-      aria-expanded="false"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="closed"
-      data-value="reka-v-2"
-      id="reka-v-2"
-      role="menuitem"
-      tabindex="-1"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        Edit
-      </span>
-      
-      
-      <!--v-if-->
-      
+    <button aria-disabled="false" aria-expanded="false" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="closed" data-value="reka-v-2" id="reka-v-2" role="menuitem" tabindex="-1" type="button">
+      <span class="truncate" data-slot="label">Edit</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <!---->
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;
 
 exports[`Menubar > renders correctly with size sm 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="0"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-controls="reka-menubar-content-v-4"
-      aria-disabled="false"
-      aria-expanded="true"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1 px-2 py-1 text-xs text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-highlighted=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="open"
-      data-value="reka-v-0"
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="0"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        File
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="0">
+    <button aria-controls="reka-menubar-content-v-4" aria-disabled="false" aria-expanded="true" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2 py-1 rounded-md text-default text-xs transition-colors" data-highlighted data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="open" data-value="reka-v-0" id="reka-v-0" role="menuitem" tabindex="0" type="button">
+      <span class="truncate" data-slot="label">File</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <div
-      data-reka-popper-content-wrapper=""
-      style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 32px); min-width: max-content; --reka-popper-transform-origin: 0% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 856.0124988555908px; --reka-popper-anchor-width: 33.95000076293945px; --reka-popper-anchor-height: 23.98750114440918px;"
-    >
-      <div
-        aria-labelledby="reka-v-0"
-        aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-        data-align="start"
-        data-dismissable-layer=""
-        data-orientation="vertical"
-        data-reka-menu-content=""
-        data-reka-menubar-content=""
-        data-side="bottom"
-        data-slot="content"
-        data-state="open"
-        dir="ltr"
-        id="reka-menubar-content-v-4"
-        role="menu"
-        style="--reka-menubar-content-transform-origin: var(--reka-popper-transform-origin); --reka-menubar-content-available-width: var(--reka-popper-available-width); --reka-menubar-content-available-height: var(--reka-popper-available-height); --reka-menubar-trigger-width: var(--reka-popper-anchor-width); --reka-menubar-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-        tabindex="-1"
-      >
-        
-        
-        
-        
-        
-        
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                New
-              </span>
-              <!--v-if-->
+    <div data-reka-popper-content-wrapper>
+      <div aria-labelledby="reka-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-reka-menubar-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-menubar-content-v-4" role="menu" tabindex="-1">
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">New</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+N
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Open
-              </span>
-              <!--v-if-->
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+O
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Save
-              </span>
-              <!--v-if-->
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+S
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        
-        
-        
-        
-        
-        
       </div>
     </div>
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
-    <button
-      aria-disabled="false"
-      aria-expanded="false"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1 px-2 py-1 text-xs text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="closed"
-      data-value="reka-v-2"
-      id="reka-v-2"
-      role="menuitem"
-      tabindex="-1"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        Edit
-      </span>
-      
-      
-      <!--v-if-->
-      
+    <button aria-disabled="false" aria-expanded="false" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2 py-1 rounded-md text-default text-xs transition-colors" data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="closed" data-value="reka-v-2" id="reka-v-2" role="menuitem" tabindex="-1" type="button">
+      <span class="truncate" data-slot="label">Edit</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <!---->
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;
 
 exports[`Menubar > renders correctly with submenu menus 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="0"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-controls="reka-menubar-content-v-2"
-      aria-disabled="false"
-      aria-expanded="true"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-      data-highlighted=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="open"
-      data-value="reka-v-0"
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="0"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        Tools
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="0">
+    <button aria-controls="reka-menubar-content-v-2" aria-disabled="false" aria-expanded="true" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-highlighted data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="open" data-value="reka-v-0" id="reka-v-0" role="menuitem" tabindex="0" type="button">
+      <span class="truncate" data-slot="label">Tools</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <div
-      data-reka-popper-content-wrapper=""
-      style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 40px); min-width: max-content; --reka-popper-transform-origin: 0% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 848px; --reka-popper-anchor-width: 51.712501525878906px; --reka-popper-anchor-height: 32px;"
-    >
-      <div
-        aria-labelledby="reka-v-0"
-        aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-        data-align="start"
-        data-dismissable-layer=""
-        data-orientation="vertical"
-        data-reka-menu-content=""
-        data-reka-menubar-content=""
-        data-side="bottom"
-        data-slot="content"
-        data-state="open"
-        dir="ltr"
-        id="reka-menubar-content-v-2"
-        role="menu"
-        style="--reka-menubar-content-transform-origin: var(--reka-popper-transform-origin); --reka-menubar-content-available-width: var(--reka-popper-available-width); --reka-menubar-content-available-height: var(--reka-popper-available-height); --reka-menubar-trigger-width: var(--reka-popper-anchor-width); --reka-menubar-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-        tabindex="-1"
-      >
-        
-        
-        
-        
-        
-        
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          
-          
-          
-          <div
-            aria-controls="reka-menu-sub-content-v-4"
-            aria-expanded="false"
-            aria-haspopup="menu"
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-reka-menubar-subtrigger=""
-            data-slot="item"
-            data-state="closed"
-            id="reka-menu-sub-trigger-v-3"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              More Tools
+    <div data-reka-popper-content-wrapper>
+      <div aria-labelledby="reka-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-reka-menubar-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-menubar-content-v-2" role="menu" tabindex="-1">
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div aria-controls="reka-menu-sub-content-v-4" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-reka-menubar-subtrigger data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-3" role="menuitem" tabindex="-1">
+            <span class="truncate" data-slot="itemLabel">More Tools</span>
+            <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path d="m9 18l6-6l-6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+              </svg>
             </span>
-            <span
-              class="ms-auto inline-flex items-center"
-              data-slot="itemTrailing"
-            >
-              <svg
-                aria-hidden="true"
-                class="shrink-0 size-5"
-                data-slot="itemTrailingIcon"
-                height="1em"
-                role="img"
-                viewBox="0 0 16 16"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              />
-            </span>
-            
-            
-            
           </div>
-          <!--teleport start-->
-          
-          
-          
-          <!---->
-          
-          
-          
-          <!--teleport end-->
-          
-          
-          
-          
-          
-          
-          
         </div>
-        
-        
-        
-        
-        
-        
       </div>
     </div>
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;
 
 exports[`Menubar > renders correctly with ui 1`] = `
 <div>
-  <div
-    class="flex items-center gap-1 bg-default"
-    data-orientation="horizontal"
-    data-slot="root"
-    dir="ltr"
-    role="menubar"
-    style="outline: none;"
-    tabindex="0"
-  >
-    
-    
-    
-    
-    
-    
-    <button
-      aria-controls="reka-menubar-content-v-4"
-      aria-disabled="false"
-      aria-expanded="true"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated font-bold"
-      data-highlighted=""
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="open"
-      data-value="reka-v-0"
-      id="reka-v-0"
-      role="menuitem"
-      tabindex="0"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        File
-      </span>
-      
-      
-      <!--v-if-->
-      
+  <div class="bg-default flex gap-1 items-center" data-orientation="horizontal" data-slot="root" dir="ltr" role="menubar" tabindex="0">
+    <button aria-controls="reka-menubar-content-v-4" aria-disabled="false" aria-expanded="true" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 font-bold gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-highlighted data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="open" data-value="reka-v-0" id="reka-v-0" role="menuitem" tabindex="0" type="button">
+      <span class="truncate" data-slot="label">File</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <div
-      data-reka-popper-content-wrapper=""
-      style="position: fixed; left: 0px; top: 0px; transform: translate(8px, 40px); min-width: max-content; --reka-popper-transform-origin: 0% 0px; z-index: auto; --reka-popper-available-width: 398px; --reka-popper-available-height: 848px; --reka-popper-anchor-width: 42.8125px; --reka-popper-anchor-height: 32px;"
-    >
-      <div
-        aria-labelledby="reka-v-0"
-        aria-orientation="vertical"
-        class="pointer-events-auto min-w-32 origin-(--reka-menubar-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-        data-align="start"
-        data-dismissable-layer=""
-        data-orientation="vertical"
-        data-reka-menu-content=""
-        data-reka-menubar-content=""
-        data-side="bottom"
-        data-slot="content"
-        data-state="open"
-        dir="ltr"
-        id="reka-menubar-content-v-4"
-        role="menu"
-        style="--reka-menubar-content-transform-origin: var(--reka-popper-transform-origin); --reka-menubar-content-available-width: var(--reka-popper-available-width); --reka-menubar-content-available-height: var(--reka-popper-available-height); --reka-menubar-trigger-width: var(--reka-popper-anchor-width); --reka-menubar-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-        tabindex="-1"
-      >
-        
-        
-        
-        
-        
-        
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                New
-              </span>
-              <!--v-if-->
+    <div data-reka-popper-content-wrapper>
+      <div aria-labelledby="reka-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-menubar-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-reka-menubar-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-menubar-content-v-4" role="menu" tabindex="-1">
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">New</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+N
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Open
-              </span>
-              <!--v-if-->
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+O
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        <div
-          class="isolate p-1"
-          data-slot="group"
-          role="group"
-        >
-          
-          
-          
-          
-          <div
-            class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-            data-reka-collection-item=""
-            data-slot="item"
-            role="menuitem"
-            tabindex="-1"
-          >
-            
-            
-            
-            <!--v-if-->
-            <span
-              class="flex min-w-0 flex-1 flex-col"
-            >
-              <span
-                class="truncate"
-                data-slot="itemLabel"
-              >
-                Save
-              </span>
-              <!--v-if-->
+        <div class="isolate p-1" data-slot="group" role="group">
+          <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+            <span class="flex flex-1 flex-col min-w-0">
+              <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
-            <span
-              class="ms-auto inline-flex items-center flex items-center gap-0.5"
-              data-slot="itemTrailing"
-            >
-              
-              <kbd
-                class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-                data-slot="base"
-              >
-                Ctrl+S
-              </kbd>
-              
+            <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
-            
-            
-            
           </div>
-          
-          
-          
-          
         </div>
-        
-        
-        
-        
-        
-        
       </div>
     </div>
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
-    <button
-      aria-disabled="false"
-      aria-expanded="false"
-      aria-haspopup="menu"
-      class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 px-2.5 py-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated font-bold"
-      data-orientation="horizontal"
-      data-reka-collection-item=""
-      data-slot="trigger"
-      data-state="closed"
-      data-value="reka-v-2"
-      id="reka-v-2"
-      role="menuitem"
-      tabindex="-1"
-      type="button"
-    >
-      
-      <!--v-if-->
-      
-      
-      <span
-        class="truncate"
-        data-slot="label"
-      >
-        Edit
-      </span>
-      
-      
-      <!--v-if-->
-      
+    <button aria-disabled="false" aria-expanded="false" aria-haspopup="menu" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 font-bold gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-orientation="horizontal" data-reka-collection-item data-slot="trigger" data-state="closed" data-value="reka-v-2" id="reka-v-2" role="menuitem" tabindex="-1" type="button">
+      <span class="truncate" data-slot="label">Edit</span>
     </button>
-    <!--teleport start-->
-    
-    
-    
-    <!---->
-    
-    
-    
-    <!--teleport end-->
-    
-    
-    
-    
-    
-    
   </div>
 </div>
 `;

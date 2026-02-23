@@ -2,66 +2,36 @@
 
 exports[`Kbd > renders correctly with as 1`] = `
 <div>
-  <span
-    class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-5 min-w-5 text-[11px]"
-    data-slot="base"
-  >
-    K
-  </span>
+  <span class="bg-default font-medium font-sans h-5 inline-flex items-center justify-center min-w-5 px-1 ring ring-accented ring-inset rounded-sm text-[11px] text-default" data-slot="base">K</span>
 </div>
 `;
 
 exports[`Kbd > renders correctly with class 1`] = `
 <div>
-  <kbd
-    class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans text-default ring ring-accented ring-inset h-5 min-w-5 text-[11px] font-bold"
-    data-slot="base"
-  >
-    K
-  </kbd>
+  <kbd class="bg-default font-bold font-sans h-5 inline-flex items-center justify-center min-w-5 px-1 ring ring-accented ring-inset rounded-sm text-[11px] text-default" data-slot="base">K</kbd>
 </div>
 `;
 
 exports[`Kbd > renders correctly with size lg 1`] = `
 <div>
-  <kbd
-    class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-6 min-w-6 text-[12px]"
-    data-slot="base"
-  >
-    K
-  </kbd>
+  <kbd class="bg-default font-medium font-sans h-6 inline-flex items-center justify-center min-w-6 px-1 ring ring-accented ring-inset rounded-sm text-[12px] text-default" data-slot="base">K</kbd>
 </div>
 `;
 
 exports[`Kbd > renders correctly with size md 1`] = `
 <div>
-  <kbd
-    class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-5 min-w-5 text-[11px]"
-    data-slot="base"
-  >
-    K
-  </kbd>
+  <kbd class="bg-default font-medium font-sans h-5 inline-flex items-center justify-center min-w-5 px-1 ring ring-accented ring-inset rounded-sm text-[11px] text-default" data-slot="base">K</kbd>
 </div>
 `;
 
 exports[`Kbd > renders correctly with size sm 1`] = `
 <div>
-  <kbd
-    class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-    data-slot="base"
-  >
-    K
-  </kbd>
+  <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">K</kbd>
 </div>
 `;
 
 exports[`Kbd > renders correctly with value 1`] = `
 <div>
-  <kbd
-    class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-5 min-w-5 text-[11px]"
-    data-slot="base"
-  >
-    K
-  </kbd>
+  <kbd class="bg-default font-medium font-sans h-5 inline-flex items-center justify-center min-w-5 px-1 ring ring-accented ring-inset rounded-sm text-[11px] text-default" data-slot="base">K</kbd>
 </div>
 `;

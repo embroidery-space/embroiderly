@@ -21,7 +21,7 @@ describe("Splitter", () => {
       const screen = page.render(Splitter, options);
       await nextTick();
 
-      expect(screen.container).toMatchSnapshot();
+      expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
 
