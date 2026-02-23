@@ -8,7 +8,9 @@ exports[`Dialog > renders correctly with class 1`] = `
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
       </div>
       <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 end-4 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
-        <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
       </button>
     </header>
     <div class="flex-1 overflow-y-auto p-4" data-slot="body">Dialog body content</div>
@@ -26,7 +28,9 @@ exports[`Dialog > renders correctly with description 1`] = `
         <p class="mt-1 text-muted text-sm" data-slot="description" id="reka-dialog-description-v-2">Are you sure?</p>
       </div>
       <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 end-4 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
-        <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
       </button>
     </header>
     <div class="flex-1 overflow-y-auto p-4" data-slot="body">Dialog body content</div>
@@ -43,7 +47,9 @@ exports[`Dialog > renders correctly with non-dismissible 1`] = `
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
       </div>
       <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 end-4 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
-        <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
       </button>
     </header>
     <div class="flex-1 overflow-y-auto p-4" data-slot="body">Dialog body content</div>
@@ -60,7 +66,9 @@ exports[`Dialog > renders correctly with title 1`] = `
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
       </div>
       <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 end-4 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
-        <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
       </button>
     </header>
     <div class="flex-1 overflow-y-auto p-4" data-slot="body">Dialog body content</div>
@@ -77,7 +85,9 @@ exports[`Dialog > renders correctly with ui 1`] = `
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
       </div>
       <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 end-4 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
-        <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
       </button>
     </header>
     <div class="flex-1 overflow-y-auto p-4" data-slot="body">Dialog body content</div>

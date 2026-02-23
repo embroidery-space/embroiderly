@@ -5,7 +5,9 @@ exports[`Select > renders correctly with class 1`] = `
   <div class="absolute inline-flex items-center" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -16,7 +18,9 @@ exports[`Select > renders correctly with disabled 1`] = `
   <div class="inline-flex items-center relative" data-disabled dir="ltr">
     <button aria-controls aria-disabled="true" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 cursor-not-allowed disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between opacity-75 px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-disabled data-slot="base" data-state="closed" disabled id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -27,7 +31,9 @@ exports[`Select > renders correctly with disabled item 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -38,7 +44,9 @@ exports[`Select > renders correctly with grouped items 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -49,7 +57,9 @@ exports[`Select > renders correctly with icons 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="truncate" data-slot="value">Backlog</span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -60,7 +70,9 @@ exports[`Select > renders correctly with items 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -71,7 +83,9 @@ exports[`Select > renders correctly with loading 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="animate-spin shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="animate-spin iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="M21 12a9 9 0 1 1-6.219-8.56" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -82,7 +96,9 @@ exports[`Select > renders correctly with modelValue 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="truncate" data-slot="value">Backlog</span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -93,7 +109,9 @@ exports[`Select > renders correctly with placeholder 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder">Select a status...</span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -104,7 +122,9 @@ exports[`Select > renders correctly with searchInput 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -115,7 +135,9 @@ exports[`Select > renders correctly with searchInput placeholder 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -126,7 +148,9 @@ exports[`Select > renders correctly with separator 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -137,7 +161,9 @@ exports[`Select > renders correctly with size lg 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -148,7 +174,9 @@ exports[`Select > renders correctly with size md 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -159,7 +187,9 @@ exports[`Select > renders correctly with size sm 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1 inline-flex items-center justify-between px-2 py-1 ring ring-accented ring-inset rounded-md text-start text-xs transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-4 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -170,7 +200,9 @@ exports[`Select > renders correctly with ui 1`] = `
   <div class="inline-flex items-center relative" dir="ltr">
     <button aria-controls aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-full text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
     </button>
   </div>
 </div>
@@ -190,7 +222,9 @@ exports[`Select > renders correctly within FormField 1`] = `
       <div class="inline-flex items-center relative" dir="ltr">
         <button aria-controls aria-describedby="v-0-hint v-0-description v-0-help" aria-disabled="false" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="closed" id="v-0" tabindex="-1" type="button">
           <span class="text-muted truncate" data-slot="placeholder"></span>
-          <svg aria-hidden="true" class="shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
         </button>
       </div>
       <p class="mt-1 text-muted" data-slot="help" id="v-0-help">Help</p>

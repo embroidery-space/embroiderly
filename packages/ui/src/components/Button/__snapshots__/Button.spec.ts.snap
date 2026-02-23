@@ -3,7 +3,13 @@
 exports[`Button > renders correctly with icon 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
-    <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
     <span class="truncate" data-slot="label">Button</span>
   </button>
 </div>
@@ -12,7 +18,13 @@ exports[`Button > renders correctly with icon 1`] = `
 exports[`Button > renders correctly with icon and leading 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
-    <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
     <span class="truncate" data-slot="label">Button</span>
   </button>
 </div>
@@ -22,7 +34,13 @@ exports[`Button > renders correctly with icon and trailing 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
     <span class="truncate" data-slot="label">Button</span>
-    <svg aria-hidden="true" class="shrink-0 size-4" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
   </button>
 </div>
 `;
@@ -38,9 +56,21 @@ exports[`Button > renders correctly with label 1`] = `
 exports[`Button > renders correctly with leading and trailing icons 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
-    <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
     <span class="truncate" data-slot="label">Button</span>
-    <svg aria-hidden="true" class="shrink-0 size-4" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
   </button>
 </div>
 `;
@@ -48,7 +78,13 @@ exports[`Button > renders correctly with leading and trailing icons 1`] = `
 exports[`Button > renders correctly with leading icon 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
-    <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
     <span class="truncate" data-slot="label">Button</span>
   </button>
 </div>
@@ -183,7 +219,13 @@ exports[`Button > renders correctly with slots 1`] = `
 exports[`Button > renders correctly with square icon-only and size lg 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-2 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center p-2 rounded-md text-base text-inverted transition-colors" data-slot="base">
-    <svg aria-hidden="true" class="shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
   </button>
 </div>
 `;
@@ -191,7 +233,13 @@ exports[`Button > renders correctly with square icon-only and size lg 1`] = `
 exports[`Button > renders correctly with square icon-only and size md 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center p-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
-    <svg aria-hidden="true" class="shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
   </button>
 </div>
 `;
@@ -199,7 +247,13 @@ exports[`Button > renders correctly with square icon-only and size md 1`] = `
 exports[`Button > renders correctly with square icon-only and size sm 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md text-inverted text-xs transition-colors" data-slot="base">
-    <svg aria-hidden="true" class="shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
   </button>
 </div>
 `;
@@ -208,7 +262,13 @@ exports[`Button > renders correctly with trailing icon 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
     <span class="truncate" data-slot="label">Button</span>
-    <svg aria-hidden="true" class="shrink-0 size-4" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+        <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+      </g>
+    </svg>
   </button>
 </div>
 `;
