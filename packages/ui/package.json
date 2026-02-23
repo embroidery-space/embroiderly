@@ -32,6 +32,7 @@
     "vue": "catalog:"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "catalog:",
     "@histoire/plugin-vue": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@tsconfig/node24": "catalog:",

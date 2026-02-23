@@ -34,6 +34,7 @@ catalog:
 
   # Styling
   "@iconify/vue": 5.0.0
+  "@iconify-json/lucide": 1.2.93
   "tailwindcss": 4.1.18
   "tailwind-merge": 3.4.0
   "tailwind-variants": 3.2.2
