@@ -27,7 +27,7 @@ import {
   usePatternFileStore,
 } from "~/modules/pattern-editor/stores/";
 import { LoggerService } from "~/shared/services/";
-import { addSymbolFonts } from "~/shared/utils/";
+import { addSymbolFonts } from "~/utils/";
 
 import { EditorWorkspaceLayout, EditorWorkspaceTabs } from "./layout/";
 

@@ -8,7 +8,7 @@ import type { Ref } from "vue";
 import { PatternApi } from "~/api/";
 import { useI18n } from "~/composables/";
 import { Fabric, PaletteSettings, FabricColor } from "~/modules/pattern-editor/lib/pattern/";
-import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/shared/utils/";
+import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/utils/";
 
 import { PaletteList } from "../palette/";
 

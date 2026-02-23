@@ -8,7 +8,7 @@ import {
   PartStitchKind,
   DisplayMode,
 } from "~/modules/pattern-editor/lib/pattern/";
-import { mm2px } from "~/shared/utils/";
+import { mm2px } from "~/utils/";
 
 const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
   resolution: window.devicePixelRatio,

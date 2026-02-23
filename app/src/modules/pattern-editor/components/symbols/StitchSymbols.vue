@@ -8,7 +8,7 @@ import { FilesApi } from "~/api/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { FONT_FILTER } from "~/constants/";
 import { LoggerService } from "~/shared/services/";
-import { addSymbolFonts } from "~/shared/utils/";
+import { addSymbolFonts } from "~/utils/";
 
 import { PaletteSection } from "../palette/";
 
