@@ -5,7 +5,7 @@ import { onMounted, onErrorCaptured } from "vue";
 
 import { useI18n } from "~/composables/";
 import { LoggerService } from "~/shared/services/";
-import { useSettingsStore } from "~/shared/stores/";
+import { useSettingsStore } from "~/stores/";
 
 import PatternEditorPage from "./modules/pattern-editor/PatternEditorPage.vue";
 

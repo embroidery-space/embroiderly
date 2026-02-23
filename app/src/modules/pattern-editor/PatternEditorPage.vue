@@ -7,12 +7,11 @@ import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 
 import { StartupApi } from "~/api/";
 import { useDragDrop, useI18n, useTauriListener } from "~/composables/";
-import { useSettingsStore } from "~/shared/stores/";
+import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
 import { PageHeader } from "./components/";
 import { CanvasToolbar } from "./components/canvas/";
 import { PalettePanel, PatternWorkspace, WelcomeScreen } from "./components/workspace/";
-import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore } from "./stores/";
 
 const appWindow = getCurrentWebviewWindow();
 

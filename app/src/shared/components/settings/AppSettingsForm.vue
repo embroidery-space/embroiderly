@@ -6,7 +6,7 @@ import { computed } from "vue";
 
 import { useFilePicker, useI18n } from "~/composables/";
 import { ANY_PATTERN_FILTER } from "~/constants/";
-import { StartupAction, useSettingsStore } from "~/shared/stores/";
+import { StartupAction, useSettingsStore } from "~/stores/";
 import type {
   OtherOptions,
   StartupOptions,
@@ -14,7 +14,7 @@ import type {
   UpdaterOptions,
   ViewportOptions,
   TelemetryOptions,
-} from "~/shared/stores/";
+} from "~/stores/";
 
 const ui = defineModel<UiOptions>("ui", { required: true });
 const startup = defineModel<StartupOptions>("startup", { required: true });

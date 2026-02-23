@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Dialog } from "@embroiderly/ui";
 
-import { useSettingsStore } from "~/shared/stores/";
+import { useSettingsStore } from "~/stores/";
 
 import AppSettingsForm from "./AppSettingsForm.vue";
 

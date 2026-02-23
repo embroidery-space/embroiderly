@@ -14,7 +14,7 @@ import {
 } from "~/modules/pattern-editor/components/palette/";
 import { StitchSymbols } from "~/modules/pattern-editor/components/symbols/";
 import { PaletteSettings, SortPaletteBy, Symbol } from "~/modules/pattern-editor/lib/pattern/";
-import { PaletteMode, useEditorStateStore, usePatternStore } from "~/modules/pattern-editor/stores/";
+import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
 
 const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();

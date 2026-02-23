@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Button, Tabs } from "@embroiderly/ui";
 
-import { usePatternFileStore, usePatternStore } from "~/modules/pattern-editor/stores";
+import { usePatternFileStore, usePatternStore } from "~/stores/";
 
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();

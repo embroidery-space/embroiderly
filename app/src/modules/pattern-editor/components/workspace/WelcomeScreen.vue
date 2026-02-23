@@ -7,8 +7,8 @@ import { computed } from "vue";
 
 import { useEditorModals, useI18n } from "~/composables/";
 import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
-import { usePatternFileStore } from "~/modules/pattern-editor/stores/";
-import { useSettingsStore } from "~/shared/stores/";
+import { usePatternFileStore } from "~/stores/";
+import { useSettingsStore } from "~/stores/";
 
 import { EditorWorkspaceLayout } from "./layout/";
 

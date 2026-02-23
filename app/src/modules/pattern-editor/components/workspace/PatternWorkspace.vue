@@ -20,13 +20,8 @@ import type {
 } from "~/modules/pattern-editor/lib/pixi/";
 import { CursorTool } from "~/modules/pattern-editor/lib/tools/";
 import type { PatternEditorToolContext } from "~/modules/pattern-editor/lib/tools/";
-import {
-  PaletteMode,
-  useEditorStateStore,
-  usePatternStore,
-  usePatternFileStore,
-} from "~/modules/pattern-editor/stores/";
 import { LoggerService } from "~/shared/services/";
+import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "~/stores/";
 import { addSymbolFonts } from "~/utils/";
 
 import { EditorWorkspaceLayout, EditorWorkspaceTabs } from "./layout/";
