@@ -36,8 +36,8 @@ export default defineConfig({
       {
         test: {
           name: "unit",
-          include: ["./src/**/*.test.ts"],
-          exclude: ["./src/shared/components/**/*.test.ts", "./src/modules/*/components/**/*.test.ts"],
+          include: ["./src/**/*.spec.ts"],
+          exclude: ["./src/components/**/*.spec.ts"],
         },
       },
       {
@@ -50,7 +50,7 @@ export default defineConfig({
         },
         test: {
           name: "components",
-          include: ["./src/shared/components/**/*.test.ts", "./src/modules/*/components/**/*.test.ts"],
+          include: ["./src/components/**/*.spec.ts"],
           setupFiles: ["./tests/components/test-setup.ts", "vitest-browser-vue"],
           browser: {
             enabled: true,

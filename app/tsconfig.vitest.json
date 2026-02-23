@@ -1,6 +1,6 @@
 {
   "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
-  "include": ["src/**/*.test.ts"],
+  "include": ["src/**/*.spec.ts"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
 
@@ -12,9 +12,9 @@
     "noUncheckedIndexedAccess": false,
 
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
     },
 
-    "types": ["node", "vitest-browser-vue", "vite/client"]
-  }
+    "types": ["node", "vitest-browser-vue", "vite/client"],
+  },
 }
