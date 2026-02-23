@@ -7,7 +7,7 @@ import { ref } from "vue";
 
 import { useFilePicker } from "~/composables/";
 import { PDF_FILTER } from "~/constants/";
-import { PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
+import { PdfExportOptions } from "~/lib/pattern/";
 
 import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 

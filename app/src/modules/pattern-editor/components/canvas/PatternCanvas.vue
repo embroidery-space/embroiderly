@@ -2,14 +2,10 @@
 import { useEventListener } from "@vueuse/core";
 import { onMounted, onUnmounted, useTemplateRef, watch } from "vue";
 
-import { PatternEvent } from "~/modules/pattern-editor/lib/pattern/";
-import type { LayersVisibility, LineStitch, NodeStitch, Pattern } from "~/modules/pattern-editor/lib/pattern/";
-import { PatternApplication, ToolEvent } from "~/modules/pattern-editor/lib/pixi/";
-import type {
-  PatternApplicationOptions,
-  ToolEventDetail,
-  TransformEventDetail,
-} from "~/modules/pattern-editor/lib/pixi/";
+import { PatternEvent } from "~/lib/pattern/";
+import type { LayersVisibility, LineStitch, NodeStitch, Pattern } from "~/lib/pattern/";
+import { PatternApplication, ToolEvent } from "~/lib/pixi/";
+import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
 
 interface PatternCanvasProps {
   pattern?: Pattern;

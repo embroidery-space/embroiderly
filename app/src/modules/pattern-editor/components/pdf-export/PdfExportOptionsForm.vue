@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Checkbox, FormField, FormFieldSet, InputNumber } from "@embroiderly/ui";
 
-import type { PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
+import type { PdfExportOptions } from "~/lib/pattern/";
 
 const options = defineModel<PdfExportOptions>({ required: true });
 </script>

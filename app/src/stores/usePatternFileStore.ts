@@ -7,7 +7,7 @@ import { BackupFileExistsError, UnsavedChangesError, UnsupportedPatternTypeError
 import { FilesApi } from "~/api/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/constants/";
-import type { Fabric, PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
+import type { Fabric, PdfExportOptions } from "~/lib/pattern/";
 
 const MAX_RECENT_PATTERNS = 5;
 

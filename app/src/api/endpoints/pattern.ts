@@ -14,8 +14,8 @@ import {
   SetSymbolData,
   serializeStitch,
   PdfExportOptions,
-} from "~/modules/pattern-editor/lib/pattern/";
-import type { Stitch } from "~/modules/pattern-editor/lib/pattern/";
+} from "~/lib/pattern/";
+import type { Stitch } from "~/lib/pattern/";
 
 import { invoke } from "../client.ts";
 

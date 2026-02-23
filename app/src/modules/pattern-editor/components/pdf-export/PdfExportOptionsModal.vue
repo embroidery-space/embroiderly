@@ -3,7 +3,7 @@ import { Button, Dialog } from "@embroiderly/ui";
 
 import { ref, toRaw } from "vue";
 
-import { PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
+import { PdfExportOptions } from "~/lib/pattern/";
 
 import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 

@@ -13,7 +13,7 @@ import { SystemApi } from "~/api/";
 import { FilesApi } from "~/api/";
 import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
-import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
+import { Fabric } from "~/lib/pattern/";
 import { WindowControls } from "~/shared/components/index.ts";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";

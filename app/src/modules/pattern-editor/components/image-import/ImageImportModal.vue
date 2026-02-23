@@ -21,8 +21,8 @@ import { FilesApi } from "~/api/";
 import type { ImageImportOptions } from "~/api/";
 import { useDragDrop, useFilePicker } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
+import { LayersVisibility, Pattern } from "~/lib/pattern/";
 import { PatternCanvas } from "~/modules/pattern-editor/components/canvas";
-import { LayersVisibility, Pattern } from "~/modules/pattern-editor/lib/pattern";
 import { ImageImportService } from "~/services/";
 
 import { PaletteSelect } from "../palette/";

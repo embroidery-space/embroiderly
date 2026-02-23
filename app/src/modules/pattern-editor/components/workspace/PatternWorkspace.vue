@@ -10,16 +10,12 @@ import { computed, useTemplateRef, watch } from "vue";
 import { FilesApi } from "~/api/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
+import { PatternEvent, PatternInfo } from "~/lib/pattern/";
+import { MAX_SCALE, MIN_SCALE } from "~/lib/pixi/";
+import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
+import { CursorTool } from "~/lib/tools/";
+import type { PatternEditorToolContext } from "~/lib/tools/";
 import { CanvasZoomControls, PatternCanvas } from "~/modules/pattern-editor/components/canvas/";
-import { PatternEvent, PatternInfo } from "~/modules/pattern-editor/lib/pattern/";
-import { MAX_SCALE, MIN_SCALE } from "~/modules/pattern-editor/lib/pixi/";
-import type {
-  PatternApplicationOptions,
-  ToolEventDetail,
-  TransformEventDetail,
-} from "~/modules/pattern-editor/lib/pixi/";
-import { CursorTool } from "~/modules/pattern-editor/lib/tools/";
-import type { PatternEditorToolContext } from "~/modules/pattern-editor/lib/tools/";
 import { LoggerService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "~/stores/";
 import { addSymbolFonts } from "~/utils/";

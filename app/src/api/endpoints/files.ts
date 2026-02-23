@@ -1,4 +1,4 @@
-import { Pattern, Fabric, deserializeBrandPalette } from "~/modules/pattern-editor/lib/pattern/";
+import { Pattern, Fabric, deserializeBrandPalette } from "~/lib/pattern/";
 
 import { invoke } from "../client.ts";
 

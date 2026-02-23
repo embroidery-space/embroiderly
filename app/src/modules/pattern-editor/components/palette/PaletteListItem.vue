@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Tooltip } from "@embroiderly/ui";
 
-import type { BasePaletteItem, PaletteSettings } from "~/modules/pattern-editor/lib/pattern/";
+import type { BasePaletteItem, PaletteSettings } from "~/lib/pattern/";
 
 interface PaletteItemProps {
   paletteItem: BasePaletteItem;

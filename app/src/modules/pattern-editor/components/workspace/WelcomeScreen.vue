@@ -6,7 +6,7 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 import { computed } from "vue";
 
 import { useEditorModals, useI18n } from "~/composables/";
-import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
+import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
 

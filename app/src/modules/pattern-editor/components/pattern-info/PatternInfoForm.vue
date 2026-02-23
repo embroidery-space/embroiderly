@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FormField, Input, Textarea } from "@embroiderly/ui";
 
-import { PatternInfo } from "~/modules/pattern-editor/lib/pattern/";
+import { PatternInfo } from "~/lib/pattern/";
 
 const patternInfo = defineModel<PatternInfo>({ required: true });
 </script>

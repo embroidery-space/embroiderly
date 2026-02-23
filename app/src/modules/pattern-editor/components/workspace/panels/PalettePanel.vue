@@ -5,6 +5,7 @@ import type { ContextMenuItem, DropdownMenuItem } from "@embroiderly/ui";
 import { computed, reactive, ref, watch } from "vue";
 
 import { useI18n } from "~/composables/";
+import { PaletteSettings, SortPaletteBy, Symbol } from "~/lib/pattern/";
 import {
   PaletteCatalog,
   PaletteDisplaySettings,
@@ -13,7 +14,6 @@ import {
   PaletteToolbar,
 } from "~/modules/pattern-editor/components/palette/";
 import { StitchSymbols } from "~/modules/pattern-editor/components/symbols/";
-import { PaletteSettings, SortPaletteBy, Symbol } from "~/modules/pattern-editor/lib/pattern/";
 import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
 
 const editorStateStore = useEditorStateStore();
