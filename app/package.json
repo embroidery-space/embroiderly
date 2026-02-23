@@ -48,8 +48,7 @@
     "stacktracey": "catalog:",
     "tauri-plugin-better-posthog": "catalog:",
     "uuid": "catalog:",
-    "vue": "catalog:",
-    "vue-router": "catalog:"
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@iconify/vue": "catalog:",

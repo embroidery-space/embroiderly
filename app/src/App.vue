@@ -7,6 +7,8 @@ import { useI18n } from "#shared/composables/";
 import { LoggerService } from "#shared/services/";
 import { useSettingsStore } from "#shared/stores/";
 
+import PatternEditorPage from "./modules/pattern-editor/PatternEditorPage.vue";
+
 const toast = useToast();
 const { fluent, currentLocale } = useI18n();
 
@@ -32,6 +34,6 @@ onErrorCaptured((err, _component, info) => {
 
 <template>
   <App :locale="currentLocale">
-    <RouterView />
+    <PatternEditorPage />
   </App>
 </template>
