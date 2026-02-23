@@ -23,6 +23,6 @@ describe("ConfirmDialog", () => {
     const screen = page.render(ConfirmDialog, { ...options });
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

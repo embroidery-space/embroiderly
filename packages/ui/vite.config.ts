@@ -49,6 +49,7 @@ export default defineConfig({
     bail: isCI ? 1 : 0,
     reporters: isCI ? ["verbose", "github-actions"] : ["verbose"],
     setupFiles: ["./vitest.setup.ts", "vitest-browser-vue"],
+    snapshotSerializers: ["vue3-snapshot-serializer"],
     browser: {
       enabled: true,
       headless: isCI,

@@ -2,52 +2,15 @@
 
 exports[`ColorPicker > renders correctly with class 1`] = `
 <div>
-  <div
-    class="data-disabled:opacity-75 w-64"
-    data-slot="root"
-    data-v-0d9dad41=""
-  >
-    <div
-      class="flex gap-4"
-      data-slot="picker"
-      data-v-0d9dad41=""
-    >
-      <div
-        class="relative touch-none size-42"
-        data-slot="selector"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute inset-0 rounded-md"
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-          style="background-color: rgb(255, 0, 0);"
-        />
-        <div
-          class="absolute inset-0 rounded-md"
-          data-color-picker-selector=""
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-        />
-        <div
-          class="absolute size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="selectorThumb"
-          data-v-0d9dad41=""
-          style="left: 100%; top: 0%; background-color: rgb(255, 0, 0);"
-        />
+  <div class="data-disabled:opacity-75 w-64" data-slot="root">
+    <div class="flex gap-4" data-slot="picker">
+      <div class="relative size-42 touch-none" data-slot="selector">
+        <div class="absolute inset-0 rounded-md" data-slot="selectorBackground"></div>
+        <div class="absolute inset-0 rounded-md" data-color-picker-selector data-slot="selectorBackground"></div>
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed ring-2 ring-white rounded-full size-4" data-slot="selectorThumb"></div>
       </div>
-      <div
-        class="relative w-2 touch-none rounded-md h-42"
-        data-color-picker-track=""
-        data-slot="track"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute left-1/2 size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="trackThumb"
-          data-v-0d9dad41=""
-          style="top: 0%; background-color: rgb(255, 0, 0);"
-        />
+      <div class="h-42 relative rounded-md touch-none w-2" data-color-picker-track data-slot="track">
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed left-1/2 ring-2 ring-white rounded-full size-4" data-slot="trackThumb"></div>
       </div>
     </div>
   </div>
@@ -56,55 +19,15 @@ exports[`ColorPicker > renders correctly with class 1`] = `
 
 exports[`ColorPicker > renders correctly with disabled 1`] = `
 <div>
-  <div
-    class="data-disabled:opacity-75"
-    data-disabled="true"
-    data-slot="root"
-    data-v-0d9dad41=""
-  >
-    <div
-      class="flex gap-4"
-      data-slot="picker"
-      data-v-0d9dad41=""
-    >
-      <div
-        class="relative touch-none size-42"
-        data-slot="selector"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute inset-0 rounded-md"
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-          style="background-color: rgb(255, 0, 0);"
-        />
-        <div
-          class="absolute inset-0 rounded-md"
-          data-color-picker-selector=""
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-        />
-        <div
-          class="absolute size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-disabled="true"
-          data-slot="selectorThumb"
-          data-v-0d9dad41=""
-          style="left: 100%; top: 0%; background-color: rgb(255, 0, 0);"
-        />
+  <div class="data-disabled:opacity-75" data-disabled="true" data-slot="root">
+    <div class="flex gap-4" data-slot="picker">
+      <div class="relative size-42 touch-none" data-slot="selector">
+        <div class="absolute inset-0 rounded-md" data-slot="selectorBackground"></div>
+        <div class="absolute inset-0 rounded-md" data-color-picker-selector data-slot="selectorBackground"></div>
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed ring-2 ring-white rounded-full size-4" data-disabled="true" data-slot="selectorThumb"></div>
       </div>
-      <div
-        class="relative w-2 touch-none rounded-md h-42"
-        data-color-picker-track=""
-        data-slot="track"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute left-1/2 size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-disabled="true"
-          data-slot="trackThumb"
-          data-v-0d9dad41=""
-          style="top: 0%; background-color: rgb(255, 0, 0);"
-        />
+      <div class="h-42 relative rounded-md touch-none w-2" data-color-picker-track data-slot="track">
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed left-1/2 ring-2 ring-white rounded-full size-4" data-disabled="true" data-slot="trackThumb"></div>
       </div>
     </div>
   </div>
@@ -113,52 +36,15 @@ exports[`ColorPicker > renders correctly with disabled 1`] = `
 
 exports[`ColorPicker > renders correctly with size lg 1`] = `
 <div>
-  <div
-    class="data-disabled:opacity-75"
-    data-slot="root"
-    data-v-0d9dad41=""
-  >
-    <div
-      class="flex gap-4"
-      data-slot="picker"
-      data-v-0d9dad41=""
-    >
-      <div
-        class="relative touch-none size-46"
-        data-slot="selector"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute inset-0 rounded-md"
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-          style="background-color: rgb(255, 0, 0);"
-        />
-        <div
-          class="absolute inset-0 rounded-md"
-          data-color-picker-selector=""
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-        />
-        <div
-          class="absolute size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="selectorThumb"
-          data-v-0d9dad41=""
-          style="left: 100%; top: 0%; background-color: rgb(255, 0, 0);"
-        />
+  <div class="data-disabled:opacity-75" data-slot="root">
+    <div class="flex gap-4" data-slot="picker">
+      <div class="relative size-46 touch-none" data-slot="selector">
+        <div class="absolute inset-0 rounded-md" data-slot="selectorBackground"></div>
+        <div class="absolute inset-0 rounded-md" data-color-picker-selector data-slot="selectorBackground"></div>
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed ring-2 ring-white rounded-full size-4" data-slot="selectorThumb"></div>
       </div>
-      <div
-        class="relative w-2 touch-none rounded-md h-46"
-        data-color-picker-track=""
-        data-slot="track"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute left-1/2 size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="trackThumb"
-          data-v-0d9dad41=""
-          style="top: 0%; background-color: rgb(255, 0, 0);"
-        />
+      <div class="h-46 relative rounded-md touch-none w-2" data-color-picker-track data-slot="track">
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed left-1/2 ring-2 ring-white rounded-full size-4" data-slot="trackThumb"></div>
       </div>
     </div>
   </div>
@@ -167,52 +53,15 @@ exports[`ColorPicker > renders correctly with size lg 1`] = `
 
 exports[`ColorPicker > renders correctly with size md 1`] = `
 <div>
-  <div
-    class="data-disabled:opacity-75"
-    data-slot="root"
-    data-v-0d9dad41=""
-  >
-    <div
-      class="flex gap-4"
-      data-slot="picker"
-      data-v-0d9dad41=""
-    >
-      <div
-        class="relative touch-none size-42"
-        data-slot="selector"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute inset-0 rounded-md"
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-          style="background-color: rgb(255, 0, 0);"
-        />
-        <div
-          class="absolute inset-0 rounded-md"
-          data-color-picker-selector=""
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-        />
-        <div
-          class="absolute size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="selectorThumb"
-          data-v-0d9dad41=""
-          style="left: 100%; top: 0%; background-color: rgb(255, 0, 0);"
-        />
+  <div class="data-disabled:opacity-75" data-slot="root">
+    <div class="flex gap-4" data-slot="picker">
+      <div class="relative size-42 touch-none" data-slot="selector">
+        <div class="absolute inset-0 rounded-md" data-slot="selectorBackground"></div>
+        <div class="absolute inset-0 rounded-md" data-color-picker-selector data-slot="selectorBackground"></div>
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed ring-2 ring-white rounded-full size-4" data-slot="selectorThumb"></div>
       </div>
-      <div
-        class="relative w-2 touch-none rounded-md h-42"
-        data-color-picker-track=""
-        data-slot="track"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute left-1/2 size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="trackThumb"
-          data-v-0d9dad41=""
-          style="top: 0%; background-color: rgb(255, 0, 0);"
-        />
+      <div class="h-42 relative rounded-md touch-none w-2" data-color-picker-track data-slot="track">
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed left-1/2 ring-2 ring-white rounded-full size-4" data-slot="trackThumb"></div>
       </div>
     </div>
   </div>
@@ -221,52 +70,15 @@ exports[`ColorPicker > renders correctly with size md 1`] = `
 
 exports[`ColorPicker > renders correctly with size sm 1`] = `
 <div>
-  <div
-    class="data-disabled:opacity-75"
-    data-slot="root"
-    data-v-0d9dad41=""
-  >
-    <div
-      class="flex gap-4"
-      data-slot="picker"
-      data-v-0d9dad41=""
-    >
-      <div
-        class="relative touch-none size-38"
-        data-slot="selector"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute inset-0 rounded-md"
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-          style="background-color: rgb(255, 0, 0);"
-        />
-        <div
-          class="absolute inset-0 rounded-md"
-          data-color-picker-selector=""
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-        />
-        <div
-          class="absolute size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="selectorThumb"
-          data-v-0d9dad41=""
-          style="left: 100%; top: 0%; background-color: rgb(255, 0, 0);"
-        />
+  <div class="data-disabled:opacity-75" data-slot="root">
+    <div class="flex gap-4" data-slot="picker">
+      <div class="relative size-38 touch-none" data-slot="selector">
+        <div class="absolute inset-0 rounded-md" data-slot="selectorBackground"></div>
+        <div class="absolute inset-0 rounded-md" data-color-picker-selector data-slot="selectorBackground"></div>
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed ring-2 ring-white rounded-full size-4" data-slot="selectorThumb"></div>
       </div>
-      <div
-        class="relative w-2 touch-none rounded-md h-38"
-        data-color-picker-track=""
-        data-slot="track"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute left-1/2 size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="trackThumb"
-          data-v-0d9dad41=""
-          style="top: 0%; background-color: rgb(255, 0, 0);"
-        />
+      <div class="h-38 relative rounded-md touch-none w-2" data-color-picker-track data-slot="track">
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed left-1/2 ring-2 ring-white rounded-full size-4" data-slot="trackThumb"></div>
       </div>
     </div>
   </div>
@@ -275,52 +87,15 @@ exports[`ColorPicker > renders correctly with size sm 1`] = `
 
 exports[`ColorPicker > renders correctly with ui 1`] = `
 <div>
-  <div
-    class="data-disabled:opacity-75"
-    data-slot="root"
-    data-v-0d9dad41=""
-  >
-    <div
-      class="flex gap-4"
-      data-slot="picker"
-      data-v-0d9dad41=""
-    >
-      <div
-        class="relative touch-none size-42 rounded-lg"
-        data-slot="selector"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute inset-0 rounded-md"
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-          style="background-color: rgb(255, 0, 0);"
-        />
-        <div
-          class="absolute inset-0 rounded-md"
-          data-color-picker-selector=""
-          data-slot="selectorBackground"
-          data-v-0d9dad41=""
-        />
-        <div
-          class="absolute size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="selectorThumb"
-          data-v-0d9dad41=""
-          style="left: 100%; top: 0%; background-color: rgb(255, 0, 0);"
-        />
+  <div class="data-disabled:opacity-75" data-slot="root">
+    <div class="flex gap-4" data-slot="picker">
+      <div class="relative rounded-lg size-42 touch-none" data-slot="selector">
+        <div class="absolute inset-0 rounded-md" data-slot="selectorBackground"></div>
+        <div class="absolute inset-0 rounded-md" data-color-picker-selector data-slot="selectorBackground"></div>
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed ring-2 ring-white rounded-full size-4" data-slot="selectorThumb"></div>
       </div>
-      <div
-        class="relative w-2 touch-none rounded-md h-42"
-        data-color-picker-track=""
-        data-slot="track"
-        data-v-0d9dad41=""
-      >
-        <div
-          class="absolute left-1/2 size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed"
-          data-slot="trackThumb"
-          data-v-0d9dad41=""
-          style="top: 0%; background-color: rgb(255, 0, 0);"
-        />
+      <div class="h-42 relative rounded-md touch-none w-2" data-color-picker-track data-slot="track">
+        <div class="-translate-1/2 absolute cursor-pointer data-disabled:cursor-not-allowed left-1/2 ring-2 ring-white rounded-full size-4" data-slot="trackThumb"></div>
       </div>
     </div>
   </div>

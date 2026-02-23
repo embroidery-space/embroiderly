@@ -2,2346 +2,421 @@
 
 exports[`ContextMenu > renders correctly with checkbox items 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto min-w-32 origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="flex w-full items-center font-semibold gap-1.5 p-1.5 text-sm"
-          data-slot="label"
-        >
-          
-          
-          View
-          
-          
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label">View</div>
+        <div aria-orientation="horizontal" class="-mx-1 bg-border h-px my-1" data-slot="separator" role="separator"></div>
+        <div aria-checked="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="checked" role="menuitemcheckbox" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">Show Grid</span>
+          <svg aria-hidden="true" class="iconify iconify--lucide inline-flex items-center ms-auto shrink-0 size-5" data-slot="itemTrailingIcon" data-state="checked" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
         </div>
-        
-        
-        <div
-          aria-orientation="horizontal"
-          class="-mx-1 my-1 h-px bg-border"
-          data-slot="separator"
-          role="separator"
-        >
-          
-          
+        <div aria-checked="false" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="unchecked" role="menuitemcheckbox" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">Show Rulers</span>
         </div>
-        
-        
-        <div
-          aria-checked="true"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          data-state="checked"
-          role="menuitemcheckbox"
-          tabindex="-1"
-        >
-          
-          
-          
-          
-          <span
-            class="truncate"
-            data-slot="itemLabel"
-          >
-            Show Grid
-          </span>
-          <svg
-            aria-hidden="true"
-            class="ms-auto inline-flex items-center shrink-0 size-5"
-            data-slot="itemTrailingIcon"
-            data-state="checked"
-            height="1em"
-            role="img"
-            viewBox="0 0 16 16"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          />
-          
-          
-          
-          
+        <div aria-checked="false" aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" role="menuitemcheckbox" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">Snap to Grid</span>
         </div>
-        
-        
-        <div
-          aria-checked="false"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          data-state="unchecked"
-          role="menuitemcheckbox"
-          tabindex="-1"
-        >
-          
-          
-          
-          
-          <span
-            class="truncate"
-            data-slot="itemLabel"
-          >
-            Show Rulers
-          </span>
-          <!---->
-          
-          
-          
-          
-        </div>
-        
-        
-        <div
-          aria-checked="false"
-          aria-disabled="true"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-disabled=""
-          data-reka-collection-item=""
-          data-slot="item"
-          data-state="unchecked"
-          role="menuitemcheckbox"
-          tabindex="-1"
-        >
-          
-          
-          
-          
-          <span
-            class="truncate"
-            data-slot="itemLabel"
-          >
-            Snap to Grid
-          </span>
-          <!---->
-          
-          
-          
-          
-        </div>
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with class 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] min-w-48"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <circle
-                cx="6"
-                cy="6"
-                r="3"
-              />
-              <path
-                d="M8.12 8.12L12 12m8-8L8.12 15.88"
-              />
-              <circle
-                cx="6"
-                cy="18"
-                r="3"
-              />
-              <path
-                d="M14.8 14.8L20 20"
-              />
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Cut
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="14"
-                rx="2"
-                ry="2"
-                width="14"
-                x="8"
-                y="8"
-              />
-              <path
-                d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-              />
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Copy
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          aria-disabled="true"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-disabled=""
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="4"
-                rx="1"
-                ry="1"
-                width="8"
-                x="8"
-                y="2"
-              />
-              <path
-                d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
-              />
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Paste
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Select All
-            </span>
-            <!--v-if-->
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with disabled 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-disabled=""
-    data-state="closed"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <!---->
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
+  <span data-disabled data-state="closed">Trigger</span>
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with shortcuts 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto min-w-32 origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Undo
-            </span>
-            <!--v-if-->
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Undo</span>
           </span>
-          <span
-            class="ms-auto inline-flex items-center flex items-center gap-0.5"
-            data-slot="itemTrailing"
-          >
-            
-            <kbd
-              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-              data-slot="base"
-            >
-              Ctrl+Z
-            </kbd>
-            
+          <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+            <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+Z</kbd>
           </span>
-          
-          
-          
         </div>
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Redo
-            </span>
-            <!--v-if-->
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Redo</span>
           </span>
-          <span
-            class="ms-auto inline-flex items-center flex items-center gap-0.5"
-            data-slot="itemTrailing"
-          >
-            
-            <kbd
-              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-              data-slot="base"
-            >
-              Ctrl+Shift+Z
-            </kbd>
-            
+          <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+            <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+Shift+Z</kbd>
           </span>
-          
-          
-          
         </div>
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Go to Definition
-            </span>
-            <!--v-if-->
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Go to Definition</span>
           </span>
-          <span
-            class="ms-auto inline-flex items-center flex items-center gap-0.5"
-            data-slot="itemTrailing"
-          >
-            
-            <kbd
-              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-              data-slot="base"
-            >
-              G
-            </kbd>
-            <kbd
-              class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
-              data-slot="base"
-            >
-              D
-            </kbd>
-            
+          <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+            <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">G</kbd>
+            <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">D</kbd>
           </span>
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with simple items 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto min-w-32 origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 16 16"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          />
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Cut
-            </span>
-            <!--v-if-->
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 16 16"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          />
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Copy
-            </span>
-            <!--v-if-->
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          aria-disabled="true"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-disabled=""
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 16 16"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          />
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Paste
-            </span>
-            <!--v-if-->
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Select All
-            </span>
-            <!--v-if-->
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with size lg 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto min-w-32 origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <circle
-                cx="6"
-                cy="6"
-                r="3"
-              />
-              <path
-                d="M8.12 8.12L12 12m8-8L8.12 15.88"
-              />
-              <circle
-                cx="6"
-                cy="18"
-                r="3"
-              />
-              <path
-                d="M14.8 14.8L20 20"
-              />
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Cut
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="14"
-                rx="2"
-                ry="2"
-                width="14"
-                x="8"
-                y="8"
-              />
-              <path
-                d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-              />
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Copy
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          aria-disabled="true"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
-          data-disabled=""
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="4"
-                rx="1"
-                ry="1"
-                width="8"
-                x="8"
-                y="2"
-              />
-              <path
-                d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
-              />
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Paste
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-2 p-2 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Select All
-            </span>
-            <!--v-if-->
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with size md 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto min-w-32 origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <circle
-                cx="6"
-                cy="6"
-                r="3"
-              />
-              <path
-                d="M8.12 8.12L12 12m8-8L8.12 15.88"
-              />
-              <circle
-                cx="6"
-                cy="18"
-                r="3"
-              />
-              <path
-                d="M14.8 14.8L20 20"
-              />
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Cut
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="14"
-                rx="2"
-                ry="2"
-                width="14"
-                x="8"
-                y="8"
-              />
-              <path
-                d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-              />
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Copy
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          aria-disabled="true"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-disabled=""
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="4"
-                rx="1"
-                ry="1"
-                width="8"
-                x="8"
-                y="2"
-              />
-              <path
-                d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
-              />
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Paste
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Select All
-            </span>
-            <!--v-if-->
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with size sm 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto min-w-32 origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-4"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <circle
-                cx="6"
-                cy="6"
-                r="3"
-              />
-              <path
-                d="M8.12 8.12L12 12m8-8L8.12 15.88"
-              />
-              <circle
-                cx="6"
-                cy="18"
-                r="3"
-              />
-              <path
-                d="M14.8 14.8L20 20"
-              />
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Cut
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-4"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="14"
-                rx="2"
-                ry="2"
-                width="14"
-                x="8"
-                y="8"
-              />
-              <path
-                d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-              />
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Copy
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          aria-disabled="true"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
-          data-disabled=""
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-4"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="4"
-                rx="1"
-                ry="1"
-                width="8"
-                x="8"
-                y="2"
-              />
-              <path
-                d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
-              />
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Paste
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1 p-1 text-xs"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Select All
-            </span>
-            <!--v-if-->
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with submenu items 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto min-w-32 origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out]"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        
-        
-        
-        <div
-          aria-controls="reka-menu-sub-content-v-2"
-          aria-expanded="false"
-          aria-haspopup="menu"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          data-state="closed"
-          id="reka-menu-sub-trigger-v-0"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="truncate"
-            data-slot="itemLabel"
-          >
-            File
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div aria-controls="reka-menu-sub-content-v-2" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-0" role="menuitem" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">File</span>
+          <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
+            <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="m9 18l6-6l-6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
           </span>
-          <span
-            class="ms-auto inline-flex items-center"
-            data-slot="itemTrailing"
-          >
-            <svg
-              aria-hidden="true"
-              class="shrink-0 size-5"
-              data-slot="itemTrailingIcon"
-              height="1em"
-              role="img"
-              viewBox="0 0 16 16"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            />
-          </span>
-          
-          
-          
         </div>
-        <!--teleport start-->
-        
-        
-        
-        <!---->
-        
-        
-        
-        <!--teleport end-->
-        
-        
-        
-        
-        
-        
-        
-        
-        <div
-          aria-controls="reka-menu-sub-content-v-3"
-          aria-expanded="false"
-          aria-haspopup="menu"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          data-state="closed"
-          id="reka-menu-sub-trigger-v-1"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="truncate"
-            data-slot="itemLabel"
-          >
-            Edit
+        <div aria-controls="reka-menu-sub-content-v-3" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-1" role="menuitem" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">Edit</span>
+          <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
+            <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="m9 18l6-6l-6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
           </span>
-          <span
-            class="ms-auto inline-flex items-center"
-            data-slot="itemTrailing"
-          >
-            <svg
-              aria-hidden="true"
-              class="shrink-0 size-5"
-              data-slot="itemTrailingIcon"
-              height="1em"
-              role="img"
-              viewBox="0 0 16 16"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            />
-          </span>
-          
-          
-          
         </div>
-        <!--teleport start-->
-        
-        
-        
-        <!---->
-        
-        
-        
-        <!--teleport end-->
-        
-        
-        
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;
 
 exports[`ContextMenu > renders correctly with ui 1`] = `
 <div>
-  
-  
-  
-  
-  
-  
-  <span
-    data-state="open"
-    style="pointer-events: auto;"
-  >
-    Trigger
-  </span>
-  
-  <!--teleport start-->
-  
-  
-  
-  <div
-    data-reka-popper-content-wrapper=""
-    style="position: fixed; left: 0px; top: 0px; transform: translate(24px, 7.2px); min-width: max-content; --reka-popper-transform-origin: 0px 0%; z-index: auto; --reka-popper-available-width: 386px; --reka-popper-available-height: 888px; --reka-popper-anchor-width: 0px; --reka-popper-anchor-height: 0px;"
-  >
-    <div
-      aria-orientation="vertical"
-      class="pointer-events-auto origin-(--reka-context-menu-content-transform-origin) divide-y divide-default overflow-hidden rounded-md bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] min-w-48"
-      data-align="start"
-      data-dismissable-layer=""
-      data-orientation="vertical"
-      data-reka-menu-content=""
-      data-side="right"
-      data-slot="content"
-      data-state="open"
-      dir="ltr"
-      role="menu"
-      style="--reka-context-menu-content-transform-origin: var(--reka-popper-transform-origin); --reka-context-menu-content-available-width: var(--reka-popper-available-width); --reka-context-menu-content-available-height: var(--reka-popper-available-height); --reka-context-menu-trigger-width: var(--reka-popper-anchor-width); --reka-context-menu-trigger-height: var(--reka-popper-anchor-height); outline: none;"
-      tabindex="-1"
-    >
-      
-      
-      
-      
-      
-      
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <circle
-                cx="6"
-                cy="6"
-                r="3"
-              />
-              <path
-                d="M8.12 8.12L12 12m8-8L8.12 15.88"
-              />
-              <circle
-                cx="6"
-                cy="18"
-                r="3"
-              />
-              <path
-                d="M14.8 14.8L20 20"
-              />
+  <span data-state="open">Trigger</span>
+  <div data-reka-popper-content-wrapper>
+    <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Cut
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="14"
-                rx="2"
-                ry="2"
-                width="14"
-                x="8"
-                y="8"
-              />
-              <path
-                d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-              />
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Copy
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        <div
-          aria-disabled="true"
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-disabled=""
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <svg
-            aria-hidden="true"
-            class="iconify iconify--lucide shrink-0 text-dimmed group-data-highlighted:text-default size-5"
-            data-slot="itemLeadingIcon"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <rect
-                height="4"
-                rx="1"
-                ry="1"
-                width="8"
-                x="8"
-                y="2"
-              />
-              <path
-                d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
-              />
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
             </g>
           </svg>
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Paste
-            </span>
-            <!--v-if-->
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      <div
-        class="isolate p-1"
-        data-slot="group"
-        role="group"
-      >
-        
-        
-        
-        
-        <div
-          class="group relative flex w-full cursor-pointer items-center rounded-sm text-default outline-none select-none before:absolute before:inset-px before:z-[-1] before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 gap-1.5 p-1.5 text-sm"
-          data-reka-collection-item=""
-          data-slot="item"
-          role="menuitem"
-          tabindex="-1"
-        >
-          
-          
-          
-          <!--v-if-->
-          <span
-            class="flex min-w-0 flex-1 flex-col"
-          >
-            <span
-              class="truncate"
-              data-slot="itemLabel"
-            >
-              Select All
-            </span>
-            <!--v-if-->
+      <div class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
           </span>
-          <!--v-if-->
-          
-          
-          
         </div>
-        
-        
-        
-        
       </div>
-      
-      
-      
-      
-      
-      
     </div>
   </div>
-  
-  
-  
-  <!--teleport end-->
-  
-  
-  
 </div>
 `;

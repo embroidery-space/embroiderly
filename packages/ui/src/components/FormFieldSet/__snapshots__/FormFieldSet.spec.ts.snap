@@ -2,169 +2,64 @@
 
 exports[`FormFieldSet > renders correctly with class 1`] = `
 <div>
-  <fieldset
-    class="mt-2 rounded-md border border-default px-4 pb-4 custom-class"
-    data-slot="root"
-  >
-    <legend
-      class="font-medium text-default text-base"
-      data-slot="legend"
-    >
-      Legend
-    </legend>
-    
-    
+  <fieldset class="border border-default custom-class mt-2 pb-4 px-4 rounded-md" data-slot="root">
+    <legend class="font-medium text-base text-default" data-slot="legend">Legend</legend>
   </fieldset>
 </div>
 `;
 
 exports[`FormFieldSet > renders correctly with collapsible 1`] = `
 <div>
-  <fieldset
-    class="mt-2 rounded-md border border-default px-4 pb-4"
-    data-slot="root"
-    data-state="open"
-  >
-    
-    <legend
-      class="font-medium text-default text-base"
-      data-slot="legend"
-    >
-      <button
-        aria-controls=""
-        aria-disabled="false"
-        aria-expanded="true"
-        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-2 px-3 py-2 text-base text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated"
-        data-slot="base"
-        data-state="open"
-        type="button"
-      >
-        
-        <svg
-          aria-hidden="true"
-          class="shrink-0 size-5"
-          data-slot="leadingIcon"
-          height="1em"
-          role="img"
-          viewBox="0 0 16 16"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        />
-        
-        
-        <span
-          class="truncate"
-          data-slot="label"
-        >
-          Legend
-        </span>
-        
-        
-        <!--v-if-->
-        
+  <fieldset class="border border-default mt-2 pb-4 px-4 rounded-md" data-slot="root" data-state="open">
+    <legend class="font-medium text-base text-default" data-slot="legend">
+      <button aria-controls aria-disabled="false" aria-expanded="true" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-3 py-2 rounded-md text-base text-default transition-colors" data-slot="base" data-state="open" type="button">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M5 12h14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
+        <span class="truncate" data-slot="label">Legend</span>
       </button>
     </legend>
-    <div
-      class="overflow-hidden data-[state=closed]:animate-[collapsible-up_200ms_ease-out] data-[state=open]:animate-[collapsible-down_200ms_ease-out]"
-      data-slot="content"
-      id="reka-collapsible-content-v-0"
-      style="--reka-collapsible-content-height: 0px; --reka-collapsible-content-width: 0px; transition-duration: 0s; animation-name: none;"
-    >
-      
-      
-    </div>
-    
+    <div class="data-[state=closed]:animate-[collapsible-up_200ms_ease-out] data-[state=open]:animate-[collapsible-down_200ms_ease-out] overflow-hidden" data-slot="content" id="reka-collapsible-content-v-0"></div>
   </fieldset>
 </div>
 `;
 
 exports[`FormFieldSet > renders correctly with legend 1`] = `
 <div>
-  <fieldset
-    class="mt-2 rounded-md border border-default px-4 pb-4"
-    data-slot="root"
-  >
-    <legend
-      class="font-medium text-default text-base"
-      data-slot="legend"
-    >
-      Legend
-    </legend>
-    
-    
+  <fieldset class="border border-default mt-2 pb-4 px-4 rounded-md" data-slot="root">
+    <legend class="font-medium text-base text-default" data-slot="legend">Legend</legend>
   </fieldset>
 </div>
 `;
 
 exports[`FormFieldSet > renders correctly with size lg 1`] = `
 <div>
-  <fieldset
-    class="mt-2 rounded-md border border-default px-4 pb-4"
-    data-slot="root"
-  >
-    <legend
-      class="font-medium text-default text-base"
-      data-slot="legend"
-    >
-      Legend
-    </legend>
-    
-    
+  <fieldset class="border border-default mt-2 pb-4 px-4 rounded-md" data-slot="root">
+    <legend class="font-medium text-base text-default" data-slot="legend">Legend</legend>
   </fieldset>
 </div>
 `;
 
 exports[`FormFieldSet > renders correctly with size md 1`] = `
 <div>
-  <fieldset
-    class="mt-2 rounded-md border border-default px-4 pb-4"
-    data-slot="root"
-  >
-    <legend
-      class="font-medium text-default text-sm"
-      data-slot="legend"
-    >
-      Legend
-    </legend>
-    
-    
+  <fieldset class="border border-default mt-2 pb-4 px-4 rounded-md" data-slot="root">
+    <legend class="font-medium text-default text-sm" data-slot="legend">Legend</legend>
   </fieldset>
 </div>
 `;
 
 exports[`FormFieldSet > renders correctly with size sm 1`] = `
 <div>
-  <fieldset
-    class="mt-2 rounded-md border border-default px-4 pb-4"
-    data-slot="root"
-  >
-    <legend
-      class="font-medium text-default text-xs"
-      data-slot="legend"
-    >
-      Legend
-    </legend>
-    
-    
+  <fieldset class="border border-default mt-2 pb-4 px-4 rounded-md" data-slot="root">
+    <legend class="font-medium text-default text-xs" data-slot="legend">Legend</legend>
   </fieldset>
 </div>
 `;
 
 exports[`FormFieldSet > renders correctly with ui 1`] = `
 <div>
-  <fieldset
-    class="mt-2 border border-default px-4 pb-4 rounded-lg"
-    data-slot="root"
-  >
-    <legend
-      class="font-medium text-default text-base"
-      data-slot="legend"
-    >
-      Legend
-    </legend>
-    
-    
+  <fieldset class="border border-default mt-2 pb-4 px-4 rounded-lg" data-slot="root">
+    <legend class="font-medium text-base text-default" data-slot="legend">Legend</legend>
   </fieldset>
 </div>
 `;

@@ -59,9 +59,6 @@ describe("ContextMenu", () => {
     ["with simple items", { props: { ...props, items: simpleItems } }],
     ["with checkbox items", { props: { ...props, items: checkboxItems } }],
     ["with submenu items", { props: { ...props, items: submenuItems } }],
-    ["with disabled", { props: { ...props, items: simpleItems, disabled: true } }],
-    ...sizes.map((size) => [`with size ${size}`, { props: { ...props, items: simpleItems, size } }]),
-    ["with class", { props: { ...props, items: simpleItems, class: "min-w-48" } }],
     [
       "with shortcuts",
       {
@@ -77,6 +74,9 @@ describe("ContextMenu", () => {
         },
       },
     ],
+    ["with disabled", { props: { ...props, items: simpleItems, disabled: true } }],
+    ...sizes.map((size) => [`with size ${size}`, { props: { ...props, items: simpleItems, size } }]),
+    ["with class", { props: { ...props, items: simpleItems, class: "min-w-48" } }],
     ["with ui", { props: { ...props, items: simpleItems, ui: { content: "min-w-48" } } }],
   ] as [string, { props?: ContextMenuProps }][])("renders correctly %s", async (_, options) => {
     const screen = page.render(ContextMenuWrapper, options);
@@ -86,6 +86,6 @@ describe("ContextMenu", () => {
     await userEvent.click(trigger, { button: "right" });
 
     await nextTick();
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

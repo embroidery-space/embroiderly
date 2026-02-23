@@ -30,7 +30,7 @@ describe("RadioGroup", () => {
     const screen = page.render(RadioGroup, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("renders correctly within FormField", async () => {
@@ -45,7 +45,7 @@ describe("RadioGroup", () => {
     const screen = page.render(Wrapper);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {

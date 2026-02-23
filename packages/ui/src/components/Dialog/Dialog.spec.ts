@@ -25,6 +25,6 @@ describe("Dialog", () => {
     });
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

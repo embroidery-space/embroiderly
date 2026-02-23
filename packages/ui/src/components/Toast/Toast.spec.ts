@@ -45,7 +45,7 @@ describe("Toast", () => {
       const screen = page.render(ToastWrapper, options);
       await nextTick();
 
-      expect(screen.container).toMatchSnapshot();
+      expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
 });

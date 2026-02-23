@@ -28,6 +28,6 @@ describe("Tooltip", () => {
     const screen = page.render(TooltipWrapper, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

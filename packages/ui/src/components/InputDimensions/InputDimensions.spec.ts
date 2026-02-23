@@ -27,7 +27,7 @@ describe("InputDimensions", () => {
     const screen = page.render(InputDimensions, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {

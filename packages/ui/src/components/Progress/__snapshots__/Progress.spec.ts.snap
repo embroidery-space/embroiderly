@@ -2,555 +2,160 @@
 
 exports[`Progress > renders correctly indeterminate 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with class 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2 my-4"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 my-4 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with color error 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-error"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-error data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with color help 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-help"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-help data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with color info 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-info"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-info data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with color neutral 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-inverted"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-inverted data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with color primary 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with color success 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-success"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-success data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with color warning 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-warning"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-warning data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with modelValue 0 1`] = `
 <div>
-  <div
-    aria-label="0%"
-    aria-valuemax="100"
-    aria-valuemin="0"
-    aria-valuenow="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="loading"
-    data-value="0"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="loading"
-      data-value="0"
-      style="transform: translateX(-100%);"
-    >
-      
-      
-    </div>
-    
+  <div aria-label="0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="loading" data-value="0" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="loading" data-value="0"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with modelValue 50 1`] = `
 <div>
-  <div
-    aria-label="50%"
-    aria-valuemax="100"
-    aria-valuemin="0"
-    aria-valuenow="50"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="loading"
-    data-value="50"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="loading"
-      data-value="50"
-      style="transform: translateX(-50%);"
-    >
-      
-      
-    </div>
-    
+  <div aria-label="50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="loading" data-value="50" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="loading" data-value="50"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with modelValue 100 1`] = `
 <div>
-  <div
-    aria-label="100%"
-    aria-valuemax="100"
-    aria-valuemin="0"
-    aria-valuenow="100"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="complete"
-    data-value="100"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="complete"
-      data-value="100"
-      style="transform: translateX(0%);"
-    >
-      
-      
-    </div>
-    
+  <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="complete" data-value="100" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with orientation horizontal 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with orientation vertical 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented h-full w-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-full overflow-hidden relative rounded-full w-2" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with size lg 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-3"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-3 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with size md 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-2"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with size sm 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-1"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-1 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with size xl 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-4"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-4 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with size xs 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full bg-accented w-full h-0.5"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-accented h-0.5 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;
 
 exports[`Progress > renders correctly with ui 1`] = `
 <div>
-  <div
-    aria-valuemax="100"
-    aria-valuemin="0"
-    class="relative overflow-hidden rounded-full w-full h-2 bg-default"
-    data-max="100"
-    data-slot="base"
-    data-state="indeterminate"
-    role="progressbar"
-    style="transform: translateZ(0px);"
-  >
-    
-    <div
-      class="size-full rounded-full data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] bg-primary"
-      data-max="100"
-      data-slot="indicator"
-      data-state="indeterminate"
-    >
-      
-      
-    </div>
-    
+  <div aria-valuemax="100" aria-valuemin="0" class="bg-default h-2 overflow-hidden relative rounded-full w-full" data-max="100" data-slot="base" data-state="indeterminate" role="progressbar">
+    <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="indeterminate"></div>
   </div>
 </div>
 `;

@@ -40,6 +40,6 @@ describe("ButtonIcon", () => {
     const screen = page.render(ButtonIconWrapper, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

@@ -22,7 +22,7 @@ describe("Switch", () => {
     const screen = page.render(Switch, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("renders correctly within FormField", async () => {
@@ -37,7 +37,7 @@ describe("Switch", () => {
     const screen = page.render(Wrapper);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {

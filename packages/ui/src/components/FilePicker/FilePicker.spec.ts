@@ -18,7 +18,7 @@ describe("FilePicker", () => {
     const screen = page.render(FilePicker, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("emits pick event when button is clicked", async () => {

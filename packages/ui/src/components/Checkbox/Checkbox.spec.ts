@@ -23,7 +23,7 @@ describe("Checkbox", () => {
     const screen = page.render(Checkbox, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("renders correctly within FormField", async () => {
@@ -38,7 +38,7 @@ describe("Checkbox", () => {
     const screen = page.render(Wrapper);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
