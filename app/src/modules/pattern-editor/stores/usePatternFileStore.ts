@@ -1,9 +1,11 @@
+import { useConfirm, useToast } from "@embroiderly/ui";
+
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 import type { Fabric, PdfExportOptions } from "#pattern-editor/lib/pattern/";
 import { BackupFileExistsError, UnsavedChangesError, UnsupportedPatternTypeError } from "#shared/api/";
-import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+import { useFilePicker, useI18n } from "#shared/composables/";
 import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "#shared/constants/";
 
 import { FilesApi } from "../api/";

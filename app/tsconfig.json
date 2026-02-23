@@ -5,8 +5,5 @@
     { "path": "./tsconfig.node.json" },
     { "path": "./tsconfig.vitest.json" },
     { "path": "./tsconfig.wdio.json" }
-  ],
-  "compilerOptions": {
-    "module": "NodeNext"
-  }
+  ]
 }

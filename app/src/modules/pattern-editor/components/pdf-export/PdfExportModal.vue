@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { Button, Checkbox, Dialog, FilePicker, FormFieldSet } from "@embroiderly/ui";
 import { basename } from "@tauri-apps/api/path";
 
 import { computedAsync, refAutoReset } from "@vueuse/core";
 import { ref } from "vue";
 
 import { PdfExportOptions } from "#pattern-editor/lib/pattern/";
-import { FilePicker } from "#shared/components/";
+import { useFilePicker } from "#shared/composables/";
 import { PDF_FILTER } from "#shared/constants/";
 
 import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
@@ -17,6 +18,8 @@ const props = defineProps<{
   onDocumentExport?: (filePath: string, options: PdfExportOptions) => void | Promise<void>;
 }>();
 const emit = defineEmits<{ close: [] }>();
+
+const filePicker = useFilePicker();
 
 // Copy the data from the props to a reactive object.
 const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
@@ -46,48 +49,44 @@ async function exportPattern() {
 </script>
 
 <template>
-  <UModal :title="$t('pdf-export')" :ui="{ content: 'w-xl' }">
+  <Dialog :title="$t('pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
       <div class="flex flex-col gap-y-4">
-        <FilePicker v-model="filePath" mode="save" :options="{ filters: PDF_FILTER }" class="w-full" />
+        <FilePicker
+          v-model="filePath"
+          class="w-full"
+          @pick="
+            async () => {
+              const path = await filePicker.save(filePath, { filters: PDF_FILTER });
+              if (path) filePath = path;
+            }
+          "
+        />
 
         <div class="flex flex-col gap-y-1">
-          <UCheckbox
+          <Checkbox
             v-model="options.monochrome"
             :label="$t('pdf-export-monochrome')"
             :description="pdfFile.monochrome"
           />
-          <UCheckbox v-model="options.color" :label="$t('pdf-export-color')" :description="pdfFile.color" />
+          <Checkbox v-model="options.color" :label="$t('pdf-export-color')" :description="pdfFile.color" />
         </div>
 
-        <UCollapsible class="flex flex-col gap-x-2">
-          <UButton
-            block
-            color="neutral"
-            variant="subtle"
-            trailing-icon="i-lucide:chevron-down"
-            :label="$t('publish-settings')"
-            :ui="{
-              base: 'group',
-              trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200',
-            }"
-          />
-          <template #content>
-            <PdfExportOptionsForm v-model="options" />
-          </template>
-        </UCollapsible>
+        <FormFieldSet collapsible :legend="$t('publish-settings')">
+          <PdfExportOptionsForm v-model="options" />
+        </FormFieldSet>
       </div>
     </template>
     <template #footer>
-      <UButton :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <UButton
+      <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
+      <Button
         loading-auto
         variant="outline"
         :label="$t('pdf-export-save-settings')"
-        :icon="optionsUpdated ? 'i-lucide:check' : undefined"
+        :icon="optionsUpdated ? 'lucide:check' : undefined"
         @click="updateOptions"
       />
-      <UButton v-if="filePath" loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern" />
+      <Button v-if="filePath" loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern" />
     </template>
-  </UModal>
+  </Dialog>
 </template>

@@ -1,0 +1,52 @@
+{
+  "name": "@embroiderly/ui",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts",
+      "style": "./src/index.css"
+    }
+  },
+  "scripts": {
+    "story:dev": "histoire dev",
+    "story:build": "histoire build",
+    "story:preview": "histoire preview",
+    "check-types": "vue-tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "color-convert": "catalog:",
+    "defu": "catalog:",
+    "tailwind-merge": "catalog:",
+    "tailwind-variants": "catalog:",
+    "vue-component-type-helpers": "catalog:"
+  },
+  "peerDependencies": {
+    "@embroiderly/shortcuts": "workspace:",
+    "@iconify/vue": "catalog:",
+    "@vueuse/core": "catalog:",
+    "reka-ui": "catalog:",
+    "tailwindcss": "catalog:",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@histoire/plugin-vue": "catalog:",
+    "@tailwindcss/vite": "catalog:",
+    "@tsconfig/node24": "catalog:",
+    "@tsconfig/strictest": "catalog:",
+    "@types/node": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitest/browser-webdriverio": "catalog:",
+    "@vue/tsconfig": "catalog:",
+    "histoire": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-vue": "catalog:",
+    "vue-tsc": "catalog:",
+    "webdriverio": "catalog:",
+    "wrangler": "catalog:"
+  }
+}

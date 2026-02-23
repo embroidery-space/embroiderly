@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { Button, Tooltip } from "@embroiderly/ui";
+
+import { Toggle } from "reka-ui";
+
 const value = defineModel<boolean>({ required: true });
 defineProps<{ icon: string; label?: string; disabled?: boolean }>();
 </script>
 
 <template>
-  <UTooltip arrow :text="label" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
-    <RToggle v-model="value" as-child>
-      <UButton
+  <Tooltip arrow :text="label" :delay-duration="200" :disabled="disabled" :content="{ side: 'left' }">
+    <Toggle v-model="value" as-child>
+      <Button
         color="neutral"
         variant="ghost"
         :icon="icon"
@@ -15,6 +19,6 @@ defineProps<{ icon: string; label?: string; disabled?: boolean }>();
         :class="{ 'bg-elevated hover:bg-accented': value }"
         :ui="{ leadingIcon: 'size-5' }"
       />
-    </RToggle>
-  </UTooltip>
+    </Toggle>
+  </Tooltip>
 </template>

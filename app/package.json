@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run check-types",
+    "build": "pnpm check-types && vite build",
     "build-only": "vite build",
-    "check-types": "vue-tsc --noEmit -p tsconfig.app.json",
+    "check-types": "vue-tsc -b",
     "test": "vitest run",
     "test:unit": "vitest run --project unit",
     "test:components": "vitest run --project components",
@@ -14,12 +14,12 @@
   },
   "imports": {
     "#pattern-editor/*": "./src/modules/pattern-editor/*",
-    "#plugins/*": "./src/plugins/*",
     "#shared/*": "./src/shared/*"
   },
   "dependencies": {
+    "@embroiderly/shortcuts": "workspace:",
+    "@embroiderly/ui": "workspace:",
     "@fluent/bundle": "catalog:",
-    "@nuxt/ui": "catalog:",
     "@sentry/core": "catalog:",
     "@sentry/vue": "catalog:",
     "@stdlib/math-base-special-roundn": "catalog:",

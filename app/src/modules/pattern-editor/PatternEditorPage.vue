@@ -1,13 +1,13 @@
 <script lang="ts" setup>
+import { useShortcuts } from "@embroiderly/shortcuts";
+import { BlockUI, Splitter, SplitterPanel, useConfirm, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import { useShortcuts } from "#plugins/shortcuts/";
 import { StartupApi } from "#shared/api/";
-import { BlockUI } from "#shared/components/";
-import { useConfirm, useDragDrop, useI18n, useTauriListener } from "#shared/composables/";
+import { useDragDrop, useI18n, useTauriListener } from "#shared/composables/";
 import { useSettingsStore } from "#shared/stores/";
 
 import { PageHeader } from "./components/";
@@ -84,8 +84,8 @@ useTauriListener(
 );
 
 useShortcuts({
-  ctrl_shift_z: () => patternStore.undo({ single: true }),
-  ctrl_shift_y: () => patternStore.redo({ single: true }),
+  "Ctrl+Shift+Z": () => patternStore.undo({ single: true }),
+  "Ctrl+Shift+Y": () => patternStore.redo({ single: true }),
 });
 
 onMounted(async () => {
@@ -122,12 +122,11 @@ onMounted(async () => {
   <div class="flex h-full flex-col">
     <PageHeader />
     <div class="flex grow overflow-y-auto">
-      <RSplitterGroup direction="horizontal">
-        <RSplitterPanel :default-size="15" :style="{ overflow: 'visible clip' }">
+      <Splitter direction="horizontal">
+        <SplitterPanel :default-size="15" :style="{ overflow: 'visible clip' }">
           <PalettePanel />
-        </RSplitterPanel>
-        <RSplitterResizeHandle class="border-2 border-default" />
-        <RSplitterPanel>
+        </SplitterPanel>
+        <SplitterPanel>
           <BlockUI
             ref="drop-zone"
             :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
@@ -145,8 +144,8 @@ onMounted(async () => {
               }"
             />
           </BlockUI>
-        </RSplitterPanel>
-      </RSplitterGroup>
+        </SplitterPanel>
+      </Splitter>
       <CanvasToolbar class="h-full border-l border-default" />
     </div>
   </div>

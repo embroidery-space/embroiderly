@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Icon > renders correctly with class 1`] = `
+<div>
+  <svg
+    aria-hidden="true"
+    class="size-8"
+    height="1em"
+    role="img"
+    viewBox="0 0 16 16"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  />
+</div>
+`;
+
+exports[`Icon > renders correctly with icon 1`] = `
+<div>
+  <svg
+    aria-hidden="true"
+    height="1em"
+    role="img"
+    viewBox="0 0 16 16"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  />
+</div>
+`;

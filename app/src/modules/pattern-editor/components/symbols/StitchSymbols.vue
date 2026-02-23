@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { ContextMenuItem, DropdownMenuItem, SelectMenuItem } from "@nuxt/ui";
+import { Button, ContextMenu, DropdownMenu, Select, useConfirm, useToast } from "@embroiderly/ui";
+import type { ContextMenuItem, DropdownMenuItem, SelectItem } from "@embroiderly/ui";
+
 import { computed, onMounted, ref, shallowRef } from "vue";
 
 import { FilesApi } from "#pattern-editor/api";
-import { useConfirm, useFilePicker, useI18n } from "#shared/composables/";
+import { useFilePicker, useI18n } from "#shared/composables/";
 import { FONT_FILTER } from "#shared/constants/";
 import { LoggerService } from "#shared/services/";
 import { addSymbolFonts } from "#shared/utils/";
@@ -57,7 +59,7 @@ const loadingFont = ref(false);
 const importingFonts = ref(false);
 
 const loadedFonts = new Map<string, number[]>();
-const symbolFontOptions = shallowRef<SelectMenuItem[][]>([]);
+const symbolFontOptions = shallowRef<SelectItem[][]>([]);
 
 const selectedFontKey = ref("system/ursasoftware");
 const selectedCodePoints = shallowRef<number[]>([]);
@@ -73,13 +75,13 @@ const symbolFontMenuOptions = computed<DropdownMenuItem[]>(() => [
 async function refreshFontsList() {
   const { system, custom } = await FilesApi.getSymbolFontsList();
 
-  const systemFonts: SelectMenuItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
+  const systemFonts: SelectItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
   for (const fontFamily of system) {
     const fontKey = `system/${fontFamily}`;
     systemFonts.push({ label: fontFamily, value: fontKey });
   }
 
-  const customFonts: SelectMenuItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
+  const customFonts: SelectItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
   for (const fontFamily of custom) {
     const fontKey = `custom/${fontFamily}`;
     customFonts.push({ label: fontFamily, value: fontKey });
@@ -155,7 +157,7 @@ onMounted(async () => {
 
 <template>
   <PaletteSection :title="$t('stitch-symbols')">
-    <UContextMenu :items="contextMenuOptions">
+    <ContextMenu :items="contextMenuOptions">
       <SymbolsList
         v-model:selected-symbol="selectedSymbol"
         :assigned-symbols="assignedSymbols"
@@ -166,24 +168,24 @@ onMounted(async () => {
       >
         <template #header>
           <div class="flex gap-x-1">
-            <USelectMenu
+            <Select
               v-model="selectedFontKey"
               :loading="loadingFont"
               :items="symbolFontOptions"
-              value-key="value"
               size="md"
+              variant="outline"
               class="w-full"
               @update:model-value="
-                async (key: string) => {
-                  const [fontGroup, fontFamily] = key.split('/') as [string, string];
+                async (key) => {
+                  const [fontGroup, fontFamily] = (key as string).split('/') as [string, string];
                   await loadFont(fontGroup, fontFamily);
                 }
               "
             />
 
-            <UDropdownMenu :items="symbolFontMenuOptions">
-              <UButton :loading="importingFonts" color="neutral" variant="outline" icon="i-lucide:menu" />
-            </UDropdownMenu>
+            <DropdownMenu :items="symbolFontMenuOptions">
+              <Button :loading="importingFonts" color="neutral" variant="outline" icon="lucide:menu" />
+            </DropdownMenu>
           </div>
         </template>
 
@@ -193,6 +195,6 @@ onMounted(async () => {
           </span>
         </template>
       </SymbolsList>
-    </UContextMenu>
+    </ContextMenu>
   </PaletteSection>
 </template>

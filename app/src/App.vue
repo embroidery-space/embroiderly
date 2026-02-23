@@ -1,13 +1,14 @@
 <script lang="ts" setup>
+import { App, useToast } from "@embroiderly/ui";
+
 import { onMounted, onErrorCaptured } from "vue";
 
-import { ShortcutsProvider } from "#plugins/shortcuts/";
 import { useI18n } from "#shared/composables/";
 import { LoggerService } from "#shared/services/";
 import { useSettingsStore } from "#shared/stores/";
 
 const toast = useToast();
-const { fluent, currentUiLocale } = useI18n();
+const { fluent, currentLocale } = useI18n();
 
 const settingsStore = useSettingsStore();
 
@@ -30,9 +31,7 @@ onErrorCaptured((err, _component, info) => {
 </script>
 
 <template>
-  <UApp :locale="currentUiLocale">
-    <ShortcutsProvider>
-      <RouterView />
-    </ShortcutsProvider>
-  </UApp>
+  <App :locale="currentLocale">
+    <RouterView />
+  </App>
 </template>

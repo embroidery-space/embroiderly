@@ -1,0 +1,1010 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Select > renders correctly with class 1`] = `
+<div>
+  
+  <div
+    class="inline-flex items-center absolute"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with disabled 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    data-disabled=""
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="true"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base cursor-not-allowed opacity-75 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-disabled=""
+      data-slot="base"
+      data-state="closed"
+      disabled=""
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with disabled item 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with grouped items 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with icons 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate"
+        data-slot="value"
+      >
+        Backlog
+      </span>
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with items 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with loading 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6 animate-spin"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with modelValue 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate"
+        data-slot="value"
+      >
+        Backlog
+      </span>
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with placeholder 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      >
+        Select a status...
+      </span>
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with searchInput 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with searchInput placeholder 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with separator 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with size lg 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with size md 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-1.5 px-2.5 py-1.5 text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-5"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with size sm 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-1 px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-4"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly with ui 1`] = `
+<div>
+  
+  <div
+    class="relative inline-flex items-center"
+    dir="ltr"
+  >
+    
+    
+    <button
+      aria-controls=""
+      aria-disabled="false"
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      aria-label="Show popup"
+      class="inline-flex w-full items-center justify-between border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset rounded-full"
+      data-slot="base"
+      data-state="closed"
+      id="v-0"
+      open="true"
+      tabindex="-1"
+      type="button"
+    >
+      
+      <span
+        class="truncate text-muted"
+        data-slot="placeholder"
+      />
+      <svg
+        aria-hidden="true"
+        class="shrink-0 text-muted size-6"
+        data-slot="trailingIcon"
+        height="1em"
+        role="img"
+        viewBox="0 0 16 16"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      />
+      
+    </button>
+    <!--teleport start-->
+    
+    
+    <!---->
+    
+    
+    <!--teleport end-->
+    
+    
+    <!--v-if-->
+  </div>
+  
+</div>
+`;
+
+exports[`Select > renders correctly within FormField 1`] = `
+<div>
+  <div
+    class=""
+    data-slot="root"
+  >
+    <div
+      class=""
+      data-slot="wrapper"
+    >
+      <div
+        class="flex items-center justify-between gap-1"
+        data-slot="labelWrapper"
+      >
+        <label
+          class="block font-medium text-default"
+          data-slot="label"
+          for="v-0"
+          id="v-0-label"
+        >
+          
+          Label
+          
+        </label>
+        <span
+          class="text-muted"
+          data-slot="hint"
+          id="v-0-hint"
+        >
+          Hint
+        </span>
+      </div>
+      <p
+        class="text-muted"
+        data-slot="description"
+        id="v-0-description"
+      >
+        Description
+      </p>
+    </div>
+    <div
+      class="mt-1"
+      data-slot="container"
+    >
+      
+      
+      <div
+        class="relative inline-flex items-center"
+        dir="ltr"
+      >
+        
+        
+        <button
+          aria-controls=""
+          aria-describedby="v-0-hint v-0-description v-0-help"
+          aria-disabled="false"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Show popup"
+          class="inline-flex w-full items-center justify-between rounded-md border-0 text-start transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 bg-elevated ring ring-accented ring-inset gap-2 px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+          data-slot="base"
+          data-state="closed"
+          id="v-0"
+          tabindex="-1"
+          type="button"
+        >
+          
+          <span
+            class="truncate text-muted"
+            data-slot="placeholder"
+          />
+          <svg
+            aria-hidden="true"
+            class="shrink-0 text-muted size-6"
+            data-slot="trailingIcon"
+            height="1em"
+            role="img"
+            viewBox="0 0 16 16"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          />
+          
+        </button>
+        <!--teleport start-->
+        <!--teleport end-->
+        
+        
+        <!--v-if-->
+      </div>
+      
+      
+      <p
+        class="mt-1 text-muted"
+        data-slot="help"
+        id="v-0-help"
+      >
+        Help
+      </p>
+    </div>
+  </div>
+</div>
+`;

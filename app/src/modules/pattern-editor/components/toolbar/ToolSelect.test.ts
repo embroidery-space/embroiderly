@@ -1,27 +1,22 @@
-import UApp from "@nuxt/ui/components/App.vue";
+import { App } from "@embroiderly/ui";
+
 import { expect, test, describe, vi } from "vitest";
 import { page } from "vitest/browser";
 import { defineComponent } from "vue";
 
-import { ShortcutsProvider } from "#plugins/shortcuts/";
-
 import ToolSelect from "./ToolSelect.vue";
 
-const SINGLE_ITEM = [{ label: "Pencil", icon: "i-lucide:pencil", value: "pencil" }];
+const SINGLE_ITEM = [{ label: "Pencil", icon: "lucide:pencil", value: "pencil" }];
 const MULTIPLE_ITEMS = [
-  { label: "Pencil", icon: "i-lucide:pencil", value: "pencil" },
-  { label: "Eraser", icon: "i-lucide:eraser", value: "eraser" },
-  { label: "Brush", icon: "i-lucide:brush", value: "brush" },
+  { label: "Pencil", icon: "lucide:pencil", value: "pencil" },
+  { label: "Eraser", icon: "lucide:eraser", value: "eraser" },
+  { label: "Brush", icon: "lucide:brush", value: "brush" },
 ];
 
 const ToolSelectWrapper = defineComponent({
-  components: { UApp, ShortcutsProvider, ToolSelect },
+  components: { App, ToolSelect },
   inheritAttrs: false,
-  template: `<UApp>
-  <ShortcutsProvider>
-    <ToolSelect v-bind="$attrs" />
-  </ShortcutsProvider>
-</UApp>`,
+  template: `<App><ToolSelect v-bind="$attrs" /></App>`,
 });
 
 describe("ToolSelect", () => {

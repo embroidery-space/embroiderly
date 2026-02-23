@@ -1,0 +1,701 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ConfirmDialog > renders correctly with class 1`] = `
+<div>
+  
+  
+  
+  
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby="reka-dialog-description-v-2"
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] w-96"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="alertdialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4 pb-0"
+      data-slot="header"
+    >
+      <div>
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          
+          Confirm
+          
+          
+        </h2>
+        <p
+          class="mt-1 text-sm whitespace-pre-line text-muted"
+          data-slot="description"
+          id="reka-dialog-description-v-2"
+        >
+          
+          
+          Are you sure?
+          
+          
+        </p>
+      </div>
+    </header>
+    <footer
+      class="flex items-center justify-end gap-1.5 p-4"
+      data-slot="footer"
+    >
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm bg-default text-default ring-accented hover:bg-elevated focus-visible:outline-inverted active:bg-elevated disabled:bg-default"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Cancel
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-elevated text-default hover:bg-accented/75 focus-visible:outline-inverted active:bg-accented/75 disabled:bg-elevated"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          No
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Yes
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </footer>
+    
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;
+
+exports[`ConfirmDialog > renders correctly with noButton hidden 1`] = `
+<div>
+  
+  
+  
+  
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby="reka-dialog-description-v-2"
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="alertdialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4 pb-0"
+      data-slot="header"
+    >
+      <div>
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          
+          Confirm
+          
+          
+        </h2>
+        <p
+          class="mt-1 text-sm whitespace-pre-line text-muted"
+          data-slot="description"
+          id="reka-dialog-description-v-2"
+        >
+          
+          
+          Are you sure?
+          
+          
+        </p>
+      </div>
+    </header>
+    <footer
+      class="flex items-center justify-end gap-1.5 p-4"
+      data-slot="footer"
+    >
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm bg-default text-default ring-accented hover:bg-elevated focus-visible:outline-inverted active:bg-elevated disabled:bg-default"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Cancel
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--v-if-->
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Yes
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </footer>
+    
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;
+
+exports[`ConfirmDialog > renders correctly with title and description 1`] = `
+<div>
+  
+  
+  
+  
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby="reka-dialog-description-v-2"
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="alertdialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4 pb-0"
+      data-slot="header"
+    >
+      <div>
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          
+          Confirm
+          
+          
+        </h2>
+        <p
+          class="mt-1 text-sm whitespace-pre-line text-muted"
+          data-slot="description"
+          id="reka-dialog-description-v-2"
+        >
+          
+          
+          Are you sure?
+          
+          
+        </p>
+      </div>
+    </header>
+    <footer
+      class="flex items-center justify-end gap-1.5 p-4"
+      data-slot="footer"
+    >
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm bg-default text-default ring-accented hover:bg-elevated focus-visible:outline-inverted active:bg-elevated disabled:bg-default"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Cancel
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-elevated text-default hover:bg-accented/75 focus-visible:outline-inverted active:bg-accented/75 disabled:bg-elevated"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          No
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Yes
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </footer>
+    
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;
+
+exports[`ConfirmDialog > renders correctly with ui 1`] = `
+<div>
+  
+  
+  
+  
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby="reka-dialog-description-v-2"
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="alertdialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4 pb-0"
+      data-slot="header"
+    >
+      <div>
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          
+          Confirm
+          
+          
+        </h2>
+        <p
+          class="mt-1 text-sm whitespace-pre-line text-muted"
+          data-slot="description"
+          id="reka-dialog-description-v-2"
+        >
+          
+          
+          Are you sure?
+          
+          
+        </p>
+      </div>
+    </header>
+    <footer
+      class="flex items-center gap-1.5 p-4 justify-start"
+      data-slot="footer"
+    >
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm bg-default text-default ring-accented hover:bg-elevated focus-visible:outline-inverted active:bg-elevated disabled:bg-default"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Cancel
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-elevated text-default hover:bg-accented/75 focus-visible:outline-inverted active:bg-accented/75 disabled:bg-elevated"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          No
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-primary text-inverted hover:bg-primary/75 focus-visible:outline-primary active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Yes
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </footer>
+    
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;
+
+exports[`ConfirmDialog > renders correctly with yesButton hidden 1`] = `
+<div>
+  
+  
+  
+  
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby="reka-dialog-description-v-2"
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="alertdialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4 pb-0"
+      data-slot="header"
+    >
+      <div>
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          
+          Confirm
+          
+          
+        </h2>
+        <p
+          class="mt-1 text-sm whitespace-pre-line text-muted"
+          data-slot="description"
+          id="reka-dialog-description-v-2"
+        >
+          
+          
+          Are you sure?
+          
+          
+        </p>
+      </div>
+    </header>
+    <footer
+      class="flex items-center justify-end gap-1.5 p-4"
+      data-slot="footer"
+    >
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 ring ring-inset gap-1.5 px-2.5 py-1.5 text-sm bg-default text-default ring-accented hover:bg-elevated focus-visible:outline-inverted active:bg-elevated disabled:bg-default"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          Cancel
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <button
+        aria-disabled="false"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 gap-1.5 px-2.5 py-1.5 text-sm bg-elevated text-default hover:bg-accented/75 focus-visible:outline-inverted active:bg-accented/75 disabled:bg-elevated"
+        data-slot="base"
+        type="button"
+      >
+        
+        <!--v-if-->
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          No
+        </span>
+        
+        
+        <!--v-if-->
+        
+      </button>
+      <!--v-if-->
+    </footer>
+    
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+</div>
+`;

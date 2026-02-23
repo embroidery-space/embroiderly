@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Button, Icon, Tooltip } from "@embroiderly/ui";
 import { resolveResource, sep } from "@tauri-apps/api/path";
 import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
@@ -101,10 +102,10 @@ async function openRecentFile(filePath: string) {
       <div>
         <i18n tag="p" path="welcome-get-started">
           <template #button-open="{ buttonOpenLabel }">
-            <UButton variant="link" :label="buttonOpenLabel" class="p-0" @click="openPattern" />
+            <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="openPattern" />
           </template>
           <template #button-create="{ buttonCreateLabel }">
-            <UButton variant="link" :label="buttonCreateLabel" class="p-0" @click="createPattern" />
+            <Button variant="link" :label="buttonCreateLabel" class="p-0" @click="createPattern" />
           </template>
           <br />
         </i18n>
@@ -115,16 +116,16 @@ async function openRecentFile(filePath: string) {
         <div class="flex flex-col gap-y-1">
           <span class="text-lg">{{ $t("welcome-section-starting") }}</span>
           <div class="flex max-w-max flex-col gap-y-1">
-            <UButton
+            <Button
               variant="ghost"
-              icon="i-lucide:file-plus"
+              icon="lucide:file-plus"
               :label="$t('welcome-create-pattern')"
               class="justify-start"
               @click="createPattern"
             />
-            <UButton
+            <Button
               variant="ghost"
-              icon="i-lucide:file-up"
+              icon="lucide:file-up"
               :label="$t('welcome-open-pattern')"
               class="justify-start"
               @click="openPattern"
@@ -135,15 +136,15 @@ async function openRecentFile(filePath: string) {
             <span class="text-lg">{{ $t("welcome-section-recent") }}</span>
             <div class="flex max-w-max flex-col gap-y-1">
               <template v-for="filePath in patternFileStore.recentPatterns" :key="filePath">
-                <UTooltip arrow :text="filePath" :delay-duration="200" :content="{ side: 'right' }">
-                  <UButton
+                <Tooltip :text="filePath" :delay-duration="200" :content="{ side: 'right' }">
+                  <Button
                     variant="ghost"
-                    icon="i-lucide:file"
+                    icon="lucide:file"
                     :label="filePath.split(sep()).pop() || filePath"
                     class="justify-start"
                     @click="openRecentFile(filePath)"
                   />
-                </UTooltip>
+                </Tooltip>
               </template>
             </div>
           </div>
@@ -161,7 +162,7 @@ async function openRecentFile(filePath: string) {
             >
               <span class="flex items-center gap-2 font-medium text-primary">
                 {{ item.title }}
-                <UIcon v-if="item.url" name="i-lucide:external-link" />
+                <Icon v-if="item.url" name="lucide:external-link" />
               </span>
               <span v-if="item.text">{{ item.text }}</span>
             </div>

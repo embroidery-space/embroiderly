@@ -23,9 +23,9 @@
     "check-types": "pnpm -r check-types",
     "fmt": "prettier --check .",
     "fmt:fix": "prettier --write .",
-    "lint": "oxlint --format stylish && eslint && markdownlint-cli2",
-    "lint:fix": "oxlint --fix --format stylish && eslint --fix && markdownlint-cli2 --fix",
-    "test": "pnpm -r test"
+    "lint": "oxlint --format stylish && eslint --concurrency auto && markdownlint-cli2",
+    "lint:fix": "oxlint --fix --format stylish && eslint --fix --concurrency auto && markdownlint-cli2 --fix",
+    "test": "pnpm -r --workspace-concurrency 1 test"
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "catalog:",

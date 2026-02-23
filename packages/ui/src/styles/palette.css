@@ -1,0 +1,106 @@
+/* Our palette is based on the Nord Theme: https://nordtheme.com/docs/colors-and-palettes. */
+@theme static {
+  --ui-color-primary-50: #e5f2f5;
+  --ui-color-primary-100: #daecf1;
+  --ui-color-primary-200: #c8e2e9;
+  --ui-color-primary-300: #b2d7e1;
+  --ui-color-primary-400: #a0cdd9;
+  --ui-color-primary-500: #88c0d0; /* Nord 8 */
+  --ui-color-primary-600: #69b0c4;
+  --ui-color-primary-700: #479cb3;
+  --ui-color-primary-800: #3b8296;
+  --ui-color-primary-900: #2a5c6a;
+  --ui-color-primary-950: #1e434d;
+
+  --ui-color-error-50: #f6e9eb;
+  --ui-color-error-100: #f2dee0;
+  --ui-color-error-200: #e7c5c8;
+  --ui-color-error-300: #ddacb1;
+  --ui-color-error-400: #d18f95;
+  --ui-color-error-500: #bf616a; /* Nord 11 */
+  --ui-color-error-600: #b8515b;
+  --ui-color-error-700: #a3424c;
+  --ui-color-error-800: #86363e;
+  --ui-color-error-900: #5e262c;
+  --ui-color-error-950: #411a1e;
+
+  --ui-color-warning-50: #f9efdc;
+  --ui-color-warning-100: #f8ecd3;
+  --ui-color-warning-200: #f5e4c2;
+  --ui-color-warning-300: #f2dcb1;
+  --ui-color-warning-400: #efd49f;
+  --ui-color-warning-500: #ebcb8b; /* Nord 13 */
+  --ui-color-warning-600: #e3b55a;
+  --ui-color-warning-700: #d59a25;
+  --ui-color-warning-800: #b2811f;
+  --ui-color-warning-900: #7e5b16;
+  --ui-color-warning-950: #5b4210;
+
+  --ui-color-success-50: #eaf0e5;
+  --ui-color-success-100: #e2ebdb;
+  --ui-color-success-200: #d5e2cb;
+  --ui-color-success-300: #c6d6b7;
+  --ui-color-success-400: #b6cba4;
+  --ui-color-success-500: #a3be8c; /* Nord 14 */
+  --ui-color-success-600: #8dae70;
+  --ui-color-success-700: #789c58;
+  --ui-color-success-800: #64824a;
+  --ui-color-success-900: #465b34;
+  --ui-color-success-950: #354427;
+
+  --ui-color-info-50: #e7edf3;
+  --ui-color-info-100: #dae2ec;
+  --ui-color-info-200: #c2d0e0;
+  --ui-color-info-300: #a7bbd2;
+  --ui-color-info-400: #89a3c2;
+  --ui-color-info-500: #5e81ac; /* Nord 10 */
+  --ui-color-info-600: #51749e;
+  --ui-color-info-700: #49688d;
+  --ui-color-info-800: #39516f;
+  --ui-color-info-900: #28394d;
+  --ui-color-info-950: #1c2736;
+
+  --ui-color-help-50: #f1eaef;
+  --ui-color-help-100: #ede3eb;
+  --ui-color-help-200: #e0d1de;
+  --ui-color-help-300: #d4bfd0;
+  --ui-color-help-400: #c6a9c1;
+  --ui-color-help-500: #b48ead; /* Nord 15 */
+  --ui-color-help-600: #aa7ea2;
+  --ui-color-help-700: #9b6992;
+  --ui-color-help-800: #84587c;
+  --ui-color-help-900: #593b53;
+  --ui-color-help-950: #3d293a;
+}
+
+:root,
+:host {
+  --ui-color-neutral-50: #f9fafb;
+  --ui-color-neutral-100: #f5f7f9;
+  --ui-color-neutral-200: #f2f4f8;
+  --ui-color-neutral-300: #eff1f6;
+  --ui-color-neutral-400: #eceff4;
+  --ui-color-neutral-500: #e5e9f0;
+  --ui-color-neutral-600: #d8dee9;
+  --ui-color-neutral-700: #bec8da;
+  --ui-color-neutral-800: #9dacc8;
+  --ui-color-neutral-900: #768bb2;
+  --ui-color-neutral-950: #5c75a3;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  :host {
+    --ui-color-neutral-50: #e4e7ec;
+    --ui-color-neutral-100: #d5d9e1;
+    --ui-color-neutral-200: #b5bcca;
+    --ui-color-neutral-300: #8893aa;
+    --ui-color-neutral-400: #4c566a;
+    --ui-color-neutral-500: #434c5e;
+    --ui-color-neutral-600: #3b4252;
+    --ui-color-neutral-700: #2e3440;
+    --ui-color-neutral-800: #2b303b;
+    --ui-color-neutral-900: #22272f;
+    --ui-color-neutral-950: #171b21;
+  }
+}

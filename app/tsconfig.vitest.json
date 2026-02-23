@@ -2,14 +2,20 @@
   "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
   "include": ["src/**/*.test.ts"],
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
+
     "baseUrl": ".",
+
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": false,
-    "types": ["node", "vitest-browser-vue"],
+
     "paths": {
-      "#plugins/*": ["./src/plugins/*"]
-    }
+      "#pattern-editor/*": ["./src/modules/pattern-editor/*"],
+      "#shared/*": ["./src/shared/*"]
+    },
+
+    "types": ["node", "vitest-browser-vue", "vite/client"]
   }
 }

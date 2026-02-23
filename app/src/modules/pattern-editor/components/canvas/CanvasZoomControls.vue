@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import type { DropdownMenuItem } from "@nuxt/ui";
+import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
+import { Button, ButtonIcon, DropdownMenu, FormFieldGroup, InputNumber, Slider } from "@embroiderly/ui";
+import type { DropdownMenuItem } from "@embroiderly/ui";
+
 import { computed } from "vue";
 
 import type { ZoomState } from "#pattern-editor/lib/pixi/";
-import { useShortcuts, extractShortcuts } from "#plugins/shortcuts/";
 import { useI18n } from "#shared/composables/";
 
 const {
@@ -22,7 +24,7 @@ const emit = defineEmits<{
 const { fluent } = useI18n();
 
 const zoomOptions = computed<DropdownMenuItem[]>(() => [
-  { label: fluent.$t("canvas-zoom-fit"), kbds: ["ctrl", "0"], onSelect: () => emit("update:model-value", "fit") },
+  { label: fluent.$t("canvas-zoom-fit"), shortcut: "Ctrl+0", onSelect: () => emit("update:model-value", "fit") },
   { label: fluent.$t("canvas-zoom-fit-width"), onSelect: () => emit("update:model-value", "fit-width") },
   { label: fluent.$t("canvas-zoom-fit-height"), onSelect: () => emit("update:model-value", "fit-height") },
 ]);
@@ -38,48 +40,63 @@ function zoomOut() {
 useShortcuts(extractShortcuts(zoomOptions));
 useShortcuts({
   // Use `=` instead of `+` for defining a shortcut since `+` is triggered by the `Shift` key.
-  "ctrl_=": zoomIn,
-  "ctrl_-": zoomOut,
+  "ctrl+=": zoomIn,
+  "ctrl+-": zoomOut,
 });
 </script>
 
 <template>
   <div class="flex items-center gap-x-2">
-    <UFieldGroup class="w-16">
-      <UInputNumber
+    <FormFieldGroup class="w-16">
+      <InputNumber
         :model-value="zoom"
-        color="neutral"
         variant="outline"
-        size="xs"
+        size="sm"
         :min="min"
         :max="max"
-        :ui="{ base: 'ps-2 pe-2', increment: 'hidden', decrement: 'hidden' }"
+        :increment="false"
+        :decrement="false"
+        :ui="{ base: 'ps-2 pe-2' }"
         @update:model-value="emit('update:model-value', $event!)"
       />
 
-      <UDropdownMenu :items="zoomOptions">
-        <UButton color="neutral" variant="outline" size="xs" icon="i-lucide:chevron-down" />
-      </UDropdownMenu>
-    </UFieldGroup>
+      <DropdownMenu :items="zoomOptions">
+        <Button color="neutral" variant="outline" size="sm" icon="lucide:chevron-down" />
+      </DropdownMenu>
+    </FormFieldGroup>
 
     <div class="flex grow items-center gap-x-1">
-      <UTooltip :text="$t('canvas-zoom-out')" :delay-duration="200" :kbds="['ctrl', '-']">
-        <UButton color="neutral" variant="ghost" icon="i-lucide:zoom-out" size="xs" @click="zoomOut" />
-      </UTooltip>
+      <ButtonIcon
+        color="neutral"
+        variant="ghost"
+        icon="lucide:zoom-out"
+        size="sm"
+        :tooltip="$t('canvas-zoom-out')"
+        shortcut="Ctrl+-"
+        :delay-duration="200"
+        @click="zoomOut"
+      />
 
-      <USlider
+      <Slider
         :model-value="zoom"
         tooltip
-        size="xs"
+        size="sm"
         :min="min"
         :max="max"
         class="grow"
         @update:model-value="emit('update:model-value', $event as number)"
       />
 
-      <UTooltip :text="$t('canvas-zoom-in')" :delay-duration="200" :kbds="['ctrl', '+']">
-        <UButton color="neutral" variant="ghost" icon="i-lucide:zoom-in" size="xs" @click="zoomIn" />
-      </UTooltip>
+      <ButtonIcon
+        color="neutral"
+        variant="ghost"
+        icon="lucide:zoom-out"
+        size="sm"
+        :tooltip="$t('canvas-zoom-in')"
+        shortcut="Ctrl++"
+        :delay-duration="200"
+        @click="zoomIn"
+      />
     </div>
   </div>
 </template>

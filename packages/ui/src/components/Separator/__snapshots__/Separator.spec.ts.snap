@@ -1,0 +1,142 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Separator > renders correctly with class 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid border-default w-full border-t my-4"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with decorative 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid border-default w-full border-t"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="none"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with orientation horizontal 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid border-default w-full border-t"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with orientation vertical 1`] = `
+<div>
+  <div
+    aria-orientation="vertical"
+    class="shrink-0 border-solid border-default h-full border-s"
+    data-orientation="vertical"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid border-default w-full border-t-4"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid border-default w-full border-t-3"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid border-default w-full border-t-2"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with size xl 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid border-default w-full border-t-5"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with size xs 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid border-default w-full border-t"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Separator > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="shrink-0 border-solid w-full border-t border-primary"
+    data-orientation="horizontal"
+    data-slot="base"
+    role="separator"
+  >
+    
+    
+  </div>
+</div>
+`;

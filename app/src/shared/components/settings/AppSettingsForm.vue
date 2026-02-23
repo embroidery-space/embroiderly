@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { TabsItem } from "@nuxt/ui";
+import { Button, Checkbox, FilePicker, FormField, InputNumber, Select, Tabs } from "@embroiderly/ui";
+import type { TabsItem } from "@embroiderly/ui";
+
 import { computed } from "vue";
 
-import { FilePicker } from "#shared/components/";
-import { useI18n } from "#shared/composables/";
+import { useFilePicker, useI18n } from "#shared/composables/";
 import { ANY_PATTERN_FILTER } from "#shared/constants/";
 import { StartupAction, useSettingsStore } from "#shared/stores/";
 import type {
@@ -22,7 +23,9 @@ const updater = defineModel<UpdaterOptions>("updater", { required: true });
 const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
 const other = defineModel<OtherOptions>("other", { required: true });
 
+const filePicker = useFilePicker();
 const { fluent } = useI18n();
+
 const settingsStore = useSettingsStore();
 
 const tabs = computed<TabsItem[]>(() => [
@@ -36,9 +39,9 @@ const tabs = computed<TabsItem[]>(() => [
 
 const themeIcon = computed(() => themeOptions.value.find((item) => item!.value === ui.value.theme)?.icon);
 const themeOptions = computed(() => [
-  { label: fluent.$t("settings-theme-dark"), value: "dark", icon: "i-lucide:moon" },
-  { label: fluent.$t("settings-theme-light"), value: "light", icon: "i-lucide:sun" },
-  { label: fluent.$t("settings-theme-system"), value: "system", icon: "i-lucide:laptop-minimal" },
+  { label: fluent.$t("settings-theme-dark"), value: "dark", icon: "lucide:moon" },
+  { label: fluent.$t("settings-theme-light"), value: "light", icon: "lucide:sun" },
+  { label: fluent.$t("settings-theme-system"), value: "system", icon: "lucide:laptop-minimal" },
 ]);
 const scaleOptions = computed(() => [
   { label: fluent.$t("settings-scale-xx-small"), value: "xx-small" },
@@ -67,11 +70,11 @@ const wheelActionOptions = computed(() => [
 </script>
 
 <template>
-  <UTabs
+  <Tabs
     :items="tabs"
     orientation="vertical"
     color="neutral"
-    size="xl"
+    size="lg"
     :ui="{
       root: 'items-start',
       list: 'items-start bg-transparent rounded-none',
@@ -79,34 +82,39 @@ const wheelActionOptions = computed(() => [
   >
     <template #ui>
       <div class="flex flex-col gap-y-2">
-        <UFormField :label="$t('settings-theme')" class="w-full">
-          <USelect v-model="ui.theme" :items="themeOptions" :icon="themeIcon" class="w-full" />
-        </UFormField>
+        <FormField :label="$t('settings-theme')" class="w-full">
+          <Select v-model="ui.theme" :items="themeOptions" :icon="themeIcon" class="w-full" />
+        </FormField>
 
-        <UFormField :label="$t('settings-scale')" class="w-full">
-          <USelect v-model="ui.scale" :items="scaleOptions" class="w-full" />
-        </UFormField>
+        <FormField :label="$t('settings-scale')" class="w-full">
+          <Select v-model="ui.scale" :items="scaleOptions" class="w-full" />
+        </FormField>
 
-        <UFormField :label="$t('settings-language')" class="w-full">
-          <USelect v-model="ui.language" :items="languageOptions" class="w-full" />
-        </UFormField>
+        <FormField :label="$t('settings-language')" class="w-full">
+          <Select v-model="ui.language" :items="languageOptions" class="w-full" />
+        </FormField>
       </div>
     </template>
 
     <template #startup>
       <div class="flex flex-col gap-y-2">
-        <UFormField :label="$t('settings-startup-action')" class="w-full">
-          <USelect v-model="startup.action" :items="startupActionOptions" class="w-full" />
-        </UFormField>
+        <FormField :label="$t('settings-startup-action')" class="w-full">
+          <Select v-model="startup.action" :items="startupActionOptions" class="w-full" />
+        </FormField>
 
-        <UFormField :label="$t('settings-startup-template-path')" class="w-full">
+        <FormField :label="$t('settings-startup-template-path')" class="w-full">
           <FilePicker
             v-model="startup.templatePath"
-            :options="{ filters: ANY_PATTERN_FILTER }"
             :disabled="startup.action !== StartupAction.CustomTemplate"
             class="w-full"
+            @pick="
+              async () => {
+                const path = await filePicker.open({ filters: ANY_PATTERN_FILTER });
+                if (path) startup.templatePath = path;
+              }
+            "
           />
-        </UFormField>
+        </FormField>
       </div>
     </template>
 
@@ -114,44 +122,44 @@ const wheelActionOptions = computed(() => [
       <div class="flex flex-col gap-y-2">
         <p class="text-sm text-neutral-300">{{ $t("settings-viewport-hint") }}</p>
 
-        <UCheckbox v-model="viewport.antialias" :label="$t('settings-viewport-antialias')" />
+        <Checkbox v-model="viewport.antialias" :label="$t('settings-viewport-antialias')" />
 
-        <UFormField :label="$t('settings-viewport-wheel-action')" class="w-full">
-          <USelect v-model="viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
-        </UFormField>
+        <FormField :label="$t('settings-viewport-wheel-action')" class="w-full">
+          <Select v-model="viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
+        </FormField>
       </div>
     </template>
 
     <template #updater>
       <div class="space-y-2">
-        <UButton
+        <Button
           :loading="settingsStore.loadingUpdate"
           :label="$t('updater-check-for-updates')"
           class="w-full justify-center"
           @click="() => settingsStore.checkForUpdates()"
         />
-        <UCheckbox v-model="updater.autoCheck" v-bind="$ta('settings-updater-auto-check')" />
+        <Checkbox v-model="updater.autoCheck" v-bind="$ta('settings-updater-auto-check')" />
       </div>
     </template>
 
     <template #telemetry>
       <div class="space-y-2">
-        <UCheckbox v-model="telemetry.diagnostics" v-bind="$ta('settings-telemetry-diagnostics')" />
-        <UCheckbox v-model="telemetry.metrics" v-bind="$ta('settings-telemetry-metrics')" />
+        <Checkbox v-model="telemetry.diagnostics" v-bind="$ta('settings-telemetry-diagnostics')" />
+        <Checkbox v-model="telemetry.metrics" v-bind="$ta('settings-telemetry-metrics')" />
       </div>
     </template>
 
     <template #other>
       <div class="space-y-2">
-        <UFormField v-bind="$ta('settings-autosave-interval')" class="w-full">
-          <UInputNumber v-model="other.autoSaveInterval" orientation="vertical" class="w-full" />
-        </UFormField>
+        <FormField v-bind="$ta('settings-autosave-interval')" class="w-full">
+          <InputNumber v-model="other.autoSaveInterval" class="w-full" />
+        </FormField>
 
-        <UCheckbox
+        <Checkbox
           v-model="other.usePaletteItemColorForStitchTools"
           :label="$t('settings-use-palitem-color-for-stitch-tools')"
         />
       </div>
     </template>
-  </UTabs>
+  </Tabs>
 </template>

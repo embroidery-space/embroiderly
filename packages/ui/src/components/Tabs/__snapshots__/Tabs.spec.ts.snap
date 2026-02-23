@@ -1,0 +1,2428 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tabs > renders correctly with class 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col w-96"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with content slot 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content slot
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with custom slot 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with default slot 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Default slot
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Default slot
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Default slot
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with items 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with leading slot 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        Leading slot
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        Leading slot
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        Leading slot
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with orientation horizontal 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with orientation vertical 1`] = `
+<div>
+  <div
+    class="flex gap-2"
+    data-orientation="vertical"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="vertical"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 flex-col"
+      data-orientation="vertical"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted w-full px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="vertical"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted w-full px-2.5 py-1.5 text-sm"
+        data-orientation="vertical"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted w-full px-2.5 py-1.5 text-sm"
+        data-orientation="vertical"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="vertical"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="vertical"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="vertical"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with size lg 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-3 py-2 text-base"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-3 py-2 text-base"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-3 py-2 text-base"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with size md 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with size sm 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2 py-1 text-xs"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2 py-1 text-xs"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2 py-1 text-xs"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with trailing slot 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        Trailing slot
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        Trailing slot
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        Trailing slot
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with ui 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="focus-visible:outline-none w-full ring ring-default"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="focus-visible:outline-none w-full ring ring-default"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="focus-visible:outline-none w-full ring ring-default"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <!--v-if-->
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly with unmountOnHide false 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-controls="reka-tabs-v-0-content-0"
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-1"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-controls="reka-tabs-v-0-content-2"
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-0"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="active"
+      id="reka-tabs-v-0-content-0"
+      role="tabpanel"
+      style="animation-duration: 0s;"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab1
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-1"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-1"
+      role="tabpanel"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab2
+      
+      
+    </div>
+    <div
+      aria-labelledby="reka-tabs-v-0-trigger-2"
+      class="w-full focus-visible:outline-none"
+      data-orientation="horizontal"
+      data-slot="content"
+      data-state="inactive"
+      hidden=""
+      id="reka-tabs-v-0-content-2"
+      role="tabpanel"
+      tabindex="0"
+    >
+      
+      
+      Content for Tab3
+      
+      
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`Tabs > renders correctly without content 1`] = `
+<div>
+  <div
+    class="flex gap-2 flex-col"
+    data-orientation="horizontal"
+    data-slot="root"
+    dir="ltr"
+  >
+    
+    <div
+      aria-orientation="horizontal"
+      class="relative inline-flex items-center rounded-lg bg-accented p-1 overflow-x-auto"
+      data-orientation="horizontal"
+      data-slot="list"
+      dir="ltr"
+      role="tablist"
+      style="outline: none;"
+      tabindex="0"
+    >
+      
+      <!--v-if-->
+      
+      
+      
+      <button
+        aria-selected="true"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-active=""
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="active"
+        id="reka-tabs-v-0-trigger-0"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab1
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab2
+          
+        </span>
+        
+        
+        
+      </button>
+      <button
+        aria-selected="false"
+        class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted px-2.5 py-1.5 text-sm"
+        data-orientation="horizontal"
+        data-reka-collection-item=""
+        data-slot="trigger"
+        data-state="inactive"
+        id="reka-tabs-v-0-trigger-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        
+        
+        
+        <span
+          class="truncate"
+          data-slot="label"
+        >
+          
+          Tab3
+          
+        </span>
+        
+        
+        
+      </button>
+      
+      
+      
+      
+    </div>
+    <!--v-if-->
+    
+  </div>
+</div>
+`;

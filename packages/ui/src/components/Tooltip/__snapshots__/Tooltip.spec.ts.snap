@@ -1,0 +1,359 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tooltip > renders correctly with class 1`] = `
+<div>
+  
+  
+  
+  <button
+    aria-describedby="reka-tooltip-content-v-0"
+    data-grace-area-trigger=""
+    data-state="instant-open"
+  >
+    Trigger
+  </button>
+  <!--teleport start-->
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
+  >
+    <div
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] text-sm"
+      data-align="center"
+      data-dismissable-layer=""
+      data-side="bottom"
+      data-slot="content"
+      data-state="instant-open"
+      style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
+    >
+      
+      
+      
+      
+      <span
+        class="truncate"
+        data-slot="text"
+      >
+        Tooltip
+      </span>
+      <!--v-if-->
+      <span
+        style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
+      >
+        <svg
+          class="fill-default"
+          data-slot="arrow"
+          height="5"
+          preserveAspectRatio="none"
+          rounded="false"
+          style="display: block;"
+          viewBox="0 0 12 6"
+          width="10"
+        >
+          
+          <path
+            d="M0 0L6 6L12 0"
+          />
+          
+        </svg>
+      </span>
+      
+      
+      
+      <span
+        aria-hidden="true"
+        id="reka-tooltip-content-v-0"
+        role="tooltip"
+        style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); white-space: nowrap; overflow-wrap: normal; top: -1px; left: -1px;"
+      >
+        
+        Tooltip
+        
+      </span>
+      
+    </div>
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+  
+</div>
+`;
+
+exports[`Tooltip > renders correctly with shortcut 1`] = `
+<div>
+  
+  
+  
+  <button
+    aria-describedby="reka-tooltip-content-v-0"
+    data-grace-area-trigger=""
+    data-state="instant-open"
+  >
+    Trigger
+  </button>
+  <!--teleport start-->
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
+  >
+    <div
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      data-align="center"
+      data-dismissable-layer=""
+      data-side="bottom"
+      data-slot="content"
+      data-state="instant-open"
+      style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
+    >
+      
+      
+      
+      
+      <span
+        class="truncate"
+        data-slot="text"
+      >
+        Tooltip
+      </span>
+      <span
+        class="inline-flex shrink-0 items-center gap-0.5 before:me-0.5 before:content-['·']"
+        data-slot="kbds"
+      >
+        
+        <kbd
+          class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+          data-slot="base"
+        >
+          Ctrl+Z
+        </kbd>
+        
+      </span>
+      <span
+        style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
+      >
+        <svg
+          class="fill-default"
+          data-slot="arrow"
+          height="5"
+          preserveAspectRatio="none"
+          rounded="false"
+          style="display: block;"
+          viewBox="0 0 12 6"
+          width="10"
+        >
+          
+          <path
+            d="M0 0L6 6L12 0"
+          />
+          
+        </svg>
+      </span>
+      
+      
+      
+      <span
+        aria-hidden="true"
+        id="reka-tooltip-content-v-0"
+        role="tooltip"
+        style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); white-space: nowrap; overflow-wrap: normal; top: -1px; left: -1px;"
+      >
+        
+        TooltipCtrl+Z
+        
+      </span>
+      
+    </div>
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+  
+</div>
+`;
+
+exports[`Tooltip > renders correctly with shortcut only 1`] = `
+<div>
+  
+  
+  
+  <button
+    aria-describedby="reka-tooltip-content-v-0"
+    data-grace-area-trigger=""
+    data-state="instant-open"
+  >
+    Trigger
+  </button>
+  <!--teleport start-->
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
+  >
+    <div
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      data-align="center"
+      data-dismissable-layer=""
+      data-side="bottom"
+      data-slot="content"
+      data-state="instant-open"
+      style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
+    >
+      
+      
+      
+      
+      <span
+        class="truncate"
+        data-slot="text"
+      />
+      <span
+        class="inline-flex shrink-0 items-center gap-0.5 before:me-0.5 before:content-['·']"
+        data-slot="kbds"
+      >
+        
+        <kbd
+          class="inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset h-4 min-w-4 text-[10px]"
+          data-slot="base"
+        >
+          Ctrl+S
+        </kbd>
+        
+      </span>
+      <span
+        style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
+      >
+        <svg
+          class="fill-default"
+          data-slot="arrow"
+          height="5"
+          preserveAspectRatio="none"
+          rounded="false"
+          style="display: block;"
+          viewBox="0 0 12 6"
+          width="10"
+        >
+          
+          <path
+            d="M0 0L6 6L12 0"
+          />
+          
+        </svg>
+      </span>
+      
+      
+      
+      <span
+        aria-hidden="true"
+        id="reka-tooltip-content-v-0"
+        role="tooltip"
+        style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); white-space: nowrap; overflow-wrap: normal; top: -1px; left: -1px;"
+      >
+        
+        Ctrl+S
+        
+      </span>
+      
+    </div>
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+  
+</div>
+`;
+
+exports[`Tooltip > renders correctly with text 1`] = `
+<div>
+  
+  
+  
+  <button
+    aria-describedby="reka-tooltip-content-v-0"
+    data-grace-area-trigger=""
+    data-state="instant-open"
+  >
+    Trigger
+  </button>
+  <!--teleport start-->
+  
+  
+  <div
+    data-reka-popper-content-wrapper=""
+    style="position: fixed; left: 0px; top: 0px; transform: translate(0px, -200%); min-width: max-content; --reka-popper-transform-origin: ; z-index: auto;"
+  >
+    <div
+      class="pointer-events-auto flex h-6 origin-(--reka-tooltip-content-transform-origin) items-center gap-1 rounded-sm bg-default px-2.5 py-1 text-xs shadow-sm ring ring-default select-none data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out]"
+      data-align="center"
+      data-dismissable-layer=""
+      data-side="bottom"
+      data-slot="content"
+      data-state="instant-open"
+      style="--reka-tooltip-content-transform-origin: var(--reka-popper-transform-origin); --reka-tooltip-content-available-width: var(--reka-popper-available-width); --reka-tooltip-content-available-height: var(--reka-popper-available-height); --reka-tooltip-trigger-width: var(--reka-popper-anchor-width); --reka-tooltip-trigger-height: var(--reka-popper-anchor-height); animation: auto ease 0s 1 normal none running none;"
+    >
+      
+      
+      
+      
+      <span
+        class="truncate"
+        data-slot="text"
+      >
+        Tooltip
+      </span>
+      <!--v-if-->
+      <span
+        style="position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); visibility: hidden;"
+      >
+        <svg
+          class="fill-default"
+          data-slot="arrow"
+          height="5"
+          preserveAspectRatio="none"
+          rounded="false"
+          style="display: block;"
+          viewBox="0 0 12 6"
+          width="10"
+        >
+          
+          <path
+            d="M0 0L6 6L12 0"
+          />
+          
+        </svg>
+      </span>
+      
+      
+      
+      <span
+        aria-hidden="true"
+        id="reka-tooltip-content-v-0"
+        role="tooltip"
+        style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); white-space: nowrap; overflow-wrap: normal; top: -1px; left: -1px;"
+      >
+        
+        Tooltip
+        
+      </span>
+      
+    </div>
+  </div>
+  
+  
+  <!--teleport end-->
+  
+  
+  
+</div>
+`;

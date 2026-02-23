@@ -1,0 +1,548 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Dialog > renders correctly with class 1`] = `
+<div>
+  
+  Open Dialog
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby=""
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col divide-y divide-default rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] w-96"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="dialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4"
+      data-slot="header"
+    >
+      <div
+        class="flex-1"
+      >
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          Dialog
+          
+        </h2>
+        <!--v-if-->
+      </div>
+      <button
+        aria-disabled="false"
+        aria-label="Close"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 absolute end-4 top-4"
+        data-slot="close"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-4"
+          data-slot="leadingIcon"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </header>
+    <div
+      class="flex-1 overflow-y-auto p-4"
+      data-slot="body"
+    >
+      
+      Dialog body content
+      
+    </div>
+    <footer
+      class="flex items-center justify-end gap-1.5 p-4"
+      data-slot="footer"
+    >
+      
+      Footer content
+      
+    </footer>
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+</div>
+`;
+
+exports[`Dialog > renders correctly with description 1`] = `
+<div>
+  
+  Open Dialog
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col divide-y divide-default rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="dialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4"
+      data-slot="header"
+    >
+      <div
+        class="flex-1"
+      >
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          Dialog
+          
+        </h2>
+        <p
+          class="mt-1 text-sm text-muted"
+          data-slot="description"
+          id="reka-dialog-description-v-2"
+        >
+          
+          Are you sure?
+          
+        </p>
+      </div>
+      <button
+        aria-disabled="false"
+        aria-label="Close"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 absolute end-4 top-4"
+        data-slot="close"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-4"
+          data-slot="leadingIcon"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </header>
+    <div
+      class="flex-1 overflow-y-auto p-4"
+      data-slot="body"
+    >
+      
+      Dialog body content
+      
+    </div>
+    <footer
+      class="flex items-center justify-end gap-1.5 p-4"
+      data-slot="footer"
+    >
+      
+      Footer content
+      
+    </footer>
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+</div>
+`;
+
+exports[`Dialog > renders correctly with non-dismissible 1`] = `
+<div>
+  
+  Open Dialog
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby=""
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col divide-y divide-default rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="dialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4"
+      data-slot="header"
+    >
+      <div
+        class="flex-1"
+      >
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          Dialog
+          
+        </h2>
+        <!--v-if-->
+      </div>
+      <button
+        aria-disabled="false"
+        aria-label="Close"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 absolute end-4 top-4"
+        data-slot="close"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-4"
+          data-slot="leadingIcon"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </header>
+    <div
+      class="flex-1 overflow-y-auto p-4"
+      data-slot="body"
+    >
+      
+      Dialog body content
+      
+    </div>
+    <footer
+      class="flex items-center justify-end gap-1.5 p-4"
+      data-slot="footer"
+    >
+      
+      Footer content
+      
+    </footer>
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+</div>
+`;
+
+exports[`Dialog > renders correctly with title 1`] = `
+<div>
+  
+  Open Dialog
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby=""
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col divide-y divide-default rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="dialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4"
+      data-slot="header"
+    >
+      <div
+        class="flex-1"
+      >
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          Dialog
+          
+        </h2>
+        <!--v-if-->
+      </div>
+      <button
+        aria-disabled="false"
+        aria-label="Close"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 absolute end-4 top-4"
+        data-slot="close"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-4"
+          data-slot="leadingIcon"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </header>
+    <div
+      class="flex-1 overflow-y-auto p-4"
+      data-slot="body"
+    >
+      
+      Dialog body content
+      
+    </div>
+    <footer
+      class="flex items-center justify-end gap-1.5 p-4"
+      data-slot="footer"
+    >
+      
+      Footer content
+      
+    </footer>
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+</div>
+`;
+
+exports[`Dialog > renders correctly with ui 1`] = `
+<div>
+  
+  Open Dialog
+  <!--teleport start-->
+  
+  
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out]"
+    data-aria-hidden="true"
+    data-slot="overlay"
+    data-state="open"
+    style="pointer-events: auto;"
+  >
+    
+    
+  </div>
+  <div
+    aria-describedby=""
+    aria-labelledby="reka-dialog-title-v-1"
+    class="fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md -translate-1/2 flex-col divide-y divide-default rounded-lg bg-default shadow-lg ring ring-default focus:outline-none data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out]"
+    data-dismissable-layer=""
+    data-slot="content"
+    data-state="open"
+    id="reka-dialog-content-v-0"
+    role="dialog"
+    style="pointer-events: auto;"
+    tabindex="-1"
+  >
+    
+    
+    
+    
+    <header
+      class="flex min-h-12 items-center gap-1.5 p-4"
+      data-slot="header"
+    >
+      <div
+        class="flex-1"
+      >
+        <h2
+          class="font-semibold"
+          data-slot="title"
+          id="reka-dialog-title-v-1"
+        >
+          
+          Dialog
+          
+        </h2>
+        <!--v-if-->
+      </div>
+      <button
+        aria-disabled="false"
+        aria-label="Close"
+        class="inline-flex items-center justify-center rounded-md transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent aria-disabled:bg-transparent gap-1.5 text-sm text-default hover:bg-elevated focus-visible:outline-inverted active:bg-elevated p-1.5 absolute end-4 top-4"
+        data-slot="close"
+        type="button"
+      >
+        
+        <svg
+          aria-hidden="true"
+          class="shrink-0 size-4"
+          data-slot="leadingIcon"
+          height="1em"
+          role="img"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+        
+        
+        <!--v-if-->
+        
+        
+        <!--v-if-->
+        
+      </button>
+    </header>
+    <div
+      class="flex-1 overflow-y-auto p-4"
+      data-slot="body"
+    >
+      
+      Dialog body content
+      
+    </div>
+    <footer
+      class="flex items-center gap-1.5 p-4 justify-start"
+      data-slot="footer"
+    >
+      
+      Footer content
+      
+    </footer>
+    
+    
+    
+    
+  </div>
+  
+  
+  <!--teleport end-->
+  
+</div>
+`;

@@ -1,26 +1,27 @@
 /// <reference types="vitest/config" />
 
-import ui from "@nuxt/ui/vite";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { webdriverio } from "@vitest/browser-webdriverio";
 import { defineConfig } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
 
-import { NuxtUIConfig } from "./ui.config";
 import fluentMerge from "./vite-plugins/fluent-merge";
 
 const isCI = process.env.CI === "true";
 const isDebug = process.env.TAURI_ENV_DEBUG === "true";
 
 export default defineConfig({
-  plugins: [vue(), ui(NuxtUIConfig), tailwindcss(), fluentMerge({ localesDir: "./src/app/locales/" }), vueDevTools()],
+  plugins: [vue(), tailwindcss(), fluentMerge({ localesDir: "./src/app/locales/" }), vueDevTools()],
   clearScreen: false,
   envPrefix: ["VITE_", "TAURI_ENV_"],
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
   build: {
     sourcemap: isDebug,
     chunkSizeWarningLimit: 1000,
+  },
+  resolve: {
+    dedupe: ["@iconify/vue", "@vueuse/*", "reka-ui", "vue"],
   },
   test: {
     bail: isCI ? 1 : 0,
