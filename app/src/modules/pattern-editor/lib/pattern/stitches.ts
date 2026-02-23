@@ -1,7 +1,7 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 
-import type { Clone, Eq } from "~/shared/types/";
+import type { Clone, Eq } from "~/types/";
 
 export enum FullStitchKind {
   Full = "Full",
