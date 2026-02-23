@@ -12,7 +12,7 @@ describe("BlockUI", () => {
     });
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("renders correctly when not blocked", async () => {
@@ -22,6 +22,6 @@ describe("BlockUI", () => {
     });
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

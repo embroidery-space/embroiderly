@@ -19,6 +19,6 @@ describe("Separator", () => {
     const screen = page.render(Separator, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

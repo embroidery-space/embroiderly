@@ -20,7 +20,7 @@ describe("FormFieldSet", () => {
     const screen = page.render(FormFieldSet, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("toggles open state when collapsible trigger is clicked", async () => {

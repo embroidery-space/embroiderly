@@ -2,268 +2,32 @@
 
 exports[`Splitter > renders correctly with horizontal direction 1`] = `
 <div>
-  <div
-    data-orientation="horizontal"
-    data-panel-group=""
-    data-panel-group-id="reka-splitter-group-v-0"
-    data-slot="base"
-    style="display: flex; flex-direction: row; height: 100%; overflow: hidden; width: 100%;"
-  >
-    
-    
-    
-    <div
-      class=""
-      data-panel=""
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-id="reka-splitter-panel-v-1"
-      data-panel-size="50.0"
-      data-slot="panel"
-      id="reka-splitter-panel-v-1"
-      style="flex: 50 1 0px; overflow: hidden;"
-    >
-      
-      
-      Panel 1
-      
-      
-    </div>
-    <div
-      aria-controls="reka-splitter-panel-v-1"
-      aria-valuemax="100"
-      aria-valuemin="0"
-      aria-valuenow="50"
-      class="border-2 border-default"
-      data-orientation="horizontal"
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-resize-handle-enabled="true"
-      data-panel-resize-handle-id="reka-splitter-resize-handle-v-2"
-      data-resize-handle=""
-      data-resize-handle-state="inactive"
-      data-slot="handle"
-      data-state="inactive"
-      id="reka-splitter-resize-handle-v-2"
-      role="separator"
-      style="touch-action: none; user-select: none;"
-      tabindex="0"
-    >
-      
-      
-    </div>
-    
-    
-    <div
-      class=""
-      data-panel=""
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-id="reka-splitter-panel-v-3"
-      data-panel-size="50.0"
-      data-slot="panel"
-      id="reka-splitter-panel-v-3"
-      style="flex: 50 1 0px; overflow: hidden;"
-    >
-      
-      
-      Panel 2
-      
-      
-    </div>
-    <!--v-if-->
-    
-    
-    
+  <div data-orientation="horizontal" data-panel-group data-panel-group-id="reka-splitter-group-v-0" data-slot="base">
+    <div class data-panel data-panel-group-id="reka-splitter-group-v-0" data-panel-id="reka-splitter-panel-v-1" data-panel-size="50.0" data-slot="panel" id="reka-splitter-panel-v-1">Panel 1</div>
+    <div aria-controls="reka-splitter-panel-v-1" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="border-2 border-default" data-orientation="horizontal" data-panel-group-id="reka-splitter-group-v-0" data-panel-resize-handle-enabled="true" data-panel-resize-handle-id="reka-splitter-resize-handle-v-2" data-resize-handle data-resize-handle-state="inactive" data-slot="handle" data-state="inactive" id="reka-splitter-resize-handle-v-2" role="separator" tabindex="0"></div>
+    <div class data-panel data-panel-group-id="reka-splitter-group-v-0" data-panel-id="reka-splitter-panel-v-3" data-panel-size="50.0" data-slot="panel" id="reka-splitter-panel-v-3">Panel 2</div>
   </div>
 </div>
 `;
 
 exports[`Splitter > renders correctly with three panels 1`] = `
 <div>
-  <div
-    data-orientation="horizontal"
-    data-panel-group=""
-    data-panel-group-id="reka-splitter-group-v-0"
-    data-slot="base"
-    style="display: flex; flex-direction: row; height: 100%; overflow: hidden; width: 100%;"
-  >
-    
-    
-    
-    <div
-      class=""
-      data-panel=""
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-id="reka-splitter-panel-v-1"
-      data-panel-size="33.3"
-      data-slot="panel"
-      id="reka-splitter-panel-v-1"
-      style="flex: 33.3 1 0px; overflow: hidden;"
-    >
-      
-      
-      Panel 1
-      
-      
-    </div>
-    <div
-      aria-controls="reka-splitter-panel-v-1"
-      aria-valuemax="100"
-      aria-valuemin="0"
-      aria-valuenow="33"
-      class="border-2 border-default"
-      data-orientation="horizontal"
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-resize-handle-enabled="true"
-      data-panel-resize-handle-id="reka-splitter-resize-handle-v-2"
-      data-resize-handle=""
-      data-resize-handle-state="inactive"
-      data-slot="handle"
-      data-state="inactive"
-      id="reka-splitter-resize-handle-v-2"
-      role="separator"
-      style="touch-action: none; user-select: none;"
-      tabindex="0"
-    >
-      
-      
-    </div>
-    
-    
-    <div
-      class=""
-      data-panel=""
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-id="reka-splitter-panel-v-3"
-      data-panel-size="33.3"
-      data-slot="panel"
-      id="reka-splitter-panel-v-3"
-      style="flex: 33.3 1 0px; overflow: hidden;"
-    >
-      
-      
-      Panel 2
-      
-      
-    </div>
-    <div
-      aria-controls="reka-splitter-panel-v-3"
-      aria-valuemax="100"
-      aria-valuemin="0"
-      aria-valuenow="33"
-      class="border-2 border-default"
-      data-orientation="horizontal"
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-resize-handle-enabled="true"
-      data-panel-resize-handle-id="reka-splitter-resize-handle-v-4"
-      data-resize-handle=""
-      data-resize-handle-state="inactive"
-      data-slot="handle"
-      data-state="inactive"
-      id="reka-splitter-resize-handle-v-4"
-      role="separator"
-      style="touch-action: none; user-select: none;"
-      tabindex="0"
-    >
-      
-      
-    </div>
-    
-    
-    <div
-      class=""
-      data-panel=""
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-id="reka-splitter-panel-v-5"
-      data-panel-size="33.3"
-      data-slot="panel"
-      id="reka-splitter-panel-v-5"
-      style="flex: 33.3 1 0px; overflow: hidden;"
-    >
-      
-      
-      Panel 3
-      
-      
-    </div>
-    <!--v-if-->
-    
-    
-    
+  <div data-orientation="horizontal" data-panel-group data-panel-group-id="reka-splitter-group-v-0" data-slot="base">
+    <div class data-panel data-panel-group-id="reka-splitter-group-v-0" data-panel-id="reka-splitter-panel-v-1" data-panel-size="33.3" data-slot="panel" id="reka-splitter-panel-v-1">Panel 1</div>
+    <div aria-controls="reka-splitter-panel-v-1" aria-valuemax="100" aria-valuemin="0" aria-valuenow="33" class="border-2 border-default" data-orientation="horizontal" data-panel-group-id="reka-splitter-group-v-0" data-panel-resize-handle-enabled="true" data-panel-resize-handle-id="reka-splitter-resize-handle-v-2" data-resize-handle data-resize-handle-state="inactive" data-slot="handle" data-state="inactive" id="reka-splitter-resize-handle-v-2" role="separator" tabindex="0"></div>
+    <div class data-panel data-panel-group-id="reka-splitter-group-v-0" data-panel-id="reka-splitter-panel-v-3" data-panel-size="33.3" data-slot="panel" id="reka-splitter-panel-v-3">Panel 2</div>
+    <div aria-controls="reka-splitter-panel-v-3" aria-valuemax="100" aria-valuemin="0" aria-valuenow="33" class="border-2 border-default" data-orientation="horizontal" data-panel-group-id="reka-splitter-group-v-0" data-panel-resize-handle-enabled="true" data-panel-resize-handle-id="reka-splitter-resize-handle-v-4" data-resize-handle data-resize-handle-state="inactive" data-slot="handle" data-state="inactive" id="reka-splitter-resize-handle-v-4" role="separator" tabindex="0"></div>
+    <div class data-panel data-panel-group-id="reka-splitter-group-v-0" data-panel-id="reka-splitter-panel-v-5" data-panel-size="33.3" data-slot="panel" id="reka-splitter-panel-v-5">Panel 3</div>
   </div>
 </div>
 `;
 
 exports[`Splitter > renders correctly with vertical direction 1`] = `
 <div>
-  <div
-    data-orientation="vertical"
-    data-panel-group=""
-    data-panel-group-id="reka-splitter-group-v-0"
-    data-slot="base"
-    style="display: flex; flex-direction: column; height: 100%; overflow: hidden; width: 100%;"
-  >
-    
-    
-    
-    <div
-      class=""
-      data-panel=""
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-id="reka-splitter-panel-v-1"
-      data-panel-size="50.0"
-      data-slot="panel"
-      id="reka-splitter-panel-v-1"
-      style="flex: 50 1 0px; overflow: hidden;"
-    >
-      
-      
-      Panel 1
-      
-      
-    </div>
-    <div
-      aria-controls="reka-splitter-panel-v-1"
-      aria-valuemax="100"
-      aria-valuemin="0"
-      aria-valuenow="50"
-      class="border-2 border-default"
-      data-orientation="vertical"
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-resize-handle-enabled="true"
-      data-panel-resize-handle-id="reka-splitter-resize-handle-v-2"
-      data-resize-handle=""
-      data-resize-handle-state="inactive"
-      data-slot="handle"
-      data-state="inactive"
-      id="reka-splitter-resize-handle-v-2"
-      role="separator"
-      style="touch-action: none; user-select: none;"
-      tabindex="0"
-    >
-      
-      
-    </div>
-    
-    
-    <div
-      class=""
-      data-panel=""
-      data-panel-group-id="reka-splitter-group-v-0"
-      data-panel-id="reka-splitter-panel-v-3"
-      data-panel-size="50.0"
-      data-slot="panel"
-      id="reka-splitter-panel-v-3"
-      style="flex: 50 1 0px; overflow: hidden;"
-    >
-      
-      
-      Panel 2
-      
-      
-    </div>
-    <!--v-if-->
-    
-    
-    
+  <div data-orientation="vertical" data-panel-group data-panel-group-id="reka-splitter-group-v-0" data-slot="base">
+    <div class data-panel data-panel-group-id="reka-splitter-group-v-0" data-panel-id="reka-splitter-panel-v-1" data-panel-size="50.0" data-slot="panel" id="reka-splitter-panel-v-1">Panel 1</div>
+    <div aria-controls="reka-splitter-panel-v-1" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="border-2 border-default" data-orientation="vertical" data-panel-group-id="reka-splitter-group-v-0" data-panel-resize-handle-enabled="true" data-panel-resize-handle-id="reka-splitter-resize-handle-v-2" data-resize-handle data-resize-handle-state="inactive" data-slot="handle" data-state="inactive" id="reka-splitter-resize-handle-v-2" role="separator" tabindex="0"></div>
+    <div class data-panel data-panel-group-id="reka-splitter-group-v-0" data-panel-id="reka-splitter-panel-v-3" data-panel-size="50.0" data-slot="panel" id="reka-splitter-panel-v-3">Panel 2</div>
   </div>
 </div>
 `;

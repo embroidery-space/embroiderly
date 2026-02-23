@@ -30,7 +30,7 @@ describe("FormField", () => {
       const screen = page.render(FormFieldWrapper, options);
       await nextTick();
 
-      expect(screen.container).toMatchSnapshot();
+      expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
 

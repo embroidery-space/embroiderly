@@ -22,7 +22,7 @@ describe("FormFieldGroup", () => {
     const screen = page.render(FormFieldGroup, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("renders correctly with Button children", async () => {
@@ -39,7 +39,7 @@ describe("FormFieldGroup", () => {
     const screen = page.render(Wrapper);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("renders correctly with Input and Button children", async () => {
@@ -55,7 +55,7 @@ describe("FormFieldGroup", () => {
     const screen = page.render(Wrapper);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("renders correctly with InputNumber and Button children", async () => {
@@ -71,6 +71,6 @@ describe("FormFieldGroup", () => {
     const screen = page.render(Wrapper);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

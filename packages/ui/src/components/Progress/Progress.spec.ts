@@ -24,6 +24,6 @@ describe("Progress", () => {
     const screen = page.render(Progress, options);
     await nextTick();
 
-    expect(screen.container).toMatchSnapshot();
+    expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

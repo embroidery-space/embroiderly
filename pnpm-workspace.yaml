@@ -114,6 +114,7 @@ catalog:
   "@vue/test-utils": 2.4.6
   "@pinia/testing": 1.0.3
   "vitest-browser-vue": 2.0.2
+  "vue3-snapshot-serializer": 2.13.1
 
   # WebdriverIO
   "webdriverio": 9.24.0
