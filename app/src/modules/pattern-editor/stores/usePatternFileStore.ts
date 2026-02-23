@@ -3,12 +3,11 @@ import { useConfirm, useToast } from "@embroiderly/ui";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+import { BackupFileExistsError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/api/";
+import { FilesApi } from "~/api/";
 import type { Fabric, PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
-import { BackupFileExistsError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/shared/api/";
 import { useFilePicker, useI18n } from "~/shared/composables/";
 import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/shared/constants/";
-
-import { FilesApi } from "../api/";
 
 const MAX_RECENT_PATTERNS = 5;
 

@@ -17,8 +17,8 @@ import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
 import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
 
-import { FilesApi } from "~/modules/pattern-editor/api";
-import type { ImageImportOptions } from "~/modules/pattern-editor/api";
+import { FilesApi } from "~/api/";
+import type { ImageImportOptions } from "~/api/";
 import { PatternCanvas } from "~/modules/pattern-editor/components/canvas";
 import { LayersVisibility, Pattern } from "~/modules/pattern-editor/lib/pattern";
 import { ImageImportService } from "~/modules/pattern-editor/services/";

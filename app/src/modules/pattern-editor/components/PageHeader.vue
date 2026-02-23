@@ -9,16 +9,15 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
+import { SystemApi } from "~/api/";
+import { FilesApi } from "~/api/";
 import { useEditorModals } from "~/modules/pattern-editor/composables/";
 import { Fabric } from "~/modules/pattern-editor/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/modules/pattern-editor/stores/";
-import { SystemApi } from "~/shared/api/";
 import { WindowControls } from "~/shared/components/index.ts";
 import { useFilePicker, useI18n } from "~/shared/composables/";
 import { ANY_IMAGE_FILTER } from "~/shared/constants";
 import { useSettingsStore } from "~/shared/stores/";
-
-import { FilesApi } from "../api/";
 
 const confirm = useConfirm();
 const filePicker = useFilePicker();

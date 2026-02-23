@@ -1,5 +1,4 @@
 export * from "./endpoints/";
-export * from "./client.ts";
 export {
   InvalidRequestBodyError,
   MissingPatternIdHeaderError,

@@ -1,5 +1,6 @@
 import { Pattern, Fabric, deserializeBrandPalette } from "~/modules/pattern-editor/lib/pattern/";
-import { invoke } from "~/shared/api/";
+
+import { invoke } from "../client.ts";
 
 export interface GroupedFilesList {
   system: string[];

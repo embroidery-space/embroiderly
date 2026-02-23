@@ -7,7 +7,7 @@ import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
 import { computed, useTemplateRef, watch } from "vue";
 
-import { FilesApi } from "~/modules/pattern-editor/api/";
+import { FilesApi } from "~/api/";
 import { CanvasZoomControls, PatternCanvas } from "~/modules/pattern-editor/components/canvas/";
 import { PatternEvent, PatternInfo } from "~/modules/pattern-editor/lib/pattern/";
 import { MAX_SCALE, MIN_SCALE } from "~/modules/pattern-editor/lib/pixi/";

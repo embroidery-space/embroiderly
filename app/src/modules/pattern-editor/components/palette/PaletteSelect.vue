@@ -4,7 +4,7 @@ import type { SelectProps, SelectItem } from "@embroiderly/ui";
 
 import { ref, onMounted, shallowRef, watch } from "vue";
 
-import { FilesApi } from "~/modules/pattern-editor/api/";
+import { FilesApi } from "~/api/";
 import type { BrandPaletteItem } from "~/modules/pattern-editor/lib/pattern";
 import { useI18n } from "~/shared/composables/";
 import { LoggerService } from "~/shared/services/";
