@@ -10,7 +10,7 @@ import { FilesApi } from "~/api/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { PALETTE_FILTER } from "~/constants/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/modules/pattern-editor/lib/pattern/";
-import { LoggerService } from "~/shared/services/";
+import { LoggerService } from "~/services/";
 
 import { PaletteSection, PaletteList, PaletteListItem, PaletteSelect } from ".";
 

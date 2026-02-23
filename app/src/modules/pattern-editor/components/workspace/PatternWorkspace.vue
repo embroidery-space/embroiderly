@@ -20,7 +20,7 @@ import type {
 } from "~/modules/pattern-editor/lib/pixi/";
 import { CursorTool } from "~/modules/pattern-editor/lib/tools/";
 import type { PatternEditorToolContext } from "~/modules/pattern-editor/lib/tools/";
-import { LoggerService } from "~/shared/services/";
+import { LoggerService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "~/stores/";
 import { addSymbolFonts } from "~/utils/";
 

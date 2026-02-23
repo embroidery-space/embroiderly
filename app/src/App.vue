@@ -4,7 +4,7 @@ import { App, useToast } from "@embroiderly/ui";
 import { onMounted, onErrorCaptured } from "vue";
 
 import { useI18n } from "~/composables/";
-import { LoggerService } from "~/shared/services/";
+import { LoggerService } from "~/services/";
 import { useSettingsStore } from "~/stores/";
 
 import PatternEditorPage from "./modules/pattern-editor/PatternEditorPage.vue";

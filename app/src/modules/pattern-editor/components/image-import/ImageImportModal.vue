@@ -23,7 +23,7 @@ import { useDragDrop, useFilePicker } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
 import { PatternCanvas } from "~/modules/pattern-editor/components/canvas";
 import { LayersVisibility, Pattern } from "~/modules/pattern-editor/lib/pattern";
-import { ImageImportService } from "~/modules/pattern-editor/services/";
+import { ImageImportService } from "~/services/";
 
 import { PaletteSelect } from "../palette/";
 

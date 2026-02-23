@@ -5,7 +5,7 @@ import { createPinia } from "pinia";
 import { createApp } from "vue";
 
 import App from "./App.vue";
-import { DiagnosticsService } from "./shared/services/";
+import { DiagnosticsService } from "./services/";
 
 import "./assets/styles.css";
 import "./assets/icons.ts";

@@ -7,7 +7,7 @@ import { computed, onMounted, ref, shallowRef } from "vue";
 import { FilesApi } from "~/api/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { FONT_FILTER } from "~/constants/";
-import { LoggerService } from "~/shared/services/";
+import { LoggerService } from "~/services/";
 import { addSymbolFonts } from "~/utils/";
 
 import { PaletteSection } from "../palette/";
