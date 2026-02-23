@@ -20,7 +20,7 @@ export default defineConfig({
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
   build: {
     sourcemap: isDebug,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: Infinity,
   },
   resolve: {
     dedupe: ["@iconify/vue", "@vueuse/*", "reka-ui", "vue"],
