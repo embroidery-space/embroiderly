@@ -6,8 +6,8 @@ import { check } from "@tauri-apps/plugin-updater";
 import { defineStore } from "pinia";
 import { defineAsyncComponent, reactive, ref, watch } from "vue";
 
+import { useI18n } from "~/composables/";
 import type { WheelAction } from "~/modules/pattern-editor/lib/pixi/";
-import { useI18n } from "~/shared/composables/";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";

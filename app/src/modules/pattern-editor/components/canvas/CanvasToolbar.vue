@@ -3,9 +3,9 @@ import { ButtonIcon, Popover, Separator } from "@embroiderly/ui";
 
 import { computed, ref, watch } from "vue";
 
+import { useI18n } from "~/composables/";
 import { DisplayMode, LayersVisibility } from "~/modules/pattern-editor/lib/pattern/";
 import { usePatternStore } from "~/modules/pattern-editor/stores/";
-import { useI18n } from "~/shared/composables/";
 
 import { ToolToggle, ToolToggleGroup } from "../toolbar/";
 

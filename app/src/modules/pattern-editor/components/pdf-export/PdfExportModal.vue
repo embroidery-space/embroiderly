@@ -5,8 +5,8 @@ import { basename } from "@tauri-apps/api/path";
 import { computedAsync, refAutoReset } from "@vueuse/core";
 import { ref } from "vue";
 
+import { useFilePicker } from "~/composables/";
 import { PdfExportOptions } from "~/modules/pattern-editor/lib/pattern/";
-import { useFilePicker } from "~/shared/composables/";
 import { PDF_FILTER } from "~/shared/constants/";
 
 import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";

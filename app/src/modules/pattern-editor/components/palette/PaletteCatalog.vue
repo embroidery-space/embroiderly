@@ -7,8 +7,8 @@ import { useTemplateRef, ref, computed, shallowRef } from "vue";
 import type { Ref } from "vue";
 
 import { FilesApi } from "~/api/";
+import { useFilePicker, useI18n } from "~/composables/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/modules/pattern-editor/lib/pattern/";
-import { useFilePicker, useI18n } from "~/shared/composables/";
 import { PALETTE_FILTER } from "~/shared/constants/";
 import { LoggerService } from "~/shared/services/";
 

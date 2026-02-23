@@ -5,7 +5,7 @@ import { unrefElement } from "@vueuse/core";
 import type { MaybeComputedElementRef, MaybeElement } from "@vueuse/core";
 import { computed, ref } from "vue";
 
-import { useTauriListener } from "~/shared/composables/";
+import { useTauriListener } from "./useTauriListener.ts";
 
 /**
  * Composable for handling drag-and-drop operations.

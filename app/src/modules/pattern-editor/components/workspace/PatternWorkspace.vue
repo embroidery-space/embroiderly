@@ -8,6 +8,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { computed, useTemplateRef, watch } from "vue";
 
 import { FilesApi } from "~/api/";
+import { useFilePicker, useI18n } from "~/composables/";
 import { CanvasZoomControls, PatternCanvas } from "~/modules/pattern-editor/components/canvas/";
 import { PatternEvent, PatternInfo } from "~/modules/pattern-editor/lib/pattern/";
 import { MAX_SCALE, MIN_SCALE } from "~/modules/pattern-editor/lib/pixi/";
@@ -24,7 +25,6 @@ import {
   usePatternStore,
   usePatternFileStore,
 } from "~/modules/pattern-editor/stores/";
-import { useFilePicker, useI18n } from "~/shared/composables/";
 import { ANY_IMAGE_FILTER } from "~/shared/constants/";
 import { LoggerService } from "~/shared/services/";
 import { addSymbolFonts } from "~/shared/utils/";

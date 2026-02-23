@@ -6,7 +6,7 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 
 import { StartupApi } from "~/api/";
-import { useDragDrop, useI18n, useTauriListener } from "~/shared/composables/";
+import { useDragDrop, useI18n, useTauriListener } from "~/composables/";
 import { useSettingsStore } from "~/shared/stores/";
 
 import { PageHeader } from "./components/";

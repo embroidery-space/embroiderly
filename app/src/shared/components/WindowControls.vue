@@ -4,7 +4,7 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { ref } from "vue";
 
-import { useTauriListener } from "~/shared/composables";
+import { useTauriListener } from "~/composables/";
 
 const appWindow = getCurrentWebviewWindow();
 

@@ -3,9 +3,9 @@ import { useShortcuts } from "@embroiderly/shortcuts";
 
 import { computed } from "vue";
 
+import { useI18n } from "~/composables/";
 import { tools } from "~/modules/pattern-editor/lib/tools/";
 import { useEditorStateStore, usePatternStore } from "~/modules/pattern-editor/stores/";
-import { useI18n } from "~/shared/composables/";
 import { useSettingsStore } from "~/shared/stores/";
 
 import { ToolSelect } from "../toolbar/";

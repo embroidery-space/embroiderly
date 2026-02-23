@@ -5,7 +5,7 @@ import type { ContextMenuItem, DropdownMenuItem, SelectItem } from "@embroiderly
 import { computed, onMounted, ref, shallowRef } from "vue";
 
 import { FilesApi } from "~/api/";
-import { useFilePicker, useI18n } from "~/shared/composables/";
+import { useFilePicker, useI18n } from "~/composables/";
 import { FONT_FILTER } from "~/shared/constants/";
 import { LoggerService } from "~/shared/services/";
 import { addSymbolFonts } from "~/shared/utils/";

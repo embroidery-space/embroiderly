@@ -5,8 +5,8 @@ import type { DropdownMenuItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
+import { useI18n } from "~/composables/";
 import type { ZoomState } from "~/modules/pattern-editor/lib/pixi/";
-import { useI18n } from "~/shared/composables/";
 
 const {
   modelValue: zoom,

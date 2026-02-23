@@ -3,7 +3,7 @@ import { App, useToast } from "@embroiderly/ui";
 
 import { onMounted, onErrorCaptured } from "vue";
 
-import { useI18n } from "~/shared/composables/";
+import { useI18n } from "~/composables/";
 import { LoggerService } from "~/shared/services/";
 import { useSettingsStore } from "~/shared/stores/";
 
