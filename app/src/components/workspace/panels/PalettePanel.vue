@@ -4,16 +4,16 @@ import type { ContextMenuItem, DropdownMenuItem } from "@embroiderly/ui";
 
 import { computed, reactive, ref, watch } from "vue";
 
-import { useI18n } from "~/composables/";
-import { PaletteSettings, SortPaletteBy, Symbol } from "~/lib/pattern/";
 import {
   PaletteCatalog,
   PaletteDisplaySettings,
   PaletteList,
   PaletteListItem,
   PaletteToolbar,
-} from "~/modules/pattern-editor/components/palette/";
-import { StitchSymbols } from "~/modules/pattern-editor/components/symbols/";
+} from "~/components/palette/";
+import { StitchSymbols } from "~/components/symbols/";
+import { useI18n } from "~/composables/";
+import { PaletteSettings, SortPaletteBy, Symbol } from "~/lib/pattern/";
 import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
 
 const editorStateStore = useEditorStateStore();

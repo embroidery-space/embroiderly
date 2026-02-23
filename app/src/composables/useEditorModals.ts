@@ -7,29 +7,25 @@ export const useEditorModals = createSharedComposable(() => {
   const overlay = useOverlay();
 
   const patternCreationModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/fabric/PatternCreationModal.vue")),
+    defineAsyncComponent(() => import("~/components/fabric/PatternCreationModal.vue")),
   );
 
   const imageImportModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/image-import/ImageImportModal.vue")),
+    defineAsyncComponent(() => import("~/components/image-import/ImageImportModal.vue")),
   );
 
   const pdfExportModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/pdf-export/PdfExportModal.vue")),
+    defineAsyncComponent(() => import("~/components/pdf-export/PdfExportModal.vue")),
   );
   const pdfExportOptionsModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/pdf-export/PdfExportOptionsModal.vue")),
+    defineAsyncComponent(() => import("~/components/pdf-export/PdfExportOptionsModal.vue")),
   );
 
   const patternInfoModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/pattern-info/PatternInfoModal.vue")),
+    defineAsyncComponent(() => import("~/components/pattern-info/PatternInfoModal.vue")),
   );
-  const fabricModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/fabric/FabricModal.vue")),
-  );
-  const gridModal = overlay.create(
-    defineAsyncComponent(() => import("~/modules/pattern-editor/components/grid/GridModal.vue")),
-  );
+  const fabricModal = overlay.create(defineAsyncComponent(() => import("~/components/fabric/FabricModal.vue")));
+  const gridModal = overlay.create(defineAsyncComponent(() => import("~/components/grid/GridModal.vue")));
 
   return {
     patternCreationModal,

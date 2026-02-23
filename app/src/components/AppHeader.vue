@@ -14,9 +14,10 @@ import { FilesApi } from "~/api/";
 import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
 import { Fabric } from "~/lib/pattern/";
-import { WindowControls } from "~/shared/components/index.ts";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
+
+import WindowControls from "./WindowControls.vue";
 
 const confirm = useConfirm();
 const filePicker = useFilePicker();

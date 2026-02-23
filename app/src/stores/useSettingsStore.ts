@@ -72,7 +72,7 @@ export interface OtherOptions {
 export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const overlay = useOverlay();
   const appSettingModal = overlay.create(
-    defineAsyncComponent(() => import("~/shared/components/settings/AppSettingsModal.vue")),
+    defineAsyncComponent(() => import("~/components/settings/AppSettingsModal.vue")),
   );
 
   const { fluent, setLocale } = useI18n();

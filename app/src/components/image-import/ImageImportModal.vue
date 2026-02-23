@@ -19,10 +19,10 @@ import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch
 
 import { FilesApi } from "~/api/";
 import type { ImageImportOptions } from "~/api/";
+import { PatternCanvas } from "~/components/canvas/";
 import { useDragDrop, useFilePicker } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
 import { LayersVisibility, Pattern } from "~/lib/pattern/";
-import { PatternCanvas } from "~/modules/pattern-editor/components/canvas";
 import { ImageImportService } from "~/services/";
 
 import { PaletteSelect } from "../palette/";
