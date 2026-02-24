@@ -4,8 +4,9 @@ import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 
 import { defineStore } from "pinia";
-import { defineAsyncComponent, reactive, ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 
+import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
 import type { WheelAction } from "~/lib/pixi/";
 
@@ -71,9 +72,7 @@ export interface OtherOptions {
 
 export const useSettingsStore = defineStore("embroiderly-settings", () => {
   const overlay = useOverlay();
-  const appSettingModal = overlay.create(
-    defineAsyncComponent(() => import("~/components/settings/AppSettingsModal.vue")),
-  );
+  const appSettingModal = overlay.create(AppSettingModal);
 
   const { fluent, setLocale } = useI18n();
   const toast = useToast();
