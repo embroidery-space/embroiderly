@@ -1,5 +1,7 @@
 /// <reference types="vitest/config" />
 
+import { fileURLToPath, URL } from "node:url";
+
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { webdriverio } from "@vitest/browser-webdriverio";
@@ -12,16 +14,19 @@ const isCI = process.env.CI === "true";
 const isDebug = process.env.TAURI_ENV_DEBUG === "true";
 
 export default defineConfig({
-  plugins: [vue(), tailwindcss(), fluentMerge({ localesDir: "./src/app/locales/" }), vueDevTools()],
+  plugins: [vue(), tailwindcss(), fluentMerge({ localesDir: "./src/assets/locales/" }), vueDevTools()],
   clearScreen: false,
   envPrefix: ["VITE_", "TAURI_ENV_"],
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
   build: {
     sourcemap: isDebug,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: Infinity,
   },
   resolve: {
     dedupe: ["@iconify/vue", "@vueuse/*", "reka-ui", "vue"],
+    alias: {
+      "~": fileURLToPath(new URL("src", import.meta.url)),
+    },
   },
   test: {
     bail: isCI ? 1 : 0,
@@ -31,8 +36,8 @@ export default defineConfig({
       {
         test: {
           name: "unit",
-          include: ["./src/**/*.test.ts"],
-          exclude: ["./src/shared/components/**/*.test.ts", "./src/modules/*/components/**/*.test.ts"],
+          include: ["./src/**/*.spec.ts"],
+          exclude: ["./src/components/**/*.spec.ts"],
         },
       },
       {
@@ -45,7 +50,7 @@ export default defineConfig({
         },
         test: {
           name: "components",
-          include: ["./src/shared/components/**/*.test.ts", "./src/modules/*/components/**/*.test.ts"],
+          include: ["./src/components/**/*.spec.ts"],
           setupFiles: ["./tests/components/test-setup.ts", "vitest-browser-vue"],
           browser: {
             enabled: true,

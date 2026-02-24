@@ -115,7 +115,7 @@ export default defineConfigWithVueTs(
               position: "before",
             },
             {
-              pattern: "#*/**",
+              pattern: "~/**",
               group: "internal",
             },
             {
@@ -143,7 +143,7 @@ export default defineConfigWithVueTs(
     extends: [betterTailwindcss.configs["recommended"]],
     settings: {
       "better-tailwindcss": {
-        entryPoint: fileURLToPath(new URL("app/src/app/assets/styles.css", import.meta.url)),
+        entryPoint: fileURLToPath(new URL("app/src/assets/styles.css", import.meta.url)),
       },
     },
     rules: {

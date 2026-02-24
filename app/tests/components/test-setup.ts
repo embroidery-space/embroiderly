@@ -1,2 +1,2 @@
-import "../../src/app/assets/styles.css";
-import "../../src/app/assets/icons.ts";
+import "../../src/assets/styles.css";
+import "../../src/assets/icons.ts";

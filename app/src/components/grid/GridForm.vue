@@ -1,0 +1,56 @@
+<script setup lang="ts">
+import { FormField, FormFieldSet, InputColor, InputNumber } from "@embroiderly/ui";
+
+import { Grid } from "~/lib/pattern/";
+
+const grid = defineModel<Grid>({ required: true });
+</script>
+
+<template>
+  <div>
+    <div class="grid grid-cols-2 gap-4">
+      <FormField v-bind="$ta('grid-major-lines-interval')">
+        <InputNumber
+          v-model="grid.majorLinesInterval"
+          data-testid="grid-major-lines-interval-input"
+          :min="1"
+          class="w-full"
+        />
+      </FormField>
+    </div>
+
+    <FormFieldSet :legend="$t('grid-major-lines')">
+      <div class="grid grid-cols-2 gap-4">
+        <FormField v-bind="$ta('grid-thickness')">
+          <InputNumber
+            v-model="grid.majorLines.thickness"
+            data-testid="grid-major-lines-thickness-input"
+            :min="0.001"
+            :step="0.01"
+            class="w-full"
+          />
+        </FormField>
+        <FormField :label="$t('grid-color')">
+          <InputColor v-model="grid.majorLines.color" data-testid="grid-major-lines-color-input" />
+        </FormField>
+      </div>
+    </FormFieldSet>
+
+    <FormFieldSet :legend="$t('grid-minor-lines')">
+      <div class="grid grid-cols-2 gap-4">
+        <FormField v-bind="$ta('grid-thickness')">
+          <InputNumber
+            v-model="grid.minorLines.thickness"
+            data-testid="grid-minor-lines-thickness-input"
+            :min="0.001"
+            :step="0.01"
+            class="w-full"
+          />
+        </FormField>
+        <FormField :label="$t('grid-color')">
+          <InputColor v-model="grid.minorLines.color" data-testid="grid-minor-lines-color-input" />
+        </FormField>
+      </div>
+    </FormFieldSet>
+  </div>
+</template>
