@@ -12,9 +12,9 @@
     "strictPropertyInitialization": false,
 
     "paths": {
-      "~/*": ["./src/*"],
+      "~/*": ["./src/*"]
     },
 
-    "types": ["vite/client"],
-  },
+    "types": ["vite/client"]
+  }
 }

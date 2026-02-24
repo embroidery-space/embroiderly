@@ -6,30 +6,33 @@
 
 @source "./components/";
 
-:root,
-:host {
-  --ui-text: #2e3440;
-  --ui-text-dimmed: #3b4252;
-  --ui-text-muted: #434c5e;
-  --ui-text-inverted: var(--ui-bg);
+@variant light (&:where(.light, .light *));
+@variant dark (&:where(.dark, .dark *));
 
-  --ui-bg: var(--ui-color-neutral-400);
-  --ui-bg-elevated: var(--ui-color-neutral-500);
-  --ui-bg-accented: var(--ui-color-neutral-600);
-  --ui-bg-inverted: var(--ui-text);
-
-  --ui-border: var(--ui-color-neutral-600);
-  --ui-border-elevated: var(--ui-color-neutral-700);
-  --ui-border-accented: var(--ui-color-neutral-800);
-  --ui-border-inverted: var(--ui-text);
-
-  --ui-radius: 0.25rem;
-  --ui-container: 80rem;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer theme {
   :root,
-  :host {
+  :host,
+  .light {
+    --ui-text: #2e3440;
+    --ui-text-dimmed: #3b4252;
+    --ui-text-muted: #434c5e;
+    --ui-text-inverted: var(--ui-bg);
+
+    --ui-bg: var(--ui-color-neutral-400);
+    --ui-bg-elevated: var(--ui-color-neutral-500);
+    --ui-bg-accented: var(--ui-color-neutral-600);
+    --ui-bg-inverted: var(--ui-text);
+
+    --ui-border: var(--ui-color-neutral-600);
+    --ui-border-elevated: var(--ui-color-neutral-700);
+    --ui-border-accented: var(--ui-color-neutral-800);
+    --ui-border-inverted: var(--ui-text);
+
+    --ui-radius: 0.25rem;
+    --ui-container: 80rem;
+  }
+
+  .dark {
     --ui-text: #eceff4;
     --ui-text-dimmed: #e5e9f0;
     --ui-text-muted: #d8dee9;

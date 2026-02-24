@@ -12,9 +12,9 @@
     "noUncheckedIndexedAccess": false,
 
     "paths": {
-      "~/*": ["./src/*"],
+      "~/*": ["./src/*"]
     },
 
-    "types": ["node", "vitest-browser-vue", "vite/client"],
-  },
+    "types": ["node", "vitest-browser-vue", "vite/client"]
+  }
 }

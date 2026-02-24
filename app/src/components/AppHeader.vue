@@ -9,8 +9,7 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
-import { SystemApi } from "~/api/";
-import { FilesApi } from "~/api/";
+import { FilesApi, SystemApi } from "~/api/";
 import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
 import { Fabric } from "~/lib/pattern/";
@@ -256,11 +255,11 @@ async function showSystemInfo() {
 </script>
 
 <template>
-  <div class="flex border-b border-default">
-    <div data-tauri-drag-region class="flex grow items-center gap-x-2 px-2">
+  <header class="flex border-b border-default">
+    <div data-tauri-drag-region class="flex h-full grow items-center gap-x-2 p-1">
       <Menubar :menus="menus" />
 
-      <div class="ml-auto flex items-center gap-2">
+      <div class="ml-auto flex h-full items-center gap-2">
         <template v-if="patternStore.pattern">
           <ButtonIcon
             data-testid="undo-button"
@@ -296,5 +295,5 @@ async function showSystemInfo() {
     </div>
 
     <WindowControls />
-  </div>
+  </header>
 </template>
