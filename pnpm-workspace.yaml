@@ -29,18 +29,18 @@ catalog:
   "vue": 3.5.28
   "pinia": 3.0.4
   "pinia-plugin-persistedstate": 4.7.1
-  "reka-ui": 2.8.0
+  "reka-ui": 2.8.2
 
   # Styling
   "@iconify/vue": 5.0.0
   "@iconify-json/lucide": 1.2.93
-  "tailwindcss": 4.1.18
-  "tailwind-merge": 3.4.0
+  "tailwindcss": 4.2.0
+  "tailwind-merge": 3.5.0
   "tailwind-variants": 3.2.2
 
   # Localization
   "@fluent/bundle": 0.19.1
-  "fluent-vue": 3.8.1
+  "fluent-vue": 3.8.2
 
   # Canvas rendering
   "pixi.js": 8.16.0
@@ -50,9 +50,9 @@ catalog:
   "base64-js": 1.5.1
 
   # Telemetry
-  "@sentry/core": 10.38.0
-  "@sentry/vue": 10.38.0
-  "posthog-js": 1.347.2
+  "@sentry/core": 10.39.0
+  "@sentry/vue": 10.39.0
+  "posthog-js": 1.352.0
 
   # Utilities
   "@stdlib/math-base-special-roundn": 0.2.3
@@ -63,7 +63,7 @@ catalog:
   "sortablejs": 1.15.7
   "stacktracey": 2.1.8
   "uuid": 13.0.0
-  "vue-component-type-helpers": 3.2.4
+  "vue-component-type-helpers": 3.2.5
 
   # Documentation
   "@cssnr/vitepress-swiper": 0.2.1
@@ -71,29 +71,29 @@ catalog:
   "vitepress-plugin-llms": 1.11.0
 
   # Code Quality
-  "eslint": 9.39.2
+  "eslint": 9.39.3
   "@eslint/compat": 2.0.2
   "@eslint-community/eslint-plugin-eslint-comments": 4.6.0
   "@intlify/eslint-plugin-vue-i18n": 4.1.1
   "@vitest/eslint-plugin": 1.6.9
   "@vue/eslint-config-prettier": 10.2.0
-  "@vue/eslint-config-typescript": 14.6.0
-  "eslint-plugin-better-tailwindcss": 4.2.0
+  "@vue/eslint-config-typescript": 14.7.0
+  "eslint-plugin-better-tailwindcss": 4.3.0
   "eslint-plugin-import-x": 4.16.1
   "eslint-plugin-no-only-tests": 3.3.0
-  "eslint-plugin-oxlint": 1.48.0
+  "eslint-plugin-oxlint": 1.49.0
   "eslint-plugin-vue": 10.8.0
   "eslint-plugin-wdio": 9.23.0
-  "eslint-plugin-yml": 3.1.2
-  "markdownlint-cli2": 0.20.0
+  "eslint-plugin-yml": 3.2.1
+  "markdownlint-cli2": 0.21.0
   "oxfmt": 0.35.0
-  "oxlint": 1.48.0
+  "oxlint": 1.49.0
 
   # Build tools
   "vite": 7.3.1
   "@vitejs/plugin-vue": 6.0.4
-  "@tailwindcss/vite": 4.1.18
-  "wrangler": 4.65.0
+  "@tailwindcss/vite": 4.2.0
+  "wrangler": 4.67.0
 
   # Histoire
   "histoire": 1.0.0-beta.1
@@ -101,7 +101,7 @@ catalog:
 
   # TypeScript
   "typescript": 5.9.3
-  "vue-tsc": 3.2.4
+  "vue-tsc": 3.2.5
   "@tsconfig/node24": 24.0.4
   "@tsconfig/strictest": 2.0.8
   "@vue/tsconfig": 0.8.1
