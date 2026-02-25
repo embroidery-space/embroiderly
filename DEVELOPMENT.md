@@ -11,41 +11,34 @@ Before starting, make sure you have everything needed to work on Embroiderly.
 
 1. Install [system dependencies](https://tauri.app/start/prerequisites/#system-dependencies).
 1. Install stable and nightly (only the `fmt` component) [Rust](https://rust-lang.org/tools/install).
-1. Install Rust tools: [`cargo-nextest`](https://nexte.st).
+1. Install Rust tools: [`cargo-nextest`](https://nexte.st), [`just`](https://just.systems).
 1. Install [Node.js v24](https://nodejs.org/en/download).
 1. Install **pnpm** using Corepack (see the [official documentation](https://pnpm.io/installation#using-corepack)).
 1. Go to `app/src-tauri/` and create the `.env` file.
    Copy the contents of the [`.env.example`](app/src-tauri/.env.example) file and specify your own values.
 
-Once you are done, run the application via `pnpm tauri dev` and build it via `pnpm tauri build`.
+Once you are done, you can run the application via `just dev` or build it via `just build`.
 
-## Common commands
+## Available Commands
 
-**Tauri:**
+We use [`just`](https://just.systems) to manage development commands.
+If you don't want to use it, check [`Justfile`](./Justfile) to see all available commands.
 
-> Refer to the [Tauri CLI reference](https://tauri.app/reference/cli) for all commands and their options.
+### Development
 
-- `pnpm tauri dev` - Run the application in development mode.
-- `pnpm tauri build` - Build the application and bundle into the installer.
+- `just dev` - Run the application in development mode.
+- `just build` - Build the application and bundle into the installer.
 
-**Frontend:**
+### Code Checks
 
-- `pnpm check-types` - Check types.
-- `pnpm fmt` - Check formatting.
-- `pnpm fmt:fix` - Fix formatting.
-- `pnpm lint` - Check linting.
-- `pnpm lint:fix` - Fix linting.
-- `pnpm test` - Run all tests.
-- `pnpm --filter @embroiderly/app test:unit` - Run unit tests.
-- `pnpm --filter @embroiderly/app test:components` - Run component tests.
-- `pnpm --filter @embroiderly/app test:e2e` - Run end-to-end tests (see [instructions](#integration-testing) below).
+- `just all` - Run all code checks.
+- `just check` - Check types.
+- `just fmt` - Check code format.
+- `just lint` - Check linting.
+- `just test` - Run all tests.
 
-**Backend:**
-
-- `cargo check` - Check types.
-- `cargo +nightly fmt --check` - Check formatting.
-- `cargo clippy -- -D warnings` - Check linting.
-- `cargo nextest run --locked --no-fail-fast -F embroiderly/test` - Run all tests.
+The code checking commands above have `-fe` and `-be` variants to target the frontend or backend, respectively.
+For example, run `just all-fe` to run all _frontend_ checks.
 
 ## Sidecars Development
 
