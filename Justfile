@@ -85,3 +85,7 @@ test-fe:
 [group("testing")]
 test-be:
     cargo nextest run --locked --no-fail-fast -F embroiderly/test
+
+[group("testing")]
+test-e2e:
+    pnpm --filter @embroiderly/app test:e2e
