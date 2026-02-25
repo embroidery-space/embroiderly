@@ -57,23 +57,45 @@ check-be:
 fmt: fmt-fe fmt-be
 
 [group("formatting")]
+fmt-fix: fmt-fe-fix fmt-be-fix
+
+[group("formatting")]
 fmt-fe:
     pnpm fmt
+
+[group("formatting")]
+fmt-fe-fix:
+    pnpm fmt:fix
 
 [group("formatting")]
 fmt-be:
     cargo +nightly fmt --check
 
+[group("formatting")]
+fmt-be-fix:
+    cargo +nightly fmt
+
 [group("linting")]
 lint: lint-fe lint-be
+
+[group("linting")]
+lint-fix: lint-fe-fix lint-be-fix
 
 [group("linting")]
 lint-fe:
     pnpm lint
 
 [group("linting")]
+lint-fe-fix:
+    pnpm lint:fix
+
+[group("linting")]
 lint-be:
     cargo clippy --locked -- -D warnings
+
+[group("linting")]
+lint-be-fix:
+    cargo clippy --locked --fix --allow-dirty -- -D warnings
 
 [group("testing")]
 test: test-fe test-be

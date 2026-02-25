@@ -15,6 +15,9 @@ lcov.info
 .env
 !.env.example
 
-# Browser extensions
+# Claude Code configuration.
+.claude/*.local.json
+
+# Browser extensions.
 app/src-tauri/extensions/*
 !app/src-tauri/extensions/README.md

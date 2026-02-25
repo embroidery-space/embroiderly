@@ -32,13 +32,16 @@ If you don't want to use it, check [`Justfile`](./Justfile) to see all available
 ### Code Checks
 
 - `just all` - Run all code checks.
-- `just check` - Check types.
-- `just fmt` - Check code format.
-- `just lint` - Check linting.
-- `just test` - Run all tests.
+  - `just check` - Check types.
+  - `just fmt` - Check code format.
+  - `just lint` - Check linting.
+  - `just test` - Run all tests.
 
 The code checking commands above have `-fe` and `-be` variants to target the frontend or backend, respectively.
 For example, run `just all-fe` to run all _frontend_ checks.
+
+Additionally, there is a `-fix` variant for `fmt` and `lint` recipes.
+For example, run `just fmt-fix` to fix code formatting issues (or `just fmt-fe-fix` to fix only _frontend_).
 
 ## Sidecars Development
 
