@@ -4,6 +4,8 @@ use super::{Coord, LineStitch, NodeStitch};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct SpecialStitch {
   pub x: Coord,
   pub y: Coord,
@@ -46,6 +48,8 @@ impl TryFrom<(pmaker::SpecialStitch, f32, f32)> for SpecialStitch {
 
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct SpecialStitchModel {
   pub unique_name: String,
   pub name: String,
@@ -86,6 +90,8 @@ impl TryFrom<pmaker::SpecialStitchModel> for SpecialStitchModel {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct CurvedStitch {
   pub points: Vec<(Coord, Coord)>,
 }

@@ -49,6 +49,8 @@ impl borsh::BorshDeserialize for ReferenceImage {
 
 #[derive(Debug, Default, Clone, Copy, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct ReferenceImageSettings {
   pub x: f32,
   pub y: f32,

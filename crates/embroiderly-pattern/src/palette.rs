@@ -286,6 +286,21 @@ impl From<Palette> for Vec<PaletteItem> {
   }
 }
 
+#[cfg(feature = "serde")]
+impl serde::Serialize for Palette {
+  fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+    self.items.serialize(serializer)
+  }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Palette {
+  fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+    let items = Vec::<PaletteItem>::deserialize(deserializer)?;
+    Ok(Self::from(items))
+  }
+}
+
 impl std::ops::Index<u32> for Palette {
   type Output = PaletteItem;
 
@@ -305,6 +320,8 @@ impl std::ops::IndexMut<u32> for Palette {
 /// It contains all the properties from [`BrandPaletteItem`] plus project-specific display properties.
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct PaletteItem {
   pub brand: String,
   pub number: String,
@@ -474,6 +491,36 @@ impl Symbol {
     } else {
       None
     }
+  }
+}
+
+#[cfg(feature = "serde")]
+impl serde::Serialize for Symbol {
+  fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+    use serde::ser::SerializeStruct as _;
+
+    let mut state = serializer.serialize_struct("Symbol", 2)?;
+    state.serialize_field("char", &(self.char as u32))?;
+    state.serialize_field("font", &self.font)?;
+
+    state.end()
+  }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Symbol {
+  fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+    #[derive(serde::Deserialize)]
+    struct SymbolData {
+      char: u32,
+      font: String,
+    }
+
+    let data = SymbolData::deserialize(deserializer)?;
+    let char = char::from_u32(data.char)
+      .ok_or_else(|| serde::de::Error::custom(format!("invalid Unicode code point: {}", data.char)))?;
+
+    Ok(Self { char, font: data.font })
   }
 }
 

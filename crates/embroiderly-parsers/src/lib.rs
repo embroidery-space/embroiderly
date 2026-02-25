@@ -22,7 +22,7 @@ pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path, packa
   match PatternFormat::try_from(file_path.extension())? {
     PatternFormat::Xsd => Err(Error::UnsupportedPatternType(PatternFormat::Xsd.to_string()).into()),
     PatternFormat::Oxs => oxs::save_pattern(patproj, file_path, package_info),
-    PatternFormat::EmbProj => embproj::save_pattern(patproj, file_path, package_info),
+    PatternFormat::EmbProj => embproj::save_pattern(patproj, file_path),
   }
   .map_err(Error::FailedToParse)
 }

@@ -7,7 +7,7 @@ workspace = true
 
 [features]
 borsh = ["dep:borsh", "uuid/borsh", "ordered-float/borsh"]
-serde = ["dep:serde", "uuid/serde"]
+serde = ["dep:serde", "uuid/serde", "ordered-float/serde"]
 
 [dependencies]
 # De/serialization
