@@ -228,9 +228,9 @@ dependencies = [
 
 [[package]]
 name = "anyhow"
-version = "1.0.101"
+version = "1.0.102"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5f0e0fee31ef5ed1ba1316088939cea399010ed7731dba877ed44aeb407a75ea"
+checksum = "7f202df86484c868dbad7eaa557ef785d5c66295e41b460ef922eca0723b842c"
 
 [[package]]
 name = "approx"
@@ -1782,7 +1782,7 @@ dependencies = [
  "palette",
  "prettydiff",
  "quantette",
- "quick-xml 0.39.0",
+ "quick-xml 0.39.2",
  "serde",
  "serde_json",
  "thiserror 2.0.18",
@@ -1796,7 +1796,7 @@ dependencies = [
  "anyhow",
  "embroiderly_pattern",
  "prettydiff",
- "quick-xml 0.39.0",
+ "quick-xml 0.39.2",
  "serde_json",
  "tempfile",
  "thiserror 2.0.18",
@@ -5454,9 +5454,9 @@ dependencies = [
 
 [[package]]
 name = "quick-xml"
-version = "0.39.0"
+version = "0.39.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f2e3bf4aa9d243beeb01a7b3bc30b77cfe2c44e24ec02d751a7104a53c2c49a1"
+checksum = "958f21e8e7ceb5a1aa7fa87fab28e7c75976e0bfe7e23ff069e0a260f894067d"
 dependencies = [
  "memchr",
 ]
