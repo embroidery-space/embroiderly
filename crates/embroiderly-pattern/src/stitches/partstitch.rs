@@ -4,6 +4,8 @@ use super::{Coord, FullStitch, FullStitchKind};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct PartStitch {
   pub x: Coord,
   pub y: Coord,
@@ -79,6 +81,7 @@ impl TryFrom<pmaker::PartStitch> for PartStitch {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum PartStitchDirection {
   Forward,
   Backward,
@@ -105,6 +108,7 @@ impl From<pmaker::PartStitchDirection> for PartStitchDirection {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum PartStitchKind {
   Half,
   Quarter,

@@ -46,6 +46,7 @@ impl Bounds {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Stitch {
   Full(FullStitch),
   Part(PartStitch),
@@ -141,6 +142,23 @@ impl<T: Ord> Stitches<T> {
 
   pub fn get(&self, stitch: &T) -> Option<&T> {
     self.inner.get(stitch)
+  }
+}
+
+#[cfg(feature = "serde")]
+impl<T: Ord + serde::Serialize> serde::Serialize for Stitches<T> {
+  fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+    self.inner.serialize(serializer)
+  }
+}
+
+#[cfg(feature = "serde")]
+impl<'de, T: Ord + serde::Deserialize<'de>> serde::Deserialize<'de> for Stitches<T> {
+  fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+    let items = Vec::<T>::deserialize(deserializer)?;
+    Ok(Self {
+      inner: BTreeSet::from_iter(items),
+    })
   }
 }
 

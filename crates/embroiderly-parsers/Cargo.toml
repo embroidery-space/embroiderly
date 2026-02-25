@@ -7,11 +7,12 @@ workspace = true
 
 [dependencies]
 # Embroiderly Core
-embroiderly_pattern = { workspace = true }
+embroiderly_pattern = { workspace = true, features = ["serde"] }
 xsp_parsers = { workspace = true }
 
-# Parsing OXS files
+# Parsing pattern files
 quick-xml = { workspace = true }
+serde_json = { workspace = true }
 
 # Archiving
 zip = { workspace = true }
