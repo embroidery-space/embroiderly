@@ -1,10 +1,6 @@
 {
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937",
-  "engines": {
-    "node": ">=24"
-  },
   "scripts": {
     "tauri": "tauri",
     "|----- APPLICATION -----|": "",
@@ -28,8 +24,8 @@
     "test": "pnpm -r --workspace-concurrency 1 test"
   },
   "devDependencies": {
-    "@eslint/compat": "catalog:",
     "@eslint-community/eslint-plugin-eslint-comments": "catalog:",
+    "@eslint/compat": "catalog:",
     "@intlify/eslint-plugin-vue-i18n": "catalog:",
     "@tauri-apps/cli": "catalog:",
     "@vitest/eslint-plugin": "catalog:",
@@ -47,5 +43,9 @@
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "tailwindcss": "catalog:"
-  }
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937"
 }
