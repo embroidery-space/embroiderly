@@ -1,5 +1,6 @@
 target/
 logs/
+gen/
 
 .tmp/
 
@@ -10,3 +11,7 @@ dist/
 
 coverage/
 lcov.info
+
+# Browser extensions
+app/src-tauri/extensions/*
+!app/src-tauri/extensions/README.md

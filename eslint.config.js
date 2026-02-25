@@ -1,6 +1,6 @@
-import fs from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 
+import { includeIgnoreFile } from "@eslint/compat";
 import eslintComments from "@eslint-community/eslint-plugin-eslint-comments";
 import vueI18n from "@intlify/eslint-plugin-vue-i18n";
 import vitest from "@vitest/eslint-plugin";
@@ -16,15 +16,9 @@ import vue from "eslint-plugin-vue";
 import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
 
-// Read the `.prettierignore` file and filter out empty lines and comments.
-const ignores = fs
-  .readFileSync(fileURLToPath(new URL(".prettierignore", import.meta.url)), { encoding: "utf8" })
-  .split(/\r?\n/)
-  .filter((s) => s.length && !s.startsWith("#"));
-
 export default defineConfigWithVueTs(
   // Common options.
-  { ignores },
+  includeIgnoreFile(fileURLToPath(new URL(".gitignore", import.meta.url))),
 
   // Vue.js configs.
   vue.configs["flat/recommended"],

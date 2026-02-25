@@ -21,13 +21,14 @@
     "embroiderly:sidecars": "node scripts/build-sidecars.js",
     "|----- UTILS -----|": "",
     "check-types": "pnpm -r check-types",
-    "fmt": "prettier --check .",
-    "fmt:fix": "prettier --write .",
+    "fmt": "oxfmt --check",
+    "fmt:fix": "oxfmt --write",
     "lint": "oxlint --format stylish && eslint --concurrency auto && markdownlint-cli2",
     "lint:fix": "oxlint --fix --format stylish && eslint --fix --concurrency auto && markdownlint-cli2 --fix",
     "test": "pnpm -r --workspace-concurrency 1 test"
   },
   "devDependencies": {
+    "@eslint/compat": "catalog:",
     "@eslint-community/eslint-plugin-eslint-comments": "catalog:",
     "@intlify/eslint-plugin-vue-i18n": "catalog:",
     "@tauri-apps/cli": "catalog:",
@@ -45,8 +46,8 @@
     "eslint-plugin-wdio": "catalog:",
     "eslint-plugin-yml": "catalog:",
     "markdownlint-cli2": "catalog:",
+    "oxfmt": "catalog:",
     "oxlint": "catalog:",
-    "prettier": "catalog:",
     "tailwindcss": "catalog:"
   }
 }
