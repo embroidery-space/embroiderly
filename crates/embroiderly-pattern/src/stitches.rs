@@ -146,7 +146,9 @@ impl<T: Ord> Stitches<T> {
 
 impl<T: Ord> FromIterator<T> for Stitches<T> {
   fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
-    Self { inner: BTreeSet::from_iter(iter) }
+    Self {
+      inner: BTreeSet::from_iter(iter),
+    }
   }
 }
 
@@ -171,7 +173,12 @@ impl Stitches<FullStitch> {
       FullStitch { kind, ..*fullstitch },
       FullStitch { x, kind, ..*fullstitch },
       FullStitch { y, kind, ..*fullstitch },
-      FullStitch { x, y, kind, ..*fullstitch },
+      FullStitch {
+        x,
+        y,
+        kind,
+        ..*fullstitch
+      },
     ] {
       self.remove(&petite).inspect(|&petite| conflicts.push(petite));
     }
@@ -219,7 +226,12 @@ impl Stitches<FullStitch> {
       PartStitchDirection::Backward => {
         for petite in [
           FullStitch { kind, ..fullstitch },
-          FullStitch { x, y, kind, ..fullstitch },
+          FullStitch {
+            x,
+            y,
+            kind,
+            ..fullstitch
+          },
         ] {
           self.remove(&petite).inspect(|&petite| conflicts.push(petite));
         }

@@ -13,7 +13,10 @@ pub struct ImageImportSidecar<R: tauri::Runtime> {
 impl<R: tauri::Runtime> ImageImportSidecar<R> {
   /// Create a new sidecar controller with the given app handle.
   pub const fn new(app_handle: tauri::AppHandle<R>) -> Self {
-    Self { app_handle, sidecar_handle: None }
+    Self {
+      app_handle,
+      sidecar_handle: None,
+    }
   }
 
   fn receiver(&mut self) -> Result<&mut Receiver<CommandEvent>> {
