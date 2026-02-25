@@ -20,7 +20,10 @@ pub struct Pattern {
 impl Pattern {
   #[must_use]
   pub fn new(fabric: Fabric) -> Self {
-    Self { fabric, ..Self::default() }
+    Self {
+      fabric,
+      ..Self::default()
+    }
   }
 
   /// Returns the number of full and petite stitches in the pattern.

@@ -227,7 +227,11 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
         ),
       ],
 
-      Self::ReferenceImageSet { format, dimensions, size } => vec![
+      Self::ReferenceImageSet {
+        format,
+        dimensions,
+        size,
+      } => vec![
         ("format", json!(image::ImageFormat::extensions_str(*format)[0])),
         ("dimensions", json!(format!("{}x{}", dimensions.0, dimensions.1))),
         ("size", json!(size)),
@@ -241,12 +245,20 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
         ("opactity", json!(settings.opacity)),
       ],
 
-      Self::PaletteItemAdded { brand, is_blend, blends_number } => vec![
+      Self::PaletteItemAdded {
+        brand,
+        is_blend,
+        blends_number,
+      } => vec![
         ("brand", json!(brand)),
         ("is_blend", json!(is_blend)),
         ("blends_number", json!(blends_number)),
       ],
-      Self::PaletteItemRemoved { brand, is_blend, blends_number } => vec![
+      Self::PaletteItemRemoved {
+        brand,
+        is_blend,
+        blends_number,
+      } => vec![
         ("brand", json!(brand)),
         ("is_blend", json!(is_blend)),
         ("blends_number", json!(blends_number)),
@@ -304,11 +316,17 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
         ("rulers_visible", json!(visibility.rulers)),
       ],
 
-      Self::PalettesImported { total_files, failed_files } => vec![
+      Self::PalettesImported {
+        total_files,
+        failed_files,
+      } => vec![
         ("total_files", json!(total_files)),
         ("failed_files", json!(failed_files)),
       ],
-      Self::SymbolFontsImported { total_files, failed_files } => vec![
+      Self::SymbolFontsImported {
+        total_files,
+        failed_files,
+      } => vec![
         ("total_files", json!(total_files)),
         ("failed_files", json!(failed_files)),
       ],

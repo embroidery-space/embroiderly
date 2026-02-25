@@ -1,6 +1,6 @@
-import fs from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 
+import { includeIgnoreFile } from "@eslint/compat";
 import eslintComments from "@eslint-community/eslint-plugin-eslint-comments";
 import vueI18n from "@intlify/eslint-plugin-vue-i18n";
 import vitest from "@vitest/eslint-plugin";
@@ -8,23 +8,15 @@ import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import importX from "eslint-plugin-import-x";
-import jsonc from "eslint-plugin-jsonc";
 import noOnlyTests from "eslint-plugin-no-only-tests";
 import oxlint from "eslint-plugin-oxlint";
-import toml from "eslint-plugin-toml";
 import vue from "eslint-plugin-vue";
 import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
 
-// Read the `.prettierignore` file and filter out empty lines and comments.
-const ignores = fs
-  .readFileSync(fileURLToPath(new URL(".prettierignore", import.meta.url)), { encoding: "utf8" })
-  .split(/\r?\n/)
-  .filter((s) => s.length && !s.startsWith("#"));
-
 export default defineConfigWithVueTs(
   // Common options.
-  { ignores },
+  includeIgnoreFile(fileURLToPath(new URL(".gitignore", import.meta.url))),
 
   // Vue.js configs.
   vue.configs["flat/recommended"],
@@ -163,25 +155,6 @@ export default defineConfigWithVueTs(
     },
   },
 
-  // JSONC validation.
-  {
-    files: ["**/*.json"],
-    ignores: [".oxlintrc.json"],
-    extends: [jsonc.configs["flat/recommended-with-json"], jsonc.configs["flat/prettier"]],
-  },
-  {
-    files: [".oxlintrc.json", "**/*.jsonc"],
-    extends: [jsonc.configs["flat/recommended-with-jsonc"], jsonc.configs["flat/prettier"]],
-  },
-  {
-    files: ["**/*.json5"],
-    extends: [jsonc.configs["flat/recommended-with-json5"], jsonc.configs["flat/prettier"]],
-  },
-  // TOML validation.
-  {
-    files: ["**/*.toml"],
-    extends: [toml.configs.standard],
-  },
   // YAML validation.
   {
     files: ["**/*.yml"],

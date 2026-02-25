@@ -19,7 +19,10 @@ pub struct SetDisplayModeAction {
 
 impl SetDisplayModeAction {
   pub const fn new(mode: DisplayMode) -> Self {
-    Self { mode, old_mode: OnceLock::new() }
+    Self {
+      mode,
+      old_mode: OnceLock::new(),
+    }
   }
 }
 

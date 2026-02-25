@@ -1,10 +1,6 @@
 {
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937",
-  "engines": {
-    "node": ">=24"
-  },
   "scripts": {
     "tauri": "tauri",
     "|----- APPLICATION -----|": "",
@@ -21,14 +17,15 @@
     "embroiderly:sidecars": "node scripts/build-sidecars.js",
     "|----- UTILS -----|": "",
     "check-types": "pnpm -r check-types",
-    "fmt": "prettier --check .",
-    "fmt:fix": "prettier --write .",
+    "fmt": "oxfmt --check",
+    "fmt:fix": "oxfmt --write",
     "lint": "oxlint --format stylish && eslint --concurrency auto && markdownlint-cli2",
     "lint:fix": "oxlint --fix --format stylish && eslint --fix --concurrency auto && markdownlint-cli2 --fix",
     "test": "pnpm -r --workspace-concurrency 1 test"
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "catalog:",
+    "@eslint/compat": "catalog:",
     "@intlify/eslint-plugin-vue-i18n": "catalog:",
     "@tauri-apps/cli": "catalog:",
     "@vitest/eslint-plugin": "catalog:",
@@ -37,16 +34,18 @@
     "eslint": "catalog:",
     "eslint-plugin-better-tailwindcss": "catalog:",
     "eslint-plugin-import-x": "catalog:",
-    "eslint-plugin-jsonc": "catalog:",
     "eslint-plugin-no-only-tests": "catalog:",
     "eslint-plugin-oxlint": "catalog:",
-    "eslint-plugin-toml": "catalog:",
     "eslint-plugin-vue": "catalog:",
     "eslint-plugin-wdio": "catalog:",
     "eslint-plugin-yml": "catalog:",
     "markdownlint-cli2": "catalog:",
+    "oxfmt": "catalog:",
     "oxlint": "catalog:",
-    "prettier": "catalog:",
     "tailwindcss": "catalog:"
-  }
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937"
 }

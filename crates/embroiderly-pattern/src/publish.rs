@@ -66,7 +66,10 @@ impl ImageExportOptions {
 
   #[must_use]
   pub fn new(cell_size: f32) -> Self {
-    Self { cell_size, ..Self::default() }
+    Self {
+      cell_size,
+      ..Self::default()
+    }
   }
 }
 

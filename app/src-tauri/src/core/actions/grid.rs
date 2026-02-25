@@ -19,7 +19,10 @@ pub struct UpdateGridPropertiesAction {
 
 impl UpdateGridPropertiesAction {
   pub const fn new(grid: Grid) -> Self {
-    Self { grid, old_grid: OnceLock::new() }
+    Self {
+      grid,
+      old_grid: OnceLock::new(),
+    }
   }
 }
 

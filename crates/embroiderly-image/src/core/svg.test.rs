@@ -3,7 +3,12 @@ use super::*;
 const CELL_SIZE: f32 = 14.0;
 const FRAME: FrameContext = FrameContext {
   color: true,
-  bounds: Bounds { x: 0, y: 0, width: 0, height: 0 },
+  bounds: Bounds {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  },
   cell_size: CELL_SIZE,
   preserved_overlap: 3,
   show_grid_line_numbers: false,
@@ -324,7 +329,12 @@ fn writes_grid() {
     },
   };
   let frame = FrameContext {
-    bounds: Bounds { x: 0, y: 0, width: 2, height: 2 },
+    bounds: Bounds {
+      x: 0,
+      y: 0,
+      width: 2,
+      height: 2,
+    },
     ..FRAME
   };
 
@@ -364,7 +374,12 @@ fn writes_grid_with_line_numbers() {
   };
   let frame = FrameContext {
     show_grid_line_numbers: true,
-    bounds: Bounds { x: 0, y: 0, width: 2, height: 2 },
+    bounds: Bounds {
+      x: 0,
+      y: 0,
+      width: 2,
+      height: 2,
+    },
     ..FRAME
   };
 
@@ -421,7 +436,12 @@ fn writes_grid_with_centering_marks() {
   };
   let frame = FrameContext {
     show_centering_marks: true,
-    bounds: Bounds { x: 0, y: 0, width: 2, height: 2 },
+    bounds: Bounds {
+      x: 0,
+      y: 0,
+      width: 2,
+      height: 2,
+    },
     ..FRAME
   };
 

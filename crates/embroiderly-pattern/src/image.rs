@@ -23,7 +23,11 @@ impl ReferenceImage {
         opacity: 1.0,
       }
     });
-    Self { format, content, settings }
+    Self {
+      format,
+      content,
+      settings,
+    }
   }
 
   /// Returns the original image dimensions.
