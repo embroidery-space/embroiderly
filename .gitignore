@@ -12,6 +12,9 @@ dist/
 coverage/
 lcov.info
 
+.env
+!.env.example
+
 # Browser extensions
 app/src-tauri/extensions/*
 !app/src-tauri/extensions/README.md

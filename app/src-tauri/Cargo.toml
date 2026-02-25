@@ -10,6 +10,7 @@ test = []
 
 [build-dependencies]
 tauri-build = { workspace = true }
+dotenvy = { workspace = true }
 
 [dependencies]
 # Tauri

@@ -1,4 +1,11 @@
 fn main() {
+  if let Ok(env_file) = dotenvy::dotenv() {
+    println!("cargo:rerun-if-changed={}", env_file.display());
+    for (key, value) in dotenvy::dotenv_iter().unwrap().flatten() {
+      println!("cargo:rustc-env={key}={value}");
+    }
+  }
+
   let attributes = tauri_build::Attributes::new()
     .plugin("log", tauri_build::InlinedPlugin::new().commands(&["log"]))
     .plugin(

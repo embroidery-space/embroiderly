@@ -10,18 +10,12 @@ Follow it to start working on your ideas, improvements, and fixes.
 Before starting, make sure you have everything needed to work on Embroiderly.
 
 1. Install [system dependencies](https://tauri.app/start/prerequisites/#system-dependencies).
-
 1. Install stable and nightly (only the `fmt` component) [Rust](https://rust-lang.org/tools/install).
-
-1. Install Rust tools: [`cargo-nextest`](https://nexte.st)
-
-1. Install [Node.js v24](https://nodejs.org/en/download)
-
-1. Install **pnpm** using Corepack (see the [official documentation](https://pnpm.io/installation#using-corepack)):
-
-   ```sh
-   corepack enable pnpm
-   ```
+1. Install Rust tools: [`cargo-nextest`](https://nexte.st).
+1. Install [Node.js v24](https://nodejs.org/en/download).
+1. Install **pnpm** using Corepack (see the [official documentation](https://pnpm.io/installation#using-corepack)).
+1. Go to `app/src-tauri/` and create the `.env` file.
+   Copy the contents of the [`.env.example`](app/src-tauri/.env.example) file and specify your own values.
 
 Once you are done, run the application via `pnpm tauri dev` and build it via `pnpm tauri build`.
 
