@@ -26,6 +26,7 @@
   "devDependencies": {
     "@histoire/plugin-vue": "catalog:",
     "@iconify-json/lucide": "catalog:",
+    "@iconify/vue": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@tsconfig/node24": "catalog:",
     "@tsconfig/strictest": "catalog:",
@@ -45,7 +46,6 @@
   },
   "peerDependencies": {
     "@embroiderly/shortcuts": "workspace:",
-    "@iconify/vue": "catalog:",
     "@vueuse/core": "catalog:",
     "reka-ui": "catalog:",
     "tailwindcss": "catalog:",

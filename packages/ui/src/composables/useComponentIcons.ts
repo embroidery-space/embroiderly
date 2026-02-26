@@ -2,23 +2,23 @@ import { computed, inject, toRef, toValue } from "vue";
 import type { InjectionKey, MaybeRefOrGetter, Ref } from "vue";
 
 import { DEFAULT_ICONS } from "../icons.ts";
-import type { Icons } from "../types/icons.ts";
+import type { IconValue, Icons } from "../types/icons.ts";
 
 export const iconsInjectionKey: InjectionKey<Ref<Icons | undefined>> = Symbol.for("embroiderly-ui.icons");
 
 export interface UseComponentIconsProps {
   /** Display an icon based on the `leading` and `trailing` props. */
-  icon?: string;
+  icon?: IconValue;
 
   /** When `true`, the icon will be displayed on the left side. */
   leading?: boolean;
   /** Display an icon on the left side. */
-  leadingIcon?: string;
+  leadingIcon?: IconValue;
 
   /** When `true`, the icon will be displayed on the right side. */
   trailing?: boolean;
   /** Display an icon on the right side. */
-  trailingIcon?: string;
+  trailingIcon?: IconValue;
 
   /** When `true`, the loading icon will be displayed. */
   loading?: boolean;
@@ -26,7 +26,7 @@ export interface UseComponentIconsProps {
    * The icon when the `loading` prop is `true`.
    * @default "icons.loading"
    */
-  loadingIcon?: string;
+  loadingIcon?: IconValue;
 }
 
 export function useComponentIcons(componentProps?: MaybeRefOrGetter<UseComponentIconsProps>) {

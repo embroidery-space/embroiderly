@@ -5,6 +5,7 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
+import { IconExternalLink, IconFile, IconFilePlus, IconFileUp } from "~/assets/icons/";
 import { useEditorModals, useI18n } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore } from "~/stores/";
@@ -113,14 +114,14 @@ async function openRecentFile(filePath: string) {
           <div class="flex max-w-max flex-col gap-y-1">
             <Button
               variant="ghost"
-              icon="lucide:file-plus"
+              :icon="IconFilePlus"
               :label="$t('welcome-create-pattern')"
               class="justify-start"
               @click="createPattern"
             />
             <Button
               variant="ghost"
-              icon="lucide:file-up"
+              :icon="IconFileUp"
               :label="$t('welcome-open-pattern')"
               class="justify-start"
               @click="openPattern"
@@ -134,7 +135,7 @@ async function openRecentFile(filePath: string) {
                 <Tooltip :text="filePath" :delay-duration="200" :content="{ side: 'right' }">
                   <Button
                     variant="ghost"
-                    icon="lucide:file"
+                    :icon="IconFile"
                     :label="filePath.split(sep()).pop() || filePath"
                     class="justify-start"
                     @click="openRecentFile(filePath)"
@@ -157,7 +158,7 @@ async function openRecentFile(filePath: string) {
             >
               <span class="flex items-center gap-2 font-medium text-primary">
                 {{ item.title }}
-                <Icon v-if="item.url" name="lucide:external-link" />
+                <Icon v-if="item.url" :name="IconExternalLink" />
               </span>
               <span v-if="item.text">{{ item.text }}</span>
             </div>

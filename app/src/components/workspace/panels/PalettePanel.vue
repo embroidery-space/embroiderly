@@ -4,6 +4,7 @@ import type { ContextMenuItem, DropdownMenuItem } from "@embroiderly/ui";
 
 import { computed, reactive, ref, watch } from "vue";
 
+import { IconCheck, IconMenu, IconPen } from "~/assets/icons/";
 import {
   PaletteCatalog,
   PaletteDisplaySettings,
@@ -313,13 +314,13 @@ async function updatePaletteDisplaySettings() {
             @contextmenu.stop.prevent
           >
             <Button
-              icon="lucide:check"
+              :icon="IconCheck"
               :label="$t('palette-save')"
               class="grow justify-center text-sm"
               @click="editorStateStore.paletteMode = PaletteMode.Regular"
             />
             <DropdownMenu :items="palettePanelsMenuOptions">
-              <Button icon="lucide:menu" />
+              <Button :icon="IconMenu" />
             </DropdownMenu>
           </div>
           <PaletteToolbar v-else :disabled="paletteIsDisabled" @contextmenu.stop.prevent />
@@ -355,7 +356,7 @@ async function updatePaletteDisplaySettings() {
               color="neutral"
               size="sm"
               :disabled="paletteIsDisabled"
-              :icon="editorStateStore.paletteMode === PaletteMode.Editing ? 'lucide:check' : 'lucide:pen'"
+              :icon="editorStateStore.paletteMode === PaletteMode.Editing ? IconCheck : IconPen"
               :tooltip="editorStateStore.paletteMode === PaletteMode.Editing ? $t('palette-save') : $t('palette-edit')"
               :delay-duration="200"
               @click="

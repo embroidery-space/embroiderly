@@ -5,7 +5,7 @@ export const InputNumberTheme = tv({
   slots: {
     root: "relative inline-flex items-center",
     base: "w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
-    buttons: "absolute inset-y-0 end-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0",
+    buttons: "absolute inset-y-0 inset-e-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0",
   },
   variants: {
     color: {

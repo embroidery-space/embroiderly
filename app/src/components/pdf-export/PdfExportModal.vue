@@ -5,6 +5,7 @@ import { basename } from "@tauri-apps/api/path";
 import { computedAsync, refAutoReset } from "@vueuse/core";
 import { ref } from "vue";
 
+import { IconCheck } from "~/assets/icons/";
 import { useFilePicker } from "~/composables/";
 import { PDF_FILTER } from "~/constants/";
 import { PdfExportOptions } from "~/lib/pattern/";
@@ -83,7 +84,7 @@ async function exportPattern() {
         loading-auto
         variant="outline"
         :label="$t('pdf-export-save-settings')"
-        :icon="optionsUpdated ? 'lucide:check' : undefined"
+        :icon="optionsUpdated ? IconCheck : undefined"
         @click="updateOptions"
       />
       <Button v-if="filePath" loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern" />

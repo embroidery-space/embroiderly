@@ -40,8 +40,8 @@ defineExpose({ state });
         <HstSelect v-model="state.color" title="Color" :options="colors" />
         <HstSelect v-model="state.size" title="Size" :options="sizes" />
 
-        <HstText v-model="state.leadingIcon" title="Leading Icon" />
-        <HstText v-model="state.trailingIcon" title="Trailing Icon" />
+        <HstText v-model="state.leadingIcon as string" title="Leading Icon" />
+        <HstText v-model="state.trailingIcon as string" title="Trailing Icon" />
 
         <HstCheckbox v-model="state.loading" title="Loading" />
         <HstCheckbox v-model="state.disabled" title="Disabled" />

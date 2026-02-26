@@ -7,6 +7,7 @@ import { useTemplateRef, ref, computed, shallowRef } from "vue";
 import type { Ref } from "vue";
 
 import { FilesApi } from "~/api/";
+import { IconMenu, IconSearch } from "~/assets/icons/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { PALETTE_FILTER } from "~/constants/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/lib/pattern/";
@@ -113,7 +114,7 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
           />
 
           <DropdownMenu :items="paletteCatalogMenuOptions">
-            <Button :loading="importingPalettes" color="neutral" variant="outline" icon="lucide:menu" />
+            <Button :loading="importingPalettes" color="neutral" variant="outline" :icon="IconMenu" />
           </DropdownMenu>
         </div>
       </template>
@@ -124,7 +125,7 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
           v-bind="$ta('palette-catalog-search')"
           size="md"
           variant="outline"
-          icon="lucide:search"
+          :icon="IconSearch"
           class="w-full"
         />
       </template>

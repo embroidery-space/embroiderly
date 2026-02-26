@@ -32,11 +32,15 @@ catalog:
   "reka-ui": 2.8.2
 
   # Styling
-  "@iconify/vue": 5.0.0
-  "@iconify-json/lucide": 1.2.93
   "tailwindcss": 4.2.0
   "tailwind-merge": 3.5.0
   "tailwind-variants": 3.2.2
+
+  # Icons
+  "@iconify/vue": 5.0.0
+  "@iconify-json/lucide": 1.2.93
+  "@iconify-json/material-symbols": 1.2.58
+  "unplugin-icons": 23.0.1
 
   # Localization
   "@fluent/bundle": 0.19.1

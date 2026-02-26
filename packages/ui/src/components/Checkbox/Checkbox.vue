@@ -6,6 +6,7 @@ import { computed } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useFormField } from "../../composables/useFormField.ts";
+import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 
 import { CheckboxTheme } from "./Checkbox.theme";
@@ -32,7 +33,7 @@ export interface CheckboxProps extends Pick<CheckboxRootProps, "as" | "asChild" 
    * The icon displayed when checked.
    * @default "icons.check"
    */
-  icon?: string;
+  icon?: IconValue;
 
   class?: any;
   ui?: CheckboxThemeSlots;

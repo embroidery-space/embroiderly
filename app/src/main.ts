@@ -8,7 +8,6 @@ import App from "./App.vue";
 import { DiagnosticsService } from "./services/";
 
 import "./assets/styles.css";
-import "./assets/icons.ts";
 
 const app = createApp(App);
 const pinia = createPinia().use(TauriPluginPinia());

@@ -5,6 +5,7 @@ import { Menubar } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
 import { usePortal } from "../../composables/usePortal.ts";
+import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 
 import { MenubarTheme } from "./Menubar.theme.ts";
@@ -21,7 +22,7 @@ export interface MenubarItem {
   description?: string;
 
   /** An icon to display before the label. */
-  icon?: string;
+  icon?: IconValue;
 
   /** Whether the checkbox item is checked. Only used when `type` is `"checkbox"`. */
   checked?: boolean;
@@ -49,7 +50,7 @@ export interface MenubarMenu {
   /** The label displayed on the menu trigger. */
   label: string;
   /** The icon displayed on the menu trigger. */
-  icon?: string;
+  icon?: IconValue;
   /** Whether the menu trigger is disabled. */
   disabled?: boolean;
   /** Whether the menu trigger is hidden. */

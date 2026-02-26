@@ -3,6 +3,7 @@ import { ButtonIcon, Popover, Separator } from "@embroiderly/ui";
 
 import { computed, ref, watch } from "vue";
 
+import { IconLayers, IconStitchFull, IconStitchMix, IconStitchSquare, IconStitchSymbol } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
 import { DisplayMode, LayersVisibility } from "~/lib/pattern/";
 import { usePatternStore } from "~/stores/";
@@ -21,9 +22,9 @@ const layers = ref(new LayersVisibility(patternStore.pattern?.layersVisibility |
 watch(layers, (newLayers) => patternStore.setLayersVisibility(newLayers), { deep: true });
 
 const displayModeOptions = computed(() => [
-  { icon: "stitches:mix", label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
-  { icon: "stitches:square", label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
-  { icon: "stitches:full", label: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
+  { icon: IconStitchMix, label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
+  { icon: IconStitchSquare, label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
+  { icon: IconStitchFull, label: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
 ]);
 
 const showSymbols = computed({
@@ -38,7 +39,7 @@ const showSymbols = computed({
       <ButtonIcon
         color="neutral"
         variant="ghost"
-        icon="lucide:layers"
+        :icon="IconLayers"
         :disabled="disabled"
         :tooltip="$t('canvas-toolbar-layers')"
         :delay-duration="200"
@@ -65,7 +66,7 @@ const showSymbols = computed({
 
     <ToolToggle
       v-model="showSymbols"
-      icon="stitches:symbol"
+      :icon="IconStitchSymbol"
       :label="showSymbols ? fluent.$t('canvas-toolbar-hide-symbols') : fluent.$t('canvas-toolbar-show-symbols')"
       :disabled="disabled"
     />

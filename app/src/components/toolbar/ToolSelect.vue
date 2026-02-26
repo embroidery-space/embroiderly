@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { useShortcuts, extractShortcuts, ShortcutsSeparator } from "@embroiderly/shortcuts";
 import { Button, DropdownMenu, Tooltip } from "@embroiderly/ui";
-import type { DropdownMenuItem } from "@embroiderly/ui";
+import type { DropdownMenuItem, IconValue } from "@embroiderly/ui";
 
 import { unrefElement } from "@vueuse/core";
 import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
+import { IconChevronDown } from "~/assets/icons/";
+
 export interface ToolSelectItem {
-  icon: string;
+  icon: IconValue;
   label: string;
   value: unknown;
   shortcut?: string;
@@ -127,7 +129,7 @@ function handleLongPress(e: PointerEvent, isLongPress: boolean) {
         variant="link"
         color="neutral"
         :disabled="props.disabled"
-        icon="lucide:chevron-down"
+        :icon="IconChevronDown"
         :ui="{
           base: 'absolute bottom-0 right-0 size-3 rounded-sm border-none p-0',
           leadingIcon: 'size-3 absolute left-1/2 top-1/2 -translate-1/2 -rotate-45',

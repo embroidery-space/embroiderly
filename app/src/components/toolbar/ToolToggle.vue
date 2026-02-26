@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Button, Tooltip } from "@embroiderly/ui";
+import type { IconValue } from "@embroiderly/ui";
 
 import { Toggle } from "reka-ui";
 
 const value = defineModel<boolean>({ required: true });
-defineProps<{ icon: string; label?: string; disabled?: boolean }>();
+defineProps<{ icon: IconValue; label?: string; disabled?: boolean }>();
 </script>
 
 <template>

@@ -47,7 +47,8 @@
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@iconify/vue": "catalog:",
+    "@iconify-json/lucide": "catalog:",
+    "@iconify-json/material-symbols": "catalog:",
     "@pinia/testing": "catalog:",
     "@pixi/devtools": "catalog:",
     "@tailwindcss/vite": "catalog:",
@@ -68,6 +69,7 @@
     "@wdio/spec-reporter": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
+    "unplugin-icons": "catalog:",
     "vite": "catalog:",
     "vite-plugin-vue-devtools": "catalog:",
     "vitest": "catalog:",

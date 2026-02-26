@@ -10,6 +10,7 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 import { computed } from "vue";
 
 import { FilesApi, SystemApi } from "~/api/";
+import { IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
 import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
 import { Fabric } from "~/lib/pattern/";
@@ -263,7 +264,7 @@ async function showSystemInfo() {
         <template v-if="patternStore.pattern">
           <ButtonIcon
             data-testid="undo-button"
-            icon="lucide:undo"
+            :icon="IconUndo"
             color="neutral"
             variant="ghost"
             :tooltip="$t('history-undo')"
@@ -272,7 +273,7 @@ async function showSystemInfo() {
           />
           <ButtonIcon
             data-testid="redo-button"
-            icon="lucide:redo"
+            :icon="IconRedo"
             color="neutral"
             variant="ghost"
             :tooltip="$t('history-redo')"
@@ -287,7 +288,7 @@ async function showSystemInfo() {
             :loading="settingsStore.loadingUpdate"
             variant="ghost"
             color="neutral"
-            icon="lucide:settings"
+            :icon="IconSettings"
             :tooltip="$t('app-menu-manage')"
           />
         </DropdownMenu>

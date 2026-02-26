@@ -5,6 +5,7 @@ import { ContextMenu } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
 import { usePortal } from "../../composables/usePortal.ts";
+import type { IconValue } from "../../types/icons.ts";
 
 import { ContextMenuTheme } from "./ContextMenu.theme.ts";
 import type { ContextMenuThemeSlots, ContextMenuThemeVariants } from "./ContextMenu.theme.ts";
@@ -20,7 +21,7 @@ export interface ContextMenuItem {
   description?: string;
 
   /** An icon to display before the label. */
-  icon?: string;
+  icon?: IconValue;
 
   /** Whether the checkbox item is checked. Only used when `type` is `"checkbox"`. */
   checked?: boolean;

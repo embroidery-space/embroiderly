@@ -1,11 +1,12 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
 import { Button, Tooltip } from "@embroiderly/ui";
+import type { IconValue } from "@embroiderly/ui";
 
 import type { AcceptableValue } from "reka-ui";
 import { ToggleGroup } from "reka-ui/namespaced";
 
 interface ToolOption {
-  icon: string;
+  icon: IconValue;
   label: string;
   value: TValue;
 }
