@@ -88,7 +88,7 @@ xsp_parsers = { path = "crates/xsp-parsers" }
 byteorder = "1.5.0"
 encoding_rs = "0.8.35"
 hex = "0.4.3"
-quick-xml = "0.39.0"
+quick-xml = "0.39.2"
 
 # Fonts handling
 font-kit = "0.14.3"
@@ -118,7 +118,7 @@ borsh = { version = "1.6.0", features = ["derive"] }
 argh = { version = "0.1.14", default-features = false }
 
 # Error handling
-anyhow = "1.0.101"
+anyhow = "1.0.102"
 thiserror = "2.0.18"
 
 # Logging & Tracing
