@@ -6,18 +6,14 @@ assignees: niusia-ua
 
 <!-- THIS ISSUE TYPE SHOULD BE OPENED ONLY BY THE MAINTAINERS -->
 
-**User Story**
+**Description:**
 
-<!--
-As a user ...
-I want to ...
-So I can ...
--->
+<!-- A clear and concise overview of the task to be completed. -->
 
-**Acceptance Criteria**
+**Acceptance Criteria:**
 
 <!-- A clear and concise list of what should be implemented. -->
 
-**Additional Context**
+**Additional Context:**
 
 <!-- Add any other context, screenshots or videos about the task here. -->

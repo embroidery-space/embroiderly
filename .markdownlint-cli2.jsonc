@@ -8,5 +8,4 @@
   },
   "gitignore": true,
   "globs": ["**/*.md"],
-  "ignores": [".github/"],
 }

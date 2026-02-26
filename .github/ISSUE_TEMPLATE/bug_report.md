@@ -4,11 +4,11 @@ about: Report a bug so we can fix it
 assignees: niusia-ua
 ---
 
-**Bug Description**
+**Bug Description:**
 
 <!-- A clear and concise description of what the bug is. -->
 
-**Steps to Reproduce**
+**Steps to Reproduce:**
 
 <!--
 1. Go to ...
@@ -17,19 +17,19 @@ assignees: niusia-ua
 4. See error
 -->
 
-**Expected Behavior**
+**Expected Behavior:**
 
 <!-- A clear and concise description of what you _expected to happen_. -->
 
-**Actual Behavior**
+**Actual Behavior:**
 
 <!-- A clear and concise description of what _actually happened_. -->
 
-**Screenshots**
+**Screenshots:**
 
-<!-- If applicable, add screenshots or screenrecordings to help explain your problem. -->
+<!-- If applicable, add screenshots or screen recordings to help explain your problem. -->
 
-**System Information**
+**System Information:**
 
 <!-- You can obtain this information under Help -> About in the application menu. -->
 
@@ -37,6 +37,6 @@ assignees: niusia-ua
 - Embroiderly Version: <!-- e.g. 0.3.0 -->
 - WebView version: <!-- e.g. 136.0.3240.92 -->
 
-**Additional Context**
+**Additional Context:**
 
 <!-- Add any other context about the problem here. -->
