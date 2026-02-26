@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Button, Tabs } from "@embroiderly/ui";
 
+import { IconX } from "~/assets/icons/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 
 const patternStore = usePatternStore();
@@ -27,7 +28,7 @@ const patternFileStore = usePatternFileStore();
       <Button
         size="sm"
         variant="ghost"
-        icon="lucide:x"
+        :icon="IconX"
         class="p-0"
         :class="{
           'text-inverted': patternStore.pattern?.id === item.value,

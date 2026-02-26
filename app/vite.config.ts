@@ -5,6 +5,8 @@ import { fileURLToPath, URL } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { webdriverio } from "@vitest/browser-webdriverio";
+import { FileSystemIconLoader } from "unplugin-icons/loaders";
+import icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
 
@@ -14,7 +16,19 @@ const isCI = process.env.CI === "true";
 const isDebug = process.env.TAURI_ENV_DEBUG === "true";
 
 export default defineConfig({
-  plugins: [vue(), tailwindcss(), fluentMerge({ localesDir: "./src/assets/locales/" }), vueDevTools()],
+  plugins: [
+    vue(),
+    icons({
+      compiler: "vue3",
+      customCollections: {
+        stitches: FileSystemIconLoader("./src/assets/icons/stitches"),
+        window: FileSystemIconLoader("./src/assets/icons/window"),
+      },
+    }),
+    tailwindcss(),
+    fluentMerge({ localesDir: "./src/assets/locales/" }),
+    vueDevTools(),
+  ],
   clearScreen: false,
   envPrefix: ["VITE_", "TAURI_ENV_"],
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
@@ -23,7 +37,7 @@ export default defineConfig({
     chunkSizeWarningLimit: Infinity,
   },
   resolve: {
-    dedupe: ["@iconify/vue", "@vueuse/*", "reka-ui", "vue"],
+    dedupe: ["@vueuse/*", "reka-ui", "vue"],
     alias: {
       "~": fileURLToPath(new URL("src", import.meta.url)),
     },

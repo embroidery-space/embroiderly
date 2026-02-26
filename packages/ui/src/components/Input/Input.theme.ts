@@ -5,8 +5,8 @@ export const InputTheme = tv({
   slots: {
     root: "relative inline-flex items-center",
     base: "w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
-    leading: "absolute inset-y-0 start-0 flex items-center",
-    trailing: "absolute inset-y-0 end-0 flex items-center",
+    leading: "absolute inset-y-0 inset-s-0 flex items-center",
+    trailing: "absolute inset-y-0 inset-e-0 flex items-center",
     leadingIcon: "shrink-0 text-dimmed",
     trailingIcon: "shrink-0 text-dimmed",
   },

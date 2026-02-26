@@ -1,12 +1,16 @@
+import type { Component } from "vue";
+
+export type IconValue = string | Component;
+
 export interface Icons {
-  check: string;
-  chevronUp: string;
-  chevronDown: string;
-  chevronRight: string;
-  close: string;
-  loading: string;
-  link: string;
-  unlink: string;
-  minus: string;
-  plus: string;
+  check: IconValue;
+  chevronUp: IconValue;
+  chevronDown: IconValue;
+  chevronRight: IconValue;
+  close: IconValue;
+  loading: IconValue;
+  link: IconValue;
+  unlink: IconValue;
+  minus: IconValue;
+  plus: IconValue;
 }

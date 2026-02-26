@@ -5,6 +5,7 @@ import type { DropdownMenuItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
+import { IconChevronDown, IconZoomIn, IconZoomOut } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
 import type { ZoomState } from "~/lib/pixi/";
 
@@ -61,7 +62,7 @@ useShortcuts({
       />
 
       <DropdownMenu :items="zoomOptions">
-        <Button color="neutral" variant="outline" size="sm" icon="lucide:chevron-down" />
+        <Button color="neutral" variant="outline" size="sm" :icon="IconChevronDown" />
       </DropdownMenu>
     </FormFieldGroup>
 
@@ -69,7 +70,7 @@ useShortcuts({
       <ButtonIcon
         color="neutral"
         variant="ghost"
-        icon="lucide:zoom-out"
+        :icon="IconZoomOut"
         size="sm"
         :tooltip="$t('canvas-zoom-out')"
         shortcut="Ctrl+-"
@@ -90,7 +91,7 @@ useShortcuts({
       <ButtonIcon
         color="neutral"
         variant="ghost"
-        icon="lucide:zoom-out"
+        :icon="IconZoomIn"
         size="sm"
         :tooltip="$t('canvas-zoom-in')"
         shortcut="Ctrl++"

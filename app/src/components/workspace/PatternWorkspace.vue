@@ -8,6 +8,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { computed, useTemplateRef, watch } from "vue";
 
 import { FilesApi } from "~/api/";
+import { IconImage, IconImageOff } from "~/assets/icons/";
 import { CanvasZoomControls, PatternCanvas } from "~/components/canvas/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
@@ -38,7 +39,7 @@ const patternCanvas = useTemplateRef<InstanceType<typeof PatternCanvas>>("patter
 const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
   [
     {
-      icon: "lucide:image",
+      icon: IconImage,
       label: fluent.$t("canvas-ctx-menu-set-image"),
       async onSelect() {
         const selectedPath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
@@ -46,7 +47,7 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
       },
     },
     {
-      icon: "lucide:image-off",
+      icon: IconImageOff,
       label: fluent.$t("canvas-ctx-menu-remove-image"),
       color: "error",
       disabled: !patternStore.pattern?.referenceImage,

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 import type { ButtonProps } from "../Button/Button.vue";
 import Tooltip from "../Tooltip/Tooltip.vue";
@@ -11,7 +12,7 @@ export interface ButtonIconProps
     Omit<ButtonProps, "label" | "leadingIcon" | "trailingIcon" | "leading" | "trailing" | "square">,
     Pick<TooltipProps, "delayDuration" | "shortcut"> {
   /** The icon to display. */
-  icon: string;
+  icon: IconValue;
   /** The tooltip text. */
   tooltip: string;
 

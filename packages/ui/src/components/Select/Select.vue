@@ -9,6 +9,7 @@ import { useFormField } from "../../composables/useFormField.ts";
 import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
+import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
 import type { InputProps } from "../Input/Input.vue";
@@ -26,7 +27,7 @@ export interface SelectItemObject {
   value?: string | number;
 
   /** An icon to display before the label. */
-  icon?: string;
+  icon?: IconValue;
 
   /** Whether the item is disabled. */
   disabled?: boolean;

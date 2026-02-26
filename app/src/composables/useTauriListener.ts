@@ -15,8 +15,6 @@ import { onUnmounted } from "vue";
  * @param unlisten A promise that resolves to a function to unlisten to the event.
  */
 export function useTauriListener(unlisten: Promise<UnlistenFn> | (() => Promise<UnlistenFn>)) {
-  onUnmounted(() => {
-    const promise = typeof unlisten === "function" ? unlisten() : unlisten;
-    promise.then((unlisten) => unlisten()).catch(() => {});
-  });
+  const promise = typeof unlisten === "function" ? unlisten() : unlisten;
+  onUnmounted(() => promise.then((unlisten) => unlisten()).catch(() => {}));
 }

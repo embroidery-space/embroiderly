@@ -46,8 +46,8 @@ defineExpose({ inputState, formFieldState });
       </FormField>
 
       <template #controls>
-        <HstText v-model="inputState.leadingIcon" title="Leading Icon" />
-        <HstText v-model="inputState.trailingIcon" title="Trailing Icon" />
+        <HstText v-model="inputState.leadingIcon as string" title="Leading Icon" />
+        <HstText v-model="inputState.trailingIcon as string" title="Trailing Icon" />
         <HstCheckbox v-model="inputState.loading" title="Loading" />
         <HstCheckbox v-model="inputState.disabled" title="Disabled" />
         <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />

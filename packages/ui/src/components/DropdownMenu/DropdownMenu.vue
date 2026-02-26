@@ -7,6 +7,7 @@ import { DropdownMenu } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
 import { usePortal } from "../../composables/usePortal.ts";
+import type { IconValue } from "../../types/icons.ts";
 
 import { DropdownMenuTheme } from "./DropdownMenu.theme.ts";
 import type { DropdownMenuThemeSlots, DropdownMenuThemeVariants } from "./DropdownMenu.theme.ts";
@@ -22,7 +23,7 @@ export interface DropdownMenuItem {
   description?: string;
 
   /** An icon to display before the label. */
-  icon?: string;
+  icon?: IconValue;
 
   /** Whether the checkbox item is checked. Only used when `type` is `"checkbox"`. */
   checked?: boolean;

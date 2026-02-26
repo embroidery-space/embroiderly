@@ -2,7 +2,20 @@
 import { App, useToast } from "@embroiderly/ui";
 
 import { UseDark } from "@vueuse/components";
-import { onMounted, onErrorCaptured } from "vue";
+import { onMounted, onErrorCaptured, markRaw } from "vue";
+
+import {
+  IconCheck,
+  IconChevronUp,
+  IconChevronDown,
+  IconChevronRight,
+  IconX,
+  IconLoaderCircle,
+  IconLink,
+  IconUnlink,
+  IconMinus,
+  IconPlus,
+} from "~/assets/icons/";
 
 import { AppHeader, AppMain } from "./components/";
 import { useI18n } from "./composables/";
@@ -33,7 +46,21 @@ onErrorCaptured((err, _component, info) => {
 </script>
 
 <template>
-  <App :locale="currentLocale">
+  <App
+    :locale="currentLocale"
+    :icons="{
+      check: markRaw(IconCheck),
+      chevronUp: markRaw(IconChevronUp),
+      chevronDown: markRaw(IconChevronDown),
+      chevronRight: markRaw(IconChevronRight),
+      close: markRaw(IconX),
+      loading: markRaw(IconLoaderCircle),
+      link: markRaw(IconLink),
+      unlink: markRaw(IconUnlink),
+      minus: markRaw(IconMinus),
+      plus: markRaw(IconPlus),
+    }"
+  >
     <UseDark>
       <AppHeader />
       <AppMain />

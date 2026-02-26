@@ -5,6 +5,7 @@ import type { ContextMenuItem, DropdownMenuItem, SelectItem } from "@embroiderly
 import { computed, onMounted, ref, shallowRef } from "vue";
 
 import { FilesApi } from "~/api/";
+import { IconMenu } from "~/assets/icons/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { FONT_FILTER } from "~/constants/";
 import { LoggerService } from "~/services/";
@@ -184,7 +185,7 @@ onMounted(async () => {
             />
 
             <DropdownMenu :items="symbolFontMenuOptions">
-              <Button :loading="importingFonts" color="neutral" variant="outline" icon="lucide:menu" />
+              <Button :loading="importingFonts" color="neutral" variant="outline" :icon="IconMenu" />
             </DropdownMenu>
           </div>
         </template>

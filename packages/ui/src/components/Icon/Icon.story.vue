@@ -17,7 +17,7 @@ defineExpose({ state });
       <Icon v-bind="state" />
 
       <template #controls>
-        <HstText v-model="state.name" title="Name" />
+        <HstText v-model="state.name as string" title="Name" />
       </template>
     </Variant>
 
