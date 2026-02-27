@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ButtonIcon, Popover, Separator } from "@embroiderly/ui";
+import { ButtonIcon, Popover, Separator, ToolToggle, ToolToggleGroup } from "@embroiderly/ui";
+import type { ToolToggleItem } from "@embroiderly/ui";
 
 import { computed, ref, watch } from "vue";
 
@@ -7,8 +8,6 @@ import { IconLayers, IconStitchFull, IconStitchMix, IconStitchSquare, IconStitch
 import { useI18n } from "~/composables/";
 import { DisplayMode, LayersVisibility } from "~/lib/pattern/";
 import { usePatternStore } from "~/stores/";
-
-import { ToolToggle, ToolToggleGroup } from "../toolbar/";
 
 import CanvasLayers from "./CanvasLayers.vue";
 
@@ -21,10 +20,10 @@ const disabled = computed(() => patternStore.pattern === undefined);
 const layers = ref(new LayersVisibility(patternStore.pattern?.layersVisibility || LayersVisibility.default()));
 watch(layers, (newLayers) => patternStore.setLayersVisibility(newLayers), { deep: true });
 
-const displayModeOptions = computed(() => [
-  { icon: IconStitchMix, label: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
-  { icon: IconStitchSquare, label: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
-  { icon: IconStitchFull, label: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
+const displayModeOptions = computed<ToolToggleItem[]>(() => [
+  { icon: IconStitchMix, tooltip: fluent.$t("canvas-toolbar-view-as-mix"), value: DisplayMode.Mixed },
+  { icon: IconStitchSquare, tooltip: fluent.$t("canvas-toolbar-view-as-solid"), value: DisplayMode.Solid },
+  { icon: IconStitchFull, tooltip: fluent.$t("canvas-toolbar-view-as-stitches"), value: DisplayMode.Stitches },
 ]);
 
 const showSymbols = computed({
@@ -55,11 +54,13 @@ const showSymbols = computed({
 
     <ToolToggleGroup
       :model-value="patternStore.pattern?.displayMode"
-      :options="displayModeOptions"
+      :items="displayModeOptions"
       :disabled="disabled"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'left' } }"
       orientation="vertical"
       class="flex flex-col gap-1"
-      @update:model-value="patternStore.setDisplayMode"
+      @update:model-value="patternStore.setDisplayMode($event as DisplayMode)"
     />
 
     <Separator />
@@ -67,8 +68,10 @@ const showSymbols = computed({
     <ToolToggle
       v-model="showSymbols"
       :icon="IconStitchSymbol"
-      :label="showSymbols ? fluent.$t('canvas-toolbar-hide-symbols') : fluent.$t('canvas-toolbar-show-symbols')"
+      :tooltip="showSymbols ? fluent.$t('canvas-toolbar-hide-symbols') : fluent.$t('canvas-toolbar-show-symbols')"
       :disabled="disabled"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'left' } }"
     />
   </div>
 </template>

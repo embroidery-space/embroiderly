@@ -86,7 +86,7 @@ const ui = TooltipTheme();
         data-slot="content"
         :class="ui.content({ class: [props.ui?.content, props.class] })"
       >
-        <span data-slot="text" :class="ui.text({ class: props.ui?.text })">{{ text }}</span>
+        <span v-if="text" data-slot="text" :class="ui.text({ class: props.ui?.text })">{{ text }}</span>
         <span v-if="shortcut" data-slot="kbds" :class="ui.kbds({ class: props.ui?.kbds })">
           <Kbd v-for="(key, i) in parseShortcutDisplay(shortcut)" :key="i" :value="key" size="sm" />
         </span>

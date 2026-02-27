@@ -1,10 +1,10 @@
-import { App } from "@embroiderly/ui";
-
-import { expect, test, describe, vi } from "vitest";
+import { TooltipProvider } from "reka-ui";
+import { describe, expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
-import { defineComponent } from "vue";
+import { defineComponent, nextTick } from "vue";
 
 import ToolSelect from "./ToolSelect.vue";
+import type { ToolSelectProps } from "./ToolSelect.vue";
 
 const SINGLE_ITEM = [{ label: "Pencil", icon: "lucide:pencil", value: "pencil" }];
 const MULTIPLE_ITEMS = [
@@ -14,13 +14,38 @@ const MULTIPLE_ITEMS = [
 ];
 
 const ToolSelectWrapper = defineComponent({
-  components: { App, ToolSelect },
+  components: { TooltipProvider, ToolSelect },
   inheritAttrs: false,
-  template: `<App><ToolSelect v-bind="$attrs" /></App>`,
+  template: `
+  <TooltipProvider>
+    <ToolSelect v-bind="$attrs" />
+  </TooltipProvider>
+`,
 });
 
 describe("ToolSelect", () => {
   describe("Rendering States", () => {
+    const sizes = ["sm", "md", "lg"] as const;
+
+    test.each([
+      ["single item", { props: { items: SINGLE_ITEM } }],
+      ["multiple items", { props: { items: MULTIPLE_ITEMS } }],
+      ...sizes.map((size) => [`with size ${size}`, { props: { items: MULTIPLE_ITEMS, size } }]),
+      ["with custom selection color", { props: { items: MULTIPLE_ITEMS, selectionColor: "var(--color-error)" } }],
+      ["when selected", { props: { modelValue: "pencil", items: MULTIPLE_ITEMS } }],
+      ["when disabled", { props: { items: MULTIPLE_ITEMS, disabled: true } }],
+      ["with class", { props: { items: MULTIPLE_ITEMS, class: "custom-class" } }],
+      ["with ui", { props: { items: MULTIPLE_ITEMS, ui: { root: "custom-root" } } }],
+    ] as [string, { props: ToolSelectProps & { modelValue: string } }][])(
+      "renders correctly %s",
+      async (_, options) => {
+        const screen = page.render(ToolSelectWrapper, options);
+        await nextTick();
+
+        expect(screen.container.outerHTML).toMatchSnapshot();
+      },
+    );
+
     test("renders a single option without a dropdown button", async () => {
       const screen = page.render(ToolSelectWrapper, {
         props: {
@@ -49,6 +74,32 @@ describe("ToolSelect", () => {
 
       const dropdownButton = screen.getByTestId("tool-selector-dropdown-button");
       await expect.element(dropdownButton).toBeInTheDocument();
+    });
+
+    test("renders ARIA attributes when multiple items", async () => {
+      const screen = page.render(ToolSelectWrapper, {
+        props: {
+          modelValue: "pencil",
+          items: MULTIPLE_ITEMS,
+        },
+      });
+
+      const mainButton = screen.getByTestId("tool-selector-main-button");
+      await expect.element(mainButton).toHaveAttribute("aria-haspopup", "menu");
+      await expect.element(mainButton).toHaveAttribute("aria-expanded", "false");
+    });
+
+    test("dropdown button has tabindex -1 and aria-hidden", async () => {
+      const screen = page.render(ToolSelectWrapper, {
+        props: {
+          modelValue: "pencil",
+          items: MULTIPLE_ITEMS,
+        },
+      });
+
+      const dropdownButton = screen.getByTestId("tool-selector-dropdown-button");
+      await expect.element(dropdownButton).toHaveAttribute("tabindex", "-1");
+      await expect.element(dropdownButton).toHaveAttribute("aria-hidden", "true");
     });
   });
 

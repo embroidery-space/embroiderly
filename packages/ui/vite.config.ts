@@ -40,6 +40,7 @@ export default defineConfig({
         { id: "layout", title: "Layout" },
         { id: "element", title: "Element" },
         { id: "form", title: "Form" },
+        { id: "toolbar", title: "Toolbar" },
         { id: "navigation", title: "Navigation" },
         { id: "overlay", title: "Overlay" },
       ],

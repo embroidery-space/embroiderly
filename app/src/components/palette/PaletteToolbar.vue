@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { useShortcuts } from "@embroiderly/shortcuts";
+import { useShortcuts, extractShortcuts, ShortcutsSeparator } from "@embroiderly/shortcuts";
+import { ToolSelect } from "@embroiderly/ui";
+import type { ToolSelectItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
@@ -26,11 +28,9 @@ import {
 } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
 import { tools } from "~/lib/tools/";
+import type { PatternEditorTool } from "~/lib/tools/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
-
-import { ToolSelect } from "../toolbar/";
-import type { ToolSelectItem } from "../toolbar/";
 
 const { disabled } = defineProps<{
   disabled?: boolean;
@@ -186,6 +186,28 @@ const cursor = computed<ToolSelectItem[]>(() => [
   },
 ]);
 
+// Register keyboard shortcuts for all tool groups.
+useShortcuts(
+  extractShortcuts(
+    () =>
+      [
+        ...fullstitches.value,
+        ...petitestitches.value,
+        ...halfstitches.value,
+        ...quarterstitches.value,
+        ...linestitches.value,
+        ...nodestitches.value,
+        ...cursor.value,
+      ].map((item) => ({
+        shortcut: item.shortcut,
+        onSelect() {
+          editorStateStore.selectedTool = item.value as PatternEditorTool;
+        },
+      })),
+    ShortcutsSeparator.KeySequence,
+  ),
+);
+
 // Define shorter key sequences for enabling top-left and bottom-left positional stitch tools if the user hasn't typed the full shortcut.
 useShortcuts({
   "P-T": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
@@ -202,43 +224,49 @@ useShortcuts({
       <ToolSelect
         v-model="editorStateStore.selectedTool"
         :items="fullstitches"
-        :selection-color="selectionColor"
         :disabled="disabled"
+        :delay-duration="200"
+        :selection-color="selectionColor"
       />
       <ToolSelect
         v-model="editorStateStore.selectedTool"
         :items="petitestitches"
-        :selection-color="selectionColor"
         :disabled="disabled"
+        :delay-duration="200"
+        :selection-color="selectionColor"
       />
       <ToolSelect
         v-model="editorStateStore.selectedTool"
         :items="halfstitches"
-        :selection-color="selectionColor"
         :disabled="disabled"
+        :delay-duration="200"
+        :selection-color="selectionColor"
       />
       <ToolSelect
         v-model="editorStateStore.selectedTool"
         :items="quarterstitches"
-        :selection-color="selectionColor"
         :disabled="disabled"
+        :delay-duration="200"
+        :selection-color="selectionColor"
       />
       <ToolSelect
         v-model="editorStateStore.selectedTool"
         :items="linestitches"
-        :selection-color="selectionColor"
         :disabled="disabled"
+        :delay-duration="200"
+        :selection-color="selectionColor"
       />
       <ToolSelect
         v-model="editorStateStore.selectedTool"
         :items="nodestitches"
-        :selection-color="selectionColor"
         :disabled="disabled"
+        :delay-duration="200"
+        :selection-color="selectionColor"
       />
     </div>
 
     <div class="flex gap-2">
-      <ToolSelect v-model="editorStateStore.selectedTool" :items="cursor" :disabled="disabled" />
+      <ToolSelect v-model="editorStateStore.selectedTool" :items="cursor" :disabled="disabled" :delay-duration="200" />
     </div>
   </div>
 </template>

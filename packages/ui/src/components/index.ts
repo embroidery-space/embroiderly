@@ -47,6 +47,15 @@ export { default as Slider, type SliderProps } from "./Slider/Slider.vue";
 export { default as Switch, type SwitchProps } from "./Switch/Switch.vue";
 export { default as Textarea, type TextareaProps } from "./Textarea/Textarea.vue";
 
+// Toolbar.
+export { default as ToolToggle, type ToolToggleProps } from "./ToolToggle/ToolToggle.vue";
+export {
+  default as ToolToggleGroup,
+  type ToolToggleGroupProps,
+  type ToolToggleItem,
+} from "./ToolToggleGroup/ToolToggleGroup.vue";
+export { default as ToolSelect, type ToolSelectProps, type ToolSelectItem } from "./ToolSelect/ToolSelect.vue";
+
 // Navigation.
 export {
   default as Menubar,
