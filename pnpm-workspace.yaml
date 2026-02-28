@@ -93,6 +93,8 @@ catalog:
   "markdownlint-cli2": 0.21.0
   "oxfmt": 0.35.0
   "oxlint": 1.49.0
+  "husky": 9.1.7
+  "lint-staged": 16.2.7
 
   # Build tools
   "vite": 7.3.1

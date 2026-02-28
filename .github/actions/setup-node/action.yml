@@ -14,5 +14,7 @@ runs:
         node-version-file: package.json
         cache: pnpm
     - if: inputs.install-deps == 'true'
-      run: pnpm install
       shell: bash
+      run: pnpm install
+      env:
+        HUSKY: 0

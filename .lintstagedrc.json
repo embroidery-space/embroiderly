@@ -1,0 +1,5 @@
+{
+  "*.md": ["markdownlint-cli2 --fix", "oxfmt"],
+  "*.rs": ["cargo clippy --locked --fix --allow-dirty -- -D warnings", "cargo +nightly fmt"],
+  "!(*.md|*.rs)": ["oxlint --fix --format stylish", "eslint --fix --concurrency auto", "oxfmt"]
+}
