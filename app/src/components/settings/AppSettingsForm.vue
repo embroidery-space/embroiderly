@@ -78,7 +78,7 @@ const wheelActionOptions = computed(() => [
     size="lg"
     :ui="{
       root: 'items-start',
-      list: 'items-start bg-transparent rounded-none',
+      list: 'items-start rounded-none bg-transparent',
     }"
   >
     <template #ui>

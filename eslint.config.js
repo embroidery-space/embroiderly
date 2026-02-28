@@ -7,6 +7,7 @@ import vitest from "@vitest/eslint-plugin";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
+import { getDefaultSelectors as getDefaultBetterTailwindcssSelectors } from "eslint-plugin-better-tailwindcss/defaults";
 import importX from "eslint-plugin-import-x";
 import noOnlyTests from "eslint-plugin-no-only-tests";
 import oxlint from "eslint-plugin-oxlint";
@@ -136,6 +137,14 @@ export default defineConfigWithVueTs(
     settings: {
       "better-tailwindcss": {
         entryPoint: fileURLToPath(new URL("app/src/assets/styles.css", import.meta.url)),
+        selectors: [
+          ...getDefaultBetterTailwindcssSelectors(),
+          {
+            kind: "attribute",
+            match: [{ type: "objectValues" }],
+            name: "^v-bind:ui$",
+          },
+        ],
       },
     },
     rules: {
