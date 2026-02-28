@@ -84,30 +84,32 @@ const ui = computed(() => {
     data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
-    <Tabs.List data-slot="list" :class="ui.list({ class: props.ui?.list })">
-      <Tabs.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
-
+    <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
       <slot name="list-leading" />
 
-      <Tabs.Trigger
-        v-for="(item, index) in items"
-        :key="index"
-        :value="item.value ?? String(index)"
-        :disabled="item.disabled"
-        data-slot="trigger"
-        :class="ui.trigger({ class: props.ui?.trigger })"
-      >
-        <slot name="leading" :item="item" :index="index" />
+      <Tabs.List data-slot="list" :class="ui.list({ class: props.ui?.list })">
+        <Tabs.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
 
-        <span v-if="item.label || !!slots.default" data-slot="label" :class="ui.label({ class: props.ui?.label })">
-          <slot :item="item" :index="index">{{ item.label }}</slot>
-        </span>
+        <Tabs.Trigger
+          v-for="(item, index) in items"
+          :key="index"
+          :value="item.value ?? String(index)"
+          :disabled="item.disabled"
+          data-slot="trigger"
+          :class="ui.trigger({ class: props.ui?.trigger })"
+        >
+          <slot name="leading" :item="item" :index="index" />
 
-        <slot name="trailing" :item="item" :index="index" />
-      </Tabs.Trigger>
+          <span v-if="item.label || !!slots.default" data-slot="label" :class="ui.label({ class: props.ui?.label })">
+            <slot :item="item" :index="index">{{ item.label }}</slot>
+          </span>
+
+          <slot name="trailing" :item="item" :index="index" />
+        </Tabs.Trigger>
+      </Tabs.List>
 
       <slot name="list-trailing" />
-    </Tabs.List>
+    </div>
 
     <template v-if="!!content">
       <Tabs.Content

@@ -4,7 +4,8 @@ import type { VariantProps } from "tailwind-variants";
 export const TabsTheme = tv({
   slots: {
     root: "flex gap-2",
-    list: "relative inline-flex items-center rounded-lg bg-accented p-1",
+    wrapper: "inline-flex",
+    list: "relative inline-flex grow items-center rounded-lg bg-accented p-1",
     indicator: "absolute rounded-md bg-inverted shadow-xs transition-[translate,width,height] duration-200",
     trigger:
       "relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted",
