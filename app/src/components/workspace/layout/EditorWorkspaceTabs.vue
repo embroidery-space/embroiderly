@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Button, Tabs } from "@embroiderly/ui";
+import { Button, ButtonIcon, Tabs } from "@embroiderly/ui";
 
-import { IconX } from "~/assets/icons/";
+import { IconPanelLeft, IconPanelRight, IconX } from "~/assets/icons/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 
 const patternStore = usePatternStore();
@@ -17,13 +17,24 @@ const patternFileStore = usePatternFileStore();
     activation-mode="manual"
     :ui="{
       root: 'border-b border-default',
-      list: 'bg-transparent p-0 rounded-none',
-      indicator: 'h-full inset-0 rounded-none shadow-none z-0',
+      list: 'bg-transparent p-0 rounded-none border-x border-default [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+      indicator: 'h-full inset-0 rounded-none shadow-none',
       trigger:
-        'grow-0 min-w-20 hover:data-[state=inactive]:bg-accented hover:cursor-pointer data-[state=inactive]:border-r border-default rounded-none',
+        'h-full min-w-20 hover:data-[state=inactive]:bg-accented data-[state=inactive]:border-r border-default rounded-none',
     }"
     @update:model-value="patternFileStore.switchPattern($event as string)"
   >
+    <template #list-leading>
+      <ButtonIcon
+        color="neutral"
+        variant="ghost"
+        size="lg"
+        :icon="IconPanelLeft"
+        tooltip="Hide left panel"
+        class="rounded-none"
+      />
+    </template>
+
     <template #trailing="{ item }">
       <Button
         size="sm"
@@ -35,6 +46,17 @@ const patternFileStore = usePatternFileStore();
           'text-default': patternStore.pattern?.id !== item.value,
         }"
         @click.stop="patternFileStore.closePattern(item.value as string)"
+      />
+    </template>
+
+    <template #list-trailing>
+      <ButtonIcon
+        color="neutral"
+        variant="ghost"
+        size="lg"
+        :icon="IconPanelRight"
+        tooltip="Hide right panel"
+        class="rounded-none"
       />
     </template>
   </Tabs>
