@@ -1,0 +1,11 @@
+UPSTREAM=$(git rev-parse --abbrev-ref @{u} 2>/dev/null || echo "origin/dev")
+
+changed_files=$(git diff --name-only HEAD $UPSTREAM)
+
+if echo "$changed_files" | grep -qE "^(app/src/|packages/)"; then
+  pnpm test
+fi
+
+if echo "$changed_files" | grep -qE "^(app/src-tauri/|crates/)"; then
+  cargo nextest run --locked --no-fail-fast -F embroiderly/test
+fi
