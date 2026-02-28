@@ -17,10 +17,10 @@ const patternFileStore = usePatternFileStore();
     activation-mode="manual"
     :ui="{
       root: 'border-b border-default',
-      list: 'bg-transparent p-0 rounded-none border-x border-default [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
-      indicator: 'h-full inset-0 rounded-none shadow-none',
+      list: 'rounded-none border-x border-default bg-transparent p-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+      indicator: 'inset-0 h-full rounded-none shadow-none',
       trigger:
-        'h-full min-w-20 hover:data-[state=inactive]:bg-accented data-[state=inactive]:border-r border-default rounded-none',
+        'h-full min-w-20 rounded-none border-default data-[state=inactive]:border-r hover:data-[state=inactive]:bg-accented',
     }"
     @update:model-value="patternFileStore.switchPattern($event as string)"
   >
