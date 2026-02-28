@@ -131,8 +131,8 @@ function handleLongPress(e: PointerEvent, isLongPress: boolean) {
         :disabled="props.disabled"
         :icon="IconChevronDown"
         :ui="{
-          base: 'absolute bottom-0 right-0 size-3 rounded-sm border-none p-0',
-          leadingIcon: 'size-3 absolute left-1/2 top-1/2 -translate-1/2 -rotate-45',
+          base: 'absolute right-0 bottom-0 size-3 rounded-sm border-none p-0',
+          leadingIcon: 'absolute top-1/2 left-1/2 size-3 -translate-1/2 -rotate-45',
         }"
       />
     </DropdownMenu>
