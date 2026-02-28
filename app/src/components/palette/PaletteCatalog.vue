@@ -100,7 +100,7 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
       multiple
-      class="overflow-y-auto"
+      scroll-type="always"
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
       <template #header>
