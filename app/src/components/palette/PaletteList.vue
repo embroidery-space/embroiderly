@@ -102,7 +102,7 @@ function optionIsSelected(option: T) {
       v-model="value as AcceptableValue"
       :disabled="disabled"
       :multiple="multiple"
-      class="flex flex-col overflow-hidden data-disabled:cursor-not-allowed"
+      class="flex grow flex-col overflow-hidden data-disabled:cursor-not-allowed"
     >
       <div v-if="$slots.filter" class="shrink-0 border-b border-default px-2 py-1">
         <Listbox.Filter as-child>
@@ -113,7 +113,7 @@ function optionIsSelected(option: T) {
       <ScrollArea :type="scrollType">
         <Listbox.Content
           ref="content"
-          class="grid gap-1 p-1 outline-none"
+          class="grid min-h-full gap-1 p-1 outline-none"
           :style="{
             gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
           }"

@@ -15,6 +15,12 @@ export interface ScrollAreaProps extends ScrollAreaRootProps {
    */
   orientation?: ScrollAreaThemeVariants["orientation"];
 
+  /**
+   * The size of the scrollbar.
+   * @default "lg"
+   */
+  size?: ScrollAreaThemeVariants["size"];
+
   class?: any;
   ui?: ScrollAreaThemeSlots;
 }
@@ -25,6 +31,7 @@ export interface ScrollAreaSlots {
 
 const props = withDefaults(defineProps<ScrollAreaProps>(), {
   orientation: "vertical",
+  size: "lg",
 });
 defineSlots<ScrollAreaSlots>();
 
@@ -33,6 +40,8 @@ const rootProps = useForwardPropsEmits(reactivePick(props, "as", "asChild", "typ
 const ui = computed(() => {
   return ScrollAreaTheme({
     orientation: props.orientation,
+    size: props.size,
+    ephemeral: props.type === "scroll" || props.type === "hover" || props.type === "glimpse",
   });
 });
 </script>
