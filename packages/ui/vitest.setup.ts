@@ -14,5 +14,7 @@ beforeEach(() => {
 
     removeComments: true,
     regexToRemoveAttributes: /style/,
+
+    stubs: ["style"],
   };
 });

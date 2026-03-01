@@ -1,5 +1,6 @@
 // Layout.
 export { default as App, type AppProps, type AppSlots } from "./App/App.vue";
+export { default as ScrollArea, type ScrollAreaProps, type ScrollAreaSlots } from "./ScrollArea/ScrollArea.vue";
 export {
   default as Splitter,
   type SplitterProps,

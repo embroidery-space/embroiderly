@@ -1,4 +1,7 @@
 <script setup lang="ts" generic="T extends BasePaletteItem, V">
+import { ScrollArea } from "@embroiderly/ui";
+import type { ScrollType } from "@embroiderly/ui";
+
 import { insertNodeAt, removeNode, useSortable } from "@vueuse/integrations/useSortable";
 import { dequal } from "dequal/lite";
 import type { AcceptableValue } from "reka-ui";
@@ -15,6 +18,7 @@ interface PaletteListProps<T> {
   disabled?: boolean;
   multiple?: boolean;
   draggable?: boolean;
+  scrollType?: ScrollType;
   displaySettings: PaletteSettings;
 }
 
@@ -25,6 +29,7 @@ const {
   disabled = false,
   multiple = false,
   draggable = false,
+  scrollType = "hover",
   displaySettings,
 } = defineProps<PaletteListProps<T>>();
 const emit = defineEmits<{
@@ -88,7 +93,7 @@ function optionIsSelected(option: T) {
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex min-h-0 grow flex-col">
     <div v-if="$slots.header" class="border-b border-default px-2 py-1">
       <slot name="header"></slot>
     </div>
@@ -105,39 +110,41 @@ function optionIsSelected(option: T) {
         </Listbox.Filter>
       </div>
 
-      <Listbox.Content
-        ref="content"
-        class="grid gap-1 overflow-y-auto p-1 outline-none"
-        :style="{
-          gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
-        }"
-      >
-        <template v-if="options.length">
-          <Listbox.Item
-            v-for="option in options"
-            :key="option.index"
-            :value="optionValue?.(option) ?? option"
-            as-child
-            @dblclick="handleOptionDoubleClick($event, option)"
-          >
-            <slot
-              name="option"
-              v-bind="{
-                option,
-                selected: optionIsSelected(option),
-                displaySettings,
-              }"
+      <ScrollArea :type="scrollType">
+        <Listbox.Content
+          ref="content"
+          class="grid min-h-full gap-1 p-1 outline-none"
+          :style="{
+            gridTemplateColumns: `repeat(${options.length ? displaySettings.columnsNumber : 1}, minmax(0px, 1fr))`,
+          }"
+        >
+          <template v-if="options.length">
+            <Listbox.Item
+              v-for="option in options"
+              :key="option.index"
+              :value="optionValue?.(option) ?? option"
+              as-child
+              @dblclick="handleOptionDoubleClick($event, option)"
             >
-              <PaletteListItem
-                :palette-item="option"
-                :selected="optionIsSelected(option)"
-                :display-settings="displaySettings"
-              />
-            </slot>
-          </Listbox.Item>
-        </template>
-        <p v-else class="px-2">{{ $t("palette-empty") }}</p>
-      </Listbox.Content>
+              <slot
+                name="option"
+                v-bind="{
+                  option,
+                  selected: optionIsSelected(option),
+                  displaySettings,
+                }"
+              >
+                <PaletteListItem
+                  :palette-item="option"
+                  :selected="optionIsSelected(option)"
+                  :display-settings="displaySettings"
+                />
+              </slot>
+            </Listbox.Item>
+          </template>
+          <p v-else class="px-2">{{ $t("palette-empty") }}</p>
+        </Listbox.Content>
+      </ScrollArea>
     </Listbox.Root>
 
     <div v-if="$slots.footer" class="border-t border-default px-2 py-1">
