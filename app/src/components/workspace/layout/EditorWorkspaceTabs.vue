@@ -17,7 +17,7 @@ const patternFileStore = usePatternFileStore();
     activation-mode="manual"
     :ui="{
       root: 'border-b border-default',
-      list: 'rounded-none border-x border-default bg-transparent p-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+      list: 'rounded-none border-x border-default bg-transparent p-0',
       indicator: 'inset-0 h-full rounded-none shadow-none',
       trigger:
         'h-full min-w-20 rounded-none border-default data-[state=inactive]:border-r hover:data-[state=inactive]:bg-accented',

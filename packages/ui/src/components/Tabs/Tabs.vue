@@ -3,6 +3,8 @@ import type { TabsRootProps } from "reka-ui";
 import { Tabs } from "reka-ui/namespaced";
 import { computed } from "vue";
 
+import ScrollArea from "../ScrollArea/ScrollArea.vue";
+
 import { TabsTheme } from "./Tabs.theme.ts";
 import type { TabsThemeSlots, TabsThemeVariants } from "./Tabs.theme.ts";
 
@@ -87,26 +89,34 @@ const ui = computed(() => {
     <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
       <slot name="list-leading" />
 
-      <Tabs.List data-slot="list" :class="ui.list({ class: props.ui?.list })">
-        <Tabs.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
+      <ScrollArea
+        :orientation="orientation"
+        :size="size"
+        type="hover"
+        data-slot="scroll"
+        :class="ui.scroll({ class: props.ui?.scroll })"
+      >
+        <Tabs.List data-slot="list" :class="ui.list({ class: props.ui?.list })">
+          <Tabs.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
 
-        <Tabs.Trigger
-          v-for="(item, index) in items"
-          :key="index"
-          :value="item.value ?? String(index)"
-          :disabled="item.disabled"
-          data-slot="trigger"
-          :class="ui.trigger({ class: props.ui?.trigger })"
-        >
-          <slot name="leading" :item="item" :index="index" />
+          <Tabs.Trigger
+            v-for="(item, index) in items"
+            :key="index"
+            :value="item.value ?? String(index)"
+            :disabled="item.disabled"
+            data-slot="trigger"
+            :class="ui.trigger({ class: props.ui?.trigger })"
+          >
+            <slot name="leading" :item="item" :index="index" />
 
-          <span v-if="item.label || !!slots.default" data-slot="label" :class="ui.label({ class: props.ui?.label })">
-            <slot :item="item" :index="index">{{ item.label }}</slot>
-          </span>
+            <span v-if="item.label || !!slots.default" data-slot="label" :class="ui.label({ class: props.ui?.label })">
+              <slot :item="item" :index="index">{{ item.label }}</slot>
+            </span>
 
-          <slot name="trailing" :item="item" :index="index" />
-        </Tabs.Trigger>
-      </Tabs.List>
+            <slot name="trailing" :item="item" :index="index" />
+          </Tabs.Trigger>
+        </Tabs.List>
+      </ScrollArea>
 
       <slot name="list-trailing" />
     </div>
