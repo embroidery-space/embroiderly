@@ -4,18 +4,7 @@ exports[`ScrollArea > renders correctly with class 1`] = `
 <div>
   <div class="h-64 overflow-hidden relative" data-slot="root" dir="ltr">
     <div class="size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
-    <style>
-      /* Hide scrollbars cross-browser and enable momentum scroll for touch devices */
-      [data-reka-scroll-area-viewport] {
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      [data-reka-scroll-area-viewport]::-webkit-scrollbar {
-        display: none;
-      }
-    </style>
+    <style></style>
     <div class="flex flex-col h-full p-1 select-none touch-none w-3" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
       <div class="bg-inverted/75 relative rounded-full" data-slot="thumb" data-state="visible"></div>
     </div>
@@ -27,18 +16,7 @@ exports[`ScrollArea > renders correctly with orientation horizontal 1`] = `
 <div>
   <div class="overflow-hidden relative" data-slot="root" dir="ltr">
     <div class="size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
-    <style>
-      /* Hide scrollbars cross-browser and enable momentum scroll for touch devices */
-      [data-reka-scroll-area-viewport] {
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      [data-reka-scroll-area-viewport]::-webkit-scrollbar {
-        display: none;
-      }
-    </style>
+    <style></style>
     <div class="flex flex-row h-3 p-1 select-none touch-none w-full" data-orientation="horizontal" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
       <div class="bg-inverted/75 relative rounded-full" data-slot="thumb" data-state="visible"></div>
     </div>
@@ -50,18 +28,7 @@ exports[`ScrollArea > renders correctly with orientation vertical 1`] = `
 <div>
   <div class="overflow-hidden relative" data-slot="root" dir="ltr">
     <div class="size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
-    <style>
-      /* Hide scrollbars cross-browser and enable momentum scroll for touch devices */
-      [data-reka-scroll-area-viewport] {
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      [data-reka-scroll-area-viewport]::-webkit-scrollbar {
-        display: none;
-      }
-    </style>
+    <style></style>
     <div class="flex flex-col h-full p-1 select-none touch-none w-3" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
       <div class="bg-inverted/75 relative rounded-full" data-slot="thumb" data-state="visible"></div>
     </div>
@@ -73,18 +40,7 @@ exports[`ScrollArea > renders correctly with ui 1`] = `
 <div>
   <div class="overflow-hidden relative" data-slot="root" dir="ltr">
     <div class="size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
-    <style>
-      /* Hide scrollbars cross-browser and enable momentum scroll for touch devices */
-      [data-reka-scroll-area-viewport] {
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      [data-reka-scroll-area-viewport]::-webkit-scrollbar {
-        display: none;
-      }
-    </style>
+    <style></style>
     <div class="flex flex-col h-full p-1 select-none touch-none w-3" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
       <div class="bg-primary relative rounded-full" data-slot="thumb" data-state="visible"></div>
     </div>
