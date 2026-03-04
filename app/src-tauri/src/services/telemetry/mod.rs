@@ -1,4 +1,5 @@
-pub use {better_posthog as posthog, sentry};
+pub use better_posthog as posthog;
+pub use sentry;
 
 mod diagnostics;
 mod events;
