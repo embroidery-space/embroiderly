@@ -17,7 +17,6 @@ const patternFileStore = usePatternFileStore();
     color="neutral"
     activation-mode="manual"
     :ui="{
-      root: 'border-b border-default',
       list: 'rounded-none border-x border-default bg-transparent p-0',
       indicator: 'inset-0 h-full rounded-none shadow-none',
       trigger:

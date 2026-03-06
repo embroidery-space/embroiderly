@@ -222,7 +222,7 @@ useShortcuts({
 </script>
 
 <template>
-  <div class="flex flex-col gap-1">
+  <div class="flex flex-col gap-1 p-1">
     <ToolSelect
       v-model="editorStateStore.selectedTool"
       :items="fullstitches"

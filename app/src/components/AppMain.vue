@@ -128,10 +128,11 @@ onMounted(async () => {
       <SplitterPanel>
         <BlockUI
           ref="drop-zone"
+          as-child
           :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
           class="size-full"
         >
-          <WelcomeScreen v-if="!patternStore.pattern" class="size-full" />
+          <WelcomeScreen v-if="!patternStore.pattern" />
           <PatternWorkspace
             :options="{
               render: {
