@@ -4,7 +4,7 @@ import type { ContextMenuItem, DropdownMenuItem } from "@embroiderly/ui";
 
 import { computed, reactive, ref, watch } from "vue";
 
-import { IconCheck, IconMenu, IconPen } from "~/assets/icons/";
+import { IconCheck, IconMenu, IconEdit } from "~/assets/icons/";
 import {
   PaletteCatalog,
   PaletteDisplaySettings,
@@ -356,7 +356,7 @@ async function updatePaletteDisplaySettings() {
               color="neutral"
               size="sm"
               :disabled="paletteIsDisabled"
-              :icon="editorStateStore.paletteMode === PaletteMode.Editing ? IconCheck : IconPen"
+              :icon="editorStateStore.paletteMode === PaletteMode.Editing ? IconCheck : IconEdit"
               :tooltip="editorStateStore.paletteMode === PaletteMode.Editing ? $t('palette-save') : $t('palette-edit')"
               :delay-duration="200"
               @click="

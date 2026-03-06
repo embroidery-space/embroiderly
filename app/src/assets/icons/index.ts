@@ -1,36 +1,34 @@
-// Lucide
-export { default as IconCheck } from "~icons/lucide/check";
-export { default as IconChevronDown } from "~icons/lucide/chevron-down";
-export { default as IconChevronUp } from "~icons/lucide/chevron-up";
-export { default as IconChevronLeft } from "~icons/lucide/chevron-left";
-export { default as IconChevronRight } from "~icons/lucide/chevron-right";
-export { default as IconExternalLink } from "~icons/lucide/external-link";
-export { default as IconFile } from "~icons/lucide/file";
-export { default as IconFilePlus } from "~icons/lucide/file-plus";
-export { default as IconFileUp } from "~icons/lucide/file-up";
-export { default as IconImage } from "~icons/lucide/image";
-export { default as IconImageOff } from "~icons/lucide/image-off";
-export { default as IconLaptopMinimal } from "~icons/lucide/laptop-minimal";
-export { default as IconLayers } from "~icons/lucide/layers";
-export { default as IconLink } from "~icons/lucide/link";
-export { default as IconUnlink } from "~icons/lucide/unlink";
-export { default as IconLoaderCircle } from "~icons/lucide/loader-circle";
-export { default as IconMenu } from "~icons/lucide/menu";
-export { default as IconMinus } from "~icons/lucide/minus";
-export { default as IconMoon } from "~icons/lucide/moon";
-export { default as IconPen } from "~icons/lucide/pen";
-export { default as IconPlus } from "~icons/lucide/plus";
-export { default as IconRedo } from "~icons/lucide/redo";
-export { default as IconSearch } from "~icons/lucide/search";
-export { default as IconSettings } from "~icons/lucide/settings";
-export { default as IconSun } from "~icons/lucide/sun";
-export { default as IconUndo } from "~icons/lucide/undo";
-export { default as IconX } from "~icons/lucide/x";
-export { default as IconZoomIn } from "~icons/lucide/zoom-in";
-export { default as IconZoomOut } from "~icons/lucide/zoom-out";
-
 // Material Symbols
-export { default as IconArrowSelectorTool } from "~icons/material-symbols/arrow-selector-tool";
+export { default as IconCheck } from "~icons/material-symbols/check-rounded";
+export { default as IconChevronUp } from "~icons/material-symbols/keyboard-arrow-up-rounded";
+export { default as IconChevronDown } from "~icons/material-symbols/keyboard-arrow-down-rounded";
+export { default as IconChevronLeft } from "~icons/material-symbols/chevron-left-rounded";
+export { default as IconChevronRight } from "~icons/material-symbols/chevron-right-rounded";
+export { default as IconCursor } from "~icons/material-symbols/arrow-selector-tool-rounded";
+export { default as IconExternalLink } from "~icons/material-symbols/open-in-new-rounded";
+export { default as IconFile } from "~icons/material-symbols/draft-rounded";
+export { default as IconFileCreate } from "~icons/material-symbols/edit-document-rounded";
+export { default as IconFileOpen } from "~icons/material-symbols/file-open-rounded";
+export { default as IconImage } from "~icons/material-symbols/image-rounded";
+export { default as IconImageOff } from "~icons/material-symbols/hide-image-rounded";
+export { default as IconLayers } from "~icons/material-symbols/layers-rounded";
+export { default as IconLink } from "~icons/material-symbols/link-rounded";
+export { default as IconUnlink } from "~icons/material-symbols/link-off-rounded";
+export { default as IconLoaderCircle } from "~icons/material-symbols/progress-activity";
+export { default as IconMenu } from "~icons/material-symbols/menu-rounded";
+export { default as IconMinus } from "~icons/material-symbols/remove-rounded";
+export { default as IconPlus } from "~icons/material-symbols/add-rounded";
+export { default as IconSearch } from "~icons/material-symbols/search-rounded";
+export { default as IconSettings } from "~icons/material-symbols/settings-rounded";
+export { default as IconSun } from "~icons/material-symbols/sunny-rounded";
+export { default as IconMoon } from "~icons/material-symbols/nightlight-rounded";
+export { default as IconLaptop } from "~icons/material-symbols/computer-rounded";
+export { default as IconUndo } from "~icons/material-symbols/undo-rounded";
+export { default as IconRedo } from "~icons/material-symbols/redo-rounded";
+export { default as IconEdit } from "~icons/material-symbols/edit-rounded";
+export { default as IconClose } from "~icons/material-symbols/close-rounded";
+export { default as IconZoomIn } from "~icons/material-symbols/zoom-in-rounded";
+export { default as IconZoomOut } from "~icons/material-symbols/zoom-out-rounded";
 
 // Stitches (custom collection)
 export { default as IconStitchFull } from "~icons/stitches/full";

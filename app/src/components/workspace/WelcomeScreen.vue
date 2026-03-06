@@ -5,7 +5,7 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
-import { IconExternalLink, IconFile, IconFilePlus, IconFileUp } from "~/assets/icons/";
+import { IconExternalLink, IconFile, IconFileCreate, IconFileOpen } from "~/assets/icons/";
 import { useEditorModals, useI18n } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore } from "~/stores/";
@@ -114,14 +114,14 @@ async function openRecentFile(filePath: string) {
           <div class="flex max-w-max flex-col gap-y-1">
             <Button
               variant="ghost"
-              :icon="IconFilePlus"
+              :icon="IconFileCreate"
               :label="$t('welcome-create-pattern')"
               class="justify-start"
               @click="createPattern"
             />
             <Button
               variant="ghost"
-              :icon="IconFileUp"
+              :icon="IconFileOpen"
               :label="$t('welcome-open-pattern')"
               class="justify-start"
               @click="openPattern"
