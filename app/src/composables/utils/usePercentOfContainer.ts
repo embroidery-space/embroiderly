@@ -33,6 +33,8 @@ export function usePercentOfContainer(container: MaybeComputedElementRef) {
    */
   function toPercent(value: number, unit: "px" | "rem") {
     return computed(() => {
+      if (containerWidth.value <= 0) return 0;
+
       const px = unit === "rem" ? value * rootFontSize.value : value;
       return (px / containerWidth.value) * 100;
     });
