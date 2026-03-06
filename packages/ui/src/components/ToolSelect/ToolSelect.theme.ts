@@ -14,21 +14,21 @@ export const ToolSelectTheme = tv({
     size: {
       sm: {
         mainButton: "p-1",
+        mainButtonIcon: "size-3",
+        dropdownButton: "size-2",
+        dropdownButtonIcon: "size-2",
+      },
+      md: {
+        mainButton: "p-1.5",
         mainButtonIcon: "size-4",
         dropdownButton: "size-2.5",
         dropdownButtonIcon: "size-2.5",
       },
-      md: {
-        mainButton: "p-1.5",
+      lg: {
+        mainButton: "p-2",
         mainButtonIcon: "size-5",
         dropdownButton: "size-3",
         dropdownButtonIcon: "size-3",
-      },
-      lg: {
-        mainButton: "p-2",
-        mainButtonIcon: "size-6",
-        dropdownButton: "size-3.5",
-        dropdownButtonIcon: "size-3.5",
       },
     },
     selected: {

@@ -3,7 +3,7 @@
 exports[`ToolSelect > Rendering States > renders correctly multiple items 1`] = `
 <div>
   <div class="inline-block relative" data-slot="root">
-    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
+    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
@@ -20,7 +20,7 @@ exports[`ToolSelect > Rendering States > renders correctly multiple items 1`] = 
 exports[`ToolSelect > Rendering States > renders correctly single item 1`] = `
 <div>
   <div class="inline-block relative" data-slot="root">
-    <button class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
+    <button class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
@@ -32,7 +32,7 @@ exports[`ToolSelect > Rendering States > renders correctly single item 1`] = `
 exports[`ToolSelect > Rendering States > renders correctly when disabled 1`] = `
 <div>
   <div class="inline-block opacity-75 relative" data-slot="root">
-    <button aria-expanded="false" aria-haspopup="menu" class="cursor-not-allowed focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" disabled type="button">
+    <button aria-expanded="false" aria-haspopup="menu" class="cursor-not-allowed focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" disabled type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
@@ -49,7 +49,7 @@ exports[`ToolSelect > Rendering States > renders correctly when disabled 1`] = `
 exports[`ToolSelect > Rendering States > renders correctly when selected 1`] = `
 <div>
   <div class="inline-block relative" data-slot="root">
-    <button aria-expanded="false" aria-haspopup="menu" class="bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 hover:bg-accented inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
+    <button aria-expanded="false" aria-haspopup="menu" class="bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 hover:bg-accented inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
@@ -66,7 +66,7 @@ exports[`ToolSelect > Rendering States > renders correctly when selected 1`] = `
 exports[`ToolSelect > Rendering States > renders correctly with class 1`] = `
 <div>
   <div class="custom-class inline-block relative" data-slot="root">
-    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
+    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
@@ -83,7 +83,7 @@ exports[`ToolSelect > Rendering States > renders correctly with class 1`] = `
 exports[`ToolSelect > Rendering States > renders correctly with custom selection color 1`] = `
 <div>
   <div class="inline-block relative" data-slot="root">
-    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
+    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
@@ -101,23 +101,6 @@ exports[`ToolSelect > Rendering States > renders correctly with size lg 1`] = `
 <div>
   <div class="inline-block relative" data-slot="root">
     <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-      </svg>
-    </button>
-    <button aria-expanded="false" aria-haspopup="menu" aria-hidden="true" class="absolute border-none bottom-0 not-disabled:hover:cursor-pointer p-0 right-0 rounded-sm size-3.5" data-slot="dropdownButton" data-state="closed" id="reka-dropdown-menu-trigger-v-1" tabindex="-1" type="button">
-      <svg aria-hidden="true" class="-rotate-45 -translate-1/2 absolute iconify iconify--lucide left-1/2 size-3.5 top-1/2" data-slot="dropdownButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-      </svg>
-    </button>
-  </div>
-</div>
-`;
-
-exports[`ToolSelect > Rendering States > renders correctly with size md 1`] = `
-<div>
-  <div class="inline-block relative" data-slot="root">
-    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
@@ -131,10 +114,10 @@ exports[`ToolSelect > Rendering States > renders correctly with size md 1`] = `
 </div>
 `;
 
-exports[`ToolSelect > Rendering States > renders correctly with size sm 1`] = `
+exports[`ToolSelect > Rendering States > renders correctly with size md 1`] = `
 <div>
   <div class="inline-block relative" data-slot="root">
-    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
+    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
@@ -148,10 +131,27 @@ exports[`ToolSelect > Rendering States > renders correctly with size sm 1`] = `
 </div>
 `;
 
+exports[`ToolSelect > Rendering States > renders correctly with size sm 1`] = `
+<div>
+  <div class="inline-block relative" data-slot="root">
+    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
+    </button>
+    <button aria-expanded="false" aria-haspopup="menu" aria-hidden="true" class="absolute border-none bottom-0 not-disabled:hover:cursor-pointer p-0 right-0 rounded-sm size-2" data-slot="dropdownButton" data-state="closed" id="reka-dropdown-menu-trigger-v-1" tabindex="-1" type="button">
+      <svg aria-hidden="true" class="-rotate-45 -translate-1/2 absolute iconify iconify--lucide left-1/2 size-2 top-1/2" data-slot="dropdownButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
 exports[`ToolSelect > Rendering States > renders correctly with ui 1`] = `
 <div>
   <div class="custom-root inline-block relative" data-slot="root">
-    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
+    <button aria-expanded="false" aria-haspopup="menu" class="focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:active:bg-elevated not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="mainButton" data-state="closed" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="mainButtonIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>

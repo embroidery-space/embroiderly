@@ -41,7 +41,7 @@ export interface ToolToggleGroupProps extends Pick<TooltipProps, "delayDuration"
   orientation?: "vertical" | "horizontal";
   /**
    * The size of the toggle group.
-   * @default "md"
+   * @default "lg"
    */
   size?: ToolToggleGroupThemeVariants["size"];
 
@@ -57,7 +57,7 @@ export interface ToolToggleGroupProps extends Pick<TooltipProps, "delayDuration"
 
 const modelValue = defineModel<AcceptableValue>();
 const props = withDefaults(defineProps<ToolToggleGroupProps>(), {
-  size: "md",
+  size: "lg",
   orientation: "horizontal",
 });
 

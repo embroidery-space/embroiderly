@@ -14,17 +14,17 @@ export const ToolToggleTheme = tv({
     size: {
       sm: {
         base: "p-1",
-        icon: "size-4",
+        icon: "size-3",
         wrapper: "text-xs",
       },
       md: {
         base: "p-1.5",
-        icon: "size-5",
+        icon: "size-4",
         wrapper: "text-sm",
       },
       lg: {
         base: "p-2",
-        icon: "size-6",
+        icon: "size-5",
         wrapper: "text-base",
       },
     },

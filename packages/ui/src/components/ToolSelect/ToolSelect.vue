@@ -31,7 +31,7 @@ export interface ToolSelectProps extends Pick<TooltipProps, "delayDuration"> {
 
   /**
    * The size of the tool select.
-   * @default "md"
+   * @default "lg"
    */
   size?: ToolSelectThemeVariants["size"];
   /** Custom selection color. */
@@ -49,7 +49,7 @@ export interface ToolSelectProps extends Pick<TooltipProps, "delayDuration"> {
 
 const model = defineModel<unknown>();
 const props = withDefaults(defineProps<ToolSelectProps>(), {
-  size: "md",
+  size: "lg",
 });
 
 const { icons } = useComponentIcons();
