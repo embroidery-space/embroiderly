@@ -47,7 +47,6 @@
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "catalog:",
     "@iconify-json/material-symbols": "catalog:",
     "@pinia/testing": "catalog:",
     "@pixi/devtools": "catalog:",
