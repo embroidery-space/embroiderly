@@ -453,9 +453,6 @@ importers:
         specifier: 'catalog:'
         version: 3.5.29(typescript@5.9.3)
     devDependencies:
-      '@iconify-json/lucide':
-        specifier: 'catalog:'
-        version: 1.2.95
       '@iconify-json/material-symbols':
         specifier: 'catalog:'
         version: 1.2.59

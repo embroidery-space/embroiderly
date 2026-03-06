@@ -4,7 +4,7 @@ import type { TabsItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
-import { IconLaptopMinimal, IconMoon, IconSun } from "~/assets/icons/";
+import { IconLaptop, IconMoon, IconSun } from "~/assets/icons/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { ANY_PATTERN_FILTER } from "~/constants/";
 import { StartupAction, useSettingsStore } from "~/stores/";
@@ -42,7 +42,7 @@ const themeIcon = computed(() => themeOptions.value.find((item) => item!.value =
 const themeOptions = computed(() => [
   { label: fluent.$t("settings-theme-dark"), value: "dark", icon: IconMoon },
   { label: fluent.$t("settings-theme-light"), value: "light", icon: IconSun },
-  { label: fluent.$t("settings-theme-system"), value: "system", icon: IconLaptopMinimal },
+  { label: fluent.$t("settings-theme-system"), value: "system", icon: IconLaptop },
 ]);
 const scaleOptions = computed(() => [
   { label: fluent.$t("settings-scale-xx-small"), value: "xx-small" },

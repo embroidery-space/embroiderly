@@ -6,7 +6,7 @@ import type { ToolSelectItem } from "@embroiderly/ui";
 import { computed } from "vue";
 
 import {
-  IconArrowSelectorTool,
+  IconCursor,
   IconStitchBack,
   IconStitchBead,
   IconStitchFrenchKnot,
@@ -184,7 +184,7 @@ const cursor = computed<ToolSelectItem[]>(() => [
   {
     value: tools.Cursor,
     label: fluent.$t("palette-toolbar-cursor"),
-    icon: IconArrowSelectorTool,
+    icon: IconCursor,
     shortcut: "C",
   },
 ]);
