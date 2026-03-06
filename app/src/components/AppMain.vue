@@ -29,7 +29,7 @@ const palettePanelDefaultSize = toPercent(15.5, "rem");
 const palettePanelCollapsedSize = toPercent(2.75, "rem");
 
 const canvasToolbarDefaultSize = toPercent(12, "rem");
-const canvasToolbarCollapsedSize = toPercent(2.75, "rem");
+const canvasToolbarCollapsedSize = toPercent(2.25, "rem");
 
 const dropZoneContainer = useTemplateRef("drop-zone");
 const { isOverDropZone } = useDragDrop(dropZoneContainer, async (paths) => {
