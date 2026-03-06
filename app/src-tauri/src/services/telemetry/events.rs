@@ -92,6 +92,12 @@ pub enum AppEvent {
   SymbolsVisibilityChanged {
     visible: bool,
   },
+  GridVisibilityChanged {
+    visible: bool,
+  },
+  RulersVisibilityChanged {
+    visible: bool,
+  },
   LayersVisibilityChanged {
     visibility: LayersVisibility,
   },
@@ -134,6 +140,8 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
 
       Self::DisplayModeChanged { .. } => "display_mode_changed",
       Self::SymbolsVisibilityChanged { .. } => "symbols_visibility_changed",
+      Self::GridVisibilityChanged { .. } => "grid_visibility_changed",
+      Self::RulersVisibilityChanged { .. } => "rulers_visibility_changed",
       Self::LayersVisibilityChanged { .. } => "layers_visibility_changed",
 
       Self::PalettesImported { .. } => "palettes_imported",
@@ -301,6 +309,8 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
 
       Self::DisplayModeChanged { mode } => vec![("display_mode", json!(mode.to_string()))],
       Self::SymbolsVisibilityChanged { visible } => vec![("symbols_visible", json!(visible))],
+      Self::GridVisibilityChanged { visible } => vec![("grid_visible", json!(visible))],
+      Self::RulersVisibilityChanged { visible } => vec![("rulers_visible", json!(visible))],
       Self::LayersVisibilityChanged { visibility } => vec![
         ("reference_image_visible", json!(visibility.reference_image)),
         ("full_stitches_visible", json!(visibility.fullstitches)),
@@ -312,8 +322,6 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
         ("french_knots_visible", json!(visibility.frenchknots)),
         ("beads_visible", json!(visibility.beads)),
         ("special_stitches_visible", json!(visibility.specialstitches)),
-        ("grid_visible", json!(visibility.grid)),
-        ("rulers_visible", json!(visibility.rulers)),
       ],
 
       Self::PalettesImported {

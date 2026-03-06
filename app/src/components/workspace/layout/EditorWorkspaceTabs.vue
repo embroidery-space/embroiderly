@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { Button, ButtonIcon, Tabs } from "@embroiderly/ui";
 
-import { IconPanelLeftClose, IconPanelLeftOpen, IconPanelRight, IconClose } from "~/assets/icons/";
+import {
+  IconPanelLeftClose,
+  IconPanelLeftOpen,
+  IconPanelRightClose,
+  IconPanelRightOpen,
+  IconClose,
+} from "~/assets/icons/";
 import { useEditorStateStore, usePatternFileStore, usePatternStore } from "~/stores/";
 
 const editorStateStore = useEditorStateStore();
@@ -55,9 +61,10 @@ const patternFileStore = usePatternFileStore();
         color="neutral"
         variant="ghost"
         size="lg"
-        :icon="IconPanelRight"
-        tooltip="Hide right panel"
+        :icon="editorStateStore.canvasPanelCollapsed ? IconPanelRightOpen : IconPanelRightClose"
+        :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-panel-expand') : $t('canvas-panel-collapse')"
         class="rounded-none px-3"
+        @click="editorStateStore.canvasPanelCollapsed = !editorStateStore.canvasPanelCollapsed"
       />
     </template>
   </Tabs>

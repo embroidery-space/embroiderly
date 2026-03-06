@@ -10,8 +10,7 @@ import { useDragDrop, useI18n, useTauriListener } from "~/composables/";
 import { usePercentOfContainer } from "~/composables/utils/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
-import { CanvasToolbar } from "./canvas/";
-import { WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
+import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
 
 const appWindow = getCurrentWebviewWindow();
 
@@ -28,6 +27,9 @@ const { toPercent } = usePercentOfContainer(useTemplateRef("splitter"));
 
 const palettePanelDefaultSize = toPercent(15.5, "rem");
 const palettePanelCollapsedSize = toPercent(2.75, "rem");
+
+const canvasToolbarDefaultSize = toPercent(12, "rem");
+const canvasToolbarCollapsedSize = toPercent(2.75, "rem");
 
 const dropZoneContainer = useTemplateRef("drop-zone");
 const { isOverDropZone } = useDragDrop(dropZoneContainer, async (paths) => {
@@ -125,6 +127,7 @@ onMounted(async () => {
         :min-size="palettePanelDefaultSize"
         :default-size="editorStateStore.palettePanelSize ?? palettePanelDefaultSize"
       />
+
       <SplitterPanel>
         <BlockUI
           ref="drop-zone"
@@ -145,7 +148,13 @@ onMounted(async () => {
           />
         </BlockUI>
       </SplitterPanel>
+
+      <WorkspaceCanvasPanel
+        collapsible
+        :collapsed-size="canvasToolbarCollapsedSize"
+        :min-size="canvasToolbarDefaultSize"
+        :default-size="editorStateStore.canvasPanelSize ?? canvasToolbarDefaultSize"
+      />
     </Splitter>
-    <CanvasToolbar class="h-full border-l border-default" />
   </main>
 </template>

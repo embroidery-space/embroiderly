@@ -51,6 +51,14 @@ export function showSymbols(patternId: string, value: boolean) {
   return invoke<void>("show_symbols", { value }, { headers: { patternId } });
 }
 
+export function showGrid(patternId: string, value: boolean) {
+  return invoke<void>("show_grid", { value }, { headers: { patternId } });
+}
+
+export function showRulers(patternId: string, value: boolean) {
+  return invoke<void>("show_rulers", { value }, { headers: { patternId } });
+}
+
 export function setLayersVisibility(patternId: string, visibility: LayersVisibility) {
   return invoke<void>("set_layers_visibility", LayersVisibility.serialize(visibility), { headers: { patternId } });
 }

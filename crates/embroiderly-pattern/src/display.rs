@@ -8,6 +8,8 @@ pub struct DisplaySettings {
   pub grid: Grid,
   pub display_mode: DisplayMode,
   pub show_symbols: bool,
+  pub show_grid: bool,
+  pub show_rulers: bool,
   pub palette_settings: PaletteSettings,
   pub layers_visibility: LayersVisibility,
 }
@@ -18,6 +20,8 @@ impl Default for DisplaySettings {
       grid: Grid::default(),
       display_mode: DisplayMode::Solid,
       show_symbols: false,
+      show_grid: true,
+      show_rulers: true,
       palette_settings: PaletteSettings::default(),
       layers_visibility: LayersVisibility::default(),
     }
@@ -181,9 +185,6 @@ pub struct LayersVisibility {
   pub beads: bool,
 
   pub specialstitches: bool,
-
-  pub grid: bool,
-  pub rulers: bool,
 }
 
 impl Default for LayersVisibility {
@@ -204,9 +205,6 @@ impl Default for LayersVisibility {
       beads: true,
 
       specialstitches: true,
-
-      grid: true,
-      rulers: true,
     }
   }
 }

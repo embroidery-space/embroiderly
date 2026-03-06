@@ -8,7 +8,7 @@ if [ -z "$file" ] || [ "$file" == "null" ] || [ ! -f "$file" ]; then
 fi
 
 if [[ "$file" == *.rs ]]; then
-  cargo +nightly fmt "$file"
+  cargo +nightly fmt -- "$file"
 else
-  pnpm exec oxfmt "$file"
+  pnpm exec oxfmt -- "$file"
 fi

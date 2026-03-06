@@ -22,6 +22,9 @@ export const useEditorStateStore = defineStore(
     const palettePanelCollapsed = ref(false);
     const palettePanelSize = ref<number>();
 
+    const canvasPanelCollapsed = ref(false);
+    const canvasPanelSize = ref<number>();
+
     const selectedTool = ref<PatternEditorTool>(tools.FullStitch);
     const selectedPaletteItemIndex = ref<number>();
 
@@ -41,6 +44,8 @@ export const useEditorStateStore = defineStore(
     return {
       palettePanelCollapsed,
       palettePanelSize,
+      canvasPanelCollapsed,
+      canvasPanelSize,
       selectedTool,
       selectedPaletteItemIndex,
       paletteMode,
@@ -51,7 +56,7 @@ export const useEditorStateStore = defineStore(
   {
     tauri: {
       autoStart: true,
-      filterKeys: ["palettePanelCollapsed", "palettePanelSize"],
+      filterKeys: ["palettePanelCollapsed", "palettePanelSize", "canvasPanelCollapsed", "canvasPanelSize"],
       filterKeysStrategy: "pick",
     },
   },

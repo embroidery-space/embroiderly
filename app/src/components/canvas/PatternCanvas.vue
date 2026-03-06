@@ -81,6 +81,12 @@ function updatePatternView(pattern: Pattern) {
     (e) => patternView.setShowSymbols((e as CustomEvent).detail),
     { signal },
   );
+  pattern.addEventListener(PatternEvent.UpdateShowGrid, (e) => patternView.setShowGrid((e as CustomEvent).detail), {
+    signal,
+  });
+  pattern.addEventListener(PatternEvent.UpdateShowRulers, (e) => patternView.setShowRulers((e as CustomEvent).detail), {
+    signal,
+  });
   pattern.addEventListener(
     PatternEvent.UpdateLayersVisibility,
     (e) => patternView.setLayersVisibility((e as CustomEvent).detail),
@@ -115,6 +121,8 @@ defineExpose({
   resizeCanvas: patternApplication.resize.bind(patternApplication),
 
   setShowSymbols: (value: boolean) => patternApplication.view?.setShowSymbols(value),
+  setShowGrid: (value: boolean) => patternApplication.view?.setShowGrid(value),
+  setShowRulers: (value: boolean) => patternApplication.view?.setShowRulers(value),
   setLayersVisibility: (value: LayersVisibility) => patternApplication.view?.setLayersVisibility(value),
 
   getReferenceImageSettings: () => patternApplication.view?.referenceImageSettings,

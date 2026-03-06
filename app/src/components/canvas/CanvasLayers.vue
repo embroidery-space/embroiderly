@@ -32,9 +32,6 @@ const layers = defineModel<LayersVisibility>({ required: true });
         :label="$t('canvas-toolbar-layers-specialstitches')"
         class="col-span-2"
       />
-
-      <Checkbox v-model="layers.grid" :label="$t('canvas-toolbar-layers-grid')" />
-      <Checkbox v-model="layers.rulers" :label="$t('canvas-toolbar-layers-rulers')" />
     </div>
   </div>
 </template>

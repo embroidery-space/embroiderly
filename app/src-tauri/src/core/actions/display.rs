@@ -2,6 +2,8 @@ use std::sync::OnceLock;
 
 use anyhow::Result;
 use embroiderly_pattern::{DisplayMode, LayersVisibility, PatternProject};
+// NOTE: The `grid` and `rulers` fields were removed from `LayersVisibility`
+// and moved to `DisplaySettings` as `show_grid` and `show_rulers`.
 use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
@@ -81,6 +83,56 @@ impl<R: tauri::Runtime> Action<R> for ShowSymbolsAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     patproj.display_settings.show_symbols = !self.value;
     window.emit("display:show_symbols", !self.value)?;
+    Ok(())
+  }
+}
+
+#[derive(Clone)]
+pub struct ShowGridAction {
+  value: bool,
+}
+
+impl ShowGridAction {
+  pub const fn new(value: bool) -> Self {
+    Self { value }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for ShowGridAction {
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    patproj.display_settings.show_grid = self.value;
+    window.emit("display:show_grid", self.value)?;
+    Ok(())
+  }
+
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    patproj.display_settings.show_grid = !self.value;
+    window.emit("display:show_grid", !self.value)?;
+    Ok(())
+  }
+}
+
+#[derive(Clone)]
+pub struct ShowRulersAction {
+  value: bool,
+}
+
+impl ShowRulersAction {
+  pub const fn new(value: bool) -> Self {
+    Self { value }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for ShowRulersAction {
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    patproj.display_settings.show_rulers = self.value;
+    window.emit("display:show_rulers", self.value)?;
+    Ok(())
+  }
+
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    patproj.display_settings.show_rulers = !self.value;
+    window.emit("display:show_rulers", !self.value)?;
     Ok(())
   }
 }

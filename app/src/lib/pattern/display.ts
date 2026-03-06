@@ -117,9 +117,6 @@ export class LayersVisibility {
 
   specialstitches: boolean;
 
-  grid: boolean;
-  rulers: boolean;
-
   constructor(data: b.infer<typeof LayersVisibility.schema>) {
     this.referenceImage = data.referenceImage;
 
@@ -136,9 +133,6 @@ export class LayersVisibility {
     this.beads = data.beads;
 
     this.specialstitches = data.specialstitches;
-
-    this.grid = data.grid;
-    this.rulers = data.rulers;
   }
 
   static readonly schema = b.struct({
@@ -156,9 +150,6 @@ export class LayersVisibility {
     beads: b.bool(),
 
     specialstitches: b.bool(),
-
-    grid: b.bool(),
-    rulers: b.bool(),
   });
 
   static serialize(data: LayersVisibility) {
@@ -189,9 +180,6 @@ export class LayersVisibility {
       beads: value,
 
       specialstitches: value,
-
-      grid: value,
-      rulers: value,
     });
   }
 }
@@ -200,6 +188,8 @@ export class DisplaySettings {
   grid: Grid;
   displayMode: DisplayMode;
   showSymbols: boolean;
+  showGrid: boolean;
+  showRulers: boolean;
   paletteSettings: PaletteSettings;
   layersVisibility: LayersVisibility;
 
@@ -207,6 +197,8 @@ export class DisplaySettings {
     this.grid = new Grid(data.grid);
     this.displayMode = data.displayMode;
     this.showSymbols = data.showSymbols;
+    this.showGrid = data.showGrid;
+    this.showRulers = data.showRulers;
     this.paletteSettings = new PaletteSettings(data.paletteSettings);
     this.layersVisibility = new LayersVisibility(data.layersVisibility);
   }
@@ -215,6 +207,8 @@ export class DisplaySettings {
     grid: Grid.schema,
     displayMode: b.nativeEnum(DisplayMode),
     showSymbols: b.bool(),
+    showGrid: b.bool(),
+    showRulers: b.bool(),
     paletteSettings: PaletteSettings.schema,
     layersVisibility: LayersVisibility.schema,
   });

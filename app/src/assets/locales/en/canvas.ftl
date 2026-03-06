@@ -11,6 +11,11 @@ canvas-symbol-fonts-load-failure =
 canvas-ctx-menu-set-image = Set Reference Image
 canvas-ctx-menu-remove-image = Remove Reference Image
 
+## Canvas panel.
+
+canvas-panel-collapse = Collapse canvas panel
+canvas-panel-expand = Expand canvas panel
+
 ## Canvas toolbar.
 
 canvas-toolbar-layers = Layers
@@ -24,8 +29,6 @@ canvas-toolbar-layers-straightstitches = Straight Stitches
 canvas-toolbar-layers-frenchknots = French Knots
 canvas-toolbar-layers-beads = Beads
 canvas-toolbar-layers-specialstitches = Special Stitches
-canvas-toolbar-layers-grid = Grid
-canvas-toolbar-layers-rulers = Rulers
 
 canvas-toolbar-view-as-mix = View as a Mix of Solid and Stitches
 canvas-toolbar-view-as-solid = View as Solid
@@ -33,6 +36,12 @@ canvas-toolbar-view-as-stitches = View as Stitches
 
 canvas-toolbar-show-symbols = Show Symbols
 canvas-toolbar-hide-symbols = Hide Symbols
+
+canvas-toolbar-show-grid = Show Grid
+canvas-toolbar-hide-grid = Hide Grid
+
+canvas-toolbar-show-rulers = Show Rulers
+canvas-toolbar-hide-rulers = Hide Rulers
 
 ## Canvas zoom controls.
 
