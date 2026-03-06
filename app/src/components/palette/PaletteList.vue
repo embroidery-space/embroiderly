@@ -142,7 +142,7 @@ function optionIsSelected(option: T) {
               </slot>
             </Listbox.Item>
           </template>
-          <p v-else>{{ $t("palette-empty") }}</p>
+          <p v-else class="text-xs">{{ $t("palette-empty") }}</p>
         </Listbox.Content>
       </ScrollArea>
     </Listbox.Root>

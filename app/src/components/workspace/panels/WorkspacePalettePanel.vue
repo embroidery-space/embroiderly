@@ -376,7 +376,7 @@ async function updatePaletteDisplaySettings() {
             :class="collapsed ? 'justify-center' : 'justify-between'"
             @contextmenu.stop.prevent
           >
-            <span v-show="!collapsed" class="text-nowrap">
+            <span v-show="!collapsed" class="text-sm text-nowrap">
               {{ $t("palette-size", { size: patternStore.pattern?.palette.length ?? 0 }) }}
             </span>
 
