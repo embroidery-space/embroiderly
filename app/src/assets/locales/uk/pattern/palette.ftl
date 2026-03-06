@@ -1,5 +1,10 @@
 ### Translations for the palette panel.
 
+## Palette panel.
+
+palette-panel-collapse = Згорнути панель палітри
+palette-panel-expand = Розгорнути панель палітри
+
 ## Working palette.
 
 palette-size = Палітра: { $size ->

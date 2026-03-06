@@ -1,1 +1,1 @@
-export { default as PalettePanel } from "./PalettePanel.vue";
+export { default as WorkspacePalettePanel } from "./WorkspacePalettePanel.vue";

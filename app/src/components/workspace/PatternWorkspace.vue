@@ -21,7 +21,7 @@ import { LoggerService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "~/stores/";
 import { addSymbolFonts } from "~/utils/";
 
-import { EditorWorkspaceLayout, EditorWorkspaceTabs } from "./layout/";
+import { EditorWorkspaceLayout, EditorWorkspaceTabs, EditorWorkspaceToolbar } from "./layout/";
 
 const props = defineProps<{ options?: PatternApplicationOptions }>();
 
@@ -200,29 +200,32 @@ async function loadSymbolFonts(fonts: string[]) {
       <EditorWorkspaceTabs />
     </template>
 
-    <ContextMenu :items="canvasContextMenuOptions">
-      <PatternCanvas
-        ref="patternCanvas"
-        v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
-        :pattern="patternStore.pattern!"
-        :options="props.options"
-        enable-tool-events
-        class="size-full"
-        @tool-main-action="handleToolMainAction"
-        @tool-anti-action="handleToolAntiAction"
-        @tool-release="handleToolRelease"
-        @transform="handleTransform"
-      />
-    </ContextMenu>
+    <div class="flex size-full">
+      <EditorWorkspaceToolbar class="h-full border-r border-default p-1" />
+
+      <ContextMenu :items="canvasContextMenuOptions">
+        <PatternCanvas
+          ref="patternCanvas"
+          v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
+          :pattern="patternStore.pattern!"
+          :options="props.options"
+          enable-tool-events
+          class="size-full"
+          @tool-main-action="handleToolMainAction"
+          @tool-anti-action="handleToolAntiAction"
+          @tool-release="handleToolRelease"
+          @transform="handleTransform"
+        />
+      </ContextMenu>
+    </div>
 
     <template #footer>
       <div class="flex items-center justify-between border-t border-default px-2 py-1">
-        <div class="grow"></div>
         <CanvasZoomControls
           :model-value="editorStateStore.canvasZoom"
           :min="MIN_SCALE"
           :max="MAX_SCALE"
-          class="w-full max-w-3xs"
+          class="ml-auto w-full max-w-3xs"
           @update:model-value="(value) => patternCanvas?.setCanvasZoom(value)"
         />
       </div>

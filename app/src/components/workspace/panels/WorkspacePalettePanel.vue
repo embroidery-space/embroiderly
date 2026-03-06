@@ -1,21 +1,27 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, ContextMenu, DropdownMenu, useToast } from "@embroiderly/ui";
-import type { ContextMenuItem, DropdownMenuItem } from "@embroiderly/ui";
+import { Button, ButtonIcon, ContextMenu, DropdownMenu, SplitterPanel, useToast } from "@embroiderly/ui";
+import type { ContextMenuItem, DropdownMenuItem, SplitterPanelProps, SplitterPanelEmits } from "@embroiderly/ui";
 
-import { computed, reactive, ref, watch } from "vue";
+import { useForwardPropsEmits } from "reka-ui";
+import { computed, reactive, ref, useTemplateRef, watch } from "vue";
 
-import { IconCheck, IconMenu, IconPen } from "~/assets/icons/";
-import {
-  PaletteCatalog,
-  PaletteDisplaySettings,
-  PaletteList,
-  PaletteListItem,
-  PaletteToolbar,
-} from "~/components/palette/";
+import { IconCheck, IconMenu, IconPalette } from "~/assets/icons/";
+import { PaletteCatalog, PaletteDisplaySettings, PaletteList, PaletteListItem } from "~/components/palette/";
 import { StitchSymbols } from "~/components/symbols/";
 import { useI18n } from "~/composables/";
 import { PaletteSettings, SortPaletteBy, Symbol } from "~/lib/pattern/";
 import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WorkspacePalettePanel extends SplitterPanelProps {}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WorkspacePalettePanelEmits extends SplitterPanelEmits {}
+
+const props = defineProps<WorkspacePalettePanel>();
+const emits = defineEmits<WorkspacePalettePanelEmits>();
+
+const splitterPanelProps = useForwardPropsEmits(props, emits);
 
 const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
@@ -23,7 +29,10 @@ const patternStore = usePatternStore();
 const { fluent } = useI18n();
 const toast = useToast();
 
-const paletteIsDisabled = computed(() => !patternStore.pattern);
+const panel = useTemplateRef("panel");
+
+const collapsed = ref(false);
+const disabled = computed(() => !patternStore.pattern);
 
 const sectionVisibility = reactive({
   paletteDisplaySettings: false,
@@ -32,6 +41,10 @@ const sectionVisibility = reactive({
 });
 
 const paletteDisplaySettings = ref(PaletteSettings.default());
+const effectiveDisplaySettings = computed(() => {
+  if (collapsed.value) return { ...paletteDisplaySettings.value, columnsNumber: 1, colorOnly: true };
+  return paletteDisplaySettings.value;
+});
 watch(
   () => patternStore.pattern?.paletteDisplaySettings,
   (settings) => {
@@ -235,6 +248,28 @@ const palettePanelsMenuOptions = computed<DropdownMenuItem[]>(() => [
   },
 ]);
 
+watch(
+  () => editorStateStore.palettePanelCollapsed,
+  (collapsed) => {
+    if (collapsed) panel.value?.collapse();
+    else panel.value?.expand();
+  },
+);
+
+function handlePanelCollapse() {
+  collapsed.value = true;
+  if (editorStateStore.paletteMode !== PaletteMode.Editing) {
+    editorStateStore.palettePanelCollapsed = true;
+  }
+}
+
+function handlePanelExpand() {
+  collapsed.value = false;
+  if (editorStateStore.paletteMode !== PaletteMode.Editing) {
+    editorStateStore.palettePanelCollapsed = false;
+  }
+}
+
 function handleSetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePoint: number }) {
   if (editorStateStore.selectedPaletteItemIndex === undefined) {
     toast.add({ title: fluent.$t("stitch-symbols-no-palitem-selected"), color: "warning" });
@@ -272,6 +307,12 @@ watch(
       sectionVisibility.paletteCatalog = false;
       sectionVisibility.stitchSymbols = false;
       await updatePaletteDisplaySettings();
+
+      // Restore collapsed state when exiting editing mode.
+      if (editorStateStore.palettePanelCollapsed) panel.value?.collapse();
+    } else {
+      // Forcibly expand the panel when entering editing mode.
+      panel.value?.expand();
     }
   },
 );
@@ -282,14 +323,20 @@ async function updatePaletteDisplaySettings() {
 </script>
 
 <template>
-  <div
+  <SplitterPanel
+    ref="panel"
+    v-bind="splitterPanelProps"
     tabindex="-1"
     class="flex h-full outline-none"
     :class="{ 'border-2 border-primary': editorStateStore.paletteMode === PaletteMode.Editing }"
+    :style="{ overflow: collapsed ? undefined : 'visible clip' }"
     @keydown.escape="editorStateStore.paletteMode = PaletteMode.Regular"
+    @collapse="handlePanelCollapse"
+    @expand="handlePanelExpand"
+    @resize="editorStateStore.palettePanelSize = $event"
   >
     <ContextMenu
-      :disabled="paletteIsDisabled"
+      :disabled="disabled"
       :items="
         editorStateStore.paletteMode === PaletteMode.Editing
           ? paletteEditingContextMenuOptions
@@ -301,8 +348,8 @@ async function updatePaletteDisplaySettings() {
         v-model="editorStateStore.selectedPaletteItemIndex"
         :options="patternStore.pattern?.palette.itemsInVisualOrder"
         :option-value="(pi) => pi.index"
-        :display-settings="paletteDisplaySettings"
-        :disabled="paletteIsDisabled"
+        :display-settings="effectiveDisplaySettings"
+        :disabled="disabled"
         :draggable="editorStateStore.paletteMode === PaletteMode.Editing"
         class="grow"
         @reorder="({ oldPosition, newPosition }) => patternStore.reorderPaletteItems(oldPosition, newPosition)"
@@ -323,12 +370,37 @@ async function updatePaletteDisplaySettings() {
               <Button :icon="IconMenu" />
             </DropdownMenu>
           </div>
-          <PaletteToolbar v-else :disabled="paletteIsDisabled" @contextmenu.stop.prevent />
+          <div
+            v-else
+            class="flex items-center"
+            :class="collapsed ? 'justify-center' : 'justify-between'"
+            @contextmenu.stop.prevent
+          >
+            <span v-show="!collapsed" class="text-nowrap">
+              {{ $t("palette-size", { size: patternStore.pattern?.palette.length ?? 0 }) }}
+            </span>
+
+            <ButtonIcon
+              variant="ghost"
+              color="neutral"
+              :disabled="disabled"
+              :icon="IconPalette"
+              :tooltip="$t('palette-edit')"
+              :delay-duration="200"
+              @click="
+                () => {
+                  editorStateStore.paletteMode =
+                    editorStateStore.paletteMode === PaletteMode.Editing ? PaletteMode.Regular : PaletteMode.Editing;
+                  sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
+                }
+              "
+            />
+          </div>
         </template>
 
         <template #option="{ option: paletteItem, selected, displaySettings }">
           <PaletteListItem :palette-item="paletteItem" :selected="selected" :display-settings="displaySettings">
-            <template v-if="!displaySettings.colorOnly && displaySettings.showStitchSymbols">
+            <template v-if="collapsed || (!displaySettings.colorOnly && displaySettings.showStitchSymbols)">
               <span
                 v-if="paletteItem.symbol"
                 class="mr-2 inline-flex size-5 shrink-0 items-center justify-center"
@@ -343,31 +415,6 @@ async function updatePaletteDisplaySettings() {
               <span v-else class="mr-2 size-5 shrink-0"></span>
             </template>
           </PaletteListItem>
-        </template>
-
-        <template #footer>
-          <div class="flex items-center justify-between" @contextmenu.stop.prevent>
-            <span class="text-sm text-nowrap">
-              {{ $t("palette-size", { size: patternStore.pattern?.palette.length ?? 0 }) }}
-            </span>
-
-            <ButtonIcon
-              variant="ghost"
-              color="neutral"
-              size="sm"
-              :disabled="paletteIsDisabled"
-              :icon="editorStateStore.paletteMode === PaletteMode.Editing ? IconCheck : IconPen"
-              :tooltip="editorStateStore.paletteMode === PaletteMode.Editing ? $t('palette-save') : $t('palette-edit')"
-              :delay-duration="200"
-              @click="
-                () => {
-                  editorStateStore.paletteMode =
-                    editorStateStore.paletteMode === PaletteMode.Editing ? PaletteMode.Regular : PaletteMode.Editing;
-                  sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
-                }
-              "
-            />
-          </div>
         </template>
       </PaletteList>
     </ContextMenu>
@@ -403,5 +450,5 @@ async function updatePaletteDisplaySettings() {
       @set-symbol="handleSetSymbol"
       @unset-symbol="handleUnsetSymbol"
     />
-  </div>
+  </SplitterPanel>
 </template>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useShortcuts, extractShortcuts, ShortcutsSeparator } from "@embroiderly/shortcuts";
-import { ToolSelect } from "@embroiderly/ui";
+import { Separator, ToolSelect } from "@embroiderly/ui";
 import type { ToolSelectItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
@@ -32,9 +32,12 @@ import type { PatternEditorTool } from "~/lib/tools/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
 
-const { disabled } = defineProps<{
+export interface EditorWorkspaceToolbarProps {
+  /** Whether the toolbar is disabled. */
   disabled?: boolean;
-}>();
+}
+
+const { disabled } = defineProps<EditorWorkspaceToolbarProps>();
 
 const { fluent } = useI18n();
 
@@ -219,54 +222,52 @@ useShortcuts({
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <div class="flex gap-2">
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="fullstitches"
-        :disabled="disabled"
-        :delay-duration="200"
-        :selection-color="selectionColor"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="petitestitches"
-        :disabled="disabled"
-        :delay-duration="200"
-        :selection-color="selectionColor"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="halfstitches"
-        :disabled="disabled"
-        :delay-duration="200"
-        :selection-color="selectionColor"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="quarterstitches"
-        :disabled="disabled"
-        :delay-duration="200"
-        :selection-color="selectionColor"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="linestitches"
-        :disabled="disabled"
-        :delay-duration="200"
-        :selection-color="selectionColor"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="nodestitches"
-        :disabled="disabled"
-        :delay-duration="200"
-        :selection-color="selectionColor"
-      />
-    </div>
+  <div class="flex flex-col gap-1">
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="fullstitches"
+      :disabled="disabled"
+      :delay-duration="200"
+      :selection-color="selectionColor"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="petitestitches"
+      :disabled="disabled"
+      :delay-duration="200"
+      :selection-color="selectionColor"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="halfstitches"
+      :disabled="disabled"
+      :delay-duration="200"
+      :selection-color="selectionColor"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="quarterstitches"
+      :disabled="disabled"
+      :delay-duration="200"
+      :selection-color="selectionColor"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="linestitches"
+      :disabled="disabled"
+      :delay-duration="200"
+      :selection-color="selectionColor"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="nodestitches"
+      :disabled="disabled"
+      :delay-duration="200"
+      :selection-color="selectionColor"
+    />
 
-    <div class="flex gap-2">
-      <ToolSelect v-model="editorStateStore.selectedTool" :items="cursor" :disabled="disabled" :delay-duration="200" />
-    </div>
+    <Separator decorative />
+
+    <ToolSelect v-model="editorStateStore.selectedTool" :items="cursor" :disabled="disabled" :delay-duration="200" />
   </div>
 </template>

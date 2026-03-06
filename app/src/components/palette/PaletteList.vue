@@ -94,7 +94,7 @@ function optionIsSelected(option: T) {
 
 <template>
   <div class="flex min-h-0 grow flex-col">
-    <div v-if="$slots.header" class="border-b border-default px-2 py-1">
+    <div v-if="$slots.header" class="border-b border-default p-1">
       <slot name="header"></slot>
     </div>
 
@@ -142,7 +142,7 @@ function optionIsSelected(option: T) {
               </slot>
             </Listbox.Item>
           </template>
-          <p v-else class="px-2">{{ $t("palette-empty") }}</p>
+          <p v-else>{{ $t("palette-empty") }}</p>
         </Listbox.Content>
       </ScrollArea>
     </Listbox.Root>

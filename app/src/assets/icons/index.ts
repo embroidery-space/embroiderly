@@ -28,8 +28,10 @@ export { default as IconUndo } from "~icons/lucide/undo";
 export { default as IconX } from "~icons/lucide/x";
 export { default as IconZoomIn } from "~icons/lucide/zoom-in";
 export { default as IconZoomOut } from "~icons/lucide/zoom-out";
-export { default as IconPanelLeft } from "~icons/lucide/panel-left";
+export { default as IconPanelLeftClose } from "~icons/lucide/panel-left-close";
+export { default as IconPanelLeftOpen } from "~icons/lucide/panel-left-open";
 export { default as IconPanelRight } from "~icons/lucide/panel-right";
+export { default as IconPalette } from "~icons/lucide/palette";
 
 // Material Symbols
 export { default as IconArrowSelectorTool } from "~icons/material-symbols/arrow-selector-tool";
