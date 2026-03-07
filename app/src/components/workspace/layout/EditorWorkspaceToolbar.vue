@@ -227,47 +227,59 @@ useShortcuts({
       v-model="editorStateStore.selectedTool"
       :items="fullstitches"
       :disabled="disabled"
-      :delay-duration="200"
       :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
       :items="petitestitches"
       :disabled="disabled"
-      :delay-duration="200"
       :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
       :items="halfstitches"
       :disabled="disabled"
-      :delay-duration="200"
       :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
       :items="quarterstitches"
       :disabled="disabled"
-      :delay-duration="200"
       :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
       :items="linestitches"
       :disabled="disabled"
-      :delay-duration="200"
       :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
       :items="nodestitches"
       :disabled="disabled"
-      :delay-duration="200"
       :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
     />
 
     <Separator decorative />
 
-    <ToolSelect v-model="editorStateStore.selectedTool" :items="cursor" :disabled="disabled" :delay-duration="200" />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="cursor"
+      :disabled="disabled"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
+    />
   </div>
 </template>
