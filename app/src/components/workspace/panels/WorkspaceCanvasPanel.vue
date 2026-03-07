@@ -43,20 +43,20 @@ const disabled = computed(() => patternStore.pattern === undefined);
 const displayModeOptions = computed<ToolToggleItem[]>(() => [
   {
     icon: IconStitchMix,
-    tooltip: fluent.$t("canvas-toolbar-view-as-mix"),
-    label: collapsed.value ? undefined : fluent.$t("canvas-toolbar-view-as-mix"),
+    tooltip: collapsed.value ? fluent.$t("canvas-view-mix") : undefined,
+    label: collapsed.value ? undefined : fluent.$t("canvas-view-mix"),
     value: DisplayMode.Mixed,
   },
   {
     icon: IconStitchSquare,
-    tooltip: fluent.$t("canvas-toolbar-view-as-solid"),
-    label: collapsed.value ? undefined : fluent.$t("canvas-toolbar-view-as-solid"),
+    tooltip: collapsed.value ? fluent.$t("canvas-view-solid") : undefined,
+    label: collapsed.value ? undefined : fluent.$t("canvas-view-solid"),
     value: DisplayMode.Solid,
   },
   {
     icon: IconStitchFull,
-    tooltip: fluent.$t("canvas-toolbar-view-as-stitches"),
-    label: collapsed.value ? undefined : fluent.$t("canvas-toolbar-view-as-stitches"),
+    tooltip: collapsed.value ? fluent.$t("canvas-view-stitches") : undefined,
+    label: collapsed.value ? undefined : fluent.$t("canvas-view-stitches"),
     value: DisplayMode.Stitches,
   },
 ]);
@@ -113,7 +113,7 @@ function handlePanelExpand() {
         variant="ghost"
         :icon="IconLayers"
         :disabled="disabled"
-        :tooltip="$t('canvas-toolbar-layers')"
+        :tooltip="$t('canvas-layers')"
         :delay-duration="200"
         :content="{ side: 'left' }"
       />
@@ -141,14 +141,8 @@ function handlePanelExpand() {
     <ToolToggle
       v-model="showSymbols"
       :icon="IconSymbols"
-      :tooltip="showSymbols ? fluent.$t('canvas-toolbar-hide-symbols') : fluent.$t('canvas-toolbar-show-symbols')"
-      :label="
-        collapsed
-          ? undefined
-          : showSymbols
-            ? fluent.$t('canvas-toolbar-hide-symbols')
-            : fluent.$t('canvas-toolbar-show-symbols')
-      "
+      :tooltip="collapsed ? $t('canvas-symbols') : undefined"
+      :label="collapsed ? undefined : fluent.$t('canvas-symbols')"
       :disabled="disabled"
       :delay-duration="200"
       :tooltip-options="{ content: { side: 'left' } }"
@@ -157,10 +151,8 @@ function handlePanelExpand() {
     <ToolToggle
       v-model="showGrid"
       :icon="IconGrid"
-      :tooltip="showGrid ? fluent.$t('canvas-toolbar-hide-grid') : fluent.$t('canvas-toolbar-show-grid')"
-      :label="
-        collapsed ? undefined : showGrid ? fluent.$t('canvas-toolbar-hide-grid') : fluent.$t('canvas-toolbar-show-grid')
-      "
+      :tooltip="collapsed ? $t('canvas-grid') : undefined"
+      :label="collapsed ? undefined : $t('canvas-grid')"
       :disabled="disabled"
       :delay-duration="200"
       :tooltip-options="{ content: { side: 'left' } }"
@@ -169,14 +161,8 @@ function handlePanelExpand() {
     <ToolToggle
       v-model="showRulers"
       :icon="IconRulers"
-      :tooltip="showRulers ? fluent.$t('canvas-toolbar-hide-rulers') : fluent.$t('canvas-toolbar-show-rulers')"
-      :label="
-        collapsed
-          ? undefined
-          : showRulers
-            ? fluent.$t('canvas-toolbar-hide-rulers')
-            : fluent.$t('canvas-toolbar-show-rulers')
-      "
+      :tooltip="collapsed ? $t('canvas-rulers') : undefined"
+      :label="collapsed ? undefined : $t('canvas-rulers')"
       :disabled="disabled"
       :delay-duration="200"
       :tooltip-options="{ content: { side: 'left' } }"
