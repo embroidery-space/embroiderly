@@ -146,7 +146,7 @@ exports[`ToolToggleGroup > renders correctly with expanded items 1`] = `
         </svg>
       </button>
       <div class="ms-2 text-base w-full" data-slot="wrapper">
-        <label class="block font-medium text-default" data-slot="label" for="v-9">Solid</label>
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-9">Solid</label>
         <p class="text-muted" data-slot="description">View as solid squares</p>
       </div>
     </div>
@@ -160,7 +160,7 @@ exports[`ToolToggleGroup > renders correctly with expanded items 1`] = `
         </svg>
       </button>
       <div class="ms-2 text-base w-full" data-slot="wrapper">
-        <label class="block font-medium text-default" data-slot="label" for="v-10">Stitches</label>
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-10">Stitches</label>
         <p class="text-muted" data-slot="description">View as individual stitches</p>
       </div>
     </div>
@@ -174,7 +174,7 @@ exports[`ToolToggleGroup > renders correctly with expanded items 1`] = `
         </svg>
       </button>
       <div class="ms-2 text-base w-full" data-slot="wrapper">
-        <label class="block font-medium text-default" data-slot="label" for="v-11">Mixed</label>
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-11">Mixed</label>
         <p class="text-muted" data-slot="description">Mixed display mode</p>
       </div>
     </div>

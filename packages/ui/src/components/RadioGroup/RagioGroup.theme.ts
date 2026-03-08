@@ -6,10 +6,10 @@ export const RadioGroupTheme = tv({
     root: "relative flex flex-col items-start",
     item: "flex items-start",
     container: "flex items-center",
-    base: "overflow-hidden rounded-full ring ring-accented ring-inset focus-visible:outline-2 focus-visible:outline-offset-2",
+    base: "overflow-hidden rounded-full ring ring-accented ring-inset not-disabled:hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2",
     indicator: "flex size-full items-center justify-center after:rounded-full after:bg-default",
     wrapper: "ms-2 w-full",
-    label: "block font-medium text-default",
+    label: "block font-medium text-default not-disabled:hover:cursor-pointer",
     description: "text-muted",
   },
   variants: {

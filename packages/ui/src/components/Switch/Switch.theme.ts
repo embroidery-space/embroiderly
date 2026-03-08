@@ -5,11 +5,11 @@ export const SwitchTheme = tv({
   slots: {
     root: "relative flex items-start",
     container: "flex items-center",
-    base: "inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented",
+    base: "inline-flex shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 not-disabled:hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented",
     thumb:
       "pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0",
     wrapper: "ms-2 w-full",
-    label: "block font-medium text-default",
+    label: "block font-medium text-default not-disabled:hover:cursor-pointer",
     description: "text-muted",
   },
   variants: {
