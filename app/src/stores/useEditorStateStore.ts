@@ -19,6 +19,12 @@ export const enum PaletteMode {
 export const useEditorStateStore = defineStore(
   "embroiderly-pattern-editor-state",
   () => {
+    const palettePanelCollapsed = ref(false);
+    const palettePanelSize = ref<number>();
+
+    const canvasPanelCollapsed = ref(false);
+    const canvasPanelSize = ref<number>();
+
     const selectedTool = ref<PatternEditorTool>(tools.FullStitch);
     const selectedPaletteItemIndex = ref<number>();
 
@@ -36,6 +42,10 @@ export const useEditorStateStore = defineStore(
     }
 
     return {
+      palettePanelCollapsed,
+      palettePanelSize,
+      canvasPanelCollapsed,
+      canvasPanelSize,
       selectedTool,
       selectedPaletteItemIndex,
       paletteMode,
@@ -43,5 +53,11 @@ export const useEditorStateStore = defineStore(
       $reset,
     };
   },
-  { tauri: { save: false, sync: false } },
+  {
+    tauri: {
+      autoStart: true,
+      filterKeys: ["palettePanelCollapsed", "palettePanelSize", "canvasPanelCollapsed", "canvasPanelSize"],
+      filterKeysStrategy: "pick",
+    },
+  },
 );

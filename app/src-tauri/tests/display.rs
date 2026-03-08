@@ -67,6 +67,66 @@ fn show_symbols(#[case] value: bool) {
   assert_eq!(history.undo_stack_len(), 1);
 }
 
+#[rstest]
+#[case(true)]
+#[case(false)]
+fn show_grid(#[case] value: bool) {
+  let (app, webview) = setup_test_app!(commands: [commands::core::display::show_grid]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "show_grid",
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "value": value })),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert_eq!(patproj.display_settings.show_grid, value);
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 1);
+}
+
+#[rstest]
+#[case(true)]
+#[case(false)]
+fn show_rulers(#[case] value: bool) {
+  let (app, webview) = setup_test_app!(commands: [commands::core::display::show_rulers]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "show_rulers",
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "value": value })),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert_eq!(patproj.display_settings.show_rulers, value);
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 1);
+}
+
 #[test]
 fn sets_layers_visibility() {
   let (app, webview) = setup_test_app!(commands: [commands::core::display::set_layers_visibility]);
@@ -83,8 +143,6 @@ fn sets_layers_visibility() {
     frenchknots: true,
     beads: false,
     specialstitches: true,
-    grid: false,
-    rulers: true,
   };
   assert!(
     invoke_ipc!(

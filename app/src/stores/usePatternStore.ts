@@ -188,6 +188,26 @@ export const usePatternStore = defineStore(
       triggerRef(pattern);
     });
 
+    function showGrid(value: boolean) {
+      if (!pattern.value) return;
+      return PatternApi.showGrid(pattern.value.id, value);
+    }
+    appWindow.listen<boolean>(PatternEvent.UpdateShowGrid, ({ payload: value }) => {
+      if (!pattern.value) return;
+      pattern.value.showGrid = value;
+      triggerRef(pattern);
+    });
+
+    function showRulers(value: boolean) {
+      if (!pattern.value) return;
+      return PatternApi.showRulers(pattern.value.id, value);
+    }
+    appWindow.listen<boolean>(PatternEvent.UpdateShowRulers, ({ payload: value }) => {
+      if (!pattern.value) return;
+      pattern.value.showRulers = value;
+      triggerRef(pattern);
+    });
+
     function setLayersVisibility(layersVisibility: LayersVisibility) {
       if (!pattern.value) return;
       return PatternApi.setLayersVisibility(pattern.value.id, layersVisibility);
@@ -245,6 +265,8 @@ export const usePatternStore = defineStore(
       removeStitch,
       setDisplayMode,
       showSymbols,
+      showGrid,
+      showRulers,
       setLayersVisibility,
       updatePdfExportOptions,
       undo,

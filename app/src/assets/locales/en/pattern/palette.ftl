@@ -1,5 +1,10 @@
 ### Translations for the palette panel.
 
+## Palette panel.
+
+palette-panel-collapse = Collapse palette panel
+palette-panel-expand = Expand palette panel
+
 ## Working palette.
 
 palette-size = Palette: { $size ->

@@ -40,6 +40,7 @@ catalog:
   "@iconify/vue": 5.0.0
   "@iconify-json/lucide": 1.2.95
   "@iconify-json/material-symbols": 1.2.59
+  "@iconify-json/mdi": 1.2.3
   "unplugin-icons": 23.0.1
 
   # Localization

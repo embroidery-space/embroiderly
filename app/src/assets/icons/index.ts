@@ -1,4 +1,4 @@
-// Material Symbols
+// UI
 export { default as IconCheck } from "~icons/material-symbols/check-rounded";
 export { default as IconChevronUp } from "~icons/material-symbols/keyboard-arrow-up-rounded";
 export { default as IconChevronDown } from "~icons/material-symbols/keyboard-arrow-down-rounded";
@@ -29,6 +29,14 @@ export { default as IconEdit } from "~icons/material-symbols/edit-rounded";
 export { default as IconClose } from "~icons/material-symbols/close-rounded";
 export { default as IconZoomIn } from "~icons/material-symbols/zoom-in-rounded";
 export { default as IconZoomOut } from "~icons/material-symbols/zoom-out-rounded";
+export { default as IconPanelLeftClose } from "~icons/material-symbols/left-panel-close-rounded";
+export { default as IconPanelLeftOpen } from "~icons/material-symbols/left-panel-open-rounded";
+export { default as IconPanelRightClose } from "~icons/material-symbols/right-panel-close-rounded";
+export { default as IconPanelRightOpen } from "~icons/material-symbols/right-panel-open-rounded";
+export { default as IconPalette } from "~icons/material-symbols/palette";
+export { default as IconSymbols } from "~icons/material-symbols/emoji-symbols-rounded";
+export { default as IconGrid } from "~icons/material-symbols/grid-4x4-rounded";
+export { default as IconRulers } from "~icons/mdi/ruler-square";
 
 // Stitches (custom collection)
 export { default as IconStitchFull } from "~icons/stitches/full";
@@ -51,7 +59,6 @@ export { default as IconStitchFrenchKnot } from "~icons/stitches/french-knot";
 export { default as IconStitchBead } from "~icons/stitches/bead";
 export { default as IconStitchMix } from "~icons/stitches/mix";
 export { default as IconStitchSquare } from "~icons/stitches/square";
-export { default as IconStitchSymbol } from "~icons/stitches/symbol";
 
 // Window (custom collection)
 export { default as IconWindowMinimize } from "~icons/window/minimize";

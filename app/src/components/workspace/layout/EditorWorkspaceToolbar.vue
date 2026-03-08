@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { useShortcuts } from "@embroiderly/shortcuts";
+import { useShortcuts, extractShortcuts, ShortcutsSeparator } from "@embroiderly/shortcuts";
+import { Separator, ToolSelect } from "@embroiderly/ui";
+import type { ToolSelectItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
@@ -26,15 +28,16 @@ import {
 } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
 import { tools } from "~/lib/tools/";
+import type { PatternEditorTool } from "~/lib/tools/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
 
-import { ToolSelect } from "../toolbar/";
-import type { ToolSelectItem } from "../toolbar/";
-
-const { disabled } = defineProps<{
+export interface EditorWorkspaceToolbarProps {
+  /** Whether the toolbar is disabled. */
   disabled?: boolean;
-}>();
+}
+
+const { disabled } = defineProps<EditorWorkspaceToolbarProps>();
 
 const { fluent } = useI18n();
 
@@ -186,6 +189,28 @@ const cursor = computed<ToolSelectItem[]>(() => [
   },
 ]);
 
+// Register keyboard shortcuts for all tool groups.
+useShortcuts(
+  extractShortcuts(
+    () =>
+      [
+        ...fullstitches.value,
+        ...petitestitches.value,
+        ...halfstitches.value,
+        ...quarterstitches.value,
+        ...linestitches.value,
+        ...nodestitches.value,
+        ...cursor.value,
+      ].map((item) => ({
+        shortcut: item.shortcut,
+        onSelect() {
+          editorStateStore.selectedTool = item.value as PatternEditorTool;
+        },
+      })),
+    ShortcutsSeparator.KeySequence,
+  ),
+);
+
 // Define shorter key sequences for enabling top-left and bottom-left positional stitch tools if the user hasn't typed the full shortcut.
 useShortcuts({
   "P-T": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
@@ -197,48 +222,64 @@ useShortcuts({
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <div class="flex gap-2">
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="fullstitches"
-        :selection-color="selectionColor"
-        :disabled="disabled"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="petitestitches"
-        :selection-color="selectionColor"
-        :disabled="disabled"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="halfstitches"
-        :selection-color="selectionColor"
-        :disabled="disabled"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="quarterstitches"
-        :selection-color="selectionColor"
-        :disabled="disabled"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="linestitches"
-        :selection-color="selectionColor"
-        :disabled="disabled"
-      />
-      <ToolSelect
-        v-model="editorStateStore.selectedTool"
-        :items="nodestitches"
-        :selection-color="selectionColor"
-        :disabled="disabled"
-      />
-    </div>
+  <div class="flex flex-col gap-1 p-1">
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="fullstitches"
+      :disabled="disabled"
+      :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="petitestitches"
+      :disabled="disabled"
+      :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="halfstitches"
+      :disabled="disabled"
+      :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="quarterstitches"
+      :disabled="disabled"
+      :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="linestitches"
+      :disabled="disabled"
+      :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="nodestitches"
+      :disabled="disabled"
+      :selection-color="selectionColor"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
+    />
 
-    <div class="flex gap-2">
-      <ToolSelect v-model="editorStateStore.selectedTool" :items="cursor" :disabled="disabled" />
-    </div>
+    <Separator decorative />
+
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      :items="cursor"
+      :disabled="disabled"
+      :delay-duration="200"
+      :tooltip-options="{ content: { side: 'right' } }"
+    />
   </div>
 </template>

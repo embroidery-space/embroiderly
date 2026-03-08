@@ -7,10 +7,10 @@ import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 
 import { StartupApi } from "~/api/";
 import { useDragDrop, useI18n, useTauriListener } from "~/composables/";
+import { usePercentOfContainer } from "~/composables/utils/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
-import { CanvasToolbar } from "./canvas/";
-import { PalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
+import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
 
 const appWindow = getCurrentWebviewWindow();
 
@@ -22,6 +22,14 @@ const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
+
+const { toPercent } = usePercentOfContainer(useTemplateRef("splitter"));
+
+const palettePanelDefaultSize = toPercent(15.5, "rem");
+const palettePanelCollapsedSize = toPercent(2.75, "rem");
+
+const canvasToolbarDefaultSize = toPercent(12, "rem");
+const canvasToolbarCollapsedSize = toPercent(2.25, "rem");
 
 const dropZoneContainer = useTemplateRef("drop-zone");
 const { isOverDropZone } = useDragDrop(dropZoneContainer, async (paths) => {
@@ -112,10 +120,14 @@ onMounted(async () => {
 
 <template>
   <main class="flex overflow-y-auto">
-    <Splitter direction="horizontal">
-      <SplitterPanel :default-size="15" :style="{ overflow: 'visible clip' }">
-        <PalettePanel />
-      </SplitterPanel>
+    <Splitter ref="splitter" direction="horizontal">
+      <WorkspacePalettePanel
+        collapsible
+        :collapsed-size="palettePanelCollapsedSize"
+        :min-size="palettePanelDefaultSize"
+        :default-size="editorStateStore.palettePanelSize ?? palettePanelDefaultSize"
+      />
+
       <SplitterPanel>
         <BlockUI
           ref="drop-zone"
@@ -132,10 +144,17 @@ onMounted(async () => {
                 wheelAction: settingsStore.viewport.wheelAction,
               },
             }"
+            class="size-full"
           />
         </BlockUI>
       </SplitterPanel>
+
+      <WorkspaceCanvasPanel
+        collapsible
+        :collapsed-size="canvasToolbarCollapsedSize"
+        :min-size="canvasToolbarDefaultSize"
+        :default-size="editorStateStore.canvasPanelSize ?? canvasToolbarDefaultSize"
+      />
     </Splitter>
-    <CanvasToolbar class="h-full border-l border-default" />
   </main>
 </template>

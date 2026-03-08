@@ -11,28 +11,34 @@ canvas-symbol-fonts-load-failure =
 canvas-ctx-menu-set-image = Встановити зразкове зображення
 canvas-ctx-menu-remove-image = Вилучити зразкове зображення
 
-## Canvas toolbar.
+## Canvas panel.
 
-canvas-toolbar-layers = Шари
-canvas-toolbar-layers-reference-image = Зразкове зображення
-canvas-toolbar-layers-fullstitches = Хрести
-canvas-toolbar-layers-petitestitches = Петіти
-canvas-toolbar-layers-halfstitches = Півхрести
-canvas-toolbar-layers-quarterstitches = Чвертьхрести
-canvas-toolbar-layers-backstitches = Зворотні стібки
-canvas-toolbar-layers-straightstitches = Прямі стібки
-canvas-toolbar-layers-frenchknots = Фр. вузлики
-canvas-toolbar-layers-beads = Бісер
-canvas-toolbar-layers-specialstitches = Спеціальні стібки
-canvas-toolbar-layers-grid = Сітка
-canvas-toolbar-layers-rulers = Лінійки
+canvas-panel-collapse = Згорнути панель полотна
+canvas-panel-expand = Розгорнути панель полотна
 
-canvas-toolbar-view-as-mix = Відображати як мікс суцільного і стібків
-canvas-toolbar-view-as-solid = Відображати як суцільне
-canvas-toolbar-view-as-stitches = Відображати як стібки
+## Canvas layers.
 
-canvas-toolbar-show-symbols = Показати символи
-canvas-toolbar-hide-symbols = Сховати символи
+canvas-layers = Шари
+canvas-layers-reference-image = Зразкове зображення
+canvas-layers-fullstitches = Хрести
+canvas-layers-petitestitches = Петіти
+canvas-layers-halfstitches = Півхрести
+canvas-layers-quarterstitches = Чвертьхрести
+canvas-layers-backstitches = Зворотні стібки
+canvas-layers-straightstitches = Прямі стібки
+canvas-layers-frenchknots = Фр. вузлики
+canvas-layers-beads = Бісер
+canvas-layers-specialstitches = Спеціальні стібки
+
+## Canvas display options.
+
+canvas-view-mix = Змішане відображення
+canvas-view-solid = Суцільне відображення
+canvas-view-stitches = Стібкове відображення
+
+canvas-symbols = Символи
+canvas-grid = Сітка
+canvas-rulers = Лінійки
 
 ## Canvas zoom controls.
 

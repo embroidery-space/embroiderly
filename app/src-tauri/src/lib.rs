@@ -138,6 +138,8 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::image::update_reference_image_settings,
     commands::core::display::set_display_mode,
     commands::core::display::show_symbols,
+    commands::core::display::show_grid,
+    commands::core::display::show_rulers,
     commands::core::display::set_layers_visibility,
     commands::core::fabric::update_fabric,
     commands::core::fabric::load_fabric_colors,

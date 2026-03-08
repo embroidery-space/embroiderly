@@ -5,8 +5,9 @@ export const ScrollAreaTheme = tv({
   slots: {
     root: "relative overflow-hidden",
     viewport: "size-full",
-    scrollbar: "group/scrollbar flex touch-none items-center transition-colors duration-150 select-none",
-    thumb: "relative rounded-full bg-inverted duration-150",
+    scrollbar:
+      "group/scrollbar flex touch-none items-center transition-colors duration-200 select-none data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out]",
+    thumb: "relative rounded-full bg-inverted duration-200",
   },
   variants: {
     orientation: {

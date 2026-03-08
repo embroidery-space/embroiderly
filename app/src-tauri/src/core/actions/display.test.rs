@@ -2,7 +2,9 @@ use embroiderly_pattern::{DisplayMode, LayersVisibility, PatternProject};
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
-use super::{Action, SetDisplayModeAction, SetLayersVisibilityAction, ShowSymbolsAction};
+use super::{
+  Action, SetDisplayModeAction, SetLayersVisibilityAction, ShowGridAction, ShowRulersAction, ShowSymbolsAction,
+};
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {
@@ -85,6 +87,82 @@ fn test_show_symbols() {
 }
 
 #[test]
+fn test_show_grid() {
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = PatternProject::default();
+
+  let initial_value = patproj.display_settings.show_grid;
+  let new_value = !initial_value;
+  let action = ShowGridAction::new(new_value);
+
+  // Test executing the command
+  {
+    let expected_value = new_value;
+    window.once("display:show_grid", move |e| {
+      let value: bool = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(value, expected_value);
+    });
+
+    action.perform(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.display_settings.show_grid, new_value);
+  }
+
+  // Test revoking the command
+  {
+    let expected_value = !new_value;
+    window.once("display:show_grid", move |e| {
+      let value: bool = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(value, expected_value);
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.display_settings.show_grid, !new_value);
+  }
+}
+
+#[test]
+fn test_show_rulers() {
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = PatternProject::default();
+
+  let initial_value = patproj.display_settings.show_rulers;
+  let new_value = !initial_value;
+  let action = ShowRulersAction::new(new_value);
+
+  // Test executing the command
+  {
+    let expected_value = new_value;
+    window.once("display:show_rulers", move |e| {
+      let value: bool = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(value, expected_value);
+    });
+
+    action.perform(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.display_settings.show_rulers, new_value);
+  }
+
+  // Test revoking the command
+  {
+    let expected_value = !new_value;
+    window.once("display:show_rulers", move |e| {
+      let value: bool = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(value, expected_value);
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.display_settings.show_rulers, !new_value);
+  }
+}
+
+#[test]
 fn test_layers_visibility() {
   let app = setup_app();
   let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
@@ -103,8 +181,6 @@ fn test_layers_visibility() {
     straightstitches: false,
     frenchknots: false,
     beads: false,
-    grid: true,
-    rulers: true,
   };
   let action = SetLayersVisibilityAction::new(visibility.clone());
 

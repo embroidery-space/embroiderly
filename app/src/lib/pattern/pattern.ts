@@ -239,6 +239,22 @@ export class Pattern extends EventTarget {
     this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplayMode, { detail: this.displayMode }));
   }
 
+  get showGrid() {
+    return this.#displaySettings.showGrid;
+  }
+  set showGrid(value: boolean) {
+    this.#displaySettings.showGrid = value;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateShowGrid, { detail: value }));
+  }
+
+  get showRulers() {
+    return this.#displaySettings.showRulers;
+  }
+  set showRulers(value: boolean) {
+    this.#displaySettings.showRulers = value;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateShowRulers, { detail: value }));
+  }
+
   get layersVisibility() {
     return this.#displaySettings.layersVisibility;
   }
@@ -282,6 +298,8 @@ export const enum PatternEvent {
 
   UpdateDisplayMode = "display:set_mode",
   UpdateShowSymbols = "display:show_symbols",
+  UpdateShowGrid = "display:show_grid",
+  UpdateShowRulers = "display:show_rulers",
   UpdateLayersVisibility = "display:set_layers_visibility",
 
   UpdatePdfExportOptions = "publish:update-pdf",

@@ -108,6 +108,8 @@ export class PatternView extends Container {
     this.setGrid(pattern.grid);
 
     this.setShowSymbols(pattern.showSymbols);
+    this.setShowGrid(pattern.showGrid);
+    this.setShowRulers(pattern.showRulers);
     this.setDisplayMode(pattern.displayMode);
     this.setLayersVisibility(pattern.layersVisibility);
 
@@ -361,6 +363,16 @@ export class PatternView extends Container {
     this.stages.symbols.visible = value;
     this.stages.symbols.renderable = value;
     this.setDisplayMode(this.displayMode);
+  }
+
+  setShowGrid(value: boolean) {
+    this.stages.grid.visible = value;
+    this.stages.grid.renderable = value;
+  }
+
+  setShowRulers(value: boolean) {
+    this.stages.rulers.visible = value;
+    this.stages.rulers.renderable = value;
   }
 
   setLayersVisibility(layersVisibility: LayersVisibility) {

@@ -11,28 +11,34 @@ canvas-symbol-fonts-load-failure =
 canvas-ctx-menu-set-image = Set Reference Image
 canvas-ctx-menu-remove-image = Remove Reference Image
 
-## Canvas toolbar.
+## Canvas panel.
 
-canvas-toolbar-layers = Layers
-canvas-toolbar-layers-reference-image = Reference Image
-canvas-toolbar-layers-fullstitches = Full Stitches
-canvas-toolbar-layers-petitestitches = Petite Stitches
-canvas-toolbar-layers-halfstitches = Half Stitches
-canvas-toolbar-layers-quarterstitches = Quarter Stitches
-canvas-toolbar-layers-backstitches = Back Stitches
-canvas-toolbar-layers-straightstitches = Straight Stitches
-canvas-toolbar-layers-frenchknots = French Knots
-canvas-toolbar-layers-beads = Beads
-canvas-toolbar-layers-specialstitches = Special Stitches
-canvas-toolbar-layers-grid = Grid
-canvas-toolbar-layers-rulers = Rulers
+canvas-panel-collapse = Collapse canvas panel
+canvas-panel-expand = Expand canvas panel
 
-canvas-toolbar-view-as-mix = View as a Mix of Solid and Stitches
-canvas-toolbar-view-as-solid = View as Solid
-canvas-toolbar-view-as-stitches = View as Stitches
+## Canvas layers.
 
-canvas-toolbar-show-symbols = Show Symbols
-canvas-toolbar-hide-symbols = Hide Symbols
+canvas-layers = Layers
+canvas-layers-reference-image = Reference Image
+canvas-layers-fullstitches = Full Stitches
+canvas-layers-petitestitches = Petite Stitches
+canvas-layers-halfstitches = Half Stitches
+canvas-layers-quarterstitches = Quarter Stitches
+canvas-layers-backstitches = Back Stitches
+canvas-layers-straightstitches = Straight Stitches
+canvas-layers-frenchknots = French Knots
+canvas-layers-beads = Beads
+canvas-layers-specialstitches = Special Stitches
+
+## Canvas display options.
+
+canvas-view-mix = Mixed view
+canvas-view-solid = Solid view
+canvas-view-stitches = Stitches view
+
+canvas-symbols = Symbols
+canvas-grid = Grid
+canvas-rulers = Rulers
 
 ## Canvas zoom controls.
 

@@ -4,7 +4,9 @@ import type { VariantProps } from "tailwind-variants";
 export const TabsTheme = tv({
   slots: {
     root: "flex gap-2",
-    list: "relative inline-flex items-center rounded-lg bg-accented p-1",
+    wrapper: "inline-flex",
+    scroll: "grow",
+    list: "relative flex size-full items-center overflow-hidden rounded-lg bg-accented p-1",
     indicator: "absolute rounded-md bg-inverted shadow-xs transition-[translate,width,height] duration-200",
     trigger:
       "relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium text-muted focus-visible:outline-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-inverted",
@@ -15,7 +17,6 @@ export const TabsTheme = tv({
     orientation: {
       horizontal: {
         root: "flex-col",
-        list: "overflow-x-auto",
         indicator: "inset-y-1 left-0 w-(--reka-tabs-indicator-size) translate-x-(--reka-tabs-indicator-position)",
       },
       vertical: {
