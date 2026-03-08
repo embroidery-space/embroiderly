@@ -1,9 +1,7 @@
 use std::sync::OnceLock;
 
 use anyhow::Result;
-use embroiderly_pattern::{DisplayMode, LayersVisibility, PatternProject};
-// NOTE: The `grid` and `rulers` fields were removed from `LayersVisibility`
-// and moved to `DisplaySettings` as `show_grid` and `show_rulers`.
+use embroiderly_pattern::{DisplaySettings, PatternProject};
 use tauri::{Emitter as _, WebviewWindow};
 
 use super::Action;
@@ -14,173 +12,42 @@ use crate::utils::base64;
 mod tests;
 
 #[derive(Clone)]
-pub struct SetDisplayModeAction {
-  mode: DisplayMode,
-  old_mode: OnceLock<DisplayMode>,
+pub struct UpdateDisplaySettingsAction {
+  display_settings: DisplaySettings,
+  old_display_settings: OnceLock<DisplaySettings>,
 }
 
-impl SetDisplayModeAction {
-  pub const fn new(mode: DisplayMode) -> Self {
+impl UpdateDisplaySettingsAction {
+  pub const fn new(display_settings: DisplaySettings) -> Self {
     Self {
-      mode,
-      old_mode: OnceLock::new(),
+      display_settings,
+      old_display_settings: OnceLock::new(),
     }
   }
 }
 
-impl<R: tauri::Runtime> Action<R> for SetDisplayModeAction {
-  /// Updates the display mode.
+impl<R: tauri::Runtime> Action<R> for UpdateDisplaySettingsAction {
+  /// Updates the display settings.
   ///
   /// **Emits:**
-  /// - `display:set_mode` with the updated display mode.
+  /// - `display:update` with the updated display settings.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    window.emit("display:set_mode", self.mode.to_string())?;
-    let old_mode = std::mem::replace(&mut patproj.display_settings.display_mode, self.mode);
-    if self.old_mode.get().is_none() {
-      self.old_mode.set(old_mode).unwrap();
+    let old_display_settings = std::mem::replace(&mut patproj.display_settings, self.display_settings.clone());
+    window.emit("display:update", base64::encode(borsh::to_vec(&self.display_settings)?))?;
+    if self.old_display_settings.get().is_none() {
+      self.old_display_settings.set(old_display_settings).unwrap();
     }
     Ok(())
   }
 
-  /// Restores the previous display mode.
+  /// Restores the previous display settings.
   ///
   /// **Emits:**
-  /// - `display:set_mode` with the previous display mode.
+  /// - `display:update` with the previous display settings.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    let old_mode = self.old_mode.get().unwrap();
-    window.emit("display:set_mode", old_mode.to_string())?;
-    patproj.display_settings.display_mode = *old_mode;
-    Ok(())
-  }
-}
-
-#[derive(Clone)]
-pub struct ShowSymbolsAction {
-  value: bool,
-}
-
-impl ShowSymbolsAction {
-  pub const fn new(value: bool) -> Self {
-    Self { value }
-  }
-}
-
-impl<R: tauri::Runtime> Action<R> for ShowSymbolsAction {
-  /// Updates the display setting for showing symbols.
-  ///
-  /// **Emits:**
-  /// - `display:show_symbols` with the new value.
-  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    patproj.display_settings.show_symbols = self.value;
-    window.emit("display:show_symbols", self.value)?;
-    Ok(())
-  }
-
-  /// Toggles the display setting for showing symbols.
-  ///
-  /// **Emits:**
-  /// - `display:show_symbols` with the new value.
-  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    patproj.display_settings.show_symbols = !self.value;
-    window.emit("display:show_symbols", !self.value)?;
-    Ok(())
-  }
-}
-
-#[derive(Clone)]
-pub struct ShowGridAction {
-  value: bool,
-}
-
-impl ShowGridAction {
-  pub const fn new(value: bool) -> Self {
-    Self { value }
-  }
-}
-
-impl<R: tauri::Runtime> Action<R> for ShowGridAction {
-  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    patproj.display_settings.show_grid = self.value;
-    window.emit("display:show_grid", self.value)?;
-    Ok(())
-  }
-
-  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    patproj.display_settings.show_grid = !self.value;
-    window.emit("display:show_grid", !self.value)?;
-    Ok(())
-  }
-}
-
-#[derive(Clone)]
-pub struct ShowRulersAction {
-  value: bool,
-}
-
-impl ShowRulersAction {
-  pub const fn new(value: bool) -> Self {
-    Self { value }
-  }
-}
-
-impl<R: tauri::Runtime> Action<R> for ShowRulersAction {
-  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    patproj.display_settings.show_rulers = self.value;
-    window.emit("display:show_rulers", self.value)?;
-    Ok(())
-  }
-
-  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    patproj.display_settings.show_rulers = !self.value;
-    window.emit("display:show_rulers", !self.value)?;
-    Ok(())
-  }
-}
-
-#[derive(Clone)]
-pub struct SetLayersVisibilityAction {
-  layers_visibility: LayersVisibility,
-  old_layers_visibility: OnceLock<LayersVisibility>,
-}
-
-impl SetLayersVisibilityAction {
-  pub const fn new(layers_visibility: LayersVisibility) -> Self {
-    Self {
-      layers_visibility,
-      old_layers_visibility: OnceLock::new(),
-    }
-  }
-}
-
-impl<R: tauri::Runtime> Action<R> for SetLayersVisibilityAction {
-  /// Updates the layers visibility.
-  ///
-  /// **Emits:**
-  /// - `display:set_layers_visibility` with the updated layers visibility.
-  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    window.emit(
-      "display:set_layers_visibility",
-      base64::encode(borsh::to_vec(&self.layers_visibility)?),
-    )?;
-    let old_layers_visibility =
-      std::mem::replace(&mut patproj.display_settings.layers_visibility, self.layers_visibility);
-    if self.old_layers_visibility.get().is_none() {
-      self.old_layers_visibility.set(old_layers_visibility).unwrap();
-    }
-    Ok(())
-  }
-
-  /// Restores the previous layers visibility.
-  ///
-  /// **Emits:**
-  /// - `display:set_layers_visibility` with the previous layers visibility.
-  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    let old_layers_visibility = self.old_layers_visibility.get().unwrap();
-    window.emit(
-      "display:set_layers_visibility",
-      base64::encode(borsh::to_vec(old_layers_visibility)?),
-    )?;
-    patproj.display_settings.layers_visibility = *old_layers_visibility;
+    let old_display_settings = self.old_display_settings.get().unwrap();
+    patproj.display_settings = old_display_settings.clone();
+    window.emit("display:update", base64::encode(borsh::to_vec(old_display_settings)?))?;
     Ok(())
   }
 }

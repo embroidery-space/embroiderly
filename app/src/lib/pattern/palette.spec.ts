@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { PaletteSettings } from "./display.ts";
-import { Blend, Palette, PaletteItem } from "./palette.ts";
+import { Blend, Palette, PaletteItem, PaletteSettings } from "./palette.ts";
 
 describe("Palette", () => {
   const PALETTE_ITEMS = {

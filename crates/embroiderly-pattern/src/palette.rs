@@ -40,6 +40,50 @@ mod tests;
 
 use xsp_parsers::{pmaker, ursa, xspro};
 
+/// Display settings for the palette panel.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+pub struct PaletteSettings {
+  pub columns_number: u8,
+  pub color_only: bool,
+  pub show_stitch_symbols: bool,
+  pub stitch_symbols_on_contrast_background: bool,
+  pub show_color_brands: bool,
+  pub show_color_numbers: bool,
+  pub show_color_names: bool,
+}
+
+impl PaletteSettings {
+  pub const DEFAULT_COLUMNS_NUMBER: u8 = 1;
+  pub const DEFAULT_COLOR_ONLY: bool = false;
+  pub const DEFAULT_SHOW_STITCH_SYMBOLS: bool = true;
+  pub const DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND: bool = true;
+  pub const DEFAULT_SHOW_COLOR_BRANDS: bool = true;
+  pub const DEFAULT_SHOW_COLOR_NUMBERS: bool = true;
+  pub const DEFAULT_SHOW_COLOR_NAMES: bool = true;
+
+  #[must_use]
+  pub const fn new() -> Self {
+    Self {
+      columns_number: Self::DEFAULT_COLUMNS_NUMBER,
+      color_only: Self::DEFAULT_COLOR_ONLY,
+      show_stitch_symbols: Self::DEFAULT_SHOW_STITCH_SYMBOLS,
+      stitch_symbols_on_contrast_background: Self::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND,
+      show_color_brands: Self::DEFAULT_SHOW_COLOR_BRANDS,
+      show_color_numbers: Self::DEFAULT_SHOW_COLOR_NUMBERS,
+      show_color_names: Self::DEFAULT_SHOW_COLOR_NAMES,
+    }
+  }
+}
+
+impl Default for PaletteSettings {
+  fn default() -> Self {
+    Self::new()
+  }
+}
+
 /// Manages palette items and their visual ordering.
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
@@ -48,6 +92,8 @@ pub struct Palette {
   items: Vec<PaletteItem>,
   /// Visual ordering of palette items.
   positions: Vec<u32>,
+  /// Display settings for the palette panel.
+  settings: PaletteSettings,
 }
 
 impl Palette {
@@ -57,7 +103,19 @@ impl Palette {
     Self {
       items: Vec::new(),
       positions: Vec::new(),
+      settings: PaletteSettings::new(),
     }
+  }
+
+  /// Returns the palette display settings.
+  #[must_use]
+  pub const fn settings(&self) -> PaletteSettings {
+    self.settings
+  }
+
+  /// Sets the palette display settings.
+  pub const fn set_settings(&mut self, settings: PaletteSettings) {
+    self.settings = settings;
   }
 
   // === Access Methods ===
@@ -257,7 +315,11 @@ impl Default for Palette {
 impl From<Vec<PaletteItem>> for Palette {
   fn from(items: Vec<PaletteItem>) -> Self {
     let positions = (0..items.len() as u32).collect();
-    Self { items, positions }
+    Self {
+      items,
+      positions,
+      settings: PaletteSettings::default(),
+    }
   }
 }
 

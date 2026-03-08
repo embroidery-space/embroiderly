@@ -3,7 +3,7 @@ import { useEventListener } from "@vueuse/core";
 import { onMounted, onUnmounted, useTemplateRef, watch } from "vue";
 
 import { PatternEvent } from "~/lib/pattern/";
-import type { LayersVisibility, LineStitch, NodeStitch, Pattern } from "~/lib/pattern/";
+import type { DisplaySettings, LineStitch, NodeStitch, Pattern } from "~/lib/pattern/";
 import { PatternApplication, ToolEvent } from "~/lib/pixi/";
 import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
 
@@ -77,19 +77,8 @@ function updatePatternView(pattern: Pattern) {
     { signal },
   );
   pattern.addEventListener(
-    PatternEvent.UpdateShowSymbols,
-    (e) => patternView.setShowSymbols((e as CustomEvent).detail),
-    { signal },
-  );
-  pattern.addEventListener(PatternEvent.UpdateShowGrid, (e) => patternView.setShowGrid((e as CustomEvent).detail), {
-    signal,
-  });
-  pattern.addEventListener(PatternEvent.UpdateShowRulers, (e) => patternView.setShowRulers((e as CustomEvent).detail), {
-    signal,
-  });
-  pattern.addEventListener(
-    PatternEvent.UpdateLayersVisibility,
-    (e) => patternView.setLayersVisibility((e as CustomEvent).detail),
+    PatternEvent.UpdateDisplaySettings,
+    (e) => patternView.setDisplaySettings((e as CustomEvent).detail),
     { signal },
   );
 }
@@ -120,10 +109,7 @@ defineExpose({
   setCanvasZoom: patternApplication.setZoom.bind(patternApplication),
   resizeCanvas: patternApplication.resize.bind(patternApplication),
 
-  setShowSymbols: (value: boolean) => patternApplication.view?.setShowSymbols(value),
-  setShowGrid: (value: boolean) => patternApplication.view?.setShowGrid(value),
-  setShowRulers: (value: boolean) => patternApplication.view?.setShowRulers(value),
-  setLayersVisibility: (value: LayersVisibility) => patternApplication.view?.setLayersVisibility(value),
+  setDisplaySettings: (value: DisplaySettings) => patternApplication.view?.setDisplaySettings(value),
 
   getReferenceImageSettings: () => patternApplication.view?.referenceImageSettings,
   blurReferenceImage: () => patternApplication.view?.blurReferenceImage(),

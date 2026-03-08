@@ -3,6 +3,7 @@ import type { DestroyOptions } from "pixi.js";
 
 import {
   DisplayMode,
+  DisplaySettings,
   Fabric,
   FullStitch,
   FullStitchKind,
@@ -384,6 +385,14 @@ export class PatternView extends Container {
         stage.renderable = visible;
       }
     }
+  }
+
+  setDisplaySettings(settings: DisplaySettings) {
+    this.setDisplayMode(settings.displayMode);
+    this.setShowSymbols(settings.showSymbols);
+    this.setShowGrid(settings.showGrid);
+    this.setShowRulers(settings.showRulers);
+    this.setLayersVisibility(settings.layersVisibility);
   }
 
   async setReferenceImage(

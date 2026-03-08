@@ -1,10 +1,8 @@
-use embroiderly_pattern::{DisplayMode, LayersVisibility, PatternProject};
+use embroiderly_pattern::{DisplayMode, DisplaySettings, LayersVisibility, PatternProject};
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
-use super::{
-  Action, SetDisplayModeAction, SetLayersVisibilityAction, ShowGridAction, ShowRulersAction, ShowSymbolsAction,
-};
+use super::{Action, UpdateDisplaySettingsAction};
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {
@@ -12,7 +10,7 @@ fn setup_app() -> App<MockRuntime> {
 }
 
 #[test]
-fn test_set_display_mode() {
+fn test_update_display_settings() {
   let app = setup_app();
   let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
     .build()
@@ -20,189 +18,51 @@ fn test_set_display_mode() {
 
   let mut patproj = PatternProject::default();
 
-  let old_mode = patproj.display_settings.display_mode.clone();
-  let mode = DisplayMode::Stitches;
-  let action = SetDisplayModeAction::new(mode.clone());
-
-  // Test executing the command.
-  {
-    window.once("display:set_mode", move |e| {
-      let str: String = serde_json::from_str(e.payload()).unwrap();
-      let expected: DisplayMode = str.parse().unwrap();
-      assert_eq!(expected, mode);
-    });
-
-    action.perform(&window, &mut patproj).unwrap();
-  }
-
-  // Test revoking the command.
-  {
-    window.once("display:set_mode", move |e| {
-      let str: String = serde_json::from_str(e.payload()).unwrap();
-      let expected: DisplayMode = str.parse().unwrap();
-      assert_eq!(expected, old_mode);
-    });
-
-    action.revoke(&window, &mut patproj).unwrap();
-  }
-}
-
-#[test]
-fn test_show_symbols() {
-  let app = setup_app();
-  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
-    .build()
-    .unwrap();
-
-  let mut patproj = PatternProject::default();
-
-  // Store the initial value and set to the opposite for our test
-  let initial_value = patproj.display_settings.show_symbols;
-  let new_value = !initial_value;
-  let action = ShowSymbolsAction::new(new_value);
-
-  // Test executing the command
-  {
-    let expected_value = new_value;
-    window.once("display:show_symbols", move |e| {
-      let value: bool = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(value, expected_value);
-    });
-
-    action.perform(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.display_settings.show_symbols, new_value);
-  }
-
-  // Test revoking the command
-  {
-    let expected_value = !new_value;
-    window.once("display:show_symbols", move |e| {
-      let value: bool = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(value, expected_value);
-    });
-
-    action.revoke(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.display_settings.show_symbols, !new_value);
-  }
-}
-
-#[test]
-fn test_show_grid() {
-  let app = setup_app();
-  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
-    .build()
-    .unwrap();
-
-  let mut patproj = PatternProject::default();
-
-  let initial_value = patproj.display_settings.show_grid;
-  let new_value = !initial_value;
-  let action = ShowGridAction::new(new_value);
-
-  // Test executing the command
-  {
-    let expected_value = new_value;
-    window.once("display:show_grid", move |e| {
-      let value: bool = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(value, expected_value);
-    });
-
-    action.perform(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.display_settings.show_grid, new_value);
-  }
-
-  // Test revoking the command
-  {
-    let expected_value = !new_value;
-    window.once("display:show_grid", move |e| {
-      let value: bool = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(value, expected_value);
-    });
-
-    action.revoke(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.display_settings.show_grid, !new_value);
-  }
-}
-
-#[test]
-fn test_show_rulers() {
-  let app = setup_app();
-  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
-    .build()
-    .unwrap();
-
-  let mut patproj = PatternProject::default();
-
-  let initial_value = patproj.display_settings.show_rulers;
-  let new_value = !initial_value;
-  let action = ShowRulersAction::new(new_value);
-
-  // Test executing the command
-  {
-    let expected_value = new_value;
-    window.once("display:show_rulers", move |e| {
-      let value: bool = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(value, expected_value);
-    });
-
-    action.perform(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.display_settings.show_rulers, new_value);
-  }
-
-  // Test revoking the command
-  {
-    let expected_value = !new_value;
-    window.once("display:show_rulers", move |e| {
-      let value: bool = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(value, expected_value);
-    });
-
-    action.revoke(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.display_settings.show_rulers, !new_value);
-  }
-}
-
-#[test]
-fn test_layers_visibility() {
-  let app = setup_app();
-  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
-    .build()
-    .unwrap();
-
-  let mut patproj = PatternProject::default();
-  let visibility = LayersVisibility {
-    reference_image: true,
-    fullstitches: true,
-    petitestitches: false,
-    halfstitches: true,
-    quarterstitches: false,
-    specialstitches: false,
-    backstitches: false,
-    straightstitches: false,
-    frenchknots: false,
-    beads: false,
+  let old_display_settings = patproj.display_settings.clone();
+  let new_display_settings = DisplaySettings {
+    display_mode: DisplayMode::Stitches,
+    show_symbols: true,
+    show_grid: false,
+    show_rulers: false,
+    layers_visibility: LayersVisibility {
+      reference_image: false,
+      fullstitches: true,
+      petitestitches: false,
+      halfstitches: true,
+      quarterstitches: false,
+      specialstitches: false,
+      backstitches: false,
+      straightstitches: false,
+      frenchknots: false,
+      beads: false,
+    },
+    ..old_display_settings.clone()
   };
-  let action = SetLayersVisibilityAction::new(visibility.clone());
+  let action = UpdateDisplaySettingsAction::new(new_display_settings.clone());
 
-  // Test executing the command
+  // Test executing the action.
   {
-    window.once("display:set_layers_visibility", move |e| {
+    let expected = new_display_settings.clone();
+    window.once("display:update", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: LayersVisibility = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
-      assert_eq!(expected, visibility);
+      let actual: DisplaySettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
+      assert_eq!(actual, expected);
     });
 
     action.perform(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.display_settings, new_display_settings);
   }
 
-  // Test revoking the command
+  // Test revoking the action.
   {
-    window.once("display:set_layers_visibility", move |e| {
+    let expected = old_display_settings.clone();
+    window.once("display:update", move |e| {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
-      let expected: LayersVisibility = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
-      assert_eq!(expected, LayersVisibility::default());
+      let actual: DisplaySettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
+      assert_eq!(actual, expected);
     });
 
     action.revoke(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.display_settings, old_display_settings);
   }
 }

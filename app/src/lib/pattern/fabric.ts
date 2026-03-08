@@ -2,7 +2,7 @@ import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 
-import { PaletteSettings } from "./display";
+import { PaletteSettings } from "./palette";
 import { BasePaletteItem } from "./palette";
 
 export class Fabric {

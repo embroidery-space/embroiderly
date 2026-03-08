@@ -22,7 +22,7 @@ import type { ImageImportOptions } from "~/api/";
 import { PatternCanvas } from "~/components/canvas/";
 import { useDragDrop, useFilePicker } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
-import { LayersVisibility, Pattern } from "~/lib/pattern/";
+import { DisplaySettings, LayersVisibility, Pattern } from "~/lib/pattern/";
 import { ImageImportService } from "~/services/";
 
 import { PaletteSelect } from "../palette/";
@@ -123,10 +123,11 @@ const importPatternFromImage = useDebounceFn(
       previewPattern.value = await imageImportService.getPreview(imagePath.value, selectedPalettePath.value, options);
 
       // Configure the pattern view.
-      previewPattern.value.showSymbols = false;
-      previewPattern.value.layersVisibility = new LayersVisibility({
-        ...LayersVisibility.default(false),
-        fullstitches: true,
+      const ds = previewPattern.value.displaySettings;
+      previewPattern.value.displaySettings = new DisplaySettings({
+        ...ds,
+        showSymbols: false,
+        layersVisibility: new LayersVisibility({ ...LayersVisibility.default(false), fullstitches: true }),
       });
     } finally {
       importingPattern.value = false;
