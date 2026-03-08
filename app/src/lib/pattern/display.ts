@@ -158,4 +158,13 @@ export class DisplaySettings {
     showRulers: b.bool(),
     layersVisibility: LayersVisibility.schema,
   });
+
+  static serialize(data: DisplaySettings) {
+    return DisplaySettings.schema.serialize(data);
+  }
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new DisplaySettings(DisplaySettings.schema.deserialize(buffer));
+  }
 }

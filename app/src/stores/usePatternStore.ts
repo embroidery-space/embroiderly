@@ -18,6 +18,7 @@ import {
   Symbol,
   SetSymbolData,
   DisplayMode,
+  DisplaySettings,
   LayersVisibility,
   PdfExportOptions,
   PatternInfo,
@@ -166,57 +167,44 @@ export const usePatternStore = defineStore(
       for (const stitch of deserializeStitches(payload)) pattern.value.removeStitch(stitch);
     });
 
-    function setDisplayMode(mode: DisplayMode | undefined) {
+    function updateDisplaySettings(settings: DisplaySettings) {
       if (!pattern.value) return;
-      if (mode && mode !== pattern.value.displayMode) return PatternApi.setDisplayMode(pattern.value.id, mode);
-      pattern.value.displayMode = mode;
-      return triggerRef(pattern);
+      return PatternApi.updateDisplaySettings(pattern.value.id, settings);
     }
-    appWindow.listen<DisplayMode>(PatternEvent.UpdateDisplayMode, ({ payload: mode }) => {
+    appWindow.listen<string>(PatternEvent.UpdateDisplaySettings, ({ payload }) => {
       if (!pattern.value) return;
-      pattern.value.displayMode = mode;
+      pattern.value.displaySettings = DisplaySettings.deserialize(payload);
       triggerRef(pattern);
     });
+
+    function setDisplayMode(mode: DisplayMode | undefined) {
+      if (!pattern.value) return;
+      if (mode === undefined || mode === pattern.value.displayMode) {
+        pattern.value.displayMode = mode;
+        return triggerRef(pattern);
+      }
+      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, displayMode: mode }));
+    }
 
     function showSymbols(value: boolean) {
       if (!pattern.value) return;
-      return PatternApi.showSymbols(pattern.value.id, value);
+      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showSymbols: value }));
     }
-    appWindow.listen<boolean>(PatternEvent.UpdateShowSymbols, ({ payload: value }) => {
-      if (!pattern.value) return;
-      pattern.value.showSymbols = value;
-      triggerRef(pattern);
-    });
 
     function showGrid(value: boolean) {
       if (!pattern.value) return;
-      return PatternApi.showGrid(pattern.value.id, value);
+      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showGrid: value }));
     }
-    appWindow.listen<boolean>(PatternEvent.UpdateShowGrid, ({ payload: value }) => {
-      if (!pattern.value) return;
-      pattern.value.showGrid = value;
-      triggerRef(pattern);
-    });
 
     function showRulers(value: boolean) {
       if (!pattern.value) return;
-      return PatternApi.showRulers(pattern.value.id, value);
+      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showRulers: value }));
     }
-    appWindow.listen<boolean>(PatternEvent.UpdateShowRulers, ({ payload: value }) => {
-      if (!pattern.value) return;
-      pattern.value.showRulers = value;
-      triggerRef(pattern);
-    });
 
     function setLayersVisibility(layersVisibility: LayersVisibility) {
       if (!pattern.value) return;
-      return PatternApi.setLayersVisibility(pattern.value.id, layersVisibility);
+      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, layersVisibility }));
     }
-    appWindow.listen<string>(PatternEvent.UpdateLayersVisibility, ({ payload }) => {
-      if (!pattern.value) return;
-      pattern.value.layersVisibility = LayersVisibility.deserialize(payload);
-      triggerRef(pattern);
-    });
 
     async function updatePdfExportOptions(options: PdfExportOptions) {
       if (!pattern.value) return;
@@ -263,6 +251,7 @@ export const usePatternStore = defineStore(
       setPaletteItemSymbol,
       addStitch,
       removeStitch,
+      updateDisplaySettings,
       setDisplayMode,
       showSymbols,
       showGrid,

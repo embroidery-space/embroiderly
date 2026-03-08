@@ -1,7 +1,5 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{
-  DisplayMode, Fabric, Grid, LayersVisibility, PaletteSettings, PdfExportOptions, ReferenceImageSettings,
-};
+use embroiderly_pattern::{DisplaySettings, Fabric, Grid, PaletteSettings, PdfExportOptions, ReferenceImageSettings};
 
 use crate::core::actions::SortPaletteBy;
 
@@ -86,20 +84,8 @@ pub enum AppEvent {
     grid: Grid,
   },
 
-  DisplayModeChanged {
-    mode: DisplayMode,
-  },
-  SymbolsVisibilityChanged {
-    visible: bool,
-  },
-  GridVisibilityChanged {
-    visible: bool,
-  },
-  RulersVisibilityChanged {
-    visible: bool,
-  },
-  LayersVisibilityChanged {
-    visibility: LayersVisibility,
+  DisplaySettingsUpdated {
+    display_settings: DisplaySettings,
   },
 
   PalettesImported {
@@ -138,11 +124,7 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
       Self::FabricUpdated { .. } => "fabric_updated",
       Self::GridUpdated { .. } => "grid_updated",
 
-      Self::DisplayModeChanged { .. } => "display_mode_changed",
-      Self::SymbolsVisibilityChanged { .. } => "symbols_visibility_changed",
-      Self::GridVisibilityChanged { .. } => "grid_visibility_changed",
-      Self::RulersVisibilityChanged { .. } => "rulers_visibility_changed",
-      Self::LayersVisibilityChanged { .. } => "layers_visibility_changed",
+      Self::DisplaySettingsUpdated { .. } => "display_settings_updated",
 
       Self::PalettesImported { .. } => "palettes_imported",
       Self::SymbolFontsImported { .. } => "symbol_fonts_imported",
@@ -307,21 +289,48 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
         ("major_lines_color", json!(grid.major_lines.color)),
       ],
 
-      Self::DisplayModeChanged { mode } => vec![("display_mode", json!(mode.to_string()))],
-      Self::SymbolsVisibilityChanged { visible } => vec![("symbols_visible", json!(visible))],
-      Self::GridVisibilityChanged { visible } => vec![("grid_visible", json!(visible))],
-      Self::RulersVisibilityChanged { visible } => vec![("rulers_visible", json!(visible))],
-      Self::LayersVisibilityChanged { visibility } => vec![
-        ("reference_image_visible", json!(visibility.reference_image)),
-        ("full_stitches_visible", json!(visibility.fullstitches)),
-        ("petite_stitches_visible", json!(visibility.petitestitches)),
-        ("half_stitches_visible", json!(visibility.halfstitches)),
-        ("quarter_stitches_visible", json!(visibility.quarterstitches)),
-        ("back_stitches_visible", json!(visibility.backstitches)),
-        ("straight_stitches_visible", json!(visibility.straightstitches)),
-        ("french_knots_visible", json!(visibility.frenchknots)),
-        ("beads_visible", json!(visibility.beads)),
-        ("special_stitches_visible", json!(visibility.specialstitches)),
+      Self::DisplaySettingsUpdated { display_settings } => vec![
+        ("display_mode", json!(display_settings.display_mode.to_string())),
+        ("symbols_visible", json!(display_settings.show_symbols)),
+        ("grid_visible", json!(display_settings.show_grid)),
+        ("rulers_visible", json!(display_settings.show_rulers)),
+        (
+          "reference_image_visible",
+          json!(display_settings.layers_visibility.reference_image),
+        ),
+        (
+          "full_stitches_visible",
+          json!(display_settings.layers_visibility.fullstitches),
+        ),
+        (
+          "petite_stitches_visible",
+          json!(display_settings.layers_visibility.petitestitches),
+        ),
+        (
+          "half_stitches_visible",
+          json!(display_settings.layers_visibility.halfstitches),
+        ),
+        (
+          "quarter_stitches_visible",
+          json!(display_settings.layers_visibility.quarterstitches),
+        ),
+        (
+          "back_stitches_visible",
+          json!(display_settings.layers_visibility.backstitches),
+        ),
+        (
+          "straight_stitches_visible",
+          json!(display_settings.layers_visibility.straightstitches),
+        ),
+        (
+          "french_knots_visible",
+          json!(display_settings.layers_visibility.frenchknots),
+        ),
+        ("beads_visible", json!(display_settings.layers_visibility.beads)),
+        (
+          "special_stitches_visible",
+          json!(display_settings.layers_visibility.specialstitches),
+        ),
       ],
 
       Self::PalettesImported {

@@ -2,7 +2,7 @@ import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 import { stringify as stringifyUuid } from "uuid";
 
-import { DisplayMode, DisplaySettings, Grid, LayersVisibility } from "./display.ts";
+import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
 import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
@@ -215,6 +215,16 @@ export class Pattern extends EventTarget {
     this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: stitch }));
   }
 
+  get displaySettings() {
+    return this.#displaySettings;
+  }
+  set displaySettings(settings: DisplaySettings) {
+    this.#displaySettings = settings;
+    // Sync #effectiveDisplayMode: keep it aligned with new displayMode.
+    this.#effectiveDisplayMode = settings.displayMode;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplaySettings, { detail: settings }));
+  }
+
   /**
    * Returns the effective display mode.
    * - When symbols are hidden, always returns a valid display mode (never `undefined`)
@@ -233,34 +243,17 @@ export class Pattern extends EventTarget {
   get showSymbols() {
     return this.#displaySettings.showSymbols;
   }
-  set showSymbols(value: boolean) {
-    this.#displaySettings.showSymbols = value;
-    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateShowSymbols, { detail: this.showSymbols }));
-    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplayMode, { detail: this.displayMode }));
-  }
 
   get showGrid() {
     return this.#displaySettings.showGrid;
-  }
-  set showGrid(value: boolean) {
-    this.#displaySettings.showGrid = value;
-    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateShowGrid, { detail: value }));
   }
 
   get showRulers() {
     return this.#displaySettings.showRulers;
   }
-  set showRulers(value: boolean) {
-    this.#displaySettings.showRulers = value;
-    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateShowRulers, { detail: value }));
-  }
 
   get layersVisibility() {
     return this.#displaySettings.layersVisibility;
-  }
-  set layersVisibility(value: LayersVisibility) {
-    this.#displaySettings.layersVisibility = value;
-    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateLayersVisibility, { detail: value }));
   }
 
   get pdfExportOptions() {
@@ -296,11 +289,8 @@ export const enum PatternEvent {
   RemovePaletteItem = "palette:remove_palette_item",
   UpdatePaletteDisplaySettings = "palette:update_display_settings",
 
+  UpdateDisplaySettings = "display:update",
   UpdateDisplayMode = "display:set_mode",
-  UpdateShowSymbols = "display:show_symbols",
-  UpdateShowGrid = "display:show_grid",
-  UpdateShowRulers = "display:show_rulers",
-  UpdateLayersVisibility = "display:set_layers_visibility",
 
   UpdatePdfExportOptions = "publish:update-pdf",
 }

@@ -1,10 +1,9 @@
 import {
   deserializeFabricColors,
-  DisplayMode,
+  DisplaySettings,
   Fabric,
   Grid,
   FabricColor,
-  LayersVisibility,
   PatternInfo,
   ReferenceImageSettings,
   PaletteItem,
@@ -43,24 +42,10 @@ export function updateReferenceImageSettings(patternId: string, settings: Refere
 
 // === Display Settings === //
 
-export function setDisplayMode(patternId: string, mode: DisplayMode) {
-  return invoke<void>("set_display_mode", { mode }, { headers: { patternId } });
-}
-
-export function showSymbols(patternId: string, value: boolean) {
-  return invoke<void>("show_symbols", { value }, { headers: { patternId } });
-}
-
-export function showGrid(patternId: string, value: boolean) {
-  return invoke<void>("show_grid", { value }, { headers: { patternId } });
-}
-
-export function showRulers(patternId: string, value: boolean) {
-  return invoke<void>("show_rulers", { value }, { headers: { patternId } });
-}
-
-export function setLayersVisibility(patternId: string, visibility: LayersVisibility) {
-  return invoke<void>("set_layers_visibility", LayersVisibility.serialize(visibility), { headers: { patternId } });
+export function updateDisplaySettings(patternId: string, displaySettings: DisplaySettings) {
+  return invoke<void>("update_display_settings", DisplaySettings.serialize(displaySettings), {
+    headers: { patternId },
+  });
 }
 
 // === Fabric Properties === //
