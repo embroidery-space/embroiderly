@@ -86,15 +86,13 @@ function onClose(value?: boolean) {
         @after-leave="emits('after:leave')"
       >
         <header data-slot="header" :class="ui.header({ class: props.ui?.header })">
-          <div>
-            <AlertDialog.Title data-slot="title" :class="ui.title({ class: props.ui?.title })">
-              {{ title }}
-            </AlertDialog.Title>
+          <AlertDialog.Title data-slot="title" :class="ui.title({ class: props.ui?.title })">
+            {{ title }}
+          </AlertDialog.Title>
 
-            <AlertDialog.Description data-slot="description" :class="ui.description({ class: props.ui?.description })">
-              {{ description }}
-            </AlertDialog.Description>
-          </div>
+          <AlertDialog.Description data-slot="description" :class="ui.description({ class: props.ui?.description })">
+            {{ description }}
+          </AlertDialog.Description>
         </header>
 
         <footer data-slot="footer" :class="ui.footer({ class: props.ui?.footer })">
