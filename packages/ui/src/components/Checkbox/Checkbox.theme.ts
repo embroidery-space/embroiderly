@@ -7,7 +7,7 @@ export const CheckboxTheme = tv({
     container: "flex items-center",
     base: "overflow-hidden rounded-sm ring ring-accented ring-inset not-disabled:hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2",
     indicator: "flex size-full items-center justify-center text-inverted",
-    icon: "size-full shrink-0",
+    icon: "mt-px size-full shrink-0",
     wrapper: "ms-2 w-full",
     label: "block font-medium text-default not-disabled:hover:cursor-pointer",
     description: "text-muted",
