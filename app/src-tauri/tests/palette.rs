@@ -171,7 +171,7 @@ fn updates_palette_display_settings() {
   let patterns_manager = patterns_state.read().unwrap();
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
-  assert_eq!(patproj.display_settings.palette_settings, new_palette_settings);
+  assert_eq!(patproj.pattern.palette.settings(), new_palette_settings);
 
   let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
   let history_manager = history_state.read().unwrap();

@@ -5,7 +5,56 @@ import type { ColorSource } from "pixi.js";
 
 import type { Eq } from "~/types/";
 
-import { PaletteSettings } from "./display.ts";
+export class PaletteSettings {
+  columnsNumber: number;
+  colorOnly: boolean;
+  showStitchSymbols: boolean;
+  stitchSymbolsOnContrastBackground: boolean;
+  showColorBrands: boolean;
+  showColorNumbers: boolean;
+  showColorNames: boolean;
+
+  constructor(data: b.infer<typeof PaletteSettings.schema>) {
+    this.columnsNumber = data.columnsNumber;
+    this.colorOnly = data.colorOnly;
+    this.showStitchSymbols = data.showStitchSymbols;
+    this.stitchSymbolsOnContrastBackground = data.stitchSymbolsOnContrastBackground;
+    this.showColorBrands = data.showColorBrands;
+    this.showColorNumbers = data.showColorNumbers;
+    this.showColorNames = data.showColorNames;
+  }
+
+  static readonly schema = b.struct({
+    columnsNumber: b.u8(),
+    colorOnly: b.bool(),
+    showStitchSymbols: b.bool(),
+    stitchSymbolsOnContrastBackground: b.bool(),
+    showColorBrands: b.bool(),
+    showColorNumbers: b.bool(),
+    showColorNames: b.bool(),
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new PaletteSettings(PaletteSettings.schema.deserialize(buffer));
+  }
+
+  static serialize(data: PaletteSettings) {
+    return PaletteSettings.schema.serialize(data);
+  }
+
+  static default(): PaletteSettings {
+    return new PaletteSettings({
+      columnsNumber: 1,
+      colorOnly: true,
+      showStitchSymbols: true,
+      stitchSymbolsOnContrastBackground: true,
+      showColorBrands: true,
+      showColorNumbers: true,
+      showColorNames: true,
+    });
+  }
+}
 
 export enum SortPaletteBy {
   BrandAndNumber = "BrandAndNumber",
@@ -233,17 +282,22 @@ export class Palette {
   #items: PaletteItem[];
   /** Visual ordering of palette items. */
   #positions: number[];
+  /** Display settings for the palette panel. */
+  #settings: PaletteSettings;
 
   constructor(
     data: b.infer<typeof Palette.schema> | { items: b.infer<typeof PaletteItem.schema>[]; positions: number[] },
   ) {
     this.#items = data.items.map((item, index) => new PaletteItem(index, item));
     this.#positions = Array.from(data.positions);
+    this.#settings =
+      "settings" in data && data.settings ? new PaletteSettings(data.settings) : PaletteSettings.default();
   }
 
   static readonly schema = b.struct({
     items: b.vec(PaletteItem.schema),
     positions: b.vec(b.u32()),
+    settings: PaletteSettings.schema,
   });
 
   static deserialize(data: Uint8Array | string) {
@@ -272,6 +326,14 @@ export class Palette {
       throw new Error("Positions array length must match items length");
     }
     this.#positions = [...positions];
+  }
+
+  /** Palette display settings. */
+  get settings(): PaletteSettings {
+    return this.#settings;
+  }
+  set settings(settings: PaletteSettings) {
+    this.#settings = settings;
   }
 
   /** Palette items in visual order. */

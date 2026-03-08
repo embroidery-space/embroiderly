@@ -99,7 +99,7 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
   let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
   // Only update if settings have actually changed.
-  if patproj.display_settings.palette_settings == settings {
+  if patproj.pattern.palette.settings() == settings {
     return Ok(());
   }
 

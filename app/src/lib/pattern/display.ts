@@ -43,57 +43,6 @@ export class Grid {
   }
 }
 
-export class PaletteSettings {
-  columnsNumber: number;
-  colorOnly: boolean;
-  showStitchSymbols: boolean;
-  stitchSymbolsOnContrastBackground: boolean;
-  showColorBrands: boolean;
-  showColorNumbers: boolean;
-  showColorNames: boolean;
-
-  constructor(data: b.infer<typeof PaletteSettings.schema>) {
-    this.columnsNumber = data.columnsNumber;
-    this.colorOnly = data.colorOnly;
-    this.showStitchSymbols = data.showStitchSymbols;
-    this.stitchSymbolsOnContrastBackground = data.stitchSymbolsOnContrastBackground;
-    this.showColorBrands = data.showColorBrands;
-    this.showColorNumbers = data.showColorNumbers;
-    this.showColorNames = data.showColorNames;
-  }
-
-  static readonly schema = b.struct({
-    columnsNumber: b.u8(),
-    colorOnly: b.bool(),
-    showStitchSymbols: b.bool(),
-    stitchSymbolsOnContrastBackground: b.bool(),
-    showColorBrands: b.bool(),
-    showColorNumbers: b.bool(),
-    showColorNames: b.bool(),
-  });
-
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new PaletteSettings(PaletteSettings.schema.deserialize(buffer));
-  }
-
-  static serialize(data: PaletteSettings) {
-    return PaletteSettings.schema.serialize(data);
-  }
-
-  static default(): PaletteSettings {
-    return new PaletteSettings({
-      columnsNumber: 1,
-      colorOnly: true,
-      showStitchSymbols: true,
-      stitchSymbolsOnContrastBackground: true,
-      showColorBrands: true,
-      showColorNumbers: true,
-      showColorNames: true,
-    });
-  }
-}
-
 export enum DisplayMode {
   Solid = "Solid",
   Stitches = "Stitches",
@@ -190,7 +139,6 @@ export class DisplaySettings {
   showSymbols: boolean;
   showGrid: boolean;
   showRulers: boolean;
-  paletteSettings: PaletteSettings;
   layersVisibility: LayersVisibility;
 
   constructor(data: b.infer<typeof DisplaySettings.schema>) {
@@ -199,7 +147,6 @@ export class DisplaySettings {
     this.showSymbols = data.showSymbols;
     this.showGrid = data.showGrid;
     this.showRulers = data.showRulers;
-    this.paletteSettings = new PaletteSettings(data.paletteSettings);
     this.layersVisibility = new LayersVisibility(data.layersVisibility);
   }
 
@@ -209,7 +156,6 @@ export class DisplaySettings {
     showSymbols: b.bool(),
     showGrid: b.bool(),
     showRulers: b.bool(),
-    paletteSettings: PaletteSettings.schema,
     layersVisibility: LayersVisibility.schema,
   });
 }

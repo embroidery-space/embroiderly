@@ -205,7 +205,7 @@ fn test_update_palette_display_settings() {
     .unwrap();
 
   let mut patproj = create_pattern_project();
-  let old_settings = patproj.display_settings.palette_settings.clone();
+  let old_settings = patproj.pattern.palette.settings().clone();
   let new_settings = PaletteSettings {
     columns_number: 4,
     color_only: true,

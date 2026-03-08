@@ -10,7 +10,6 @@ pub struct DisplaySettings {
   pub show_symbols: bool,
   pub show_grid: bool,
   pub show_rulers: bool,
-  pub palette_settings: PaletteSettings,
   pub layers_visibility: LayersVisibility,
 }
 
@@ -22,7 +21,6 @@ impl Default for DisplaySettings {
       show_symbols: false,
       show_grid: true,
       show_rulers: true,
-      palette_settings: PaletteSettings::default(),
       layers_visibility: LayersVisibility::default(),
     }
   }
@@ -123,44 +121,6 @@ impl std::str::FromStr for DisplayMode {
       "Stitches" => Ok(Self::Stitches),
       "Mixed" => Ok(Self::Mixed),
       _ => Ok(Self::Mixed),
-    }
-  }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
-pub struct PaletteSettings {
-  pub columns_number: u8,
-  pub color_only: bool,
-  pub show_stitch_symbols: bool,
-  pub stitch_symbols_on_contrast_background: bool,
-  pub show_color_brands: bool,
-  pub show_color_numbers: bool,
-  pub show_color_names: bool,
-}
-
-impl PaletteSettings {
-  pub const DEFAULT_COLUMNS_NUMBER: u8 = 1;
-  pub const DEFAULT_COLOR_ONLY: bool = false;
-  pub const DEFAULT_SHOW_STITCH_SYMBOLS: bool = true;
-  pub const DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND: bool = true;
-  pub const DEFAULT_SHOW_COLOR_BRANDS: bool = true;
-  pub const DEFAULT_SHOW_COLOR_NUMBERS: bool = true;
-  pub const DEFAULT_SHOW_COLOR_NAMES: bool = true;
-}
-
-impl Default for PaletteSettings {
-  fn default() -> Self {
-    Self {
-      columns_number: Self::DEFAULT_COLUMNS_NUMBER,
-      color_only: Self::DEFAULT_COLOR_ONLY,
-      show_stitch_symbols: Self::DEFAULT_SHOW_STITCH_SYMBOLS,
-      stitch_symbols_on_contrast_background: Self::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND,
-      show_color_brands: Self::DEFAULT_SHOW_COLOR_BRANDS,
-      show_color_numbers: Self::DEFAULT_SHOW_COLOR_NUMBERS,
-      show_color_names: Self::DEFAULT_SHOW_COLOR_NAMES,
     }
   }
 }

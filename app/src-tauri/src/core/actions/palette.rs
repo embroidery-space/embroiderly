@@ -169,7 +169,8 @@ impl<R: tauri::Runtime> Action<R> for UpdatePaletteDisplaySettingsAction {
       "palette:update_display_settings",
       base64::encode(borsh::to_vec(&self.settings)?),
     )?;
-    let old_settings = std::mem::replace(&mut patproj.display_settings.palette_settings, self.settings);
+    let old_settings = patproj.pattern.palette.settings();
+    patproj.pattern.palette.set_settings(self.settings);
     if self.old_settings.get().is_none() {
       self.old_settings.set(old_settings).unwrap();
     }
@@ -186,7 +187,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePaletteDisplaySettingsAction {
       "palette:update_display_settings",
       base64::encode(borsh::to_vec(&old_settings)?),
     )?;
-    patproj.display_settings.palette_settings = *old_settings;
+    patproj.pattern.palette.set_settings(*old_settings);
     Ok(())
   }
 }
