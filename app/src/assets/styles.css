@@ -1,7 +1,2 @@
 @import "tailwindcss";
 @import "@embroiderly/ui";
-
-:root,
-:host {
-  --ui-header-height: --spacing(10);
-}
