@@ -62,8 +62,8 @@ onErrorCaptured((err, _component, info) => {
     }"
   >
     <UseDark>
-      <AppHeader />
-      <AppMain />
+      <AppHeader class="h-10" />
+      <AppMain class="h-[calc(100vh-(--spacing(10)))]" />
     </UseDark>
   </App>
 </template>

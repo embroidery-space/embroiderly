@@ -35,7 +35,7 @@ defineExpose({ state });
 
       <template #controls>
         <HstText v-model="state.title" title="Title" />
-        <HstText v-model="state.description" title="Description" />
+        <HstTextarea v-model="state.description" title="Description" />
       </template>
     </Variant>
 
