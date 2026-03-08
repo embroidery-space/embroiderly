@@ -3,17 +3,5 @@
 
 :root,
 :host {
-  /* The height of the application header. */
   --ui-header-height: --spacing(10);
-
-  /* The size (width or height) of small outer panels around the pattern editor. */
-  --ui-editor-outer-panel-size: --spacing(9);
-}
-
-header {
-  height: var(--ui-header-height);
-}
-
-main {
-  height: calc(100vh - var(--ui-header-height));
 }
