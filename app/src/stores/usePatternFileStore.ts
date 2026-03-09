@@ -27,7 +27,7 @@ export const usePatternFileStore = defineStore(
     const toast = useToast();
     const filePicker = useFilePicker();
 
-    const currentPatternId = ref<string>();
+    const currentPatternId = useSessionStorage<string | undefined>("embroiderly-current-pattern", undefined);
 
     const openedPatterns = useSessionStorage<OpenPattern[]>("embroiderly-opened-patterns", []);
     const recentPatterns = useLocalStorage<string[]>("embroiderly-recent-patterns", []);
