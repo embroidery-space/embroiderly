@@ -1,7 +1,10 @@
+use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
+
 use embroiderly::commands;
 use embroiderly::state::PatternsState;
 use embroiderly_pattern::Fabric;
-use tauri::Manager as _;
+use tauri::{Listener as _, Manager as _};
 
 mod utils;
 
@@ -94,6 +97,12 @@ fn saves_pattern() {
     for extension in ["oxs", "embproj"] {
       let file_path = std::env::temp_dir().join(format!("pattern.{extension}"));
 
+      let checkpoint_received = Arc::new(AtomicBool::new(false));
+      webview.once("app:pattern-checkpoint", {
+        let checkpoint_received = checkpoint_received.clone();
+        move |_| checkpoint_received.store(true, Ordering::Relaxed)
+      });
+
       // If we can save the pattern and then parse it back, we can consider it a success.
       assert!(
         invoke_ipc!(
@@ -106,6 +115,8 @@ fn saves_pattern() {
         )
         .is_ok()
       );
+
+      assert!(checkpoint_received.load(Ordering::Relaxed));
       assert!(
         invoke_ipc!(
           &webview,

@@ -1,6 +1,7 @@
 import { useConfirm, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -12,6 +13,12 @@ import type { Fabric, PdfExportOptions } from "~/lib/pattern/";
 
 const MAX_RECENT_PATTERNS = 5;
 
+export interface OpenPattern {
+  id: string;
+  title: string;
+  dirty: boolean;
+}
+
 export const usePatternFileStore = defineStore(
   "embroiderly-pattern-files",
   () => {
@@ -22,8 +29,8 @@ export const usePatternFileStore = defineStore(
 
     const currentPatternId = ref<string>();
 
-    const openedPatterns = ref<{ id: string; title: string; dirty: boolean }[]>([]);
-    const recentPatterns = ref<string[]>([]);
+    const openedPatterns = useSessionStorage<OpenPattern[]>("embroiderly-opened-patterns", []);
+    const recentPatterns = useLocalStorage<string[]>("embroiderly-recent-patterns", []);
 
     const loading = ref(false);
 
@@ -227,13 +234,13 @@ export const usePatternFileStore = defineStore(
       return openedPatterns.value.filter((pattern) => patterns.includes(pattern.id));
     }
 
-    // Listen to change/save events to correctly identify dirty state.
+    // Listen to change/checkpoint events to correctly identify dirty state.
     const window = getCurrentWebviewWindow();
     window.listen<string>("app:pattern-changed", (event) => {
       const pattern = openedPatterns.value.find((p) => p.id === event.payload);
       if (pattern) pattern.dirty = true;
     });
-    window.listen<string>("app:pattern-saved", (event) => {
+    window.listen<string>("app:pattern-checkpoint", (event) => {
       const pattern = openedPatterns.value.find((p) => p.id === event.payload);
       if (pattern) pattern.dirty = false;
     });
@@ -256,12 +263,5 @@ export const usePatternFileStore = defineStore(
       fetchOpenedPatterns,
     };
   },
-  {
-    tauri: {
-      autoStart: true,
-      saveOnChange: true,
-      filterKeys: ["openedPatterns", "recentPatterns"],
-      filterKeysStrategy: "pick",
-    },
-  },
+  { tauri: { save: false, sync: false } },
 );
