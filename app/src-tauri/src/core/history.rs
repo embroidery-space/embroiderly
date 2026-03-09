@@ -129,14 +129,11 @@ impl<R: tauri::Runtime> History<R> {
             self.redo_stack.push(HistoryEntry::Single(action));
 
             // Undo the next action in the undo stack.
-            if let Some(HistoryEntry::Single(action)) = self.undo_stack.pop() {
-              self.redo_stack.push(HistoryEntry::Single(action.clone()));
-              return Some(action);
-            }
-          } else {
-            self.redo_stack.push(HistoryEntry::Single(action.clone()));
-            return Some(action);
+            return self.undo();
           }
+
+          self.redo_stack.push(HistoryEntry::Single(action.clone()));
+          return Some(action);
         }
         HistoryEntry::Transaction(transaction) => {
           if let Some(action) = transaction.actions.pop() {
@@ -232,6 +229,15 @@ impl<R: tauri::Runtime> History<R> {
   /// If the last action is a `Transaction`, it returns all actions in that transaction.
   /// If the last action is a `Single` action, it returns that action.
   pub fn undo_transaction(&mut self) -> Option<Vec<Box<dyn Action<R>>>> {
+    // Skip a checkpoint action at the top of the undo stack before proceeding.
+    if self
+      .undo_stack
+      .last()
+      .is_some_and(|entry| matches!(entry, HistoryEntry::Single(action) if self.is_checkpoint_action(action.clone())))
+    {
+      self.redo_stack.push(self.undo_stack.pop().unwrap());
+    }
+
     if let Some(entry) = self.undo_stack.last() {
       match entry {
         HistoryEntry::Single(_) => return Some(vec![self.undo().unwrap()]),

@@ -360,6 +360,27 @@ mod transactions {
   }
 
   #[test]
+  fn test_undo_transaction_after_checkpoint() {
+    let mut history = History::<MockRuntime>::default();
+
+    // Simulate: add stitches in a transaction, then save (checkpoint).
+    history.start_transaction();
+    history.push(Box::new(MockAction));
+    history.push(Box::new(MockAction));
+    history.end_transaction();
+    history.push(Box::new(CheckpointAction));
+
+    assert_eq!(history.undo_stack.len(), 2);
+
+    // Undoing should skip the checkpoint and undo the transaction.
+    let undone_actions = history.undo_transaction();
+    assert!(undone_actions.is_some_and(|actions| actions.len() == 2));
+
+    assert_eq!(history.undo_stack.len(), 0);
+    assert_eq!(history.redo_stack.len(), 2);
+  }
+
+  #[test]
   fn test_undo_transaction_single_action() {
     let mut history = History::<MockRuntime>::default();
 
@@ -372,6 +393,24 @@ mod transactions {
     assert_eq!(history.redo_stack.len(), 1);
 
     assert!(matches!(history.redo_stack.first(), Some(HistoryEntry::Single(_))));
+  }
+
+  #[test]
+  fn test_undo_transaction_single_action_after_checkpoint() {
+    let mut history = History::<MockRuntime>::default();
+
+    // Simulate: add a single stitch action, then save (checkpoint).
+    history.push(Box::new(MockAction));
+    history.push(Box::new(CheckpointAction));
+
+    assert_eq!(history.undo_stack.len(), 2);
+
+    // Undoing should skip the checkpoint and undo the single action.
+    let undone_actions = history.undo_transaction();
+    assert!(undone_actions.is_some_and(|actions| actions.len() == 1));
+
+    assert_eq!(history.undo_stack.len(), 0);
+    assert_eq!(history.redo_stack.len(), 2);
   }
 
   #[test]
