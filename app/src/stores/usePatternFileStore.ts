@@ -165,9 +165,9 @@ export const usePatternFileStore = defineStore(
         await FilesApi.closePattern(id, options);
         removeOpenedPattern(id);
 
+        // Switch to the first opened pattern after closing the current one.
         if (currentPatternId.value === id) {
-          const lastOpenedPattern = openedPatterns.value[openedPatterns.value.length - 1];
-          currentPatternId.value = lastOpenedPattern?.id;
+          currentPatternId.value = openedPatterns.value[0]?.id;
         }
       } catch (error) {
         if (error instanceof UnsavedChangesError) {
