@@ -1,4 +1,5 @@
 import { useConfirm, useToast } from "@embroiderly/ui";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { defineStore } from "pinia";
 import { ref } from "vue";
@@ -21,7 +22,7 @@ export const usePatternFileStore = defineStore(
 
     const currentPatternId = ref<string>();
 
-    const openedPatterns = ref<{ id: string; title: string }[]>([]);
+    const openedPatterns = ref<{ id: string; title: string; dirty: boolean }[]>([]);
     const recentPatterns = ref<string[]>([]);
 
     const loading = ref(false);
@@ -32,7 +33,7 @@ export const usePatternFileStore = defineStore(
 
     function addOpenedPattern(id: string, title: string) {
       if (openedPatterns.value.some((p) => p.id === id)) return;
-      openedPatterns.value.push({ id, title });
+      openedPatterns.value.push({ id, title, dirty: false });
     }
 
     function removeOpenedPattern(id: string) {
@@ -209,9 +210,15 @@ export const usePatternFileStore = defineStore(
     }
 
     async function fetchOpenedPatterns() {
-      const patterns = await FilesApi.getOpenedPatterns();
-      for (const [id, title] of patterns) {
-        addOpenedPattern(id, title);
+      const backendPatterns = await FilesApi.getOpenedPatterns();
+
+      // Remove patterns no longer in backend.
+      openedPatterns.value = openedPatterns.value.filter((op) => backendPatterns.some((bp) => bp[0] === op.id));
+
+      // Add new patterns from backend.
+      const existingIds = new Set(openedPatterns.value.map((p) => p.id));
+      for (const [id, title] of backendPatterns) {
+        if (!existingIds.has(id)) openedPatterns.value.push({ id, title, dirty: false });
       }
     }
 
@@ -219,6 +226,17 @@ export const usePatternFileStore = defineStore(
       const patterns = await FilesApi.getUnsavedPatterns();
       return openedPatterns.value.filter((pattern) => patterns.includes(pattern.id));
     }
+
+    // Listen to change/save events to correctly identify dirty state.
+    const window = getCurrentWebviewWindow();
+    window.listen<string>("app:pattern-changed", (event) => {
+      const pattern = openedPatterns.value.find((p) => p.id === event.payload);
+      if (pattern) pattern.dirty = true;
+    });
+    window.listen<string>("app:pattern-saved", (event) => {
+      const pattern = openedPatterns.value.find((p) => p.id === event.payload);
+      if (pattern) pattern.dirty = false;
+    });
 
     return {
       currentPatternId,
@@ -242,7 +260,7 @@ export const usePatternFileStore = defineStore(
     tauri: {
       autoStart: true,
       saveOnChange: true,
-      filterKeys: ["recentPatterns"],
+      filterKeys: ["openedPatterns", "recentPatterns"],
       filterKeysStrategy: "pick",
     },
   },

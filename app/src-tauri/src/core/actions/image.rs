@@ -37,6 +37,7 @@ impl<R: tauri::Runtime> Action<R> for SetReferenceImageAction {
     if self.old_image.get().is_none() {
       self.old_image.set(old_image).unwrap();
     }
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -48,6 +49,7 @@ impl<R: tauri::Runtime> Action<R> for SetReferenceImageAction {
     let old_image = self.old_image.get().unwrap();
     window.emit("image:set", base64::encode(borsh::to_vec(&old_image)?))?;
     patproj.reference_image.clone_from(old_image);
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }
@@ -79,6 +81,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateReferenceImageSettingsAction {
     if self.old_settings.get().is_none() {
       self.old_settings.set(old_settings).unwrap();
     }
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -92,6 +95,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateReferenceImageSettingsAction {
       image.settings = *old_settings;
       window.emit("image:settings:update", base64::encode(borsh::to_vec(&old_settings)?))?;
     }
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }

@@ -32,6 +32,12 @@ fn test_update_pattern_info() {
       let expected: PatternInfo = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, pattern_info);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
   }
@@ -42,6 +48,12 @@ fn test_update_pattern_info() {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: PatternInfo = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, PatternInfo::default());
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();

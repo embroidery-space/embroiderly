@@ -39,6 +39,7 @@ impl<R: tauri::Runtime> Action<R> for AddStitchAction {
     if self.conflicts.get().is_none() {
       self.conflicts.set(conflicts).unwrap();
     }
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -53,6 +54,7 @@ impl<R: tauri::Runtime> Action<R> for AddStitchAction {
     patproj.pattern.add_stitches(conflicts.clone());
     window.emit("stitches:remove", base64::encode(borsh::to_vec(&vec![self.stitch])?))?;
     window.emit("stitches:add", base64::encode(borsh::to_vec(&conflicts)?))?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }
@@ -85,6 +87,7 @@ impl<R: tauri::Runtime> Action<R> for RemoveStitchAction {
       self.actual_stitch.set(stitch).unwrap();
     }
     window.emit("stitches:remove", base64::encode(borsh::to_vec(&vec![stitch])?))?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -96,6 +99,7 @@ impl<R: tauri::Runtime> Action<R> for RemoveStitchAction {
     let stitch = self.actual_stitch.get().unwrap();
     patproj.pattern.add_stitch(*stitch);
     window.emit("stitches:add", base64::encode(borsh::to_vec(&vec![*stitch])?))?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }

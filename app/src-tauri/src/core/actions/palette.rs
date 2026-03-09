@@ -43,6 +43,7 @@ impl<R: tauri::Runtime> Action<R> for AddPaletteItemAction {
         palindex: (patproj.pattern.palette.len() - 1) as u32,
       })?),
     )?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -53,6 +54,7 @@ impl<R: tauri::Runtime> Action<R> for AddPaletteItemAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     patproj.pattern.palette.pop();
     window.emit("palette:remove_palette_item", [patproj.pattern.palette.len()])?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }
@@ -106,6 +108,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
         .unwrap();
     }
 
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -133,6 +136,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
     );
     window.emit("stitches:add", base64::encode(borsh::to_vec(&metadata.conflicts)?))?;
 
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }
@@ -174,6 +178,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePaletteDisplaySettingsAction {
     if self.old_settings.get().is_none() {
       self.old_settings.set(old_settings).unwrap();
     }
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -188,6 +193,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePaletteDisplaySettingsAction {
       base64::encode(borsh::to_vec(&old_settings)?),
     )?;
     patproj.pattern.palette.set_settings(*old_settings);
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }
@@ -227,6 +233,7 @@ impl<R: tauri::Runtime> Action<R> for SortPaletteAction {
     };
 
     window.emit("palette:sort", new_positions)?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -238,6 +245,7 @@ impl<R: tauri::Runtime> Action<R> for SortPaletteAction {
     let old_positions = self.old_positions.get().unwrap().clone();
     patproj.pattern.palette.set_positions(old_positions.clone());
     window.emit("palette:sort", old_positions)?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }
@@ -278,6 +286,7 @@ impl<R: tauri::Runtime> Action<R> for ReorderPaletteItemsAction {
       .reorder_palette_items(self.old_position, self.new_position);
 
     window.emit("palette:reorder", new_positions)?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -289,6 +298,7 @@ impl<R: tauri::Runtime> Action<R> for ReorderPaletteItemsAction {
     let old_positions = self.old_positions.get().unwrap().clone();
     patproj.pattern.palette.set_positions(old_positions.clone());
     window.emit("palette:reorder", old_positions)?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }
@@ -337,6 +347,7 @@ impl<R: tauri::Runtime> Action<R> for SetSymbolAction {
       })?),
     )?;
 
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -359,6 +370,7 @@ impl<R: tauri::Runtime> Action<R> for SetSymbolAction {
       })?),
     )?;
 
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }

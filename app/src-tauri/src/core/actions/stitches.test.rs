@@ -75,6 +75,12 @@ fn test_add_stitch() {
       let expected_stitches: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected_stitches.len(), 4);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
     assert_eq!(patproj.pattern.fullstitches.len(), 1);
@@ -93,6 +99,12 @@ fn test_add_stitch() {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected_stitches: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected_stitches.len(), 4);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();
@@ -125,6 +137,12 @@ fn test_remove_stitch() {
       assert_eq!(expected_stitches.len(), 1);
       assert_eq!(expected_stitches[0], stitch);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
     assert_eq!(patproj.pattern.fullstitches.len(), 1);
@@ -138,6 +156,12 @@ fn test_remove_stitch() {
       let expected_stitches: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected_stitches.len(), 1);
       assert_eq!(expected_stitches[0], stitch);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();

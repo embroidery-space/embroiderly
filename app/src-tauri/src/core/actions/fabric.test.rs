@@ -34,6 +34,12 @@ fn test_update_fabric() {
       let expected: Fabric = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, fabric);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
   }
@@ -44,6 +50,12 @@ fn test_update_fabric() {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let expected: Fabric = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(expected, Fabric::default());
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();

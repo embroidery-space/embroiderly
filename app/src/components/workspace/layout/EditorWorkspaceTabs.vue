@@ -18,7 +18,7 @@ const patternFileStore = usePatternFileStore();
 <template>
   <Tabs
     :model-value="patternStore.pattern?.id"
-    :items="patternFileStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
+    :items="patternFileStore.openedPatterns.map(({ id, title, dirty }) => ({ label: title, value: id, dirty }))"
     :content="false"
     color="neutral"
     activation-mode="manual"
@@ -30,6 +30,12 @@ const patternFileStore = usePatternFileStore();
     }"
     @update:model-value="patternFileStore.switchPattern($event as string)"
   >
+    <template #leading="{ item }">
+      <!-- @vue-expect-error Tabs items currently don't inherit the provided type. -->
+      <!-- eslint-disable-next-line vue-i18n/no-raw-text -->
+      <span class="text-xs" :class="{ invisible: !item.dirty }">●</span>
+    </template>
+
     <template #list-leading>
       <ButtonIcon
         color="neutral"
