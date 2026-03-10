@@ -7,6 +7,7 @@ import {
   IconPanelRightClose,
   IconPanelRightOpen,
   IconClose,
+  IconDot,
 } from "~/assets/icons/";
 import { useEditorStateStore, usePatternFileStore, usePatternStore } from "~/stores/";
 
@@ -30,12 +31,6 @@ const patternFileStore = usePatternFileStore();
     }"
     @update:model-value="patternFileStore.switchPattern($event as string)"
   >
-    <template #leading="{ item }">
-      <!-- @vue-expect-error Tabs items currently don't inherit the provided type. -->
-      <!-- eslint-disable-next-line vue-i18n/no-raw-text -->
-      <span class="text-xs" :class="{ invisible: !item.dirty }">●</span>
-    </template>
-
     <template #list-leading>
       <ButtonIcon
         color="neutral"
@@ -46,6 +41,11 @@ const patternFileStore = usePatternFileStore();
         class="rounded-none px-3"
         @click="editorStateStore.palettePanelCollapsed = !editorStateStore.palettePanelCollapsed"
       />
+    </template>
+
+    <template #leading="{ item }">
+      <!-- @vue-expect-error Tabs items currently don't inherit the provided type. -->
+      <IconDot aria-hidden="true" class="size-3 shrink-0" :class="{ invisible: !item.dirty }" />
     </template>
 
     <template #trailing="{ item }">
