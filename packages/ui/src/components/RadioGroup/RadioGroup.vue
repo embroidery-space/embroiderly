@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends RadioGroupItem">
 import type { AcceptableValue, RadioGroupRootProps } from "reka-ui";
 import { RadioGroup, Label } from "reka-ui/namespaced";
 import { computed } from "vue";
@@ -18,11 +18,14 @@ export type RadioGroupItem =
       description?: string;
     };
 
-export interface RadioGroupProps extends Pick<RadioGroupRootProps, "as" | "asChild" | "disabled"> {
+export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> extends Pick<
+  RadioGroupRootProps,
+  "as" | "asChild" | "disabled"
+> {
   id?: string;
 
   /** The items to display in the radio group. */
-  items?: RadioGroupItem[];
+  items?: T[];
 
   /**
    * The color of the radio buttons.
@@ -40,7 +43,7 @@ export interface RadioGroupProps extends Pick<RadioGroupRootProps, "as" | "asChi
 }
 
 const modelValue = defineModel<RadioGroupValue>();
-const props = withDefaults(defineProps<RadioGroupProps>(), {
+const props = withDefaults(defineProps<RadioGroupProps<T>>(), {
   color: "primary",
 });
 
@@ -48,7 +51,7 @@ const { id, size, ariaAttrs } = useFormField(props);
 
 const items = computed(() => {
   if (!props.items) return [];
-  return props.items.map((item) => {
+  return (props.items as RadioGroupItem[]).map((item) => {
     if (item === null) {
       return {
         id: `${id.value}:null`,
@@ -65,7 +68,12 @@ const items = computed(() => {
       };
     }
 
-    return { ...item, id: `${id.value}:${item.value}` };
+    return {
+      id: `${id.value}:${item.value}`,
+      value: item.value,
+      label: item.label,
+      description: item.description,
+    };
   });
 });
 

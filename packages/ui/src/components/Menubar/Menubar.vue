@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends MenubarItem">
 import defu from "defu";
 import type { MenubarContentProps, MenubarRootProps } from "reka-ui";
 import { Menubar } from "reka-ui/namespaced";
@@ -46,7 +46,7 @@ export interface MenubarItem {
   class?: any;
 }
 
-export interface MenubarMenu {
+export interface MenubarMenu<T extends MenubarItem = MenubarItem> {
   /** The label displayed on the menu trigger. */
   label: string;
   /** The icon displayed on the menu trigger. */
@@ -56,12 +56,15 @@ export interface MenubarMenu {
   /** Whether the menu trigger is hidden. */
   hidden?: boolean;
   /** The items to display in this menu's dropdown. */
-  items: MenubarItem[] | MenubarItem[][];
+  items: T[] | T[][];
 }
 
-export interface MenubarProps extends Pick<MenubarRootProps, "defaultValue" | "dir" | "loop"> {
+export interface MenubarProps<T extends MenubarItem = MenubarItem> extends Pick<
+  MenubarRootProps,
+  "defaultValue" | "dir" | "loop"
+> {
   /** The menus to display in the menubar. */
-  menus?: MenubarMenu[];
+  menus?: MenubarMenu<T>[];
 
   /**
    * The content positioning props applied to all menu dropdowns.
@@ -90,7 +93,7 @@ export interface MenubarSlots {
 }
 
 const modelValue = defineModel<string>();
-const props = withDefaults(defineProps<MenubarProps>(), {
+const props = withDefaults(defineProps<MenubarProps<T>>(), {
   size: "md",
   portal: true,
 });
@@ -106,10 +109,10 @@ const contentProps = computed(
     }) as MenubarContentProps,
 );
 
-function normalizeItems(items: MenubarItem[] | MenubarItem[][]): MenubarItem[][] {
+function normalizeItems(items: T[] | T[][]): T[][] {
   if (!items?.length) return [];
-  if (Array.isArray(items[0])) return items as MenubarItem[][];
-  return [items as MenubarItem[]];
+  if (Array.isArray(items[0])) return items as T[][];
+  return [items as T[]];
 }
 
 const ui = computed(() => MenubarTheme({ size: props.size }));

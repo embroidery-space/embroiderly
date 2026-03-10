@@ -6,7 +6,7 @@ import ContextMenu from "./ContextMenu.vue";
 import type { ContextMenuItem, ContextMenuProps } from "./ContextMenu.vue";
 
 const ContextMenuWrapper = defineComponent({
-  components: { ContextMenu },
+  components: { ContextMenu: ContextMenu as any },
   inheritAttrs: false,
   template: `
   <ContextMenu v-bind="$attrs">
