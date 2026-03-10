@@ -6,7 +6,7 @@ import DropdownMenu from "./DropdownMenu.vue";
 import type { DropdownMenuItem, DropdownMenuProps } from "./DropdownMenu.vue";
 
 const DropdownMenuWrapper = defineComponent({
-  components: { DropdownMenu },
+  components: { DropdownMenu: DropdownMenu as any },
   inheritAttrs: false,
   template: `
   <DropdownMenu v-bind="$attrs">

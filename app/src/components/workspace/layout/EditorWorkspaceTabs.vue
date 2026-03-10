@@ -44,7 +44,6 @@ const patternFileStore = usePatternFileStore();
     </template>
 
     <template #leading="{ item }">
-      <!-- @vue-expect-error Tabs items currently don't inherit the provided type. -->
       <IconDot aria-hidden="true" class="size-3 shrink-0" :class="{ invisible: !item.dirty }" />
     </template>
 

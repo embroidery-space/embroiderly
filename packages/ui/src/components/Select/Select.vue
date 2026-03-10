@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends SelectItem">
 import defu from "defu";
 import { useFilter } from "reka-ui";
 import { Combobox } from "reka-ui/namespaced";
@@ -38,11 +38,11 @@ export interface SelectItemObject {
 
 export type SelectItem = string | number | SelectItemObject;
 
-export interface SelectProps {
+export interface SelectProps<T extends SelectItem = SelectItem> {
   id?: string;
 
   /** The items to display in the select. */
-  items?: SelectItem[] | SelectItem[][];
+  items?: T[] | T[][];
 
   /** The placeholder text when no value is selected. */
   placeholder?: string;
@@ -88,7 +88,7 @@ export interface SelectProps {
 defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<string | number | undefined>();
-const props = withDefaults(defineProps<SelectProps>(), {
+const props = withDefaults(defineProps<SelectProps<T>>(), {
   color: "primary",
   variant: "subtle",
 

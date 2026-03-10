@@ -55,7 +55,7 @@ describe("Select", () => {
     ["with icons", { props: { ...props, items: groupedItems, modelValue: "backlog" } }],
     ["with disabled item", { props: { ...props, items: groupedItems } }],
   ] as [string, { props?: SelectProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Select, options);
+    const screen = page.render(Select as any, options);
     await nextTick();
 
     expect(screen.container.outerHTML).toMatchSnapshot();

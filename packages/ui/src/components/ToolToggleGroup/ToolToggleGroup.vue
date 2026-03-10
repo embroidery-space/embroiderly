@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends ToolToggleItem">
 import type { AcceptableValue } from "reka-ui";
 import { Label, ToggleGroup } from "reka-ui/namespaced";
 import { computed, useId } from "vue";
@@ -30,9 +30,12 @@ export interface ToolToggleItem {
   tooltip?: string;
 }
 
-export interface ToolToggleGroupProps extends Pick<TooltipProps, "delayDuration"> {
+export interface ToolToggleGroupProps<T extends ToolToggleItem = ToolToggleItem> extends Pick<
+  TooltipProps,
+  "delayDuration"
+> {
   /** The items to display. */
-  items: ToolToggleItem[];
+  items: T[];
 
   /**
    * The orientation of the toggle group.
@@ -56,7 +59,7 @@ export interface ToolToggleGroupProps extends Pick<TooltipProps, "delayDuration"
 }
 
 const modelValue = defineModel<AcceptableValue>();
-const props = withDefaults(defineProps<ToolToggleGroupProps>(), {
+const props = withDefaults(defineProps<ToolToggleGroupProps<T>>(), {
   size: "lg",
   orientation: "horizontal",
 });

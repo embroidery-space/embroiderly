@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends DropdownMenuItem">
 import { reactivePick } from "@vueuse/core";
 import defu from "defu";
 import { useForwardPropsEmits } from "reka-ui";
@@ -47,9 +47,12 @@ export interface DropdownMenuItem {
   class?: any;
 }
 
-export interface DropdownMenuProps extends Pick<DropdownMenuRootProps, "open" | "defaultOpen" | "modal"> {
+export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem> extends Pick<
+  DropdownMenuRootProps,
+  "open" | "defaultOpen" | "modal"
+> {
   /** The items to display in the dropdown menu. */
-  items?: DropdownMenuItem[] | DropdownMenuItem[][];
+  items?: T[] | T[][];
 
   /**
    * The content positioning props.
@@ -83,7 +86,7 @@ export interface DropdownMenuSlots {
   default(props: { open: boolean }): any;
 }
 
-const props = withDefaults(defineProps<DropdownMenuProps>(), {
+const props = withDefaults(defineProps<DropdownMenuProps<T>>(), {
   size: "md",
   portal: true,
 });
@@ -101,10 +104,10 @@ const contentProps = computed(
     }) as DropdownMenuContentProps,
 );
 
-const normalizedItems = computed<DropdownMenuItem[][]>(() => {
+const normalizedItems = computed<T[][]>(() => {
   if (!props.items?.length) return [];
-  if (Array.isArray(props.items[0])) return props.items as DropdownMenuItem[][];
-  return [props.items as DropdownMenuItem[]];
+  if (Array.isArray(props.items[0])) return props.items as T[][];
+  return [props.items as T[]];
 });
 
 const ui = computed(() => DropdownMenuTheme({ size: props.size }));

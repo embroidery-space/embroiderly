@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends TabsItem">
 import type { TabsRootProps } from "reka-ui";
 import { Tabs } from "reka-ui/namespaced";
 import { computed } from "vue";
@@ -16,12 +16,12 @@ export interface TabsItem {
   disabled?: boolean;
 }
 
-export interface TabsProps extends Pick<
+export interface TabsProps<T extends TabsItem = TabsItem> extends Pick<
   TabsRootProps<string | number>,
   "defaultValue" | "activationMode" | "unmountOnHide"
 > {
   /** The items to display as tabs. */
-  items?: TabsItem[];
+  items?: T[];
 
   /**
    * The size of the tabs.
@@ -45,18 +45,18 @@ export interface TabsProps extends Pick<
   ui?: TabsThemeSlots;
 }
 
-export interface TabsSlots {
-  "leading"(props: { item: TabsItem; index: number }): any;
-  "default"(props: { item: TabsItem; index: number }): any;
-  "trailing"(props: { item: TabsItem; index: number }): any;
-  "content"(props: { item: TabsItem; index: number }): any;
+export interface TabsSlots<T extends TabsItem = TabsItem> {
+  "leading"(props: { item: T; index: number }): any;
+  "default"(props: { item: T; index: number }): any;
+  "trailing"(props: { item: T; index: number }): any;
+  "content"(props: { item: T; index: number }): any;
   "list-leading"(props?: object): any;
   "list-trailing"(props?: object): any;
-  [key: string]: (props: { item: TabsItem; index: number }) => any;
+  [key: string]: (props: { item: T; index: number }) => any;
 }
 
 const modelValue = defineModel<string | number>();
-const props = withDefaults(defineProps<TabsProps>(), {
+const props = withDefaults(defineProps<TabsProps<T>>(), {
   defaultValue: "0",
 
   size: "md",
@@ -66,7 +66,7 @@ const props = withDefaults(defineProps<TabsProps>(), {
 
   unmountOnHide: true,
 });
-const slots = defineSlots<TabsSlots>();
+const slots = defineSlots<TabsSlots<T>>();
 
 const ui = computed(() => {
   return TabsTheme({

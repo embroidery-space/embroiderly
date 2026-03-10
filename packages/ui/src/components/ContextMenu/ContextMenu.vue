@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends ContextMenuItem">
 import defu from "defu";
 import type { ContextMenuContentProps, ContextMenuRootProps } from "reka-ui";
 import { ContextMenu } from "reka-ui/namespaced";
@@ -45,9 +45,12 @@ export interface ContextMenuItem {
   class?: any;
 }
 
-export interface ContextMenuProps extends Pick<ContextMenuRootProps, "modal"> {
+export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> extends Pick<
+  ContextMenuRootProps,
+  "modal"
+> {
   /** The items to display in the context menu. */
-  items?: ContextMenuItem[] | ContextMenuItem[][];
+  items?: T[] | T[][];
 
   /**
    * The content positioning props.
@@ -82,7 +85,7 @@ export interface ContextMenuSlots {
   default(): any;
 }
 
-const props = withDefaults(defineProps<ContextMenuProps>(), {
+const props = withDefaults(defineProps<ContextMenuProps<T>>(), {
   size: "md",
   portal: true,
 });
@@ -98,10 +101,10 @@ const contentProps = computed(
     }) as ContextMenuContentProps,
 );
 
-const normalizedItems = computed<ContextMenuItem[][]>(() => {
+const normalizedItems = computed<T[][]>(() => {
   if (!props.items?.length) return [];
-  if (Array.isArray(props.items[0])) return props.items as ContextMenuItem[][];
-  return [props.items as ContextMenuItem[]];
+  if (Array.isArray(props.items[0])) return props.items as T[][];
+  return [props.items as T[]];
 });
 
 const ui = computed(() => ContextMenuTheme({ size: props.size }));

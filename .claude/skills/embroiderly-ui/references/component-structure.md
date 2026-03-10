@@ -181,6 +181,25 @@ const slots = defineSlots<ComponentSlots>();
 </template>
 ```
 
+## Generic Item Types
+
+Components with an `items` prop are generic over the item type:
+
+```vue
+<script setup lang="ts" generic="T extends TabsItem">
+export interface TabsProps<T extends TabsItem = TabsItem> {
+  items?: T[];
+}
+
+export interface TabsSlots<T extends TabsItem = TabsItem> {
+  "default"(props: { item: T; index: number }): any;
+}
+
+const props = defineProps<TabsProps<T>>();
+const slots = defineSlots<TabsSlots<T>>();
+</script>
+```
+
 ## I18n
 
 For accessible labels on interactive elements:

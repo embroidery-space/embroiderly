@@ -67,7 +67,7 @@ describe("Menubar", () => {
     ["with class", { props: { ...props, menus: simpleMenus, class: "min-w-48" } }],
     ["with ui", { props: { ...props, menus: simpleMenus, ui: { root: "bg-default", trigger: "font-bold" } } }],
   ] as [string, { props?: MenubarProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Menubar, options);
+    const screen = page.render(Menubar as any, options);
     await nextTick();
 
     const trigger = screen.getByRole("menuitem").first();

@@ -27,7 +27,7 @@ describe("RadioGroup", () => {
     ["with class", { props: { items, class: "absolute" } }],
     ["with ui", { props: { items, ui: { wrapper: "ms-4" } } }],
   ] as [string, { props?: RadioGroupProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(RadioGroup, options);
+    const screen = page.render(RadioGroup as any, options);
     await nextTick();
 
     expect(screen.container.outerHTML).toMatchSnapshot();

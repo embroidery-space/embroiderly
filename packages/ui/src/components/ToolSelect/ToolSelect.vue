@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends ToolSelectItem">
 import { unrefElement } from "@vueuse/core";
 import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
@@ -25,9 +25,12 @@ export interface ToolSelectItem {
   shortcut?: string;
 }
 
-export interface ToolSelectProps extends Pick<TooltipProps, "delayDuration"> {
+export interface ToolSelectProps<T extends ToolSelectItem = ToolSelectItem> extends Pick<
+  TooltipProps,
+  "delayDuration"
+> {
   /** The items to display. */
-  items: ToolSelectItem[];
+  items: T[];
 
   /**
    * The size of the tool select.
@@ -48,7 +51,7 @@ export interface ToolSelectProps extends Pick<TooltipProps, "delayDuration"> {
 }
 
 const model = defineModel<unknown>();
-const props = withDefaults(defineProps<ToolSelectProps>(), {
+const props = withDefaults(defineProps<ToolSelectProps<T>>(), {
   size: "lg",
 });
 
@@ -70,9 +73,9 @@ const dropdownItems = computed<DropdownMenuItem[]>(() => {
 });
 
 // Track the last selected option from this group.
-const lastSelectedOption = ref<ToolSelectItem>(props.items[0]!);
+const lastSelectedOption = ref<T>(props.items[0]!);
 
-const currentOption = computed<ToolSelectItem>(() => {
+const currentOption = computed<T>(() => {
   const rawModelValue = toRaw(model.value);
   const foundOption = props.items.find(({ value }) => value === rawModelValue);
   return foundOption ?? lastSelectedOption.value;
