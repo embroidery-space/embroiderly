@@ -7,6 +7,7 @@ import {
   IconPanelRightClose,
   IconPanelRightOpen,
   IconClose,
+  IconDot,
 } from "~/assets/icons/";
 import { useEditorStateStore, usePatternFileStore, usePatternStore } from "~/stores/";
 
@@ -18,7 +19,7 @@ const patternFileStore = usePatternFileStore();
 <template>
   <Tabs
     :model-value="patternStore.pattern?.id"
-    :items="patternFileStore.openedPatterns.map(({ id, title }) => ({ label: title, value: id }))"
+    :items="patternFileStore.openedPatterns.map(({ id, title, dirty }) => ({ label: title, value: id, dirty }))"
     :content="false"
     color="neutral"
     activation-mode="manual"
@@ -40,6 +41,10 @@ const patternFileStore = usePatternFileStore();
         class="rounded-none px-3"
         @click="editorStateStore.palettePanelCollapsed = !editorStateStore.palettePanelCollapsed"
       />
+    </template>
+
+    <template #leading="{ item }">
+      <IconDot aria-hidden="true" class="size-3 shrink-0" :class="{ invisible: !item.dirty }" />
     </template>
 
     <template #trailing="{ item }">

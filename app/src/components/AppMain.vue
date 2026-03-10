@@ -54,7 +54,7 @@ watch(
 useTauriListener(
   appWindow.onCloseRequested(async (event) => {
     const unsavedPatterns = await patternFileStore.getUnsavedPatterns();
-    for (const pattern of structuredClone(toRaw(patternFileStore.openedPatterns))) {
+    for (const pattern of structuredClone(toRaw(patternFileStore.openedPatterns.map((op) => toRaw(op))))) {
       const hasUnsavedChanges = unsavedPatterns.some((p) => p.id === pattern.id);
       if (hasUnsavedChanges) {
         const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;

@@ -1,3 +1,5 @@
+use tauri::Emitter as _;
+
 use crate::error::Result;
 use crate::parse_command_payload;
 use crate::state::{HistoryState, PatternsState};
@@ -27,6 +29,10 @@ pub fn undo<R: tauri::Runtime>(
     }
   }
 
+  if !history.get(&pattern_id).unwrap().has_unsaved_changes() {
+    window.emit("app:pattern-checkpoint", pattern_id.to_string())?;
+  }
+
   Ok(())
 }
 
@@ -53,6 +59,10 @@ pub fn redo<R: tauri::Runtime>(
     for action in actions.iter() {
       action.perform(&window, pattern)?;
     }
+  }
+
+  if !history.get(&pattern_id).unwrap().has_unsaved_changes() {
+    window.emit("app:pattern-checkpoint", pattern_id.to_string())?;
   }
 
   Ok(())

@@ -49,6 +49,12 @@ fn test_add_palette_item() {
         }
       );
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     assert_eq!(patproj.pattern.palette.len(), 7);
     action.perform(&window, &mut patproj).unwrap();
@@ -59,6 +65,12 @@ fn test_add_palette_item() {
   {
     window.once("palette:remove_palette_item", move |e| {
       assert_eq!(serde_json::from_str::<Vec<u32>>(e.payload()).unwrap(), vec![7]);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     assert_eq!(patproj.pattern.palette.len(), 8);
@@ -84,6 +96,12 @@ fn assert_executing_remove_palette_items_action(
     let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
     assert!(!conflicts.is_empty());
   });
+  window.once("app:pattern-changed", {
+    let id = patproj.id.to_string();
+    move |e| {
+      assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+    }
+  });
 
   assert_eq!(patproj.pattern.palette.len(), initial_palsize);
   action.perform(window, patproj).unwrap();
@@ -107,6 +125,12 @@ fn assert_revoking_remove_palette_items_action(
     let base64: &str = serde_json::from_str(e.payload()).unwrap();
     let conflicts: Vec<Stitch> = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
     assert!(!conflicts.is_empty());
+  });
+  window.once("app:pattern-changed", {
+    let id = patproj.id.to_string();
+    move |e| {
+      assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+    }
   });
 
   assert_eq!(patproj.pattern.palette.len(), initial_palsize);
@@ -224,6 +248,12 @@ fn test_update_palette_display_settings() {
       let received_settings: PaletteSettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(received_settings, new_settings);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
   }
@@ -234,6 +264,12 @@ fn test_update_palette_display_settings() {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let received_settings: PaletteSettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(received_settings, old_settings);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();
@@ -265,6 +301,12 @@ fn test_sort_palette_action() {
       sorted_new_positions.sort();
       assert_eq!(sorted_new_positions, initial_positions_clone);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
     let sorted_positions = patproj.pattern.palette.positions().to_vec();
@@ -279,6 +321,12 @@ fn test_sort_palette_action() {
       let restored_positions = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
       // Verify that old positions were restored.
       assert_eq!(restored_positions, initial_positions_clone);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();
@@ -311,6 +359,12 @@ fn test_reorder_palette_items_action() {
         initial_positions_clone[old_position as usize]
       );
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
   }
@@ -321,6 +375,12 @@ fn test_reorder_palette_items_action() {
     window.once("palette:reorder", move |e| {
       let restored_positions = serde_json::from_str::<Vec<u32>>(e.payload()).unwrap();
       assert_eq!(restored_positions, initial_positions_clone);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();
@@ -359,6 +419,12 @@ fn test_set_symbol_action() {
       assert_eq!(symbol.char, 'A');
       assert_eq!(symbol.font, "Arial");
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     // Verify symbol is not set initially.
     assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_none());
@@ -379,6 +445,12 @@ fn test_set_symbol_action() {
 
       assert_eq!(data.palindex, 0);
       assert!(data.symbol.is_none());
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();
@@ -421,6 +493,12 @@ fn test_unset_symbol_action() {
       assert_eq!(data.palindex, 0);
       assert!(data.symbol.is_none());
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
 
@@ -440,6 +518,12 @@ fn test_unset_symbol_action() {
       let symbol = data.symbol.unwrap();
       assert_eq!(symbol.char, 'B');
       assert_eq!(symbol.font, "Times");
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();
@@ -489,6 +573,12 @@ fn test_replace_symbol_action() {
       assert_eq!(symbol.char, 'Y');
       assert_eq!(symbol.font, "Font2");
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
 
@@ -510,6 +600,12 @@ fn test_replace_symbol_action() {
       let symbol = data.symbol.unwrap();
       assert_eq!(symbol.char, 'X');
       assert_eq!(symbol.font, "Font1");
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();

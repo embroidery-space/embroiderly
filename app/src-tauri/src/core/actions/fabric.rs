@@ -53,6 +53,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateFabricPropertiesAction {
       self.old_fabric.set(old_fabric).unwrap();
     }
 
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -71,6 +72,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateFabricPropertiesAction {
       window.emit("stitches:add", base64::encode(borsh::to_vec(extra_stitches)?))?;
     }
 
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }

@@ -37,6 +37,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePatternInfoAction {
     if self.old_info.get().is_none() {
       self.old_info.set(old_info).unwrap();
     }
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -48,6 +49,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePatternInfoAction {
     let old_info = self.old_info.get().unwrap();
     window.emit("pattern-info:update", base64::encode(borsh::to_vec(&old_info)?))?;
     patproj.pattern.info = old_info.clone();
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }
