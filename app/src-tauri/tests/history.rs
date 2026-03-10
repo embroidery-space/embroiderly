@@ -1,7 +1,10 @@
+use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
+
 use embroiderly::commands;
 use embroiderly::state::{HistoryState, PatternsState};
 use embroiderly_pattern::Grid;
-use tauri::Manager as _;
+use tauri::{Listener as _, Manager as _};
 
 mod utils;
 
@@ -31,6 +34,12 @@ fn undoes_single_action() {
   )
   .unwrap();
 
+  let checkpoint_received = Arc::new(AtomicBool::new(false));
+  webview.once("app:pattern-checkpoint", {
+    let checkpoint_received = checkpoint_received.clone();
+    move |_| checkpoint_received.store(true, Ordering::Relaxed)
+  });
+
   assert!(
     invoke_ipc!(
       &webview,
@@ -40,6 +49,8 @@ fn undoes_single_action() {
     )
     .is_ok()
   );
+
+  assert!(checkpoint_received.load(Ordering::Relaxed));
 
   let patterns_state = app.state::<PatternsState>();
   let patterns_manager = patterns_state.read().unwrap();

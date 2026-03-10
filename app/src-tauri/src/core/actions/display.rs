@@ -37,6 +37,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateDisplaySettingsAction {
     if self.old_display_settings.get().is_none() {
       self.old_display_settings.set(old_display_settings).unwrap();
     }
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -48,6 +49,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateDisplaySettingsAction {
     let old_display_settings = self.old_display_settings.get().unwrap();
     patproj.display_settings = old_display_settings.clone();
     window.emit("display:update", base64::encode(borsh::to_vec(old_display_settings)?))?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }

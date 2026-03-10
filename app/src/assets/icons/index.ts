@@ -37,6 +37,7 @@ export { default as IconPalette } from "~icons/material-symbols/palette";
 export { default as IconSymbols } from "~icons/material-symbols/emoji-symbols-rounded";
 export { default as IconGrid } from "~icons/material-symbols/grid-4x4-rounded";
 export { default as IconRulers } from "~icons/mdi/ruler-square";
+export { default as IconDot } from "~icons/mdi/circle-medium";
 
 // Stitches (custom collection)
 export { default as IconStitchFull } from "~icons/stitches/full";

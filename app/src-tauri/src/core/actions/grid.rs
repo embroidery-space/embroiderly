@@ -37,6 +37,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateGridPropertiesAction {
     if self.old_grid.get().is_none() {
       self.old_grid.set(old_grid).unwrap();
     }
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -48,6 +49,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateGridPropertiesAction {
     let old_grid = self.old_grid.get().unwrap();
     window.emit("grid:update", base64::encode(borsh::to_vec(&old_grid)?))?;
     patproj.display_settings.grid = old_grid.clone();
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }

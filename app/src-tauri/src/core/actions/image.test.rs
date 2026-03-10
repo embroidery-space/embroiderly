@@ -40,6 +40,12 @@ fn test_set_reference_image() {
       let expected: Option<ReferenceImage> = borsh::from_slice(&base64::decode(&str).unwrap()).unwrap();
       assert_eq!(expected, Some(image.clone()));
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action1.perform(&window, &mut patproj).unwrap();
     window.unlisten(event_id);
@@ -52,6 +58,12 @@ fn test_set_reference_image() {
       let str: String = serde_json::from_str(e.payload()).unwrap();
       let expected: Option<ReferenceImage> = borsh::from_slice(&base64::decode(&str).unwrap()).unwrap();
       assert_eq!(expected, Some(image.clone()));
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action2.perform(&window, &mut patproj).unwrap();
@@ -66,6 +78,12 @@ fn test_set_reference_image() {
       let expected: Option<ReferenceImage> = borsh::from_slice(&base64::decode(&str).unwrap()).unwrap();
       assert_eq!(expected, Some(image.clone()));
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action2.revoke(&window, &mut patproj).unwrap();
     window.unlisten(event_id);
@@ -77,6 +95,12 @@ fn test_set_reference_image() {
       let str: String = serde_json::from_str(e.payload()).unwrap();
       let expected: Option<ReferenceImage> = borsh::from_slice(&base64::decode(&str).unwrap()).unwrap();
       assert_eq!(expected, None);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action1.revoke(&window, &mut patproj).unwrap();
@@ -109,6 +133,12 @@ fn test_remove_reference_image() {
       let expected: Option<ReferenceImage> = borsh::from_slice(&base64::decode(&str).unwrap()).unwrap();
       assert_eq!(expected, None);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
     assert_eq!(patproj.reference_image, None);
@@ -122,6 +152,12 @@ fn test_remove_reference_image() {
       let str: String = serde_json::from_str(e.payload()).unwrap();
       let expected: Option<ReferenceImage> = borsh::from_slice(&base64::decode(&str).unwrap()).unwrap();
       assert_eq!(expected, Some(original_image.clone()));
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();
@@ -163,6 +199,12 @@ fn test_update_reference_image_settings() {
       let expected: ReferenceImageSettings = borsh::from_slice(&base64::decode(&str).unwrap()).unwrap();
       assert_eq!(expected, new_settings);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
     window.unlisten(event_id);
@@ -175,6 +217,12 @@ fn test_update_reference_image_settings() {
       let str: String = serde_json::from_str(e.payload()).unwrap();
       let expected: ReferenceImageSettings = borsh::from_slice(&base64::decode(&str).unwrap()).unwrap();
       assert_eq!(expected, old_settings);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();

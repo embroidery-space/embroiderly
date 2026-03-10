@@ -39,6 +39,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePdfExportOptionsAction {
       self.old_options.set(old_options).unwrap();
     }
 
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 
@@ -51,6 +52,7 @@ impl<R: tauri::Runtime> Action<R> for UpdatePdfExportOptionsAction {
     patproj.publish_settings.pdf = *old_options;
     window.emit("publish:update-pdf", base64::encode(borsh::to_vec(old_options)?))?;
 
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())
   }
 }

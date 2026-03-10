@@ -177,6 +177,7 @@ pub fn save_pattern<R: tauri::Runtime>(
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).unwrap().push(Box::new(CheckpointAction));
 
+  app_handle.emit("app:pattern-checkpoint", &pattern_id)?;
   app_handle.emit("app:pattern-saved", &pattern_id)?;
   Ok(())
 }

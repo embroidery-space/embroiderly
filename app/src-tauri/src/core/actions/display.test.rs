@@ -48,6 +48,12 @@ fn test_update_display_settings() {
       let actual: DisplaySettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(actual, expected);
     });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
 
     action.perform(&window, &mut patproj).unwrap();
     assert_eq!(patproj.display_settings, new_display_settings);
@@ -60,6 +66,12 @@ fn test_update_display_settings() {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let actual: DisplaySettings = borsh::from_slice(&base64::decode(base64).unwrap()).unwrap();
       assert_eq!(actual, expected);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
     });
 
     action.revoke(&window, &mut patproj).unwrap();

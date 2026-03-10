@@ -1,5 +1,7 @@
 import { useConfirm, useToast } from "@embroiderly/ui";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -11,6 +13,12 @@ import type { Fabric, PdfExportOptions } from "~/lib/pattern/";
 
 const MAX_RECENT_PATTERNS = 5;
 
+export interface OpenPattern {
+  id: string;
+  title: string;
+  dirty: boolean;
+}
+
 export const usePatternFileStore = defineStore(
   "embroiderly-pattern-files",
   () => {
@@ -19,10 +27,10 @@ export const usePatternFileStore = defineStore(
     const toast = useToast();
     const filePicker = useFilePicker();
 
-    const currentPatternId = ref<string>();
+    const currentPatternId = useSessionStorage<string | undefined>("embroiderly-current-pattern", undefined);
 
-    const openedPatterns = ref<{ id: string; title: string }[]>([]);
-    const recentPatterns = ref<string[]>([]);
+    const openedPatterns = useSessionStorage<OpenPattern[]>("embroiderly-opened-patterns", []);
+    const recentPatterns = useLocalStorage<string[]>("embroiderly-recent-patterns", []);
 
     const loading = ref(false);
 
@@ -32,7 +40,7 @@ export const usePatternFileStore = defineStore(
 
     function addOpenedPattern(id: string, title: string) {
       if (openedPatterns.value.some((p) => p.id === id)) return;
-      openedPatterns.value.push({ id, title });
+      openedPatterns.value.push({ id, title, dirty: false });
     }
 
     function removeOpenedPattern(id: string) {
@@ -157,9 +165,9 @@ export const usePatternFileStore = defineStore(
         await FilesApi.closePattern(id, options);
         removeOpenedPattern(id);
 
+        // Switch to the first opened pattern after closing the current one.
         if (currentPatternId.value === id) {
-          const lastOpenedPattern = openedPatterns.value[openedPatterns.value.length - 1];
-          currentPatternId.value = lastOpenedPattern?.id;
+          currentPatternId.value = openedPatterns.value[0]?.id;
         }
       } catch (error) {
         if (error instanceof UnsavedChangesError) {
@@ -209,9 +217,15 @@ export const usePatternFileStore = defineStore(
     }
 
     async function fetchOpenedPatterns() {
-      const patterns = await FilesApi.getOpenedPatterns();
-      for (const [id, title] of patterns) {
-        addOpenedPattern(id, title);
+      const backendPatterns = await FilesApi.getOpenedPatterns();
+
+      // Remove patterns no longer in backend.
+      openedPatterns.value = openedPatterns.value.filter((op) => backendPatterns.some((bp) => bp[0] === op.id));
+
+      // Add new patterns from backend.
+      const existingIds = new Set(openedPatterns.value.map((p) => p.id));
+      for (const [id, title] of backendPatterns) {
+        if (!existingIds.has(id)) openedPatterns.value.push({ id, title, dirty: false });
       }
     }
 
@@ -219,6 +233,17 @@ export const usePatternFileStore = defineStore(
       const patterns = await FilesApi.getUnsavedPatterns();
       return openedPatterns.value.filter((pattern) => patterns.includes(pattern.id));
     }
+
+    // Listen to change/checkpoint events to correctly identify dirty state.
+    const window = getCurrentWebviewWindow();
+    window.listen<string>("app:pattern-changed", (event) => {
+      const pattern = openedPatterns.value.find((p) => p.id === event.payload);
+      if (pattern) pattern.dirty = true;
+    });
+    window.listen<string>("app:pattern-checkpoint", (event) => {
+      const pattern = openedPatterns.value.find((p) => p.id === event.payload);
+      if (pattern) pattern.dirty = false;
+    });
 
     return {
       currentPatternId,
@@ -238,12 +263,5 @@ export const usePatternFileStore = defineStore(
       fetchOpenedPatterns,
     };
   },
-  {
-    tauri: {
-      autoStart: true,
-      saveOnChange: true,
-      filterKeys: ["recentPatterns"],
-      filterKeysStrategy: "pick",
-    },
-  },
+  { tauri: { save: false, sync: false } },
 );
