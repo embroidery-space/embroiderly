@@ -4,10 +4,22 @@ import type { VariantProps } from "tailwind-variants";
 export const ToolToggleTheme = tv({
   slots: {
     root: "relative flex",
-    base: "inline-flex items-center justify-center rounded-md text-dimmed transition-colors not-disabled:hover:cursor-pointer not-disabled:hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted active:bg-elevated aria-pressed:bg-elevated not-disabled:aria-pressed:hover:bg-accented",
+    base: `
+      inline-flex items-center justify-center rounded-md text-dimmed
+      transition-colors
+      not-disabled:hover:cursor-pointer not-disabled:hover:bg-elevated
+      focus-visible:outline-2 focus-visible:outline-offset-2
+      focus-visible:outline-inverted
+      active:bg-elevated
+      aria-pressed:bg-elevated
+      not-disabled:aria-pressed:hover:bg-accented
+    `,
     icon: "size-5 shrink-0",
     wrapper: "ms-2 w-full",
-    label: "block font-medium text-default not-disabled:hover:cursor-pointer",
+    label: `
+      block font-medium text-default
+      not-disabled:hover:cursor-pointer
+    `,
     description: "text-muted",
   },
   variants: {

@@ -3,7 +3,10 @@ import type { VariantProps } from "tailwind-variants";
 
 export const KbdTheme = tv({
   slots: {
-    base: "inline-flex items-center justify-center rounded-sm bg-default px-1 font-sans font-medium text-default ring ring-accented ring-inset",
+    base: `
+      inline-flex items-center justify-center rounded-sm bg-default px-1
+      font-sans font-medium text-default ring ring-accented ring-inset
+    `,
   },
   variants: {
     size: {

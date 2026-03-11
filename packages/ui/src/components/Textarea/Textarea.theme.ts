@@ -4,7 +4,11 @@ import type { VariantProps } from "tailwind-variants";
 export const TextareaTheme = tv({
   slots: {
     root: "relative inline-flex items-center",
-    base: "w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
+    base: `
+      w-full appearance-none rounded-md border-0 transition-colors
+      focus:outline-none
+      disabled:cursor-not-allowed disabled:opacity-75
+    `,
   },
   variants: {
     color: {
@@ -40,14 +44,20 @@ export const TextareaTheme = tv({
       color: "primary",
       variant: "subtle",
       class: {
-        base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
+        base: `
+          focus-visible:ring-2 focus-visible:ring-primary
+          focus-visible:ring-inset
+        `,
       },
     },
     {
       color: "primary",
       variant: "outline",
       class: {
-        base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
+        base: `
+          focus-visible:ring-2 focus-visible:ring-primary
+          focus-visible:ring-inset
+        `,
       },
     },
   ],

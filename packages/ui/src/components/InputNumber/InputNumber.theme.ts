@@ -4,8 +4,15 @@ import type { VariantProps } from "tailwind-variants";
 export const InputNumberTheme = tv({
   slots: {
     root: "relative inline-flex items-center",
-    base: "w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
-    buttons: "absolute inset-y-0 inset-e-0 flex flex-col justify-center [&>button]:scale-80 [&>button]:py-0",
+    base: `
+      w-full appearance-none rounded-md border-0 transition-colors
+      focus:outline-none
+      disabled:cursor-not-allowed disabled:opacity-75
+    `,
+    buttons: `
+      absolute inset-y-0 inset-e-0 flex flex-col justify-center
+      [&>button]:scale-80 [&>button]:py-0
+    `,
   },
   variants: {
     color: {
@@ -39,8 +46,15 @@ export const InputNumberTheme = tv({
     },
     fieldGroup: {
       true: {
-        root: "group has-focus-visible:z-1",
-        base: "group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none",
+        root: `
+          group
+          has-focus-visible:z-1
+        `,
+        base: `
+          group-not-last:group-not-first:rounded-none
+          group-not-only:group-first:rounded-e-none
+          group-not-only:group-last:rounded-s-none
+        `,
       },
     },
   },
@@ -49,14 +63,20 @@ export const InputNumberTheme = tv({
       color: "primary",
       variant: "subtle",
       class: {
-        base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
+        base: `
+          focus-visible:ring-2 focus-visible:ring-primary
+          focus-visible:ring-inset
+        `,
       },
     },
     {
       color: "primary",
       variant: "outline",
       class: {
-        base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
+        base: `
+          focus-visible:ring-2 focus-visible:ring-primary
+          focus-visible:ring-inset
+        `,
       },
     },
 

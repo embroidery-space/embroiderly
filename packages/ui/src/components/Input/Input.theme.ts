@@ -4,7 +4,11 @@ import type { VariantProps } from "tailwind-variants";
 export const InputTheme = tv({
   slots: {
     root: "relative inline-flex items-center",
-    base: "w-full appearance-none rounded-md border-0 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
+    base: `
+      w-full appearance-none rounded-md border-0 transition-colors
+      focus:outline-none
+      disabled:cursor-not-allowed disabled:opacity-75
+    `,
     leading: "absolute inset-y-0 inset-s-0 flex items-center",
     trailing: "absolute inset-y-0 inset-e-0 flex items-center",
     leadingIcon: "shrink-0 text-dimmed",
@@ -56,8 +60,15 @@ export const InputTheme = tv({
     },
     fieldGroup: {
       true: {
-        root: "group has-focus-visible:z-1",
-        base: "group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none",
+        root: `
+          group
+          has-focus-visible:z-1
+        `,
+        base: `
+          group-not-last:group-not-first:rounded-none
+          group-not-only:group-first:rounded-e-none
+          group-not-only:group-last:rounded-s-none
+        `,
       },
     },
   },
@@ -66,14 +77,20 @@ export const InputTheme = tv({
       color: "primary",
       variant: "subtle",
       class: {
-        base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
+        base: `
+          focus-visible:ring-2 focus-visible:ring-primary
+          focus-visible:ring-inset
+        `,
       },
     },
     {
       color: "primary",
       variant: "outline",
       class: {
-        base: "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
+        base: `
+          focus-visible:ring-2 focus-visible:ring-primary
+          focus-visible:ring-inset
+        `,
       },
     },
 

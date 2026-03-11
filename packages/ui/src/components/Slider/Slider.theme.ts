@@ -6,13 +6,19 @@ export const SliderTheme = tv({
     root: "relative flex w-full touch-none items-center select-none",
     track: "relative grow overflow-hidden rounded-full bg-accented",
     range: "absolute h-full rounded-full",
-    thumb: "block cursor-pointer rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2",
+    thumb: `
+      block cursor-pointer rounded-full bg-default ring-2
+      focus-visible:outline-2 focus-visible:outline-offset-2
+    `,
   },
   variants: {
     color: {
       primary: {
         range: "bg-primary",
-        thumb: "ring-primary focus-visible:outline-primary",
+        thumb: `
+          ring-primary
+          focus-visible:outline-primary
+        `,
       },
     },
     size: {

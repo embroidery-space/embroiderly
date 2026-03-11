@@ -7,11 +7,17 @@ export const ColorPickerTheme = tv({
     picker: "flex gap-4",
     selector: "relative touch-none",
     selectorBackground: "absolute inset-0 rounded-md",
-    selectorThumb:
-      "absolute size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed",
+    selectorThumb: `
+      absolute size-4 -translate-1/2 cursor-pointer rounded-full ring-2
+      ring-white
+      data-disabled:cursor-not-allowed
+    `,
     track: "relative w-2 touch-none rounded-md",
-    trackThumb:
-      "absolute left-1/2 size-4 -translate-1/2 cursor-pointer rounded-full ring-2 ring-white data-disabled:cursor-not-allowed",
+    trackThumb: `
+      absolute left-1/2 size-4 -translate-1/2 cursor-pointer rounded-full ring-2
+      ring-white
+      data-disabled:cursor-not-allowed
+    `,
   },
   variants: {
     size: {
