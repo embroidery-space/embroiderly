@@ -177,6 +177,14 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
         :key="flatItem._id"
         v-bind="flatItem.bind"
         v-slot="{ isExpanded, isSelected, handleSelect, handleToggle }"
+        data-slot="item"
+        :class="ui.item({ class: props.ui?.item })"
+        :style="{
+          '--tree-level': flatItem.level,
+          marginInlineStart: `calc(${flatItem.level - 1} * var(--tree-indent))`,
+          width: `calc(100% - ${flatItem.level - 1} * var(--tree-indent))`,
+        }"
+        :data-ancestor-selected="selectedAncestors.has(flatItem.value.value ?? flatItem.value.label) || undefined"
         @select="(e) => handleItemSelect(e, flatItem.value)"
         @toggle="(e) => handleItemToggle(e)"
       >
@@ -190,80 +198,60 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
           :handle-select="handleSelect"
           :handle-toggle="handleToggle"
         >
-          <span
-            v-if="flatItem.level > 1"
-            aria-hidden="true"
-            data-slot="itemBranch"
-            :class="ui.itemBranch({ class: props.ui?.itemBranch })"
-            :style="{ left: `calc(${flatItem.level - 2} * var(--tree-indent) + var(--tree-indent) / 2)` }"
-          />
-
-          <div
-            data-slot="item"
-            :aria-disabled="props.disabled || flatItem.value.disabled || undefined"
-            :data-selected="isSelected || undefined"
-            :data-ancestor-selected="selectedAncestors.has(flatItem.value.value ?? flatItem.value.label) || undefined"
-            :class="ui.item({ class: props.ui?.item })"
-            :style="{
-              marginInlineStart: `calc(${flatItem.level - 1} * var(--tree-indent))`,
-              width: `calc(100% - ${flatItem.level - 1} * var(--tree-indent))`,
-            }"
+          <slot
+            name="item-leading"
+            :item="flatItem.value"
+            :index="index"
+            :level="flatItem.level"
+            :expanded="isExpanded"
+            :selected="isSelected"
+            :handle-select="handleSelect"
+            :handle-toggle="handleToggle"
           >
-            <slot
-              name="item-leading"
-              :item="flatItem.value"
-              :index="index"
-              :level="flatItem.level"
-              :expanded="isExpanded"
-              :selected="isSelected"
-              :handle-select="handleSelect"
-              :handle-toggle="handleToggle"
-            >
-              <Icon
-                v-if="flatItem.value.icon"
-                :name="flatItem.value.icon"
-                data-slot="itemLeadingIcon"
-                :class="ui.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
-              />
-            </slot>
-
-            <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
-              <slot
-                name="item-label"
-                :item="flatItem.value"
-                :index="index"
-                :level="flatItem.level"
-                :expanded="isExpanded"
-                :selected="isSelected"
-                :handle-select="handleSelect"
-                :handle-toggle="handleToggle"
-              >
-                {{ flatItem.value.label }}
-              </slot>
-            </span>
-
-            <button
-              v-if="flatItem.hasChildren"
-              type="button"
-              tabindex="-1"
-              data-slot="itemChevron"
-              :class="ui.itemChevron({ class: [props.ui?.itemChevron, isExpanded && 'rotate-180'] })"
-              @click.stop="handleToggle()"
-            >
-              <Icon :name="icons.chevronDown" />
-            </button>
-
-            <slot
-              name="item-trailing"
-              :item="flatItem.value"
-              :index="index"
-              :level="flatItem.level"
-              :expanded="isExpanded"
-              :selected="isSelected"
-              :handle-select="handleSelect"
-              :handle-toggle="handleToggle"
+            <Icon
+              v-if="flatItem.value.icon"
+              :name="flatItem.value.icon"
+              data-slot="itemLeadingIcon"
+              :class="ui.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
             />
-          </div>
+          </slot>
+
+          <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
+            <slot
+              name="item-label"
+              :item="flatItem.value"
+              :index="index"
+              :level="flatItem.level"
+              :expanded="isExpanded"
+              :selected="isSelected"
+              :handle-select="handleSelect"
+              :handle-toggle="handleToggle"
+            >
+              {{ flatItem.value.label }}
+            </slot>
+          </span>
+
+          <button
+            v-if="flatItem.hasChildren"
+            type="button"
+            tabindex="-1"
+            data-slot="itemChevron"
+            :class="ui.itemChevron({ class: [props.ui?.itemChevron, isExpanded && 'rotate-180'] })"
+            @click.stop="handleToggle()"
+          >
+            <Icon :name="icons.chevronDown" />
+          </button>
+
+          <slot
+            name="item-trailing"
+            :item="flatItem.value"
+            :index="index"
+            :level="flatItem.level"
+            :expanded="isExpanded"
+            :selected="isSelected"
+            :handle-select="handleSelect"
+            :handle-toggle="handleToggle"
+          />
         </slot>
       </Tree.Item>
     </template>

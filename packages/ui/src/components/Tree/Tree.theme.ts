@@ -3,9 +3,8 @@ import type { VariantProps } from "tailwind-variants";
 
 export const TreeTheme = tv({
   slots: {
-    root: "w-full list-none space-y-0.5 select-none [&>li]:relative [&>li:focus-visible]:rounded-md [&>li:focus-visible]:outline-2 [&>li:focus-visible]:outline-inverted",
-    item: "flex cursor-pointer items-center gap-1.5 rounded-md text-default hover:bg-elevated aria-disabled:cursor-not-allowed aria-disabled:opacity-75 data-ancestor-selected:bg-elevated data-selected:bg-elevated",
-    itemBranch: "absolute -top-0.5 bottom-0 w-px bg-elevated",
+    root: "w-full list-none space-y-0.5 select-none",
+    item: "relative flex cursor-pointer items-center gap-1.5 rounded-md text-default before:absolute before:-top-0.5 before:bottom-0 before:left-[calc((var(--tree-level)-2)*var(--tree-indent)-var(--tree-indent)/2)] before:w-px before:bg-elevated hover:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted aria-disabled:cursor-not-allowed aria-disabled:opacity-75 aria-[aria-level='1']:before:hidden data-ancestor-selected:bg-elevated data-selected:bg-elevated",
     itemLeadingIcon: "shrink-0 text-muted",
     itemLabel: "flex-1 truncate text-left",
     itemChevron: "flex shrink-0 items-center justify-center text-muted transition-transform duration-200",
