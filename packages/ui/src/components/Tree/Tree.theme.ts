@@ -6,9 +6,9 @@ export const TreeTheme = tv({
     root: "w-full list-none space-y-0.5 select-none",
     item: `
       relative flex cursor-pointer items-center gap-1.5 rounded-md text-default
-      before:absolute before:-top-0.5 before:bottom-0
-      before:left-[calc((var(--tree-level)-2)*var(--tree-indent)-var(--tree-indent)/2)]
-      before:w-px before:bg-elevated
+      before:pointer-events-none before:absolute before:-inset-y-px
+      before:left-[calc((var(--tree-level)-2)*var(--tree-indent)-var(--tree-indent)/4)]
+      before:w-px before:bg-border
       hover:bg-elevated
       focus-visible:outline-2 focus-visible:outline-inverted
       aria-disabled:cursor-not-allowed aria-disabled:opacity-75
