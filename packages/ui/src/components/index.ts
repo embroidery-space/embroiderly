@@ -66,6 +66,7 @@ export {
   type MenubarMenu,
 } from "./Menubar/Menubar.vue";
 export { default as Tabs, type TabsProps, type TabsSlots, type TabsItem } from "./Tabs/Tabs.vue";
+export { default as Tree, type TreeProps, type TreeSlots, type TreeItem } from "./Tree/Tree.vue";
 
 // Overlay.
 export { default as BlockUI, type BlockUIProps, type BlockUISlots } from "./BlockUI/BlockUI.vue";
