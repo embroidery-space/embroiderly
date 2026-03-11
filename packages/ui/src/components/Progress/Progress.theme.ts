@@ -10,11 +10,15 @@ export const ProgressTheme = tv({
     orientation: {
       horizontal: {
         base: "w-full",
-        indicator: "data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]",
+        indicator: `
+          data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]
+        `,
       },
       vertical: {
         base: "h-full",
-        indicator: "data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite]",
+        indicator: `
+          data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite]
+        `,
       },
     },
     color: {
