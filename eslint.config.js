@@ -159,9 +159,6 @@ export default defineConfigWithVueTs(
         entryPoint: fileURLToPath(new URL("packages/ui/src/index.css", import.meta.url)),
       },
     },
-    rules: {
-      "better-tailwindcss/enforce-consistent-line-wrapping": ["off"],
-    },
   },
 
   // YAML validation.
