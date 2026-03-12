@@ -10,7 +10,7 @@ cleanupUnusedCatalogs: true
 catalog:
   # Tauri
   "@tauri-apps/api": 2.10.1
-  "@tauri-apps/cli": 2.10.0
+  "@tauri-apps/cli": 2.10.1
   ## Official Tauri plugins
   "@tauri-apps/plugin-clipboard-manager": 2.3.2
   "@tauri-apps/plugin-dialog": 2.6.0
@@ -29,7 +29,7 @@ catalog:
   "vue": 3.5.29
   "pinia": 3.0.4
   "pinia-plugin-persistedstate": 4.7.1
-  "reka-ui": 2.8.2
+  "reka-ui": 2.9.0
 
   # Styling
   "tailwindcss": 4.2.1
@@ -38,8 +38,8 @@ catalog:
 
   # Icons
   "@iconify/vue": 5.0.0
-  "@iconify-json/lucide": 1.2.95
-  "@iconify-json/material-symbols": 1.2.59
+  "@iconify-json/lucide": 1.2.96
+  "@iconify-json/material-symbols": 1.2.60
   "@iconify-json/mdi": 1.2.3
   "unplugin-icons": 23.0.1
 
@@ -55,9 +55,9 @@ catalog:
   "base64-js": 1.5.1
 
   # Telemetry
-  "@sentry/core": 10.40.0
-  "@sentry/vue": 10.40.0
-  "posthog-js": 1.356.1
+  "@sentry/core": 10.42.0
+  "@sentry/vue": 10.42.0
+  "posthog-js": 1.359.1
 
   # Utilities
   "@stdlib/math-base-special-roundn": 0.2.3
@@ -77,31 +77,31 @@ catalog:
   "vitepress-plugin-llms": 1.11.0
 
   # Code Quality
-  "eslint": 9.39.3
-  "@eslint/compat": 2.0.2
-  "@eslint-community/eslint-plugin-eslint-comments": 4.6.0
+  "eslint": 9.39.4
+  "@eslint/compat": 2.0.3
+  "@eslint-community/eslint-plugin-eslint-comments": 4.7.1
   "@intlify/eslint-plugin-vue-i18n": 4.3.0
   "@vitest/eslint-plugin": 1.6.9
   "@vue/eslint-config-prettier": 10.2.0
   "@vue/eslint-config-typescript": 14.7.0
-  "eslint-plugin-better-tailwindcss": 4.3.1
+  "eslint-plugin-better-tailwindcss": 4.3.2
   "eslint-plugin-import-x": 4.16.1
   "eslint-plugin-no-only-tests": 3.3.0
-  "eslint-plugin-oxlint": 1.50.0
+  "eslint-plugin-oxlint": 1.51.0
   "eslint-plugin-vue": 10.8.0
   "eslint-plugin-wdio": 9.23.0
-  "eslint-plugin-yml": 3.3.0
+  "eslint-plugin-yml": 3.3.1
   "markdownlint-cli2": 0.21.0
-  "oxfmt": 0.35.0
-  "oxlint": 1.50.0
+  "oxfmt": 0.36.0
+  "oxlint": 1.51.0
   "husky": 9.1.7
-  "lint-staged": 16.3.1
+  "lint-staged": 16.3.2
 
   # Build tools
   "vite": 7.3.1
   "@vitejs/plugin-vue": 6.0.4
   "@tailwindcss/vite": 4.2.1
-  "wrangler": 4.69.0
+  "wrangler": 4.71.0
 
   # Histoire
   "histoire": 1.0.0-beta.1
@@ -112,7 +112,7 @@ catalog:
   "vue-tsc": 3.2.5
   "@tsconfig/node24": 24.0.4
   "@tsconfig/strictest": 2.0.8
-  "@vue/tsconfig": 0.8.1
+  "@vue/tsconfig": 0.9.0
 
   # Testing
   "vitest": 4.0.18
@@ -133,7 +133,7 @@ catalog:
 
   # Types
   "@types/mocha": 10.0.10
-  "@types/node": 24.11.0
+  "@types/node": 24.12.0
   "@types/sortablejs": 1.15.9
 
   # DevTools

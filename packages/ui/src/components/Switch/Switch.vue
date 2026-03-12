@@ -52,6 +52,7 @@ const ui = computed(() => {
 <template>
   <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
+      <!-- @vue-expect-error Types regression in Reka UI 2.9.0. -->
       <Switch.Root
         :id="id"
         v-model="modelValue"
