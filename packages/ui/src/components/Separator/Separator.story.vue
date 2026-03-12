@@ -17,6 +17,7 @@ defineExpose({ state });
 <template>
   <Story id="separator" group="element" title="Separator" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
+      <!-- eslint-disable-next-line better-tailwindcss/enforce-consistent-line-wrapping -->
       <div class="flex size-96 justify-between" :class="state.orientation === 'horizontal' ? 'flex-col' : 'flex-row'">
         <Separator v-for="size in sizes" :key="size" :size="size" v-bind="state" />
       </div>

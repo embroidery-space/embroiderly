@@ -3,6 +3,11 @@
 Themes live in `packages/ui/src/components/ComponentName/ComponentName.theme.ts`.
 Not every component has a theme---composite wrappers delegate to child component themes.
 
+## Writing Classes
+
+Write all Tailwind CSS classes on a single line in a single string.
+Never manually break lines---let the linter handle it.
+
 ## Standard Multi-Slot Theme
 
 ```ts
