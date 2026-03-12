@@ -61,7 +61,7 @@ wildcard_dependencies = "deny"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.5", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
+tauri = { version = "2.10.3", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
 tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
 ## Official Tauri plugins
 tauri-plugin-clipboard-manager = "2.3.2"
@@ -106,7 +106,7 @@ palette = "0.7.6"
 quantette = "0.5.1"
 
 # Archiving
-zip = { version = "8.0.0", default-features = false, features = ["zstd", "time"] }
+zip = { version = "8.2.0", default-features = false, features = ["zstd", "time"] }
 
 # De/serialization
 serde = { version = "1.0.228", features = ["derive"] }
@@ -115,7 +115,7 @@ base64 = "0.22.1"
 borsh = { version = "1.6.0", features = ["derive"] }
 
 # CLI
-argh = { version = "0.1.14", default-features = false }
+argh = { version = "0.1.17", default-features = false }
 
 # Error handling
 anyhow = "1.0.102"
@@ -132,7 +132,7 @@ better-posthog = "0.2.4"
 sentry = "0.46.2"
 
 # Identification
-uuid = { version = "1.21.0", features = ["v4", "v7"] }
+uuid = { version = "1.22.0", features = ["v4", "v7"] }
 
 # File system utilities
 tempfile = "3.26.0"
