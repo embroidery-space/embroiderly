@@ -11,8 +11,8 @@ export interface SystemInfo {
 }
 
 export function getSystemInfo(): SystemInfo {
-  // @ts-expect-error `window.navigator.userAgentData` is an experimental API: <https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgentData>.
-  const result = Bowser.parse(window.navigator.userAgent, window.navigator.userAgentData);
+  // @ts-expect-error `navigator.userAgentData` is an experimental API: <https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgentData>.
+  const result = Bowser.parse(navigator.userAgent, navigator.userAgentData);
 
   return {
     appVersion: __APP_VERSION__,
