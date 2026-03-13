@@ -33,9 +33,9 @@ app-menu-help-website = Website
 system-info =
   .title = System Information
   .description =
-    Operating System: { $osType } { $osVersion } { $osArch }
     { -app-name } version: { $appVersion }
-    WebView version: { $webviewVersion }
+    Operating System: { $os } { $osVersion }
+    Browser: { $browser } { $browserVersion }
 
 ## Editor notifications and errors.
 

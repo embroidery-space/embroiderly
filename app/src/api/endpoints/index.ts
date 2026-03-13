@@ -9,6 +9,3 @@ export type * from "./pattern.ts";
 
 export * as StartupApi from "./startup.ts";
 export type * from "./startup.ts";
-
-export * as SystemApi from "./system.ts";
-export type * from "./system.ts";
