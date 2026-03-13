@@ -19,7 +19,7 @@ import { CursorTool } from "~/lib/tools/";
 import type { PatternEditorToolContext } from "~/lib/tools/";
 import { LoggerService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "~/stores/";
-import { addSymbolFonts } from "~/utils/";
+import { addSymbolFonts } from "~/utils/font-face.ts";
 
 import { EditorWorkspaceTabs, EditorWorkspaceToolbar } from "./layout/";
 

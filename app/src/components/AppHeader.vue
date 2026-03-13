@@ -16,7 +16,7 @@ import { ANY_IMAGE_FILTER } from "~/constants/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
-import { getSystemInfo } from "~/utils/system";
+import { getSystemInfo } from "~/utils/system.ts";
 
 import WindowControls from "./WindowControls.vue";
 
