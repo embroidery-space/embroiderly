@@ -20,7 +20,6 @@
     "@sentry/vue": "catalog:",
     "@stdlib/math-base-special-roundn": "catalog:",
     "@tauri-apps/api": "catalog:",
-    "@tauri-apps/plugin-clipboard-manager": "catalog:",
     "@tauri-apps/plugin-dialog": "catalog:",
     "@tauri-apps/plugin-fs": "catalog:",
     "@tauri-apps/plugin-opener": "catalog:",

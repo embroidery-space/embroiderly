@@ -4,7 +4,6 @@ import { ButtonIcon, DropdownMenu, Menubar, Separator, useConfirm } from "@embro
 import type { DropdownMenuItem, MenubarItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
@@ -251,7 +250,7 @@ async function showSystemInfo() {
     yesButton: { label: fluent.$t("modal-copy") },
     noButton: { label: fluent.$t("modal-close") },
   }).result;
-  if (accepted) await writeText(description);
+  if (accepted) await navigator.clipboard.writeText(description);
 }
 </script>
 
