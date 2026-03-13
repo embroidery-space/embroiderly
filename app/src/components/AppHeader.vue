@@ -9,13 +9,14 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
-import { FilesApi, SystemApi } from "~/api/";
+import { FilesApi } from "~/api/";
 import { IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
 import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
+import { getSystemInfo } from "~/utils/system.ts";
 
 import WindowControls from "./WindowControls.vue";
 
@@ -242,7 +243,7 @@ const manageOptions = computed<DropdownMenuItem[][]>(() => [
 
 async function showSystemInfo() {
   // @ts-expect-error Ignore the lack of index signature of the system info object.
-  const systemInfo = fluent.$ta("system-info", await SystemApi.getSystemInfo());
+  const systemInfo = fluent.$ta("system-info", getSystemInfo());
   const { title, description } = systemInfo as { title: string; description: string };
 
   const accepted = await confirm.open({

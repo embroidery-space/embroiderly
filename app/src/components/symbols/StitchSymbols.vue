@@ -9,7 +9,7 @@ import { IconMenu } from "~/assets/icons/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { FONT_FILTER } from "~/constants/";
 import { LoggerService } from "~/services/";
-import { addSymbolFonts } from "~/utils/";
+import { addSymbolFonts } from "~/utils/font-face.ts";
 
 import { PaletteSection } from "../palette/";
 

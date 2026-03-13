@@ -156,7 +156,6 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     // Utility commands.
     commands::utils::path::get_app_document_dir,
     commands::utils::startup::get_startup_notifications,
-    commands::utils::system::get_system_info,
   ]);
 
   builder
