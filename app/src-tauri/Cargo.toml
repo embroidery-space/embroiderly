@@ -19,7 +19,6 @@ tauri = { workspace = true, features = ["test"] }
 tauri-plugin-dialog = { workspace = true }
 tauri-plugin-fs = { workspace = true }
 tauri-plugin-opener = { workspace = true }
-tauri-plugin-os = { workspace = true }
 tauri-plugin-process = { workspace = true }
 tauri-plugin-shell = { workspace = true }
 tauri-plugin-updater = { workspace = true }

@@ -10,6 +10,7 @@ import icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
 
+import pkg from "./package.json";
 import fluentMerge from "./vite-plugins/fluent-merge";
 
 const isCI = process.env.CI === "true";
@@ -35,6 +36,9 @@ export default defineConfig({
   build: {
     sourcemap: isDebug,
     chunkSizeWarningLimit: Infinity,
+  },
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
   },
   resolve: {
     dedupe: ["@vueuse/*", "reka-ui", "vue"],

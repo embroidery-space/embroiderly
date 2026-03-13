@@ -1,5 +1,6 @@
 {
   "name": "@embroiderly/app",
+  "version": "0.7.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -31,6 +32,7 @@
     "@vueuse/integrations": "catalog:",
     "@zorsh/zorsh": "catalog:",
     "base64-js": "catalog:",
+    "bowser": "catalog:",
     "dequal": "catalog:",
     "fluent-vue": "catalog:",
     "fuse.js": "catalog:",
