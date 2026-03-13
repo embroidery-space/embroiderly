@@ -22,7 +22,7 @@
     "fmt": "oxfmt --check",
     "fmt:fix": "oxfmt --write",
     "lint": "oxlint --format stylish && eslint --concurrency auto && markdownlint-cli2 \"**/*.md\"",
-    "lint:fix": "oxlint --fix --format stylish && eslint --fix --concurrency auto && markdownlint-cli2 --fix",
+    "lint:fix": "oxlint --fix --format stylish && eslint --fix --concurrency auto && markdownlint-cli2 --fix \"**/*.md\"",
     "test": "pnpm -r --workspace-concurrency 1 test"
   },
   "devDependencies": {
