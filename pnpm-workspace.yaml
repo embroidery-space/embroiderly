@@ -118,8 +118,6 @@ catalog:
   "vitest": 4.1.0
   "@vitest/browser-webdriverio": 4.1.0
   "@vitest/coverage-v8": 4.1.0
-  "@vue/test-utils": 2.4.6
-  "@pinia/testing": 1.0.3
   "vitest-browser-vue": 2.0.2
   "vue3-snapshot-serializer": 2.13.1
 
