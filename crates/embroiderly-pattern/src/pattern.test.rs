@@ -11,6 +11,15 @@ fn full_stitch(x: f32, y: f32, palindex: u32) -> Stitch {
   })
 }
 
+fn petite_stitch(x: f32, y: f32, palindex: u32) -> Stitch {
+  Stitch::Full(FullStitch {
+    x: NotNan::new(x).unwrap(),
+    y: NotNan::new(y).unwrap(),
+    palindex,
+    kind: FullStitchKind::Petite,
+  })
+}
+
 fn half_stitch(x: f32, y: f32, palindex: u32, direction: PartStitchDirection) -> Stitch {
   Stitch::Part(PartStitch {
     x: NotNan::new(x).unwrap(),
@@ -18,6 +27,15 @@ fn half_stitch(x: f32, y: f32, palindex: u32, direction: PartStitchDirection) ->
     palindex,
     direction,
     kind: PartStitchKind::Half,
+  })
+}
+
+fn back_stitch(x1: f32, y1: f32, x2: f32, y2: f32, palindex: u32) -> Stitch {
+  Stitch::Line(LineStitch {
+    x: (NotNan::new(x1).unwrap(), NotNan::new(x2).unwrap()),
+    y: (NotNan::new(y1).unwrap(), NotNan::new(y2).unwrap()),
+    palindex,
+    kind: LineStitchKind::Back,
   })
 }
 
@@ -29,6 +47,19 @@ fn french_knot(x: f32, y: f32, palindex: u32) -> Stitch {
     palindex,
     kind: NodeStitchKind::FrenchKnot,
   })
+}
+
+fn special_stitch(x: f32, y: f32, palindex: u32, modindex: u32) -> SpecialStitch {
+  SpecialStitch {
+    x: NotNan::new(x).unwrap(),
+    y: NotNan::new(y).unwrap(),
+    width: NotNan::new(1.0).unwrap(),
+    height: NotNan::new(1.0).unwrap(),
+    rotation: 0,
+    flip: (false, false),
+    palindex,
+    modindex,
+  }
 }
 
 #[test]
@@ -208,4 +239,111 @@ fn removes_stitches_outside_bounds_from_all_layers() {
   assert_eq!(removed.len(), 2);
   assert_eq!(pattern.layers[0].fullstitches.len(), 1);
   assert_eq!(pattern.layers[1].fullstitches.len(), 1);
+}
+
+#[test]
+fn flatten_single_layer_includes_all_stitches() {
+  let mut pattern = Pattern::default();
+  pattern.add_stitch(0, full_stitch(0.0, 0.0, 0));
+  pattern.add_stitch(0, half_stitch(1.0, 0.0, 0, PartStitchDirection::Forward));
+  pattern.add_stitch(0, french_knot(2.0, 0.0, 0));
+  pattern.add_stitch(0, back_stitch(0.0, 0.0, 1.0, 0.0, 0));
+
+  let flat = pattern.flatten_visible_layers();
+
+  assert_eq!(flat.fullstitches.len(), 1);
+  assert_eq!(flat.partstitches.len(), 1);
+  assert_eq!(flat.nodestitches.len(), 1);
+  assert_eq!(flat.linestitches.len(), 1);
+}
+
+#[test]
+fn flatten_two_layers_topmost_wins_at_same_position() {
+  let mut pattern = Pattern::default();
+  // Layer 0 (top): palindex 1 at (0, 0).
+  pattern.add_stitch(0, full_stitch(0.0, 0.0, 1));
+  // Layer 1 (bottom): palindex 0 at (0, 0).
+  pattern.add_layer(Layer::new("Layer 2"));
+  pattern.add_stitch(1, full_stitch(0.0, 0.0, 0));
+
+  let flat = pattern.flatten_visible_layers();
+
+  assert_eq!(flat.fullstitches.len(), 1);
+  assert_eq!(flat.fullstitches.iter().next().unwrap().palindex, 1);
+}
+
+#[test]
+fn flatten_skips_hidden_layer() {
+  let mut pattern = Pattern::default();
+  pattern.add_stitch(0, full_stitch(0.0, 0.0, 0));
+  pattern.add_layer({
+    let mut layer = Layer::new("Layer 2");
+    layer.visible = false;
+    layer
+  });
+  pattern.add_stitch(1, full_stitch(1.0, 0.0, 0));
+
+  let flat = pattern.flatten_visible_layers();
+
+  assert_eq!(flat.fullstitches.len(), 1);
+}
+
+#[test]
+fn flatten_respects_stitch_kind_visibility() {
+  let mut pattern = Pattern::default();
+  // Disable full stitches visibility but keep petite visible.
+  pattern.layers[0].fullstitches_visible = false;
+  pattern.add_stitch(0, full_stitch(0.0, 0.0, 0));
+  pattern.add_stitch(0, petite_stitch(0.5, 0.0, 0));
+
+  let flat = pattern.flatten_visible_layers();
+
+  // Full stitches should be excluded, petite should be included.
+  assert_eq!(flat.fullstitches.len(), 1);
+  assert_eq!(flat.fullstitches.iter().next().unwrap().kind, FullStitchKind::Petite);
+}
+
+#[test]
+fn flatten_non_conflicting_stitches_from_multiple_layers_all_appear() {
+  let mut pattern = Pattern::default();
+  pattern.add_stitch(0, full_stitch(0.0, 0.0, 0));
+  pattern.add_layer(Layer::new("Layer 2"));
+  pattern.add_stitch(1, full_stitch(1.0, 0.0, 0));
+  pattern.add_stitch(1, full_stitch(2.0, 0.0, 0));
+
+  let flat = pattern.flatten_visible_layers();
+
+  assert_eq!(flat.fullstitches.len(), 3);
+}
+
+#[test]
+fn flatten_top_layer_full_stitch_displaces_bottom_layer_part_stitches() {
+  let mut pattern = Pattern::default();
+  // Layer 0 (top): full stitch at (0, 0).
+  pattern.add_stitch(0, full_stitch(0.0, 0.0, 1));
+  // Layer 1 (bottom): half stitches at (0, 0) that conflict with the full stitch.
+  pattern.add_layer(Layer::new("Layer 2"));
+  pattern.add_stitch(1, half_stitch(0.0, 0.0, 0, PartStitchDirection::Forward));
+  pattern.add_stitch(1, half_stitch(0.0, 0.0, 0, PartStitchDirection::Backward));
+
+  let flat = pattern.flatten_visible_layers();
+
+  // The full stitch from layer 0 should have displaced the part stitches.
+  assert_eq!(flat.fullstitches.len(), 1);
+  assert_eq!(flat.partstitches.len(), 0);
+}
+
+#[test]
+fn flatten_higher_layer_special_stitch_overrides_lower_at_same_position() {
+  let mut pattern = Pattern::default();
+  // Layer 0 (top): special stitch at (0, 0) with palindex 1.
+  pattern.layers[0].specialstitches.insert(special_stitch(0.0, 0.0, 1, 0));
+  // Layer 1 (bottom): special stitch at (0, 0) with palindex 0.
+  pattern.add_layer(Layer::new("Layer 2"));
+  pattern.layers[1].specialstitches.insert(special_stitch(0.0, 0.0, 0, 0));
+
+  let flat = pattern.flatten_visible_layers();
+
+  assert_eq!(flat.specialstitches.len(), 1);
+  assert_eq!(flat.specialstitches.iter().next().unwrap().palindex, 1);
 }

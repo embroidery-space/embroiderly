@@ -24,6 +24,8 @@ pub fn generate_svg(
     .preserved_overlap
     .unwrap_or(ImageExportOptions::DEFAULT_PRESERVED_OVERLAP);
 
+  let flattened_layer = patproj.pattern.flatten_visible_layers();
+
   // We continiously iterate by frames from the top-left corner of the pattern to the bottom-right corner.
   // So, if we have exceeded the pattern height, we stop.
   let mut current_position = (0, 0);
@@ -36,8 +38,7 @@ pub fn generate_svg(
       frame_size.1.min(pattern_height.saturating_sub(current_position.1)),
     );
 
-    let fullstitches = patproj
-      .pattern
+    let fullstitches = flattened_layer
       .fullstitches
       .get_stitches_in_bounds(bounds)
       .copied()
@@ -48,8 +49,7 @@ pub fn generate_svg(
         ..stitch
       })
       .collect::<Vec<_>>();
-    let partstitches = patproj
-      .pattern
+    let partstitches = flattened_layer
       .partstitches
       .get_stitches_in_bounds(bounds)
       .copied()
@@ -60,8 +60,7 @@ pub fn generate_svg(
         ..stitch
       })
       .collect::<Vec<_>>();
-    let linestitches = patproj
-      .pattern
+    let linestitches = flattened_layer
       .linestitches
       .get_stitches_in_bounds(bounds)
       .copied()
@@ -78,8 +77,7 @@ pub fn generate_svg(
         ..stitch
       })
       .collect::<Vec<_>>();
-    let nodestitches = patproj
-      .pattern
+    let nodestitches = flattened_layer
       .nodestitches
       .get_stitches_in_bounds(bounds)
       .copied()
@@ -90,8 +88,7 @@ pub fn generate_svg(
         ..stitch
       })
       .collect::<Vec<_>>();
-    let specialstitches = patproj
-      .pattern
+    let specialstitches = flattened_layer
       .specialstitches
       .get_stitches_in_bounds(bounds)
       .copied()

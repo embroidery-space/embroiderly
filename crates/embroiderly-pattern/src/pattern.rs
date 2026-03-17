@@ -169,6 +169,65 @@ impl Pattern {
   pub const fn layers_count(&self) -> usize {
     self.layers.len()
   }
+
+  /// Flattens all visible layers into a single layer, resolving stitch conflicts.
+  #[must_use]
+  pub fn flatten_visible_layers(&self) -> Layer {
+    let mut result = Layer::new("Flattened");
+    // Bottom-to-top: higher layers (lower indices) override lower ones via `add_stitch` conflict resolution.
+    for layer in self.layers.iter().rev() {
+      if !layer.visible {
+        continue;
+      }
+
+      for &stitch in layer.fullstitches.iter() {
+        let visible = match stitch.kind {
+          FullStitchKind::Full => layer.fullstitches_visible,
+          FullStitchKind::Petite => layer.petitestitches_visible,
+        };
+        if visible {
+          result.add_stitch(Stitch::Full(stitch));
+        }
+      }
+
+      for &stitch in layer.partstitches.iter() {
+        let visible = match stitch.kind {
+          PartStitchKind::Half => layer.halfstitches_visible,
+          PartStitchKind::Quarter => layer.quarterstitches_visible,
+        };
+        if visible {
+          result.add_stitch(Stitch::Part(stitch));
+        }
+      }
+
+      for &stitch in layer.linestitches.iter() {
+        let visible = match stitch.kind {
+          LineStitchKind::Back => layer.backstitches_visible,
+          LineStitchKind::Straight => layer.straightstitches_visible,
+        };
+        if visible {
+          result.add_stitch(Stitch::Line(stitch));
+        }
+      }
+
+      for &stitch in layer.nodestitches.iter() {
+        let visible = match stitch.kind {
+          NodeStitchKind::FrenchKnot => layer.frenchknots_visible,
+          NodeStitchKind::Bead => layer.beads_visible,
+        };
+        if visible {
+          result.add_stitch(Stitch::Node(stitch));
+        }
+      }
+
+      if layer.specialstitches_visible {
+        for &stitch in layer.specialstitches.iter() {
+          result.specialstitches.insert(stitch);
+        }
+      }
+    }
+    result
+  }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]

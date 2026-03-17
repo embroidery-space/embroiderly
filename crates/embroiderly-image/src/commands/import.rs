@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use std::str::FromStr as _;
 
 use embroiderly_pattern::{
-  BrandPaletteItem, Coord, Fabric, FullStitch, FullStitchKind, Palette, PaletteItem, Pattern, Stitches,
+  BrandPaletteItem, Coord, Fabric, FullStitch, FullStitchKind, Layer, Palette, PaletteItem, Pattern, Stitches,
 };
 use image::{DynamicImage, GenericImageView as _};
 use palette::color_difference::EuclideanDistance as _;
@@ -312,7 +312,10 @@ fn finalize_pattern(
       palette.sort_by_brand_and_number();
       palette
     },
-    fullstitches: Stitches::from_iter(fullstitches),
+    layers: vec![Layer {
+      fullstitches: Stitches::from_iter(fullstitches),
+      ..Layer::default()
+    }],
     ..Pattern::default()
   })
 }
