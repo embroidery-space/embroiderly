@@ -524,6 +524,34 @@ fn node_conflicts_with_node() {
 }
 
 #[test]
+fn test_reindex_palindexes() {
+  let mut stitches = Stitches::from_iter([
+    FullStitch {
+      x: NotNan::new(0.0).unwrap(),
+      y: NotNan::new(0.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(1.0).unwrap(),
+      y: NotNan::new(1.0).unwrap(),
+      palindex: 1,
+      kind: FullStitchKind::Full,
+    },
+  ]);
+
+  // Restore one item at position [1]; current palette has 2 items.
+  // Expected: palindex 0 stays 0, palindex 1 shifts to 2 (skipping the restored slot).
+  stitches.reindex_palindexes(&[1], 2);
+
+  // No stitches are inserted or removed — only indexes shift.
+  assert_eq!(stitches.len(), 2);
+  let all: Vec<_> = stitches.iter().collect();
+  assert_eq!(all[0].palindex, 0);
+  assert_eq!(all[1].palindex, 2);
+}
+
+#[test]
 fn test_remove_stitches_by_palindexes() {
   let mut stitches = Stitches::from_iter([
     FullStitch {
