@@ -33,7 +33,7 @@ impl<R: tauri::Runtime> Action<R> for AddStitchAction {
   /// - `stitches:add` with the added stitch (as array).
   /// - `stitches:remove` with the removed stitches that conflict with the new stitch.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    let conflicts = patproj.pattern.add_stitch(self.stitch);
+    let conflicts = patproj.pattern.add_stitch(0, self.stitch);
     window.emit("stitches:add", base64::encode(borsh::to_vec(&vec![self.stitch])?))?;
     window.emit("stitches:remove", base64::encode(borsh::to_vec(&conflicts)?))?;
     if self.conflicts.get().is_none() {
@@ -50,8 +50,8 @@ impl<R: tauri::Runtime> Action<R> for AddStitchAction {
   /// - `stitches:add` with the added stitches that were removed when the stitch was added.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let conflicts = self.conflicts.get().unwrap();
-    patproj.pattern.remove_stitch(self.stitch);
-    patproj.pattern.add_stitches(conflicts.clone());
+    patproj.pattern.remove_stitch(0, self.stitch);
+    patproj.pattern.add_stitches(0, conflicts.clone());
     window.emit("stitches:remove", base64::encode(borsh::to_vec(&vec![self.stitch])?))?;
     window.emit("stitches:add", base64::encode(borsh::to_vec(&conflicts)?))?;
     window.emit("app:pattern-changed", patproj.id.to_string())?;
@@ -82,7 +82,7 @@ impl<R: tauri::Runtime> Action<R> for RemoveStitchAction {
   /// **Emits:**
   /// - `stitches:remove` with the removed stitch (as array).
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    let stitch = patproj.pattern.remove_stitch(self.target_stitch).unwrap();
+    let stitch = patproj.pattern.remove_stitch(0, self.target_stitch).unwrap();
     if self.actual_stitch.get().is_none() {
       self.actual_stitch.set(stitch).unwrap();
     }
@@ -97,7 +97,7 @@ impl<R: tauri::Runtime> Action<R> for RemoveStitchAction {
   /// - `stitches:add` with the added stitch (as array).
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let stitch = self.actual_stitch.get().unwrap();
-    patproj.pattern.add_stitch(*stitch);
+    patproj.pattern.add_stitch(0, *stitch);
     window.emit("stitches:add", base64::encode(borsh::to_vec(&vec![*stitch])?))?;
     window.emit("app:pattern-changed", patproj.id.to_string())?;
     Ok(())

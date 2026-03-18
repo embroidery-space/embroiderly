@@ -8,7 +8,6 @@ import {
   FullStitch,
   FullStitchKind,
   Grid,
-  LayersVisibility,
   LineStitch,
   LineStitchKind,
   NodeStitch,
@@ -48,7 +47,6 @@ export class PatternView extends Container {
   private specialStitchModels: SpecialStitchModel[];
 
   private displayMode: DisplayMode | undefined;
-  private layersVisibility: LayersVisibility;
 
   private stages = {
     // lowest
@@ -112,7 +110,6 @@ export class PatternView extends Container {
     this.setShowGrid(pattern.showGrid);
     this.setShowRulers(pattern.showRulers);
     this.setDisplayMode(pattern.displayMode);
-    this.setLayersVisibility(pattern.layersVisibility);
 
     if (pattern.referenceImage) this.setReferenceImage(pattern.referenceImage, { fit: false });
 
@@ -376,23 +373,11 @@ export class PatternView extends Container {
     this.stages.rulers.renderable = value;
   }
 
-  setLayersVisibility(layersVisibility: LayersVisibility) {
-    this.layersVisibility = layersVisibility;
-    for (const [layer, visible] of Object.entries(this.layersVisibility)) {
-      const stage = this.stages[layer as keyof typeof this.stages];
-      if (stage) {
-        stage.visible = visible;
-        stage.renderable = visible;
-      }
-    }
-  }
-
   setDisplaySettings(settings: DisplaySettings) {
     this.setDisplayMode(settings.displayMode);
     this.setShowSymbols(settings.showSymbols);
     this.setShowGrid(settings.showGrid);
     this.setShowRulers(settings.showRulers);
-    this.setLayersVisibility(settings.layersVisibility);
   }
 
   async setReferenceImage(

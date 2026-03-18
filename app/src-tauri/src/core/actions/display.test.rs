@@ -1,4 +1,4 @@
-use embroiderly_pattern::{DisplayMode, DisplaySettings, LayersVisibility, PatternProject};
+use embroiderly_pattern::{DisplayMode, DisplaySettings, PatternProject};
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
@@ -24,18 +24,6 @@ fn test_update_display_settings() {
     show_symbols: true,
     show_grid: false,
     show_rulers: false,
-    layers_visibility: LayersVisibility {
-      reference_image: false,
-      fullstitches: true,
-      petitestitches: false,
-      halfstitches: true,
-      quarterstitches: false,
-      specialstitches: false,
-      backstitches: false,
-      straightstitches: false,
-      frenchknots: false,
-      beads: false,
-    },
     ..old_display_settings.clone()
   };
   let action = UpdateDisplaySettingsAction::new(new_display_settings.clone());

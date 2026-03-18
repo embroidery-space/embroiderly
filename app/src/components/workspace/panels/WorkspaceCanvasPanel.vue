@@ -1,22 +1,13 @@
 <script setup lang="ts">
-import { ButtonIcon, Popover, Separator, SplitterPanel, ToolToggle, ToolToggleGroup } from "@embroiderly/ui";
+import { Separator, SplitterPanel, ToolToggle, ToolToggleGroup } from "@embroiderly/ui";
 import type { SplitterPanelProps, SplitterPanelEmits, ToolToggleItem } from "@embroiderly/ui";
 
 import { useForwardPropsEmits } from "reka-ui";
 import { computed, ref, useTemplateRef, watch } from "vue";
 
-import {
-  IconGrid,
-  IconLayers,
-  IconRulers,
-  IconStitchFull,
-  IconStitchMix,
-  IconStitchSquare,
-  IconSymbols,
-} from "~/assets/icons/";
-import { CanvasLayers } from "~/components/canvas";
+import { IconGrid, IconRulers, IconStitchFull, IconStitchMix, IconStitchSquare, IconSymbols } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
-import { DisplayMode, LayersVisibility } from "~/lib/pattern/";
+import { DisplayMode } from "~/lib/pattern/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -76,9 +67,6 @@ const showRulers = computed({
   set: patternStore.showRulers,
 });
 
-const layers = ref(new LayersVisibility(patternStore.pattern?.layersVisibility || LayersVisibility.default()));
-watch(layers, (newLayers) => patternStore.setLayersVisibility(newLayers), { deep: true });
-
 watch(
   () => editorStateStore.canvasPanelCollapsed,
   (value) => {
@@ -107,24 +95,6 @@ function handlePanelExpand() {
     @expand="handlePanelExpand"
     @resize="editorStateStore.canvasPanelSize = $event"
   >
-    <Popover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
-      <ButtonIcon
-        color="neutral"
-        variant="ghost"
-        :icon="IconLayers"
-        :disabled="disabled"
-        :tooltip="$t('canvas-layers')"
-        :delay-duration="200"
-        :content="{ side: 'left' }"
-      />
-
-      <template #content>
-        <CanvasLayers v-model="layers" />
-      </template>
-    </Popover>
-
-    <Separator />
-
     <ToolToggleGroup
       :model-value="patternStore.pattern?.displayMode"
       :items="displayModeOptions"

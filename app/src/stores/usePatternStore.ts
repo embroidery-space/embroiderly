@@ -19,7 +19,6 @@ import {
   SetSymbolData,
   DisplayMode,
   DisplaySettings,
-  LayersVisibility,
   PdfExportOptions,
   PatternInfo,
   deserializeStitches,
@@ -201,11 +200,6 @@ export const usePatternStore = defineStore(
       return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showRulers: value }));
     }
 
-    function setLayersVisibility(layersVisibility: LayersVisibility) {
-      if (!pattern.value) return;
-      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, layersVisibility }));
-    }
-
     async function updatePdfExportOptions(options: PdfExportOptions) {
       if (!pattern.value) return;
       await PatternApi.updatePdfExportOptions(pattern.value.id, options);
@@ -256,7 +250,6 @@ export const usePatternStore = defineStore(
       showSymbols,
       showGrid,
       showRulers,
-      setLayersVisibility,
       updatePdfExportOptions,
       undo,
       redo,

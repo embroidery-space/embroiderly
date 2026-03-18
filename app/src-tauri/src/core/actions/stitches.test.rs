@@ -13,14 +13,14 @@ fn create_pattern_project() -> PatternProject {
   let mut patproj = PatternProject::default();
 
   // top-left petite
-  patproj.pattern.fullstitches.insert(FullStitch {
+  patproj.pattern.layers[0].fullstitches.insert(FullStitch {
     x: Coord::new(0.0).unwrap(),
     y: Coord::new(0.0).unwrap(),
     palindex: 0,
     kind: FullStitchKind::Petite,
   });
   // top-right quarter
-  patproj.pattern.partstitches.insert(PartStitch {
+  patproj.pattern.layers[0].partstitches.insert(PartStitch {
     x: Coord::new(0.5).unwrap(),
     y: Coord::new(0.0).unwrap(),
     palindex: 0,
@@ -28,14 +28,14 @@ fn create_pattern_project() -> PatternProject {
     direction: PartStitchDirection::Forward,
   });
   // bottom-left petite
-  patproj.pattern.fullstitches.insert(FullStitch {
+  patproj.pattern.layers[0].fullstitches.insert(FullStitch {
     x: Coord::new(0.0).unwrap(),
     y: Coord::new(0.5).unwrap(),
     palindex: 0,
     kind: FullStitchKind::Petite,
   });
   // bottom-right quarter
-  patproj.pattern.partstitches.insert(PartStitch {
+  patproj.pattern.layers[0].partstitches.insert(PartStitch {
     x: Coord::new(0.5).unwrap(),
     y: Coord::new(0.5).unwrap(),
     palindex: 0,
@@ -83,8 +83,8 @@ fn test_add_stitch() {
     });
 
     action.perform(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.pattern.fullstitches.len(), 1);
-    assert_eq!(patproj.pattern.partstitches.len(), 0);
+    assert_eq!(patproj.pattern.layers[0].fullstitches.len(), 1);
+    assert_eq!(patproj.pattern.layers[0].partstitches.len(), 0);
   }
 
   // Test revoking the command.
@@ -108,8 +108,8 @@ fn test_add_stitch() {
     });
 
     action.revoke(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.pattern.fullstitches.len(), 2);
-    assert_eq!(patproj.pattern.partstitches.len(), 2);
+    assert_eq!(patproj.pattern.layers[0].fullstitches.len(), 2);
+    assert_eq!(patproj.pattern.layers[0].partstitches.len(), 2);
   }
 }
 
@@ -145,8 +145,8 @@ fn test_remove_stitch() {
     });
 
     action.perform(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.pattern.fullstitches.len(), 1);
-    assert_eq!(patproj.pattern.partstitches.len(), 2);
+    assert_eq!(patproj.pattern.layers[0].fullstitches.len(), 1);
+    assert_eq!(patproj.pattern.layers[0].partstitches.len(), 2);
   }
 
   // Test revoking the command.
@@ -165,7 +165,7 @@ fn test_remove_stitch() {
     });
 
     action.revoke(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.pattern.fullstitches.len(), 2);
-    assert_eq!(patproj.pattern.partstitches.len(), 2);
+    assert_eq!(patproj.pattern.layers[0].fullstitches.len(), 2);
+    assert_eq!(patproj.pattern.layers[0].partstitches.len(), 2);
   }
 }

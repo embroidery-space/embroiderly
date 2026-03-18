@@ -190,7 +190,6 @@ fn read_palette<R: Read + Seek>(reader: &mut R) -> io::Result<Vec<PaletteItem>> 
   Ok(palette)
 }
 
-// TODO: Implement reading the palette item notes.
 /// Reads a single palette item.
 pub fn read_palette_item<R: Read + Seek>(reader: &mut R) -> io::Result<PaletteItem> {
   /// Reads the blend colors of the palette item.

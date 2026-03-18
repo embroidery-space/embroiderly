@@ -30,7 +30,7 @@ fn adds_stitch() {
   let patterns_manager = patterns_state.read().unwrap();
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
-  assert!(patproj.pattern.contains_stitch(&stitch));
+  assert!(patproj.pattern.contains_stitch(0, &stitch));
 
   let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
   let history_manager = history_state.read().unwrap();
@@ -109,7 +109,7 @@ fn removes_stitch() {
   let patterns_manager = patterns_state.read().unwrap();
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
-  assert!(!patproj.pattern.contains_stitch(&stitch));
+  assert!(!patproj.pattern.contains_stitch(0, &stitch));
 
   let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
   let history_manager = history_state.read().unwrap();

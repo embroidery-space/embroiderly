@@ -1,4 +1,5 @@
 export * from "./image.ts";
+export * from "./layer.ts";
 export * from "./pattern.ts";
 export * from "./fabric.ts";
 export * from "./palette.ts";

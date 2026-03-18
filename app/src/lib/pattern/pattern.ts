@@ -5,9 +5,10 @@ import { stringify as stringifyUuid } from "uuid";
 import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
 import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
+import { Layer } from "./layer.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
-import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch, SpecialStitchModel } from "./stitches.ts";
+import { FullStitch, PartStitch, LineStitch, SpecialStitchModel } from "./stitches.ts";
 import type { Stitch } from "./stitches.ts";
 
 export class PatternInfo {
@@ -55,11 +56,7 @@ export class Pattern extends EventTarget {
   #info: PatternInfo;
   #fabric: Fabric;
   #palette: Palette;
-  #fullstitches: FullStitch[];
-  #partstitches: PartStitch[];
-  #linestitches: LineStitch[];
-  #nodestitches: NodeStitch[];
-  #specialstitches: SpecialStitch[];
+  #layers: Layer[];
   #specialStitchModels: SpecialStitchModel[];
 
   #displaySettings: DisplaySettings;
@@ -77,11 +74,7 @@ export class Pattern extends EventTarget {
     this.#info = new PatternInfo(data.info);
     this.#fabric = new Fabric(data.fabric);
     this.#palette = new Palette(data.palette);
-    this.#fullstitches = data.fullstitches.map((stitch) => new FullStitch(stitch));
-    this.#partstitches = data.partstitches.map((stitch) => new PartStitch(stitch));
-    this.#linestitches = data.linestitches.map((stitch) => new LineStitch(stitch));
-    this.#nodestitches = data.nodestitches.map((stitch) => new NodeStitch(stitch));
-    this.#specialstitches = data.specialstitches.map((stitch) => new SpecialStitch(stitch));
+    this.#layers = data.layers.map((layer) => new Layer(layer));
     this.#specialStitchModels = data.specialStitchModels.map((model) => new SpecialStitchModel(model));
 
     this.#displaySettings = new DisplaySettings(data.displaySettings);
@@ -98,11 +91,7 @@ export class Pattern extends EventTarget {
     info: PatternInfo.schema,
     fabric: Fabric.schema,
     palette: Palette.schema,
-    fullstitches: b.vec(FullStitch.schema),
-    partstitches: b.vec(PartStitch.schema),
-    linestitches: b.vec(LineStitch.schema),
-    nodestitches: b.vec(NodeStitch.schema),
-    specialstitches: b.vec(SpecialStitch.schema),
+    layers: b.vec(Layer.schema),
     specialStitchModels: b.vec(SpecialStitchModel.schema),
 
     displaySettings: DisplaySettings.schema,
@@ -162,20 +151,24 @@ export class Pattern extends EventTarget {
     this.dispatchEvent(new CustomEvent(PatternEvent.UpdateGrid, { detail: grid }));
   }
 
+  get layers() {
+    return this.#layers;
+  }
+
   get fullstitches() {
-    return this.#fullstitches;
+    return this.#layers[0]!.fullstitches;
   }
   get partstitches() {
-    return this.#partstitches;
+    return this.#layers[0]!.partstitches;
   }
   get linestitches() {
-    return this.#linestitches;
+    return this.#layers[0]!.linestitches;
   }
   get nodestitches() {
-    return this.#nodestitches;
+    return this.#layers[0]!.nodestitches;
   }
   get specialstitches() {
-    return this.#specialstitches;
+    return this.#layers[0]!.specialstitches;
   }
   get specialStitchModels() {
     return this.#specialStitchModels;
@@ -187,10 +180,10 @@ export class Pattern extends EventTarget {
    * @param stitch The stitch to add.
    */
   addStitch(stitch: Stitch) {
-    if (stitch instanceof FullStitch) this.#fullstitches.push(stitch);
-    else if (stitch instanceof PartStitch) this.#partstitches.push(stitch);
-    else if (stitch instanceof LineStitch) this.#linestitches.push(stitch);
-    else this.#nodestitches.push(stitch);
+    if (stitch instanceof FullStitch) this.#layers[0]!.fullstitches.push(stitch);
+    else if (stitch instanceof PartStitch) this.#layers[0]!.partstitches.push(stitch);
+    else if (stitch instanceof LineStitch) this.#layers[0]!.linestitches.push(stitch);
+    else this.#layers[0]!.nodestitches.push(stitch);
 
     this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: stitch }));
   }
@@ -207,10 +200,10 @@ export class Pattern extends EventTarget {
       if (index !== -1) array.splice(index, 1);
     }
 
-    if (stitch instanceof FullStitch) removeStitchFromArray(this.#fullstitches, stitch);
-    else if (stitch instanceof PartStitch) removeStitchFromArray(this.#partstitches, stitch);
-    else if (stitch instanceof LineStitch) removeStitchFromArray(this.#linestitches, stitch);
-    else removeStitchFromArray(this.#nodestitches, stitch);
+    if (stitch instanceof FullStitch) removeStitchFromArray(this.#layers[0]!.fullstitches, stitch);
+    else if (stitch instanceof PartStitch) removeStitchFromArray(this.#layers[0]!.partstitches, stitch);
+    else if (stitch instanceof LineStitch) removeStitchFromArray(this.#layers[0]!.linestitches, stitch);
+    else removeStitchFromArray(this.#layers[0]!.nodestitches, stitch);
 
     this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: stitch }));
   }
@@ -250,10 +243,6 @@ export class Pattern extends EventTarget {
 
   get showRulers() {
     return this.#displaySettings.showRulers;
-  }
-
-  get layersVisibility() {
-    return this.#displaySettings.layersVisibility;
   }
 
   get pdfExportOptions() {
