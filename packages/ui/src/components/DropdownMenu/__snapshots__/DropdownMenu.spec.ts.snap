@@ -5,8 +5,8 @@ exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
-        <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label">View</div>
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label" id="reka-menu-group-v-2">View</div>
         <div aria-orientation="horizontal" class="-mx-1 bg-border h-px my-1" data-slot="separator" role="separator"></div>
         <div aria-checked="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="checked" role="menuitemcheckbox" tabindex="-1">
           <span class="truncate" data-slot="itemLabel">Show Grid</span>
@@ -31,7 +31,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -68,7 +68,7 @@ exports[`DropdownMenu > renders correctly with class 1`] = `
           </span>
         </div>
       </div>
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <span class="flex flex-1 flex-col min-w-0">
             <span class="truncate" data-slot="itemLabel">Select All</span>
@@ -91,7 +91,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <span class="flex flex-1 flex-col min-w-0">
             <span class="truncate" data-slot="itemLabel">Undo</span>
@@ -128,7 +128,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -165,7 +165,7 @@ exports[`DropdownMenu > renders correctly with simple items 1`] = `
           </span>
         </div>
       </div>
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <span class="flex flex-1 flex-col min-w-0">
             <span class="truncate" data-slot="itemLabel">Select All</span>
@@ -182,7 +182,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -219,7 +219,7 @@ exports[`DropdownMenu > renders correctly with size lg 1`] = `
           </span>
         </div>
       </div>
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <span class="flex flex-1 flex-col min-w-0">
             <span class="truncate" data-slot="itemLabel">Select All</span>
@@ -236,7 +236,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -273,7 +273,7 @@ exports[`DropdownMenu > renders correctly with size md 1`] = `
           </span>
         </div>
       </div>
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <span class="flex flex-1 flex-col min-w-0">
             <span class="truncate" data-slot="itemLabel">Select All</span>
@@ -290,7 +290,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -327,7 +327,7 @@ exports[`DropdownMenu > renders correctly with size sm 1`] = `
           </span>
         </div>
       </div>
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <span class="flex flex-1 flex-col min-w-0">
             <span class="truncate" data-slot="itemLabel">Select All</span>
@@ -344,8 +344,8 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
-        <div aria-controls="reka-menu-sub-content-v-4" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-2" role="menuitem" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div aria-controls="reka-menu-sub-content-v-5" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-3" role="menuitem" tabindex="-1">
           <span class="truncate" data-slot="itemLabel">File</span>
           <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
             <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -353,7 +353,7 @@ exports[`DropdownMenu > renders correctly with submenu items 1`] = `
             </svg>
           </span>
         </div>
-        <div aria-controls="reka-menu-sub-content-v-5" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-3" role="menuitem" tabindex="-1">
+        <div aria-controls="reka-menu-sub-content-v-6" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-4" role="menuitem" tabindex="-1">
           <span class="truncate" data-slot="itemLabel">Edit</span>
           <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
             <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -372,7 +372,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
   <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" aria-hidden="true" data-aria-hidden="true" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -409,7 +409,7 @@ exports[`DropdownMenu > renders correctly with ui 1`] = `
           </span>
         </div>
       </div>
-      <div class="isolate p-1" data-slot="group" role="group">
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
         <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
           <span class="flex flex-1 flex-col min-w-0">
             <span class="truncate" data-slot="itemLabel">Select All</span>

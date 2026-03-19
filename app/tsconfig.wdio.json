@@ -1,6 +1,6 @@
 {
   "extends": ["@tsconfig/node24/tsconfig.json", "@tsconfig/strictest/tsconfig.json"],
-  "include": ["wdio.config.ts", "tests/**/*.ts"],
+  "include": ["wdio.config.ts", "tests/e2e/**/*.ts"],
   "exclude": ["tests/components/"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.wdio.tsbuildinfo",
