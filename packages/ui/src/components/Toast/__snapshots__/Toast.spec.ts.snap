@@ -5,7 +5,7 @@ exports[`Toast > renders correctly with actions 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
           <div class="flex gap-1.5 items-start mt-2.5 shrink-0" data-slot="actions">
@@ -34,7 +34,7 @@ exports[`Toast > renders correctly with actions and description 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
           <div class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description">Something went wrong.</div>
@@ -64,7 +64,7 @@ exports[`Toast > renders correctly with actions slot 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
           <div class="flex gap-1.5 items-start mt-2.5 shrink-0" data-slot="actions">Actions slot</div>
@@ -89,7 +89,7 @@ exports[`Toast > renders correctly with class 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg w-96" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg w-96" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
         </div>
@@ -113,7 +113,7 @@ exports[`Toast > renders correctly with close slot 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
         </div>Close slot<div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
@@ -131,7 +131,7 @@ exports[`Toast > renders correctly with color error 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-inset focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-inset focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
         </div>
@@ -155,7 +155,7 @@ exports[`Toast > renders correctly with color neutral 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-inverted focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-inverted focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
         </div>
@@ -179,7 +179,7 @@ exports[`Toast > renders correctly with color success 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-success focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-success focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
         </div>
@@ -203,7 +203,7 @@ exports[`Toast > renders correctly with description 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
           <div class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description">This is a toast</div>
@@ -228,7 +228,7 @@ exports[`Toast > renders correctly with description slot 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
           <div class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description">Description slot</div>
@@ -253,7 +253,7 @@ exports[`Toast > renders correctly with title 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
         </div>
@@ -277,7 +277,7 @@ exports[`Toast > renders correctly with title and description 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Toast</div>
           <div class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description">This is a toast</div>
@@ -302,7 +302,7 @@ exports[`Toast > renders correctly with title slot 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-medium text-sm" data-slot="title">Title slot</div>
         </div>
@@ -326,7 +326,7 @@ exports[`Toast > renders correctly with ui 1`] = `
   <div aria-label="Notifications (F8)" role="region" tabindex="-1">
     <span aria-hidden="true" tabindex="0"></span>
     <ol class="bottom-0 flex flex-col-reverse gap-4 max-w-[100vw] outline-none p-4 right-0 static w-auto z-100" data-slot="viewport" tabindex="-1">
-      <li aria-atomic="true" aria-live="off" class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" role="alert" tabindex="0">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
         <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
           <div class="font-bold text-sm" data-slot="title">Toast</div>
         </div>
