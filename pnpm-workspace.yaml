@@ -19,16 +19,16 @@ catalog:
   "@tauri-apps/plugin-updater": 2.10.0
   "@tauri-store/pinia": 4.2.0
   ## Third-party Tauri plugins
-  "tauri-plugin-better-posthog": 0.1.4
+  "tauri-plugin-better-posthog": 0.1.6
 
   # Vue
   "@vueuse/core": 14.2.1
   "@vueuse/components": 14.2.1
   "@vueuse/integrations": 14.2.1
-  "vue": 3.5.29
+  "vue": 3.5.30
   "pinia": 3.0.4
   "pinia-plugin-persistedstate": 4.7.1
-  "reka-ui": 2.9.0
+  "reka-ui": 2.9.2
 
   # Styling
   "tailwindcss": 4.2.1
@@ -37,8 +37,8 @@ catalog:
 
   # Icons
   "@iconify/vue": 5.0.0
-  "@iconify-json/lucide": 1.2.96
-  "@iconify-json/material-symbols": 1.2.60
+  "@iconify-json/lucide": 1.2.98
+  "@iconify-json/material-symbols": 1.2.62
   "@iconify-json/mdi": 1.2.3
   "unplugin-icons": 23.0.1
 
@@ -47,16 +47,16 @@ catalog:
   "fluent-vue": 3.8.2
 
   # Canvas rendering
-  "pixi.js": 8.16.0
+  "pixi.js": 8.17.0
 
   # De/serialization
   "@zorsh/zorsh": 0.4.0
   "base64-js": 1.5.1
 
   # Telemetry
-  "@sentry/core": 10.42.0
-  "@sentry/vue": 10.42.0
-  "posthog-js": 1.359.1
+  "@sentry/core": 10.43.0
+  "@sentry/vue": 10.43.0
+  "posthog-js": 1.360.2
 
   # Utilities
   "@stdlib/math-base-special-roundn": 0.2.3
@@ -81,27 +81,27 @@ catalog:
   "@eslint/compat": 2.0.3
   "@eslint-community/eslint-plugin-eslint-comments": 4.7.1
   "@intlify/eslint-plugin-vue-i18n": 4.3.0
-  "@vitest/eslint-plugin": 1.6.9
+  "@vitest/eslint-plugin": 1.6.12
   "@vue/eslint-config-prettier": 10.2.0
   "@vue/eslint-config-typescript": 14.7.0
   "eslint-plugin-better-tailwindcss": 4.3.2
-  "eslint-plugin-import-x": 4.16.1
+  "eslint-plugin-import-x": 4.16.2
   "eslint-plugin-no-only-tests": 3.3.0
-  "eslint-plugin-oxlint": 1.51.0
+  "eslint-plugin-oxlint": 1.55.0
   "eslint-plugin-vue": 10.8.0
-  "eslint-plugin-wdio": 9.23.0
+  "eslint-plugin-wdio": 9.26.0
   "eslint-plugin-yml": 3.3.1
   "markdownlint-cli2": 0.21.0
-  "oxfmt": 0.36.0
-  "oxlint": 1.51.0
+  "oxfmt": 0.40.0
+  "oxlint": 1.55.0
   "husky": 9.1.7
-  "lint-staged": 16.3.2
+  "lint-staged": 16.4.0
 
   # Build tools
   "vite": 8.0.0
   "@vitejs/plugin-vue": 6.0.5
   "@tailwindcss/vite": 4.2.1
-  "wrangler": 4.71.0
+  "wrangler": 4.73.0
 
   # Histoire
   "histoire": 1.0.0-beta.1
@@ -118,16 +118,16 @@ catalog:
   "vitest": 4.1.0
   "@vitest/browser-webdriverio": 4.1.0
   "@vitest/coverage-v8": 4.1.0
-  "vitest-browser-vue": 2.0.2
+  "vitest-browser-vue": 2.1.0
   "vue3-snapshot-serializer": 2.13.1
 
   # WebdriverIO
-  "webdriverio": 9.24.0
-  "@wdio/cli": 9.24.0
-  "@wdio/globals": 9.23.0
-  "@wdio/local-runner": 9.24.0
-  "@wdio/mocha-framework": 9.24.0
-  "@wdio/spec-reporter": 9.24.0
+  "webdriverio": 9.26.0
+  "@wdio/cli": 9.26.0
+  "@wdio/globals": 9.26.0
+  "@wdio/local-runner": 9.26.0
+  "@wdio/mocha-framework": 9.26.0
+  "@wdio/spec-reporter": 9.26.0
 
   # Types
   "@types/mocha": 10.0.10
