@@ -29,6 +29,7 @@ export const ContextMenuTheme = tv({
     itemTrailing: "ms-auto inline-flex items-center",
     itemKbd: "flex items-center gap-0.5",
     itemTrailingIcon: "shrink-0",
+    itemBody: "flex min-w-0 flex-1 flex-col",
     itemLabel: "truncate",
     itemDescription: "truncate text-muted",
   },

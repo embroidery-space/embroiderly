@@ -123,11 +123,13 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
           />
           <Icon v-else-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
 
-          <span v-if="item.label || item.description" class="flex min-w-0 flex-1 flex-col">
-            <span v-if="item.label" data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
-            <span v-if="item.description" data-slot="itemDescription" :class="ui.itemDescription()">{{
-              item.description
-            }}</span>
+          <span v-if="item.label || item.description" data-slot="itemBody" :class="ui.itemBody()">
+            <span v-if="item.label" data-slot="itemLabel" :class="ui.itemLabel()">
+              {{ item.label }}
+            </span>
+            <span v-if="item.description" data-slot="itemDescription" :class="ui.itemDescription()">
+              {{ item.description }}
+            </span>
           </span>
 
           <span v-if="item.shortcut" data-slot="itemTrailing" :class="[ui.itemTrailing(), ui.itemKbd()]">
