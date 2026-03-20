@@ -22,8 +22,6 @@ export interface TreeItem {
   /** Nested items. */
   children?: TreeItem[];
 
-  /** Whether the item is disabled. */
-  disabled?: boolean;
   /** Whether the item is initially expanded. */
   defaultExpanded?: boolean;
 
@@ -167,7 +165,6 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
         as-child
         :level="level"
         :value="item"
-        :disabled="item.disabled"
         @select="(e) => handleItemSelect(e as TreeItemSelectEvent<T>, item)"
         @toggle="(e) => handleItemToggle(e as TreeItemToggleEvent<T>)"
       >

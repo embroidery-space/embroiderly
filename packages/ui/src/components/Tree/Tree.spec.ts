@@ -37,7 +37,6 @@ describe("Tree", () => {
     ["with nested items", { props: { items: nestedItems } }],
     ...sizes.map((size) => [`with size ${size}`, { props: { items: flatItems, size } }]),
     ["with disabled tree", { props: { items: flatItems, disabled: true } }],
-    ["with disabled item", { props: { items: [{ label: "Disabled", value: "disabled", disabled: true }] } }],
     [
       "with defaultExpanded item",
       {

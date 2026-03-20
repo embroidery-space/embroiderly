@@ -66,18 +66,6 @@ exports[`Tree > renders correctly with defaultExpanded item 1`] = `
 </div>
 `;
 
-exports[`Tree > renders correctly with disabled item 1`] = `
-<div>
-  <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" disabled="true" role="treeitem" tabindex="-1">
-        <span class="flex-1 text-left truncate" data-slot="itemLabel">Disabled</span>
-      </div>
-    </li>
-  </ul>
-</div>
-`;
-
 exports[`Tree > renders correctly with disabled tree 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
