@@ -19,10 +19,7 @@ export const TreeTheme = tv({
     `,
     itemLeadingIcon: "shrink-0 text-muted",
     itemLabel: "flex-1 truncate text-left",
-    itemChevron: `
-      flex shrink-0 items-center justify-center text-muted transition-transform
-      duration-200
-    `,
+    itemChevron: "transition-transform duration-200",
   },
   variants: {
     size: {

@@ -6,6 +6,7 @@ import { computed } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import type { IconValue } from "../../types/icons.ts";
+import Button from "../Button/Button.vue";
 import Icon from "../Icon/Icon.vue";
 
 import { TreeTheme } from "./Tree.theme.ts";
@@ -216,16 +217,18 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
               </slot>
             </span>
 
-            <button
+            <Button
               v-if="item.children?.length"
-              type="button"
+              square
+              color="neutral"
+              variant="ghost"
+              size="sm"
+              :icon="icons.chevronDown"
               tabindex="-1"
               data-slot="itemChevron"
               :class="ui.itemChevron({ class: [props.ui?.itemChevron, isExpanded && 'rotate-180'] })"
               @click.stop="handleToggle()"
-            >
-              <Icon :name="icons.chevronDown" />
-            </button>
+            />
 
             <slot
               name="item-trailing"

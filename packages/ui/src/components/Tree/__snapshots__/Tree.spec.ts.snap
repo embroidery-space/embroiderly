@@ -28,8 +28,8 @@ exports[`Tree > renders correctly with defaultExpanded item 1`] = `
     <li index="0" item="[object Object]" level="1">
       <div aria-expanded="true" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-expanded data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 1</span>
-        <button class="duration-200 flex items-center justify-center rotate-180 shrink-0 size-4 text-muted transition-transform" data-slot="itemChevron" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rotate-180 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
@@ -55,8 +55,8 @@ exports[`Tree > renders correctly with defaultExpanded item 1`] = `
     <li index="2" item="[object Object]" level="1">
       <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 3</span>
-        <button class="duration-200 flex items-center justify-center shrink-0 size-4 text-muted transition-transform" data-slot="itemChevron" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
@@ -94,8 +94,8 @@ exports[`Tree > renders correctly with dynamic slot 1`] = `
     <li index="0" item="[object Object]" level="1">
       <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 1</span>
-        <button class="duration-200 flex items-center justify-center shrink-0 size-4 text-muted transition-transform" data-slot="itemChevron" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
@@ -167,8 +167,8 @@ exports[`Tree > renders correctly with item defaultExpanded true 1`] = `
     <li index="0" item="[object Object]" level="1">
       <div aria-expanded="true" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-expanded data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Auto Expanded</span>
-        <button class="duration-200 flex items-center justify-center rotate-180 shrink-0 size-4 text-muted transition-transform" data-slot="itemChevron" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rotate-180 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
@@ -270,8 +270,8 @@ exports[`Tree > renders correctly with nested items 1`] = `
     <li index="0" item="[object Object]" level="1">
       <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 1</span>
-        <button class="duration-200 flex items-center justify-center shrink-0 size-4 text-muted transition-transform" data-slot="itemChevron" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
@@ -285,8 +285,8 @@ exports[`Tree > renders correctly with nested items 1`] = `
     <li index="2" item="[object Object]" level="1">
       <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 3</span>
-        <button class="duration-200 flex items-center justify-center shrink-0 size-4 text-muted transition-transform" data-slot="itemChevron" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
