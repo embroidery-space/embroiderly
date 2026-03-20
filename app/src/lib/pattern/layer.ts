@@ -1,4 +1,5 @@
 import { b } from "@zorsh/zorsh";
+import { toByteArray } from "base64-js";
 
 import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch } from "./stitches.ts";
 
@@ -72,4 +73,29 @@ export class Layer {
     specialstitches: b.vec(SpecialStitch.schema),
     specialstitchesVisible: b.bool(),
   });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new Layer(Layer.schema.deserialize(buffer));
+  }
+}
+
+export class AddedLayerData {
+  index: number;
+  layer: Layer;
+
+  constructor(data: b.infer<typeof AddedLayerData.schema>) {
+    this.index = data.index;
+    this.layer = new Layer(data.layer);
+  }
+
+  static readonly schema = b.struct({
+    index: b.u32(),
+    layer: Layer.schema,
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new AddedLayerData(AddedLayerData.schema.deserialize(buffer));
+  }
 }

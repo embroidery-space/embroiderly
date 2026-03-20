@@ -146,10 +146,10 @@ impl Pattern {
     self.layers[layer_index].restore_stitches(stitches, palindexes, palsize);
   }
 
-  /// Adds a layer and returns its index.
+  /// Adds a layer at the top (index 0) and returns its index.
   pub fn add_layer(&mut self, layer: Layer) -> usize {
-    self.layers.push(layer);
-    self.layers.len() - 1
+    self.layers.insert(0, layer);
+    0
   }
 
   /// Removes and returns the layer at the given index.

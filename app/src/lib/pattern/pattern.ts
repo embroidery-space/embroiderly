@@ -155,6 +155,14 @@ export class Pattern extends EventTarget {
     return this.#layers;
   }
 
+  addLayerAt(index: number, layer: Layer) {
+    this.#layers = [...this.#layers.slice(0, index), layer, ...this.#layers.slice(index)];
+  }
+
+  removeLayerAt(index: number) {
+    this.#layers = this.#layers.filter((_, i) => i !== index);
+  }
+
   get fullstitches() {
     return this.#layers[0]!.fullstitches;
   }
@@ -282,4 +290,7 @@ export const enum PatternEvent {
   UpdateDisplayMode = "display:set_mode",
 
   UpdatePdfExportOptions = "publish:update-pdf",
+
+  AddLayer = "layers:add",
+  RemoveLayer = "layers:remove",
 }

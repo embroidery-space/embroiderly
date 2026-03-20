@@ -3,6 +3,7 @@ pub mod fabric;
 pub mod grid;
 pub mod history;
 pub mod image;
+pub mod layers;
 pub mod palette;
 pub mod pattern;
 pub mod publish;

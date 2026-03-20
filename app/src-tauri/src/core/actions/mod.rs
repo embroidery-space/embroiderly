@@ -12,6 +12,9 @@ use anyhow::Result;
 use embroiderly_pattern::PatternProject;
 use tauri::WebviewWindow;
 
+mod layers;
+pub use layers::*;
+
 mod pattern;
 pub use pattern::*;
 

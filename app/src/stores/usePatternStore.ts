@@ -11,6 +11,7 @@ import {
   Pattern,
   Fabric,
   Grid,
+  AddedLayerData,
   PaletteItem,
   AddedPaletteItemData,
   PaletteSettings,
@@ -149,6 +150,26 @@ export const usePatternStore = defineStore(
       }
     });
 
+    async function addLayer(name: string) {
+      if (!pattern.value) return;
+      await PatternApi.addLayer(pattern.value.id, name);
+    }
+    async function removeLayer(layerIndex: number) {
+      if (!pattern.value) return;
+      await PatternApi.removeLayer(pattern.value.id, layerIndex);
+    }
+    appWindow.listen<string>(PatternEvent.AddLayer, ({ payload }) => {
+      if (!pattern.value) return;
+      const { index, layer } = AddedLayerData.deserialize(payload);
+      pattern.value.addLayerAt(index, layer);
+      triggerRef(pattern);
+    });
+    appWindow.listen<number>(PatternEvent.RemoveLayer, ({ payload: layerIndex }) => {
+      if (!pattern.value) return;
+      pattern.value.removeLayerAt(layerIndex);
+      triggerRef(pattern);
+    });
+
     function addStitch(stitch: Stitch) {
       if (!pattern.value) return;
       return PatternApi.addStitch(pattern.value.id, stitch);
@@ -237,6 +258,8 @@ export const usePatternStore = defineStore(
       updatePatternInfo,
       updateFabric,
       updateGrid,
+      addLayer,
+      removeLayer,
       addPaletteItem,
       removePaletteItem,
       updatePaletteDisplaySettings,

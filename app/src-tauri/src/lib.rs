@@ -145,6 +145,8 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::palette::sort_palette_by,
     commands::core::palette::reorder_palette_items,
     commands::core::palette::set_symbol,
+    commands::core::layers::add_layer,
+    commands::core::layers::remove_layer,
     commands::core::stitches::add_stitch,
     commands::core::stitches::remove_stitch,
     commands::core::publish::update_pdf_export_options,

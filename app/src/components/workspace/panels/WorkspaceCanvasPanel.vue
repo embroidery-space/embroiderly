@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { Separator, SplitterPanel, ToolToggle, ToolToggleGroup } from "@embroiderly/ui";
+import { Separator, SplitterPanel, ToolToggle, ToolToggleGroup, useConfirm } from "@embroiderly/ui";
 import type { SplitterPanelProps, SplitterPanelEmits, ToolToggleItem } from "@embroiderly/ui";
 
 import { useForwardPropsEmits } from "reka-ui";
 import { computed, ref, useTemplateRef, watch } from "vue";
 
-import { IconGrid, IconRulers, IconStitchFull, IconStitchMix, IconStitchSquare, IconSymbols } from "~/assets/icons/";
+import { IconSymbols, IconGrid, IconRulers, IconStitchFull, IconStitchSquare, IconStitchMix } from "~/assets/icons/";
+import { CanvasLayers } from "~/components/canvas/";
 import { useI18n } from "~/composables/";
 import { DisplayMode } from "~/lib/pattern/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
@@ -25,6 +26,7 @@ const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
 
 const { fluent } = useI18n();
+const confirm = useConfirm();
 
 const panel = useTemplateRef("panel");
 
@@ -66,6 +68,23 @@ const showRulers = computed({
   get: () => patternStore.pattern?.showRulers ?? true,
   set: patternStore.showRulers,
 });
+
+function handleAddLayer() {
+  const layerCount = patternStore.pattern?.layers.length ?? 0;
+  patternStore.addLayer(`Layer ${layerCount + 1}`);
+}
+
+async function handleRemoveLayer(index: number) {
+  const layer = patternStore.pattern?.layers[index];
+
+  const accepted = await confirm.open(fluent.$ta("canvas-layers-remove-confirm", { name: layer!.name })).result;
+  if (!accepted) return;
+
+  patternStore.removeLayer(index);
+  if (editorStateStore.selectedLayerIndex >= index && editorStateStore.selectedLayerIndex > 0) {
+    editorStateStore.selectedLayerIndex -= 1;
+  }
+}
 
 watch(
   () => editorStateStore.canvasPanelCollapsed,
@@ -117,7 +136,6 @@ function handlePanelExpand() {
       :delay-duration="200"
       :tooltip-options="{ content: { side: 'left' } }"
     />
-
     <ToolToggle
       v-model="showGrid"
       :icon="IconGrid"
@@ -127,7 +145,6 @@ function handlePanelExpand() {
       :delay-duration="200"
       :tooltip-options="{ content: { side: 'left' } }"
     />
-
     <ToolToggle
       v-model="showRulers"
       :icon="IconRulers"
@@ -137,5 +154,16 @@ function handlePanelExpand() {
       :delay-duration="200"
       :tooltip-options="{ content: { side: 'left' } }"
     />
+
+    <template v-if="!collapsed && patternStore.pattern?.layers.length">
+      <Separator />
+      <CanvasLayers
+        v-model="editorStateStore.selectedLayerIndex"
+        :layers="patternStore.pattern.layers"
+        class="grow"
+        @add-layer="handleAddLayer"
+        @remove-layer="handleRemoveLayer"
+      />
+    </template>
   </SplitterPanel>
 </template>

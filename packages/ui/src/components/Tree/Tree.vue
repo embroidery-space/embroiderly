@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends TreeItem">
-import type { TreeItemSelectEvent, TreeItemToggleEvent } from "reka-ui";
+import type { TreeItemSelectEvent, TreeItemToggleEvent, TreeRootProps } from "reka-ui";
 import { Tree } from "reka-ui/namespaced";
 import { computed } from "vue";
 
@@ -43,18 +43,12 @@ export interface TreeItemSlotProps<T extends TreeItem> {
   handleToggle: () => void;
 }
 
-export interface TreeProps<T extends TreeItem = TreeItem> {
+export interface TreeProps<T extends TreeItem = TreeItem> extends Pick<
+  TreeRootProps,
+  "disabled" | "defaultValue" | "defaultExpanded" | "selectionBehavior"
+> {
   /** The items to display. */
   items?: T[];
-
-  /**
-   * Uncontrolled initial expanded keys.
-   * Merged with per-item `defaultExpanded: true`.
-   */
-  defaultExpanded?: string[];
-
-  /** Whether the entire tree is disabled. */
-  disabled?: boolean;
 
   /**
    * The size of the tree.
@@ -164,10 +158,12 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
     v-model="modelValue"
     v-model:expanded="expanded"
     :items="items"
+    :default-value="defaultValue"
     :default-expanded="defaultExpanded"
     :get-key="(item) => item.value ?? item.label"
     :disabled="disabled"
     :multiple="false"
+    :selection-behavior="props.selectionBehavior"
     data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >

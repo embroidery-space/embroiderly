@@ -93,6 +93,16 @@ export function setSymbol(patternId: string, palindex: number, symbol?: Symbol) 
   return invoke<void>("set_symbol", SetSymbolData.serialize({ palindex, symbol }), { headers: { patternId } });
 }
 
+// === Layer Management === //
+
+export function addLayer(patternId: string, name: string) {
+  return invoke<void>("add_layer", { name }, { headers: { patternId } });
+}
+
+export function removeLayer(patternId: string, layerIndex: number) {
+  return invoke<void>("remove_layer", { layerIndex }, { headers: { patternId } });
+}
+
 // === Stitches Management === //
 
 export function addStitch(patternId: string, stitch: Stitch) {
