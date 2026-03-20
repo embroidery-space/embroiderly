@@ -1,14 +1,18 @@
 import { useOverlay } from "@embroiderly/ui";
 
 import { createSharedComposable } from "@vueuse/core";
+import { defineAsyncComponent } from "vue";
 
-import FabricModal from "~/components/fabric/FabricModal.vue";
-import PatternCreationModal from "~/components/fabric/PatternCreationModal.vue";
-import GridModal from "~/components/grid/GridModal.vue";
-import ImageImportModal from "~/components/image-import/ImageImportModal.vue";
-import PatternInfoModal from "~/components/pattern-info/PatternInfoModal.vue";
-import PdfExportModal from "~/components/pdf-export/PdfExportModal.vue";
-import PdfExportOptionsModal from "~/components/pdf-export/PdfExportOptionsModal.vue";
+const PatternCreationModal = defineAsyncComponent(() => import("~/components/fabric/PatternCreationModal.vue"));
+
+const ImageImportModal = defineAsyncComponent(() => import("~/components/image-import/ImageImportModal.vue"));
+
+const PdfExportModal = defineAsyncComponent(() => import("~/components/pdf-export/PdfExportModal.vue"));
+const PdfExportOptionsModal = defineAsyncComponent(() => import("~/components/pdf-export/PdfExportOptionsModal.vue"));
+
+const PatternInfoModal = defineAsyncComponent(() => import("~/components/pattern-info/PatternInfoModal.vue"));
+const FabricModal = defineAsyncComponent(() => import("~/components/fabric/FabricModal.vue"));
+const GridModal = defineAsyncComponent(() => import("~/components/grid/GridModal.vue"));
 
 export const useEditorModals = createSharedComposable(() => {
   const overlay = useOverlay();
