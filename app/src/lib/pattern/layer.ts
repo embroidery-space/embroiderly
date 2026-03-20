@@ -1,6 +1,8 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 
+import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
+
 import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch } from "./stitches.ts";
 
 export class Layer {
@@ -73,6 +75,44 @@ export class Layer {
     specialstitches: b.vec(SpecialStitch.schema),
     specialstitchesVisible: b.bool(),
   });
+
+  getVisibility(): LayerVisibility {
+    return {
+      visible: this.visible,
+
+      fullstitchesVisible: this.fullstitchesVisible,
+      petitestitchesVisible: this.petitestitchesVisible,
+
+      halfstitchesVisible: this.halfstitchesVisible,
+      quarterstitchesVisible: this.quarterstitchesVisible,
+
+      backstitchesVisible: this.backstitchesVisible,
+      straightstitchesVisible: this.straightstitchesVisible,
+
+      frenchknotsVisible: this.frenchknotsVisible,
+      beadsVisible: this.beadsVisible,
+
+      specialstitchesVisible: this.specialstitchesVisible,
+    };
+  }
+
+  setVisibility(vis: LayerVisibility): void {
+    this.visible = vis.visible;
+
+    this.fullstitchesVisible = vis.fullstitchesVisible;
+    this.petitestitchesVisible = vis.petitestitchesVisible;
+
+    this.halfstitchesVisible = vis.halfstitchesVisible;
+    this.quarterstitchesVisible = vis.quarterstitchesVisible;
+
+    this.backstitchesVisible = vis.backstitchesVisible;
+    this.straightstitchesVisible = vis.straightstitchesVisible;
+
+    this.frenchknotsVisible = vis.frenchknotsVisible;
+    this.beadsVisible = vis.beadsVisible;
+
+    this.specialstitchesVisible = vis.specialstitchesVisible;
+  }
 
   static deserialize(data: Uint8Array | string) {
     const buffer = typeof data === "string" ? toByteArray(data) : data;

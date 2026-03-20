@@ -152,7 +152,7 @@ export class Pattern extends EventTarget {
   }
 
   get layers() {
-    return this.#layers;
+    return [...this.#layers];
   }
 
   addLayerAt(index: number, layer: Layer) {
@@ -293,4 +293,5 @@ export const enum PatternEvent {
 
   AddLayer = "layers:add",
   RemoveLayer = "layers:remove",
+  UpdateLayerVisibility = "layers:update_visibility",
 }

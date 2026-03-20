@@ -113,3 +113,140 @@ impl<R: tauri::Runtime> Action<R> for RemoveLayerAction {
     Ok(())
   }
 }
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LayerVisibility {
+  pub visible: bool,
+
+  pub fullstitches_visible: bool,
+  pub petitestitches_visible: bool,
+
+  pub halfstitches_visible: bool,
+  pub quarterstitches_visible: bool,
+
+  pub backstitches_visible: bool,
+  pub straightstitches_visible: bool,
+
+  pub frenchknots_visible: bool,
+  pub beads_visible: bool,
+
+  pub specialstitches_visible: bool,
+}
+
+impl From<&Layer> for LayerVisibility {
+  fn from(layer: &Layer) -> Self {
+    Self {
+      visible: layer.visible,
+
+      fullstitches_visible: layer.fullstitches_visible,
+      petitestitches_visible: layer.petitestitches_visible,
+
+      halfstitches_visible: layer.halfstitches_visible,
+      quarterstitches_visible: layer.quarterstitches_visible,
+
+      backstitches_visible: layer.backstitches_visible,
+      straightstitches_visible: layer.straightstitches_visible,
+
+      frenchknots_visible: layer.frenchknots_visible,
+      beads_visible: layer.beads_visible,
+
+      specialstitches_visible: layer.specialstitches_visible,
+    }
+  }
+}
+
+impl LayerVisibility {
+  pub const fn apply_to(&self, layer: &mut Layer) {
+    layer.visible = self.visible;
+
+    layer.fullstitches_visible = self.fullstitches_visible;
+    layer.petitestitches_visible = self.petitestitches_visible;
+
+    layer.halfstitches_visible = self.halfstitches_visible;
+    layer.quarterstitches_visible = self.quarterstitches_visible;
+
+    layer.backstitches_visible = self.backstitches_visible;
+    layer.straightstitches_visible = self.straightstitches_visible;
+
+    layer.frenchknots_visible = self.frenchknots_visible;
+    layer.beads_visible = self.beads_visible;
+
+    layer.specialstitches_visible = self.specialstitches_visible;
+  }
+}
+
+#[derive(Clone, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+struct LayerVisibilityEvent {
+  layer_index: u32,
+  visibility: LayerVisibility,
+}
+
+#[derive(Clone)]
+pub struct UpdateLayerVisibilityAction {
+  layer_index: u32,
+  visibility: LayerVisibility,
+  old_visibility: OnceLock<LayerVisibility>,
+}
+
+impl UpdateLayerVisibilityAction {
+  pub const fn new(layer_index: u32, visibility: LayerVisibility) -> Self {
+    Self {
+      layer_index,
+      visibility,
+      old_visibility: OnceLock::new(),
+    }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for UpdateLayerVisibilityAction {
+  /// Updates the visibility settings of a layer.
+  ///
+  /// **Emits:**
+  /// - `layers:update_visibility` with `{ layerIndex, visibility }`.
+  /// - `app:pattern-changed`.
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    let layer = &mut patproj.pattern.layers[self.layer_index as usize];
+
+    if self.old_visibility.get().is_none() {
+      self.old_visibility.set(LayerVisibility::from(&*layer)).unwrap();
+    }
+
+    self.visibility.apply_to(layer);
+
+    window.emit(
+      "layers:update_visibility",
+      LayerVisibilityEvent {
+        layer_index: self.layer_index,
+        visibility: self.visibility.clone(),
+      },
+    )?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
+
+    Ok(())
+  }
+
+  /// Restores the previous visibility settings of the layer.
+  ///
+  /// **Emits:**
+  /// - `layers:update_visibility` with `{ layerIndex, visibility }`.
+  /// - `app:pattern-changed`.
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    let old_visibility = self.old_visibility.get().unwrap();
+    let layer = &mut patproj.pattern.layers[self.layer_index as usize];
+
+    old_visibility.apply_to(layer);
+
+    window.emit(
+      "layers:update_visibility",
+      LayerVisibilityEvent {
+        layer_index: self.layer_index,
+        visibility: old_visibility.clone(),
+      },
+    )?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
+
+    Ok(())
+  }
+}

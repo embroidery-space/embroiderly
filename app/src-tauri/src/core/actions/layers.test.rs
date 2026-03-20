@@ -2,7 +2,7 @@ use embroiderly_pattern::PatternProject;
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
-use super::{Action, AddLayerAction, RemoveLayerAction};
+use super::{Action, AddLayerAction, LayerVisibility, RemoveLayerAction, UpdateLayerVisibilityAction};
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {
@@ -115,5 +115,76 @@ fn test_remove_layer_action() {
     action.revoke(&window, &mut patproj).unwrap();
     assert_eq!(patproj.pattern.layers.len(), 2);
     assert_eq!(patproj.pattern.layers[0].name, "Layer 2");
+  }
+}
+
+#[test]
+fn test_update_layer_visibility_action() {
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = create_pattern_project();
+
+  let new_visibility = LayerVisibility {
+    visible: false,
+
+    fullstitches_visible: false,
+    petitestitches_visible: true,
+
+    halfstitches_visible: true,
+    quarterstitches_visible: true,
+
+    backstitches_visible: true,
+    straightstitches_visible: true,
+
+    frenchknots_visible: true,
+    beads_visible: true,
+
+    specialstitches_visible: true,
+  };
+
+  let action = UpdateLayerVisibilityAction::new(0, new_visibility.clone());
+
+  // Test performing the action.
+  {
+    window.once("layers:update_visibility", |e| {
+      let payload: serde_json::Value = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(payload["layerIndex"], 0);
+      assert_eq!(payload["visibility"]["visible"], false);
+      assert_eq!(payload["visibility"]["fullstitchesVisible"], false);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
+
+    assert!(patproj.pattern.layers[0].visible);
+    action.perform(&window, &mut patproj).unwrap();
+    assert!(!patproj.pattern.layers[0].visible);
+    assert!(!patproj.pattern.layers[0].fullstitches_visible);
+  }
+
+  // Test revoking the action.
+  {
+    window.once("layers:update_visibility", |e| {
+      let payload: serde_json::Value = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(payload["layerIndex"], 0);
+      assert_eq!(payload["visibility"]["visible"], true);
+      assert_eq!(payload["visibility"]["fullstitchesVisible"], true);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+    assert!(patproj.pattern.layers[0].visible);
+    assert!(patproj.pattern.layers[0].fullstitches_visible);
   }
 }

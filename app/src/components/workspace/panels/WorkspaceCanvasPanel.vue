@@ -5,6 +5,7 @@ import type { SplitterPanelProps, SplitterPanelEmits, ToolToggleItem } from "@em
 import { useForwardPropsEmits } from "reka-ui";
 import { computed, ref, useTemplateRef, watch } from "vue";
 
+import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
 import { IconSymbols, IconGrid, IconRulers, IconStitchFull, IconStitchSquare, IconStitchMix } from "~/assets/icons/";
 import { CanvasLayers } from "~/components/canvas/";
 import { useI18n } from "~/composables/";
@@ -72,6 +73,10 @@ const showRulers = computed({
 function handleAddLayer() {
   const layerCount = patternStore.pattern?.layers.length ?? 0;
   patternStore.addLayer(`Layer ${layerCount + 1}`);
+}
+
+function handleToggleLayerVisibility(layerIndex: number, visibility: LayerVisibility) {
+  patternStore.updateLayerVisibility(layerIndex, visibility);
 }
 
 async function handleRemoveLayer(index: number) {
@@ -163,6 +168,7 @@ function handlePanelExpand() {
         class="grow"
         @add-layer="handleAddLayer"
         @remove-layer="handleRemoveLayer"
+        @toggle-layer-visibility="handleToggleLayerVisibility"
       />
     </template>
   </SplitterPanel>

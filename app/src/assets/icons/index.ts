@@ -12,6 +12,8 @@ export { default as IconFileOpen } from "~icons/material-symbols/file-open-round
 export { default as IconImage } from "~icons/material-symbols/image-rounded";
 export { default as IconImageOff } from "~icons/material-symbols/hide-image-rounded";
 export { default as IconLayers } from "~icons/material-symbols/layers-rounded";
+export { default as IconVisibility } from "~icons/material-symbols/visibility-rounded";
+export { default as IconVisibilityOff } from "~icons/material-symbols/visibility-off-rounded";
 export { default as IconTrash } from "~icons/material-symbols/delete-rounded";
 export { default as IconLink } from "~icons/material-symbols/link-rounded";
 export { default as IconUnlink } from "~icons/material-symbols/link-off-rounded";

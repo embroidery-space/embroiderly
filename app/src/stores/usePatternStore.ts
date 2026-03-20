@@ -158,6 +158,10 @@ export const usePatternStore = defineStore(
       if (!pattern.value) return;
       await PatternApi.removeLayer(pattern.value.id, layerIndex);
     }
+    async function updateLayerVisibility(layerIndex: number, visibility: PatternApi.LayerVisibility) {
+      if (!pattern.value) return;
+      await PatternApi.updateLayerVisibility(pattern.value.id, layerIndex, visibility);
+    }
     appWindow.listen<string>(PatternEvent.AddLayer, ({ payload }) => {
       if (!pattern.value) return;
       const { index, layer } = AddedLayerData.deserialize(payload);
@@ -169,6 +173,14 @@ export const usePatternStore = defineStore(
       pattern.value.removeLayerAt(layerIndex);
       triggerRef(pattern);
     });
+    appWindow.listen<{ layerIndex: number; visibility: PatternApi.LayerVisibility }>(
+      PatternEvent.UpdateLayerVisibility,
+      ({ payload: { layerIndex, visibility } }) => {
+        if (!pattern.value) return;
+        pattern.value.layers[layerIndex]?.setVisibility(visibility);
+        triggerRef(pattern);
+      },
+    );
 
     function addStitch(stitch: Stitch) {
       if (!pattern.value) return;
@@ -260,6 +272,7 @@ export const usePatternStore = defineStore(
       updateGrid,
       addLayer,
       removeLayer,
+      updateLayerVisibility,
       addPaletteItem,
       removePaletteItem,
       updatePaletteDisplaySettings,

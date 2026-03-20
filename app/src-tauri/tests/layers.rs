@@ -2,6 +2,26 @@ use embroiderly::commands;
 use embroiderly::state::{HistoryState, PatternsState};
 use tauri::Manager as _;
 
+fn visibility_all_true() -> serde_json::Value {
+  serde_json::json!({
+    "visible": true,
+
+    "fullstitchesVisible": true,
+    "petitestitchesVisible": true,
+
+    "halfstitchesVisible": true,
+    "quarterstitchesVisible": true,
+
+    "backstitchesVisible": true,
+    "straightstitchesVisible": true,
+
+    "frenchknotsVisible": true,
+    "beadsVisible": true,
+
+    "specialstitchesVisible": true,
+  })
+}
+
 mod utils;
 
 #[test]
@@ -95,4 +115,38 @@ fn cannot_remove_last_layer() {
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
   assert_eq!(patproj.pattern.layers.len(), 1);
+}
+
+#[test]
+fn updates_layer_visibility() {
+  let (app, webview) = setup_test_app!(commands: [commands::core::layers::update_layer_visibility]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  let mut visibility = visibility_all_true();
+  visibility["visible"] = serde_json::json!(false);
+  visibility["fullstitchesVisible"] = serde_json::json!(false);
+
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "update_layer_visibility",
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "layerIndex": 0, "visibility": visibility })),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert!(!patproj.pattern.layers[0].visible);
+  assert!(!patproj.pattern.layers[0].fullstitches_visible);
+  assert!(patproj.pattern.layers[0].petitestitches_visible);
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 1);
 }

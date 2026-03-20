@@ -95,12 +95,29 @@ export function setSymbol(patternId: string, palindex: number, symbol?: Symbol) 
 
 // === Layer Management === //
 
+export interface LayerVisibility {
+  visible: boolean;
+  fullstitchesVisible: boolean;
+  petitestitchesVisible: boolean;
+  halfstitchesVisible: boolean;
+  quarterstitchesVisible: boolean;
+  backstitchesVisible: boolean;
+  straightstitchesVisible: boolean;
+  frenchknotsVisible: boolean;
+  beadsVisible: boolean;
+  specialstitchesVisible: boolean;
+}
+
 export function addLayer(patternId: string, name: string) {
   return invoke<void>("add_layer", { name }, { headers: { patternId } });
 }
 
 export function removeLayer(patternId: string, layerIndex: number) {
   return invoke<void>("remove_layer", { layerIndex }, { headers: { patternId } });
+}
+
+export function updateLayerVisibility(patternId: string, layerIndex: number, visibility: LayerVisibility) {
+  return invoke<void>("update_layer_visibility", { layerIndex, visibility }, { headers: { patternId } });
 }
 
 // === Stitches Management === //
