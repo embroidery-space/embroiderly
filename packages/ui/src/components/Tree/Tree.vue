@@ -252,7 +252,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
 
   <!-- eslint-disable-next-line vue/no-template-shadow -->
   <DefineTreeTemplate v-slot="{ items, level }">
-    <!-- @vue-expect-error — vue-tsc fails to resolve the item template as a component when a generic type parameter is used in the props definition. -->
+    <!-- @vue-expect-error `vue-tsc` fails to resolve the item template as a component when a generic type parameter is used in the props definition. -->
     <ReuseItemTemplate
       v-for="(item, index) in items"
       :key="item.value ?? item.label"
