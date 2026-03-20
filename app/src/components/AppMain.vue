@@ -85,7 +85,9 @@ useTauriListener(
 );
 
 useShortcuts({
+  "Ctrl+Z": () => patternStore.undo(),
   "Ctrl+Shift+Z": () => patternStore.undo({ single: true }),
+  "Ctrl+Y": () => patternStore.redo(),
   "Ctrl+Shift+Y": () => patternStore.redo({ single: true }),
 });
 
