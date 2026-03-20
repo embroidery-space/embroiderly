@@ -147,9 +147,6 @@ export default defineConfigWithVueTs(
         ],
       },
     },
-    rules: {
-      "better-tailwindcss/enforce-consistent-line-wrapping": ["off"],
-    },
   },
   {
     files: ["packages/ui/src/**/*.vue", "packages/ui/src/**/*.theme.ts"],
@@ -158,6 +155,13 @@ export default defineConfigWithVueTs(
       "better-tailwindcss": {
         entryPoint: fileURLToPath(new URL("packages/ui/src/index.css", import.meta.url)),
       },
+    },
+  },
+  // Disable consistent line wrapping for app and UI story files.
+  {
+    files: ["app/src/**/*.vue", "packages/ui/src/**/*.story.vue"],
+    rules: {
+      "better-tailwindcss/enforce-consistent-line-wrapping": "off",
     },
   },
 
