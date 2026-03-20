@@ -8,6 +8,8 @@ import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 import Icon from "../Icon/Icon.vue";
+import ScrollArea from "../ScrollArea/ScrollArea.vue";
+import type { ScrollAreaProps } from "../ScrollArea/ScrollArea.vue";
 
 import { TreeTheme } from "./Tree.theme.ts";
 import type { TreeThemeSlots, TreeThemeVariants } from "./Tree.theme.ts";
@@ -56,6 +58,12 @@ export interface TreeProps<T extends TreeItem = TreeItem> extends Pick<
    */
   size?: TreeThemeVariants["size"];
 
+  /**
+   * When provided, wraps the tree in a scroll area.
+   * Pass `true` to use defaults, or an object to configure the scroll area.
+   */
+  scroll?: boolean | Pick<ScrollAreaProps, "type" | "size" | "ui">;
+
   /** Called when any item is selected (tree-level). */
   onSelect?: (e: TreeItemSelectEvent<T>) => void;
 
@@ -80,6 +88,11 @@ const props = withDefaults(defineProps<TreeProps<T>>(), {
   size: "md",
 });
 defineSlots<TreeSlots<T>>();
+
+const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
+  if (!props.scroll) return null;
+  return typeof props.scroll === "boolean" ? {} : props.scroll;
+});
 
 const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item: T; index: number; level: number }>();
 const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items: T[]; level: number }>();
@@ -262,7 +275,27 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
     />
   </DefineTreeTemplate>
 
+  <ScrollArea v-if="scrollProps" v-bind="scrollProps" orientation="vertical">
+    <Tree.Root
+      v-bind="$attrs"
+      v-model="modelValue"
+      v-model:expanded="expanded"
+      :items="items"
+      :default-value="defaultValue"
+      :default-expanded="defaultExpanded"
+      :get-key="(item) => item.value ?? item.label"
+      :disabled="disabled"
+      :multiple="false"
+      :selection-behavior="props.selectionBehavior"
+      data-slot="root"
+      :class="ui.root({ class: [props.ui?.root, props.class] })"
+    >
+      <ReuseTreeTemplate :items="items ?? []" :level="1" />
+    </Tree.Root>
+  </ScrollArea>
+
   <Tree.Root
+    v-else
     v-bind="$attrs"
     v-model="modelValue"
     v-model:expanded="expanded"

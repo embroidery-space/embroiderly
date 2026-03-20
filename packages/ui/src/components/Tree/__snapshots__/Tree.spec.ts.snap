@@ -296,6 +296,36 @@ exports[`Tree > renders correctly with nested items 1`] = `
 </div>
 `;
 
+exports[`Tree > renders correctly with scroll 1`] = `
+<div>
+  <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+    <div class="pr-3 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+      <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
+        <li index="0" item="[object Object]" level="1">
+          <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+            <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
+          </div>
+        </li>
+        <li index="1" item="[object Object]" level="1">
+          <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+            <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
+          </div>
+        </li>
+        <li index="2" item="[object Object]" level="1">
+          <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+            <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <style></style>
+    <div class="bg-elevated data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out] duration-200 flex flex-col group/scrollbar h-full hover:bg-accented items-center p-0.75 select-none touch-none transition-colors w-3" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
+      <div class="bg-inverted duration-200 group-hover/scrollbar:w-full! relative rounded-full transition-[width] w-1/2!" data-slot="thumb" data-state="visible"></div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Tree > renders correctly with size lg 1`] = `
 <div>
   <ul class="[--tree-indent:1.5rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">

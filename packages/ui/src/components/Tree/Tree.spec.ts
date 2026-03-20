@@ -72,8 +72,33 @@ describe("Tree", () => {
         },
       },
     ],
-    ["with class", { props: { items: flatItems, class: "custom-class" } }],
-    ["with ui", { props: { items: flatItems, ui: { root: "custom-root", item: "custom-item" } } }],
+    [
+      "with scroll",
+      {
+        props: {
+          items: flatItems,
+          scroll: { type: "always" },
+        },
+      },
+    ],
+    [
+      "with class",
+      {
+        props: {
+          items: flatItems,
+          class: "custom-class",
+        },
+      },
+    ],
+    [
+      "with ui",
+      {
+        props: {
+          items: flatItems,
+          ui: { root: "custom-root", item: "custom-item" },
+        },
+      },
+    ],
     [
       "with item slot",
       {
