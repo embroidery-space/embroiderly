@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, ScrollArea, Tree } from "@embroiderly/ui";
-import type { TreeItem } from "@embroiderly/ui";
+import { Button, ButtonIcon, ContextMenu, Tree } from "@embroiderly/ui";
+import type { ContextMenuItem, TreeItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
@@ -45,6 +45,20 @@ const props = defineProps<CanvasLayersProps>();
 const emits = defineEmits<CanvasLayersEmits>();
 
 const { fluent } = useI18n();
+
+const contextMenuItems = computed<ContextMenuItem[]>(() => [
+  {
+    label: fluent.$t("canvas-layers-add"),
+    icon: IconPlus,
+    onSelect: () => emits("addLayer"),
+  },
+  {
+    label: fluent.$t("canvas-layers-remove", { name: props.layers[modelValue.value]!.name }),
+    icon: IconTrash,
+    disabled: props.layers.length <= 1,
+    onSelect: () => emits("removeLayer", modelValue.value),
+  },
+]);
 
 const layerItems = computed<LayerTreeItem[]>(() =>
   props.layers.map((layer, index) => {
@@ -139,7 +153,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
 </script>
 
 <template>
-  <div class="flex flex-col gap-1">
+  <div class="flex min-h-0 flex-col gap-1">
     <div class="flex items-center gap-1">
       <IconLayers class="m-2 size-5 shrink-0" />
       <span class="ms-1 flex-1 font-medium">{{ $t("canvas-layers") }}</span>
@@ -158,15 +172,22 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         size="lg"
         :icon="IconTrash"
         :disabled="layers.length <= 1"
-        :tooltip="$t('canvas-layers-remove')"
+        :tooltip="$t('canvas-layers-remove', { name: layers[modelValue]?.name })"
         @click="emits('removeLayer', modelValue)"
       />
     </div>
 
-    <ScrollArea type="hover" class="min-h-0 flex-1">
-      <Tree :items="layerItems" :default-value="layerItems[modelValue]" size="lg" selection-behavior="replace">
+    <ContextMenu :items="contextMenuItems">
+      <Tree
+        :items="layerItems"
+        :default-value="layerItems[modelValue]"
+        :scroll="{ type: 'hover' }"
+        size="lg"
+        selection-behavior="replace"
+      >
         <template #item-trailing="{ item }">
           <Button
+            square
             color="neutral"
             variant="ghost"
             size="sm"
@@ -175,6 +196,6 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           />
         </template>
       </Tree>
-    </ScrollArea>
+    </ContextMenu>
   </div>
 </template>

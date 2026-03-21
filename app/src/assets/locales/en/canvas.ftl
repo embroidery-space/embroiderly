@@ -31,7 +31,7 @@ canvas-layers-beads = Beads
 canvas-layers-specialstitches = Special Stitches
 
 canvas-layers-add = Add Layer
-canvas-layers-remove = Remove Layer
+canvas-layers-remove = Remove Layer "{ $name }"
 canvas-layers-remove-confirm =
   .title = Remove Layer
   .description = Are you sure you want to remove the layer "{ $name }"? This action can be undone.

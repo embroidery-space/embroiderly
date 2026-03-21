@@ -31,7 +31,7 @@ canvas-layers-beads = Бісер
 canvas-layers-specialstitches = Спеціальні стібки
 
 canvas-layers-add = Додати шар
-canvas-layers-remove = Видалити шар
+canvas-layers-remove = Видалити шар "{ $name }"
 canvas-layers-remove-confirm =
   .title = Видалити шар
   .description = Ви впевнені, що хочете видалити шар "{ $name }"? Цю дію можна скасувати.
