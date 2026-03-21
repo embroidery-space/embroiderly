@@ -7,8 +7,20 @@ if [ -z "$file" ] || [ "$file" == "null" ] || [ ! -f "$file" ]; then
   exit 0
 fi
 
-if [[ "$file" == *.rs ]]; then
-  cargo +nightly fmt -- "$file"
-else
-  pnpm exec oxfmt -- "$file"
-fi
+ext="${file##*.}"
+case "$ext" in
+  # Unsupported file extensions.
+  ftl)
+    exit 0
+    ;;
+
+  # Rust.
+  rs)
+    cargo +nightly fmt -- "$file"
+    ;;
+
+  # Oxc handles all other files.
+  *)
+    pnpm exec oxfmt -- "$file"
+    ;;
+esac
