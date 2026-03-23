@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Editable > renders correctly default 1`] = `
+<div>
+  <div class="inline-flex" data-dismissable-layer data-slot="root" dir="ltr">
+    <div class="cursor-text data-empty:text-dimmed flex-1 inline-flex items-center min-w-0 relative text-default" data-placeholder-shown data-slot="area">
+      <span class="block min-w-0 outline-none text-inherit truncate" data-placeholder-shown data-slot="preview" tabindex="0">Hello</span>
+      <input aria-label="editable input" class="bg-transparent block max-w-full outline-none placeholder:text-dimmed text-inherit w-full" data-slot="input" hidden placeholder="Enter text..." value="Hello">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Editable > renders correctly with autoResize 1`] = `
+<div>
+  <div class="inline-flex" data-dismissable-layer data-slot="root" dir="ltr">
+    <div class="cursor-text data-empty:text-dimmed flex-1 inline-flex items-center min-w-0 relative text-default" data-placeholder-shown data-slot="area">
+      <span class="block min-w-0 outline-none text-inherit truncate" data-placeholder-shown data-slot="preview" tabindex="0">Hello</span>
+      <input aria-label="editable input" class="bg-transparent block max-w-full outline-none placeholder:text-dimmed text-inherit w-full" data-slot="input" placeholder="Enter text..." value="Hello">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Editable > renders correctly with class 1`] = `
+<div>
+  <div class="inline-flex select-none" data-dismissable-layer data-slot="root" dir="ltr">
+    <div class="cursor-text data-empty:text-dimmed flex-1 inline-flex items-center min-w-0 relative text-default" data-placeholder-shown data-slot="area">
+      <span class="block min-w-0 outline-none text-inherit truncate" data-placeholder-shown data-slot="preview" tabindex="0">Hello</span>
+      <input aria-label="editable input" class="bg-transparent block max-w-full outline-none placeholder:text-dimmed text-inherit w-full" data-slot="input" hidden placeholder="Enter text..." value="Hello">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Editable > renders correctly with disabled 1`] = `
+<div>
+  <div class="inline-flex" data-dismissable-layer data-slot="root" dir="ltr">
+    <div class="cursor-not-allowed data-empty:text-dimmed flex-1 inline-flex items-center min-w-0 opacity-50 relative text-default" data-disabled data-placeholder-shown data-slot="area">
+      <span class="block min-w-0 outline-none text-inherit truncate" data-placeholder-shown data-slot="preview" tabindex="0">Hello</span>
+      <input aria-label="editable input" class="bg-transparent block max-w-full outline-none placeholder:text-dimmed text-inherit w-full" data-disabled data-slot="input" disabled hidden placeholder="Enter text..." value="Hello">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Editable > renders correctly with placeholder 1`] = `
+<div>
+  <div class="inline-flex" data-dismissable-layer data-slot="root" dir="ltr">
+    <div class="cursor-text data-empty:text-dimmed flex-1 inline-flex items-center min-w-0 relative text-default" data-empty data-placeholder-shown data-slot="area">
+      <span class="block min-w-0 outline-none text-inherit truncate" data-placeholder-shown data-slot="preview" tabindex="0">Enter text...</span>
+      <input aria-label="editable input" class="bg-transparent block max-w-full outline-none placeholder:text-dimmed text-inherit w-full" data-slot="input" hidden placeholder="Enter text..." value>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Editable > renders correctly with ui 1`] = `
+<div>
+  <div class="inline-flex" data-dismissable-layer data-slot="root" dir="ltr">
+    <div class="cursor-text data-empty:text-dimmed flex-1 inline-flex items-center min-w-0 relative text-default" data-placeholder-shown data-slot="area">
+      <span class="block min-w-0 outline-none text-red-500 truncate" data-placeholder-shown data-slot="preview" tabindex="0">Hello</span>
+      <input aria-label="editable input" class="bg-transparent block max-w-full outline-none placeholder:text-dimmed text-inherit w-full" data-slot="input" hidden placeholder="Enter text..." value="Hello">
+    </div>
+  </div>
+</div>
+`;

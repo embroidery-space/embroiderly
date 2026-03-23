@@ -23,6 +23,7 @@ export { default as Progress, type ProgressProps } from "./Progress/Progress.vue
 export { default as Separator, type SeparatorProps } from "./Separator/Separator.vue";
 
 // Form.
+export { default as Editable, type EditableProps, type EditableEmits } from "./Editable/Editable.vue";
 export { default as Checkbox, type CheckboxProps } from "./Checkbox/Checkbox.vue";
 export { default as ColorPicker, type ColorPickerProps } from "./ColorPicker/ColorPicker.vue";
 export { default as FilePicker, type FilePickerProps, type FilePickerEmits } from "./FilePicker/FilePicker.vue";
