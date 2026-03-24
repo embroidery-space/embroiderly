@@ -30,6 +30,8 @@ canvas-layers-frenchknots = French Knots
 canvas-layers-beads = Beads
 canvas-layers-specialstitches = Special Stitches
 
+canvas-layers-placeholder = Layer { $index }
+
 canvas-layers-add = Add Layer
 canvas-layers-remove = Remove Layer "{ $name }"
 canvas-layers-remove-confirm =

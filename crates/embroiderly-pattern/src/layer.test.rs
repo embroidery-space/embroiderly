@@ -73,7 +73,7 @@ fn bead_stitch(x: f32, y: f32, palindex: u32) -> Stitch {
 fn creates_default_layer() {
   let layer = Layer::default();
 
-  assert_eq!(layer.name, "Default");
+  assert!(layer.name.is_empty());
   assert!(layer.visible);
 
   assert!(layer.fullstitches.is_empty());

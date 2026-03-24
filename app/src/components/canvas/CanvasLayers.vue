@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, ContextMenu, Tree } from "@embroiderly/ui";
+import { Button, ButtonIcon, ContextMenu, Editable, Tree } from "@embroiderly/ui";
 import type { ContextMenuItem, TreeItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
@@ -28,6 +28,7 @@ interface LayerTreeItem extends TreeItem {
   index: number;
   visible: boolean;
   toggledVisibility: LayerVisibility;
+  placeholder?: string;
 }
 
 export interface CanvasLayersProps {
@@ -37,6 +38,7 @@ export interface CanvasLayersProps {
 export interface CanvasLayersEmits {
   addLayer: [];
   removeLayer: [index: number];
+  renameLayer: [layerIndex: number, name: string];
   toggleLayerVisibility: [layerIndex: number, visibility: LayerVisibility];
 }
 
@@ -53,7 +55,7 @@ const contextMenuItems = computed<ContextMenuItem[]>(() => [
     onSelect: () => emits("addLayer"),
   },
   {
-    label: fluent.$t("canvas-layers-remove", { name: props.layers[modelValue.value]!.name }),
+    label: fluent.$t("canvas-layers-remove", { name: getLayerDisplayName(modelValue.value) }),
     icon: IconTrash,
     disabled: props.layers.length <= 1,
     onSelect: () => emits("removeLayer", modelValue.value),
@@ -66,6 +68,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
     return {
       index,
       label: layer.name,
+      placeholder: fluent.$t("canvas-layers-placeholder", { index: index + 1 }),
       value: `layer-${index}`,
       visible: visibility.visible,
       toggledVisibility: { ...visibility, visible: !visibility.visible },
@@ -150,6 +153,10 @@ const layerItems = computed<LayerTreeItem[]>(() =>
     };
   }),
 );
+
+function getLayerDisplayName(index: number) {
+  return props.layers[index]!.name || fluent.$t("canvas-layers-placeholder", { index: index + 1 });
+}
 </script>
 
 <template>
@@ -172,7 +179,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         size="lg"
         :icon="IconTrash"
         :disabled="layers.length <= 1"
-        :tooltip="$t('canvas-layers-remove', { name: layers[modelValue]?.name })"
+        :tooltip="$t('canvas-layers-remove', { name: getLayerDisplayName(modelValue) })"
         @click="emits('removeLayer', modelValue)"
       />
     </div>
@@ -185,6 +192,19 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         size="lg"
         selection-behavior="replace"
       >
+        <template #item-label="{ item, level }">
+          <Editable
+            v-if="level === 1"
+            :model-value="item.label"
+            :placeholder="item.placeholder"
+            activation-mode="dblclick"
+            submit-mode="both"
+            class="w-full min-w-0"
+            @submit="(value) => emits('renameLayer', item.index, value ?? '')"
+          />
+          <span v-else class="truncate">{{ item.label }}</span>
+        </template>
+
         <template #item-trailing="{ item }">
           <Button
             square

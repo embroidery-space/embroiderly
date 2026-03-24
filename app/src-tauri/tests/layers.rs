@@ -33,7 +33,7 @@ fn adds_layer() {
     invoke_ipc!(
       &webview,
       cmd: "add_layer",
-      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "name": "Layer 2" })),
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({})),
       headers: [("patternId", pattern_id.to_string().parse().unwrap())]
     )
     .is_ok()
@@ -44,7 +44,7 @@ fn adds_layer() {
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
   assert_eq!(patproj.pattern.layers.len(), 2);
-  assert_eq!(patproj.pattern.layers[0].name, "Layer 2");
+  assert_eq!(patproj.pattern.layers[0].name, "");
 
   let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
   let history_manager = history_state.read().unwrap();
@@ -65,7 +65,7 @@ fn removes_layer() {
   invoke_ipc!(
     &webview,
     cmd: "add_layer",
-    body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "name": "Layer 2" })),
+    body: tauri::ipc::InvokeBody::Json(serde_json::json!({})),
     headers: [("patternId", pattern_id.to_string().parse().unwrap())]
   )
   .unwrap();
@@ -115,6 +115,34 @@ fn cannot_remove_last_layer() {
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
   assert_eq!(patproj.pattern.layers.len(), 1);
+}
+
+#[test]
+fn renames_layer() {
+  let (app, webview) = setup_test_app!(commands: [commands::core::layers::rename_layer]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "rename_layer",
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "layerIndex": 0, "name": "My Layer" })),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert_eq!(patproj.pattern.layers[0].name, "My Layer");
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 1);
 }
 
 #[test]

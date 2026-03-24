@@ -35,7 +35,7 @@ pub struct Layer {
 impl Default for Layer {
   fn default() -> Self {
     Self {
-      name: String::from("Default"),
+      name: String::new(),
       visible: true,
 
       fullstitches: Stitches::new(),

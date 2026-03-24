@@ -147,6 +147,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::palette::set_symbol,
     commands::core::layers::add_layer,
     commands::core::layers::remove_layer,
+    commands::core::layers::rename_layer,
     commands::core::layers::update_layer_visibility,
     commands::core::stitches::add_stitch,
     commands::core::stitches::remove_stitch,

@@ -30,6 +30,8 @@ canvas-layers-frenchknots = Фр. вузлики
 canvas-layers-beads = Бісер
 canvas-layers-specialstitches = Спеціальні стібки
 
+canvas-layers-placeholder = Шар { $index }
+
 canvas-layers-add = Додати шар
 canvas-layers-remove = Видалити шар "{ $name }"
 canvas-layers-remove-confirm =

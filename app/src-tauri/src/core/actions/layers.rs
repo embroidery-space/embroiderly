@@ -13,14 +13,12 @@ mod tests;
 
 #[derive(Clone)]
 pub struct AddLayerAction {
-  name: String,
   added_index: OnceLock<u32>,
 }
 
 impl AddLayerAction {
-  pub const fn new(name: String) -> Self {
+  pub const fn new() -> Self {
     Self {
-      name,
       added_index: OnceLock::new(),
     }
   }
@@ -33,7 +31,7 @@ impl<R: tauri::Runtime> Action<R> for AddLayerAction {
   /// - `layers:add` with the index and the new layer (borsh-encoded).
   /// - `app:pattern-changed`.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    let layer = Layer::new(&self.name);
+    let layer = Layer::default();
     let index = patproj.pattern.add_layer(layer.clone()) as u32;
 
     if self.added_index.get().is_none() {
@@ -108,6 +106,81 @@ impl<R: tauri::Runtime> Action<R> for RemoveLayerAction {
     patproj.pattern.layers.insert(self.layer_index as usize, layer.clone());
 
     window.emit("layers:add", base64::encode(borsh::to_vec(&(self.layer_index, layer))?))?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
+
+    Ok(())
+  }
+}
+
+#[derive(Clone, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+struct RenameLayerEvent {
+  layer_index: u32,
+  name: String,
+}
+
+#[derive(Clone)]
+pub struct RenameLayerAction {
+  layer_index: u32,
+  name: String,
+  old_name: OnceLock<String>,
+}
+
+impl RenameLayerAction {
+  pub const fn new(layer_index: u32, name: String) -> Self {
+    Self {
+      layer_index,
+      name,
+      old_name: OnceLock::new(),
+    }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for RenameLayerAction {
+  /// Renames the layer at the given index.
+  ///
+  /// **Emits:**
+  /// - `layers:rename` with `{ layerIndex, name }`.
+  /// - `app:pattern-changed`.
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    let layer = &mut patproj.pattern.layers[self.layer_index as usize];
+
+    if self.old_name.get().is_none() {
+      self.old_name.set(layer.name.clone()).unwrap();
+    }
+
+    layer.name.clone_from(&self.name);
+
+    window.emit(
+      "layers:rename",
+      RenameLayerEvent {
+        layer_index: self.layer_index,
+        name: self.name.clone(),
+      },
+    )?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
+
+    Ok(())
+  }
+
+  /// Restores the previous name of the layer.
+  ///
+  /// **Emits:**
+  /// - `layers:rename` with `{ layerIndex, name }`.
+  /// - `app:pattern-changed`.
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    let old_name = self.old_name.get().unwrap().clone();
+    let layer = &mut patproj.pattern.layers[self.layer_index as usize];
+
+    layer.name.clone_from(&old_name);
+
+    window.emit(
+      "layers:rename",
+      RenameLayerEvent {
+        layer_index: self.layer_index,
+        name: old_name,
+      },
+    )?;
     window.emit("app:pattern-changed", patproj.id.to_string())?;
 
     Ok(())

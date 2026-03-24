@@ -5,7 +5,6 @@ import type { SplitterPanelProps, SplitterPanelEmits, ToolToggleItem } from "@em
 import { useForwardPropsEmits } from "reka-ui";
 import { computed, ref, useTemplateRef, watch } from "vue";
 
-import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
 import { IconSymbols, IconGrid, IconRulers, IconStitchFull, IconStitchSquare, IconStitchMix } from "~/assets/icons/";
 import { CanvasLayers } from "~/components/canvas/";
 import { useI18n } from "~/composables/";
@@ -70,19 +69,11 @@ const showRulers = computed({
   set: patternStore.showRulers,
 });
 
-function handleAddLayer() {
-  const layerCount = patternStore.pattern?.layers.length ?? 0;
-  patternStore.addLayer(`Layer ${layerCount + 1}`);
-}
-
-function handleToggleLayerVisibility(layerIndex: number, visibility: LayerVisibility) {
-  patternStore.updateLayerVisibility(layerIndex, visibility);
-}
-
 async function handleRemoveLayer(index: number) {
   const layer = patternStore.pattern?.layers[index];
+  const layerName = layer!.name || fluent.$t("canvas-layers-placeholder", { index: index + 1 });
 
-  const accepted = await confirm.open(fluent.$ta("canvas-layers-remove-confirm", { name: layer!.name })).result;
+  const accepted = await confirm.open(fluent.$ta("canvas-layers-remove-confirm", { name: layerName })).result;
   if (!accepted) return;
 
   patternStore.removeLayer(index);
@@ -166,9 +157,10 @@ function handlePanelExpand() {
         v-model="editorStateStore.selectedLayerIndex"
         :layers="patternStore.pattern.layers"
         class="grow"
-        @add-layer="handleAddLayer"
+        @add-layer="patternStore.addLayer"
         @remove-layer="handleRemoveLayer"
-        @toggle-layer-visibility="handleToggleLayerVisibility"
+        @rename-layer="patternStore.renameLayer"
+        @toggle-layer-visibility="patternStore.updateLayerVisibility"
       />
     </template>
   </SplitterPanel>

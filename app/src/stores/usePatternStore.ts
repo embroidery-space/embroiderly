@@ -150,13 +150,17 @@ export const usePatternStore = defineStore(
       }
     });
 
-    async function addLayer(name: string) {
+    async function addLayer() {
       if (!pattern.value) return;
-      await PatternApi.addLayer(pattern.value.id, name);
+      await PatternApi.addLayer(pattern.value.id);
     }
     async function removeLayer(layerIndex: number) {
       if (!pattern.value) return;
       await PatternApi.removeLayer(pattern.value.id, layerIndex);
+    }
+    async function renameLayer(layerIndex: number, name: string) {
+      if (!pattern.value) return;
+      await PatternApi.renameLayer(pattern.value.id, layerIndex, name);
     }
     async function updateLayerVisibility(layerIndex: number, visibility: PatternApi.LayerVisibility) {
       if (!pattern.value) return;
@@ -173,6 +177,15 @@ export const usePatternStore = defineStore(
       pattern.value.removeLayerAt(layerIndex);
       triggerRef(pattern);
     });
+    appWindow.listen<{ layerIndex: number; name: string }>(
+      PatternEvent.RenameLayer,
+      ({ payload: { layerIndex, name } }) => {
+        if (!pattern.value) return;
+        const layer = pattern.value.layers[layerIndex];
+        if (layer) layer.name = name;
+        triggerRef(pattern);
+      },
+    );
     appWindow.listen<{ layerIndex: number; visibility: PatternApi.LayerVisibility }>(
       PatternEvent.UpdateLayerVisibility,
       ({ payload: { layerIndex, visibility } }) => {
@@ -272,6 +285,7 @@ export const usePatternStore = defineStore(
       updateGrid,
       addLayer,
       removeLayer,
+      renameLayer,
       updateLayerVisibility,
       addPaletteItem,
       removePaletteItem,

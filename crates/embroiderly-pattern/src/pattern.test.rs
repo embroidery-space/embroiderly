@@ -67,7 +67,7 @@ fn creates_pattern_with_default_layer() {
   let pattern = Pattern::default();
 
   assert_eq!(pattern.layers_count(), 1);
-  assert_eq!(pattern.layers[0].name, "Default");
+  assert!(pattern.layers[0].name.is_empty());
 }
 
 #[test]
@@ -103,6 +103,7 @@ fn panics_when_removing_last_layer() {
 #[test]
 fn moves_layer_from_end_to_beginning() {
   let mut pattern = Pattern::default();
+  pattern.layers[0].name = String::from("Default"); // [Default]
   pattern.add_layer(Layer::new("Layer 2")); // [Layer 2, Default]
   pattern.add_layer(Layer::new("Layer 3")); // [Layer 3, Layer 2, Default]
 
@@ -116,6 +117,7 @@ fn moves_layer_from_end_to_beginning() {
 #[test]
 fn moves_layer_from_beginning_to_end() {
   let mut pattern = Pattern::default();
+  pattern.layers[0].name = String::from("Default"); // [Default]
   pattern.add_layer(Layer::new("Layer 2")); // [Layer 2, Default]
   pattern.add_layer(Layer::new("Layer 3")); // [Layer 3, Layer 2, Default]
 

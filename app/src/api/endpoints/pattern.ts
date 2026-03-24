@@ -108,12 +108,16 @@ export interface LayerVisibility {
   specialstitchesVisible: boolean;
 }
 
-export function addLayer(patternId: string, name: string) {
-  return invoke<void>("add_layer", { name }, { headers: { patternId } });
+export function addLayer(patternId: string) {
+  return invoke<void>("add_layer", undefined, { headers: { patternId } });
 }
 
 export function removeLayer(patternId: string, layerIndex: number) {
   return invoke<void>("remove_layer", { layerIndex }, { headers: { patternId } });
+}
+
+export function renameLayer(patternId: string, layerIndex: number, name: string) {
+  return invoke<void>("rename_layer", { layerIndex, name }, { headers: { patternId } });
 }
 
 export function updateLayerVisibility(patternId: string, layerIndex: number, visibility: LayerVisibility) {

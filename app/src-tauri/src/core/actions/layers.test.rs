@@ -2,7 +2,9 @@ use embroiderly_pattern::PatternProject;
 use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
-use super::{Action, AddLayerAction, LayerVisibility, RemoveLayerAction, UpdateLayerVisibilityAction};
+use super::{
+  Action, AddLayerAction, LayerVisibility, RemoveLayerAction, RenameLayerAction, UpdateLayerVisibilityAction,
+};
 use crate::utils::base64;
 
 fn setup_app() -> App<MockRuntime> {
@@ -21,7 +23,7 @@ fn test_add_layer_action() {
     .unwrap();
 
   let mut patproj = create_pattern_project();
-  let action = AddLayerAction::new("Layer 2".to_string());
+  let action = AddLayerAction::new();
 
   // Test performing the action.
   {
@@ -30,7 +32,7 @@ fn test_add_layer_action() {
       let bytes = base64::decode(base64).unwrap();
       let (index, layer): (u32, embroiderly_pattern::Layer) = borsh::from_slice(&bytes).unwrap();
       assert_eq!(index, 0);
-      assert_eq!(layer.name, "Layer 2");
+      assert_eq!(layer.name, "");
     });
     window.once("app:pattern-changed", {
       let id = patproj.id.to_string();
@@ -42,7 +44,7 @@ fn test_add_layer_action() {
     assert_eq!(patproj.pattern.layers.len(), 1);
     action.perform(&window, &mut patproj).unwrap();
     assert_eq!(patproj.pattern.layers.len(), 2);
-    assert_eq!(patproj.pattern.layers[0].name, "Layer 2");
+    assert_eq!(patproj.pattern.layers[0].name, "");
   }
 
   // Test revoking the action.
@@ -115,6 +117,55 @@ fn test_remove_layer_action() {
     action.revoke(&window, &mut patproj).unwrap();
     assert_eq!(patproj.pattern.layers.len(), 2);
     assert_eq!(patproj.pattern.layers[0].name, "Layer 2");
+  }
+}
+
+#[test]
+fn test_rename_layer_action() {
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = create_pattern_project();
+
+  let action = RenameLayerAction::new(0, "My Layer".to_string());
+
+  // Test performing the action.
+  {
+    window.once("layers:rename", |e| {
+      let payload: serde_json::Value = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(payload["layerIndex"], 0);
+      assert_eq!(payload["name"], "My Layer");
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
+
+    assert_eq!(patproj.pattern.layers[0].name, "");
+    action.perform(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.pattern.layers[0].name, "My Layer");
+  }
+
+  // Test revoking the action.
+  {
+    window.once("layers:rename", |e| {
+      let payload: serde_json::Value = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(payload["layerIndex"], 0);
+      assert_eq!(payload["name"], "");
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.pattern.layers[0].name, "");
   }
 }
 
