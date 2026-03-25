@@ -4,8 +4,6 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.histoire.tsbuildinfo",
 
-    "baseUrl": ".",
-
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
