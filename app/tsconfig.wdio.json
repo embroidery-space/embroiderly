@@ -5,9 +5,11 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.wdio.tsbuildinfo",
 
-    "baseUrl": ".",
-
     "noEmit": true,
+
+    // Since TypeScript 6.0, the default lib is ES2025, but WebdriverIO doesn't support it yet.
+    // Remove "lib" once it does.
+    "lib": ["ES2024"],
 
     "module": "ESNext",
     "moduleResolution": "Bundler",
