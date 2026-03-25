@@ -73,7 +73,7 @@ catalog:
   # Documentation
   "@cssnr/vitepress-swiper": 0.2.1
   "swiper": 12.1.2
-  "vitepress": 2.0.0-alpha.16
+  "vitepress": 2.0.0-alpha.17
   "vitepress-plugin-llms": 1.12.0
 
   # Code Quality

@@ -104,13 +104,13 @@ palette = "0.7.6"
 quantette = "0.5.1"
 
 # Archiving
-zip = { version = "8.2.0", default-features = false, features = ["zstd", "time"] }
+zip = { version = "8.3.1", default-features = false, features = ["zstd", "time"] }
 
 # De/serialization
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.148"
 base64 = "0.22.1"
-borsh = { version = "1.6.0", features = ["derive"] }
+borsh = { version = "1.6.1", features = ["derive"] }
 
 # CLI
 argh = { version = "0.1.18", default-features = false }
