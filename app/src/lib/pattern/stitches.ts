@@ -1,13 +1,11 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 
-import type { Clone, Eq } from "~/types/";
-
 export enum FullStitchKind {
   Full = "Full",
   Petite = "Petite",
 }
-export class FullStitch implements Clone<FullStitch>, Eq<FullStitch> {
+export class FullStitch {
   x: number;
   y: number;
   palindex: number;
@@ -31,7 +29,7 @@ export class FullStitch implements Clone<FullStitch>, Eq<FullStitch> {
     return new FullStitch(this);
   }
 
-  eq(other: FullStitch) {
+  equals(other: FullStitch) {
     return this.y === other.y && this.x === this.y && this.kind === other.kind;
   }
 }
@@ -44,7 +42,7 @@ export enum PartStitchKind {
   Half = "Half",
   Quarter = "Quarter",
 }
-export class PartStitch implements Clone<PartStitch>, Eq<PartStitch> {
+export class PartStitch {
   x: number;
   y: number;
   palindex: number;
@@ -71,7 +69,7 @@ export class PartStitch implements Clone<PartStitch>, Eq<PartStitch> {
     return new PartStitch(this);
   }
 
-  eq(other: PartStitch) {
+  equals(other: PartStitch) {
     return this.y === other.y && this.x === this.y && this.kind === other.kind && this.direction === other.direction;
   }
 }
@@ -80,7 +78,7 @@ export enum LineStitchKind {
   Back = "Back",
   Straight = "Straight",
 }
-export class LineStitch implements Clone<LineStitch>, Eq<LineStitch> {
+export class LineStitch {
   x: [number, number];
   y: [number, number];
   palindex: number;
@@ -104,7 +102,7 @@ export class LineStitch implements Clone<LineStitch>, Eq<LineStitch> {
     return new LineStitch(this);
   }
 
-  eq(other: LineStitch) {
+  equals(other: LineStitch) {
     return this.y[0] === other.y[0] && this.y[1] === other.y[1] && this.x[0] === other.x[0] && this.x[1] === other.x[1];
   }
 }
@@ -113,7 +111,7 @@ export enum NodeStitchKind {
   FrenchKnot = "FrenchKnot",
   Bead = "Bead",
 }
-export class NodeStitch implements Clone<NodeStitch>, Eq<NodeStitch> {
+export class NodeStitch {
   x: number;
   y: number;
   rotated: boolean;
@@ -140,7 +138,7 @@ export class NodeStitch implements Clone<NodeStitch>, Eq<NodeStitch> {
     return new NodeStitch(this);
   }
 
-  eq(other: NodeStitch) {
+  equals(other: NodeStitch) {
     return this.y === other.y && this.x === other.x;
   }
 }

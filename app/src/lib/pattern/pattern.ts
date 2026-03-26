@@ -204,7 +204,7 @@ export class Pattern extends EventTarget {
   removeStitch(stitch: Stitch) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function removeStitchFromArray(array: any[], stitch: any) {
-      const index = array.findIndex((item) => item.eq(stitch));
+      const index = array.findIndex((item) => item.equals(stitch));
       if (index !== -1) array.splice(index, 1);
     }
 

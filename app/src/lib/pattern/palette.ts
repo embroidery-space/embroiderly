@@ -3,8 +3,6 @@ import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 import type { ColorSource } from "pixi.js";
 
-import type { Eq } from "~/types/";
-
 export class PaletteSettings {
   columnsNumber: number;
   colorOnly: boolean;
@@ -119,7 +117,7 @@ export class Symbol {
 }
 
 /** Represents a base palette item. */
-export abstract class BasePaletteItem implements Eq<BasePaletteItem> {
+export abstract class BasePaletteItem {
   /**
    * An index of this palette item in the palette.
    * It is used to correctly identify an element when rendering a palette item using `v-for`.
@@ -155,7 +153,7 @@ export abstract class BasePaletteItem implements Eq<BasePaletteItem> {
   /** Return the color title. */
   abstract getTitle(options?: PaletteSettings): string;
 
-  abstract eq(other: this): boolean;
+  abstract equals(other: this): boolean;
 }
 
 /**
@@ -216,7 +214,7 @@ export class BrandPaletteItem extends BasePaletteItem {
     return components.join(" ");
   }
 
-  eq(other: BrandPaletteItem) {
+  equals(other: BrandPaletteItem) {
     return this.brand === other.brand && this.number === other.number;
   }
 }

@@ -61,7 +61,7 @@ export class FabricColor extends BasePaletteItem {
     return this.name;
   }
 
-  eq(other: FabricColor) {
+  equals(other: FabricColor) {
     return this.name === other.name;
   }
 }
