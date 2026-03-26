@@ -18,7 +18,7 @@ const patternFileStore = usePatternFileStore();
 
 <template>
   <Tabs
-    :model-value="patternStore.pattern?.id"
+    :model-value="patternStore.pattern.id"
     :items="patternFileStore.openedPatterns.map(({ id, title, dirty }) => ({ label: title, value: id, dirty }))"
     :content="false"
     color="neutral"
@@ -54,8 +54,8 @@ const patternFileStore = usePatternFileStore();
         :icon="IconClose"
         class="p-0"
         :class="{
-          'text-inverted': patternStore.pattern?.id === item.value,
-          'text-default': patternStore.pattern?.id !== item.value,
+          'text-inverted': patternStore.pattern.id === item.value,
+          'text-default': patternStore.pattern.id !== item.value,
         }"
         @click.stop="patternFileStore.closePattern(item.value as string)"
       />

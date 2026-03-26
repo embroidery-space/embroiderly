@@ -50,7 +50,7 @@ catalog:
   "pixi.js": 8.17.1
 
   # De/serialization
-  "@zorsh/zorsh": 0.4.0
+  "@zorsh/zorsh": 0.5.0
   "base64-js": 1.5.1
 
   # Telemetry

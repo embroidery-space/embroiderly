@@ -175,7 +175,6 @@ describe("PaletteItem", () => {
   describe("titles", () => {
     test("empty", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: true,
         showColorBrands: false,
         showColorNumbers: false,
@@ -186,7 +185,6 @@ describe("PaletteItem", () => {
 
     test("brand only", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: true,
         showColorNumbers: false,
@@ -200,7 +198,6 @@ describe("PaletteItem", () => {
 
     test("number only", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: false,
         showColorNumbers: true,
@@ -214,7 +211,6 @@ describe("PaletteItem", () => {
 
     test("name only", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: false,
         showColorNumbers: false,
@@ -228,7 +224,6 @@ describe("PaletteItem", () => {
 
     test("brand and number", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: true,
         showColorNumbers: true,
@@ -242,7 +237,6 @@ describe("PaletteItem", () => {
 
     test("brand and name", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: true,
         showColorNumbers: false,
@@ -256,7 +250,6 @@ describe("PaletteItem", () => {
 
     test("number and name", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: false,
         showColorNumbers: true,
@@ -279,7 +272,6 @@ describe("Blend", () => {
   describe("titles", () => {
     test("empty", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: false,
         showColorNumbers: false,
@@ -290,7 +282,6 @@ describe("Blend", () => {
 
     test("brand only", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: true,
         showColorNumbers: false,
@@ -302,7 +293,6 @@ describe("Blend", () => {
 
     test("number only", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: false,
         showColorNumbers: true,
@@ -314,7 +304,6 @@ describe("Blend", () => {
 
     test("brand and number", () => {
       const options = new PaletteSettings({
-        ...PaletteSettings.default(),
         colorOnly: false,
         showColorBrands: true,
         showColorNumbers: true,

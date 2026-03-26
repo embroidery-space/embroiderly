@@ -32,7 +32,7 @@ const toast = useToast();
 const panel = useTemplateRef("panel");
 
 const collapsed = ref(false);
-const disabled = computed(() => !patternStore.pattern);
+const disabled = computed(() => patternStore.pattern.isNil);
 
 const sectionVisibility = reactive({
   paletteDisplaySettings: false,
@@ -40,13 +40,13 @@ const sectionVisibility = reactive({
   stitchSymbols: false,
 });
 
-const paletteDisplaySettings = ref(PaletteSettings.default());
+const paletteDisplaySettings = ref(new PaletteSettings());
 const effectiveDisplaySettings = computed(() => {
   if (collapsed.value) return { ...paletteDisplaySettings.value, columnsNumber: 1, colorOnly: true };
   return paletteDisplaySettings.value;
 });
 watch(
-  () => patternStore.pattern?.paletteDisplaySettings,
+  () => patternStore.pattern.paletteDisplaySettings,
   (settings) => {
     if (settings) paletteDisplaySettings.value = settings;
   },
@@ -183,7 +183,7 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
   ];
 });
 const paletteEditingContextMenuOptions = computed<ContextMenuItem[][]>(() => {
-  const palsize = patternStore.pattern?.palette.length ?? 0;
+  const palsize = patternStore.pattern.palette.length ?? 0;
   return [
     palettePanelsMenuOptions.value,
     [
@@ -277,7 +277,7 @@ function handleSetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePo
   }
 
   // Check if this symbol is already assigned to another palette item.
-  const existingItem = patternStore.pattern?.palette.items.find(
+  const existingItem = patternStore.pattern.palette.items.find(
     (pi) => pi.symbol?.font === fontFamily && pi.symbol?.code === codePoint,
   );
   if (existingItem && existingItem.index !== editorStateStore.selectedPaletteItemIndex) {
@@ -291,7 +291,7 @@ function handleSetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePo
 
 function handleUnsetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePoint: number }) {
   // Find the palette item that has this symbol.
-  const paletteItem = patternStore.pattern?.palette.items.find(
+  const paletteItem = patternStore.pattern.palette.items.find(
     (pi) => pi.symbol?.font === fontFamily && pi.symbol?.code === codePoint,
   );
   if (!paletteItem) return;
@@ -346,7 +346,7 @@ async function updatePaletteDisplaySettings() {
     >
       <PaletteList
         v-model="editorStateStore.selectedPaletteItemIndex"
-        :options="patternStore.pattern?.palette.itemsInVisualOrder"
+        :options="patternStore.pattern.palette.itemsInVisualOrder"
         :option-value="(pi) => pi.index"
         :display-settings="effectiveDisplaySettings"
         :disabled="disabled"
@@ -377,7 +377,7 @@ async function updatePaletteDisplaySettings() {
             @contextmenu.stop.prevent
           >
             <span v-show="!collapsed" class="text-sm text-nowrap">
-              {{ $t("palette-size", { size: patternStore.pattern?.palette.length ?? 0 }) }}
+              {{ $t("palette-size", { size: patternStore.pattern.palette.length ?? 0 }) }}
             </span>
 
             <ButtonIcon
@@ -427,7 +427,7 @@ async function updatePaletteDisplaySettings() {
     />
 
     <PaletteCatalog
-      v-if="patternStore.pattern?.palette && sectionVisibility.paletteCatalog"
+      v-if="patternStore.pattern.palette && sectionVisibility.paletteCatalog"
       :palette="patternStore.pattern.palette.items"
       class="min-w-max border-l border-default"
       @close="sectionVisibility.paletteCatalog = false"
@@ -436,7 +436,7 @@ async function updatePaletteDisplaySettings() {
     />
 
     <StitchSymbols
-      v-if="patternStore.pattern?.palette && sectionVisibility.stitchSymbols"
+      v-if="patternStore.pattern.palette && sectionVisibility.stitchSymbols"
       :symbols="
         patternStore.pattern.palette.items
           .filter((pi) => pi.symbol !== undefined)

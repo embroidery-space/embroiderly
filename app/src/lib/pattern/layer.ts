@@ -28,28 +28,28 @@ export class Layer {
   specialstitches: SpecialStitch[];
   specialstitchesVisible: boolean;
 
-  constructor(data: b.infer<typeof Layer.schema>) {
-    this.name = data.name;
-    this.visible = data.visible;
+  constructor(data?: Partial<b.infer<typeof Layer.schema>>) {
+    this.name = data?.name ?? "";
+    this.visible = data?.visible ?? true;
 
-    this.fullstitches = data.fullstitches.map((s) => new FullStitch(s));
-    this.fullstitchesVisible = data.fullstitchesVisible;
-    this.petitestitchesVisible = data.petitestitchesVisible;
+    this.fullstitches = data?.fullstitches?.map((s) => new FullStitch(s)) ?? [];
+    this.fullstitchesVisible = data?.fullstitchesVisible ?? true;
+    this.petitestitchesVisible = data?.petitestitchesVisible ?? true;
 
-    this.partstitches = data.partstitches.map((s) => new PartStitch(s));
-    this.halfstitchesVisible = data.halfstitchesVisible;
-    this.quarterstitchesVisible = data.quarterstitchesVisible;
+    this.partstitches = data?.partstitches?.map((s) => new PartStitch(s)) ?? [];
+    this.halfstitchesVisible = data?.halfstitchesVisible ?? true;
+    this.quarterstitchesVisible = data?.quarterstitchesVisible ?? true;
 
-    this.linestitches = data.linestitches.map((s) => new LineStitch(s));
-    this.backstitchesVisible = data.backstitchesVisible;
-    this.straightstitchesVisible = data.straightstitchesVisible;
+    this.linestitches = data?.linestitches?.map((s) => new LineStitch(s)) ?? [];
+    this.backstitchesVisible = data?.backstitchesVisible ?? true;
+    this.straightstitchesVisible = data?.straightstitchesVisible ?? true;
 
-    this.nodestitches = data.nodestitches.map((s) => new NodeStitch(s));
-    this.frenchknotsVisible = data.frenchknotsVisible;
-    this.beadsVisible = data.beadsVisible;
+    this.nodestitches = data?.nodestitches?.map((s) => new NodeStitch(s)) ?? [];
+    this.frenchknotsVisible = data?.frenchknotsVisible ?? true;
+    this.beadsVisible = data?.beadsVisible ?? true;
 
-    this.specialstitches = data.specialstitches.map((s) => new SpecialStitch(s));
-    this.specialstitchesVisible = data.specialstitchesVisible;
+    this.specialstitches = data?.specialstitches?.map((s) => new SpecialStitch(s)) ?? [];
+    this.specialstitchesVisible = data?.specialstitchesVisible ?? true;
   }
 
   static readonly schema = b.struct({

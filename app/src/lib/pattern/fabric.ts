@@ -13,13 +13,13 @@ export class Fabric {
   name: string;
   color: Color;
 
-  constructor(data: Fabric | b.infer<typeof Fabric.schema>) {
-    this.width = data.width;
-    this.height = data.height;
-    this.spi = data.spi;
-    this.kind = data.kind;
-    this.name = data.name;
-    this.color = new Color(data.color);
+  constructor(data?: Fabric | b.infer<typeof Fabric.schema>) {
+    this.width = data?.width ?? 100;
+    this.height = data?.height ?? 100;
+    this.spi = data?.spi ?? [14, 14];
+    this.kind = data?.kind ?? "Aida";
+    this.name = data?.name ?? "White";
+    this.color = new Color(data?.color ?? "FFFFFF");
   }
 
   static readonly schema = b.struct({
@@ -38,10 +38,6 @@ export class Fabric {
 
   static serialize(data: Fabric) {
     return Fabric.schema.serialize({ ...data, color: data.color.toHex().slice(1).toUpperCase() });
-  }
-
-  static default() {
-    return new Fabric({ width: 100, height: 100, spi: [14, 14], name: "White", color: "FFFFFF", kind: "Aida" });
   }
 }
 

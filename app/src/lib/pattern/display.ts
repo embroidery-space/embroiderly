@@ -5,9 +5,9 @@ export class GridLine {
   color: string;
   thickness: number;
 
-  constructor(data: b.infer<typeof GridLine.schema>) {
-    this.color = data.color;
-    this.thickness = data.thickness;
+  constructor(data?: b.infer<typeof GridLine.schema>) {
+    this.color = data?.color ?? "808080";
+    this.thickness = data?.thickness ?? 1;
   }
 
   static readonly schema = b.struct({
@@ -21,10 +21,10 @@ export class Grid {
   minorLines: GridLine;
   majorLines: GridLine;
 
-  constructor(data: b.infer<typeof Grid.schema>) {
-    this.majorLinesInterval = data.majorLinesInterval;
-    this.minorLines = new GridLine(data.minorLines);
-    this.majorLines = new GridLine(data.majorLines);
+  constructor(data?: b.infer<typeof Grid.schema>) {
+    this.majorLinesInterval = data?.majorLinesInterval ?? 10;
+    this.minorLines = new GridLine(data?.minorLines);
+    this.majorLines = new GridLine(data?.majorLines);
   }
 
   static readonly schema = b.struct({
@@ -56,12 +56,12 @@ export class DisplaySettings {
   showGrid: boolean;
   showRulers: boolean;
 
-  constructor(data: b.infer<typeof DisplaySettings.schema>) {
-    this.grid = new Grid(data.grid);
-    this.displayMode = data.displayMode;
-    this.showSymbols = data.showSymbols;
-    this.showGrid = data.showGrid;
-    this.showRulers = data.showRulers;
+  constructor(data?: b.infer<typeof DisplaySettings.schema>) {
+    this.grid = new Grid(data?.grid);
+    this.displayMode = data?.displayMode ?? DisplayMode.Solid;
+    this.showSymbols = data?.showSymbols ?? false;
+    this.showGrid = data?.showGrid ?? true;
+    this.showRulers = data?.showRulers ?? true;
   }
 
   static readonly schema = b.struct({

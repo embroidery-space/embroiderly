@@ -31,8 +31,12 @@ const confirm = useConfirm();
 const panel = useTemplateRef("panel");
 
 const collapsed = ref(false);
-const disabled = computed(() => patternStore.pattern === undefined);
+const disabled = computed(() => patternStore.pattern.isNil);
 
+const displayMode = computed({
+  get: () => (patternStore.pattern.isNil ? undefined : patternStore.pattern.displayMode),
+  set: patternStore.setDisplayMode,
+});
 const displayModeOptions = computed<ToolToggleItem[]>(() => [
   {
     icon: IconStitchMix,
@@ -55,22 +59,22 @@ const displayModeOptions = computed<ToolToggleItem[]>(() => [
 ]);
 
 const showSymbols = computed({
-  get: () => patternStore.pattern?.showSymbols ?? false,
+  get: () => (patternStore.pattern.isNil ? undefined : patternStore.pattern.showSymbols),
   set: patternStore.showSymbols,
 });
 
 const showGrid = computed({
-  get: () => patternStore.pattern?.showGrid ?? true,
+  get: () => (patternStore.pattern.isNil ? undefined : patternStore.pattern.showGrid),
   set: patternStore.showGrid,
 });
 
 const showRulers = computed({
-  get: () => patternStore.pattern?.showRulers ?? true,
+  get: () => (patternStore.pattern.isNil ? undefined : patternStore.pattern.showRulers),
   set: patternStore.showRulers,
 });
 
 async function handleRemoveLayer(index: number) {
-  const layer = patternStore.pattern?.layers[index];
+  const layer = patternStore.pattern.layers[index];
   const layerName = layer!.name || fluent.$t("canvas-layers-placeholder", { index: index + 1 });
 
   const accepted = await confirm.open(fluent.$ta("canvas-layers-remove-confirm", { name: layerName })).result;
@@ -111,14 +115,13 @@ function handlePanelExpand() {
     @resize="editorStateStore.canvasPanelSize = $event"
   >
     <ToolToggleGroup
-      :model-value="patternStore.pattern?.displayMode"
+      v-model="displayMode"
       :items="displayModeOptions"
       :disabled="disabled"
       :delay-duration="200"
       :tooltip-options="{ content: { side: 'left' } }"
       orientation="vertical"
       class="flex flex-col gap-1"
-      @update:model-value="patternStore.setDisplayMode($event as DisplayMode)"
     />
 
     <Separator />
@@ -151,7 +154,7 @@ function handlePanelExpand() {
       :tooltip-options="{ content: { side: 'left' } }"
     />
 
-    <template v-if="!collapsed && patternStore.pattern?.layers.length">
+    <template v-if="!collapsed && patternStore.pattern.layers.length">
       <Separator />
       <CanvasLayers
         v-model="editorStateStore.selectedLayerIndex"

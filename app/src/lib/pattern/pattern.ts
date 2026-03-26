@@ -1,6 +1,6 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
-import { stringify as stringifyUuid } from "uuid";
+import { NIL as NIL_UUID, stringify as stringifyUuid } from "uuid";
 
 import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
 import { Fabric } from "./fabric.ts";
@@ -17,11 +17,11 @@ export class PatternInfo {
   copyright: string;
   description: string;
 
-  constructor(data: b.infer<typeof PatternInfo.schema>) {
-    this.title = data.title;
-    this.author = data.author;
-    this.copyright = data.copyright;
-    this.description = data.description;
+  constructor(data?: b.infer<typeof PatternInfo.schema>) {
+    this.title = data?.title ?? "";
+    this.author = data?.author ?? "";
+    this.copyright = data?.copyright ?? "";
+    this.description = data?.description ?? "";
   }
 
   static readonly schema = b.struct({
@@ -64,23 +64,41 @@ export class Pattern extends EventTarget {
 
   #effectiveDisplayMode: DisplayMode | undefined;
 
-  constructor(data: b.infer<typeof Pattern.schema>) {
+  constructor(data?: b.infer<typeof Pattern.schema>) {
     super();
 
-    this.id = stringifyUuid(new Uint8Array(data.id));
+    if (data) {
+      this.id = stringifyUuid(new Uint8Array(data.id));
 
-    if (data.referenceImage) this.#referenceImage = new ReferenceImage(data.referenceImage);
+      if (data.referenceImage) this.#referenceImage = new ReferenceImage(data.referenceImage);
 
-    this.#info = new PatternInfo(data.info);
-    this.#fabric = new Fabric(data.fabric);
-    this.#palette = new Palette(data.palette);
-    this.#layers = data.layers.map((layer) => new Layer(layer));
-    this.#specialStitchModels = data.specialStitchModels.map((model) => new SpecialStitchModel(model));
+      this.#info = new PatternInfo(data.info);
+      this.#fabric = new Fabric(data.fabric);
+      this.#palette = new Palette(data.palette);
+      this.#layers = data.layers.map((layer) => new Layer(layer));
+      this.#specialStitchModels = data.specialStitchModels.map((model) => new SpecialStitchModel(model));
 
-    this.#displaySettings = new DisplaySettings(data.displaySettings);
-    this.#publishSettings = new PublishSettings(data.publishSettings);
+      this.#displaySettings = new DisplaySettings(data.displaySettings);
+      this.#publishSettings = new PublishSettings(data.publishSettings);
+    } else {
+      this.id = NIL_UUID;
+
+      this.#info = new PatternInfo();
+      this.#fabric = new Fabric();
+      this.#palette = new Palette();
+      this.#layers = [new Layer()];
+      this.#specialStitchModels = [];
+
+      this.#displaySettings = new DisplaySettings();
+      this.#publishSettings = new PublishSettings();
+    }
 
     this.#effectiveDisplayMode = this.#displaySettings.displayMode;
+  }
+
+  /** Returns `true` if the pattern is a new, empty pattern. */
+  get isNil(): boolean {
+    return this.id === NIL_UUID;
   }
 
   static readonly schema = b.struct({
