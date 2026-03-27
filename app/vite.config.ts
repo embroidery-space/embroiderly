@@ -15,6 +15,7 @@ import fluentMerge from "./vite-plugins/fluent-merge";
 
 const isCI = process.env.CI === "true";
 const isDebug = process.env.TAURI_ENV_DEBUG === "true";
+const isTest = !!process.env.VITEST;
 
 export default defineConfig({
   plugins: [
@@ -28,7 +29,7 @@ export default defineConfig({
     }),
     tailwindcss(),
     fluentMerge({ localesDir: "./src/assets/locales/" }),
-    vueDevTools(),
+    !isTest && vueDevTools(),
   ],
   clearScreen: false,
   envPrefix: ["VITE_", "TAURI_ENV_"],
@@ -69,7 +70,7 @@ export default defineConfig({
         test: {
           name: "components",
           include: ["./src/components/**/*.spec.ts"],
-          setupFiles: ["./tests/components/test-setup.ts", "vitest-browser-vue"],
+          setupFiles: ["vitest-browser-vue", "./tests/components/test-setup.ts"],
           browser: {
             enabled: true,
             headless: isCI,
