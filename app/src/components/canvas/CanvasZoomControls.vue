@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
 import { Button, ButtonIcon, DropdownMenu, FormFieldGroup, InputNumber, Slider } from "@embroiderly/ui";
 import type { DropdownMenuItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
 import { IconChevronDown, IconZoomIn, IconZoomOut } from "~/assets/icons/";
-import { useI18n } from "~/composables/";
+import { useI18n, useShortcuts, extractShortcuts } from "~/composables/";
 import type { ZoomState } from "~/lib/pixi/";
 
 const {
@@ -25,7 +24,7 @@ const emit = defineEmits<{
 const { fluent } = useI18n();
 
 const zoomOptions = computed<DropdownMenuItem[]>(() => [
-  { label: fluent.$t("canvas-zoom-fit"), shortcut: "Ctrl+0", onSelect: () => emit("update:model-value", "fit") },
+  { label: fluent.$t("canvas-zoom-fit"), shortcut: "Control+0", onSelect: () => emit("update:model-value", "fit") },
   { label: fluent.$t("canvas-zoom-fit-width"), onSelect: () => emit("update:model-value", "fit-width") },
   { label: fluent.$t("canvas-zoom-fit-height"), onSelect: () => emit("update:model-value", "fit-height") },
 ]);
@@ -41,8 +40,8 @@ function zoomOut() {
 useShortcuts(extractShortcuts(zoomOptions));
 useShortcuts({
   // Use `=` instead of `+` for defining a shortcut since `+` is triggered by the `Shift` key.
-  "ctrl+=": zoomIn,
-  "ctrl+-": zoomOut,
+  "Control+=": zoomIn,
+  "Control+-": zoomOut,
 });
 </script>
 
@@ -73,7 +72,7 @@ useShortcuts({
         :icon="IconZoomOut"
         size="sm"
         :tooltip="$t('canvas-zoom-out')"
-        shortcut="Ctrl+-"
+        shortcut="Control+-"
         :delay-duration="200"
         @click="zoomOut"
       />
@@ -94,7 +93,7 @@ useShortcuts({
         :icon="IconZoomIn"
         size="sm"
         :tooltip="$t('canvas-zoom-in')"
-        shortcut="Ctrl++"
+        shortcut="Control++"
         :delay-duration="200"
         @click="zoomIn"
       />

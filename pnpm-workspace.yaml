@@ -22,6 +22,7 @@ catalog:
   "tauri-plugin-better-posthog": 0.1.6
 
   # Vue
+  "@tanstack/vue-hotkeys": 0.8.3
   "@vueuse/core": 14.2.1
   "@vueuse/components": 14.2.1
   "@vueuse/integrations": 14.2.1
