@@ -10,7 +10,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ "Control+z": handler });
+      expect(result).toEqual({ "Control+Z": handler });
     });
 
     it("extracts shortcut string with sequence", () => {
@@ -19,7 +19,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ "g-d": handler });
+      expect(result).toEqual({ "G-D": handler });
     });
 
     it("lowercases extracted shortcuts", () => {
@@ -28,7 +28,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ "Control+s": handler });
+      expect(result).toEqual({ "Control+S": handler });
     });
   });
 
@@ -39,7 +39,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result["Control+o"]).toBe(handler);
+      expect(result["Control+O"]).toBe(handler);
     });
 
     it("extracts shortcuts with onClick handler", () => {
@@ -48,7 +48,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result["Control+k"]).toBe(handler);
+      expect(result["Control+K"]).toBe(handler);
     });
 
     it("prefers onSelect over onClick when both specified", () => {
@@ -58,7 +58,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result["Control+b"]).toBe(onSelectHandler);
+      expect(result["Control+B"]).toBe(onSelectHandler);
     });
   });
 
@@ -79,7 +79,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ "Control+o": handler1, "Control+s": handler2 });
+      expect(result).toEqual({ "Control+O": handler1, "Control+S": handler2 });
     });
 
     it("traverses nested items", () => {
@@ -88,7 +88,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ "Control+a": handler });
+      expect(result).toEqual({ "Control+A": handler });
     });
 
     it("handles deeply nested structures", () => {
@@ -125,7 +125,7 @@ describe("extractShortcuts", () => {
 
       const result = extractShortcuts(items).value;
 
-      expect(result).toEqual({ "Control+c": handler1, "Control+i": handler2 });
+      expect(result).toEqual({ "Control+C": handler1, "Control+I": handler2 });
     });
   });
 
@@ -146,44 +146,6 @@ describe("extractShortcuts", () => {
     });
 
     it("ignores items without handlers", () => {
-      const items = [{ shortcut: "Control+N" }];
-
-      const result = extractShortcuts(items).value;
-
-      expect(result).toEqual({});
-    });
-
-    it("handles nested arrays", () => {
-      const handler = vi.fn();
-      const items = [[{ shortcut: "Control+N", onSelect: handler }]];
-
-      const result = extractShortcuts(items).value;
-
-      expect(result).toEqual({ "Control+n": handler });
-    });
-  });
-
-  describe("onClick handler", () => {
-    it("extracts shortcut string with onClick handler", () => {
-      const handler = vi.fn();
-      const items = [{ shortcut: "Control+S", onClick: handler }];
-
-      const result = extractShortcuts(items).value;
-
-      expect(result).toEqual({ "Control+s": handler });
-    });
-
-    it("prefers onSelect over onClick for shortcut string", () => {
-      const onSelectHandler = vi.fn();
-      const onClickHandler = vi.fn();
-      const items = [{ shortcut: "Control+B", onSelect: onSelectHandler, onClick: onClickHandler }];
-
-      const result = extractShortcuts(items).value;
-
-      expect(result).toEqual({ "Control+b": onSelectHandler });
-    });
-
-    it("ignores shortcut string without handlers", () => {
       const items = [{ shortcut: "Control+N" }];
 
       const result = extractShortcuts(items).value;

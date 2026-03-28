@@ -49,7 +49,7 @@ export function extractShortcuts(items: MaybeRefOrGetter<any[] | any[][]>) {
     function traverse(items: any[]) {
       for (const item of items) {
         if (item.shortcut && (item.onSelect || item.onClick)) {
-          shortcuts[item.shortcut.toLowerCase()] = item.onSelect || item.onClick;
+          shortcuts[item.shortcut] = item.onSelect || item.onClick;
         }
 
         if (item.children) traverse(item.children.flat());
