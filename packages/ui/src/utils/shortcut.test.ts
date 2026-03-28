@@ -8,7 +8,7 @@ describe("parseShortcutDisplay", () => {
   });
 
   it.each([
-    ["Ctrl+Z", ["Ctrl+Z"]],
+    ["Control+Z", ["Ctrl+Z"]],
     ["Ctrl+Shift+S", ["Ctrl+Shift+S"]],
     ["Shift+Ctrl+Z", ["Ctrl+Shift+Z"]],
     ["Meta+Shift+Alt+Ctrl+X", ["Ctrl+Alt+Shift+Meta+X"]],
