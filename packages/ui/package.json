@@ -45,7 +45,6 @@
     "wrangler": "catalog:"
   },
   "peerDependencies": {
-    "@embroiderly/shortcuts": "workspace:",
     "@vueuse/core": "catalog:",
     "reka-ui": "catalog:",
     "tailwindcss": "catalog:",

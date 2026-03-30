@@ -28,7 +28,6 @@ clean-fe:
 
     rm -rf docs/node_modules/ docs/dist/ docs/cache/
 
-    rm -rf packages/shortcuts/node_modules/ packages/shortcuts/dist/
     rm -rf packages/ui/node_modules/ packages/ui/dist/
 
 [group("cleaning")]

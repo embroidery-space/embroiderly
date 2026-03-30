@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { useShortcuts } from "@embroiderly/shortcuts";
 import { BlockUI, Splitter, SplitterPanel, useConfirm, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 
 import { StartupApi } from "~/api/";
-import { useDragDrop, useI18n, useTauriListener } from "~/composables/";
+import { useDragDrop, useI18n, useTauriListener, useShortcuts } from "~/composables/";
 import { usePercentOfContainer } from "~/composables/utils/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
@@ -84,10 +83,10 @@ useTauriListener(
 );
 
 useShortcuts({
-  "Ctrl+Z": () => patternStore.undo(),
-  "Ctrl+Shift+Z": () => patternStore.undo({ single: true }),
-  "Ctrl+Y": () => patternStore.redo(),
-  "Ctrl+Shift+Y": () => patternStore.redo({ single: true }),
+  "Control+Z": () => patternStore.undo(),
+  "Control+Shift+Z": () => patternStore.undo({ single: true }),
+  "Control+Y": () => patternStore.redo(),
+  "Control+Shift+Y": () => patternStore.redo({ single: true }),
 });
 
 onMounted(async () => {

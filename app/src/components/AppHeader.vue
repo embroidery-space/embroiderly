@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useShortcuts, extractShortcuts } from "@embroiderly/shortcuts";
 import { ButtonIcon, DropdownMenu, Menubar, Separator, useConfirm } from "@embroiderly/ui";
 import type { DropdownMenuItem, MenubarItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
@@ -10,7 +9,7 @@ import { computed } from "vue";
 
 import { FilesApi } from "~/api/";
 import { IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
-import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
+import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
@@ -38,7 +37,7 @@ const menus = computed<MenubarMenu[]>(() => [
       [
         {
           label: fluent.$t("app-menu-file-open"),
-          shortcut: "Ctrl+O",
+          shortcut: "Control+O",
           async onSelect() {
             const patternId = await patternFileStore.openPattern();
             if (patternId) patternFileStore.switchPattern(patternId);
@@ -46,7 +45,7 @@ const menus = computed<MenubarMenu[]>(() => [
         },
         {
           label: fluent.$t("app-menu-file-create"),
-          shortcut: "Ctrl+N",
+          shortcut: "Control+N",
           onSelect() {
             modals.patternCreationModal.open({
               fabric: new Fabric(),
@@ -60,13 +59,13 @@ const menus = computed<MenubarMenu[]>(() => [
       [
         {
           label: fluent.$t("app-menu-file-save"),
-          shortcut: "Ctrl+S",
+          shortcut: "Control+S",
           disabled: patternStore.pattern.isNil,
           onSelect: () => patternFileStore.savePattern(patternStore.pattern.id),
         },
         {
           label: fluent.$t("app-menu-file-save-as"),
-          shortcut: "Ctrl+Shift+S",
+          shortcut: "Control+Shift+S",
           disabled: patternStore.pattern.isNil,
           onSelect: () => patternFileStore.savePattern(patternStore.pattern.id, true),
         },
@@ -128,7 +127,7 @@ const menus = computed<MenubarMenu[]>(() => [
       [
         {
           label: fluent.$t("app-menu-file-close"),
-          shortcut: "Ctrl+W",
+          shortcut: "Control+W",
           disabled: patternStore.pattern.isNil,
           onSelect: () => patternFileStore.closePattern(patternStore.pattern.id),
         },
@@ -136,7 +135,7 @@ const menus = computed<MenubarMenu[]>(() => [
       [
         {
           label: fluent.$t("app-menu-file-quit"),
-          shortcut: "Ctrl+Q",
+          shortcut: "Control+Q",
           onSelect: () => appWindow.close(),
         },
       ],
@@ -191,7 +190,7 @@ const menus = computed<MenubarMenu[]>(() => [
   {
     label: fluent.$t("app-menu-tools"),
     items: [
-      [{ label: fluent.$t("settings"), shortcut: "Ctrl+,", onSelect: () => settingsStore.openSettingsModal() }],
+      [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
       [
         {
           label: fluent.$t("updater-check-for-updates"),
@@ -231,7 +230,7 @@ const menus = computed<MenubarMenu[]>(() => [
 useShortcuts(extractShortcuts(() => menus.value.flatMap((menu) => menu.items as MenubarItem[][])));
 
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
-  [{ label: fluent.$t("settings"), shortcut: "Ctrl+,", onSelect: () => settingsStore.openSettingsModal() }],
+  [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
   [
     {
       label: fluent.$t("updater-check-for-updates"),
@@ -268,7 +267,7 @@ async function showSystemInfo() {
             color="neutral"
             variant="ghost"
             :tooltip="$t('history-undo')"
-            shortcut="Ctrl+Z"
+            shortcut="Control+Z"
             @click="() => patternStore.undo()"
           />
           <ButtonIcon
@@ -277,7 +276,7 @@ async function showSystemInfo() {
             color="neutral"
             variant="ghost"
             :tooltip="$t('history-redo')"
-            shortcut="Ctrl+Y"
+            shortcut="Control+Y"
             @click="() => patternStore.redo()"
           />
           <Separator orientation="vertical" />
