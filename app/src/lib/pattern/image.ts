@@ -48,7 +48,7 @@ export class ReferenceImage extends Blob {
   }
 
   static readonly schema = b.struct({
-    content: b.vec(b.u8()),
+    content: b.bytes(),
     settings: ReferenceImageSettings.schema,
   });
 
