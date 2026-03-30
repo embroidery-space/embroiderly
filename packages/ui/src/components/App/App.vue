@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { ShortcutsProvider } from "@embroiderly/shortcuts";
-import type { ShortcutsProviderProps } from "@embroiderly/shortcuts";
-
 import { reactivePick } from "@vueuse/core";
 import { ConfigProvider, TooltipProvider, useForwardProps } from "reka-ui";
 import type { ConfigProviderProps, TooltipProviderProps } from "reka-ui";
@@ -23,8 +20,6 @@ export interface AppProps extends Omit<ConfigProviderProps, "dir" | "locale" | "
   tooltip?: TooltipProviderProps;
   /** Toast options. Pass `null` to disable toasts. */
   toaster?: ToasterProps | null;
-  /** Shortcut options. Pass `null` to disable shortcuts. */
-  shortcuts?: ShortcutsProviderProps | null;
 
   /**
    * The locale to use for the application.
@@ -50,7 +45,6 @@ defineSlots<AppSlots>();
 const configProps = useForwardProps(reactivePick(props, "scrollBody"));
 const tooltipProps = toRef(() => props.tooltip);
 const toasterProps = toRef(() => props.toaster);
-const shortcutsProps = toRef(() => props.shortcuts);
 
 const locale = toRef(() => locales[props.locale]!);
 provide(localeInjectionKey, locale);
@@ -66,17 +60,9 @@ provide(PORTAL_TARGET_INJECTION_KEY, portal);
   <ConfigProvider v-bind="configProps" :dir="locale.dir" :locale="locale.code" :use-id="useId">
     <TooltipProvider v-bind="tooltipProps">
       <Toaster v-if="toasterProps !== null" v-bind="toasterProps">
-        <ShortcutsProvider v-if="shortcutsProps !== null" v-bind="shortcutsProps">
-          <slot />
-        </ShortcutsProvider>
-        <slot v-else />
+        <slot />
       </Toaster>
-      <template v-else>
-        <ShortcutsProvider v-if="shortcutsProps !== null" v-bind="shortcutsProps">
-          <slot />
-        </ShortcutsProvider>
-        <slot v-else />
-      </template>
+      <slot v-else />
 
       <OverlayProvider />
     </TooltipProvider>

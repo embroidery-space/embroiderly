@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useShortcuts, extractShortcuts, ShortcutsSeparator } from "@embroiderly/shortcuts";
 import { Separator, ToolSelect } from "@embroiderly/ui";
 import type { ToolSelectItem } from "@embroiderly/ui";
 
@@ -26,7 +25,7 @@ import {
   IconStitchQuarterTR,
   IconStitchStraight,
 } from "~/assets/icons/";
-import { useI18n } from "~/composables/";
+import { useI18n, useShortcuts, extractShortcuts } from "~/composables/";
 import { tools } from "~/lib/tools/";
 import type { PatternEditorTool } from "~/lib/tools/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
@@ -191,23 +190,21 @@ const cursor = computed<ToolSelectItem[]>(() => [
 
 // Register keyboard shortcuts for all tool groups.
 useShortcuts(
-  extractShortcuts(
-    () =>
-      [
-        ...fullstitches.value,
-        ...petitestitches.value,
-        ...halfstitches.value,
-        ...quarterstitches.value,
-        ...linestitches.value,
-        ...nodestitches.value,
-        ...cursor.value,
-      ].map((item) => ({
-        shortcut: item.shortcut,
-        onSelect() {
-          editorStateStore.selectedTool = item.value as PatternEditorTool;
-        },
-      })),
-    ShortcutsSeparator.KeySequence,
+  extractShortcuts(() =>
+    [
+      ...fullstitches.value,
+      ...petitestitches.value,
+      ...halfstitches.value,
+      ...quarterstitches.value,
+      ...linestitches.value,
+      ...nodestitches.value,
+      ...cursor.value,
+    ].map((item) => ({
+      shortcut: item.shortcut,
+      onSelect() {
+        editorStateStore.selectedTool = item.value as PatternEditorTool;
+      },
+    })),
   ),
 );
 
