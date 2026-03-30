@@ -130,7 +130,7 @@ better-posthog = "0.2.5"
 sentry = "0.47.0"
 
 # Identification
-uuid = { version = "1.22.0", features = ["v4", "v7"] }
+uuid = { version = "1.23.0", features = ["v4", "v7"] }
 
 # File system utilities
 tempfile = "3.27.0"
@@ -146,7 +146,7 @@ rstest = "0.26.1"
 # Other
 alphanumeric-sort = "1.5.5"
 async-trait = "0.1.89"
-ordered-float = "5.1.0"
+ordered-float = "5.2.0"
 dotenvy = "0.15.7"
 dyn-clone = "1.0.20"
 paste = "1.0.15"
