@@ -323,3 +323,57 @@ impl<R: tauri::Runtime> Action<R> for UpdateLayerVisibilityAction {
     Ok(())
   }
 }
+
+#[derive(Clone, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+struct MoveLayerEvent {
+  old_position: u32,
+  new_position: u32,
+}
+
+#[derive(Clone)]
+pub struct MoveLayerAction {
+  old_position: u32,
+  new_position: u32,
+}
+
+impl MoveLayerAction {
+  pub const fn new(old_position: u32, new_position: u32) -> Self {
+    Self {
+      old_position,
+      new_position,
+    }
+  }
+}
+
+impl<R: tauri::Runtime> Action<R> for MoveLayerAction {
+  fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    patproj
+      .pattern
+      .move_layer(self.old_position as usize, self.new_position as usize);
+    window.emit(
+      "layers:move",
+      MoveLayerEvent {
+        old_position: self.old_position,
+        new_position: self.new_position,
+      },
+    )?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
+    Ok(())
+  }
+
+  fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
+    patproj
+      .pattern
+      .move_layer(self.new_position as usize, self.old_position as usize);
+    window.emit(
+      "layers:move",
+      MoveLayerEvent {
+        old_position: self.new_position,
+        new_position: self.old_position,
+      },
+    )?;
+    window.emit("app:pattern-changed", patproj.id.to_string())?;
+    Ok(())
+  }
+}

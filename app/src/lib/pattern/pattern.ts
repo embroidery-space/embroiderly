@@ -181,6 +181,11 @@ export class Pattern extends EventTarget {
     this.#layers = this.#layers.filter((_, i) => i !== index);
   }
 
+  moveLayer(from: number, to: number) {
+    const [layer] = this.#layers.splice(from, 1);
+    this.#layers.splice(to, 0, layer!);
+  }
+
   get fullstitches() {
     return this.#layers[0]!.fullstitches;
   }
@@ -313,4 +318,5 @@ export const enum PatternEvent {
   RemoveLayer = "layers:remove",
   RenameLayer = "layers:rename",
   UpdateLayerVisibility = "layers:update_visibility",
+  MoveLayer = "layers:move",
 }

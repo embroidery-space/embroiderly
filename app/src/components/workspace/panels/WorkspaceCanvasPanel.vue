@@ -164,6 +164,7 @@ function handlePanelExpand() {
         @remove-layer="handleRemoveLayer"
         @rename-layer="patternStore.renameLayer"
         @toggle-layer-visibility="patternStore.updateLayerVisibility"
+        @move-layer="patternStore.moveLayer"
       />
     </template>
   </SplitterPanel>

@@ -3,7 +3,8 @@ use tauri::test::{MockRuntime, mock_builder};
 use tauri::{App, Listener, WebviewUrl, WebviewWindowBuilder, generate_context};
 
 use super::{
-  Action, AddLayerAction, LayerVisibility, RemoveLayerAction, RenameLayerAction, UpdateLayerVisibilityAction,
+  Action, AddLayerAction, LayerVisibility, MoveLayerAction, RemoveLayerAction, RenameLayerAction,
+  UpdateLayerVisibilityAction,
 };
 use crate::utils::base64;
 
@@ -237,5 +238,59 @@ fn test_update_layer_visibility_action() {
     action.revoke(&window, &mut patproj).unwrap();
     assert!(patproj.pattern.layers[0].visible);
     assert!(patproj.pattern.layers[0].fullstitches_visible);
+  }
+}
+
+#[test]
+fn test_move_layer_action() {
+  let app = setup_app();
+  let window = WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
+    .build()
+    .unwrap();
+
+  let mut patproj = create_pattern_project();
+
+  // Add a second layer and name both so we can verify order.
+  patproj.pattern.add_layer(embroiderly_pattern::Layer::new("Layer A"));
+  patproj.pattern.layers[1].name = "Layer B".to_string();
+
+  let action = MoveLayerAction::new(0, 1);
+
+  // Test performing the action.
+  {
+    window.once("layers:move", |e| {
+      let payload: serde_json::Value = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(payload["oldPosition"], 0);
+      assert_eq!(payload["newPosition"], 1);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
+
+    action.perform(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.pattern.layers[0].name, "Layer B");
+    assert_eq!(patproj.pattern.layers[1].name, "Layer A");
+  }
+
+  // Test revoking the action.
+  {
+    window.once("layers:move", |e| {
+      let payload: serde_json::Value = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(payload["oldPosition"], 1);
+      assert_eq!(payload["newPosition"], 0);
+    });
+    window.once("app:pattern-changed", {
+      let id = patproj.id.to_string();
+      move |e| {
+        assert_eq!(serde_json::from_str::<String>(e.payload()).unwrap(), id);
+      }
+    });
+
+    action.revoke(&window, &mut patproj).unwrap();
+    assert_eq!(patproj.pattern.layers[0].name, "Layer A");
+    assert_eq!(patproj.pattern.layers[1].name, "Layer B");
   }
 }

@@ -159,6 +159,10 @@ export const usePatternStore = defineStore(
       if (pattern.value.isNil) return;
       await PatternApi.updateLayerVisibility(pattern.value.id, layerIndex, visibility);
     }
+    async function moveLayer(oldPosition: number, newPosition: number) {
+      if (pattern.value.isNil) return;
+      await PatternApi.moveLayer(pattern.value.id, oldPosition, newPosition);
+    }
     appWindow.listen<string>(PatternEvent.AddLayer, ({ payload }) => {
       const { index, layer } = AddedLayerData.deserialize(payload);
       pattern.value.addLayerAt(index, layer);
@@ -180,6 +184,13 @@ export const usePatternStore = defineStore(
       PatternEvent.UpdateLayerVisibility,
       ({ payload: { layerIndex, visibility } }) => {
         pattern.value.layers[layerIndex]?.setVisibility(visibility);
+        triggerRef(pattern);
+      },
+    );
+    appWindow.listen<{ oldPosition: number; newPosition: number }>(
+      PatternEvent.MoveLayer,
+      ({ payload: { oldPosition, newPosition } }) => {
+        pattern.value.moveLayer(oldPosition, newPosition);
         triggerRef(pattern);
       },
     );
@@ -273,6 +284,7 @@ export const usePatternStore = defineStore(
       removeLayer,
       renameLayer,
       updateLayerVisibility,
+      moveLayer,
       addPaletteItem,
       removePaletteItem,
       updatePaletteDisplaySettings,

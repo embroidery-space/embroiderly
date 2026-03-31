@@ -178,3 +178,61 @@ fn updates_layer_visibility() {
   let history = history_manager.get(&pattern_id).unwrap();
   assert_eq!(history.undo_stack_len(), 1);
 }
+
+#[test]
+fn moves_layer() {
+  let (app, webview) = setup_test_app!(commands: [
+    commands::core::layers::add_layer,
+    commands::core::layers::rename_layer,
+    commands::core::layers::move_layer
+  ]);
+  let pattern_id = utils::create_test_pattern(&app);
+
+  // Add a second layer and name both so we can verify order.
+  invoke_ipc!(
+    &webview,
+    cmd: "add_layer",
+    body: tauri::ipc::InvokeBody::Json(serde_json::json!({})),
+    headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+  )
+  .unwrap();
+  invoke_ipc!(
+    &webview,
+    cmd: "rename_layer",
+    body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "layerIndex": 0, "name": "Layer A" })),
+    headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+  )
+  .unwrap();
+  invoke_ipc!(
+    &webview,
+    cmd: "rename_layer",
+    body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "layerIndex": 1, "name": "Layer B" })),
+    headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+  )
+  .unwrap();
+
+  // Move layer 0 ("A") to position 1.
+  assert!(
+    invoke_ipc!(
+      &webview,
+      cmd: "move_layer",
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "oldPosition": 0, "newPosition": 1 })),
+      headers: [("patternId", pattern_id.to_string().parse().unwrap())]
+    )
+    .is_ok()
+  );
+
+  let patterns_state = app.state::<PatternsState>();
+  let patterns_manager = patterns_state.read().unwrap();
+
+  let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
+  assert_eq!(patproj.pattern.layers.len(), 2);
+  assert_eq!(patproj.pattern.layers[0].name, "Layer B");
+  assert_eq!(patproj.pattern.layers[1].name, "Layer A");
+
+  let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
+  let history_manager = history_state.read().unwrap();
+
+  let history = history_manager.get(&pattern_id).unwrap();
+  assert_eq!(history.undo_stack_len(), 4);
+}

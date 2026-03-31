@@ -124,6 +124,10 @@ export function updateLayerVisibility(patternId: string, layerIndex: number, vis
   return invoke<void>("update_layer_visibility", { layerIndex, visibility }, { headers: { patternId } });
 }
 
+export function moveLayer(patternId: string, oldPosition: number, newPosition: number) {
+  return invoke<void>("move_layer", { oldPosition, newPosition }, { headers: { patternId } });
+}
+
 // === Stitches Management === //
 
 export function addStitch(patternId: string, stitch: Stitch) {
