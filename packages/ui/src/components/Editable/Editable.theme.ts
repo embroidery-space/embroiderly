@@ -5,10 +5,11 @@ export const EditableTheme = tv({
   slots: {
     root: "inline-flex",
     area: `
-      relative inline-flex min-w-0 flex-1 cursor-text items-center text-default
+      relative inline-flex w-fit min-w-0 items-center text-default
+      not-data-placeholder-shown:w-full
       data-empty:text-dimmed
     `,
-    preview: `block min-w-0 truncate text-inherit outline-none`,
+    preview: `block min-w-0 cursor-text truncate text-inherit outline-none`,
     input: `
       block w-full max-w-full bg-transparent text-inherit outline-none
       placeholder:text-dimmed
