@@ -1,9 +1,239 @@
+//! Layer management for cross-stitch patterns.
+//!
+//! # Layer Types
+//!
+//! The module distinguishes between two types of layers:
+//!
+//! - **Custom Layer** (or simply _layer_ when context is clear): A [`Layer`] object created and managed by the user.
+//!   Users can add, remove, rename, reorder, and toggle the visibility of custom layers.
+//!   Each custom layer holds its own collections of stitches, effectively acting as an independent drawing canvas.
+//!
+//! - **Stitch Layer**: A fixed sublayer within a custom layer, representing a specific stitch kind
+//!   (e.g., Full Stitches, Half Stitches, Back Stitches).
+//!   Stitch layers have a strict, predefined display order (top to bottom as defined in code) that users cannot change.
+//!   Users can only toggle the visibility of stitch layers — they cannot create, remove, or reorder them.
+//!
+//! # Ordering Terminology
+//!
+//! This module uses specific terminology to distinguish between storage and display order for custom layers:
+//!
+//! - **Index** (or _actual index_): The stable position of a layer in internal storage.
+//!   Layer indexes never change when layers are reordered visually, ensuring that all references to a layer remain valid.
+//!
+//! - **Position** (or _visual position_): The display order of custom layers in the UI.
+//!   Users can freely reorder layers by changing positions without affecting the underlying stable indexes.
+//!
+//! ## Example
+//!
+//! ```text
+//! items:     [Default, Layer2, Layer3]  <- Actual storage (stable indexes: 0, 1, 2)
+//! positions: [2, 1, 0]                  <- Visual order: Layer3, Layer2, Default
+//! ```
+//!
+//! In this example:
+//! - A layer with index 0 always refers to Default, regardless of visual order.
+//! - The UI displays layers as: Layer3 (index 2), Layer2 (index 1), Default (index 0).
+
 use super::stitches::*;
 
 #[cfg(test)]
-#[path = "./layer.test.rs"]
+#[path = "./layers.test.rs"]
 mod tests;
 
+/// Manages custom layers and their visual ordering.
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+pub struct Layers {
+  /// The actual layers.
+  items: Vec<Layer>,
+  /// Visual ordering of layers.
+  positions: Vec<u32>,
+}
+
+impl Layers {
+  /// Creates a new empty layers collection.
+  #[must_use]
+  pub const fn new() -> Self {
+    Self {
+      items: vec![],
+      positions: vec![],
+    }
+  }
+
+  /// Creates a new layers collection with the given layer.
+  #[must_use]
+  pub fn new_with_layer(layer: Layer) -> Self {
+    Self {
+      items: vec![layer],
+      positions: vec![0],
+    }
+  }
+
+  // === Access Methods ===
+
+  /// Returns the number of layers.
+  #[must_use]
+  pub fn len(&self) -> usize {
+    debug_assert_eq!(self.items.len(), self.positions.len());
+    self.items.len()
+  }
+
+  /// Returns `true` if there are no layers.
+  #[must_use]
+  pub fn is_empty(&self) -> bool {
+    debug_assert_eq!(self.items.is_empty(), self.positions.is_empty());
+    self.items.is_empty()
+  }
+
+  /// Returns a reference to a layer by its actual index.
+  #[must_use]
+  pub fn get(&self, index: u32) -> Option<&Layer> {
+    self.items.get(index as usize)
+  }
+
+  /// Returns a mutable reference to a layer by its actual index.
+  pub fn get_mut(&mut self, index: u32) -> Option<&mut Layer> {
+    self.items.get_mut(index as usize)
+  }
+
+  // === Iteration Methods ===
+
+  /// Returns an iterator over layers in actual order.
+  pub fn iter(&self) -> impl Iterator<Item = &Layer> {
+    self.items.iter()
+  }
+
+  /// Returns a mutable iterator over layers in actual order.
+  pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut Layer> {
+    self.items.iter_mut()
+  }
+
+  // === Mutation Methods ===
+
+  /// Adds a new layer, returning its actual index.
+  /// The layer appears at visual position 0 (top).
+  pub fn push(&mut self, layer: Layer) -> u32 {
+    let index = self.items.len() as u32;
+    self.items.push(layer);
+    self.positions.insert(0, index);
+    index
+  }
+
+  /// Inserts a layer at a specific actual index.
+  /// Updates positions accordingly.
+  pub fn insert(&mut self, index: u32, layer: Layer) {
+    self.items.insert(index as usize, layer);
+
+    // Shift all positions which reference indexes >= index.
+    for pos in self.positions.iter_mut() {
+      if *pos >= index {
+        *pos += 1;
+      }
+    }
+
+    // Find the correct visual position for this index (maintain sorted visual order for new entries).
+    let position = self
+      .positions
+      .iter()
+      .position(|&idx| idx > index)
+      .unwrap_or(self.positions.len());
+    self.positions.insert(position, index);
+  }
+
+  /// Removes a layer by its actual index, returning the removed layer.
+  pub fn remove(&mut self, index: u32) -> Layer {
+    assert!(self.items.len() > 1, "cannot remove the last layer");
+
+    // Remove from items.
+    let removed = self.items.remove(index as usize);
+
+    // Remove from positions.
+    self.positions.retain(|&idx| idx != index);
+
+    // Shift all positions which reference indexes > index.
+    for pos in self.positions.iter_mut() {
+      if *pos > index {
+        *pos -= 1;
+      }
+    }
+
+    removed
+  }
+
+  // === Ordering Methods ===
+
+  /// Returns the current visual positions.
+  #[must_use]
+  pub fn positions(&self) -> &[u32] {
+    &self.positions
+  }
+
+  /// Sets the visual positions.
+  pub fn set_positions(&mut self, positions: Vec<u32>) {
+    debug_assert_eq!(positions.len(), self.items.len());
+    self.positions = positions;
+  }
+
+  /// Moves the layer at `old_position` to `new_position` in visual order.
+  /// Returns the updated positions array.
+  pub fn move_layer(&mut self, old_position: u32, new_position: u32) -> Vec<u32> {
+    debug_assert!((old_position as usize) < self.positions.len());
+    debug_assert!((new_position as usize) < self.positions.len());
+
+    if old_position == new_position {
+      return self.positions.clone();
+    }
+
+    let item_index = self.positions.remove(old_position as usize);
+    self.positions.insert(new_position as usize, item_index);
+
+    self.positions.clone()
+  }
+}
+
+impl Default for Layers {
+  fn default() -> Self {
+    Self::new_with_layer(Layer::default())
+  }
+}
+
+impl From<Vec<Layer>> for Layers {
+  fn from(items: Vec<Layer>) -> Self {
+    let positions = (0..items.len() as u32).collect();
+    Self { items, positions }
+  }
+}
+
+impl std::ops::Index<u32> for Layers {
+  type Output = Layer;
+
+  fn index(&self, index: u32) -> &Self::Output {
+    &self.items[index as usize]
+  }
+}
+
+impl std::ops::IndexMut<u32> for Layers {
+  fn index_mut(&mut self, index: u32) -> &mut Self::Output {
+    &mut self.items[index as usize]
+  }
+}
+
+#[cfg(feature = "serde")]
+impl serde::Serialize for Layers {
+  fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+    self.items.serialize(serializer)
+  }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Layers {
+  fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+    let items = Vec::<Layer>::deserialize(deserializer)?;
+    Ok(Self::from(items))
+  }
+}
+
+/// Represent a _custom_ layer.
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

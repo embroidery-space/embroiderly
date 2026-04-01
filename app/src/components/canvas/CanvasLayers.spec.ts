@@ -17,7 +17,7 @@ const CanvasLayersWrapper = defineComponent({
 describe("CanvasLayers", () => {
   test("displays header with actions and tree", async () => {
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer({ name: "My layer" })] },
+      props: { modelValue: 0, layers: [new Layer(0, { name: "My layer" })] },
     });
     await nextTick();
 
@@ -44,7 +44,7 @@ describe("CanvasLayers", () => {
 
   test("displays placeholder name when layer name is empty", async () => {
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer()] },
+      props: { modelValue: 0, layers: [new Layer(0)] },
     });
     await nextTick();
 
@@ -53,7 +53,7 @@ describe("CanvasLayers", () => {
 
   test("displays layer name when set", async () => {
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer({ name: "My Layer" })] },
+      props: { modelValue: 0, layers: [new Layer(0, { name: "My Layer" })] },
     });
     await nextTick();
 
@@ -62,7 +62,7 @@ describe("CanvasLayers", () => {
 
   test("remove button is disabled with a single layer", async () => {
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer()] },
+      props: { modelValue: 0, layers: [new Layer(0)] },
     });
     await nextTick();
 
@@ -71,7 +71,7 @@ describe("CanvasLayers", () => {
 
   test("remove button is enabled with multiple layers", async () => {
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer(), new Layer()] },
+      props: { modelValue: 0, layers: [new Layer(0), new Layer(1)] },
     });
     await nextTick();
 
@@ -82,7 +82,7 @@ describe("CanvasLayers", () => {
     const onAddLayer = vi.fn();
 
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer()], onAddLayer },
+      props: { modelValue: 0, layers: [new Layer(0)], onAddLayer },
     });
     await nextTick();
 
@@ -95,7 +95,7 @@ describe("CanvasLayers", () => {
     const onRemoveLayer = vi.fn();
 
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 1, layers: [new Layer(), new Layer()], onRemoveLayer },
+      props: { modelValue: 1, layers: [new Layer(0), new Layer(1)], onRemoveLayer },
     });
     await nextTick();
 
@@ -105,13 +105,13 @@ describe("CanvasLayers", () => {
     expect(onRemoveLayer).toHaveBeenCalledWith(1);
   });
 
-  test("clicking a layer emits update:modelValue event with its index", async () => {
+  test("clicking a layer emits update:modelValue event with its stable index", async () => {
     const onUpdateModelValue = vi.fn();
 
     const screen = page.render(CanvasLayersWrapper, {
       props: {
         modelValue: 0,
-        layers: [new Layer({ name: "Layer A" }), new Layer({ name: "Layer B" })],
+        layers: [new Layer(0, { name: "Layer A" }), new Layer(1, { name: "Layer B" })],
         "onUpdate:modelValue": onUpdateModelValue,
       },
     });
@@ -127,7 +127,7 @@ describe("CanvasLayers", () => {
     const onToggleLayerVisibility = vi.fn();
 
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer({ name: "Layer A" })], onToggleLayerVisibility },
+      props: { modelValue: 0, layers: [new Layer(0, { name: "Layer A" })], onToggleLayerVisibility },
     });
     await nextTick();
 
@@ -153,7 +153,7 @@ describe("CanvasLayers", () => {
     const onToggleLayerVisibility = vi.fn();
 
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer()], onToggleLayerVisibility },
+      props: { modelValue: 0, layers: [new Layer(0)], onToggleLayerVisibility },
     });
     await nextTick();
 
@@ -180,7 +180,7 @@ describe("CanvasLayers", () => {
     const onRenameLayer = vi.fn();
 
     const screen = page.render(CanvasLayersWrapper, {
-      props: { modelValue: 0, layers: [new Layer({ name: "My Layer" })], onRenameLayer },
+      props: { modelValue: 0, layers: [new Layer(0, { name: "My Layer" })], onRenameLayer },
     });
     await nextTick();
 
@@ -207,7 +207,7 @@ describe("CanvasLayers", () => {
   describe("context menu", () => {
     test("displays context menu", async () => {
       const screen = page.render(CanvasLayersWrapper, {
-        props: { modelValue: 0, layers: [new Layer()] },
+        props: { modelValue: 0, layers: [new Layer(0)] },
       });
       await nextTick();
 
@@ -220,7 +220,7 @@ describe("CanvasLayers", () => {
 
     test("remove item is disabled with a single layer", async () => {
       const screen = page.render(CanvasLayersWrapper, {
-        props: { modelValue: 0, layers: [new Layer()] },
+        props: { modelValue: 0, layers: [new Layer(0)] },
       });
       await nextTick();
 
@@ -231,7 +231,7 @@ describe("CanvasLayers", () => {
 
     test("remove item is enabled with multiple layers", async () => {
       const screen = page.render(CanvasLayersWrapper, {
-        props: { modelValue: 0, layers: [new Layer(), new Layer()] },
+        props: { modelValue: 0, layers: [new Layer(0), new Layer(1)] },
       });
       await nextTick();
 
@@ -244,7 +244,7 @@ describe("CanvasLayers", () => {
       const onAddLayer = vi.fn();
 
       const screen = page.render(CanvasLayersWrapper, {
-        props: { modelValue: 0, layers: [new Layer()], onAddLayer },
+        props: { modelValue: 0, layers: [new Layer(0)], onAddLayer },
       });
       await nextTick();
 
@@ -258,7 +258,7 @@ describe("CanvasLayers", () => {
       const onRemoveLayer = vi.fn();
 
       const screen = page.render(CanvasLayersWrapper, {
-        props: { modelValue: 1, layers: [new Layer(), new Layer()], onRemoveLayer },
+        props: { modelValue: 1, layers: [new Layer(0), new Layer(1)], onRemoveLayer },
       });
       await nextTick();
 

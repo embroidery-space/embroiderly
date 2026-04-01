@@ -93,7 +93,7 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
         }
       })
       .collect(),
-    layers: vec![layer],
+    layers: Layers::new_with_layer(layer),
     special_stitch_models: xsd_pattern
       .special_stitch_models
       .into_iter()

@@ -6,6 +6,7 @@ import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
 import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch } from "./stitches.ts";
 
 export class Layer {
+  readonly index: number;
   name: string;
   visible: boolean;
 
@@ -28,7 +29,8 @@ export class Layer {
   specialstitches: SpecialStitch[];
   specialstitchesVisible: boolean;
 
-  constructor(data?: Partial<b.infer<typeof Layer.schema>>) {
+  constructor(index: number, data?: Partial<b.infer<typeof Layer.schema>>) {
+    this.index = index;
     this.name = data?.name ?? "";
     this.visible = data?.visible ?? true;
 
@@ -76,6 +78,11 @@ export class Layer {
     specialstitchesVisible: b.bool(),
   });
 
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new Layer(0, Layer.schema.deserialize(buffer));
+  }
+
   getVisibility(): LayerVisibility {
     return {
       visible: this.visible,
@@ -113,10 +120,98 @@ export class Layer {
 
     this.specialstitchesVisible = vis.specialstitchesVisible;
   }
+}
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Layer(Layer.schema.deserialize(buffer));
+export class Layers {
+  #items: Layer[];
+  #positions: number[];
+
+  constructor(data?: b.infer<typeof Layers.schema> | Layer[]) {
+    if (Array.isArray(data)) {
+      this.#items = data;
+      this.#positions = data.map((_, i) => i);
+    } else {
+      this.#items = data?.items.map((item, index) => new Layer(index, item)) ?? [new Layer(0)];
+      this.#positions = data?.positions ?? [0];
+    }
+  }
+
+  static readonly schema = b.struct({
+    items: b.vec(Layer.schema),
+    positions: b.vec(b.u32()),
+  });
+
+  // === Access Methods ===
+
+  /** The number of layers. */
+  get length(): number {
+    return this.#items.length;
+  }
+
+  /** Returns a layer by its actual index. */
+  get(index: number): Layer | undefined {
+    return this.#items[index];
+  }
+
+  // === Iteration Methods ===
+
+  /** Layers in actual order. */
+  get items(): readonly Layer[] {
+    return this.#items;
+  }
+
+  /** Layers in visual order. */
+  get itemsInVisualOrder(): Layer[] {
+    return this.#positions.map((index) => this.#items[index]!);
+  }
+
+  // === Ordering Methods ===
+
+  /** The current visual positions. */
+  get positions(): readonly number[] {
+    return this.#positions;
+  }
+  set positions(positions: number[]) {
+    if (import.meta.env.DEV && positions.length !== this.#items.length) {
+      throw new Error("Positions array length must match items length");
+    }
+    this.#positions = [...positions];
+  }
+
+  // === Mutation Methods ===
+
+  /** Inserts a layer at a specific actual index. Updates positions accordingly. */
+  insert(index: number, layer: Layer): void {
+    this.#items.splice(index, 0, layer);
+
+    // Shift all positions that reference indexes >= index.
+    for (let i = 0; i < this.#positions.length; i++) {
+      if (this.#positions[i]! >= index) this.#positions[i]!++;
+    }
+
+    // Layers maintain descending index order (higher index = newer = top),
+    // so insert before the first position whose value is less than the new index.
+    const position = this.#positions.findIndex((idx) => idx < index);
+    const insertAt = position === -1 ? this.#positions.length : position;
+    this.#positions.splice(insertAt, 0, index);
+  }
+
+  /** Removes a layer by its actual index. Returns the removed layer. */
+  remove(index: number): Layer {
+    // Remove from items.
+    const [removed] = this.#items.splice(index, 1);
+
+    // Remove from positions.
+    this.#positions = this.#positions.filter((idx) => idx !== index);
+
+    // Shift all positions which reference indexes > index.
+    for (let i = 0; i < this.#positions.length; i++) {
+      if (this.#positions[i]! > index) {
+        this.#positions[i]!--;
+      }
+    }
+
+    return removed!;
   }
 }
 
@@ -126,7 +221,7 @@ export class AddedLayerData {
 
   constructor(data: b.infer<typeof AddedLayerData.schema>) {
     this.index = data.index;
-    this.layer = new Layer(data.layer);
+    this.layer = new Layer(data.index, data.layer);
   }
 
   static readonly schema = b.struct({

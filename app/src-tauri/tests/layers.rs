@@ -44,7 +44,8 @@ fn adds_layer() {
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
   assert_eq!(patproj.pattern.layers.len(), 2);
-  assert_eq!(patproj.pattern.layers[0].name, "");
+  assert_eq!(patproj.pattern.layers[1].name, "");
+  assert_eq!(patproj.pattern.layers.positions(), &[1, 0]);
 
   let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
   let history_manager = history_state.read().unwrap();
@@ -61,7 +62,7 @@ fn removes_layer() {
   ]);
   let pattern_id = utils::create_test_pattern(&app);
 
-  // Add a second layer first.
+  // Add a second layer first (gets actual index 1).
   invoke_ipc!(
     &webview,
     cmd: "add_layer",
@@ -70,12 +71,12 @@ fn removes_layer() {
   )
   .unwrap();
 
-  // Now remove it.
+  // Now remove it by actual index 1.
   assert!(
     invoke_ipc!(
       &webview,
       cmd: "remove_layer",
-      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "layerIndex": 0 })),
+      body: tauri::ipc::InvokeBody::Json(serde_json::json!({ "layerIndex": 1 })),
       headers: [("patternId", pattern_id.to_string().parse().unwrap())]
     )
     .is_ok()
@@ -188,7 +189,7 @@ fn moves_layer() {
   ]);
   let pattern_id = utils::create_test_pattern(&app);
 
-  // Add a second layer and name both so we can verify order.
+  // Add a second layer.
   invoke_ipc!(
     &webview,
     cmd: "add_layer",
@@ -196,6 +197,8 @@ fn moves_layer() {
     headers: [("patternId", pattern_id.to_string().parse().unwrap())]
   )
   .unwrap();
+
+  // Name both layers.
   invoke_ipc!(
     &webview,
     cmd: "rename_layer",
@@ -211,7 +214,8 @@ fn moves_layer() {
   )
   .unwrap();
 
-  // Move layer 0 ("A") to position 1.
+  // Current visual order: LayerB (actual 1, visual 0) → LayerA (actual 0, visual 1)
+  // Move visual 0 (LayerB) to visual 1.
   assert!(
     invoke_ipc!(
       &webview,
@@ -227,8 +231,9 @@ fn moves_layer() {
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
   assert_eq!(patproj.pattern.layers.len(), 2);
-  assert_eq!(patproj.pattern.layers[0].name, "Layer B");
-  assert_eq!(patproj.pattern.layers[1].name, "Layer A");
+  assert_eq!(patproj.pattern.layers.positions(), &[0, 1]);
+  assert_eq!(patproj.pattern.layers[0].name, "Layer A");
+  assert_eq!(patproj.pattern.layers[1].name, "Layer B");
 
   let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
   let history_manager = history_state.read().unwrap();

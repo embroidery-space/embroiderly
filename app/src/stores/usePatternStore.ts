@@ -165,17 +165,17 @@ export const usePatternStore = defineStore(
     }
     appWindow.listen<string>(PatternEvent.AddLayer, ({ payload }) => {
       const { index, layer } = AddedLayerData.deserialize(payload);
-      pattern.value.addLayerAt(index, layer);
+      pattern.value.layers.insert(index, layer);
       triggerRef(pattern);
     });
     appWindow.listen<number>(PatternEvent.RemoveLayer, ({ payload: layerIndex }) => {
-      pattern.value.removeLayerAt(layerIndex);
+      pattern.value.layers.remove(layerIndex);
       triggerRef(pattern);
     });
     appWindow.listen<{ layerIndex: number; name: string }>(
       PatternEvent.RenameLayer,
       ({ payload: { layerIndex, name } }) => {
-        const layer = pattern.value.layers[layerIndex];
+        const layer = pattern.value.layers.get(layerIndex);
         if (layer) layer.name = name;
         triggerRef(pattern);
       },
@@ -183,17 +183,15 @@ export const usePatternStore = defineStore(
     appWindow.listen<{ layerIndex: number; visibility: PatternApi.LayerVisibility }>(
       PatternEvent.UpdateLayerVisibility,
       ({ payload: { layerIndex, visibility } }) => {
-        pattern.value.layers[layerIndex]?.setVisibility(visibility);
+        const layer = pattern.value.layers.get(layerIndex);
+        if (layer) layer.setVisibility(visibility);
         triggerRef(pattern);
       },
     );
-    appWindow.listen<{ oldPosition: number; newPosition: number }>(
-      PatternEvent.MoveLayer,
-      ({ payload: { oldPosition, newPosition } }) => {
-        pattern.value.moveLayer(oldPosition, newPosition);
-        triggerRef(pattern);
-      },
-    );
+    appWindow.listen<number[]>(PatternEvent.MoveLayer, ({ payload: positions }) => {
+      pattern.value.layers.positions = positions;
+      triggerRef(pattern);
+    });
 
     function addStitch(stitch: Stitch) {
       if (pattern.value.isNil) return;

@@ -53,99 +53,90 @@ const treeRootEl = computed(() => treeContainer.value?.querySelector<HTMLElement
 
 const { fluent } = useI18n();
 
-// Stable layer keys so Tree's state (mainly, selection and expansion) follows layer objects across reorders.
-const layerKeyMap = new WeakMap<Layer, string>();
-let layerKeySeq = 0;
-
 const layerItems = computed<LayerTreeItem[]>(() =>
-  props.layers.map((layer, index) => {
+  props.layers.map((layer) => {
     const visibility = layer.getVisibility();
 
-    function getLayerKey(layer: Layer) {
-      if (!layerKeyMap.has(layer)) layerKeyMap.set(layer, `layer-${layerKeySeq++}`);
-      return layerKeyMap.get(layer)!;
-    }
-
     return {
-      index,
+      index: layer.index,
       label: layer.name,
-      placeholder: fluent.$t("canvas-layers-placeholder", { index: index + 1 }),
-      value: getLayerKey(layer),
+      placeholder: fluent.$t("canvas-layers-placeholder", { index: layer.index + 1 }),
+      value: `layer-${layer.index}`,
       visible: visibility.visible,
       toggledVisibility: { ...visibility, visible: !visibility.visible },
-      defaultExpanded: index === 0,
+      defaultExpanded: layer.index === 0,
       onSelect() {
-        modelValue.value = index;
+        modelValue.value = layer.index;
       },
       children: [
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-fullstitches"),
-          value: `${getLayerKey(layer)}-fullstitches`,
+          value: `layer-${layer.index}-fullstitches`,
           icon: IconStitchFull,
           visible: visibility.fullstitchesVisible,
           toggledVisibility: { ...visibility, fullstitchesVisible: !visibility.fullstitchesVisible },
         },
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-petitestitches"),
-          value: `${getLayerKey(layer)}-petitestitches`,
+          value: `layer-${layer.index}-petitestitches`,
           icon: IconStitchPetite,
           visible: visibility.petitestitchesVisible,
           toggledVisibility: { ...visibility, petitestitchesVisible: !visibility.petitestitchesVisible },
         },
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-halfstitches"),
-          value: `${getLayerKey(layer)}-halfstitches`,
+          value: `layer-${layer.index}-halfstitches`,
           icon: IconStitchHalf,
           visible: visibility.halfstitchesVisible,
           toggledVisibility: { ...visibility, halfstitchesVisible: !visibility.halfstitchesVisible },
         },
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-quarterstitches"),
-          value: `${getLayerKey(layer)}-quarterstitches`,
+          value: `layer-${layer.index}-quarterstitches`,
           icon: IconStitchQuarter,
           visible: visibility.quarterstitchesVisible,
           toggledVisibility: { ...visibility, quarterstitchesVisible: !visibility.quarterstitchesVisible },
         },
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-specialstitches"),
-          value: `${getLayerKey(layer)}-specialstitches`,
+          value: `layer-${layer.index}-specialstitches`,
           icon: IconStitchSpecial,
           visible: visibility.specialstitchesVisible,
           toggledVisibility: { ...visibility, specialstitchesVisible: !visibility.specialstitchesVisible },
         },
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-backstitches"),
-          value: `${getLayerKey(layer)}-backstitches`,
+          value: `layer-${layer.index}-backstitches`,
           icon: IconStitchBack,
           visible: visibility.backstitchesVisible,
           toggledVisibility: { ...visibility, backstitchesVisible: !visibility.backstitchesVisible },
         },
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-straightstitches"),
-          value: `${getLayerKey(layer)}-straightstitches`,
+          value: `layer-${layer.index}-straightstitches`,
           icon: IconStitchStraight,
           visible: visibility.straightstitchesVisible,
           toggledVisibility: { ...visibility, straightstitchesVisible: !visibility.straightstitchesVisible },
         },
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-frenchknots"),
-          value: `${getLayerKey(layer)}-frenchknots`,
+          value: `layer-${layer.index}-frenchknots`,
           icon: IconStitchFrenchKnot,
           visible: visibility.frenchknotsVisible,
           toggledVisibility: { ...visibility, frenchknotsVisible: !visibility.frenchknotsVisible },
         },
         {
-          index,
+          index: layer.index,
           label: fluent.$t("canvas-layers-beads"),
-          value: `${getLayerKey(layer)}-beads`,
+          value: `layer-${layer.index}-beads`,
           icon: IconStitchBead,
           visible: visibility.beadsVisible,
           toggledVisibility: { ...visibility, beadsVisible: !visibility.beadsVisible },
@@ -153,6 +144,10 @@ const layerItems = computed<LayerTreeItem[]>(() =>
       ],
     };
   }),
+);
+const selectedLayerItem = computed(() => layerItems.value.find((item) => item.index === modelValue.value));
+const selectedLayerDisplayName = computed(
+  () => selectedLayerItem.value?.label || (selectedLayerItem.value?.placeholder ?? ""),
 );
 
 const contextMenuItems = computed<ContextMenuItem[]>(() => [
@@ -162,16 +157,12 @@ const contextMenuItems = computed<ContextMenuItem[]>(() => [
     onSelect: () => emits("addLayer"),
   },
   {
-    label: fluent.$t("canvas-layers-remove", { name: getLayerDisplayName(modelValue.value) }),
+    label: fluent.$t("canvas-layers-remove", { name: selectedLayerDisplayName.value }),
     icon: IconTrash,
     disabled: props.layers.length <= 1,
     onSelect: () => emits("removeLayer", modelValue.value),
   },
 ]);
-
-function getLayerDisplayName(index: number) {
-  return props.layers[index]!.name || fluent.$t("canvas-layers-placeholder", { index: index + 1 });
-}
 
 const { option: setSortableOption } = useSortable(treeRootEl, [], {
   animation: 100,
@@ -215,7 +206,7 @@ watchEffect(() => {
         size="lg"
         :icon="IconTrash"
         :disabled="layers.length <= 1"
-        :tooltip="$t('canvas-layers-remove', { name: getLayerDisplayName(modelValue) })"
+        :tooltip="$t('canvas-layers-remove', { name: selectedLayerDisplayName })"
         @click="emits('removeLayer', modelValue)"
       />
     </div>
@@ -223,7 +214,7 @@ watchEffect(() => {
     <ContextMenu :items="contextMenuItems">
       <Tree
         :items="layerItems"
-        :default-value="layerItems[modelValue]"
+        :default-value="selectedLayerItem"
         :scroll="{ type: 'hover' }"
         size="lg"
         selection-behavior="replace"

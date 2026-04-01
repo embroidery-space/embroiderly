@@ -1,6 +1,6 @@
 use xsp_parsers::pmaker;
 
-use super::layer::*;
+use super::layers::*;
 use super::palette::*;
 use super::stitches::*;
 
@@ -12,24 +12,13 @@ mod tests;
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[derive(Default)]
 pub struct Pattern {
   pub info: PatternInfo,
   pub fabric: Fabric,
   pub palette: Palette,
-  pub layers: Vec<Layer>,
+  pub layers: Layers,
   pub special_stitch_models: Vec<SpecialStitchModel>,
-}
-
-impl Default for Pattern {
-  fn default() -> Self {
-    Self {
-      info: PatternInfo::default(),
-      fabric: Fabric::default(),
-      palette: Palette::default(),
-      layers: vec![Layer::default()],
-      special_stitch_models: Vec::new(),
-    }
-  }
 }
 
 impl Pattern {
@@ -83,33 +72,33 @@ impl Pattern {
 
   /// Get a stitch from the specified layer.
   #[must_use]
-  pub fn get_stitch(&self, layer_index: usize, stitch: &Stitch) -> Option<Stitch> {
+  pub fn get_stitch(&self, layer_index: u32, stitch: &Stitch) -> Option<Stitch> {
     self.layers[layer_index].get_stitch(stitch)
   }
 
   /// Check if the specified layer contains a stitch.
   #[must_use]
-  pub fn contains_stitch(&self, layer_index: usize, stitch: &Stitch) -> bool {
+  pub fn contains_stitch(&self, layer_index: u32, stitch: &Stitch) -> bool {
     self.layers[layer_index].contains_stitch(stitch)
   }
 
   /// Adds many stitches to the specified layer.
-  pub fn add_stitches(&mut self, layer_index: usize, stitches: Vec<Stitch>) {
+  pub fn add_stitches(&mut self, layer_index: u32, stitches: Vec<Stitch>) {
     self.layers[layer_index].add_stitches(stitches);
   }
 
   /// Adds a stitch to the specified layer and returns any conflicts that may have arisen.
-  pub fn add_stitch(&mut self, layer_index: usize, stitch: Stitch) -> Vec<Stitch> {
+  pub fn add_stitch(&mut self, layer_index: u32, stitch: Stitch) -> Vec<Stitch> {
     self.layers[layer_index].add_stitch(stitch)
   }
 
   /// Removes many stitches from the specified layer.
-  pub fn remove_stitches(&mut self, layer_index: usize, stitches: Vec<Stitch>) {
+  pub fn remove_stitches(&mut self, layer_index: u32, stitches: Vec<Stitch>) {
     self.layers[layer_index].remove_stitches(stitches);
   }
 
   /// Removes and returns a stitch from the specified layer.
-  pub fn remove_stitch(&mut self, layer_index: usize, stitch: Stitch) -> Option<Stitch> {
+  pub fn remove_stitch(&mut self, layer_index: u32, stitch: Stitch) -> Option<Stitch> {
     self.layers[layer_index].remove_stitch(stitch)
   }
 
@@ -132,10 +121,10 @@ impl Pattern {
   }
 
   /// Reindexes palette item indexes in all layers, then inserts the restored stitches into the specified layer only.
-  pub fn restore_stitches(&mut self, layer_index: usize, stitches: Vec<Stitch>, palindexes: &[u32], palsize: u32) {
+  pub fn restore_stitches(&mut self, layer_index: u32, stitches: Vec<Stitch>, palindexes: &[u32], palsize: u32) {
     // Reindex palindexes in every layer except the target.
     for (i, layer) in self.layers.iter_mut().enumerate() {
-      if i == layer_index {
+      if i as u32 == layer_index {
         continue;
       }
 
@@ -146,36 +135,13 @@ impl Pattern {
     self.layers[layer_index].restore_stitches(stitches, palindexes, palsize);
   }
 
-  /// Adds a layer at the top (index 0) and returns its index.
-  pub fn add_layer(&mut self, layer: Layer) -> usize {
-    self.layers.insert(0, layer);
-    0
-  }
-
-  /// Removes and returns the layer at the given index.
-  pub fn remove_layer(&mut self, layer_index: usize) -> Layer {
-    assert!(self.layers.len() > 1, "cannot remove the last layer");
-    self.layers.remove(layer_index)
-  }
-
-  /// Moves the layer at `from` to position `to`.
-  pub fn move_layer(&mut self, from: usize, to: usize) {
-    let layer = self.layers.remove(from);
-    self.layers.insert(to, layer);
-  }
-
-  /// Returns the number of layers in the pattern.
-  #[must_use]
-  pub const fn layers_count(&self) -> usize {
-    self.layers.len()
-  }
-
   /// Flattens all visible layers into a single layer, resolving stitch conflicts.
   #[must_use]
   pub fn flatten_visible_layers(&self) -> Layer {
     let mut result = Layer::new("Flattened");
-    // Bottom-to-top: higher layers (lower indices) override lower ones via `add_stitch` conflict resolution.
-    for layer in self.layers.iter().rev() {
+    // Bottom-to-top: higher layers (lower visual positions) override lower ones via `add_stitch` conflict resolution.
+    for &pos in self.layers.positions().iter().rev() {
+      let layer = &self.layers[pos];
       if !layer.visible {
         continue;
       }

@@ -32,7 +32,7 @@ fn test_add_layer_action() {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let bytes = base64::decode(base64).unwrap();
       let (index, layer): (u32, embroiderly_pattern::Layer) = borsh::from_slice(&bytes).unwrap();
-      assert_eq!(index, 0);
+      assert_eq!(index, 1);
       assert_eq!(layer.name, "");
     });
     window.once("app:pattern-changed", {
@@ -45,14 +45,14 @@ fn test_add_layer_action() {
     assert_eq!(patproj.pattern.layers.len(), 1);
     action.perform(&window, &mut patproj).unwrap();
     assert_eq!(patproj.pattern.layers.len(), 2);
-    assert_eq!(patproj.pattern.layers[0].name, "");
+    assert_eq!(patproj.pattern.layers.positions(), &[1, 0]);
   }
 
   // Test revoking the action.
   {
     window.once("layers:remove", |e| {
       let index: u32 = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(index, 0);
+      assert_eq!(index, 1);
     });
     window.once("app:pattern-changed", {
       let id = patproj.id.to_string();
@@ -75,16 +75,15 @@ fn test_remove_layer_action() {
     .unwrap();
 
   let mut patproj = create_pattern_project();
-  // Add a second layer first. With add_layer inserting at index 0, Layer 2 is at index 0.
-  patproj.pattern.add_layer(embroiderly_pattern::Layer::new("Layer 2"));
+  patproj.pattern.layers.push(embroiderly_pattern::Layer::new("Layer 2"));
 
-  let action = RemoveLayerAction::new(0);
+  let action = RemoveLayerAction::new(1);
 
   // Test performing the action.
   {
     window.once("layers:remove", |e| {
       let index: u32 = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(index, 0);
+      assert_eq!(index, 1);
     });
     window.once("app:pattern-changed", {
       let id = patproj.id.to_string();
@@ -104,7 +103,7 @@ fn test_remove_layer_action() {
       let base64: &str = serde_json::from_str(e.payload()).unwrap();
       let bytes = base64::decode(base64).unwrap();
       let (index, layer): (u32, embroiderly_pattern::Layer) = borsh::from_slice(&bytes).unwrap();
-      assert_eq!(index, 0);
+      assert_eq!(index, 1);
       assert_eq!(layer.name, "Layer 2");
     });
     window.once("app:pattern-changed", {
@@ -117,7 +116,7 @@ fn test_remove_layer_action() {
     assert_eq!(patproj.pattern.layers.len(), 1);
     action.revoke(&window, &mut patproj).unwrap();
     assert_eq!(patproj.pattern.layers.len(), 2);
-    assert_eq!(patproj.pattern.layers[0].name, "Layer 2");
+    assert_eq!(patproj.pattern.layers[1].name, "Layer 2");
   }
 }
 
@@ -250,18 +249,15 @@ fn test_move_layer_action() {
 
   let mut patproj = create_pattern_project();
 
-  // Add a second layer and name both so we can verify order.
-  patproj.pattern.add_layer(embroiderly_pattern::Layer::new("Layer A"));
-  patproj.pattern.layers[1].name = "Layer B".to_string();
+  patproj.pattern.layers.push(embroiderly_pattern::Layer::new("Layer A"));
 
   let action = MoveLayerAction::new(0, 1);
 
   // Test performing the action.
   {
     window.once("layers:move", |e| {
-      let payload: serde_json::Value = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(payload["oldPosition"], 0);
-      assert_eq!(payload["newPosition"], 1);
+      let positions: Vec<u32> = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(positions, vec![0, 1]);
     });
     window.once("app:pattern-changed", {
       let id = patproj.id.to_string();
@@ -271,16 +267,14 @@ fn test_move_layer_action() {
     });
 
     action.perform(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers[0].name, "Layer B");
-    assert_eq!(patproj.pattern.layers[1].name, "Layer A");
+    assert_eq!(patproj.pattern.layers.positions(), &[0, 1]);
   }
 
   // Test revoking the action.
   {
     window.once("layers:move", |e| {
-      let payload: serde_json::Value = serde_json::from_str(e.payload()).unwrap();
-      assert_eq!(payload["oldPosition"], 1);
-      assert_eq!(payload["newPosition"], 0);
+      let positions: Vec<u32> = serde_json::from_str(e.payload()).unwrap();
+      assert_eq!(positions, vec![1, 0]);
     });
     window.once("app:pattern-changed", {
       let id = patproj.id.to_string();
@@ -290,7 +284,6 @@ fn test_move_layer_action() {
     });
 
     action.revoke(&window, &mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers[0].name, "Layer A");
-    assert_eq!(patproj.pattern.layers[1].name, "Layer B");
+    assert_eq!(patproj.pattern.layers.positions(), &[1, 0]);
   }
 }

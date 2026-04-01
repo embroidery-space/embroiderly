@@ -74,15 +74,15 @@ const showRulers = computed({
 });
 
 async function handleRemoveLayer(index: number) {
-  const layer = patternStore.pattern.layers[index];
-  const layerName = layer!.name || fluent.$t("canvas-layers-placeholder", { index: index + 1 });
+  const layer = patternStore.pattern.layers.get(index);
+  const layerName = layer!.name || fluent.$t("canvas-layers-placeholder", { index: layer!.index + 1 });
 
   const accepted = await confirm.open(fluent.$ta("canvas-layers-remove-confirm", { name: layerName })).result;
   if (!accepted) return;
 
   patternStore.removeLayer(index);
-  if (editorStateStore.selectedLayerIndex >= index && editorStateStore.selectedLayerIndex > 0) {
-    editorStateStore.selectedLayerIndex -= 1;
+  if (editorStateStore.selectedLayerIndex === index) {
+    editorStateStore.selectedLayerIndex = patternStore.pattern.layers.positions[0]!;
   }
 }
 
@@ -158,7 +158,7 @@ function handlePanelExpand() {
       <Separator />
       <CanvasLayers
         v-model="editorStateStore.selectedLayerIndex"
-        :layers="patternStore.pattern.layers"
+        :layers="patternStore.pattern.layers.itemsInVisualOrder"
         class="grow"
         @add-layer="patternStore.addLayer"
         @remove-layer="handleRemoveLayer"

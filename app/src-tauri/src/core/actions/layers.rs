@@ -28,11 +28,11 @@ impl<R: tauri::Runtime> Action<R> for AddLayerAction {
   /// Add a new layer to the pattern.
   ///
   /// **Emits:**
-  /// - `layers:add` with the index and the new layer (borsh-encoded).
+  /// - `layers:add` with the actual index and the new layer.
   /// - `app:pattern-changed`.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let layer = Layer::default();
-    let index = patproj.pattern.add_layer(layer.clone()) as u32;
+    let index = patproj.pattern.layers.push(layer.clone());
 
     if self.added_index.get().is_none() {
       self.added_index.set(index).unwrap();
@@ -47,12 +47,12 @@ impl<R: tauri::Runtime> Action<R> for AddLayerAction {
   /// Remove the added layer from the pattern.
   ///
   /// **Emits:**
-  /// - `layers:remove` with the layer index.
+  /// - `layers:remove` with the layer actual index.
   /// - `app:pattern-changed`.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let index = *self.added_index.get().unwrap();
 
-    patproj.pattern.remove_layer(index as usize);
+    patproj.pattern.layers.remove(index);
 
     window.emit("layers:remove", index)?;
     window.emit("app:pattern-changed", patproj.id.to_string())?;
@@ -77,13 +77,13 @@ impl RemoveLayerAction {
 }
 
 impl<R: tauri::Runtime> Action<R> for RemoveLayerAction {
-  /// Remove the layer at the given index from the pattern.
+  /// Remove the layer at the given actual index from the pattern.
   ///
   /// **Emits:**
-  /// - `layers:remove` with the layer index.
+  /// - `layers:remove` with the layer actual index.
   /// - `app:pattern-changed`.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    let layer = patproj.pattern.remove_layer(self.layer_index as usize);
+    let layer = patproj.pattern.layers.remove(self.layer_index);
 
     if self.removed_layer.get().is_none() {
       self.removed_layer.set(layer).unwrap();
@@ -95,7 +95,7 @@ impl<R: tauri::Runtime> Action<R> for RemoveLayerAction {
     Ok(())
   }
 
-  /// Re-insert the removed layer at its original index.
+  /// Re-insert the removed layer at its original actual index.
   ///
   /// **Emits:**
   /// - `layers:add` with `(index, layer)`.
@@ -103,7 +103,7 @@ impl<R: tauri::Runtime> Action<R> for RemoveLayerAction {
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let layer = self.removed_layer.get().unwrap().clone();
 
-    patproj.pattern.layers.insert(self.layer_index as usize, layer.clone());
+    patproj.pattern.layers.insert(self.layer_index, layer.clone());
 
     window.emit("layers:add", base64::encode(borsh::to_vec(&(self.layer_index, layer))?))?;
     window.emit("app:pattern-changed", patproj.id.to_string())?;
@@ -137,13 +137,13 @@ impl RenameLayerAction {
 }
 
 impl<R: tauri::Runtime> Action<R> for RenameLayerAction {
-  /// Renames the layer at the given index.
+  /// Renames the layer at the given actual index.
   ///
   /// **Emits:**
   /// - `layers:rename` with `{ layerIndex, name }`.
   /// - `app:pattern-changed`.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    let layer = &mut patproj.pattern.layers[self.layer_index as usize];
+    let layer = &mut patproj.pattern.layers[self.layer_index];
 
     if self.old_name.get().is_none() {
       self.old_name.set(layer.name.clone()).unwrap();
@@ -170,7 +170,7 @@ impl<R: tauri::Runtime> Action<R> for RenameLayerAction {
   /// - `app:pattern-changed`.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_name = self.old_name.get().unwrap().clone();
-    let layer = &mut patproj.pattern.layers[self.layer_index as usize];
+    let layer = &mut patproj.pattern.layers[self.layer_index];
 
     layer.name.clone_from(&old_name);
 
@@ -280,7 +280,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateLayerVisibilityAction {
   /// - `layers:update_visibility` with `{ layerIndex, visibility }`.
   /// - `app:pattern-changed`.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    let layer = &mut patproj.pattern.layers[self.layer_index as usize];
+    let layer = &mut patproj.pattern.layers[self.layer_index];
 
     if self.old_visibility.get().is_none() {
       self.old_visibility.set(LayerVisibility::from(&*layer)).unwrap();
@@ -307,7 +307,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateLayerVisibilityAction {
   /// - `app:pattern-changed`.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
     let old_visibility = self.old_visibility.get().unwrap();
-    let layer = &mut patproj.pattern.layers[self.layer_index as usize];
+    let layer = &mut patproj.pattern.layers[self.layer_index];
 
     old_visibility.apply_to(layer);
 
@@ -324,17 +324,11 @@ impl<R: tauri::Runtime> Action<R> for UpdateLayerVisibilityAction {
   }
 }
 
-#[derive(Clone, serde::Serialize)]
-#[serde(rename_all = "camelCase")]
-struct MoveLayerEvent {
-  old_position: u32,
-  new_position: u32,
-}
-
 #[derive(Clone)]
 pub struct MoveLayerAction {
   old_position: u32,
   new_position: u32,
+  old_positions: OnceLock<Vec<u32>>,
 }
 
 impl MoveLayerAction {
@@ -342,38 +336,46 @@ impl MoveLayerAction {
     Self {
       old_position,
       new_position,
+      old_positions: OnceLock::new(),
     }
   }
 }
 
 impl<R: tauri::Runtime> Action<R> for MoveLayerAction {
+  /// Moves a layer from one visual position to another.
+  ///
+  /// **Emits:**
+  /// - `layers:move` with the new positions array.
+  /// - `app:pattern-changed`.
   fn perform(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    patproj
-      .pattern
-      .move_layer(self.old_position as usize, self.new_position as usize);
-    window.emit(
-      "layers:move",
-      MoveLayerEvent {
-        old_position: self.old_position,
-        new_position: self.new_position,
-      },
-    )?;
+    if self.old_positions.get().is_none() {
+      self
+        .old_positions
+        .set(patproj.pattern.layers.positions().to_vec())
+        .unwrap();
+    }
+
+    let new_positions = patproj.pattern.layers.move_layer(self.old_position, self.new_position);
+
+    window.emit("layers:move", new_positions)?;
     window.emit("app:pattern-changed", patproj.id.to_string())?;
+
     Ok(())
   }
 
+  /// Restores the previous visual order.
+  ///
+  /// **Emits:**
+  /// - `layers:move` with the restored positions array.
+  /// - `app:pattern-changed`.
   fn revoke(&self, window: &WebviewWindow<R>, patproj: &mut PatternProject) -> Result<()> {
-    patproj
-      .pattern
-      .move_layer(self.new_position as usize, self.old_position as usize);
-    window.emit(
-      "layers:move",
-      MoveLayerEvent {
-        old_position: self.new_position,
-        new_position: self.old_position,
-      },
-    )?;
+    let old_positions = self.old_positions.get().unwrap();
+
+    patproj.pattern.layers.set_positions(old_positions.clone());
+
+    window.emit("layers:move", old_positions)?;
     window.emit("app:pattern-changed", patproj.id.to_string())?;
+
     Ok(())
   }
 }
