@@ -159,7 +159,7 @@ describe("CanvasLayers", () => {
 
     // In stitch layers, there are no chevron buttons for expanding/collapsing layers.
     // Therefore, there is only one button which is the visibility toggle button.
-    await userEvent.click(screen.getByRole("treeitem", { name: "Full Stitches" }).getByRole("button"));
+    await userEvent.click(screen.getByRole("treeitem", { name: "Full Stitches", exact: true }).getByRole("button"));
 
     expect(onToggleLayerVisibility).toHaveBeenCalledTimes(1);
     expect(onToggleLayerVisibility).toHaveBeenCalledWith(0, {

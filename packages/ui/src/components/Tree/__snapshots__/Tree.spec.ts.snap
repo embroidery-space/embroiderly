@@ -3,18 +3,18 @@
 exports[`Tree > renders correctly with class 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] custom-class list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
       </div>
     </li>
@@ -25,8 +25,8 @@ exports[`Tree > renders correctly with class 1`] = `
 exports[`Tree > renders correctly with defaultExpanded item 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-expanded="true" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-expanded data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-expanded="true" aria-level="1" aria-selected="false" data-expanded data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 1</span>
         <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rotate-180 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
           <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -35,25 +35,25 @@ exports[`Tree > renders correctly with defaultExpanded item 1`] = `
         </button>
       </div>
       <ul class="before:absolute before:bg-border before:inset-y-0 before:left-[calc(var(--tree-indent)*0.75)] before:pointer-events-none before:w-px list-none mt-0.5 ps-(--tree-indent) relative space-y-0.5" data-slot="list">
-        <li index="0" item="[object Object]" level="2">
-          <div aria-level="2" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="2" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+        <li aria-level="2" aria-selected="false" data-indent="2" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+          <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
             <span class="flex-1 text-left truncate" data-slot="itemLabel">Child 1</span>
           </div>
         </li>
-        <li index="1" item="[object Object]" level="2">
-          <div aria-level="2" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="2" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+        <li aria-level="2" aria-selected="false" data-indent="2" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+          <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
             <span class="flex-1 text-left truncate" data-slot="itemLabel">Child 2</span>
           </div>
         </li>
       </ul>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-expanded="false" aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 3</span>
         <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
           <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -69,18 +69,18 @@ exports[`Tree > renders correctly with defaultExpanded item 1`] = `
 exports[`Tree > renders correctly with disabled tree 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
       </div>
     </li>
@@ -91,8 +91,8 @@ exports[`Tree > renders correctly with disabled tree 1`] = `
 exports[`Tree > renders correctly with dynamic slot 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-expanded="false" aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 1</span>
         <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
           <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -101,13 +101,13 @@ exports[`Tree > renders correctly with dynamic slot 1`] = `
         </button>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">Custom slot content</div>
+    <li aria-expanded="false" aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">Custom slot content</div>
     </li>
   </ul>
 </div>
@@ -116,18 +116,18 @@ exports[`Tree > renders correctly with dynamic slot 1`] = `
 exports[`Tree > renders correctly with flat items 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
       </div>
     </li>
@@ -138,16 +138,16 @@ exports[`Tree > renders correctly with flat items 1`] = `
 exports[`Tree > renders correctly with icons 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-muted" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
         </svg>
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Icon Item</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-muted" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
             <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
@@ -164,8 +164,8 @@ exports[`Tree > renders correctly with icons 1`] = `
 exports[`Tree > renders correctly with item defaultExpanded true 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-expanded="true" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-expanded data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-expanded="true" aria-level="1" aria-selected="false" data-expanded data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Auto Expanded</span>
         <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rotate-180 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
           <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -174,8 +174,8 @@ exports[`Tree > renders correctly with item defaultExpanded true 1`] = `
         </button>
       </div>
       <ul class="before:absolute before:bg-border before:inset-y-0 before:left-[calc(var(--tree-indent)*0.75)] before:pointer-events-none before:w-px list-none mt-0.5 ps-(--tree-indent) relative space-y-0.5" data-slot="list">
-        <li index="0" item="[object Object]" level="2">
-          <div aria-level="2" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="2" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+        <li aria-level="2" aria-selected="false" data-indent="2" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+          <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
             <span class="flex-1 text-left truncate" data-slot="itemLabel">Child</span>
           </div>
         </li>
@@ -188,14 +188,14 @@ exports[`Tree > renders correctly with item defaultExpanded true 1`] = `
 exports[`Tree > renders correctly with item slot 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">Custom: Item 1</div>
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">Custom: Item 1</div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">Custom: Item 2</div>
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">Custom: Item 2</div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">Custom: Item 3</div>
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">Custom: Item 3</div>
     </li>
   </ul>
 </div>
@@ -204,18 +204,18 @@ exports[`Tree > renders correctly with item slot 1`] = `
 exports[`Tree > renders correctly with item-label slot 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Label: Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Label: Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Label: Item 3</span>
       </div>
     </li>
@@ -226,16 +226,16 @@ exports[`Tree > renders correctly with item-label slot 1`] = `
 exports[`Tree > renders correctly with item-leading slot 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">Leading<span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">Leading<span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">Leading<span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">Leading<span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">Leading<span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">Leading<span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
       </div>
     </li>
   </ul>
@@ -245,18 +245,18 @@ exports[`Tree > renders correctly with item-leading slot 1`] = `
 exports[`Tree > renders correctly with item-trailing slot 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>Trailing
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>Trailing
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>Trailing
       </div>
     </li>
@@ -267,8 +267,8 @@ exports[`Tree > renders correctly with item-trailing slot 1`] = `
 exports[`Tree > renders correctly with nested items 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-expanded="false" aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 1</span>
         <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
           <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -277,13 +277,13 @@ exports[`Tree > renders correctly with nested items 1`] = `
         </button>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-expanded="false" aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-expanded="false" aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Parent 3</span>
         <button aria-disabled="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 duration-200 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center p-1 rounded-md size-4 text-default text-xs transition-transform" data-slot="itemChevron" tabindex="-1">
           <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -301,18 +301,18 @@ exports[`Tree > renders correctly with scroll 1`] = `
   <div class="overflow-hidden relative" data-slot="root" dir="ltr">
     <div class="pr-3 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
       <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-        <li index="0" item="[object Object]" level="1">
-          <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+        <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+          <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
             <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
           </div>
         </li>
-        <li index="1" item="[object Object]" level="1">
-          <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+        <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+          <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
             <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
           </div>
         </li>
-        <li index="2" item="[object Object]" level="1">
-          <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+        <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+          <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
             <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
           </div>
         </li>
@@ -329,18 +329,18 @@ exports[`Tree > renders correctly with scroll 1`] = `
 exports[`Tree > renders correctly with size lg 1`] = `
 <div>
   <ul class="[--tree-indent:1.5rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-3 py-2 rounded-md text-base text-default" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-3 py-2 rounded-md text-base text-default" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-3 py-2 rounded-md text-base text-default" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-3 py-2 rounded-md text-base text-default" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-3 py-2 rounded-md text-base text-default" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-3 py-2 rounded-md text-base text-default" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
       </div>
     </li>
@@ -351,18 +351,18 @@ exports[`Tree > renders correctly with size lg 1`] = `
 exports[`Tree > renders correctly with size md 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
       </div>
     </li>
@@ -373,18 +373,18 @@ exports[`Tree > renders correctly with size md 1`] = `
 exports[`Tree > renders correctly with size sm 1`] = `
 <div>
   <ul class="[--tree-indent:1rem] list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2 py-1 rounded-md text-default text-xs" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2 py-1 rounded-md text-default text-xs" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2 py-1 rounded-md text-default text-xs" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2 py-1 rounded-md text-default text-xs" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2 py-1 rounded-md text-default text-xs" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2 py-1 rounded-md text-default text-xs" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
       </div>
     </li>
@@ -395,18 +395,18 @@ exports[`Tree > renders correctly with size sm 1`] = `
 exports[`Tree > renders correctly with ui 1`] = `
 <div>
   <ul class="[--tree-indent:1.25rem] custom-root list-none select-none space-y-0.5 w-full" data-orientation="vertical" data-slot="root" dir="ltr" role="tree" tabindex="0">
-    <li index="0" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer custom-item data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="0" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer custom-item data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 1</span>
       </div>
     </li>
-    <li index="1" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer custom-item data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="1" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer custom-item data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 2</span>
       </div>
     </li>
-    <li index="2" item="[object Object]" level="1">
-      <div aria-level="1" aria-selected="false" class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer custom-item data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-indent="1" data-orientation="vertical" data-reka-collection-item data-slot="item" role="treeitem" tabindex="-1">
+    <li aria-level="1" aria-selected="false" data-indent="1" data-orientation="vertical" data-reka-collection-item index="2" item="[object Object]" role="treeitem" tabindex="-1">
+      <div class="aria-disabled:cursor-not-allowed aria-disabled:opacity-75 cursor-pointer custom-item data-ancestor-selected:bg-elevated data-selected:bg-elevated flex focus-visible:outline-2 focus-visible:outline-inverted gap-1.5 hover:bg-elevated items-center px-2.5 py-1.5 rounded-md text-default text-sm" data-slot="item">
         <span class="flex-1 text-left truncate" data-slot="itemLabel">Item 3</span>
       </div>
     </li>
