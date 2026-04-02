@@ -154,11 +154,12 @@ function handlePanelExpand() {
       :tooltip-options="{ content: { side: 'left' } }"
     />
 
-    <template v-if="!collapsed && patternStore.pattern.layers.length">
+    <template v-if="!collapsed">
       <Separator />
       <CanvasLayers
         v-model="editorStateStore.selectedLayerIndex"
         :layers="patternStore.pattern.layers.itemsInVisualOrder"
+        :disabled="disabled"
         class="grow"
         @add-layer="patternStore.addLayer"
         @remove-layer="handleRemoveLayer"

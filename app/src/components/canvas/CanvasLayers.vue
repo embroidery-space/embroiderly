@@ -34,6 +34,7 @@ interface LayerTreeItem extends TreeItem {
 
 export interface CanvasLayersProps {
   layers: Layer[];
+  disabled?: boolean;
 }
 
 export interface CanvasLayersEmits {
@@ -189,14 +190,15 @@ watchEffect(() => {
 <template>
   <div ref="tree-container" class="flex min-h-0 flex-col gap-1">
     <div class="flex items-center gap-1">
-      <IconLayers class="m-2 size-5 shrink-0" />
-      <span class="ms-1 flex-1 font-medium">{{ $t("canvas-layers") }}</span>
+      <IconLayers class="m-2 size-5 shrink-0" :class="{ 'opacity-75': disabled }" />
+      <span class="ms-1 flex-1 font-medium" :class="{ 'opacity-75': disabled }">{{ $t("canvas-layers") }}</span>
 
       <ButtonIcon
         color="neutral"
         variant="ghost"
         size="lg"
         :icon="IconPlus"
+        :disabled="disabled"
         :tooltip="$t('canvas-layers-add')"
         @click="$emit('addLayer')"
       />
@@ -205,17 +207,18 @@ watchEffect(() => {
         variant="ghost"
         size="lg"
         :icon="IconTrash"
-        :disabled="layers.length <= 1"
+        :disabled="disabled || layers.length <= 1"
         :tooltip="$t('canvas-layers-remove', { name: selectedLayerDisplayName })"
         @click="emits('removeLayer', modelValue)"
       />
     </div>
 
-    <ContextMenu :items="contextMenuItems">
+    <ContextMenu :items="contextMenuItems" :disabled="disabled">
       <Tree
         :items="layerItems"
         :default-value="selectedLayerItem"
         :scroll="{ type: 'hover' }"
+        :disabled="disabled"
         size="lg"
         selection-behavior="replace"
       >

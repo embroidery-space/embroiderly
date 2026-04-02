@@ -3,11 +3,10 @@ import { describe, expect, test } from "vitest";
 import { Layer, Layers } from "./layers.ts";
 
 describe("Layers", () => {
-  test("creates with one default layer when no data provided", () => {
+  test("creates with no layers when no data provided", () => {
     const layers = new Layers();
-    expect(layers.length).toBe(1);
-    expect(layers.positions).toEqual([0]);
-    expect(layers.get(0)?.index).toBe(0);
+    expect(layers.length).toBe(0);
+    expect(layers.positions).toEqual([]);
   });
 
   test("returns layers in visual order", () => {

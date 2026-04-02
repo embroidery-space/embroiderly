@@ -131,8 +131,8 @@ export class Layers {
       this.#items = data;
       this.#positions = data.map((_, i) => i);
     } else {
-      this.#items = data?.items.map((item, index) => new Layer(index, item)) ?? [new Layer(0)];
-      this.#positions = data?.positions ?? [0];
+      this.#items = data?.items.map((item, index) => new Layer(index, item)) ?? [];
+      this.#positions = data?.positions ?? [];
     }
   }
 
