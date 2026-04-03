@@ -182,6 +182,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
     >
       <div
         data-slot="item"
+        :data-selected="isSelected || undefined"
         :data-ancestor-selected="selectedAncestors.has(item.value ?? item.label) || undefined"
         :class="ui.item({ class: props.ui?.item })"
       >
