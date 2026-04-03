@@ -174,19 +174,19 @@ export class Pattern extends EventTarget {
   }
 
   get fullstitches() {
-    return this.#layers.get(0)!.fullstitches;
+    return this.#layers.get(0)?.fullstitches ?? [];
   }
   get partstitches() {
-    return this.#layers.get(0)!.partstitches;
+    return this.#layers.get(0)?.partstitches ?? [];
   }
   get linestitches() {
-    return this.#layers.get(0)!.linestitches;
+    return this.#layers.get(0)?.linestitches ?? [];
   }
   get nodestitches() {
-    return this.#layers.get(0)!.nodestitches;
+    return this.#layers.get(0)?.nodestitches ?? [];
   }
   get specialstitches() {
-    return this.#layers.get(0)!.specialstitches;
+    return this.#layers.get(0)?.specialstitches ?? [];
   }
   get specialStitchModels() {
     return this.#specialStitchModels;
