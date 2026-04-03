@@ -92,5 +92,5 @@ export {
   type DropdownMenuSlots,
   type DropdownMenuItem,
 } from "./DropdownMenu/DropdownMenu.vue";
-export { default as Popover, type PopoverProps, type PopoverEmits, type PopoverSlots } from "./Popover/Popover.vue";
+export { default as Popover, type PopoverProps, type PopoverSlots } from "./Popover/Popover.vue";
 export { default as Tooltip, type TooltipProps, type TooltipEmits, type TooltipSlots } from "./Tooltip/Tooltip.vue";

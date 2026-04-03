@@ -1,11 +1,28 @@
 <script setup lang="ts">
-import { Separator, SplitterPanel, ToolToggle, ToolToggleGroup, useConfirm } from "@embroiderly/ui";
+import {
+  ButtonIcon,
+  Popover,
+  Separator,
+  SplitterPanel,
+  ToolToggle,
+  ToolToggleGroup,
+  useConfirm,
+} from "@embroiderly/ui";
 import type { SplitterPanelProps, SplitterPanelEmits, ToolToggleItem } from "@embroiderly/ui";
 
 import { useForwardPropsEmits } from "reka-ui";
 import { computed, ref, useTemplateRef, watch } from "vue";
 
-import { IconSymbols, IconGrid, IconRulers, IconStitchFull, IconStitchSquare, IconStitchMix } from "~/assets/icons/";
+import {
+  IconClose,
+  IconGrid,
+  IconLayers,
+  IconRulers,
+  IconStitchFull,
+  IconStitchMix,
+  IconStitchSquare,
+  IconSymbols,
+} from "~/assets/icons/";
 import { CanvasLayers } from "~/components/canvas/";
 import { useI18n } from "~/composables/";
 import { DisplayMode } from "~/lib/pattern/";
@@ -154,19 +171,52 @@ function handlePanelExpand() {
       :tooltip-options="{ content: { side: 'left' } }"
     />
 
-    <template v-if="!collapsed">
-      <Separator />
-      <CanvasLayers
-        v-model="editorStateStore.selectedLayerIndex"
-        :layers="patternStore.pattern.layers.itemsInVisualOrder"
-        :disabled="disabled"
-        class="grow"
-        @add-layer="patternStore.addLayer"
-        @remove-layer="handleRemoveLayer"
-        @rename-layer="patternStore.renameLayer"
-        @toggle-layer-visibility="patternStore.updateLayerVisibility"
-        @move-layer="patternStore.moveLayer"
-      />
-    </template>
+    <Separator />
+
+    <CanvasLayers
+      v-if="!collapsed"
+      v-model="editorStateStore.selectedLayerIndex"
+      :layers="patternStore.pattern.layers.itemsInVisualOrder"
+      :disabled="disabled"
+      class="grow"
+      @add-layer="patternStore.addLayer"
+      @remove-layer="handleRemoveLayer"
+      @rename-layer="patternStore.renameLayer"
+      @toggle-layer-visibility="patternStore.updateLayerVisibility"
+      @move-layer="patternStore.moveLayer"
+    />
+    <Popover
+      v-else
+      pinned
+      arrow
+      :content="{ side: 'left', align: 'start', sideOffset: 0 }"
+      class="flex h-[calc(100vh*0.415)] w-64 p-1"
+    >
+      <template #default="{ open }">
+        <ButtonIcon
+          size="lg"
+          color="neutral"
+          :variant="open ? 'soft' : 'ghost'"
+          :icon="open ? IconClose : IconLayers"
+          :disabled="disabled"
+          :tooltip="$t('canvas-layers')"
+          :tooltip-options="{ content: { side: 'left' } }"
+        />
+      </template>
+
+      <template #content>
+        <CanvasLayers
+          v-model="editorStateStore.selectedLayerIndex"
+          :layers="patternStore.pattern.layers.itemsInVisualOrder"
+          :disabled="disabled"
+          class="w-full"
+          @add-layer="patternStore.addLayer"
+          @remove-layer="handleRemoveLayer"
+          @rename-layer="patternStore.renameLayer"
+          @toggle-layer-visibility="patternStore.updateLayerVisibility"
+          @move-layer="patternStore.moveLayer"
+        />
+      </template>
+    </Popover>
   </SplitterPanel>
 </template>
