@@ -8,31 +8,69 @@ on:
   schedule:
     - cron: "0 12 * * 1" # Run at 12:00 UTC every Monday
 permissions:
-  security-events: write
-  contents: read
   actions: read
+  contents: read
+  pull-requests: read
+  security-events: write
 concurrency:
   group: ${{ github.ref }}-codeql
   cancel-in-progress: true
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  analyze:
-    # Skip CodeQL on dependency update branches.
+  prepare:
+    runs-on: ubuntu-latest
     if: |
       startsWith(github.head_ref, 'dependabot/') == false
       && github.head_ref != 'dependency-updates'
+    outputs:
+      matrix: ${{ steps.build-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Check for file changes
+        id: changes
+        uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+        with:
+          filters: |
+            actions:
+              - '.github/workflows/**'
+              - '.github/actions/**'
+            javascript:
+              - '**/*.{js,ts,vue}'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+            rust:
+              - '**/*.rs'
+              - 'Cargo.toml'
+              - 'Cargo.lock'
+      - name: Build Dynamic Matrix
+        id: build-matrix
+        run: |
+          # If this is our weekly schedule, force-run all languages.
+          if [ "${{ github.event_name }}" == "schedule" ]; then
+            echo 'matrix=[{"language":"actions","build-mode":"none"},{"language":"javascript-typescript","build-mode":"none"},{"language":"rust","build-mode":"none"}]' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Otherwise, construct the matrix based on what changed.
+          MATRIX=""
+          [ "${{ steps.changes.outputs.actions }}" == "true" ] && MATRIX+='{"language":"actions","build-mode":"none"},'
+          [ "${{ steps.changes.outputs.javascript }}" == "true" ] && MATRIX+='{"language":"javascript-typescript","build-mode":"none"},'
+          [ "${{ steps.changes.outputs.rust }}" == "true" ] && MATRIX+='{"language":"rust","build-mode":"none"},'
+
+          # Remove the trailing comma and construct the array.
+          MATRIX="[${MATRIX%,}]"
+
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+  analyze:
+    needs: prepare
+    if: ${{ needs.prepare.outputs.matrix != '[]' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - language: actions
-            build-mode: none
-          - language: javascript-typescript
-            build-mode: none
-          - language: rust
-            build-mode: none
+        include: ${{ fromJSON(needs.prepare.outputs.matrix) }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Initialize CodeQL
