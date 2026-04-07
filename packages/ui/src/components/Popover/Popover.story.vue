@@ -7,14 +7,11 @@ import Popover from "./Popover.vue";
 import type { PopoverProps } from "./Popover.vue";
 
 const sides = ["top", "right", "bottom", "left"] as const;
+const aligns = ["start", "center", "end"] as const;
 
 const state = reactive<PopoverProps>({
-  content: {
-    side: "bottom",
-    sideOffset: 4,
-  },
-
-  arrow: false,
+  side: "bottom",
+  align: "center",
   modal: false,
 });
 
@@ -32,10 +29,9 @@ defineExpose({ state });
       </Popover>
 
       <template #controls>
-        <HstSelect v-model="state.content!.side" title="Side" :options="sides" />
-        <HstNumber v-model="state.content!.sideOffset" title="Side Offset" />
+        <HstSelect v-model="state.side" title="Side" :options="sides" />
+        <HstSelect v-model="state.align" title="Align" :options="aligns" />
 
-        <HstCheckbox v-model="state.arrow" title="Arrow" />
         <HstCheckbox v-model="state.modal" title="Modal" />
       </template>
     </Variant>

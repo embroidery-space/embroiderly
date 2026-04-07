@@ -45,7 +45,7 @@ function onUpdate(value: string | undefined) {
     @update:model-value="onUpdate"
   >
     <template #leading>
-      <Popover v-bind="popover" :content="{ sideOffset: 12 }" class="p-4">
+      <Popover v-bind="popover" class="p-4">
         <Button
           square
           :size="size"

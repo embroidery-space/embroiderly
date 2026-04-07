@@ -7,15 +7,14 @@ import Tooltip from "./Tooltip.vue";
 import type { TooltipProps } from "./Tooltip.vue";
 
 const sides = ["top", "right", "bottom", "left"] as const;
+const aligns = ["start", "center", "end"] as const;
 
 const state = reactive<TooltipProps>({
   text: "Lorem ipsum",
   shortcut: "Ctrl+B",
 
-  content: {
-    side: "bottom",
-    sideOffset: 4,
-  },
+  side: "bottom",
+  align: "center",
 
   delayDuration: 200,
 
@@ -36,8 +35,8 @@ defineExpose({ state });
         <HstText v-model="state.text" title="text" />
         <HstText v-model="state.shortcut" title="shortcut" />
 
-        <HstSelect v-model="state.content!.side" title="Variant" :options="sides" />
-        <HstNumber v-model="state.content!.sideOffset" title="Side Offset" />
+        <HstSelect v-model="state.side" title="Side" :options="sides" />
+        <HstSelect v-model="state.align" title="Align" :options="aligns" />
 
         <HstNumber v-model="state.delayDuration" title="Delay Duration" />
 

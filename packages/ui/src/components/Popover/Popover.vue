@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactivePick } from "@vueuse/core";
-import defu from "defu";
 import { useForwardPropsEmits } from "reka-ui";
 import type { PopoverContentProps, PopoverRootEmits, PopoverRootProps } from "reka-ui";
 import { Popover } from "reka-ui/namespaced";
@@ -13,16 +12,15 @@ import type { PopoverThemeSlots } from "./Popover.theme.ts";
 
 export interface PopoverProps extends PopoverRootProps {
   /**
-   * The content of the popover.
-   * @default { side: "bottom", sideOffset: 4, collisionPadding: 4 }
+   * The preferred side of the trigger to render against when open.
+   * @default "bottom"
    */
-  content?: Omit<PopoverContentProps, "as" | "asChild">;
-
+  side?: PopoverContentProps["side"];
   /**
-   * Display an arrow alongside the popover.
-   * @default false
+   * The preferred alignment against the trigger.
+   * @default "center"
    */
-  arrow?: boolean;
+  align?: PopoverContentProps["align"];
 
   /**
    * Render the popover in a portal.
@@ -43,21 +41,21 @@ export interface PopoverSlots {
 }
 
 const props = withDefaults(defineProps<PopoverProps>(), {
+  side: "bottom",
+  align: "center",
+
   portal: true,
-  arrow: false,
 });
 const emits = defineEmits<PopoverEmits>();
 defineSlots<PopoverSlots>();
 
 const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen", "modal"), emits);
-const contentProps = computed(
-  () =>
-    defu(props.content, {
-      side: "bottom",
-      sideOffset: 4,
-      collisionPadding: 4,
-    }) as PopoverContentProps,
-);
+const contentProps = computed<PopoverContentProps>(() => ({
+  side: props.side,
+  align: props.align,
+  sideOffset: 0,
+  collisionPadding: 4,
+}));
 const portalProps = usePortal(toRef(() => props.portal));
 
 // eslint-disable-next-line vue/no-dupe-keys
@@ -77,7 +75,7 @@ const ui = PopoverTheme();
         :class="ui.content({ class: [props.ui?.content, props.class] })"
       >
         <slot name="content" :close="close" />
-        <Popover.Arrow v-if="arrow" data-slot="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
+        <Popover.Arrow data-slot="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
       </Popover.Content>
     </Popover.Portal>
   </Popover.Root>

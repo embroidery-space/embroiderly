@@ -13,12 +13,7 @@ const { paletteItem, selected, displaySettings } = defineProps<PaletteItemProps>
 </script>
 
 <template>
-  <Tooltip
-    :text="paletteItem.getTitle()"
-    :delay-duration="200"
-    :content="{ side: 'left' }"
-    :ui="{ content: 'text-base' }"
-  >
+  <Tooltip :text="paletteItem.getTitle()" :delay-duration="200" side="left" :ui="{ content: 'text-base' }">
     <div
       class="flex min-h-8 items-center rounded-md px-2 py-1 outline-2 -outline-offset-4 outline-solid data-highlighted:ring-2 data-highlighted:ring-primary"
       :style="{

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactivePick } from "@vueuse/core";
-import defu from "defu";
 import { useForwardPropsEmits } from "reka-ui";
 import type { TooltipContentProps, TooltipRootEmits, TooltipRootProps } from "reka-ui";
 import { Tooltip } from "reka-ui/namespaced";
@@ -20,10 +19,15 @@ export interface TooltipProps extends TooltipRootProps {
   shortcut?: string;
 
   /**
-   * The content of the tooltip.
-   * @default { side: "bottom", sideOffset: 4, collisionPadding: 4 }
+   * The preferred side of the trigger to render against when open.
+   * @default "bottom"
    */
-  content?: Omit<TooltipContentProps, "as" | "asChild">;
+  side?: TooltipContentProps["side"];
+  /**
+   * The preferred alignment against the trigger.
+   * @default "center"
+   */
+  align?: TooltipContentProps["align"];
 
   /**
    * Render the tooltip in a portal.
@@ -43,6 +47,9 @@ export interface TooltipSlots {
 }
 
 const props = withDefaults(defineProps<TooltipProps>(), {
+  side: "bottom",
+  align: "center",
+
   portal: true,
 });
 const emits = defineEmits<TooltipEmits>();
@@ -60,14 +67,12 @@ const rootProps = useForwardPropsEmits(
   ),
   emits,
 );
-const contentProps = computed(
-  () =>
-    defu(props.content, {
-      side: "bottom",
-      sideOffset: 4,
-      collisionPadding: 4,
-    }) as TooltipContentProps,
-);
+const contentProps = computed<TooltipContentProps>(() => ({
+  side: props.side,
+  align: props.align,
+  sideOffset: 0,
+  collisionPadding: 4,
+}));
 const portalProps = usePortal(toRef(() => props.portal));
 
 // eslint-disable-next-line vue/no-dupe-keys
