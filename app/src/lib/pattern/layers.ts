@@ -126,8 +126,11 @@ export class Layers {
   #items: Layer[];
   #positions: number[];
 
-  constructor(data?: b.infer<typeof Layers.schema> | Layer[]) {
-    if (Array.isArray(data)) {
+  constructor(data?: b.infer<typeof Layers.schema> | Layer[] | Layers) {
+    if (data instanceof Layers) {
+      this.#items = data.#items;
+      this.#positions = data.#positions;
+    } else if (Array.isArray(data)) {
       this.#items = data;
       this.#positions = data.map((_, i) => i);
     } else {

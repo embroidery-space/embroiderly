@@ -56,7 +56,7 @@ export class DisplaySettings {
   showGrid: boolean;
   showRulers: boolean;
 
-  constructor(data?: b.infer<typeof DisplaySettings.schema>) {
+  constructor(data?: Partial<b.infer<typeof DisplaySettings.schema>>) {
     this.grid = new Grid(data?.grid);
     this.displayMode = data?.displayMode ?? DisplayMode.Solid;
     this.showSymbols = data?.showSymbols ?? false;

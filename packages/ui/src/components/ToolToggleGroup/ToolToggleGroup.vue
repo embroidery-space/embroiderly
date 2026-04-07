@@ -101,6 +101,7 @@ const ui = computed(() => {
             :value="item.value"
             v-bind="ariaAttrs"
             :disabled="disabled"
+            :aria-label="item.label ?? item.tooltip"
             data-slot="base"
             :class="ui.base({ class: props.ui?.base })"
           >

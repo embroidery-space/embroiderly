@@ -13,6 +13,6 @@
       "~/*": ["./src/*"]
     },
 
-    "types": ["node", "vitest-browser-vue"]
+    "types": ["node", "vitest-browser-vue", "@tauri-store/pinia"]
   }
 }

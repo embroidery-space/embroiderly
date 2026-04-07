@@ -5,7 +5,7 @@ import { NIL as NIL_UUID, stringify as stringifyUuid } from "uuid";
 import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
 import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
-import { Layers } from "./layers.ts";
+import { Layer, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
 import { FullStitch, PartStitch, LineStitch, SpecialStitchModel } from "./stitches.ts";
@@ -64,34 +64,34 @@ export class Pattern extends EventTarget {
 
   #effectiveDisplayMode: DisplayMode | undefined;
 
-  constructor(data?: b.infer<typeof Pattern.schema>) {
+  constructor(data?: {
+    id?: string | Uint8Array;
+
+    referenceImage?: b.infer<typeof ReferenceImage.schema> | null;
+
+    info?: b.infer<typeof PatternInfo.schema>;
+    fabric?: b.infer<typeof Fabric.schema>;
+    palette?: b.infer<typeof Palette.schema>;
+    layers?: b.infer<typeof Layers.schema> | Layer[] | Layers;
+    specialStitchModels?: b.infer<typeof SpecialStitchModel.schema>[];
+
+    displaySettings?: Partial<b.infer<typeof DisplaySettings.schema>>;
+    publishSettings?: Partial<b.infer<typeof PublishSettings.schema>>;
+  }) {
     super();
 
-    if (data) {
-      this.id = stringifyUuid(new Uint8Array(data.id));
+    this.id = data?.id instanceof Uint8Array ? stringifyUuid(data.id) : (data?.id ?? NIL_UUID);
 
-      if (data.referenceImage) this.#referenceImage = new ReferenceImage(data.referenceImage);
+    if (data?.referenceImage) this.#referenceImage = new ReferenceImage(data.referenceImage);
 
-      this.#info = new PatternInfo(data.info);
-      this.#fabric = new Fabric(data.fabric);
-      this.#palette = new Palette(data.palette);
-      this.#layers = new Layers(data.layers);
-      this.#specialStitchModels = data.specialStitchModels.map((model) => new SpecialStitchModel(model));
+    this.#info = new PatternInfo(data?.info);
+    this.#fabric = new Fabric(data?.fabric);
+    this.#palette = new Palette(data?.palette);
+    this.#layers = new Layers(data?.layers);
+    this.#specialStitchModels = data?.specialStitchModels?.map((model) => new SpecialStitchModel(model)) ?? [];
 
-      this.#displaySettings = new DisplaySettings(data.displaySettings);
-      this.#publishSettings = new PublishSettings(data.publishSettings);
-    } else {
-      this.id = NIL_UUID;
-
-      this.#info = new PatternInfo();
-      this.#fabric = new Fabric();
-      this.#palette = new Palette();
-      this.#layers = new Layers();
-      this.#specialStitchModels = [];
-
-      this.#displaySettings = new DisplaySettings();
-      this.#publishSettings = new PublishSettings();
-    }
+    this.#displaySettings = new DisplaySettings(data?.displaySettings);
+    this.#publishSettings = new PublishSettings(data?.publishSettings);
 
     this.#effectiveDisplayMode = this.#displaySettings.displayMode;
   }
@@ -102,7 +102,7 @@ export class Pattern extends EventTarget {
   }
 
   static readonly schema = b.struct({
-    id: b.array(b.u8(), 16),
+    id: b.bytes(16),
 
     referenceImage: b.option(ReferenceImage.schema),
 

@@ -75,6 +75,7 @@ const ui = computed(() => {
         v-model="modelValue"
         v-bind="ariaAttrs"
         :disabled="disabled"
+        :aria-label="label ?? tooltip"
         data-slot="base"
         :class="ui.base({ class: props.ui?.base })"
       >

@@ -8,7 +8,7 @@ export class ImageExportOptions {
   showGridLineNumbers: boolean;
   showCenteringMarks: boolean;
 
-  constructor(data?: b.infer<typeof ImageExportOptions.schema>) {
+  constructor(data?: Partial<b.infer<typeof ImageExportOptions.schema>>) {
     this.frameSize = data?.frameSize ?? [30, 40];
     this.cellSize = data?.cellSize ?? 14;
     this.preservedOverlap = data?.preservedOverlap ?? 3;
@@ -32,7 +32,7 @@ export class PdfExportOptions {
   enumerateFrames: boolean;
   frameOptions: ImageExportOptions;
 
-  constructor(data?: b.infer<typeof PdfExportOptions.schema>) {
+  constructor(data?: Partial<b.infer<typeof PdfExportOptions.schema>>) {
     this.monochrome = data?.monochrome ?? true;
     this.color = data?.color ?? false;
     this.centerFrames = data?.centerFrames ?? false;
@@ -61,7 +61,7 @@ export class PdfExportOptions {
 export class PublishSettings {
   pdf: PdfExportOptions;
 
-  constructor(data?: b.infer<typeof PublishSettings.schema>) {
+  constructor(data?: Partial<b.infer<typeof PublishSettings.schema>>) {
     this.pdf = new PdfExportOptions(data?.pdf);
   }
 
