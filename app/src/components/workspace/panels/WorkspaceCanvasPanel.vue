@@ -107,7 +107,7 @@ function handlePanelExpand() {
     @expand="handlePanelExpand"
     @resize="editorStateStore.canvasPanelSize = $event"
   >
-    <Popover arrow :content="{ side: 'left', align: 'start' }" :ui="{ content: 'p-2' }">
+    <Popover side="left" align="start" :ui="{ content: 'p-2' }">
       <ButtonIcon
         color="neutral"
         variant="ghost"
@@ -115,7 +115,7 @@ function handlePanelExpand() {
         :disabled="disabled"
         :tooltip="$t('canvas-layers')"
         :delay-duration="200"
-        :content="{ side: 'left' }"
+        side="left"
       />
 
       <template #content>
@@ -130,7 +130,7 @@ function handlePanelExpand() {
       :items="displayModeOptions"
       :disabled="disabled"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'left' } }"
+      :tooltip-options="{ side: 'left' }"
       orientation="vertical"
       class="flex flex-col gap-1"
       @update:model-value="patternStore.setDisplayMode($event as DisplayMode)"
@@ -145,7 +145,7 @@ function handlePanelExpand() {
       :label="collapsed ? undefined : fluent.$t('canvas-symbols')"
       :disabled="disabled"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'left' } }"
+      :tooltip-options="{ side: 'left' }"
     />
 
     <ToolToggle
@@ -155,7 +155,7 @@ function handlePanelExpand() {
       :label="collapsed ? undefined : $t('canvas-grid')"
       :disabled="disabled"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'left' } }"
+      :tooltip-options="{ side: 'left' }"
     />
 
     <ToolToggle
@@ -165,7 +165,7 @@ function handlePanelExpand() {
       :label="collapsed ? undefined : $t('canvas-rulers')"
       :disabled="disabled"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'left' } }"
+      :tooltip-options="{ side: 'left' }"
     />
   </SplitterPanel>
 </template>

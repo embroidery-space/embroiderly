@@ -226,7 +226,7 @@ useShortcuts({
       :disabled="disabled"
       :selection-color="selectionColor"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'right' } }"
+      :tooltip-options="{ side: 'right' }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
@@ -234,7 +234,7 @@ useShortcuts({
       :disabled="disabled"
       :selection-color="selectionColor"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'right' } }"
+      :tooltip-options="{ side: 'right' }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
@@ -242,7 +242,7 @@ useShortcuts({
       :disabled="disabled"
       :selection-color="selectionColor"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'right' } }"
+      :tooltip-options="{ side: 'right' }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
@@ -250,7 +250,7 @@ useShortcuts({
       :disabled="disabled"
       :selection-color="selectionColor"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'right' } }"
+      :tooltip-options="{ side: 'right' }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
@@ -258,7 +258,7 @@ useShortcuts({
       :disabled="disabled"
       :selection-color="selectionColor"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'right' } }"
+      :tooltip-options="{ side: 'right' }"
     />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
@@ -266,7 +266,7 @@ useShortcuts({
       :disabled="disabled"
       :selection-color="selectionColor"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'right' } }"
+      :tooltip-options="{ side: 'right' }"
     />
 
     <Separator decorative />
@@ -276,7 +276,7 @@ useShortcuts({
       :items="cursor"
       :disabled="disabled"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'right' } }"
+      :tooltip-options="{ side: 'right' }"
     />
   </div>
 </template>
