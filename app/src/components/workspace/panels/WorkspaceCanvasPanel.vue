@@ -121,7 +121,7 @@ watch(
       :items="displayModeOptions"
       :disabled="patternStore.pattern.isNil"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'left' } }"
+      :tooltip-options="{ side: 'left' }"
       orientation="vertical"
       class="flex flex-col gap-1"
     />
@@ -135,7 +135,7 @@ watch(
       :label="editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t('canvas-symbols')"
       :disabled="patternStore.pattern.isNil"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'left' } }"
+      :tooltip-options="{ side: 'left' }"
     />
     <ToolToggle
       v-model="showGrid"
@@ -144,7 +144,7 @@ watch(
       :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-grid')"
       :disabled="patternStore.pattern.isNil"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'left' } }"
+      :tooltip-options="{ side: 'left' }"
     />
     <ToolToggle
       v-model="showRulers"
@@ -153,7 +153,7 @@ watch(
       :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-rulers')"
       :disabled="patternStore.pattern.isNil"
       :delay-duration="200"
-      :tooltip-options="{ content: { side: 'left' } }"
+      :tooltip-options="{ side: 'left' }"
     />
 
     <Separator />
@@ -170,13 +170,7 @@ watch(
       @toggle-layer-visibility="patternStore.updateLayerVisibility"
       @move-layer="patternStore.moveLayer"
     />
-    <Popover
-      v-else
-      pinned
-      arrow
-      :content="{ side: 'left', align: 'start', sideOffset: 0 }"
-      class="flex h-[calc(100vh*0.415)] w-64 p-1"
-    >
+    <Popover v-else pinned side="left" align="start" class="flex h-[calc(100vh*0.415)] w-64 p-1">
       <template #default="{ open }">
         <ButtonIcon
           size="lg"
@@ -185,7 +179,7 @@ watch(
           :icon="open ? IconClose : IconLayers"
           :disabled="patternStore.pattern.isNil"
           :tooltip="$t('canvas-layers')"
-          :tooltip-options="{ content: { side: 'left' } }"
+          side="left"
         />
       </template>
 

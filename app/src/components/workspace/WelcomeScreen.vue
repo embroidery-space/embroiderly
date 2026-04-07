@@ -131,7 +131,7 @@ async function openRecentFile(filePath: string) {
               <span class="text-lg">{{ $t("welcome-section-recent") }}</span>
               <div class="flex max-w-max flex-col gap-y-1">
                 <template v-for="filePath in patternFileStore.recentPatterns" :key="filePath">
-                  <Tooltip :text="filePath" :delay-duration="200" :content="{ side: 'right' }">
+                  <Tooltip :text="filePath" :delay-duration="200" side="right">
                     <Button
                       variant="ghost"
                       :icon="IconFile"

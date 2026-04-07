@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { reactivePick } from "@vueuse/core";
 import defu from "defu";
-import type { PopoverContentProps, PopoverRootProps } from "reka-ui";
+import { useForwardPropsEmits } from "reka-ui";
+import type { PopoverContentProps, PopoverRootEmits, PopoverRootProps } from "reka-ui";
 import { Popover } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
@@ -9,12 +11,17 @@ import { usePortal } from "../../composables/usePortal.ts";
 import { PopoverTheme } from "./Popover.theme.ts";
 import type { PopoverThemeSlots } from "./Popover.theme.ts";
 
-export interface PopoverProps extends Pick<PopoverRootProps, "defaultOpen" | "modal"> {
+export interface PopoverProps extends PopoverRootProps {
   /**
-   * Display an arrow alongside the popover.
-   * @default false
+   * The preferred side of the trigger to render against when open.
+   * @default "bottom"
    */
-  arrow?: boolean;
+  side?: PopoverContentProps["side"];
+  /**
+   * The preferred alignment against the trigger.
+   * @default "center"
+   */
+  align?: PopoverContentProps["align"];
 
   /**
    * The content of the popover.
@@ -39,16 +46,23 @@ export interface PopoverSlots {
 
 const open = defineModel<boolean>("open", { default: false });
 const pinned = defineModel<boolean>("pinned", { default: false });
+
 const props = withDefaults(defineProps<PopoverProps>(), {
-  arrow: false,
+  side: "bottom",
+  align: "center",
+
   portal: true,
 });
+
+const emits = defineEmits<PopoverRootEmits>();
 defineSlots<PopoverSlots>();
 
-const contentProps = computed(
+const rootProps = useForwardPropsEmits(reactivePick(props, "defaultOpen", "modal"), emits);
+const contentProps = computed<PopoverContentProps>(
   () =>
     defu(props.content, {
-      side: "bottom",
+      side: props.side,
+      align: props.align,
       sideOffset: 4,
       collisionPadding: 4,
     }) as PopoverContentProps,
@@ -60,7 +74,7 @@ const ui = PopoverTheme();
 </script>
 
 <template>
-  <Popover.Root v-slot="{ close }" v-model:open="open" :default-open="defaultOpen" :modal="modal">
+  <Popover.Root v-bind="rootProps" v-model:open="open">
     <Popover.Trigger as-child>
       <slot :open="open" :pinned="pinned" />
     </Popover.Trigger>
@@ -74,8 +88,13 @@ const ui = PopoverTheme();
         @interact-outside="pinned && $event.preventDefault()"
         @focus-outside="pinned && $event.preventDefault()"
       >
-        <slot name="content" :pin="() => (pinned = true)" :unpin="() => (pinned = false)" :close="close" />
-        <Popover.Arrow v-if="arrow" data-slot="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
+        <slot
+          name="content"
+          :pin="() => (pinned = true)"
+          :unpin="() => (pinned = false)"
+          :close="() => (open = false)"
+        />
+        <Popover.Arrow data-slot="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
       </Popover.Content>
     </Popover.Portal>
   </Popover.Root>
