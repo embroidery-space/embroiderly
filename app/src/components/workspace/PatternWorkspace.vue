@@ -125,14 +125,14 @@ function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorT
         const palindex = editorStateStore.selectedPaletteItemIndex;
         if (palindex !== undefined) {
           stitch.palindex = palindex;
-          await patternStore.addStitch(stitch);
+          await patternStore.addStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
       async removeStitch(stitch) {
         const palindex = editorStateStore.selectedPaletteItemIndex;
         if (palindex !== undefined) {
           stitch.palindex = palindex;
-          await patternStore.removeStitch(stitch);
+          await patternStore.removeStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
 

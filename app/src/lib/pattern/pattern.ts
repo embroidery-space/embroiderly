@@ -2,6 +2,8 @@ import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 import { NIL as NIL_UUID, stringify as stringifyUuid } from "uuid";
 
+import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
+
 import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
 import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
@@ -173,59 +175,63 @@ export class Pattern extends EventTarget {
     return this.#layers;
   }
 
-  get fullstitches() {
-    return this.#layers.get(0)?.fullstitches ?? [];
-  }
-  get partstitches() {
-    return this.#layers.get(0)?.partstitches ?? [];
-  }
-  get linestitches() {
-    return this.#layers.get(0)?.linestitches ?? [];
-  }
-  get nodestitches() {
-    return this.#layers.get(0)?.nodestitches ?? [];
-  }
-  get specialstitches() {
-    return this.#layers.get(0)?.specialstitches ?? [];
-  }
   get specialStitchModels() {
     return this.#specialStitchModels;
   }
 
-  /**
-   * Adds a stitch to the pattern.
-   * Fires `stitch:add` event.
-   * @param stitch The stitch to add.
-   */
-  addStitch(stitch: Stitch) {
-    const layer = this.#layers.get(0)!;
+  /** Adds a stitch to the pattern on the given layer. */
+  addStitch(layerIndex: number, stitch: Stitch) {
+    const layer = this.#layers.get(layerIndex)!;
+
     if (stitch instanceof FullStitch) layer.fullstitches.push(stitch);
     else if (stitch instanceof PartStitch) layer.partstitches.push(stitch);
     else if (stitch instanceof LineStitch) layer.linestitches.push(stitch);
     else layer.nodestitches.push(stitch);
 
-    this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: stitch }));
+    this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: { layerIndex, stitch } }));
   }
 
-  /**
-   * Removes a stitch from the pattern.
-   * Fires `stitch:remove` event.
-   * @param stitch The stitch to remove.
-   */
-  removeStitch(stitch: Stitch) {
+  /** Removes a stitch from the pattern on the given layer. */
+  removeStitch(layerIndex: number, stitch: Stitch) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function removeStitchFromArray(array: any[], stitch: any) {
       const index = array.findIndex((item) => item.equals(stitch));
       if (index !== -1) array.splice(index, 1);
     }
 
-    const layer = this.#layers.get(0)!;
+    const layer = this.#layers.get(layerIndex)!;
+
     if (stitch instanceof FullStitch) removeStitchFromArray(layer.fullstitches, stitch);
     else if (stitch instanceof PartStitch) removeStitchFromArray(layer.partstitches, stitch);
     else if (stitch instanceof LineStitch) removeStitchFromArray(layer.linestitches, stitch);
     else removeStitchFromArray(layer.nodestitches, stitch);
 
-    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: stitch }));
+    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: { layerIndex, stitch } }));
+  }
+
+  /** Inserts a layer. */
+  insertLayer(index: number, layer: Layer) {
+    this.#layers.insert(index, layer);
+    this.dispatchEvent(new CustomEvent(PatternEvent.AddLayer, { detail: { index, layer } }));
+  }
+
+  /** Removes a layer. */
+  removeLayer(index: number) {
+    this.#layers.remove(index);
+    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveLayer, { detail: index }));
+  }
+
+  /** Updates layer visibility. */
+  updateLayerVisibility(layerIndex: number, visibility: LayerVisibility) {
+    const layer = this.#layers.get(layerIndex);
+    if (layer) layer.setVisibility(visibility);
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateLayerVisibility, { detail: { layerIndex, visibility } }));
+  }
+
+  /** Reorders layers. */
+  moveLayer(positions: number[]) {
+    this.#layers.positions = positions;
+    this.dispatchEvent(new CustomEvent(PatternEvent.MoveLayer, { detail: positions }));
   }
 
   get displaySettings() {

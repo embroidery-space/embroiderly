@@ -22,7 +22,7 @@ import {
   DisplaySettings,
   PdfExportOptions,
   PatternInfo,
-  deserializeStitches,
+  deserializeStitchesEvent,
 } from "~/lib/pattern/";
 import type { Stitch } from "~/lib/pattern/";
 
@@ -165,11 +165,11 @@ export const usePatternStore = defineStore(
     }
     appWindow.listen<string>(PatternEvent.AddLayer, ({ payload }) => {
       const { index, layer } = AddedLayerData.deserialize(payload);
-      pattern.value.layers.insert(index, layer);
+      pattern.value.insertLayer(index, layer);
       triggerRef(pattern);
     });
     appWindow.listen<number>(PatternEvent.RemoveLayer, ({ payload: layerIndex }) => {
-      pattern.value.layers.remove(layerIndex);
+      pattern.value.removeLayer(layerIndex);
       triggerRef(pattern);
     });
     appWindow.listen<{ layerIndex: number; name: string }>(
@@ -183,29 +183,30 @@ export const usePatternStore = defineStore(
     appWindow.listen<{ layerIndex: number; visibility: PatternApi.LayerVisibility }>(
       PatternEvent.UpdateLayerVisibility,
       ({ payload: { layerIndex, visibility } }) => {
-        const layer = pattern.value.layers.get(layerIndex);
-        if (layer) layer.setVisibility(visibility);
+        pattern.value.updateLayerVisibility(layerIndex, visibility);
         triggerRef(pattern);
       },
     );
     appWindow.listen<number[]>(PatternEvent.MoveLayer, ({ payload: positions }) => {
-      pattern.value.layers.positions = positions;
+      pattern.value.moveLayer(positions);
       triggerRef(pattern);
     });
 
-    function addStitch(stitch: Stitch) {
+    function addStitch(layerIndex: number, stitch: Stitch) {
       if (pattern.value.isNil) return;
-      return PatternApi.addStitch(pattern.value.id, stitch);
+      return PatternApi.addStitch(pattern.value.id, layerIndex, stitch);
     }
-    function removeStitch(stitch: Stitch) {
+    function removeStitch(layerIndex: number, stitch: Stitch) {
       if (pattern.value.isNil) return;
-      return PatternApi.removeStitch(pattern.value.id, stitch);
+      return PatternApi.removeStitch(pattern.value.id, layerIndex, stitch);
     }
     appWindow.listen<string>(PatternEvent.AddStitch, ({ payload }) => {
-      for (const stitch of deserializeStitches(payload)) pattern.value.addStitch(stitch);
+      const { layerIndex, stitches } = deserializeStitchesEvent(payload);
+      for (const stitch of stitches) pattern.value.addStitch(layerIndex, stitch);
     });
     appWindow.listen<string>(PatternEvent.RemoveStitch, ({ payload }) => {
-      for (const stitch of deserializeStitches(payload)) pattern.value.removeStitch(stitch);
+      const { layerIndex, stitches } = deserializeStitchesEvent(payload);
+      for (const stitch of stitches) pattern.value.removeStitch(layerIndex, stitch);
     });
 
     function updateDisplaySettings(settings: DisplaySettings) {

@@ -264,7 +264,7 @@ onUnmounted(() => {
             {{
               $t("image-import-pattern-properties", {
                 paletteSize: previewPattern.palette.length,
-                totalStitches: previewPattern.fullstitches.length,
+                totalStitches: previewPattern.layers.items.reduce((acc, layer) => acc + layer.fullstitches.length, 0),
               })
             }}
           </div>

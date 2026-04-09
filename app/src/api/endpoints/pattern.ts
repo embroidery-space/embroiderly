@@ -11,7 +11,7 @@ import {
   SortPaletteBy,
   Symbol,
   SetSymbolData,
-  serializeStitch,
+  serializeStitchPayload,
   PdfExportOptions,
 } from "~/lib/pattern/";
 import type { Stitch } from "~/lib/pattern/";
@@ -130,12 +130,12 @@ export function moveLayer(patternId: string, oldPosition: number, newPosition: n
 
 // === Stitches Management === //
 
-export function addStitch(patternId: string, stitch: Stitch) {
-  return invoke<void>("add_stitch", serializeStitch(stitch), { headers: { patternId } });
+export function addStitch(patternId: string, layerIndex: number, stitch: Stitch) {
+  return invoke<void>("add_stitch", serializeStitchPayload(layerIndex, stitch), { headers: { patternId } });
 }
 
-export function removeStitch(patternId: string, stitch: Stitch) {
-  return invoke<void>("remove_stitch", serializeStitch(stitch), { headers: { patternId } });
+export function removeStitch(patternId: string, layerIndex: number, stitch: Stitch) {
+  return invoke<void>("remove_stitch", serializeStitchPayload(layerIndex, stitch), { headers: { patternId } });
 }
 
 // === Publish Settings === //

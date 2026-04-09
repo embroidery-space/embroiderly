@@ -13,6 +13,8 @@ mod startup;
 pub mod state;
 mod utils;
 
+pub use core::actions::{StitchPayload, StitchesEvent};
+
 /// Runs the application.
 pub fn run() {
   setup_app(tauri::Builder::default()).run(|app_handle, event| {
