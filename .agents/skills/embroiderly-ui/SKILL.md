@@ -1,7 +1,8 @@
 ---
 name: embroiderly-ui
-description: Guide for working with Embroiderly UI Kit.
-disable-model-invocation: true
+description: >
+  Make changes to the UI Kit.
+  Use this skill when you need to create new or update existing UI components, their themes, stories, or tests.
 ---
 
 # Embroiderly UI
