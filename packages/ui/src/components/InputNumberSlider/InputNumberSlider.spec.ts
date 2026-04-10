@@ -3,8 +3,7 @@
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
-import { Key } from "webdriverio";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -35,10 +34,7 @@ describe("InputNumberSlider", () => {
         </TooltipProvider>
       `,
     });
-
-    const screen = page.render(Wrapper, options);
-    await nextTick();
-
+    const screen = await page.render(Wrapper, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -51,33 +47,25 @@ describe("InputNumberSlider", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event from input", async () => {
-      const screen = page.render(InputNumberSlider, { props: { min: 0, max: 100 } });
-      await nextTick();
+      const screen = await page.render(InputNumberSlider, { props: { min: 0, max: 100 } });
 
-      const input = screen.getByRole("spinbutton");
-
-      await userEvent.fill(input, "42");
-      await userEvent.keyboard(Key.Enter);
+      await userEvent.fill(screen.getByRole("spinbutton"), "42");
+      await userEvent.keyboard("{Enter}");
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });
 
     test("update:modelValue event from slider", async () => {
-      const screen = page.render(InputNumberSlider, { props: { modelValue: 50, min: 0, max: 100 } });
-      await nextTick();
+      const screen = await page.render(InputNumberSlider, { props: { modelValue: 50, min: 0, max: 100 } });
 
-      const slider = screen.getByRole("slider");
-
-      await userEvent.click(slider);
-      await userEvent.keyboard(Key.ArrowRight);
+      await userEvent.click(screen.getByRole("slider"));
+      await userEvent.keyboard("{ArrowRight}");
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });
@@ -85,25 +73,17 @@ describe("InputNumberSlider", () => {
 
   describe("synchronization", () => {
     test("input and slider share the same value", async () => {
-      const screen = page.render(InputNumberSlider, { props: { modelValue: 25, min: 0, max: 100 } });
-      await nextTick();
+      const screen = await page.render(InputNumberSlider, { props: { modelValue: 25, min: 0, max: 100 } });
 
-      const input = screen.getByRole("spinbutton");
-      const slider = screen.getByRole("slider");
-
-      await expect.element(input).toHaveValue("25");
-      await expect.element(slider).toHaveAttribute("aria-valuenow", "25");
+      await expect.element(screen.getByRole("spinbutton")).toHaveValue("25");
+      await expect.element(screen.getByRole("slider")).toHaveAttribute("aria-valuenow", "25");
     });
 
     test("changing input updates modelValue", async () => {
-      const screen = page.render(InputNumberSlider, { props: { modelValue: 50, min: 0, max: 100 } });
-      await nextTick();
+      const screen = await page.render(InputNumberSlider, { props: { modelValue: 50, min: 0, max: 100 } });
 
-      const input = screen.getByRole("spinbutton");
-
-      await userEvent.clear(input);
-      await userEvent.fill(input, "75");
-      await userEvent.keyboard(Key.Enter);
+      await userEvent.fill(screen.getByRole("spinbutton"), "75");
+      await userEvent.keyboard("{Enter}");
 
       const emitted = screen.emitted("update:modelValue");
       expect(emitted).toBeTruthy();
@@ -111,13 +91,10 @@ describe("InputNumberSlider", () => {
     });
 
     test("changing slider updates modelValue", async () => {
-      const screen = page.render(InputNumberSlider, { props: { modelValue: 50, min: 0, max: 100 } });
-      await nextTick();
+      const screen = await page.render(InputNumberSlider, { props: { modelValue: 50, min: 0, max: 100 } });
 
-      const slider = screen.getByRole("slider");
-
-      await userEvent.click(slider);
-      await userEvent.keyboard(Key.ArrowRight);
+      await userEvent.click(screen.getByRole("slider"));
+      await userEvent.keyboard("{ArrowRight}");
 
       const emitted = screen.emitted("update:modelValue");
       expect(emitted).toBeTruthy();
@@ -127,23 +104,17 @@ describe("InputNumberSlider", () => {
 
   describe("increment/decrement buttons", () => {
     test("increment button is shown when increment=true", async () => {
-      const screen = page.render(InputNumberSlider, { props: { increment: true } });
-      await nextTick();
-
+      const screen = await page.render(InputNumberSlider, { props: { increment: true } });
       await expect.element(screen.getByRole("button", { name: "Increment" })).toBeInTheDocument();
     });
 
     test("decrement button is shown when decrement=true", async () => {
-      const screen = page.render(InputNumberSlider, { props: { decrement: true } });
-      await nextTick();
-
+      const screen = await page.render(InputNumberSlider, { props: { decrement: true } });
       await expect.element(screen.getByRole("button", { name: "Decrement" })).toBeInTheDocument();
     });
 
     test("buttons are hidden by default", async () => {
-      const screen = page.render(InputNumberSlider);
-      await nextTick();
-
+      const screen = await page.render(InputNumberSlider);
       await expect.element(screen.getByRole("button", { name: "Increment" })).not.toBeInTheDocument();
       await expect.element(screen.getByRole("button", { name: "Decrement" })).not.toBeInTheDocument();
     });

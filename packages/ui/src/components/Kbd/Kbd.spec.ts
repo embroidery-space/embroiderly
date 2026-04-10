@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { nextTick } from "vue";
 
 import Kbd from "./Kbd.vue";
 import type { KbdProps } from "./Kbd.vue";
@@ -14,9 +13,7 @@ describe("Kbd", () => {
     ["with as", { props: { value: "K", as: "span" } }],
     ["with class", { props: { value: "K", class: "font-bold" } }],
   ] as [string, { props?: KbdProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Kbd, options);
-    await nextTick();
-
+    const screen = await page.render(Kbd, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

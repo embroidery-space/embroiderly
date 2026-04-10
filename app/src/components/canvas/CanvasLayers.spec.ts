@@ -1,10 +1,11 @@
 import { App } from "@embroiderly/ui";
 
 import { describe, expect, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { userEvent } from "vitest/browser";
+import { defineComponent } from "vue";
 
 import { Layer } from "~/lib/pattern/";
+import { renderComponent } from "~test-utils/render-component.ts";
 
 import CanvasLayers from "./CanvasLayers.vue";
 
@@ -16,10 +17,9 @@ const CanvasLayersWrapper = defineComponent({
 
 describe("CanvasLayers", () => {
   test("displays header with actions and tree", async () => {
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0, { name: "My layer" })] },
     });
-    await nextTick();
 
     // Header title.
     await expect.element(screen.getByText("Layers")).toBeVisible();
@@ -43,48 +43,39 @@ describe("CanvasLayers", () => {
   });
 
   test("displays placeholder name when layer name is empty", async () => {
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0)] },
     });
-    await nextTick();
-
     await expect.element(screen.getByRole("treeitem", { level: 1 })).toHaveTextContent("Layer \u20681\u2069"); // Keep BiDi's FSI and PDI characters.
   });
 
   test("displays layer name when set", async () => {
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0, { name: "My Layer" })] },
     });
-    await nextTick();
-
     await expect.element(screen.getByRole("treeitem", { level: 1 })).toHaveTextContent("My Layer");
   });
 
   test("remove button is disabled with a single layer", async () => {
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0)] },
     });
-    await nextTick();
-
     await expect.element(screen.getByRole("button", { name: "Remove Layer" })).toBeDisabled();
   });
 
   test("remove button is enabled with multiple layers", async () => {
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0), new Layer(1)] },
     });
-    await nextTick();
-
     await expect.element(screen.getByRole("button", { name: "Remove Layer" })).not.toBeDisabled();
   });
 
   test("clicking add button emits addLayer event", async () => {
     const onAddLayer = vi.fn();
 
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0)], onAddLayer },
     });
-    await nextTick();
 
     await userEvent.click(screen.getByRole("button", { name: "Add Layer" }));
 
@@ -94,10 +85,9 @@ describe("CanvasLayers", () => {
   test("clicking remove button emits removeLayer event with the selected layer index", async () => {
     const onRemoveLayer = vi.fn();
 
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 1, layers: [new Layer(0), new Layer(1)], onRemoveLayer },
     });
-    await nextTick();
 
     await userEvent.click(screen.getByRole("button", { name: "Remove Layer" }));
 
@@ -108,14 +98,13 @@ describe("CanvasLayers", () => {
   test("clicking a layer emits update:modelValue event with its stable index", async () => {
     const onUpdateModelValue = vi.fn();
 
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: {
         modelValue: 0,
         layers: [new Layer(0, { name: "Layer A" }), new Layer(1, { name: "Layer B" })],
         "onUpdate:modelValue": onUpdateModelValue,
       },
     });
-    await nextTick();
 
     await userEvent.click(screen.getByRole("treeitem", { name: "Layer B" }));
 
@@ -126,10 +115,9 @@ describe("CanvasLayers", () => {
   test("clicking layer visibility button emits toggleLayerVisibility event with layer visibility flipped", async () => {
     const onToggleLayerVisibility = vi.fn();
 
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0, { name: "Layer A" })], onToggleLayerVisibility },
     });
-    await nextTick();
 
     // The second button in the layer element is the visibility toggle button.
     await userEvent.click(screen.getByRole("treeitem", { name: "Layer A" }).getByRole("button").nth(1));
@@ -152,10 +140,9 @@ describe("CanvasLayers", () => {
   test("clicking stitch layer visibility button emits toggleLayerVisibility event with only that stitch layer toggled", async () => {
     const onToggleLayerVisibility = vi.fn();
 
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0)], onToggleLayerVisibility },
     });
-    await nextTick();
 
     // In stitch layers, there are no chevron buttons for expanding/collapsing layers.
     // Therefore, there is only one button which is the visibility toggle button.
@@ -179,10 +166,9 @@ describe("CanvasLayers", () => {
   test("double-clicking a layer name and submitting emits renameLayer event", async () => {
     const onRenameLayer = vi.fn();
 
-    const screen = page.render(CanvasLayersWrapper, {
+    const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0, { name: "My Layer" })], onRenameLayer },
     });
-    await nextTick();
 
     const layer = screen.getByRole("treeitem", { name: "My Layer" });
     const input = layer.getByRole("textbox", { includeHidden: true });
@@ -198,7 +184,6 @@ describe("CanvasLayers", () => {
 
     await userEvent.fill(input, "My Awesome Layer");
     await userEvent.keyboard("{Enter}");
-    await nextTick();
 
     expect(onRenameLayer).toHaveBeenCalledTimes(1);
     expect(onRenameLayer).toHaveBeenCalledWith(0, "My Awesome Layer");
@@ -206,10 +191,9 @@ describe("CanvasLayers", () => {
 
   describe("context menu", () => {
     test("displays context menu", async () => {
-      const screen = page.render(CanvasLayersWrapper, {
+      const screen = await renderComponent(CanvasLayersWrapper, {
         props: { modelValue: 0, layers: [new Layer(0)] },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("tree"), { button: "right" });
 
@@ -219,10 +203,9 @@ describe("CanvasLayers", () => {
     });
 
     test("remove item is disabled with a single layer", async () => {
-      const screen = page.render(CanvasLayersWrapper, {
+      const screen = await renderComponent(CanvasLayersWrapper, {
         props: { modelValue: 0, layers: [new Layer(0)] },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("tree"), { button: "right" });
 
@@ -230,10 +213,9 @@ describe("CanvasLayers", () => {
     });
 
     test("remove item is enabled with multiple layers", async () => {
-      const screen = page.render(CanvasLayersWrapper, {
+      const screen = await renderComponent(CanvasLayersWrapper, {
         props: { modelValue: 0, layers: [new Layer(0), new Layer(1)] },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("tree"), { button: "right" });
 
@@ -243,10 +225,9 @@ describe("CanvasLayers", () => {
     test("clicking add item emits addLayer event", async () => {
       const onAddLayer = vi.fn();
 
-      const screen = page.render(CanvasLayersWrapper, {
+      const screen = await renderComponent(CanvasLayersWrapper, {
         props: { modelValue: 0, layers: [new Layer(0)], onAddLayer },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("tree"), { button: "right" });
       await userEvent.click(screen.getByRole("menuitem", { name: "Add Layer" }));
@@ -257,10 +238,9 @@ describe("CanvasLayers", () => {
     test("clicking remove item emits removeLayer event with the selected layer index", async () => {
       const onRemoveLayer = vi.fn();
 
-      const screen = page.render(CanvasLayersWrapper, {
+      const screen = await renderComponent(CanvasLayersWrapper, {
         props: { modelValue: 1, layers: [new Layer(0), new Layer(1)], onRemoveLayer },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("tree"), { button: "right" });
       await userEvent.click(screen.getByRole("menuitem", { name: "Remove Layer" }));

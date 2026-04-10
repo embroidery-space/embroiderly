@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { nextTick } from "vue";
 
 import ConfirmDialog from "./ConfirmDialog.vue";
 import type { ConfirmDialogProps } from "./ConfirmDialog.vue";
@@ -20,9 +19,7 @@ describe("ConfirmDialog", () => {
     ["with class", { props: { ...props, class: "w-96" } }],
     ["with ui", { props: { ...props, ui: { footer: "justify-start" } } }],
   ] as [string, { props?: ConfirmDialogProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(ConfirmDialog, { ...options });
-    await nextTick();
-
+    const screen = await page.render(ConfirmDialog, { ...options });
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

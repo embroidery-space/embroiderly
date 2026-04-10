@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -20,9 +20,7 @@ describe("Checkbox", () => {
     ["with class", { props: { class: "inline-flex" } }],
     ["with ui", { props: { ui: { wrapper: "ms-4" } } }],
   ] as [string, { props?: CheckboxProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Checkbox, options);
-    await nextTick();
-
+    const screen = await page.render(Checkbox, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -35,20 +33,15 @@ describe("Checkbox", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(Checkbox);
-      await nextTick();
+      const screen = await page.render(Checkbox);
 
-      const checkbox = screen.getByRole("checkbox");
-
-      await userEvent.click(checkbox);
+      await userEvent.click(screen.getByRole("checkbox"));
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

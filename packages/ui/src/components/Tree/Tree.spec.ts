@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { nextTick } from "vue";
 
 import Tree from "./Tree.vue";
 import type { TreeItem, TreeProps, TreeSlots } from "./Tree.vue";
@@ -135,29 +134,23 @@ describe("Tree", () => {
       },
     ],
   ] as [string, { props?: TreeProps; slots?: Partial<TreeSlots> }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Tree as any, options);
-    await nextTick();
-
+    const screen = await page.render(Tree as any, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue on item click", async () => {
-      const screen = page.render(Tree, { props: { items: flatItems } });
-      await nextTick();
+      const screen = await page.render(Tree, { props: { items: flatItems } });
 
-      const treeItem = screen.getByRole("treeitem", { name: "Item 2" });
-      await userEvent.click(treeItem.element());
+      await userEvent.click(screen.getByRole("treeitem", { name: "Item 2" }));
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });
 
     test("update:expanded on chevron click", async () => {
-      const screen = page.render(Tree, { props: { items: nestedItems } });
-      await nextTick();
+      const screen = await page.render(Tree, { props: { items: nestedItems } });
 
-      const chevron = screen.getByRole("treeitem", { name: "Parent 1" }).getByRole("button");
-      await userEvent.click(chevron.element());
+      await userEvent.click(screen.getByRole("treeitem", { name: "Parent 1" }).getByRole("button"));
 
       expect(screen.emitted()).toHaveProperty("update:expanded");
     });

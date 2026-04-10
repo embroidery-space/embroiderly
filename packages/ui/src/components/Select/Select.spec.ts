@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -55,9 +55,7 @@ describe("Select", () => {
     ["with icons", { props: { ...props, items: groupedItems, modelValue: "backlog" } }],
     ["with disabled item", { props: { ...props, items: groupedItems } }],
   ] as [string, { props?: SelectProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Select as any, options);
-    await nextTick();
-
+    const screen = await page.render(Select as any, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -70,22 +68,16 @@ describe("Select", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(Select, { props: { ...props } });
-      await nextTick();
+      const screen = await page.render(Select, { props: { ...props } });
 
-      const select = screen.getByRole("button");
-      await userEvent.click(select);
-
-      const item = screen.getByRole("option").first();
-      await userEvent.click(item);
+      await userEvent.click(screen.getByRole("button"));
+      await userEvent.click(screen.getByRole("option").first());
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

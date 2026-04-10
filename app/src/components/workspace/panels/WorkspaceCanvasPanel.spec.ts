@@ -4,11 +4,12 @@ import { clearMocks, mockIPC, mockWindows } from "@tauri-apps/api/mocks";
 import { createTestingPinia } from "@pinia/testing";
 import { NIL as NIL_UUID, v4 as uuidV4 } from "uuid";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { userEvent } from "vitest/browser";
+import { defineComponent } from "vue";
 
 import { DisplayMode, Layer, Layers, Pattern } from "~/lib/pattern/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
+import { renderComponent } from "~test-utils/render-component.ts";
 
 import WorkspaceCanvasPanel from "./WorkspaceCanvasPanel.vue";
 
@@ -42,22 +43,15 @@ describe("WorkspaceCanvasPanel", () => {
   });
 
   test("renders correctly in an expanded state", async () => {
-    const screen = page.render(WorkspaceCanvasPanelWrapper, {
-      global: {
-        plugins: [
-          createTestingPinia({
-            stubActions: true,
-            createSpy: vi.fn,
-            initialState: {
-              "embroiderly-pattern": {
-                pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
-              },
-            },
-          }),
-        ],
+    const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+      pinia: {
+        initialState: {
+          "embroiderly-pattern": {
+            pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
+          },
+        },
       },
     });
-    await nextTick();
 
     // Display mode toggles.
     await expect.element(screen.getByRole("button", { name: "Mixed view" })).toBeVisible();
@@ -75,22 +69,15 @@ describe("WorkspaceCanvasPanel", () => {
   });
 
   test("renders correctly in a collapsed state", async () => {
-    const screen = page.render(WorkspaceCanvasPanelWrapper, {
-      global: {
-        plugins: [
-          createTestingPinia({
-            stubActions: true,
-            createSpy: vi.fn,
-            initialState: {
-              "embroiderly-pattern": {
-                pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
-              },
-            },
-          }),
-        ],
+    const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+      pinia: {
+        initialState: {
+          "embroiderly-pattern": {
+            pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
+          },
+        },
       },
     });
-    await nextTick();
 
     // Change the state directly, so the panel size is automatically adjusted.
     useEditorStateStore().canvasPanelCollapsed = true;
@@ -111,22 +98,15 @@ describe("WorkspaceCanvasPanel", () => {
   });
 
   test("disabled when pattern is nil", async () => {
-    const screen = page.render(WorkspaceCanvasPanelWrapper, {
-      global: {
-        plugins: [
-          createTestingPinia({
-            stubActions: true,
-            createSpy: vi.fn,
-            initialState: {
-              "embroiderly-pattern": {
-                pattern: new Pattern({ id: NIL_UUID, layers: new Layers([new Layer(0)]) }),
-              },
-            },
-          }),
-        ],
+    const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+      pinia: {
+        initialState: {
+          "embroiderly-pattern": {
+            pattern: new Pattern({ id: NIL_UUID, layers: new Layers([new Layer(0)]) }),
+          },
+        },
       },
     });
-    await nextTick();
 
     // Display mode toggles.
     await expect.element(screen.getByRole("button", { name: "Mixed view" })).toBeDisabled();
@@ -153,26 +133,19 @@ describe("WorkspaceCanvasPanel", () => {
 
   describe("display mode toggles", () => {
     test("reflect current display mode", async () => {
-      const screen = page.render(WorkspaceCanvasPanelWrapper, {
-        global: {
-          plugins: [
-            createTestingPinia({
-              stubActions: true,
-              createSpy: vi.fn,
-              initialState: {
-                "embroiderly-pattern": {
-                  pattern: new Pattern({
-                    id: uuidV4(),
-                    layers: new Layers([new Layer(0)]),
-                    displaySettings: { displayMode: DisplayMode.Mixed },
-                  }),
-                },
-              },
-            }),
-          ],
+      const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+        pinia: {
+          initialState: {
+            "embroiderly-pattern": {
+              pattern: new Pattern({
+                id: uuidV4(),
+                layers: new Layers([new Layer(0)]),
+                displaySettings: { displayMode: DisplayMode.Mixed },
+              }),
+            },
+          },
         },
       });
-      await nextTick();
 
       await expect.element(screen.getByRole("button", { name: "Mixed view" })).toHaveAttribute("aria-pressed", "true");
       await expect.element(screen.getByRole("button", { name: "Solid view" })).toHaveAttribute("aria-pressed", "false");
@@ -182,22 +155,17 @@ describe("WorkspaceCanvasPanel", () => {
     });
 
     test("clicking a toggle calls setDisplayMode with the correct value", async () => {
-      const screen = page.render(WorkspaceCanvasPanelWrapper, {
-        global: {
-          plugins: [
-            createTestingPinia({
-              stubActions: true,
-              createSpy: vi.fn,
-              initialState: {
-                "embroiderly-pattern": {
-                  pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
-                },
-              },
-            }),
-          ],
+      const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+        pinia: {
+          stubActions: true,
+          createSpy: vi.fn,
+          initialState: {
+            "embroiderly-pattern": {
+              pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
+            },
+          },
         },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("button", { name: "Mixed view" }));
 
@@ -209,26 +177,19 @@ describe("WorkspaceCanvasPanel", () => {
 
   describe("visibility toggles", () => {
     test("reflect current visibility settings", async () => {
-      const screen = page.render(WorkspaceCanvasPanelWrapper, {
-        global: {
-          plugins: [
-            createTestingPinia({
-              stubActions: true,
-              createSpy: vi.fn,
-              initialState: {
-                "embroiderly-pattern": {
-                  pattern: new Pattern({
-                    id: uuidV4(),
-                    layers: new Layers([new Layer(0)]),
-                    displaySettings: { showSymbols: true, showGrid: true, showRulers: true },
-                  }),
-                },
-              },
-            }),
-          ],
+      const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+        pinia: {
+          initialState: {
+            "embroiderly-pattern": {
+              pattern: new Pattern({
+                id: uuidV4(),
+                layers: new Layers([new Layer(0)]),
+                displaySettings: { showSymbols: true, showGrid: true, showRulers: true },
+              }),
+            },
+          },
         },
       });
-      await nextTick();
 
       await expect.element(screen.getByRole("button", { name: "Symbols" })).toHaveAttribute("aria-pressed", "true");
       await expect.element(screen.getByRole("button", { name: "Grid" })).toHaveAttribute("aria-pressed", "true");
@@ -236,22 +197,15 @@ describe("WorkspaceCanvasPanel", () => {
     });
 
     test("clicking Symbols toggle calls showSymbols", async () => {
-      const screen = page.render(WorkspaceCanvasPanelWrapper, {
-        global: {
-          plugins: [
-            createTestingPinia({
-              stubActions: true,
-              createSpy: vi.fn,
-              initialState: {
-                "embroiderly-pattern": {
-                  pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
-                },
-              },
-            }),
-          ],
+      const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+        pinia: {
+          initialState: {
+            "embroiderly-pattern": {
+              pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
+            },
+          },
         },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("button", { name: "Symbols" }));
 
@@ -259,7 +213,7 @@ describe("WorkspaceCanvasPanel", () => {
     });
 
     test("clicking Grid toggle calls showGrid", async () => {
-      const screen = page.render(WorkspaceCanvasPanelWrapper, {
+      const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
         global: {
           plugins: [
             createTestingPinia({
@@ -274,7 +228,6 @@ describe("WorkspaceCanvasPanel", () => {
           ],
         },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("button", { name: "Grid" }));
 
@@ -282,7 +235,7 @@ describe("WorkspaceCanvasPanel", () => {
     });
 
     test("clicking Rulers toggle calls showRulers", async () => {
-      const screen = page.render(WorkspaceCanvasPanelWrapper, {
+      const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
         global: {
           plugins: [
             createTestingPinia({
@@ -297,7 +250,6 @@ describe("WorkspaceCanvasPanel", () => {
           ],
         },
       });
-      await nextTick();
 
       await userEvent.click(screen.getByRole("button", { name: "Rulers" }));
 
@@ -309,23 +261,16 @@ describe("WorkspaceCanvasPanel", () => {
     "layer operations ($mode)",
     ({ mode }) => {
       async function setupLayerTest(layers: Layer[], selectedLayerIndex = 0) {
-        const screen = page.render(WorkspaceCanvasPanelWrapper, {
-          global: {
-            plugins: [
-              createTestingPinia({
-                stubActions: true,
-                createSpy: vi.fn,
-                initialState: {
-                  "embroiderly-pattern": {
-                    pattern: new Pattern({ id: uuidV4(), layers: new Layers(layers) }),
-                  },
-                  "embroiderly-pattern-editor-state": { selectedLayerIndex },
-                },
-              }),
-            ],
+        const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+          pinia: {
+            initialState: {
+              "embroiderly-pattern": {
+                pattern: new Pattern({ id: uuidV4(), layers: new Layers(layers) }),
+              },
+              "embroiderly-pattern-editor-state": { selectedLayerIndex },
+            },
           },
         });
-        await nextTick();
 
         if (mode === "collapsed") {
           useEditorStateStore().canvasPanelCollapsed = true;
@@ -344,28 +289,28 @@ describe("WorkspaceCanvasPanel", () => {
       });
 
       test("clicking Remove Layer shows confirm dialog", async () => {
-        await setupLayerTest([new Layer(0, { name: "Layer A" }), new Layer(1, { name: "Layer B" })], 1);
+        const screen = await setupLayerTest([new Layer(0, { name: "Layer A" }), new Layer(1, { name: "Layer B" })], 1);
 
-        await userEvent.click(page.getByRole("button", { name: "Remove Layer" }));
+        await userEvent.click(screen.getByRole("button", { name: "Remove Layer" }));
 
-        await expect.element(page.getByRole("alertdialog")).toBeVisible();
+        await expect.element(screen.getByRole("alertdialog")).toBeVisible();
       });
 
       test("confirming removal calls patternStore.removeLayer with the selected layer index", async () => {
-        await setupLayerTest([new Layer(0, { name: "Layer A" }), new Layer(1, { name: "Layer B" })], 1);
+        const screen = await setupLayerTest([new Layer(0, { name: "Layer A" }), new Layer(1, { name: "Layer B" })], 1);
 
-        await userEvent.click(page.getByRole("button", { name: "Remove Layer" }));
-        await userEvent.click(page.getByRole("button", { name: "Yes" }));
+        await userEvent.click(screen.getByRole("button", { name: "Remove Layer" }));
+        await userEvent.click(screen.getByRole("button", { name: "Yes" }));
 
         expect(usePatternStore().removeLayer).toHaveBeenCalledTimes(1);
         expect(usePatternStore().removeLayer).toHaveBeenCalledWith(1);
       });
 
       test("rejecting removal does not call patternStore.removeLayer", async () => {
-        await setupLayerTest([new Layer(0, { name: "Layer A" }), new Layer(1, { name: "Layer B" })], 1);
+        const screen = await setupLayerTest([new Layer(0, { name: "Layer A" }), new Layer(1, { name: "Layer B" })], 1);
 
-        await userEvent.click(page.getByRole("button", { name: "Remove Layer" }));
-        await userEvent.click(page.getByRole("button", { name: "No" }));
+        await userEvent.click(screen.getByRole("button", { name: "Remove Layer" }));
+        await userEvent.click(screen.getByRole("button", { name: "No" }));
 
         expect(usePatternStore().removeLayer).not.toHaveBeenCalled();
       });
@@ -377,7 +322,6 @@ describe("WorkspaceCanvasPanel", () => {
         await userEvent.dblClick(layer.getByText("My Layer"));
         await userEvent.fill(layer.getByRole("textbox"), "New Name");
         await userEvent.keyboard("{Enter}");
-        await nextTick();
 
         expect(usePatternStore().renameLayer).toHaveBeenCalledTimes(1);
         expect(usePatternStore().renameLayer).toHaveBeenCalledWith(0, "New Name");

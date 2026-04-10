@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { nextTick } from "vue";
 
 import FormFieldSet from "./FormFieldSet.vue";
 import type { FormFieldSetProps } from "./FormFieldSet.vue";
@@ -17,18 +16,15 @@ describe("FormFieldSet", () => {
     ["with class", { props: { ...props, class: "custom-class" } }],
     ["with ui", { props: { ...props, ui: { root: "rounded-lg" } } }],
   ] as [string, { props?: FormFieldSetProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(FormFieldSet, options);
-    await nextTick();
-
+    const screen = await page.render(FormFieldSet, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   test("toggles open state when collapsible trigger is clicked", async () => {
-    const screen = page.render(FormFieldSet, {
+    const screen = await page.render(FormFieldSet, {
       props: { ...props, collapsible: true },
       slots: { default: () => "Content" },
     });
-    await nextTick();
 
     const trigger = screen.getByRole("button");
     const content = screen.getByText("Content");

@@ -1,7 +1,7 @@
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import ButtonIcon from "./ButtonIcon.vue";
 import type { ButtonIconProps } from "./ButtonIcon.vue";
@@ -9,9 +9,11 @@ import type { ButtonIconProps } from "./ButtonIcon.vue";
 const ButtonIconWrapper = defineComponent({
   components: { TooltipProvider, ButtonIcon },
   inheritAttrs: false,
-  template: `<TooltipProvider>
-  <ButtonIcon v-bind="$attrs" />
-</TooltipProvider>`,
+  template: `
+    <TooltipProvider>
+      <ButtonIcon v-bind="$attrs" />
+    </TooltipProvider>
+  `,
 });
 
 describe("ButtonIcon", () => {
@@ -37,9 +39,7 @@ describe("ButtonIcon", () => {
     ["with disabled", { props: { ...props, disabled: true } }],
     ["with custom class", { props: { ...props, class: "font-medium" } }],
   ] as [string, { props: ButtonIconProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(ButtonIconWrapper, options);
-    await nextTick();
-
+    const screen = await page.render(ButtonIconWrapper, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

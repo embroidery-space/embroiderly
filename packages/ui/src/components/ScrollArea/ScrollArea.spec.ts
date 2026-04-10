@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { nextTick } from "vue";
 
 import ScrollArea from "./ScrollArea.vue";
 import type { ScrollAreaProps } from "./ScrollArea.vue";
@@ -19,9 +18,7 @@ describe("ScrollArea", () => {
     ["with class", { props: { ...props, class: "h-64" } }],
     ["with ui", { props: { ...props, ui: { thumb: "bg-primary" } } }],
   ] as [string, { props?: ScrollAreaProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(ScrollArea, options);
-    await nextTick();
-
+    const screen = await page.render(ScrollArea, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

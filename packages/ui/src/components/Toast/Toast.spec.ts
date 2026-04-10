@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import Toast from "./Toast.vue";
 import type { ToastProps } from "./Toast.vue";
@@ -9,13 +9,15 @@ import Toaster from "./Toaster.vue";
 const ToastWrapper = defineComponent({
   components: { Toaster, Toast },
   inheritAttrs: false,
-  template: `<Toaster :portal="false">
-    <Toast v-bind="$attrs">
-      <template v-for="(_, name) in $slots" #[name]="slotData">
-        <slot :name="name" v-bind="slotData" />
-      </template>
-    </Toast>
-  </Toaster>`,
+  template: `
+    <Toaster :portal="false">
+      <Toast v-bind="$attrs">
+        <template v-for="(_, name) in $slots" #[name]="slotData">
+          <slot :name="name" v-bind="slotData" />
+        </template>
+      </Toast>
+    </Toaster>
+  `,
 });
 
 describe("Toast", () => {
@@ -42,9 +44,7 @@ describe("Toast", () => {
   ] as [string, { props?: ToastProps; slots?: Record<string, () => string> }][])(
     "renders correctly %s",
     async (_, options) => {
-      const screen = page.render(ToastWrapper, options);
-      await nextTick();
-
+      const screen = await page.render(ToastWrapper, options);
       expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );

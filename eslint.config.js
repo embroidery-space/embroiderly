@@ -88,7 +88,20 @@ export default defineConfigWithVueTs(
     extends: [vitest.configs["recommended"]],
   },
   {
-    files: ["app/tests/**/*.ts"],
+    files: ["app/src/**/*.spec.ts"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: 'CallExpression[callee.object.name="page"][callee.property.name="render"]',
+          message:
+            "Use a custom `renderComponent()` from `~test-utils/render-component.ts` utility instead of `page.render()`.",
+        },
+      ],
+    },
+  },
+  {
+    files: ["app/tests/e2e/**/*.ts"],
     extends: [wdio.configs["flat/recommended"]],
   },
 
@@ -108,7 +121,7 @@ export default defineConfigWithVueTs(
               position: "before",
             },
             {
-              pattern: "~/**",
+              pattern: "~*/**",
               group: "internal",
             },
             {

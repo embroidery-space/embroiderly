@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { nextTick } from "vue";
 
 import ColorPicker from "./ColorPicker.vue";
 import type { ColorPickerProps } from "./ColorPicker.vue";
@@ -14,16 +13,13 @@ describe("ColorPicker", () => {
     ["with class", { props: { class: "w-64" } }],
     ["with ui", { props: { ui: { selector: "rounded-lg" } } }],
   ] as [string, { props?: ColorPickerProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(ColorPicker, options);
-    await nextTick();
-
+    const screen = await page.render(ColorPicker, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue on selector click", async () => {
-      const screen = page.render(ColorPicker, { props: { modelValue: "#FF0000" } });
-      await nextTick();
+      const screen = await page.render(ColorPicker, { props: { modelValue: "#FF0000" } });
 
       const selector = screen.container.querySelector("[data-color-picker-selector]");
       expect(selector).toBeTruthy();
@@ -37,14 +33,12 @@ describe("ColorPicker", () => {
       selector!.dispatchEvent(event);
 
       window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
-      await nextTick();
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });
 
     test("update:modelValue on track click", async () => {
-      const screen = page.render(ColorPicker, { props: { modelValue: "#FF0000" } });
-      await nextTick();
+      const screen = await page.render(ColorPicker, { props: { modelValue: "#FF0000" } });
 
       const track = screen.container.querySelector("[data-color-picker-track]");
       expect(track).toBeTruthy();
@@ -58,14 +52,12 @@ describe("ColorPicker", () => {
       track!.dispatchEvent(event);
 
       window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
-      await nextTick();
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });
 
     test("does not emit when disabled", async () => {
-      const screen = page.render(ColorPicker, { props: { modelValue: "#FF0000", disabled: true } });
-      await nextTick();
+      const screen = await page.render(ColorPicker, { props: { modelValue: "#FF0000", disabled: true } });
 
       const selector = screen.container.querySelector("[data-color-picker-selector]");
       expect(selector).toBeTruthy();
@@ -79,7 +71,6 @@ describe("ColorPicker", () => {
       selector!.dispatchEvent(event);
 
       window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
-      await nextTick();
 
       expect(screen.emitted()).not.toHaveProperty("update:modelValue");
     });

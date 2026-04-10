@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -27,9 +27,7 @@ describe("RadioGroup", () => {
     ["with class", { props: { items, class: "absolute" } }],
     ["with ui", { props: { items, ui: { wrapper: "ms-4" } } }],
   ] as [string, { props?: RadioGroupProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(RadioGroup as any, options);
-    await nextTick();
-
+    const screen = await page.render(RadioGroup as any, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -42,20 +40,15 @@ describe("RadioGroup", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(RadioGroup, { props: { items } });
-      await nextTick();
+      const screen = await page.render(RadioGroup, { props: { items } });
 
-      const radio = screen.getByRole("radio").first();
-
-      await userEvent.click(radio);
+      await userEvent.click(screen.getByRole("radio").first());
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

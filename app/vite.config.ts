@@ -45,6 +45,7 @@ export default defineConfig({
     dedupe: ["@vueuse/*", "reka-ui", "vue"],
     alias: {
       "~": fileURLToPath(new URL("src", import.meta.url)),
+      "~test-utils": fileURLToPath(new URL("tests/components/utils", import.meta.url)),
     },
   },
   test: {
@@ -70,7 +71,7 @@ export default defineConfig({
         test: {
           name: "components",
           include: ["./src/components/**/*.spec.ts"],
-          setupFiles: ["vitest-browser-vue", "./tests/components/test-setup.ts"],
+          setupFiles: ["vitest-browser-vue", "./tests/components/vitest.setup.ts"],
           browser: {
             enabled: true,
             headless: isCI,

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -19,9 +19,7 @@ describe("Switch", () => {
     ["with class", { props: { class: "inline-flex" } }],
     ["with ui", { props: { ui: { wrapper: "ms-4" } } }],
   ] as [string, { props?: SwitchProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Switch, options);
-    await nextTick();
-
+    const screen = await page.render(Switch, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -34,20 +32,15 @@ describe("Switch", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(Switch);
-      await nextTick();
+      const screen = await page.render(Switch);
 
-      const switchElement = screen.getByRole("switch");
-
-      await userEvent.click(switchElement);
+      await userEvent.click(screen.getByRole("switch"));
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

@@ -10,7 +10,8 @@
     "noUncheckedIndexedAccess": false,
 
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "~test-utils/*": ["./tests/components/utils/*"]
     },
 
     "types": ["node", "vitest-browser-vue", "@tauri-store/pinia"]

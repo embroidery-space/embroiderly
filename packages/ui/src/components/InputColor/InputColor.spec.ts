@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -16,9 +16,7 @@ describe("InputColor", () => {
     ["with class", { props: { class: "w-64" } }],
     ["with ui", { props: { ui: { root: "rounded-none" } } }],
   ] as [string, { props?: InputColorProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(InputColor, options);
-    await nextTick();
-
+    const screen = await page.render(InputColor, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -31,21 +29,17 @@ describe("InputColor", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(InputColor, {
+      const screen = await page.render(InputColor, {
         props: { modelValue: "FF0000" },
       });
-      await nextTick();
 
-      const input = screen.getByRole("textbox");
-      await userEvent.fill(input, "#00FF00");
+      await userEvent.fill(screen.getByRole("textbox"), "#00FF00");
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

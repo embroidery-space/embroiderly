@@ -41,7 +41,6 @@
     "vitest-browser-vue": "catalog:",
     "vue-tsc": "catalog:",
     "vue3-snapshot-serializer": "catalog:",
-    "webdriverio": "catalog:",
     "wrangler": "catalog:"
   },
   "peerDependencies": {
