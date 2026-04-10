@@ -27,6 +27,7 @@ export const useEditorStateStore = defineStore(
 
     const selectedTool = ref<PatternEditorTool>(tools.FullStitch);
     const selectedPaletteItemIndex = ref<number>();
+    const selectedLayerIndex = ref(0);
 
     const paletteMode = ref(PaletteMode.Regular);
 
@@ -35,6 +36,7 @@ export const useEditorStateStore = defineStore(
     function $reset() {
       selectedTool.value = tools.FullStitch;
       selectedPaletteItemIndex.value = undefined;
+      selectedLayerIndex.value = 0;
 
       paletteMode.value = PaletteMode.Regular;
 
@@ -48,6 +50,7 @@ export const useEditorStateStore = defineStore(
       canvasPanelSize,
       selectedTool,
       selectedPaletteItemIndex,
+      selectedLayerIndex,
       paletteMode,
       canvasZoom,
       $reset,

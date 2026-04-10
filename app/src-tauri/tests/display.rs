@@ -1,6 +1,6 @@
 use embroiderly::commands;
 use embroiderly::state::{HistoryState, PatternsState};
-use embroiderly_pattern::{DisplayMode, DisplaySettings, LayersVisibility};
+use embroiderly_pattern::{DisplayMode, DisplaySettings};
 use tauri::Manager as _;
 
 mod utils;
@@ -15,18 +15,6 @@ fn updates_display_settings() {
     show_symbols: true,
     show_grid: false,
     show_rulers: false,
-    layers_visibility: LayersVisibility {
-      reference_image: false,
-      fullstitches: true,
-      petitestitches: false,
-      halfstitches: true,
-      quarterstitches: false,
-      backstitches: true,
-      straightstitches: false,
-      frenchknots: true,
-      beads: false,
-      specialstitches: true,
-    },
     ..DisplaySettings::default()
   };
 

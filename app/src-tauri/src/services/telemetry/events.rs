@@ -294,43 +294,6 @@ impl tauri_plugin_better_posthog::PostHogEvent for AppEvent {
         ("symbols_visible", json!(display_settings.show_symbols)),
         ("grid_visible", json!(display_settings.show_grid)),
         ("rulers_visible", json!(display_settings.show_rulers)),
-        (
-          "reference_image_visible",
-          json!(display_settings.layers_visibility.reference_image),
-        ),
-        (
-          "full_stitches_visible",
-          json!(display_settings.layers_visibility.fullstitches),
-        ),
-        (
-          "petite_stitches_visible",
-          json!(display_settings.layers_visibility.petitestitches),
-        ),
-        (
-          "half_stitches_visible",
-          json!(display_settings.layers_visibility.halfstitches),
-        ),
-        (
-          "quarter_stitches_visible",
-          json!(display_settings.layers_visibility.quarterstitches),
-        ),
-        (
-          "back_stitches_visible",
-          json!(display_settings.layers_visibility.backstitches),
-        ),
-        (
-          "straight_stitches_visible",
-          json!(display_settings.layers_visibility.straightstitches),
-        ),
-        (
-          "french_knots_visible",
-          json!(display_settings.layers_visibility.frenchknots),
-        ),
-        ("beads_visible", json!(display_settings.layers_visibility.beads)),
-        (
-          "special_stitches_visible",
-          json!(display_settings.layers_visibility.specialstitches),
-        ),
       ],
 
       Self::PalettesImported {

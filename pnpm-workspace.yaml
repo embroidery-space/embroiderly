@@ -116,9 +116,10 @@ catalog:
   "@vue/tsconfig": 0.9.1
 
   # Testing
-  "vitest": 4.1.2
+  "@pinia/testing": 1.0.3
   "@vitest/browser-webdriverio": 4.1.2
   "@vitest/coverage-v8": 4.1.2
+  "vitest": 4.1.2
   "vitest-browser-vue": 2.1.0
   "vue3-snapshot-serializer": 2.13.2
 

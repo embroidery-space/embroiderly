@@ -100,39 +100,39 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             };
             pattern.palette = palette.into();
           }
-          b"fullstitches" => pattern.fullstitches.extend(
+          b"fullstitches" => pattern.layers[0].fullstitches.extend(
             read_full_stitches(reader)?
               .into_iter()
               .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
           ),
-          b"partstitches" => pattern.partstitches.extend(
+          b"partstitches" => pattern.layers[0].partstitches.extend(
             read_part_stitches(reader)?
               .into_iter()
               .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
           ),
-          b"backstitches" => pattern.linestitches.extend(
+          b"backstitches" => pattern.layers[0].linestitches.extend(
             read_line_stitches(reader)?
               .into_iter()
               .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
           ),
           b"ornaments_inc_knots_and_beads" => {
             let (fullstitches, partstitches, nodestitches, specialstitches) = read_ornaments(reader)?;
-            pattern.fullstitches.extend(
+            pattern.layers[0].fullstitches.extend(
               fullstitches
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
             );
-            pattern.partstitches.extend(
+            pattern.layers[0].partstitches.extend(
               partstitches
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
             );
-            pattern.nodestitches.extend(
+            pattern.layers[0].nodestitches.extend(
               nodestitches
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
             );
-            pattern.specialstitches.extend(
+            pattern.layers[0].specialstitches.extend(
               specialstitches
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
@@ -176,6 +176,7 @@ fn save_pattern_inner<W: io::Write>(
   package_info: &PackageInfo,
 ) -> io::Result<()> {
   let PatternProject { pattern, .. } = patproj;
+  let flattened_layer = pattern.flatten_visible_layers();
 
   // Create a mapping from actual index to visual position for efficient lookups when writing stitches.
   // This allows us to convert stitch palindex values (which reference actual indexes) to visual positions.
@@ -205,7 +206,7 @@ fn save_pattern_inner<W: io::Write>(
     write_palette(writer, &pattern.fabric, &pattern.palette)?;
     write_full_stitches(
       writer,
-      pattern
+      flattened_layer
         .fullstitches
         .iter()
         .filter(|stitch| stitch.kind == FullStitchKind::Full)
@@ -216,14 +217,14 @@ fn save_pattern_inner<W: io::Write>(
     )?;
     write_line_stitches(
       writer,
-      pattern.linestitches.iter().map(|stitch| LineStitch {
+      flattened_layer.linestitches.iter().map(|stitch| LineStitch {
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),
     )?;
     write_ornaments(
       writer,
-      pattern
+      flattened_layer
         .fullstitches
         .iter()
         .filter(|stitch| stitch.kind == FullStitchKind::Petite)
@@ -231,15 +232,15 @@ fn save_pattern_inner<W: io::Write>(
           palindex: index_to_position[stitch.palindex as usize],
           ..*stitch
         }),
-      pattern.partstitches.iter().map(|stitch| PartStitch {
+      flattened_layer.partstitches.iter().map(|stitch| PartStitch {
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),
-      pattern.nodestitches.iter().map(|stitch| NodeStitch {
+      flattened_layer.nodestitches.iter().map(|stitch| NodeStitch {
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),
-      pattern.specialstitches.iter().map(|stitch| SpecialStitch {
+      flattened_layer.specialstitches.iter().map(|stitch| SpecialStitch {
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),

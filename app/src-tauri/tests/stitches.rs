@@ -1,5 +1,5 @@
-use embroiderly::commands;
 use embroiderly::state::{HistoryState, PatternsState};
+use embroiderly::{StitchPayload, commands};
 use embroiderly_pattern::{Coord, FullStitch, FullStitchKind, Stitch};
 use tauri::Manager as _;
 
@@ -20,7 +20,7 @@ fn adds_stitch() {
     invoke_ipc!(
       &webview,
       cmd: "add_stitch",
-      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&stitch).unwrap()),
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&StitchPayload { layer_index: 0, stitch }).unwrap()),
       headers: [("patternId", pattern_id.to_string().parse().unwrap())]
     )
     .is_ok()
@@ -30,7 +30,7 @@ fn adds_stitch() {
   let patterns_manager = patterns_state.read().unwrap();
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
-  assert!(patproj.pattern.contains_stitch(&stitch));
+  assert!(patproj.pattern.contains_stitch(0, &stitch));
 
   let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
   let history_manager = history_state.read().unwrap();
@@ -53,7 +53,7 @@ fn does_not_add_duplicate_stitch() {
   invoke_ipc!(
     &webview,
     cmd: "add_stitch",
-    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&stitch).unwrap()),
+    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&StitchPayload { layer_index: 0, stitch }).unwrap()),
     headers: [("patternId", pattern_id.to_string().parse().unwrap())]
   )
   .unwrap();
@@ -61,7 +61,7 @@ fn does_not_add_duplicate_stitch() {
     invoke_ipc!(
       &webview,
       cmd: "add_stitch",
-      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&stitch).unwrap()),
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&StitchPayload { layer_index: 0, stitch }).unwrap()),
       headers: [("patternId", pattern_id.to_string().parse().unwrap())]
     )
     .is_ok()
@@ -91,7 +91,7 @@ fn removes_stitch() {
   invoke_ipc!(
     &webview,
     cmd: "add_stitch",
-    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&stitch).unwrap()),
+    body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&StitchPayload { layer_index: 0, stitch }).unwrap()),
     headers: [("patternId", pattern_id.to_string().parse().unwrap())]
   )
   .unwrap();
@@ -99,7 +99,7 @@ fn removes_stitch() {
     invoke_ipc!(
       &webview,
       cmd: "remove_stitch",
-      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&stitch).unwrap()),
+      body: tauri::ipc::InvokeBody::Raw(borsh::to_vec(&StitchPayload { layer_index: 0, stitch }).unwrap()),
       headers: [("patternId", pattern_id.to_string().parse().unwrap())]
     )
     .is_ok()
@@ -109,7 +109,7 @@ fn removes_stitch() {
   let patterns_manager = patterns_state.read().unwrap();
 
   let patproj = patterns_manager.get_pattern_by_id(&pattern_id).unwrap();
-  assert!(!patproj.pattern.contains_stitch(&stitch));
+  assert!(!patproj.pattern.contains_stitch(0, &stitch));
 
   let history_state = app.state::<HistoryState<tauri::test::MockRuntime>>();
   let history_manager = history_state.read().unwrap();

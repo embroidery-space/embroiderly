@@ -64,12 +64,52 @@ function updatePatternView(pattern: Pattern) {
     signal,
   });
 
-  pattern.addEventListener(PatternEvent.AddStitch, (e) => patternView.addStitch((e as CustomEvent).detail), {
-    signal,
-  });
-  pattern.addEventListener(PatternEvent.RemoveStitch, (e) => patternView.removeStitch((e as CustomEvent).detail), {
-    signal,
-  });
+  pattern.addEventListener(
+    PatternEvent.AddStitch,
+    (e) => {
+      const { layerIndex, stitch } = (e as CustomEvent).detail;
+      patternView.addStitch(stitch, layerIndex);
+    },
+    { signal },
+  );
+  pattern.addEventListener(
+    PatternEvent.RemoveStitch,
+    (e) => {
+      const { layerIndex, stitch } = (e as CustomEvent).detail;
+      patternView.removeStitch(stitch, layerIndex);
+    },
+    { signal },
+  );
+
+  pattern.addEventListener(
+    PatternEvent.AddLayer,
+    (e) => {
+      patternView.addLayer((e as CustomEvent).detail.index);
+    },
+    { signal },
+  );
+  pattern.addEventListener(
+    PatternEvent.RemoveLayer,
+    (e) => {
+      patternView.removeLayer((e as CustomEvent).detail);
+    },
+    { signal },
+  );
+  pattern.addEventListener(
+    PatternEvent.UpdateLayerVisibility,
+    (e) => {
+      const { layerIndex } = (e as CustomEvent).detail;
+      patternView.updateLayerVisibility(layerIndex);
+    },
+    { signal },
+  );
+  pattern.addEventListener(
+    PatternEvent.MoveLayer,
+    () => {
+      patternView.reorderLayers();
+    },
+    { signal },
+  );
 
   pattern.addEventListener(
     PatternEvent.UpdateDisplayMode,

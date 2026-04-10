@@ -1,9 +1,10 @@
 import { describe, expect, test } from "vitest";
-import { page } from "vitest/browser";
-import { nextTick } from "vue";
+import { page, userEvent } from "vitest/browser";
+import { h, nextTick } from "vue";
 
 import Popover from "./Popover.vue";
-import type { PopoverProps } from "./Popover.vue";
+
+type PopoverProps = InstanceType<typeof Popover>["$props"];
 
 describe("Popover", () => {
   const props: PopoverProps = { open: true, portal: false };
@@ -24,5 +25,39 @@ describe("Popover", () => {
     await nextTick();
 
     expect(screen.container.outerHTML).toMatchSnapshot();
+  });
+
+  describe("pinned behavior", () => {
+    test("default popover closes when clicking outside", async () => {
+      const screen = page.render(Popover, {
+        props,
+        slots: {
+          default: () => h("button", "Trigger"),
+          content: () => "Content",
+        },
+      });
+      await nextTick();
+
+      await userEvent.click(document.body);
+      await nextTick();
+
+      await expect.element(screen.getByText("Content")).not.toBeInTheDocument();
+    });
+
+    test("pinned popover stays open when clicking outside", async () => {
+      const screen = page.render(Popover, {
+        props: { ...props, pinned: true },
+        slots: {
+          default: () => h("button", "Trigger"),
+          content: () => "Content",
+        },
+      });
+      await nextTick();
+
+      await userEvent.click(document.body);
+      await nextTick();
+
+      await expect.element(screen.getByText("Content")).toBeInTheDocument();
+    });
   });
 });

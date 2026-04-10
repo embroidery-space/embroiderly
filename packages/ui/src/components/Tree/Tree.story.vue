@@ -27,6 +27,43 @@ const items: TreeItem[] = [
   { label: "Reference Image", value: "reference-image" },
 ];
 
+const nestedItems: TreeItem[] = [
+  {
+    label: "src",
+    value: "src",
+    defaultExpanded: true,
+    children: [
+      {
+        label: "components",
+        value: "components",
+        defaultExpanded: true,
+        children: [
+          {
+            label: "Button",
+            value: "button",
+            children: [
+              { label: "Button.vue", value: "button-vue" },
+              { label: "Button.spec.ts", value: "button-spec" },
+            ],
+          },
+          {
+            label: "Tree",
+            value: "tree",
+            defaultExpanded: true,
+            children: [
+              { label: "Tree.vue", value: "tree-vue" },
+              { label: "Tree.spec.ts", value: "tree-spec" },
+              { label: "Tree.story.vue", value: "tree-story" },
+            ],
+          },
+        ],
+      },
+      { label: "main.ts", value: "main-ts" },
+    ],
+  },
+  { label: "package.json", value: "package-json" },
+];
+
 const state = reactive<TreeProps>({
   size: "md",
 });
@@ -48,6 +85,10 @@ defineExpose({ state });
         <HstSelect v-model="state.size" title="Size" :options="sizes" />
         <HstCheckbox v-model="state.disabled" title="Disabled" />
       </template>
+    </Variant>
+
+    <Variant id="nested" title="Nested" auto-props-disabled>
+      <Tree :items="nestedItems" />
     </Variant>
 
     <Variant id="sizes" title="Sizes" auto-props-disabled>

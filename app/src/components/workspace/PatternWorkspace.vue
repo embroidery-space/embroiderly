@@ -50,14 +50,13 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
       icon: IconImageOff,
       label: fluent.$t("canvas-ctx-menu-remove-image"),
       color: "error",
-      disabled: !patternStore.pattern?.referenceImage,
+      disabled: !patternStore.pattern.referenceImage,
       onSelect: () => patternStore.removeReferenceImage(),
     },
   ],
 ]);
 
 appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
-  if (!patternStore.pattern) return;
   const patternInfo = PatternInfo.deserialize(payload);
   patternFileStore.updateOpenedPattern(patternStore.pattern.id, patternInfo.title);
 });
@@ -65,8 +64,7 @@ appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
 watch(
   () => patternStore.pattern,
   async (pattern, oldPattern) => {
-    if (!pattern || pattern.id === oldPattern?.id) return;
-
+    if (pattern.isNil || pattern.id === oldPattern?.id) return;
     await loadSymbolFonts(pattern.allSymbolFonts);
   },
 );
@@ -74,7 +72,7 @@ watch(
 watch(
   () => editorStateStore.selectedTool,
   (_tool, prevTool) => {
-    if (!patternStore.pattern) return;
+    if (patternStore.pattern.isNil) return;
 
     if (prevTool instanceof CursorTool) {
       // Blur the reference image when the cursor tool is deselected.
@@ -86,7 +84,7 @@ watch(
 
 async function handleToolMainAction(detail: ToolEventDetail) {
   const pattern = patternStore.pattern;
-  if (!pattern) return;
+  if (pattern.isNil) return;
 
   if (editorStateStore.paletteMode === PaletteMode.Editing) return;
 
@@ -95,7 +93,7 @@ async function handleToolMainAction(detail: ToolEventDetail) {
 
 async function handleToolAntiAction(detail: ToolEventDetail) {
   const pattern = patternStore.pattern;
-  if (!pattern) return;
+  if (pattern.isNil) return;
 
   if (editorStateStore.paletteMode === PaletteMode.Editing) return;
 
@@ -104,7 +102,7 @@ async function handleToolAntiAction(detail: ToolEventDetail) {
 
 async function handleToolRelease(detail: ToolEventDetail) {
   const pattern = patternStore.pattern;
-  if (!pattern) return;
+  if (pattern.isNil) return;
 
   if (editorStateStore.paletteMode === PaletteMode.Editing) return;
 
@@ -121,20 +119,20 @@ function handleTransform(detail: TransformEventDetail) {
 function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorToolContext {
   return {
     ...detail,
-    pattern: patternStore.pattern!,
+    pattern: patternStore.pattern,
     api: {
       async addStitch(stitch) {
         const palindex = editorStateStore.selectedPaletteItemIndex;
         if (palindex !== undefined) {
           stitch.palindex = palindex;
-          await patternStore.addStitch(stitch);
+          await patternStore.addStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
       async removeStitch(stitch) {
         const palindex = editorStateStore.selectedPaletteItemIndex;
         if (palindex !== undefined) {
           stitch.palindex = palindex;
-          await patternStore.removeStitch(stitch);
+          await patternStore.removeStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
 
@@ -205,7 +203,7 @@ async function loadSymbolFonts(fonts: string[]) {
         <PatternCanvas
           ref="patternCanvas"
           v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
-          :pattern="patternStore.pattern!"
+          :pattern="patternStore.pattern"
           :options="props.options"
           enable-tool-events
           class="grow"

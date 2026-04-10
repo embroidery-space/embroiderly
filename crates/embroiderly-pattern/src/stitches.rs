@@ -532,6 +532,7 @@ impl Stitches<SpecialStitch> {
 macro_rules! stitches_with_palindex_impl {
   ($type:ty) => {
     impl Stitches<$type> {
+      /// Removes stitches by their palette item indexes and returns them.
       pub fn remove_stitches_by_palindexes(&mut self, palindexes: &[u32]) -> Vec<$type> {
         let mut remaining_stitches = Vec::new();
         let mut removed_stitches = Vec::new();
@@ -571,10 +572,10 @@ macro_rules! stitches_with_palindex_impl {
         removed_stitches
       }
 
-      pub fn restore_stitches(&mut self, stitches: Vec<$type>, palindexes: &[u32], palsize: u32) {
-        // First, we need to create a map of the old palette item indexes to the new ones.
-        // We do this by iterating over the complete range of current palette item indexes
-        // and incrementing those that are greater than the removed ones.
+      /// Reindexes the palette item indexes of all stitches after palette items have been restored.
+      /// This updates the current stitches to make room for the restored palette items, without inserting any new stitches.
+      pub fn reindex_palindexes(&mut self, palindexes: &[u32], palsize: u32) {
+        // Create a map of old palette item indexes to new ones.
         let mut palindexes_map = std::collections::HashMap::new();
         let mut counter = 0;
         for palindex in 0..palsize {
@@ -585,12 +586,17 @@ macro_rules! stitches_with_palindex_impl {
           palindexes_map.insert(palindex, new_palindex);
         }
 
-        // Then, we need to update the palette item indexes of the stitches.
+        // Update the palette item indexes of the existing stitches.
         for mut stitch in std::mem::take(&mut self.inner).into_iter() {
           let new_palindex = palindexes_map.get(&stitch.palindex).unwrap();
           stitch.palindex = *new_palindex;
           self.inner.insert(stitch);
         }
+      }
+
+      /// Restores the stitches from a given vector, reindexing their palette item indexes first.
+      pub fn restore_stitches(&mut self, stitches: Vec<$type>, palindexes: &[u32], palsize: u32) {
+        self.reindex_palindexes(palindexes, palsize);
         self.inner.extend(stitches);
       }
     }

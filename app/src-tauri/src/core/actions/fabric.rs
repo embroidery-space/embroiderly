@@ -68,7 +68,7 @@ impl<R: tauri::Runtime> Action<R> for UpdateFabricPropertiesAction {
     window.emit("fabric:update", base64::encode(borsh::to_vec(old_fabric)?))?;
 
     if let Some(extra_stitches) = self.extra_stitches.get() {
-      patproj.pattern.add_stitches(extra_stitches.clone());
+      patproj.pattern.add_stitches(0, extra_stitches.clone());
       window.emit("stitches:add", base64::encode(borsh::to_vec(extra_stitches)?))?;
     }
 

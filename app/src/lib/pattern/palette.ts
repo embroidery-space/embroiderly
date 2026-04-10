@@ -3,8 +3,6 @@ import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 import type { ColorSource } from "pixi.js";
 
-import type { Eq } from "~/types/";
-
 export class PaletteSettings {
   columnsNumber: number;
   colorOnly: boolean;
@@ -14,14 +12,14 @@ export class PaletteSettings {
   showColorNumbers: boolean;
   showColorNames: boolean;
 
-  constructor(data: b.infer<typeof PaletteSettings.schema>) {
-    this.columnsNumber = data.columnsNumber;
-    this.colorOnly = data.colorOnly;
-    this.showStitchSymbols = data.showStitchSymbols;
-    this.stitchSymbolsOnContrastBackground = data.stitchSymbolsOnContrastBackground;
-    this.showColorBrands = data.showColorBrands;
-    this.showColorNumbers = data.showColorNumbers;
-    this.showColorNames = data.showColorNames;
+  constructor(data?: Partial<b.infer<typeof PaletteSettings.schema>>) {
+    this.columnsNumber = data?.columnsNumber ?? 1;
+    this.colorOnly = data?.colorOnly ?? true;
+    this.showStitchSymbols = data?.showStitchSymbols ?? true;
+    this.stitchSymbolsOnContrastBackground = data?.stitchSymbolsOnContrastBackground ?? true;
+    this.showColorBrands = data?.showColorBrands ?? true;
+    this.showColorNumbers = data?.showColorNumbers ?? true;
+    this.showColorNames = data?.showColorNames ?? true;
   }
 
   static readonly schema = b.struct({
@@ -41,18 +39,6 @@ export class PaletteSettings {
 
   static serialize(data: PaletteSettings) {
     return PaletteSettings.schema.serialize(data);
-  }
-
-  static default(): PaletteSettings {
-    return new PaletteSettings({
-      columnsNumber: 1,
-      colorOnly: true,
-      showStitchSymbols: true,
-      stitchSymbolsOnContrastBackground: true,
-      showColorBrands: true,
-      showColorNumbers: true,
-      showColorNames: true,
-    });
   }
 }
 
@@ -74,7 +60,7 @@ export class Blend {
     number: b.string(),
   });
 
-  getTitle(options = PaletteSettings.default()) {
+  getTitle(options = new PaletteSettings()) {
     const components = [];
     if (options.showColorBrands) components.push(this.brand);
     if (options.showColorNumbers) components.push(this.number);
@@ -86,19 +72,15 @@ export class Bead {
   length: number;
   diameter: number;
 
-  constructor(data: b.infer<typeof Bead.schema>) {
-    this.length = data.length;
-    this.diameter = data.diameter;
+  constructor(data?: b.infer<typeof Bead.schema>) {
+    this.length = data?.length ?? 2.5;
+    this.diameter = data?.diameter ?? 1.5;
   }
 
   static readonly schema = b.struct({
     length: b.f32(),
     diameter: b.f32(),
   });
-
-  static default() {
-    return new Bead({ length: 2.5, diameter: 1.5 });
-  }
 }
 
 export class Symbol {
@@ -119,7 +101,7 @@ export class Symbol {
 }
 
 /** Represents a base palette item. */
-export abstract class BasePaletteItem implements Eq<BasePaletteItem> {
+export abstract class BasePaletteItem {
   /**
    * An index of this palette item in the palette.
    * It is used to correctly identify an element when rendering a palette item using `v-for`.
@@ -155,7 +137,7 @@ export abstract class BasePaletteItem implements Eq<BasePaletteItem> {
   /** Return the color title. */
   abstract getTitle(options?: PaletteSettings): string;
 
-  abstract eq(other: this): boolean;
+  abstract equals(other: this): boolean;
 }
 
 /**
@@ -196,7 +178,7 @@ export class BrandPaletteItem extends BasePaletteItem {
     });
   }
 
-  getTitle(options = PaletteSettings.default()) {
+  getTitle(options = new PaletteSettings()) {
     const components = [];
     if (options.showColorBrands && this.brand) components.push(this.brand);
     if (this.blends?.length) {
@@ -216,7 +198,7 @@ export class BrandPaletteItem extends BasePaletteItem {
     return components.join(" ");
   }
 
-  eq(other: BrandPaletteItem) {
+  equals(other: BrandPaletteItem) {
     return this.brand === other.brand && this.number === other.number;
   }
 }
@@ -256,26 +238,6 @@ export class PaletteItem extends BrandPaletteItem {
   }
 }
 
-export class AddedPaletteItemData {
-  palitem: PaletteItem;
-  palindex: number;
-
-  constructor(data: b.infer<typeof AddedPaletteItemData.schema>) {
-    this.palitem = new PaletteItem(data.palindex, data.palitem);
-    this.palindex = data.palindex;
-  }
-
-  static readonly schema = b.struct({
-    palitem: PaletteItem.schema,
-    palindex: b.u32(),
-  });
-
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new AddedPaletteItemData(AddedPaletteItemData.schema.deserialize(buffer));
-  }
-}
-
 /** Manages palette items and their visual ordering. */
 export class Palette {
   /** The actual palette items. */
@@ -285,13 +247,14 @@ export class Palette {
   /** Display settings for the palette panel. */
   #settings: PaletteSettings;
 
-  constructor(
-    data: b.infer<typeof Palette.schema> | { items: b.infer<typeof PaletteItem.schema>[]; positions: number[] },
-  ) {
-    this.#items = data.items.map((item, index) => new PaletteItem(index, item));
-    this.#positions = Array.from(data.positions);
-    this.#settings =
-      "settings" in data && data.settings ? new PaletteSettings(data.settings) : PaletteSettings.default();
+  constructor(data?: {
+    items: b.infer<typeof PaletteItem.schema>[];
+    positions: number[];
+    settings?: Partial<b.infer<typeof PaletteSettings.schema>>;
+  }) {
+    this.#items = data?.items.map((item, index) => new PaletteItem(index, item)) ?? [];
+    this.#positions = data?.positions ?? [];
+    this.#settings = new PaletteSettings(data?.settings);
   }
 
   static readonly schema = b.struct({
@@ -391,6 +354,34 @@ export class Palette {
   }
 }
 
+export function deserializeBrandPalette(data: Uint8Array | string) {
+  const buffer = typeof data === "string" ? toByteArray(data) : data;
+  return b
+    .vec(BrandPaletteItem.schema)
+    .deserialize(buffer)
+    .map((palitem, index) => new BrandPaletteItem(index, palitem));
+}
+
+export class AddedPaletteItemData {
+  palitem: PaletteItem;
+  palindex: number;
+
+  constructor(data: b.infer<typeof AddedPaletteItemData.schema>) {
+    this.palitem = new PaletteItem(data.palindex, data.palitem);
+    this.palindex = data.palindex;
+  }
+
+  static readonly schema = b.struct({
+    palitem: PaletteItem.schema,
+    palindex: b.u32(),
+  });
+
+  static deserialize(data: Uint8Array | string) {
+    const buffer = typeof data === "string" ? toByteArray(data) : data;
+    return new AddedPaletteItemData(AddedPaletteItemData.schema.deserialize(buffer));
+  }
+}
+
 export class SetSymbolData {
   palindex: number;
   symbol?: Symbol;
@@ -416,12 +407,4 @@ export class SetSymbolData {
     const buffer = typeof data === "string" ? toByteArray(data) : data;
     return new SetSymbolData(SetSymbolData.schema.deserialize(buffer));
   }
-}
-
-export function deserializeBrandPalette(data: Uint8Array | string) {
-  const buffer = typeof data === "string" ? toByteArray(data) : data;
-  return b
-    .vec(BrandPaletteItem.schema)
-    .deserialize(buffer)
-    .map((palitem, index) => new BrandPaletteItem(index, palitem));
 }

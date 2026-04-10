@@ -16,6 +16,9 @@ pub enum ErrorKind {
   FailedToExport,
   FailedToImport,
 
+  // Layer errors.
+  CannotRemoveLastLayer,
+
   // Catch-all for unexpected errors.
   Unexpected,
 }
@@ -33,6 +36,7 @@ impl ErrorKind {
       Self::UnsavedChanges => "Pattern has unsaved changes.",
       Self::FailedToExport => "Failed to export pattern.",
       Self::FailedToImport => "Failed to import image.",
+      Self::CannotRemoveLastLayer => "Cannot remove the last layer.",
       Self::Unexpected => "An unexpected error occurred.",
     }
   }

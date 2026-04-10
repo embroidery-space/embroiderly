@@ -63,7 +63,7 @@ pub fn open_pattern<R: tauri::Runtime>(
     let (half_stitches_number, quarter_stitches_number) = patproj.pattern.part_stitches_number();
     let (back_stitches_number, straight_stitches_number) = patproj.pattern.line_stitches_number();
     let (french_knots_number, beads_number) = patproj.pattern.node_stitches_number();
-    let special_stitches_number = patproj.pattern.specialstitches.len();
+    let special_stitches_number: usize = patproj.pattern.layers.iter().map(|l| l.specialstitches.len()).sum();
 
     app_handle.capture_event(AppEvent::PatternOpened {
       format: PatternFormat::try_from(file_path.extension())

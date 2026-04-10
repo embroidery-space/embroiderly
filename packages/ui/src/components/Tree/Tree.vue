@@ -1,11 +1,15 @@
 <script setup lang="ts" generic="T extends TreeItem">
-import type { TreeItemSelectEvent, TreeItemToggleEvent } from "reka-ui";
+import { createReusableTemplate } from "@vueuse/core";
+import type { TreeItemSelectEvent, TreeItemToggleEvent, TreeRootProps } from "reka-ui";
 import { Tree } from "reka-ui/namespaced";
 import { computed } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import type { IconValue } from "../../types/icons.ts";
+import Button from "../Button/Button.vue";
 import Icon from "../Icon/Icon.vue";
+import ScrollArea from "../ScrollArea/ScrollArea.vue";
+import type { ScrollAreaProps } from "../ScrollArea/ScrollArea.vue";
 
 import { TreeTheme } from "./Tree.theme.ts";
 import type { TreeThemeSlots, TreeThemeVariants } from "./Tree.theme.ts";
@@ -21,8 +25,6 @@ export interface TreeItem {
   /** Nested items. */
   children?: TreeItem[];
 
-  /** Whether the item is disabled. */
-  disabled?: boolean;
   /** Whether the item is initially expanded. */
   defaultExpanded?: boolean;
 
@@ -43,24 +45,24 @@ export interface TreeItemSlotProps<T extends TreeItem> {
   handleToggle: () => void;
 }
 
-export interface TreeProps<T extends TreeItem = TreeItem> {
+export interface TreeProps<T extends TreeItem = TreeItem> extends Pick<
+  TreeRootProps,
+  "disabled" | "defaultValue" | "defaultExpanded" | "selectionBehavior"
+> {
   /** The items to display. */
   items?: T[];
-
-  /**
-   * Uncontrolled initial expanded keys.
-   * Merged with per-item `defaultExpanded: true`.
-   */
-  defaultExpanded?: string[];
-
-  /** Whether the entire tree is disabled. */
-  disabled?: boolean;
 
   /**
    * The size of the tree.
    * @default "md"
    */
   size?: TreeThemeVariants["size"];
+
+  /**
+   * When provided, wraps the tree in a scroll area.
+   * Pass `true` to use defaults, or an object to configure the scroll area.
+   */
+  scroll?: boolean | Pick<ScrollAreaProps, "type" | "size" | "ui">;
 
   /** Called when any item is selected (tree-level). */
   onSelect?: (e: TreeItemSelectEvent<T>) => void;
@@ -77,6 +79,8 @@ export interface TreeSlots<T extends TreeItem = TreeItem> {
   [key: string]: (props: TreeItemSlotProps<T>) => any;
 }
 
+defineOptions({ inheritAttrs: false });
+
 const modelValue = defineModel<T>();
 const expanded = defineModel<string[]>("expanded");
 
@@ -84,6 +88,14 @@ const props = withDefaults(defineProps<TreeProps<T>>(), {
   size: "md",
 });
 defineSlots<TreeSlots<T>>();
+
+const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
+  if (!props.scroll) return null;
+  return typeof props.scroll === "boolean" ? {} : props.scroll;
+});
+
+const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item: T; index: number; level: number }>();
+const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items: T[]; level: number }>();
 
 const { icons } = useComponentIcons();
 
@@ -160,39 +172,25 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
 </script>
 
 <template>
-  <Tree.Root
-    v-model="modelValue"
-    v-model:expanded="expanded"
-    :items="items"
-    :default-expanded="defaultExpanded"
-    :get-key="(item) => item.value ?? item.label"
-    :disabled="disabled"
-    :multiple="false"
-    data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
-  >
-    <template #default="{ flattenItems }">
-      <Tree.Item
-        v-for="(flatItem, index) in flattenItems"
-        :key="flatItem._id"
-        v-bind="flatItem.bind"
-        v-slot="{ isExpanded, isSelected, handleSelect, handleToggle }"
+  <DefineItemTemplate v-slot="{ item, index, level }">
+    <Tree.Item
+      v-slot="{ isExpanded, isSelected, handleSelect, handleToggle }"
+      :level="level"
+      :value="item"
+      @select="(e) => handleItemSelect(e as TreeItemSelectEvent<T>, item)"
+      @toggle="(e) => handleItemToggle(e as TreeItemToggleEvent<T>)"
+    >
+      <div
         data-slot="item"
+        :data-selected="isSelected || undefined"
+        :data-ancestor-selected="selectedAncestors.has(item.value ?? item.label) || undefined"
         :class="ui.item({ class: props.ui?.item })"
-        :style="{
-          '--tree-level': flatItem.level,
-          marginInlineStart: `calc(${flatItem.level - 1} * var(--tree-indent))`,
-          width: `calc(100% - ${flatItem.level - 1} * var(--tree-indent))`,
-        }"
-        :data-ancestor-selected="selectedAncestors.has(flatItem.value.value ?? flatItem.value.label) || undefined"
-        @select="(e) => handleItemSelect(e, flatItem.value)"
-        @toggle="(e) => handleItemToggle(e)"
       >
         <slot
-          :name="(flatItem.value.slot || 'item') as keyof TreeSlots"
-          :item="flatItem.value"
+          :name="(item.slot || 'item') as keyof TreeSlots"
+          :item="item"
           :index="index"
-          :level="flatItem.level"
+          :level="level"
           :expanded="isExpanded"
           :selected="isSelected"
           :handle-select="handleSelect"
@@ -200,17 +198,17 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
         >
           <slot
             name="item-leading"
-            :item="flatItem.value"
+            :item="item"
             :index="index"
-            :level="flatItem.level"
+            :level="level"
             :expanded="isExpanded"
             :selected="isSelected"
             :handle-select="handleSelect"
             :handle-toggle="handleToggle"
           >
             <Icon
-              v-if="flatItem.value.icon"
-              :name="flatItem.value.icon"
+              v-if="item.icon"
+              :name="item.icon"
               data-slot="itemLeadingIcon"
               :class="ui.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
             />
@@ -219,41 +217,96 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
           <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
             <slot
               name="item-label"
-              :item="flatItem.value"
+              :item="item"
               :index="index"
-              :level="flatItem.level"
+              :level="level"
               :expanded="isExpanded"
               :selected="isSelected"
               :handle-select="handleSelect"
               :handle-toggle="handleToggle"
             >
-              {{ flatItem.value.label }}
+              {{ item.label }}
             </slot>
           </span>
 
-          <button
-            v-if="flatItem.hasChildren"
-            type="button"
+          <Button
+            v-if="item.children?.length"
+            square
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            :icon="icons.chevronDown"
             tabindex="-1"
             data-slot="itemChevron"
             :class="ui.itemChevron({ class: [props.ui?.itemChevron, isExpanded && 'rotate-180'] })"
             @click.stop="handleToggle()"
-          >
-            <Icon :name="icons.chevronDown" />
-          </button>
+          />
 
           <slot
             name="item-trailing"
-            :item="flatItem.value"
+            :item="item"
             :index="index"
-            :level="flatItem.level"
+            :level="level"
             :expanded="isExpanded"
             :selected="isSelected"
             :handle-select="handleSelect"
             :handle-toggle="handleToggle"
           />
         </slot>
-      </Tree.Item>
-    </template>
+      </div>
+
+      <ul v-if="isExpanded && item.children?.length" data-slot="list" :class="ui.list({ class: props.ui?.list })">
+        <ReuseTreeTemplate :items="item.children as T[]" :level="level + 1" />
+      </ul>
+    </Tree.Item>
+  </DefineItemTemplate>
+
+  <!-- eslint-disable-next-line vue/no-template-shadow -->
+  <DefineTreeTemplate v-slot="{ items, level }">
+    <!-- @vue-expect-error `vue-tsc` fails to resolve the item template as a component when a generic type parameter is used in the props definition. -->
+    <ReuseItemTemplate
+      v-for="(item, index) in items"
+      :key="item.value ?? item.label"
+      :item="item"
+      :index="index"
+      :level="level"
+    />
+  </DefineTreeTemplate>
+
+  <ScrollArea v-if="scrollProps" v-bind="scrollProps" orientation="vertical">
+    <Tree.Root
+      v-bind="$attrs"
+      v-model="modelValue"
+      v-model:expanded="expanded"
+      :items="items"
+      :default-value="defaultValue"
+      :default-expanded="defaultExpanded"
+      :get-key="(item) => item.value ?? item.label"
+      :disabled="disabled"
+      :multiple="false"
+      :selection-behavior="props.selectionBehavior"
+      data-slot="root"
+      :class="ui.root({ class: [props.ui?.root, props.class] })"
+    >
+      <ReuseTreeTemplate :items="items ?? []" :level="1" />
+    </Tree.Root>
+  </ScrollArea>
+
+  <Tree.Root
+    v-else
+    v-bind="$attrs"
+    v-model="modelValue"
+    v-model:expanded="expanded"
+    :items="items"
+    :default-value="defaultValue"
+    :default-expanded="defaultExpanded"
+    :get-key="(item) => item.value ?? item.label"
+    :disabled="disabled"
+    :multiple="false"
+    :selection-behavior="props.selectionBehavior"
+    data-slot="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+  >
+    <ReuseTreeTemplate :items="items ?? []" :level="1" />
   </Tree.Root>
 </template>

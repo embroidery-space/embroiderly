@@ -43,8 +43,7 @@ const { isOverDropZone } = useDragDrop(dropZoneContainer, async (paths) => {
 watch(
   () => patternFileStore.currentPatternId,
   async (patternId) => {
-    if (patternId) patternStore.pattern = await patternFileStore.loadPattern(patternId);
-    else patternStore.pattern = undefined;
+    patternStore.setPattern(patternId ? await patternFileStore.loadPattern(patternId) : undefined);
     editorStateStore.$reset();
   },
   { immediate: true },
@@ -77,7 +76,7 @@ useTauriListener(
 
 useTauriListener(
   appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
-    if (patternId === patternStore.pattern?.id) {
+    if (patternId === patternStore.pattern.id) {
       toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
     }
   }),
@@ -135,7 +134,7 @@ onMounted(async () => {
           :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
           class="size-full"
         >
-          <WelcomeScreen v-if="!patternStore.pattern" class="size-full" />
+          <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
           <PatternWorkspace
             :options="{
               render: {

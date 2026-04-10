@@ -48,7 +48,7 @@ const menus = computed<MenubarMenu[]>(() => [
           shortcut: "Control+N",
           onSelect() {
             modals.patternCreationModal.open({
-              fabric: Fabric.default(),
+              fabric: new Fabric(),
               async onSave(fabric) {
                 patternFileStore.switchPattern(await patternFileStore.createPattern(fabric));
               },
@@ -60,14 +60,14 @@ const menus = computed<MenubarMenu[]>(() => [
         {
           label: fluent.$t("app-menu-file-save"),
           shortcut: "Control+S",
-          disabled: !patternStore.pattern,
-          onSelect: () => patternFileStore.savePattern(patternStore.pattern!.id),
+          disabled: patternStore.pattern.isNil,
+          onSelect: () => patternFileStore.savePattern(patternStore.pattern.id),
         },
         {
           label: fluent.$t("app-menu-file-save-as"),
           shortcut: "Control+Shift+S",
-          disabled: !patternStore.pattern,
-          onSelect: () => patternFileStore.savePattern(patternStore.pattern!.id, true),
+          disabled: patternStore.pattern.isNil,
+          onSelect: () => patternFileStore.savePattern(patternStore.pattern.id, true),
         },
       ],
       [
@@ -93,13 +93,13 @@ const menus = computed<MenubarMenu[]>(() => [
         },
         {
           label: fluent.$t("app-menu-file-export"),
-          disabled: !patternStore.pattern,
+          disabled: patternStore.pattern.isNil,
           children: [
             [
               {
                 label: "OXS",
                 async onSelect() {
-                  const patternId = patternStore.pattern!.id;
+                  const patternId = patternStore.pattern.id;
                   const filePath =
                     (await FilesApi.getPatternFilePath(patternId)) ??
                     (await FilesApi.getPatternDefaultFilePath(patternId));
@@ -109,7 +109,7 @@ const menus = computed<MenubarMenu[]>(() => [
               {
                 label: "PDF",
                 async onSelect() {
-                  const { id, pdfExportOptions } = patternStore.pattern!;
+                  const { id, pdfExportOptions } = patternStore.pattern;
                   const filePath =
                     (await FilesApi.getPatternFilePath(id)) ?? (await FilesApi.getPatternDefaultFilePath(id));
                   modals.pdfExportModal.open({
@@ -128,8 +128,8 @@ const menus = computed<MenubarMenu[]>(() => [
         {
           label: fluent.$t("app-menu-file-close"),
           shortcut: "Control+W",
-          disabled: !patternStore.pattern,
-          onSelect: () => patternFileStore.closePattern(patternStore.pattern!.id),
+          disabled: patternStore.pattern.isNil,
+          onSelect: () => patternFileStore.closePattern(patternStore.pattern.id),
         },
       ],
       [
@@ -143,14 +143,14 @@ const menus = computed<MenubarMenu[]>(() => [
   },
   {
     label: fluent.$t("app-menu-pattern"),
-    hidden: patternStore.pattern === undefined,
+    hidden: patternStore.pattern.isNil,
     items: [
       [
         {
           label: fluent.$t("pattern-info"),
           onSelect() {
             modals.patternInfoModal.open({
-              patternInfo: patternStore.pattern!.info,
+              patternInfo: patternStore.pattern.info,
               onSave: patternStore.updatePatternInfo,
             });
           },
@@ -159,7 +159,7 @@ const menus = computed<MenubarMenu[]>(() => [
           label: fluent.$t("fabric-properties"),
           onSelect() {
             modals.fabricModal.open({
-              fabric: patternStore.pattern!.fabric,
+              fabric: patternStore.pattern.fabric,
               onSave: patternStore.updateFabric,
             });
           },
@@ -168,7 +168,7 @@ const menus = computed<MenubarMenu[]>(() => [
           label: fluent.$t("grid-properties"),
           onSelect() {
             modals.gridModal.open({
-              grid: patternStore.pattern!.grid,
+              grid: patternStore.pattern.grid,
               onSave: patternStore.updateGrid,
             });
           },
@@ -179,7 +179,7 @@ const menus = computed<MenubarMenu[]>(() => [
           label: fluent.$t("publish-settings"),
           onSelect() {
             modals.pdfExportOptionsModal.open({
-              options: patternStore.pattern!.pdfExportOptions,
+              options: patternStore.pattern.pdfExportOptions,
               onSave: patternStore.updatePdfExportOptions,
             });
           },
@@ -260,7 +260,7 @@ async function showSystemInfo() {
       <Menubar :menus="menus" />
 
       <div class="ml-auto flex h-full items-center gap-2">
-        <template v-if="patternStore.pattern">
+        <template v-if="!patternStore.pattern.isNil">
           <ButtonIcon
             data-testid="undo-button"
             :icon="IconUndo"

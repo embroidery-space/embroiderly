@@ -10,7 +10,6 @@ pub struct DisplaySettings {
   pub show_symbols: bool,
   pub show_grid: bool,
   pub show_rulers: bool,
-  pub layers_visibility: LayersVisibility,
 }
 
 impl Default for DisplaySettings {
@@ -21,7 +20,6 @@ impl Default for DisplaySettings {
       show_symbols: false,
       show_grid: true,
       show_rulers: true,
-      layers_visibility: LayersVisibility::default(),
     }
   }
 }
@@ -121,50 +119,6 @@ impl std::str::FromStr for DisplayMode {
       "Stitches" => Ok(Self::Stitches),
       "Mixed" => Ok(Self::Mixed),
       _ => Ok(Self::Mixed),
-    }
-  }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
-pub struct LayersVisibility {
-  pub reference_image: bool,
-
-  pub fullstitches: bool,
-  pub petitestitches: bool,
-
-  pub halfstitches: bool,
-  pub quarterstitches: bool,
-
-  pub backstitches: bool,
-  pub straightstitches: bool,
-
-  pub frenchknots: bool,
-  pub beads: bool,
-
-  pub specialstitches: bool,
-}
-
-impl Default for LayersVisibility {
-  fn default() -> Self {
-    Self {
-      reference_image: true,
-
-      fullstitches: true,
-      petitestitches: true,
-
-      halfstitches: true,
-      quarterstitches: true,
-
-      backstitches: true,
-      straightstitches: true,
-
-      frenchknots: true,
-      beads: true,
-
-      specialstitches: true,
     }
   }
 }

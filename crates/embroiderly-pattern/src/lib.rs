@@ -4,6 +4,9 @@ pub use project::*;
 mod pattern;
 pub use pattern::*;
 
+mod layers;
+pub use layers::*;
+
 mod palette;
 pub use palette::*;
 

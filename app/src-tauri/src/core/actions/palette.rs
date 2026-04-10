@@ -130,6 +130,7 @@ impl<R: tauri::Runtime> Action<R> for RemovePaletteItemsAction {
     }
 
     patproj.pattern.restore_stitches(
+      0,
       metadata.conflicts.clone(),
       &self.palindexes,
       patproj.pattern.palette.len() as u32,

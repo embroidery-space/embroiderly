@@ -37,7 +37,6 @@ describe("Tree", () => {
     ["with nested items", { props: { items: nestedItems } }],
     ...sizes.map((size) => [`with size ${size}`, { props: { items: flatItems, size } }]),
     ["with disabled tree", { props: { items: flatItems, disabled: true } }],
-    ["with disabled item", { props: { items: [{ label: "Disabled", value: "disabled", disabled: true }] } }],
     [
       "with defaultExpanded item",
       {
@@ -73,8 +72,33 @@ describe("Tree", () => {
         },
       },
     ],
-    ["with class", { props: { items: flatItems, class: "custom-class" } }],
-    ["with ui", { props: { items: flatItems, ui: { root: "custom-root", item: "custom-item" } } }],
+    [
+      "with scroll",
+      {
+        props: {
+          items: flatItems,
+          scroll: { type: "always" },
+        },
+      },
+    ],
+    [
+      "with class",
+      {
+        props: {
+          items: flatItems,
+          class: "custom-class",
+        },
+      },
+    ],
+    [
+      "with ui",
+      {
+        props: {
+          items: flatItems,
+          ui: { root: "custom-root", item: "custom-item" },
+        },
+      },
+    ],
     [
       "with item slot",
       {

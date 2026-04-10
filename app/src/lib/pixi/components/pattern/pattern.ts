@@ -8,7 +8,8 @@ import {
   FullStitch,
   FullStitchKind,
   Grid,
-  LayersVisibility,
+  Layer,
+  Layers,
   LineStitch,
   LineStitchKind,
   NodeStitch,
@@ -41,14 +42,63 @@ import {
   StitchesHint,
 } from "./stitches.ts";
 
+interface LayerContainers {
+  fullstitches: StitchParticleContainer;
+  petitestitches: StitchParticleContainer;
+  halfstitches: StitchParticleContainer;
+  quarterstitches: StitchParticleContainer;
+  symbols: StitchSymbolsContainer;
+  specialstitches: StitchGraphicsContainer;
+  backstitches: StitchGraphicsContainer;
+  straightstitches: StitchGraphicsContainer;
+  frenchknots: StitchGraphicsContainer;
+  beads: StitchGraphicsContainer;
+}
+
+function createLayerContainers(layerIndex: number): LayerContainers {
+  return {
+    fullstitches: new StitchParticleContainer({ label: `Layer ${layerIndex} Full Stitches` }),
+    petitestitches: new StitchParticleContainer({ label: `Layer ${layerIndex} Petite Stitches` }),
+    halfstitches: new StitchParticleContainer({ label: `Layer ${layerIndex} Half Stitches` }),
+    quarterstitches: new StitchParticleContainer({ label: `Layer ${layerIndex} Quarter Stitches` }),
+    symbols: new StitchSymbolsContainer({ label: `Layer ${layerIndex} Symbols` }),
+    specialstitches: new StitchGraphicsContainer({
+      label: `Layer ${layerIndex} Special Stitches`,
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
+    backstitches: new StitchGraphicsContainer({
+      label: `Layer ${layerIndex} Back Stitches`,
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
+    straightstitches: new StitchGraphicsContainer({
+      label: `Layer ${layerIndex} Straight Stitches`,
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
+    frenchknots: new StitchGraphicsContainer({
+      label: `Layer ${layerIndex} French Knots`,
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
+    beads: new StitchGraphicsContainer({
+      label: `Layer ${layerIndex} Beads`,
+      eventMode: "passive",
+      interactiveChildren: true,
+    }),
+  };
+}
+
 export class PatternView extends Container {
   #textureManager: TextureManager;
 
   private palette: readonly PaletteItem[];
+  private layers: Layers;
   private specialStitchModels: SpecialStitchModel[];
 
   private displayMode: DisplayMode | undefined;
-  private layersVisibility: LayersVisibility;
+  private showSymbols = false;
 
   private stages = {
     // lowest
@@ -56,42 +106,22 @@ export class PatternView extends Container {
 
     referenceImage: new ReferenceImageView(),
 
-    fullstitches: new StitchParticleContainer({ label: "Full Stitches" }),
-    petitestitches: new StitchParticleContainer({ label: "Petite Stitches" }),
+    fullstitches: new Container({ label: "Full Stitches" }),
+    petitestitches: new Container({ label: "Petite Stitches" }),
 
-    halfstitches: new StitchParticleContainer({ label: "Half Stitches" }),
-    quarterstitches: new StitchParticleContainer({ label: "Quarter Stitches" }),
+    halfstitches: new Container({ label: "Half Stitches" }),
+    quarterstitches: new Container({ label: "Quarter Stitches" }),
 
-    symbols: new StitchSymbolsContainer({ label: "Symbols" }),
+    symbols: new Container({ label: "Symbols" }),
 
     grid: new GridView(),
 
-    specialstitches: new StitchGraphicsContainer({
-      label: "Special Stitches",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
-    backstitches: new StitchGraphicsContainer({
-      label: "Back Stitches",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
-    straightstitches: new StitchGraphicsContainer({
-      label: "Straight Stitches",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
+    specialstitches: new Container({ label: "Special Stitches", eventMode: "passive", interactiveChildren: true }),
+    backstitches: new Container({ label: "Back Stitches", eventMode: "passive", interactiveChildren: true }),
+    straightstitches: new Container({ label: "Straight Stitches", eventMode: "passive", interactiveChildren: true }),
 
-    frenchknots: new StitchGraphicsContainer({
-      label: "French Knots",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
-    beads: new StitchGraphicsContainer({
-      label: "Beads",
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
+    frenchknots: new Container({ label: "French Knots", eventMode: "passive", interactiveChildren: true }),
+    beads: new Container({ label: "Beads", eventMode: "passive", interactiveChildren: true }),
 
     stitchesHint: new StitchesHint(),
     rulers: new Rulers(),
@@ -99,46 +129,58 @@ export class PatternView extends Container {
   };
   private overlay = new RenderLayer();
 
+  private layerContainers = new Map<number, LayerContainers>();
+
   constructor(pattern: Pattern, textureManager: TextureManager) {
     super({ label: "Pattern", isRenderGroup: true });
     this.#textureManager = textureManager;
 
     this.palette = pattern.palette.items;
+    this.layers = pattern.layers;
+    this.specialStitchModels = pattern.specialStitchModels;
 
     this.setFabric(pattern.fabric);
     this.setGrid(pattern.grid);
 
+    if (pattern.referenceImage) this.setReferenceImage(pattern.referenceImage, { fit: false });
+
+    // Initialize layer containers.
+    for (const layer of pattern.layers.items) {
+      this.layerContainers.set(layer.index, createLayerContainers(layer.index));
+    }
+
+    // Set display settings.
     this.setShowSymbols(pattern.showSymbols);
     this.setShowGrid(pattern.showGrid);
     this.setShowRulers(pattern.showRulers);
     this.setDisplayMode(pattern.displayMode);
-    this.setLayersVisibility(pattern.layersVisibility);
 
-    if (pattern.referenceImage) this.setReferenceImage(pattern.referenceImage, { fit: false });
+    // Add stitches from each layer to their containers.
+    // This must be performed after display settings are set (textures need to be initialized).
+    for (const layer of pattern.layers.items) {
+      const lc = this.layerContainers.get(layer.index)!;
 
-    for (const stitch of pattern.fullstitches) {
-      this.addFullStitch(stitch);
-      this.addSymbol(stitch);
-    }
-    for (const stitch of pattern.partstitches) {
-      this.addPartStitch(stitch);
-      this.addSymbol(stitch);
-    }
-    for (const stitch of pattern.linestitches) {
-      this.addLineStitch(stitch);
-      this.addSymbol(stitch);
-    }
-    for (const stitch of pattern.nodestitches) {
-      this.addNodeStitch(stitch);
-      this.addSymbol(stitch);
-    }
-
-    this.specialStitchModels = pattern.specialStitchModels;
-    for (const specialstitch of pattern.specialstitches) {
-      this.addSpecialStitch(specialstitch);
+      for (const stitch of layer.fullstitches) {
+        this.addFullStitch(stitch, lc);
+        this.addSymbol(stitch, lc);
+      }
+      for (const stitch of layer.partstitches) {
+        this.addPartStitch(stitch, lc);
+        this.addSymbol(stitch, lc);
+      }
+      for (const stitch of layer.linestitches) {
+        this.addLineStitch(stitch, lc);
+      }
+      for (const stitch of layer.nodestitches) {
+        this.addNodeStitch(stitch, lc);
+      }
+      for (const stitch of layer.specialstitches) {
+        this.addSpecialStitch(stitch, lc);
+      }
     }
 
-    // Configure the stages and overlay.
+    // Populate stages with per-layer containers in visual order, then assemble the scene graph.
+    this.reorderLayers();
     this.addChild(...Object.values(this.stages), this.overlay);
     this.overlay.attach(this.stages.referenceImage.controls);
   }
@@ -171,40 +213,48 @@ export class PatternView extends Container {
     this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
   }
 
-  addStitch(stitch: Stitch) {
-    if (stitch instanceof FullStitch) this.addFullStitch(stitch);
-    else if (stitch instanceof PartStitch) this.addPartStitch(stitch);
-    else if (stitch instanceof LineStitch) this.addLineStitch(stitch);
-    else this.addNodeStitch(stitch);
-    this.addSymbol(stitch);
+  addStitch(stitch: Stitch, layerIndex: number) {
+    const lc = this.layerContainers.get(layerIndex);
+    if (!lc) return;
+
+    if (stitch instanceof FullStitch) this.addFullStitch(stitch, lc);
+    else if (stitch instanceof PartStitch) this.addPartStitch(stitch, lc);
+    else if (stitch instanceof LineStitch) this.addLineStitch(stitch, lc);
+    else this.addNodeStitch(stitch, lc);
+
+    this.addSymbol(stitch, lc);
   }
 
-  removeStitch(stitch: Stitch) {
-    if (stitch instanceof FullStitch) this.removeFullStitch(stitch);
-    else if (stitch instanceof PartStitch) this.removePartStitch(stitch);
-    else if (stitch instanceof LineStitch) this.removeLineStitch(stitch);
-    else this.removeNodeStitch(stitch);
-    this.removeSymbol(stitch);
+  removeStitch(stitch: Stitch, layerIndex: number) {
+    const lc = this.layerContainers.get(layerIndex);
+    if (!lc) return;
+
+    if (stitch instanceof FullStitch) this.removeFullStitch(stitch, lc);
+    else if (stitch instanceof PartStitch) this.removePartStitch(stitch, lc);
+    else if (stitch instanceof LineStitch) this.removeLineStitch(stitch, lc);
+    else this.removeNodeStitch(stitch, lc);
+
+    this.removeSymbol(stitch, lc);
   }
 
-  private addSymbol(stitch: Stitch) {
+  private addSymbol(stitch: Stitch, lc: LayerContainers) {
     if (stitch instanceof LineStitch || stitch instanceof NodeStitch) return;
 
     const palitem = this.palette[stitch.palindex]!;
     const symbol = new StitchSymbol(stitch, palitem.symbol);
 
-    this.stages.symbols.addStitch(symbol);
+    lc.symbols.addStitch(symbol);
   }
 
-  private removeSymbol(stitch: Stitch) {
-    this.stages.symbols.removeStitch(stitch);
+  private removeSymbol(stitch: Stitch, lc: LayerContainers) {
+    lc.symbols.removeStitch(stitch);
   }
 
-  private addFullStitch(stitch: FullStitch) {
+  private addFullStitch(stitch: FullStitch, lc: LayerContainers) {
     const { x, y, palindex, kind } = stitch;
 
     const particle = new StitchParticle(stitch, {
-      texture: kind === FullStitchKind.Full ? this.stages.fullstitches.texture : this.stages.petitestitches.texture,
+      texture: kind === FullStitchKind.Full ? lc.fullstitches.texture : lc.petitestitches.texture,
       x,
       y,
       tint: this.palette[palindex]!.color,
@@ -212,20 +262,20 @@ export class PatternView extends Container {
       scaleY: STITCH_SCALE_FACTOR,
     });
 
-    if (kind === FullStitchKind.Full) this.stages.fullstitches.addStitch(particle);
-    else this.stages.petitestitches.addStitch(particle);
+    if (kind === FullStitchKind.Full) lc.fullstitches.addStitch(particle);
+    else lc.petitestitches.addStitch(particle);
   }
 
-  private removeFullStitch(stitch: FullStitch) {
-    if (stitch.kind === FullStitchKind.Full) this.stages.fullstitches.removeStitch(stitch);
-    else this.stages.petitestitches.removeStitch(stitch);
+  private removeFullStitch(stitch: FullStitch, lc: LayerContainers) {
+    if (stitch.kind === FullStitchKind.Full) lc.fullstitches.removeStitch(stitch);
+    else lc.petitestitches.removeStitch(stitch);
   }
 
-  private addPartStitch(stitch: PartStitch) {
+  private addPartStitch(stitch: PartStitch, lc: LayerContainers) {
     const { x, y, palindex, kind, direction } = stitch;
 
     const particle = new StitchParticle(stitch, {
-      texture: kind === PartStitchKind.Half ? this.stages.halfstitches.texture : this.stages.quarterstitches.texture,
+      texture: kind === PartStitchKind.Half ? lc.halfstitches.texture : lc.quarterstitches.texture,
       x,
       y,
       tint: this.palette[palindex]!.color,
@@ -234,16 +284,16 @@ export class PatternView extends Container {
       anchorX: direction === PartStitchDirection.Forward ? 0 : 1,
     });
 
-    if (kind === PartStitchKind.Half) this.stages.halfstitches.addStitch(particle);
-    else this.stages.quarterstitches.addStitch(particle);
+    if (kind === PartStitchKind.Half) lc.halfstitches.addStitch(particle);
+    else lc.quarterstitches.addStitch(particle);
   }
 
-  private removePartStitch(stitch: PartStitch) {
-    if (stitch.kind === PartStitchKind.Half) this.stages.halfstitches.removeStitch(stitch);
-    else this.stages.quarterstitches.removeStitch(stitch);
+  private removePartStitch(stitch: PartStitch, lc: LayerContainers) {
+    if (stitch.kind === PartStitchKind.Half) lc.halfstitches.removeStitch(stitch);
+    else lc.quarterstitches.removeStitch(stitch);
   }
 
-  private addLineStitch(stitch: LineStitch) {
+  private addLineStitch(stitch: LineStitch, lc: LayerContainers) {
     const { x, y, palindex } = stitch;
 
     const start = { x: x[0], y: y[0] };
@@ -260,16 +310,16 @@ export class PatternView extends Container {
       .stroke({ width: 0.2, color: this.palette[palindex]!.color, cap: "round" });
     graphics.eventMode = "static";
 
-    if (stitch.kind === LineStitchKind.Back) this.stages.backstitches.addStitch(graphics);
-    else this.stages.straightstitches.addStitch(graphics);
+    if (stitch.kind === LineStitchKind.Back) lc.backstitches.addStitch(graphics);
+    else lc.straightstitches.addStitch(graphics);
   }
 
-  private removeLineStitch(stitch: LineStitch) {
-    if (stitch.kind === LineStitchKind.Back) this.stages.backstitches.removeStitch(stitch);
-    else this.stages.straightstitches.removeStitch(stitch);
+  private removeLineStitch(stitch: LineStitch, lc: LayerContainers) {
+    if (stitch.kind === LineStitchKind.Back) lc.backstitches.removeStitch(stitch);
+    else lc.straightstitches.removeStitch(stitch);
   }
 
-  private addNodeStitch(stitch: NodeStitch) {
+  private addNodeStitch(stitch: NodeStitch, lc: LayerContainers) {
     const { x, y, palindex, kind, rotated } = stitch;
     const palitem = this.palette[palindex]!;
 
@@ -281,16 +331,16 @@ export class PatternView extends Container {
     graphics.position.set(x, y);
     if (rotated) graphics.angle = 90;
 
-    if (kind === NodeStitchKind.FrenchKnot) this.stages.frenchknots.addStitch(graphics);
-    else this.stages.beads.addStitch(graphics);
+    if (kind === NodeStitchKind.FrenchKnot) lc.frenchknots.addStitch(graphics);
+    else lc.beads.addStitch(graphics);
   }
 
-  private removeNodeStitch(stitch: NodeStitch) {
-    if (stitch.kind === NodeStitchKind.FrenchKnot) this.stages.frenchknots.removeStitch(stitch);
-    else this.stages.beads.removeStitch(stitch);
+  private removeNodeStitch(stitch: NodeStitch, lc: LayerContainers) {
+    if (stitch.kind === NodeStitchKind.FrenchKnot) lc.frenchknots.removeStitch(stitch);
+    else lc.beads.removeStitch(stitch);
   }
 
-  private addSpecialStitch(specialStitch: SpecialStitch) {
+  private addSpecialStitch(specialStitch: SpecialStitch, lc: LayerContainers) {
     const { x, y, rotation, flip, palindex, modindex } = specialStitch;
     const model = this.specialStitchModels[modindex]!;
 
@@ -335,34 +385,43 @@ export class PatternView extends Container {
     if (flip[0]) graphics.scale.x = -1;
     if (flip[1]) graphics.scale.y = -1;
 
-    this.stages.specialstitches.addChild(graphics);
+    lc.specialstitches.addChild(graphics);
+  }
+
+  private syncLayerContainers(lc: LayerContainers, layer: Layer) {
+    const d = Boolean(this.displayMode);
+    const l = layer.visible;
+
+    if (this.displayMode) {
+      lc.fullstitches.texture = this.#textureManager.getFullStitchTexture(this.displayMode, FullStitchKind.Full); // oxfmt-ignore
+      lc.petitestitches.texture = this.#textureManager.getFullStitchTexture(this.displayMode, FullStitchKind.Petite); // oxfmt-ignore
+      lc.halfstitches.texture = this.#textureManager.getPartStitchTexture(this.displayMode, PartStitchKind.Half); // oxfmt-ignore
+      lc.quarterstitches.texture = this.#textureManager.getPartStitchTexture(this.displayMode, PartStitchKind.Quarter); // oxfmt-ignore
+    }
+
+    lc.fullstitches.visible = l && layer.fullstitchesVisible && d;
+    lc.petitestitches.visible = l && layer.petitestitchesVisible && d;
+    lc.halfstitches.visible = l && layer.halfstitchesVisible && d;
+    lc.quarterstitches.visible = l && layer.quarterstitchesVisible && d;
+    lc.symbols.visible = l && this.showSymbols;
+    lc.symbols.renderable = l && this.showSymbols;
+    lc.specialstitches.visible = l && layer.specialstitchesVisible;
+    lc.backstitches.visible = l && layer.backstitchesVisible;
+    lc.straightstitches.visible = l && layer.straightstitchesVisible;
+    lc.frenchknots.visible = l && layer.frenchknotsVisible;
+    lc.beads.visible = l && layer.beadsVisible;
   }
 
   setDisplayMode(displayMode: DisplayMode | undefined) {
     this.displayMode = displayMode;
-    if (displayMode) {
-      this.stages.fullstitches.texture = this.#textureManager.getFullStitchTexture(displayMode, FullStitchKind.Full);
-      this.stages.petitestitches.texture = this.#textureManager.getFullStitchTexture(
-        displayMode,
-        FullStitchKind.Petite,
-      );
-      this.stages.halfstitches.texture = this.#textureManager.getPartStitchTexture(displayMode, PartStitchKind.Half);
-      this.stages.quarterstitches.texture = this.#textureManager.getPartStitchTexture(
-        displayMode,
-        PartStitchKind.Quarter,
-      );
+    for (const [index, lc] of this.layerContainers) {
+      const layer = this.layers.get(index);
+      if (layer) this.syncLayerContainers(lc, layer);
     }
-
-    const visible = Boolean(this.displayMode);
-    this.stages.fullstitches.visible = visible;
-    this.stages.petitestitches.visible = visible;
-    this.stages.halfstitches.visible = visible;
-    this.stages.quarterstitches.visible = visible;
   }
 
   setShowSymbols(value: boolean) {
-    this.stages.symbols.visible = value;
-    this.stages.symbols.renderable = value;
+    this.showSymbols = value;
     this.setDisplayMode(this.displayMode);
   }
 
@@ -376,23 +435,64 @@ export class PatternView extends Container {
     this.stages.rulers.renderable = value;
   }
 
-  setLayersVisibility(layersVisibility: LayersVisibility) {
-    this.layersVisibility = layersVisibility;
-    for (const [layer, visible] of Object.entries(this.layersVisibility)) {
-      const stage = this.stages[layer as keyof typeof this.stages];
-      if (stage) {
-        stage.visible = visible;
-        stage.renderable = visible;
-      }
-    }
-  }
-
   setDisplaySettings(settings: DisplaySettings) {
     this.setDisplayMode(settings.displayMode);
     this.setShowSymbols(settings.showSymbols);
     this.setShowGrid(settings.showGrid);
     this.setShowRulers(settings.showRulers);
-    this.setLayersVisibility(settings.layersVisibility);
+  }
+
+  addLayer(layerIndex: number) {
+    const lc = createLayerContainers(layerIndex);
+    this.layerContainers.set(layerIndex, lc);
+
+    const layer = this.layers.get(layerIndex);
+    if (layer) this.syncLayerContainers(lc, layer);
+
+    this.reorderLayers();
+  }
+
+  removeLayer(layerIndex: number) {
+    const lc = this.layerContainers.get(layerIndex);
+    if (!lc) return;
+
+    this.layerContainers.delete(layerIndex);
+    for (const container of Object.values(lc)) container.destroy({ children: true });
+  }
+
+  updateLayerVisibility(layerIndex: number) {
+    const lc = this.layerContainers.get(layerIndex);
+    const layer = this.layers.get(layerIndex);
+    if (lc && layer) this.syncLayerContainers(lc, layer);
+  }
+
+  reorderLayers() {
+    this.stages.fullstitches.removeChildren();
+    this.stages.petitestitches.removeChildren();
+    this.stages.halfstitches.removeChildren();
+    this.stages.quarterstitches.removeChildren();
+    this.stages.symbols.removeChildren();
+    this.stages.specialstitches.removeChildren();
+    this.stages.backstitches.removeChildren();
+    this.stages.straightstitches.removeChildren();
+    this.stages.frenchknots.removeChildren();
+    this.stages.beads.removeChildren();
+
+    for (const layer of [...this.layers.itemsInVisualOrder].reverse()) {
+      const lc = this.layerContainers.get(layer.index);
+      if (!lc) continue;
+
+      this.stages.fullstitches.addChild(lc.fullstitches);
+      this.stages.petitestitches.addChild(lc.petitestitches);
+      this.stages.halfstitches.addChild(lc.halfstitches);
+      this.stages.quarterstitches.addChild(lc.quarterstitches);
+      this.stages.symbols.addChild(lc.symbols);
+      this.stages.specialstitches.addChild(lc.specialstitches);
+      this.stages.backstitches.addChild(lc.backstitches);
+      this.stages.straightstitches.addChild(lc.straightstitches);
+      this.stages.frenchknots.addChild(lc.frenchknots);
+      this.stages.beads.addChild(lc.beads);
+    }
   }
 
   async setReferenceImage(

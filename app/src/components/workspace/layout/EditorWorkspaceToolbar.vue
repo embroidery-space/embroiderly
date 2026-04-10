@@ -48,7 +48,7 @@ const selectionColor = computed(() => {
   if (!settingsStore.other.usePaletteItemColorForStitchTools) return undefined;
 
   const palindex = editorStateStore.selectedPaletteItemIndex;
-  if (!patternStore.pattern || palindex === undefined) return undefined;
+  if (patternStore.pattern.isNil || palindex === undefined) return undefined;
 
   return patternStore.pattern.palette.items[palindex]?.hex;
 });

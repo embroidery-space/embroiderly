@@ -1,13 +1,16 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
-import { stringify as stringifyUuid } from "uuid";
+import { NIL as NIL_UUID, stringify as stringifyUuid } from "uuid";
+
+import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
 
 import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
 import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
+import { Layer, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
-import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch, SpecialStitchModel } from "./stitches.ts";
+import { FullStitch, PartStitch, LineStitch, SpecialStitchModel } from "./stitches.ts";
 import type { Stitch } from "./stitches.ts";
 
 export class PatternInfo {
@@ -16,11 +19,11 @@ export class PatternInfo {
   copyright: string;
   description: string;
 
-  constructor(data: b.infer<typeof PatternInfo.schema>) {
-    this.title = data.title;
-    this.author = data.author;
-    this.copyright = data.copyright;
-    this.description = data.description;
+  constructor(data?: b.infer<typeof PatternInfo.schema>) {
+    this.title = data?.title ?? "";
+    this.author = data?.author ?? "";
+    this.copyright = data?.copyright ?? "";
+    this.description = data?.description ?? "";
   }
 
   static readonly schema = b.struct({
@@ -55,11 +58,7 @@ export class Pattern extends EventTarget {
   #info: PatternInfo;
   #fabric: Fabric;
   #palette: Palette;
-  #fullstitches: FullStitch[];
-  #partstitches: PartStitch[];
-  #linestitches: LineStitch[];
-  #nodestitches: NodeStitch[];
-  #specialstitches: SpecialStitch[];
+  #layers: Layers;
   #specialStitchModels: SpecialStitchModel[];
 
   #displaySettings: DisplaySettings;
@@ -67,42 +66,52 @@ export class Pattern extends EventTarget {
 
   #effectiveDisplayMode: DisplayMode | undefined;
 
-  constructor(data: b.infer<typeof Pattern.schema>) {
+  constructor(data?: {
+    id?: string | Uint8Array;
+
+    referenceImage?: b.infer<typeof ReferenceImage.schema> | null;
+
+    info?: b.infer<typeof PatternInfo.schema>;
+    fabric?: b.infer<typeof Fabric.schema>;
+    palette?: b.infer<typeof Palette.schema>;
+    layers?: b.infer<typeof Layers.schema> | Layer[] | Layers;
+    specialStitchModels?: b.infer<typeof SpecialStitchModel.schema>[];
+
+    displaySettings?: Partial<b.infer<typeof DisplaySettings.schema>>;
+    publishSettings?: Partial<b.infer<typeof PublishSettings.schema>>;
+  }) {
     super();
 
-    this.id = stringifyUuid(new Uint8Array(data.id));
+    this.id = data?.id instanceof Uint8Array ? stringifyUuid(data.id) : (data?.id ?? NIL_UUID);
 
-    if (data.referenceImage) this.#referenceImage = new ReferenceImage(data.referenceImage);
+    if (data?.referenceImage) this.#referenceImage = new ReferenceImage(data.referenceImage);
 
-    this.#info = new PatternInfo(data.info);
-    this.#fabric = new Fabric(data.fabric);
-    this.#palette = new Palette(data.palette);
-    this.#fullstitches = data.fullstitches.map((stitch) => new FullStitch(stitch));
-    this.#partstitches = data.partstitches.map((stitch) => new PartStitch(stitch));
-    this.#linestitches = data.linestitches.map((stitch) => new LineStitch(stitch));
-    this.#nodestitches = data.nodestitches.map((stitch) => new NodeStitch(stitch));
-    this.#specialstitches = data.specialstitches.map((stitch) => new SpecialStitch(stitch));
-    this.#specialStitchModels = data.specialStitchModels.map((model) => new SpecialStitchModel(model));
+    this.#info = new PatternInfo(data?.info);
+    this.#fabric = new Fabric(data?.fabric);
+    this.#palette = new Palette(data?.palette);
+    this.#layers = new Layers(data?.layers);
+    this.#specialStitchModels = data?.specialStitchModels?.map((model) => new SpecialStitchModel(model)) ?? [];
 
-    this.#displaySettings = new DisplaySettings(data.displaySettings);
-    this.#publishSettings = new PublishSettings(data.publishSettings);
+    this.#displaySettings = new DisplaySettings(data?.displaySettings);
+    this.#publishSettings = new PublishSettings(data?.publishSettings);
 
     this.#effectiveDisplayMode = this.#displaySettings.displayMode;
   }
 
+  /** Returns `true` if the pattern is a new, empty pattern. */
+  get isNil(): boolean {
+    return this.id === NIL_UUID;
+  }
+
   static readonly schema = b.struct({
-    id: b.array(b.u8(), 16),
+    id: b.bytes(16),
 
     referenceImage: b.option(ReferenceImage.schema),
 
     info: PatternInfo.schema,
     fabric: Fabric.schema,
     palette: Palette.schema,
-    fullstitches: b.vec(FullStitch.schema),
-    partstitches: b.vec(PartStitch.schema),
-    linestitches: b.vec(LineStitch.schema),
-    nodestitches: b.vec(NodeStitch.schema),
-    specialstitches: b.vec(SpecialStitch.schema),
+    layers: Layers.schema,
     specialStitchModels: b.vec(SpecialStitchModel.schema),
 
     displaySettings: DisplaySettings.schema,
@@ -162,57 +171,67 @@ export class Pattern extends EventTarget {
     this.dispatchEvent(new CustomEvent(PatternEvent.UpdateGrid, { detail: grid }));
   }
 
-  get fullstitches() {
-    return this.#fullstitches;
+  get layers() {
+    return this.#layers;
   }
-  get partstitches() {
-    return this.#partstitches;
-  }
-  get linestitches() {
-    return this.#linestitches;
-  }
-  get nodestitches() {
-    return this.#nodestitches;
-  }
-  get specialstitches() {
-    return this.#specialstitches;
-  }
+
   get specialStitchModels() {
     return this.#specialStitchModels;
   }
 
-  /**
-   * Adds a stitch to the pattern.
-   * Fires `stitch:add` event.
-   * @param stitch The stitch to add.
-   */
-  addStitch(stitch: Stitch) {
-    if (stitch instanceof FullStitch) this.#fullstitches.push(stitch);
-    else if (stitch instanceof PartStitch) this.#partstitches.push(stitch);
-    else if (stitch instanceof LineStitch) this.#linestitches.push(stitch);
-    else this.#nodestitches.push(stitch);
+  /** Adds a stitch to the pattern on the given layer. */
+  addStitch(layerIndex: number, stitch: Stitch) {
+    const layer = this.#layers.get(layerIndex)!;
 
-    this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: stitch }));
+    if (stitch instanceof FullStitch) layer.fullstitches.push(stitch);
+    else if (stitch instanceof PartStitch) layer.partstitches.push(stitch);
+    else if (stitch instanceof LineStitch) layer.linestitches.push(stitch);
+    else layer.nodestitches.push(stitch);
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: { layerIndex, stitch } }));
   }
 
-  /**
-   * Removes a stitch from the pattern.
-   * Fires `stitch:remove` event.
-   * @param stitch The stitch to remove.
-   */
-  removeStitch(stitch: Stitch) {
+  /** Removes a stitch from the pattern on the given layer. */
+  removeStitch(layerIndex: number, stitch: Stitch) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function removeStitchFromArray(array: any[], stitch: any) {
-      const index = array.findIndex((item) => item.eq(stitch));
+      const index = array.findIndex((item) => item.equals(stitch));
       if (index !== -1) array.splice(index, 1);
     }
 
-    if (stitch instanceof FullStitch) removeStitchFromArray(this.#fullstitches, stitch);
-    else if (stitch instanceof PartStitch) removeStitchFromArray(this.#partstitches, stitch);
-    else if (stitch instanceof LineStitch) removeStitchFromArray(this.#linestitches, stitch);
-    else removeStitchFromArray(this.#nodestitches, stitch);
+    const layer = this.#layers.get(layerIndex)!;
 
-    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: stitch }));
+    if (stitch instanceof FullStitch) removeStitchFromArray(layer.fullstitches, stitch);
+    else if (stitch instanceof PartStitch) removeStitchFromArray(layer.partstitches, stitch);
+    else if (stitch instanceof LineStitch) removeStitchFromArray(layer.linestitches, stitch);
+    else removeStitchFromArray(layer.nodestitches, stitch);
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: { layerIndex, stitch } }));
+  }
+
+  /** Inserts a layer. */
+  insertLayer(index: number, layer: Layer) {
+    this.#layers.insert(index, layer);
+    this.dispatchEvent(new CustomEvent(PatternEvent.AddLayer, { detail: { index, layer } }));
+  }
+
+  /** Removes a layer. */
+  removeLayer(index: number) {
+    this.#layers.remove(index);
+    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveLayer, { detail: index }));
+  }
+
+  /** Updates layer visibility. */
+  updateLayerVisibility(layerIndex: number, visibility: LayerVisibility) {
+    const layer = this.#layers.get(layerIndex);
+    if (layer) layer.setVisibility(visibility);
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateLayerVisibility, { detail: { layerIndex, visibility } }));
+  }
+
+  /** Reorders layers. */
+  moveLayer(positions: number[]) {
+    this.#layers.positions = positions;
+    this.dispatchEvent(new CustomEvent(PatternEvent.MoveLayer, { detail: positions }));
   }
 
   get displaySettings() {
@@ -252,10 +271,6 @@ export class Pattern extends EventTarget {
     return this.#displaySettings.showRulers;
   }
 
-  get layersVisibility() {
-    return this.#displaySettings.layersVisibility;
-  }
-
   get pdfExportOptions() {
     return this.#publishSettings.pdf;
   }
@@ -293,4 +308,10 @@ export const enum PatternEvent {
   UpdateDisplayMode = "display:set_mode",
 
   UpdatePdfExportOptions = "publish:update-pdf",
+
+  AddLayer = "layers:add",
+  RemoveLayer = "layers:remove",
+  RenameLayer = "layers:rename",
+  UpdateLayerVisibility = "layers:update_visibility",
+  MoveLayer = "layers:move",
 }

@@ -102,7 +102,7 @@ export class TextureManager {
     return this.#createTexture(figure);
   }
 
-  getNodeTexture(kind: NodeStitchKind, bead = Bead.default()) {
+  getNodeTexture(kind: NodeStitchKind, bead = new Bead()) {
     const stitchCachekey = kind === NodeStitchKind.FrenchKnot ? kind : `${kind}-${bead.diameter}x${bead.length}`;
 
     let texture = this.#cache.get(stitchCachekey) as GraphicsContext;

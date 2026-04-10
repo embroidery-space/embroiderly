@@ -11,7 +11,7 @@ import {
   SortPaletteBy,
   Symbol,
   SetSymbolData,
-  serializeStitch,
+  serializeStitchPayload,
   PdfExportOptions,
 } from "~/lib/pattern/";
 import type { Stitch } from "~/lib/pattern/";
@@ -93,14 +93,49 @@ export function setSymbol(patternId: string, palindex: number, symbol?: Symbol) 
   return invoke<void>("set_symbol", SetSymbolData.serialize({ palindex, symbol }), { headers: { patternId } });
 }
 
-// === Stitches Management === //
+// === Layer Management === //
 
-export function addStitch(patternId: string, stitch: Stitch) {
-  return invoke<void>("add_stitch", serializeStitch(stitch), { headers: { patternId } });
+export interface LayerVisibility {
+  visible: boolean;
+  fullstitchesVisible: boolean;
+  petitestitchesVisible: boolean;
+  halfstitchesVisible: boolean;
+  quarterstitchesVisible: boolean;
+  backstitchesVisible: boolean;
+  straightstitchesVisible: boolean;
+  frenchknotsVisible: boolean;
+  beadsVisible: boolean;
+  specialstitchesVisible: boolean;
 }
 
-export function removeStitch(patternId: string, stitch: Stitch) {
-  return invoke<void>("remove_stitch", serializeStitch(stitch), { headers: { patternId } });
+export function addLayer(patternId: string) {
+  return invoke<void>("add_layer", undefined, { headers: { patternId } });
+}
+
+export function removeLayer(patternId: string, layerIndex: number) {
+  return invoke<void>("remove_layer", { layerIndex }, { headers: { patternId } });
+}
+
+export function renameLayer(patternId: string, layerIndex: number, name: string) {
+  return invoke<void>("rename_layer", { layerIndex, name }, { headers: { patternId } });
+}
+
+export function updateLayerVisibility(patternId: string, layerIndex: number, visibility: LayerVisibility) {
+  return invoke<void>("update_layer_visibility", { layerIndex, visibility }, { headers: { patternId } });
+}
+
+export function moveLayer(patternId: string, oldPosition: number, newPosition: number) {
+  return invoke<void>("move_layer", { oldPosition, newPosition }, { headers: { patternId } });
+}
+
+// === Stitches Management === //
+
+export function addStitch(patternId: string, layerIndex: number, stitch: Stitch) {
+  return invoke<void>("add_stitch", serializeStitchPayload(layerIndex, stitch), { headers: { patternId } });
+}
+
+export function removeStitch(patternId: string, layerIndex: number, stitch: Stitch) {
+  return invoke<void>("remove_stitch", serializeStitchPayload(layerIndex, stitch), { headers: { patternId } });
 }
 
 // === Publish Settings === //

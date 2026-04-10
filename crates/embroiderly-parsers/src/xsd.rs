@@ -7,6 +7,50 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
   let file_path = file_path.as_ref();
   let xsd_pattern = pmaker::parse_pattern(file_path)?;
 
+  let layer = Layer {
+    fullstitches: Stitches::from_iter(
+      xsd_pattern
+        .fullstitches
+        .into_iter()
+        .map(TryInto::try_into)
+        .collect::<Result<Vec<_>, _>>()?,
+    ),
+    partstitches: Stitches::from_iter(
+      xsd_pattern
+        .partstitches
+        .into_iter()
+        .map(TryInto::try_into)
+        .collect::<Result<Vec<_>, _>>()?,
+    ),
+    linestitches: Stitches::from_iter(
+      xsd_pattern
+        .linestitches
+        .into_iter()
+        .map(TryInto::try_into)
+        .collect::<Result<Vec<_>, _>>()?,
+    ),
+    nodestitches: Stitches::from_iter(
+      xsd_pattern
+        .nodestitches
+        .into_iter()
+        .map(TryInto::try_into)
+        .collect::<Result<Vec<_>, _>>()?,
+    ),
+    specialstitches: Stitches::from_iter(
+      xsd_pattern
+        .specialstitches
+        .into_iter()
+        .map(|stitch| {
+          let model = xsd_pattern
+            .special_stitch_models
+            .get(stitch.modindex as usize)
+            .ok_or_else(|| anyhow::anyhow!("Special stitch model not found for index {}", stitch.modindex))?;
+          (stitch, model.width, model.height).try_into()
+        })
+        .collect::<Result<Vec<_>, _>>()?,
+    ),
+    ..Layer::default()
+  };
   let pattern = Pattern {
     info: xsd_pattern.info.into(),
     fabric: xsd_pattern.fabric.into(),
@@ -49,47 +93,7 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
         }
       })
       .collect(),
-    fullstitches: Stitches::from_iter(
-      xsd_pattern
-        .fullstitches
-        .into_iter()
-        .map(TryInto::try_into)
-        .collect::<Result<Vec<_>, _>>()?,
-    ),
-    partstitches: Stitches::from_iter(
-      xsd_pattern
-        .partstitches
-        .into_iter()
-        .map(TryInto::try_into)
-        .collect::<Result<Vec<_>, _>>()?,
-    ),
-    linestitches: Stitches::from_iter(
-      xsd_pattern
-        .linestitches
-        .into_iter()
-        .map(TryInto::try_into)
-        .collect::<Result<Vec<_>, _>>()?,
-    ),
-    nodestitches: Stitches::from_iter(
-      xsd_pattern
-        .nodestitches
-        .into_iter()
-        .map(TryInto::try_into)
-        .collect::<Result<Vec<_>, _>>()?,
-    ),
-    specialstitches: Stitches::from_iter(
-      xsd_pattern
-        .specialstitches
-        .into_iter()
-        .map(|stitch| {
-          let model = xsd_pattern
-            .special_stitch_models
-            .get(stitch.modindex as usize)
-            .ok_or_else(|| anyhow::anyhow!("Special stitch model not found for index {}", stitch.modindex))?;
-          (stitch, model.width, model.height).try_into()
-        })
-        .collect::<Result<Vec<_>, _>>()?,
-    ),
+    layers: Layers::new_with_layer(layer),
     special_stitch_models: xsd_pattern
       .special_stitch_models
       .into_iter()

@@ -1,13 +1,11 @@
 import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 
-import type { Clone, Eq } from "~/types/";
-
 export enum FullStitchKind {
   Full = "Full",
   Petite = "Petite",
 }
-export class FullStitch implements Clone<FullStitch>, Eq<FullStitch> {
+export class FullStitch {
   x: number;
   y: number;
   palindex: number;
@@ -31,7 +29,7 @@ export class FullStitch implements Clone<FullStitch>, Eq<FullStitch> {
     return new FullStitch(this);
   }
 
-  eq(other: FullStitch) {
+  equals(other: FullStitch) {
     return this.y === other.y && this.x === this.y && this.kind === other.kind;
   }
 }
@@ -44,7 +42,7 @@ export enum PartStitchKind {
   Half = "Half",
   Quarter = "Quarter",
 }
-export class PartStitch implements Clone<PartStitch>, Eq<PartStitch> {
+export class PartStitch {
   x: number;
   y: number;
   palindex: number;
@@ -71,7 +69,7 @@ export class PartStitch implements Clone<PartStitch>, Eq<PartStitch> {
     return new PartStitch(this);
   }
 
-  eq(other: PartStitch) {
+  equals(other: PartStitch) {
     return this.y === other.y && this.x === this.y && this.kind === other.kind && this.direction === other.direction;
   }
 }
@@ -80,7 +78,7 @@ export enum LineStitchKind {
   Back = "Back",
   Straight = "Straight",
 }
-export class LineStitch implements Clone<LineStitch>, Eq<LineStitch> {
+export class LineStitch {
   x: [number, number];
   y: [number, number];
   palindex: number;
@@ -104,7 +102,7 @@ export class LineStitch implements Clone<LineStitch>, Eq<LineStitch> {
     return new LineStitch(this);
   }
 
-  eq(other: LineStitch) {
+  equals(other: LineStitch) {
     return this.y[0] === other.y[0] && this.y[1] === other.y[1] && this.x[0] === other.x[0] && this.x[1] === other.x[1];
   }
 }
@@ -113,7 +111,7 @@ export enum NodeStitchKind {
   FrenchKnot = "FrenchKnot",
   Bead = "Bead",
 }
-export class NodeStitch implements Clone<NodeStitch>, Eq<NodeStitch> {
+export class NodeStitch {
   x: number;
   y: number;
   rotated: boolean;
@@ -140,7 +138,7 @@ export class NodeStitch implements Clone<NodeStitch>, Eq<NodeStitch> {
     return new NodeStitch(this);
   }
 
-  eq(other: NodeStitch) {
+  equals(other: NodeStitch) {
     return this.y === other.y && this.x === other.x;
   }
 }
@@ -248,4 +246,37 @@ export function deserializeStitches(data: Uint8Array | string) {
     if ("node" in stitch) return new NodeStitch(stitch.node);
     throw new Error("Invalid stitch variant");
   });
+}
+
+const StitchPayloadSchema = b.struct({
+  layerIndex: b.u32(),
+  stitch: StitchSchema,
+});
+
+export function serializeStitchPayload(layerIndex: number, stitch: Stitch) {
+  if (stitch instanceof FullStitch) return StitchPayloadSchema.serialize({ layerIndex, stitch: { full: stitch } });
+  if (stitch instanceof PartStitch) return StitchPayloadSchema.serialize({ layerIndex, stitch: { part: stitch } });
+  if (stitch instanceof LineStitch) return StitchPayloadSchema.serialize({ layerIndex, stitch: { line: stitch } });
+  if (stitch instanceof NodeStitch) return StitchPayloadSchema.serialize({ layerIndex, stitch: { node: stitch } });
+  throw new Error("Invalid stitch variant");
+}
+
+const StitchesEventSchema = b.struct({
+  layerIndex: b.u32(),
+  stitches: StitchesSchema,
+});
+
+export function deserializeStitchesEvent(data: Uint8Array | string): { layerIndex: number; stitches: Stitch[] } {
+  const buffer = typeof data === "string" ? toByteArray(data) : data;
+  const { layerIndex, stitches } = StitchesEventSchema.deserialize(buffer);
+  return {
+    layerIndex,
+    stitches: stitches.map((stitch) => {
+      if ("full" in stitch) return new FullStitch(stitch.full);
+      if ("part" in stitch) return new PartStitch(stitch.part);
+      if ("line" in stitch) return new LineStitch(stitch.line);
+      if ("node" in stitch) return new NodeStitch(stitch.node);
+      throw new Error("Invalid stitch variant");
+    }),
+  };
 }

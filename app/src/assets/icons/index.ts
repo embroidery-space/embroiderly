@@ -11,7 +11,10 @@ export { default as IconFileCreate } from "~icons/material-symbols/edit-document
 export { default as IconFileOpen } from "~icons/material-symbols/file-open-rounded";
 export { default as IconImage } from "~icons/material-symbols/image-rounded";
 export { default as IconImageOff } from "~icons/material-symbols/hide-image-rounded";
-export { default as IconLayers } from "~icons/material-symbols/layers-rounded";
+export { default as IconLayers } from "~icons/material-symbols/stacks-rounded";
+export { default as IconVisibility } from "~icons/material-symbols/visibility-rounded";
+export { default as IconVisibilityOff } from "~icons/material-symbols/visibility-off-rounded";
+export { default as IconTrash } from "~icons/material-symbols/delete-rounded";
 export { default as IconLink } from "~icons/material-symbols/link-rounded";
 export { default as IconUnlink } from "~icons/material-symbols/link-off-rounded";
 export { default as IconLoaderCircle } from "~icons/material-symbols/progress-activity";
@@ -58,6 +61,7 @@ export { default as IconStitchBack } from "~icons/stitches/back";
 export { default as IconStitchStraight } from "~icons/stitches/straight";
 export { default as IconStitchFrenchKnot } from "~icons/stitches/french-knot";
 export { default as IconStitchBead } from "~icons/stitches/bead";
+export { default as IconStitchSpecial } from "~icons/stitches/special";
 export { default as IconStitchMix } from "~icons/stitches/mix";
 export { default as IconStitchSquare } from "~icons/stitches/square";
 

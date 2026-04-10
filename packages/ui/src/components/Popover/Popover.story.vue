@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 import Button from "../Button/Button.vue";
 
@@ -9,13 +9,14 @@ import type { PopoverProps } from "./Popover.vue";
 const sides = ["top", "right", "bottom", "left"] as const;
 const aligns = ["start", "center", "end"] as const;
 
+const pinned = ref(false);
 const state = reactive<PopoverProps>({
   side: "bottom",
   align: "center",
   modal: false,
 });
 
-defineExpose({ state });
+defineExpose({ pinned, state });
 </script>
 
 <template>
@@ -33,6 +34,7 @@ defineExpose({ state });
         <HstSelect v-model="state.align" title="Align" :options="aligns" />
 
         <HstCheckbox v-model="state.modal" title="Modal" />
+        <HstCheckbox v-model="pinned" title="Pinned" />
       </template>
     </Variant>
   </Story>
