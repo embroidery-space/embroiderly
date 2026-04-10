@@ -45,6 +45,7 @@ export default defineConfig({
     dedupe: ["@vueuse/*", "reka-ui", "vue"],
     alias: {
       "~": fileURLToPath(new URL("src", import.meta.url)),
+      "~test-utils": fileURLToPath(new URL("tests/components/utils", import.meta.url)),
     },
   },
   test: {
