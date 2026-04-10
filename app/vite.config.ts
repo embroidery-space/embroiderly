@@ -70,7 +70,7 @@ export default defineConfig({
         test: {
           name: "components",
           include: ["./src/components/**/*.spec.ts"],
-          setupFiles: ["vitest-browser-vue", "./tests/components/test-setup.ts"],
+          setupFiles: ["vitest-browser-vue", "./tests/components/vitest.setup.ts"],
           browser: {
             enabled: true,
             headless: isCI,
