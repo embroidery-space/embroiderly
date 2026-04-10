@@ -2,7 +2,7 @@
 
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import Button from "../Button/Button.vue";
 import Input from "../Input/Input.vue";
@@ -19,9 +19,7 @@ describe("FormFieldGroup", () => {
     ["with class", { props: { class: "custom-class" } }],
     ["with ui", { props: { ui: { base: "rounded-lg" } } }],
   ] as [string, { props?: FormFieldGroupProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(FormFieldGroup, options);
-    await nextTick();
-
+    const screen = await page.render(FormFieldGroup, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -36,9 +34,7 @@ describe("FormFieldGroup", () => {
         </FormFieldGroup>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -52,9 +48,7 @@ describe("FormFieldGroup", () => {
         </FormFieldGroup>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -68,9 +62,7 @@ describe("FormFieldGroup", () => {
         </FormFieldGroup>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

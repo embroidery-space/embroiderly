@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -19,9 +19,7 @@ describe("Textarea", () => {
     ["with class", { props: { class: "absolute" } }],
     ["with ui", { props: { ui: { base: "rounded-full" } } }],
   ] as [string, { props?: TextareaProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Textarea, options);
-    await nextTick();
-
+    const screen = await page.render(Textarea, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -34,20 +32,15 @@ describe("Textarea", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(Textarea);
-      await nextTick();
+      const screen = await page.render(Textarea);
 
-      const textarea = screen.getByRole("textbox");
-
-      await userEvent.fill(textarea, "Hello, World!");
+      await userEvent.fill(screen.getByRole("textbox"), "Hello, World!");
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

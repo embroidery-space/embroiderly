@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { nextTick } from "vue";
 
 import Tabs from "./Tabs.vue";
 import type { TabsItem, TabsProps, TabsSlots } from "./Tabs.vue";
@@ -30,19 +29,15 @@ describe("Tabs", () => {
     ["with custom slot", { props: { items }, slots: { custom: () => "Custom slot" } }],
   ] as [string, { props?: TabsProps; slots?: Partial<TabsSlots> }][])("renders correctly %s", async (_, options) => {
     // @ts-expect-error Partial slots type is not compatible with `ComponentRenderOptions`.
-    const screen = page.render(Tabs, options);
-    await nextTick();
-
+    const screen = await page.render(Tabs, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue on trigger click", async () => {
-      const screen = page.render(Tabs, { props: { items } });
-      await nextTick();
+      const screen = await page.render(Tabs, { props: { items } });
 
-      const triggers = screen.getByRole("tab", { name: "Tab2" });
-      await userEvent.click(triggers.element());
+      await userEvent.click(screen.getByRole("tab", { name: "Tab2" }).element());
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

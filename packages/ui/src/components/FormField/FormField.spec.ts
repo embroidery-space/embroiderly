@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import Input from "../Input/Input.vue";
 
@@ -27,19 +27,16 @@ describe("FormField", () => {
   ] as [string, { props?: FormFieldProps; slots?: { default: () => string } }][])(
     "renders correctly %s",
     async (_, options) => {
-      const screen = page.render(FormFieldWrapper, options);
-      await nextTick();
-
+      const screen = await page.render(FormFieldWrapper, options);
       expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
 
   describe("accessibility", () => {
     test("generates unique id for label association", async () => {
-      const screen = page.render(FormFieldWrapper, {
+      const screen = await page.render(FormFieldWrapper, {
         props: { label: "Label" },
       });
-      await nextTick();
 
       const input = screen.getByRole("textbox");
       const label = screen.getByText("Label");
@@ -53,10 +50,9 @@ describe("FormField", () => {
     });
 
     test("applies aria id to description element", async () => {
-      const screen = page.render(FormFieldWrapper, {
+      const screen = await page.render(FormFieldWrapper, {
         props: { label: "Label", description: "Description" },
       });
-      await nextTick();
 
       const input = screen.getByRole("textbox");
       const description = screen.getByText("Description");
@@ -70,10 +66,9 @@ describe("FormField", () => {
     });
 
     test("applies aria id to hint element", async () => {
-      const screen = page.render(FormFieldWrapper, {
+      const screen = await page.render(FormFieldWrapper, {
         props: { label: "Label", hint: "Hint" },
       });
-      await nextTick();
 
       const input = screen.getByRole("textbox");
       const hint = screen.getByText("Hint");
@@ -87,10 +82,9 @@ describe("FormField", () => {
     });
 
     test("applies aria id to help element", async () => {
-      const screen = page.render(FormFieldWrapper, {
+      const screen = await page.render(FormFieldWrapper, {
         props: { label: "Label", help: "Help" },
       });
-      await nextTick();
 
       const input = screen.getByRole("textbox");
       const help = screen.getByText("Help");

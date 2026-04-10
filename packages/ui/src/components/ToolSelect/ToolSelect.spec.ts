@@ -1,7 +1,7 @@
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import ToolSelect from "./ToolSelect.vue";
 import type { ToolSelectProps } from "./ToolSelect.vue";
@@ -17,10 +17,10 @@ const ToolSelectWrapper = defineComponent({
   components: { TooltipProvider, ToolSelect },
   inheritAttrs: false,
   template: `
-  <TooltipProvider>
-    <ToolSelect v-bind="$attrs" />
-  </TooltipProvider>
-`,
+    <TooltipProvider>
+      <ToolSelect v-bind="$attrs" />
+    </TooltipProvider>
+  `,
 });
 
 describe("ToolSelect", () => {
@@ -39,15 +39,13 @@ describe("ToolSelect", () => {
     ] as [string, { props: ToolSelectProps & { modelValue: string } }][])(
       "renders correctly %s",
       async (_, options) => {
-        const screen = page.render(ToolSelectWrapper, options);
-        await nextTick();
-
+        const screen = await page.render(ToolSelectWrapper, options);
         expect(screen.container.outerHTML).toMatchSnapshot();
       },
     );
 
     test("renders a single option without a dropdown button", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: SINGLE_ITEM,
@@ -62,7 +60,7 @@ describe("ToolSelect", () => {
     });
 
     test("renders multiple options with a dropdown button", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: MULTIPLE_ITEMS,
@@ -77,7 +75,7 @@ describe("ToolSelect", () => {
     });
 
     test("renders ARIA attributes when multiple items", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: MULTIPLE_ITEMS,
@@ -90,7 +88,7 @@ describe("ToolSelect", () => {
     });
 
     test("dropdown button has tabindex -1 and aria-hidden", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: MULTIPLE_ITEMS,
@@ -105,7 +103,7 @@ describe("ToolSelect", () => {
 
   describe("Dropdown Interaction", () => {
     test("a click on the dropdown button opens the dropdown menu", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: MULTIPLE_ITEMS,
@@ -123,7 +121,7 @@ describe("ToolSelect", () => {
     });
 
     test("a right-click on the main button opens the dropdown menu", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: MULTIPLE_ITEMS,
@@ -141,7 +139,7 @@ describe("ToolSelect", () => {
     });
 
     test("a right-click on the single-option main button does nothing", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: SINGLE_ITEM,
@@ -156,7 +154,7 @@ describe("ToolSelect", () => {
     });
 
     test("a long-press on the main button opens the dropdown menu", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: MULTIPLE_ITEMS,
@@ -171,7 +169,7 @@ describe("ToolSelect", () => {
     });
 
     test("a long-press on the single-option main button does nothing", async () => {
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: SINGLE_ITEM,
@@ -189,7 +187,7 @@ describe("ToolSelect", () => {
     test("a click on an option from dropdown menu selects it", async () => {
       const onUpdate = vi.fn();
 
-      const screen = page.render(ToolSelectWrapper, {
+      const screen = await page.render(ToolSelectWrapper, {
         props: {
           modelValue: "pencil",
           items: MULTIPLE_ITEMS,

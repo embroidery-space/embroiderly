@@ -1,7 +1,7 @@
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import ToolToggleGroup from "./ToolToggleGroup.vue";
 import type { ToolToggleGroupProps } from "./ToolToggleGroup.vue";
@@ -22,10 +22,10 @@ const ToolToggleGroupWrapper = defineComponent({
   components: { TooltipProvider, ToolToggleGroup },
   inheritAttrs: false,
   template: `
-  <TooltipProvider>
-    <ToolToggleGroup v-bind="$attrs" />
-  </TooltipProvider>
-`,
+    <TooltipProvider>
+      <ToolToggleGroup v-bind="$attrs" />
+    </TooltipProvider>
+  `,
 });
 
 describe("ToolToggleGroup", () => {
@@ -40,9 +40,7 @@ describe("ToolToggleGroup", () => {
   ] as [string, { props?: ToolToggleGroupProps & { modelValue: string } }][])(
     "renders correctly %s",
     async (_, options) => {
-      const screen = page.render(ToolToggleGroupWrapper, options);
-      await nextTick();
-
+      const screen = await page.render(ToolToggleGroupWrapper, options);
       expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );

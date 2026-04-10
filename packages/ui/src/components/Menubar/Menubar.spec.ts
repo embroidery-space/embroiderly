@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { nextTick } from "vue";
 
 import Menubar from "./Menubar.vue";
 import type { MenubarMenu, MenubarProps } from "./Menubar.vue";
@@ -67,13 +66,10 @@ describe("Menubar", () => {
     ["with class", { props: { ...props, menus: simpleMenus, class: "min-w-48" } }],
     ["with ui", { props: { ...props, menus: simpleMenus, ui: { root: "bg-default", trigger: "font-bold" } } }],
   ] as [string, { props?: MenubarProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Menubar as any, options);
-    await nextTick();
+    const screen = await page.render(Menubar as any, options);
 
-    const trigger = screen.getByRole("menuitem").first();
-    await userEvent.click(trigger);
+    await userEvent.click(screen.getByRole("menuitem").first());
 
-    await nextTick();
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -26,9 +26,7 @@ describe("Input", () => {
     ["with trailing slot", { slots: { trailing: () => "Trailing slot" } }],
   ] as [string, { props?: InputProps; slots?: Partial<InputSlots> }][])("renders correctly %s", async (_, options) => {
     // @ts-expect-error Partial slots type is not compatible with `ComponentRenderOptions`.
-    const screen = page.render(Input, options);
-    await nextTick();
-
+    const screen = await page.render(Input, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -41,20 +39,15 @@ describe("Input", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(Input);
-      await nextTick();
+      const screen = await page.render(Input);
 
-      const input = screen.getByRole("textbox");
-
-      await userEvent.fill(input, "qwerty");
+      await userEvent.fill(screen.getByRole("textbox"), "qwerty");
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

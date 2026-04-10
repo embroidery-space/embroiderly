@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { h, nextTick } from "vue";
+import { h } from "vue";
 
 import Splitter from "./Splitter.vue";
 import type { SplitterProps } from "./Splitter.vue";
@@ -18,22 +18,16 @@ describe("Splitter", () => {
   ] as [string, { props: SplitterProps; slots: { default: () => ReturnType<typeof h>[] } }][])(
     "renders correctly %s",
     async (_, options) => {
-      const screen = page.render(Splitter, options);
-      await nextTick();
-
+      const screen = await page.render(Splitter, options);
       expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
 
   test.each([2, 3, 4])("inserts correct number of resize handles for %d panels", async (panelCount) => {
-    const screen = page.render(Splitter, {
+    const screen = await page.render(Splitter, {
       props: { direction: "horizontal" },
       slots: { default: createPanels(panelCount) },
     });
-    await nextTick();
-
-    const handles = screen.getByRole("separator");
-
-    expect(handles.length).toBe(panelCount - 1);
+    expect(screen.getByRole("separator")).toHaveLength(panelCount - 1);
   });
 });

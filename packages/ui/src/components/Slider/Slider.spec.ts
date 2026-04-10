@@ -3,8 +3,7 @@
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
-import { Key } from "webdriverio";
+import { defineComponent } from "vue";
 
 import FormField from "../FormField/FormField.vue";
 
@@ -27,13 +26,13 @@ describe("Slider", () => {
     const Wrapper = defineComponent({
       components: { TooltipProvider, Slider },
       inheritAttrs: false,
-      template: `<TooltipProvider>
-      <Slider v-bind="$attrs" />
-    </TooltipProvider>`,
+      template: `
+        <TooltipProvider>
+          <Slider v-bind="$attrs" />
+        </TooltipProvider>
+      `,
     });
-    const screen = page.render(Wrapper, options);
-    await nextTick();
-
+    const screen = await page.render(Wrapper, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -46,21 +45,16 @@ describe("Slider", () => {
         </FormField>
       `,
     });
-    const screen = page.render(Wrapper);
-    await nextTick();
-
+    const screen = await page.render(Wrapper);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:modelValue event", async () => {
-      const screen = page.render(Slider, { props: { modelValue: 50 } });
-      await nextTick();
+      const screen = await page.render(Slider, { props: { modelValue: 50 } });
 
-      const slider = screen.getByRole("slider");
-
-      await userEvent.click(slider);
-      await userEvent.keyboard(Key.ArrowRight);
+      await userEvent.click(screen.getByRole("slider"));
+      await userEvent.keyboard("{ArrowRight}");
 
       expect(screen.emitted()).toHaveProperty("update:modelValue");
     });

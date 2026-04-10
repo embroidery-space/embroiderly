@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import ContextMenu from "./ContextMenu.vue";
 import type { ContextMenuItem, ContextMenuProps } from "./ContextMenu.vue";
@@ -9,9 +9,9 @@ const ContextMenuWrapper = defineComponent({
   components: { ContextMenu: ContextMenu as any },
   inheritAttrs: false,
   template: `
-  <ContextMenu v-bind="$attrs">
-    <span>Trigger</span>
-  </ContextMenu>
+    <ContextMenu v-bind="$attrs">
+      <span>Trigger</span>
+    </ContextMenu>
   `,
 });
 
@@ -79,13 +79,10 @@ describe("ContextMenu", () => {
     ["with class", { props: { ...props, items: simpleItems, class: "min-w-48" } }],
     ["with ui", { props: { ...props, items: simpleItems, ui: { content: "min-w-48" } } }],
   ] as [string, { props?: ContextMenuProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(ContextMenuWrapper, options);
-    await nextTick();
+    const screen = await page.render(ContextMenuWrapper, options);
 
-    const trigger = screen.getByText("Trigger");
-    await userEvent.click(trigger, { button: "right" });
+    await userEvent.click(screen.getByText("Trigger"), { button: "right" });
 
-    await nextTick();
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

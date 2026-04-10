@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 
 import DropdownMenu from "./DropdownMenu.vue";
 import type { DropdownMenuItem, DropdownMenuProps } from "./DropdownMenu.vue";
@@ -9,9 +9,9 @@ const DropdownMenuWrapper = defineComponent({
   components: { DropdownMenu: DropdownMenu as any },
   inheritAttrs: false,
   template: `
-  <DropdownMenu v-bind="$attrs">
-    <span>Trigger</span>
-  </DropdownMenu>
+    <DropdownMenu v-bind="$attrs">
+      <span>Trigger</span>
+    </DropdownMenu>
   `,
 });
 
@@ -79,13 +79,10 @@ describe("DropdownMenu", () => {
     ],
     ["with ui", { props: { ...props, items: simpleItems, ui: { content: "min-w-48" } } }],
   ] as [string, { props?: DropdownMenuProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(DropdownMenuWrapper, options);
-    await nextTick();
+    const screen = await page.render(DropdownMenuWrapper, options);
 
-    const trigger = screen.getByText("Trigger");
-    await userEvent.click(trigger);
+    await userEvent.click(screen.getByText("Trigger"));
 
-    await nextTick();
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

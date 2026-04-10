@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { nextTick } from "vue";
 
 import Progress from "./Progress.vue";
 import type { ProgressProps } from "./Progress.vue";
@@ -21,9 +20,7 @@ describe("Progress", () => {
     ["with class", { props: { class: "my-4" } }],
     ["with ui", { props: { ui: { base: "bg-default" } } }],
   ] as [string, { props?: ProgressProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Progress, options);
-    await nextTick();
-
+    const screen = await page.render(Progress, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { page } from "vitest/browser";
-import { nextTick } from "vue";
 
 import Dialog from "./Dialog.vue";
 import type { DialogProps } from "./Dialog.vue";
@@ -15,7 +14,7 @@ describe("Dialog", () => {
     ["with class", { props: { ...props, class: "w-96" } }],
     ["with ui", { props: { ...props, ui: { footer: "justify-start" } } }],
   ] as [string, { props?: DialogProps }][])("renders correctly %s", async (_, options) => {
-    const screen = page.render(Dialog, {
+    const screen = await page.render(Dialog, {
       ...options,
       slots: {
         default: () => "Open Dialog",
@@ -23,8 +22,6 @@ describe("Dialog", () => {
         footer: () => "Footer content",
       },
     });
-    await nextTick();
-
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 });

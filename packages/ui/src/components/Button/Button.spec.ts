@@ -1,6 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
-import { nextTick } from "vue";
 
 import Button from "./Button.vue";
 import type { ButtonProps, ButtonSlots } from "./Button.vue";
@@ -44,9 +43,7 @@ describe("Button", () => {
     "renders correctly %s",
     async (_, options) => {
       // @ts-expect-error Partial slots type is not compatible with `ComponentRenderOptions`.
-      const screen = page.render(Button, options);
-      await nextTick();
-
+      const screen = await page.render(Button, options);
       expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
@@ -61,14 +58,13 @@ describe("Button", () => {
           }),
       );
 
-      const screen = page.render(Button, {
+      const screen = await page.render(Button, {
         props: {
           label: "Submit",
           loadingAuto: true,
           onClick: asyncHandler,
         },
       });
-      await nextTick();
 
       const button = screen.getByRole("button");
       await expect.element(button).not.toBeDisabled();
@@ -87,14 +83,13 @@ describe("Button", () => {
       const handler1 = vi.fn(() => Promise.resolve());
       const handler2 = vi.fn(() => Promise.resolve());
 
-      const screen = page.render(Button, {
+      const screen = await page.render(Button, {
         props: {
           label: "Submit",
           loadingAuto: true,
           onClick: [handler1, handler2],
         },
       });
-      await nextTick();
 
       await screen.getByRole("button").click();
 
