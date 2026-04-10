@@ -19,6 +19,13 @@ Before starting, make sure you have everything needed to work on Embroiderly.
 
 Once you are done, you can run the application via `just dev` or build it via `just build`.
 
+## AI Agents
+
+We tolerate using AI Agents for developing Embroiderly.
+We maintain [`AGENTS.md`](AGENTS.md) and [`.agents/skills/`](.agents/skills/).
+If your tool doesn’t support these entries out of the box, configure them or create symbolic links to them.
+Ensure that your local agent settings are excluded from being tracked by Git (specify them in the `.git/info/exclude` file).
+
 ## Available Commands
 
 We use [`just`](https://just.systems) to manage development commands.
