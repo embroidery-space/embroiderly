@@ -70,6 +70,12 @@ export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem
   disabled?: boolean;
 
   /**
+   * Reference element for the dropdown menu.
+   * If provided, the dropdown will be anchored to this element instead of the trigger.
+   */
+  reference?: any;
+
+  /**
    * Render the dropdown menu in a portal.
    * @default true
    */
@@ -101,6 +107,7 @@ const contentProps = computed(
       side: "bottom",
       sideOffset: 8,
       collisionPadding: 8,
+      reference: props.reference,
     }) as DropdownMenuContentProps,
 );
 

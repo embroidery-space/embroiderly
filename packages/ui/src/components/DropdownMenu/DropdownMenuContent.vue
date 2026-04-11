@@ -19,10 +19,13 @@ interface DropdownMenuContentInternalProps {
   portal?: boolean | string | HTMLElement;
   sub?: boolean;
 
+  align?: "start" | "center" | "end";
   alignOffset?: number;
-  collisionPadding?: number | Partial<Record<"top" | "bottom" | "left" | "right", number>>;
   side?: "top" | "right" | "bottom" | "left";
   sideOffset?: number;
+  collisionPadding?: number | Partial<Record<"top" | "bottom" | "left" | "right", number>>;
+
+  reference?: any;
 
   ui: ReturnType<typeof DropdownMenuTheme>;
 }
@@ -45,8 +48,9 @@ function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]):
 <template>
   <component
     :is="sub ? DropdownMenu.SubContent : DropdownMenu.Content"
-    v-bind="sub ? { sideOffset: sideOffset ?? 0 } : { alignOffset, side, sideOffset }"
+    v-bind="sub ? { sideOffset: sideOffset ?? 0 } : { align, alignOffset, side, sideOffset }"
     :collision-padding="collisionPadding"
+    :reference="reference"
   >
     <DropdownMenu.Group
       v-for="(group, groupIndex) in items"
@@ -104,6 +108,7 @@ function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]):
               :ui="ui"
               :size="size"
               :portal="portal"
+              :side-offset="sideOffset"
               :align-offset="-4"
               data-slot="content"
               :class="ui.content()"
