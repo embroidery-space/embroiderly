@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Separator, ToolSelect } from "@embroiderly/ui";
-import type { ToolSelectItem } from "@embroiderly/ui";
+import { Separator, ToolSelect, useRemToPx } from "@embroiderly/ui";
+import type { ToolSelectItem, ToolSelectProps } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
@@ -44,6 +44,8 @@ const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
 const settingsStore = useSettingsStore();
 
+const { remToPx } = useRemToPx();
+
 const selectionColor = computed(() => {
   if (!settingsStore.other.usePaletteItemColorForStitchTools) return undefined;
 
@@ -52,6 +54,14 @@ const selectionColor = computed(() => {
 
   return patternStore.pattern.palette.items[palindex]?.hex;
 });
+
+const toolSelectProps = computed<Partial<ToolSelectProps>>(() => ({
+  disabled,
+  selectionColor: selectionColor.value,
+  delayDuration: 200,
+  tooltipOptions: { side: "right" },
+  dropdownOptions: { side: "right", align: "start", alignOffset: remToPx(-0.25) },
+}));
 
 const fullstitches = computed<ToolSelectItem[]>(() => [
   {
@@ -220,63 +230,20 @@ useShortcuts({
 
 <template>
   <div class="flex flex-col gap-1 p-1">
-    <ToolSelect
-      v-model="editorStateStore.selectedTool"
-      :items="fullstitches"
-      :disabled="disabled"
-      :selection-color="selectionColor"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'right' }"
-    />
-    <ToolSelect
-      v-model="editorStateStore.selectedTool"
-      :items="petitestitches"
-      :disabled="disabled"
-      :selection-color="selectionColor"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'right' }"
-    />
-    <ToolSelect
-      v-model="editorStateStore.selectedTool"
-      :items="halfstitches"
-      :disabled="disabled"
-      :selection-color="selectionColor"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'right' }"
-    />
-    <ToolSelect
-      v-model="editorStateStore.selectedTool"
-      :items="quarterstitches"
-      :disabled="disabled"
-      :selection-color="selectionColor"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'right' }"
-    />
-    <ToolSelect
-      v-model="editorStateStore.selectedTool"
-      :items="linestitches"
-      :disabled="disabled"
-      :selection-color="selectionColor"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'right' }"
-    />
-    <ToolSelect
-      v-model="editorStateStore.selectedTool"
-      :items="nodestitches"
-      :disabled="disabled"
-      :selection-color="selectionColor"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'right' }"
-    />
+    <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="fullstitches" />
+    <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="petitestitches" />
+    <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="halfstitches" />
+    <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="quarterstitches" />
+    <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="linestitches" />
+    <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="nodestitches" />
 
     <Separator decorative />
 
     <ToolSelect
       v-model="editorStateStore.selectedTool"
+      v-bind="toolSelectProps"
       :items="cursor"
-      :disabled="disabled"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'right' }"
+      :selection-color="undefined"
     />
   </div>
 </template>

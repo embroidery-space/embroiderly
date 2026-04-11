@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 import { tools } from "~/lib/tools/";
 import type { PatternEditorTool } from "~/lib/tools/";
+import type { ZoomState } from "~/lib/types/";
 
 export const enum PaletteMode {
   /** A regular palette mode in which users can select tools and color to draw patterns. */
@@ -31,7 +32,7 @@ export const useEditorStateStore = defineStore(
 
     const paletteMode = ref(PaletteMode.Regular);
 
-    const canvasZoom = ref(1);
+    const canvasZoom = ref<ZoomState>(1);
 
     function $reset() {
       selectedTool.value = tools.FullStitch;

@@ -1,6 +1,8 @@
 import { Bounds, Container, Point, Rectangle } from "pixi.js";
 import type { ContainerChild, DestroyOptions, FederatedPointerEvent } from "pixi.js";
 
+import type { ZoomState } from "~/lib/types/";
+
 import { MIN_SCALE, MAX_SCALE, DEFAULT_CONTAINER_OPTIONS } from "./constants.ts";
 import { getMouseButtons, MODIFIERS } from "./utils/index.ts";
 import type { ModifiersState } from "./utils/index.ts";
@@ -38,7 +40,6 @@ export interface ViewportOptions {
   wheelAction?: WheelAction;
 }
 
-export type ZoomState = "fit" | "fit-width" | "fit-height" | number;
 export type WheelAction = "zoom" | "scroll";
 
 /**

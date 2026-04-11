@@ -10,6 +10,7 @@ import { usePercentOfContainer } from "~/composables/utils/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
 import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
+import { EditorWorkspaceTabs, EditorWorkspaceToolbar, EditorWorkspaceFooter } from "./workspace/layout/";
 
 const appWindow = getCurrentWebviewWindow();
 
@@ -128,25 +129,34 @@ onMounted(async () => {
         :default-size="editorStateStore.palettePanelSize ?? palettePanelDefaultSize"
       />
 
-      <SplitterPanel>
-        <BlockUI
-          ref="drop-zone"
-          :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
-          class="size-full"
-        >
-          <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
-          <PatternWorkspace
-            :options="{
-              render: {
-                antialias: settingsStore.viewport.antialias,
-              },
-              viewport: {
-                wheelAction: settingsStore.viewport.wheelAction,
-              },
-            }"
-            class="size-full"
-          />
-        </BlockUI>
+      <SplitterPanel class="flex flex-col">
+        <EditorWorkspaceTabs :disabled="patternStore.pattern.isNil" class="border-b border-default" />
+
+        <div class="flex grow">
+          <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" class="border-r border-default p-1" />
+
+          <BlockUI
+            ref="drop-zone"
+            :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
+            class="grow"
+          >
+            <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
+            <PatternWorkspace
+              v-else
+              :options="{
+                render: {
+                  antialias: settingsStore.viewport.antialias,
+                },
+                viewport: {
+                  wheelAction: settingsStore.viewport.wheelAction,
+                },
+              }"
+              class="size-full"
+            />
+          </BlockUI>
+        </div>
+
+        <EditorWorkspaceFooter :disabled="patternStore.pattern.isNil" />
       </SplitterPanel>
 
       <WorkspaceCanvasPanel

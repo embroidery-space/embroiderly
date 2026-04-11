@@ -3,12 +3,13 @@ import { Application } from "pixi.js";
 import type { ApplicationOptions } from "pixi.js";
 
 import { Pattern } from "~/lib/pattern/";
+import type { ZoomState } from "~/lib/types/";
 
 import { PatternView } from "./components/";
 import { TextureManager } from "./texture-manager.ts";
 import type { TextureManagerOptions } from "./texture-manager.ts";
 import { ToolEvent, PatternViewport } from "./viewport.ts";
-import type { ToolEventDetail, ViewportOptions, ZoomState } from "./viewport.ts";
+import type { ToolEventDetail, ViewportOptions } from "./viewport.ts";
 
 /** Options for the pattern application. */
 export interface PatternApplicationOptions {

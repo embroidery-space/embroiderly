@@ -11,6 +11,10 @@ import {
 } from "~/assets/icons/";
 import { useEditorStateStore, usePatternFileStore, usePatternStore } from "~/stores/";
 
+const { disabled = false } = defineProps<{
+  disabled?: boolean;
+}>();
+
 const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
@@ -21,6 +25,7 @@ const patternFileStore = usePatternFileStore();
     :model-value="patternStore.pattern.id"
     :items="patternFileStore.openedPatterns.map(({ id, title, dirty }) => ({ label: title, value: id, dirty }))"
     :content="false"
+    :disabled="disabled"
     color="neutral"
     activation-mode="manual"
     :ui="{
@@ -38,6 +43,7 @@ const patternFileStore = usePatternFileStore();
         size="lg"
         :icon="editorStateStore.palettePanelCollapsed ? IconPanelLeftOpen : IconPanelLeftClose"
         :tooltip="editorStateStore.palettePanelCollapsed ? $t('palette-panel-expand') : $t('palette-panel-collapse')"
+        :disabled="disabled"
         class="rounded-none px-3"
         @click="editorStateStore.palettePanelCollapsed = !editorStateStore.palettePanelCollapsed"
       />
@@ -68,6 +74,7 @@ const patternFileStore = usePatternFileStore();
         size="lg"
         :icon="editorStateStore.canvasPanelCollapsed ? IconPanelRightOpen : IconPanelRightClose"
         :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-panel-expand') : $t('canvas-panel-collapse')"
+        :disabled="disabled"
         class="rounded-none px-3"
         @click="editorStateStore.canvasPanelCollapsed = !editorStateStore.canvasPanelCollapsed"
       />

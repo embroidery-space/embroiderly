@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T extends ToolSelectItem">
 import { unrefElement } from "@vueuse/core";
+import type { DropdownMenuContentProps } from "reka-ui";
 import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
@@ -39,6 +40,9 @@ export interface ToolSelectProps<T extends ToolSelectItem = ToolSelectItem> exte
   size?: ToolSelectThemeVariants["size"];
   /** Custom selection color. */
   selectionColor?: string;
+
+  /** Additional options for the dropdown menu. */
+  dropdownOptions?: Omit<DropdownMenuContentProps, "as" | "asChild">;
 
   /** Additional options for the tooltip. */
   tooltipOptions?: Omit<TooltipProps, "text" | "disabled" | "delayDuration">;
@@ -99,9 +103,10 @@ const ui = computed(() => {
   });
 });
 
-const dropdownMenuOpen = ref(false);
+const mainButton = useTemplateRef("main-button");
 const dropdownButton = useTemplateRef("dropdown-button") as MaybeRefOrGetter;
 const dropdownButtonElement = computed(() => unrefElement(dropdownButton));
+const dropdownMenuOpen = ref(false);
 
 let timeout: ReturnType<typeof setTimeout> | undefined;
 let hasLongPressed = false;
@@ -161,6 +166,7 @@ function handleKeydown(e: KeyboardEvent) {
       :disabled="props.disabled"
     >
       <button
+        ref="main-button"
         data-testid="tool-selector-main-button"
         type="button"
         :disabled="props.disabled"
@@ -181,7 +187,13 @@ function handleKeydown(e: KeyboardEvent) {
       </button>
     </Tooltip>
 
-    <DropdownMenu v-model:open="dropdownMenuOpen" :items="dropdownItems" :size="size">
+    <DropdownMenu
+      v-model:open="dropdownMenuOpen"
+      :items="dropdownItems"
+      :size="size"
+      :content="dropdownOptions"
+      :reference="mainButton"
+    >
       <button
         v-if="items.length > 1"
         ref="dropdown-button"
