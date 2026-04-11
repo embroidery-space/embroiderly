@@ -34,6 +34,25 @@ describe("CanvasZoomControls", () => {
     await expect.element(screen.getByRole("button", { name: "Zoom Out" })).toBeVisible();
   });
 
+  test("disables zoom controls", async () => {
+    const screen = await renderComponent(CanvasZoomControlsWrapper, {
+      props: { modelValue: 50, disabled: true },
+    });
+
+    // Input number.
+    await expect.element(screen.getByRole("spinbutton")).toBeDisabled();
+
+    // Dropdown button.
+    await expect.element(page.getByRole("button", { expanded: false })).toBeDisabled();
+
+    // Slider for zoom level.
+    await expect.element(screen.getByRole("slider")).toHaveAttribute("data-disabled");
+
+    // Zoom in/out buttons.
+    await expect.element(screen.getByRole("button", { name: "Zoom In" })).toBeDisabled();
+    await expect.element(screen.getByRole("button", { name: "Zoom Out" })).toBeDisabled();
+  });
+
   describe("zoom buttons", () => {
     test("hovering zoom-in button shows tooltip", async () => {
       const screen = await renderComponent(CanvasZoomControlsWrapper, {

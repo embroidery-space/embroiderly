@@ -97,7 +97,11 @@ const ui = computed(() => {
         :class="ui.scroll({ class: props.ui?.scroll })"
       >
         <Tabs.List data-slot="list" :class="ui.list({ class: props.ui?.list })">
-          <Tabs.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
+          <Tabs.Indicator
+            v-if="items?.length"
+            data-slot="indicator"
+            :class="ui.indicator({ class: props.ui?.indicator })"
+          />
 
           <Tabs.Trigger
             v-for="(item, index) in items"

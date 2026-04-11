@@ -9,19 +9,16 @@ import { computed, useTemplateRef, watch } from "vue";
 
 import { FilesApi } from "~/api/";
 import { IconImage, IconImageOff } from "~/assets/icons/";
-import { CanvasZoomControls, PatternCanvas } from "~/components/canvas/";
+import { PatternCanvas } from "~/components/canvas/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { ANY_IMAGE_FILTER } from "~/constants/";
 import { PatternEvent, PatternInfo } from "~/lib/pattern/";
-import { MAX_SCALE, MIN_SCALE } from "~/lib/pixi/";
 import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
 import { CursorTool } from "~/lib/tools/";
 import type { PatternEditorToolContext } from "~/lib/tools/";
 import { LoggerService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "~/stores/";
 import { addSymbolFonts } from "~/utils/font-face.ts";
-
-import { EditorWorkspaceTabs, EditorWorkspaceToolbar } from "./layout/";
 
 const props = defineProps<{ options?: PatternApplicationOptions }>();
 
@@ -82,6 +79,19 @@ watch(
   { immediate: true },
 );
 
+let ignoreNextWatch = false;
+watch(
+  () => editorStateStore.canvasZoom,
+  (zoom) => {
+    if (ignoreNextWatch) {
+      ignoreNextWatch = false;
+      return;
+    }
+
+    patternCanvas.value?.setCanvasZoom(zoom);
+  },
+);
+
 async function handleToolMainAction(detail: ToolEventDetail) {
   const pattern = patternStore.pattern;
   if (pattern.isNil) return;
@@ -113,7 +123,11 @@ async function handleToolRelease(detail: ToolEventDetail) {
 }
 
 function handleTransform(detail: TransformEventDetail) {
-  editorStateStore.canvasZoom = Math.round(detail.scale);
+  const scale = Math.round(detail.scale);
+  if (editorStateStore.canvasZoom !== scale) {
+    ignoreNextWatch = true;
+    editorStateStore.canvasZoom = scale;
+  }
 }
 
 function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorToolContext {
@@ -193,36 +207,18 @@ async function loadSymbolFonts(fonts: string[]) {
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <EditorWorkspaceTabs class="border-b border-default" />
-
-    <div class="flex min-h-0 grow">
-      <EditorWorkspaceToolbar class="border-r border-default p-1" />
-
-      <ContextMenu :items="canvasContextMenuOptions">
-        <PatternCanvas
-          ref="patternCanvas"
-          v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
-          :pattern="patternStore.pattern"
-          :options="props.options"
-          enable-tool-events
-          class="grow"
-          @tool-main-action="handleToolMainAction"
-          @tool-anti-action="handleToolAntiAction"
-          @tool-release="handleToolRelease"
-          @transform="handleTransform"
-        />
-      </ContextMenu>
-    </div>
-
-    <div class="flex items-center justify-between border-t border-default px-2 py-1">
-      <CanvasZoomControls
-        :model-value="editorStateStore.canvasZoom"
-        :min="MIN_SCALE"
-        :max="MAX_SCALE"
-        class="ml-auto w-full max-w-3xs"
-        @update:model-value="(value) => patternCanvas?.setCanvasZoom(value)"
-      />
-    </div>
-  </div>
+  <ContextMenu :items="canvasContextMenuOptions">
+    <PatternCanvas
+      ref="patternCanvas"
+      v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
+      :pattern="patternStore.pattern"
+      :options="props.options"
+      enable-tool-events
+      class="size-full"
+      @tool-main-action="handleToolMainAction"
+      @tool-anti-action="handleToolAntiAction"
+      @tool-release="handleToolRelease"
+      @transform="handleTransform"
+    />
+  </ContextMenu>
 </template>
