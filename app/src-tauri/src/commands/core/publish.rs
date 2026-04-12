@@ -1,16 +1,13 @@
 use embroiderly_pattern::PdfExportOptions;
-use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::{Action as _, UpdatePdfExportOptionsAction};
 use crate::error::Result;
 use crate::parse_command_payload;
-use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 
 #[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn update_pdf_export_options<R: tauri::Runtime>(
-  app_handle: tauri::AppHandle<R>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
@@ -24,8 +21,6 @@ pub fn update_pdf_export_options<R: tauri::Runtime>(
 
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).unwrap().push(Box::new(action));
-
-  app_handle.capture_event(AppEvent::PdfExportSettingsUpdated { settings });
 
   Ok(())
 }

@@ -81,7 +81,7 @@ impl<R: tauri::Runtime> super::SidecarController for ImageImportSidecar<R> {
     };
 
     let output = super::utils::collect_sidecar_binary_output_from_receiver(rx).await?;
-    super::utils::handle_sidecar_output(&self.app_handle, output, "embroiderly_image")
+    super::utils::handle_sidecar_output(output, "embroiderly_image")
   }
 
   async fn send_command(&mut self, payload: Vec<u8>) -> Result<()> {

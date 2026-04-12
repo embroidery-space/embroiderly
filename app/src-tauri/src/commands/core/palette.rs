@@ -1,5 +1,4 @@
 use embroiderly_pattern::{PaletteItem, PaletteSettings};
-use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::{
   Action as _, AddPaletteItemAction, RemovePaletteItemsAction, ReorderPaletteItemsAction, SetSymbolAction,
@@ -7,13 +6,11 @@ use crate::core::actions::{
 };
 use crate::error::Result;
 use crate::parse_command_payload;
-use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 
 #[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn add_palette_item<R: tauri::Runtime>(
-  app_handle: tauri::AppHandle<R>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
@@ -24,19 +21,11 @@ pub fn add_palette_item<R: tauri::Runtime>(
   let mut patterns = patterns.write().unwrap();
   let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
   if !patproj.pattern.palette.contains(&palitem) {
-    let event = AppEvent::PaletteItemAdded {
-      brand: palitem.brand.clone(),
-      is_blend: palitem.is_blend(),
-      blends_number: palitem.blends.as_ref().map(Vec::len),
-    };
-
     let action = AddPaletteItemAction::new(palitem);
     action.perform(&window, patproj)?;
 
     let mut history = history.write().unwrap();
     history.get_mut(&pattern_id).unwrap().push(Box::new(action));
-
-    app_handle.capture_event(event);
   }
 
   Ok(())
@@ -46,7 +35,6 @@ pub fn add_palette_item<R: tauri::Runtime>(
 #[tauri::command]
 pub fn remove_palette_items<R: tauri::Runtime>(
   palette_item_indexes: Vec<u32>,
-  app_handle: tauri::AppHandle<R>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
@@ -57,29 +45,11 @@ pub fn remove_palette_items<R: tauri::Runtime>(
   let mut patterns = patterns.write().unwrap();
   let patproj = patterns.get_mut_pattern_by_id(&pattern_id).unwrap();
 
-  let events = palette_item_indexes
-    .clone()
-    .into_iter()
-    .filter_map(|palindex| {
-      patproj
-        .pattern
-        .palette
-        .get(palindex)
-        .map(|palitem| AppEvent::PaletteItemRemoved {
-          brand: palitem.brand.clone(),
-          is_blend: palitem.is_blend(),
-          blends_number: palitem.blends.as_ref().map(Vec::len),
-        })
-    })
-    .collect::<Vec<_>>();
-
   let action = RemovePaletteItemsAction::new(palette_item_indexes);
   action.perform(&window, patproj)?;
 
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).unwrap().push(Box::new(action));
-
-  app_handle.batch_events(&events);
 
   Ok(())
 }
@@ -87,7 +57,6 @@ pub fn remove_palette_items<R: tauri::Runtime>(
 #[tracing::instrument(level = "trace", skip_all, fields(pattern_id, body), err)]
 #[tauri::command]
 pub fn update_palette_display_settings<R: tauri::Runtime>(
-  app_handle: tauri::AppHandle<R>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
@@ -109,8 +78,6 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).unwrap().push(Box::new(action));
 
-  app_handle.capture_event(AppEvent::PaletteDisplaySettingsUpdated { settings });
-
   Ok(())
 }
 
@@ -118,7 +85,6 @@ pub fn update_palette_display_settings<R: tauri::Runtime>(
 #[tauri::command]
 pub fn sort_palette_by<R: tauri::Runtime>(
   sort_by: SortPaletteBy,
-  app_handle: tauri::AppHandle<R>,
   request: tauri::ipc::Request<'_>,
   window: tauri::WebviewWindow<R>,
   history: tauri::State<HistoryState<R>>,
@@ -134,13 +100,6 @@ pub fn sort_palette_by<R: tauri::Runtime>(
 
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).unwrap().push(Box::new(action));
-
-  app_handle.capture_event(AppEvent::PaletteSorted {
-    sort_by,
-    palette_size: patproj.pattern.palette.len(),
-    blends_number: patproj.pattern.palette.blends_number(),
-    used_palette_brands: patproj.pattern.palette.used_brands(),
-  });
 
   Ok(())
 }

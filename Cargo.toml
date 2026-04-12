@@ -71,7 +71,6 @@ tauri-plugin-process = "2.3.1"
 tauri-plugin-shell = "2.3.5"
 tauri-plugin-updater = "2.10.0"
 ## Third-party Tauri plugins
-tauri-plugin-better-posthog = "0.1.6"
 tauri-plugin-prevent-default = "4.0.4"
 tauri-plugin-pinia = "4.2.0"
 
@@ -124,10 +123,6 @@ log = "0.4.29"
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 tracing-panic = "0.1.2"
-
-# Telemetry
-better-posthog = "0.2.5"
-sentry = "0.47.0"
 
 # Identification
 uuid = { version = "1.23.0", features = ["v4", "v7"] }

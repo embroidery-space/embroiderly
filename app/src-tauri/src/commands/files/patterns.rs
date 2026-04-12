@@ -1,11 +1,9 @@
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{Fabric, Pattern, PatternProject, ReferenceImage};
+use embroiderly_pattern::{Fabric, Pattern, PatternProject};
 use tauri::Emitter as _;
-use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::core::actions::CheckpointAction;
 use crate::error::{Error, ErrorKind, Result};
-use crate::services::telemetry::AppEvent;
 use crate::state::{HistoryState, PatternsState};
 use crate::utils::path::{app_document_dir, backup_file_path};
 
@@ -21,12 +19,12 @@ pub fn load_pattern(pattern_id: uuid::Uuid, patterns: tauri::State<PatternsState
   }
 }
 
-#[tracing::instrument(level = "trace", skip(app_handle, history, patterns), err)]
+#[tracing::instrument(level = "trace", skip(_app_handle, history, patterns), err)]
 #[tauri::command]
 pub fn open_pattern<R: tauri::Runtime>(
   file_path: std::path::PathBuf,
   restore_from_backup: Option<bool>,
-  app_handle: tauri::AppHandle<R>,
+  _app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<String> {
@@ -58,40 +56,6 @@ pub fn open_pattern<R: tauri::Runtime>(
   let mut patproj = embroiderly_parsers::parse_pattern(file_path.clone())?;
   patproj.file_path = Some(file_path.with_extension(PatternFormat::default().to_string()));
 
-  {
-    let (full_stitches_number, petite_stitches_number) = patproj.pattern.full_stitches_number();
-    let (half_stitches_number, quarter_stitches_number) = patproj.pattern.part_stitches_number();
-    let (back_stitches_number, straight_stitches_number) = patproj.pattern.line_stitches_number();
-    let (french_knots_number, beads_number) = patproj.pattern.node_stitches_number();
-    let special_stitches_number: usize = patproj.pattern.layers.iter().map(|l| l.specialstitches.len()).sum();
-
-    app_handle.capture_event(AppEvent::PatternOpened {
-      format: PatternFormat::try_from(file_path.extension())
-        .expect("After parsing, the pattern format is always valid"),
-      fabric: patproj.pattern.fabric.clone(),
-
-      palette_size: patproj.pattern.palette.len(),
-      blends_number: patproj.pattern.palette.blends_number(),
-      used_palette_brands: patproj.pattern.palette.used_brands(),
-      used_stitch_fonts: patproj.pattern.palette.used_symbol_fonts(),
-
-      full_stitches_number,
-      petite_stitches_number,
-      half_stitches_number,
-      quarter_stitches_number,
-      back_stitches_number,
-      straight_stitches_number,
-      french_knots_number,
-      beads_number,
-      special_stitches_number,
-
-      has_reference_image: patproj.reference_image.is_some(),
-      reference_image_format: patproj.reference_image.as_ref().map(|image| image.format),
-      reference_image_dimensions: patproj.reference_image.as_ref().map(ReferenceImage::dimensions),
-      reference_image_size: patproj.reference_image.as_ref().map(|image| image.content.len()),
-    });
-  }
-
   let pattern_id = patproj.id;
 
   history.write().unwrap().create(patproj.id);
@@ -104,7 +68,7 @@ pub fn open_pattern<R: tauri::Runtime>(
 #[tauri::command]
 pub fn create_pattern<R: tauri::Runtime>(
   request: tauri::ipc::Request<'_>,
-  app_handle: tauri::AppHandle<R>,
+  _app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<String> {
@@ -113,9 +77,6 @@ pub fn create_pattern<R: tauri::Runtime>(
       let fabric: Fabric = borsh::from_slice(data)?;
       PatternProject::new(Pattern::new(fabric))
     };
-    app_handle.capture_event(AppEvent::PatternCreated {
-      fabric: patproj.pattern.fabric.clone(),
-    });
 
     let pattern_id = patproj.id;
 
@@ -172,8 +133,6 @@ pub fn save_pattern<R: tauri::Runtime>(
     embroiderly_parsers::save_pattern(patproj, &file_path, &package_info)?;
   }
 
-  app_handle.capture_event(AppEvent::PatternSaved { format });
-
   let mut history = history.write().unwrap();
   history.get_mut(&pattern_id).unwrap().push(Box::new(CheckpointAction));
 
@@ -182,12 +141,12 @@ pub fn save_pattern<R: tauri::Runtime>(
   Ok(())
 }
 
-#[tracing::instrument(level = "trace", skip(app_handle, history, patterns), err)]
+#[tracing::instrument(level = "trace", skip(_app_handle, history, patterns), err)]
 #[tauri::command]
 pub fn close_pattern<R: tauri::Runtime>(
   pattern_id: uuid::Uuid,
   force: Option<bool>,
-  app_handle: tauri::AppHandle<R>,
+  _app_handle: tauri::AppHandle<R>,
   history: tauri::State<HistoryState<R>>,
   patterns: tauri::State<PatternsState>,
 ) -> Result<()> {
@@ -209,8 +168,6 @@ pub fn close_pattern<R: tauri::Runtime>(
       std::fs::remove_file(backup_file_path)?;
     }
   }
-
-  app_handle.capture_event(AppEvent::PatternClosed);
 
   Ok(())
 }

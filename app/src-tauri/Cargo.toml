@@ -23,7 +23,6 @@ tauri-plugin-process = { workspace = true }
 tauri-plugin-shell = { workspace = true }
 tauri-plugin-updater = { workspace = true }
 ## Third-party plugins
-tauri-plugin-better-posthog = { workspace = true }
 tauri-plugin-prevent-default = { workspace = true }
 tauri-plugin-pinia = { workspace = true }
 
@@ -54,10 +53,6 @@ anyhow = { workspace = true }
 # Logging & Tracing
 log = { workspace = true }
 tracing = { workspace = true }
-
-# Telemetry
-better-posthog = { workspace = true }
-sentry = { workspace = true }
 
 # File system utilities
 tempfile = { workspace = true }

@@ -16,8 +16,6 @@
   "dependencies": {
     "@embroiderly/ui": "workspace:",
     "@fluent/bundle": "catalog:",
-    "@sentry/core": "catalog:",
-    "@sentry/vue": "catalog:",
     "@stdlib/math-base-special-roundn": "catalog:",
     "@tanstack/vue-hotkeys": "catalog:",
     "@tauri-apps/api": "catalog:",
@@ -39,7 +37,6 @@
     "pinia": "catalog:",
     "pinia-plugin-persistedstate": "catalog:",
     "pixi.js": "catalog:",
-    "posthog-js": "catalog:",
     "reka-ui": "catalog:",
     "sortablejs": "catalog:",
     "stacktracey": "catalog:",

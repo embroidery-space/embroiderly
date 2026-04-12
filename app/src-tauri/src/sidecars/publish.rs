@@ -97,6 +97,6 @@ impl<R: tauri::Runtime> super::SidecarRunner for PdfExportSidecar<R> {
 
     // Execute the command.
     let output = super::utils::collect_sidecar_binary_output_from_command(sidecar).await?;
-    super::utils::handle_sidecar_output(&self.app_handle, output, "embroiderly_publish")
+    super::utils::handle_sidecar_output(output, "embroiderly_publish")
   }
 }

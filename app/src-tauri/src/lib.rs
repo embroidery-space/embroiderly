@@ -1,7 +1,6 @@
 use std::sync::{Mutex, RwLock};
 
 use tauri::Manager as _;
-use tauri_plugin_better_posthog::PostHogExt as _;
 
 pub mod commands;
 mod core;
@@ -36,8 +35,6 @@ pub fn run() {
             let _ = sidecar.shutdown().await;
           }
         });
-
-        app_handle.capture_event(services::telemetry::AppEvent::AppExited);
       }
       _ => {}
     }
@@ -51,9 +48,6 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
       let app_handle = app.handle();
 
       services::logger::init(app_handle)?;
-      services::telemetry::init(app_handle)?;
-
-      app_handle.capture_event(services::telemetry::AppEvent::AppStarted);
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {

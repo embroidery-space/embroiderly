@@ -1,10 +1,8 @@
 use embroiderly_parsers::PatternFormat;
 use embroiderly_pattern::PdfExportOptions;
 use tauri::Emitter as _;
-use tauri_plugin_better_posthog::PostHogExt as _;
 
 use crate::error::Result;
-use crate::services::telemetry::AppEvent;
 use crate::sidecars::SidecarRunner as _;
 use crate::state::PatternsState;
 
@@ -41,9 +39,6 @@ pub fn export_pattern<R: tauri::Runtime>(
     .run()?;
 
   app_handle.emit("app:pattern-exported", &pattern_id)?;
-  app_handle.capture_event(AppEvent::PatternExportedAsPdf {
-    settings: patproj.publish_settings.pdf,
-  });
 
   Ok(())
 }

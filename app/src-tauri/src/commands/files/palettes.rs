@@ -3,11 +3,9 @@ use std::path::{Path, PathBuf};
 use embroiderly_pattern::BrandPaletteItem;
 use rayon::prelude::*;
 use tauri::Manager as _;
-use tauri_plugin_better_posthog::PostHogExt as _;
 
 use super::{FileGroup, GroupedFilesList, ImportFilesResponse};
 use crate::error::Result;
-use crate::services::telemetry::AppEvent;
 use crate::utils::palette::is_palette_file;
 use crate::utils::path::app_data_dir;
 
@@ -50,11 +48,6 @@ pub fn import_palettes<R: tauri::Runtime>(
 
   tracing::Span::current().record("total_files", total_files);
   tracing::Span::current().record("failed_files", failed_files.len());
-
-  app_handle.capture_event(AppEvent::PalettesImported {
-    total_files,
-    failed_files: failed_files.len(),
-  });
 
   Ok(ImportFilesResponse { failed_files })
 }

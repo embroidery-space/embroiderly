@@ -6,12 +6,7 @@ fn main() {
     }
   }
 
-  let attributes = tauri_build::Attributes::new()
-    .plugin("log", tauri_build::InlinedPlugin::new().commands(&["log"]))
-    .plugin(
-      "sentry",
-      tauri_build::InlinedPlugin::new().commands(&["envelope", "add_breadcrumb"]),
-    );
+  let attributes = tauri_build::Attributes::new().plugin("log", tauri_build::InlinedPlugin::new().commands(&["log"]));
 
   #[cfg(all(target_os = "windows", target_env = "msvc", feature = "test"))]
   {

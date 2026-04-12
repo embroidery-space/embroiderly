@@ -28,9 +28,6 @@
     "updater:allow-download-and-install",
     "pinia:default",
     "log:allow-log",
-    "sentry:allow-envelope",
-    "sentry:allow-add-breadcrumb",
-    "better-posthog:default",
     { "identifier": "fs:allow-read-dir", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-text-file", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-file", "allow": [{ "path": "$RESOURCE/**/*" }] }

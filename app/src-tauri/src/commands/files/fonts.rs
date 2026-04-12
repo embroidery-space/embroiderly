@@ -2,11 +2,9 @@ use std::path::{Path, PathBuf};
 
 use rayon::prelude::*;
 use tauri::Manager as _;
-use tauri_plugin_better_posthog::PostHogExt as _;
 
 use super::{GroupedFilesList, ImportFilesResponse};
 use crate::error::Result;
-use crate::services::telemetry::AppEvent;
 use crate::utils::fonts::is_font_file;
 use crate::utils::path::app_data_dir;
 
@@ -174,11 +172,6 @@ pub fn import_symbol_fonts<R: tauri::Runtime>(
 
   tracing::Span::current().record("total_files", total_files);
   tracing::Span::current().record("failed_files", failed_files.len());
-
-  app_handle.capture_event(AppEvent::SymbolFontsImported {
-    total_files,
-    failed_files: failed_files.len(),
-  });
 
   Ok(ImportFilesResponse { failed_files })
 }
