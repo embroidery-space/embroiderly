@@ -13,9 +13,11 @@ import vueDevTools from "vite-plugin-vue-devtools";
 import pkg from "./package.json";
 import fluentMerge from "./vite-plugins/fluent-merge";
 
-const isCI = process.env.CI === "true";
-const isDebug = process.env.TAURI_ENV_DEBUG === "true";
-const isTest = !!process.env.VITEST;
+const isCI = !!process.env.CI;
+const isTauri = !!process.env.TAURI_ENV_TARGET_TRIPLE;
+
+const isDev = process.env.NODE_ENV === "development";
+const isTest = process.env.NODE_ENV === "test";
 
 export default defineConfig({
   plugins: [
@@ -32,14 +34,14 @@ export default defineConfig({
     !isTest && vueDevTools(),
   ],
   clearScreen: false,
-  envPrefix: ["VITE_", "TAURI_ENV_"],
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
   build: {
-    sourcemap: isDebug,
+    sourcemap: isDev,
     chunkSizeWarningLimit: Infinity,
   },
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
+    __TAURI__: isTauri,
   },
   resolve: {
     dedupe: ["@vueuse/*", "reka-ui", "vue"],
