@@ -1,11 +1,11 @@
 use embroiderly_pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch, Symbol};
 
+use crate::EditorEvent;
+use crate::error::{EditorError, Result};
+
 #[cfg(test)]
 #[path = "palette.test.rs"]
 mod tests;
-
-use crate::EditorEvent;
-use crate::error::{EditorError, Result};
 
 /// Specifies how palette items should be sorted.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, borsh::BorshSerialize, borsh::BorshDeserialize)]

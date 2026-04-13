@@ -1,11 +1,11 @@
 use embroiderly_pattern::{PatternProject, ReferenceImage, ReferenceImageSettings};
 
+use crate::EditorEvent;
+use crate::error::Result;
+
 #[cfg(test)]
 #[path = "image.test.rs"]
 mod tests;
-
-use crate::EditorEvent;
-use crate::error::Result;
 
 #[derive(Debug, Clone, borsh::BorshSerialize, borsh::BorshDeserialize)]
 pub enum ImageAction {

@@ -1,11 +1,11 @@
 use embroiderly_pattern::{Layer, PatternProject};
 
+use crate::EditorEvent;
+use crate::error::{EditorError, Result};
+
 #[cfg(test)]
 #[path = "layers.test.rs"]
 mod tests;
-
-use crate::EditorEvent;
-use crate::error::{EditorError, Result};
 
 #[derive(Debug, Clone, borsh::BorshSerialize, borsh::BorshDeserialize)]
 pub struct LayerVisibility {

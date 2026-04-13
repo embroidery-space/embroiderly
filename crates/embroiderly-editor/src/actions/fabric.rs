@@ -1,11 +1,11 @@
 use embroiderly_pattern::{Bounds, Fabric, PatternProject, Stitch};
 
+use crate::EditorEvent;
+use crate::error::Result;
+
 #[cfg(test)]
 #[path = "fabric.test.rs"]
 mod tests;
-
-use crate::EditorEvent;
-use crate::error::Result;
 
 #[derive(Debug, Clone, borsh::BorshSerialize, borsh::BorshDeserialize)]
 pub enum FabricAction {
