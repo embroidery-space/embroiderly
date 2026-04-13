@@ -13,9 +13,8 @@ fn main() {
     let attributes = attributes.windows_attributes(tauri_build::WindowsAttributes::new_without_app_manifest());
     tauri_build::try_build(attributes).expect("failed to run tauri-build");
 
-    let manifest = std::env::current_dir()
-      .unwrap()
-      .join("testdata/")
+    let manifest = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+      .join("../../testdata/")
       .join("windows-app-manifest.xml");
 
     // Workaround needed to prevent `STATUS_ENTRYPOINT_NOT_FOUND` error in tests on Windows.

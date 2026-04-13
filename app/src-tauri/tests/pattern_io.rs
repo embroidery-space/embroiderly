@@ -10,7 +10,7 @@ mod utils;
 
 fn get_all_test_patterns() -> Vec<std::io::Result<std::fs::DirEntry>> {
   let sample_patterns = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("resources/patterns");
-  let test_patterns = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/patterns");
+  let test_patterns = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../testdata/patterns");
   std::fs::read_dir(sample_patterns)
     .unwrap()
     .chain(std::fs::read_dir(test_patterns).unwrap())

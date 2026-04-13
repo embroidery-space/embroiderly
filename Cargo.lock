@@ -1450,6 +1450,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "embroiderly_editor"
+version = "0.0.0"
+dependencies = [
+ "borsh",
+ "embroiderly_parsers",
+ "embroiderly_pattern",
+ "image",
+ "rand 0.10.0",
+ "rstest",
+ "thiserror 2.0.18",
+ "uuid",
+]
+
+[[package]]
 name = "embroiderly_image"
 version = "0.0.0"
 dependencies = [
