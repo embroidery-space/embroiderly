@@ -7,6 +7,10 @@ use crate::actions::EditorAction;
 use crate::error::{EditorError, Result};
 use crate::history::History;
 
+#[cfg(test)]
+#[path = "editor.test.rs"]
+mod tests;
+
 /// The unified editor object that owns all open pattern projects and their edit history.
 #[derive(Default)]
 pub struct Editor {
