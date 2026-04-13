@@ -64,12 +64,12 @@ wildcard_dependencies = "deny"
 tauri = { version = "2.10.3", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
 tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
 ## Official Tauri plugins
-tauri-plugin-dialog = "2.6.0"
+tauri-plugin-dialog = "2.7.0"
 tauri-plugin-fs = "2.0.3"
 tauri-plugin-opener = "2.5.3"
 tauri-plugin-process = "2.3.1"
 tauri-plugin-shell = "2.3.5"
-tauri-plugin-updater = "2.10.0"
+tauri-plugin-updater = "2.10.1"
 ## Third-party Tauri plugins
 tauri-plugin-better-posthog = "0.1.6"
 tauri-plugin-prevent-default = "4.0.4"
@@ -104,7 +104,7 @@ palette = "0.7.6"
 quantette = "0.5.1"
 
 # Archiving
-zip = { version = "8.5.0", default-features = false, features = ["zstd", "time"] }
+zip = { version = "8.5.1", default-features = false, features = ["zstd", "time"] }
 
 # De/serialization
 serde = { version = "1.0.228", features = ["derive"] }
@@ -144,7 +144,7 @@ rayon = "1.11.0"
 rstest = "0.26.1"
 
 # Other
-alphanumeric-sort = "1.5.5"
+alphanumeric-sort = "1.5.6"
 async-trait = "0.1.89"
 ordered-float = "5.2.0"
 dotenvy = "0.15.7"
