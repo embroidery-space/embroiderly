@@ -30,7 +30,8 @@ pub fn export_pattern<R: tauri::Runtime>(
   let tempfile_path = tempfile::NamedTempFile::new()?
     .path()
     .with_extension(PatternFormat::default().to_string());
-  embroiderly_parsers::save_pattern(patproj, &tempfile_path, &package_info)?;
+  let data = embroiderly_parsers::save_pattern(patproj, PatternFormat::default(), &package_info)?;
+  std::fs::write(&tempfile_path, data)?;
 
   crate::sidecars::PdfExportSidecar::new(app_handle.clone())
     .pattern_path(tempfile_path)

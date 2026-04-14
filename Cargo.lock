@@ -1494,7 +1494,6 @@ dependencies = [
  "prettydiff",
  "quick-xml 0.39.2",
  "serde_json",
- "tempfile",
  "thiserror 2.0.18",
  "tracing",
  "xsp_parsers",

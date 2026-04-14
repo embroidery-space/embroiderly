@@ -34,7 +34,10 @@ fn main() -> anyhow::Result<()> {
     symbol_fonts_dir,
   } = argh::from_env();
 
-  let patproj = embroiderly_parsers::parse_pattern(pattern)?;
+  let patproj = embroiderly_parsers::parse_pattern(
+    &std::fs::read(&pattern)?,
+    pattern.file_name().and_then(|s| s.to_str()).unwrap_or_default(),
+  )?;
   let options = serde_json::from_str(&options).map_err(Error::InvalidPdfExportOptions)?;
 
   embroiderly_publish::export_pattern(&patproj, output, options, symbol_fonts_dir)?;

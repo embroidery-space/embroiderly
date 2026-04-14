@@ -56,9 +56,8 @@ const PAGE_HEADER_AND_FOOTER_LENGTH: usize = 119;
 const SPECIAL_STITCH_NAME_LENGTH: usize = 255;
 
 #[tracing::instrument(name = "parse_xsd", skip_all)]
-pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<Pattern> {
-  let buf = std::fs::read(file_path.as_ref())?;
-  let mut cursor = std::io::Cursor::new(buf);
+pub fn parse_pattern(data: &[u8]) -> Result<Pattern> {
+  let mut cursor = std::io::Cursor::new(data);
 
   let signature = read_signature(&mut cursor)?;
   if signature != VALID_SIGNATURE {

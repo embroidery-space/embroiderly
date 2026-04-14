@@ -38,7 +38,12 @@ pub fn open_pattern<R: tauri::Runtime>(
   if backup_file_path.exists() {
     match restore_from_backup {
       Some(true) => {
-        let pattern = embroiderly_parsers::parse_pattern(backup_file_path)?;
+        let data = std::fs::read(&backup_file_path)?;
+        let file_name = backup_file_path
+          .file_name()
+          .and_then(|s| s.to_str())
+          .unwrap_or_default();
+        let pattern = embroiderly_parsers::parse_pattern(&data, file_name)?;
         tracing::trace!("Pattern restored from backup");
 
         let pattern_id = pattern.id;
@@ -53,7 +58,9 @@ pub fn open_pattern<R: tauri::Runtime>(
     }
   }
 
-  let mut patproj = embroiderly_parsers::parse_pattern(file_path.clone())?;
+  let data = std::fs::read(&file_path)?;
+  let file_name = file_path.file_name().and_then(|s| s.to_str()).unwrap_or_default();
+  let mut patproj = embroiderly_parsers::parse_pattern(&data, file_name)?;
   patproj.file_path = Some(file_path.with_extension(PatternFormat::default().to_string()));
 
   let pattern_id = patproj.id;
@@ -111,13 +118,15 @@ pub fn save_pattern<R: tauri::Runtime>(
     }
   };
 
-  let format = PatternFormat::try_from(file_path.extension())?;
+  let format = PatternFormat::try_from(file_path.file_name().and_then(|s| s.to_str()).unwrap_or_default())?;
   if format == PatternFormat::default() {
     let new_file_path = backup_file_path(&file_path, "new");
     let backup_file_path = backup_file_path(&file_path, "bak");
+    let format = PatternFormat::try_from(new_file_path.extension().and_then(|s| s.to_str()).unwrap_or_default())?;
 
     tracing::trace!("Saving the pattern to a temporary file.");
-    embroiderly_parsers::save_pattern(patproj, &new_file_path, &package_info)?;
+    let data = embroiderly_parsers::save_pattern(patproj, format, &package_info)?;
+    std::fs::write(&new_file_path, data)?;
 
     tracing::trace!("Backing up the previous file.");
     if let Some(ref prev_path) = previous_file_path
@@ -130,7 +139,8 @@ pub fn save_pattern<R: tauri::Runtime>(
     std::fs::rename(&new_file_path, &file_path)?;
     patproj.file_path = Some(file_path);
   } else {
-    embroiderly_parsers::save_pattern(patproj, &file_path, &package_info)?;
+    let data = embroiderly_parsers::save_pattern(patproj, format, &package_info)?;
+    std::fs::write(file_path, data)?;
   }
 
   let mut history = history.write().unwrap();

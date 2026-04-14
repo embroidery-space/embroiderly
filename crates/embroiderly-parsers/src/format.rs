@@ -1,5 +1,3 @@
-use std::ffi::OsStr;
-
 use crate::error::Error;
 
 #[derive(Default, Clone, Copy, PartialEq, Eq)]
@@ -20,20 +18,15 @@ pub enum PatternFormat {
   EmbProj,
 }
 
-impl TryFrom<Option<&OsStr>> for PatternFormat {
+impl TryFrom<&str> for PatternFormat {
   type Error = Error;
 
-  fn try_from(value: Option<&OsStr>) -> std::result::Result<Self, Self::Error> {
-    if let Some(extension) = value {
-      let extension = extension.to_str().unwrap();
-      match extension.to_lowercase().as_str() {
-        "xsd" => Ok(Self::Xsd),
-        "oxs" | "xml" => Ok(Self::Oxs),
-        "embproj" => Ok(Self::EmbProj),
-        _ => Err(Error::UnsupportedPatternType(extension.to_string())),
-      }
-    } else {
-      Err(Error::UnsupportedPatternType("No extension".into()))
+  fn try_from(file_name: &str) -> std::result::Result<Self, Self::Error> {
+    match file_name.split('.').next_back().unwrap_or_default() {
+      "xsd" => Ok(Self::Xsd),
+      "oxs" | "xml" => Ok(Self::Oxs),
+      "embproj" => Ok(Self::EmbProj),
+      ext => Err(Error::UnsupportedPatternType(ext.to_string())),
     }
   }
 }

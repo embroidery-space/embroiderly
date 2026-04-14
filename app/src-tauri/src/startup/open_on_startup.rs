@@ -41,7 +41,13 @@ fn create_new_pattern<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) {
 }
 
 fn load_template<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>, template_path: &std::path::Path) {
-  match embroiderly_parsers::parse_pattern(template_path.to_path_buf()) {
+  let result = (|| -> anyhow::Result<_> {
+    let data = std::fs::read(template_path)?;
+    let file_name = template_path.file_name().and_then(|s| s.to_str()).unwrap_or_default();
+    Ok(embroiderly_parsers::parse_pattern(&data, file_name)?)
+  })();
+
+  match result {
     Ok(mut patproj) => {
       patproj.file_path = None;
 

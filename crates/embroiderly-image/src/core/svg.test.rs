@@ -529,7 +529,7 @@ fn writes_overlapping_zones_by_xy() {
 #[test]
 fn generates_svg_frames() {
   let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/patterns/piggies.xsd");
-  let patproj = embroiderly_parsers::parse_pattern(file_path).unwrap();
+  let patproj = embroiderly_parsers::xsd::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap();
 
   let options = ImageExportOptions {
     frame_size: Some((30, 40)),

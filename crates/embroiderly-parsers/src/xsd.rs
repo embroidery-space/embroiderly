@@ -3,9 +3,8 @@ use embroiderly_pattern::*;
 use xsp_parsers::pmaker;
 
 #[tracing::instrument(name = "parse_xsd", skip_all)]
-pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
-  let file_path = file_path.as_ref();
-  let xsd_pattern = pmaker::parse_pattern(file_path)?;
+pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
+  let xsd_pattern = pmaker::parse_pattern(data)?;
 
   let layer = Layer {
     fullstitches: Stitches::from_iter(
@@ -108,7 +107,6 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
 
   Ok(
     PatternProject::builder(pattern)
-      .file_path(file_path)
       .display_settings(display_settings)
       .build(),
   )

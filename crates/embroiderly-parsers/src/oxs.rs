@@ -35,20 +35,8 @@ macro_rules! unwrap_or_continue {
   };
 }
 
-pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
-  let file_path = file_path.as_ref();
-  let mut reader = Reader::from_file(file_path)?;
-
-  let mut pattern = parse_pattern_inner(&mut reader)?;
-  if pattern.info.title.is_empty() {
-    pattern.info.title = file_path.file_name().unwrap().to_string_lossy().to_string();
-  }
-
-  Ok(PatternProject::builder(pattern).file_path(file_path).build())
-}
-
-pub fn parse_pattern_from_reader<R: io::BufRead>(reader: R) -> Result<PatternProject> {
-  let mut reader = Reader::from_reader(reader);
+pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
+  let mut reader = Reader::from_reader(data);
 
   let pattern = parse_pattern_inner(&mut reader)?;
   Ok(PatternProject::new(pattern))
@@ -154,19 +142,10 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
   Ok(pattern)
 }
 
-pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path, package_info: &PackageInfo) -> Result<()> {
-  let mut file = std::fs::OpenOptions::new()
-    .create(true)
-    .write(true)
-    .truncate(true)
-    .open(file_path)?;
-  Ok(save_pattern_inner(&mut file, patproj, package_info)?)
-}
-
-pub fn save_pattern_to_vec(patproj: &PatternProject, package_info: &PackageInfo) -> Result<Vec<u8>> {
-  let mut buf = Vec::new();
-  save_pattern_inner(&mut buf, patproj, package_info)?;
-  Ok(buf)
+pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<Vec<u8>> {
+  let mut data = Vec::new();
+  save_pattern_inner(&mut data, patproj, package_info)?;
+  Ok(data)
 }
 
 #[tracing::instrument(name = "save_oxs", skip_all)]
