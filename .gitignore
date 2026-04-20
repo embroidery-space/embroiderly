@@ -1,6 +1,7 @@
 target/
 logs/
 gen/
+pkg/
 
 .tmp/
 
