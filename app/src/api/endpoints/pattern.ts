@@ -14,7 +14,7 @@ import {
   serializeStitchPayload,
   PdfExportOptions,
 } from "~/lib/pattern/";
-import type { Stitch } from "~/lib/pattern/";
+import type { LayerVisibility, Stitch } from "~/lib/pattern/";
 
 import { invoke } from "../client.ts";
 
@@ -94,19 +94,6 @@ export function setSymbol(patternId: string, palindex: number, symbol?: Symbol) 
 }
 
 // === Layer Management === //
-
-export interface LayerVisibility {
-  visible: boolean;
-  fullstitchesVisible: boolean;
-  petitestitchesVisible: boolean;
-  halfstitchesVisible: boolean;
-  quarterstitchesVisible: boolean;
-  backstitchesVisible: boolean;
-  straightstitchesVisible: boolean;
-  frenchknotsVisible: boolean;
-  beadsVisible: boolean;
-  specialstitchesVisible: boolean;
-}
 
 export function addLayer(patternId: string) {
   return invoke<void>("add_layer", undefined, { headers: { patternId } });

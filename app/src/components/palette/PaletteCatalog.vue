@@ -6,9 +6,8 @@ import { useFuse } from "@vueuse/integrations/useFuse";
 import { useTemplateRef, ref, computed, shallowRef } from "vue";
 import type { Ref } from "vue";
 
-import { FilesApi } from "~/api/";
 import { IconMenu, IconSearch } from "~/assets/icons/";
-import { useFilePicker, useI18n } from "~/composables/";
+import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { PALETTE_FILTER } from "~/constants/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/lib/pattern/";
 import { LoggerService } from "~/services/";
@@ -33,6 +32,7 @@ const PALETTE_CATALOG_DISPLAY_SETTINGS = new PaletteSettings({
 
 const confirm = useConfirm();
 const filePicker = useFilePicker();
+const { files } = useEditor();
 const { fluent } = useI18n();
 const toast = useToast();
 
@@ -61,13 +61,20 @@ const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
 
 const importingPalettes = ref(false);
 async function importPalettes() {
-  const paths = (await filePicker.open({ multiple: true, filters: PALETTE_FILTER })) as string[] | null;
-  if (!paths) return;
+  const handles = await filePicker.open({ multiple: true, types: PALETTE_FILTER });
+  if (!handles) return;
 
   try {
     importingPalettes.value = true;
 
-    const { failedFiles } = await FilesApi.importPalettes(paths);
+    const fileEntries = await Promise.all(
+      handles.map(async (handle) => {
+        const file = await handle.getFile();
+        return { name: file.name, data: new Uint8Array(await file.arrayBuffer()) };
+      }),
+    );
+    const { failedFiles } = await files.importPalettes(fileEntries);
+
     await paletteSelect.value!.loadPalettesList();
 
     if (failedFiles.length) {

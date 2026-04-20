@@ -2,7 +2,7 @@ use embroiderly_pattern::PatternProject;
 
 use super::*;
 use crate::actions::EditorAction;
-use crate::error::EditorError;
+use crate::error::Error;
 
 #[test]
 fn test_editor_new() {
@@ -38,30 +38,18 @@ fn test_pattern_not_found() {
 
   assert!(matches!(
     editor.dispatch(&id, EditorAction::Mock),
-    Err(EditorError::PatternNotFound(_))
+    Err(Error::PatternNotFound(_))
   ));
-  assert!(matches!(editor.undo(&id), Err(EditorError::PatternNotFound(_))));
-  assert!(matches!(editor.redo(&id), Err(EditorError::PatternNotFound(_))));
-  assert!(matches!(
-    editor.undo_transaction(&id),
-    Err(EditorError::PatternNotFound(_))
-  ));
-  assert!(matches!(
-    editor.redo_transaction(&id),
-    Err(EditorError::PatternNotFound(_))
-  ));
-  assert!(matches!(
-    editor.start_transaction(&id),
-    Err(EditorError::PatternNotFound(_))
-  ));
-  assert!(matches!(
-    editor.end_transaction(&id),
-    Err(EditorError::PatternNotFound(_))
-  ));
-  assert!(matches!(editor.checkpoint(&id), Err(EditorError::PatternNotFound(_))));
+  assert!(matches!(editor.undo(&id), Err(Error::PatternNotFound(_))));
+  assert!(matches!(editor.redo(&id), Err(Error::PatternNotFound(_))));
+  assert!(matches!(editor.undo_transaction(&id), Err(Error::PatternNotFound(_))));
+  assert!(matches!(editor.redo_transaction(&id), Err(Error::PatternNotFound(_))));
+  assert!(matches!(editor.start_transaction(&id), Err(Error::PatternNotFound(_))));
+  assert!(matches!(editor.end_transaction(&id), Err(Error::PatternNotFound(_))));
+  assert!(matches!(editor.checkpoint(&id), Err(Error::PatternNotFound(_))));
   assert!(matches!(
     editor.has_unsaved_changes(&id),
-    Err(EditorError::PatternNotFound(_))
+    Err(Error::PatternNotFound(_))
   ));
 }
 

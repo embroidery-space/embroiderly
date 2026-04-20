@@ -5,7 +5,6 @@ import type { ContextMenuItem, TreeItem } from "@embroiderly/ui";
 import { insertNodeAt, removeNode, useSortable } from "@vueuse/integrations/useSortable";
 import { computed, nextTick, watchEffect, useTemplateRef } from "vue";
 
-import type { LayerVisibility } from "~/api/";
 import {
   IconLayers,
   IconPlus,
@@ -23,6 +22,7 @@ import {
   IconStitchSpecial,
 } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
+import type { LayerVisibility } from "~/lib/pattern/";
 import type { Layer } from "~/lib/pattern/";
 
 interface LayerTreeItem extends TreeItem {

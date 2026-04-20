@@ -2,12 +2,10 @@ import { b } from "@zorsh/zorsh";
 import { toByteArray } from "base64-js";
 import { NIL as NIL_UUID, stringify as stringifyUuid } from "uuid";
 
-import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
-
 import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
 import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
-import { Layer, Layers } from "./layers.ts";
+import { Layer, LayerVisibility, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
 import { FullStitch, PartStitch, LineStitch, SpecialStitchModel } from "./stitches.ts";

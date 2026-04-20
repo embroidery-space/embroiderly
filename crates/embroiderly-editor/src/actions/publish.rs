@@ -32,9 +32,7 @@ impl PublishAction {
   pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::UpdatePdfExportOptions { old_options, .. } => {
-        let old = old_options
-          .take()
-          .ok_or(crate::error::EditorError::ActionNotPerformed)?;
+        let old = old_options.take().ok_or(crate::error::Error::ActionNotPerformed)?;
         patproj.publish_settings.pdf = old;
         Ok(vec![
           EditorEvent::PublishUpdatePdf(old),

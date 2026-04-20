@@ -69,7 +69,7 @@ pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
 #[tracing::instrument(name = "save_embproj", skip_all)]
 pub fn save_pattern(patproj: &PatternProject) -> Result<Vec<u8>> {
   let mut zip = zip::ZipWriter::new(std::io::Cursor::new(Vec::new()));
-  let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Zstd);
+  let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Deflated);
 
   zip.start_file("pattern.json", options)?;
   zip.write_all(&serde_json::to_vec(&patproj.pattern)?)?;

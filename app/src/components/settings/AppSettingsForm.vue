@@ -5,8 +5,7 @@ import type { TabsItem } from "@embroiderly/ui";
 import { computed } from "vue";
 
 import { IconLaptop, IconMoon, IconSun } from "~/assets/icons/";
-import { useFilePicker, useI18n } from "~/composables/";
-import { ANY_PATTERN_FILTER } from "~/constants/";
+import { useI18n } from "~/composables/";
 import { StartupAction, useSettingsStore } from "~/stores/";
 import type {
   OtherOptions,
@@ -24,7 +23,6 @@ const updater = defineModel<UpdaterOptions>("updater", { required: true });
 const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
 const other = defineModel<OtherOptions>("other", { required: true });
 
-const filePicker = useFilePicker();
 const { fluent } = useI18n();
 
 const settingsStore = useSettingsStore();
@@ -110,8 +108,9 @@ const wheelActionOptions = computed(() => [
             class="w-full"
             @pick="
               async () => {
-                const path = await filePicker.open({ filters: ANY_PATTERN_FILTER });
-                if (path) startup.templatePath = path;
+                // TODO: migrate template path picker to handle-based File System Access API.
+                // const path = await filePicker.open({ types: ANY_PATTERN_FILTER });
+                // if (path) startup.templatePath = path;
               }
             "
           />

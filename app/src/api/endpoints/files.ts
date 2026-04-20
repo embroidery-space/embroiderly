@@ -1,11 +1,6 @@
-import { Pattern, Fabric, deserializeBrandPalette } from "~/lib/pattern/";
+import { Pattern, Fabric } from "~/lib/pattern/";
 
 import { invoke } from "../client.ts";
-
-export interface GroupedFilesList {
-  system: string[];
-  custom: string[];
-}
 
 // === Pattern files management === //
 
@@ -16,7 +11,7 @@ export async function loadPattern(patternId: string) {
 
 export interface OpenPatternOptions {
   /**
-   * Whether to restore the pattern from a backup file if it exists.i
+   * Whether to restore the pattern from a backup file if it exists.
    *
    * If set to `true`, the command will attempt to restore the pattern from a backup file.
    * If set to `false`, it will not attempt to restore from a backup.
@@ -33,26 +28,6 @@ export function createPattern(fabric: Fabric) {
   return invoke<string>("create_pattern", Fabric.serialize(fabric));
 }
 
-export function savePattern(patternId: string, filePath: string) {
-  return invoke<void>("save_pattern", { patternId, filePath });
-}
-
-export interface ClosePatternOptions {
-  /**
-   * Whether to bypass unsaved changes check and force close the pattern.
-   * @default false
-   */
-  force?: boolean;
-}
-
-export function closePattern(patternId: string, options?: ClosePatternOptions) {
-  return invoke<void>("close_pattern", { patternId, ...options });
-}
-
-/**
- * Returns a list of opened patterns with their IDs and titles.
- * This is used on the first app startup to initially load those patterns which were opened using file associations.
- */
 export function getOpenedPatterns() {
   return invoke<[id: string, title: string][]>("get_opened_patterns");
 }
@@ -67,52 +42,6 @@ export function getPatternFilePath(patternId: string) {
 
 export function getPatternDefaultFilePath(patternId: string) {
   return invoke<string>("get_pattern_default_file_path", { patternId });
-}
-
-// === Palette files management === //
-
-export function importPalettes(paths: string[]) {
-  return invoke<{ failedFiles: string[] }>("import_palettes", { paths });
-}
-
-export function getPalettesList() {
-  return invoke<GroupedFilesList>("get_palettes_list");
-}
-
-export async function loadPalette(paletteGroup: string, paletteName: string) {
-  const buffer = await invoke<ArrayBuffer>("load_palette", { paletteGroup, paletteName });
-  return deserializeBrandPalette(new Uint8Array(buffer));
-}
-
-export async function resolvePalettePath(paletteGroup: string, paletteName: string) {
-  return await invoke<string>("resolve_palette_path", { paletteGroup, paletteName });
-}
-
-// === Symbol font files management === //
-
-export function getSymbolFontsList() {
-  return invoke<GroupedFilesList>("get_symbol_fonts_list");
-}
-
-export function loadSymbolFontCodePoints(fontFamily: string) {
-  return invoke<number[]>("load_symbol_font_code_points", { fontFamily });
-}
-
-export async function loadSymbolFont(fontFamily: string) {
-  const fontData = await invoke<ArrayBuffer>("load_symbol_font_content", { fontFamily });
-
-  const fontFace = new FontFace(fontFamily, fontData);
-  await fontFace.load();
-
-  return fontFace;
-}
-
-export interface ImportSymbolFontsResponse {
-  failedFiles: string[];
-}
-
-export function importSymbolFonts(paths: string[]) {
-  return invoke<ImportSymbolFontsResponse>("import_symbol_fonts", { paths });
 }
 
 // === Importing images into patterns === //

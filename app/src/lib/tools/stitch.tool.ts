@@ -70,10 +70,10 @@ export class StitchTool implements PatternEditorTool {
     return this.prevStitchState === undefined;
   }
 
-  async main({ pattern, start, end, modifiers, api, ui }: PatternEditorToolContext) {
+  main({ pattern, start, end, modifiers, api, ui }: PatternEditorToolContext) {
     if (!patternContainsPoint(pattern.fabric, start, end)) return;
 
-    if (this.isFirstRun) await api.startTransaction();
+    if (this.isFirstRun) api.startTransaction();
 
     const { x, y } = adjustStitchCoordinate(end, this.kind, this.options?.corner);
 
@@ -90,7 +90,7 @@ export class StitchTool implements PatternEditorTool {
           stitch.y = Math.trunc(y) + (this.prevStitchState.y - Math.trunc(this.prevStitchState.y));
         }
 
-        await api.addStitch(stitch);
+        api.addStitch(stitch);
         break;
       }
 
@@ -130,7 +130,7 @@ export class StitchTool implements PatternEditorTool {
           }
         }
 
-        await api.addStitch(stitch);
+        api.addStitch(stitch);
         break;
       }
 
@@ -153,7 +153,7 @@ export class StitchTool implements PatternEditorTool {
 
         this.prevStitchState = stitch;
 
-        await api.addStitch(stitch);
+        api.addStitch(stitch);
         break;
       }
 
@@ -175,31 +175,29 @@ export class StitchTool implements PatternEditorTool {
     }
   }
 
-  async anti({ pattern, event, end: point, api }: PatternEditorToolContext) {
+  anti({ pattern, event, end: point, api }: PatternEditorToolContext) {
     if (!patternContainsPoint(pattern.fabric, point)) return;
 
     if (event.target instanceof StitchGraphics) {
-      await api.removeStitch(event.target.stitch.clone());
+      api.removeStitch(event.target.stitch.clone());
     } else {
-      await Promise.all(
-        [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter].map(async (kind) => {
-          const { x, y } = adjustStitchCoordinate(point, kind);
-          if (kind === FullStitchKind.Full || kind === FullStitchKind.Petite) {
-            await api.removeStitch(new FullStitch({ x, y, kind, palindex: 0 }));
-          } else {
-            const [fractX, fractY] = [point.x - Math.trunc(x), point.y - Math.trunc(y)];
-            const direction =
-              (fractX < 0.5 && fractY > 0.5) || (fractX > 0.5 && fractY < 0.5)
-                ? PartStitchDirection.Forward
-                : PartStitchDirection.Backward;
-            await api.removeStitch(new PartStitch({ x, y, kind, direction, palindex: 0 }));
-          }
-        }),
-      );
+      for (const kind of [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter]) {
+        const { x, y } = adjustStitchCoordinate(point, kind);
+        if (kind === FullStitchKind.Full || kind === FullStitchKind.Petite) {
+          api.removeStitch(new FullStitch({ x, y, kind, palindex: 0 }));
+        } else {
+          const [fractX, fractY] = [point.x - Math.trunc(x), point.y - Math.trunc(y)];
+          const direction =
+            (fractX < 0.5 && fractY > 0.5) || (fractX > 0.5 && fractY < 0.5)
+              ? PartStitchDirection.Forward
+              : PartStitchDirection.Backward;
+          api.removeStitch(new PartStitch({ x, y, kind, direction, palindex: 0 }));
+        }
+      }
     }
   }
 
-  async release({ pattern, start, end, api }: PatternEditorToolContext) {
+  release({ pattern, start, end, api }: PatternEditorToolContext) {
     if (!patternContainsPoint(pattern.fabric, start, end)) return;
 
     const { x, y } = adjustStitchCoordinate(end, this.kind);
@@ -210,20 +208,20 @@ export class StitchTool implements PatternEditorTool {
         const { x: x1, y: y1 } = adjustStitchCoordinate(_start, this.kind);
         const { x: x2, y: y2 } = adjustStitchCoordinate(_end, this.kind);
         const line = new LineStitch({ x: [x1, x2], y: [y1, y2], palindex: 0, kind: this.kind });
-        await api.addStitch(line);
+        api.addStitch(line);
         break;
       }
 
       case NodeStitchKind.FrenchKnot:
       case NodeStitchKind.Bead: {
         const node = new NodeStitch({ x, y, palindex: 0, kind: this.kind, rotated: false });
-        await api.addStitch(node);
+        api.addStitch(node);
         break;
       }
     }
 
     this.prevStitchState = undefined;
-    await api.endTransaction();
+    api.endTransaction();
   }
 }
 

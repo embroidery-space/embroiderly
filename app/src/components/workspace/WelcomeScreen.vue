@@ -82,9 +82,12 @@ function createPattern() {
   });
 }
 
-async function openRecentFile(filePath: string) {
-  const patternId = await patternFileStore.openPattern(filePath);
-  if (patternId) patternFileStore.switchPattern(patternId);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function openRecentFile(_filePath: string) {
+  // oxlint-disable-next-line no-warning-comments
+  // TODO: migrate recent file opening to handle-based File System Access API.
+  // const patternId = await patternFileStore.openPattern(filePath);
+  // if (patternId) patternFileStore.switchPattern(patternId);
 }
 </script>
 

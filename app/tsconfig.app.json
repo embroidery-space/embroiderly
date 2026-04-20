@@ -10,7 +10,8 @@
     "strictPropertyInitialization": false,
 
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@embroiderly/wasm": ["./src-wasm/pkg/"]
     }
   }
 }

@@ -1,308 +1,292 @@
-import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-
 import { defineStore } from "pinia";
 import { shallowRef, triggerRef } from "vue";
 
-import { PatternApi } from "~/api/";
+import { useEditor } from "~/composables";
 import {
-  PatternEvent,
-  ReferenceImage,
-  ReferenceImageSettings,
   Pattern,
   Fabric,
   Grid,
-  AddedLayerData,
+  LayerVisibility,
   PaletteItem,
-  AddedPaletteItemData,
   PaletteSettings,
   SortPaletteBy,
-  Symbol,
   SetSymbolData,
   DisplayMode,
   DisplaySettings,
   PdfExportOptions,
   PatternInfo,
-  deserializeStitchesEvent,
+  ReferenceImage,
+  ReferenceImageSettings,
+  serializeStitch,
 } from "~/lib/pattern/";
-import type { Stitch } from "~/lib/pattern/";
+import type { Stitch, Symbol } from "~/lib/pattern/";
 
-export const usePatternStore = defineStore(
-  "embroiderly-pattern",
-  () => {
-    const appWindow = getCurrentWebviewWindow();
+export const usePatternStore = defineStore("embroiderly-pattern", () => {
+  const { editor, events } = useEditor();
 
-    const pattern = shallowRef(new Pattern());
+  const pattern = shallowRef(new Pattern());
 
-    function setPattern(value?: Pattern) {
-      pattern.value = value ?? new Pattern();
+  function setPattern(value?: Pattern) {
+    pattern.value = value ?? new Pattern();
+  }
+
+  async function setReferenceImage(image: ReferenceImage) {
+    if (pattern.value.isNil) return;
+    const content = new Uint8Array(await image.arrayBuffer());
+    const data = ReferenceImage.schema.serialize({ content, settings: image.settings });
+    editor.setReferenceImage(pattern.value.id, data);
+  }
+  function removeReferenceImage() {
+    if (pattern.value.isNil) return;
+    editor.removeReferenceImage(pattern.value.id);
+  }
+  events.on("image:set", (image) => {
+    pattern.value.referenceImage = image;
+    triggerRef(pattern);
+  });
+
+  function updateReferenceImageSettings(settings: ReferenceImageSettings) {
+    if (pattern.value.isNil) return;
+    editor.updateReferenceImageSettings(pattern.value.id, ReferenceImageSettings.serialize(settings));
+  }
+  events.on("image:settings:update", (settings) => {
+    if (pattern.value.referenceImage) pattern.value.referenceImage.settings = settings;
+  });
+
+  function updatePatternInfo(patternInfo: PatternInfo) {
+    if (pattern.value.isNil) return;
+    editor.updatePatternInfo(pattern.value.id, PatternInfo.serialize(patternInfo));
+  }
+  events.on("pattern-info:update", (info) => {
+    pattern.value.info = info;
+  });
+
+  function updateFabric(fabric: Fabric) {
+    if (pattern.value.isNil) return;
+    editor.updateFabric(pattern.value.id, Fabric.serialize(fabric));
+  }
+  events.on("fabric:update", (fabric) => {
+    pattern.value.fabric = fabric;
+  });
+
+  function updateGrid(grid: Grid) {
+    if (pattern.value.isNil) return;
+    editor.updateGrid(pattern.value.id, Grid.serialize(grid));
+  }
+  events.on("grid:update", (grid) => {
+    pattern.value.grid = grid;
+  });
+
+  function addPaletteItem(palitem: PaletteItem) {
+    if (pattern.value.isNil) return;
+    editor.addPaletteItem(pattern.value.id, PaletteItem.serialize(palitem));
+  }
+  events.on("palette:add_palette_item", ({ palitem, palindex }) => {
+    pattern.value.palette.insert(palindex, palitem);
+    triggerRef(pattern);
+  });
+
+  function removePaletteItem(...paletteItemIndexes: number[]) {
+    if (pattern.value.isNil) return;
+    editor.removePaletteItems(pattern.value.id, new Uint32Array(paletteItemIndexes));
+  }
+  events.on("palette:remove_palette_item", (palindexes) => {
+    for (const palindex of [...palindexes].reverse()) {
+      pattern.value.palette.remove(palindex);
     }
+    triggerRef(pattern);
+  });
 
-    async function setReferenceImage(path: string) {
-      if (pattern.value.isNil) return;
-      await PatternApi.setReferenceImage(pattern.value.id, path);
-    }
-    async function removeReferenceImage() {
-      if (pattern.value.isNil) return;
-      await PatternApi.removeReferenceImage(pattern.value.id);
-    }
-    appWindow.listen<string>("image:set", ({ payload }) => {
-      pattern.value.referenceImage = ReferenceImage.deserialize(payload);
+  function updatePaletteDisplaySettings(settings: PaletteSettings) {
+    if (pattern.value.isNil) return;
+    editor.updatePaletteDisplaySettings(pattern.value.id, PaletteSettings.serialize(settings));
+  }
+  events.on("palette:update_display_settings", (settings) => {
+    pattern.value.paletteDisplaySettings = settings;
+    triggerRef(pattern);
+  });
+
+  function sortPaletteBy(sortBy: SortPaletteBy) {
+    if (pattern.value.isNil) return;
+    editor.sortPalette(pattern.value.id, sortBy);
+  }
+  events.on("palette:sort", (positions) => {
+    pattern.value.palette.positions = positions;
+    triggerRef(pattern);
+  });
+
+  function reorderPaletteItems(oldPosition: number, newPosition: number) {
+    if (pattern.value.isNil) return;
+    editor.reorderPaletteItems(pattern.value.id, oldPosition, newPosition);
+  }
+  events.on("palette:reorder", (positions) => {
+    pattern.value.palette.positions = positions;
+    triggerRef(pattern);
+  });
+
+  function setPaletteItemSymbol(palindex: number, symbol?: Symbol) {
+    if (pattern.value.isNil) return;
+    editor.setPaletteItemSymbol(pattern.value.id, SetSymbolData.serialize({ palindex, symbol }));
+  }
+  events.on("palette:set_symbol", ({ palindex, symbol }) => {
+    const item = pattern.value.palette.get(palindex);
+    if (item) {
+      item.symbol = symbol;
       triggerRef(pattern);
-    });
+    }
+  });
 
-    async function updateReferenceImageSettings(settings: ReferenceImageSettings) {
-      if (pattern.value.isNil) return;
-      await PatternApi.updateReferenceImageSettings(pattern.value.id, settings);
-    }
-    appWindow.listen<string>(PatternEvent.UpdateReferenceImageSettings, ({ payload }) => {
-      pattern.value.referenceImageSettings = ReferenceImageSettings.deserialize(payload);
-    });
+  function addLayer() {
+    if (pattern.value.isNil) return;
+    editor.addLayer(pattern.value.id);
+  }
+  function removeLayer(layerIndex: number) {
+    if (pattern.value.isNil) return;
+    editor.removeLayer(pattern.value.id, layerIndex);
+  }
+  function renameLayer(layerIndex: number, name: string) {
+    if (pattern.value.isNil) return;
+    editor.renameLayer(pattern.value.id, layerIndex, name);
+  }
+  function updateLayerVisibility(layerIndex: number, visibility: LayerVisibility) {
+    if (pattern.value.isNil) return;
+    editor.updateLayerVisibility(pattern.value.id, layerIndex, LayerVisibility.serialize(visibility));
+  }
+  function moveLayer(oldPosition: number, newPosition: number) {
+    if (pattern.value.isNil) return;
+    editor.moveLayer(pattern.value.id, oldPosition, newPosition);
+  }
+  events.on("layers:add", ({ index, layer }) => {
+    pattern.value.insertLayer(index, layer);
+    triggerRef(pattern);
+  });
+  events.on("layers:remove", (layerIndex) => {
+    pattern.value.removeLayer(layerIndex);
+    triggerRef(pattern);
+  });
+  events.on("layers:rename", ({ layerIndex, name }) => {
+    const layer = pattern.value.layers.get(layerIndex);
+    if (layer) layer.name = name;
+    triggerRef(pattern);
+  });
+  events.on("layers:update_visibility", ({ layerIndex, visibility }) => {
+    pattern.value.updateLayerVisibility(layerIndex, visibility);
+    triggerRef(pattern);
+  });
+  events.on("layers:move", (positions) => {
+    pattern.value.moveLayer(positions);
+    triggerRef(pattern);
+  });
 
-    async function updatePatternInfo(patternInfo: PatternInfo) {
-      if (pattern.value.isNil) return;
-      await PatternApi.updatePatternInfo(pattern.value.id, patternInfo);
-    }
-    appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
-      pattern.value.info = PatternInfo.deserialize(payload);
-    });
+  function addStitch(layerIndex: number, stitch: Stitch) {
+    if (pattern.value.isNil) return;
+    editor.addStitch(pattern.value.id, layerIndex, serializeStitch(stitch));
+  }
+  function removeStitch(layerIndex: number, stitch: Stitch) {
+    if (pattern.value.isNil) return;
+    editor.removeStitch(pattern.value.id, layerIndex, serializeStitch(stitch));
+  }
+  events.on("stitches:add", ({ layerIndex, stitches }) => {
+    for (const stitch of stitches) pattern.value.addStitch(layerIndex, stitch);
+  });
+  events.on("stitches:remove", ({ layerIndex, stitches }) => {
+    for (const stitch of stitches) pattern.value.removeStitch(layerIndex, stitch);
+  });
 
-    async function updateFabric(fabric: Fabric) {
-      if (pattern.value.isNil) return;
-      await PatternApi.updateFabric(pattern.value.id, fabric);
-    }
-    appWindow.listen<string>(PatternEvent.UpdateFabric, ({ payload }) => {
-      pattern.value.fabric = Fabric.deserialize(payload);
-    });
+  function updateDisplaySettings(settings: DisplaySettings) {
+    if (pattern.value.isNil) return;
+    editor.updateDisplaySettings(pattern.value.id, DisplaySettings.serialize(settings));
+  }
+  events.on("display:update", (settings) => {
+    pattern.value.displaySettings = settings;
+    triggerRef(pattern);
+  });
 
-    async function updateGrid(grid: Grid) {
-      if (pattern.value.isNil) return;
-      await PatternApi.updateGrid(pattern.value.id, grid);
+  function setDisplayMode(mode: DisplayMode | undefined) {
+    if (pattern.value.isNil) return;
+    if (mode === undefined || mode === pattern.value.displayMode) {
+      pattern.value.displayMode = mode;
+      return triggerRef(pattern);
     }
-    appWindow.listen<string>(PatternEvent.UpdateGrid, ({ payload }) => {
-      pattern.value.grid = Grid.deserialize(payload);
-    });
+    return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, displayMode: mode }));
+  }
 
-    async function addPaletteItem(palitem: PaletteItem) {
-      if (pattern.value.isNil) return;
-      await PatternApi.addPaletteItem(pattern.value.id, palitem);
-    }
-    appWindow.listen<string>(PatternEvent.AddPaletteItem, ({ payload }) => {
-      const { palitem, palindex } = AddedPaletteItemData.deserialize(payload);
-      pattern.value.palette.insert(palindex, palitem);
-      triggerRef(pattern);
-    });
+  function showSymbols(value: boolean) {
+    if (pattern.value.isNil) return;
+    return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showSymbols: value }));
+  }
 
-    async function removePaletteItem(...paletteItemIndexes: number[]) {
-      if (pattern.value.isNil) return;
-      await PatternApi.removePaletteItems(pattern.value.id, paletteItemIndexes);
-    }
-    appWindow.listen<number[]>(PatternEvent.RemovePaletteItem, ({ payload: palindexes }) => {
-      for (const palindex of palindexes.reverse()) {
-        pattern.value.palette.remove(palindex);
-      }
-      triggerRef(pattern);
-    });
+  function showGrid(value: boolean) {
+    if (pattern.value.isNil) return;
+    return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showGrid: value }));
+  }
 
-    async function updatePaletteDisplaySettings(settings: PaletteSettings) {
-      if (pattern.value.isNil) return;
-      await PatternApi.updatePaletteDisplaySettings(pattern.value.id, settings);
-    }
-    appWindow.listen<string>(PatternEvent.UpdatePaletteDisplaySettings, ({ payload }) => {
-      pattern.value.paletteDisplaySettings = PaletteSettings.deserialize(payload);
-      triggerRef(pattern);
-    });
+  function showRulers(value: boolean) {
+    if (pattern.value.isNil) return;
+    return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showRulers: value }));
+  }
 
-    async function sortPaletteBy(sortBy: SortPaletteBy) {
-      if (pattern.value.isNil) return;
-      await PatternApi.sortPaletteBy(pattern.value.id, sortBy);
-    }
-    appWindow.listen<number[]>("palette:sort", ({ payload: positions }) => {
-      pattern.value.palette.positions = positions;
-      triggerRef(pattern);
-    });
+  function updatePdfExportOptions(options: PdfExportOptions) {
+    if (pattern.value.isNil) return;
+    editor.updatePdfExportOptions(pattern.value.id, PdfExportOptions.serialize(options));
+  }
+  events.on("publish:update-pdf", (options) => {
+    pattern.value.pdfExportOptions = options;
+  });
 
-    async function reorderPaletteItems(oldPosition: number, newPosition: number) {
-      if (pattern.value.isNil) return;
-      await PatternApi.reorderPaletteItems(pattern.value.id, oldPosition, newPosition);
-    }
-    appWindow.listen<number[]>("palette:reorder", ({ payload: positions }) => {
-      pattern.value.palette.positions = positions;
-      triggerRef(pattern);
-    });
+  function undo(options?: { single?: boolean }) {
+    if (pattern.value.isNil) return;
+    if (options?.single) editor.undo(pattern.value.id);
+    else editor.undoTransaction(pattern.value.id);
+  }
 
-    async function setPaletteItemSymbol(palindex: number, symbol?: Symbol) {
-      if (pattern.value.isNil) return;
-      await PatternApi.setSymbol(pattern.value.id, palindex, symbol);
-    }
-    appWindow.listen<string>("palette:set_symbol", ({ payload }) => {
-      const { palindex, symbol } = SetSymbolData.deserialize(payload);
-      const item = pattern.value.palette.get(palindex);
-      if (item) {
-        item.symbol = symbol;
-        triggerRef(pattern);
-      }
-    });
+  function redo(options?: { single?: boolean }) {
+    if (pattern.value.isNil) return;
+    if (options?.single) editor.redo(pattern.value.id);
+    else editor.redoTransaction(pattern.value.id);
+  }
 
-    async function addLayer() {
-      if (pattern.value.isNil) return;
-      await PatternApi.addLayer(pattern.value.id);
-    }
-    async function removeLayer(layerIndex: number) {
-      if (pattern.value.isNil) return;
-      await PatternApi.removeLayer(pattern.value.id, layerIndex);
-    }
-    async function renameLayer(layerIndex: number, name: string) {
-      if (pattern.value.isNil) return;
-      await PatternApi.renameLayer(pattern.value.id, layerIndex, name);
-    }
-    async function updateLayerVisibility(layerIndex: number, visibility: PatternApi.LayerVisibility) {
-      if (pattern.value.isNil) return;
-      await PatternApi.updateLayerVisibility(pattern.value.id, layerIndex, visibility);
-    }
-    async function moveLayer(oldPosition: number, newPosition: number) {
-      if (pattern.value.isNil) return;
-      await PatternApi.moveLayer(pattern.value.id, oldPosition, newPosition);
-    }
-    appWindow.listen<string>(PatternEvent.AddLayer, ({ payload }) => {
-      const { index, layer } = AddedLayerData.deserialize(payload);
-      pattern.value.insertLayer(index, layer);
-      triggerRef(pattern);
-    });
-    appWindow.listen<number>(PatternEvent.RemoveLayer, ({ payload: layerIndex }) => {
-      pattern.value.removeLayer(layerIndex);
-      triggerRef(pattern);
-    });
-    appWindow.listen<{ layerIndex: number; name: string }>(
-      PatternEvent.RenameLayer,
-      ({ payload: { layerIndex, name } }) => {
-        const layer = pattern.value.layers.get(layerIndex);
-        if (layer) layer.name = name;
-        triggerRef(pattern);
-      },
-    );
-    appWindow.listen<{ layerIndex: number; visibility: PatternApi.LayerVisibility }>(
-      PatternEvent.UpdateLayerVisibility,
-      ({ payload: { layerIndex, visibility } }) => {
-        pattern.value.updateLayerVisibility(layerIndex, visibility);
-        triggerRef(pattern);
-      },
-    );
-    appWindow.listen<number[]>(PatternEvent.MoveLayer, ({ payload: positions }) => {
-      pattern.value.moveLayer(positions);
-      triggerRef(pattern);
-    });
+  function startTransaction() {
+    if (pattern.value.isNil) return;
+    editor.startTransaction(pattern.value.id);
+  }
 
-    function addStitch(layerIndex: number, stitch: Stitch) {
-      if (pattern.value.isNil) return;
-      return PatternApi.addStitch(pattern.value.id, layerIndex, stitch);
-    }
-    function removeStitch(layerIndex: number, stitch: Stitch) {
-      if (pattern.value.isNil) return;
-      return PatternApi.removeStitch(pattern.value.id, layerIndex, stitch);
-    }
-    appWindow.listen<string>(PatternEvent.AddStitch, ({ payload }) => {
-      const { layerIndex, stitches } = deserializeStitchesEvent(payload);
-      for (const stitch of stitches) pattern.value.addStitch(layerIndex, stitch);
-    });
-    appWindow.listen<string>(PatternEvent.RemoveStitch, ({ payload }) => {
-      const { layerIndex, stitches } = deserializeStitchesEvent(payload);
-      for (const stitch of stitches) pattern.value.removeStitch(layerIndex, stitch);
-    });
+  function endTransaction() {
+    if (pattern.value.isNil) return;
+    editor.endTransaction(pattern.value.id);
+  }
 
-    function updateDisplaySettings(settings: DisplaySettings) {
-      if (pattern.value.isNil) return;
-      return PatternApi.updateDisplaySettings(pattern.value.id, settings);
-    }
-    appWindow.listen<string>(PatternEvent.UpdateDisplaySettings, ({ payload }) => {
-      pattern.value.displaySettings = DisplaySettings.deserialize(payload);
-      triggerRef(pattern);
-    });
-
-    function setDisplayMode(mode: DisplayMode | undefined) {
-      if (pattern.value.isNil) return;
-      if (mode === undefined || mode === pattern.value.displayMode) {
-        pattern.value.displayMode = mode;
-        return triggerRef(pattern);
-      }
-      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, displayMode: mode }));
-    }
-
-    function showSymbols(value: boolean) {
-      if (pattern.value.isNil) return;
-      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showSymbols: value }));
-    }
-
-    function showGrid(value: boolean) {
-      if (pattern.value.isNil) return;
-      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showGrid: value }));
-    }
-
-    function showRulers(value: boolean) {
-      if (pattern.value.isNil) return;
-      return updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showRulers: value }));
-    }
-
-    async function updatePdfExportOptions(options: PdfExportOptions) {
-      if (pattern.value.isNil) return;
-      await PatternApi.updatePdfExportOptions(pattern.value.id, options);
-    }
-    appWindow.listen<string>(PatternEvent.UpdatePdfExportOptions, ({ payload }) => {
-      pattern.value.pdfExportOptions = PdfExportOptions.deserialize(payload);
-    });
-
-    async function undo(options?: PatternApi.UndoRedoOptions) {
-      if (pattern.value.isNil) return;
-      await PatternApi.undo(pattern.value.id, options);
-    }
-
-    async function redo(options?: PatternApi.UndoRedoOptions) {
-      if (pattern.value.isNil) return;
-      await PatternApi.redo(pattern.value.id, options);
-    }
-
-    async function startTransaction() {
-      if (pattern.value.isNil) return;
-      await PatternApi.startTransaction(pattern.value.id);
-    }
-
-    async function endTransaction() {
-      if (pattern.value.isNil) return;
-      await PatternApi.endTransaction(pattern.value.id);
-    }
-
-    return {
-      pattern,
-      setPattern,
-      setReferenceImage,
-      removeReferenceImage,
-      updateReferenceImageSettings,
-      updatePatternInfo,
-      updateFabric,
-      updateGrid,
-      addLayer,
-      removeLayer,
-      renameLayer,
-      updateLayerVisibility,
-      moveLayer,
-      addPaletteItem,
-      removePaletteItem,
-      updatePaletteDisplaySettings,
-      sortPaletteBy,
-      reorderPaletteItems,
-      setPaletteItemSymbol,
-      addStitch,
-      removeStitch,
-      updateDisplaySettings,
-      setDisplayMode,
-      showSymbols,
-      showGrid,
-      showRulers,
-      updatePdfExportOptions,
-      undo,
-      redo,
-      startTransaction,
-      endTransaction,
-    };
-  },
-  { tauri: { save: false, sync: false } },
-);
+  return {
+    pattern,
+    setPattern,
+    setReferenceImage,
+    removeReferenceImage,
+    updateReferenceImageSettings,
+    updatePatternInfo,
+    updateFabric,
+    updateGrid,
+    addLayer,
+    removeLayer,
+    renameLayer,
+    updateLayerVisibility,
+    moveLayer,
+    addPaletteItem,
+    removePaletteItem,
+    updatePaletteDisplaySettings,
+    sortPaletteBy,
+    reorderPaletteItems,
+    setPaletteItemSymbol,
+    addStitch,
+    removeStitch,
+    updateDisplaySettings,
+    setDisplayMode,
+    showSymbols,
+    showGrid,
+    showRulers,
+    updatePdfExportOptions,
+    undo,
+    redo,
+    startTransaction,
+    endTransaction,
+  };
+});

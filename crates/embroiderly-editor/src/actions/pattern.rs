@@ -32,7 +32,7 @@ impl PatternAction {
   pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::UpdateInfo { old_info, .. } => {
-        let old = old_info.take().ok_or(crate::error::EditorError::ActionNotPerformed)?;
+        let old = old_info.take().ok_or(crate::error::Error::ActionNotPerformed)?;
         patproj.pattern.info = old.clone();
         Ok(vec![
           EditorEvent::PatternInfoUpdate(old),

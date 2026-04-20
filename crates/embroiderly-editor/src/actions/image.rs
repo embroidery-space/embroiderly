@@ -44,7 +44,7 @@ impl ImageAction {
   pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::SetReferenceImage { old_image, .. } => {
-        let prev = old_image.take().ok_or(crate::error::EditorError::ActionNotPerformed)?;
+        let prev = old_image.take().ok_or(crate::error::Error::ActionNotPerformed)?;
         patproj.reference_image.clone_from(&prev);
         Ok(vec![
           EditorEvent::ImageSet(prev),
@@ -52,9 +52,7 @@ impl ImageAction {
         ])
       }
       Self::UpdateSettings { old_settings, .. } => {
-        let prev = old_settings
-          .take()
-          .ok_or(crate::error::EditorError::ActionNotPerformed)?;
+        let prev = old_settings.take().ok_or(crate::error::Error::ActionNotPerformed)?;
         if let Some(image) = patproj.reference_image.as_mut() {
           image.settings = prev;
         }

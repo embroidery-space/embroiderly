@@ -52,7 +52,7 @@ impl FabricAction {
         extra_stitches,
         ..
       } => {
-        let old = old_fabric.take().ok_or(crate::error::EditorError::ActionNotPerformed)?;
+        let old = old_fabric.take().ok_or(crate::error::Error::ActionNotPerformed)?;
         patproj.pattern.fabric = old.clone();
         let mut events = vec![EditorEvent::FabricUpdate(old)];
 

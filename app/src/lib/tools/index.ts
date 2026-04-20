@@ -48,13 +48,13 @@ export interface PatternEditorTool {
   readonly name: string;
 
   /** Tool's main action handler. */
-  main(context: PatternEditorToolContext): Promise<void> | void;
+  main(context: PatternEditorToolContext): void;
 
   /** Tool's anti action handler. */
-  anti?(context: PatternEditorToolContext): Promise<void> | void;
+  anti?(context: PatternEditorToolContext): void;
 
   /** Tool's release action handler. */
-  release?(context: PatternEditorToolContext): Promise<void> | void;
+  release?(context: PatternEditorToolContext): void;
 }
 
 export interface PatternEditorToolContext extends ToolEventDetail {
@@ -70,19 +70,19 @@ export interface PatternEditorToolContext extends ToolEventDetail {
      * Adds a stitch to the pattern.
      * @param stitch The stitch to add.
      */
-    addStitch(stitch: Stitch): Promise<void>;
+    addStitch(stitch: Stitch): void;
     /**
      * Removes a stitch from the pattern.
      * @param stitch The stitch to remove.
      */
-    removeStitch(stitch: Stitch): Promise<void>;
+    removeStitch(stitch: Stitch): void;
 
-    updateReferenceImageSettings(settings: ReferenceImageSettings): Promise<void>;
+    updateReferenceImageSettings(settings: ReferenceImageSettings): void;
 
     /** Starts a transaction. */
-    startTransaction(): Promise<void>;
+    startTransaction(): void;
     /** Ends a transaction. */
-    endTransaction(): Promise<void>;
+    endTransaction(): void;
   };
 
   /**

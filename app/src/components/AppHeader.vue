@@ -7,10 +7,8 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
-import { FilesApi } from "~/api/";
 import { IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
-import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
-import { ANY_IMAGE_FILTER } from "~/constants/";
+import { useEditorModals, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
@@ -19,7 +17,6 @@ import { getSystemInfo } from "~/utils/system.ts";
 import WindowControls from "./WindowControls.vue";
 
 const confirm = useConfirm();
-const filePicker = useFilePicker();
 const { fluent } = useI18n();
 
 const modals = useEditorModals();
@@ -71,26 +68,25 @@ const menus = computed<MenubarMenu[]>(() => [
         },
       ],
       [
-        {
-          label: fluent.$t("app-menu-file-import"),
-          children: [
-            [
-              {
-                label: fluent.$t("app-menu-file-import-image"),
-                async onSelect() {
-                  const imagePath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
-                  if (imagePath === null) return;
-
-                  const patternId = await modals.imageImportModal.open({
-                    imagePath,
-                    imageDimensions: await FilesApi.getImageDimensions(imagePath),
-                  }).result;
-                  if (patternId) patternFileStore.switchPattern(patternId);
-                },
-              },
-            ],
-          ],
-        },
+        // {
+        //   label: fluent.$t("app-menu-file-import"),
+        //   children: [
+        //     [
+        //       {
+        //         label: fluent.$t("app-menu-file-import-image"),
+        //         async onSelect() {
+        //           const imagePath = await filePicker.open({ types: ANY_IMAGE_FILTER });
+        //           if (imagePath === null) return;
+        //           const patternId = await modals.imageImportModal.open({
+        //             imagePath,
+        //             imageDimensions: await FilesApi.getImageDimensions(imagePath),
+        //           }).result;
+        //           if (patternId) patternFileStore.switchPattern(patternId);
+        //         },
+        //       },
+        //     ],
+        //   ],
+        // },
         {
           label: fluent.$t("app-menu-file-export"),
           disabled: patternStore.pattern.isNil,
@@ -99,27 +95,23 @@ const menus = computed<MenubarMenu[]>(() => [
               {
                 label: "OXS",
                 async onSelect() {
-                  const patternId = patternStore.pattern.id;
-                  const filePath =
-                    (await FilesApi.getPatternFilePath(patternId)) ??
-                    (await FilesApi.getPatternDefaultFilePath(patternId));
-                  await patternFileStore.exportPatternAsOxs(patternId, filePath.replace(/\.[^.]+$/, ".oxs"));
+                  await patternFileStore.exportPatternAsOxs(patternStore.pattern.id);
                 },
               },
-              {
-                label: "PDF",
-                async onSelect() {
-                  const { id, pdfExportOptions } = patternStore.pattern;
-                  const filePath =
-                    (await FilesApi.getPatternFilePath(id)) ?? (await FilesApi.getPatternDefaultFilePath(id));
-                  modals.pdfExportModal.open({
-                    filePath: filePath.replace(/\.[^.]+$/, ".pdf"),
-                    options: pdfExportOptions,
-                    onOptionsUpdate: patternStore.updatePdfExportOptions,
-                    onDocumentExport: (filePath, options) => patternFileStore.exportPatternAsPdf(id, filePath, options),
-                  });
-                },
-              },
+              // {
+              //   label: "PDF",
+              //   async onSelect() {
+              //     const { id, pdfExportOptions } = patternStore.pattern;
+              //     const filePath =
+              //       (await FilesApi.getPatternFilePath(id)) ?? (await FilesApi.getPatternDefaultFilePath(id));
+              //     modals.pdfExportModal.open({
+              //       filePath: filePath.replace(/\.[^.]+$/, ".pdf"),
+              //       options: pdfExportOptions,
+              //       onOptionsUpdate: patternStore.updatePdfExportOptions,
+              //       onDocumentExport: (filePath, options) => patternFileStore.exportPatternAsPdf(id, filePath, options),
+              //     });
+              //   },
+              // },
             ],
           ],
         },

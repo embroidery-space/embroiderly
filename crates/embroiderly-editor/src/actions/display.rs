@@ -39,7 +39,7 @@ impl DisplayAction {
       } => {
         let old = old_display_settings
           .take()
-          .ok_or(crate::error::EditorError::ActionNotPerformed)?;
+          .ok_or(crate::error::Error::ActionNotPerformed)?;
         patproj.display_settings = old.clone();
         Ok(vec![
           EditorEvent::DisplayUpdate(old),

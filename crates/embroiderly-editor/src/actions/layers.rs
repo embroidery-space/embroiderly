@@ -1,7 +1,7 @@
 use embroiderly_pattern::{Layer, PatternProject};
 
 use crate::EditorEvent;
-use crate::error::{EditorError, Result};
+use crate::error::{Error, Result};
 
 #[cfg(test)]
 #[path = "layers.test.rs"]
@@ -157,7 +157,7 @@ impl LayerAction {
   pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Add { added_index } => {
-        let index = added_index.take().ok_or(EditorError::ActionNotPerformed)?;
+        let index = added_index.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.layers.remove(index);
         Ok(vec![
           EditorEvent::LayerRemove(index),
@@ -168,7 +168,7 @@ impl LayerAction {
         layer_index,
         removed_layer,
       } => {
-        let layer = removed_layer.take().ok_or(EditorError::ActionNotPerformed)?;
+        let layer = removed_layer.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.layers.insert(*layer_index, layer.clone());
         Ok(vec![
           EditorEvent::LayerAdd {
@@ -181,7 +181,7 @@ impl LayerAction {
       Self::Rename {
         layer_index, old_name, ..
       } => {
-        let old = old_name.take().ok_or(EditorError::ActionNotPerformed)?;
+        let old = old_name.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.layers[*layer_index].name.clone_from(&old);
         Ok(vec![
           EditorEvent::LayerRename {
@@ -196,7 +196,7 @@ impl LayerAction {
         old_visibility,
         ..
       } => {
-        let old = old_visibility.take().ok_or(EditorError::ActionNotPerformed)?;
+        let old = old_visibility.take().ok_or(Error::ActionNotPerformed)?;
         old.apply_to(&mut patproj.pattern.layers[*layer_index]);
         Ok(vec![
           EditorEvent::LayerUpdateVisibility {
@@ -207,7 +207,7 @@ impl LayerAction {
         ])
       }
       Self::Move { old_positions, .. } => {
-        let old = old_positions.take().ok_or(EditorError::ActionNotPerformed)?;
+        let old = old_positions.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.layers.set_positions(old.clone());
         Ok(vec![
           EditorEvent::LayerMove(old),

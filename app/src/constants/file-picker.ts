@@ -1,37 +1,61 @@
-import type { DialogFilter } from "@tauri-apps/plugin-dialog";
-
-/**
- * A filter that accepts any file.
- * It is typically used as a last option in all file picker dialogs.
- */
+import type { FilePickerAcceptType } from "show-open-file-picker/types";
 
 /** A filter that accepts any supported pattern file. */
-export const ANY_PATTERN_FILTER: DialogFilter[] = [
-  { name: "Cross-Stitch Patterns", extensions: ["embproj", "oxs", "xsd"] },
+export const ANY_PATTERN_FILTER: FilePickerAcceptType[] = [
+  {
+    description: "Cross-Stitch Patterns",
+    accept: { "application/octet-stream": [".embproj", ".oxs", ".xsd"] },
+  },
 ];
+
 /** A filter that accepts only Embroiderly Project files. */
-export const EMBPROJ_FILTER: DialogFilter[] = [{ name: "Embroidery Project", extensions: ["embproj"] }];
+export const EMBPROJ_FILTER: FilePickerAcceptType[] = [
+  {
+    description: "Embroidery Project",
+    accept: { "application/octet-stream": [".embproj"] },
+  },
+];
+
 /** A filter that accepts only OXS files. */
-export const OXS_FILTER: DialogFilter[] = [{ name: "OXS", extensions: ["oxs"] }];
+export const OXS_FILTER: FilePickerAcceptType[] = [
+  {
+    description: "OXS",
+    accept: { "application/octet-stream": [".oxs"] },
+  },
+];
 
 /** A filter that accepts any supported image file. */
-export const ANY_IMAGE_FILTER: DialogFilter[] = [{ name: "Images", extensions: ["png", "jpg", "jpeg", "webp"] }];
-
-/** A filter that accepts PDF files. */
-export const PDF_FILTER: DialogFilter[] = [{ name: "PDF", extensions: ["pdf"] }];
-
-/** A filter that accepts any supported palette files. */
-export const PALETTE_FILTER = [
-  { name: "All Palette Files", extensions: ["master", "user", "threads", "rng", "json"] },
-  { name: "Pattern Maker Palettes", extensions: ["master", "user"] },
-  { name: "Win/MacStitch Palettes", extensions: ["threads"] },
-  { name: "XSPro Platinum Palettes", extensions: ["rng"] },
-  { name: "JSON Palettes", extensions: ["json"] },
+export const ANY_IMAGE_FILTER: FilePickerAcceptType[] = [
+  {
+    description: "Images",
+    accept: { "image/*": [".png", ".jpg", ".jpeg", ".webp"] },
+  },
 ];
 
-/** A filter that accept any supported font files. */
-export const FONT_FILTER = [
-  { name: "All Font Files", extensions: ["ttf", "otf"] },
-  { name: "TrueType Fonts", extensions: ["ttf"] },
-  { name: "OpenType Fonts", extensions: ["otf"] },
+/** A filter that accepts PDF files. */
+export const PDF_FILTER: FilePickerAcceptType[] = [
+  {
+    description: "PDF",
+    accept: { "application/pdf": [".pdf"] },
+  },
+];
+
+/** A filter that accepts any supported palette file. */
+export const PALETTE_FILTER: FilePickerAcceptType[] = [
+  {
+    description: "Palette files",
+    accept: {
+      "application/octet-stream": [".master", ".user", ".rng"],
+      "text/plain": [".threads"],
+      "application/json": [".json"],
+    },
+  },
+];
+
+/** A filter that accepts any supported font file. */
+export const FONT_FILTER: FilePickerAcceptType[] = [
+  {
+    description: "Font files",
+    accept: { "font/*": [".ttf", ".otf"] },
+  },
 ];

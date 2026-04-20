@@ -10,4 +10,5 @@ export {
   FailedToImportError,
   UnsavedChangesError,
   UnknownError,
-} from "./error.ts";
+  toApplicationError,
+} from "~/lib/errors.ts";

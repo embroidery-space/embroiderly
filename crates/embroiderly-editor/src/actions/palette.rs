@@ -1,7 +1,7 @@
 use embroiderly_pattern::{PaletteItem, PaletteSettings, PatternProject, Stitch, Symbol};
 
 use crate::EditorEvent;
-use crate::error::{EditorError, Result};
+use crate::error::{Error, Result};
 
 #[cfg(test)]
 #[path = "palette.test.rs"]
@@ -160,8 +160,8 @@ impl PaletteAction {
         saved_palitems,
         saved_conflicts,
       } => {
-        let palitems = saved_palitems.take().ok_or(EditorError::ActionNotPerformed)?;
-        let conflicts = saved_conflicts.take().ok_or(EditorError::ActionNotPerformed)?;
+        let palitems = saved_palitems.take().ok_or(Error::ActionNotPerformed)?;
+        let conflicts = saved_conflicts.take().ok_or(Error::ActionNotPerformed)?;
 
         for (index, &palindex) in palindexes.iter().enumerate() {
           patproj.pattern.palette.insert(palindex, palitems[index].clone());
@@ -189,7 +189,7 @@ impl PaletteAction {
         Ok(events)
       }
       Self::UpdateDisplaySettings { old_settings, .. } => {
-        let old = old_settings.take().ok_or(EditorError::ActionNotPerformed)?;
+        let old = old_settings.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.palette.set_settings(old);
         Ok(vec![
           EditorEvent::PaletteUpdateDisplaySettings(old),
@@ -197,7 +197,7 @@ impl PaletteAction {
         ])
       }
       Self::Sort { old_positions, .. } => {
-        let old = old_positions.take().ok_or(EditorError::ActionNotPerformed)?;
+        let old = old_positions.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.palette.set_positions(old.clone());
         Ok(vec![
           EditorEvent::PaletteSort(old),
@@ -205,7 +205,7 @@ impl PaletteAction {
         ])
       }
       Self::Reorder { old_positions, .. } => {
-        let old = old_positions.take().ok_or(EditorError::ActionNotPerformed)?;
+        let old = old_positions.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.palette.set_positions(old.clone());
         Ok(vec![
           EditorEvent::PaletteReorder(old),
@@ -215,7 +215,7 @@ impl PaletteAction {
       Self::SetSymbol {
         palindex, old_symbol, ..
       } => {
-        let old = old_symbol.take().ok_or(EditorError::ActionNotPerformed)?;
+        let old = old_symbol.take().ok_or(Error::ActionNotPerformed)?;
         if let Some(palitem) = patproj.pattern.palette.get_mut(*palindex) {
           palitem.symbol.clone_from(&old);
         }

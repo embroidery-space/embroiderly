@@ -7,11 +7,9 @@ import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
 import { computed, useTemplateRef, watch } from "vue";
 
-import { FilesApi } from "~/api/";
 import { IconImage, IconImageOff } from "~/assets/icons/";
 import { PatternCanvas } from "~/components/canvas/";
-import { useFilePicker, useI18n } from "~/composables/";
-import { ANY_IMAGE_FILTER } from "~/constants/";
+import { useEditor, useI18n } from "~/composables/";
 import { PatternEvent, PatternInfo } from "~/lib/pattern/";
 import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
 import { CursorTool } from "~/lib/tools/";
@@ -24,7 +22,7 @@ const props = defineProps<{ options?: PatternApplicationOptions }>();
 
 const appWindow = getCurrentWebviewWindow();
 
-const filePicker = useFilePicker();
+const { files } = useEditor();
 const { fluent } = useI18n();
 const toast = useToast();
 
@@ -39,8 +37,8 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
       icon: IconImage,
       label: fluent.$t("canvas-ctx-menu-set-image"),
       async onSelect() {
-        const selectedPath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
-        if (selectedPath) patternStore.setReferenceImage(selectedPath);
+        // const selectedPath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
+        // if (selectedPath) patternStore.setReferenceImage(selectedPath);
       },
     },
     {
@@ -92,25 +90,25 @@ watch(
   },
 );
 
-async function handleToolMainAction(detail: ToolEventDetail) {
+function handleToolMainAction(detail: ToolEventDetail) {
   const pattern = patternStore.pattern;
   if (pattern.isNil) return;
 
   if (editorStateStore.paletteMode === PaletteMode.Editing) return;
 
-  await editorStateStore.selectedTool.main(createPatternEditorToolContext(detail));
+  editorStateStore.selectedTool.main(createPatternEditorToolContext(detail));
 }
 
-async function handleToolAntiAction(detail: ToolEventDetail) {
+function handleToolAntiAction(detail: ToolEventDetail) {
   const pattern = patternStore.pattern;
   if (pattern.isNil) return;
 
   if (editorStateStore.paletteMode === PaletteMode.Editing) return;
 
-  await editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(detail));
+  editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(detail));
 }
 
-async function handleToolRelease(detail: ToolEventDetail) {
+function handleToolRelease(detail: ToolEventDetail) {
   const pattern = patternStore.pattern;
   if (pattern.isNil) return;
 
@@ -118,7 +116,7 @@ async function handleToolRelease(detail: ToolEventDetail) {
 
   if (detail.event.type !== "pointerupoutside") {
     // Call the `release` method only if the pointer is not released outside.
-    await editorStateStore.selectedTool.release?.(createPatternEditorToolContext(detail));
+    editorStateStore.selectedTool.release?.(createPatternEditorToolContext(detail));
   }
 }
 
@@ -135,23 +133,23 @@ function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorT
     ...detail,
     pattern: patternStore.pattern,
     api: {
-      async addStitch(stitch) {
+      addStitch(stitch) {
         const palindex = editorStateStore.selectedPaletteItemIndex;
         if (palindex !== undefined) {
           stitch.palindex = palindex;
-          await patternStore.addStitch(editorStateStore.selectedLayerIndex, stitch);
+          patternStore.addStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
-      async removeStitch(stitch) {
+      removeStitch(stitch) {
         const palindex = editorStateStore.selectedPaletteItemIndex;
         if (palindex !== undefined) {
           stitch.palindex = palindex;
-          await patternStore.removeStitch(editorStateStore.selectedLayerIndex, stitch);
+          patternStore.removeStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
 
-      async updateReferenceImageSettings(settings) {
-        await patternStore.updateReferenceImageSettings(settings);
+      updateReferenceImageSettings(settings) {
+        patternStore.updateReferenceImageSettings(settings);
       },
 
       startTransaction: patternStore.startTransaction,
@@ -185,7 +183,13 @@ function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorT
 }
 
 async function loadSymbolFonts(fonts: string[]) {
-  const results = await Promise.allSettled(fonts.map((font) => FilesApi.loadSymbolFont(font)));
+  const results = await Promise.allSettled(
+    fonts.map(async (font) => {
+      // @ts-expect-error The `FontFace` constructor do accept `TypedArray`s.
+      const fontFace = new FontFace(font, await files.loadFontContent(font));
+      return fontFace.load();
+    }),
+  );
   const failedFonts: string[] = [];
   const fontFaces = results
     .map((result, index) => {

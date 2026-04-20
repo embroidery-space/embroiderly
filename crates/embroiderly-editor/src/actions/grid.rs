@@ -29,7 +29,7 @@ impl GridAction {
   pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Update { old_grid, .. } => {
-        let old = old_grid.take().ok_or(crate::error::EditorError::ActionNotPerformed)?;
+        let old = old_grid.take().ok_or(crate::error::Error::ActionNotPerformed)?;
         patproj.display_settings.grid = old.clone();
         Ok(vec![
           EditorEvent::GridUpdate(old),

@@ -4,6 +4,8 @@ interface ApplicationError {
 }
 
 export function toApplicationError(error: unknown): Error {
+  if (error instanceof Error) return error;
+
   const isApplicationError = typeof error === "object" && error !== null && "kind" in error && "message" in error;
   if (isApplicationError) {
     const { kind, message } = error as ApplicationError;
@@ -31,7 +33,7 @@ export function toApplicationError(error: unknown): Error {
     }
   }
 
-  return error instanceof Error ? error : new Error(String(error));
+  return new Error(String(error));
 }
 
 export class InvalidRequestBodyError extends Error {

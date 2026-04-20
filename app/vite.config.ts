@@ -34,7 +34,8 @@ export default defineConfig({
     !isTest && vueDevTools(),
   ],
   clearScreen: false,
-  server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**"] } },
+  optimizeDeps: { exclude: ["@embroiderly/wasm"] },
+  server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**", "src-wasm/**"] } },
   build: {
     sourcemap: isDev,
     chunkSizeWarningLimit: Infinity,
@@ -48,6 +49,7 @@ export default defineConfig({
     alias: {
       "~": fileURLToPath(new URL("src", import.meta.url)),
       "~test-utils": fileURLToPath(new URL("tests/components/utils", import.meta.url)),
+      "@embroiderly/wasm": fileURLToPath(new URL("src-wasm/pkg", import.meta.url)),
     },
   },
   test: {

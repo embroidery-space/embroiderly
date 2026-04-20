@@ -1,7 +1,7 @@
 use embroiderly_pattern::{PatternProject, Stitch};
 
 use crate::EditorEvent;
-use crate::error::{EditorError, Result};
+use crate::error::{Error, Result};
 
 #[cfg(test)]
 #[path = "stitches.test.rs"]
@@ -52,7 +52,7 @@ impl StitchAction {
         let removed = patproj
           .pattern
           .remove_stitch(*layer_index, *target_stitch)
-          .ok_or(EditorError::StitchNotFound)?;
+          .ok_or(Error::StitchNotFound)?;
         actual_stitch.get_or_insert(removed);
         Ok(vec![
           EditorEvent::StitchesRemove {
@@ -72,7 +72,7 @@ impl StitchAction {
         stitch,
         conflicts,
       } => {
-        let saved = conflicts.take().ok_or(EditorError::ActionNotPerformed)?;
+        let saved = conflicts.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.remove_stitch(*layer_index, *stitch);
         patproj.pattern.add_stitches(*layer_index, saved.clone());
         Ok(vec![
@@ -92,7 +92,7 @@ impl StitchAction {
         actual_stitch,
         ..
       } => {
-        let saved = actual_stitch.take().ok_or(EditorError::ActionNotPerformed)?;
+        let saved = actual_stitch.take().ok_or(Error::ActionNotPerformed)?;
         patproj.pattern.add_stitch(*layer_index, saved);
         Ok(vec![
           EditorEvent::StitchesAdd {

@@ -1,15 +1,15 @@
 import { useConfirm, useToast } from "@embroiderly/ui";
-import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { BackupFileExistsError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/api/";
 import { FilesApi } from "~/api/";
-import { useFilePicker, useI18n } from "~/composables/";
+import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/constants/";
-import type { Fabric, PdfExportOptions } from "~/lib/pattern/";
+import { UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
+import { Fabric, Pattern } from "~/lib/pattern/";
+import type { PdfExportOptions } from "~/lib/pattern/";
 
 const MAX_RECENT_PATTERNS = 5;
 
@@ -27,10 +27,14 @@ export const usePatternFileStore = defineStore(
     const toast = useToast();
     const filePicker = useFilePicker();
 
+    const { editor, events } = useEditor();
+
     const currentPatternId = useSessionStorage<string | undefined>("embroiderly-current-pattern", undefined);
 
     const openedPatterns = useSessionStorage<OpenPattern[]>("embroiderly-opened-patterns", []);
     const recentPatterns = useLocalStorage<string[]>("embroiderly-recent-patterns", []);
+
+    const patternHandles = new Map<string, FileSystemFileHandle>();
 
     const loading = ref(false);
 
@@ -53,20 +57,19 @@ export const usePatternFileStore = defineStore(
       if (pattern) pattern.title = title;
     }
 
-    function addRecentPattern(filePath: string) {
-      // Delete an existing entry to maintain the order.
-      const index = recentPatterns.value.indexOf(filePath);
+    function addRecentPattern(fileName: string) {
+      const index = recentPatterns.value.indexOf(fileName);
       if (index !== -1) recentPatterns.value.splice(index, 1);
-
-      recentPatterns.value.unshift(filePath);
+      recentPatterns.value.unshift(fileName);
       recentPatterns.value = recentPatterns.value.slice(0, MAX_RECENT_PATTERNS);
     }
 
+    // oxlint-disable-next-line require-await
     async function loadPattern(id: string) {
       try {
         loading.value = true;
 
-        const pattern = await FilesApi.loadPattern(id);
+        const pattern = Pattern.deserialize(editor.loadPattern(id));
         addOpenedPattern(pattern.id, pattern.info.title);
 
         return pattern;
@@ -75,19 +78,24 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    async function openPattern(filePath?: string, options?: FilesApi.OpenPatternOptions) {
-      const path = filePath ?? (await filePicker.open({ filters: ANY_PATTERN_FILTER }));
-      if (!path) return;
-
+    async function openPattern() {
       try {
         loading.value = true;
 
-        const patternId = await FilesApi.openPattern(path, options);
-        addRecentPattern(path);
+        const handles = await filePicker.open({ types: ANY_PATTERN_FILTER });
+        if (!handles) return;
+
+        const fileHandle = handles[0]!;
+        const file = await fileHandle.getFile();
+        const data = new Uint8Array(await file.arrayBuffer());
+
+        const patternId = editor.openPattern(data, file.name);
+        patternHandles.set(patternId, fileHandle);
+        addRecentPattern(file.name);
 
         return patternId;
-      } catch (error) {
-        if (error instanceof UnsupportedPatternTypeError) {
+      } catch (err) {
+        if (err instanceof UnsupportedPatternTypeError) {
           confirm.open({
             title: fluent.$t("error"),
             description: fluent.$t("pattern-open-unsupported-type"),
@@ -96,23 +104,17 @@ export const usePatternFileStore = defineStore(
           });
           return;
         }
-        if (error instanceof BackupFileExistsError) {
-          const accepted = await confirm.open({
-            title: fluent.$t("error"),
-            description: fluent.$t("pattern-backup-file-exists"),
-          }).result;
-          return await openPattern(path, { restoreFromBackup: accepted });
-        }
-        throw error;
+        throw err;
       } finally {
         loading.value = false;
       }
     }
 
+    // oxlint-disable-next-line require-await
     async function createPattern(fabric: Fabric) {
       try {
         loading.value = true;
-        return await FilesApi.createPattern(fabric);
+        return editor.createPattern(Fabric.serialize(fabric));
       } finally {
         loading.value = false;
       }
@@ -121,27 +123,34 @@ export const usePatternFileStore = defineStore(
     /**
      * Saves the pattern to a file.
      * @param id - The pattern ID to save.
-     * @param as - If true, always show the file picker (Save As).
+     * @param as - If true, always show the save picker (Save As).
      * @returns `true` if the pattern was saved successfully, `false` if cancelled or failed.
      */
     async function savePattern(id: string, as = false) {
       try {
-        let path = await FilesApi.getPatternFilePath(id);
-        if (path === null || as) {
-          path ??= await FilesApi.getPatternDefaultFilePath(id);
-
-          const selectedPath = await filePicker.save(path, { filters: EMBPROJ_FILTER });
-          if (selectedPath === null) return false;
-
-          path = selectedPath;
+        let handle = patternHandles.get(id);
+        if (!handle || as) {
+          const pattern = openedPatterns.value.find((p) => p.id === id);
+          const suggestedName = `${pattern?.title ?? "pattern"}.embproj`;
+          const picked = await filePicker.save(suggestedName, EMBPROJ_FILTER);
+          if (!picked) return false;
+          handle = picked;
         }
 
         loading.value = true;
-        await FilesApi.savePattern(id, path);
 
+        const file = await handle!.getFile();
+        const bytes = editor.encodePattern(id, file.name);
+
+        const writable = await handle!.createWritable();
+        await writable.write(new Uint8Array(bytes));
+        await writable.close();
+
+        patternHandles.set(id, handle!);
+        editor.checkpoint(id);
         return true;
-      } catch (error) {
-        if (error instanceof UnsupportedPatternTypeError) {
+      } catch (err) {
+        if (err instanceof UnsupportedPatternTypeError) {
           confirm.open({
             title: fluent.$t("error"),
             description: fluent.$t("pattern-save-unsupported-type"),
@@ -151,26 +160,25 @@ export const usePatternFileStore = defineStore(
         } else {
           toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
         }
-
         return false;
       } finally {
         loading.value = false;
       }
     }
 
-    async function closePattern(id: string, options?: FilesApi.ClosePatternOptions) {
+    async function closePattern(id: string, options?: { force?: boolean }) {
       try {
         loading.value = true;
 
-        await FilesApi.closePattern(id, options);
+        editor.closePattern(id, options?.force ?? false);
+        patternHandles.delete(id);
         removeOpenedPattern(id);
 
-        // Switch to the first opened pattern after closing the current one.
         if (currentPatternId.value === id) {
           currentPatternId.value = openedPatterns.value[0]?.id;
         }
-      } catch (error) {
-        if (error instanceof UnsavedChangesError) {
+      } catch (err) {
+        if (err instanceof UnsavedChangesError) {
           const pattern = openedPatterns.value.find((p) => p.id === id)!;
 
           const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
@@ -186,19 +194,25 @@ export const usePatternFileStore = defineStore(
 
           return;
         }
-        throw error;
+        throw err;
       } finally {
         loading.value = false;
       }
     }
 
-    async function exportPatternAsOxs(id: string, filePath: string) {
-      const path = await filePicker.save(filePath, { filters: OXS_FILTER });
-      if (path === null) return;
+    async function exportPatternAsOxs(id: string) {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
+      const suggestedName = `${pattern?.title ?? "pattern"}.oxs`;
+      const handle = await filePicker.save(suggestedName, OXS_FILTER);
+      if (!handle) return;
 
       try {
         loading.value = true;
-        await FilesApi.savePattern(id, path);
+        const file = await handle.getFile();
+        const bytes = editor.encodePattern(id, file.name);
+        const writable = await handle.createWritable();
+        await writable.write(new Uint8Array(bytes));
+        await writable.close();
       } finally {
         loading.value = false;
       }
@@ -216,32 +230,13 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    async function fetchOpenedPatterns() {
-      const backendPatterns = await FilesApi.getOpenedPatterns();
-
-      // Remove patterns no longer in backend.
-      openedPatterns.value = openedPatterns.value.filter((op) => backendPatterns.some((bp) => bp[0] === op.id));
-
-      // Add new patterns from backend.
-      const existingIds = new Set(openedPatterns.value.map((p) => p.id));
-      for (const [id, title] of backendPatterns) {
-        if (!existingIds.has(id)) openedPatterns.value.push({ id, title, dirty: false });
-      }
-    }
-
-    async function getUnsavedPatterns() {
-      const patterns = await FilesApi.getUnsavedPatterns();
-      return openedPatterns.value.filter((pattern) => patterns.includes(pattern.id));
-    }
-
     // Listen to change/checkpoint events to correctly identify dirty state.
-    const window = getCurrentWebviewWindow();
-    window.listen<string>("app:pattern-changed", (event) => {
-      const pattern = openedPatterns.value.find((p) => p.id === event.payload);
+    events.on("app:pattern-changed", (id) => {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
       if (pattern) pattern.dirty = true;
     });
-    window.listen<string>("app:pattern-checkpoint", (event) => {
-      const pattern = openedPatterns.value.find((p) => p.id === event.payload);
+    events.on("app:pattern-checkpoint", (id) => {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
       if (pattern) pattern.dirty = false;
     });
 
@@ -259,8 +254,6 @@ export const usePatternFileStore = defineStore(
       closePattern,
       exportPatternAsOxs,
       exportPatternAsPdf,
-      getUnsavedPatterns,
-      fetchOpenedPatterns,
     };
   },
   { tauri: { save: false, sync: false } },

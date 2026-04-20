@@ -5,7 +5,7 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 
 import { StartupApi } from "~/api/";
-import { useDragDrop, useI18n, useTauriListener, useShortcuts } from "~/composables/";
+import { useI18n, useTauriListener, useShortcuts } from "~/composables/";
 import { usePercentOfContainer } from "~/composables/utils/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
@@ -31,16 +31,6 @@ const palettePanelCollapsedSize = toPercent(2.75, "rem");
 const canvasToolbarDefaultSize = toPercent(12, "rem");
 const canvasToolbarCollapsedSize = toPercent(2.25, "rem");
 
-const dropZoneContainer = useTemplateRef("drop-zone");
-const { isOverDropZone } = useDragDrop(dropZoneContainer, async (paths) => {
-  for (const [index, path] of paths.entries()) {
-    const patternId = await patternFileStore.openPattern(path);
-    if (index === paths.length - 1 && patternId) {
-      patternFileStore.switchPattern(patternId);
-    }
-  }
-});
-
 watch(
   () => patternFileStore.currentPatternId,
   async (patternId) => {
@@ -52,9 +42,8 @@ watch(
 
 useTauriListener(
   appWindow.onCloseRequested(async (event) => {
-    const unsavedPatterns = await patternFileStore.getUnsavedPatterns();
     for (const pattern of structuredClone(toRaw(patternFileStore.openedPatterns.map((op) => toRaw(op))))) {
-      const hasUnsavedChanges = unsavedPatterns.some((p) => p.id === pattern.id);
+      const hasUnsavedChanges = pattern.dirty;
       if (hasUnsavedChanges) {
         const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
         if (accepted === undefined) {
@@ -91,7 +80,6 @@ useShortcuts({
 });
 
 onMounted(async () => {
-  await patternFileStore.fetchOpenedPatterns();
   if (!patternFileStore.currentPatternId && patternFileStore.openedPatterns.length) {
     patternFileStore.switchPattern(patternFileStore.openedPatterns[0]!.id);
   }
@@ -135,11 +123,7 @@ onMounted(async () => {
         <div class="flex grow">
           <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" class="border-r border-default p-1" />
 
-          <BlockUI
-            ref="drop-zone"
-            :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
-            class="grow"
-          >
+          <BlockUI ref="drop-zone" :blocked="editorStateStore.paletteMode === PaletteMode.Editing" class="grow">
             <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
             <PatternWorkspace
               v-else

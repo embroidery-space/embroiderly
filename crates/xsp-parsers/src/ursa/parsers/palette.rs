@@ -4,9 +4,10 @@ use crate::ursa::schemas::palette::PaletteItem;
 #[path = "palette.test.rs"]
 mod tests;
 
-#[tracing::instrument(name = "parse_ursa_palette", skip_all)]
-pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> std::io::Result<Vec<PaletteItem>> {
-  let content = std::fs::read_to_string(file_path.as_ref())?;
+/// Parses a Ursa/WinStitch palette from raw UTF-8 bytes.
+#[tracing::instrument(name = "parse_ursa_palette_bytes", skip(data))]
+pub fn parse_palette_from_bytes(data: &[u8]) -> std::io::Result<Vec<PaletteItem>> {
+  let content = std::str::from_utf8(data).map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
 
   let mut palette = Vec::new();
   for line in content.replace("\r\n", "\n").replace("\r", "\n").lines() {
@@ -16,6 +17,12 @@ pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> std::io::Result
   }
 
   Ok(palette)
+}
+
+#[tracing::instrument(name = "parse_ursa_palette", skip_all)]
+pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> std::io::Result<Vec<PaletteItem>> {
+  let data = std::fs::read(file_path.as_ref())?;
+  parse_palette_from_bytes(&data)
 }
 
 fn parse_palette_item(line: &str) -> Option<PaletteItem> {

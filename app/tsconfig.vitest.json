@@ -11,7 +11,8 @@
 
     "paths": {
       "~/*": ["./src/*"],
-      "~test-utils/*": ["./tests/components/utils/*"]
+      "~test-utils/*": ["./tests/components/utils/*"],
+      "@embroiderly/wasm": ["./src-wasm/pkg/"]
     },
 
     "types": ["node", "vitest-browser-vue", "@tauri-store/pinia"]
