@@ -56,9 +56,6 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
         startup::create_webview_window(app_handle)?;
       }
 
-      #[cfg(not(debug_assertions))]
-      startup::copy_sample_patterns(app_handle)?;
-
       startup::run_auto_save_background_process(app_handle);
 
       Ok(())
