@@ -64,7 +64,6 @@ wildcard_dependencies = "deny"
 tauri = { version = "2.10.3", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
 tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
 ## Official Tauri plugins
-tauri-plugin-dialog = "2.7.0"
 tauri-plugin-fs = "2.0.3"
 tauri-plugin-opener = "2.5.3"
 tauri-plugin-process = "2.3.1"

@@ -18,8 +18,6 @@
     "core:window:allow-scale-factor",
     "core:window:allow-internal-toggle-maximize",
     "core:webview:allow-internal-toggle-devtools",
-    "dialog:allow-open",
-    "dialog:allow-save",
     { "identifier": "opener:allow-open-path", "allow": [{ "path": "$RESOURCE/help/*.pdf" }] },
     "opener:allow-open-url",
     "opener:allow-default-urls",
