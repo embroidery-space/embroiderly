@@ -1,4 +1,4 @@
-use embroiderly_pattern::BrandPaletteItem;
+use embroiderly_pattern::{BrandPaletteItem, FabricColor};
 use js_sys::{Reflect, Uint8Array};
 use wasm_bindgen::prelude::*;
 
@@ -47,6 +47,12 @@ impl FileManager {
   #[expect(clippy::future_not_send)]
   pub async fn create() -> Result<Self, Error> {
     Self::create_impl().await
+  }
+
+  /// Returns a Borsh-encoded list of fabric colors.
+  #[wasm_bindgen(js_name = "loadFabricColors")]
+  pub async fn load_fabric_colors(&self) -> Result<Vec<u8>, Error> {
+    self.load_fabric_colors_impl().await
   }
 
   /// Returns a complete list of the available palettes.
@@ -124,6 +130,12 @@ impl FileManager {
       palettes_dir,
       fonts_dir,
     })
+  }
+
+  #[tracing::instrument(name = "FileManager::load_fabric_colors", level = "debug", skip(self), err)]
+  async fn load_fabric_colors_impl(&self) -> Result<Vec<u8>, Error> {
+    let fabric_colors: Vec<FabricColor> = serde_json::from_slice(&net::fetch("/fabric-colors.json").await?)?;
+    Ok(borsh::to_vec(&fabric_colors)?)
   }
 
   #[tracing::instrument(name = "FileManager::get_palettes_list", level = "debug", skip(self), ret, err)]

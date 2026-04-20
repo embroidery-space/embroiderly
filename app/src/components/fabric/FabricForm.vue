@@ -5,15 +5,15 @@ import { Color } from "pixi.js";
 import { computed, onMounted, reactive, ref, watch } from "vue";
 import type { Ref } from "vue";
 
-import { PatternApi } from "~/api/";
-import { useI18n } from "~/composables/";
-import { Fabric, PaletteSettings, FabricColor } from "~/lib/pattern/";
+import { useEditor, useI18n } from "~/composables/";
+import { Fabric, PaletteSettings, FabricColor, deserializeFabricColors } from "~/lib/pattern/";
 import { inches2mm, mm2inches, size2stitches, stitches2inches, stitches2mm } from "~/utils/measurement.ts";
 
 import { PaletteList } from "../palette/";
 
 const fabric = defineModel<Fabric>({ required: true });
 
+const { files } = useEditor();
 const { fluent } = useI18n();
 
 const fabricCounts = ref([14, 16, 18, 20]);
@@ -100,7 +100,7 @@ const FABRIC_COLORS_DISPLAY_SETTINGS = new PaletteSettings({
 });
 
 onMounted(async () => {
-  fabricColors.value = await PatternApi.loadFabricColors();
+  fabricColors.value = deserializeFabricColors(await files.loadFabricColors());
 });
 </script>
 
