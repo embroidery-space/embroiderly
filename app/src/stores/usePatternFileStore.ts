@@ -6,7 +6,6 @@ import { ref } from "vue";
 
 import { FilesApi } from "~/api/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/constants/";
 import { UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
 import { Fabric, Pattern } from "~/lib/pattern/";
 import type { PdfExportOptions } from "~/lib/pattern/";
@@ -82,10 +81,9 @@ export const usePatternFileStore = defineStore(
       try {
         loading.value = true;
 
-        const handles = await filePicker.open({ types: ANY_PATTERN_FILTER });
-        if (!handles) return;
+        const fileHandle = await filePicker.open({ types: filePicker.filters.pattern });
+        if (!fileHandle) return;
 
-        const fileHandle = handles[0]!;
         const file = await fileHandle.getFile();
         const data = new Uint8Array(await file.arrayBuffer());
 
@@ -132,7 +130,10 @@ export const usePatternFileStore = defineStore(
         if (!handle || as) {
           const pattern = openedPatterns.value.find((p) => p.id === id);
           const suggestedName = `${pattern?.title ?? "pattern"}.embproj`;
-          const picked = await filePicker.save(suggestedName, EMBPROJ_FILTER);
+          const picked = await filePicker.save({
+            suggestedName,
+            types: filePicker.filters.embproj,
+          });
           if (!picked) return false;
           handle = picked;
         }
@@ -158,7 +159,11 @@ export const usePatternFileStore = defineStore(
             noButton: null,
           });
         } else {
-          toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
+          toast.add({
+            color: "error",
+            title: fluent.$t("pattern-save-failure"),
+            duration: 3000,
+          });
         }
         return false;
       } finally {
@@ -203,7 +208,10 @@ export const usePatternFileStore = defineStore(
     async function exportPatternAsOxs(id: string) {
       const pattern = openedPatterns.value.find((p) => p.id === id);
       const suggestedName = `${pattern?.title ?? "pattern"}.oxs`;
-      const handle = await filePicker.save(suggestedName, OXS_FILTER);
+      const handle = await filePicker.save({
+        suggestedName,
+        types: filePicker.filters.oxs,
+      });
       if (!handle) return;
 
       try {
@@ -222,9 +230,17 @@ export const usePatternFileStore = defineStore(
       try {
         loading.value = true;
         await FilesApi.exportPattern(id, filePath, options);
-        toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
+        toast.add({
+          color: "success",
+          title: fluent.$t("pattern-export-success"),
+          duration: 3000,
+        });
       } catch {
-        toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
+        toast.add({
+          color: "error",
+          title: fluent.$t("pattern-export-failure"),
+          duration: 3000,
+        });
       } finally {
         loading.value = false;
       }

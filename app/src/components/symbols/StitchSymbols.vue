@@ -6,7 +6,6 @@ import { computed, onMounted, ref, shallowRef } from "vue";
 
 import { IconMenu } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import { FONT_FILTER } from "~/constants/";
 import { LoggerService } from "~/services/";
 import { addSymbolFonts } from "~/utils/font-face.ts";
 
@@ -117,7 +116,7 @@ async function loadFont(fontGroup: string, fontFamily: string) {
 
 /** Imports selected symbol fonts. */
 async function importSymbolFonts() {
-  const handles = await filePicker.open({ multiple: true, types: FONT_FILTER });
+  const handles = await filePicker.open({ multiple: true, types: filePicker.filters.font });
   if (!handles) return;
 
   try {

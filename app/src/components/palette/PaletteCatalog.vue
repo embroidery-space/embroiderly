@@ -8,7 +8,6 @@ import type { Ref } from "vue";
 
 import { IconMenu, IconSearch } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import { PALETTE_FILTER } from "~/constants/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/lib/pattern/";
 import { LoggerService } from "~/services/";
 
@@ -61,7 +60,7 @@ const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
 
 const importingPalettes = ref(false);
 async function importPalettes() {
-  const handles = await filePicker.open({ multiple: true, types: PALETTE_FILTER });
+  const handles = await filePicker.open({ multiple: true, types: filePicker.filters.palette });
   if (!handles) return;
 
   try {
