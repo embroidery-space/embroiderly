@@ -34,10 +34,12 @@ pub struct GroupedFilesList {
   pub custom: Vec<String>,
 }
 
+#[allow(clippy::struct_field_names)]
 #[wasm_bindgen]
 pub struct FileManager {
   palettes_dir: opfs::DirectoryHandle,
   fonts_dir: opfs::DirectoryHandle,
+  pattern_templates_dir: opfs::DirectoryHandle,
 }
 
 // Public methods which delegate the execution to private instrumented implementations.
@@ -96,6 +98,25 @@ impl FileManager {
   pub async fn import_fonts(&self, files: Vec<ImportFilesItem>) -> Result<ImportFilesResult, Error> {
     self.import_fonts_impl(files).await
   }
+
+  /// Saves the given bytes as the startup pattern template file.
+  /// Any previously saved template with the same name is overwritten.
+  #[wasm_bindgen(js_name = "savePatternTemplate")]
+  pub async fn save_pattern_template(&self, name: String, data: Vec<u8>) -> Result<(), Error> {
+    self.save_pattern_template_impl(name, data).await
+  }
+
+  /// Returns the bytes of the startup pattern template with the given name.
+  #[wasm_bindgen(js_name = "loadPatternTemplate")]
+  pub async fn load_pattern_template(&self, name: String) -> Result<Vec<u8>, Error> {
+    self.load_pattern_template_impl(name).await
+  }
+
+  /// Deletes the startup pattern template file with the given name from OPFS.
+  #[wasm_bindgen(js_name = "deletePatternTemplate")]
+  pub async fn delete_pattern_template(&self, name: String) -> Result<(), Error> {
+    self.delete_pattern_template_impl(name).await
+  }
 }
 
 // Private helpers and instrumented implementations.
@@ -120,15 +141,12 @@ impl FileManager {
   #[tracing::instrument(name = "FileManager::create", level = "debug", err)]
   async fn create_impl() -> Result<Self, Error> {
     let root = opfs::get_root_dir().await?;
-
     let options = opfs::GetDirectoryHandleOptions { create: true };
 
-    let palettes_dir = root.get_directory_handle("palettes", options).await?;
-    let fonts_dir = root.get_directory_handle("fonts", options).await?;
-
     Ok(Self {
-      palettes_dir,
-      fonts_dir,
+      palettes_dir: root.get_directory_handle("palettes", options).await?,
+      fonts_dir: root.get_directory_handle("fonts", options).await?,
+      pattern_templates_dir: root.get_directory_handle("pattern_templates", options).await?,
     })
   }
 
@@ -265,6 +283,29 @@ impl FileManager {
 
     tracing::Span::current().record("failed_files", failed_files.len());
     Ok(ImportFilesResult { failed_files })
+  }
+
+  #[tracing::instrument(name = "FileManager::save_pattern_template", level = "debug", skip(self, data), err)]
+  async fn save_pattern_template_impl(&self, name: String, data: Vec<u8>) -> Result<(), Error> {
+    let file_handle = self
+      .pattern_templates_dir
+      .get_file_handle(&name, opfs::GetFileHandleOptions { create: true })
+      .await?;
+    file_handle.write(&data).await
+  }
+
+  #[tracing::instrument(name = "FileManager::load_pattern_template", level = "debug", skip(self), err)]
+  async fn load_pattern_template_impl(&self, name: String) -> Result<Vec<u8>, Error> {
+    let file_handle = self
+      .pattern_templates_dir
+      .get_file_handle(&name, Default::default())
+      .await?;
+    file_handle.read().await
+  }
+
+  #[tracing::instrument(name = "FileManager::delete_pattern_template", level = "debug", skip(self), err)]
+  async fn delete_pattern_template_impl(&self, name: String) -> Result<(), Error> {
+    self.pattern_templates_dir.remove_entry(&name).await
   }
 }
 

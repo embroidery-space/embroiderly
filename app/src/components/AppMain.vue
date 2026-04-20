@@ -2,12 +2,20 @@
 import { BlockUI, Splitter, SplitterPanel, useConfirm, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
+import { useSessionStorage } from "@vueuse/core";
 import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 
-import { StartupApi } from "~/api/";
 import { useI18n, useTauriListener, useShortcuts } from "~/composables/";
 import { usePercentOfContainer } from "~/composables/utils/";
-import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
+import { Fabric } from "~/lib/pattern";
+import {
+  PaletteMode,
+  StartupAction,
+  useEditorStateStore,
+  usePatternFileStore,
+  usePatternStore,
+  useSettingsStore,
+} from "~/stores/";
 
 import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
 import { EditorWorkspaceTabs, EditorWorkspaceToolbar, EditorWorkspaceFooter } from "./workspace/layout/";
@@ -22,6 +30,8 @@ const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
+
+const startupHandled = useSessionStorage("embroiderly-startup-handled", false);
 
 const { toPercent } = usePercentOfContainer(useTemplateRef("splitter"));
 
@@ -79,28 +89,63 @@ useShortcuts({
   "Control+Shift+Y": () => patternStore.redo({ single: true }),
 });
 
+async function handleFileAssociations(files: string[]) {
+  for (const filePath of files) {
+    try {
+      const patternId = await patternFileStore.openPatternFromPath(filePath);
+      if (patternId) patternFileStore.switchPattern(patternId);
+    } catch {
+      const fileName = filePath.replaceAll("\\", "/").split("/").pop() ?? filePath;
+      toast.add({
+        type: "foreground",
+        color: "error",
+        title: fluent.$t("error"),
+        description: fluent.$t("startup-file-association-failure", { filePath: fileName }),
+      });
+    }
+  }
+}
+
+async function handleOpenOnStartup() {
+  switch (settingsStore.startup.action) {
+    case StartupAction.NewPattern: {
+      const id = await patternFileStore.createPattern(new Fabric());
+      patternFileStore.switchPattern(id);
+      break;
+    }
+    case StartupAction.CustomTemplate: {
+      if (settingsStore.startup.patternTemplate) {
+        try {
+          const id = await patternFileStore.openPatternFromTemplate(settingsStore.startup.patternTemplate);
+          patternFileStore.switchPattern(id);
+        } catch {
+          toast.add({
+            type: "foreground",
+            color: "error",
+            title: fluent.$t("error"),
+            description: fluent.$t("startup-template-failure", { filePath: settingsStore.startup.patternTemplate }),
+          });
+        }
+      }
+      break;
+    }
+  }
+}
+
 onMounted(async () => {
-  if (!patternFileStore.currentPatternId && patternFileStore.openedPatterns.length) {
-    patternFileStore.switchPattern(patternFileStore.openedPatterns[0]!.id);
+  if (!startupHandled.value) {
+    startupHandled.value = true;
+
+    const openedFiles = window.openedFiles ?? [];
+    if (__TAURI__) await handleFileAssociations(openedFiles);
+
+    if (openedFiles.length === 0 && !patternFileStore.openedPatterns.length) {
+      await handleOpenOnStartup();
+    }
   }
 
-  const notifications = await StartupApi.getStartupNotifications();
-  for (const notification of notifications) {
-    let message: string;
-    if ("fileAssociationFailed" in notification) {
-      message = fluent.$t("startup-file-association-failure", { filePath: notification.fileAssociationFailed });
-    } else if ("templateFailed" in notification) {
-      message = fluent.$t("startup-template-failure", { filePath: notification.templateFailed });
-    } else {
-      throw new Error(`Unknown notification: ${JSON.stringify(notification)}`);
-    }
-
-    toast.add({
-      type: "foreground",
-      color: "error",
-      title: fluent.$t("error"),
-      description: message,
-    });
+  if (!patternFileStore.currentPatternId && patternFileStore.openedPatterns.length) {
+    patternFileStore.switchPattern(patternFileStore.openedPatterns[0]!.id);
   }
 
   await appWindow.show();

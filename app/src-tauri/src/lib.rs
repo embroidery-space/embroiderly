@@ -1,4 +1,4 @@
-use std::sync::{Mutex, RwLock};
+use std::sync::RwLock;
 
 use tauri::Manager as _;
 
@@ -21,9 +21,8 @@ pub fn run() {
       // Yeah, we don't currently support MacOS, but keep the code for future use.
       #[cfg(any(target_os = "macos", target_os = "ios"))]
       tauri::RunEvent::Opened { urls } => {
-        startup::handle_file_associations(app_handle, urls.into_iter().map(|url| url.to_string()));
-        startup::handle_open_on_startup(app_handle);
-        startup::create_webview_window(app_handle).unwrap();
+        let files = urls.into_iter().filter_map(|url| url.to_file_path().ok()).collect();
+        startup::create_webview_window(app_handle, files).unwrap();
       }
       tauri::RunEvent::Exit => {
         // Shutdown all running sidecars gracefully.
@@ -51,9 +50,8 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
 
       #[cfg(any(target_os = "windows", target_os = "linux"))]
       {
-        startup::handle_file_associations(app_handle, std::env::args().skip(1));
-        startup::handle_open_on_startup(app_handle);
-        startup::create_webview_window(app_handle)?;
+        let files = collect_files_from_args(std::env::args().skip(1));
+        create_webview_window(app_handle, files)?;
       }
 
       startup::run_auto_save_background_process(app_handle);
@@ -62,7 +60,6 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     })
     .manage(RwLock::new(state::PatternManager::new()))
     .manage(RwLock::new(state::HistoryManager::<R>::new()))
-    .manage(Mutex::new(state::StartupNotifications::new()))
     .manage(sidecars::SidecarManager::new());
 
   #[cfg(debug_assertions)]
@@ -150,12 +147,66 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     commands::core::history::redo,
     commands::core::history::start_transaction,
     commands::core::history::end_transaction,
-    // Utility commands.
-    commands::utils::path::get_app_document_dir,
-    commands::utils::startup::get_startup_notifications,
   ]);
 
   builder
     .build(tauri::generate_context!())
     .expect("Failed to build Embroiderly")
+}
+
+/// Collects file paths from command line arguments.
+/// Handles both plain paths and `file://` URLs; skips flags starting with `-`.
+fn collect_files_from_args(args: impl IntoIterator<Item = String>) -> Vec<std::path::PathBuf> {
+  let mut files = Vec::new();
+
+  for maybe_file in args {
+    if maybe_file.starts_with('-') {
+      continue;
+    }
+
+    if maybe_file.starts_with("file://") {
+      if let Ok(url) = tauri::Url::parse(&maybe_file)
+        && let Ok(path) = url.to_file_path()
+      {
+        files.push(path);
+      }
+    } else {
+      files.push(maybe_file.into());
+    }
+  }
+
+  files
+}
+
+/// Creates the main webview window for the application.
+/// Injects `window.openedFiles` with paths from file associations (may be empty).
+fn create_webview_window<R: tauri::Runtime>(
+  app: &tauri::AppHandle<R>,
+  files: Vec<std::path::PathBuf>,
+) -> anyhow::Result<tauri::WebviewWindow<R>> {
+  let files_js = files
+    .into_iter()
+    .map(|f| {
+      let path = f.to_string_lossy().replace('\\', "\\\\");
+      format!("\"{path}\"")
+    })
+    .collect::<Vec<_>>()
+    .join(",");
+
+  let webview_window = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
+    .title(app.package_info().name.clone())
+    .min_inner_size(640.0, 480.0)
+    .maximized(true)
+    .decorations(false)
+    .visible(cfg!(debug_assertions))
+    .initialization_script(format!("window.openedFiles = [{files_js}]"))
+    .build()?;
+
+  #[cfg(debug_assertions)]
+  // Skip opening devtools for automation testing.
+  if std::env::var("TAURI_WEBVIEW_AUTOMATION").is_err() {
+    webview_window.open_devtools();
+  }
+
+  Ok(webview_window)
 }

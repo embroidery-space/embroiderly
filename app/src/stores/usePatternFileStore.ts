@@ -1,4 +1,5 @@
 import { useConfirm, useToast } from "@embroiderly/ui";
+import { readFile } from "@tauri-apps/plugin-fs";
 
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
@@ -26,7 +27,7 @@ export const usePatternFileStore = defineStore(
     const toast = useToast();
     const filePicker = useFilePicker();
 
-    const { editor, events } = useEditor();
+    const { editor, events, files } = useEditor();
 
     const currentPatternId = useSessionStorage<string | undefined>("embroiderly-current-pattern", undefined);
 
@@ -103,6 +104,45 @@ export const usePatternFileStore = defineStore(
           return;
         }
         throw err;
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function openPatternFromPath(filePath: string) {
+      try {
+        loading.value = true;
+
+        const data = await readFile(filePath);
+        const fileName = filePath.replaceAll("\\", "/").split("/").pop() ?? filePath;
+
+        const patternId = editor.openPattern(data, fileName);
+        addRecentPattern(fileName);
+
+        return patternId;
+      } catch (err) {
+        if (err instanceof UnsupportedPatternTypeError) {
+          confirm.open({
+            title: fluent.$t("error"),
+            description: fluent.$t("pattern-open-unsupported-type"),
+            yesButton: { label: fluent.$t("confirm-ok") },
+            noButton: null,
+          });
+          return;
+        }
+        throw err;
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function openPatternFromTemplate(templateName: string) {
+      try {
+        loading.value = true;
+
+        const data = await files.loadPatternTemplate(templateName);
+
+        return editor.openPattern(new Uint8Array(data), templateName);
       } finally {
         loading.value = false;
       }
@@ -265,6 +305,8 @@ export const usePatternFileStore = defineStore(
       updateOpenedPattern,
       loadPattern,
       openPattern,
+      openPatternFromPath,
+      openPatternFromTemplate,
       createPattern,
       savePattern,
       closePattern,

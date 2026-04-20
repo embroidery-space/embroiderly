@@ -72,6 +72,12 @@ impl DirectoryHandle {
     Ok(Self(fs_directory_handle))
   }
 
+  /// Removes an entry (file or empty directory) from this directory.
+  pub async fn remove_entry(&self, name: &str) -> Result<(), Error> {
+    JsFuture::from(self.0.remove_entry(name)).await?;
+    Ok(())
+  }
+
   /// Returns a list of keys for the entries in this directory.
   pub async fn keys(&self) -> Result<Vec<String>, Error> {
     let mut stream = JsStream::from(self.0.keys());

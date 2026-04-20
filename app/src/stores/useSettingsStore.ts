@@ -28,7 +28,7 @@ export enum StartupAction {
 
 export interface StartupOptions {
   action: StartupAction;
-  templatePath: string;
+  patternTemplate: string;
 }
 
 export interface ViewportOptions {
@@ -94,7 +94,7 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
 
   const startup = reactive<StartupOptions>({
     action: StartupAction.NewPattern,
-    templatePath: "",
+    patternTemplate: "",
   });
 
   const viewport = reactive<ViewportOptions>({
@@ -146,7 +146,11 @@ export const useSettingsStore = defineStore("embroiderly-settings", () => {
               },
             },
           ],
-          ...fluent.$ta("updater-update-available", { currentVersion, version, date }),
+          ...fluent.$ta("updater-update-available", {
+            currentVersion,
+            version,
+            date,
+          }),
         });
       } else {
         if (!options?.auto) {
