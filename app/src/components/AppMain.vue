@@ -8,6 +8,7 @@ import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 import { useI18n, useTauriListener, useShortcuts } from "~/composables/";
 import { usePercentOfContainer } from "~/composables/utils/";
 import { Fabric } from "~/lib/pattern";
+import { LoggerService } from "~/services";
 import {
   PaletteMode,
   StartupAction,
@@ -94,13 +95,15 @@ async function handleFileAssociations(files: string[]) {
     try {
       const patternId = await patternFileStore.openPatternFromPath(filePath);
       if (patternId) patternFileStore.switchPattern(patternId);
-    } catch {
-      const fileName = filePath.replaceAll("\\", "/").split("/").pop() ?? filePath;
+    } catch (error) {
+      LoggerService.error(`Failed to open pattern from path (${filePath}): ${error}`);
       toast.add({
         type: "foreground",
         color: "error",
         title: fluent.$t("error"),
-        description: fluent.$t("startup-file-association-failure", { filePath: fileName }),
+        description: fluent.$t("startup-file-association-failure", {
+          filePath: filePath.replaceAll("\\", "/").split("/").pop() ?? filePath,
+        }),
       });
     }
   }
@@ -118,12 +121,15 @@ async function handleOpenOnStartup() {
         try {
           const id = await patternFileStore.openPatternFromTemplate(settingsStore.startup.patternTemplate);
           patternFileStore.switchPattern(id);
-        } catch {
+        } catch (error) {
+          LoggerService.error(`Failed to open pattern from template: ${error}`);
           toast.add({
             type: "foreground",
             color: "error",
             title: fluent.$t("error"),
-            description: fluent.$t("startup-template-failure", { filePath: settingsStore.startup.patternTemplate }),
+            description: fluent.$t("startup-template-failure", {
+              filePath: settingsStore.startup.patternTemplate,
+            }),
           });
         }
       }

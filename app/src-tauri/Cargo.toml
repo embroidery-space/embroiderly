@@ -10,7 +10,7 @@ tauri-build = { workspace = true }
 
 [dependencies]
 # Tauri
-tauri = { workspace = true, features = ["test"] }
+tauri = { workspace = true, features = ["devtools"] }
 ## Official plugins
 tauri-plugin-fs = { workspace = true }
 tauri-plugin-opener = { workspace = true }

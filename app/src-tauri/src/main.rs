@@ -36,22 +36,11 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     Ok(())
   });
 
-  #[cfg(debug_assertions)]
   {
     use tauri_plugin_prevent_default::Flags;
     builder = builder.plugin(
       tauri_plugin_prevent_default::Builder::new()
         .with_flags(Flags::all().difference(Flags::DEV_TOOLS | Flags::RELOAD))
-        .build(),
-    );
-  }
-
-  #[cfg(not(debug_assertions))]
-  {
-    use tauri_plugin_prevent_default::Flags;
-    builder = builder.plugin(
-      tauri_plugin_prevent_default::Builder::new()
-        .with_flags(Flags::all().difference(Flags::RELOAD))
         .build(),
     );
   }
@@ -98,14 +87,18 @@ fn create_webview_window<R: tauri::Runtime>(
   app: &tauri::AppHandle<R>,
   files: Vec<std::path::PathBuf>,
 ) -> anyhow::Result<tauri::WebviewWindow<R>> {
-  let files_js = files
-    .into_iter()
-    .map(|f| {
-      let path = f.to_string_lossy().replace('\\', "\\\\");
-      format!("\"{path}\"")
-    })
-    .collect::<Vec<_>>()
-    .join(",");
+  use tauri_plugin_fs::FsExt as _;
+
+  let fs_scope = app.fs_scope();
+
+  let mut files_js = Vec::new();
+  for file in files {
+    // Allow the file to be read from the frontend.
+    fs_scope.allow_file(&file)?;
+
+    let path = file.to_string_lossy().replace('\\', "\\\\");
+    files_js.push(format!("\"{path}\""));
+  }
 
   let webview_window = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
     .title(app.package_info().name.clone())
@@ -113,11 +106,11 @@ fn create_webview_window<R: tauri::Runtime>(
     .maximized(true)
     .decorations(false)
     .visible(cfg!(debug_assertions))
-    .initialization_script(format!("window.openedFiles = [{files_js}]"))
+    .initialization_script(format!("window.openedFiles = [{}]", files_js.join(",")))
     .build()?;
 
-  #[cfg(debug_assertions)]
   // Skip opening devtools for automation testing.
+  #[cfg(debug_assertions)]
   if std::env::var("TAURI_WEBVIEW_AUTOMATION").is_err() {
     webview_window.open_devtools();
   }
