@@ -103,14 +103,13 @@ This fixes trivial issues and reports non-fixable issues inline.
 
 **Frontend:** `app/` has separate `test:unit` (logic) and `test:components` (Vue components) scripts.
 Run only what's relevant.
-Skip `test:e2e` unless the change touched Tauri commands, IPC, or window behavior, as it requires a running Tauri instance.
 
 ```bash
-pnpm -F <package> test
+pnpm [-F <package>] test
 ```
 
-**Backend:** all tests require `-F embroiderly/test`.
+**Backend:**
 
 ```bash
-cargo nextest run --locked --no-fail-fast -F embroiderly/test [-p <crate>]
+cargo nextest run --locked --no-fail-fast [-p <crate>]
 ```

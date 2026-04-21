@@ -1,7 +1,0 @@
-[test-groups]
-# We should run pattern I/O commands sequentially to eliminate conflicts.
-pattern-io-commands = { max-threads = 1 }
-
-[[profile.default.overrides]]
-filter = 'package(embroiderly) and binary(pattern_io)'
-test-group = 'pattern-io-commands'

@@ -105,7 +105,7 @@ test-fe:
 
 [group("testing")]
 test-be:
-    cargo nextest run --locked --no-fail-fast -F embroiderly/test
+    cargo nextest run --locked --no-fail-fast
 
 [group("testing")]
 test-e2e:

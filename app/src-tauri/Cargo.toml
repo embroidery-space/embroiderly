@@ -5,12 +5,8 @@ edition = { workspace = true }
 [lints]
 workspace = true
 
-[features]
-test = []
-
 [build-dependencies]
 tauri-build = { workspace = true }
-dotenvy = { workspace = true }
 
 [dependencies]
 # Tauri
@@ -24,26 +20,12 @@ tauri-plugin-updater = { workspace = true }
 ## Third-party plugins
 tauri-plugin-prevent-default = { workspace = true }
 
-# Embroiderly Core
-embroiderly_image = { workspace = true }
-embroiderly_parsers = { workspace = true }
-embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
+# Embroiderly core
 embroiderly_tracing = { workspace = true }
-xsp_parsers = { workspace = true }
-
-# Fonts parsing
-font-kit = { workspace = true }
-ttf-parser = { workspace = true }
-encoding_rs = { workspace = true }
-
-# Image processing
-image = { workspace = true }
 
 # De/serialization
 serde = { workspace = true }
 serde_json = { workspace = true }
-base64 = { workspace = true }
-borsh = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }
@@ -51,17 +33,3 @@ anyhow = { workspace = true }
 # Logging & Tracing
 log = { workspace = true }
 tracing = { workspace = true }
-
-# File system utilities
-tempfile = { workspace = true }
-walkdir = { workspace = true }
-
-# Other
-async-trait = { workspace = true }
-dyn-clone = { workspace = true }
-uuid = { workspace = true, features = ["borsh", "serde"] }
-rayon = { workspace = true }
-
-[dev-dependencies]
-rand = { workspace = true }
-rstest = { workspace = true }

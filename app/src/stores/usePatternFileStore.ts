@@ -4,11 +4,9 @@ import { readFile } from "@tauri-apps/plugin-fs";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { FilesApi } from "~/api/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
 import { Fabric, Pattern } from "~/lib/pattern/";
-import type { PdfExportOptions } from "~/lib/pattern/";
 
 const MAX_RECENT_PATTERNS = 5;
 
@@ -265,25 +263,25 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    async function exportPatternAsPdf(id: string, filePath: string, options: PdfExportOptions) {
-      try {
-        loading.value = true;
-        await FilesApi.exportPattern(id, filePath, options);
-        toast.add({
-          color: "success",
-          title: fluent.$t("pattern-export-success"),
-          duration: 3000,
-        });
-      } catch {
-        toast.add({
-          color: "error",
-          title: fluent.$t("pattern-export-failure"),
-          duration: 3000,
-        });
-      } finally {
-        loading.value = false;
-      }
-    }
+    // async function exportPatternAsPdf(id: string, filePath: string, options: PdfExportOptions) {
+    //   try {
+    //     loading.value = true;
+    //     await FilesApi.exportPattern(id, filePath, options);
+    //     toast.add({
+    //       color: "success",
+    //       title: fluent.$t("pattern-export-success"),
+    //       duration: 3000,
+    //     });
+    //   } catch {
+    //     toast.add({
+    //       color: "error",
+    //       title: fluent.$t("pattern-export-failure"),
+    //       duration: 3000,
+    //     });
+    //   } finally {
+    //     loading.value = false;
+    //   }
+    // }
 
     // Listen to change/checkpoint events to correctly identify dirty state.
     events.on("app:pattern-changed", (id) => {
@@ -310,7 +308,7 @@ export const usePatternFileStore = defineStore(
       savePattern,
       closePattern,
       exportPatternAsOxs,
-      exportPatternAsPdf,
+      // exportPatternAsPdf,
     };
   },
   {
