@@ -16,9 +16,6 @@ catalog:
   "@tauri-apps/plugin-opener": 2.5.3
   "@tauri-apps/plugin-process": 2.3.1
   "@tauri-apps/plugin-updater": 2.10.1
-  "@tauri-store/pinia": 4.2.0
-  ## Third-party Tauri plugins
-  "tauri-plugin-better-posthog": 0.1.6
 
   # Vue
   "@tanstack/vue-hotkeys": 0.9.1

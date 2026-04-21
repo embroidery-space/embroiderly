@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 /// <reference types="unplugin-icons/types/vue" />
+/// <reference types="pinia-plugin-persistedstate" />
 
 /** The app version. */
 declare const __APP_VERSION__: string;

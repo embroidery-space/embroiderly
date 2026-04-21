@@ -69,9 +69,6 @@ catalogs:
     '@tauri-apps/plugin-updater':
       specifier: 2.10.1
       version: 2.10.1
-    '@tauri-store/pinia':
-      specifier: 4.2.0
-      version: 4.2.0
     '@tsconfig/node24':
       specifier: 24.0.4
       version: 24.0.4
@@ -237,9 +234,6 @@ catalogs:
     tailwindcss:
       specifier: 4.2.2
       version: 4.2.2
-    tauri-plugin-better-posthog:
-      specifier: 0.1.6
-      version: 0.1.6
     typescript:
       specifier: 6.0.2
       version: 6.0.2
@@ -380,9 +374,6 @@ importers:
       '@tauri-apps/plugin-updater':
         specifier: 'catalog:'
         version: 2.10.1
-      '@tauri-store/pinia':
-        specifier: 'catalog:'
-        version: 4.2.0(typescript@6.0.2)
       '@vueuse/components':
         specifier: 'catalog:'
         version: 14.2.1(vue@3.5.32(typescript@6.0.2))
@@ -434,9 +425,6 @@ importers:
       stacktracey:
         specifier: 'catalog:'
         version: 2.2.0
-      tauri-plugin-better-posthog:
-        specifier: 'catalog:'
-        version: 0.1.6
       uuid:
         specifier: 'catalog:'
         version: 13.0.0
@@ -3201,12 +3189,6 @@ packages:
   '@tauri-apps/plugin-updater@2.10.1':
     resolution: {integrity: sha512-NFYMg+tWOZPJdzE/PpFj2qfqwAWwNS3kXrb1tm1gnBJ9mYzZ4WDRrwy8udzWoAnfGCHLuePNLY1WVCNHnh3eRA==}
 
-  '@tauri-store/pinia@4.2.0':
-    resolution: {integrity: sha512-fOwbrAuAN5kdjU42jjgOb6qAisglyskgVgAfSdLyz3lyxgN/2xRR4boQmzD6M40Q5mmX9TxMuAaL2bm5AZyEmw==}
-
-  '@tauri-store/shared@0.10.3':
-    resolution: {integrity: sha512-6S2SbYxZUBOLL/t+49cIF4gdZNxYnw9yitNlIUsgiPI5ApRtdXfj4JdQd7WmDwoQXXTOzlOYaqGpmICWhzmmRg==}
-
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
@@ -4559,9 +4541,6 @@ packages:
 
   es-module-lexer@2.0.0:
     resolution: {integrity: sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw==}
-
-  es-toolkit@1.44.0:
-    resolution: {integrity: sha512-6penXeZalaV88MM3cGkFZZfOoLGWshWWfdy0tWw/RlVVyhvMaWSBTOvXNeiW3e5FwdS5ePW0LGEu17zT139ktg==}
 
   esbuild@0.27.3:
     resolution: {integrity: sha512-8VwMnyGCONIs6cWue2IdpHxHnAjzxnw2Zr7MkVxB2vjmQ2ivqGFb4LEG3SMnv0Gb2F/G/2yA8zUaiL1gywDCCg==}
@@ -6602,9 +6581,6 @@ packages:
 
   tar-stream@3.1.7:
     resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
-
-  tauri-plugin-better-posthog@0.1.6:
-    resolution: {integrity: sha512-S3BcMc0E0lN8MQTl54jX4GHw0chi8MKerH1rNAKguWkUEcRDGt59vg4AUD8G0HWoGHbJOA2Zc+v+5FFa6vJH7w==}
 
   text-decoder@1.2.3:
     resolution: {integrity: sha512-3/o9z3X0X0fTupwsYvR03pJ/DjWuqqrfwBgTQzdWDiQSm9KitAyz/9WqsT2JQW7KV2m+bC2ol/zqpW37NHxLaA==}
@@ -9693,20 +9669,6 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.10.1
 
-  '@tauri-store/pinia@4.2.0(typescript@6.0.2)':
-    dependencies:
-      '@tauri-apps/api': 2.10.1
-      '@tauri-store/shared': 0.10.3
-      pinia: 3.0.4(typescript@6.0.2)(vue@3.5.32(typescript@6.0.2))
-      vue: 3.5.32(typescript@6.0.2)
-    transitivePeerDependencies:
-      - typescript
-
-  '@tauri-store/shared@0.10.3':
-    dependencies:
-      '@tauri-apps/api': 2.10.1
-      es-toolkit: 1.44.0
-
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
   '@tsconfig/node24@24.0.4': {}
@@ -11208,8 +11170,6 @@ snapshots:
   es-module-lexer@1.7.0: {}
 
   es-module-lexer@2.0.0: {}
-
-  es-toolkit@1.44.0: {}
 
   esbuild@0.27.3:
     optionalDependencies:
@@ -13638,10 +13598,6 @@ snapshots:
     transitivePeerDependencies:
       - bare-abort-controller
       - react-native-b4a
-
-  tauri-plugin-better-posthog@0.1.6:
-    dependencies:
-      '@tauri-apps/api': 2.10.1
 
   text-decoder@1.2.3:
     dependencies:

@@ -24,7 +24,6 @@
     "process:allow-restart",
     "updater:allow-check",
     "updater:allow-download-and-install",
-    "pinia:default",
     "log:allow-log",
     { "identifier": "fs:allow-read-dir", "allow": [{ "path": "$RESOURCE/**/*" }] },
     { "identifier": "fs:allow-read-text-file", "allow": [{ "path": "$RESOURCE/**/*" }] },

@@ -57,11 +57,5 @@ export const useEditorStateStore = defineStore(
       $reset,
     };
   },
-  {
-    tauri: {
-      autoStart: true,
-      filterKeys: ["palettePanelCollapsed", "palettePanelSize", "canvasPanelCollapsed", "canvasPanelSize"],
-      filterKeysStrategy: "pick",
-    },
-  },
+  { persist: { pick: ["palettePanelCollapsed", "palettePanelSize", "canvasPanelCollapsed", "canvasPanelSize"] } },
 );

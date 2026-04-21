@@ -1,6 +1,6 @@
-import { TauriPluginPinia } from "@tauri-store/pinia";
 import { createFluentVue } from "fluent-vue";
 import { createPinia } from "pinia";
+import { createPersistedState } from "pinia-plugin-persistedstate";
 import { createApp } from "vue";
 
 import App from "./App.vue";
@@ -15,7 +15,7 @@ const app = createApp(App);
 
 app.provide(EditorContextKey, editorContext);
 
-const pinia = createPinia().use(TauriPluginPinia());
+const pinia = createPinia().use(createPersistedState());
 const fluent = createFluentVue({ bundles: [], componentTag: false });
 
 app.use(pinia);

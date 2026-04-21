@@ -27,15 +27,10 @@ const { fluent, currentLocale } = useI18n();
 
 const settingsStore = useSettingsStore();
 
-async function checkForUpdates() {
-  await settingsStore.$tauri.start();
+onMounted(async () => {
   if (settingsStore.updater.autoCheck) {
     await settingsStore.checkForUpdates({ auto: true });
   }
-}
-
-onMounted(async () => {
-  await checkForUpdates();
 });
 
 onErrorCaptured((err, _component, info) => {

@@ -26,7 +26,6 @@
     "@tauri-apps/plugin-opener": "catalog:",
     "@tauri-apps/plugin-process": "catalog:",
     "@tauri-apps/plugin-updater": "catalog:",
-    "@tauri-store/pinia": "catalog:",
     "@vueuse/components": "catalog:",
     "@vueuse/core": "catalog:",
     "@vueuse/integrations": "catalog:",
@@ -44,7 +43,6 @@
     "show-open-file-picker": "catalog:",
     "sortablejs": "catalog:",
     "stacktracey": "catalog:",
-    "tauri-plugin-better-posthog": "catalog:",
     "uuid": "catalog:",
     "vue": "catalog:"
   },

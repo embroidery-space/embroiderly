@@ -1,7 +1,6 @@
 import { useConfirm, useToast } from "@embroiderly/ui";
 import { readFile } from "@tauri-apps/plugin-fs";
 
-import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -29,10 +28,10 @@ export const usePatternFileStore = defineStore(
 
     const { editor, events, files } = useEditor();
 
-    const currentPatternId = useSessionStorage<string | undefined>("embroiderly-current-pattern", undefined);
+    const currentPatternId = ref<string>();
 
-    const openedPatterns = useSessionStorage<OpenPattern[]>("embroiderly-opened-patterns", []);
-    const recentPatterns = useLocalStorage<string[]>("embroiderly-recent-patterns", []);
+    const openedPatterns = ref<OpenPattern[]>([]);
+    const recentPatterns = ref<string[]>([]);
 
     const patternHandles = new Map<string, FileSystemFileHandle>();
 
@@ -314,5 +313,10 @@ export const usePatternFileStore = defineStore(
       exportPatternAsPdf,
     };
   },
-  { tauri: { save: false, sync: false } },
+  {
+    persist: [
+      { storage: sessionStorage, pick: ["currentPatternId", "openedPatterns"] },
+      { storage: localStorage, pick: ["recentPatterns"] },
+    ],
+  },
 );

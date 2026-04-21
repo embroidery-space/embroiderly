@@ -23,7 +23,6 @@ tauri-plugin-shell = { workspace = true }
 tauri-plugin-updater = { workspace = true }
 ## Third-party plugins
 tauri-plugin-prevent-default = { workspace = true }
-tauri-plugin-pinia = { workspace = true }
 
 # Embroiderly Core
 embroiderly_image = { workspace = true }

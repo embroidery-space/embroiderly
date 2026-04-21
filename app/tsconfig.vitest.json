@@ -15,6 +15,6 @@
       "@embroiderly/wasm": ["./src-wasm/pkg/"]
     },
 
-    "types": ["node", "vitest-browser-vue", "@tauri-store/pinia"]
+    "types": ["node", "vitest-browser-vue"]
   }
 }

@@ -8,7 +8,6 @@ mod error;
 mod plugins;
 pub mod services;
 mod sidecars;
-mod startup;
 pub mod state;
 mod utils;
 
@@ -54,8 +53,6 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
         create_webview_window(app_handle, files)?;
       }
 
-      startup::run_auto_save_background_process(app_handle);
-
       Ok(())
     })
     .manage(RwLock::new(state::PatternManager::new()))
@@ -87,8 +84,7 @@ fn setup_app<R: tauri::Runtime>(mut builder: tauri::Builder<R>) -> tauri::App<R>
     .plugin(tauri_plugin_opener::init())
     .plugin(tauri_plugin_process::init())
     .plugin(tauri_plugin_shell::init())
-    .plugin(tauri_plugin_updater::Builder::new().build())
-    .plugin(tauri_plugin_pinia::init());
+    .plugin(tauri_plugin_updater::Builder::new().build());
 
   builder = builder.invoke_handler(tauri::generate_handler![
     // Pattern files management.

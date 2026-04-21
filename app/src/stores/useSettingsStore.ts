@@ -70,111 +70,115 @@ export interface OtherOptions {
   autoSaveInterval: number;
 }
 
-export const useSettingsStore = defineStore("embroiderly-settings", () => {
-  const overlay = useOverlay();
-  const appSettingModal = overlay.create(AppSettingModal);
+export const useSettingsStore = defineStore(
+  "embroiderly-settings",
+  () => {
+    const overlay = useOverlay();
+    const appSettingModal = overlay.create(AppSettingModal);
 
-  const { fluent, setLocale } = useI18n();
-  const toast = useToast();
+    const { fluent, setLocale } = useI18n();
+    const toast = useToast();
 
-  const ui = reactive<UiOptions>({
-    theme: "system",
-    scale: "medium",
-    language: "en",
-  });
-  watch(
-    ui,
-    async (newUi) => {
-      document.documentElement.style.fontSize = newUi.scale;
-      setLocale(newUi.language);
-      await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
-    },
-    { immediate: true },
-  );
+    const ui = reactive<UiOptions>({
+      theme: "system",
+      scale: "medium",
+      language: "en",
+    });
+    watch(
+      ui,
+      async (newUi) => {
+        document.documentElement.style.fontSize = newUi.scale;
+        setLocale(newUi.language);
+        await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
+      },
+      { immediate: true },
+    );
 
-  const startup = reactive<StartupOptions>({
-    action: StartupAction.NewPattern,
-    patternTemplate: "",
-  });
+    const startup = reactive<StartupOptions>({
+      action: StartupAction.NewPattern,
+      patternTemplate: "",
+    });
 
-  const viewport = reactive<ViewportOptions>({
-    antialias: true,
-    wheelAction: "zoom",
-  });
+    const viewport = reactive<ViewportOptions>({
+      antialias: true,
+      wheelAction: "zoom",
+    });
 
-  const updater = reactive<UpdaterOptions>({
-    autoCheck: false,
-  });
+    const updater = reactive<UpdaterOptions>({
+      autoCheck: false,
+    });
 
-  const telemetry = reactive<TelemetryOptions>({
-    diagnostics: false,
-    metrics: false,
-  });
+    const telemetry = reactive<TelemetryOptions>({
+      diagnostics: false,
+      metrics: false,
+    });
 
-  const other = reactive<OtherOptions>({
-    usePaletteItemColorForStitchTools: true,
-    autoSaveInterval: 15,
-  });
+    const other = reactive<OtherOptions>({
+      usePaletteItemColorForStitchTools: true,
+      autoSaveInterval: 15,
+    });
 
-  function openSettingsModal() {
-    appSettingModal.open();
-  }
+    function openSettingsModal() {
+      appSettingModal.open();
+    }
 
-  const loadingUpdate = ref(false);
-  async function checkForUpdates(options?: CheckForUpdatesOptions) {
-    const type = options?.auto ? "background" : "foreground";
-    try {
-      loadingUpdate.value = true;
-      const update = await check();
-      if (update) {
-        const { currentVersion, version } = update;
-        const date = new Date(update.date!);
-        toast.add({
-          type,
-          color: "info",
-          actions: [
-            {
-              label: fluent.$t("updater-update-now"),
-              onClick: async () => {
-                try {
-                  loadingUpdate.value = true;
-                  await update.downloadAndInstall();
-                  await relaunch();
-                } finally {
-                  loadingUpdate.value = false;
-                }
-              },
-            },
-          ],
-          ...fluent.$ta("updater-update-available", {
-            currentVersion,
-            version,
-            date,
-          }),
-        });
-      } else {
-        if (!options?.auto) {
+    const loadingUpdate = ref(false);
+    async function checkForUpdates(options?: CheckForUpdatesOptions) {
+      const type = options?.auto ? "background" : "foreground";
+      try {
+        loadingUpdate.value = true;
+        const update = await check();
+        if (update) {
+          const { currentVersion, version } = update;
+          const date = new Date(update.date!);
           toast.add({
             type,
             color: "info",
-            ...fluent.$ta("updater-no-updates-available"),
+            actions: [
+              {
+                label: fluent.$t("updater-update-now"),
+                onClick: async () => {
+                  try {
+                    loadingUpdate.value = true;
+                    await update.downloadAndInstall();
+                    await relaunch();
+                  } finally {
+                    loadingUpdate.value = false;
+                  }
+                },
+              },
+            ],
+            ...fluent.$ta("updater-update-available", {
+              currentVersion,
+              version,
+              date,
+            }),
           });
+        } else {
+          if (!options?.auto) {
+            toast.add({
+              type,
+              color: "info",
+              ...fluent.$ta("updater-no-updates-available"),
+            });
+          }
         }
+      } finally {
+        loadingUpdate.value = false;
       }
-    } finally {
-      loadingUpdate.value = false;
     }
-  }
 
-  return {
-    loadingUpdate,
-    ui,
-    startup,
-    viewport,
-    updater,
-    telemetry,
-    other,
-    openSettingsModal,
-    checkForUpdates,
-  };
-});
+    return {
+      loadingUpdate,
+      ui,
+      startup,
+      viewport,
+      updater,
+      telemetry,
+      other,
+      openSettingsModal,
+      checkForUpdates,
+    };
+  },
+  { persist: { omit: ["loadingUpdate"] } },
+);

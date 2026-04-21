@@ -20,8 +20,7 @@ fn get_all_test_patterns() -> Vec<std::io::Result<std::fs::DirEntry>> {
 #[test]
 fn parses_supported_pattern_formats() {
   let (app, webview) = setup_test_app!(
-    commands: [commands::files::patterns::open_pattern],
-    plugins: [tauri_plugin_pinia::init()]
+    commands: [commands::files::patterns::open_pattern]
   );
   let patterns_state = app.state::<PatternsState>();
 
@@ -48,8 +47,7 @@ fn parses_supported_pattern_formats() {
 #[test]
 fn creates_new_pattern() {
   let (app, webview) = setup_test_app!(
-    commands: [commands::files::patterns::create_pattern],
-    plugins: [tauri_plugin_pinia::init()]
+    commands: [commands::files::patterns::create_pattern]
   );
   let patterns_state = app.state::<PatternsState>();
 
@@ -73,8 +71,7 @@ fn saves_pattern() {
       commands::files::patterns::open_pattern,
       commands::files::patterns::save_pattern,
       commands::files::patterns::close_pattern,
-    ],
-    plugins: [tauri_plugin_pinia::init()]
+    ]
   );
 
   for file_path in get_all_test_patterns().into_iter() {
@@ -148,8 +145,7 @@ fn closes_pattern() {
     commands: [
       commands::files::patterns::create_pattern,
       commands::files::patterns::close_pattern,
-    ],
-    plugins: [tauri_plugin_pinia::init()]
+    ]
   );
   let patterns_state = app.state::<PatternsState>();
 
