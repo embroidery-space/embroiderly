@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 import type { ColorSource } from "pixi.js";
 
@@ -32,9 +31,8 @@ export class PaletteSettings {
     showColorNames: b.bool(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new PaletteSettings(PaletteSettings.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new PaletteSettings(PaletteSettings.schema.deserialize(data));
   }
 
   static serialize(data: PaletteSettings) {
@@ -263,9 +261,8 @@ export class Palette {
     settings: PaletteSettings.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Palette(Palette.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new Palette(Palette.schema.deserialize(data));
   }
 
   // === Access Methods ===
@@ -354,11 +351,10 @@ export class Palette {
   }
 }
 
-export function deserializeBrandPalette(data: Uint8Array | string) {
-  const buffer = typeof data === "string" ? toByteArray(data) : data;
+export function deserializeBrandPalette(data: Uint8Array) {
   return b
     .vec(BrandPaletteItem.schema)
-    .deserialize(buffer)
+    .deserialize(data)
     .map((palitem, index) => new BrandPaletteItem(index, palitem));
 }
 
@@ -376,9 +372,8 @@ export class AddedPaletteItemData {
     palindex: b.u32(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new AddedPaletteItemData(AddedPaletteItemData.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new AddedPaletteItemData(AddedPaletteItemData.schema.deserialize(data));
   }
 }
 
@@ -403,8 +398,7 @@ export class SetSymbolData {
     });
   }
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new SetSymbolData(SetSymbolData.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new SetSymbolData(SetSymbolData.schema.deserialize(data));
   }
 }

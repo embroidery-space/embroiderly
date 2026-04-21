@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 
 export class ImageExportOptions {
   frameSize: [number, number] | null;
@@ -48,9 +47,8 @@ export class PdfExportOptions {
     frameOptions: ImageExportOptions.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new PdfExportOptions(PdfExportOptions.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new PdfExportOptions(PdfExportOptions.schema.deserialize(data));
   }
 
   static serialize(data: PdfExportOptions) {

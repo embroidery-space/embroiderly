@@ -132,9 +132,6 @@ catalogs:
     '@zorsh/zorsh':
       specifier: 0.5.0
       version: 0.5.0
-    base64-js:
-      specifier: 1.5.1
-      version: 1.5.1
     bowser:
       specifier: 2.14.1
       version: 2.14.1
@@ -386,9 +383,6 @@ importers:
       '@zorsh/zorsh':
         specifier: 'catalog:'
         version: 0.5.0
-      base64-js:
-        specifier: 'catalog:'
-        version: 1.5.1
       bowser:
         specifier: 'catalog:'
         version: 2.14.1

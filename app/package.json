@@ -30,7 +30,6 @@
     "@vueuse/core": "catalog:",
     "@vueuse/integrations": "catalog:",
     "@zorsh/zorsh": "catalog:",
-    "base64-js": "catalog:",
     "bowser": "catalog:",
     "dequal": "catalog:",
     "eventemitter3": "catalog:",

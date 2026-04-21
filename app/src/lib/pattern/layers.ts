@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 
 import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch } from "./stitches.ts";
 
@@ -57,9 +56,8 @@ export class LayerVisibility {
     specialstitchesVisible: b.bool(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new LayerVisibility(LayerVisibility.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new LayerVisibility(LayerVisibility.schema.deserialize(data));
   }
 
   static serialize(data: LayerVisibility) {
@@ -140,9 +138,8 @@ export class Layer {
     specialstitchesVisible: b.bool(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Layer(0, Layer.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new Layer(0, Layer.schema.deserialize(data));
   }
 
   getVisibility(): LayerVisibility {
@@ -294,9 +291,8 @@ export class AddedLayerData {
     layer: Layer.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new AddedLayerData(AddedLayerData.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new AddedLayerData(AddedLayerData.schema.deserialize(data));
   }
 }
 
@@ -314,9 +310,8 @@ export class RenamedLayerData {
     name: b.string(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new RenamedLayerData(RenamedLayerData.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new RenamedLayerData(RenamedLayerData.schema.deserialize(data));
   }
 }
 
@@ -334,8 +329,7 @@ export class UpdatedLayerVisibilityData {
     visibility: LayerVisibility.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new UpdatedLayerVisibilityData(UpdatedLayerVisibilityData.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new UpdatedLayerVisibilityData(UpdatedLayerVisibilityData.schema.deserialize(data));
   }
 }

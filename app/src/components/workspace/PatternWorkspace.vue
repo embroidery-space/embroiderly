@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ContextMenu, useToast } from "@embroiderly/ui";
 import type { ContextMenuItem } from "@embroiderly/ui";
-import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
@@ -10,7 +9,6 @@ import { computed, useTemplateRef, watch } from "vue";
 import { IconImage, IconImageOff } from "~/assets/icons/";
 import { PatternCanvas } from "~/components/canvas/";
 import { useEditor, useI18n } from "~/composables/";
-import { PatternEvent, PatternInfo } from "~/lib/pattern/";
 import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
 import { CursorTool } from "~/lib/tools/";
 import type { PatternEditorToolContext } from "~/lib/tools/";
@@ -20,9 +18,7 @@ import { addSymbolFonts } from "~/utils/font-face.ts";
 
 const props = defineProps<{ options?: PatternApplicationOptions }>();
 
-const appWindow = getCurrentWebviewWindow();
-
-const { files } = useEditor();
+const { events, files } = useEditor();
 const { fluent } = useI18n();
 const toast = useToast();
 
@@ -51,8 +47,7 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
   ],
 ]);
 
-appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
-  const patternInfo = PatternInfo.deserialize(payload);
+events.on("pattern-info:update", (patternInfo) => {
   patternFileStore.updateOpenedPattern(patternStore.pattern.id, patternInfo.title);
 });
 

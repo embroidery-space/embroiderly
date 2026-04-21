@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 import { NIL as NIL_UUID, stringify as stringifyUuid } from "uuid";
 
 import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
@@ -31,9 +30,8 @@ export class PatternInfo {
     description: b.string(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new PatternInfo(PatternInfo.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new PatternInfo(PatternInfo.schema.deserialize(data));
   }
 
   static serialize(data: PatternInfo) {
@@ -116,9 +114,8 @@ export class Pattern extends EventTarget {
     publishSettings: PublishSettings.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Pattern(Pattern.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new Pattern(Pattern.schema.deserialize(data));
   }
 
   get referenceImage() {
