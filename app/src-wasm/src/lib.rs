@@ -1,3 +1,4 @@
+#![doc = include_str!("../README.md")]
 #![allow(clippy::future_not_send)]
 
 use wasm_bindgen::prelude::*;
