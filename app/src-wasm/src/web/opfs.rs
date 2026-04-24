@@ -9,7 +9,23 @@ use crate::error::Error;
 #[derive(Debug, Clone)]
 pub struct FileHandle(web_sys::FileSystemFileHandle);
 
+impl From<web_sys::FileSystemFileHandle> for FileHandle {
+  fn from(handle: web_sys::FileSystemFileHandle) -> Self {
+    Self(handle)
+  }
+}
+
 impl FileHandle {
+  /// Returns the underlying `FileSystemFileHandle`.
+  pub fn into_inner(self) -> web_sys::FileSystemFileHandle {
+    self.0
+  }
+
+  /// Returns the file name.
+  pub fn name(&self) -> String {
+    self.0.name()
+  }
+
   /// Reads the contents of the file.
   pub async fn read(&self) -> Result<Vec<u8>, Error> {
     let file = web_sys::File::from(JsFuture::from(self.0.get_file()).await?);
@@ -47,6 +63,12 @@ pub struct GetDirectoryHandleOptions {
 #[derive(Debug, Clone)]
 pub struct DirectoryHandle(web_sys::FileSystemDirectoryHandle);
 
+impl From<web_sys::FileSystemDirectoryHandle> for DirectoryHandle {
+  fn from(handle: web_sys::FileSystemDirectoryHandle) -> Self {
+    Self(handle)
+  }
+}
+
 impl DirectoryHandle {
   /// Returns a handle to a file in this directory.
   pub async fn get_file_handle(&self, name: &str, options: GetFileHandleOptions) -> Result<FileHandle, Error> {
@@ -57,7 +79,7 @@ impl DirectoryHandle {
       JsFuture::from(self.0.get_file_handle_with_options(name, &fs_options)).await?,
     );
 
-    Ok(FileHandle(fs_file_handle))
+    Ok(fs_file_handle.into())
   }
 
   /// Returns a handle to a directory in this directory.
@@ -69,7 +91,7 @@ impl DirectoryHandle {
       JsFuture::from(self.0.get_directory_handle_with_options(name, &fs_options)).await?,
     );
 
-    Ok(Self(fs_directory_handle))
+    Ok(fs_directory_handle.into())
   }
 
   /// Removes an entry (file or empty directory) from this directory.

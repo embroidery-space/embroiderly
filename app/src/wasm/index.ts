@@ -19,7 +19,7 @@ export async function initEditor(): Promise<EditorContext> {
   await init();
 
   const events = new EditorEventBus();
-  const editor = new EditorWrapper(createDispatcher(events));
+  const editor = await EditorWrapper.create(createDispatcher(events));
   const files = await FileManager.create();
 
   return { editor, events, files };

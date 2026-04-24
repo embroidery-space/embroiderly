@@ -13,6 +13,8 @@ use js_sys::{Function, Uint8Array};
 use wasm_bindgen::prelude::*;
 
 use crate::error::{Error, ErrorKind};
+use crate::persistence_manager::PersistenceManager;
+use crate::web::opfs;
 
 thread_local! {
   pub(crate) static EDITOR: RefCell<Option<Editor>> = const { RefCell::new(None) };
@@ -28,26 +30,38 @@ fn package_info() -> PackageInfo {
 #[wasm_bindgen]
 pub struct EditorWrapper {
   callback: Function,
+  persistence: PersistenceManager,
 }
 
 // Public methods which delegate the execution to private instrumented implementations.
 #[wasm_bindgen]
 impl EditorWrapper {
-  #[must_use]
-  #[wasm_bindgen(constructor)]
-  pub fn new(callback: Function) -> Self {
+  /// Creates a new `EditorWrapper`.
+  pub async fn create(callback: Function) -> Result<Self, Error> {
     EDITOR.with(|cell| {
       *cell.borrow_mut() = Some(Editor::new());
     });
-    Self { callback }
+    Ok(Self {
+      callback,
+      persistence: PersistenceManager::create().await?,
+    })
   }
 
-  /// Parses the provided pattern file from bytes and registers it in the editor.
-  /// The file name exxtension determines the pattern type.
-  /// Returns its UUID as a string.
+  /// Reads the file from the provided file handle, parses it, and registers the pattern in the editor.
+  /// The file name extension determines the pattern format.
+  /// The handle is persisted in IndexedDB so later saves can reuse it.
+  /// Returns the pattern UUID as a string.
   #[wasm_bindgen(js_name = "openPattern")]
-  pub fn open_pattern(&self, data: &[u8], file_name: String) -> Result<String, Error> {
-    self.open_pattern_impl(data, file_name)
+  pub async fn open_pattern(&self, file_handle: web_sys::FileSystemFileHandle) -> Result<String, Error> {
+    self.open_pattern_impl(file_handle.into()).await
+  }
+
+  /// Parses pattern bytes directly without associating a file handle.
+  /// Use this for templates or platform-specific file reads where no `FileSystemFileHandle` is available.
+  /// Returns the pattern UUID as a string.
+  #[wasm_bindgen(js_name = "openPatternFromData")]
+  pub fn open_pattern_from_data(&self, data: &[u8], file_name: &str) -> Result<String, Error> {
+    self.open_pattern_from_data_impl(data, file_name)
   }
 
   /// Creates a blank pattern from the provided Borsh-serialized `Fabric` data.
@@ -63,19 +77,35 @@ impl EditorWrapper {
     self.load_pattern_impl(pattern_id)
   }
 
-  /// Encodes the in-memory pattern as bytes.
-  /// The file name extension determines the output format.
-  /// The caller is responsible for writing the returned bytes.
-  #[wasm_bindgen(js_name = "encodePattern")]
-  pub fn encode_pattern(&self, pattern_id: &str, file_name: &str) -> Result<Vec<u8>, Error> {
-    self.encode_pattern_impl(pattern_id, file_name)
+  /// Encodes the pattern and writes it to the associated file handle.
+  /// If `handle` is provided it is persisted in IndexedDB and used for this write.
+  /// If `handle` is `null` and no handle is stored, returns a `NoFileHandle` error.
+  /// Checkpoints the pattern on success.
+  #[wasm_bindgen(js_name = "savePattern")]
+  pub async fn save_pattern(
+    &self,
+    pattern_id: &str,
+    file_handle: Option<web_sys::FileSystemFileHandle>,
+  ) -> Result<(), Error> {
+    self.save_pattern_impl(pattern_id, file_handle.map(Into::into)).await
   }
 
-  /// Removes the pattern from the editor.
+  /// Encodes the pattern and writes it to the given handle without updating the stored handle.
+  /// Use this for one-off exports (e.g. OXS). Does not checkpoint.
+  #[wasm_bindgen(js_name = "exportPattern")]
+  pub async fn export_pattern(
+    &self,
+    pattern_id: &str,
+    file_handle: web_sys::FileSystemFileHandle,
+  ) -> Result<(), Error> {
+    self.export_pattern_impl(pattern_id, file_handle.into()).await
+  }
+
+  /// Removes the pattern from the editor and cleans up its persisted handle from IndexedDB.
   /// Throws an error if the pattern has unsaved changes and `force` is false.
   #[wasm_bindgen(js_name = "closePattern")]
-  pub fn close_pattern(&self, pattern_id: &str, force: bool) -> Result<(), Error> {
-    self.close_pattern_impl(pattern_id, force)
+  pub async fn close_pattern(&self, pattern_id: &str, force: bool) -> Result<(), Error> {
+    self.close_pattern_impl(pattern_id, force).await
   }
 
   /// Adds a stitch to the pattern layer.
@@ -283,14 +313,42 @@ impl EditorWrapper {
     self.send_events(events)
   }
 
-  #[tracing::instrument(name = "EditorWrapper::open_pattern", level = "debug", skip(self, data), err)]
-  fn open_pattern_impl(&self, data: &[u8], file_name: String) -> Result<String, Error> {
-    let patproj = embroiderly_parsers::parse_pattern(data, &file_name)?;
+  #[tracing::instrument(
+    name = "EditorWrapper::open_pattern",
+    level = "debug",
+    skip_all,
+    fields(file_name),
+    ret,
+    err
+  )]
+  async fn open_pattern_impl(&self, file_handle: opfs::FileHandle) -> Result<String, Error> {
+    let file_name = file_handle.name();
+    let data = file_handle.read().await?;
+
+    tracing::Span::current().record("file_name", &file_name);
+
+    let patproj = embroiderly_parsers::parse_pattern(&data, &file_name)?;
+    let pattern_id = self.run(|editor| editor.add_pattern(patproj));
+
+    self.persistence.save_handle(pattern_id, file_handle).await?;
+
+    Ok(pattern_id.to_string())
+  }
+
+  #[tracing::instrument(
+    name = "EditorWrapper::open_pattern_from_data",
+    level = "debug",
+    skip(self, data),
+    ret,
+    err
+  )]
+  fn open_pattern_from_data_impl(&self, data: &[u8], file_name: &str) -> Result<String, Error> {
+    let patproj = embroiderly_parsers::parse_pattern(data, file_name)?;
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
     Ok(pattern_id.to_string())
   }
 
-  #[tracing::instrument(name = "EditorWrapper::create_pattern", level = "debug", skip_all, err)]
+  #[tracing::instrument(name = "EditorWrapper::create_pattern", level = "debug", skip_all, ret, err)]
   fn create_pattern_impl(&self, fabric_data: &[u8]) -> Result<String, Error> {
     let fabric = borsh::from_slice(fabric_data)?;
     let pattern = Pattern::new(fabric);
@@ -311,21 +369,74 @@ impl EditorWrapper {
     })
   }
 
-  #[tracing::instrument(name = "EditorWrapper::encode_pattern", level = "debug", skip(self), err)]
-  fn encode_pattern_impl(&self, pattern_id: &str, file_name: &str) -> Result<Vec<u8>, Error> {
+  #[tracing::instrument(
+    name = "EditorWrapper::save_pattern",
+    level = "debug",
+    skip(self, file_handle),
+    fields(file_name),
+    err
+  )]
+  async fn save_pattern_impl(&self, pattern_id: &str, file_handle: Option<opfs::FileHandle>) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    let format = PatternFormat::try_from(file_name)?;
-    self.run(|editor| {
+    let file_handle = if let Some(file_handle) = file_handle {
+      self.persistence.save_handle(pattern_id, file_handle.clone()).await?;
+      file_handle
+    } else {
+      self
+        .persistence
+        .get_handle(pattern_id)
+        .await?
+        .ok_or_else(|| Error::new(ErrorKind::NoFileHandle))?
+    };
+
+    let file_name = file_handle.name();
+    let format = PatternFormat::try_from(file_name.as_str())?;
+
+    tracing::Span::current().record("file_name", &file_name);
+
+    let data = self.run(|editor| {
       if let Some(patproj) = editor.get_pattern(&pattern_id) {
         Ok(embroiderly_parsers::save_pattern(patproj, format, &package_info())?)
       } else {
         Err(Error::new(ErrorKind::PatternNotFound))
       }
-    })
+    })?;
+
+    file_handle.write(&data).await?;
+    self.run(|editor| editor.checkpoint(&pattern_id))?;
+
+    Ok(())
+  }
+
+  #[tracing::instrument(
+    name = "EditorWrapper::export_pattern",
+    level = "debug",
+    skip(self, file_handle),
+    fields(file_name),
+    err
+  )]
+  async fn export_pattern_impl(&self, pattern_id: &str, file_handle: opfs::FileHandle) -> Result<(), Error> {
+    let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
+    let file_name = file_handle.name();
+
+    tracing::Span::current().record("file_name", &file_name);
+
+    let format = PatternFormat::try_from(file_name.as_str())?;
+    let data = self.run(|editor| {
+      if let Some(patproj) = editor.get_pattern(&pattern_id) {
+        Ok(embroiderly_parsers::save_pattern(patproj, format, &package_info())?)
+      } else {
+        Err(Error::new(ErrorKind::PatternNotFound))
+      }
+    })?;
+
+    file_handle.write(&data).await?;
+
+    Ok(())
   }
 
   #[tracing::instrument(name = "EditorWrapper::close_pattern", level = "debug", skip(self), err)]
-  fn close_pattern_impl(&self, pattern_id: &str, force: bool) -> Result<(), Error> {
+  async fn close_pattern_impl(&self, pattern_id: &str, force: bool) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     self.run(|editor| {
       if !force {
@@ -336,7 +447,8 @@ impl EditorWrapper {
       }
       editor.remove_pattern(&pattern_id);
       Ok(())
-    })
+    })?;
+    self.persistence.remove_handle(pattern_id).await
   }
 
   #[tracing::instrument(name = "EditorWrapper::add_stitch", level = "debug", skip(self, stitch_data), err)]

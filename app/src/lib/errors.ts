@@ -24,6 +24,8 @@ export function toApplicationError(error: unknown): Error {
         return new FailedToParseError(message);
       case "UnsavedChanges":
         return new UnsavedChangesError(message);
+      case "NoFileHandle":
+        return new NoFileHandleError(message);
       case "FailedToExport":
         return new FailedToExportError(message);
       case "FailedToImport":
@@ -96,6 +98,13 @@ export class UnsavedChangesError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "UnsavedChangesError";
+  }
+}
+
+export class NoFileHandleError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NoFileHandleError";
   }
 }
 

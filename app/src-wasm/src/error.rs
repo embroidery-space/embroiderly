@@ -23,6 +23,9 @@ pub enum ErrorKind {
   // Layer errors.
   CannotRemoveLastLayer,
 
+  // File handle errors.
+  NoFileHandle,
+
   // Catch-all for unexpected errors.
   Unexpected,
 }
@@ -39,6 +42,8 @@ impl ErrorKind {
       Self::UnsupportedPaletteType(extension) => format!("Unsupported palette type: {extension}."),
 
       Self::CannotRemoveLastLayer => String::from("Cannot remove the last layer."),
+
+      Self::NoFileHandle => String::from("Pattern has no associated file handle."),
 
       Self::Unexpected => String::from("An unexpected error occurred."),
     }

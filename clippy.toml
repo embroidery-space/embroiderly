@@ -1,2 +1,4 @@
 allow-dbg-in-tests = true
 allow-print-in-tests = true
+
+doc-valid-idents = ["IndexedDB", ".."]

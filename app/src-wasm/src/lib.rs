@@ -7,6 +7,7 @@ mod editor_wrapper;
 mod error;
 mod file_manager;
 mod logger;
+mod persistence_manager;
 mod web;
 
 pub use editor_wrapper::EditorWrapper;

@@ -5,7 +5,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import { UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
+import { NoFileHandleError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
 import { Fabric, Pattern } from "~/lib/pattern/";
 
 const MAX_RECENT_PATTERNS = 5;
@@ -30,8 +30,6 @@ export const usePatternFileStore = defineStore(
 
     const openedPatterns = ref<OpenPattern[]>([]);
     const recentPatterns = ref<string[]>([]);
-
-    const patternHandles = new Map<string, FileSystemFileHandle>();
 
     const loading = ref(false);
 
@@ -82,12 +80,8 @@ export const usePatternFileStore = defineStore(
         const fileHandle = await filePicker.open({ types: filePicker.filters.pattern });
         if (!fileHandle) return;
 
-        const file = await fileHandle.getFile();
-        const data = new Uint8Array(await file.arrayBuffer());
-
-        const patternId = editor.openPattern(data, file.name);
-        patternHandles.set(patternId, fileHandle);
-        addRecentPattern(file.name);
+        const patternId = await editor.openPattern(fileHandle);
+        addRecentPattern(fileHandle.name);
 
         return patternId;
       } catch (err) {
@@ -113,7 +107,7 @@ export const usePatternFileStore = defineStore(
         const data = await readFile(filePath);
         const fileName = filePath.replaceAll("\\", "/").split("/").pop() ?? filePath;
 
-        const patternId = editor.openPattern(data, fileName);
+        const patternId = editor.openPatternFromData(data, fileName);
         addRecentPattern(fileName);
 
         return patternId;
@@ -139,7 +133,7 @@ export const usePatternFileStore = defineStore(
 
         const data = await files.loadPatternTemplate(templateName);
 
-        return editor.openPattern(new Uint8Array(data), templateName);
+        return editor.openPatternFromData(new Uint8Array(data), templateName);
       } finally {
         loading.value = false;
       }
@@ -162,32 +156,34 @@ export const usePatternFileStore = defineStore(
      * @returns `true` if the pattern was saved successfully, `false` if cancelled or failed.
      */
     async function savePattern(id: string, as = false) {
+      let handle: FileSystemFileHandle | null = null;
+      if (as) {
+        handle = await pickSaveHandle(id);
+        if (!handle) return false;
+      }
+
       try {
-        let handle = patternHandles.get(id);
-        if (!handle || as) {
-          const pattern = openedPatterns.value.find((p) => p.id === id);
-          const suggestedName = `${pattern?.title ?? "pattern"}.embproj`;
-          const picked = await filePicker.save({
-            suggestedName,
-            types: filePicker.filters.embproj,
-          });
-          if (!picked) return false;
-          handle = picked;
-        }
-
         loading.value = true;
-
-        const file = await handle!.getFile();
-        const bytes = editor.encodePattern(id, file.name);
-
-        const writable = await handle!.createWritable();
-        await writable.write(new Uint8Array(bytes));
-        await writable.close();
-
-        patternHandles.set(id, handle!);
-        editor.checkpoint(id);
+        await editor.savePattern(id, handle);
         return true;
       } catch (err) {
+        if (err instanceof NoFileHandleError) {
+          loading.value = false;
+
+          const picked = await pickSaveHandle(id);
+          if (!picked) return false;
+
+          loading.value = true;
+
+          try {
+            await editor.savePattern(id, picked);
+            return true;
+          } catch {
+            toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
+            return false;
+          }
+        }
+
         if (err instanceof UnsupportedPatternTypeError) {
           confirm.open({
             title: fluent.$t("error"),
@@ -202,18 +198,24 @@ export const usePatternFileStore = defineStore(
             duration: 3000,
           });
         }
+
         return false;
       } finally {
         loading.value = false;
       }
     }
 
+    function pickSaveHandle(id: string) {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
+      const suggestedName = `${pattern?.title ?? "pattern"}.embproj`;
+      return filePicker.save({ suggestedName, types: filePicker.filters.embproj });
+    }
+
     async function closePattern(id: string, options?: { force?: boolean }) {
       try {
         loading.value = true;
 
-        editor.closePattern(id, options?.force ?? false);
-        patternHandles.delete(id);
+        await editor.closePattern(id, options?.force ?? false);
         removeOpenedPattern(id);
 
         if (currentPatternId.value === id) {
@@ -253,11 +255,7 @@ export const usePatternFileStore = defineStore(
 
       try {
         loading.value = true;
-        const file = await handle.getFile();
-        const bytes = editor.encodePattern(id, file.name);
-        const writable = await handle.createWritable();
-        await writable.write(new Uint8Array(bytes));
-        await writable.close();
+        await editor.exportPattern(id, handle);
       } finally {
         loading.value = false;
       }

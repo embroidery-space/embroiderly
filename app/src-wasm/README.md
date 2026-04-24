@@ -27,7 +27,7 @@ This struct provides access to the application's resources — thread palettes a
 **User resources** are custom thread palettes, symbols fonts, and pattern templates uploaded by the user.
 These are stored persistently in the browser's Origin Private File System (OPFS).
 
-Both tiers use the same web platform APIs, so this struct works without changes in the browser and inside Tauri's WebView.
+Both tiers use the same web platform APIs, so this struct works without changes in the browser and inside Tauri's webview.
 
 ## Public/private method split
 

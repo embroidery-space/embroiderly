@@ -132,6 +132,7 @@ uuid = { version = "1.23.0", features = ["v4", "v7"] }
 wasm-bindgen = "0.2.118"
 wasm-bindgen-futures = "0.4.68"
 console_error_panic_hook = "0.1.7"
+indexed-db = "0.4.2"
 js-sys = "0.3.95"
 web-sys = "0.3.95"
 
