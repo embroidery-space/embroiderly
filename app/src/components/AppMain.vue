@@ -2,10 +2,10 @@
 import { BlockUI, Splitter, SplitterPanel, useConfirm, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-import { useSessionStorage } from "@vueuse/core";
+import { useEventListener, useSessionStorage } from "@vueuse/core";
 import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 
-import { useI18n, useTauriListener, useShortcuts } from "~/composables/";
+import { useI18n, useShortcuts, useEditor, useTauriListener } from "~/composables/";
 import { usePercentOfContainer } from "~/composables/utils/";
 import { Fabric } from "~/lib/pattern";
 import { LoggerService } from "~/services";
@@ -21,11 +21,10 @@ import {
 import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
 import { EditorWorkspaceTabs, EditorWorkspaceToolbar, EditorWorkspaceFooter } from "./workspace/layout/";
 
-const appWindow = getCurrentWebviewWindow();
-
 const confirm = useConfirm();
 const toast = useToast();
 const { fluent } = useI18n();
+const { events } = useEditor();
 
 const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
@@ -51,37 +50,43 @@ watch(
   { immediate: true },
 );
 
-useTauriListener(
-  appWindow.onCloseRequested(async (event) => {
-    for (const pattern of structuredClone(toRaw(patternFileStore.openedPatterns.map((op) => toRaw(op))))) {
-      const hasUnsavedChanges = pattern.dirty;
-      if (hasUnsavedChanges) {
-        const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
-        if (accepted === undefined) {
-          event.preventDefault();
-          return;
-        } else if (accepted) {
-          const saved = await patternFileStore.savePattern(pattern.id);
-          if (!saved) {
+if (__TAURI__) {
+  useTauriListener(
+    getCurrentWebviewWindow().onCloseRequested(async (event) => {
+      const patterns = structuredClone(toRaw(patternFileStore.openedPatterns).map((op) => toRaw(op)));
+      for (const pattern of patterns) {
+        if (pattern.dirty) {
+          const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
+          if (accepted === undefined) {
             event.preventDefault();
             return;
+          } else if (accepted) {
+            const saved = await patternFileStore.savePattern(pattern.id);
+            if (!saved) {
+              event.preventDefault();
+              return;
+            }
           }
-        } else {
-          // The user doesn't want to save the pattern. Continue.
         }
+        await patternFileStore.closePattern(pattern.id, { force: true });
       }
-      await patternFileStore.closePattern(pattern.id, { force: true });
+    }),
+  );
+} else {
+  // In browsers, we can't handle pattern closing/saving during this hook.
+  // This is the user's responsibility to handle the patterns.
+  useEventListener(window, "beforeunload", (event: BeforeUnloadEvent) => {
+    if (patternFileStore.openedPatterns.some((p) => p.dirty)) {
+      event.preventDefault();
     }
-  }),
-);
+  });
+}
 
-useTauriListener(
-  appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
-    if (patternId === patternStore.pattern.id) {
-      toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
-    }
-  }),
-);
+events.on("app:pattern-checkpoint", (patternId) => {
+  if (patternId === patternStore.pattern.id) {
+    toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
+  }
+});
 
 useShortcuts({
   "Control+Z": () => patternStore.undo(),
@@ -154,7 +159,7 @@ onMounted(async () => {
     patternFileStore.switchPattern(patternFileStore.openedPatterns[0]!.id);
   }
 
-  await appWindow.show();
+  if (__TAURI__) await getCurrentWebviewWindow().show();
 });
 </script>
 

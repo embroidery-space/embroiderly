@@ -55,8 +55,10 @@ export class LoggerServiceClass {
   #dispatch(level: LogLevel, message: string, options?: LogOptions) {
     console[level](message);
 
-    const location = options?.location ?? getCallerLocation(new Error().stack);
-    void invoke("plugin:log|log", { level: level.toUpperCase(), message, location });
+    if (__TAURI__) {
+      const location = options?.location ?? getCallerLocation(new Error().stack);
+      void invoke("plugin:log|log", { level: level.toUpperCase(), message, location });
+    }
   }
 }
 export const LoggerService = new LoggerServiceClass();

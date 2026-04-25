@@ -89,7 +89,7 @@ export const useSettingsStore = defineStore(
       async (newUi) => {
         document.documentElement.style.fontSize = newUi.scale;
         setLocale(newUi.language);
-        await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
+        // await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
       },
       { immediate: true },
     );

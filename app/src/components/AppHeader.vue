@@ -25,10 +25,12 @@ const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
 
-const appWindow = getCurrentWebviewWindow();
+// This variable is needed for the conditional component rendering.
+// We must declare it in the setup function, since template doesn't have access to global variables.
+const isTauri = __TAURI__;
 
-const menus = computed<MenubarMenu[]>(() => [
-  {
+const menus = computed<MenubarMenu[]>(() => {
+  const fileMenu: MenubarMenu = {
     label: fluent.$t("app-menu-file"),
     items: [
       [
@@ -124,16 +126,19 @@ const menus = computed<MenubarMenu[]>(() => [
           onSelect: () => patternFileStore.closePattern(patternStore.pattern.id),
         },
       ],
-      [
-        {
-          label: fluent.$t("app-menu-file-quit"),
-          shortcut: "Control+Q",
-          onSelect: () => appWindow.close(),
-        },
-      ],
     ],
-  },
-  {
+  };
+  if (__TAURI__) {
+    fileMenu.items.push([
+      {
+        label: fluent.$t("app-menu-file-quit"),
+        shortcut: "Control+Q",
+        onSelect: () => getCurrentWebviewWindow().close(),
+      },
+    ]);
+  }
+
+  const patternMenu: MenubarMenu = {
     label: fluent.$t("app-menu-pattern"),
     hidden: patternStore.pattern.isNil,
     items: [
@@ -178,8 +183,9 @@ const menus = computed<MenubarMenu[]>(() => [
         },
       ],
     ],
-  },
-  {
+  };
+
+  const toolsMenu: MenubarMenu = {
     label: fluent.$t("app-menu-tools"),
     items: [
       [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
@@ -190,8 +196,9 @@ const menus = computed<MenubarMenu[]>(() => [
         },
       ],
     ],
-  },
-  {
+  };
+
+  const helpMenu: MenubarMenu = {
     label: fluent.$t("app-menu-help"),
     items: [
       [{ label: fluent.$t("app-menu-help-about"), onSelect: showSystemInfo }],
@@ -217,8 +224,10 @@ const menus = computed<MenubarMenu[]>(() => [
         },
       ],
     ],
-  },
-]);
+  };
+
+  return [fileMenu, patternMenu, toolsMenu, helpMenu];
+});
 useShortcuts(extractShortcuts(() => menus.value.flatMap((menu) => menu.items as MenubarItem[][])));
 
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
@@ -286,6 +295,6 @@ async function showSystemInfo() {
       </div>
     </div>
 
-    <WindowControls />
+    <WindowControls v-if="isTauri" />
   </header>
 </template>
