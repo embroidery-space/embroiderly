@@ -1,5 +1,4 @@
 import { useOverlay, useToast } from "@embroiderly/ui";
-import { setTheme as setAppTheme } from "@tauri-apps/api/app";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 
@@ -86,10 +85,10 @@ export const useSettingsStore = defineStore(
     });
     watch(
       ui,
-      async (newUi) => {
+      (newUi) => {
+        document.documentElement.style.colorScheme = newUi.theme === "system" ? "light dark" : newUi.theme;
         document.documentElement.style.fontSize = newUi.scale;
         setLocale(newUi.language);
-        // await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
       },
       { immediate: true },
     );

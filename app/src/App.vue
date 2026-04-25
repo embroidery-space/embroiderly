@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { App, useToast } from "@embroiderly/ui";
 
-import { UseDark } from "@vueuse/components";
 import { onMounted, onErrorCaptured, markRaw } from "vue";
 
 import {
@@ -56,9 +55,7 @@ onErrorCaptured((err, _component, info) => {
       plus: markRaw(IconPlus),
     }"
   >
-    <UseDark>
-      <AppHeader class="h-10" />
-      <AppMain class="h-[calc(100vh-(--spacing(10)))]" />
-    </UseDark>
+    <AppHeader class="h-10" />
+    <AppMain class="h-[calc(100vh-(--spacing(10)))]" />
   </App>
 </template>

@@ -2,7 +2,6 @@
   "identifier": "default",
   "windows": ["main"],
   "permissions": [
-    "core:app:allow-set-app-theme",
     "core:event:allow-listen",
     "core:event:allow-unlisten",
     "core:path:allow-resolve-directory",
