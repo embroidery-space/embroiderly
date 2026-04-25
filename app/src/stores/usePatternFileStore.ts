@@ -81,6 +81,7 @@ export const usePatternFileStore = defineStore(
         if (!fileHandle) return;
 
         const patternId = await editor.openPattern(fileHandle);
+        addOpenedPattern(patternId, fileHandle.name);
         addRecentPattern(fileHandle.name);
 
         return patternId;
@@ -100,7 +101,35 @@ export const usePatternFileStore = defineStore(
       }
     }
 
+    async function openPatternFromFile(file: File) {
+      try {
+        loading.value = true;
+
+        const data = new Uint8Array(await file.arrayBuffer());
+
+        const patternId = editor.openPatternFromData(data, file.name);
+        addOpenedPattern(patternId, file.name);
+        addRecentPattern(file.name);
+
+        return patternId;
+      } catch (err) {
+        if (err instanceof UnsupportedPatternTypeError) {
+          confirm.open({
+            title: fluent.$t("error"),
+            description: fluent.$t("pattern-open-unsupported-type"),
+            yesButton: { label: fluent.$t("confirm-ok") },
+            noButton: null,
+          });
+          return;
+        }
+        throw err;
+      } finally {
+        loading.value = false;
+      }
+    }
+
     async function openPatternFromPath(filePath: string) {
+      if (!__TAURI__) return;
       try {
         loading.value = true;
 
@@ -108,6 +137,7 @@ export const usePatternFileStore = defineStore(
         const fileName = filePath.replaceAll("\\", "/").split("/").pop() ?? filePath;
 
         const patternId = editor.openPatternFromData(data, fileName);
+        addOpenedPattern(patternId, fileName);
         addRecentPattern(fileName);
 
         return patternId;
@@ -300,6 +330,7 @@ export const usePatternFileStore = defineStore(
       updateOpenedPattern,
       loadPattern,
       openPattern,
+      openPatternFromFile,
       openPatternFromPath,
       openPatternFromTemplate,
       createPattern,

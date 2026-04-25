@@ -2,7 +2,7 @@
 import { BlockUI, Splitter, SplitterPanel, useConfirm, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-import { useEventListener, useSessionStorage } from "@vueuse/core";
+import { useDropZone, useEventListener, useSessionStorage } from "@vueuse/core";
 import { onMounted, toRaw, useTemplateRef, watch } from "vue";
 
 import { useI18n, useShortcuts, useEditor, useTauriListener } from "~/composables/";
@@ -32,6 +32,21 @@ const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
 
 const startupHandled = useSessionStorage("embroiderly-startup-handled", false);
+
+const { isOverDropZone } = useDropZone(useTemplateRef("drop-zone"), {
+  multiple: true,
+  async onDrop(files) {
+    if (!files) return;
+
+    let lastPatternId: string | undefined;
+    for (const file of files) {
+      const patternId = await patternFileStore.openPatternFromFile(file);
+      if (patternId) lastPatternId = patternId;
+    }
+
+    if (lastPatternId) patternFileStore.switchPattern(lastPatternId);
+  },
+});
 
 const { toPercent } = usePercentOfContainer(useTemplateRef("splitter"));
 
@@ -179,7 +194,11 @@ onMounted(async () => {
         <div class="flex grow">
           <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" class="border-r border-default p-1" />
 
-          <BlockUI ref="drop-zone" :blocked="editorStateStore.paletteMode === PaletteMode.Editing" class="grow">
+          <BlockUI
+            ref="drop-zone"
+            :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
+            class="grow"
+          >
             <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
             <PatternWorkspace
               v-else

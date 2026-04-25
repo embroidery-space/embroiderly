@@ -107,6 +107,7 @@ fn create_webview_window<R: tauri::Runtime>(
     .decorations(false)
     .visible(cfg!(debug_assertions))
     .initialization_script(format!("window.openedFiles = [{}]", files_js.join(",")))
+    .disable_drag_drop_handler()
     .build()?;
 
   // Skip opening devtools for automation testing.
