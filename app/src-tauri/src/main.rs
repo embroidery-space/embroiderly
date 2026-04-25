@@ -3,7 +3,6 @@
 
 mod plugins;
 mod services;
-mod utils;
 
 fn main() {
   #[allow(unused)]
