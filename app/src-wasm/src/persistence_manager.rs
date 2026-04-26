@@ -60,7 +60,22 @@ impl PersistenceManager {
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
-    Ok(result.map(|v| opfs::FileHandle::from(v.unchecked_into::<web_sys::FileSystemFileHandle>())))
+    Ok(result.and_then(|v| {
+      // A real FileSystemFileHandle always has a non-empty string `name`.
+      // Polyfill-created fakes lose their `WeakMap` backing after IndexedDB round-trips, so `name` comes back as undefined.
+      // Treat those as missing handles.
+      let has_valid_name = js_sys::Reflect::get(&v, &JsValue::from_str("name"))
+        .ok()
+        .and_then(|n| n.as_string())
+        .is_some_and(|s| !s.is_empty());
+      if has_valid_name {
+        Some(opfs::FileHandle::from(
+          v.unchecked_into::<web_sys::FileSystemFileHandle>(),
+        ))
+      } else {
+        None
+      }
+    }))
   }
 
   /// Removes the file handle associated with the given pattern ID.
