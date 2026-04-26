@@ -20,6 +20,12 @@ thread_local! {
   pub(crate) static EDITOR: RefCell<Option<Editor>> = const { RefCell::new(None) };
 }
 
+#[wasm_bindgen(getter_with_clone)]
+pub struct OpenPatternResult {
+  pub id: String,
+  pub title: String,
+}
+
 fn package_info() -> PackageInfo {
   PackageInfo {
     name: "Embroiderly".to_owned(),
@@ -48,20 +54,25 @@ impl EditorWrapper {
   }
 
   /// Reads the file from the provided file handle, parses it, and registers the pattern in the editor.
+  ///
   /// The file name extension determines the pattern format.
   /// The handle is persisted in IndexedDB so later saves can reuse it.
-  /// Returns the pattern UUID as a string.
+  ///
+  /// Returns `[id, title]` --- the pattern UUID and its title (falling back to the file name if empty).
   #[wasm_bindgen(js_name = "openPattern")]
-  pub async fn open_pattern(&self, file_handle: web_sys::FileSystemFileHandle) -> Result<String, Error> {
-    self.open_pattern_impl(file_handle.into()).await
+  pub async fn open_pattern(&self, file_handle: web_sys::FileSystemFileHandle) -> Result<OpenPatternResult, Error> {
+    let (id, title) = self.open_pattern_impl(file_handle.into()).await?;
+    Ok(OpenPatternResult { id, title })
   }
 
   /// Parses pattern bytes directly without associating a file handle.
   /// Use this for templates or platform-specific file reads where no `FileSystemFileHandle` is available.
-  /// Returns the pattern UUID as a string.
+  ///
+  /// Returns `[id, title]` --- the pattern UUID and its title (falling back to `file_name` if empty).
   #[wasm_bindgen(js_name = "openPatternFromData")]
-  pub fn open_pattern_from_data(&self, data: &[u8], file_name: &str) -> Result<String, Error> {
-    self.open_pattern_from_data_impl(data, file_name)
+  pub fn open_pattern_from_data(&self, data: &[u8], file_name: &str) -> Result<OpenPatternResult, Error> {
+    let (id, title) = self.open_pattern_from_data_impl(data, file_name)?;
+    Ok(OpenPatternResult { id, title })
   }
 
   /// Creates a blank pattern from the provided Borsh-serialized `Fabric` data.
@@ -321,18 +332,20 @@ impl EditorWrapper {
     ret,
     err
   )]
-  async fn open_pattern_impl(&self, file_handle: opfs::FileHandle) -> Result<String, Error> {
+  async fn open_pattern_impl(&self, file_handle: opfs::FileHandle) -> Result<(String, String), Error> {
     let file_name = file_handle.name();
     let data = file_handle.read().await?;
 
     tracing::Span::current().record("file_name", &file_name);
 
     let patproj = embroiderly_parsers::parse_pattern(&data, &file_name)?;
+    let title = patproj.pattern.info.title.clone();
+    let title = if title.is_empty() { file_name } else { title };
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
 
     self.persistence.save_handle(pattern_id, file_handle).await?;
 
-    Ok(pattern_id.to_string())
+    Ok((pattern_id.to_string(), title))
   }
 
   #[tracing::instrument(
@@ -342,10 +355,12 @@ impl EditorWrapper {
     ret,
     err
   )]
-  fn open_pattern_from_data_impl(&self, data: &[u8], file_name: &str) -> Result<String, Error> {
+  fn open_pattern_from_data_impl(&self, data: &[u8], file_name: &str) -> Result<(String, String), Error> {
     let patproj = embroiderly_parsers::parse_pattern(data, file_name)?;
+    let title = patproj.pattern.info.title.clone();
+    let title = if title.is_empty() { file_name.to_owned() } else { title };
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
-    Ok(pattern_id.to_string())
+    Ok((pattern_id.to_string(), title))
   }
 
   #[tracing::instrument(name = "EditorWrapper::create_pattern", level = "debug", skip_all, ret, err)]

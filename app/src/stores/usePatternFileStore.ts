@@ -63,28 +63,52 @@ export const usePatternFileStore = defineStore(
     async function loadPattern(id: string) {
       try {
         loading.value = true;
-
-        const pattern = Pattern.deserialize(editor.loadPattern(id));
-        addOpenedPattern(pattern.id, pattern.info.title);
-
-        return pattern;
+        return Pattern.deserialize(editor.loadPattern(id));
       } finally {
         loading.value = false;
       }
     }
 
-    async function openPattern() {
+    async function openPattern(): Promise<string>;
+    async function openPattern(options: { file: File }): Promise<string>;
+    async function openPattern(options: { filePath: string }): Promise<string>;
+    async function openPattern(options: { template: string }): Promise<string>;
+    async function openPattern(options?: { file: File } | { filePath: string } | { template: string }) {
       try {
         loading.value = true;
 
-        const fileHandle = await filePicker.open({ types: filePicker.filters.pattern });
-        if (!fileHandle) return;
+        let result: { id: string; title: string };
+        if (!options) {
+          const fileHandle = await filePicker.open({ types: filePicker.filters.pattern });
+          if (!fileHandle) return;
 
-        const patternId = await editor.openPattern(fileHandle);
-        addOpenedPattern(patternId, fileHandle.name);
-        addRecentPattern(fileHandle.name);
+          result = await editor.openPattern(fileHandle);
 
-        return patternId;
+          addRecentPattern(fileHandle.name);
+        } else if ("file" in options) {
+          const data = new Uint8Array(await options.file.arrayBuffer());
+
+          result = editor.openPatternFromData(data, options.file.name);
+
+          addRecentPattern(options.file.name);
+        } else if ("filePath" in options) {
+          if (!__TAURI__) return;
+
+          const data = await readFile(options.filePath);
+          const fileName = options.filePath.replaceAll("\\", "/").split("/").pop() ?? options.filePath;
+
+          result = editor.openPatternFromData(data, fileName);
+
+          addRecentPattern(fileName);
+        } else {
+          const data = await files.loadPatternTemplate(options.template);
+
+          result = editor.openPatternFromData(new Uint8Array(data), options.template);
+        }
+
+        addOpenedPattern(result.id, result.title);
+
+        return result.id;
       } catch (err) {
         if (err instanceof UnsupportedPatternTypeError) {
           confirm.open({
@@ -96,74 +120,6 @@ export const usePatternFileStore = defineStore(
           return;
         }
         throw err;
-      } finally {
-        loading.value = false;
-      }
-    }
-
-    async function openPatternFromFile(file: File) {
-      try {
-        loading.value = true;
-
-        const data = new Uint8Array(await file.arrayBuffer());
-
-        const patternId = editor.openPatternFromData(data, file.name);
-        addOpenedPattern(patternId, file.name);
-        addRecentPattern(file.name);
-
-        return patternId;
-      } catch (err) {
-        if (err instanceof UnsupportedPatternTypeError) {
-          confirm.open({
-            title: fluent.$t("error"),
-            description: fluent.$t("pattern-open-unsupported-type"),
-            yesButton: { label: fluent.$t("confirm-ok") },
-            noButton: null,
-          });
-          return;
-        }
-        throw err;
-      } finally {
-        loading.value = false;
-      }
-    }
-
-    async function openPatternFromPath(filePath: string) {
-      if (!__TAURI__) return;
-      try {
-        loading.value = true;
-
-        const data = await readFile(filePath);
-        const fileName = filePath.replaceAll("\\", "/").split("/").pop() ?? filePath;
-
-        const patternId = editor.openPatternFromData(data, fileName);
-        addOpenedPattern(patternId, fileName);
-        addRecentPattern(fileName);
-
-        return patternId;
-      } catch (err) {
-        if (err instanceof UnsupportedPatternTypeError) {
-          confirm.open({
-            title: fluent.$t("error"),
-            description: fluent.$t("pattern-open-unsupported-type"),
-            yesButton: { label: fluent.$t("confirm-ok") },
-            noButton: null,
-          });
-          return;
-        }
-        throw err;
-      } finally {
-        loading.value = false;
-      }
-    }
-
-    async function openPatternFromTemplate(templateName: string) {
-      try {
-        loading.value = true;
-
-        const data = await files.loadPatternTemplate(templateName);
-
-        return editor.openPatternFromData(new Uint8Array(data), templateName);
       } finally {
         loading.value = false;
       }
@@ -330,9 +286,6 @@ export const usePatternFileStore = defineStore(
       updateOpenedPattern,
       loadPattern,
       openPattern,
-      openPatternFromFile,
-      openPatternFromPath,
-      openPatternFromTemplate,
       createPattern,
       savePattern,
       closePattern,

@@ -40,7 +40,7 @@ const { isOverDropZone } = useDropZone(useTemplateRef("drop-zone"), {
 
     let lastPatternId: string | undefined;
     for (const file of files) {
-      const patternId = await patternFileStore.openPatternFromFile(file);
+      const patternId = await patternFileStore.openPattern({ file });
       if (patternId) lastPatternId = patternId;
     }
 
@@ -113,7 +113,7 @@ useShortcuts({
 async function handleFileAssociations(files: string[]) {
   for (const filePath of files) {
     try {
-      const patternId = await patternFileStore.openPatternFromPath(filePath);
+      const patternId = await patternFileStore.openPattern({ filePath });
       if (patternId) patternFileStore.switchPattern(patternId);
     } catch (error) {
       LoggerService.error(`Failed to open pattern from path (${filePath}): ${error}`);
@@ -139,7 +139,7 @@ async function handleOpenOnStartup() {
     case StartupAction.CustomTemplate: {
       if (settingsStore.startup.patternTemplate) {
         try {
-          const id = await patternFileStore.openPatternFromTemplate(settingsStore.startup.patternTemplate);
+          const id = await patternFileStore.openPattern({ template: settingsStore.startup.patternTemplate });
           patternFileStore.switchPattern(id);
         } catch (error) {
           LoggerService.error(`Failed to open pattern from template: ${error}`);
