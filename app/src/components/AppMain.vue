@@ -96,7 +96,7 @@ if (__TAURI__) {
   });
 }
 
-events.on("app:pattern-checkpoint", (patternId) => {
+events.on("app:pattern-saved", (patternId) => {
   if (patternId === patternStore.pattern.id) {
     toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
   }

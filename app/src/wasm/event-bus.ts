@@ -48,6 +48,7 @@ export interface EditorEvents {
 
   "app:pattern-changed": [string];
   "app:pattern-checkpoint": [string];
+  "app:pattern-saved": [string];
 }
 
 export class EditorEventBus extends EventEmitter<EditorEvents> {}

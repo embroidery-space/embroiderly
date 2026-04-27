@@ -59,6 +59,7 @@ pub enum EditorEvent {
   ImageSet(Option<ReferenceImage>),
   ImageSettingsUpdate(ReferenceImageSettings),
 
-  PatternChanged(uuid::Uuid),
-  PatternCheckpoint(uuid::Uuid),
+  PatternChanged(uuid::Uuid),    // Used for marking the pattern as dirty.
+  PatternCheckpoint(uuid::Uuid), // Used for marking the pattern as clean (not dirty, saved).
+  PatternSaved(uuid::Uuid),      // Used for notifiyng the user about a successful save.
 }

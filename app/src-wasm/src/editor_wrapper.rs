@@ -316,11 +316,6 @@ impl EditorWrapper {
     self.end_transaction_impl(pattern_id).await
   }
 
-  /// Records a checkpoint (save point) for the pattern. Used for tracking unsaved changes.
-  pub fn checkpoint(&self, pattern_id: &str) -> Result<(), Error> {
-    self.checkpoint_impl(pattern_id)
-  }
-
   /// Checks if the pattern with the given ID has unsaved changes.
   #[wasm_bindgen(js_name = "hasUnsavedChanges")]
   pub fn has_unsaved_changes(&self, pattern_id: &str) -> Result<bool, Error> {
@@ -490,6 +485,11 @@ impl EditorWrapper {
     if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
       tracing::warn!("Failed to journal checkpoint after save: {e}");
     }
+
+    self.send_events(vec![
+      EditorEvent::PatternCheckpoint(pattern_id),
+      EditorEvent::PatternSaved(pattern_id),
+    ])?;
 
     Ok(())
   }
@@ -982,7 +982,8 @@ impl EditorWrapper {
   #[tracing::instrument(name = "EditorWrapper::undo", level = "debug", skip(self), err)]
   async fn undo_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    let events = self.run(|editor| editor.undo(&pattern_id))?;
+
+    let mut events = self.run(|editor| editor.undo(&pattern_id))?;
     if !events.is_empty() {
       let action_bytes = borsh::to_vec(&JournalEntry::Undo)?;
       if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
@@ -992,13 +993,19 @@ impl EditorWrapper {
         return Err(e);
       }
     }
+
+    if !self.run(|editor| editor.has_unsaved_changes(&pattern_id))? {
+      events.push(EditorEvent::PatternCheckpoint(pattern_id));
+    }
+
     self.send_events(events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::redo", level = "debug", skip(self), err)]
   async fn redo_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    let events = self.run(|editor| editor.redo(&pattern_id))?;
+
+    let mut events = self.run(|editor| editor.redo(&pattern_id))?;
     if !events.is_empty() {
       let action_bytes = borsh::to_vec(&JournalEntry::Redo)?;
       if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
@@ -1008,13 +1015,19 @@ impl EditorWrapper {
         return Err(e);
       }
     }
+
+    if !self.run(|editor| editor.has_unsaved_changes(&pattern_id))? {
+      events.push(EditorEvent::PatternCheckpoint(pattern_id));
+    }
+
     self.send_events(events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::undo_transaction", level = "debug", skip(self), err)]
   async fn undo_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    let events = self.run(|editor| editor.undo_transaction(&pattern_id))?;
+
+    let mut events = self.run(|editor| editor.undo_transaction(&pattern_id))?;
     if !events.is_empty() {
       let action_bytes = borsh::to_vec(&JournalEntry::UndoTransaction)?;
       if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
@@ -1024,13 +1037,19 @@ impl EditorWrapper {
         return Err(e);
       }
     }
+
+    if !self.run(|editor| editor.has_unsaved_changes(&pattern_id))? {
+      events.push(EditorEvent::PatternCheckpoint(pattern_id));
+    }
+
     self.send_events(events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::redo_transaction", level = "debug", skip(self), err)]
   async fn redo_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    let events = self.run(|editor| editor.redo_transaction(&pattern_id))?;
+
+    let mut events = self.run(|editor| editor.redo_transaction(&pattern_id))?;
     if !events.is_empty() {
       let action_bytes = borsh::to_vec(&JournalEntry::RedoTransaction)?;
       if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
@@ -1040,6 +1059,11 @@ impl EditorWrapper {
         return Err(e);
       }
     }
+
+    if !self.run(|editor| editor.has_unsaved_changes(&pattern_id))? {
+      events.push(EditorEvent::PatternCheckpoint(pattern_id));
+    }
+
     self.send_events(events)
   }
 
@@ -1069,12 +1093,6 @@ impl EditorWrapper {
       return Err(e);
     }
     Ok(())
-  }
-
-  #[tracing::instrument(name = "EditorWrapper::checkpoint", level = "debug", skip(self), err)]
-  fn checkpoint_impl(&self, pattern_id: &str) -> Result<(), Error> {
-    let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    Ok(self.run(|editor| editor.checkpoint(&pattern_id))?)
   }
 
   #[tracing::instrument(name = "EditorWrapper::has_unsaved_changes", level = "debug", skip(self), ret, err)]

@@ -66,6 +66,7 @@ const HANDLERS: Array<(bus: EditorEventBus, payload: Uint8Array) => void> = [
 
   (bus, payload) => bus.emit("app:pattern-changed", stringifyUuid(payload)),
   (bus, payload) => bus.emit("app:pattern-checkpoint", stringifyUuid(payload)),
+  (bus, payload) => bus.emit("app:pattern-saved", stringifyUuid(payload)),
 ];
 
 /** Creates a dispatcher that decodes a raw Borsh-encoded `EditorEvent` (discriminant byte followed by payload) and emits the deserialized domain value on the event bus. */
