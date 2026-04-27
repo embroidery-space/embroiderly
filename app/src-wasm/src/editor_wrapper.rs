@@ -282,26 +282,14 @@ impl EditorWrapper {
       .await
   }
 
-  /// Undoes the last edit in the pattern with the given ID.
-  pub async fn undo(&self, pattern_id: &str) -> Result<(), Error> {
-    self.undo_impl(pattern_id).await
+  /// Undoes the last edit or transaction in the pattern with the given ID.
+  pub async fn undo(&self, pattern_id: &str, single: bool) -> Result<(), Error> {
+    self.undo_impl(pattern_id, single).await
   }
 
-  /// Redoes the last undone edit in the pattern with the given ID.
-  pub async fn redo(&self, pattern_id: &str) -> Result<(), Error> {
-    self.redo_impl(pattern_id).await
-  }
-
-  /// Undoes the last transaction in the pattern with the given ID.
-  #[wasm_bindgen(js_name = "undoTransaction")]
-  pub async fn undo_transaction(&self, pattern_id: &str) -> Result<(), Error> {
-    self.undo_transaction_impl(pattern_id).await
-  }
-
-  /// Redoes the last undone transaction in the pattern with the given ID.
-  #[wasm_bindgen(js_name = "redoTransaction")]
-  pub async fn redo_transaction(&self, pattern_id: &str) -> Result<(), Error> {
-    self.redo_transaction_impl(pattern_id).await
+  /// Redoes the last undone edit or transaction in the pattern with the given ID.
+  pub async fn redo(&self, pattern_id: &str, single: bool) -> Result<(), Error> {
+    self.redo_impl(pattern_id, single).await
   }
 
   /// Starts a new transaction in the pattern with the given ID.
@@ -980,14 +968,25 @@ impl EditorWrapper {
   }
 
   #[tracing::instrument(name = "EditorWrapper::undo", level = "debug", skip(self), err)]
-  async fn undo_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn undo_impl(&self, pattern_id: &str, single: bool) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
 
-    let mut events = self.run(|editor| editor.undo(&pattern_id))?;
+    let (mut events, journal_entry) = if single {
+      let events = self.run(|editor| editor.undo(&pattern_id))?;
+      (events, JournalEntry::Undo)
+    } else {
+      let events = self.run(|editor| editor.undo_transaction(&pattern_id))?;
+      (events, JournalEntry::UndoTransaction)
+    };
+
     if !events.is_empty() {
-      let action_bytes = borsh::to_vec(&JournalEntry::Undo)?;
+      let action_bytes = borsh::to_vec(&journal_entry)?;
       if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
-        if let Err(redo_err) = self.run(|editor| editor.redo(&pattern_id)) {
+        if single {
+          if let Err(redo_err) = self.run(|editor| editor.redo(&pattern_id)) {
+            tracing::error!("Failed to roll back undo after journal failure: {redo_err}");
+          }
+        } else if let Err(redo_err) = self.run(|editor| editor.redo_transaction(&pattern_id)) {
           tracing::error!("Failed to roll back undo after journal failure: {redo_err}");
         }
         return Err(e);
@@ -1002,59 +1001,26 @@ impl EditorWrapper {
   }
 
   #[tracing::instrument(name = "EditorWrapper::redo", level = "debug", skip(self), err)]
-  async fn redo_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn redo_impl(&self, pattern_id: &str, single: bool) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
 
-    let mut events = self.run(|editor| editor.redo(&pattern_id))?;
+    let (mut events, journal_entry) = if single {
+      let events = self.run(|editor| editor.redo(&pattern_id))?;
+      (events, JournalEntry::Redo)
+    } else {
+      let events = self.run(|editor| editor.redo_transaction(&pattern_id))?;
+      (events, JournalEntry::RedoTransaction)
+    };
+
     if !events.is_empty() {
-      let action_bytes = borsh::to_vec(&JournalEntry::Redo)?;
+      let action_bytes = borsh::to_vec(&journal_entry)?;
       if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
-        if let Err(undo_err) = self.run(|editor| editor.undo(&pattern_id)) {
+        if single {
+          if let Err(undo_err) = self.run(|editor| editor.undo(&pattern_id)) {
+            tracing::error!("Failed to roll back redo after journal failure: {undo_err}");
+          }
+        } else if let Err(undo_err) = self.run(|editor| editor.undo_transaction(&pattern_id)) {
           tracing::error!("Failed to roll back redo after journal failure: {undo_err}");
-        }
-        return Err(e);
-      }
-    }
-
-    if !self.run(|editor| editor.has_unsaved_changes(&pattern_id))? {
-      events.push(EditorEvent::PatternCheckpoint(pattern_id));
-    }
-
-    self.send_events(events)
-  }
-
-  #[tracing::instrument(name = "EditorWrapper::undo_transaction", level = "debug", skip(self), err)]
-  async fn undo_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
-    let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-
-    let mut events = self.run(|editor| editor.undo_transaction(&pattern_id))?;
-    if !events.is_empty() {
-      let action_bytes = borsh::to_vec(&JournalEntry::UndoTransaction)?;
-      if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
-        if let Err(redo_err) = self.run(|editor| editor.redo_transaction(&pattern_id)) {
-          tracing::error!("Failed to roll back undo_transaction after journal failure: {redo_err}");
-        }
-        return Err(e);
-      }
-    }
-
-    if !self.run(|editor| editor.has_unsaved_changes(&pattern_id))? {
-      events.push(EditorEvent::PatternCheckpoint(pattern_id));
-    }
-
-    self.send_events(events)
-  }
-
-  #[tracing::instrument(name = "EditorWrapper::redo_transaction", level = "debug", skip(self), err)]
-  async fn redo_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
-    let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-
-    let mut events = self.run(|editor| editor.redo_transaction(&pattern_id))?;
-    if !events.is_empty() {
-      let action_bytes = borsh::to_vec(&JournalEntry::RedoTransaction)?;
-      if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
-        if let Err(undo_err) = self.run(|editor| editor.undo_transaction(&pattern_id)) {
-          tracing::error!("Failed to roll back redo_transaction after journal failure: {undo_err}");
         }
         return Err(e);
       }

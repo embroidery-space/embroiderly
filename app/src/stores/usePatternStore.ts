@@ -236,14 +236,12 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
 
   async function undo(options?: { single?: boolean }) {
     if (pattern.value.isNil) return;
-    if (options?.single) await editor.undo(pattern.value.id);
-    else await editor.undoTransaction(pattern.value.id);
+    await editor.undo(pattern.value.id, options?.single ?? false);
   }
 
   async function redo(options?: { single?: boolean }) {
     if (pattern.value.isNil) return;
-    if (options?.single) await editor.redo(pattern.value.id);
-    else await editor.redoTransaction(pattern.value.id);
+    await editor.redo(pattern.value.id, options?.single ?? false);
   }
 
   async function startTransaction() {
