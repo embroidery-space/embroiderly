@@ -62,7 +62,6 @@ watch(
     patternStore.setPattern(patternId ? await patternFileStore.loadPattern(patternId) : undefined);
     editorStateStore.$reset();
   },
-  { immediate: true },
 );
 
 if (__TAURI__) {
@@ -159,6 +158,8 @@ async function handleOpenOnStartup() {
 }
 
 onMounted(async () => {
+  await patternFileStore.restoreSession();
+
   if (!startupHandled.value) {
     startupHandled.value = true;
 
@@ -170,7 +171,10 @@ onMounted(async () => {
     }
   }
 
-  if (!patternFileStore.currentPatternId && patternFileStore.openedPatterns.length) {
+  if (patternFileStore.currentPatternId) {
+    const pattern = await patternFileStore.loadPattern(patternFileStore.currentPatternId);
+    patternStore.setPattern(pattern);
+  } else if (patternFileStore.openedPatterns.length) {
     patternFileStore.switchPattern(patternFileStore.openedPatterns[0]!.id);
   }
 

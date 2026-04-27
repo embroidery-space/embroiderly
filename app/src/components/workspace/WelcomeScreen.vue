@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Button, Icon, Tooltip } from "@embroiderly/ui";
-import { resolveResource, sep } from "@tauri-apps/api/path";
+import { Button, Icon } from "@embroiderly/ui";
+import { resolveResource } from "@tauri-apps/api/path";
 import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
@@ -41,19 +41,23 @@ const infoSections = computed<InfoSection[]>(() => [
       },
     ],
   },
-  {
-    title: fluent.$t("welcome-section-info"),
-    items: [
-      {
-        title: fluent.$t("welcome-info-docs-title"),
-        text: fluent.$t("welcome-info-docs-descr"),
-        async command() {
-          const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
-          await openPath(documentPath);
+  ...(__TAURI__
+    ? [
+        {
+          title: fluent.$t("welcome-section-info"),
+          items: [
+            {
+              title: fluent.$t("welcome-info-docs-title"),
+              text: fluent.$t("welcome-info-docs-descr"),
+              async command() {
+                const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
+                await openPath(documentPath);
+              },
+            },
+          ],
         },
-      },
-    ],
-  },
+      ]
+    : []),
   {
     title: fluent.$t("welcome-section-help"),
     items: [
@@ -133,17 +137,15 @@ async function openRecentFile(_filePath: string) {
             <div v-if="patternFileStore.recentPatterns.length > 0" class="flex flex-col gap-y-1">
               <span class="text-lg">{{ $t("welcome-section-recent") }}</span>
               <div class="flex max-w-max flex-col gap-y-1">
-                <template v-for="filePath in patternFileStore.recentPatterns" :key="filePath">
-                  <Tooltip :text="filePath" :delay-duration="200" side="right">
-                    <Button
-                      variant="ghost"
-                      :icon="IconFile"
-                      :label="filePath.split(sep()).pop() || filePath"
-                      class="justify-start"
-                      @click="openRecentFile(filePath)"
-                    />
-                  </Tooltip>
-                </template>
+                <Button
+                  v-for="fileName in patternFileStore.recentPatterns"
+                  :key="fileName"
+                  variant="ghost"
+                  :icon="IconFile"
+                  :label="fileName"
+                  class="justify-start"
+                  @click="openRecentFile(fileName)"
+                />
               </div>
             </div>
           </div>

@@ -59,6 +59,17 @@ export const usePatternFileStore = defineStore(
       recentPatterns.value = recentPatterns.value.slice(0, MAX_RECENT_PATTERNS);
     }
 
+    async function restoreSession() {
+      const restored = await editor.restoreSession();
+      for (const pattern of restored) {
+        if (!openedPatterns.value.some((p) => p.id === pattern.id)) {
+          // Destructure the restored pattern to get cloned values from the Wasm module.
+          const { id, title, dirty } = pattern;
+          openedPatterns.value.push({ id, title, dirty });
+        }
+      }
+    }
+
     // oxlint-disable-next-line require-await
     async function loadPattern(id: string) {
       try {
@@ -88,7 +99,7 @@ export const usePatternFileStore = defineStore(
         } else if ("file" in options) {
           const data = new Uint8Array(await options.file.arrayBuffer());
 
-          result = editor.openPatternFromData(data, options.file.name);
+          result = await editor.openPatternFromData(data, options.file.name);
 
           addRecentPattern(options.file.name);
         } else if ("filePath" in options) {
@@ -97,13 +108,13 @@ export const usePatternFileStore = defineStore(
           const data = await readFile(options.filePath);
           const fileName = options.filePath.replaceAll("\\", "/").split("/").pop() ?? options.filePath;
 
-          result = editor.openPatternFromData(data, fileName);
+          result = await editor.openPatternFromData(data, fileName);
 
           addRecentPattern(fileName);
         } else {
           const data = await files.loadPatternTemplate(options.template);
 
-          result = editor.openPatternFromData(new Uint8Array(data), options.template);
+          result = await editor.openPatternFromData(new Uint8Array(data), options.template);
         }
 
         addOpenedPattern(result.id, result.title);
@@ -125,11 +136,10 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    // oxlint-disable-next-line require-await
     async function createPattern(fabric: Fabric) {
       try {
         loading.value = true;
-        return editor.createPattern(Fabric.serialize(fabric));
+        return await editor.createPattern(Fabric.serialize(fabric));
       } finally {
         loading.value = false;
       }
@@ -284,6 +294,7 @@ export const usePatternFileStore = defineStore(
       loading,
       switchPattern,
       updateOpenedPattern,
+      restoreSession,
       loadPattern,
       openPattern,
       createPattern,

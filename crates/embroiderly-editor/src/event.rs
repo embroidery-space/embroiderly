@@ -60,4 +60,5 @@ pub enum EditorEvent {
   ImageSettingsUpdate(ReferenceImageSettings),
 
   PatternChanged(uuid::Uuid),
+  PatternCheckpoint(uuid::Uuid),
 }

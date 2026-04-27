@@ -9,7 +9,7 @@ use embroiderly_editor::actions::{
 use embroiderly_editor::{Editor, EditorAction, EditorEvent};
 use embroiderly_parsers::{PackageInfo, PatternFormat};
 use embroiderly_pattern::{Pattern, PatternProject, ReferenceImage, Stitch};
-use js_sys::{Function, Uint8Array};
+use js_sys::Uint8Array;
 use wasm_bindgen::prelude::*;
 
 use crate::error::{Error, ErrorKind};
@@ -26,16 +26,28 @@ pub struct OpenPatternResult {
   pub title: String,
 }
 
-fn package_info() -> PackageInfo {
-  PackageInfo {
-    name: "Embroiderly".to_owned(),
-    version: "0.7.1".to_owned(),
-  }
+#[wasm_bindgen(getter_with_clone)]
+pub struct RestoredPattern {
+  pub id: String,
+  pub title: String,
+  pub dirty: bool,
+}
+
+#[derive(borsh::BorshSerialize, borsh::BorshDeserialize)]
+enum JournalEntry {
+  Action(EditorAction),
+  Undo,
+  Redo,
+  UndoTransaction,
+  RedoTransaction,
+  StartTransaction,
+  EndTransaction,
+  Checkpoint,
 }
 
 #[wasm_bindgen]
 pub struct EditorWrapper {
-  callback: Function,
+  callback: js_sys::Function,
   persistence: PersistenceManager,
 }
 
@@ -43,7 +55,7 @@ pub struct EditorWrapper {
 #[wasm_bindgen]
 impl EditorWrapper {
   /// Creates a new `EditorWrapper`.
-  pub async fn create(callback: Function) -> Result<Self, Error> {
+  pub async fn create(callback: js_sys::Function) -> Result<Self, Error> {
     EDITOR.with(|cell| {
       *cell.borrow_mut() = Some(Editor::new());
     });
@@ -51,6 +63,13 @@ impl EditorWrapper {
       callback,
       persistence: PersistenceManager::create().await?,
     })
+  }
+
+  /// Restores all previously open patterns from their IndexedDB snapshots and replays the full journal for each.
+  /// Returns an array of [`RestoredPattern`] values so the frontend can rebuild the open-tab list.
+  #[wasm_bindgen(js_name = "restoreSession")]
+  pub async fn restore_session(&self) -> Result<Vec<RestoredPattern>, Error> {
+    self.restore_session_impl().await
   }
 
   /// Reads the file from the provided file handle, parses it, and registers the pattern in the editor.
@@ -70,16 +89,16 @@ impl EditorWrapper {
   ///
   /// Returns `[id, title]` --- the pattern UUID and its title (falling back to `file_name` if empty).
   #[wasm_bindgen(js_name = "openPatternFromData")]
-  pub fn open_pattern_from_data(&self, data: &[u8], file_name: &str) -> Result<OpenPatternResult, Error> {
-    let (id, title) = self.open_pattern_from_data_impl(data, file_name)?;
+  pub async fn open_pattern_from_data(&self, data: &[u8], file_name: &str) -> Result<OpenPatternResult, Error> {
+    let (id, title) = self.open_pattern_from_data_impl(data, file_name).await?;
     Ok(OpenPatternResult { id, title })
   }
 
   /// Creates a blank pattern from the provided Borsh-serialized `Fabric` data.
   /// Returns its UUID as a string.
   #[wasm_bindgen(js_name = "createPattern")]
-  pub fn create_pattern(&self, fabric_data: &[u8]) -> Result<String, Error> {
-    self.create_pattern_impl(fabric_data)
+  pub async fn create_pattern(&self, fabric_data: &[u8]) -> Result<String, Error> {
+    self.create_pattern_impl(fabric_data).await
   }
 
   /// Returns the Borsh-serialized `PatternProject`.
@@ -112,7 +131,7 @@ impl EditorWrapper {
     self.export_pattern_impl(pattern_id, file_handle.into()).await
   }
 
-  /// Removes the pattern from the editor and cleans up its persisted handle from IndexedDB.
+  /// Removes the pattern from the editor and cleans up its persisted entry from IndexedDB.
   /// Throws an error if the pattern has unsaved changes and `force` is false.
   #[wasm_bindgen(js_name = "closePattern")]
   pub async fn close_pattern(&self, pattern_id: &str, force: bool) -> Result<(), Error> {
@@ -121,167 +140,180 @@ impl EditorWrapper {
 
   /// Adds a stitch to the pattern layer.
   #[wasm_bindgen(js_name = "addStitch")]
-  pub fn add_stitch(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
-    self.add_stitch_impl(pattern_id, layer_index, stitch_data)
+  pub async fn add_stitch(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
+    self.add_stitch_impl(pattern_id, layer_index, stitch_data).await
   }
 
   /// Removes a stitch from the pattern layer.
   #[wasm_bindgen(js_name = "removeStitch")]
-  pub fn remove_stitch(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
-    self.remove_stitch_impl(pattern_id, layer_index, stitch_data)
+  pub async fn remove_stitch(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
+    self.remove_stitch_impl(pattern_id, layer_index, stitch_data).await
   }
 
   /// Updates fabric properties.
   #[wasm_bindgen(js_name = "updateFabric")]
-  pub fn update_fabric(&self, pattern_id: &str, fabric_data: &[u8]) -> Result<(), Error> {
-    self.update_fabric_impl(pattern_id, fabric_data)
+  pub async fn update_fabric(&self, pattern_id: &str, fabric_data: &[u8]) -> Result<(), Error> {
+    self.update_fabric_impl(pattern_id, fabric_data).await
   }
 
   /// Updates grid properties.
   #[wasm_bindgen(js_name = "updateGrid")]
-  pub fn update_grid(&self, pattern_id: &str, grid_data: &[u8]) -> Result<(), Error> {
-    self.update_grid_impl(pattern_id, grid_data)
+  pub async fn update_grid(&self, pattern_id: &str, grid_data: &[u8]) -> Result<(), Error> {
+    self.update_grid_impl(pattern_id, grid_data).await
   }
 
   /// Adds a new palette item.
   #[wasm_bindgen(js_name = "addPaletteItem")]
-  pub fn add_palette_item(&self, pattern_id: &str, palitem_data: &[u8]) -> Result<(), Error> {
-    self.add_palette_item_impl(pattern_id, palitem_data)
+  pub async fn add_palette_item(&self, pattern_id: &str, palitem_data: &[u8]) -> Result<(), Error> {
+    self.add_palette_item_impl(pattern_id, palitem_data).await
   }
 
   /// Removes palette items by their indexes.
   #[wasm_bindgen(js_name = "removePaletteItems")]
-  pub fn remove_palette_items(&self, pattern_id: &str, palindexes: Vec<u32>) -> Result<(), Error> {
-    self.remove_palette_items_impl(pattern_id, palindexes)
+  pub async fn remove_palette_items(&self, pattern_id: &str, palindexes: Vec<u32>) -> Result<(), Error> {
+    self.remove_palette_items_impl(pattern_id, palindexes).await
   }
 
   /// Updates palette display settings.
   #[wasm_bindgen(js_name = "updatePaletteDisplaySettings")]
-  pub fn update_palette_display_settings(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
-    self.update_palette_display_settings_impl(pattern_id, settings_data)
+  pub async fn update_palette_display_settings(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
+    self
+      .update_palette_display_settings_impl(pattern_id, settings_data)
+      .await
   }
 
   /// Sorts palette items by the given criterion.
   #[wasm_bindgen(js_name = "sortPalette")]
-  pub fn sort_palette(&self, pattern_id: &str, sort_by: &str) -> Result<(), Error> {
-    self.sort_palette_impl(pattern_id, sort_by)
+  pub async fn sort_palette(&self, pattern_id: &str, sort_by: &str) -> Result<(), Error> {
+    self.sort_palette_impl(pattern_id, sort_by).await
   }
 
   /// Reorders a palette item from `old_position` to `new_position`.
   #[wasm_bindgen(js_name = "reorderPaletteItems")]
-  pub fn reorder_palette_items(&self, pattern_id: &str, old_position: u32, new_position: u32) -> Result<(), Error> {
-    self.reorder_palette_items_impl(pattern_id, old_position, new_position)
+  pub async fn reorder_palette_items(
+    &self,
+    pattern_id: &str,
+    old_position: u32,
+    new_position: u32,
+  ) -> Result<(), Error> {
+    self
+      .reorder_palette_items_impl(pattern_id, old_position, new_position)
+      .await
   }
 
   /// Sets the stitch symbol for a palette item.
   #[wasm_bindgen(js_name = "setPaletteItemSymbol")]
-  pub fn set_palette_item_symbol(&self, pattern_id: &str, symbol_data: &[u8]) -> Result<(), Error> {
-    self.set_palette_item_symbol_impl(pattern_id, symbol_data)
+  pub async fn set_palette_item_symbol(&self, pattern_id: &str, symbol_data: &[u8]) -> Result<(), Error> {
+    self.set_palette_item_symbol_impl(pattern_id, symbol_data).await
   }
 
   /// Updates pattern info.
   #[wasm_bindgen(js_name = "updatePatternInfo")]
-  pub fn update_pattern_info(&self, pattern_id: &str, info_data: &[u8]) -> Result<(), Error> {
-    self.update_pattern_info_impl(pattern_id, info_data)
+  pub async fn update_pattern_info(&self, pattern_id: &str, info_data: &[u8]) -> Result<(), Error> {
+    self.update_pattern_info_impl(pattern_id, info_data).await
   }
 
   /// Updates display settings.
   #[wasm_bindgen(js_name = "updateDisplaySettings")]
-  pub fn update_display_settings(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
-    self.update_display_settings_impl(pattern_id, settings_data)
+  pub async fn update_display_settings(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
+    self.update_display_settings_impl(pattern_id, settings_data).await
   }
 
   /// Adds a new layer to the pattern.
   #[wasm_bindgen(js_name = "addLayer")]
-  pub fn add_layer(&self, pattern_id: &str) -> Result<(), Error> {
-    self.add_layer_impl(pattern_id)
+  pub async fn add_layer(&self, pattern_id: &str) -> Result<(), Error> {
+    self.add_layer_impl(pattern_id).await
   }
 
   /// Removes the layer at the given index.
   #[wasm_bindgen(js_name = "removeLayer")]
-  pub fn remove_layer(&self, pattern_id: &str, layer_index: u32) -> Result<(), Error> {
-    self.remove_layer_impl(pattern_id, layer_index)
+  pub async fn remove_layer(&self, pattern_id: &str, layer_index: u32) -> Result<(), Error> {
+    self.remove_layer_impl(pattern_id, layer_index).await
   }
 
   /// Renames the layer at the given index.
   #[wasm_bindgen(js_name = "renameLayer")]
-  pub fn rename_layer(&self, pattern_id: &str, layer_index: u32, name: String) -> Result<(), Error> {
-    self.rename_layer_impl(pattern_id, layer_index, name)
+  pub async fn rename_layer(&self, pattern_id: &str, layer_index: u32, name: String) -> Result<(), Error> {
+    self.rename_layer_impl(pattern_id, layer_index, name).await
   }
 
   /// Updates layer visibility flags.
   #[wasm_bindgen(js_name = "updateLayerVisibility")]
-  pub fn update_layer_visibility(
+  pub async fn update_layer_visibility(
     &self,
     pattern_id: &str,
     layer_index: u32,
     visibility_data: &[u8],
   ) -> Result<(), Error> {
-    self.update_layer_visibility_impl(pattern_id, layer_index, visibility_data)
+    self
+      .update_layer_visibility_impl(pattern_id, layer_index, visibility_data)
+      .await
   }
 
   /// Moves a layer from `old_position` to `new_position`.
   #[wasm_bindgen(js_name = "moveLayer")]
-  pub fn move_layer(&self, pattern_id: &str, old_position: u32, new_position: u32) -> Result<(), Error> {
-    self.move_layer_impl(pattern_id, old_position, new_position)
+  pub async fn move_layer(&self, pattern_id: &str, old_position: u32, new_position: u32) -> Result<(), Error> {
+    self.move_layer_impl(pattern_id, old_position, new_position).await
   }
 
   /// Updates PDF export options.
   #[wasm_bindgen(js_name = "updatePdfExportOptions")]
-  pub fn update_pdf_export_options(&self, pattern_id: &str, options_data: &[u8]) -> Result<(), Error> {
-    self.update_pdf_export_options_impl(pattern_id, options_data)
+  pub async fn update_pdf_export_options(&self, pattern_id: &str, options_data: &[u8]) -> Result<(), Error> {
+    self.update_pdf_export_options_impl(pattern_id, options_data).await
   }
 
   /// Sets the reference image.
   #[wasm_bindgen(js_name = "setReferenceImage")]
-  pub fn set_reference_image(&self, pattern_id: &str, image_data: &[u8]) -> Result<(), Error> {
-    self.set_reference_image_impl(pattern_id, image_data)
+  pub async fn set_reference_image(&self, pattern_id: &str, image_data: &[u8]) -> Result<(), Error> {
+    self.set_reference_image_impl(pattern_id, image_data).await
   }
 
   /// Removes the reference image.
   #[wasm_bindgen(js_name = "removeReferenceImage")]
-  pub fn remove_reference_image(&self, pattern_id: &str) -> Result<(), Error> {
-    self.remove_reference_image_impl(pattern_id)
+  pub async fn remove_reference_image(&self, pattern_id: &str) -> Result<(), Error> {
+    self.remove_reference_image_impl(pattern_id).await
   }
 
   /// Updates reference image display settings.
   #[wasm_bindgen(js_name = "updateReferenceImageSettings")]
-  pub fn update_reference_image_settings(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
-    self.update_reference_image_settings_impl(pattern_id, settings_data)
+  pub async fn update_reference_image_settings(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
+    self
+      .update_reference_image_settings_impl(pattern_id, settings_data)
+      .await
   }
 
   /// Undoes the last edit in the pattern with the given ID.
-  pub fn undo(&self, pattern_id: &str) -> Result<(), Error> {
-    self.undo_impl(pattern_id)
+  pub async fn undo(&self, pattern_id: &str) -> Result<(), Error> {
+    self.undo_impl(pattern_id).await
   }
 
   /// Redoes the last undone edit in the pattern with the given ID.
-  pub fn redo(&self, pattern_id: &str) -> Result<(), Error> {
-    self.redo_impl(pattern_id)
+  pub async fn redo(&self, pattern_id: &str) -> Result<(), Error> {
+    self.redo_impl(pattern_id).await
   }
 
   /// Undoes the last transaction in the pattern with the given ID.
   #[wasm_bindgen(js_name = "undoTransaction")]
-  pub fn undo_transaction(&self, pattern_id: &str) -> Result<(), Error> {
-    self.undo_transaction_impl(pattern_id)
+  pub async fn undo_transaction(&self, pattern_id: &str) -> Result<(), Error> {
+    self.undo_transaction_impl(pattern_id).await
   }
 
   /// Redoes the last undone transaction in the pattern with the given ID.
   #[wasm_bindgen(js_name = "redoTransaction")]
-  pub fn redo_transaction(&self, pattern_id: &str) -> Result<(), Error> {
-    self.redo_transaction_impl(pattern_id)
+  pub async fn redo_transaction(&self, pattern_id: &str) -> Result<(), Error> {
+    self.redo_transaction_impl(pattern_id).await
   }
 
   /// Starts a new transaction in the pattern with the given ID.
   #[wasm_bindgen(js_name = "startTransaction")]
-  pub fn start_transaction(&self, pattern_id: &str) -> Result<(), Error> {
-    self.start_transaction_impl(pattern_id)
+  pub async fn start_transaction(&self, pattern_id: &str) -> Result<(), Error> {
+    self.start_transaction_impl(pattern_id).await
   }
 
   /// Ends the current transaction in the pattern with the given ID.
   #[wasm_bindgen(js_name = "endTransaction")]
-  pub fn end_transaction(&self, pattern_id: &str) -> Result<(), Error> {
-    self.end_transaction_impl(pattern_id)
+  pub async fn end_transaction(&self, pattern_id: &str) -> Result<(), Error> {
+    self.end_transaction_impl(pattern_id).await
   }
 
   /// Records a checkpoint (save point) for the pattern. Used for tracking unsaved changes.
@@ -318,9 +350,21 @@ impl EditorWrapper {
     Ok(())
   }
 
-  /// Dispatches an action and sends the resulting events.
-  fn dispatch(&self, pattern_id: uuid::Uuid, action: EditorAction) -> Result<(), Error> {
-    let events = self.run(|editor| editor.dispatch(&pattern_id, action))?;
+  /// Dispatches an action against the editor, journals it, and emits the resulting events.
+  ///
+  /// If the journal write fails, the action is rolled back so both states remain identical.
+  /// Events are only emitted after a successful journal write.
+  async fn dispatch(&self, pattern_id: uuid::Uuid, action: EditorAction) -> Result<(), Error> {
+    let events = self.run(|editor| editor.dispatch(&pattern_id, action.clone()))?;
+    if !events.is_empty() {
+      let action_bytes = borsh::to_vec(&JournalEntry::Action(action))?;
+      if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
+        if let Err(undo_err) = self.run(|editor| editor.undo(&pattern_id)) {
+          tracing::error!("Failed to roll back action after journal failure: {undo_err}");
+        }
+        return Err(e);
+      }
+    }
     self.send_events(events)
   }
 
@@ -341,9 +385,16 @@ impl EditorWrapper {
     let patproj = embroiderly_parsers::parse_pattern(&data, &file_name)?;
     let title = patproj.pattern.info.title.clone();
     let title = if title.is_empty() { file_name } else { title };
+
+    // Serialize the initial pattern state before handing ownership to the editor.
+    // This snapshot serves as the replay baseline for session restore.
+    let snapshot = borsh::to_vec(&patproj)?;
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
 
-    self.persistence.save_handle(pattern_id, file_handle).await?;
+    self
+      .persistence
+      .save_pattern_entry(pattern_id, Some(file_handle), snapshot)
+      .await?;
 
     Ok((pattern_id.to_string(), title))
   }
@@ -355,20 +406,34 @@ impl EditorWrapper {
     ret,
     err
   )]
-  fn open_pattern_from_data_impl(&self, data: &[u8], file_name: &str) -> Result<(String, String), Error> {
+  async fn open_pattern_from_data_impl(&self, data: &[u8], file_name: &str) -> Result<(String, String), Error> {
     let patproj = embroiderly_parsers::parse_pattern(data, file_name)?;
     let title = patproj.pattern.info.title.clone();
     let title = if title.is_empty() { file_name.to_owned() } else { title };
+
+    // Serialize the initial pattern state before handing ownership to the editor.
+    // This snapshot serves as the replay baseline for session restore.
+    let snapshot = borsh::to_vec(&patproj)?;
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
+
+    self.persistence.save_pattern_entry(pattern_id, None, snapshot).await?;
+
     Ok((pattern_id.to_string(), title))
   }
 
   #[tracing::instrument(name = "EditorWrapper::create_pattern", level = "debug", skip_all, ret, err)]
-  fn create_pattern_impl(&self, fabric_data: &[u8]) -> Result<String, Error> {
+  async fn create_pattern_impl(&self, fabric_data: &[u8]) -> Result<String, Error> {
     let fabric = borsh::from_slice(fabric_data)?;
     let pattern = Pattern::new(fabric);
     let patproj = PatternProject::builder(pattern).build();
+
+    // Serialize the initial pattern state before handing ownership to the editor.
+    // This snapshot serves as the replay baseline for session restore.
+    let snapshot = borsh::to_vec(&patproj)?;
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
+
+    self.persistence.save_pattern_entry(pattern_id, None, snapshot).await?;
+
     Ok(pattern_id.to_string())
   }
 
@@ -394,7 +459,7 @@ impl EditorWrapper {
   async fn save_pattern_impl(&self, pattern_id: &str, file_handle: Option<opfs::FileHandle>) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let file_handle = if let Some(file_handle) = file_handle {
-      self.persistence.save_handle(pattern_id, file_handle.clone()).await?;
+      self.persistence.update_handle(pattern_id, file_handle.clone()).await?;
       file_handle
     } else {
       self
@@ -419,6 +484,12 @@ impl EditorWrapper {
 
     file_handle.write(&data).await?;
     self.run(|editor| editor.checkpoint(&pattern_id))?;
+
+    // Record the checkpoint in the journal so that `has_unsaved_changes` is correctly restored when the history is replayed after a page reload.
+    let action_bytes = borsh::to_vec(&JournalEntry::Checkpoint)?;
+    if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
+      tracing::warn!("Failed to journal checkpoint after save: {e}");
+    }
 
     Ok(())
   }
@@ -463,59 +534,143 @@ impl EditorWrapper {
       editor.remove_pattern(&pattern_id);
       Ok(())
     })?;
-    self.persistence.remove_handle(pattern_id).await
+    self.persistence.remove_pattern_entry(pattern_id).await?;
+    self.persistence.clear_journal(pattern_id).await
+  }
+
+  #[tracing::instrument(name = "EditorWrapper::restore_session", level = "debug", skip(self), err)]
+  async fn restore_session_impl(&self) -> Result<Vec<RestoredPattern>, Error> {
+    let entries = self.persistence.load_all_pattern_entries().await?;
+
+    let mut restored = Vec::with_capacity(entries.len());
+    for entry in entries {
+      let patproj: PatternProject = borsh::from_slice(&entry.data)?;
+
+      let id = patproj.id;
+      let title = patproj.pattern.info.title.clone();
+
+      // Add the pattern at its initial (snapshot) state and mark it as checkpointed.
+      // Journal actions are replayed on top of this baseline to reconstruct the full history.
+      self.run(|editor| {
+        editor.add_pattern(patproj);
+        editor.checkpoint(&id)
+      })?;
+
+      let actions = self.persistence.load_journal_entries(id).await?;
+      for action_bytes in actions {
+        let op: JournalEntry = borsh::from_slice(&action_bytes)?;
+        match op {
+          JournalEntry::Action(action) => {
+            if let Err(e) = self.run(|editor| editor.dispatch(&id, action)) {
+              tracing::warn!("Failed to replay journal action: {e}");
+            }
+          }
+          JournalEntry::Undo => {
+            if let Err(e) = self.run(|editor| editor.undo(&id)) {
+              tracing::warn!("Failed to replay journal undo: {e}");
+            }
+          }
+          JournalEntry::Redo => {
+            if let Err(e) = self.run(|editor| editor.redo(&id)) {
+              tracing::warn!("Failed to replay journal redo: {e}");
+            }
+          }
+          JournalEntry::UndoTransaction => {
+            if let Err(e) = self.run(|editor| editor.undo_transaction(&id)) {
+              tracing::warn!("Failed to replay journal undo_transaction: {e}");
+            }
+          }
+          JournalEntry::RedoTransaction => {
+            if let Err(e) = self.run(|editor| editor.redo_transaction(&id)) {
+              tracing::warn!("Failed to replay journal redo_transaction: {e}");
+            }
+          }
+          JournalEntry::StartTransaction => {
+            if let Err(e) = self.run(|editor| editor.start_transaction(&id)) {
+              tracing::warn!("Failed to replay journal start_transaction: {e}");
+            }
+          }
+          JournalEntry::EndTransaction => {
+            if let Err(e) = self.run(|editor| editor.end_transaction(&id)) {
+              tracing::warn!("Failed to replay journal end_transaction: {e}");
+            }
+          }
+          JournalEntry::Checkpoint => {
+            if let Err(e) = self.run(|editor| editor.checkpoint(&id)) {
+              tracing::warn!("Failed to replay journal checkpoint: {e}");
+            }
+          }
+        }
+      }
+
+      restored.push(RestoredPattern {
+        id: id.to_string(),
+        title,
+        dirty: self.run(|editor| editor.has_unsaved_changes(&id))?,
+      });
+    }
+
+    Ok(restored)
   }
 
   #[tracing::instrument(name = "EditorWrapper::add_stitch", level = "debug", skip(self, stitch_data), err)]
-  fn add_stitch_impl(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
+  async fn add_stitch_impl(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let stitch: Stitch = borsh::from_slice(stitch_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Stitch(StitchAction::Add {
-        layer_index,
-        stitch,
-        conflicts: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Stitch(StitchAction::Add {
+          layer_index,
+          stitch,
+          conflicts: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::remove_stitch", level = "debug", skip(self, stitch_data), err)]
-  fn remove_stitch_impl(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
+  async fn remove_stitch_impl(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let stitch: Stitch = borsh::from_slice(stitch_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Stitch(StitchAction::Remove {
-        layer_index,
-        target_stitch: stitch,
-        actual_stitch: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Stitch(StitchAction::Remove {
+          layer_index,
+          target_stitch: stitch,
+          actual_stitch: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::update_fabric", level = "debug", skip(self, fabric_data), err)]
-  fn update_fabric_impl(&self, pattern_id: &str, fabric_data: &[u8]) -> Result<(), Error> {
+  async fn update_fabric_impl(&self, pattern_id: &str, fabric_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let fabric = borsh::from_slice(fabric_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Fabric(FabricAction::Update {
-        fabric,
-        old_fabric: None,
-        extra_stitches: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Fabric(FabricAction::Update {
+          fabric,
+          old_fabric: None,
+          extra_stitches: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::update_grid", level = "debug", skip(self, grid_data), err)]
-  fn update_grid_impl(&self, pattern_id: &str, grid_data: &[u8]) -> Result<(), Error> {
+  async fn update_grid_impl(&self, pattern_id: &str, grid_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let grid = borsh::from_slice(grid_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Grid(GridAction::Update { grid, old_grid: None }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Grid(GridAction::Update { grid, old_grid: None }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -524,23 +679,27 @@ impl EditorWrapper {
     skip(self, palitem_data),
     err
   )]
-  fn add_palette_item_impl(&self, pattern_id: &str, palitem_data: &[u8]) -> Result<(), Error> {
+  async fn add_palette_item_impl(&self, pattern_id: &str, palitem_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let palitem = borsh::from_slice(palitem_data)?;
-    self.dispatch(pattern_id, EditorAction::Palette(PaletteAction::AddItem { palitem }))
+    self
+      .dispatch(pattern_id, EditorAction::Palette(PaletteAction::AddItem { palitem }))
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::remove_palette_items", level = "debug", skip(self), err)]
-  fn remove_palette_items_impl(&self, pattern_id: &str, palindexes: Vec<u32>) -> Result<(), Error> {
+  async fn remove_palette_items_impl(&self, pattern_id: &str, palindexes: Vec<u32>) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Palette(PaletteAction::RemoveItems {
-        palindexes,
-        saved_palitems: None,
-        saved_conflicts: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Palette(PaletteAction::RemoveItems {
+          palindexes,
+          saved_palitems: None,
+          saved_conflicts: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -549,20 +708,22 @@ impl EditorWrapper {
     skip(self, settings_data),
     err
   )]
-  fn update_palette_display_settings_impl(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
+  async fn update_palette_display_settings_impl(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let settings = borsh::from_slice(settings_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Palette(PaletteAction::UpdateDisplaySettings {
-        settings,
-        old_settings: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Palette(PaletteAction::UpdateDisplaySettings {
+          settings,
+          old_settings: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::sort_palette", level = "debug", skip(self), err)]
-  fn sort_palette_impl(&self, pattern_id: &str, sort_by: &str) -> Result<(), Error> {
+  async fn sort_palette_impl(&self, pattern_id: &str, sort_by: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let sort_by = match sort_by {
       "BrandAndNumber" => SortPaletteBy::BrandAndNumber,
@@ -572,26 +733,35 @@ impl EditorWrapper {
         );
       }
     };
-    self.dispatch(
-      pattern_id,
-      EditorAction::Palette(PaletteAction::Sort {
-        sort_by,
-        old_positions: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Palette(PaletteAction::Sort {
+          sort_by,
+          old_positions: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::reorder_palette_items", level = "debug", skip(self), err)]
-  fn reorder_palette_items_impl(&self, pattern_id: &str, old_position: u32, new_position: u32) -> Result<(), Error> {
+  async fn reorder_palette_items_impl(
+    &self,
+    pattern_id: &str,
+    old_position: u32,
+    new_position: u32,
+  ) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Palette(PaletteAction::Reorder {
-        old_position,
-        new_position,
-        old_positions: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Palette(PaletteAction::Reorder {
+          old_position,
+          new_position,
+          old_positions: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -600,7 +770,7 @@ impl EditorWrapper {
     skip(self, symbol_data),
     err
   )]
-  fn set_palette_item_symbol_impl(&self, pattern_id: &str, symbol_data: &[u8]) -> Result<(), Error> {
+  async fn set_palette_item_symbol_impl(&self, pattern_id: &str, symbol_data: &[u8]) -> Result<(), Error> {
     #[derive(borsh::BorshDeserialize)]
     struct SetSymbolPayload {
       palindex: u32,
@@ -608,14 +778,16 @@ impl EditorWrapper {
     }
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let SetSymbolPayload { palindex, symbol } = borsh::from_slice(symbol_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Palette(PaletteAction::SetSymbol {
-        palindex,
-        symbol,
-        old_symbol: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Palette(PaletteAction::SetSymbol {
+          palindex,
+          symbol,
+          old_symbol: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -624,13 +796,15 @@ impl EditorWrapper {
     skip(self, info_data),
     err
   )]
-  fn update_pattern_info_impl(&self, pattern_id: &str, info_data: &[u8]) -> Result<(), Error> {
+  async fn update_pattern_info_impl(&self, pattern_id: &str, info_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let info = borsh::from_slice(info_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Pattern(PatternAction::UpdateInfo { info, old_info: None }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Pattern(PatternAction::UpdateInfo { info, old_info: None }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -639,47 +813,55 @@ impl EditorWrapper {
     skip(self, settings_data),
     err
   )]
-  fn update_display_settings_impl(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
+  async fn update_display_settings_impl(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let display_settings = borsh::from_slice(settings_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Display(DisplayAction::Update {
-        display_settings,
-        old_display_settings: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Display(DisplayAction::Update {
+          display_settings,
+          old_display_settings: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::add_layer", level = "debug", skip(self), err)]
-  fn add_layer_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn add_layer_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    self.dispatch(pattern_id, EditorAction::Layer(LayerAction::Add { added_index: None }))
+    self
+      .dispatch(pattern_id, EditorAction::Layer(LayerAction::Add { added_index: None }))
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::remove_layer", level = "debug", skip(self), err)]
-  fn remove_layer_impl(&self, pattern_id: &str, layer_index: u32) -> Result<(), Error> {
+  async fn remove_layer_impl(&self, pattern_id: &str, layer_index: u32) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Layer(LayerAction::Remove {
-        layer_index,
-        removed_layer: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Layer(LayerAction::Remove {
+          layer_index,
+          removed_layer: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::rename_layer", level = "debug", skip(self), err)]
-  fn rename_layer_impl(&self, pattern_id: &str, layer_index: u32, name: String) -> Result<(), Error> {
+  async fn rename_layer_impl(&self, pattern_id: &str, layer_index: u32, name: String) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Layer(LayerAction::Rename {
-        layer_index,
-        name,
-        old_name: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Layer(LayerAction::Rename {
+          layer_index,
+          name,
+          old_name: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -688,7 +870,7 @@ impl EditorWrapper {
     skip(self, visibility_data),
     err
   )]
-  fn update_layer_visibility_impl(
+  async fn update_layer_visibility_impl(
     &self,
     pattern_id: &str,
     layer_index: u32,
@@ -696,27 +878,31 @@ impl EditorWrapper {
   ) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let visibility: LayerVisibility = borsh::from_slice(visibility_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Layer(LayerAction::UpdateVisibility {
-        layer_index,
-        visibility,
-        old_visibility: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Layer(LayerAction::UpdateVisibility {
+          layer_index,
+          visibility,
+          old_visibility: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::move_layer", level = "debug", skip(self), err)]
-  fn move_layer_impl(&self, pattern_id: &str, old_position: u32, new_position: u32) -> Result<(), Error> {
+  async fn move_layer_impl(&self, pattern_id: &str, old_position: u32, new_position: u32) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Layer(LayerAction::Move {
-        old_position,
-        new_position,
-        old_positions: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Layer(LayerAction::Move {
+          old_position,
+          new_position,
+          old_positions: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -725,16 +911,18 @@ impl EditorWrapper {
     skip(self, options_data),
     err
   )]
-  fn update_pdf_export_options_impl(&self, pattern_id: &str, options_data: &[u8]) -> Result<(), Error> {
+  async fn update_pdf_export_options_impl(&self, pattern_id: &str, options_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let options = borsh::from_slice(options_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Publish(PublishAction::UpdatePdfExportOptions {
-        options,
-        old_options: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Publish(PublishAction::UpdatePdfExportOptions {
+          options,
+          old_options: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -743,28 +931,32 @@ impl EditorWrapper {
     skip(self, image_data),
     err
   )]
-  fn set_reference_image_impl(&self, pattern_id: &str, image_data: &[u8]) -> Result<(), Error> {
+  async fn set_reference_image_impl(&self, pattern_id: &str, image_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let image: ReferenceImage = borsh::from_slice(image_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Image(ImageAction::SetReferenceImage {
-        image: Some(image),
-        old_image: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Image(ImageAction::SetReferenceImage {
+          image: Some(image),
+          old_image: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::remove_reference_image", level = "debug", skip(self), err)]
-  fn remove_reference_image_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn remove_reference_image_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Image(ImageAction::SetReferenceImage {
-        image: None,
-        old_image: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Image(ImageAction::SetReferenceImage {
+          image: None,
+          old_image: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(
@@ -773,56 +965,110 @@ impl EditorWrapper {
     skip(self, settings_data),
     err
   )]
-  fn update_reference_image_settings_impl(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
+  async fn update_reference_image_settings_impl(&self, pattern_id: &str, settings_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let settings = borsh::from_slice(settings_data)?;
-    self.dispatch(
-      pattern_id,
-      EditorAction::Image(ImageAction::UpdateSettings {
-        settings,
-        old_settings: None,
-      }),
-    )
+    self
+      .dispatch(
+        pattern_id,
+        EditorAction::Image(ImageAction::UpdateSettings {
+          settings,
+          old_settings: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::undo", level = "debug", skip(self), err)]
-  fn undo_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn undo_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let events = self.run(|editor| editor.undo(&pattern_id))?;
+    if !events.is_empty() {
+      let action_bytes = borsh::to_vec(&JournalEntry::Undo)?;
+      if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
+        if let Err(redo_err) = self.run(|editor| editor.redo(&pattern_id)) {
+          tracing::error!("Failed to roll back undo after journal failure: {redo_err}");
+        }
+        return Err(e);
+      }
+    }
     self.send_events(events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::redo", level = "debug", skip(self), err)]
-  fn redo_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn redo_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let events = self.run(|editor| editor.redo(&pattern_id))?;
+    if !events.is_empty() {
+      let action_bytes = borsh::to_vec(&JournalEntry::Redo)?;
+      if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
+        if let Err(undo_err) = self.run(|editor| editor.undo(&pattern_id)) {
+          tracing::error!("Failed to roll back redo after journal failure: {undo_err}");
+        }
+        return Err(e);
+      }
+    }
     self.send_events(events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::undo_transaction", level = "debug", skip(self), err)]
-  fn undo_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn undo_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let events = self.run(|editor| editor.undo_transaction(&pattern_id))?;
+    if !events.is_empty() {
+      let action_bytes = borsh::to_vec(&JournalEntry::UndoTransaction)?;
+      if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
+        if let Err(redo_err) = self.run(|editor| editor.redo_transaction(&pattern_id)) {
+          tracing::error!("Failed to roll back undo_transaction after journal failure: {redo_err}");
+        }
+        return Err(e);
+      }
+    }
     self.send_events(events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::redo_transaction", level = "debug", skip(self), err)]
-  fn redo_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn redo_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let events = self.run(|editor| editor.redo_transaction(&pattern_id))?;
+    if !events.is_empty() {
+      let action_bytes = borsh::to_vec(&JournalEntry::RedoTransaction)?;
+      if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
+        if let Err(undo_err) = self.run(|editor| editor.undo_transaction(&pattern_id)) {
+          tracing::error!("Failed to roll back redo_transaction after journal failure: {undo_err}");
+        }
+        return Err(e);
+      }
+    }
     self.send_events(events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::start_transaction", level = "debug", skip(self), err)]
-  fn start_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn start_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    Ok(self.run(|editor| editor.start_transaction(&pattern_id))?)
+    self.run(|editor| editor.start_transaction(&pattern_id))?;
+    let action_bytes = borsh::to_vec(&JournalEntry::StartTransaction)?;
+    if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
+      if let Err(end_err) = self.run(|editor| editor.end_transaction(&pattern_id)) {
+        tracing::error!("Failed to roll back start_transaction after journal failure: {end_err}");
+      }
+      return Err(e);
+    }
+    Ok(())
   }
 
   #[tracing::instrument(name = "EditorWrapper::end_transaction", level = "debug", skip(self), err)]
-  fn end_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
+  async fn end_transaction_impl(&self, pattern_id: &str) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    Ok(self.run(|editor| editor.end_transaction(&pattern_id))?)
+    self.run(|editor| editor.end_transaction(&pattern_id))?;
+    let action_bytes = borsh::to_vec(&JournalEntry::EndTransaction)?;
+    if let Err(e) = self.persistence.append_journal_entry(pattern_id, action_bytes).await {
+      if let Err(undo_err) = self.run(|editor| editor.undo_transaction(&pattern_id)) {
+        tracing::error!("Failed to roll back end_transaction after journal failure: {undo_err}");
+      }
+      return Err(e);
+    }
+    Ok(())
   }
 
   #[tracing::instrument(name = "EditorWrapper::checkpoint", level = "debug", skip(self), err)]
@@ -835,5 +1081,12 @@ impl EditorWrapper {
   fn has_unsaved_changes_impl(&self, pattern_id: &str) -> Result<bool, Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     Ok(self.run(|editor| editor.has_unsaved_changes(&pattern_id))?)
+  }
+}
+
+fn package_info() -> PackageInfo {
+  PackageInfo {
+    name: "Embroiderly".to_owned(),
+    version: "0.7.1".to_owned(),
   }
 }

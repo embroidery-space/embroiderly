@@ -128,23 +128,23 @@ function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorT
     ...detail,
     pattern: patternStore.pattern,
     api: {
-      addStitch(stitch) {
+      async addStitch(stitch) {
         const palindex = editorStateStore.selectedPaletteItemIndex;
         if (palindex !== undefined) {
           stitch.palindex = palindex;
-          patternStore.addStitch(editorStateStore.selectedLayerIndex, stitch);
+          await patternStore.addStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
-      removeStitch(stitch) {
+      async removeStitch(stitch) {
         const palindex = editorStateStore.selectedPaletteItemIndex;
         if (palindex !== undefined) {
           stitch.palindex = palindex;
-          patternStore.removeStitch(editorStateStore.selectedLayerIndex, stitch);
+          await patternStore.removeStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
 
-      updateReferenceImageSettings(settings) {
-        patternStore.updateReferenceImageSettings(settings);
+      async updateReferenceImageSettings(settings) {
+        await patternStore.updateReferenceImageSettings(settings);
       },
 
       startTransaction: patternStore.startTransaction,
