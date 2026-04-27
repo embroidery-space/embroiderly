@@ -355,7 +355,7 @@ fn draw_part_stitches<W: io::Write>(
             };
             let points = points
               .iter()
-              .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size,))
+              .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size))
               .collect::<Vec<_>>()
               .join(" ");
             let fill = if color {
@@ -725,7 +725,7 @@ fn draw_centering_marks<W: io::Write>(
   };
   let points = points
     .iter()
-    .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size,))
+    .map(|(x, y)| format!("{},{}", x * cell_size, y * cell_size))
     .collect::<Vec<_>>()
     .join(" ");
 

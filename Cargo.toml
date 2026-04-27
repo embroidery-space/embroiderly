@@ -70,7 +70,7 @@ tauri-plugin-process = "2.3.1"
 tauri-plugin-shell = "2.3.5"
 tauri-plugin-updater = "2.10.1"
 ## Third-party Tauri plugins
-tauri-plugin-prevent-default = "4.0.4"
+tauri-plugin-prevent-default = "5.0.0"
 
 # Embroiderly Core
 embroiderly_editor = { path = "crates/embroiderly-editor" }
@@ -126,7 +126,7 @@ tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 tracing-panic = "0.1.2"
 
 # Identification
-uuid = { version = "1.23.0", features = ["v4", "v7"] }
+uuid = { version = "1.23.1", features = ["v4", "v7"] }
 
 # Wasm
 wasm-bindgen = "0.2.118"
@@ -147,4 +147,4 @@ alphanumeric-sort = "1.5.6"
 ordered-float = "5.2.0"
 paste = "1.0.15"
 prettydiff = { version = "0.9.0", default-features = false }
-rand = "0.10.0"
+rand = "0.10.1"
