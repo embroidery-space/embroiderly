@@ -72,7 +72,7 @@ tauri-plugin-shell = "2.3.5"
 tauri-plugin-updater = "2.10.1"
 ## Third-party Tauri plugins
 tauri-plugin-better-posthog = "0.1.6"
-tauri-plugin-prevent-default = "4.0.4"
+tauri-plugin-prevent-default = "5.0.0"
 tauri-plugin-pinia = "4.2.0"
 
 # Embroiderly Core
