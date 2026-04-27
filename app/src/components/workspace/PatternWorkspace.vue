@@ -8,7 +8,7 @@ import { computed, useTemplateRef, watch } from "vue";
 
 import { IconImage, IconImageOff } from "~/assets/icons/";
 import { PatternCanvas } from "~/components/canvas/";
-import { useEditor, useI18n } from "~/composables/";
+import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
 import { CursorTool } from "~/lib/tools/";
 import type { PatternEditorToolContext } from "~/lib/tools/";
@@ -19,6 +19,7 @@ import { addSymbolFonts } from "~/utils/font-face.ts";
 const props = defineProps<{ options?: PatternApplicationOptions }>();
 
 const { events, files } = useEditor();
+const filePicker = useFilePicker();
 const { fluent } = useI18n();
 const toast = useToast();
 
@@ -33,8 +34,8 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
       icon: IconImage,
       label: fluent.$t("canvas-ctx-menu-set-image"),
       async onSelect() {
-        // const selectedPath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
-        // if (selectedPath) patternStore.setReferenceImage(selectedPath);
+        const handle = await filePicker.open({ types: filePicker.filters.image });
+        if (handle) await patternStore.setReferenceImage(await handle.getFile());
       },
     },
     {

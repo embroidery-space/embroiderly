@@ -15,7 +15,6 @@ import {
   DisplaySettings,
   PdfExportOptions,
   PatternInfo,
-  ReferenceImage,
   ReferenceImageSettings,
   serializeStitch,
 } from "~/lib/pattern/";
@@ -30,11 +29,9 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
     pattern.value = value ?? new Pattern();
   }
 
-  async function setReferenceImage(image: ReferenceImage) {
+  async function setReferenceImage(image: File) {
     if (pattern.value.isNil) return;
-    const content = new Uint8Array(await image.arrayBuffer());
-    const data = ReferenceImage.schema.serialize({ content, settings: image.settings });
-    editor.setReferenceImage(pattern.value.id, data);
+    await editor.setReferenceImage(pattern.value.id, new Uint8Array(await image.arrayBuffer()));
   }
   async function removeReferenceImage() {
     if (pattern.value.isNil) return;

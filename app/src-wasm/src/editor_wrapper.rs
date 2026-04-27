@@ -921,7 +921,7 @@ impl EditorWrapper {
   )]
   async fn set_reference_image_impl(&self, pattern_id: &str, image_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
-    let image: ReferenceImage = borsh::from_slice(image_data)?;
+    let image = ReferenceImage::new(image_data.to_vec(), None);
     self
       .dispatch(
         pattern_id,
