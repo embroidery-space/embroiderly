@@ -5,7 +5,7 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
-import { IconExternalLink, IconFile, IconFileCreate, IconFileOpen } from "~/assets/icons/";
+import { IconExternalLink, IconFileCreate, IconFileOpen } from "~/assets/icons/";
 import { useEditorModals, useI18n } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore } from "~/stores/";
@@ -85,14 +85,6 @@ function createPattern() {
     },
   });
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function openRecentFile(_filePath: string) {
-  // oxlint-disable-next-line no-warning-comments
-  // TODO: migrate recent file opening to handle-based File System Access API.
-  // const patternId = await patternFileStore.openPattern(filePath);
-  // if (patternId) patternFileStore.switchPattern(patternId);
-}
 </script>
 
 <template>
@@ -132,21 +124,6 @@ async function openRecentFile(_filePath: string) {
                 class="justify-start"
                 @click="openPattern"
               />
-            </div>
-
-            <div v-if="patternFileStore.recentPatterns.length > 0" class="flex flex-col gap-y-1">
-              <span class="text-lg">{{ $t("welcome-section-recent") }}</span>
-              <div class="flex max-w-max flex-col gap-y-1">
-                <Button
-                  v-for="fileName in patternFileStore.recentPatterns"
-                  :key="fileName"
-                  variant="ghost"
-                  :icon="IconFile"
-                  :label="fileName"
-                  class="justify-start"
-                  @click="openRecentFile(fileName)"
-                />
-              </div>
             </div>
           </div>
 

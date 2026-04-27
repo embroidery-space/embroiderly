@@ -12,8 +12,6 @@ welcome-section-starting = Розпочати
 welcome-open-pattern = Відкрити схему
 welcome-create-pattern = Створити схему
 
-welcome-section-recent = Нещодавні схеми
-
 welcome-section-customization = Персоналізація
 welcome-customization-settings-title = Налаштування
 welcome-customization-settings-descr = Налаштуйте { -app-name } відповідно до ваших уподобань.

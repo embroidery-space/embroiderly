@@ -8,8 +8,6 @@ import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { NoFileHandleError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
 import { Fabric, Pattern } from "~/lib/pattern/";
 
-const MAX_RECENT_PATTERNS = 5;
-
 export interface OpenPattern {
   id: string;
   title: string;
@@ -29,7 +27,6 @@ export const usePatternFileStore = defineStore(
     const currentPatternId = ref<string>();
 
     const openedPatterns = ref<OpenPattern[]>([]);
-    const recentPatterns = ref<string[]>([]);
 
     const loading = ref(false);
 
@@ -50,13 +47,6 @@ export const usePatternFileStore = defineStore(
     function updateOpenedPattern(id: string, title: string) {
       const pattern = openedPatterns.value.find((p) => p.id === id);
       if (pattern) pattern.title = title;
-    }
-
-    function addRecentPattern(fileName: string) {
-      const index = recentPatterns.value.indexOf(fileName);
-      if (index !== -1) recentPatterns.value.splice(index, 1);
-      recentPatterns.value.unshift(fileName);
-      recentPatterns.value = recentPatterns.value.slice(0, MAX_RECENT_PATTERNS);
     }
 
     async function restoreSession() {
@@ -94,14 +84,10 @@ export const usePatternFileStore = defineStore(
           if (!fileHandle) return;
 
           result = await editor.openPattern(fileHandle);
-
-          addRecentPattern(fileHandle.name);
         } else if ("file" in options) {
           const data = new Uint8Array(await options.file.arrayBuffer());
 
           result = await editor.openPatternFromData(data, options.file.name);
-
-          addRecentPattern(options.file.name);
         } else if ("filePath" in options) {
           if (!__TAURI__) return;
 
@@ -109,8 +95,6 @@ export const usePatternFileStore = defineStore(
           const fileName = options.filePath.replaceAll("\\", "/").split("/").pop() ?? options.filePath;
 
           result = await editor.openPatternFromData(data, fileName);
-
-          addRecentPattern(fileName);
         } else {
           const data = await files.loadPatternTemplate(options.template);
 
@@ -290,7 +274,6 @@ export const usePatternFileStore = defineStore(
     return {
       currentPatternId,
       openedPatterns,
-      recentPatterns,
       loading,
       switchPattern,
       updateOpenedPattern,
@@ -305,9 +288,6 @@ export const usePatternFileStore = defineStore(
     };
   },
   {
-    persist: [
-      { storage: sessionStorage, pick: ["currentPatternId", "openedPatterns"] },
-      { storage: localStorage, pick: ["recentPatterns"] },
-    ],
+    persist: [{ storage: sessionStorage, pick: ["currentPatternId", "openedPatterns"] }],
   },
 );
