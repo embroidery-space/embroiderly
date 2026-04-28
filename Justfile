@@ -1,22 +1,8 @@
-set dotenv-load := true
+set dotenv-load
 set dotenv-path := "app/src-tauri/.env"
 
 default:
     just --list
-
-[group("development")]
-dev:
-    pnpm tauri dev
-
-[group("development")]
-build:
-    pnpm tauri build
-    git restore app/src-tauri/binaries/ app/src-tauri/help/
-
-[group("development")]
-dbuild:
-    pnpm tauri build --debug
-    git restore app/src-tauri/binaries/ app/src-tauri/help/
 
 [group("cleaning")]
 clean: clean-fe clean-be
