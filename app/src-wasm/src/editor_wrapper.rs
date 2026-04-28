@@ -26,13 +26,6 @@ pub struct OpenPatternResult {
   pub title: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
-pub struct RestoredPattern {
-  pub id: String,
-  pub title: String,
-  pub dirty: bool,
-}
-
 #[derive(borsh::BorshSerialize, borsh::BorshDeserialize)]
 enum JournalEntry {
   Action(EditorAction),
@@ -65,13 +58,6 @@ impl EditorWrapper {
     })
   }
 
-  /// Restores all previously open patterns from their IndexedDB snapshots and replays the full journal for each.
-  /// Returns an array of [`RestoredPattern`] values so the frontend can rebuild the open-tab list.
-  #[wasm_bindgen(js_name = "restoreSession")]
-  pub async fn restore_session(&self) -> Result<Vec<RestoredPattern>, Error> {
-    self.restore_session_impl().await
-  }
-
   /// Reads the file from the provided file handle, parses it, and registers the pattern in the editor.
   ///
   /// The file name extension determines the pattern format.
@@ -95,16 +81,18 @@ impl EditorWrapper {
   }
 
   /// Creates a blank pattern from the provided Borsh-serialized `Fabric` data.
-  /// Returns its UUID as a string.
+  /// Returns `[id, title]` --- the pattern UUID and its title.
   #[wasm_bindgen(js_name = "createPattern")]
-  pub async fn create_pattern(&self, fabric_data: &[u8]) -> Result<String, Error> {
-    self.create_pattern_impl(fabric_data).await
+  pub async fn create_pattern(&self, fabric_data: &[u8]) -> Result<OpenPatternResult, Error> {
+    let (id, title) = self.create_pattern_impl(fabric_data).await?;
+    Ok(OpenPatternResult { id, title })
   }
 
   /// Returns the Borsh-serialized `PatternProject`.
+  /// If the pattern is not in memory, it is automatically restored from IndexedDB before being returned.
   #[wasm_bindgen(js_name = "loadPattern")]
-  pub fn load_pattern(&self, pattern_id: &str) -> Result<Vec<u8>, Error> {
-    self.load_pattern_impl(pattern_id)
+  pub async fn load_pattern(&self, pattern_id: &str) -> Result<Vec<u8>, Error> {
+    self.load_pattern_impl(pattern_id).await
   }
 
   /// Encodes the pattern and writes it to the associated file handle.
@@ -376,7 +364,7 @@ impl EditorWrapper {
 
     self
       .persistence
-      .save_pattern_entry(pattern_id, Some(file_handle), snapshot)
+      .save_pattern_entry(pattern_id, snapshot, Some(file_handle))
       .await?;
 
     Ok((pattern_id.to_string(), title))
@@ -399,37 +387,117 @@ impl EditorWrapper {
     let snapshot = borsh::to_vec(&patproj)?;
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
 
-    self.persistence.save_pattern_entry(pattern_id, None, snapshot).await?;
+    self.persistence.save_pattern_entry(pattern_id, snapshot, None).await?;
 
     Ok((pattern_id.to_string(), title))
   }
 
   #[tracing::instrument(name = "EditorWrapper::create_pattern", level = "debug", skip_all, ret, err)]
-  async fn create_pattern_impl(&self, fabric_data: &[u8]) -> Result<String, Error> {
+  async fn create_pattern_impl(&self, fabric_data: &[u8]) -> Result<(String, String), Error> {
     let fabric = borsh::from_slice(fabric_data)?;
-    let pattern = Pattern::new(fabric);
-    let patproj = PatternProject::builder(pattern).build();
+
+    let patproj = PatternProject::builder(Pattern::new(fabric)).build();
+    let title = patproj.pattern.info.title.clone();
 
     // Serialize the initial pattern state before handing ownership to the editor.
     // This snapshot serves as the replay baseline for session restore.
     let snapshot = borsh::to_vec(&patproj)?;
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
 
-    self.persistence.save_pattern_entry(pattern_id, None, snapshot).await?;
+    self.persistence.save_pattern_entry(pattern_id, snapshot, None).await?;
 
-    Ok(pattern_id.to_string())
+    Ok((pattern_id.to_string(), title))
   }
 
   #[tracing::instrument(name = "EditorWrapper::load_pattern", level = "debug", skip(self), err)]
-  fn load_pattern_impl(&self, pattern_id: &str) -> Result<Vec<u8>, Error> {
-    let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
+  async fn load_pattern_impl(&self, pattern_id: &str) -> Result<Vec<u8>, Error> {
+    let id = uuid::Uuid::parse_str(pattern_id)?;
+
+    if let Some(data) = self.run(|editor| editor.get_pattern(&id).map(borsh::to_vec)) {
+      return Ok(data?);
+    }
+
+    self.restore_pattern(pattern_id).await?;
     self.run(|editor| {
-      if let Some(patproj) = editor.get_pattern(&pattern_id) {
+      if let Some(patproj) = editor.get_pattern(&id) {
         Ok(borsh::to_vec(patproj)?)
       } else {
         Err(Error::new(ErrorKind::PatternNotFound))
       }
     })
+  }
+
+  async fn restore_pattern(&self, pattern_id: &str) -> Result<(), Error> {
+    let id = uuid::Uuid::parse_str(pattern_id)?;
+
+    let entry = self
+      .persistence
+      .get_pattern_entry(id)
+      .await?
+      .ok_or_else(|| Error::new(ErrorKind::PatternNotFound))?;
+
+    let patproj: PatternProject = borsh::from_slice(&entry.data)?;
+    self.run(|editor| {
+      editor.add_pattern(patproj);
+      editor.checkpoint(&id)
+    })?;
+
+    let actions = self.persistence.load_journal_entries(id).await?;
+    for action_bytes in actions {
+      let op: JournalEntry = borsh::from_slice(&action_bytes)?;
+      match op {
+        JournalEntry::Action(action) => {
+          if let Err(e) = self.run(|editor| editor.dispatch(&id, action)) {
+            tracing::warn!("Failed to replay journal action: {e}");
+          }
+        }
+        JournalEntry::Undo => {
+          if let Err(e) = self.run(|editor| editor.undo(&id)) {
+            tracing::warn!("Failed to replay journal undo: {e}");
+          }
+        }
+        JournalEntry::Redo => {
+          if let Err(e) = self.run(|editor| editor.redo(&id)) {
+            tracing::warn!("Failed to replay journal redo: {e}");
+          }
+        }
+        JournalEntry::UndoTransaction => {
+          if let Err(e) = self.run(|editor| editor.undo_transaction(&id)) {
+            tracing::warn!("Failed to replay journal undo_transaction: {e}");
+          }
+        }
+        JournalEntry::RedoTransaction => {
+          if let Err(e) = self.run(|editor| editor.redo_transaction(&id)) {
+            tracing::warn!("Failed to replay journal redo_transaction: {e}");
+          }
+        }
+        JournalEntry::StartTransaction => {
+          if let Err(e) = self.run(|editor| editor.start_transaction(&id)) {
+            tracing::warn!("Failed to replay journal start_transaction: {e}");
+          }
+        }
+        JournalEntry::EndTransaction => {
+          if let Err(e) = self.run(|editor| editor.end_transaction(&id)) {
+            tracing::warn!("Failed to replay journal end_transaction: {e}");
+          }
+        }
+        JournalEntry::Checkpoint => {
+          if let Err(e) = self.run(|editor| editor.checkpoint(&id)) {
+            tracing::warn!("Failed to replay journal checkpoint: {e}");
+          }
+        }
+      }
+    }
+
+    // Emit the correct dirty event so the frontend tab reflects accurate state after lazy restore.
+    let dirty = self.run(|editor| editor.has_unsaved_changes(&id))?;
+    self.send_events(vec![if dirty {
+      EditorEvent::PatternChanged(id)
+    } else {
+      EditorEvent::PatternCheckpoint(id)
+    }])?;
+
+    Ok(())
   }
 
   #[tracing::instrument(
@@ -524,81 +592,6 @@ impl EditorWrapper {
     })?;
     self.persistence.remove_pattern_entry(pattern_id).await?;
     self.persistence.clear_journal(pattern_id).await
-  }
-
-  #[tracing::instrument(name = "EditorWrapper::restore_session", level = "debug", skip(self), err)]
-  async fn restore_session_impl(&self) -> Result<Vec<RestoredPattern>, Error> {
-    let entries = self.persistence.load_all_pattern_entries().await?;
-
-    let mut restored = Vec::with_capacity(entries.len());
-    for entry in entries {
-      let patproj: PatternProject = borsh::from_slice(&entry.data)?;
-
-      let id = patproj.id;
-      let title = patproj.pattern.info.title.clone();
-
-      // Add the pattern at its initial (snapshot) state and mark it as checkpointed.
-      // Journal actions are replayed on top of this baseline to reconstruct the full history.
-      self.run(|editor| {
-        editor.add_pattern(patproj);
-        editor.checkpoint(&id)
-      })?;
-
-      let actions = self.persistence.load_journal_entries(id).await?;
-      for action_bytes in actions {
-        let op: JournalEntry = borsh::from_slice(&action_bytes)?;
-        match op {
-          JournalEntry::Action(action) => {
-            if let Err(e) = self.run(|editor| editor.dispatch(&id, action)) {
-              tracing::warn!("Failed to replay journal action: {e}");
-            }
-          }
-          JournalEntry::Undo => {
-            if let Err(e) = self.run(|editor| editor.undo(&id)) {
-              tracing::warn!("Failed to replay journal undo: {e}");
-            }
-          }
-          JournalEntry::Redo => {
-            if let Err(e) = self.run(|editor| editor.redo(&id)) {
-              tracing::warn!("Failed to replay journal redo: {e}");
-            }
-          }
-          JournalEntry::UndoTransaction => {
-            if let Err(e) = self.run(|editor| editor.undo_transaction(&id)) {
-              tracing::warn!("Failed to replay journal undo_transaction: {e}");
-            }
-          }
-          JournalEntry::RedoTransaction => {
-            if let Err(e) = self.run(|editor| editor.redo_transaction(&id)) {
-              tracing::warn!("Failed to replay journal redo_transaction: {e}");
-            }
-          }
-          JournalEntry::StartTransaction => {
-            if let Err(e) = self.run(|editor| editor.start_transaction(&id)) {
-              tracing::warn!("Failed to replay journal start_transaction: {e}");
-            }
-          }
-          JournalEntry::EndTransaction => {
-            if let Err(e) = self.run(|editor| editor.end_transaction(&id)) {
-              tracing::warn!("Failed to replay journal end_transaction: {e}");
-            }
-          }
-          JournalEntry::Checkpoint => {
-            if let Err(e) = self.run(|editor| editor.checkpoint(&id)) {
-              tracing::warn!("Failed to replay journal checkpoint: {e}");
-            }
-          }
-        }
-      }
-
-      restored.push(RestoredPattern {
-        id: id.to_string(),
-        title,
-        dirty: self.run(|editor| editor.has_unsaved_changes(&id))?,
-      });
-    }
-
-    Ok(restored)
   }
 
   #[tracing::instrument(name = "EditorWrapper::add_stitch", level = "debug", skip(self, stitch_data), err)]

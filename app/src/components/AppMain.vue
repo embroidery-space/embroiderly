@@ -1,27 +1,18 @@
 <script lang="ts" setup>
-import { BlockUI, Splitter, SplitterPanel, useConfirm, useToast } from "@embroiderly/ui";
+import { BlockUI, Splitter, SplitterPanel, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-import { useDropZone, useEventListener, useSessionStorage } from "@vueuse/core";
-import { onMounted, toRaw, useTemplateRef, watch } from "vue";
+import { useDropZone } from "@vueuse/core";
+import { onMounted, useTemplateRef, watch } from "vue";
 
-import { useI18n, useShortcuts, useEditor, useTauriListener } from "~/composables/";
+import { useI18n, useShortcuts, useEditor } from "~/composables/";
+import { useAppStartup, useCloseGuard } from "~/composables/core/";
 import { usePercentOfContainer } from "~/composables/utils/";
-import { Fabric } from "~/lib/pattern";
-import { LoggerService } from "~/services";
-import {
-  PaletteMode,
-  StartupAction,
-  useEditorStateStore,
-  usePatternFileStore,
-  usePatternStore,
-  useSettingsStore,
-} from "~/stores/";
+import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
 import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
 import { EditorWorkspaceTabs, EditorWorkspaceToolbar, EditorWorkspaceFooter } from "./workspace/layout/";
 
-const confirm = useConfirm();
 const toast = useToast();
 const { fluent } = useI18n();
 const { events } = useEditor();
@@ -30,8 +21,6 @@ const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
-
-const startupHandled = useSessionStorage("embroiderly-startup-handled", false);
 
 const { isOverDropZone } = useDropZone(useTemplateRef("drop-zone"), {
   multiple: true,
@@ -56,51 +45,17 @@ const palettePanelCollapsedSize = toPercent(2.75, "rem");
 const canvasToolbarDefaultSize = toPercent(12, "rem");
 const canvasToolbarCollapsedSize = toPercent(2.25, "rem");
 
+useAppStartup();
+useCloseGuard();
+
 watch(
   () => patternFileStore.currentPatternId,
   async (patternId) => {
     patternStore.setPattern(patternId ? await patternFileStore.loadPattern(patternId) : undefined);
     editorStateStore.$reset();
   },
+  { immediate: true },
 );
-
-if (__TAURI__) {
-  useTauriListener(
-    getCurrentWebviewWindow().onCloseRequested(async (event) => {
-      const patterns = structuredClone(toRaw(patternFileStore.openedPatterns).map((op) => toRaw(op)));
-      for (const pattern of patterns) {
-        if (pattern.dirty) {
-          const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
-          if (accepted === undefined) {
-            event.preventDefault();
-            return;
-          } else if (accepted) {
-            const saved = await patternFileStore.savePattern(pattern.id);
-            if (!saved) {
-              event.preventDefault();
-              return;
-            }
-          }
-        }
-        await patternFileStore.closePattern(pattern.id, { force: true });
-      }
-    }),
-  );
-} else {
-  // In browsers, we can't handle pattern closing/saving during this hook.
-  // This is the user's responsibility to handle the patterns.
-  useEventListener(window, "beforeunload", (event: BeforeUnloadEvent) => {
-    if (patternFileStore.openedPatterns.some((p) => p.dirty)) {
-      event.preventDefault();
-    }
-  });
-}
-
-events.on("app:pattern-saved", (patternId) => {
-  if (patternId === patternStore.pattern.id) {
-    toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
-  }
-});
 
 useShortcuts({
   "Control+Z": () => patternStore.undo(),
@@ -109,75 +64,14 @@ useShortcuts({
   "Control+Shift+Y": () => patternStore.redo({ single: true }),
 });
 
-async function handleFileAssociations(files: string[]) {
-  for (const filePath of files) {
-    try {
-      const patternId = await patternFileStore.openPattern({ filePath });
-      if (patternId) patternFileStore.switchPattern(patternId);
-    } catch (error) {
-      LoggerService.error(`Failed to open pattern from path (${filePath}): ${error}`);
-      toast.add({
-        type: "foreground",
-        color: "error",
-        title: fluent.$t("error"),
-        description: fluent.$t("startup-file-association-failure", {
-          filePath: filePath.replaceAll("\\", "/").split("/").pop() ?? filePath,
-        }),
-      });
-    }
+events.on("app:pattern-saved", (patternId) => {
+  if (patternId === patternStore.pattern.id) {
+    toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
   }
-}
-
-async function handleOpenOnStartup() {
-  switch (settingsStore.startup.action) {
-    case StartupAction.NewPattern: {
-      const id = await patternFileStore.createPattern(new Fabric());
-      patternFileStore.switchPattern(id);
-      break;
-    }
-    case StartupAction.CustomTemplate: {
-      if (settingsStore.startup.patternTemplate) {
-        try {
-          const id = await patternFileStore.openPattern({ template: settingsStore.startup.patternTemplate });
-          patternFileStore.switchPattern(id);
-        } catch (error) {
-          LoggerService.error(`Failed to open pattern from template: ${error}`);
-          toast.add({
-            type: "foreground",
-            color: "error",
-            title: fluent.$t("error"),
-            description: fluent.$t("startup-template-failure", {
-              filePath: settingsStore.startup.patternTemplate,
-            }),
-          });
-        }
-      }
-      break;
-    }
-  }
-}
+});
 
 onMounted(async () => {
-  await patternFileStore.restoreSession();
-
-  if (!startupHandled.value) {
-    startupHandled.value = true;
-
-    const openedFiles = window.openedFiles ?? [];
-    if (__TAURI__) await handleFileAssociations(openedFiles);
-
-    if (openedFiles.length === 0 && !patternFileStore.openedPatterns.length) {
-      await handleOpenOnStartup();
-    }
-  }
-
-  if (patternFileStore.currentPatternId) {
-    const pattern = await patternFileStore.loadPattern(patternFileStore.currentPatternId);
-    patternStore.setPattern(pattern);
-  } else if (patternFileStore.openedPatterns.length) {
-    patternFileStore.switchPattern(patternFileStore.openedPatterns[0]!.id);
-  }
-
+  // In production, the app window is hidden by default to prevent the blank screen appearance.
   if (__TAURI__) await getCurrentWebviewWindow().show();
 });
 </script>

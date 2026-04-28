@@ -12,8 +12,8 @@ const JOURNAL_BY_PATTERN_INDEX: &str = "by_pattern";
 
 pub struct PatternEntry {
   pub pattern_id: String,
-  pub handle: Option<JsValue>,
   pub data: Vec<u8>,
+  pub handle: Option<JsValue>,
 }
 
 impl From<PatternEntry> for JsValue {
@@ -21,8 +21,8 @@ impl From<PatternEntry> for JsValue {
     let obj = js_sys::Object::new();
     let set = |k: &str, v: Self| js_sys::Reflect::set(&obj, &k.into(), &v).unwrap();
     set("pattern_id", entry.pattern_id.into());
-    set("handle", entry.handle.unwrap_or(Self::null()));
     set("data", js_sys::Uint8Array::from(entry.data.as_slice()).into());
+    set("handle", entry.handle.unwrap_or(Self::null()));
     obj.into()
   }
 }
@@ -34,15 +34,15 @@ impl TryFrom<JsValue> for PatternEntry {
     let pattern_id = get("pattern_id")
       .and_then(|v| v.as_string())
       .ok_or_else(|| anyhow::anyhow!("pattern entry missing pattern_id"))?;
-    let handle = get("handle").filter(|v| !v.is_null() && !v.is_undefined());
     let data = get("data")
       .and_then(|v| v.dyn_into::<js_sys::Uint8Array>().ok())
       .map(|arr| arr.to_vec())
       .ok_or_else(|| anyhow::anyhow!("pattern entry missing data"))?;
+    let handle = get("handle").filter(|v| !v.is_null() && !v.is_undefined());
     Ok(Self {
       pattern_id,
-      handle,
       data,
+      handle,
     })
   }
 }
@@ -104,6 +104,26 @@ impl PersistenceManager {
     Ok(Self { db })
   }
 
+  /// Returns the stored entry for a single pattern, or `None` if not found.
+  #[tracing::instrument(name = "PersistenceManager::get_pattern_entry", level = "debug", skip(self), err)]
+  pub async fn get_pattern_entry(&self, pattern_id: uuid::Uuid) -> Result<Option<PatternEntry>, Error> {
+    let key = JsValue::from_str(&pattern_id.to_string());
+    let result = self
+      .db
+      .transaction(&[PATTERN_STORE])
+      .run(move |tx| async move {
+        let store = tx.object_store(PATTERN_STORE)?;
+        store.get(&key).await
+      })
+      .await
+      .map_err(|e| anyhow::anyhow!("{e}"))?;
+
+    match result {
+      Some(val) => Ok(Some(PatternEntry::try_from(val)?)),
+      None => Ok(None),
+    }
+  }
+
   /// Saves the pattern handle and data as a single entry.
   #[tracing::instrument(
     name = "PersistenceManager::save_pattern_entry",
@@ -114,13 +134,13 @@ impl PersistenceManager {
   pub async fn save_pattern_entry(
     &self,
     pattern_id: uuid::Uuid,
-    handle: Option<opfs::FileHandle>,
     data: Vec<u8>,
+    handle: Option<opfs::FileHandle>,
   ) -> Result<(), Error> {
     let entry = JsValue::from(PatternEntry {
       pattern_id: pattern_id.to_string(),
-      handle: handle.map(|h| h.into_inner().into()),
       data,
+      handle: handle.map(|h| h.into_inner().into()),
     });
     self
       .db
@@ -129,39 +149,6 @@ impl PersistenceManager {
       .run(move |tx| async move {
         let store = tx.object_store(PATTERN_STORE)?;
         store.put(&entry).await
-      })
-      .await
-      .map_err(|e| anyhow::anyhow!("{e}"))?;
-    Ok(())
-  }
-
-  /// Updates the stored file handle for an existing pattern entry, preserving the snapshot data.
-  #[tracing::instrument(name = "PersistenceManager::update_handle", level = "debug", skip(self, handle), err)]
-  pub async fn update_handle(&self, pattern_id: uuid::Uuid, handle: opfs::FileHandle) -> Result<(), Error> {
-    let pattern_id = pattern_id.to_string();
-    let handle: JsValue = handle.into_inner().into();
-    self
-      .db
-      .transaction(&[PATTERN_STORE])
-      .rw()
-      .run(move |tx| async move {
-        let store = tx.object_store(PATTERN_STORE)?;
-
-        let key = JsValue::from_str(&pattern_id);
-        let existing = store.get(&key).await?;
-
-        let data = existing
-          .and_then(|v| PatternEntry::try_from(v).ok())
-          .map(|e| e.data)
-          .unwrap_or_default();
-
-        store
-          .put(&JsValue::from(PatternEntry {
-            pattern_id,
-            handle: Some(handle),
-            data,
-          }))
-          .await
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
@@ -204,6 +191,39 @@ impl PersistenceManager {
     }))
   }
 
+  /// Updates the stored file handle for an existing pattern entry, preserving the snapshot data.
+  #[tracing::instrument(name = "PersistenceManager::update_handle", level = "debug", skip(self, handle), err)]
+  pub async fn update_handle(&self, pattern_id: uuid::Uuid, handle: opfs::FileHandle) -> Result<(), Error> {
+    let pattern_id = pattern_id.to_string();
+    let handle: JsValue = handle.into_inner().into();
+    self
+      .db
+      .transaction(&[PATTERN_STORE])
+      .rw()
+      .run(move |tx| async move {
+        let store = tx.object_store(PATTERN_STORE)?;
+
+        let key = JsValue::from_str(&pattern_id);
+        let existing = store.get(&key).await?;
+
+        let data = existing
+          .and_then(|v| PatternEntry::try_from(v).ok())
+          .map(|e| e.data)
+          .unwrap_or_default();
+
+        store
+          .put(&JsValue::from(PatternEntry {
+            pattern_id,
+            handle: Some(handle),
+            data,
+          }))
+          .await
+      })
+      .await
+      .map_err(|e| anyhow::anyhow!("{e}"))?;
+    Ok(())
+  }
+
   /// Deletes the pattern entry (handle + snapshot) for the given pattern ID.
   #[tracing::instrument(name = "PersistenceManager::remove_pattern_entry", level = "debug", skip(self), err)]
   pub async fn remove_pattern_entry(&self, pattern_id: uuid::Uuid) -> Result<(), Error> {
@@ -219,32 +239,6 @@ impl PersistenceManager {
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
     Ok(())
-  }
-
-  /// Loads all stored pattern entries.
-  #[tracing::instrument(
-    name = "PersistenceManager::load_all_pattern_entries",
-    level = "debug",
-    skip(self),
-    err
-  )]
-  pub async fn load_all_pattern_entries(&self) -> Result<Vec<PatternEntry>, Error> {
-    let rows = self
-      .db
-      .transaction(&[PATTERN_STORE])
-      .run(move |tx| async move {
-        let store = tx.object_store(PATTERN_STORE)?;
-        store.get_all(None).await
-      })
-      .await
-      .map_err(|e| anyhow::anyhow!("{e}"))?;
-
-    let mut entries = Vec::with_capacity(rows.len());
-    for row in rows {
-      entries.push(PatternEntry::try_from(row)?);
-    }
-
-    Ok(entries)
   }
 
   /// Appends a single journal action for the given pattern ID.

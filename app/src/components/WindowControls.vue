@@ -4,7 +4,7 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { ref } from "vue";
 
 import { IconWindowClose, IconWindowMaximize, IconWindowMinimize, IconWindowRestore } from "~/assets/icons/";
-import { useTauriListener } from "~/composables/";
+import { useTauriListener } from "~/composables/tauri/";
 
 const appWindow = getCurrentWebviewWindow();
 

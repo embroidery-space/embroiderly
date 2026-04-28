@@ -49,22 +49,10 @@ export const usePatternFileStore = defineStore(
       if (pattern) pattern.title = title;
     }
 
-    async function restoreSession() {
-      const restored = await editor.restoreSession();
-      for (const pattern of restored) {
-        if (!openedPatterns.value.some((p) => p.id === pattern.id)) {
-          // Destructure the restored pattern to get cloned values from the Wasm module.
-          const { id, title, dirty } = pattern;
-          openedPatterns.value.push({ id, title, dirty });
-        }
-      }
-    }
-
-    // oxlint-disable-next-line require-await
     async function loadPattern(id: string) {
       try {
         loading.value = true;
-        return Pattern.deserialize(editor.loadPattern(id));
+        return Pattern.deserialize(await editor.loadPattern(id));
       } finally {
         loading.value = false;
       }
@@ -120,10 +108,14 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    async function createPattern(fabric: Fabric) {
+    async function createPattern(fabric?: Fabric) {
       try {
         loading.value = true;
-        return await editor.createPattern(Fabric.serialize(fabric));
+
+        const result = await editor.createPattern(Fabric.serialize(fabric ?? new Fabric()));
+        addOpenedPattern(result.id, result.title);
+
+        return result.id;
       } finally {
         loading.value = false;
       }
@@ -277,7 +269,6 @@ export const usePatternFileStore = defineStore(
       loading,
       switchPattern,
       updateOpenedPattern,
-      restoreSession,
       loadPattern,
       openPattern,
       createPattern,
@@ -288,6 +279,6 @@ export const usePatternFileStore = defineStore(
     };
   },
   {
-    persist: [{ storage: sessionStorage, pick: ["currentPatternId", "openedPatterns"] }],
+    persist: { pick: ["currentPatternId", "openedPatterns"] },
   },
 );
