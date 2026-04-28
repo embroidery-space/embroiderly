@@ -1,3 +1,6 @@
+#[allow(unused)]
+use tauri::Manager as _;
+
 pub fn init<R: tauri::Runtime>(app_handle: &tauri::AppHandle<R>) -> anyhow::Result<()> {
   #[cfg(not(debug_assertions))]
   let log_dir = app_handle.path().app_log_dir()?; // In production, store logs in the application's log directory.
