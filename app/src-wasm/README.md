@@ -29,6 +29,20 @@ These are stored persistently in the browser's Origin Private File System (OPFS)
 
 Both tiers use the same web platform APIs, so this struct works without changes in the browser and inside Tauri's webview.
 
+## `PersistenceManager`
+
+This struct manages all browser-side persistent storage for the editor using IndexedDB.
+It is not exposed to JavaScript directly — `EditorWrapper` calls it internally.
+
+It stores two kinds of data:
+
+- **Pattern entries** — a Borsh-encoded snapshot of the pattern plus the optional OPFS `FileSystemFileHandle` that backs it on disk.
+  File handles are also kept in an in-memory cache so that browser-granted permissions are not lost between calls, which is required for auto-save to work.
+
+- **Action journal** — an append-only log of Borsh-encoded editor actions scoped to a pattern.
+  Actions are appended on every edit and replayed on startup if the previous session ended without a clean save.
+  The journal is cleared when the pattern is closed.
+
 ## Public/private method split
 
 All `wasm_bindgen`-exposed methods are thin wrappers that immediately delegate to private `*_impl()` counterparts.
