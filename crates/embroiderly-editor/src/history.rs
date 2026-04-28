@@ -168,7 +168,10 @@ impl History {
     if let Some(entry) = self.redo_stack.last_mut() {
       match entry {
         HistoryEntry::Checkpoint => {
-          unreachable!("Checkpoint should not be at the top of the redo stack.");
+          // The checkpoint sits at the top, so we've already redone everything above it.
+          // Absorb it back into the undo stack and try the next entry.
+          self.undo_stack.push(self.redo_stack.pop().unwrap());
+          return self.redo(patproj);
         }
         HistoryEntry::Single(_) => {
           let HistoryEntry::Single(mut action) = self.redo_stack.pop().unwrap() else {
@@ -200,6 +203,11 @@ impl History {
             }
             if transaction.actions.is_empty() {
               self.redo_stack.pop();
+
+              // If the next item in the redo stack is a checkpoint, absorb it into the undo stack.
+              if matches!(self.redo_stack.last(), Some(HistoryEntry::Checkpoint)) {
+                self.undo_stack.push(self.redo_stack.pop().unwrap());
+              }
             }
             return Ok(Some(events));
           }
@@ -213,6 +221,10 @@ impl History {
   /// Undoes the last transaction (or single action) atomically.
   /// Returns all events from revoking all actions in the entry.
   pub fn undo_transaction(&mut self, patproj: &mut PatternProject) -> Result<Option<Vec<EditorEvent>>> {
+    if self.undo_stack.len() == 1 && matches!(self.undo_stack.last(), Some(HistoryEntry::Checkpoint)) {
+      return Ok(None);
+    }
+
     // Skip a checkpoint at the top before proceeding.
     if matches!(self.undo_stack.last(), Some(HistoryEntry::Checkpoint)) {
       let checkpoint = self.undo_stack.pop().unwrap();
@@ -265,7 +277,12 @@ impl History {
   pub fn redo_transaction(&mut self, patproj: &mut PatternProject) -> Result<Option<Vec<EditorEvent>>> {
     if let Some(entry) = self.redo_stack.last() {
       match entry {
-        HistoryEntry::Checkpoint => unreachable!(),
+        HistoryEntry::Checkpoint => {
+          // The checkpoint sits at the top, so we've already redone everything above it.
+          // Absorb it back into the undo stack and try the next entry.
+          self.undo_stack.push(self.redo_stack.pop().unwrap());
+          return self.redo_transaction(patproj);
+        }
         HistoryEntry::Single(_) => {
           return self.redo(patproj);
         }
@@ -294,6 +311,11 @@ impl History {
                 actions: performed,
               }));
             }
+          }
+
+          // If the next item in the redo stack is a checkpoint, absorb it into the undo stack.
+          if matches!(self.redo_stack.last(), Some(HistoryEntry::Checkpoint)) {
+            self.undo_stack.push(self.redo_stack.pop().unwrap());
           }
 
           return Ok(Some(all_events));

@@ -504,4 +504,168 @@ mod transactions {
 
     assert!(matches!(history.undo_stack.last(), Some(HistoryEntry::Single(_))));
   }
+
+  #[test]
+  fn test_redo_after_checkpoint() {
+    let mut history = History::default();
+    let mut patproj = PatternProject::default();
+
+    history.start_transaction();
+    history.push(EditorAction::Mock);
+    history.push(EditorAction::Mock);
+    history.end_transaction();
+    history.push_checkpoint();
+
+    // Undo all the way through the checkpoint and the transaction.
+    history.undo(&mut patproj).unwrap();
+    history.undo(&mut patproj).unwrap();
+    assert_eq!(history.undo_stack_len(), 0);
+    assert_eq!(history.redo_stack_len(), 2);
+
+    // Redoing each transaction action moves the trailing checkpoint to the undo stack.
+    assert!(history.redo(&mut patproj).unwrap().is_some());
+    assert!(history.redo(&mut patproj).unwrap().is_some());
+    assert_eq!(history.undo_stack_len(), 2);
+    assert_eq!(history.redo_stack_len(), 0);
+    assert!(!history.has_unsaved_changes());
+
+    // Extra redo must not panic.
+    assert!(history.redo(&mut patproj).unwrap().is_none());
+  }
+
+  #[test]
+  fn test_redo_transaction_after_checkpoint() {
+    let mut history = History::default();
+    let mut patproj = PatternProject::default();
+
+    history.start_transaction();
+    history.push(EditorAction::Mock);
+    history.push(EditorAction::Mock);
+    history.end_transaction();
+    history.push_checkpoint();
+
+    history.undo_transaction(&mut patproj).unwrap();
+    assert_eq!(history.undo_stack_len(), 0);
+    assert_eq!(history.redo_stack_len(), 2);
+
+    // Redoing the transaction moves the trailing checkpoint to the undo stack.
+    assert!(history.redo_transaction(&mut patproj).unwrap().is_some());
+    assert_eq!(history.undo_stack_len(), 2);
+    assert_eq!(history.redo_stack_len(), 0);
+    assert!(!history.has_unsaved_changes());
+
+    // Extra redo_transaction must not panic.
+    assert!(history.redo_transaction(&mut patproj).unwrap().is_none());
+  }
+
+  #[test]
+  fn test_undo_transaction_only_checkpoint() {
+    let mut history = History::default();
+    let mut patproj = PatternProject::default();
+
+    history.push_checkpoint();
+
+    // Nothing to undo; the checkpoint must stay on the undo stack.
+    assert!(history.undo_transaction(&mut patproj).unwrap().is_none());
+    assert_eq!(history.undo_stack_len(), 1);
+    assert_eq!(history.redo_stack_len(), 0);
+
+    // The next redo_transaction must not panic.
+    assert!(history.redo_transaction(&mut patproj).unwrap().is_none());
+  }
+
+  #[test]
+  fn test_redo_transaction_sandwiched_between_checkpoints() {
+    let mut history = History::default();
+    let mut patproj = PatternProject::default();
+
+    history.push_checkpoint();
+    history.start_transaction();
+    history.push(EditorAction::Mock);
+    history.push(EditorAction::Mock);
+    history.end_transaction();
+    history.push_checkpoint();
+
+    // Undo down to the lone leading checkpoint.
+    history.undo(&mut patproj).unwrap();
+    history.undo(&mut patproj).unwrap();
+    assert_eq!(history.undo_stack_len(), 1);
+    assert!(matches!(history.undo_stack.last(), Some(HistoryEntry::Checkpoint)));
+
+    // Redoing all the way back must absorb the trailing checkpoint.
+    history.redo(&mut patproj).unwrap();
+    history.redo(&mut patproj).unwrap();
+    assert_eq!(history.undo_stack_len(), 3);
+    assert_eq!(history.redo_stack_len(), 0);
+    assert!(!history.has_unsaved_changes());
+    assert!(history.redo(&mut patproj).unwrap().is_none());
+  }
+
+  // Stepwise undo followed by atomic redo across a trailing checkpoint must round-trip cleanly.
+  #[test]
+  fn test_stepwise_undo_then_redo_transaction_after_checkpoint() {
+    let mut history = History::default();
+    let mut patproj = PatternProject::default();
+
+    history.start_transaction();
+    history.push(EditorAction::Mock);
+    history.push(EditorAction::Mock);
+    history.end_transaction();
+    history.push_checkpoint();
+
+    history.undo(&mut patproj).unwrap();
+    history.undo(&mut patproj).unwrap();
+    assert_eq!(history.undo_stack_len(), 0);
+
+    assert!(history.redo_transaction(&mut patproj).unwrap().is_some());
+    assert_eq!(history.undo_stack_len(), 2);
+    assert_eq!(history.redo_stack_len(), 0);
+    assert!(!history.has_unsaved_changes());
+  }
+
+  // Atomic undo followed by stepwise redo across a trailing checkpoint must round-trip cleanly.
+  #[test]
+  fn test_undo_transaction_then_stepwise_redo_after_checkpoint() {
+    let mut history = History::default();
+    let mut patproj = PatternProject::default();
+
+    history.start_transaction();
+    history.push(EditorAction::Mock);
+    history.push(EditorAction::Mock);
+    history.end_transaction();
+    history.push_checkpoint();
+
+    history.undo_transaction(&mut patproj).unwrap();
+    assert_eq!(history.undo_stack_len(), 0);
+
+    history.redo(&mut patproj).unwrap();
+    history.redo(&mut patproj).unwrap();
+    assert_eq!(history.undo_stack_len(), 2);
+    assert_eq!(history.redo_stack_len(), 0);
+    assert!(!history.has_unsaved_changes());
+  }
+
+  // Repeated round-trips across a checkpoint must not corrupt the stacks or panic.
+  #[test]
+  fn test_repeated_undo_redo_transaction_round_trip() {
+    let mut history = History::default();
+    let mut patproj = PatternProject::default();
+
+    history.start_transaction();
+    history.push(EditorAction::Mock);
+    history.push(EditorAction::Mock);
+    history.end_transaction();
+    history.push_checkpoint();
+
+    for _ in 0..5 {
+      history.undo_transaction(&mut patproj).unwrap();
+      history.redo_transaction(&mut patproj).unwrap();
+      // An extra redo_transaction at the end of redo must not panic.
+      assert!(history.redo_transaction(&mut patproj).unwrap().is_none());
+    }
+
+    assert_eq!(history.undo_stack_len(), 2);
+    assert_eq!(history.redo_stack_len(), 0);
+    assert!(!history.has_unsaved_changes());
+  }
 }
