@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm wasm:build-dev && concurrently -k -n \"VITE,RUST\" \"vite\" \"pnpm wasm:watch-dev\"",
+    "prod": "pnpm wasm:build && concurrently -k -n \"VITE,RUST\" \"vite\" \"pnpm wasm:watch\"",
     "build": "pnpm check-types && pnpm build-only",
     "build-only": "pnpm wasm:build && vite build",
     "wasm:build": "wasm-pack build src-wasm --release --target web --out-dir pkg",
     "wasm:build-dev": "wasm-pack build src-wasm --dev --target web --out-dir pkg",
+    "wasm:watch": "cargo watch --postpone --watch-when-idle --workdir src-wasm --shell \"wasm-pack build . --release --target web --out-dir pkg\"",
     "wasm:watch-dev": "cargo watch --postpone --watch-when-idle --workdir src-wasm --shell \"wasm-pack build . --dev --target web --out-dir pkg\"",
     "check-types": "vue-tsc -b",
     "test": "vitest run",
