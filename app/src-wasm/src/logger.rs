@@ -5,6 +5,7 @@
 //! every event is routed through the `LoggerService` singleton, which already dual-routes to
 //! `console.*` and the Tauri `plugin:log|log` command and can gain new sinks in one place.
 
+use tracing_subscriber::fmt::format::FmtSpan;
 use tracing_subscriber::layer::SubscriberExt as _;
 use tracing_subscriber::util::SubscriberInitExt as _;
 use wasm_bindgen::prelude::*;
@@ -103,6 +104,7 @@ pub fn init() {
         .without_time()
         // Keep the module path in the message body which is useful for log filtering.
         .with_target(true)
+        .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
         .with_writer(MakeJsSinkWriter),
     )
     .init();

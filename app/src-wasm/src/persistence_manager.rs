@@ -1,3 +1,6 @@
+use std::cell::RefCell;
+use std::collections::HashMap;
+
 use wasm_bindgen::prelude::*;
 
 use crate::error::Error;
@@ -79,7 +82,13 @@ impl TryFrom<JsValue> for JournalEntry {
 
 /// Manages persistent browser-side storage for the editor via IndexedDB.
 pub struct PersistenceManager {
+  /// The underlying IndexedDB database.
   db: idb::Database<anyhow::Error>,
+
+  /// The in-memory pattern file handles store which is used to:
+  /// 1. Avoid re-fetching from IndexedDB on every call.
+  /// 2. Maintain the granted permissions (required for auto-save).
+  handles: RefCell<HashMap<uuid::Uuid, opfs::FileHandle>>,
 }
 
 impl PersistenceManager {
@@ -101,7 +110,10 @@ impl PersistenceManager {
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
-    Ok(Self { db })
+    Ok(Self {
+      db,
+      handles: RefCell::new(HashMap::new()),
+    })
   }
 
   /// Returns the stored entry for a single pattern, or `None` if not found.
@@ -137,6 +149,10 @@ impl PersistenceManager {
     data: Vec<u8>,
     handle: Option<opfs::FileHandle>,
   ) -> Result<(), Error> {
+    if let Some(h) = &handle {
+      self.handles.borrow_mut().insert(pattern_id, h.clone());
+    }
+
     let entry = JsValue::from(PatternEntry {
       pattern_id: pattern_id.to_string(),
       data,
@@ -152,12 +168,17 @@ impl PersistenceManager {
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
+
     Ok(())
   }
 
   /// Returns the file handle associated with the given pattern ID, or `None` if not found.
   #[tracing::instrument(name = "PersistenceManager::get_handle", level = "debug", skip(self), err)]
   pub async fn get_handle(&self, pattern_id: uuid::Uuid) -> Result<Option<opfs::FileHandle>, Error> {
+    if let Some(handle) = self.handles.borrow().get(&pattern_id) {
+      return Ok(Some(handle.clone()));
+    }
+
     let key = JsValue::from_str(&pattern_id.to_string());
     let result = self
       .db
@@ -194,6 +215,8 @@ impl PersistenceManager {
   /// Updates the stored file handle for an existing pattern entry, preserving the snapshot data.
   #[tracing::instrument(name = "PersistenceManager::update_handle", level = "debug", skip(self, handle), err)]
   pub async fn update_handle(&self, pattern_id: uuid::Uuid, handle: opfs::FileHandle) -> Result<(), Error> {
+    self.handles.borrow_mut().insert(pattern_id, handle.clone());
+
     let pattern_id = pattern_id.to_string();
     let handle: JsValue = handle.into_inner().into();
     self
@@ -221,12 +244,15 @@ impl PersistenceManager {
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
+
     Ok(())
   }
 
   /// Deletes the pattern entry (handle + snapshot) for the given pattern ID.
   #[tracing::instrument(name = "PersistenceManager::remove_pattern_entry", level = "debug", skip(self), err)]
   pub async fn remove_pattern_entry(&self, pattern_id: uuid::Uuid) -> Result<(), Error> {
+    self.handles.borrow_mut().remove(&pattern_id);
+
     let key = JsValue::from_str(&pattern_id.to_string());
     self
       .db
@@ -238,6 +264,7 @@ impl PersistenceManager {
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
+
     Ok(())
   }
 

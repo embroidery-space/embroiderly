@@ -24,6 +24,12 @@ impl Editor {
     Self::default()
   }
 
+  /// Returns the IDs of all open patterns.
+  #[must_use]
+  pub fn pattern_ids(&self) -> Vec<uuid::Uuid> {
+    self.patterns.keys().copied().collect()
+  }
+
   /// Adds a pattern project to the editor. Returns its UUID.
   pub fn add_pattern(&mut self, patproj: PatternProject) -> uuid::Uuid {
     let id = patproj.id;

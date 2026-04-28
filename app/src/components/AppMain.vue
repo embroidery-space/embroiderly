@@ -15,7 +15,7 @@ import { EditorWorkspaceTabs, EditorWorkspaceToolbar, EditorWorkspaceFooter } fr
 
 const toast = useToast();
 const { fluent } = useI18n();
-const { events } = useEditor();
+const { editor, events } = useEditor();
 
 const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
@@ -54,6 +54,12 @@ watch(
     patternStore.setPattern(patternId ? await patternFileStore.loadPattern(patternId) : undefined);
     editorStateStore.$reset();
   },
+  { immediate: true },
+);
+
+watch(
+  () => settingsStore.autoSaveIntervalInMillis,
+  (ms) => editor.setAutoSaveInterval(ms),
   { immediate: true },
 );
 

@@ -1,4 +1,5 @@
 use std::cell::RefCell;
+use std::rc::Rc;
 
 use embroiderly_editor::actions::layers::LayerVisibility;
 use embroiderly_editor::actions::palette::SortPaletteBy;
@@ -14,7 +15,7 @@ use wasm_bindgen::prelude::*;
 
 use crate::error::{Error, ErrorKind};
 use crate::persistence_manager::PersistenceManager;
-use crate::web::opfs;
+use crate::web::{opfs, timers};
 
 thread_local! {
   pub(crate) static EDITOR: RefCell<Option<Editor>> = const { RefCell::new(None) };
@@ -41,7 +42,8 @@ enum JournalEntry {
 #[wasm_bindgen]
 pub struct EditorWrapper {
   callback: js_sys::Function,
-  persistence: PersistenceManager,
+  persistence: Rc<PersistenceManager>,
+  auto_save_interval: RefCell<Option<timers::Interval>>,
 }
 
 // Public methods which delegate the execution to private instrumented implementations.
@@ -54,8 +56,15 @@ impl EditorWrapper {
     });
     Ok(Self {
       callback,
-      persistence: PersistenceManager::create().await?,
+      persistence: Rc::new(PersistenceManager::create().await?),
+      auto_save_interval: RefCell::new(None),
     })
+  }
+
+  /// Sets the auto-save interval replacing any existing interval immediately.
+  #[wasm_bindgen(js_name = "setAutoSaveInterval")]
+  pub fn set_auto_save_interval(&self, millis: u32) {
+    self.set_auto_save_interval_impl(millis);
   }
 
   /// Reads the file from the provided file handle, parses it, and registers the pattern in the editor.
@@ -311,16 +320,6 @@ impl EditorWrapper {
     EDITOR.with(|cell| f(cell.borrow_mut().as_mut().unwrap()))
   }
 
-  /// Sends the given events to the frontend.
-  fn send_events(&self, events: Vec<EditorEvent>) -> Result<(), Error> {
-    for event in events {
-      let payload = borsh::to_vec(&event)?;
-      let payload = Uint8Array::from(payload.as_slice());
-      self.callback.call1(&JsValue::null(), &payload)?;
-    }
-    Ok(())
-  }
-
   /// Dispatches an action against the editor, journals it, and emits the resulting events.
   ///
   /// If the journal write fails, the action is rolled back so both states remain identical.
@@ -336,7 +335,24 @@ impl EditorWrapper {
         return Err(e);
       }
     }
-    self.send_events(events)
+    emit_events(&self.callback, events)
+  }
+
+  #[tracing::instrument(name = "EditorWrapper::set_auto_save_interval", level = "debug", skip(self))]
+  fn set_auto_save_interval_impl(&self, millis: u32) {
+    *self.auto_save_interval.borrow_mut() = if millis == 0 {
+      None
+    } else {
+      let persistence = self.persistence.clone();
+      let callback = self.callback.clone();
+      Some(timers::Interval::new(millis, move || {
+        let persistence = persistence.clone();
+        let callback = callback.clone();
+        wasm_bindgen_futures::spawn_local(async move {
+          auto_save_tick(persistence, callback).await;
+        });
+      }))
+    };
   }
 
   #[tracing::instrument(
@@ -491,11 +507,14 @@ impl EditorWrapper {
 
     // Emit the correct dirty event so the frontend tab reflects accurate state after lazy restore.
     let dirty = self.run(|editor| editor.has_unsaved_changes(&id))?;
-    self.send_events(vec![if dirty {
-      EditorEvent::PatternChanged(id)
-    } else {
-      EditorEvent::PatternCheckpoint(id)
-    }])?;
+    emit_events(
+      &self.callback,
+      [if dirty {
+        EditorEvent::PatternChanged(id)
+      } else {
+        EditorEvent::PatternCheckpoint(id)
+      }],
+    )?;
 
     Ok(())
   }
@@ -542,10 +561,13 @@ impl EditorWrapper {
       tracing::warn!("Failed to journal checkpoint after save: {e}");
     }
 
-    self.send_events(vec![
-      EditorEvent::PatternCheckpoint(pattern_id),
-      EditorEvent::PatternSaved(pattern_id),
-    ])?;
+    emit_events(
+      &self.callback,
+      [
+        EditorEvent::PatternCheckpoint(pattern_id),
+        EditorEvent::PatternSaved(pattern_id),
+      ],
+    )?;
 
     Ok(())
   }
@@ -990,7 +1012,7 @@ impl EditorWrapper {
       events.push(EditorEvent::PatternCheckpoint(pattern_id));
     }
 
-    self.send_events(events)
+    emit_events(&self.callback, events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::redo", level = "debug", skip(self), err)]
@@ -1023,7 +1045,7 @@ impl EditorWrapper {
       events.push(EditorEvent::PatternCheckpoint(pattern_id));
     }
 
-    self.send_events(events)
+    emit_events(&self.callback, events)
   }
 
   #[tracing::instrument(name = "EditorWrapper::start_transaction", level = "debug", skip(self), err)]
@@ -1065,5 +1087,106 @@ fn package_info() -> PackageInfo {
   PackageInfo {
     name: "Embroiderly".to_owned(),
     version: "0.7.1".to_owned(),
+  }
+}
+
+fn emit_events(callback: &js_sys::Function, events: impl IntoIterator<Item = EditorEvent>) -> Result<(), Error> {
+  for event in events {
+    let payload = borsh::to_vec(&event)?;
+    let payload = Uint8Array::from(payload.as_slice());
+    callback.call1(&JsValue::null(), &payload)?;
+  }
+  Ok(())
+}
+
+#[tracing::instrument(name = "auto_save_tick", level = "debug", skip_all)]
+async fn auto_save_tick(persistence: Rc<PersistenceManager>, callback: js_sys::Function) {
+  let pattern_ids = EDITOR.with(|cell| {
+    cell
+      .borrow()
+      .as_ref()
+      .map(embroiderly_editor::Editor::pattern_ids)
+      .unwrap_or_default()
+  });
+  if pattern_ids.is_empty() {
+    tracing::debug!("No patterns to save");
+    return;
+  }
+
+  let pkg = package_info();
+
+  tracing::debug!("Processing {} patterns", pattern_ids.len());
+  for pattern_id in pattern_ids {
+    let dirty = EDITOR.with(|cell| {
+      cell
+        .borrow()
+        .as_ref()
+        .and_then(|e| e.has_unsaved_changes(&pattern_id).ok())
+        .unwrap_or(false)
+    });
+    if !dirty {
+      tracing::debug!("Pattern {pattern_id} is clean, skipping");
+      continue;
+    }
+
+    let file_handle = match persistence.get_handle(pattern_id).await {
+      Ok(Some(h)) => h,
+      Ok(None) => {
+        tracing::debug!("No file handle for {pattern_id}, skipping");
+        continue;
+      }
+      Err(e) => {
+        tracing::warn!("Failed to get file handle for {pattern_id}: {e}");
+        continue;
+      }
+    };
+
+    let file_name = file_handle.name();
+    let format = match PatternFormat::try_from(file_name.as_str()) {
+      Ok(f) => f,
+      Err(e) => {
+        tracing::warn!("Unknown format for {pattern_id}: {e}");
+        continue;
+      }
+    };
+
+    let data = EDITOR.with(|cell| {
+      cell
+        .borrow()
+        .as_ref()
+        .and_then(|e| e.get_pattern(&pattern_id))
+        .and_then(|p| embroiderly_parsers::save_pattern(p, format, &pkg).ok())
+    });
+    let Some(data) = data else {
+      tracing::warn!("Failed to encode {pattern_id}");
+      continue;
+    };
+
+    if let Err(e) = file_handle.write(&data).await {
+      tracing::warn!("Failed to write {pattern_id}: {e}");
+      continue;
+    }
+
+    EDITOR.with(|cell| {
+      if let Some(editor) = cell.borrow_mut().as_mut()
+        && let Err(e) = editor.checkpoint(&pattern_id)
+      {
+        tracing::warn!("Checkpoint failed for {pattern_id}: {e}");
+      }
+    });
+
+    if let Ok(action_bytes) = borsh::to_vec(&JournalEntry::Checkpoint)
+      && let Err(e) = persistence.append_journal_entry(pattern_id, action_bytes).await
+    {
+      tracing::warn!("Failed to journal checkpoint for {pattern_id}: {e}");
+    }
+
+    let _ = emit_events(
+      &callback,
+      [
+        EditorEvent::PatternCheckpoint(pattern_id),
+        EditorEvent::PatternSaved(pattern_id),
+      ],
+    );
   }
 }

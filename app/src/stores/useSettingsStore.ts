@@ -3,7 +3,7 @@ import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 
 import { defineStore } from "pinia";
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 
 import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
@@ -65,8 +65,17 @@ export interface TelemetryOptions {
 }
 
 export interface OtherOptions {
-  usePaletteItemColorForStitchTools: boolean;
+  /**
+   * The pattern auto save interval, in minutes.
+   * @default 15
+   */
   autoSaveInterval: number;
+
+  /**
+   * Whether to use the palette item color for stitch tools.
+   * @default true
+   */
+  usePaletteItemColorForStitchTools: boolean;
 }
 
 export const useSettingsStore = defineStore(
@@ -113,8 +122,8 @@ export const useSettingsStore = defineStore(
     });
 
     const other = reactive<OtherOptions>({
-      usePaletteItemColorForStitchTools: true,
       autoSaveInterval: 15,
+      usePaletteItemColorForStitchTools: true,
     });
 
     function openSettingsModal() {
@@ -167,6 +176,8 @@ export const useSettingsStore = defineStore(
       }
     }
 
+    const autoSaveIntervalInMillis = computed(() => other.autoSaveInterval * 60 * 1000);
+
     return {
       loadingUpdate,
       ui,
@@ -177,6 +188,7 @@ export const useSettingsStore = defineStore(
       other,
       openSettingsModal,
       checkForUpdates,
+      autoSaveIntervalInMillis,
     };
   },
   { persist: { omit: ["loadingUpdate"] } },
