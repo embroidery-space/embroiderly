@@ -1,7 +1,6 @@
 import { useConfirm } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-import { useEventListener } from "@vueuse/core";
 import { toRaw } from "vue";
 
 import { useI18n } from "~/composables/";
@@ -43,13 +42,9 @@ export function useCloseGuard() {
         }
       }),
     );
-  } else {
-    // In browsers, we can't handle pattern closing/saving during this hook.
-    // This is the user's responsibility to handle the patterns.
-    useEventListener(window, "beforeunload", (event: BeforeUnloadEvent) => {
-      if (patternFileStore.openedPatterns.some((p) => p.dirty)) {
-        event.preventDefault();
-      }
-    });
   }
+
+  // In browser, we always persist the state in the IndexedDB.
+  // Also, there is no way to clean up the state before closing the tab.
+  // Therefore, it is easier to simply restore the session on startup (what we actually do).
 }
