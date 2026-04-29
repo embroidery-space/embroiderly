@@ -86,33 +86,21 @@ watch(
   },
 );
 
-function handleToolMainAction(detail: ToolEventDetail) {
-  const pattern = patternStore.pattern;
-  if (pattern.isNil) return;
-
-  if (editorStateStore.paletteMode === PaletteMode.Editing) return;
-
-  editorStateStore.selectedTool.main(createPatternEditorToolContext(detail));
+async function handleToolMainAction(detail: ToolEventDetail) {
+  if (patternStore.pattern.isNil || editorStateStore.paletteMode === PaletteMode.Editing) return;
+  await editorStateStore.selectedTool.main(createPatternEditorToolContext(detail));
 }
 
-function handleToolAntiAction(detail: ToolEventDetail) {
-  const pattern = patternStore.pattern;
-  if (pattern.isNil) return;
-
-  if (editorStateStore.paletteMode === PaletteMode.Editing) return;
-
-  editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(detail));
+async function handleToolAntiAction(detail: ToolEventDetail) {
+  if (patternStore.pattern.isNil || editorStateStore.paletteMode === PaletteMode.Editing) return;
+  await editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(detail));
 }
 
-function handleToolRelease(detail: ToolEventDetail) {
-  const pattern = patternStore.pattern;
-  if (pattern.isNil) return;
-
-  if (editorStateStore.paletteMode === PaletteMode.Editing) return;
-
+async function handleToolRelease(detail: ToolEventDetail) {
+  if (patternStore.pattern.isNil || editorStateStore.paletteMode === PaletteMode.Editing) return;
   if (detail.event.type !== "pointerupoutside") {
     // Call the `release` method only if the pointer is not released outside.
-    editorStateStore.selectedTool.release?.(createPatternEditorToolContext(detail));
+    await editorStateStore.selectedTool.release?.(createPatternEditorToolContext(detail));
   }
 }
 
