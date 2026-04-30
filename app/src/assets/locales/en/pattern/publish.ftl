@@ -2,8 +2,8 @@
 
 pdf-export = PDF Export
 
-pdf-export-monochrome = Export black and white document
-pdf-export-color = Export color document
+pdf-export-variant-monochrome = Export black and white document
+pdf-export-variant-color = Export color document
 
 pdf-export-save-settings = Save Settings
 pdf-export-export-document = Export Document

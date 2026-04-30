@@ -7,7 +7,7 @@ const PatternCreationModal = defineAsyncComponent(() => import("~/components/fab
 
 // const ImageImportModal = defineAsyncComponent(() => import("~/components/image-import/ImageImportModal.vue"));
 
-// const PdfExportModal = defineAsyncComponent(() => import("~/components/pdf-export/PdfExportModal.vue"));
+const PdfExportModal = defineAsyncComponent(() => import("~/components/pdf-export/PdfExportModal.vue"));
 const PdfExportOptionsModal = defineAsyncComponent(() => import("~/components/pdf-export/PdfExportOptionsModal.vue"));
 
 const PatternInfoModal = defineAsyncComponent(() => import("~/components/pattern-info/PatternInfoModal.vue"));
@@ -21,7 +21,7 @@ export const useEditorModals = createSharedComposable(() => {
 
     // imageImportModal: overlay.create(ImageImportModal),
 
-    // pdfExportModal: overlay.create(PdfExportModal),
+    pdfExportModal: overlay.create(PdfExportModal),
     pdfExportOptionsModal: overlay.create(PdfExportOptionsModal),
 
     patternInfoModal: overlay.create(PatternInfoModal),

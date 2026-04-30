@@ -40,8 +40,7 @@ fn builder_sets_display_settings() {
 fn builder_sets_publish_settings() {
   let publish_settings = PublishSettings {
     pdf: crate::PdfExportOptions {
-      monochrome: true,
-      color: true,
+      center_frames: true, // `false` by default
       ..Default::default()
     },
     ..Default::default()

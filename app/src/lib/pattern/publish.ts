@@ -25,23 +25,17 @@ export class ImageExportOptions {
 }
 
 export class PdfExportOptions {
-  monochrome: boolean;
-  color: boolean;
   centerFrames: boolean;
   enumerateFrames: boolean;
   frameOptions: ImageExportOptions;
 
   constructor(data?: Partial<b.infer<typeof PdfExportOptions.schema>>) {
-    this.monochrome = data?.monochrome ?? true;
-    this.color = data?.color ?? false;
     this.centerFrames = data?.centerFrames ?? false;
     this.enumerateFrames = data?.enumerateFrames ?? true;
     this.frameOptions = new ImageExportOptions(data?.frameOptions);
   }
 
   static readonly schema = b.struct({
-    monochrome: b.bool(),
-    color: b.bool(),
     centerFrames: b.bool(),
     enumerateFrames: b.bool(),
     frameOptions: ImageExportOptions.schema,

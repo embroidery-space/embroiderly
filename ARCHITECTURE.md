@@ -19,6 +19,7 @@ embroiderly/
 │   ├── embroiderly-tracing/    # Shared logging/tracing configuration
 │   └── xsp-parsers/            # Low-level embroidery file format parsers
 ├── packages/
+│   ├── pdf-export/             # PDF export (Wasm + Web Worker)
 │   └── ui/                     # Custom UI Kit
 └── docs/                       # End-user documentation
 ```

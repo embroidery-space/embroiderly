@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "pnpm wasm:build-dev && concurrently -k -n \"VITE,RUST\" \"vite\" \"pnpm wasm:watch-dev\"",
     "prod": "pnpm wasm:build && concurrently -k -n \"VITE,RUST\" \"vite\" \"pnpm wasm:watch\"",
-    "build": "pnpm check-types && pnpm build-only",
-    "build-only": "pnpm wasm:build && vite build",
+    "build": "pnpm check-types && vite build",
     "wasm:build": "wasm-pack build src-wasm --release --target web --out-dir pkg",
     "wasm:build-dev": "wasm-pack build src-wasm --dev --target web --out-dir pkg",
     "wasm:watch": "cargo watch --postpone --watch-when-idle --workdir src-wasm --shell \"wasm-pack build . --release --target web --out-dir pkg\"",
@@ -19,6 +18,7 @@
     "test:e2e": "wdio run wdio.config.ts"
   },
   "dependencies": {
+    "@embroiderly/pdf-export": "workspace:",
     "@embroiderly/ui": "workspace:",
     "@fluent/bundle": "catalog:",
     "@stdlib/math-base-special-roundn": "catalog:",

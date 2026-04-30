@@ -34,7 +34,7 @@ tracing-subscriber = { workspace = true }
 tracing-panic = { workspace = true }
 
 # Identification
-uuid = { workspace = true, features = ["js"] }
+uuid = { workspace = true }
 
 # Font handling
 ttf-parser = { workspace = true }

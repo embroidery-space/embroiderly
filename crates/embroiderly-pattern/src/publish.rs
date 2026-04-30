@@ -11,10 +11,6 @@ pub struct PublishSettings {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct PdfExportOptions {
-  /// Whether to export the pattern in monochrome (black and white).
-  pub monochrome: bool,
-  /// Whether to export the pattern in color.
-  pub color: bool,
   /// Whether to center the frames on the page.
   pub center_frames: bool,
   /// Whether to enumerate the frames.
@@ -26,8 +22,6 @@ pub struct PdfExportOptions {
 impl Default for PdfExportOptions {
   fn default() -> Self {
     Self {
-      monochrome: true,
-      color: false,
       center_frames: false,
       enumerate_frames: true,
       frame_options: ImageExportOptions {

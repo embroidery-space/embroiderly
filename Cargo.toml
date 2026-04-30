@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["app/src-tauri/", "app/src-wasm/", "crates/*"]
+members = ["app/src-tauri/", "app/src-wasm/", "crates/*", "packages/pdf-export/src-wasm/"]
 
 [workspace.package]
 edition = "2024"
@@ -126,7 +126,7 @@ tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 tracing-panic = "0.1.2"
 
 # Identification
-uuid = { version = "1.23.1", features = ["v4", "v7"] }
+uuid = { version = "1.23.1", features = ["v4", "v7", "js"] }
 
 # Wasm
 wasm-bindgen = "0.2.118"

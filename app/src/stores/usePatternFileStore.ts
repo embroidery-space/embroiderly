@@ -6,7 +6,7 @@ import { ref } from "vue";
 
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { NoFileHandleError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
-import { Fabric, Pattern } from "~/lib/pattern/";
+import { Fabric, Pattern, PdfExportOptions } from "~/lib/pattern/";
 
 export interface OpenPattern {
   id: string;
@@ -233,25 +233,38 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    // async function exportPatternAsPdf(id: string, filePath: string, options: PdfExportOptions) {
-    //   try {
-    //     loading.value = true;
-    //     await FilesApi.exportPattern(id, filePath, options);
-    //     toast.add({
-    //       color: "success",
-    //       title: fluent.$t("pattern-export-success"),
-    //       duration: 3000,
-    //     });
-    //   } catch {
-    //     toast.add({
-    //       color: "error",
-    //       title: fluent.$t("pattern-export-failure"),
-    //       duration: 3000,
-    //     });
-    //   } finally {
-    //     loading.value = false;
-    //   }
-    // }
+    async function exportPatternAsPdf(id: string, variant: "monochrome" | "color") {
+      const patternData = await editor.loadPattern(id);
+      const pattern = Pattern.deserialize(patternData);
+
+      const handle = await filePicker.save({
+        suggestedName: `${pattern.info.title ?? "pattern"}.${variant}.pdf`,
+        types: filePicker.filters.pdf,
+      });
+      if (!handle) return;
+
+      try {
+        loading.value = true;
+
+        const { exportPatternAsPdf } = await import("@embroiderly/pdf-export");
+        const pdfBytes = await exportPatternAsPdf({
+          pattern: patternData,
+          options: PdfExportOptions.schema.serialize(pattern.pdfExportOptions),
+          fonts: await Promise.all(pattern.allSymbolFonts.map((name) => files.loadFontContent(name))),
+          variant,
+        });
+
+        const writer = await handle.createWritable();
+        await writer.write(new Uint8Array(pdfBytes));
+        await writer.close();
+
+        toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
+      } catch {
+        toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
+      } finally {
+        loading.value = false;
+      }
+    }
 
     // Listen to change/checkpoint events to correctly identify dirty state.
     events.on("app:pattern-changed", (id) => {
@@ -275,7 +288,7 @@ export const usePatternFileStore = defineStore(
       savePattern,
       closePattern,
       exportPatternAsOxs,
-      // exportPatternAsPdf,
+      exportPatternAsPdf,
     };
   },
   {

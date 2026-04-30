@@ -100,20 +100,17 @@ const menus = computed<MenubarMenu[]>(() => {
                   await patternFileStore.exportPatternAsOxs(patternStore.pattern.id);
                 },
               },
-              // {
-              //   label: "PDF",
-              //   async onSelect() {
-              //     const { id, pdfExportOptions } = patternStore.pattern;
-              //     const filePath =
-              //       (await FilesApi.getPatternFilePath(id)) ?? (await FilesApi.getPatternDefaultFilePath(id));
-              //     modals.pdfExportModal.open({
-              //       filePath: filePath.replace(/\.[^.]+$/, ".pdf"),
-              //       options: pdfExportOptions,
-              //       onOptionsUpdate: patternStore.updatePdfExportOptions,
-              //       onDocumentExport: (filePath, options) => patternFileStore.exportPatternAsPdf(id, filePath, options),
-              //     });
-              //   },
-              // },
+              {
+                label: "PDF",
+                onSelect() {
+                  modals.pdfExportModal.open({
+                    options: patternStore.pattern.pdfExportOptions,
+                    onOptionsUpdate: patternStore.updatePdfExportOptions,
+                    onDocumentExport: (variant) =>
+                      patternFileStore.exportPatternAsPdf(patternStore.pattern.id, variant),
+                  });
+                },
+              },
             ],
           ],
         },

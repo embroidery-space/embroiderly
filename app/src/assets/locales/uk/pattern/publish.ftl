@@ -2,8 +2,8 @@
 
 pdf-export = Експорт PDF
 
-pdf-export-monochrome = Експортувати чорно-білий документ
-pdf-export-color = Експортувати кольоровий документ
+pdf-export-variant-monochrome = Експортувати чорно-білий документ
+pdf-export-variant-color = Експортувати кольоровий документ
 
 pdf-export-save-settings = Зберегти налаштування
 pdf-export-export-document = Експортувати документ

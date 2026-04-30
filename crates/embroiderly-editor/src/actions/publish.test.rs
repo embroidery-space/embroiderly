@@ -7,8 +7,6 @@ use crate::{EditorAction, EditorEvent};
 fn test_update_pdf_export_options() {
   let mut patproj = PatternProject::default();
   let options = PdfExportOptions {
-    monochrome: true,
-    color: true,
     center_frames: true,
     enumerate_frames: true,
     frame_options: ImageExportOptions {
