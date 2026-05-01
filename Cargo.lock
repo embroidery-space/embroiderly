@@ -1449,11 +1449,14 @@ dependencies = [
  "borsh",
  "embroiderly_image",
  "embroiderly_pattern",
+ "embroiderly_web",
  "js-sys",
  "typst",
  "typst-as-lib",
  "typst-pdf",
  "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
 ]
 
 [[package]]
@@ -1477,10 +1480,9 @@ dependencies = [
  "embroiderly_parsers",
  "embroiderly_pattern",
  "embroiderly_tracing",
+ "embroiderly_web",
  "encoding_rs",
  "futures",
- "gloo-timers",
- "indexed-db",
  "js-sys",
  "serde",
  "serde-wasm-bindgen",
@@ -1494,6 +1496,21 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "xsp_parsers",
+]
+
+[[package]]
+name = "embroiderly_web"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "gloo-timers",
+ "indexed-db",
+ "js-sys",
+ "thiserror 2.0.18",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
 ]
 
 [[package]]

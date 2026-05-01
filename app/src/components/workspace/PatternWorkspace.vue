@@ -58,6 +58,7 @@ watch(
     if (pattern.isNil || pattern.id === oldPattern?.id) return;
     await loadSymbolFonts(pattern.allSymbolFonts);
   },
+  { immediate: true },
 );
 
 watch(

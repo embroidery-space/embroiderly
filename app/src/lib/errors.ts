@@ -10,14 +10,8 @@ export function toApplicationError(error: unknown): Error {
   if (isApplicationError) {
     const { kind, message } = error as ApplicationError;
     switch (kind) {
-      case "InvalidRequestBody":
-        return new InvalidRequestBodyError(message);
-      case "MissingPatternIdHeader":
-        return new MissingPatternIdHeaderError(message);
       case "PatternNotFound":
         return new PatternNotFoundError(message);
-      case "BackupFileExists":
-        return new BackupFileExistsError(message);
       case "UnsupportedPatternType":
         return new UnsupportedPatternTypeError(message);
       case "FailedToParse":
@@ -26,10 +20,6 @@ export function toApplicationError(error: unknown): Error {
         return new UnsavedChangesError(message);
       case "NoFileHandle":
         return new NoFileHandleError(message);
-      case "FailedToExport":
-        return new FailedToExportError(message);
-      case "FailedToImport":
-        return new FailedToImportError(message);
       default:
         return new UnknownError(message);
     }
@@ -38,31 +28,10 @@ export function toApplicationError(error: unknown): Error {
   return new Error(String(error));
 }
 
-export class InvalidRequestBodyError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "InvalidRequestBodyError";
-  }
-}
-
-export class MissingPatternIdHeaderError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "MissingPatternIdHeaderError";
-  }
-}
-
 export class PatternNotFoundError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "PatternNotFoundError";
-  }
-}
-
-export class BackupFileExistsError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "BackupFileExistsError";
   }
 }
 
@@ -77,20 +46,6 @@ export class FailedToParseError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "FailedToParseError";
-  }
-}
-
-export class FailedToExportError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "FailedToExportError";
-  }
-}
-
-export class FailedToImportError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "FailedToImportError";
   }
 }
 

@@ -7,6 +7,7 @@ import { ref } from "vue";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { NoFileHandleError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
 import { Fabric, Pattern, PdfExportOptions } from "~/lib/pattern/";
+import { LoggerService } from "~/services";
 
 export interface OpenPattern {
   id: string;
@@ -247,19 +248,17 @@ export const usePatternFileStore = defineStore(
         loading.value = true;
 
         const { exportPatternAsPdf } = await import("@embroiderly/pdf-export");
-        const pdfBytes = await exportPatternAsPdf({
+        await exportPatternAsPdf({
+          handle,
           pattern: patternData,
           options: PdfExportOptions.schema.serialize(pattern.pdfExportOptions),
           fonts: await Promise.all(pattern.allSymbolFonts.map((name) => files.loadFontContent(name))),
           variant,
         });
 
-        const writer = await handle.createWritable();
-        await writer.write(new Uint8Array(pdfBytes));
-        await writer.close();
-
         toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
-      } catch {
+      } catch (err) {
+        LoggerService.error(`Failed to export pattern as PDF: ${err}`);
         toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
       } finally {
         loading.value = false;

@@ -1,10 +1,9 @@
 use embroiderly_pattern::{BrandPaletteItem, FabricColor};
+use embroiderly_web::{net, opfs};
 use js_sys::{Reflect, Uint8Array};
 use wasm_bindgen::prelude::*;
 
 use crate::error::{Error, ErrorKind};
-use crate::web::opfs::DirectoryHandle;
-use crate::web::{net, opfs};
 
 #[wasm_bindgen(typescript_custom_section)]
 const TS_APPEND_CONTENT: &'static str = r#"
@@ -123,7 +122,7 @@ impl FileManager {
 // Must not be exposed via `#[wasm_bindgen]`.
 impl FileManager {
   /// Iterates over the entries in the provided directory and returns a list of file names without extensions.
-  async fn list_file_names(dir: &DirectoryHandle) -> Result<Vec<String>, Error> {
+  async fn list_file_names(dir: &opfs::DirectoryHandle) -> Result<Vec<String>, Error> {
     let mut file_names = Vec::new();
     for key in dir.keys().await? {
       let file_path = std::path::Path::new(&key);
@@ -291,7 +290,8 @@ impl FileManager {
       .pattern_templates_dir
       .get_file_handle(&name, opfs::GetFileHandleOptions { create: true })
       .await?;
-    file_handle.write(&data).await
+    file_handle.write(&data).await?;
+    Ok(())
   }
 
   #[tracing::instrument(name = "FileManager::load_pattern_template", level = "debug", skip(self), err)]
@@ -300,12 +300,13 @@ impl FileManager {
       .pattern_templates_dir
       .get_file_handle(&name, Default::default())
       .await?;
-    file_handle.read().await
+    Ok(file_handle.read().await?)
   }
 
   #[tracing::instrument(name = "FileManager::delete_pattern_template", level = "debug", skip(self), err)]
   async fn delete_pattern_template_impl(&self, name: String) -> Result<(), Error> {
-    self.pattern_templates_dir.remove_entry(&name).await
+    self.pattern_templates_dir.remove_entry(&name).await?;
+    Ok(())
   }
 }
 
@@ -356,7 +357,8 @@ async fn process_and_save_palette(file_name: &str, data: &[u8], dir: &opfs::Dire
       opfs::GetFileHandleOptions { create: true },
     )
     .await?;
-  file_handle.write(&data).await
+  file_handle.write(&data).await?;
+  Ok(())
 }
 
 async fn process_and_save_font(file_name: &str, data: &[u8], dir: &opfs::DirectoryHandle) -> Result<(), Error> {
@@ -396,5 +398,6 @@ async fn process_and_save_font(file_name: &str, data: &[u8], dir: &opfs::Directo
       opfs::GetFileHandleOptions { create: true },
     )
     .await?;
-  file_handle.write(data).await
+  file_handle.write(data).await?;
+  Ok(())
 }

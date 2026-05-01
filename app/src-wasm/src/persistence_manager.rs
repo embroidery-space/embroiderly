@@ -1,10 +1,10 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
 
+use embroiderly_web::{idb, opfs};
 use wasm_bindgen::prelude::*;
 
 use crate::error::Error;
-use crate::web::{idb, opfs};
 
 const DB_NAME: &str = "embroiderly";
 const DB_VERSION: u32 = 1;

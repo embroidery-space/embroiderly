@@ -17,6 +17,7 @@ embroiderly/
 │   ├── embroiderly-pattern/    # Domain data structures
 │   ├── embroiderly-parsers/    # Pattern file format parsers
 │   ├── embroiderly-tracing/    # Shared logging/tracing configuration
+│   ├── embroiderly-web/        # Shared Web API bindings for Wasm modules
 │   └── xsp-parsers/            # Low-level embroidery file format parsers
 ├── packages/
 │   ├── pdf-export/             # PDF export (Wasm + Web Worker)

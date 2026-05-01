@@ -133,6 +133,12 @@ impl From<embroiderly_parsers::Error> for Error {
   }
 }
 
+impl From<embroiderly_web::Error> for Error {
+  fn from(err: embroiderly_web::Error) -> Self {
+    Self::new(ErrorKind::Unexpected).with_source(err)
+  }
+}
+
 impl From<embroiderly_editor::Error> for Error {
   fn from(err: embroiderly_editor::Error) -> Self {
     match err {

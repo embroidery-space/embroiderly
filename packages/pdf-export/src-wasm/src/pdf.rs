@@ -45,13 +45,7 @@ pub fn export_pattern(
     }))
     .build();
 
-  let doc = {
-    let result = typst_template.compile_with_input(typst_content);
-    // for warning in &result.warnings {
-    //   tracing::warn!("Typst compilation warning: {warning:?}");
-    // }
-    result.output?
-  };
+  let doc = typst_template.compile_with_input(typst_content).output?;
 
   typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
     .map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))

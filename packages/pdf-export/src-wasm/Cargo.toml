@@ -12,6 +12,7 @@ crate-type = ["cdylib", "rlib"]
 # Embroiderly Core
 embroiderly_image = { workspace = true }
 embroiderly_pattern = { workspace = true, features = ["borsh"] }
+embroiderly_web = { workspace = true, features = ["opfs"] }
 
 # De/serialization
 borsh = { workspace = true }
@@ -26,7 +27,9 @@ anyhow = { workspace = true }
 
 # Wasm
 wasm-bindgen = { workspace = true }
+wasm-bindgen-futures = { workspace = true }
 js-sys = { workspace = true }
+web-sys = { workspace = true, features = ["FileSystemFileHandle"] }
 
 [package.metadata.wasm-pack.profile.dev]
 wasm-opt = false

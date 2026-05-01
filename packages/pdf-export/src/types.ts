@@ -1,6 +1,8 @@
 export type PdfVariant = "monochrome" | "color";
 
 export interface ExportInput {
+  /** The file handle to write the PDF to. */
+  handle: FileSystemFileHandle;
   /** Borsh-serialised `PatternProject`. */
   pattern: Uint8Array;
   /** Borsh-serialised `PdfExportOptions`. */

@@ -10,12 +10,12 @@ use embroiderly_editor::actions::{
 use embroiderly_editor::{Editor, EditorAction, EditorEvent};
 use embroiderly_parsers::{PackageInfo, PatternFormat};
 use embroiderly_pattern::{Pattern, PatternProject, ReferenceImage, Stitch};
+use embroiderly_web::{opfs, timers};
 use js_sys::Uint8Array;
 use wasm_bindgen::prelude::*;
 
 use crate::error::{Error, ErrorKind};
 use crate::persistence_manager::PersistenceManager;
-use crate::web::{opfs, timers};
 
 thread_local! {
   pub(crate) static EDITOR: RefCell<Option<Editor>> = const { RefCell::new(None) };

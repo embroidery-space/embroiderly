@@ -1,4 +1,3 @@
-#![doc = include_str!("../README.md")]
 #![allow(clippy::future_not_send)]
 
 use wasm_bindgen::prelude::*;
@@ -8,7 +7,6 @@ mod error;
 mod file_manager;
 mod logger;
 mod persistence_manager;
-mod web;
 
 pub use editor_wrapper::EditorWrapper;
 pub use file_manager::FileManager;
