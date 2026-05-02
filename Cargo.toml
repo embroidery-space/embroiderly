@@ -1,6 +1,12 @@
 [workspace]
 resolver = "3"
-members = ["app/src-tauri/", "app/src-wasm/", "crates/*", "packages/pdf-export/src-wasm/"]
+members = [
+  "app/src-tauri/",
+  "app/src-wasm/",
+  "crates/*",
+  "packages/pdf-export/src-wasm/",
+  "packages/image-import/src-wasm/",
+]
 
 [workspace.package]
 edition = "2024"
@@ -67,7 +73,6 @@ tauri-build = { version = "2.4.1", default-features = false, features = ["config
 tauri-plugin-fs = "2.0.3"
 tauri-plugin-opener = "2.5.3"
 tauri-plugin-process = "2.3.1"
-tauri-plugin-shell = "2.3.5"
 tauri-plugin-updater = "2.10.1"
 ## Third-party Tauri plugins
 tauri-plugin-prevent-default = "5.0.0"
@@ -100,7 +105,7 @@ typst-pdf = "0.14.2"
 typst-as-lib = "0.15.4"
 
 # Image processing
-image = "0.25.10"
+image = { version = "0.25.10", default-features = false, features = ["png", "jpeg", "webp"] }
 palette = "0.7.6"
 quantette = "0.5.1"
 
@@ -112,9 +117,6 @@ serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.148"
 serde-wasm-bindgen = "0.6.5"
 borsh = { version = "1.6.1", features = ["derive"] }
-
-# CLI
-argh = { version = "0.1.18", default-features = false }
 
 # Error handling
 anyhow = "1.0.102"

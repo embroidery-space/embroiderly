@@ -1,0 +1,30 @@
+{
+  "name": "@embroiderly/image-import",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "pnpm wasm:build && vite build",
+    "build-dev": "pnpm wasm:build-dev && vite build",
+    "wasm:build": "wasm-pack build src-wasm --release --target web --out-dir pkg",
+    "wasm:build-dev": "wasm-pack build src-wasm --dev --target web --out-dir pkg",
+    "check-types": "tsc -b --noEmit"
+  },
+  "dependencies": {
+    "@zorsh/zorsh": "catalog:",
+    "comlink": "catalog:"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "catalog:",
+    "@tsconfig/strictest": "catalog:",
+    "@types/node": "catalog:",
+    "@vue/tsconfig": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

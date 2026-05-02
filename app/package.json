@@ -18,6 +18,7 @@
     "test:e2e": "wdio run wdio.config.ts"
   },
   "dependencies": {
+    "@embroiderly/image-import": "workspace:",
     "@embroiderly/pdf-export": "workspace:",
     "@embroiderly/ui": "workspace:",
     "@fluent/bundle": "catalog:",

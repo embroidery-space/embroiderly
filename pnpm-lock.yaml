@@ -347,6 +347,9 @@ importers:
 
   app:
     dependencies:
+      '@embroiderly/image-import':
+        specifier: 'workspace:'
+        version: link:../packages/image-import
       '@embroiderly/pdf-export':
         specifier: 'workspace:'
         version: link:../packages/pdf-export
@@ -538,6 +541,34 @@ importers:
       wrangler:
         specifier: 'catalog:'
         version: 4.84.1
+
+  packages/image-import:
+    dependencies:
+      '@zorsh/zorsh':
+        specifier: 'catalog:'
+        version: 0.5.0
+      comlink:
+        specifier: 'catalog:'
+        version: 4.4.2
+    devDependencies:
+      '@tsconfig/node24':
+        specifier: 'catalog:'
+        version: 24.0.4
+      '@tsconfig/strictest':
+        specifier: 'catalog:'
+        version: 2.0.8
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.12.2
+      '@vue/tsconfig':
+        specifier: 'catalog:'
+        version: 0.9.1(typescript@6.0.3)(vue@3.5.33(typescript@6.0.3))
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+      vite:
+        specifier: 'catalog:'
+        version: 8.0.10(@types/node@24.12.2)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.2)
 
   packages/pdf-export:
     dependencies:

@@ -15,7 +15,6 @@ tauri = { workspace = true, features = ["devtools"] }
 tauri-plugin-fs = { workspace = true }
 tauri-plugin-opener = { workspace = true }
 tauri-plugin-process = { workspace = true }
-tauri-plugin-shell = { workspace = true }
 tauri-plugin-updater = { workspace = true }
 ## Third-party plugins
 tauri-plugin-prevent-default = { workspace = true }

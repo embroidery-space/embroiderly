@@ -8,7 +8,7 @@ import { openPath, openUrl } from "@tauri-apps/plugin-opener";
 import { computed } from "vue";
 
 import { IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
-import { useEditorModals, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
+import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
@@ -20,6 +20,7 @@ const confirm = useConfirm();
 const { fluent } = useI18n();
 
 const modals = useEditorModals();
+const filePicker = useFilePicker();
 
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
@@ -70,25 +71,26 @@ const menus = computed<MenubarMenu[]>(() => {
         },
       ],
       [
-        // {
-        //   label: fluent.$t("app-menu-file-import"),
-        //   children: [
-        //     [
-        //       {
-        //         label: fluent.$t("app-menu-file-import-image"),
-        //         async onSelect() {
-        //           const imagePath = await filePicker.open({ types: ANY_IMAGE_FILTER });
-        //           if (imagePath === null) return;
-        //           const patternId = await modals.imageImportModal.open({
-        //             imagePath,
-        //             imageDimensions: await FilesApi.getImageDimensions(imagePath),
-        //           }).result;
-        //           if (patternId) patternFileStore.switchPattern(patternId);
-        //         },
-        //       },
-        //     ],
-        //   ],
-        // },
+        {
+          label: fluent.$t("app-menu-file-import"),
+          children: [
+            [
+              {
+                label: fluent.$t("app-menu-file-import-image"),
+                async onSelect() {
+                  const handle = await filePicker.open({ types: filePicker.filters.image });
+                  if (!handle) return;
+
+                  const patternBytes = await modals.imageImportModal.open({ imageFile: await handle.getFile() }).result;
+                  if (patternBytes) {
+                    const patternId = await patternFileStore.addPattern(patternBytes);
+                    patternFileStore.switchPattern(patternId);
+                  }
+                },
+              },
+            ],
+          ],
+        },
         {
           label: fluent.$t("app-menu-file-export"),
           disabled: patternStore.pattern.isNil,

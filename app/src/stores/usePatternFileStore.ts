@@ -59,6 +59,20 @@ export const usePatternFileStore = defineStore(
       }
     }
 
+    /** Adds a Borsh-serialized pattern directly to the editor. Returns the pattern ID. */
+    async function addPattern(pattern: Uint8Array): Promise<string> {
+      try {
+        loading.value = true;
+
+        const result = await editor.addPattern(pattern);
+        addOpenedPattern(result.id, result.title);
+
+        return result.id;
+      } finally {
+        loading.value = false;
+      }
+    }
+
     async function openPattern(): Promise<string>;
     async function openPattern(options: { file: File }): Promise<string>;
     async function openPattern(options: { filePath: string }): Promise<string>;
@@ -282,6 +296,7 @@ export const usePatternFileStore = defineStore(
       switchPattern,
       updateOpenedPattern,
       loadPattern,
+      addPattern,
       openPattern,
       createPattern,
       savePattern,

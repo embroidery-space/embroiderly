@@ -67,6 +67,13 @@ impl EditorWrapper {
     self.set_auto_save_interval_impl(millis);
   }
 
+  /// Adds a Borsh-serialized `PatternProject` and persists it without a file handle.
+  #[wasm_bindgen(js_name = "addPattern")]
+  pub async fn add_pattern(&self, data: &[u8]) -> Result<OpenPatternResult, Error> {
+    let (id, title) = self.add_pattern_impl(data).await?;
+    Ok(OpenPatternResult { id, title })
+  }
+
   /// Reads the file from the provided file handle, parses it, and registers the pattern in the editor.
   ///
   /// The file name extension determines the pattern format.
@@ -355,6 +362,19 @@ impl EditorWrapper {
     };
   }
 
+  #[tracing::instrument(name = "EditorWrapper::add_pattern", level = "debug", skip_all, ret, err)]
+  async fn add_pattern_impl(&self, data: &[u8]) -> Result<(String, String), Error> {
+    let patproj: PatternProject = borsh::from_slice(data)?;
+    let title = patproj.pattern.info.title.clone();
+
+    let snapshot = data.to_vec();
+    let pattern_id = self.run(|editor| editor.add_pattern(patproj));
+
+    self.persistence.save_pattern_entry(pattern_id, snapshot, None).await?;
+
+    Ok((pattern_id.to_string(), title))
+  }
+
   #[tracing::instrument(
     name = "EditorWrapper::open_pattern",
     level = "debug",
@@ -373,8 +393,6 @@ impl EditorWrapper {
     let title = patproj.pattern.info.title.clone();
     let title = if title.is_empty() { file_name } else { title };
 
-    // Serialize the initial pattern state before handing ownership to the editor.
-    // This snapshot serves as the replay baseline for session restore.
     let snapshot = borsh::to_vec(&patproj)?;
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
 
@@ -398,8 +416,6 @@ impl EditorWrapper {
     let title = patproj.pattern.info.title.clone();
     let title = if title.is_empty() { file_name.to_owned() } else { title };
 
-    // Serialize the initial pattern state before handing ownership to the editor.
-    // This snapshot serves as the replay baseline for session restore.
     let snapshot = borsh::to_vec(&patproj)?;
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
 

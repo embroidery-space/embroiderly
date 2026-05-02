@@ -34,7 +34,7 @@ export default defineConfig({
     !isTest && vueDevTools(),
   ],
   clearScreen: false,
-  optimizeDeps: { exclude: ["@embroiderly/wasm", "@embroiderly/pdf-export"] },
+  optimizeDeps: { exclude: ["@embroiderly/wasm", "@embroiderly/pdf-export", "@embroiderly/image-import"] },
   worker: { format: "es" },
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**", "src-wasm/**"] } },
   build: {
