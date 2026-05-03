@@ -132,7 +132,7 @@ const ui = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style>
 [data-color-picker-selector] {
   background-image:
     linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 100%),
