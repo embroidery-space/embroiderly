@@ -150,5 +150,33 @@ describe("InputDimensions", () => {
 
       await expect.element(heightInput).toHaveValue("50");
     });
+
+    test("reacts to aspectRatio prop changes", async () => {
+      const Wrapper = defineComponent({
+        components: { InputDimensions },
+        setup() {
+          return { width: ref(100), height: ref(50), aspectRatio: ref(2) };
+        },
+        template: `<InputDimensions v-model:width="width" v-model:height="height" :aspect-ratio="aspectRatio" />`,
+      });
+      const screen = await page.render(Wrapper);
+
+      const widthInput = screen.getByRole("spinbutton").nth(0);
+      const heightInput = screen.getByRole("spinbutton").nth(1);
+
+      // Verify initial ratio (2:1).
+      await userEvent.fill(widthInput, "200");
+      await userEvent.keyboard("{Enter}");
+      await expect.element(heightInput).toHaveValue("100");
+
+      // Update ratio to 1:1.
+      // @ts-expect-error Props type is not inferred.
+      await screen.rerender({ aspectRatio: 1 });
+
+      // Verify new ratio.
+      await userEvent.fill(widthInput, "300");
+      await userEvent.keyboard("{Enter}");
+      await expect.element(heightInput).toHaveValue("300");
+    });
   });
 });
