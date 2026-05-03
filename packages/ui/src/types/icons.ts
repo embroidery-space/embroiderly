@@ -8,6 +8,7 @@ export interface Icons {
   chevronDown: IconValue;
   chevronRight: IconValue;
   close: IconValue;
+  external: IconValue;
   loading: IconValue;
   link: IconValue;
   unlink: IconValue;

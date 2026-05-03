@@ -1,5 +1,48 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Button > renders correctly with external href 1`] = `
+<div>
+  <a aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" href="https://example.com">
+    <span class="truncate" data-slot="label">Button</span>
+    <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+    </svg>
+  </a>
+</div>
+`;
+
+exports[`Button > renders correctly with href 1`] = `
+<div>
+  <a aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" href="/about">
+    <span class="truncate" data-slot="label">Button</span>
+  </a>
+</div>
+`;
+
+exports[`Button > renders correctly with href and custom rel 1`] = `
+<div>
+  <a aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" href="/about" rel="nofollow">
+    <span class="truncate" data-slot="label">Button</span>
+  </a>
+</div>
+`;
+
+exports[`Button > renders correctly with href and disabled 1`] = `
+<div>
+  <a aria-disabled="true" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" tabindex="-1">
+    <span class="truncate" data-slot="label">Button</span>
+  </a>
+</div>
+`;
+
+exports[`Button > renders correctly with href and target _blank 1`] = `
+<div>
+  <a aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" href="/about" target="_blank">
+    <span class="truncate" data-slot="label">Button</span>
+  </a>
+</div>
+`;
+
 exports[`Button > renders correctly with icon 1`] = `
 <div>
   <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">

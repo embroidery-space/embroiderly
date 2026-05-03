@@ -3,7 +3,7 @@ import { ButtonIcon, DropdownMenu, Menubar, Separator, useConfirm } from "@embro
 import type { DropdownMenuItem, MenubarItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { openPath, openUrl } from "@tauri-apps/plugin-opener";
+import { openPath } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
@@ -202,24 +202,25 @@ const menus = computed<MenubarMenu[]>(() => {
     items: [
       [{ label: fluent.$t("app-menu-help-about"), onSelect: showSystemInfo }],
       [
+        __TAURI__
+          ? {
+              label: fluent.$t("app-menu-help-guide"),
+              async onSelect() {
+                const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
+                await openPath(documentPath);
+              },
+            }
+          : {
+              type: "link",
+              label: fluent.$t("app-menu-help-guide"),
+              href: "https://docs.embroiderly.niusia.me",
+              target: "_blank",
+            },
         {
-          label: fluent.$t("app-menu-help-guide"),
-          async onSelect() {
-            const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
-            await openPath(documentPath);
-          },
-        },
-        {
+          type: "link",
           label: fluent.$t("app-menu-help-license"),
-          async onSelect() {
-            await openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE");
-          },
-        },
-        {
-          label: fluent.$t("app-menu-help-website"),
-          async onSelect() {
-            await openUrl(`https://embroiderly.niusia.me`);
-          },
+          href: "https://github.com/embroidery-space/embroiderly/blob/main/LICENSE",
+          target: "_blank",
         },
       ],
     ],

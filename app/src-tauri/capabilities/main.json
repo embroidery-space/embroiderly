@@ -17,8 +17,6 @@
     "core:webview:allow-internal-toggle-devtools",
     "fs:allow-read-file",
     { "identifier": "opener:allow-open-path", "allow": [{ "path": "$RESOURCE/help/*.pdf" }] },
-    "opener:allow-open-url",
-    "opener:allow-default-urls",
     "process:allow-restart",
     "updater:allow-check",
     "updater:allow-download-and-install",

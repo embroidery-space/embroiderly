@@ -74,6 +74,14 @@ defineExpose({ state });
       </div>
     </Variant>
 
+    <Variant id="links" title="Links" auto-props-disabled>
+      <div class="flex flex-wrap items-center gap-2">
+        <Button label="Internal Link" href="/about" />
+        <Button label="External Link" href="https://example.com" target="_blank" />
+        <Button label="Disabled Link" href="https://example.com" disabled />
+      </div>
+    </Variant>
+
     <Variant id="field-group" title="Field Group" auto-props-disabled>
       <FormFieldGroup>
         <Button label="First" variant="outline" color="neutral" />

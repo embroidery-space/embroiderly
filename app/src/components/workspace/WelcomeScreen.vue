@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Button, Icon } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
-import { openPath, openUrl } from "@tauri-apps/plugin-opener";
+import { openPath } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
@@ -26,7 +26,8 @@ interface InfoSection {
 interface InfoItemOptions {
   title: string;
   text?: string;
-  url?: string;
+  href?: string;
+  target?: "_self" | "_blank" | "_parent" | "_top";
   command?: () => void;
 }
 
@@ -41,36 +42,34 @@ const infoSections = computed<InfoSection[]>(() => [
       },
     ],
   },
-  ...(__TAURI__
-    ? [
-        {
-          title: fluent.$t("welcome-section-info"),
-          items: [
-            {
-              title: fluent.$t("welcome-info-docs-title"),
-              text: fluent.$t("welcome-info-docs-descr"),
-              async command() {
-                const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
-                await openPath(documentPath);
-              },
+  {
+    title: fluent.$t("welcome-section-info"),
+    items: [
+      __TAURI__
+        ? {
+            title: fluent.$t("welcome-info-docs-title"),
+            text: fluent.$t("welcome-info-docs-descr"),
+            async command() {
+              const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
+              await openPath(documentPath);
             },
-          ],
-        },
-      ]
-    : []),
+          }
+        : {
+            title: fluent.$t("welcome-info-docs-title"),
+            text: fluent.$t("welcome-info-docs-descr"),
+            href: "https://docs.embroiderly.niusia.me",
+            target: "_blank",
+          },
+    ],
+  },
   {
     title: fluent.$t("welcome-section-help"),
     items: [
-      { title: fluent.$t("welcome-help-tg"), url: "https://t.me/embroiderly" },
-      { title: fluent.$t("welcome-help-fb"), url: "https://facebook.com/groups/embroiderly" },
+      { title: fluent.$t("welcome-help-tg"), href: "https://t.me/embroiderly", target: "_blank" },
+      { title: fluent.$t("welcome-help-fb"), href: "https://facebook.com/groups/embroiderly", target: "_blank" },
     ],
   },
 ]);
-
-function handleInfoItemClick(item: InfoItemOptions) {
-  if (item.url) openUrl(item.url);
-  if (item.command) item.command();
-}
 
 async function openPattern() {
   const patternId = await patternFileStore.openPattern();
@@ -130,19 +129,30 @@ function createPattern() {
           <div class="flex flex-col gap-y-5">
             <div v-for="section in infoSections" :key="section.title" class="flex flex-col gap-1">
               <span class="text-lg">{{ section.title }}</span>
-              <div
-                v-for="item in section.items"
-                :key="item.title"
-                tabindex="0"
-                class="rounded-md p-2 transition-colors duration-initial hover:cursor-pointer hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                @click="handleInfoItemClick(item)"
-              >
-                <span class="flex items-center gap-2 font-medium text-primary">
-                  {{ item.title }}
-                  <Icon v-if="item.url" :name="IconExternalLink" />
-                </span>
-                <span v-if="item.text">{{ item.text }}</span>
-              </div>
+              <template v-for="item in section.items" :key="item.title">
+                <a
+                  v-if="item.href"
+                  :href="item.href"
+                  :target="item.target"
+                  rel="noopener noreferrer"
+                  class="block rounded-md p-2 transition-colors duration-initial hover:cursor-pointer hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  <span class="flex items-center gap-2 font-medium text-primary">
+                    {{ item.title }}
+                    <Icon :name="IconExternalLink" />
+                  </span>
+                  <span v-if="item.text">{{ item.text }}</span>
+                </a>
+                <div
+                  v-else
+                  tabindex="0"
+                  class="rounded-md p-2 transition-colors duration-initial hover:cursor-pointer hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  @click="item?.command"
+                >
+                  <span class="flex items-center gap-2 font-medium text-primary">{{ item.title }}</span>
+                  <span v-if="item.text">{{ item.text }}</span>
+                </div>
+              </template>
             </div>
           </div>
         </div>

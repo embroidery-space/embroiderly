@@ -22,8 +22,9 @@ export interface ButtonIconProps
 
 const props = defineProps<ButtonIconProps>();
 const buttonProps = computed<Partial<ButtonProps>>(() => ({
-  as: props.as,
-  asChild: props.asChild,
+  href: props.href,
+  target: props.href,
+  rel: props.rel,
 
   icon: props.icon,
 

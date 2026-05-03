@@ -14,6 +14,7 @@ import {
   IconUnlink,
   IconMinus,
   IconPlus,
+  IconExternalLink,
 } from "~/assets/icons/";
 
 import { AppHeader, AppMain } from "./components/";
@@ -48,6 +49,7 @@ onErrorCaptured((err, _component, info) => {
       chevronDown: markRaw(IconChevronDown),
       chevronRight: markRaw(IconChevronRight),
       close: markRaw(IconClose),
+      external: markRaw(IconExternalLink),
       loading: markRaw(IconLoaderCircle),
       link: markRaw(IconLink),
       unlink: markRaw(IconUnlink),

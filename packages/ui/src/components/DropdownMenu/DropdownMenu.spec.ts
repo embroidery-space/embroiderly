@@ -37,6 +37,14 @@ describe("DropdownMenu", () => {
     ],
   ];
 
+  const linkItems: DropdownMenuItem[][] = [
+    [
+      { type: "link", label: "Internal Page", href: "/about" },
+      { type: "link", label: "External Site", href: "https://example.com", target: "_blank" },
+      { type: "link", label: "Disabled Link", href: "https://example.com", disabled: true },
+    ],
+  ];
+
   const submenuItems: DropdownMenuItem[][] = [
     [
       {
@@ -59,6 +67,7 @@ describe("DropdownMenu", () => {
     ["with simple items", { props: { ...props, items: simpleItems } }],
     ["with checkbox items", { props: { ...props, items: checkboxItems } }],
     ["with submenu items", { props: { ...props, items: submenuItems } }],
+    ["with link items", { props: { ...props, items: linkItems } }],
     ["with disabled", { props: { ...props, items: simpleItems, disabled: true } }],
     ...sizes.map((size) => [`with size ${size}`, { props: { ...props, items: simpleItems, size } }]),
     ["with class", { props: { ...props, items: simpleItems, class: "min-w-48" } }],

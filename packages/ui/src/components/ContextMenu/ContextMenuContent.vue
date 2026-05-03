@@ -4,6 +4,7 @@ import { toRef } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { usePortal } from "../../composables/usePortal.ts";
+import { getLinkRel, isExternalHref } from "../../utils/link.ts";
 import { parseShortcutDisplay } from "../../utils/shortcut.ts";
 import Icon from "../Icon/Icon.vue";
 import Kbd from "../Kbd/Kbd.vue";
@@ -84,6 +85,29 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
           </ContextMenu.ItemIndicator>
         </ContextMenu.CheckboxItem>
 
+        <ContextMenu.Item
+          v-else-if="item.type === 'link'"
+          as-child
+          :disabled="item.disabled"
+          :class="ui.item({ class: item.class })"
+          @select="item.onSelect"
+        >
+          <a :href="item.href" :target="item.target" :rel="getLinkRel(item)" data-slot="item">
+            <Icon v-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
+
+            <span v-if="item.label || item.description" data-slot="itemBody" :class="ui.itemBody()">
+              <span v-if="item.label" data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
+              <span v-if="item.description" data-slot="itemDescription" :class="ui.itemDescription()">
+                {{ item.description }}
+              </span>
+            </span>
+
+            <span v-if="isExternalHref(item.href)" data-slot="itemTrailing" :class="ui.itemTrailing()">
+              <Icon :name="icons.external" data-slot="itemTrailingIcon" :class="ui.itemTrailingIcon()" />
+            </span>
+          </a>
+        </ContextMenu.Item>
+
         <ContextMenu.Sub v-else-if="item.children?.length">
           <ContextMenu.SubTrigger :disabled="item.disabled" data-slot="item" :class="ui.item({ class: item.class })">
             <Icon v-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
@@ -97,7 +121,6 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
             <ContextMenuContent
               sub
               :items="normalizeChildren(item.children)"
-              :icons="icons"
               :ui="ui"
               :size="size"
               :portal="portal"

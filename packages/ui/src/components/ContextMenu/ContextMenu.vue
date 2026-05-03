@@ -13,7 +13,7 @@ import ContextMenuContent from "./ContextMenuContent.vue";
 
 export interface ContextMenuItem {
   /** The type of the item. */
-  type?: "separator" | "label" | "checkbox";
+  type?: "separator" | "label" | "checkbox" | "link";
 
   /** The label to display. */
   label?: string;
@@ -35,6 +35,13 @@ export interface ContextMenuItem {
 
   /** Keyboard shortcut. */
   shortcut?: string;
+
+  /** The URL for link items. Only used when `type` is `"link"`. */
+  href?: string;
+  /** The link target. Only used when `type` is `"link"`. */
+  target?: "_self" | "_blank" | "_parent" | "_top" | (string & {});
+  /** Overrides the auto-computed rel attribute. Only used when `type` is `"link"`. */
+  rel?: string;
 
   /** Callback when the item is selected. Call `event.preventDefault()` to prevent the menu from closing. */
   onSelect?: (event: Event) => void;
