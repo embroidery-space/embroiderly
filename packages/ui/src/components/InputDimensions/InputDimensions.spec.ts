@@ -16,8 +16,8 @@ describe("InputDimensions", () => {
     ...sizes.map((size: string) => [`with size ${size}`, { props: { size } }]),
     ...orientations.map((orientation: string) => [`with orientation ${orientation}`, { props: { orientation } }]),
     ["with aspectRatio", { props: { aspectRatio: 1.5 } }],
-    ["with widthInputOptions", { props: { widthinputOptions: { min: 0, max: 100 } } }],
-    ["with heightInputOptions", { props: { heightinputOptions: { min: 0, max: 100 } } }],
+    ["with widthInputOptions", { props: { widthInputOptions: { min: 0, max: 100 } } }],
+    ["with heightInputOptions", { props: { heightInputOptions: { min: 0, max: 100 } } }],
     ["with widthFieldOptions", { props: { widthFieldOptions: { label: "Width", hint: "px" } } }],
     ["with heightFieldOptions", { props: { heightFieldOptions: { label: "Height", hint: "px" } } }],
     ["with class", { props: { class: "w-64" } }],
@@ -38,13 +38,12 @@ describe("InputDimensions", () => {
       });
       const screen = await page.render(Wrapper);
 
-      const inputs = screen.container.querySelectorAll<HTMLInputElement>("[role='spinbutton']");
-      const widthInput = page.elementLocator(inputs[0]!);
+      const widthInput = screen.getByRole("spinbutton").nth(0);
 
       await userEvent.fill(widthInput, "200");
       await userEvent.keyboard("{Enter}");
 
-      expect(screen.getByRole("spinbutton").elements()[0]).toHaveValue("200");
+      await expect.element(widthInput).toHaveValue("200");
     });
 
     test("update:height event", async () => {
@@ -57,13 +56,12 @@ describe("InputDimensions", () => {
       });
       const screen = await page.render(Wrapper);
 
-      const inputs = screen.container.querySelectorAll<HTMLInputElement>("[role='spinbutton']");
-      const heightInput = page.elementLocator(inputs[1]!);
+      const heightInput = screen.getByRole("spinbutton").nth(1);
 
       await userEvent.fill(heightInput, "75");
       await userEvent.keyboard("{Enter}");
 
-      expect(screen.getByRole("spinbutton").elements()[1]).toHaveValue("75");
+      await expect.element(heightInput).toHaveValue("75");
     });
   });
 
@@ -106,13 +104,13 @@ describe("InputDimensions", () => {
       });
       const screen = await page.render(Wrapper);
 
-      const inputs = screen.container.querySelectorAll<HTMLInputElement>("[role='spinbutton']");
-      const widthInput = page.elementLocator(inputs[0]!);
+      const widthInput = screen.getByRole("spinbutton").nth(0);
+      const heightInput = screen.getByRole("spinbutton").nth(1);
 
       await userEvent.fill(widthInput, "200");
       await userEvent.keyboard("{Enter}");
 
-      expect(inputs[1]).toHaveValue("100");
+      await expect.element(heightInput).toHaveValue("100");
     });
 
     test("changing height proportionally updates width when locked", async () => {
@@ -125,13 +123,13 @@ describe("InputDimensions", () => {
       });
       const screen = await page.render(Wrapper);
 
-      const inputs = screen.container.querySelectorAll<HTMLInputElement>("[role='spinbutton']");
-      const heightInput = page.elementLocator(inputs[1]!);
+      const widthInput = screen.getByRole("spinbutton").nth(0);
+      const heightInput = screen.getByRole("spinbutton").nth(1);
 
       await userEvent.fill(heightInput, "100");
       await userEvent.keyboard("{Enter}");
 
-      expect(inputs[0]).toHaveValue("200");
+      await expect.element(widthInput).toHaveValue("200");
     });
 
     test("changing width does not update height when unlocked", async () => {
@@ -144,13 +142,13 @@ describe("InputDimensions", () => {
       });
       const screen = await page.render(Wrapper);
 
-      const inputs = screen.container.querySelectorAll<HTMLInputElement>("[role='spinbutton']");
-      const widthInput = page.elementLocator(inputs[0]!);
+      const widthInput = screen.getByRole("spinbutton").nth(0);
+      const heightInput = screen.getByRole("spinbutton").nth(1);
 
       await userEvent.fill(widthInput, "200");
       await userEvent.keyboard("{Enter}");
 
-      expect(inputs[1]).toHaveValue("50");
+      await expect.element(heightInput).toHaveValue("50");
     });
   });
 });
