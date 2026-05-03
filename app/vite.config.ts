@@ -40,6 +40,7 @@ export default defineConfig({
   build: {
     sourcemap: isDev,
     chunkSizeWarningLimit: Infinity,
+    cssCodeSplit: false, // Embroiderly is SPA; compile all styles in a single CSS file.
   },
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
