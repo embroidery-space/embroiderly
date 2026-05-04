@@ -47,12 +47,12 @@ export class Slider extends Container {
   readonly track: Graphics;
   readonly handle: Graphics;
 
-  private _min: number;
-  private _max: number;
-  private _value: number;
-  private _step: number;
+  #min: number;
+  #max: number;
+  #value: number;
+  #step: number;
 
-  private isDragging = false;
+  #isDragging = false;
 
   #onUpdateListeners: Array<(event: SliderChangeEvent) => void> = [];
   #onChangeListeners: Array<(event: SliderChangeEvent) => void> = [];
@@ -74,10 +74,10 @@ export class Slider extends Container {
     this.handle.label = "Slider Handle";
     this.handle.y = (this.track.height - this.handle.height) / 2;
 
-    this._min = options.min ?? 0;
-    this._max = options.max ?? 100;
-    this._value = options.value ?? this._min;
-    this._step = options.step ?? 1;
+    this.#min = options.min ?? 0;
+    this.#max = options.max ?? 100;
+    this.#value = options.value ?? this.#min;
+    this.#step = options.step ?? 1;
 
     this.updateSliderPosition();
 
@@ -91,7 +91,7 @@ export class Slider extends Container {
     this.#onUpdateListeners.length = 0;
     this.#onChangeListeners.length = 0;
 
-    this.isDragging = false;
+    this.#isDragging = false;
     this.removeAllListeners();
 
     super.destroy(options);
@@ -99,13 +99,13 @@ export class Slider extends Container {
 
   /** Current slider value. */
   get value() {
-    return this._value;
+    return this.#value;
   }
   set value(value: number) {
-    const clampedValue = Math.max(this._min, Math.min(this._max, value));
+    const clampedValue = Math.max(this.#min, Math.min(this.#max, value));
     const steppedValue = this.snapToStep(clampedValue);
-    if (this._value !== steppedValue) {
-      this._value = steppedValue;
+    if (this.#value !== steppedValue) {
+      this.#value = steppedValue;
       this.updateSliderPosition();
       this.emitUpdate();
     }
@@ -113,36 +113,36 @@ export class Slider extends Container {
 
   /** Normalized value in range from 0 to 1. */
   get normalizedValue() {
-    return (this._value - this._min) / (this._max - this._min);
+    return (this.#value - this.#min) / (this.#max - this.#min);
   }
   set normalizedValue(value: number) {
-    this.value = value * (this._max - this._min) + this._min;
+    this.value = value * (this.#max - this.#min) + this.#min;
   }
 
   /** Minimum value */
   get min() {
-    return this._min;
+    return this.#min;
   }
   set min(value: number) {
-    this._min = value;
-    if (this._value < value) this.value = value;
+    this.#min = value;
+    if (this.#value < value) this.value = value;
   }
 
   /** Maximum value */
   get max() {
-    return this._max;
+    return this.#max;
   }
   set max(value: number) {
-    this._max = value;
-    if (this._value > value) this.value = value;
+    this.#max = value;
+    if (this.#value > value) this.value = value;
   }
 
   /** Step size */
   get step() {
-    return this._step;
+    return this.#step;
   }
   set step(value: number) {
-    this._step = Math.max(0.01, value);
+    this.#step = Math.max(0.01, value);
   }
 
   /** Adds a listener for continuous value updates during dragging. */
@@ -170,13 +170,13 @@ export class Slider extends Container {
   private onPointerDown(event: FederatedPointerEvent) {
     event.stopPropagation();
 
-    this.isDragging = true;
+    this.#isDragging = true;
 
     const localPos = this.toLocal(event.global);
     if (localPos.x < this.handle.x || localPos.x > this.handle.x + this.handle.width) {
       // If clicking on the track (not handle), jump to that position.
       const progress = Math.max(0, Math.min(1, localPos.x / this.track.width));
-      const newValue = this._min + progress * (this._max - this._min);
+      const newValue = this.#min + progress * (this.#max - this.#min);
       this.value = newValue;
       this.emitChange();
     }
@@ -185,36 +185,36 @@ export class Slider extends Container {
   }
 
   private onPointerMove(event: FederatedPointerEvent) {
-    if (!this.isDragging) return;
+    if (!this.#isDragging) return;
     event.stopPropagation();
 
     const localPos = this.toLocal(event.global);
     const progress = Math.max(0, Math.min(1, localPos.x / this.track.width));
-    const newValue = this._min + progress * (this._max - this._min);
+    const newValue = this.#min + progress * (this.#max - this.#min);
 
     this.value = newValue;
   }
 
   private onPointerUp() {
-    if (!this.isDragging) return;
+    if (!this.#isDragging) return;
 
-    this.isDragging = false;
+    this.#isDragging = false;
     this.removeAllListeners("globalpointermove");
 
     this.emitChange();
   }
 
   private updateSliderPosition() {
-    const progress = (this._value - this._min) / (this._max - this._min);
+    const progress = (this.#value - this.#min) / (this.#max - this.#min);
     this.handle.x = progress * this.track.width;
   }
 
   /** Snaps the value to the nearest step. */
   private snapToStep(value: number) {
-    if (this._step <= 0) return value;
+    if (this.#step <= 0) return value;
 
-    const steppedValue = Math.round((value - this._min) / this._step) * this._step + this._min;
-    return Math.max(this._min, Math.min(this._max, steppedValue));
+    const steppedValue = Math.round((value - this.#min) / this.#step) * this.#step + this.#min;
+    return Math.max(this.#min, Math.min(this.#max, steppedValue));
   }
 
   private emitUpdate() {

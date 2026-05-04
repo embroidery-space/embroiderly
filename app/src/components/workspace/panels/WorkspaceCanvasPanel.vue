@@ -170,7 +170,7 @@ watch(
       @toggle-layer-visibility="patternStore.updateLayerVisibility"
       @move-layer="patternStore.moveLayer"
     />
-    <Popover v-else pinned side="left" align="start" class="flex h-[calc(100vh*0.415)] w-64 p-1">
+    <Popover v-else pinned side="left" align="start" class="flex h-[41.5vh] w-64 p-1">
       <template #default="{ open }">
         <ButtonIcon
           size="lg"
