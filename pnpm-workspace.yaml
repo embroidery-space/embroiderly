@@ -140,13 +140,13 @@ catalog:
   "vite-plugin-vue-devtools": 8.1.1
 
 strictDepBuilds: true
-ignoredBuiltDependencies:
-  - core-js
-  - edgedriver
-  - esbuild
-  - geckodriver
-  - protobufjs
-  - sharp
-  - unrs-resolver
-  - vue-demi
-  - workerd
+allowBuilds:
+  core-js: false
+  edgedriver: false
+  esbuild: false
+  geckodriver: false
+  protobufjs: false
+  sharp: false
+  unrs-resolver: false
+  vue-demi: false
+  workerd: false
