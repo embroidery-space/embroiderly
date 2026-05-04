@@ -127,7 +127,7 @@ tracing-panic = "0.1.2"
 
 # Telemetry
 better-posthog = "0.2.5"
-sentry = "0.47.0"
+sentry = "0.48.0"
 
 # Identification
 uuid = { version = "1.23.1", features = ["v4", "v7"] }
