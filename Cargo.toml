@@ -61,7 +61,7 @@ wildcard_dependencies = "deny"
 
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.10.3", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
+tauri = { version = "2.11.0", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
 tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
 ## Official Tauri plugins
 tauri-plugin-dialog = "2.7.0"
@@ -104,7 +104,7 @@ palette = "0.7.6"
 quantette = "0.5.1"
 
 # Archiving
-zip = { version = "8.5.1", default-features = false, features = ["zstd", "time"] }
+zip = { version = "8.6.0", default-features = false, features = ["zstd", "time"] }
 
 # De/serialization
 serde = { version = "1.0.228", features = ["derive"] }
