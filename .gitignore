@@ -1,13 +1,14 @@
+.tmp/
+
 target/
 logs/
 gen/
-
-.tmp/
 
 node_modules/
 
 cache/
 dist/
+pkg/
 
 coverage/
 lcov.info
