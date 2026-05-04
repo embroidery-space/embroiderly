@@ -1,6 +1,4 @@
 import { useOverlay, useToast } from "@embroiderly/ui";
-import { relaunch } from "@tauri-apps/plugin-process";
-import { check } from "@tauri-apps/plugin-updater";
 
 import { defineStore } from "pinia";
 import { computed, reactive, ref, watch } from "vue";
@@ -135,40 +133,66 @@ export const useSettingsStore = defineStore(
       const type = options?.auto ? "background" : "foreground";
       try {
         loadingUpdate.value = true;
-        const update = await check();
-        if (update) {
-          const { currentVersion, version } = update;
-          const date = new Date(update.date!);
-          toast.add({
-            type,
-            color: "info",
-            actions: [
-              {
-                label: fluent.$t("updater-update-now"),
-                onClick: async () => {
-                  try {
-                    loadingUpdate.value = true;
-                    await update.downloadAndInstall();
-                    await relaunch();
-                  } finally {
-                    loadingUpdate.value = false;
-                  }
-                },
-              },
-            ],
-            ...fluent.$ta("updater-update-available", {
-              currentVersion,
-              version,
-              date,
-            }),
-          });
-        } else {
-          if (!options?.auto) {
+
+        if (__TAURI__) {
+          const [{ check }, { relaunch }] = await Promise.all([
+            import("@tauri-apps/plugin-updater"),
+            import("@tauri-apps/plugin-process"),
+          ]);
+
+          const update = await check();
+          if (update) {
+            const { currentVersion, version } = update;
+            const date = new Date(update.date!);
             toast.add({
               type,
               color: "info",
-              ...fluent.$ta("updater-no-updates-available"),
+              actions: [
+                {
+                  label: fluent.$t("updater-update-now"),
+                  async onClick() {
+                    try {
+                      loadingUpdate.value = true;
+                      await update.downloadAndInstall();
+                      await relaunch();
+                    } finally {
+                      loadingUpdate.value = false;
+                    }
+                  },
+                },
+              ],
+              ...fluent.$ta("updater-update-available-desktop", { currentVersion, version, date }),
             });
+          } else if (!options?.auto) {
+            toast.add({ type, color: "info", ...fluent.$ta("updater-no-updates-available") });
+          }
+        } else {
+          const { useServiceWorker } = await import("~/composables/pwa");
+
+          const pwa = useServiceWorker();
+
+          const hasUpdate = await pwa.check();
+          if (hasUpdate) {
+            toast.add({
+              type,
+              color: "info",
+              actions: [
+                {
+                  label: fluent.$t("updater-update-now"),
+                  async onClick() {
+                    try {
+                      loadingUpdate.value = true;
+                      await pwa.applyUpdate();
+                    } finally {
+                      loadingUpdate.value = false;
+                    }
+                  },
+                },
+              ],
+              ...fluent.$ta("updater-update-available-pwa"),
+            });
+          } else if (!options?.auto) {
+            toast.add({ type, color: "info", ...fluent.$ta("updater-no-updates-available") });
           }
         }
       } finally {

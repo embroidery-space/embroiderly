@@ -94,9 +94,15 @@ catalog:
   # Build tools
   "concurrently": 9.2.1
   "vite": 8.0.10
+  "vite-plugin-pwa": 1.2.0
+  "@vite-pwa/assets-generator": 1.0.2
   "@vitejs/plugin-vue": 6.0.6
   "@tailwindcss/vite": 4.2.4
   "wrangler": 4.87.0
+
+  # PWA
+  "workbox-precaching": 7.4.0
+  "workbox-window": 7.4.0
 
   # Histoire
   "histoire": 1.0.0-beta.1

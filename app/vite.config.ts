@@ -8,6 +8,7 @@ import { webdriverio } from "@vitest/browser-webdriverio";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 import pkg from "./package.json";
@@ -31,6 +32,32 @@ export default defineConfig({
     }),
     tailwindcss(),
     fluentMerge({ localesDir: "./src/assets/locales/" }),
+    !isTauri &&
+      VitePWA({
+        strategies: "injectManifest",
+        srcDir: "src",
+        filename: "sw.ts",
+        registerType: "prompt",
+        injectRegister: false,
+        manifest: {
+          name: "Embroiderly",
+          short_name: "Embroiderly",
+          description: "Cross-stitch pattern editor.",
+          theme_color: "#0a0a0a",
+          background_color: "#0a0a0a",
+          display: "standalone",
+          start_url: "/",
+          scope: "/",
+        },
+        pwaAssets: {
+          preset: "minimal-2023",
+          overrideManifestIcons: true,
+        },
+        injectManifest: {
+          globPatterns: ["**/*.{js,wasm,css,html,ico,png,svg,json,ttf,otf}"],
+          maximumFileSizeToCacheInBytes: 30 * 1024 * 1024, // 30 MB. We have quite large Wasm modules.
+        },
+      }),
     !isTest && vueDevTools(),
   ],
   clearScreen: false,

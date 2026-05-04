@@ -58,26 +58,28 @@ export class Slider extends Container {
   #onChangeListeners: Array<(event: SliderChangeEvent) => void> = [];
 
   constructor(options: SliderOptions) {
+    const { min, max, value, step, track, handle, ...containerOptions } = options;
+
     super({
       ...DEFAULT_CONTAINER_OPTIONS,
-      ...options,
+      ...containerOptions,
       interactive: true,
       interactiveChildren: true,
       eventMode: "static",
       label: "Slider",
     });
 
-    this.track = this.addChild(options.track);
+    this.track = this.addChild(track);
     this.track.label = "Slider Track";
 
-    this.handle = this.addChild(options.handle);
+    this.handle = this.addChild(handle);
     this.handle.label = "Slider Handle";
     this.handle.y = (this.track.height - this.handle.height) / 2;
 
-    this.#min = options.min ?? 0;
-    this.#max = options.max ?? 100;
-    this.#value = options.value ?? this.#min;
-    this.#step = options.step ?? 1;
+    this.#min = min ?? 0;
+    this.#max = max ?? 100;
+    this.#value = value ?? this.#min;
+    this.#step = step ?? 1;
 
     this.updateSliderPosition();
 

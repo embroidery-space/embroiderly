@@ -28,6 +28,11 @@ const { fluent, currentLocale } = useI18n();
 const settingsStore = useSettingsStore();
 
 onMounted(async () => {
+  if (!__TAURI__) {
+    const { useServiceWorker } = await import("~/composables/pwa/");
+    useServiceWorker();
+  }
+
   if (settingsStore.updater.autoCheck) {
     await settingsStore.checkForUpdates({ auto: true });
   }

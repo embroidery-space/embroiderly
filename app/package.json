@@ -59,6 +59,7 @@
     "@types/mocha": "catalog:",
     "@types/node": "catalog:",
     "@types/sortablejs": "catalog:",
+    "@vite-pwa/assets-generator": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "@vitest/browser-webdriverio": "catalog:",
     "@vitest/coverage-v8": "catalog:",
@@ -73,9 +74,12 @@
     "typescript": "catalog:",
     "unplugin-icons": "catalog:",
     "vite": "catalog:",
+    "vite-plugin-pwa": "catalog:",
     "vite-plugin-vue-devtools": "catalog:",
     "vitest": "catalog:",
     "vitest-browser-vue": "catalog:",
-    "vue-tsc": "catalog:"
+    "vue-tsc": "catalog:",
+    "workbox-precaching": "catalog:",
+    "workbox-window": "catalog:"
   }
 }
