@@ -1,9 +1,7 @@
 import { App, Splitter, SplitterPanel } from "@embroiderly/ui";
-import { clearMocks, mockIPC, mockWindows } from "@tauri-apps/api/mocks";
 
-import { createTestingPinia } from "@pinia/testing";
 import { NIL as NIL_UUID, v4 as uuidV4 } from "uuid";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 import { userEvent } from "vitest/browser";
 import { defineComponent } from "vue";
 
@@ -33,17 +31,9 @@ const WorkspaceCanvasPanelWrapper = defineComponent({
 });
 
 describe("WorkspaceCanvasPanel", () => {
-  beforeEach(() => {
-    mockWindows("main");
-    mockIPC(() => {}, { shouldMockEvents: true });
-  });
-
-  afterEach(() => {
-    clearMocks();
-  });
-
   test("renders correctly in an expanded state", async () => {
     const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+      editorContext: true,
       pinia: {
         initialState: {
           "embroiderly-pattern": {
@@ -70,6 +60,7 @@ describe("WorkspaceCanvasPanel", () => {
 
   test("renders correctly in a collapsed state", async () => {
     const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+      editorContext: true,
       pinia: {
         initialState: {
           "embroiderly-pattern": {
@@ -99,6 +90,7 @@ describe("WorkspaceCanvasPanel", () => {
 
   test("disabled when pattern is nil", async () => {
     const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+      editorContext: true,
       pinia: {
         initialState: {
           "embroiderly-pattern": {
@@ -134,6 +126,7 @@ describe("WorkspaceCanvasPanel", () => {
   describe("display mode toggles", () => {
     test("reflect current display mode", async () => {
       const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+        editorContext: true,
         pinia: {
           initialState: {
             "embroiderly-pattern": {
@@ -156,9 +149,8 @@ describe("WorkspaceCanvasPanel", () => {
 
     test("clicking a toggle calls setDisplayMode with the correct value", async () => {
       const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+        editorContext: true,
         pinia: {
-          stubActions: true,
-          createSpy: vi.fn,
           initialState: {
             "embroiderly-pattern": {
               pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
@@ -178,6 +170,7 @@ describe("WorkspaceCanvasPanel", () => {
   describe("visibility toggles", () => {
     test("reflect current visibility settings", async () => {
       const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+        editorContext: true,
         pinia: {
           initialState: {
             "embroiderly-pattern": {
@@ -198,6 +191,7 @@ describe("WorkspaceCanvasPanel", () => {
 
     test("clicking Symbols toggle calls showSymbols", async () => {
       const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+        editorContext: true,
         pinia: {
           initialState: {
             "embroiderly-pattern": {
@@ -214,18 +208,13 @@ describe("WorkspaceCanvasPanel", () => {
 
     test("clicking Grid toggle calls showGrid", async () => {
       const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
-        global: {
-          plugins: [
-            createTestingPinia({
-              stubActions: true,
-              createSpy: vi.fn,
-              initialState: {
-                "embroiderly-pattern": {
-                  pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
-                },
-              },
-            }),
-          ],
+        editorContext: true,
+        pinia: {
+          initialState: {
+            "embroiderly-pattern": {
+              pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
+            },
+          },
         },
       });
 
@@ -236,18 +225,13 @@ describe("WorkspaceCanvasPanel", () => {
 
     test("clicking Rulers toggle calls showRulers", async () => {
       const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
-        global: {
-          plugins: [
-            createTestingPinia({
-              stubActions: true,
-              createSpy: vi.fn,
-              initialState: {
-                "embroiderly-pattern": {
-                  pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
-                },
-              },
-            }),
-          ],
+        editorContext: true,
+        pinia: {
+          initialState: {
+            "embroiderly-pattern": {
+              pattern: new Pattern({ id: uuidV4(), layers: new Layers([new Layer(0)]) }),
+            },
+          },
         },
       });
 
@@ -262,6 +246,7 @@ describe("WorkspaceCanvasPanel", () => {
     ({ mode }) => {
       async function setupLayerTest(layers: Layer[], selectedLayerIndex = 0) {
         const screen = await renderComponent(WorkspaceCanvasPanelWrapper, {
+          editorContext: true,
           pinia: {
             initialState: {
               "embroiderly-pattern": {

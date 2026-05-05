@@ -110,11 +110,12 @@ export default defineConfig({
             headless: isCI,
             provider: webdriverio(),
             instances: [
-              { browser: "edge" }, // Windows.
-              // Since we currently do not support macOS
-              // and there is no way to install Safari on other platforms,
-              // keep this option commented for the future.
-              // { browser: "safari" }, // macOS and Linux.
+              (() => {
+                if (process.platform === "win32") return { browser: "edge" };
+                if (process.platform === "linux") return { browser: "firefox" };
+                if (process.platform === "darwin") return { browser: "safari" };
+                throw new Error("Unsupported platform for browser testing");
+              })(),
             ],
           },
         },
