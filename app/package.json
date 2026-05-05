@@ -60,7 +60,6 @@
     "@types/sortablejs": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "@vitest/browser-webdriverio": "catalog:",
-    "@vitest/coverage-v8": "catalog:",
     "@vue/tsconfig": "catalog:",
     "@wdio/cli": "catalog:",
     "@wdio/globals": "catalog:",

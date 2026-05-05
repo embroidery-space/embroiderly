@@ -10,7 +10,6 @@ on:
       - "Cargo.*"
       - rustfmt.toml
       - .github/workflows/ci.backend.yml
-      - .github/codecov.yml
 permissions:
   contents: read
 concurrency:
@@ -42,32 +41,6 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup-rust
         with:
-          nightly-components: llvm-tools-preview
-          tools: cargo-nextest,cargo-llvm-cov
-
-      # Build sidecars to replace stubs, otherwise cargo-llvm-cov fails on invalid executables.
-      - name: Build sidecars
-        shell: bash
-        run: |
-          TRIPLE=$(rustc -vV | grep 'host:' | sed 's/host: //')
-
-          EXT=""
-          if [[ "${{ matrix.platform }}" == "windows-latest" ]]; then
-            EXT=".exe"
-          fi
-
-          cargo build -p embroiderly_image -p embroiderly_publish
-
-          mv "target/debug/embroiderly_image${EXT}" "app/src-tauri/binaries/embroiderly_image-${TRIPLE}${EXT}"
-          mv "target/debug/embroiderly_publish${EXT}" "app/src-tauri/binaries/embroiderly_publish-${TRIPLE}${EXT}"
-
+          tools: cargo-nextest
       - name: Test
-        run: cargo +nightly llvm-cov nextest --locked -F embroiderly/test --lcov --output-path lcov.info
-
-      - name: Upload coverage to Codecov
-        if: matrix.platform == 'ubuntu-latest'
-        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
-        with:
-          flags: backend
-          files: lcov.info
-          token: ${{ secrets.CODECOV_TOKEN }}
+        run: cargo nextest run --locked -F embroiderly/test
