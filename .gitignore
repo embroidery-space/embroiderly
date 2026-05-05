@@ -11,8 +11,5 @@ cache/
 dist/
 pkg/
 
-coverage/
-lcov.info
-
 .env
 !.env.example

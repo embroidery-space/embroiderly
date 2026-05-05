@@ -120,10 +120,5 @@ export default defineConfig({
         },
       },
     ],
-
-    coverage: {
-      reporter: isCI ? ["text", "lcov"] : ["text"],
-      exclude: ["./src/app/"],
-    },
   },
 });
