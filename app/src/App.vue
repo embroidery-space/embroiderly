@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { App, useToast } from "@embroiderly/ui";
 
-import { onMounted, onErrorCaptured, markRaw } from "vue";
+import { onMounted, onErrorCaptured, markRaw, watch } from "vue";
 
 import {
   IconCheck,
@@ -19,13 +19,21 @@ import {
 
 import { AppHeader, AppMain } from "./components/";
 import { useI18n } from "./composables/";
-import { LoggerService } from "./services";
+import { DiagnosticsService, LoggerService } from "./services";
 import { useSettingsStore } from "./stores/";
 
 const toast = useToast();
 const { fluent, currentLocale } = useI18n();
 
 const settingsStore = useSettingsStore();
+
+watch(
+  () => settingsStore.telemetry,
+  (telemetry) => {
+    DiagnosticsService.enabled = telemetry.diagnostics;
+  },
+  { immediate: true },
+);
 
 onMounted(async () => {
   if (!__TAURI__) {

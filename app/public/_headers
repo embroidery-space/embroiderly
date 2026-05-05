@@ -1,0 +1,3 @@
+# CSPs must be synched with ones declared in `app/src-tauri/tauri.conf.json5` for the desktop build.
+/*
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://*.ingest.de.sentry.io; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self';

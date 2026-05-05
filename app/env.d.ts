@@ -21,3 +21,11 @@ declare module "virtual:*.ftl" {
   const content: string;
   export default content;
 }
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
+interface ImportMetaEnv {
+  readonly VITE_EMBROIDERLY_SENTRY_DSN?: string;
+}

@@ -1,3 +1,4 @@
+import { vueIntegration } from "@sentry/vue";
 import { createFluentVue } from "fluent-vue";
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
@@ -5,6 +6,7 @@ import { createApp } from "vue";
 
 import App from "./App.vue";
 import { EditorContextKey } from "./composables/";
+import { DiagnosticsService } from "./services/";
 import { initEditor } from "./wasm/";
 
 import "./assets/styles.css";
@@ -17,6 +19,8 @@ app.provide(EditorContextKey, editorContext);
 
 const pinia = createPinia().use(createPersistedState());
 const fluent = createFluentVue({ bundles: [], componentTag: false });
+
+DiagnosticsService.addIntegration(vueIntegration({ app }));
 
 app.use(pinia);
 app.use(fluent);

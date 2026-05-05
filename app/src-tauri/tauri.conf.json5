@@ -55,9 +55,10 @@
   },
   app: {
     security: {
+      // CSPs must be synched with ones declared in `app/public/_headers` for the web build.
       csp: {
         "default-src": "'self' customprotocol: asset:",
-        "connect-src": "'self' ipc: http://ipc.localhost http://tauri.localhost",
+        "connect-src": "'self' ipc: http://ipc.localhost http://tauri.localhost https://*.ingest.de.sentry.io",
         "style-src": "'unsafe-inline' 'self'",
         "img-src": "'self' data:",
         "script-src": "'unsafe-eval' 'self'",
