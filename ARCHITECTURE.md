@@ -14,12 +14,14 @@ embroiderly/
 │   └── src-tauri/              # Tauri desktop shell
 ├── crates/
 │   ├── embroiderly-editor/     # Core editing engine
+│   ├── embroiderly-image/      # Pattern to image conversion
 │   ├── embroiderly-pattern/    # Domain data structures
 │   ├── embroiderly-parsers/    # Pattern file format parsers
 │   ├── embroiderly-tracing/    # Shared logging/tracing configuration
 │   ├── embroiderly-web/        # Shared Web API bindings for Wasm modules
 │   └── xsp-parsers/            # Low-level embroidery file format parsers
 ├── packages/
+│   ├── image-import/           # Image import (Wasm + Web Worker)
 │   ├── pdf-export/             # PDF export (Wasm + Web Worker)
 │   └── ui/                     # Custom UI Kit
 └── docs/                       # End-user documentation
@@ -28,8 +30,11 @@ embroiderly/
 The main application is split into three layers:
 
 - a Vue.js + TypeScript frontend that renders the UI and manages state;
-- a Wasm module that exposes the core Rust editing logic to JavaScript (see [`app/src-wasm/README.md`](app/src-wasm/README.md) for details);
+- a Wasm module that exposes the core pattern editing logic to JavaScript (see [`app/src-wasm/README.md`](app/src-wasm/README.md) for details);
 - and a minimal Tauri desktop shell responsible only for window management, file association handling, disk-based log collection, and packaging.
+
+Also, there are other two Wasm modules which provide specialized compute-heavy actions to the web app: [Image Import](packages/image-import/README.md) and [PDF Export](packages/pdf-export/README.md).
+These Wasm modules are wrapped in web workers using the [`comlink`](https://github.com/googlechromelabs/comlink) package to offload all the computations to a separate thread, so that the main thread is not blocked.
 
 ## Serialization
 
