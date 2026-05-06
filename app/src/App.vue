@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { App, useToast } from "@embroiderly/ui";
 
+import { useEventListener } from "@vueuse/core";
 import { onMounted, onErrorCaptured, markRaw, watch } from "vue";
 
 import {
@@ -19,7 +20,7 @@ import {
 
 import { AppHeader, AppMain } from "./components/";
 import { useI18n } from "./composables/";
-import { DiagnosticsService, LoggerService } from "./services";
+import { DiagnosticsService, LoggerService, MetricsService } from "./services";
 import { useSettingsStore } from "./stores/";
 
 const toast = useToast();
@@ -31,11 +32,22 @@ watch(
   () => settingsStore.telemetry,
   (telemetry) => {
     DiagnosticsService.enabled = telemetry.diagnostics;
+    MetricsService.enabled = telemetry.metrics;
   },
   { immediate: true },
 );
 
+watch(
+  () => settingsStore.ui,
+  (ui) => MetricsService.captureUiChanged(ui.theme, ui.scale, ui.language),
+  { immediate: true },
+);
+
+useEventListener("beforeunload", () => MetricsService.captureAppExited());
+
 onMounted(async () => {
+  MetricsService.captureAppStarted();
+
   if (!__TAURI__) {
     const { useServiceWorker } = await import("~/composables/pwa/");
     useServiceWorker();

@@ -9,7 +9,7 @@ import type { Ref } from "vue";
 import { IconMenu, IconSearch } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/lib/pattern/";
-import { LoggerService } from "~/services/";
+import { LoggerService, MetricsService } from "~/services/";
 
 import { PaletteSection, PaletteList, PaletteListItem, PaletteSelect } from ".";
 
@@ -73,6 +73,10 @@ async function importPalettes() {
       }),
     );
     const { failedFiles } = await files.importPalettes(fileEntries);
+    MetricsService.capturePalettesImported(
+      fileEntries.map((file) => file.name),
+      failedFiles.length,
+    );
 
     await paletteSelect.value!.loadPalettesList();
 

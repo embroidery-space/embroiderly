@@ -6,7 +6,7 @@ import { computed, onMounted, ref, shallowRef } from "vue";
 
 import { IconMenu } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import { LoggerService } from "~/services/";
+import { LoggerService, MetricsService } from "~/services/";
 import { addSymbolFonts } from "~/utils/font-face.ts";
 
 import { PaletteSection } from "../palette/";
@@ -129,6 +129,10 @@ async function importSymbolFonts() {
       }),
     );
     const { failedFiles } = await files.importFonts(fileEntries);
+    MetricsService.captureSymbolFontsImported(
+      fileEntries.map((file) => file.name),
+      failedFiles.length,
+    );
 
     await refreshFontsList();
 

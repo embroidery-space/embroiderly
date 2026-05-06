@@ -56,7 +56,7 @@ watch(
   () => patternStore.pattern,
   async (pattern, oldPattern) => {
     if (pattern.isNil || pattern.id === oldPattern?.id) return;
-    await loadSymbolFonts(pattern.allSymbolFonts);
+    await loadSymbolFonts(pattern.palette.usedSymbolFonts);
   },
   { immediate: true },
 );

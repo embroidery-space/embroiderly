@@ -1,6 +1,16 @@
 import { b } from "@zorsh/zorsh";
 
-import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch } from "./stitches.ts";
+import {
+  FullStitch,
+  FullStitchKind,
+  PartStitch,
+  PartStitchKind,
+  LineStitch,
+  LineStitchKind,
+  NodeStitch,
+  NodeStitchKind,
+  SpecialStitch,
+} from "./stitches.ts";
 
 export class LayerVisibility {
   visible: boolean;
@@ -140,6 +150,21 @@ export class Layer {
 
   static deserialize(data: Uint8Array) {
     return new Layer(0, Layer.schema.deserialize(data));
+  }
+
+  /** Returns an object with the counts of each stitch type on this layer. */
+  stitchCounts() {
+    return {
+      fullStitches: this.fullstitches.filter((s) => s.kind === FullStitchKind.Full).length,
+      petiteStitches: this.fullstitches.filter((s) => s.kind === FullStitchKind.Petite).length,
+      halfStitches: this.partstitches.filter((s) => s.kind === PartStitchKind.Half).length,
+      quarterStitches: this.partstitches.filter((s) => s.kind === PartStitchKind.Quarter).length,
+      backStitches: this.linestitches.filter((s) => s.kind === LineStitchKind.Back).length,
+      straightStitches: this.linestitches.filter((s) => s.kind === LineStitchKind.Straight).length,
+      frenchKnots: this.nodestitches.filter((s) => s.kind === NodeStitchKind.FrenchKnot).length,
+      beads: this.nodestitches.filter((s) => s.kind === NodeStitchKind.Bead).length,
+      specialStitches: this.specialstitches.length,
+    };
   }
 
   getVisibility(): LayerVisibility {

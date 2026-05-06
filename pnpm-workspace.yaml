@@ -53,6 +53,7 @@ catalog:
   # Telemetry
   "@sentry/core": 10.51.0
   "@sentry/vue": 10.51.0
+  "posthog-js": 1.372.9
 
   # Utilities
   "@stdlib/math-base-special-roundn": 0.2.3

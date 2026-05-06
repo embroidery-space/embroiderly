@@ -301,6 +301,21 @@ export class Palette {
     return this.#positions.map((index) => this.#items[index]!);
   }
 
+  /** Number of palette items which are blends. */
+  get blendsNumber(): number {
+    return this.#items.filter((item) => item.blends?.length).length;
+  }
+
+  /** Unique brand names used in the palette. */
+  get usedBrands(): string[] {
+    return [...new Set(this.#items.map((item) => item.brand).filter(Boolean))];
+  }
+
+  /** Unique symbol font names used in the palette. */
+  get usedSymbolFonts(): string[] {
+    return [...new Set(this.#items.filter((item) => item.symbol?.font).map((item) => item.symbol!.font))];
+  }
+
   /** Return an item by its actual index. */
   get(index: number): PaletteItem | undefined {
     return this.#items[index];

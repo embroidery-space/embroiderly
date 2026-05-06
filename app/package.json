@@ -43,6 +43,7 @@
     "pinia": "catalog:",
     "pinia-plugin-persistedstate": "catalog:",
     "pixi.js": "catalog:",
+    "posthog-js": "catalog:",
     "reka-ui": "catalog:",
     "show-open-file-picker": "catalog:",
     "sortablejs": "catalog:",

@@ -273,14 +273,6 @@ export class Pattern extends EventTarget {
     this.#publishSettings.pdf = options;
     this.dispatchEvent(new CustomEvent(PatternEvent.UpdatePdfExportOptions, { detail: options }));
   }
-
-  get allSymbolFonts() {
-    const fonts = new Set<string>();
-    for (const palitem of this.palette.items) {
-      if (palitem.symbol?.font) fonts.add(palitem.symbol.font);
-    }
-    return Array.from(fonts);
-  }
 }
 
 export const enum PatternEvent {

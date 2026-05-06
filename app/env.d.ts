@@ -28,4 +28,5 @@ interface ImportMeta {
 
 interface ImportMetaEnv {
   readonly VITE_EMBROIDERLY_SENTRY_DSN?: string;
+  readonly VITE_EMBROIDERLY_POSTHOG_API_KEY?: string;
 }

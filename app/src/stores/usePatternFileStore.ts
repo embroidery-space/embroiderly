@@ -7,7 +7,7 @@ import { ref } from "vue";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { NoFileHandleError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
 import { Fabric, Pattern, PdfExportOptions } from "~/lib/pattern/";
-import { LoggerService } from "~/services";
+import { LoggerService, MetricsService } from "~/services/";
 
 export interface OpenPattern {
   id: string;
@@ -81,30 +81,36 @@ export const usePatternFileStore = defineStore(
       try {
         loading.value = true;
 
-        let result: { id: string; title: string };
+        let fileName: string;
+        let result: { id: string; title: string; pattern: Uint8Array };
+
         if (!options) {
           const fileHandle = await filePicker.open({ types: filePicker.filters.pattern });
           if (!fileHandle) return;
 
+          fileName = fileHandle.name;
           result = await editor.openPattern(fileHandle);
         } else if ("file" in options) {
           const data = new Uint8Array(await options.file.arrayBuffer());
 
-          result = await editor.openPatternFromData(data, options.file.name);
+          fileName = options.file.name;
+          result = await editor.openPatternFromData(data, fileName);
         } else if ("filePath" in options) {
           if (!__TAURI__) return;
 
           const data = await readFile(options.filePath);
-          const fileName = options.filePath.replaceAll("\\", "/").split("/").pop() ?? options.filePath;
 
+          fileName = options.filePath.replaceAll("\\", "/").split("/").pop() ?? options.filePath;
           result = await editor.openPatternFromData(data, fileName);
         } else {
           const data = await files.loadPatternTemplate(options.template);
 
-          result = await editor.openPatternFromData(new Uint8Array(data), options.template);
+          fileName = options.template;
+          result = await editor.openPatternFromData(new Uint8Array(data), fileName);
         }
 
-        addOpenedPattern(result.id, result.title);
+        addOpenedPattern(result.id, result.title || fileName);
+        MetricsService.capturePatternOpened(Pattern.deserialize(result.pattern), fileName.split(".").pop());
 
         return result.id;
       } catch (err) {
@@ -123,12 +129,14 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    async function createPattern(fabric?: Fabric) {
+    async function createPattern(fabric = new Fabric()) {
       try {
         loading.value = true;
 
-        const result = await editor.createPattern(Fabric.serialize(fabric ?? new Fabric()));
+        const result = await editor.createPattern(Fabric.serialize(fabric));
+
         addOpenedPattern(result.id, result.title);
+        MetricsService.capturePatternCreated(fabric);
 
         return result.id;
       } finally {
@@ -152,6 +160,7 @@ export const usePatternFileStore = defineStore(
       try {
         loading.value = true;
         await editor.savePattern(id, handle);
+        MetricsService.capturePatternSaved(handle?.name.split(".").pop());
         return true;
       } catch (err) {
         if (err instanceof NoFileHandleError) {
@@ -164,6 +173,7 @@ export const usePatternFileStore = defineStore(
 
           try {
             await editor.savePattern(id, picked);
+            MetricsService.capturePatternSaved(picked.name.split(".").pop());
             return true;
           } catch {
             toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
@@ -203,7 +213,9 @@ export const usePatternFileStore = defineStore(
         loading.value = true;
 
         await editor.closePattern(id, options?.force ?? false);
+
         removeOpenedPattern(id);
+        MetricsService.capturePatternClosed();
 
         if (currentPatternId.value === id) {
           currentPatternId.value = openedPatterns.value[0]?.id;
@@ -266,10 +278,11 @@ export const usePatternFileStore = defineStore(
           handle,
           pattern: patternData,
           options: PdfExportOptions.schema.serialize(pattern.pdfExportOptions),
-          fonts: await Promise.all(pattern.allSymbolFonts.map((name) => files.loadFontContent(name))),
+          fonts: await Promise.all(pattern.palette.usedSymbolFonts.map((name) => files.loadFontContent(name))),
           variant,
         });
 
+        MetricsService.capturePatternExportedAsPdf(pattern.pdfExportOptions);
         toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
       } catch (err) {
         LoggerService.error(`Failed to export pattern as PDF: ${err}`);
