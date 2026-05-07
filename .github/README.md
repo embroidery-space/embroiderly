@@ -5,7 +5,7 @@
 We maintain a set of custom reusable composite actions that standardise toolchain setup across all workflows.
 
 - `setup-node`: Installs pnpm and Node.js (version from `package.json`) with cache, then runs `pnpm install` (skipping Husky).
-- `setup-rust`: Installs system components (required by Tauri), sets up stable Rust (pinned version) and optionally nightly, configures `rust-cache`, and installs extra Cargo tools via `taiki-e/install-action`.
+- `setup-rust`: Installs system components (required by Tauri), sets up stable Rust (pinned version) and optionally nightly with extra targets, configures cache, and installs extra Cargo tools via `taiki-e/install-action`.
 
 ## Workflows
 

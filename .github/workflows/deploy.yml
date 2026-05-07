@@ -28,6 +28,7 @@ jobs:
       - uses: ./.github/actions/setup-rust
         with:
           tools: wasm-pack
+          targets: wasm32-unknown-unknown
 
       - name: Build web app
         env:
