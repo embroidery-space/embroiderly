@@ -11,7 +11,7 @@
     "wasm:build-dev": "wasm-pack build src-wasm --dev --target web --out-dir pkg",
     "wasm:watch": "cargo watch --postpone --watch-when-idle --workdir src-wasm --shell \"wasm-pack build . --release --target web --out-dir pkg\"",
     "wasm:watch-dev": "cargo watch --postpone --watch-when-idle --workdir src-wasm --shell \"wasm-pack build . --dev --target web --out-dir pkg\"",
-    "check-types": "vue-tsc -b",
+    "check-types": "wrangler types && vue-tsc -b",
     "test": "vitest run",
     "test:unit": "vitest run --project unit",
     "test:components": "vitest run --project components",
@@ -82,6 +82,7 @@
     "vitest-browser-vue": "catalog:",
     "vue-tsc": "catalog:",
     "workbox-precaching": "catalog:",
-    "workbox-window": "catalog:"
+    "workbox-window": "catalog:",
+    "wrangler": "catalog:"
   }
 }

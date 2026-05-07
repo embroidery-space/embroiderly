@@ -1,6 +1,3 @@
-set dotenv-load
-set dotenv-path := "app/src-tauri/.env"
-
 default:
     just --list
 

@@ -21,7 +21,7 @@ class MetricsServiceClass {
 
   constructor() {
     this.#client = posthog.init(import.meta.env.VITE_EMBROIDERLY_POSTHOG_API_KEY ?? "", {
-      api_host: "https://eu.i.posthog.com",
+      api_host: import.meta.env.DEV ? "/usage" : "https://embroiderly.niusia.me/usage",
 
       // Always start opted-out.
       // The client is enabled in `App.vue` based on the user preferences.

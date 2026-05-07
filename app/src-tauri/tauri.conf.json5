@@ -58,10 +58,10 @@
       // CSPs must be synched with ones declared in `app/public/_headers` for the web build.
       csp: {
         "default-src": "'self' customprotocol: asset:",
-        "connect-src": "'self' ipc: http://ipc.localhost http://tauri.localhost https://*.ingest.de.sentry.io https://eu.i.posthog.com",
-        "style-src": "'unsafe-inline' 'self'",
+        "connect-src": "'self' ipc: http://ipc.localhost http://tauri.localhost https://embroiderly.niusia.me",
+        "style-src": "'self' 'unsafe-inline'",
         "img-src": "'self' data:",
-        "script-src": "'unsafe-eval' 'self'",
+        "script-src": "'self' 'unsafe-eval'",
       },
     },
   },

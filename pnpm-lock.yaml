@@ -555,6 +555,9 @@ importers:
       workbox-window:
         specifier: 'catalog:'
         version: 7.4.0
+      wrangler:
+        specifier: 'catalog:'
+        version: 4.87.0
 
   docs:
     dependencies:

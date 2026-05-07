@@ -13,6 +13,7 @@ class DiagnosticsServiceClass {
       debug: import.meta.env.DEV,
       dsn: import.meta.env.VITE_EMBROIDERLY_SENTRY_DSN,
       release: `embroiderly@${__APP_VERSION__}`,
+      tunnel: import.meta.env.DEV ? "/errors" : "https://embroiderly.niusia.me/errors",
     };
 
     // Initialize a standard browser client.
