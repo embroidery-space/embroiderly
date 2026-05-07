@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "@cssnr/vitepress-swiper": "catalog:",
+    "@vite-pwa/vitepress": "catalog:",
     "swiper": "catalog:",
     "vue": "catalog:"
   },
   "devDependencies": {
+    "@vite-pwa/assets-generator": "catalog:",
     "vitepress": "catalog:",
     "vitepress-plugin-llms": "catalog:",
     "wrangler": "catalog:"

@@ -42,12 +42,8 @@ export default defineConfig({
         manifest: {
           name: "Embroiderly",
           short_name: "Embroiderly",
-          description: "Cross-stitch pattern editor.",
-          theme_color: "#0a0a0a",
-          background_color: "#0a0a0a",
-          display: "standalone",
-          start_url: "/",
-          scope: "/",
+          description: "A free, open-source, cross-platform desktop application for designing cross-stitch patterns.",
+          theme_color: undefined,
         },
         pwaAssets: {
           preset: "minimal-2023",

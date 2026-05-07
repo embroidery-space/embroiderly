@@ -93,6 +93,9 @@ catalogs:
     '@vite-pwa/assets-generator':
       specifier: 1.0.2
       version: 1.0.2
+    '@vite-pwa/vitepress':
+      specifier: 1.1.0
+      version: 1.1.0
     '@vitejs/plugin-vue':
       specifier: 6.0.6
       version: 6.0.6
@@ -564,6 +567,9 @@ importers:
       '@cssnr/vitepress-swiper':
         specifier: 'catalog:'
         version: 0.3.1(swiper@12.1.4)(vue@3.5.33(typescript@6.0.3))
+      '@vite-pwa/vitepress':
+        specifier: 'catalog:'
+        version: 1.1.0(@vite-pwa/assets-generator@1.0.2)(vite-plugin-pwa@1.2.0(@vite-pwa/assets-generator@1.0.2)(vite@7.3.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.2))(workbox-build@7.4.0)(workbox-window@7.4.0))
       swiper:
         specifier: 'catalog:'
         version: 12.1.4
@@ -571,6 +577,9 @@ importers:
         specifier: 'catalog:'
         version: 3.5.33(typescript@6.0.3)
     devDependencies:
+      '@vite-pwa/assets-generator':
+        specifier: 'catalog:'
+        version: 1.0.2
       vitepress:
         specifier: 'catalog:'
         version: 2.0.0-alpha.17(@types/node@24.12.2)(change-case@5.4.4)(fuse.js@7.3.0)(jiti@2.6.1)(lightningcss@1.32.0)(postcss@8.5.12)(sortablejs@1.15.7)(terser@5.46.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.8.2)
@@ -4328,6 +4337,15 @@ packages:
     resolution: {integrity: sha512-MCbrb508JZHqe7bUibmZj/lyojdhLRnfkmyXnkrCM2zVrjTgL89U8UEfInpKTvPeTnxsw2hmyZxnhsdNR6yhwg==}
     engines: {node: '>=16.14.0'}
     hasBin: true
+
+  '@vite-pwa/vitepress@1.1.0':
+    resolution: {integrity: sha512-enif5C2JmepS69Ak7PSr6K3Eimsg7VyryZo1Z6NiIPNDnjXFlOqxwBYaq8R/d0M7akArJsjos7KmQnEfNFf5nA==}
+    peerDependencies:
+      '@vite-pwa/assets-generator': ^1.0.0
+      vite-plugin-pwa: ^1.2.0
+    peerDependenciesMeta:
+      '@vite-pwa/assets-generator':
+        optional: true
 
   '@vitejs/plugin-vue@6.0.6':
     resolution: {integrity: sha512-u9HHgfrq3AjXlysn0eINFnWQOJQLO9WN6VprZ8FXl7A2bYisv3Hui9Ij+7QZ41F/WYWarHjwBbXtD7dKg3uxbg==}
@@ -12182,6 +12200,12 @@ snapshots:
       sharp-ico: 0.1.5
       unconfig: 7.5.0
 
+  '@vite-pwa/vitepress@1.1.0(@vite-pwa/assets-generator@1.0.2)(vite-plugin-pwa@1.2.0(@vite-pwa/assets-generator@1.0.2)(vite@7.3.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.2))(workbox-build@7.4.0)(workbox-window@7.4.0))':
+    dependencies:
+      vite-plugin-pwa: 1.2.0(@vite-pwa/assets-generator@1.0.2)(vite@7.3.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.2))(workbox-build@7.4.0)(workbox-window@7.4.0)
+    optionalDependencies:
+      '@vite-pwa/assets-generator': 1.0.2
+
   '@vitejs/plugin-vue@6.0.6(vite@7.3.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.33(typescript@6.0.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-rc.13
@@ -16796,6 +16820,19 @@ snapshots:
       unplugin-utils: 0.3.1
       vite: 8.0.10(@types/node@24.12.2)(esbuild@0.27.3)(jiti@2.6.1)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.2)
       vite-dev-rpc: 1.1.0(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.3)(jiti@2.6.1)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.2))
+    transitivePeerDependencies:
+      - supports-color
+
+  vite-plugin-pwa@1.2.0(@vite-pwa/assets-generator@1.0.2)(vite@7.3.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.2))(workbox-build@7.4.0)(workbox-window@7.4.0):
+    dependencies:
+      debug: 4.4.3(supports-color@8.1.1)
+      pretty-bytes: 6.1.1
+      tinyglobby: 0.2.16
+      vite: 7.3.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.2)
+      workbox-build: 7.4.0
+      workbox-window: 7.4.0
+    optionalDependencies:
+      '@vite-pwa/assets-generator': 1.0.2
     transitivePeerDependencies:
       - supports-color
 

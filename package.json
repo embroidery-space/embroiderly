@@ -18,7 +18,7 @@
     "ui:build": "pnpm -F @embroiderly/ui build",
     "ui:preview": "pnpm -F @embroiderly/ui preview",
     "|----- PRODUCTION -----|": "",
-    "embroiderly:help": "pnpm docs:build && cp docs/dist/embroiderly.*.pdf app/src-tauri/help/",
+    "embroiderly:help": "pnpm docs:build && cp docs/.vitepress/dist/embroiderly.*.pdf app/src-tauri/help/",
     "|----- UTILS -----|": "",
     "check-types": "pnpm -r check-types",
     "fmt": "oxfmt --check",
