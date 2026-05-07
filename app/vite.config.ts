@@ -61,9 +61,9 @@ export default defineConfig({
   worker: { format: "es" },
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**", "src-wasm/**"] } },
   build: {
-    sourcemap: isDev,
+    sourcemap: isCI ? "hidden" : isDev,
     chunkSizeWarningLimit: Infinity,
-    cssCodeSplit: false, // Embroiderly is SPA; compile all styles in a single CSS file.
+    cssCodeSplit: false, // Embroiderly is SPA; compile all styles into a single CSS file.
   },
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),

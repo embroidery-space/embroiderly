@@ -1,0 +1,67 @@
+name: Deploy
+on:
+  # Push to main: production build with telemetry, deploys to the live Cloudflare Worker, uploads Sentry source maps.
+  # Push to other branches / PRs: preview build without telemetry, uploads a new Cloudflare Worker version (preview URL).
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+    types: [opened, reopened, edited, synchronize]
+permissions:
+  contents: read
+env:
+  CARGO_TERM_COLOR: always
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    if: |
+      startsWith(github.head_ref, 'dependabot/') == false
+      && github.head_ref != 'dependency-updates'
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-rust
+
+      - name: Build web app
+        env:
+          VITE_EMBROIDERLY_POSTHOG_API_KEY: ${{ github.event_name == 'push' && github.ref_name == 'main' && secrets.EMBROIDERLY_POSTHOG_API_KEY || '' }}
+          VITE_EMBROIDERLY_SENTRY_DSN: ${{ github.event_name == 'push' && github.ref_name == 'main' && secrets.EMBROIDERLY_SENTRY_DSN || '' }}
+        run: pnpm app:build
+
+      - name: Upload source maps to Sentry
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: embroidery-space
+          SENTRY_PROJECT: embroiderly
+        run: |
+          pnpm install -g @sentry/cli
+
+          APP_VERSION=$(node -p "require('./app/package.json').version")
+
+          sentry-cli releases new "embroiderly@$APP_VERSION"
+          sentry-cli releases set-commits "embroiderly@$APP_VERSION" --auto || true
+
+          sentry-cli sourcemaps inject ./app/dist
+          sentry-cli sourcemaps upload --release="embroiderly@$APP_VERSION" ./app/dist
+
+          sentry-cli releases finalize "embroiderly@$APP_VERSION"
+
+      - name: Remove source maps before deploy
+        run: find app/dist -name "*.map" -delete
+
+      - name: Deploy to Cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref_name }}" = "main" ]; then
+            pnpm -F @embroiderly/app exec wrangler deploy
+          else
+            pnpm -F @embroiderly/app exec wrangler versions upload
+          fi
