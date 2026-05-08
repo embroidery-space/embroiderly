@@ -57,6 +57,7 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
   async function updatePatternInfo(patternInfo: PatternInfo) {
     if (pattern.value.isNil) return;
     await editor.updatePatternInfo(pattern.value.id, PatternInfo.serialize(patternInfo));
+    MetricsService.capturePatternInfoUpdated(patternInfo);
   }
   events.on("pattern-info:update", (info) => {
     pattern.value.info = info;
@@ -198,10 +199,12 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
   async function addStitch(layerIndex: number, stitch: Stitch) {
     if (pattern.value.isNil) return;
     await editor.addStitch(pattern.value.id, layerIndex, serializeStitch(stitch));
+    MetricsService.captureStitchAdded(stitch.kind);
   }
   async function removeStitch(layerIndex: number, stitch: Stitch) {
     if (pattern.value.isNil) return;
     await editor.removeStitch(pattern.value.id, layerIndex, serializeStitch(stitch));
+    MetricsService.captureStitchRemoved(stitch.kind);
   }
   events.on("stitches:add", ({ layerIndex, stitches }) => {
     for (const stitch of stitches) pattern.value.addStitch(layerIndex, stitch);

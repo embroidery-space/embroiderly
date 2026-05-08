@@ -1,5 +1,6 @@
-import { posthog } from "posthog-js/dist/module.slim";
-import type { PostHog, EventName, Properties } from "posthog-js/dist/module.slim";
+import { posthog } from "posthog-js/dist/module.slim.js";
+import type { PostHog, EventName, Properties } from "posthog-js/dist/module.slim.js";
+import { sampleByEvent } from "posthog-js/lib/src/customizations/before-send.js";
 
 import type {
   DisplaySettings,
@@ -10,9 +11,11 @@ import type {
   PaletteItem,
   PaletteSettings,
   Pattern,
+  PatternInfo,
   PdfExportOptions,
   ReferenceImageSettings,
   SortPaletteBy,
+  StitchKind,
   Symbol,
 } from "~/lib/pattern/";
 
@@ -42,6 +45,7 @@ class MetricsServiceClass {
       // Disable marketing features.
       save_referrer: false,
       save_campaign_params: false,
+      cross_subdomain_cookie: false,
 
       // Disable loading of remote configs.
       disable_external_dependency_loading: true,
@@ -61,6 +65,8 @@ class MetricsServiceClass {
       advanced_disable_toolbar_metrics: true,
       advanced_disable_feature_flags_on_first_load: true,
       advanced_only_evaluate_survey_feature_flags: true,
+
+      before_send: [sampleByEvent(["stitch_added", "stitch_removed"], 0.001)],
     });
 
     this.#client.register({
@@ -204,6 +210,15 @@ class MetricsServiceClass {
     });
   }
 
+  capturePatternInfoUpdated(info: PatternInfo) {
+    this.#capture("pattern_info_updated", {
+      title_set: !!info.title,
+      author_set: !!info.author,
+      copyright_set: !!info.copyright,
+      description_set: !!info.description,
+    });
+  }
+
   captureFabricUpdated(fabric: Fabric) {
     this.#capture("fabric_updated", {
       fabric_size: [fabric.width, fabric.height],
@@ -312,6 +327,14 @@ class MetricsServiceClass {
 
   captureLayerMoved() {
     this.#capture("layer_moved");
+  }
+
+  captureStitchAdded(kind: StitchKind) {
+    this.#capture("stitch_added", { kind });
+  }
+
+  captureStitchRemoved(kind: StitchKind) {
+    this.#capture("stitch_removed", { kind });
   }
 
   capturePalettesImported(paletteFileNames: string[], failedFiles: number) {
