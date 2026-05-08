@@ -27,8 +27,8 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/setup-rust
         with:
-          tools: wasm-pack
           targets: wasm32-unknown-unknown
+          tools: wasm-pack
 
       - name: Build web app
         env:
@@ -56,15 +56,21 @@ jobs:
           sentry-cli releases finalize "embroiderly@$APP_VERSION"
 
       - name: Remove source maps before deploy
-        run: find app/dist -name "*.map" -delete
+        run: find app/dist/ -name "*.map" -delete
 
       - name: Deploy to Cloudflare
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        id: deploy
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3.15.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: app/
+          packageManager: pnpm
+          command: ${{ github.event_name == 'push' && github.ref_name == 'main' && 'deploy' || 'versions upload' }}
+
+      - name: Generate Summary
         run: |
-          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref_name }}" = "main" ]; then
-            pnpm -F @embroiderly/app exec wrangler deploy
-          else
-            pnpm -F @embroiderly/app exec wrangler versions upload
-          fi
+          {
+            echo "## Deploying Embroiderly to Cloudflare"
+            echo "**Preview URL:** <${{ steps.deploy.outputs.deployment-url }}>."
+          } >> $GITHUB_STEP_SUMMARY
