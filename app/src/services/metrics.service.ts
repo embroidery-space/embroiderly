@@ -20,10 +20,12 @@ import type {
 } from "~/lib/pattern/";
 
 class MetricsServiceClass {
-  #client: PostHog;
+  #client?: PostHog;
 
   constructor() {
-    this.#client = posthog.init(import.meta.env.VITE_EMBROIDERLY_POSTHOG_API_KEY ?? "", {
+    if (import.meta.env.VITE_EMBROIDERLY_POSTHOG_API_KEY === undefined) return;
+
+    this.#client = posthog.init(import.meta.env.VITE_EMBROIDERLY_POSTHOG_API_KEY, {
       api_host: import.meta.env.DEV ? "/usage" : "https://embroiderly.niusia.me/usage",
 
       // Always start opted-out.
@@ -76,15 +78,15 @@ class MetricsServiceClass {
   }
 
   get enabled(): boolean {
-    return !posthog.has_opted_out_capturing();
+    return !this.#client?.has_opted_out_capturing();
   }
   set enabled(value: boolean) {
-    if (value) posthog.opt_in_capturing({ captureEventName: false });
-    else posthog.opt_out_capturing();
+    if (value) this.#client?.opt_in_capturing({ captureEventName: false });
+    else this.#client?.opt_out_capturing();
   }
 
   #capture(event: EventName, properties?: Properties) {
-    posthog.capture(event, properties);
+    this.#client?.capture(event, properties);
   }
 
   captureAppStarted() {

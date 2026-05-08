@@ -2,13 +2,15 @@ import type { Client, Integration, Options } from "@sentry/core";
 import { getDefaultIntegrations, init } from "@sentry/vue";
 
 class DiagnosticsServiceClass {
-  #client: Client;
+  #client?: Client;
 
   // Always start opted-out.
   // The client is enabled in `App.vue` based on the user preferences.
   enabled = false;
 
   constructor() {
+    if (import.meta.env.VITE_EMBROIDERLY_SENTRY_DSN === undefined) return;
+
     const options: Options = {
       debug: import.meta.env.DEV,
       dsn: import.meta.env.VITE_EMBROIDERLY_SENTRY_DSN,
@@ -27,11 +29,11 @@ class DiagnosticsServiceClass {
   }
 
   addIntegration(integration: Integration) {
-    this.#client.addIntegration(integration);
+    this.#client?.addIntegration(integration);
   }
 
   captureException(exception: unknown) {
-    this.#client.captureException(exception);
+    this.#client?.captureException(exception);
   }
 }
 export const DiagnosticsService = new DiagnosticsServiceClass();
