@@ -38,6 +38,18 @@ export class PaletteSettings {
   static serialize(data: PaletteSettings) {
     return PaletteSettings.schema.serialize(data);
   }
+
+  equals(other: PaletteSettings) {
+    return (
+      this.columnsNumber === other.columnsNumber &&
+      this.colorOnly === other.colorOnly &&
+      this.showStitchSymbols === other.showStitchSymbols &&
+      this.stitchSymbolsOnContrastBackground === other.stitchSymbolsOnContrastBackground &&
+      this.showColorBrands === other.showColorBrands &&
+      this.showColorNumbers === other.showColorNumbers &&
+      this.showColorNames === other.showColorNames
+    );
+  }
 }
 
 export enum SortPaletteBy {
