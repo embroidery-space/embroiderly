@@ -25,7 +25,13 @@ thread_local! {
 pub struct OpenPatternResult {
   pub id: String,
   pub title: String,
-  pub pattern: Vec<u8>,
+  pub snapshot: Vec<u8>,
+}
+
+impl std::fmt::Display for OpenPatternResult {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(f, "OpenPatternResult(id={}, title={})", self.id, self.title)
+  }
 }
 
 #[derive(borsh::BorshSerialize, borsh::BorshDeserialize)]
@@ -71,8 +77,7 @@ impl EditorWrapper {
   /// Adds a Borsh-serialized `PatternProject` and persists it without a file handle.
   #[wasm_bindgen(js_name = "addPattern")]
   pub async fn add_pattern(&self, data: Vec<u8>) -> Result<OpenPatternResult, Error> {
-    let (id, title, pattern) = self.add_pattern_impl(data).await?;
-    Ok(OpenPatternResult { id, title, pattern })
+    self.add_pattern_impl(data).await
   }
 
   /// Reads the file from the provided file handle, parses it, and registers the pattern in the editor.
@@ -83,8 +88,7 @@ impl EditorWrapper {
   /// Returns `[id, title]` --- the pattern UUID and its title (falling back to the file name if empty).
   #[wasm_bindgen(js_name = "openPattern")]
   pub async fn open_pattern(&self, file_handle: web_sys::FileSystemFileHandle) -> Result<OpenPatternResult, Error> {
-    let (id, title, pattern) = self.open_pattern_impl(file_handle.into()).await?;
-    Ok(OpenPatternResult { id, title, pattern })
+    self.open_pattern_impl(file_handle.into()).await
   }
 
   /// Parses pattern bytes directly without associating a file handle.
@@ -93,16 +97,14 @@ impl EditorWrapper {
   /// Returns `[id, title]` --- the pattern UUID and its title (falling back to `file_name` if empty).
   #[wasm_bindgen(js_name = "openPatternFromData")]
   pub async fn open_pattern_from_data(&self, data: &[u8], file_name: &str) -> Result<OpenPatternResult, Error> {
-    let (id, title, pattern) = self.open_pattern_from_data_impl(data, file_name).await?;
-    Ok(OpenPatternResult { id, title, pattern })
+    self.open_pattern_from_data_impl(data, file_name).await
   }
 
   /// Creates a blank pattern from the provided Borsh-serialized `Fabric` data.
   /// Returns `[id, title]` --- the pattern UUID and its title.
   #[wasm_bindgen(js_name = "createPattern")]
   pub async fn create_pattern(&self, fabric_data: &[u8]) -> Result<OpenPatternResult, Error> {
-    let (id, title, pattern) = self.create_pattern_impl(fabric_data).await?;
-    Ok(OpenPatternResult { id, title, pattern })
+    self.create_pattern_impl(fabric_data).await
   }
 
   /// Returns the Borsh-serialized `PatternProject`.
@@ -363,19 +365,23 @@ impl EditorWrapper {
     };
   }
 
-  #[tracing::instrument(name = "EditorWrapper::add_pattern", level = "debug", skip_all, ret, err)]
-  async fn add_pattern_impl(&self, data: Vec<u8>) -> Result<(String, String, Vec<u8>), Error> {
-    let patproj: PatternProject = borsh::from_slice(&data)?;
+  #[tracing::instrument(name = "EditorWrapper::add_pattern", level = "debug", skip_all, ret(Display), err)]
+  async fn add_pattern_impl(&self, snapshot: Vec<u8>) -> Result<OpenPatternResult, Error> {
+    let patproj: PatternProject = borsh::from_slice(&snapshot)?;
     let title = patproj.pattern.info.title.clone();
 
     let pattern_id = self.run(|editor| editor.add_pattern(patproj));
 
     self
       .persistence
-      .save_pattern_entry(pattern_id, data.clone(), None)
+      .save_pattern_entry(pattern_id, snapshot.clone(), None)
       .await?;
 
-    Ok((pattern_id.to_string(), title, data))
+    Ok(OpenPatternResult {
+      id: pattern_id.to_string(),
+      title,
+      snapshot,
+    })
   }
 
   #[tracing::instrument(
@@ -383,10 +389,10 @@ impl EditorWrapper {
     level = "debug",
     skip_all,
     fields(file_name),
-    ret,
+    ret(Display),
     err
   )]
-  async fn open_pattern_impl(&self, file_handle: opfs::FileHandle) -> Result<(String, String, Vec<u8>), Error> {
+  async fn open_pattern_impl(&self, file_handle: opfs::FileHandle) -> Result<OpenPatternResult, Error> {
     let file_name = file_handle.name();
     let data = file_handle.read().await?;
 
@@ -404,21 +410,21 @@ impl EditorWrapper {
       .save_pattern_entry(pattern_id, snapshot.clone(), Some(file_handle))
       .await?;
 
-    Ok((pattern_id.to_string(), title, snapshot))
+    Ok(OpenPatternResult {
+      id: pattern_id.to_string(),
+      title,
+      snapshot,
+    })
   }
 
   #[tracing::instrument(
     name = "EditorWrapper::open_pattern_from_data",
     level = "debug",
     skip(self, data),
-    ret,
+    ret(Display),
     err
   )]
-  async fn open_pattern_from_data_impl(
-    &self,
-    data: &[u8],
-    file_name: &str,
-  ) -> Result<(String, String, Vec<u8>), Error> {
+  async fn open_pattern_from_data_impl(&self, data: &[u8], file_name: &str) -> Result<OpenPatternResult, Error> {
     let patproj = embroiderly_parsers::parse_pattern(data, file_name)?;
     let title = patproj.pattern.info.title.clone();
     let title = if title.is_empty() { file_name.to_owned() } else { title };
@@ -431,11 +437,15 @@ impl EditorWrapper {
       .save_pattern_entry(pattern_id, snapshot.clone(), None)
       .await?;
 
-    Ok((pattern_id.to_string(), title, snapshot))
+    Ok(OpenPatternResult {
+      id: pattern_id.to_string(),
+      title,
+      snapshot,
+    })
   }
 
-  #[tracing::instrument(name = "EditorWrapper::create_pattern", level = "debug", skip_all, ret, err)]
-  async fn create_pattern_impl(&self, fabric_data: &[u8]) -> Result<(String, String, Vec<u8>), Error> {
+  #[tracing::instrument(name = "EditorWrapper::create_pattern", level = "debug", skip_all, ret(Display), err)]
+  async fn create_pattern_impl(&self, fabric_data: &[u8]) -> Result<OpenPatternResult, Error> {
     let fabric = borsh::from_slice(fabric_data)?;
 
     let patproj = PatternProject::builder(Pattern::new(fabric)).build();
@@ -449,7 +459,11 @@ impl EditorWrapper {
       .save_pattern_entry(pattern_id, snapshot.clone(), None)
       .await?;
 
-    Ok((pattern_id.to_string(), title, snapshot))
+    Ok(OpenPatternResult {
+      id: pattern_id.to_string(),
+      title,
+      snapshot,
+    })
   }
 
   #[tracing::instrument(name = "EditorWrapper::load_pattern", level = "debug", skip(self), err)]

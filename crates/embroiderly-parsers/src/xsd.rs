@@ -2,7 +2,7 @@ use anyhow::Result;
 use embroiderly_pattern::*;
 use xsp_parsers::pmaker;
 
-#[tracing::instrument(name = "parse_xsd", skip_all)]
+#[tracing::instrument(name = "parse_xsd", level = "debug", skip_all)]
 pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
   let xsd_pattern = pmaker::parse_pattern(data)?;
 

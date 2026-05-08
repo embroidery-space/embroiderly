@@ -82,7 +82,7 @@ export const usePatternFileStore = defineStore(
         loading.value = true;
 
         let fileName: string;
-        let result: { id: string; title: string; pattern: Uint8Array };
+        let result: { id: string; title: string; snapshot: Uint8Array };
 
         if (!options) {
           const fileHandle = await filePicker.open({ types: filePicker.filters.pattern });
@@ -110,7 +110,7 @@ export const usePatternFileStore = defineStore(
         }
 
         addOpenedPattern(result.id, result.title || fileName);
-        MetricsService.capturePatternOpened(Pattern.deserialize(result.pattern), fileName.split(".").pop());
+        MetricsService.capturePatternOpened(Pattern.deserialize(result.snapshot), fileName.split(".").pop());
 
         return result.id;
       } catch (err) {

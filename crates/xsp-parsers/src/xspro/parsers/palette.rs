@@ -25,7 +25,7 @@ pub fn parse_palette_from_bytes(data: &[u8]) -> io::Result<Vec<PaletteItem>> {
   Ok(palette)
 }
 
-#[tracing::instrument(name = "parse_xspro_palette", skip_all)]
+#[tracing::instrument(name = "parse_xspro_palette", level = "debug", skip_all)]
 pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> io::Result<Vec<PaletteItem>> {
   let data = std::fs::read(file_path)?;
   parse_palette_from_bytes(&data)

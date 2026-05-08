@@ -17,7 +17,7 @@ macro_rules! read_zip_file {
   }};
 }
 
-#[tracing::instrument(name = "parse_embproj", skip_all)]
+#[tracing::instrument(name = "parse_embproj", level = "debug", skip_all)]
 pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
   let cursor = std::io::Cursor::new(data);
   let mut archive = zip::ZipArchive::new(cursor)?;
@@ -66,7 +66,7 @@ pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
   Ok(patproj.build())
 }
 
-#[tracing::instrument(name = "save_embproj", skip_all)]
+#[tracing::instrument(name = "save_embproj", level = "debug", skip_all)]
 pub fn save_pattern(patproj: &PatternProject) -> Result<Vec<u8>> {
   let mut zip = zip::ZipWriter::new(std::io::Cursor::new(Vec::new()));
   let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Deflated);

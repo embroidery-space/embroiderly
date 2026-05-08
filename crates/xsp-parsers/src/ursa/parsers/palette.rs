@@ -5,7 +5,7 @@ use crate::ursa::schemas::palette::PaletteItem;
 mod tests;
 
 /// Parses a Ursa/WinStitch palette from raw UTF-8 bytes.
-#[tracing::instrument(name = "parse_ursa_palette_bytes", skip(data))]
+#[tracing::instrument(name = "parse_ursa_palette_bytes", level = "debug", skip(data))]
 pub fn parse_palette_from_bytes(data: &[u8]) -> std::io::Result<Vec<PaletteItem>> {
   let content = std::str::from_utf8(data).map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
 
@@ -19,7 +19,7 @@ pub fn parse_palette_from_bytes(data: &[u8]) -> std::io::Result<Vec<PaletteItem>
   Ok(palette)
 }
 
-#[tracing::instrument(name = "parse_ursa_palette", skip_all)]
+#[tracing::instrument(name = "parse_ursa_palette", level = "debug", skip_all)]
 pub fn parse_palette<P: AsRef<std::path::Path>>(file_path: P) -> std::io::Result<Vec<PaletteItem>> {
   let data = std::fs::read(file_path.as_ref())?;
   parse_palette_from_bytes(&data)

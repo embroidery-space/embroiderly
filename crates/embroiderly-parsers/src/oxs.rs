@@ -42,7 +42,7 @@ pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
   Ok(PatternProject::new(pattern))
 }
 
-#[tracing::instrument(name = "parse_oxs", skip_all)]
+#[tracing::instrument(name = "parse_oxs", level = "debug", skip_all)]
 fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern> {
   let reader_config = reader.config_mut();
   reader_config.expand_empty_elements = true;
@@ -60,7 +60,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
     {
       Event::Start(ref e) => {
         let name = e.name();
-        tracing::trace!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
+        tracing::debug!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
 
         match name.as_ref() {
           b"properties" => {
@@ -69,7 +69,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             let oxs_version = attributes.get("oxsversion").unwrap_or("1.0");
             let software = attributes.get("software").unwrap_or("Unknown");
             let software_version = attributes.get("software_version").unwrap_or("Unknown");
-            tracing::trace!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
+            tracing::debug!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
 
             let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes);
             pattern.info = pattern_info;
@@ -148,7 +148,7 @@ pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Res
   Ok(data)
 }
 
-#[tracing::instrument(name = "save_oxs", skip_all)]
+#[tracing::instrument(name = "save_oxs", level = "debug", skip_all)]
 fn save_pattern_inner<W: io::Write>(
   writer: &mut W,
   patproj: &PatternProject,
