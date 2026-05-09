@@ -23,7 +23,7 @@ class MetricsServiceClass {
   #client?: PostHog;
 
   constructor() {
-    if (import.meta.env.VITE_EMBROIDERLY_POSTHOG_API_KEY === undefined) return;
+    if (!import.meta.env.VITE_EMBROIDERLY_POSTHOG_API_KEY) return;
 
     this.#client = posthog.init(import.meta.env.VITE_EMBROIDERLY_POSTHOG_API_KEY, {
       api_host: import.meta.env.DEV ? "/usage" : "https://embroiderly.niusia.me/usage",

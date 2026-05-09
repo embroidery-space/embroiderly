@@ -9,7 +9,7 @@ class DiagnosticsServiceClass {
   enabled = false;
 
   constructor() {
-    if (import.meta.env.VITE_EMBROIDERLY_SENTRY_DSN === undefined) return;
+    if (!import.meta.env.VITE_EMBROIDERLY_SENTRY_DSN) return;
 
     const options: Options = {
       debug: import.meta.env.DEV,
