@@ -75,7 +75,7 @@ jobs:
           packageManager: pnpm
           workingDirectory: app/
 
-      - run: echo "${{ steps.deploy.outputs }}"
+      - run: echo '${{ toJSON(steps.deploy.outputs) }}'
 
       - name: Generate Summary
         run: |

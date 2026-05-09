@@ -9,6 +9,15 @@
 /** The app version. */
 declare const __APP_VERSION__: string;
 
+/** Short Git commit hash. */
+declare const __GIT_COMMIT__: string;
+
+/** Git branch name. */
+declare const __GIT_BRANCH__: string;
+
+/** ISO 8601 timestamp of the HEAD commit. */
+declare const __GIT_DATE__: string;
+
 /** Whether the app is running in Tauri. */
 declare const __TAURI__: boolean;
 

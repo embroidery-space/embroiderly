@@ -3,6 +3,10 @@ import Bowser from "bowser";
 export interface SystemInfo {
   appVersion: string;
 
+  gitCommit: string;
+  gitBranch: string;
+  gitDate: Date;
+
   os: string;
   osVersion: string;
 
@@ -16,6 +20,10 @@ export function getSystemInfo(): SystemInfo {
 
   return {
     appVersion: __APP_VERSION__,
+
+    gitCommit: __GIT_COMMIT__,
+    gitBranch: __GIT_BRANCH__,
+    gitDate: new Date(__GIT_DATE__),
 
     os: result.os.name ?? "Unknown",
     osVersion: result.os.version ?? "Unknown",

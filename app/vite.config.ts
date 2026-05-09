@@ -1,5 +1,6 @@
 /// <reference types="vitest/config" />
 
+import { execSync } from "node:child_process";
 import { fileURLToPath, URL } from "node:url";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -13,6 +14,17 @@ import vueDevTools from "vite-plugin-vue-devtools";
 
 import pkg from "./package.json";
 import fluentMerge from "./vite-plugins/fluent-merge";
+
+const git = (() => {
+  try {
+    const commit = execSync("git rev-parse --short HEAD").toString().trim();
+    const branch = execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
+    const date = execSync("git log -1 --format=%cI").toString().trim();
+    return { commit, branch, date };
+  } catch {
+    return { commit: "unknown", branch: "unknown", date: new Date().toISOString() };
+  }
+})();
 
 const isCI = !!process.env.CI;
 const isTauri = !!process.env.TAURI_ENV_TARGET_TRIPLE;
@@ -67,6 +79,9 @@ export default defineConfig({
   },
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
+    __GIT_COMMIT__: JSON.stringify(git.commit),
+    __GIT_BRANCH__: JSON.stringify(git.branch),
+    __GIT_DATE__: JSON.stringify(git.date),
     __TAURI__: isTauri,
   },
   resolve: {
