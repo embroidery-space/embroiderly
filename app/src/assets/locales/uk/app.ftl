@@ -32,7 +32,7 @@ app-menu-help-license = Ліцензія
 system-info =
   .title = Інформація про систему
   .description =
-    Версія { -app-name }: { $appVersion } ({ $gitBranch }@{ $gitCommit }, { DATETIME($gitDate, month: "short", day: "numeric", year: "numeric") })
+    Версія { -app-name }: { $appVersion } ({ $gitBranch }@{ $gitCommit }, { DATETIME($gitDate, dateStyle: "long") })
     Операційна система: { $os } { $osVersion }
     Бравзер: { $browser } { $browserVersion }
 

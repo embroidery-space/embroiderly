@@ -32,7 +32,7 @@ app-menu-help-license = License
 system-info =
   .title = System Information
   .description =
-    { -app-name } version: { $appVersion } ({ $gitBranch }@{ $gitCommit }, { DATETIME($gitDate, month: "short", day: "numeric", year: "numeric") })
+    { -app-name } version: { $appVersion } ({ $gitBranch }@{ $gitCommit }, { DATETIME($gitDate, dateStyle: "long") })
     Operating System: { $os } { $osVersion }
     Browser: { $browser } { $browserVersion }
 
