@@ -1,10 +1,7 @@
 import { useOverlay, useToast } from "@embroiderly/ui";
-import { setTheme as setAppTheme } from "@tauri-apps/api/app";
-import { relaunch } from "@tauri-apps/plugin-process";
-import { check } from "@tauri-apps/plugin-updater";
 
 import { defineStore } from "pinia";
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 
 import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
@@ -28,7 +25,7 @@ export enum StartupAction {
 
 export interface StartupOptions {
   action: StartupAction;
-  templatePath: string;
+  patternTemplate: string;
 }
 
 export interface ViewportOptions {
@@ -66,111 +63,157 @@ export interface TelemetryOptions {
 }
 
 export interface OtherOptions {
-  usePaletteItemColorForStitchTools: boolean;
+  /**
+   * The pattern auto save interval, in minutes.
+   * @default 15
+   */
   autoSaveInterval: number;
+
+  /**
+   * Whether to use the palette item color for stitch tools.
+   * @default true
+   */
+  usePaletteItemColorForStitchTools: boolean;
 }
 
-export const useSettingsStore = defineStore("embroiderly-settings", () => {
-  const overlay = useOverlay();
-  const appSettingModal = overlay.create(AppSettingModal);
+export const useSettingsStore = defineStore(
+  "embroiderly-settings",
+  () => {
+    const overlay = useOverlay();
+    const appSettingModal = overlay.create(AppSettingModal);
 
-  const { fluent, setLocale } = useI18n();
-  const toast = useToast();
+    const { fluent, setLocale } = useI18n();
+    const toast = useToast();
 
-  const ui = reactive<UiOptions>({
-    theme: "system",
-    scale: "medium",
-    language: "en",
-  });
-  watch(
-    ui,
-    async (newUi) => {
-      document.documentElement.style.fontSize = newUi.scale;
-      setLocale(newUi.language);
-      await setAppTheme(newUi.theme === "system" ? null : newUi.theme);
-    },
-    { immediate: true },
-  );
+    const ui = reactive<UiOptions>({
+      theme: "system",
+      scale: "medium",
+      language: "en",
+    });
+    watch(
+      ui,
+      (newUi) => {
+        document.documentElement.style.colorScheme = newUi.theme === "system" ? "light dark" : newUi.theme;
+        document.documentElement.style.fontSize = newUi.scale;
+        setLocale(newUi.language);
+      },
+      { immediate: true },
+    );
 
-  const startup = reactive<StartupOptions>({
-    action: StartupAction.NewPattern,
-    templatePath: "",
-  });
+    const startup = reactive<StartupOptions>({
+      action: StartupAction.NewPattern,
+      patternTemplate: "",
+    });
 
-  const viewport = reactive<ViewportOptions>({
-    antialias: true,
-    wheelAction: "zoom",
-  });
+    const viewport = reactive<ViewportOptions>({
+      antialias: true,
+      wheelAction: "zoom",
+    });
 
-  const updater = reactive<UpdaterOptions>({
-    autoCheck: false,
-  });
+    const updater = reactive<UpdaterOptions>({
+      autoCheck: false,
+    });
 
-  const telemetry = reactive<TelemetryOptions>({
-    diagnostics: false,
-    metrics: false,
-  });
+    const telemetry = reactive<TelemetryOptions>({
+      diagnostics: false,
+      metrics: false,
+    });
 
-  const other = reactive<OtherOptions>({
-    usePaletteItemColorForStitchTools: true,
-    autoSaveInterval: 15,
-  });
+    const other = reactive<OtherOptions>({
+      autoSaveInterval: 15,
+      usePaletteItemColorForStitchTools: true,
+    });
 
-  function openSettingsModal() {
-    appSettingModal.open();
-  }
-
-  const loadingUpdate = ref(false);
-  async function checkForUpdates(options?: CheckForUpdatesOptions) {
-    const type = options?.auto ? "background" : "foreground";
-    try {
-      loadingUpdate.value = true;
-      const update = await check();
-      if (update) {
-        const { currentVersion, version } = update;
-        const date = new Date(update.date!);
-        toast.add({
-          type,
-          color: "info",
-          actions: [
-            {
-              label: fluent.$t("updater-update-now"),
-              onClick: async () => {
-                try {
-                  loadingUpdate.value = true;
-                  await update.downloadAndInstall();
-                  await relaunch();
-                } finally {
-                  loadingUpdate.value = false;
-                }
-              },
-            },
-          ],
-          ...fluent.$ta("updater-update-available", { currentVersion, version, date }),
-        });
-      } else {
-        if (!options?.auto) {
-          toast.add({
-            type,
-            color: "info",
-            ...fluent.$ta("updater-no-updates-available"),
-          });
-        }
-      }
-    } finally {
-      loadingUpdate.value = false;
+    function openSettingsModal() {
+      appSettingModal.open();
     }
-  }
 
-  return {
-    loadingUpdate,
-    ui,
-    startup,
-    viewport,
-    updater,
-    telemetry,
-    other,
-    openSettingsModal,
-    checkForUpdates,
-  };
-});
+    const loadingUpdate = ref(false);
+    async function checkForUpdates(options?: CheckForUpdatesOptions) {
+      const type = options?.auto ? "background" : "foreground";
+      try {
+        loadingUpdate.value = true;
+
+        if (__TAURI__) {
+          const [{ check }, { relaunch }] = await Promise.all([
+            import("@tauri-apps/plugin-updater"),
+            import("@tauri-apps/plugin-process"),
+          ]);
+
+          const update = await check();
+          if (update) {
+            const { currentVersion, version } = update;
+            const date = new Date(update.date!);
+            toast.add({
+              type,
+              color: "info",
+              actions: [
+                {
+                  label: fluent.$t("updater-update-now"),
+                  async onClick() {
+                    try {
+                      loadingUpdate.value = true;
+                      await update.downloadAndInstall();
+                      await relaunch();
+                    } finally {
+                      loadingUpdate.value = false;
+                    }
+                  },
+                },
+              ],
+              ...fluent.$ta("updater-update-available-desktop", { currentVersion, version, date }),
+            });
+          } else if (!options?.auto) {
+            toast.add({ type, color: "info", ...fluent.$ta("updater-no-updates-available") });
+          }
+        } else {
+          const { useServiceWorker } = await import("~/composables/pwa");
+
+          const pwa = useServiceWorker();
+
+          const hasUpdate = await pwa.check();
+          if (hasUpdate) {
+            toast.add({
+              type,
+              color: "info",
+              actions: [
+                {
+                  label: fluent.$t("updater-update-now"),
+                  async onClick() {
+                    try {
+                      loadingUpdate.value = true;
+                      await pwa.applyUpdate();
+                    } finally {
+                      loadingUpdate.value = false;
+                    }
+                  },
+                },
+              ],
+              ...fluent.$ta("updater-update-available-pwa"),
+            });
+          } else if (!options?.auto) {
+            toast.add({ type, color: "info", ...fluent.$ta("updater-no-updates-available") });
+          }
+        }
+      } finally {
+        loadingUpdate.value = false;
+      }
+    }
+
+    const autoSaveIntervalInMillis = computed(() => other.autoSaveInterval * 60 * 1000);
+
+    return {
+      loadingUpdate,
+      ui,
+      startup,
+      viewport,
+      updater,
+      telemetry,
+      other,
+      openSettingsModal,
+      checkForUpdates,
+      autoSaveIntervalInMillis,
+    };
+  },
+  { persist: { omit: ["loadingUpdate"] } },
+);

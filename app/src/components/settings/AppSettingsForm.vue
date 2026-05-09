@@ -5,8 +5,7 @@ import type { TabsItem } from "@embroiderly/ui";
 import { computed } from "vue";
 
 import { IconLaptop, IconMoon, IconSun } from "~/assets/icons/";
-import { useFilePicker, useI18n } from "~/composables/";
-import { ANY_PATTERN_FILTER } from "~/constants/";
+import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { StartupAction, useSettingsStore } from "~/stores/";
 import type {
   OtherOptions,
@@ -24,8 +23,9 @@ const updater = defineModel<UpdaterOptions>("updater", { required: true });
 const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
 const other = defineModel<OtherOptions>("other", { required: true });
 
-const filePicker = useFilePicker();
+const { files } = useEditor();
 const { fluent } = useI18n();
+const filePicker = useFilePicker();
 
 const settingsStore = useSettingsStore();
 
@@ -68,6 +68,27 @@ const wheelActionOptions = computed(() => [
   { label: fluent.$t("settings-viewport-wheel-action-zoom"), value: "zoom" },
   { label: fluent.$t("settings-viewport-wheel-action-scroll"), value: "scroll" },
 ]);
+
+async function pickPatternTemplate() {
+  const fileHandle = await filePicker.open({
+    types: filePicker.filters.pattern,
+  });
+  if (!fileHandle) return;
+
+  const file = await fileHandle.getFile();
+  const data = new Uint8Array(await file.arrayBuffer());
+
+  if (startup.value.patternTemplate) {
+    try {
+      await files.deletePatternTemplate(startup.value.patternTemplate);
+    } catch {
+      // Ignore deletion errors (file may not exist).
+    }
+  }
+
+  await files.savePatternTemplate(file.name, data);
+  startup.value.patternTemplate = file.name;
+}
 </script>
 
 <template>
@@ -105,15 +126,10 @@ const wheelActionOptions = computed(() => [
 
         <FormField :label="$t('settings-startup-template-path')" class="w-full">
           <FilePicker
-            v-model="startup.templatePath"
+            v-model="startup.patternTemplate"
             :disabled="startup.action !== StartupAction.CustomTemplate"
             class="w-full"
-            @pick="
-              async () => {
-                const path = await filePicker.open({ filters: ANY_PATTERN_FILTER });
-                if (path) startup.templatePath = path;
-              }
-            "
+            @pick="pickPatternTemplate"
           />
         </FormField>
       </div>

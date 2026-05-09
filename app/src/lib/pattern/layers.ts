@@ -1,9 +1,79 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 
-import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
+import {
+  FullStitch,
+  FullStitchKind,
+  PartStitch,
+  PartStitchKind,
+  LineStitch,
+  LineStitchKind,
+  NodeStitch,
+  NodeStitchKind,
+  SpecialStitch,
+} from "./stitches.ts";
 
-import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitch } from "./stitches.ts";
+export class LayerVisibility {
+  visible: boolean;
+
+  fullstitchesVisible: boolean;
+  petitestitchesVisible: boolean;
+
+  halfstitchesVisible: boolean;
+  quarterstitchesVisible: boolean;
+
+  backstitchesVisible: boolean;
+  straightstitchesVisible: boolean;
+
+  frenchknotsVisible: boolean;
+  beadsVisible: boolean;
+
+  specialstitchesVisible: boolean;
+
+  constructor(data: b.infer<typeof LayerVisibility.schema>) {
+    this.visible = data.visible;
+
+    this.fullstitchesVisible = data.fullstitchesVisible;
+    this.petitestitchesVisible = data.petitestitchesVisible;
+
+    this.halfstitchesVisible = data.halfstitchesVisible;
+    this.quarterstitchesVisible = data.quarterstitchesVisible;
+
+    this.backstitchesVisible = data.backstitchesVisible;
+    this.straightstitchesVisible = data.straightstitchesVisible;
+
+    this.frenchknotsVisible = data.frenchknotsVisible;
+    this.beadsVisible = data.beadsVisible;
+
+    this.specialstitchesVisible = data.specialstitchesVisible;
+  }
+
+  // Field order matches the Rust `LayerVisibility` struct declaration for Borsh compatibility.
+  static readonly schema = b.struct({
+    visible: b.bool(),
+
+    fullstitchesVisible: b.bool(),
+    petitestitchesVisible: b.bool(),
+
+    halfstitchesVisible: b.bool(),
+    quarterstitchesVisible: b.bool(),
+
+    backstitchesVisible: b.bool(),
+    straightstitchesVisible: b.bool(),
+
+    frenchknotsVisible: b.bool(),
+    beadsVisible: b.bool(),
+
+    specialstitchesVisible: b.bool(),
+  });
+
+  static deserialize(data: Uint8Array) {
+    return new LayerVisibility(LayerVisibility.schema.deserialize(data));
+  }
+
+  static serialize(data: LayerVisibility) {
+    return LayerVisibility.schema.serialize(data);
+  }
+}
 
 export class Layer {
   readonly index: number;
@@ -78,13 +148,27 @@ export class Layer {
     specialstitchesVisible: b.bool(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Layer(0, Layer.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new Layer(0, Layer.schema.deserialize(data));
+  }
+
+  /** Returns an object with the counts of each stitch type on this layer. */
+  stitchCounts() {
+    return {
+      fullStitches: this.fullstitches.filter((s) => s.kind === FullStitchKind.Full).length,
+      petiteStitches: this.fullstitches.filter((s) => s.kind === FullStitchKind.Petite).length,
+      halfStitches: this.partstitches.filter((s) => s.kind === PartStitchKind.Half).length,
+      quarterStitches: this.partstitches.filter((s) => s.kind === PartStitchKind.Quarter).length,
+      backStitches: this.linestitches.filter((s) => s.kind === LineStitchKind.Back).length,
+      straightStitches: this.linestitches.filter((s) => s.kind === LineStitchKind.Straight).length,
+      frenchKnots: this.nodestitches.filter((s) => s.kind === NodeStitchKind.FrenchKnot).length,
+      beads: this.nodestitches.filter((s) => s.kind === NodeStitchKind.Bead).length,
+      specialStitches: this.specialstitches.length,
+    };
   }
 
   getVisibility(): LayerVisibility {
-    return {
+    return new LayerVisibility({
       visible: this.visible,
 
       fullstitchesVisible: this.fullstitchesVisible,
@@ -100,7 +184,7 @@ export class Layer {
       beadsVisible: this.beadsVisible,
 
       specialstitchesVisible: this.specialstitchesVisible,
-    };
+    });
   }
 
   setVisibility(vis: LayerVisibility): void {
@@ -232,8 +316,45 @@ export class AddedLayerData {
     layer: Layer.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new AddedLayerData(AddedLayerData.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new AddedLayerData(AddedLayerData.schema.deserialize(data));
+  }
+}
+
+export class RenamedLayerData {
+  layerIndex: number;
+  name: string;
+
+  constructor(data: b.infer<typeof RenamedLayerData.schema>) {
+    this.layerIndex = data.layerIndex;
+    this.name = data.name;
+  }
+
+  static readonly schema = b.struct({
+    layerIndex: b.u32(),
+    name: b.string(),
+  });
+
+  static deserialize(data: Uint8Array) {
+    return new RenamedLayerData(RenamedLayerData.schema.deserialize(data));
+  }
+}
+
+export class UpdatedLayerVisibilityData {
+  layerIndex: number;
+  visibility: LayerVisibility;
+
+  constructor(data: b.infer<typeof UpdatedLayerVisibilityData.schema>) {
+    this.layerIndex = data.layerIndex;
+    this.visibility = new LayerVisibility(data.visibility);
+  }
+
+  static readonly schema = b.struct({
+    layerIndex: b.u32(),
+    visibility: LayerVisibility.schema,
+  });
+
+  static deserialize(data: Uint8Array) {
+    return new UpdatedLayerVisibilityData(UpdatedLayerVisibilityData.schema.deserialize(data));
   }
 }

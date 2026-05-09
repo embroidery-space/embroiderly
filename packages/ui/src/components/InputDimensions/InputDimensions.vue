@@ -59,18 +59,29 @@ const { icons } = useComponentIcons();
 const aspectRatioLocked = ref(props.aspectRatio !== undefined);
 const storedAspectRatio = ref(props.aspectRatio);
 
-watch(aspectRatioLocked, function (locked: boolean) {
-  if (locked && !props.aspectRatio) {
-    const calculated = calculateAspectRatio();
-    if (calculated) storedAspectRatio.value = calculated;
-  }
-});
+watch(
+  () => props.aspectRatio,
+  (newRatio) => {
+    if (newRatio !== undefined) {
+      aspectRatioLocked.value = true;
+      storedAspectRatio.value = newRatio;
+    }
+  },
+);
 
 function calculateAspectRatio() {
   if (width.value && height.value) {
     return width.value / height.value;
   }
   return undefined;
+}
+
+function toggleAspectRatioLock() {
+  aspectRatioLocked.value = !aspectRatioLocked.value;
+  if (aspectRatioLocked.value) {
+    const calculated = calculateAspectRatio();
+    if (calculated) storedAspectRatio.value = calculated;
+  }
 }
 
 function handleWidthChange(newWidth: number) {
@@ -118,7 +129,7 @@ const ui = computed(() =>
       :class="ui.lockButton({ class: props.ui?.lockButton })"
       :aria-label="aspectRatioLocked ? 'Unlock aspect ratio' : 'Lock aspect ratio'"
       :aria-pressed="aspectRatioLocked"
-      @click="aspectRatioLocked = !aspectRatioLocked"
+      @click="toggleAspectRatioLock"
     />
 
     <FormField v-bind="heightFieldOptions" :size="size">

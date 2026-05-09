@@ -40,6 +40,17 @@ describe("Menubar", () => {
     },
   ];
 
+  const linkMenus: MenubarMenu[] = [
+    {
+      label: "Help",
+      items: [
+        { type: "link", label: "Internal Page", href: "/about" },
+        { type: "link", label: "External Site", href: "https://example.com", target: "_blank" },
+        { type: "link", label: "Disabled Link", href: "https://example.com", disabled: true },
+      ],
+    },
+  ];
+
   const submenuMenus: MenubarMenu[] = [
     {
       label: "Tools",
@@ -58,6 +69,7 @@ describe("Menubar", () => {
     ["with simple menus", { props: { ...props, menus: simpleMenus } }],
     ["with checkbox menus", { props: { ...props, menus: checkboxMenus } }],
     ["with submenu menus", { props: { ...props, menus: submenuMenus } }],
+    ["with link menus", { props: { ...props, menus: linkMenus } }],
     [
       "with disabled menu",
       { props: { ...props, menus: [{ label: "File", disabled: true, items: [{ label: "New" }] }] } },

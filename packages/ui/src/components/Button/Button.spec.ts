@@ -25,6 +25,11 @@ describe("Button", () => {
       "with leading and trailing icons",
       { props: { label: "Button", leadingIcon: "lucide:rocket", trailingIcon: "lucide:rocket" } },
     ],
+    ["with href", { props: { label: "Button", href: "/about" } }],
+    ["with external href", { props: { label: "Button", href: "https://example.com" } }],
+    ["with href and target _blank", { props: { label: "Button", href: "/about", target: "_blank" } }],
+    ["with href and custom rel", { props: { label: "Button", href: "/about", rel: "nofollow" } }],
+    ["with href and disabled", { props: { label: "Button", href: "/about", disabled: true } }],
     ...sizes.map((size: string) => [
       `with square icon-only and size ${size}`,
       { props: { square: true, size, icon: "lucide:rocket" } },

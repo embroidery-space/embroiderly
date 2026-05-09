@@ -7,31 +7,30 @@ use embroiderly_pattern::{PatternProject, ReferenceImage};
 macro_rules! read_zip_file {
   ($archive:expr, $name:expr) => {{
     $archive.by_name($name).map(|mut file| {
-      let mut buf = Vec::new();
-      if let Err(e) = file.read_to_end(&mut buf) {
+      let mut data = Vec::new();
+      if let Err(e) = file.read_to_end(&mut data) {
         tracing::error!("Failed to read zip file {}: {}", $name, e);
       }
 
-      std::io::BufReader::new(std::io::Cursor::new(buf))
+      data
     })
   }};
 }
 
-#[tracing::instrument(name = "parse_embproj", skip_all)]
-pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
-  let file_path = file_path.as_ref();
-  let file = std::fs::File::open(file_path)?;
-  let mut archive = zip::ZipArchive::new(file)?;
+#[tracing::instrument(name = "parse_embproj", level = "debug", skip_all)]
+pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
+  let cursor = std::io::Cursor::new(data);
+  let mut archive = zip::ZipArchive::new(cursor)?;
 
-  let pattern = serde_json::from_reader(read_zip_file!(archive, "pattern.json")?)?;
+  let pattern = serde_json::from_slice(&read_zip_file!(archive, "pattern.json")?)?;
 
   let display_settings = match read_zip_file!(archive, "display_settings.json") {
-    Ok(file) => serde_json::from_reader(file)?,
+    Ok(file) => serde_json::from_slice(&file)?,
     Err(zip::result::ZipError::FileNotFound) => Default::default(),
     Err(e) => return Err(e.into()),
   };
   let publish_settings = match read_zip_file!(archive, "publish_settings.json") {
-    Ok(file) => serde_json::from_reader(file)?,
+    Ok(file) => serde_json::from_slice(&file)?,
     Err(zip::result::ZipError::FileNotFound) => Default::default(),
     Err(e) => return Err(e.into()),
   };
@@ -46,9 +45,8 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
 
       match image_file.and_then(|i| settings_file.map(|s| (i, s))) {
         Ok((image_file, settings_file)) => {
-          let image = image_file.into_inner().into_inner();
-          let settings = serde_json::from_reader(settings_file)?;
-          Some(ReferenceImage::new(image, Some(settings)))
+          let settings = serde_json::from_slice(&settings_file)?;
+          Some(ReferenceImage::new(image_file, Some(settings)))
         }
         Err(zip::result::ZipError::FileNotFound) => None,
         Err(e) => return Err(e.into()),
@@ -65,24 +63,13 @@ pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternP
     patproj = patproj.reference_image(reference_image);
   }
 
-  let mut patproj = patproj.build();
-
-  if patproj.pattern.info.title.is_empty() {
-    patproj.pattern.info.title = file_path.file_name().unwrap().to_string_lossy().to_string();
-  }
-
-  Ok(patproj)
+  Ok(patproj.build())
 }
 
-#[tracing::instrument(name = "save_embproj", skip_all)]
-pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path) -> Result<()> {
-  let file = std::fs::OpenOptions::new()
-    .create(true)
-    .write(true)
-    .truncate(true)
-    .open(file_path)?;
-  let mut zip = zip::ZipWriter::new(file);
-  let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Zstd);
+#[tracing::instrument(name = "save_embproj", level = "debug", skip_all)]
+pub fn save_pattern(patproj: &PatternProject) -> Result<Vec<u8>> {
+  let mut zip = zip::ZipWriter::new(std::io::Cursor::new(Vec::new()));
+  let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Deflated);
 
   zip.start_file("pattern.json", options)?;
   zip.write_all(&serde_json::to_vec(&patproj.pattern)?)?;
@@ -102,6 +89,5 @@ pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path) -> Re
     zip.write_all(&serde_json::to_vec(&image.settings)?)?;
   }
 
-  zip.finish()?;
-  Ok(())
+  Ok(zip.finish()?.into_inner())
 }

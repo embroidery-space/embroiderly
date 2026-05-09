@@ -4,11 +4,13 @@ on:
     branches: [main, dev]
     types: [opened, reopened, edited, synchronize]
     paths:
-      - ".config/**"
       - "app/src-tauri/**"
+      - "app/src-wasm/**"
       - "crates/**"
+      - "packages/*/src-wasm/**"
       - "Cargo.*"
       - rustfmt.toml
+      - clippy.toml
       - .github/workflows/ci.backend.yml
 permissions:
   contents: read
@@ -26,11 +28,8 @@ jobs:
         with:
           stable-components: clippy
           nightly-components: rustfmt
-      - name: Check formatting
-        run: cargo +nightly fmt --check
-      - name: Check linting
-        run: cargo clippy --locked -- -D warnings
-
+      - run: cargo +nightly fmt --check
+      - run: cargo clippy --locked -- -D warnings
   test:
     strategy:
       fail-fast: false
@@ -42,5 +41,4 @@ jobs:
       - uses: ./.github/actions/setup-rust
         with:
           tools: cargo-nextest
-      - name: Test
-        run: cargo nextest run --locked -F embroiderly/test
+      - run: cargo nextest run --locked

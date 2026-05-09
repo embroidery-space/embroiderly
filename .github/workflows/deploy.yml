@@ -1,0 +1,91 @@
+name: Deploy
+on:
+  push:
+    branches-ignore: ["dependabot/**", dependency-updates]
+permissions:
+  contents: read
+  deployments: write
+env:
+  CARGO_TERM_COLOR: always
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    env:
+      # Branches whose deployments are long-lived.
+      # Anything else is treated as a short-lived preview and ships without PWA so users' disks aren't filled by service-worker caches for URLs they'll never revisit.
+      LONG_LIVED_BRANCHES: '["main", "dev"]'
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-rust
+        with:
+          targets: wasm32-unknown-unknown
+          tools: wasm-pack
+
+      - name: Build web app
+        env:
+          VITE_EMBROIDERLY_POSTHOG_API_KEY: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_POSTHOG_API_KEY || '' }}
+          VITE_EMBROIDERLY_SENTRY_DSN: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_SENTRY_DSN || '' }}
+          EMBROIDERLY_PWA: ${{ contains(fromJSON(env.LONG_LIVED_BRANCHES), github.ref_name) }}
+        run: pnpm app:build
+
+      - name: Upload source maps to Sentry
+        if: github.ref_name == 'main'
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: embroidery-space
+          SENTRY_PROJECT: embroiderly
+        run: |
+          pnpm install -g @sentry/cli
+
+          APP_VERSION=$(node -p "require('./app/package.json').version")
+
+          sentry-cli releases new "embroiderly@$APP_VERSION"
+          sentry-cli releases set-commits "embroiderly@$APP_VERSION" --auto || true
+
+          sentry-cli sourcemaps inject ./app/dist
+          sentry-cli sourcemaps upload --release="embroiderly@$APP_VERSION" ./app/dist
+
+          sentry-cli releases finalize "embroiderly@$APP_VERSION"
+
+      - name: Remove source maps before deploy
+        run: find app/dist/ -name "*.map" -delete
+
+      - name: Determine Wrangler Command
+        id: info
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            # Live production.
+            echo "cmd=deploy --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
+          else
+            # Sanitize branch name for the alias: replace `/` with `-` and lowercase it.
+            alias=$(echo "${{ github.ref_name }}" | sed 's/\//-/g' | tr '[:upper:]' '[:lower:]')
+
+            # Commit and branch preview.
+            echo "cmd=versions upload --preview-alias $alias --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy to Cloudflare
+        id: deploy
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3.15.0
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: ${{ steps.info.outputs.cmd }}
+          packageManager: pnpm
+          workingDirectory: app/
+
+      - name: Generate Summary
+        run: |
+          {
+            echo "## Embroiderly deployment on Cloudflare"
+            echo "**Preview URL:** <${{ steps.deploy.outputs.deployment-url }}>."
+          } >> $GITHUB_STEP_SUMMARY

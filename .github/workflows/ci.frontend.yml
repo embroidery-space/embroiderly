@@ -6,13 +6,17 @@ on:
     paths:
       - "app/**"
       - "!app/src-tauri/**"
+      - "!app/src-wasm/**"
       - "docs/**"
+      - "packages/**"
+      - "!packages/*/src-wasm/**"
       - package.json
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
       - eslint.config.js
-      - .prettierrc.json
-      - .prettierignore
+      - .markdownlint-cli2.jsonc
+      - .oxfmtrc.json
+      - .oxlintrc.json
       - .github/workflows/ci.frontend.yml
 permissions:
   contents: read
@@ -25,16 +29,15 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup-node
-      - name: Check types
-        run: pnpm check-types
-      - name: Check formatting
-        run: pnpm fmt
-      - name: Check linting
-        run: pnpm lint
+      - run: pnpm fmt
+      - run: pnpm lint
   test:
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup-node
-      - name: Test
-        run: pnpm test
+      - run: pnpm test

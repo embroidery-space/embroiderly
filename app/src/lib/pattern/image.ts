@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 
 export class ReferenceImageSettings {
   x: number;
@@ -27,9 +26,8 @@ export class ReferenceImageSettings {
     opacity: b.f32(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new ReferenceImageSettings(ReferenceImageSettings.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new ReferenceImageSettings(ReferenceImageSettings.schema.deserialize(data));
   }
 
   static serialize(data: ReferenceImageSettings) {
@@ -52,9 +50,8 @@ export class ReferenceImage extends Blob {
     settings: ReferenceImageSettings.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    const result = b.option(ReferenceImage.schema).deserialize(buffer);
+  static deserialize(data: Uint8Array) {
+    const result = b.option(ReferenceImage.schema).deserialize(data);
     return result ? new ReferenceImage(result) : undefined;
   }
 }

@@ -12,9 +12,9 @@ const enum LogLevel {
   Trace = "trace",
 }
 
-function log(level: LogLevel, message: string) {
-  const location = getCallerLocation(new Error(message).stack);
-  return invoke<void>("plugin:log|log", { level, message, location });
+export interface LogOptions {
+  /** When provided, skips the JS-stack walk. Mainly used by the Wasm module. */
+  location?: string;
 }
 
 function getCallerLocation(stack?: string) {
@@ -26,30 +26,39 @@ function getCallerLocation(stack?: string) {
   return `${entry.callee || "<anonymous>"}@${entry.fileName}:${entry.line}:${entry.column}`;
 }
 
-class LoggerServiceClass {
-  error(message: string) {
-    console.error(message);
-    return log(LogLevel.Error, message);
+export class LoggerServiceClass {
+  /** Generic entry point for callers that only have the level as a string (e.g. the Wasm module). */
+  log(level: string, message: string, options?: LogOptions) {
+    this.#dispatch(level.toLowerCase() as LogLevel, message, options);
   }
 
-  warn(message: string) {
-    console.warn(message);
-    return log(LogLevel.Warn, message);
+  error(message: string, options?: LogOptions) {
+    this.#dispatch(LogLevel.Error, message, options);
   }
 
-  info(message: string) {
-    console.info(message);
-    return log(LogLevel.Info, message);
+  warn(message: string, options?: LogOptions) {
+    this.#dispatch(LogLevel.Warn, message, options);
   }
 
-  debug(message: string) {
-    console.debug(message);
-    return log(LogLevel.Debug, message);
+  info(message: string, options?: LogOptions) {
+    this.#dispatch(LogLevel.Info, message, options);
   }
 
-  trace(message: string) {
-    console.trace(message);
-    return log(LogLevel.Trace, message);
+  debug(message: string, options?: LogOptions) {
+    this.#dispatch(LogLevel.Debug, message, options);
+  }
+
+  trace(message: string, options?: LogOptions) {
+    this.#dispatch(LogLevel.Trace, message, options);
+  }
+
+  #dispatch(level: LogLevel, message: string, options?: LogOptions) {
+    console[level](message);
+
+    if (__TAURI__) {
+      const location = options?.location ?? getCallerLocation(new Error().stack);
+      void invoke("plugin:log|log", { level: level.toUpperCase(), message, location });
+    }
   }
 }
 export const LoggerService = new LoggerServiceClass();

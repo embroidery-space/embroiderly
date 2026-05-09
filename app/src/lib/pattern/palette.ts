@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 import type { ColorSource } from "pixi.js";
 
@@ -32,13 +31,24 @@ export class PaletteSettings {
     showColorNames: b.bool(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new PaletteSettings(PaletteSettings.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new PaletteSettings(PaletteSettings.schema.deserialize(data));
   }
 
   static serialize(data: PaletteSettings) {
     return PaletteSettings.schema.serialize(data);
+  }
+
+  equals(other: PaletteSettings) {
+    return (
+      this.columnsNumber === other.columnsNumber &&
+      this.colorOnly === other.colorOnly &&
+      this.showStitchSymbols === other.showStitchSymbols &&
+      this.stitchSymbolsOnContrastBackground === other.stitchSymbolsOnContrastBackground &&
+      this.showColorBrands === other.showColorBrands &&
+      this.showColorNumbers === other.showColorNumbers &&
+      this.showColorNames === other.showColorNames
+    );
   }
 }
 
@@ -263,9 +273,8 @@ export class Palette {
     settings: PaletteSettings.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Palette(Palette.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new Palette(Palette.schema.deserialize(data));
   }
 
   // === Access Methods ===
@@ -302,6 +311,21 @@ export class Palette {
   /** Palette items in visual order. */
   get itemsInVisualOrder(): PaletteItem[] {
     return this.#positions.map((index) => this.#items[index]!);
+  }
+
+  /** Number of palette items which are blends. */
+  get blendsNumber(): number {
+    return this.#items.filter((item) => item.blends?.length).length;
+  }
+
+  /** Unique brand names used in the palette. */
+  get usedBrands(): string[] {
+    return [...new Set(this.#items.map((item) => item.brand).filter(Boolean))];
+  }
+
+  /** Unique symbol font names used in the palette. */
+  get usedSymbolFonts(): string[] {
+    return [...new Set(this.#items.filter((item) => item.symbol?.font).map((item) => item.symbol!.font))];
   }
 
   /** Return an item by its actual index. */
@@ -354,11 +378,10 @@ export class Palette {
   }
 }
 
-export function deserializeBrandPalette(data: Uint8Array | string) {
-  const buffer = typeof data === "string" ? toByteArray(data) : data;
+export function deserializeBrandPalette(data: Uint8Array) {
   return b
     .vec(BrandPaletteItem.schema)
-    .deserialize(buffer)
+    .deserialize(data)
     .map((palitem, index) => new BrandPaletteItem(index, palitem));
 }
 
@@ -376,9 +399,8 @@ export class AddedPaletteItemData {
     palindex: b.u32(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new AddedPaletteItemData(AddedPaletteItemData.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new AddedPaletteItemData(AddedPaletteItemData.schema.deserialize(data));
   }
 }
 
@@ -403,8 +425,7 @@ export class SetSymbolData {
     });
   }
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new SetSymbolData(SetSymbolData.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new SetSymbolData(SetSymbolData.schema.deserialize(data));
   }
 }

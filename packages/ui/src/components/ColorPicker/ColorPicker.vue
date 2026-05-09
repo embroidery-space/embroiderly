@@ -132,7 +132,7 @@ const ui = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style>
 [data-color-picker-selector] {
   background-image:
     linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 100%),
@@ -140,6 +140,6 @@ const ui = computed(() => {
 }
 
 [data-color-picker-track] {
-  background-image: linear-gradient(0deg, red 0%, #f0f 17%, #00f 33%, #0ff 50%, #0f0 67%, #ff0 83%, red 100%);
+  background-image: linear-gradient(0deg, red 0%, magenta 17%, blue 33%, cyan 50%, lime 67%, yellow 83%, red 100%);
 }
 </style>

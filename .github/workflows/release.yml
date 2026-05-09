@@ -1,9 +1,9 @@
 name: Release
 on:
-  # Push to main: builds sidecars, builds app, publishes GitHub release, uploads debug symbols to Sentry.
+  # Push to main: builds the desktop app and publishes a GitHub release.
   push:
     branches: [main]
-  # PR to main: builds sidecars and app only (validates the build works).
+  # PR to main: builds the desktop app only (validates the build works).
   pull_request:
     branches: [main]
     types: [opened, reopened, edited, synchronize]
@@ -20,8 +20,6 @@ jobs:
       matrix:
         platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
-    outputs:
-      app-version: ${{ steps.tauri.outputs.appVersion }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -32,76 +30,13 @@ jobs:
           tools: typst-cli
 
       - name: Build the application
-        id: tauri
         uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # v0.6.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-          EMBROIDERLY_POSTHOG_API_KEY: ${{ secrets.EMBROIDERLY_POSTHOG_API_KEY }}
-          EMBROIDERLY_SENTRY_DSN: ${{ secrets.EMBROIDERLY_SENTRY_DSN }}
         with:
           # Empty tagName/releaseName skips release creation (PR builds).
           tagName: ${{ github.event_name == 'push' && 'v__VERSION__' || '' }}
           releaseName: ${{ github.event_name == 'push' && 'Embroiderly v__VERSION__' || '' }}
           updaterJsonPreferNsis: true
-
-      # Debug symbols are only needed for release builds.
-      - name: Upload debug symbols
-        if: github.event_name == 'push'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: debug-symbols-${{ matrix.platform }}
-          path: |
-            target/release/embroiderly.pdb
-            target/release/embroiderly.dwp
-          retention-days: 1
-
-  sentry:
-    if: github.event_name == 'push'
-    needs: release
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    permissions:
-      contents: read
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: embroidery-space
-      SENTRY_PROJECT: embroiderly
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: ./.github/actions/setup-node
-
-      - name: Install Sentry CLI
-        run: pnpm install -g @sentry/cli
-
-      - name: Create Sentry release
-        run: |
-          sentry-cli releases new "${{ needs.release.outputs.app-version }}"
-          sentry-cli releases set-commits "${{ needs.release.outputs.app-version }}" --auto || true
-
-      - name: Build frontend with source maps
-        env:
-          TAURI_ENV_DEBUG: "true"
-        run: pnpm app:build-only
-
-      - name: Upload source maps to Sentry
-        run: |
-          sentry-cli sourcemaps inject ./app/dist
-          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" ./app/dist
-
-      - name: Download debug symbols
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          pattern: debug-symbols-*
-          merge-multiple: true
-
-      - name: Upload debug symbols to Sentry
-        run: |
-          find . -name "embroiderly.pdb" -exec sentry-cli debug-files upload {} + || true
-          find . -name "embroiderly.dwp" -exec sentry-cli debug-files upload {} + || true
-
-      - name: Finalize Sentry release
-        run: sentry-cli releases finalize "${{ needs.release.outputs.app-version }}"

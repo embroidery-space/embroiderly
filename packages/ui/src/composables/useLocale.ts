@@ -8,7 +8,7 @@ import type { Locale } from "../types/locale.ts";
 export const localeInjectionKey: InjectionKey<Ref<Locale>> = Symbol.for("embroiderly-ui.locale");
 
 export const useLocale = createSharedComposable(() => {
-  const locale = toRef(() => inject(localeInjectionKey)?.value ?? locales["en"]!);
+  const locale = toRef(() => inject(localeInjectionKey, undefined)?.value ?? locales["en"]!);
   return {
     locale,
     messages: computed(() => locale.value.messages),

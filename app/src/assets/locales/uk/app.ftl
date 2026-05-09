@@ -26,14 +26,13 @@ app-menu-help = Допомога
 app-menu-help-about = Про застосунок
 app-menu-help-guide = Посібник
 app-menu-help-license = Ліцензія
-app-menu-help-website = Вебсайт
 
 ## System info.
 
 system-info =
   .title = Інформація про систему
   .description =
-    Версія { -app-name }: { $appVersion }
+    Версія { -app-name }: { $appVersion } ({ $gitBranch }@{ $gitCommit }, { DATETIME($gitDate, dateStyle: "long") })
     Операційна система: { $os } { $osVersion }
     Бравзер: { $browser } { $browserVersion }
 

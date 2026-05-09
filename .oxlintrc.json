@@ -19,7 +19,10 @@
     "max-classes-per-file": "off",
     "max-lines": "off",
 
-    "eslint/no-underscore-dangle": ["error", { "allow": ["__APP_VERSION__"] }],
+    "eslint/no-underscore-dangle": [
+      "error",
+      { "allow": ["__APP_VERSION__", "__GIT_BRANCH__", "__GIT_COMMIT__", "__GIT_DATE__", "__TAURI__"] }
+    ],
 
     "typescript/ban-types": "off",
 

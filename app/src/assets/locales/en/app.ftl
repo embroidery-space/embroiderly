@@ -26,14 +26,13 @@ app-menu-help = Help
 app-menu-help-about = About
 app-menu-help-guide = Guide
 app-menu-help-license = License
-app-menu-help-website = Website
 
 ## System info.
 
 system-info =
   .title = System Information
   .description =
-    { -app-name } version: { $appVersion }
+    { -app-name } version: { $appVersion } ({ $gitBranch }@{ $gitCommit }, { DATETIME($gitDate, dateStyle: "long") })
     Operating System: { $os } { $osVersion }
     Browser: { $browser } { $browserVersion }
 

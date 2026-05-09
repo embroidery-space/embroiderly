@@ -80,6 +80,10 @@ const menus = computed<MenubarMenu[]>(() => [
       },
       { type: "separator" },
       { label: "About" },
+      { type: "separator" },
+      { type: "link", label: "Internal Page", href: "/about" },
+      { type: "link", label: "External Site", href: "https://example.com", target: "_blank" },
+      { type: "link", label: "Disabled Link", href: "https://example.com", disabled: true },
     ],
   },
 ]);

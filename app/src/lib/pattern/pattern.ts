@@ -1,13 +1,10 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 import { NIL as NIL_UUID, stringify as stringifyUuid } from "uuid";
-
-import type { LayerVisibility } from "~/api/endpoints/pattern.ts";
 
 import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
 import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
-import { Layer, Layers } from "./layers.ts";
+import { Layer, LayerVisibility, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
 import { FullStitch, PartStitch, LineStitch, SpecialStitchModel } from "./stitches.ts";
@@ -33,9 +30,8 @@ export class PatternInfo {
     description: b.string(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new PatternInfo(PatternInfo.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new PatternInfo(PatternInfo.schema.deserialize(data));
   }
 
   static serialize(data: PatternInfo) {
@@ -118,9 +114,8 @@ export class Pattern extends EventTarget {
     publishSettings: PublishSettings.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Pattern(Pattern.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new Pattern(Pattern.schema.deserialize(data));
   }
 
   get referenceImage() {
@@ -277,14 +272,6 @@ export class Pattern extends EventTarget {
   set pdfExportOptions(options: PdfExportOptions) {
     this.#publishSettings.pdf = options;
     this.dispatchEvent(new CustomEvent(PatternEvent.UpdatePdfExportOptions, { detail: options }));
-  }
-
-  get allSymbolFonts() {
-    const fonts = new Set<string>();
-    for (const palitem of this.palette.items) {
-      if (palitem.symbol?.font) fonts.add(palitem.symbol.font);
-    }
-    return Array.from(fonts);
   }
 }
 

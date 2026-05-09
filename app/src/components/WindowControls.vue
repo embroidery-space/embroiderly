@@ -4,7 +4,7 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { ref } from "vue";
 
 import { IconWindowClose, IconWindowMaximize, IconWindowMinimize, IconWindowRestore } from "~/assets/icons/";
-import { useTauriListener } from "~/composables/";
+import { useTauriListener } from "~/composables/tauri/";
 
 const appWindow = getCurrentWebviewWindow();
 
@@ -24,7 +24,7 @@ useTauriListener(async () => {
   <div class="flex items-center justify-center">
     <button
       :title="$t('window-minimize')"
-      class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-black/6 focus-visible:bg-black/6 active:bg-black/12 dark:text-white dark:hover:bg-white/6 dark:active:bg-white/12"
+      class="inline-flex size-10 items-center justify-center text-default hover:cursor-pointer hover:bg-current/6 focus-visible:bg-current/6 active:bg-current/12"
       @click="appWindow.minimize()"
     >
       <IconWindowMinimize class="size-3" />
@@ -32,7 +32,7 @@ useTauriListener(async () => {
 
     <button
       :title="isMaximized ? $t('window-restore') : $t('window-maximize')"
-      class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-black/6 focus-visible:bg-black/6 active:bg-black/12 dark:text-white dark:hover:bg-white/6 dark:active:bg-white/12"
+      class="inline-flex size-10 items-center justify-center text-default hover:cursor-pointer hover:bg-current/6 focus-visible:bg-current/6 active:bg-current/12"
       @click="appWindow.toggleMaximize()"
     >
       <IconWindowRestore v-if="isMaximized" class="size-3" />
@@ -41,7 +41,7 @@ useTauriListener(async () => {
 
     <button
       :title="$t('window-close')"
-      class="inline-flex size-10 items-center justify-center text-black hover:cursor-pointer hover:bg-red-600 hover:text-white focus-visible:bg-red-600 focus-visible:text-white active:bg-red-700 dark:text-white"
+      class="inline-flex size-10 items-center justify-center text-default hover:cursor-pointer hover:bg-red-600 hover:text-white focus-visible:bg-red-600 focus-visible:text-white active:bg-red-700"
       @click="appWindow.close()"
     >
       <IconWindowClose class="size-3" />

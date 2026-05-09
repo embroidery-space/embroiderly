@@ -1,42 +1,39 @@
 <script setup lang="ts">
-import { Button, Checkbox, Dialog, FilePicker, FormFieldSet } from "@embroiderly/ui";
-import { basename } from "@tauri-apps/api/path";
+import type { PdfVariant } from "@embroiderly/pdf-export";
+import { Button, Dialog, DropdownMenu, FormFieldGroup, RadioGroup } from "@embroiderly/ui";
+import type { DropdownMenuItem, RadioGroupItem } from "@embroiderly/ui";
 
-import { computedAsync, refAutoReset } from "@vueuse/core";
-import { ref } from "vue";
+import { refAutoReset } from "@vueuse/core";
+import { computed, ref, toRaw } from "vue";
 
 import { IconCheck } from "~/assets/icons/";
-import { useFilePicker } from "~/composables/";
-import { PDF_FILTER } from "~/constants/";
+import { useI18n } from "~/composables/";
 import { PdfExportOptions } from "~/lib/pattern/";
 
 import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 
 const props = defineProps<{
-  filePath: string;
   options: PdfExportOptions;
   onOptionsUpdate?: (options: PdfExportOptions) => void | Promise<void>;
-  onDocumentExport?: (filePath: string, options: PdfExportOptions) => void | Promise<void>;
+  onDocumentExport?: (variant: PdfVariant) => void | Promise<void>;
 }>();
 const emit = defineEmits<{ close: [] }>();
 
-const filePicker = useFilePicker();
+const { fluent } = useI18n();
 
-// Copy the data from the props to a reactive object.
-const options = ref<PdfExportOptions>(new PdfExportOptions(props.options));
+const options = ref<PdfExportOptions>(new PdfExportOptions(toRaw(props.options)));
+const variant = ref<PdfVariant>("monochrome");
 
-const filePath = ref(props.filePath);
-const pdfFile = computedAsync(
-  async () => {
-    const fileName = filePath.value ? await basename(filePath.value, ".pdf") : "";
-    return {
-      base: `${fileName}.pdf`,
-      monochrome: `${fileName}.monochrome.pdf`,
-      color: `${fileName}.color.pdf`,
-    };
-  },
-  { base: "", monochrome: "", color: "" },
-);
+const variantItems = computed<RadioGroupItem[]>(() => [
+  { value: "monochrome", label: fluent.$t("pdf-export-variant-monochrome") },
+  { value: "color", label: fluent.$t("pdf-export-variant-color") },
+]);
+const exportItems = computed<DropdownMenuItem[][]>(() => [
+  [
+    { label: fluent.$t("pdf-export-variant-monochrome"), onSelect: () => exportPattern("monochrome") },
+    { label: fluent.$t("pdf-export-variant-color"), onSelect: () => exportPattern("color") },
+  ],
+]);
 
 const optionsUpdated = refAutoReset(false, 1000);
 async function updateOptions() {
@@ -44,8 +41,8 @@ async function updateOptions() {
   optionsUpdated.value = true;
 }
 
-async function exportPattern() {
-  await props.onDocumentExport?.(filePath.value, options.value);
+async function exportPattern(variant: PdfVariant) {
+  await props.onDocumentExport?.(variant);
 }
 </script>
 
@@ -53,29 +50,8 @@ async function exportPattern() {
   <Dialog :title="$t('pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
       <div class="flex flex-col gap-y-4">
-        <FilePicker
-          v-model="filePath"
-          class="w-full"
-          @pick="
-            async () => {
-              const path = await filePicker.save(filePath, { filters: PDF_FILTER });
-              if (path) filePath = path;
-            }
-          "
-        />
-
-        <div class="flex flex-col gap-y-1">
-          <Checkbox
-            v-model="options.monochrome"
-            :label="$t('pdf-export-monochrome')"
-            :description="pdfFile.monochrome"
-          />
-          <Checkbox v-model="options.color" :label="$t('pdf-export-color')" :description="pdfFile.color" />
-        </div>
-
-        <FormFieldSet collapsible :legend="$t('publish-settings')">
-          <PdfExportOptionsForm v-model="options" />
-        </FormFieldSet>
+        <RadioGroup v-model="variant" :items="variantItems" orientation="horizontal" />
+        <PdfExportOptionsForm v-model="options" />
       </div>
     </template>
     <template #footer>
@@ -87,7 +63,12 @@ async function exportPattern() {
         :icon="optionsUpdated ? IconCheck : undefined"
         @click="updateOptions"
       />
-      <Button v-if="filePath" loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern" />
+      <FormFieldGroup>
+        <Button loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern(variant)" />
+        <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
+          <Button color="primary" variant="solid" icon="lucide:chevron-down" />
+        </DropdownMenu>
+      </FormFieldGroup>
     </template>
   </Dialog>
 </template>

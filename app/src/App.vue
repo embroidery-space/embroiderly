@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { App, useToast } from "@embroiderly/ui";
 
-import { UseDark } from "@vueuse/components";
-import { onMounted, onErrorCaptured, markRaw } from "vue";
+import { useEventListener } from "@vueuse/core";
+import { onMounted, onErrorCaptured, markRaw, watch } from "vue";
 
 import {
   IconCheck,
@@ -15,11 +15,12 @@ import {
   IconUnlink,
   IconMinus,
   IconPlus,
+  IconExternalLink,
 } from "~/assets/icons/";
 
 import { AppHeader, AppMain } from "./components/";
 import { useI18n } from "./composables/";
-import { LoggerService } from "./services";
+import { DiagnosticsService, LoggerService, MetricsService } from "./services";
 import { useSettingsStore } from "./stores/";
 
 const toast = useToast();
@@ -27,15 +28,34 @@ const { fluent, currentLocale } = useI18n();
 
 const settingsStore = useSettingsStore();
 
-async function checkForUpdates() {
-  await settingsStore.$tauri.start();
+watch(
+  () => settingsStore.telemetry,
+  (telemetry) => {
+    DiagnosticsService.enabled = telemetry.diagnostics;
+    MetricsService.enabled = telemetry.metrics;
+  },
+  { immediate: true },
+);
+
+watch(
+  () => settingsStore.ui,
+  (ui) => MetricsService.captureUiChanged(ui.theme, ui.scale, ui.language),
+  { immediate: true },
+);
+
+useEventListener("beforeunload", () => MetricsService.captureAppExited());
+
+onMounted(async () => {
+  MetricsService.captureAppStarted();
+
+  if (!__TAURI__) {
+    const { useServiceWorker } = await import("~/composables/pwa/");
+    useServiceWorker();
+  }
+
   if (settingsStore.updater.autoCheck) {
     await settingsStore.checkForUpdates({ auto: true });
   }
-}
-
-onMounted(async () => {
-  await checkForUpdates();
 });
 
 onErrorCaptured((err, _component, info) => {
@@ -54,6 +74,7 @@ onErrorCaptured((err, _component, info) => {
       chevronDown: markRaw(IconChevronDown),
       chevronRight: markRaw(IconChevronRight),
       close: markRaw(IconClose),
+      external: markRaw(IconExternalLink),
       loading: markRaw(IconLoaderCircle),
       link: markRaw(IconLink),
       unlink: markRaw(IconUnlink),
@@ -61,9 +82,7 @@ onErrorCaptured((err, _component, info) => {
       plus: markRaw(IconPlus),
     }"
   >
-    <UseDark>
-      <AppHeader class="h-10" />
-      <AppMain class="h-[calc(100vh-(--spacing(10)))]" />
-    </UseDark>
+    <AppHeader class="h-10" />
+    <AppMain class="h-[calc(100vh-(--spacing(10)))]" />
   </App>
 </template>

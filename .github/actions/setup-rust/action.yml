@@ -9,6 +9,10 @@ inputs:
     description: Nightly Rust components to install (comma-separated list)
     required: false
     default: ""
+  targets:
+    description: Targets to install (comma-separated list)
+    required: false
+    default: ""
   tools:
     description: Tools to install (comma-separated list)
     required: false
@@ -32,6 +36,7 @@ runs:
       with:
         toolchain: 1.95.0 # stable
         components: ${{ inputs.stable-components }}
+        targets: ${{ inputs.targets }}
     - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
     - uses: taiki-e/install-action@4575ae687efd0e2c78240087f26013fb2484987f # v2.62.6
       if: inputs.tools != ''

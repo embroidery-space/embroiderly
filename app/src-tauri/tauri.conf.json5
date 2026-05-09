@@ -5,8 +5,8 @@
   version: "0.7.1",
   build: {
     beforeDevCommand: "pnpm app:dev",
-    beforeBuildCommand: "pnpm app:build-only",
-    beforeBundleCommand: "pnpm embroiderly:all",
+    beforeBuildCommand: "pnpm app:build",
+    beforeBundleCommand: "pnpm embroiderly:help",
     frontendDist: "../dist",
     devUrl: "http://localhost:1420",
     removeUnusedCommands: true,
@@ -15,8 +15,7 @@
     active: true,
     createUpdaterArtifacts: true,
     targets: ["nsis", "rpm", "deb"],
-    resources: ["./resources/**/*", "./help/*.pdf"],
-    externalBin: ["./binaries/embroiderly_image", "./binaries/embroiderly_publish"],
+    resources: ["./help/*.pdf"],
     icon: [
       "./icons/32x32.png",
       "./icons/128x128.png",
@@ -56,12 +55,13 @@
   },
   app: {
     security: {
+      // CSPs must be synched with ones declared in `app/public/_headers` for the web build.
       csp: {
         "default-src": "'self' customprotocol: asset:",
-        "connect-src": "ipc: http://ipc.localhost",
-        "style-src": "'unsafe-inline' 'self'",
+        "connect-src": "'self' ipc: http://ipc.localhost http://tauri.localhost https://embroiderly.niusia.me",
+        "style-src": "'self' 'unsafe-inline'",
         "img-src": "'self' data:",
-        "script-src": "'unsafe-eval' 'self'",
+        "script-src": "'self' 'unsafe-eval'",
       },
     },
   },

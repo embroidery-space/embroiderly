@@ -1,27 +1,41 @@
 <script lang="ts" setup>
-import { BlockUI, Splitter, SplitterPanel, useConfirm, useToast } from "@embroiderly/ui";
+import { BlockUI, Splitter, SplitterPanel, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
-import { onMounted, toRaw, useTemplateRef, watch } from "vue";
+import { useDropZone } from "@vueuse/core";
+import { onMounted, useTemplateRef, watch } from "vue";
 
-import { StartupApi } from "~/api/";
-import { useDragDrop, useI18n, useTauriListener, useShortcuts } from "~/composables/";
+import { useI18n, useShortcuts, useEditor } from "~/composables/";
+import { useAppStartup, useCloseGuard } from "~/composables/core/";
 import { usePercentOfContainer } from "~/composables/utils/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
 import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
 import { EditorWorkspaceTabs, EditorWorkspaceToolbar, EditorWorkspaceFooter } from "./workspace/layout/";
 
-const appWindow = getCurrentWebviewWindow();
-
-const confirm = useConfirm();
 const toast = useToast();
 const { fluent } = useI18n();
+const { editor, events } = useEditor();
 
 const editorStateStore = useEditorStateStore();
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
+
+const { isOverDropZone } = useDropZone(useTemplateRef("drop-zone"), {
+  multiple: true,
+  async onDrop(files) {
+    if (!files) return;
+
+    let lastPatternId: string | undefined;
+    for (const file of files) {
+      const patternId = await patternFileStore.openPattern({ file });
+      if (patternId) lastPatternId = patternId;
+    }
+
+    if (lastPatternId) patternFileStore.switchPattern(lastPatternId);
+  },
+});
 
 const { toPercent } = usePercentOfContainer(useTemplateRef("splitter"));
 
@@ -31,15 +45,8 @@ const palettePanelCollapsedSize = toPercent(2.75, "rem");
 const canvasToolbarDefaultSize = toPercent(12, "rem");
 const canvasToolbarCollapsedSize = toPercent(2.25, "rem");
 
-const dropZoneContainer = useTemplateRef("drop-zone");
-const { isOverDropZone } = useDragDrop(dropZoneContainer, async (paths) => {
-  for (const [index, path] of paths.entries()) {
-    const patternId = await patternFileStore.openPattern(path);
-    if (index === paths.length - 1 && patternId) {
-      patternFileStore.switchPattern(patternId);
-    }
-  }
-});
+useAppStartup();
+useCloseGuard();
 
 watch(
   () => patternFileStore.currentPatternId,
@@ -50,37 +57,10 @@ watch(
   { immediate: true },
 );
 
-useTauriListener(
-  appWindow.onCloseRequested(async (event) => {
-    const unsavedPatterns = await patternFileStore.getUnsavedPatterns();
-    for (const pattern of structuredClone(toRaw(patternFileStore.openedPatterns.map((op) => toRaw(op))))) {
-      const hasUnsavedChanges = unsavedPatterns.some((p) => p.id === pattern.id);
-      if (hasUnsavedChanges) {
-        const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
-        if (accepted === undefined) {
-          event.preventDefault();
-          return;
-        } else if (accepted) {
-          const saved = await patternFileStore.savePattern(pattern.id);
-          if (!saved) {
-            event.preventDefault();
-            return;
-          }
-        } else {
-          // The user doesn't want to save the pattern. Continue.
-        }
-      }
-      await patternFileStore.closePattern(pattern.id, { force: true });
-    }
-  }),
-);
-
-useTauriListener(
-  appWindow.listen<string>("app:pattern-saved", ({ payload: patternId }) => {
-    if (patternId === patternStore.pattern.id) {
-      toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
-    }
-  }),
+watch(
+  () => settingsStore.autoSaveIntervalInMillis,
+  (ms) => editor.setAutoSaveInterval(ms),
+  { immediate: true },
 );
 
 useShortcuts({
@@ -90,32 +70,15 @@ useShortcuts({
   "Control+Shift+Y": () => patternStore.redo({ single: true }),
 });
 
+events.on("app:pattern-saved", (patternId) => {
+  if (patternId === patternStore.pattern.id) {
+    toast.add({ type: "background", color: "success", title: fluent.$t("pattern-save-success"), duration: 3000 });
+  }
+});
+
 onMounted(async () => {
-  await patternFileStore.fetchOpenedPatterns();
-  if (!patternFileStore.currentPatternId && patternFileStore.openedPatterns.length) {
-    patternFileStore.switchPattern(patternFileStore.openedPatterns[0]!.id);
-  }
-
-  const notifications = await StartupApi.getStartupNotifications();
-  for (const notification of notifications) {
-    let message: string;
-    if ("fileAssociationFailed" in notification) {
-      message = fluent.$t("startup-file-association-failure", { filePath: notification.fileAssociationFailed });
-    } else if ("templateFailed" in notification) {
-      message = fluent.$t("startup-template-failure", { filePath: notification.templateFailed });
-    } else {
-      throw new Error(`Unknown notification: ${JSON.stringify(notification)}`);
-    }
-
-    toast.add({
-      type: "foreground",
-      color: "error",
-      title: fluent.$t("error"),
-      description: message,
-    });
-  }
-
-  await appWindow.show();
+  // In production, the app window is hidden by default to prevent the blank screen appearance.
+  if (__TAURI__) await getCurrentWebviewWindow().show();
 });
 </script>
 

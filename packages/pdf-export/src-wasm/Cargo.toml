@@ -1,0 +1,38 @@
+[package]
+name = "embroiderly_pdf_export"
+edition = { workspace = true }
+
+[lints]
+workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Embroiderly Core
+embroiderly_image = { workspace = true }
+embroiderly_pattern = { workspace = true, features = ["borsh"] }
+embroiderly_web = { workspace = true, features = ["opfs"] }
+
+# De/serialization
+borsh = { workspace = true }
+
+# Exporting patterns to PDF
+typst = { workspace = true }
+typst-pdf = { workspace = true }
+typst-as-lib = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+
+# Wasm
+wasm-bindgen = { workspace = true }
+wasm-bindgen-futures = { workspace = true }
+js-sys = { workspace = true }
+web-sys = { workspace = true, features = ["FileSystemFileHandle"] }
+
+[package.metadata.wasm-pack.profile.dev]
+wasm-opt = false
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-Os"]

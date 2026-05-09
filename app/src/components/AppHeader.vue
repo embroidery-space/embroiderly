@@ -3,14 +3,12 @@ import { ButtonIcon, DropdownMenu, Menubar, Separator, useConfirm } from "@embro
 import type { DropdownMenuItem, MenubarItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { openPath, openUrl } from "@tauri-apps/plugin-opener";
+import { openPath } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
-import { FilesApi } from "~/api/";
 import { IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
 import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
-import { ANY_IMAGE_FILTER } from "~/constants/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
@@ -19,19 +17,21 @@ import { getSystemInfo } from "~/utils/system.ts";
 import WindowControls from "./WindowControls.vue";
 
 const confirm = useConfirm();
-const filePicker = useFilePicker();
 const { fluent } = useI18n();
 
 const modals = useEditorModals();
+const filePicker = useFilePicker();
 
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
 
-const appWindow = getCurrentWebviewWindow();
+// This variable is needed for the conditional component rendering.
+// We must declare it in the setup function, since template doesn't have access to global variables.
+const isTauri = __TAURI__;
 
-const menus = computed<MenubarMenu[]>(() => [
-  {
+const menus = computed<MenubarMenu[]>(() => {
+  const fileMenu: MenubarMenu = {
     label: fluent.$t("app-menu-file"),
     items: [
       [
@@ -78,14 +78,14 @@ const menus = computed<MenubarMenu[]>(() => [
               {
                 label: fluent.$t("app-menu-file-import-image"),
                 async onSelect() {
-                  const imagePath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
-                  if (imagePath === null) return;
+                  const handle = await filePicker.open({ types: filePicker.filters.image });
+                  if (!handle) return;
 
-                  const patternId = await modals.imageImportModal.open({
-                    imagePath,
-                    imageDimensions: await FilesApi.getImageDimensions(imagePath),
-                  }).result;
-                  if (patternId) patternFileStore.switchPattern(patternId);
+                  const patternBytes = await modals.imageImportModal.open({ imageFile: await handle.getFile() }).result;
+                  if (patternBytes) {
+                    const patternId = await patternFileStore.addPattern(patternBytes);
+                    patternFileStore.switchPattern(patternId);
+                  }
                 },
               },
             ],
@@ -99,24 +99,17 @@ const menus = computed<MenubarMenu[]>(() => [
               {
                 label: "OXS",
                 async onSelect() {
-                  const patternId = patternStore.pattern.id;
-                  const filePath =
-                    (await FilesApi.getPatternFilePath(patternId)) ??
-                    (await FilesApi.getPatternDefaultFilePath(patternId));
-                  await patternFileStore.exportPatternAsOxs(patternId, filePath.replace(/\.[^.]+$/, ".oxs"));
+                  await patternFileStore.exportPatternAsOxs(patternStore.pattern.id);
                 },
               },
               {
                 label: "PDF",
-                async onSelect() {
-                  const { id, pdfExportOptions } = patternStore.pattern;
-                  const filePath =
-                    (await FilesApi.getPatternFilePath(id)) ?? (await FilesApi.getPatternDefaultFilePath(id));
+                onSelect() {
                   modals.pdfExportModal.open({
-                    filePath: filePath.replace(/\.[^.]+$/, ".pdf"),
-                    options: pdfExportOptions,
+                    options: patternStore.pattern.pdfExportOptions,
                     onOptionsUpdate: patternStore.updatePdfExportOptions,
-                    onDocumentExport: (filePath, options) => patternFileStore.exportPatternAsPdf(id, filePath, options),
+                    onDocumentExport: (variant) =>
+                      patternFileStore.exportPatternAsPdf(patternStore.pattern.id, variant),
                   });
                 },
               },
@@ -132,16 +125,19 @@ const menus = computed<MenubarMenu[]>(() => [
           onSelect: () => patternFileStore.closePattern(patternStore.pattern.id),
         },
       ],
-      [
-        {
-          label: fluent.$t("app-menu-file-quit"),
-          shortcut: "Control+Q",
-          onSelect: () => appWindow.close(),
-        },
-      ],
     ],
-  },
-  {
+  };
+  if (__TAURI__) {
+    fileMenu.items.push([
+      {
+        label: fluent.$t("app-menu-file-quit"),
+        shortcut: "Control+Q",
+        onSelect: () => getCurrentWebviewWindow().close(),
+      },
+    ]);
+  }
+
+  const patternMenu: MenubarMenu = {
     label: fluent.$t("app-menu-pattern"),
     hidden: patternStore.pattern.isNil,
     items: [
@@ -186,8 +182,9 @@ const menus = computed<MenubarMenu[]>(() => [
         },
       ],
     ],
-  },
-  {
+  };
+
+  const toolsMenu: MenubarMenu = {
     label: fluent.$t("app-menu-tools"),
     items: [
       [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
@@ -198,35 +195,39 @@ const menus = computed<MenubarMenu[]>(() => [
         },
       ],
     ],
-  },
-  {
+  };
+
+  const helpMenu: MenubarMenu = {
     label: fluent.$t("app-menu-help"),
     items: [
       [{ label: fluent.$t("app-menu-help-about"), onSelect: showSystemInfo }],
       [
+        __TAURI__
+          ? {
+              label: fluent.$t("app-menu-help-guide"),
+              async onSelect() {
+                const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
+                await openPath(documentPath);
+              },
+            }
+          : {
+              type: "link",
+              label: fluent.$t("app-menu-help-guide"),
+              href: "https://docs.embroiderly.niusia.me",
+              target: "_blank",
+            },
         {
-          label: fluent.$t("app-menu-help-guide"),
-          async onSelect() {
-            const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
-            await openPath(documentPath);
-          },
-        },
-        {
+          type: "link",
           label: fluent.$t("app-menu-help-license"),
-          async onSelect() {
-            await openUrl("https://github.com/embroidery-space/embroiderly/blob/main/LICENSE");
-          },
-        },
-        {
-          label: fluent.$t("app-menu-help-website"),
-          async onSelect() {
-            await openUrl(`https://embroiderly.niusia.me`);
-          },
+          href: "https://github.com/embroidery-space/embroiderly/blob/main/LICENSE",
+          target: "_blank",
         },
       ],
     ],
-  },
-]);
+  };
+
+  return [fileMenu, patternMenu, toolsMenu, helpMenu];
+});
 useShortcuts(extractShortcuts(() => menus.value.flatMap((menu) => menu.items as MenubarItem[][])));
 
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
@@ -294,6 +295,6 @@ async function showSystemInfo() {
       </div>
     </div>
 
-    <WindowControls />
+    <WindowControls v-if="isTauri" />
   </header>
 </template>

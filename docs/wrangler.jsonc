@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
 
-  "name": "embroiderly",
-  "compatibility_date": "2025-04-01",
+  "name": "embroiderly-docs",
+  "compatibility_date": "2026-05-06",
 
   "preview_urls": true,
   "assets": {
-    "directory": "./dist/",
+    "directory": "./.vitepress/dist/",
     "not_found_handling": "single-page-application",
   },
 }

@@ -1,22 +1,5 @@
-set dotenv-load := true
-set dotenv-path := "app/src-tauri/.env"
-
 default:
     just --list
-
-[group("development")]
-dev:
-    pnpm tauri dev
-
-[group("development")]
-build:
-    pnpm tauri build
-    git restore app/src-tauri/binaries/ app/src-tauri/help/
-
-[group("development")]
-dbuild:
-    pnpm tauri build --debug
-    git restore app/src-tauri/binaries/ app/src-tauri/help/
 
 [group("cleaning")]
 clean: clean-fe clean-be
@@ -105,7 +88,7 @@ test-fe:
 
 [group("testing")]
 test-be:
-    cargo nextest run --locked --no-fail-fast -F embroiderly/test
+    cargo nextest run --locked --no-fail-fast
 
 [group("testing")]
 test-e2e:

@@ -4,11 +4,9 @@ import type { ContextMenuItem, DropdownMenuItem, SelectItem } from "@embroiderly
 
 import { computed, onMounted, ref, shallowRef } from "vue";
 
-import { FilesApi } from "~/api/";
 import { IconMenu } from "~/assets/icons/";
-import { useFilePicker, useI18n } from "~/composables/";
-import { FONT_FILTER } from "~/constants/";
-import { LoggerService } from "~/services/";
+import { useEditor, useFilePicker, useI18n } from "~/composables/";
+import { LoggerService, MetricsService } from "~/services/";
 import { addSymbolFonts } from "~/utils/font-face.ts";
 
 import { PaletteSection } from "../palette/";
@@ -25,6 +23,7 @@ const emit = defineEmits<{
 
 const confirm = useConfirm();
 const filePicker = useFilePicker();
+const { files } = useEditor();
 const { fluent } = useI18n();
 const toast = useToast();
 
@@ -62,7 +61,7 @@ const importingFonts = ref(false);
 const loadedFonts = new Map<string, number[]>();
 const symbolFontOptions = shallowRef<SelectItem[][]>([]);
 
-const selectedFontKey = ref("system/ursasoftware");
+const selectedFontKey = ref("system/Ursasoftware");
 const selectedCodePoints = shallowRef<number[]>([]);
 
 const symbolFontMenuOptions = computed<DropdownMenuItem[]>(() => [
@@ -74,19 +73,13 @@ const symbolFontMenuOptions = computed<DropdownMenuItem[]>(() => [
 ]);
 
 async function refreshFontsList() {
-  const { system, custom } = await FilesApi.getSymbolFontsList();
+  const { system, custom } = await files.getFontsList();
 
   const systemFonts: SelectItem[] = [{ label: fluent.$t("files-group-system"), type: "label" }];
-  for (const fontFamily of system) {
-    const fontKey = `system/${fontFamily}`;
-    systemFonts.push({ label: fontFamily, value: fontKey });
-  }
+  for (const fontFamily of system) systemFonts.push({ label: fontFamily, value: `system/${fontFamily}` });
 
   const customFonts: SelectItem[] = [{ label: fluent.$t("files-group-custom"), type: "label" }];
-  for (const fontFamily of custom) {
-    const fontKey = `custom/${fontFamily}`;
-    customFonts.push({ label: fontFamily, value: fontKey });
-  }
+  for (const fontFamily of custom) customFonts.push({ label: fontFamily, value: `custom/${fontFamily}` });
 
   symbolFontOptions.value = [systemFonts, customFonts];
 }
@@ -97,18 +90,25 @@ async function loadFont(fontGroup: string, fontFamily: string) {
     let codePoints = loadedFonts.get(fontKey);
     if (!codePoints) {
       loadingFont.value = true;
-      const [fontFace, loadedCodePoints] = await Promise.all([
-        FilesApi.loadSymbolFont(fontFamily),
-        FilesApi.loadSymbolFontCodePoints(fontFamily),
+
+      const [bytes, loadedCodePoints] = await Promise.all([
+        files.loadFontContent(fontFamily),
+        files.loadFontCodePoints(fontFamily),
       ]);
-      addSymbolFonts(fontFace);
-      codePoints = loadedCodePoints;
+
+      // @ts-expect-error The `FontFace` constructor do accept `TypedArray`s.
+      const fontFace = new FontFace(fontFamily, bytes);
+      await fontFace.load();
+
+      addSymbolFonts([fontFace]);
+
+      codePoints = Array.from(loadedCodePoints);
       loadedFonts.set(fontKey, codePoints);
     }
     selectedCodePoints.value = codePoints;
   } catch (err) {
     LoggerService.error(`Failed to load font ${fontKey}: ${err}`);
-    toast.add({ title: fluent.$t("stitch-symbol-font-load-failure", { font: fontFamily }), color: "error" });
+    toast.add({ title: fluent.$t("stitch-symbols-load-failure", { font: fontFamily }), color: "error" });
   } finally {
     loadingFont.value = false;
   }
@@ -116,13 +116,24 @@ async function loadFont(fontGroup: string, fontFamily: string) {
 
 /** Imports selected symbol fonts. */
 async function importSymbolFonts() {
-  const paths = (await filePicker.open({ multiple: true, filters: FONT_FILTER })) as string[] | null;
-  if (!paths) return;
+  const handles = await filePicker.open({ multiple: true, types: filePicker.filters.font });
+  if (!handles) return;
 
   try {
     importingFonts.value = true;
 
-    const { failedFiles } = await FilesApi.importSymbolFonts(paths);
+    const fileEntries = await Promise.all(
+      handles.map(async (handle) => {
+        const file = await handle.getFile();
+        return { name: file.name, data: new Uint8Array(await file.arrayBuffer()) };
+      }),
+    );
+    const { failedFiles } = await files.importFonts(fileEntries);
+    MetricsService.captureSymbolFontsImported(
+      fileEntries.map((file) => file.name),
+      failedFiles.length,
+    );
+
     await refreshFontsList();
 
     if (failedFiles.length) {

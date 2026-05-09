@@ -1,18 +1,14 @@
 <script lang="ts" setup>
 import { ContextMenu, useToast } from "@embroiderly/ui";
 import type { ContextMenuItem } from "@embroiderly/ui";
-import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { vElementSize } from "@vueuse/components";
 import { useDebounceFn } from "@vueuse/core";
 import { computed, useTemplateRef, watch } from "vue";
 
-import { FilesApi } from "~/api/";
 import { IconImage, IconImageOff } from "~/assets/icons/";
 import { PatternCanvas } from "~/components/canvas/";
-import { useFilePicker, useI18n } from "~/composables/";
-import { ANY_IMAGE_FILTER } from "~/constants/";
-import { PatternEvent, PatternInfo } from "~/lib/pattern/";
+import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
 import { CursorTool } from "~/lib/tools/";
 import type { PatternEditorToolContext } from "~/lib/tools/";
@@ -22,8 +18,7 @@ import { addSymbolFonts } from "~/utils/font-face.ts";
 
 const props = defineProps<{ options?: PatternApplicationOptions }>();
 
-const appWindow = getCurrentWebviewWindow();
-
+const { events, files } = useEditor();
 const filePicker = useFilePicker();
 const { fluent } = useI18n();
 const toast = useToast();
@@ -39,8 +34,8 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
       icon: IconImage,
       label: fluent.$t("canvas-ctx-menu-set-image"),
       async onSelect() {
-        const selectedPath = await filePicker.open({ filters: ANY_IMAGE_FILTER });
-        if (selectedPath) patternStore.setReferenceImage(selectedPath);
+        const handle = await filePicker.open({ types: filePicker.filters.image });
+        if (handle) await patternStore.setReferenceImage(await handle.getFile());
       },
     },
     {
@@ -53,8 +48,7 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
   ],
 ]);
 
-appWindow.listen<string>(PatternEvent.UpdatePatternInfo, ({ payload }) => {
-  const patternInfo = PatternInfo.deserialize(payload);
+events.on("pattern-info:update", (patternInfo) => {
   patternFileStore.updateOpenedPattern(patternStore.pattern.id, patternInfo.title);
 });
 
@@ -62,8 +56,9 @@ watch(
   () => patternStore.pattern,
   async (pattern, oldPattern) => {
     if (pattern.isNil || pattern.id === oldPattern?.id) return;
-    await loadSymbolFonts(pattern.allSymbolFonts);
+    await loadSymbolFonts(pattern.palette.usedSymbolFonts);
   },
+  { immediate: true },
 );
 
 watch(
@@ -93,29 +88,17 @@ watch(
 );
 
 async function handleToolMainAction(detail: ToolEventDetail) {
-  const pattern = patternStore.pattern;
-  if (pattern.isNil) return;
-
-  if (editorStateStore.paletteMode === PaletteMode.Editing) return;
-
+  if (patternStore.pattern.isNil || editorStateStore.paletteMode === PaletteMode.Editing) return;
   await editorStateStore.selectedTool.main(createPatternEditorToolContext(detail));
 }
 
 async function handleToolAntiAction(detail: ToolEventDetail) {
-  const pattern = patternStore.pattern;
-  if (pattern.isNil) return;
-
-  if (editorStateStore.paletteMode === PaletteMode.Editing) return;
-
+  if (patternStore.pattern.isNil || editorStateStore.paletteMode === PaletteMode.Editing) return;
   await editorStateStore.selectedTool.anti?.(createPatternEditorToolContext(detail));
 }
 
 async function handleToolRelease(detail: ToolEventDetail) {
-  const pattern = patternStore.pattern;
-  if (pattern.isNil) return;
-
-  if (editorStateStore.paletteMode === PaletteMode.Editing) return;
-
+  if (patternStore.pattern.isNil || editorStateStore.paletteMode === PaletteMode.Editing) return;
   if (detail.event.type !== "pointerupoutside") {
     // Call the `release` method only if the pointer is not released outside.
     await editorStateStore.selectedTool.release?.(createPatternEditorToolContext(detail));
@@ -185,7 +168,13 @@ function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorT
 }
 
 async function loadSymbolFonts(fonts: string[]) {
-  const results = await Promise.allSettled(fonts.map((font) => FilesApi.loadSymbolFont(font)));
+  const results = await Promise.allSettled(
+    fonts.map(async (font) => {
+      // @ts-expect-error The `FontFace` constructor do accept `TypedArray`s.
+      const fontFace = new FontFace(font, await files.loadFontContent(font));
+      return fontFace.load();
+    }),
+  );
   const failedFonts: string[] = [];
   const fontFaces = results
     .map((result, index) => {

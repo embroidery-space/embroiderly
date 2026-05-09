@@ -318,6 +318,7 @@ watch(
 );
 
 async function updatePaletteDisplaySettings() {
+  if (paletteDisplaySettings.value.equals(patternStore.pattern.paletteDisplaySettings)) return;
   await patternStore.updatePaletteDisplaySettings(paletteDisplaySettings.value);
 }
 </script>

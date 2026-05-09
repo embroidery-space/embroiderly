@@ -9,20 +9,20 @@ mod format;
 use embroiderly_pattern::PatternProject;
 pub use format::PatternFormat;
 
-pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
-  match PatternFormat::try_from(file_path.extension())? {
-    PatternFormat::Xsd => xsd::parse_pattern(file_path),
-    PatternFormat::Oxs => oxs::parse_pattern(file_path),
-    PatternFormat::EmbProj => embproj::parse_pattern(file_path),
+pub fn parse_pattern(data: &[u8], file_name: &str) -> Result<PatternProject> {
+  match PatternFormat::try_from(file_name)? {
+    PatternFormat::Xsd => xsd::parse_pattern(data),
+    PatternFormat::Oxs => oxs::parse_pattern(data),
+    PatternFormat::EmbProj => embproj::parse_pattern(data),
   }
   .map_err(Error::FailedToParse)
 }
 
-pub fn save_pattern(patproj: &PatternProject, file_path: &std::path::Path, package_info: &PackageInfo) -> Result<()> {
-  match PatternFormat::try_from(file_path.extension())? {
+pub fn save_pattern(patproj: &PatternProject, format: PatternFormat, package_info: &PackageInfo) -> Result<Vec<u8>> {
+  match format {
     PatternFormat::Xsd => Err(Error::UnsupportedPatternType(PatternFormat::Xsd.to_string()).into()),
-    PatternFormat::Oxs => oxs::save_pattern(patproj, file_path, package_info),
-    PatternFormat::EmbProj => embproj::save_pattern(patproj, file_path),
+    PatternFormat::Oxs => oxs::save_pattern(patproj, package_info),
+    PatternFormat::EmbProj => embproj::save_pattern(patproj),
   }
   .map_err(Error::FailedToParse)
 }

@@ -56,7 +56,14 @@ export default defineConfig({
       enabled: true,
       headless: isCI,
       provider: webdriverio(),
-      instances: [{ browser: "edge" }],
+      instances: [
+        (() => {
+          if (process.platform === "win32") return { browser: "edge" };
+          if (process.platform === "linux") return { browser: "firefox" };
+          if (process.platform === "darwin") return { browser: "safari" };
+          throw new Error("Unsupported platform for browser testing");
+        })(),
+      ],
     },
   },
 });

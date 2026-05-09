@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ImageImportService } from "@embroiderly/image-import";
+import type { ImageImportOptions } from "@embroiderly/image-import";
 import {
   BlockUI,
   Button,
@@ -11,62 +13,75 @@ import {
   InputNumberSlider,
   Progress,
   Separator,
+  useToast,
 } from "@embroiderly/ui";
 
 import { vElementSize } from "@vueuse/components";
-import { useDebounceFn } from "@vueuse/core";
-import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
+import { useDebounceFn, useDropZone } from "@vueuse/core";
+import { ref, reactive, onMounted, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
 
-import { FilesApi } from "~/api/";
-import type { ImageImportOptions } from "~/api/";
 import { PatternCanvas } from "~/components/canvas/";
-import { useDragDrop, useFilePicker } from "~/composables/";
-import { ANY_IMAGE_FILTER } from "~/constants/";
+import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { DisplayMode, DisplaySettings, Pattern } from "~/lib/pattern/";
-import { ImageImportService } from "~/services/";
+import { LoggerService } from "~/services/";
 
 import { PaletteSelect } from "../palette/";
-
-interface ImportImageModalProps {
-  imagePath: string;
-  imageDimensions: [width: number, height: number];
-}
 
 interface ValueBounds {
   min: number;
   max: number;
 }
 
-const props = defineProps<ImportImageModalProps>();
-const emit = defineEmits<{ close: [patternId?: string] }>();
+const props = defineProps<{ imageFile: File }>();
+const emit = defineEmits<{ close: [patternBytes?: Uint8Array] }>();
 
 /** The maximum palette size acceptable for quantization. */
 const MAX_PALETTE_SIZE = 256;
 
+const { files } = useEditor();
+const { fluent } = useI18n();
 const filePicker = useFilePicker();
+const toast = useToast();
 
 const patternCanvas = useTemplateRef("pattern-canvas");
-const previewPattern = shallowRef<Pattern>();
 
-const imageImportService = new ImageImportService();
+const service = new ImageImportService();
 
-const imagePath = ref(props.imagePath);
-const imageDimensions = ref(props.imageDimensions);
-watch(imagePath, async (newImagePath) => {
-  imageDimensions.value = await FilesApi.getImageDimensions(newImagePath);
+const imageFile = ref(props.imageFile);
+const imageDimensions = ref<[number, number]>([0, 0]);
+
+const { isOverDropZone } = useDropZone(useTemplateRef("drop-zone"), {
+  onDrop(files) {
+    const file = files?.[0];
+    if (file) loadImageFile(file);
+  },
 });
 
-const dropZoneContainer = useTemplateRef("drop-zone");
-const { isOverDropZone } = useDragDrop(dropZoneContainer, (paths) => {
-  imagePath.value = paths[0]!;
-});
+async function loadImageFile(file: File) {
+  try {
+    const { width, height } = await service.start(new Uint8Array(await file.arrayBuffer()));
 
+    imageFile.value = file;
+    imageDimensions.value = [width, height];
+
+    imageImportOptions.patternSize = [Math.round(width * 0.1), Math.round(height * 0.1)];
+  } catch (err) {
+    LoggerService.error(`Failed to load image file: ${err}`);
+    toast.add({ color: "error", title: fluent.$t("error"), duration: 3000 });
+  }
+}
+
+async function pickImageFile() {
+  const handle = await filePicker.open({ types: filePicker.filters.image });
+  if (handle) await loadImageFile(await handle.getFile());
+}
+
+const selectedPaletteBytes = ref<Uint8Array | null>(null);
 const selectedPaletteSize = ref(1);
-const selectedPalettePath = ref("");
 
 const applyDithering = ref(true);
 const imageImportOptions = reactive<Required<ImageImportOptions>>({
-  patternSize: [Math.round(imageDimensions.value[0] * 0.1), Math.round(imageDimensions.value[1] * 0.1)],
+  patternSize: [0, 0],
   paletteSize: 32,
   quantization: {
     samplingFactor: 1,
@@ -103,73 +118,54 @@ const imageImportOptionsValid = computed(() => {
   if (!checkValueInBounds(quantization.samplingFactor, { min: 0, max: 1 })) return false;
 
   // Validate dithering options.
-  if (applyDithering.value && !checkValueInBounds(dithering.errorDiffusion, { min: 0, max: 1 })) return false;
+  if (applyDithering.value && !checkValueInBounds(dithering!.errorDiffusion, { min: 0, max: 1 })) return false;
 
   return true;
 });
 
-const imageImportServiceStarted = ref(false);
+const preview = shallowRef<{ bytes: Uint8Array; pattern: Pattern } | null>(null);
+const importing = ref(false);
 
-const importingPattern = ref(false);
-const importPatternFromImage = useDebounceFn(
-  async (options: ImageImportOptions) => {
-    if (!imageImportServiceStarted.value) {
-      await imageImportService.start();
-      imageImportServiceStarted.value = true;
-    }
+let currentRequest: Promise<Uint8Array> | null = null;
+const updatePreview = useDebounceFn(
+  async () => {
+    if (!imageImportOptionsValid.value) return;
 
-    importingPattern.value = true;
+    const options: ImageImportOptions = {
+      ...imageImportOptions,
+      dithering:
+        applyDithering.value && imageImportOptions.dithering!.errorDiffusion > 0 ? imageImportOptions.dithering : null,
+    };
+
+    importing.value = true;
+
+    const request = service.getPreview(selectedPaletteBytes.value!, options);
+    currentRequest = request;
+
     try {
-      previewPattern.value = await imageImportService.getPreview(imagePath.value, selectedPalettePath.value, options);
-      previewPattern.value.displaySettings = new DisplaySettings({
-        grid: previewPattern.value.displaySettings.grid,
+      const bytes = await request;
+      if (request !== currentRequest) return;
+
+      preview.value = { bytes, pattern: Pattern.deserialize(bytes) };
+      preview.value.pattern.displaySettings = new DisplaySettings({
+        grid: preview.value.pattern.displaySettings.grid,
         displayMode: DisplayMode.Solid,
         showSymbols: false,
         showGrid: false,
         showRulers: false,
       });
     } finally {
-      importingPattern.value = false;
+      if (request === currentRequest) importing.value = false;
     }
   },
   100,
   { maxWait: 500 },
 );
 
-// Update the pattern preview on every change of options.
-watch(
-  [imagePath, selectedPalettePath, imageImportOptions, imageImportOptionsValid, applyDithering],
-  async () => {
-    if (!imageImportOptionsValid.value) return;
+watch([imageFile, selectedPaletteBytes, imageImportOptions, applyDithering], () => updatePreview(), { flush: "post" });
 
-    const options = {
-      ...imageImportOptions,
-      dithering:
-        applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
-          ? imageImportOptions.dithering
-          : undefined,
-    };
-    await importPatternFromImage(options);
-  },
-  { immediate: true, flush: "post" },
-);
-
-async function handleFinalize() {
-  const options = {
-    ...imageImportOptions,
-    dithering:
-      applyDithering.value && imageImportOptions.dithering.errorDiffusion > 0
-        ? imageImportOptions.dithering
-        : undefined,
-  };
-
-  const patternId = await imageImportService.finalize(imagePath.value, selectedPalettePath.value, options);
-  emit("close", patternId);
-}
-
-onUnmounted(() => {
-  imageImportService.destroy();
-});
+onMounted(() => loadImageFile(props.imageFile));
+onUnmounted(() => service.destroy());
 </script>
 
 <template>
@@ -177,16 +173,7 @@ onUnmounted(() => {
     <template #body>
       <div class="flex h-full">
         <div class="space-y-2 overflow-y-auto p-4 sm:p-6">
-          <FilePicker
-            v-model="imagePath"
-            class="w-full"
-            @pick="
-              async () => {
-                const path = await filePicker.open({ filters: ANY_IMAGE_FILTER });
-                if (path) imagePath = path;
-              }
-            "
-          />
+          <FilePicker :model-value="imageFile?.name ?? 'No image selected'" class="w-full" @pick="pickImageFile" />
 
           <InputDimensions
             v-model:width="imageImportOptions.patternSize[0]"
@@ -202,9 +189,7 @@ onUnmounted(() => {
             <PaletteSelect
               variant="subtle"
               class="w-full"
-              @palette-selected="
-                async (group, name) => (selectedPalettePath = await FilesApi.resolvePalettePath(group, name))
-              "
+              @palette-selected="async (group, name) => (selectedPaletteBytes = await files.loadPalette(group, name))"
               @palette-loaded="(palette) => (selectedPaletteSize = palette.length)"
             />
           </FormField>
@@ -220,10 +205,7 @@ onUnmounted(() => {
                 :min="0"
                 :max="1"
                 :step="0.001"
-                :format-options="{
-                  style: 'percent',
-                  maximumFractionDigits: 1,
-                }"
+                :format-options="{ style: 'percent', maximumFractionDigits: 1 }"
               />
             </FormField>
           </FormFieldSet>
@@ -233,14 +215,11 @@ onUnmounted(() => {
 
             <FormField :label="$t('image-import-dither-error')" class="w-full">
               <InputNumberSlider
-                v-model="imageImportOptions.dithering.errorDiffusion"
+                v-model="imageImportOptions.dithering!.errorDiffusion"
                 :min="0"
                 :max="1"
                 :step="0.001"
-                :format-options="{
-                  style: 'percent',
-                  maximumFractionDigits: 1,
-                }"
+                :format-options="{ style: 'percent', maximumFractionDigits: 1 }"
               />
             </FormField>
           </FormFieldSet>
@@ -248,36 +227,36 @@ onUnmounted(() => {
 
         <Separator decorative orientation="vertical" size="sm" />
 
-        <BlockUI ref="drop-zone" :blocked="importingPattern || isOverDropZone" class="flex size-full flex-col">
-          <Progress v-if="importingPattern" size="sm" class="absolute top-0 rounded-none" />
+        <BlockUI ref="drop-zone" :blocked="importing || isOverDropZone" class="flex size-full flex-col">
+          <Progress v-if="importing" size="sm" class="absolute top-0 rounded-none" />
 
           <PatternCanvas
             ref="pattern-canvas"
             v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
-            :pattern="previewPattern"
+            :pattern="preview?.pattern"
             :options="{ textureManager: { outlineStitches: false } }"
             class="min-h-0 flex-1"
             :class="{ hidden: !imageImportOptionsValid }"
           />
 
-          <div v-if="previewPattern" class="border-t border-default px-2 py-1 text-sm">
+          <div v-if="preview" class="border-t border-default px-2 py-1 text-sm">
             {{
               $t("image-import-pattern-properties", {
-                paletteSize: previewPattern.palette.length,
-                totalStitches: previewPattern.layers.items.reduce((acc, layer) => acc + layer.fullstitches.length, 0),
+                paletteSize: preview.pattern.palette.length,
+                totalStitches: preview.pattern.layers.items.reduce((acc, layer) => acc + layer.fullstitches.length, 0),
               })
             }}
           </div>
         </BlockUI>
       </div>
     </template>
+
     <template #footer>
       <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
       <Button
-        loading-auto
         :label="$t('image-import-import-image')"
-        :disabled="!imageImportOptionsValid"
-        @click="handleFinalize"
+        :disabled="!imageImportOptionsValid || !preview"
+        @click="emit('close', preview?.bytes)"
       />
     </template>
   </Dialog>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Primitive } from "reka-ui";
-import type { PrimitiveProps } from "reka-ui";
 import { computed, ref } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
@@ -11,9 +10,16 @@ import Icon from "../Icon/Icon.vue";
 import { ButtonTheme } from "./Button.theme.ts";
 import type { ButtonThemeSlots, ButtonThemeVariants } from "./Button.theme.ts";
 
-export interface ButtonProps extends PrimitiveProps, UseComponentIconsProps {
+export interface ButtonProps extends UseComponentIconsProps {
   /** The text label of the button. */
   label?: string;
+
+  /** The URL to navigate to; renders the button as an `<a>` element. */
+  href?: string;
+  /** The target attribute for anchor buttons. */
+  target?: "_self" | "_blank" | "_parent" | "_top" | (string & {});
+  /** Overrides the auto-computed rel attribute for anchor buttons. */
+  rel?: string;
 
   /**
    * The color scheme of the button.
@@ -52,8 +58,6 @@ export interface ButtonSlots {
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
-  as: "button",
-
   color: "primary",
   variant: "solid",
 });
@@ -63,7 +67,10 @@ const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
 const size = computed(() => props.size ?? fieldGroupSize.value ?? "md");
 
 const loadingAutoState = ref(false);
+const isLoading = computed(() => props.loading || (props.loadingAuto && loadingAutoState.value));
+
 async function onClickWrapper(event: MouseEvent) {
+  if (props.disabled || isLoading.value) return;
   loadingAutoState.value = true;
   try {
     const callbacks = Array.isArray(props.onClick) ? props.onClick : [props.onClick];
@@ -73,10 +80,24 @@ async function onClickWrapper(event: MouseEvent) {
   }
 }
 
-const isLoading = computed(() => props.loading || (props.loadingAuto && loadingAutoState.value));
+const isExternal = computed(() => !!props.href && /^[a-z][a-z0-9+.-]*:/i.test(props.href));
+const rel = computed(() => {
+  if (props.rel !== null) return props.rel;
+  if (isExternal.value) return "noopener noreferrer";
+  return undefined;
+});
 
+const { icons } = useComponentIcons();
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
-  computed(() => ({ ...props, loading: isLoading.value })),
+  computed(() => ({
+    ...props,
+    loading: isLoading.value,
+    trailingIcon: props.trailingIcon
+      ? props.trailingIcon
+      : !props.trailing && isExternal.value
+        ? icons.value.external
+        : undefined,
+  })),
 );
 
 const ui = computed(() => {
@@ -98,10 +119,13 @@ const ui = computed(() => {
 
 <template>
   <Primitive
-    :as="as"
-    :as-child="asChild"
-    :disabled="disabled || isLoading"
+    :as="props.href ? 'a' : 'button'"
+    :href="props.href && !(props.disabled || isLoading) ? props.href : undefined"
+    :target="props.href ? target : undefined"
+    :rel="props.href ? rel : undefined"
+    :disabled="!props.href ? disabled || isLoading : undefined"
     :aria-disabled="disabled || isLoading"
+    :tabindex="(disabled || isLoading) && props.href ? -1 : undefined"
     data-slot="base"
     :class="ui.base({ class: [props.ui?.base, props.class] })"
     @click="onClickWrapper"

@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 
 export enum FullStitchKind {
   Full = "Full",
@@ -237,9 +236,8 @@ export function serializeStitch(stitch: Stitch) {
   throw new Error("Invalid stitch variant");
 }
 
-export function deserializeStitches(data: Uint8Array | string) {
-  const buffer = typeof data === "string" ? toByteArray(data) : data;
-  return StitchesSchema.deserialize(buffer).map((stitch) => {
+export function deserializeStitches(data: Uint8Array) {
+  return StitchesSchema.deserialize(data).map((stitch) => {
     if ("full" in stitch) return new FullStitch(stitch.full);
     if ("part" in stitch) return new PartStitch(stitch.part);
     if ("line" in stitch) return new LineStitch(stitch.line);
@@ -266,9 +264,8 @@ const StitchesEventSchema = b.struct({
   stitches: StitchesSchema,
 });
 
-export function deserializeStitchesEvent(data: Uint8Array | string): { layerIndex: number; stitches: Stitch[] } {
-  const buffer = typeof data === "string" ? toByteArray(data) : data;
-  const { layerIndex, stitches } = StitchesEventSchema.deserialize(buffer);
+export function deserializeStitchesEvent(data: Uint8Array): { layerIndex: number; stitches: Stitch[] } {
+  const { layerIndex, stitches } = StitchesEventSchema.deserialize(data);
   return {
     layerIndex,
     stitches: stitches.map((stitch) => {

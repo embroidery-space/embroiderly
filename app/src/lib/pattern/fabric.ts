@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 import { Color } from "pixi.js";
 
 import { PaletteSettings } from "./palette";
@@ -31,9 +30,8 @@ export class Fabric {
     color: b.string(),
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Fabric(Fabric.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new Fabric(Fabric.schema.deserialize(data));
   }
 
   static serialize(data: Fabric) {
@@ -62,10 +60,9 @@ export class FabricColor extends BasePaletteItem {
   }
 }
 
-export function deserializeFabricColors(data: Uint8Array | string) {
-  const buffer = typeof data === "string" ? toByteArray(data) : data;
+export function deserializeFabricColors(data: Uint8Array) {
   return b
     .vec(FabricColor.schema)
-    .deserialize(buffer)
+    .deserialize(data)
     .map((color, index) => new FabricColor(index, color));
 }

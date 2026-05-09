@@ -1,54 +1,39 @@
-/* oxlint-disable no-console */
-
-import { invoke } from "@tauri-apps/api/core";
-
 import type { Client, Integration, Options } from "@sentry/core";
-import { createTransport, getDefaultIntegrations, init } from "@sentry/vue";
+import { getDefaultIntegrations, init } from "@sentry/vue";
 
 class DiagnosticsServiceClass {
-  #sentry: Client;
+  #client?: Client;
+
+  // Always start opted-out.
+  // The client is enabled in `App.vue` based on the user preferences.
+  enabled = false;
 
   constructor() {
+    if (!import.meta.env.VITE_EMBROIDERLY_SENTRY_DSN) return;
+
     const options: Options = {
-      // Specify dummy DSN and release to correctly setup Sentry.
-      // Requests will be proxied through the Tauri backend and these values will be replaced with real ones.
-      dsn: "https://123456@dummy.dsn/0",
-      release: "application@0.0.0",
-      transport(options) {
-        return createTransport(options, async (request) => {
-          try {
-            await invoke<void>("plugin:sentry|envelope", request);
-          } catch (e) {
-            console.error("Failed to send envelope to Tauri:", e);
-          }
-          return { statusCode: 200 };
-        });
-      },
-      beforeBreadcrumb(breadcrumb) {
-        // Ignore IPC breadcrumbs so we don't get into an infinite loop.
-        if (!/^(ipc:\/\/|https?:\/\/ipc\.localhost)/.test(breadcrumb.data?.url)) {
-          invoke<void>("plugin:sentry|add_breadcrumb", { breadcrumb }).catch((e) => {
-            console.error("Failed to add breadcrumb to Tauri:", e);
-          });
-        }
-        return null;
-      },
+      debug: import.meta.env.DEV,
+      dsn: import.meta.env.VITE_EMBROIDERLY_SENTRY_DSN,
+      release: `embroiderly@${__APP_VERSION__}`,
+      tunnel: import.meta.env.DEV ? "/errors" : "https://embroiderly.niusia.me/errors",
     };
 
     // Initialize a standard browser client.
-    // The Vue integration is added when the application is initialized.
-    this.#sentry = init({
+    // The Vue integration is added in the `main.ts` when the application is initialized.
+    this.#client = init({
       ...options,
       defaultIntegrations: getDefaultIntegrations(options),
+      beforeSend: (event) => (this.enabled ? event : null),
+      beforeSendTransaction: (event) => (this.enabled ? event : null),
     })!;
   }
 
   addIntegration(integration: Integration) {
-    this.#sentry.addIntegration(integration);
+    this.#client?.addIntegration(integration);
   }
 
   captureException(exception: unknown) {
-    this.#sentry.captureException(exception);
+    this.#client?.captureException(exception);
   }
 }
 export const DiagnosticsService = new DiagnosticsServiceClass();

@@ -3,6 +3,7 @@
 target/
 logs/
 gen/
+pkg/
 
 node_modules/
 
@@ -13,6 +14,5 @@ pkg/
 .env
 !.env.example
 
-# Browser extensions.
-app/src-tauri/extensions/*
-!app/src-tauri/extensions/README.md
+.wrangler/
+worker-configuration.d.ts

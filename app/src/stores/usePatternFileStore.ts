@@ -1,17 +1,13 @@
 import { useConfirm, useToast } from "@embroiderly/ui";
-import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+import { readFile } from "@tauri-apps/plugin-fs";
 
-import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { BackupFileExistsError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/api/";
-import { FilesApi } from "~/api/";
-import { useFilePicker, useI18n } from "~/composables/";
-import { ANY_PATTERN_FILTER, EMBPROJ_FILTER, OXS_FILTER } from "~/constants/";
-import type { Fabric, PdfExportOptions } from "~/lib/pattern/";
-
-const MAX_RECENT_PATTERNS = 5;
+import { useEditor, useFilePicker, useI18n } from "~/composables/";
+import { NoFileHandleError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
+import { Fabric, Pattern, PdfExportOptions } from "~/lib/pattern/";
+import { LoggerService, MetricsService } from "~/services/";
 
 export interface OpenPattern {
   id: string;
@@ -27,10 +23,11 @@ export const usePatternFileStore = defineStore(
     const toast = useToast();
     const filePicker = useFilePicker();
 
-    const currentPatternId = useSessionStorage<string | undefined>("embroiderly-current-pattern", undefined);
+    const { editor, events, files } = useEditor();
 
-    const openedPatterns = useSessionStorage<OpenPattern[]>("embroiderly-opened-patterns", []);
-    const recentPatterns = useLocalStorage<string[]>("embroiderly-recent-patterns", []);
+    const currentPatternId = ref<string>();
+
+    const openedPatterns = ref<OpenPattern[]>([]);
 
     const loading = ref(false);
 
@@ -53,41 +50,71 @@ export const usePatternFileStore = defineStore(
       if (pattern) pattern.title = title;
     }
 
-    function addRecentPattern(filePath: string) {
-      // Delete an existing entry to maintain the order.
-      const index = recentPatterns.value.indexOf(filePath);
-      if (index !== -1) recentPatterns.value.splice(index, 1);
-
-      recentPatterns.value.unshift(filePath);
-      recentPatterns.value = recentPatterns.value.slice(0, MAX_RECENT_PATTERNS);
-    }
-
     async function loadPattern(id: string) {
       try {
         loading.value = true;
-
-        const pattern = await FilesApi.loadPattern(id);
-        addOpenedPattern(pattern.id, pattern.info.title);
-
-        return pattern;
+        return Pattern.deserialize(await editor.loadPattern(id));
       } finally {
         loading.value = false;
       }
     }
 
-    async function openPattern(filePath?: string, options?: FilesApi.OpenPatternOptions) {
-      const path = filePath ?? (await filePicker.open({ filters: ANY_PATTERN_FILTER }));
-      if (!path) return;
-
+    /** Adds a Borsh-serialized pattern directly to the editor. Returns the pattern ID. */
+    async function addPattern(pattern: Uint8Array): Promise<string> {
       try {
         loading.value = true;
 
-        const patternId = await FilesApi.openPattern(path, options);
-        addRecentPattern(path);
+        const result = await editor.addPattern(pattern);
+        addOpenedPattern(result.id, result.title);
 
-        return patternId;
-      } catch (error) {
-        if (error instanceof UnsupportedPatternTypeError) {
+        return result.id;
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function openPattern(): Promise<string>;
+    async function openPattern(options: { file: File }): Promise<string>;
+    async function openPattern(options: { filePath: string }): Promise<string>;
+    async function openPattern(options: { template: string }): Promise<string>;
+    async function openPattern(options?: { file: File } | { filePath: string } | { template: string }) {
+      try {
+        loading.value = true;
+
+        let fileName: string;
+        let result: { id: string; title: string; snapshot: Uint8Array };
+
+        if (!options) {
+          const fileHandle = await filePicker.open({ types: filePicker.filters.pattern });
+          if (!fileHandle) return;
+
+          fileName = fileHandle.name;
+          result = await editor.openPattern(fileHandle);
+        } else if ("file" in options) {
+          const data = new Uint8Array(await options.file.arrayBuffer());
+
+          fileName = options.file.name;
+          result = await editor.openPatternFromData(data, fileName);
+        } else if ("filePath" in options) {
+          if (!__TAURI__) return;
+
+          const data = await readFile(options.filePath);
+
+          fileName = options.filePath.replaceAll("\\", "/").split("/").pop() ?? options.filePath;
+          result = await editor.openPatternFromData(data, fileName);
+        } else {
+          const data = await files.loadPatternTemplate(options.template);
+
+          fileName = options.template;
+          result = await editor.openPatternFromData(new Uint8Array(data), fileName);
+        }
+
+        addOpenedPattern(result.id, result.title || fileName);
+        MetricsService.capturePatternOpened(Pattern.deserialize(result.snapshot), fileName.split(".").pop());
+
+        return result.id;
+      } catch (err) {
+        if (err instanceof UnsupportedPatternTypeError) {
           confirm.open({
             title: fluent.$t("error"),
             description: fluent.$t("pattern-open-unsupported-type"),
@@ -96,23 +123,22 @@ export const usePatternFileStore = defineStore(
           });
           return;
         }
-        if (error instanceof BackupFileExistsError) {
-          const accepted = await confirm.open({
-            title: fluent.$t("error"),
-            description: fluent.$t("pattern-backup-file-exists"),
-          }).result;
-          return await openPattern(path, { restoreFromBackup: accepted });
-        }
-        throw error;
+        throw err;
       } finally {
         loading.value = false;
       }
     }
 
-    async function createPattern(fabric: Fabric) {
+    async function createPattern(fabric = new Fabric()) {
       try {
         loading.value = true;
-        return await FilesApi.createPattern(fabric);
+
+        const result = await editor.createPattern(Fabric.serialize(fabric));
+
+        addOpenedPattern(result.id, result.title);
+        MetricsService.capturePatternCreated(fabric);
+
+        return result.id;
       } finally {
         loading.value = false;
       }
@@ -121,27 +147,41 @@ export const usePatternFileStore = defineStore(
     /**
      * Saves the pattern to a file.
      * @param id - The pattern ID to save.
-     * @param as - If true, always show the file picker (Save As).
+     * @param as - If true, always show the save picker (Save As).
      * @returns `true` if the pattern was saved successfully, `false` if cancelled or failed.
      */
     async function savePattern(id: string, as = false) {
+      let handle: FileSystemFileHandle | null = null;
+      if (as) {
+        handle = await pickSaveHandle(id);
+        if (!handle) return false;
+      }
+
       try {
-        let path = await FilesApi.getPatternFilePath(id);
-        if (path === null || as) {
-          path ??= await FilesApi.getPatternDefaultFilePath(id);
+        loading.value = true;
+        await editor.savePattern(id, handle);
+        MetricsService.capturePatternSaved(handle?.name.split(".").pop());
+        return true;
+      } catch (err) {
+        if (err instanceof NoFileHandleError) {
+          loading.value = false;
 
-          const selectedPath = await filePicker.save(path, { filters: EMBPROJ_FILTER });
-          if (selectedPath === null) return false;
+          const picked = await pickSaveHandle(id);
+          if (!picked) return false;
 
-          path = selectedPath;
+          loading.value = true;
+
+          try {
+            await editor.savePattern(id, picked);
+            MetricsService.capturePatternSaved(picked.name.split(".").pop());
+            return true;
+          } catch {
+            toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
+            return false;
+          }
         }
 
-        loading.value = true;
-        await FilesApi.savePattern(id, path);
-
-        return true;
-      } catch (error) {
-        if (error instanceof UnsupportedPatternTypeError) {
+        if (err instanceof UnsupportedPatternTypeError) {
           confirm.open({
             title: fluent.$t("error"),
             description: fluent.$t("pattern-save-unsupported-type"),
@@ -149,7 +189,11 @@ export const usePatternFileStore = defineStore(
             noButton: null,
           });
         } else {
-          toast.add({ color: "error", title: fluent.$t("pattern-save-failure"), duration: 3000 });
+          toast.add({
+            color: "error",
+            title: fluent.$t("pattern-save-failure"),
+            duration: 3000,
+          });
         }
 
         return false;
@@ -158,19 +202,26 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    async function closePattern(id: string, options?: FilesApi.ClosePatternOptions) {
+    function pickSaveHandle(id: string) {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
+      const suggestedName = `${pattern?.title ?? "pattern"}.embproj`;
+      return filePicker.save({ suggestedName, types: filePicker.filters.embproj });
+    }
+
+    async function closePattern(id: string, options?: { force?: boolean }) {
       try {
         loading.value = true;
 
-        await FilesApi.closePattern(id, options);
-        removeOpenedPattern(id);
+        await editor.closePattern(id, options?.force ?? false);
 
-        // Switch to the first opened pattern after closing the current one.
+        removeOpenedPattern(id);
+        MetricsService.capturePatternClosed();
+
         if (currentPatternId.value === id) {
           currentPatternId.value = openedPatterns.value[0]?.id;
         }
-      } catch (error) {
-        if (error instanceof UnsavedChangesError) {
+      } catch (err) {
+        if (err instanceof UnsavedChangesError) {
           const pattern = openedPatterns.value.find((p) => p.id === id)!;
 
           const accepted = await confirm.open(fluent.$ta("unsaved-changes", { pattern: pattern.title })).result;
@@ -186,82 +237,88 @@ export const usePatternFileStore = defineStore(
 
           return;
         }
-        throw error;
+        throw err;
       } finally {
         loading.value = false;
       }
     }
 
-    async function exportPatternAsOxs(id: string, filePath: string) {
-      const path = await filePicker.save(filePath, { filters: OXS_FILTER });
-      if (path === null) return;
+    async function exportPatternAsOxs(id: string) {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
+      const suggestedName = `${pattern?.title ?? "pattern"}.oxs`;
+      const handle = await filePicker.save({
+        suggestedName,
+        types: filePicker.filters.oxs,
+      });
+      if (!handle) return;
 
       try {
         loading.value = true;
-        await FilesApi.savePattern(id, path);
+        await editor.exportPattern(id, handle);
       } finally {
         loading.value = false;
       }
     }
 
-    async function exportPatternAsPdf(id: string, filePath: string, options: PdfExportOptions) {
+    async function exportPatternAsPdf(id: string, variant: "monochrome" | "color") {
+      const patternData = await editor.loadPattern(id);
+      const pattern = Pattern.deserialize(patternData);
+
+      const handle = await filePicker.save({
+        suggestedName: `${pattern.info.title ?? "pattern"}.${variant}.pdf`,
+        types: filePicker.filters.pdf,
+      });
+      if (!handle) return;
+
       try {
         loading.value = true;
-        await FilesApi.exportPattern(id, filePath, options);
+
+        const { exportPatternAsPdf } = await import("@embroiderly/pdf-export");
+        await exportPatternAsPdf({
+          handle,
+          pattern: patternData,
+          options: PdfExportOptions.schema.serialize(pattern.pdfExportOptions),
+          fonts: await Promise.all(pattern.palette.usedSymbolFonts.map((name) => files.loadFontContent(name))),
+          variant,
+        });
+
+        MetricsService.capturePatternExportedAsPdf(pattern.pdfExportOptions);
         toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
-      } catch {
+      } catch (err) {
+        LoggerService.error(`Failed to export pattern as PDF: ${err}`);
         toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
       } finally {
         loading.value = false;
       }
     }
 
-    async function fetchOpenedPatterns() {
-      const backendPatterns = await FilesApi.getOpenedPatterns();
-
-      // Remove patterns no longer in backend.
-      openedPatterns.value = openedPatterns.value.filter((op) => backendPatterns.some((bp) => bp[0] === op.id));
-
-      // Add new patterns from backend.
-      const existingIds = new Set(openedPatterns.value.map((p) => p.id));
-      for (const [id, title] of backendPatterns) {
-        if (!existingIds.has(id)) openedPatterns.value.push({ id, title, dirty: false });
-      }
-    }
-
-    async function getUnsavedPatterns() {
-      const patterns = await FilesApi.getUnsavedPatterns();
-      return openedPatterns.value.filter((pattern) => patterns.includes(pattern.id));
-    }
-
     // Listen to change/checkpoint events to correctly identify dirty state.
-    const window = getCurrentWebviewWindow();
-    window.listen<string>("app:pattern-changed", (event) => {
-      const pattern = openedPatterns.value.find((p) => p.id === event.payload);
+    events.on("app:pattern-changed", (id) => {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
       if (pattern) pattern.dirty = true;
     });
-    window.listen<string>("app:pattern-checkpoint", (event) => {
-      const pattern = openedPatterns.value.find((p) => p.id === event.payload);
+    events.on("app:pattern-checkpoint", (id) => {
+      const pattern = openedPatterns.value.find((p) => p.id === id);
       if (pattern) pattern.dirty = false;
     });
 
     return {
       currentPatternId,
       openedPatterns,
-      recentPatterns,
       loading,
       switchPattern,
       updateOpenedPattern,
       loadPattern,
+      addPattern,
       openPattern,
       createPattern,
       savePattern,
       closePattern,
       exportPatternAsOxs,
       exportPatternAsPdf,
-      getUnsavedPatterns,
-      fetchOpenedPatterns,
     };
   },
-  { tauri: { save: false, sync: false } },
+  {
+    persist: { pick: ["currentPatternId", "openedPatterns"] },
+  },
 );

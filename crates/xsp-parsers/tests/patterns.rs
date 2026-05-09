@@ -7,8 +7,11 @@ macro_rules! parse_all_patterns {
           .join(format!("testdata/{}/patterns", stringify!($name)));
         for entry in patterns_path.read_dir().unwrap() {
           let path = entry.unwrap().path();
-          let palette = xsp_parsers::$name::parse_pattern(path.clone());
-          assert!(palette.is_ok(), "Failed to parse {:?}", path);
+          let data = std::fs::read(&path).unwrap();
+
+          let pattern = xsp_parsers::$name::parse_pattern(&data);
+
+          assert!(pattern.is_ok(), "Failed to parse {:?}", path);
         }
       }
     }

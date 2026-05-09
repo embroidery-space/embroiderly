@@ -1,75 +1,102 @@
-import { sep } from "@tauri-apps/api/path";
-import { open, save } from "@tauri-apps/plugin-dialog";
-import type { DialogFilter, OpenDialogOptions, SaveDialogOptions } from "@tauri-apps/plugin-dialog";
+import { createSharedComposable } from "@vueuse/core";
+import { showOpenFilePicker, showSaveFilePicker } from "show-open-file-picker";
+import type {
+  FilePickerAcceptType,
+  ShowOpenFilePickerOptions,
+  ShowSaveFilePickerOptions,
+} from "show-open-file-picker/types";
 
-import { createSharedComposable, useLocalStorage } from "@vueuse/core";
+type OpenReturn<T extends ShowOpenFilePickerOptions> =
+  | (T["multiple"] extends true ? FileSystemFileHandle[] : FileSystemFileHandle)
+  | null;
 
-import { PathApi } from "~/api/";
+export const useFilePicker = createSharedComposable(() => ({
+  filters: {
+    /** Matches any supported pattern types (`.embproj`, `.oxs`, `.xsd`). */
+    pattern: [
+      {
+        description: "Cross-Stitch Patterns",
+        accept: { "application/octet-stream": [".embproj", ".oxs", ".xsd"] },
+      },
+    ] satisfies FilePickerAcceptType[],
 
-// A utility filter that is appended to any "open" query to allow user to pick any file.
-const ALL_FILES_FILTER: DialogFilter = { name: "All Files", extensions: ["*"] };
+    /** Matches `.embproj` patterns. */
+    embproj: [
+      {
+        description: "Embroidery Project",
+        accept: { "application/octet-stream": [".embproj"] },
+      },
+    ] satisfies FilePickerAcceptType[],
 
-export type FilePickerOpenOptions = Omit<OpenDialogOptions, "defaultPath">;
-export type FilePickerSaveOptions = Omit<SaveDialogOptions, "defaultPath">;
+    /** Matches `.oxs` patterns. */
+    oxs: [
+      {
+        description: "OXS",
+        accept: { "application/octet-stream": [".oxs"] },
+      },
+    ] satisfies FilePickerAcceptType[],
 
-export const useFilePicker = createSharedComposable(() => {
-  const lastOpenedFolder = useLocalStorage<string | null>("last-opened-folder", null);
-  const lastSavedFolder = useLocalStorage<string | null>("last-saved-folder", null);
+    /** Matches any supported image types (`.png`, `.jpg`, `.jpeg`, `.webp`). */
+    image: [
+      {
+        description: "Images",
+        accept: { "image/*": [".png", ".jpg", ".jpeg", ".webp"] },
+      },
+    ] satisfies FilePickerAcceptType[],
 
-  return {
-    /** The last opened folder path. */
-    lastOpenedFolder,
-    /** The last saved folder path. */
-    lastSavedFolder,
+    /** Matches `.pdf` documents. */
+    pdf: [
+      {
+        description: "PDF",
+        accept: { "application/pdf": [".pdf"] },
+      },
+    ] satisfies FilePickerAcceptType[],
 
-    /**
-     * Opens a file picker dialog.
-     * @param options The options for the dialog.
-     * @returns The selected file path or null if canceled.
-     */
-    open: async (options: FilePickerOpenOptions = {}) => {
-      lastOpenedFolder.value ??= await PathApi.getAppDocumentDir();
+    /** Matches any supported palette types (`.master`, `.user`, `.rng`, `.threads`, `.json`). */
+    palette: [
+      {
+        description: "Palette files",
+        accept: {
+          "application/octet-stream": [".master", ".user", ".rng"],
+          "text/plain": [".threads"],
+          "application/json": [".json"],
+        },
+      },
+    ] satisfies FilePickerAcceptType[],
 
-      const { title, multiple = false, directory, recursive, canCreateDirectories } = options;
-      const filters = options.filters ? [...options.filters, ALL_FILES_FILTER] : [ALL_FILES_FILTER];
+    /** Matches any supported font types (`.ttf`, `.otf`). */
+    font: [
+      {
+        description: "Font files",
+        accept: { "font/*": [".ttf", ".otf"] },
+      },
+    ] satisfies FilePickerAcceptType[],
+  },
 
-      const path = await open({
-        defaultPath: lastOpenedFolder.value,
-        title,
-        multiple,
-        filters,
-        directory,
-        recursive,
-        canCreateDirectories,
-      });
+  /**
+   * Opens a file picker dialog.
+   * Returns the selected handle(s), or `null` if the user cancelled.
+   */
+  async open<T extends ShowOpenFilePickerOptions>(options?: T): Promise<OpenReturn<T>> {
+    try {
+      const handles = await showOpenFilePicker(options);
+      return (options?.multiple ? handles : (handles[0] ?? null)) as OpenReturn<T>;
+    } catch (e) {
+      if (e instanceof DOMException && e.name === "AbortError") return null;
+      throw e;
+    }
+  },
 
-      if (path) {
-        const first = Array.isArray(path) ? path[0] : path;
-        lastOpenedFolder.value = first.slice(0, Math.max(0, first.lastIndexOf(sep())));
-      }
-
-      return path;
-    },
-
-    /**
-     * Opens a save file dialog.
-     * @param target The file path to save to.
-     * @param options The options for the dialog.
-     * @returns The selected file path or null if canceled.
-     */
-    save: async (target?: string, options?: FilePickerSaveOptions) => {
-      lastSavedFolder.value ??= await PathApi.getAppDocumentDir();
-
-      const path = await save({
-        defaultPath: target ?? lastSavedFolder.value,
-        ...options,
-      });
-
-      if (path) {
-        lastSavedFolder.value = path.slice(0, Math.max(0, path.lastIndexOf(sep())));
-      }
-
-      return path;
-    },
-  };
-});
+  /**
+   * Opens a save file picker dialog.
+   * Returns the selected handle, or `null` if the user cancelled.
+   */
+  async save<T extends ShowSaveFilePickerOptions>(options?: T) {
+    try {
+      return await showSaveFilePicker(options);
+    } catch (e) {
+      if (e instanceof DOMException && e.name === "AbortError") return null;
+      throw e;
+    }
+  },
+}));

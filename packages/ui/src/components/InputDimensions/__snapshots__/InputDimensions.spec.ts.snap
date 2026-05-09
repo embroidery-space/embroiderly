@@ -218,7 +218,7 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
 
 exports[`InputDimensions > renders correctly with heightInputOptions 1`] = `
 <div>
-  <div class="flex gap-2" data-slot="root" heightinputoptions="[object Object]">
+  <div class="flex gap-2" data-slot="root">
     <div class="text-base" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
@@ -248,7 +248,7 @@ exports[`InputDimensions > renders correctly with heightInputOptions 1`] = `
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <input aria-roledescription="Number field" aria-valuemax="100" aria-valuemin="0" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
           <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
             <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -639,12 +639,12 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
 
 exports[`InputDimensions > renders correctly with widthInputOptions 1`] = `
 <div>
-  <div class="flex gap-2" data-slot="root" widthinputoptions="[object Object]">
+  <div class="flex gap-2" data-slot="root">
     <div class="text-base" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <input aria-roledescription="Number field" aria-valuemax="100" aria-valuemin="0" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
           <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
             <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

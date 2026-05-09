@@ -1,5 +1,4 @@
 import { b } from "@zorsh/zorsh";
-import { toByteArray } from "base64-js";
 
 export class GridLine {
   color: string;
@@ -33,9 +32,8 @@ export class Grid {
     majorLines: GridLine.schema,
   });
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new Grid(Grid.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new Grid(Grid.schema.deserialize(data));
   }
 
   static serialize(data: Grid) {
@@ -76,8 +74,7 @@ export class DisplaySettings {
     return DisplaySettings.schema.serialize(data);
   }
 
-  static deserialize(data: Uint8Array | string) {
-    const buffer = typeof data === "string" ? toByteArray(data) : data;
-    return new DisplaySettings(DisplaySettings.schema.deserialize(buffer));
+  static deserialize(data: Uint8Array) {
+    return new DisplaySettings(DisplaySettings.schema.deserialize(data));
   }
 }
