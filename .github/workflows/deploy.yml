@@ -4,6 +4,7 @@ on:
     branches-ignore: ["dependabot/**", dependency-updates]
 permissions:
   contents: read
+  deployments: write
 env:
   CARGO_TERM_COLOR: always
 jobs:
@@ -74,8 +75,6 @@ jobs:
           command: ${{ steps.info.outputs.cmd }}
           packageManager: pnpm
           workingDirectory: app/
-
-      - run: echo '${{ toJSON(steps.deploy.outputs) }}'
 
       - name: Generate Summary
         run: |
