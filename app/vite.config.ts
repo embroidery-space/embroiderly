@@ -29,6 +29,9 @@ const git = (() => {
 const isCI = !!process.env.CI;
 const isTauri = !!process.env.TAURI_ENV_TARGET_TRIPLE;
 
+// CI sets this to "false" for short-lived preview deployments. Default: enabled.
+const isPwaEnabled = process.env.EMBROIDERLY_PWA !== "false";
+
 const isDev = process.env.NODE_ENV === "development";
 const isTest = process.env.NODE_ENV === "test";
 
@@ -46,6 +49,7 @@ export default defineConfig({
     fluentMerge({ localesDir: "./src/assets/locales/" }),
     !isTauri &&
       VitePWA({
+        disable: !isPwaEnabled,
         strategies: "injectManifest",
         srcDir: "src",
         filename: "sw.ts",

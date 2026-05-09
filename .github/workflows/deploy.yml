@@ -13,6 +13,10 @@ jobs:
     defaults:
       run:
         shell: bash
+    env:
+      # Branches whose deployments are long-lived.
+      # Anything else is treated as a short-lived preview and ships without PWA so users' disks aren't filled by service-worker caches for URLs they'll never revisit.
+      LONG_LIVED_BRANCHES: '["main", "dev"]'
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -27,6 +31,7 @@ jobs:
         env:
           VITE_EMBROIDERLY_POSTHOG_API_KEY: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_POSTHOG_API_KEY || '' }}
           VITE_EMBROIDERLY_SENTRY_DSN: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_SENTRY_DSN || '' }}
+          EMBROIDERLY_PWA: ${{ contains(fromJSON(env.LONG_LIVED_BRANCHES), github.ref_name) }}
         run: pnpm app:build
 
       - name: Upload source maps to Sentry
@@ -53,17 +58,18 @@ jobs:
 
       - name: Determine Wrangler Command
         id: info
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          message = "${{ github.event.head_commit.message }}"
           if [ "${{ github.ref_name }}" = "main" ]; then
             # Live production.
-            echo "cmd=deploy --message \"$message\"" >> $GITHUB_OUTPUT
+            echo "cmd=deploy --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
           else
             # Sanitize branch name for the alias: replace `/` with `-` and lowercase it.
             alias=$(echo "${{ github.ref_name }}" | sed 's/\//-/g' | tr '[:upper:]' '[:lower:]')
 
             # Commit and branch preview.
-            echo "cmd=versions upload --preview-alias $alias --message \"$message\"" >> $GITHUB_OUTPUT
+            echo "cmd=versions upload --preview-alias $alias --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
           fi
 
       - name: Deploy to Cloudflare
