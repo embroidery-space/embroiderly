@@ -1,12 +1,7 @@
 name: Deploy
 on:
-  # Push to main: production build with telemetry, deploys to the live Cloudflare Worker, uploads Sentry source maps.
-  # Push to other branches / PRs: preview build without telemetry, uploads a new Cloudflare Worker version (preview URL).
   push:
-    branches: [main, dev]
-  pull_request:
-    branches: [main, dev]
-    types: [opened, reopened, edited, synchronize]
+    branches-ignore: ["dependabot/**", dependency-updates]
 permissions:
   contents: read
 env:
@@ -17,9 +12,6 @@ jobs:
     defaults:
       run:
         shell: bash
-    if: |
-      startsWith(github.head_ref, 'dependabot/') == false
-      && github.head_ref != 'dependency-updates'
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -32,12 +24,12 @@ jobs:
 
       - name: Build web app
         env:
-          VITE_EMBROIDERLY_POSTHOG_API_KEY: ${{ github.event_name == 'push' && github.ref_name == 'main' && secrets.EMBROIDERLY_POSTHOG_API_KEY || '' }}
-          VITE_EMBROIDERLY_SENTRY_DSN: ${{ github.event_name == 'push' && github.ref_name == 'main' && secrets.EMBROIDERLY_SENTRY_DSN || '' }}
+          VITE_EMBROIDERLY_POSTHOG_API_KEY: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_POSTHOG_API_KEY || '' }}
+          VITE_EMBROIDERLY_SENTRY_DSN: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_SENTRY_DSN || '' }}
         run: pnpm app:build
 
       - name: Upload source maps to Sentry
-        if: github.event_name == 'push' && github.ref_name == 'main'
+        if: github.ref_name == 'main'
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: embroidery-space
@@ -58,19 +50,34 @@ jobs:
       - name: Remove source maps before deploy
         run: find app/dist/ -name "*.map" -delete
 
+      - name: Determine Wrangler Command
+        id: info
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            # Live production.
+            echo "cmd=deploy" >> $GITHUB_OUTPUT
+          else
+            # Sanitize branch name for the alias: replace `/` with `-` and lowercase it.
+            alias=$(echo "${{ github.ref_name }}" | sed 's/\//-/g' | tr '[:upper:]' '[:lower:]')
+
+            # Commit and branch preview.
+            echo "cmd=versions upload --preview-alias $alias" >> $GITHUB_OUTPUT
+          fi
+
       - name: Deploy to Cloudflare
         id: deploy
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3.15.0
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: app/
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: ${{ steps.info.outputs.cmd }}
           packageManager: pnpm
-          command: ${{ github.event_name == 'push' && github.ref_name == 'main' && 'deploy' || 'versions upload' }}
+          workingDirectory: app/
 
       - name: Generate Summary
         run: |
           {
-            echo "## Deploying Embroiderly to Cloudflare"
+            echo "## Embroiderly deployment on Cloudflare"
             echo "**Preview URL:** <${{ steps.deploy.outputs.deployment-url }}>."
           } >> $GITHUB_STEP_SUMMARY
