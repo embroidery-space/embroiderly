@@ -6,7 +6,7 @@ import type { DropdownMenuItem, RadioGroupItem } from "@embroiderly/ui";
 import { refAutoReset } from "@vueuse/core";
 import { computed, ref, toRaw } from "vue";
 
-import { IconCheck } from "~/assets/icons/";
+import { IconCheck, IconChevronDown } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
 import { PdfExportOptions } from "~/lib/pattern/";
 
@@ -66,7 +66,7 @@ async function exportPattern(variant: PdfVariant) {
       <FormFieldGroup>
         <Button loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern(variant)" />
         <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
-          <Button color="primary" variant="solid" icon="lucide:chevron-down" />
+          <Button color="primary" variant="solid" :icon="IconChevronDown" />
         </DropdownMenu>
       </FormFieldGroup>
     </template>
