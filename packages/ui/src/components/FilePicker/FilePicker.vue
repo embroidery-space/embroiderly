@@ -32,7 +32,7 @@ const modelValue = defineModel<string>();
 const props = defineProps<FilePickerProps>();
 const emit = defineEmits<FilePickerEmits>();
 
-const { messages } = useLocale();
+const locale = useLocale();
 
 const { fieldGroupSize } = useFormFieldGroup();
 const size = computed(() => props.size ?? fieldGroupSize.value ?? "lg");
@@ -42,7 +42,7 @@ const theme = computed(() => FilePickerTheme({ size: size.value, class: [props.u
 
 <template>
   <FormFieldGroup :size="size" :class="theme">
-    <Button :label="messages.filePicker.chooseFile" :disabled="disabled" @click="emit('pick')" />
+    <Button :label="locale.messages.filePicker.chooseFile" :disabled="disabled" @click="emit('pick')" />
     <Input v-model="modelValue" readonly :disabled="disabled" class="w-full" />
   </FormFieldGroup>
 </template>

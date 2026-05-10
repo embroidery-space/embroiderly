@@ -97,14 +97,14 @@ const props = withDefaults(defineProps<SelectProps<T>>(), {
 
 const { icons } = useComponentIcons();
 const { contains } = useFilter({ sensitivity: "base" });
-const { messages } = useLocale();
+const locale = useLocale();
 
 const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
 const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
 const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
 const portalProps = usePortal(toRef(() => props.portal));
 const searchInputProps = toRef(
-  () => defu(props.searchInput, { placeholder: messages.value.select.search }) as InputProps,
+  () => defu(props.searchInput, { placeholder: locale.messages.value.select.search }) as InputProps,
 );
 
 const open = ref(false);
@@ -221,7 +221,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
         <Combobox.Viewport data-slot="viewport" :class="ui.viewport({ class: props.ui?.viewport })">
           <Combobox.Empty data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
-            {{ searchValue ? messages.select.noMatches : messages.select.noData }}
+            {{ searchValue ? locale.messages.select.noMatches : locale.messages.select.noData }}
           </Combobox.Empty>
 
           <Combobox.Group

@@ -56,7 +56,7 @@ const emits = defineEmits<DialogEmits>();
 const slots = defineSlots<DialogSlots>();
 
 const { icons } = useComponentIcons();
-const { messages } = useLocale();
+const locale = useLocale();
 
 const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen"), emits);
 const portalProps = usePortal(toRef(() => props.portal));
@@ -106,7 +106,7 @@ const ui = DialogTheme();
               variant="ghost"
               size="md"
               square
-              :aria-label="messages.dialog.close"
+              :aria-label="locale.messages.dialog.close"
               data-slot="close"
               :class="ui.close({ class: props.ui?.close })"
             />
