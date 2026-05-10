@@ -104,7 +104,7 @@ const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
 const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
 const portalProps = usePortal(toRef(() => props.portal));
 const searchInputProps = toRef(
-  () => defu(props.searchInput, { placeholder: locale.messages.value.select.search }) as InputProps,
+  () => defu(props.searchInput, { placeholder: locale.value.messages.select.search }) as InputProps,
 );
 
 const open = ref(false);
