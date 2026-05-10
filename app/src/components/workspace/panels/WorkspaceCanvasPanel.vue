@@ -29,13 +29,13 @@ import { DisplayMode } from "~/lib/pattern/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface WorkspaceCanvasToolbarPanel extends SplitterPanelProps {}
+export interface WorkspaceCanvasPanelProps extends SplitterPanelProps {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface WorkspaceCanvasToolbarPanelEmits extends SplitterPanelEmits {}
+export interface WorkspaceCanvasPanelEmits extends SplitterPanelEmits {}
 
-const props = defineProps<WorkspaceCanvasToolbarPanel>();
-const emits = defineEmits<WorkspaceCanvasToolbarPanelEmits>();
+const props = defineProps<WorkspaceCanvasPanelProps>();
+const emits = defineEmits<WorkspaceCanvasPanelEmits>();
 
 const splitterPanelProps = useForwardPropsEmits(props, emits);
 
