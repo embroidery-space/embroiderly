@@ -37,6 +37,7 @@
     "@zorsh/zorsh": "catalog:",
     "bowser": "catalog:",
     "dequal": "catalog:",
+    "es-toolkit": "catalog:",
     "eventemitter3": "catalog:",
     "fluent-vue": "catalog:",
     "fuse.js": "catalog:",

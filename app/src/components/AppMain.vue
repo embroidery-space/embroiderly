@@ -83,8 +83,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="flex overflow-y-auto">
-    <Splitter ref="splitter" direction="horizontal">
+  <main class="overflow-hidden">
+    <Splitter ref="splitter" direction="horizontal" class="size-full">
       <WorkspacePalettePanel
         collapsible
         :collapsed-size="palettePanelCollapsedSize"
@@ -92,34 +92,23 @@ onMounted(async () => {
         :default-size="editorStateStore.palettePanelSize ?? palettePanelDefaultSize"
       />
 
-      <SplitterPanel class="flex flex-col">
-        <EditorWorkspaceTabs :disabled="patternStore.pattern.isNil" class="border-b border-default" />
+      <SplitterPanel class="grid min-h-0 min-w-0 grid-cols-[auto_minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)_auto]">
+        <EditorWorkspaceTabs :disabled="patternStore.pattern.isNil" class="col-span-2 border-b border-default" />
 
-        <div class="flex grow">
-          <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" class="border-r border-default p-1" />
+        <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" class="border-r border-default p-1" />
 
-          <BlockUI
-            ref="drop-zone"
-            :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
-            class="grow"
-          >
-            <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
-            <PatternWorkspace
-              v-else
-              :options="{
-                render: {
-                  antialias: settingsStore.viewport.antialias,
-                },
-                viewport: {
-                  wheelAction: settingsStore.viewport.wheelAction,
-                },
-              }"
-              class="size-full"
-            />
-          </BlockUI>
-        </div>
+        <BlockUI ref="drop-zone" :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone">
+          <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
+          <PatternWorkspace
+            v-else
+            :options="{
+              render: { antialias: settingsStore.viewport.antialias },
+              viewport: { wheelAction: settingsStore.viewport.wheelAction },
+            }"
+          />
+        </BlockUI>
 
-        <EditorWorkspaceFooter :disabled="patternStore.pattern.isNil" />
+        <EditorWorkspaceFooter :disabled="patternStore.pattern.isNil" class="col-span-2" />
       </SplitterPanel>
 
       <WorkspaceCanvasPanel

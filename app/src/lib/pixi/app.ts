@@ -1,4 +1,5 @@
 import { initDevtools } from "@pixi/devtools";
+import { debounce } from "es-toolkit";
 import { Application } from "pixi.js";
 import type { ApplicationOptions } from "pixi.js";
 
@@ -36,6 +37,7 @@ export class PatternApplication extends EventTarget {
 
   #pixi = new Application();
   #viewport = new PatternViewport();
+  #resizeObserver?: ResizeObserver;
 
   #textureManager: TextureManager;
 
@@ -44,10 +46,10 @@ export class PatternApplication extends EventTarget {
   constructor() {
     super();
 
-    this.#viewport.on(ToolEvent.ToolMainAction, this.handleToolMainAction, this);
-    this.#viewport.on(ToolEvent.ToolAntiAction, this.handleToolAntiAction, this);
-    this.#viewport.on(ToolEvent.ToolRelease, this.handleToolRelease, this);
-    this.#viewport.on(ToolEvent.Transform, this.handleTransform, this);
+    this.#viewport.on(ToolEvent.ToolMainAction, this.#handleToolMainAction, this);
+    this.#viewport.on(ToolEvent.ToolAntiAction, this.#handleToolAntiAction, this);
+    this.#viewport.on(ToolEvent.ToolRelease, this.#handleToolRelease, this);
+    this.#viewport.on(ToolEvent.Transform, this.#handleTransform, this);
   }
 
   /**
@@ -56,9 +58,11 @@ export class PatternApplication extends EventTarget {
    * @param options The options to use for initializing the application.
    */
   async init(canvas: HTMLCanvasElement, options?: PatternApplicationOptions) {
-    const { width, height } = canvas.getBoundingClientRect();
+    const wrapper = canvas.parentElement;
+    if (!wrapper) throw new Error("The canvas element must be mounted in the DOM");
 
-    // Initialize the Pixi.js `Application` and custom viewport.
+    const { width, height } = wrapper.getBoundingClientRect();
+
     await this.#pixi.init({
       ...DEFAULT_INIT_OPTIONS,
       ...options?.render,
@@ -66,13 +70,25 @@ export class PatternApplication extends EventTarget {
       width,
       height,
     });
-    this.#viewport.init(this.#pixi.renderer.events.domElement, options?.viewport);
 
-    // Initialize the texture manager.
+    this.#viewport.init(this.#pixi.renderer.events.domElement, options?.viewport);
+    this.#pixi.stage = this.#viewport;
+
     this.#textureManager = new TextureManager(this.#pixi.renderer, options?.textureManager);
 
-    // Replace the default stage with our viewport.
-    this.#pixi.stage = this.#viewport;
+    // Track wrapper size as the source of truth for the canvas size.
+    // Covers both window resize and splitter drag---anything that resizes the wrapper.
+    // The buffer resize is debounced to avoid flicker during slow dragging.
+    const resize = debounce((width: number, height: number) => {
+      this.#pixi.renderer.resize(width, height);
+      this.#viewport.resizeScreen(width, height);
+    }, 100);
+    this.#resizeObserver = new ResizeObserver(([entry]) => {
+      if (!entry) return;
+      const { inlineSize, blockSize } = entry.contentBoxSize[0]!;
+      resize(inlineSize, blockSize);
+    });
+    this.#resizeObserver.observe(wrapper);
 
     // Init devtools last, so it has access to the fully initialized application.
     if (import.meta.env.DEV) initDevtools({ app: this.#pixi });
@@ -82,25 +98,28 @@ export class PatternApplication extends EventTarget {
 
   /** Destroys the pattern canvas. */
   destroy() {
-    this.#viewport.off(ToolEvent.ToolMainAction, this.handleToolMainAction, this);
-    this.#viewport.off(ToolEvent.ToolAntiAction, this.handleToolAntiAction, this);
-    this.#viewport.off(ToolEvent.ToolRelease, this.handleToolRelease, this);
-    this.#viewport.off(ToolEvent.Transform, this.handleTransform, this);
+    this.#resizeObserver?.disconnect();
+    this.#resizeObserver = undefined;
+
+    this.#viewport.off(ToolEvent.ToolMainAction, this.#handleToolMainAction, this);
+    this.#viewport.off(ToolEvent.ToolAntiAction, this.#handleToolAntiAction, this);
+    this.#viewport.off(ToolEvent.ToolRelease, this.#handleToolRelease, this);
+    this.#viewport.off(ToolEvent.Transform, this.#handleTransform, this);
 
     this.#textureManager?.destroy();
     this.#pixi.destroy(undefined, true);
   }
 
-  private handleToolMainAction(detail: ToolEventDetail) {
+  #handleToolMainAction(detail: ToolEventDetail) {
     this.dispatchEvent(new CustomEvent(ToolEvent.ToolMainAction, { detail }));
   }
-  private handleToolAntiAction(detail: ToolEventDetail) {
+  #handleToolAntiAction(detail: ToolEventDetail) {
     this.dispatchEvent(new CustomEvent(ToolEvent.ToolAntiAction, { detail }));
   }
-  private handleToolRelease(detail: ToolEventDetail) {
+  #handleToolRelease(detail: ToolEventDetail) {
     this.dispatchEvent(new CustomEvent(ToolEvent.ToolRelease, { detail }));
   }
-  private handleTransform(detail: ToolEventDetail) {
+  #handleTransform(detail: ToolEventDetail) {
     this.dispatchEvent(new CustomEvent(ToolEvent.Transform, { detail }));
   }
 
@@ -132,15 +151,5 @@ export class PatternApplication extends EventTarget {
    */
   setZoom(zoom: ZoomState) {
     this.#viewport.setZoom(zoom);
-  }
-
-  /**
-   * Resizes the Pixi.js renderer.
-   * @param width The new width of the renderer.
-   * @param height The new height of the renderer.
-   */
-  resize(width: number, height: number) {
-    this.#pixi.renderer.resize(width, height);
-    this.#viewport.resizeScreen(width, height);
   }
 }

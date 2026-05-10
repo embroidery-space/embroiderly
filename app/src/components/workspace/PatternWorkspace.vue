@@ -2,8 +2,6 @@
 import { ContextMenu, useToast } from "@embroiderly/ui";
 import type { ContextMenuItem } from "@embroiderly/ui";
 
-import { vElementSize } from "@vueuse/components";
-import { useDebounceFn } from "@vueuse/core";
 import { computed, useTemplateRef, watch } from "vue";
 
 import { IconImage, IconImageOff } from "~/assets/icons/";
@@ -199,7 +197,6 @@ async function loadSymbolFonts(fonts: string[]) {
   <ContextMenu :items="canvasContextMenuOptions">
     <PatternCanvas
       ref="patternCanvas"
-      v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
       :pattern="patternStore.pattern"
       :options="props.options"
       enable-tool-events
