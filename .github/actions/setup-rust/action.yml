@@ -1,5 +1,5 @@
 name: Setup Rust
-description: Sets up Rust toolchain with system dependencies and caching
+description: Sets up Rust toolchain with system dependencies, required components, extra targets and tools, and caching
 inputs:
   stable-components:
     description: Stable Rust components to install (comma-separated list)

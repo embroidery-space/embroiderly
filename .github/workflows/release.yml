@@ -3,7 +3,7 @@ on:
   # Push to main: builds the desktop app and publishes a GitHub release.
   push:
     branches: [main]
-  # PR to main: builds the desktop app only (validates the build works).
+  # PR to main: only validates the build without publishing.
   pull_request:
     branches: [main]
     types: [opened, reopened, edited, synchronize]
