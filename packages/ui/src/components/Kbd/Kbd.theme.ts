@@ -10,15 +10,9 @@ export const KbdTheme = tv({
   },
   variants: {
     size: {
-      sm: {
-        base: "h-4 min-w-4 text-[10px]",
-      },
-      md: {
-        base: "h-5 min-w-5 text-[11px]",
-      },
-      lg: {
-        base: "h-6 min-w-6 text-[12px]",
-      },
+      sm: { base: "h-4 min-w-4 text-[0.625rem]" }, // 10px
+      md: { base: "h-5 min-w-5 text-[0.6875rem]" }, // 11px
+      lg: { base: "h-6 min-w-6 text-[0.75rem]" }, // 12px
     },
   },
 });

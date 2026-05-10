@@ -24,7 +24,7 @@ exports[`Tooltip > renders correctly with shortcut 1`] = `
     <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
       <span class="truncate" data-slot="text">Tooltip</span>
       <span class="gap-0.5 inline-flex items-center not-first:before:content-['·'] not-first:before:me-0.5 shrink-0" data-slot="kbds">
-        <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+Z</kbd>
+        <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+Z</kbd>
       </span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -43,7 +43,7 @@ exports[`Tooltip > renders correctly with shortcut only 1`] = `
   <div data-reka-popper-content-wrapper>
     <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
       <span class="gap-0.5 inline-flex items-center not-first:before:content-['·'] not-first:before:me-0.5 shrink-0" data-slot="kbds">
-        <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
+        <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+S</kbd>
       </span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
