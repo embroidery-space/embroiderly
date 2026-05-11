@@ -1,6 +1,6 @@
 import type { MarkdownRenderer } from "vitepress";
 
-const PROBLEM_CHARS_RE = /[йї_]/g;
+const PROBLEM_CHARS_RE = /[йї_]/gu;
 const REPLACEMENTS: Record<string, string> = {
   й: "и",
   ї: "і",
@@ -14,7 +14,7 @@ export function betterAnchors(md: MarkdownRenderer) {
       if (token.type !== "link_open") continue;
 
       const href = token.attrGet("href");
-      if (href === null || !/^[.#]/.test(href)) continue;
+      if (href === null || !/^[.#]/u.test(href)) continue;
 
       const [base, anchor] = href.split("#");
       if (anchor === undefined) continue;

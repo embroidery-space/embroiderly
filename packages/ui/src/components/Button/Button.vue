@@ -5,6 +5,7 @@ import { computed, ref } from "vue";
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import type { UseComponentIconsProps } from "../../composables/useComponentIcons.ts";
 import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
+import { getLinkRel, isExternalHref } from "../../utils/link.ts";
 import Icon from "../Icon/Icon.vue";
 
 import { ButtonTheme } from "./Button.theme.ts";
@@ -80,13 +81,6 @@ async function onClickWrapper(event: MouseEvent) {
   }
 }
 
-const isExternal = computed(() => !!props.href && /^[a-z][a-z0-9+.-]*:/i.test(props.href));
-const rel = computed(() => {
-  if (props.rel !== null) return props.rel;
-  if (isExternal.value) return "noopener noreferrer";
-  return undefined;
-});
-
 const { icons } = useComponentIcons();
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
   computed(() => ({
@@ -94,7 +88,7 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
     loading: isLoading.value,
     trailingIcon: props.trailingIcon
       ? props.trailingIcon
-      : !props.trailing && isExternal.value
+      : !props.trailing && isExternalHref(props.href)
         ? icons.value.external
         : undefined,
   })),
@@ -122,7 +116,7 @@ const ui = computed(() => {
     :as="props.href ? 'a' : 'button'"
     :href="props.href && !(props.disabled || isLoading) ? props.href : undefined"
     :target="props.href ? target : undefined"
-    :rel="props.href ? rel : undefined"
+    :rel="getLinkRel({ href: props.href, rel: props.rel })"
     :disabled="!props.href ? disabled || isLoading : undefined"
     :aria-disabled="disabled || isLoading"
     :tabindex="(disabled || isLoading) && props.href ? -1 : undefined"

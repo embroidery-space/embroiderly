@@ -13,7 +13,7 @@ beforeEach(() => {
     formatter: "classic",
 
     removeComments: true,
-    regexToRemoveAttributes: /style/,
+    regexToRemoveAttributes: /style/u,
 
     stubs: ["style"],
   };

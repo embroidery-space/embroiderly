@@ -11,7 +11,7 @@ import { betterAnchors } from "./plugins/";
 const HOSTNAME = "https://embroiderly.niusia.me";
 
 const LANGUAGES = ["en", "uk"];
-const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`);
+const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`, "u");
 
 const isCI = process.env.CI === "true";
 const isTauri = process.env.TAURI_ENV_TARGET_TRIPLE !== undefined;

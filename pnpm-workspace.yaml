@@ -10,23 +10,23 @@ cleanupUnusedCatalogs: true
 catalog:
   # Tauri
   "@tauri-apps/api": 2.11.0
-  "@tauri-apps/cli": 2.11.0
+  "@tauri-apps/cli": 2.11.1
   ## Official Tauri plugins
-  "@tauri-apps/plugin-fs": 2.5.0
-  "@tauri-apps/plugin-opener": 2.5.3
+  "@tauri-apps/plugin-fs": 2.5.1
+  "@tauri-apps/plugin-opener": 2.5.4
   "@tauri-apps/plugin-process": 2.3.1
   "@tauri-apps/plugin-updater": 2.10.1
 
   # Vue
   "@tanstack/vue-hotkeys": 0.10.0
-  "@vueuse/core": 14.2.1
-  "@vueuse/components": 14.2.1
-  "@vueuse/integrations": 14.2.1
-  "vue": 3.5.33
-  "vue-component-type-helpers": 3.2.7
+  "@vueuse/core": 14.3.0
+  "@vueuse/components": 14.3.0
+  "@vueuse/integrations": 14.3.0
+  "vue": 3.5.34
+  "vue-component-type-helpers": 3.2.8
   "pinia": 3.0.4
   "pinia-plugin-persistedstate": 4.7.1
-  "reka-ui": 2.9.6
+  "reka-ui": 2.9.7
 
   # Styling
   "tailwindcss": 4.2.4
@@ -34,9 +34,9 @@ catalog:
   "tailwind-variants": 3.2.2
 
   # Icons
-  "@iconify/vue": 5.0.0
+  "@iconify/vue": 5.0.1
   "@iconify-json/lucide": 1.2.105
-  "@iconify-json/material-symbols": 1.2.69
+  "@iconify-json/material-symbols": 1.2.70
   "@iconify-json/mdi": 1.2.3
   "unplugin-icons": 23.0.1
 
@@ -51,9 +51,9 @@ catalog:
   "@zorsh/zorsh": 0.5.0
 
   # Telemetry
-  "@sentry/core": 10.51.0
-  "@sentry/vue": 10.51.0
-  "posthog-js": 1.372.9
+  "@sentry/core": 10.52.0
+  "@sentry/vue": 10.52.0
+  "posthog-js": 1.372.10
 
   # Utilities
   "@stdlib/math-base-special-roundn": 0.2.3
@@ -74,7 +74,7 @@ catalog:
   "@vite-pwa/vitepress": 1.1.0
   "swiper": 12.1.4
   "vitepress": 2.0.0-alpha.17
-  "vitepress-plugin-llms": 1.12.1
+  "vitepress-plugin-llms": 1.12.2
 
   # Code Quality
   "eslint": 9.39.4
@@ -87,28 +87,28 @@ catalog:
   "eslint-plugin-better-tailwindcss": 4.5.0
   "eslint-plugin-import-x": 4.16.2
   "eslint-plugin-no-only-tests": 3.4.0
-  "eslint-plugin-oxlint": 1.62.0
-  "eslint-plugin-vue": 10.9.0
+  "eslint-plugin-oxlint": 1.63.0
+  "eslint-plugin-vue": 10.9.1
   "eslint-plugin-wdio": 9.27.1
   "eslint-plugin-yml": 3.3.2
   "markdownlint-cli2": 0.22.1
-  "oxfmt": 0.47.0
-  "oxlint": 1.62.0
+  "oxfmt": 0.48.0
+  "oxlint": 1.63.0
   "husky": 9.1.7
-  "lint-staged": 16.4.0
+  "lint-staged": 17.0.2
 
   # Build tools
   "concurrently": 9.2.1
-  "vite": 8.0.10
-  "vite-plugin-pwa": 1.2.0
+  "vite": 8.0.11
+  "vite-plugin-pwa": 1.3.0
   "@vite-pwa/assets-generator": 1.0.2
   "@vitejs/plugin-vue": 6.0.6
   "@tailwindcss/vite": 4.2.4
-  "wrangler": 4.87.0
+  "wrangler": 4.90.0
 
   # PWA
-  "workbox-precaching": 7.4.0
-  "workbox-window": 7.4.0
+  "workbox-precaching": 7.4.1
+  "workbox-window": 7.4.1
 
   # Histoire
   "histoire": 1.0.0-beta.1
@@ -116,7 +116,7 @@ catalog:
 
   # TypeScript
   "typescript": 6.0.3
-  "vue-tsc": 3.2.7
+  "vue-tsc": 3.2.8
   "@tsconfig/node24": 24.0.4
   "@tsconfig/strictest": 2.0.8
   "@vue/tsconfig": 0.9.1
@@ -137,7 +137,7 @@ catalog:
 
   # Types
   "@types/mocha": 10.0.10
-  "@types/node": 24.12.2
+  "@types/node": 24.12.3
   "@types/sortablejs": 1.15.9
 
   # DevTools
