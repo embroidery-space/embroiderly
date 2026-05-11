@@ -1,5 +1,6 @@
 [package]
 name = "embroiderly_image_import"
+version = { workspace = true }
 edition = { workspace = true }
 
 [lints]

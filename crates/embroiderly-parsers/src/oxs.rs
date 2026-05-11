@@ -5,7 +5,6 @@ use embroiderly_pattern::*;
 use quick_xml::events::{BytesDecl, Event};
 use quick_xml::{Reader, Writer};
 
-use crate::PackageInfo;
 use crate::utils::xml::*;
 
 #[cfg(test)]
@@ -142,18 +141,14 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
   Ok(pattern)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<Vec<u8>> {
+pub fn save_pattern(patproj: &PatternProject) -> Result<Vec<u8>> {
   let mut data = Vec::new();
-  save_pattern_inner(&mut data, patproj, package_info)?;
+  save_pattern_inner(&mut data, patproj)?;
   Ok(data)
 }
 
 #[tracing::instrument(name = "save_oxs", level = "debug", skip_all)]
-fn save_pattern_inner<W: io::Write>(
-  writer: &mut W,
-  patproj: &PatternProject,
-  package_info: &PackageInfo,
-) -> io::Result<()> {
+fn save_pattern_inner<W: io::Write>(writer: &mut W, patproj: &PatternProject) -> io::Result<()> {
   let PatternProject { pattern, .. } = patproj;
   let flattened_layer = pattern.flatten_visible_layers();
 
@@ -180,7 +175,6 @@ fn save_pattern_inner<W: io::Write>(
       &pattern.info,
       pattern.fabric.spi,
       pattern.palette.len(),
-      package_info,
     )?;
     write_palette(writer, &pattern.fabric, &pattern.palette)?;
     write_full_stitches(
@@ -286,14 +280,13 @@ fn write_pattern_properties<W: io::Write>(
   info: &PatternInfo,
   spi: StitchesPerInch,
   palette_size: usize,
-  package_info: &PackageInfo,
 ) -> io::Result<()> {
   writer
     .create_element("properties")
     .with_attributes([
       ("oxsversion", "1.0"),
-      ("software", package_info.name.as_str()),
-      ("software_version", package_info.version.as_str()),
+      ("software", "Embroiderly"),
+      ("software_version", env!("CARGO_PKG_VERSION")),
       ("chartwidth", pattern_width.to_string().as_str()),
       ("chartheight", pattern_height.to_string().as_str()),
       ("charttitle", info.title.as_str()),

@@ -23,10 +23,10 @@ pub fn parse_pattern(data: &[u8], file_name: &str) -> Result<PatternProject> {
   .map_err(Error::FailedToParse)
 }
 
-pub fn save_pattern(patproj: &PatternProject, format: PatternFormat, package_info: &PackageInfo) -> Result<Vec<u8>> {
+pub fn save_pattern(patproj: &PatternProject, format: PatternFormat) -> Result<Vec<u8>> {
   match format {
     PatternFormat::Xsd => Err(Error::UnsupportedPatternType(PatternFormat::Xsd.to_string()).into()),
-    PatternFormat::Oxs => oxs::save_pattern(patproj, package_info),
+    PatternFormat::Oxs => oxs::save_pattern(patproj),
     PatternFormat::EmbProj => embproj::save_pattern(patproj),
   }
   .map_err(Error::FailedToParse)
@@ -39,9 +39,4 @@ pub fn parse_palette(data: &[u8], file_name: &str) -> Result<Vec<BrandPaletteIte
     PaletteFormat::Xspro => xspro::parse_palette(data),
   }
   .map_err(Error::FailedToParse)
-}
-
-pub struct PackageInfo {
-  pub name: String,
-  pub version: String,
 }

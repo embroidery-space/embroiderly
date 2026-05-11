@@ -50,15 +50,15 @@ fn reads_and_writes_pattern_properties() {
     &pattern_info,
     spi,
     palette_size.unwrap(),
-    &PackageInfo {
-      name: String::from("MySoftware"),
-      version: String::from("0.0.0"),
-    },
   )
   .unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
-  let diff = prettydiff::diff_lines(&result, xml);
+  let expected = format!(
+    r#"<properties oxsversion="1.0" software="Embroiderly" software_version="{}" chartwidth="20" chartheight="10" charttitle="My Pattern" author="Me" copyright="" instructions="Enjoy the embroidery process!" stitchesperinch="14" stitchesperinch_y="14" palettecount="5"/>"#,
+    env!("CARGO_PKG_VERSION"),
+  );
+  let diff = prettydiff::diff_lines(&result, &expected);
   assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
@@ -88,23 +88,14 @@ fn reads_and_writes_default_pattern_properties() {
   assert_eq!(palette_size, None);
 
   let mut writer = create_writer();
-  write_pattern_properties(
-    &mut writer,
-    pattern_width,
-    pattern_height,
-    &pattern_info,
-    spi,
-    0,
-    &PackageInfo {
-      name: String::from("MySoftware"),
-      version: String::from("0.0.0"),
-    },
-  )
-  .unwrap();
+  write_pattern_properties(&mut writer, pattern_width, pattern_height, &pattern_info, spi, 0).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
-  let expected = r#"<properties oxsversion="1.0" software="MySoftware" software_version="0.0.0" chartwidth="100" chartheight="100" charttitle="" author="" copyright="" instructions="" stitchesperinch="14" stitchesperinch_y="14" palettecount="0"/>"#;
-  let diff = prettydiff::diff_lines(&result, expected);
+  let expected = format!(
+    r#"<properties oxsversion="1.0" software="Embroiderly" software_version="{}" chartwidth="100" chartheight="100" charttitle="" author="" copyright="" instructions="" stitchesperinch="14" stitchesperinch_y="14" palettecount="0"/>"#,
+    env!("CARGO_PKG_VERSION"),
+  );
+  let diff = prettydiff::diff_lines(&result, &expected);
   assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 

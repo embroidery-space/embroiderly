@@ -1,5 +1,6 @@
 [package]
 name = "embroiderly_wasm"
+version = { workspace = true }
 edition = { workspace = true }
 
 [lints]

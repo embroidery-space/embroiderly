@@ -1210,7 +1210,7 @@ checksum = "edd0f118536f44f5ccd48bcb8b111bdc3de888b58c74639dfb034a357d0f206d"
 
 [[package]]
 name = "embroiderly"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "embroiderly_tracing",
@@ -1229,7 +1229,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_editor"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "borsh",
  "embroiderly_parsers",
@@ -1243,7 +1243,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_image"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "embroiderly_parsers",
@@ -1255,7 +1255,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_image_import"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1270,7 +1270,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_parsers"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -1289,7 +1289,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_pattern"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "alphanumeric-sort",
  "anyhow",
@@ -1303,7 +1303,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_pdf_export"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1321,7 +1321,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_tracing"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "tracing",
@@ -1331,7 +1331,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_wasm"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1359,7 +1359,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_web"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "futures",

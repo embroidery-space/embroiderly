@@ -1,5 +1,6 @@
 [package]
 name = "embroiderly_editor"
+version = { workspace = true }
 edition = { workspace = true }
 
 [lints]
