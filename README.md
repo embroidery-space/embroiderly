@@ -8,11 +8,11 @@ A free, open-source, cross-platform desktop application for designing cross-stit
 
 </div>
 
-[Download]: https://embroiderly.niusia.me/download
-[Get Started]: https://embroiderly.niusia.me/guide/
-[Contacts]: https://embroiderly.niusia.me/resources/contacts
-[Contributing]: https://embroiderly.niusia.me/resources/contributing
-[Changelog]: https://embroiderly.niusia.me/resources/changelog
+[Download]: https://docs.embroiderly.niusia.me/download
+[Get Started]: https://docs.embroiderly.niusia.me/guide/
+[Contacts]: https://docs.embroiderly.niusia.me/resources/contacts
+[Contributing]: https://docs.embroiderly.niusia.me/resources/contributing
+[Changelog]: https://docs.embroiderly.niusia.me/resources/changelog
 
 ## License
 
