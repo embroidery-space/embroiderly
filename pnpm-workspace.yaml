@@ -95,7 +95,7 @@ catalog:
   "oxfmt": 0.47.0
   "oxlint": 1.62.0
   "husky": 9.1.7
-  "lint-staged": 16.4.0
+  "lint-staged": 17.0.2
 
   # Build tools
   "concurrently": 9.2.1
