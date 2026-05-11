@@ -1,5 +1,3 @@
-#![doc = include_str!("../README.md")]
-
 mod editor;
 pub use editor::Editor;
 
