@@ -1,6 +1,6 @@
 import convert from "color-convert";
 
-const HEX_REGEX = /^#?([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/;
+const HEX_REGEX = /^#?([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/u;
 
 export interface HSV {
   /** Hue: 0-360 */
@@ -18,7 +18,7 @@ export function isValidHex(hex: string): boolean {
 
 /** Normalizes a HEX color string to uppercase 6-digit format without hash. */
 function normalizeHex(hex: string): string {
-  let normalized = hex.replace(/^#/, "").toUpperCase();
+  let normalized = hex.replace(/^#/u, "").toUpperCase();
 
   // Expand 3-digit hex to 6-digit.
   if (normalized.length === 3) {

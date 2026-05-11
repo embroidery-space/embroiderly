@@ -44,9 +44,9 @@ export default function fluentMerge(options: FluentMergeOptions = {}): Plugin {
 
         if (minimize) {
           // Remove all comments.
-          content = content.replaceAll(/^#.*$/gm, "");
+          content = content.replaceAll(/^#.*$/gmu, "");
           // Remove extra empty lines.
-          content = content.replaceAll(/^[\r\n]+/gm, "\n");
+          content = content.replaceAll(/^[\r\n]+/gmu, "\n");
         }
 
         return content.trim();
