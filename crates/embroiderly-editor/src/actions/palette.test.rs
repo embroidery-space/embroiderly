@@ -7,8 +7,7 @@ use crate::{EditorAction, EditorEvent};
 
 fn create_pattern_project() -> PatternProject {
   let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../testdata/patterns/rainbow.oxs");
-  let data = std::fs::read(file_path).unwrap();
-  embroiderly_parsers::oxs::parse_pattern(&data).unwrap()
+  embroiderly_parsers::oxs::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap()
 }
 
 #[test]

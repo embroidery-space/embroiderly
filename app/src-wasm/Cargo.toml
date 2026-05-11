@@ -15,7 +15,6 @@ embroiderly_parsers = { workspace = true }
 embroiderly_tracing = { workspace = true }
 embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
 embroiderly_web = { workspace = true, features = ["opfs", "net", "idb", "timers"] }
-xsp_parsers = { workspace = true }
 
 # Async runtime
 futures = { workspace = true }

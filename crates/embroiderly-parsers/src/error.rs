@@ -5,6 +5,9 @@ pub enum Error {
   #[error("Unsupported pattern type: {0}")]
   UnsupportedPatternType(String),
 
-  #[error("Failed to parse pattern: {0}")]
+  #[error("Unsupported palette type: {0}")]
+  UnsupportedPaletteType(String),
+
+  #[error("Failed to parse: {0}")]
   FailedToParse(#[source] anyhow::Error),
 }

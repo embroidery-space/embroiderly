@@ -20,9 +20,6 @@ image = { workspace = true }
 # Error handling
 anyhow = { workspace = true }
 
-# Embroiderly Core
-xsp_parsers = { workspace = true }
-
 # Other
 alphanumeric-sort = { workspace = true }
 ordered-float = { workspace = true }

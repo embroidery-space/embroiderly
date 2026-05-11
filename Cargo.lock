@@ -1273,13 +1273,17 @@ name = "embroiderly_parsers"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "byteorder",
  "embroiderly_pattern",
+ "encoding_rs",
+ "hex",
+ "itertools",
+ "paste",
  "prettydiff",
  "quick-xml 0.39.2",
  "serde_json",
  "thiserror 2.0.18",
  "tracing",
- "xsp_parsers",
  "zip 8.6.0",
 ]
 
@@ -1295,7 +1299,6 @@ dependencies = [
  "rstest",
  "serde",
  "uuid",
- "xsp_parsers",
 ]
 
 [[package]]
@@ -1352,7 +1355,6 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
- "xsp_parsers",
 ]
 
 [[package]]
@@ -7872,19 +7874,6 @@ name = "xmp-writer"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9440ea3e5aeabb0ac63af70daf835274065238cdd0cec83418f417eae38bacee"
-
-[[package]]
-name = "xsp_parsers"
-version = "0.0.0"
-dependencies = [
- "byteorder",
- "encoding_rs",
- "hex",
- "itertools",
- "paste",
- "thiserror 2.0.18",
- "tracing",
-]
 
 [[package]]
 name = "yaml-rust"

@@ -324,26 +324,8 @@ async fn process_and_save_palette(file_name: &str, data: &[u8], dir: &opfs::Dire
     .to_owned();
 
   let palette: Vec<BrandPaletteItem> = match extension.as_str() {
-    "master" | "user" => xsp_parsers::pmaker::parse_palette_from_bytes(data, file_name)
-      .map_err(anyhow::Error::from)?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-
-    "threads" => xsp_parsers::ursa::parse_palette_from_bytes(data)
-      .map_err(anyhow::Error::from)?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-
-    "rng" => xsp_parsers::xspro::parse_palette_from_bytes(data)
-      .map_err(anyhow::Error::from)?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-
+    "master" | "user" | "threads" | "rng" => embroiderly_parsers::parse_palette(data, file_name)?,
     "json" => serde_json::from_slice(data).map_err(anyhow::Error::from)?,
-
     _ => {
       return Err(Error::new(ErrorKind::UnsupportedPaletteType(extension)));
     }

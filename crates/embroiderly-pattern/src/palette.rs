@@ -38,8 +38,6 @@
 #[path = "./palette.test.rs"]
 mod tests;
 
-use xsp_parsers::{pmaker, ursa, xspro};
-
 /// Display settings for the palette panel.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
@@ -414,47 +412,6 @@ impl From<BrandPaletteItem> for PaletteItem {
   }
 }
 
-impl From<pmaker::PaletteItem> for PaletteItem {
-  fn from(palitem: pmaker::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: palitem
-        .blends
-        .map(|blends| blends.into_iter().map(Blend::from).collect()),
-      symbol: None,
-    }
-  }
-}
-
-impl From<ursa::PaletteItem> for PaletteItem {
-  fn from(palitem: ursa::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-      symbol: None,
-    }
-  }
-}
-
-impl From<xspro::PaletteItem> for PaletteItem {
-  fn from(palitem: xspro::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-      symbol: None,
-    }
-  }
-}
-
 impl PartialEq for PaletteItem {
   fn eq(&self, other: &Self) -> bool {
     self.brand == other.brand && self.number == other.number
@@ -482,44 +439,6 @@ pub struct BrandPaletteItem {
   pub color: String,
   #[cfg_attr(feature = "serde", serde(skip_serializing_if = "blends_empty"))]
   pub blends: Option<Vec<Blend>>,
-}
-
-impl From<pmaker::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: pmaker::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: palitem
-        .blends
-        .map(|blends| blends.into_iter().map(Blend::from).collect()),
-    }
-  }
-}
-
-impl From<ursa::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: ursa::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-    }
-  }
-}
-
-impl From<xspro::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: xspro::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-    }
-  }
 }
 
 impl PartialEq for BrandPaletteItem {
@@ -617,30 +536,12 @@ pub struct Blend {
   pub number: String,
 }
 
-impl From<pmaker::Blend> for Blend {
-  fn from(blend: pmaker::Blend) -> Self {
-    Self {
-      brand: blend.brand,
-      number: blend.number,
-    }
-  }
-}
-
 /// Represents a bead used in patterns.
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Bead {
   pub length: f32,
   pub diameter: f32,
-}
-
-impl From<pmaker::Bead> for Bead {
-  fn from(bead: pmaker::Bead) -> Self {
-    Self {
-      length: bead.length,
-      diameter: bead.diameter,
-    }
-  }
 }
 
 #[cfg(feature = "serde")]
