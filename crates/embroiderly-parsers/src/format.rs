@@ -47,11 +47,14 @@ pub enum PaletteFormat {
   /// Pattern Maker (HobbyWare): `.master` or `.user` files.
   Pmaker,
 
-  /// Ursa/WinStitch: `.threads` files.
+  /// Win/MacStitch (UrsaSoftware): `.threads` files.
   Ursa,
 
-  /// `XSPro` Platinum: `.rng` files.
+  /// XSPro Platinum (DP Software): `.rng` files.
   Xspro,
+
+  /// Embroiderly's own JSON palette format.
+  Embroiderly,
 }
 
 impl TryFrom<&str> for PaletteFormat {
@@ -63,6 +66,7 @@ impl TryFrom<&str> for PaletteFormat {
       "master" | "user" => Ok(Self::Pmaker),
       "threads" => Ok(Self::Ursa),
       "rng" => Ok(Self::Xspro),
+      "json" => Ok(Self::Embroiderly),
       ext => Err(Error::UnsupportedPaletteType(ext.to_string())),
     }
   }

@@ -34,9 +34,9 @@ pub fn save_pattern(patproj: &PatternProject, format: PatternFormat) -> Result<V
 
 pub fn parse_palette(data: &[u8], file_name: &str) -> Result<Vec<BrandPaletteItem>> {
   match PaletteFormat::try_from(file_name)? {
-    PaletteFormat::Pmaker => pmaker::parse_palette(data),
-    PaletteFormat::Ursa => ursa::parse_palette(data),
-    PaletteFormat::Xspro => xspro::parse_palette(data),
+    PaletteFormat::Pmaker => pmaker::parse_palette(data).map_err(Error::FailedToParse),
+    PaletteFormat::Ursa => ursa::parse_palette(data).map_err(Error::FailedToParse),
+    PaletteFormat::Xspro => xspro::parse_palette(data).map_err(Error::FailedToParse),
+    PaletteFormat::Embroiderly => serde_json::from_slice(data).map_err(|e| Error::FailedToParse(e.into())),
   }
-  .map_err(Error::FailedToParse)
 }

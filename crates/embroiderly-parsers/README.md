@@ -10,6 +10,7 @@ This crate provides parsers of all the resources used by Embroiderly:
 
 ## Palettes
 
+- `json` - Our custom palette format (JSON).
 - `master`, `user` - [Pattern Maker for Cross Stitch]'s internal palettes.
 - `threads` - [UrsaSoftware]'s internal thread palettes.
 - `rng` - [Cross Stitch Professional Platinum]'s internal palettes.
