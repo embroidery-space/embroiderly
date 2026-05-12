@@ -97,20 +97,28 @@ jobs:
           LOGS_URL: ${{ vars.EMBROIDERLY_LOGS_URL }}
           LOGS_SECRET: ${{ secrets.EMBROIDERLY_LOGS_SECRET }}
           COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+          COMMIT_HASH: ${{ github.sha }}
+          COMMIT_BRANCH: ${{ github.ref_name }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
           ALIAS: ${{ steps.info.outputs.alias }}
         run: |
+          GIT_INFO=$(jq -cn \
+            --arg u "$COMMIT_URL" --arg h "$COMMIT_HASH" --arg b "$COMMIT_BRANCH" --arg m "$COMMIT_MESSAGE" \
+            '{ url: $u, hash: $h, branch: $b, message: $m }')
+
           if [ -n "$ALIAS" ]; then
             # Derive the base hostname from the preview URL by stripping the UUID prefix, then substitute the branch alias to build the alias URL.
             BASE=$(echo "$PREVIEW_URL" | sed 's|https://[^-]*-||')
             ALIAS_URL="https://${ALIAS}-${BASE}"
+
             BODY=$(jq -cn \
-              --arg c "$COMMIT_URL" --arg p "$PREVIEW_URL" --arg a "$ALIAS_URL" \
-              '{ commitUrl: $c, previewUrl: $p, aliasUrl: $a }')
+              --argjson gi "$GIT_INFO" --arg p "$PREVIEW_URL" --arg a "$ALIAS_URL" \
+              '{ gitInfo: $gi, previewUrl: $p, aliasUrl: $a }')
           else
             BODY=$(jq -cn \
-              --arg c "$COMMIT_URL" --arg p "$PREVIEW_URL" \
-              '{ commitUrl: $c, previewUrl: $p }')
+              --argjson gi "$GIT_INFO" --arg p "$PREVIEW_URL" \
+              '{ gitInfo: $gi, previewUrl: $p }')
           fi
 
           curl --fail-with-body -sS \
