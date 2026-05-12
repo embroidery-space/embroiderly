@@ -1,5 +1,3 @@
-use xsp_parsers::pmaker;
-
 use super::Coord;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -22,19 +20,6 @@ impl PartialOrd for LineStitch {
 impl Ord for LineStitch {
   fn cmp(&self, other: &Self) -> std::cmp::Ordering {
     self.y.cmp(&other.y).then(self.x.cmp(&other.x))
-  }
-}
-
-impl TryFrom<pmaker::LineStitch> for LineStitch {
-  type Error = anyhow::Error;
-
-  fn try_from(linestitch: pmaker::LineStitch) -> Result<Self, Self::Error> {
-    Ok(Self {
-      x: (Coord::new(linestitch.x.0)?, Coord::new(linestitch.x.1)?),
-      y: (Coord::new(linestitch.y.0)?, Coord::new(linestitch.y.1)?),
-      palindex: linestitch.palindex as u32,
-      kind: linestitch.kind.into(),
-    })
   }
 }
 
@@ -63,15 +48,6 @@ impl std::str::FromStr for LineStitchKind {
       "backstitch" => Ok(Self::Back),
       "straightstitch" => Ok(Self::Straight),
       _ => Ok(Self::Back),
-    }
-  }
-}
-
-impl From<pmaker::LineStitchKind> for LineStitchKind {
-  fn from(kind: pmaker::LineStitchKind) -> Self {
-    match kind {
-      pmaker::LineStitchKind::Back => Self::Back,
-      pmaker::LineStitchKind::Straight => Self::Straight,
     }
   }
 }

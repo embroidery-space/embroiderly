@@ -1,5 +1,3 @@
-use xsp_parsers::pmaker;
-
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -50,16 +48,6 @@ impl Default for Grid {
   }
 }
 
-impl From<pmaker::Grid> for Grid {
-  fn from(grid: pmaker::Grid) -> Self {
-    Self {
-      major_lines_interval: grid.major_lines_interval,
-      minor_lines: grid.minor_screen_lines.into(),
-      major_lines: grid.major_screen_lines.into(),
-    }
-  }
-}
-
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -71,15 +59,6 @@ pub struct GridLine {
   pub thickness: f32,
 }
 
-impl From<pmaker::GridLineStyle> for GridLine {
-  fn from(line: pmaker::GridLineStyle) -> Self {
-    Self {
-      color: line.color,
-      thickness: line.thickness,
-    }
-  }
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -87,17 +66,6 @@ pub enum DisplayMode {
   Solid,
   Stitches,
   Mixed,
-}
-
-impl DisplayMode {
-  #[must_use]
-  pub const fn from_pattern_maker(value: u16) -> Self {
-    match value {
-      0 => Self::Stitches,
-      2 => Self::Solid,
-      _ => Self::Mixed,
-    }
-  }
 }
 
 impl std::fmt::Display for DisplayMode {

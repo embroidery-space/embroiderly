@@ -1,5 +1,3 @@
-use xsp_parsers::pmaker;
-
 use super::{Coord, LineStitch, NodeStitch};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -9,8 +7,6 @@ use super::{Coord, LineStitch, NodeStitch};
 pub struct SpecialStitch {
   pub x: Coord,
   pub y: Coord,
-  pub width: Coord,
-  pub height: Coord,
   pub rotation: u16,
   pub flip: (bool, bool),
   pub palindex: u32,
@@ -29,23 +25,6 @@ impl Ord for SpecialStitch {
   }
 }
 
-impl TryFrom<(pmaker::SpecialStitch, f32, f32)> for SpecialStitch {
-  type Error = anyhow::Error;
-
-  fn try_from((special_stitch, width, height): (pmaker::SpecialStitch, f32, f32)) -> Result<Self, Self::Error> {
-    Ok(Self {
-      x: Coord::new(special_stitch.x)?,
-      y: Coord::new(special_stitch.y)?,
-      width: Coord::new(width)?,
-      height: Coord::new(height)?,
-      rotation: special_stitch.rotation,
-      flip: special_stitch.flip,
-      palindex: special_stitch.palindex as u32,
-      modindex: special_stitch.modindex as u32,
-    })
-  }
-}
-
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -60,52 +39,10 @@ pub struct SpecialStitchModel {
   pub curvedstitches: Vec<CurvedStitch>,
 }
 
-impl TryFrom<pmaker::SpecialStitchModel> for SpecialStitchModel {
-  type Error = anyhow::Error;
-
-  fn try_from(spsmodel: pmaker::SpecialStitchModel) -> Result<Self, Self::Error> {
-    Ok(Self {
-      unique_name: spsmodel.unique_name,
-      name: spsmodel.name,
-      width: spsmodel.width,
-      height: spsmodel.height,
-      nodestitches: spsmodel
-        .nodestitches
-        .into_iter()
-        .map(NodeStitch::try_from)
-        .collect::<Result<Vec<_>, _>>()?,
-      linestitches: spsmodel
-        .linestitches
-        .into_iter()
-        .map(LineStitch::try_from)
-        .collect::<Result<Vec<_>, _>>()?,
-      curvedstitches: spsmodel
-        .curvedstitches
-        .into_iter()
-        .map(CurvedStitch::try_from)
-        .collect::<Result<Vec<_>, _>>()?,
-    })
-  }
-}
-
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct CurvedStitch {
   pub points: Vec<(Coord, Coord)>,
-}
-
-impl TryFrom<pmaker::CurvedStitch> for CurvedStitch {
-  type Error = anyhow::Error;
-
-  fn try_from(curvedstitch: pmaker::CurvedStitch) -> Result<Self, Self::Error> {
-    Ok(Self {
-      points: curvedstitch
-        .points
-        .into_iter()
-        .map(|(x, y)| Ok((Coord::new(x)?, Coord::new(y)?)))
-        .collect::<Result<Vec<_>, Self::Error>>()?,
-    })
-  }
 }

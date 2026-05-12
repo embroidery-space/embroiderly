@@ -5,8 +5,7 @@ use embroiderly_pattern::*;
 use quick_xml::events::{BytesDecl, Event};
 use quick_xml::{Reader, Writer};
 
-use self::utils::*;
-use crate::PackageInfo;
+use crate::utils::xml::*;
 
 #[cfg(test)]
 #[path = "oxs.test.rs"]
@@ -142,18 +141,14 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
   Ok(pattern)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<Vec<u8>> {
+pub fn save_pattern(patproj: &PatternProject) -> Result<Vec<u8>> {
   let mut data = Vec::new();
-  save_pattern_inner(&mut data, patproj, package_info)?;
+  save_pattern_inner(&mut data, patproj)?;
   Ok(data)
 }
 
 #[tracing::instrument(name = "save_oxs", level = "debug", skip_all)]
-fn save_pattern_inner<W: io::Write>(
-  writer: &mut W,
-  patproj: &PatternProject,
-  package_info: &PackageInfo,
-) -> io::Result<()> {
+fn save_pattern_inner<W: io::Write>(writer: &mut W, patproj: &PatternProject) -> io::Result<()> {
   let PatternProject { pattern, .. } = patproj;
   let flattened_layer = pattern.flatten_visible_layers();
 
@@ -180,7 +175,6 @@ fn save_pattern_inner<W: io::Write>(
       &pattern.info,
       pattern.fabric.spi,
       pattern.palette.len(),
-      package_info,
     )?;
     write_palette(writer, &pattern.fabric, &pattern.palette)?;
     write_full_stitches(
@@ -286,14 +280,13 @@ fn write_pattern_properties<W: io::Write>(
   info: &PatternInfo,
   spi: StitchesPerInch,
   palette_size: usize,
-  package_info: &PackageInfo,
 ) -> io::Result<()> {
   writer
     .create_element("properties")
     .with_attributes([
       ("oxsversion", "1.0"),
-      ("software", package_info.name.as_str()),
-      ("software_version", package_info.version.as_str()),
+      ("software", "Embroiderly"),
+      ("software_version", env!("CARGO_PKG_VERSION")),
       ("chartwidth", pattern_width.to_string().as_str()),
       ("chartheight", pattern_height.to_string().as_str()),
       ("charttitle", info.title.as_str()),
@@ -849,8 +842,6 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
     return Ok(Some(OxsOrnament::Special(SpecialStitch {
       x,
       y,
-      width: attributes.get_parsed("width").unwrap_or_default(),
-      height: attributes.get_parsed("height").unwrap_or_default(),
       palindex,
       modindex,
       rotation: attributes.get_parsed("rotation").unwrap_or_default(),
@@ -968,8 +959,6 @@ fn write_ornament<W: io::Write>(writer: &mut Writer<W>, stitch: OxsOrnament) -> 
         .with_attributes([
           ("x1", stitch.x.to_string().as_str()),
           ("y1", stitch.y.to_string().as_str()),
-          ("width", stitch.width.to_string().as_str()),
-          ("height", stitch.height.to_string().as_str()),
           ("palindex", (stitch.palindex + 1).to_string().as_str()),
           ("objecttype", "specialstitch"),
           ("modindex", stitch.modindex.to_string().as_str()),
@@ -1074,92 +1063,4 @@ fn write_special_stitch_models<W: io::Write>(
     })?;
 
   Ok(())
-}
-
-pub mod utils {
-  use embroiderly_pattern::Coord;
-
-  pub struct AttributesMap {
-    inner: std::collections::HashMap<String, String>,
-  }
-
-  impl AttributesMap {
-    pub fn get(&self, key: &str) -> Option<&str> {
-      self.inner.get(key).map(std::string::String::as_str)
-    }
-
-    #[must_use]
-    pub fn get_coord(&self, key: &str) -> Option<Coord> {
-      self.get(key).and_then(|s| {
-        let normalized = s.replace(',', ".");
-        normalized.parse().ok()
-      })
-    }
-
-    #[must_use]
-    pub fn get_palindex(&self, key: &str) -> Option<u32> {
-      match self.get(key).and_then(|s| s.parse::<u32>().ok()) {
-        Some(palindex) if palindex != 0 => Some(palindex - 1),
-        _ => None,
-      }
-    }
-
-    #[must_use]
-    pub fn get_color(&self, key: &str) -> Option<&str> {
-      let color = self.get(key);
-      if color.is_some_and(|c| c.is_empty() || c == "nil") {
-        None
-      } else {
-        color
-      }
-    }
-
-    #[must_use]
-    pub fn get_objecttype(&self, key: &str) -> Option<String> {
-      self
-        .get(key)
-        .and_then(|s| if s.is_empty() { None } else { Some(s.to_owned()) })
-    }
-
-    #[must_use]
-    pub fn get_bool(&self, key: &str) -> Option<bool> {
-      self.get(key).and_then(|s| {
-        let normalized = s.to_lowercase();
-        normalized.parse().ok()
-      })
-    }
-
-    #[must_use]
-    pub fn get_parsed<T: std::str::FromStr>(&self, key: &str) -> Option<T> {
-      self.get(key).and_then(|s| s.parse::<T>().ok())
-    }
-
-    #[must_use]
-    pub fn get_symbol(&self, key: &str) -> Option<char> {
-      self.get(key).and_then(|s| {
-        if s.chars().count() == 1 {
-          // First try to parse as a single character.
-          s.chars().next()
-        } else {
-          // Try to parse as a numeric char code.
-          s.parse::<u32>().ok().and_then(char::from_u32)
-        }
-      })
-    }
-  }
-
-  impl TryFrom<quick_xml::events::attributes::Attributes<'_>> for AttributesMap {
-    type Error = anyhow::Error;
-
-    fn try_from(attributes: quick_xml::events::attributes::Attributes) -> Result<Self, Self::Error> {
-      let mut map = std::collections::HashMap::new();
-      for attr in attributes {
-        let attr = attr?;
-        let key = String::from_utf8(attr.key.as_ref().to_vec())?;
-        let value = String::from_utf8(attr.value.to_vec())?;
-        map.insert(key, value);
-      }
-      Ok(Self { inner: map })
-    }
-  }
 }

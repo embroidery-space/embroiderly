@@ -8,7 +8,7 @@ use embroiderly_editor::actions::{
   StitchAction,
 };
 use embroiderly_editor::{Editor, EditorAction, EditorEvent};
-use embroiderly_parsers::{PackageInfo, PatternFormat};
+use embroiderly_parsers::PatternFormat;
 use embroiderly_pattern::{Pattern, PatternProject, ReferenceImage, Stitch};
 use embroiderly_web::{opfs, timers};
 use js_sys::Uint8Array;
@@ -587,7 +587,7 @@ impl EditorWrapper {
 
     let data = self.run(|editor| {
       if let Some(patproj) = editor.get_pattern(&pattern_id) {
-        Ok(embroiderly_parsers::save_pattern(patproj, format, &package_info())?)
+        Ok(embroiderly_parsers::save_pattern(patproj, format)?)
       } else {
         Err(Error::new(ErrorKind::PatternNotFound))
       }
@@ -629,7 +629,7 @@ impl EditorWrapper {
     let format = PatternFormat::try_from(file_name.as_str())?;
     let data = self.run(|editor| {
       if let Some(patproj) = editor.get_pattern(&pattern_id) {
-        Ok(embroiderly_parsers::save_pattern(patproj, format, &package_info())?)
+        Ok(embroiderly_parsers::save_pattern(patproj, format)?)
       } else {
         Err(Error::new(ErrorKind::PatternNotFound))
       }
@@ -1144,13 +1144,6 @@ impl EditorWrapper {
   }
 }
 
-fn package_info() -> PackageInfo {
-  PackageInfo {
-    name: "Embroiderly".to_owned(),
-    version: "0.7.1".to_owned(),
-  }
-}
-
 fn emit_events(callback: &js_sys::Function, events: impl IntoIterator<Item = EditorEvent>) -> Result<(), Error> {
   for event in events {
     let payload = borsh::to_vec(&event)?;
@@ -1173,8 +1166,6 @@ async fn auto_save_tick(persistence: Rc<PersistenceManager>, callback: js_sys::F
     tracing::debug!("No patterns to save");
     return;
   }
-
-  let pkg = package_info();
 
   tracing::debug!("Processing {} patterns", pattern_ids.len());
   for pattern_id in pattern_ids {
@@ -1216,7 +1207,7 @@ async fn auto_save_tick(persistence: Rc<PersistenceManager>, callback: js_sys::F
         .borrow()
         .as_ref()
         .and_then(|e| e.get_pattern(&pattern_id))
-        .and_then(|p| embroiderly_parsers::save_pattern(p, format, &pkg).ok())
+        .and_then(|p| embroiderly_parsers::save_pattern(p, format).ok())
     });
     let Some(data) = data else {
       tracing::warn!("Failed to encode {pattern_id}");

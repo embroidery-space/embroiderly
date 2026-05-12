@@ -1,5 +1,3 @@
-use xsp_parsers::pmaker;
-
 use super::layers::*;
 use super::palette::*;
 use super::stitches::*;
@@ -218,17 +216,6 @@ impl Default for PatternInfo {
   }
 }
 
-impl From<pmaker::PatternInfo> for PatternInfo {
-  fn from(pattern_info: pmaker::PatternInfo) -> Self {
-    Self {
-      title: pattern_info.title,
-      author: pattern_info.author,
-      copyright: pattern_info.copyright,
-      description: pattern_info.description,
-    }
-  }
-}
-
 pub type StitchesPerInch = (u8, u8);
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -262,19 +249,6 @@ impl Default for Fabric {
       kind: String::from(Self::DEFAULT_KIND),
       name: String::from(Self::DEFAULT_NAME),
       color: String::from(Self::DEFAULT_COLOR),
-    }
-  }
-}
-
-impl From<pmaker::Fabric> for Fabric {
-  fn from(fabric: pmaker::Fabric) -> Self {
-    Self {
-      width: fabric.width,
-      height: fabric.height,
-      spi: fabric.stitches_per_inch,
-      kind: fabric.kind,
-      name: fabric.name,
-      color: fabric.color,
     }
   }
 }

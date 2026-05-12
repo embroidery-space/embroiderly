@@ -53,8 +53,6 @@ fn special_stitch(x: f32, y: f32, palindex: u32, modindex: u32) -> SpecialStitch
   SpecialStitch {
     x: NotNan::new(x).unwrap(),
     y: NotNan::new(y).unwrap(),
-    width: NotNan::new(1.0).unwrap(),
-    height: NotNan::new(1.0).unwrap(),
     rotation: 0,
     flip: (false, false),
     palindex,
