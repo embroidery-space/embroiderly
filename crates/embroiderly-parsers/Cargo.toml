@@ -1,5 +1,6 @@
 [package]
 name = "embroiderly_parsers"
+version = { workspace = true }
 edition = { workspace = true }
 
 [lints]
@@ -8,11 +9,16 @@ workspace = true
 [dependencies]
 # Embroiderly Core
 embroiderly_pattern = { workspace = true, features = ["serde"] }
-xsp_parsers = { workspace = true }
 
 # Parsing pattern files
 quick-xml = { workspace = true }
 serde_json = { workspace = true }
+
+# Binary reading
+byteorder = { workspace = true }
+encoding_rs = { workspace = true }
+hex = { workspace = true }
+itertools = { workspace = true }
 
 # Archiving
 zip = { workspace = true }
@@ -25,4 +31,5 @@ thiserror = { workspace = true }
 tracing = { workspace = true }
 
 [dev-dependencies]
+paste = { workspace = true }
 prettydiff = { workspace = true }

@@ -1,10 +1,20 @@
 # Embroiderly Parsers
 
-This crate contains all parsers of patterns supported by Embroiderly:
+This crate provides parsers of all the resources used by Embroiderly:
+
+## Patterns
 
 - `embproj` - Our custom pattern format.
-  In fact, this is just a zip archive that contains the pattern file in the OXS format near to XML files which contain the configuration of the project.
+- `oxs` - Open cross-stitch pattern format created by [UrsaSoftware].
+- `xsd` (read-only) - A proprietary binary pattern format from [Pattern Maker for Cross Stitch].
 
-- `oxs` - Open cross-stitch pattern format that was created by [UrsaSoftware](https://ursasoftware.com).
+## Palettes
 
-- `xsd` (read-only) - A proprietary binary pattern format from [Pattern Maker for Cross Stitch](https://web.archive.org/web/20191127080612/http://hobbyware.com).
+- `json` - Our custom palette format (JSON).
+- `master`, `user` - [Pattern Maker for Cross Stitch]'s internal palettes.
+- `threads` - [UrsaSoftware]'s internal thread palettes.
+- `rng` - [Cross Stitch Professional Platinum]'s internal palettes.
+
+[Cross Stitch Professional Platinum]: https://www.dpsoftware.com
+[Pattern Maker for Cross Stitch]: https://web.archive.org/web/20191127080612/http://hobbyware.com
+[UrsaSoftware]: https://ursasoftware.com

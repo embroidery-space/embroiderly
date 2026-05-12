@@ -1210,7 +1210,7 @@ checksum = "edd0f118536f44f5ccd48bcb8b111bdc3de888b58c74639dfb034a357d0f206d"
 
 [[package]]
 name = "embroiderly"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "embroiderly_tracing",
@@ -1229,7 +1229,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_editor"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "borsh",
  "embroiderly_parsers",
@@ -1243,7 +1243,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_image"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "embroiderly_parsers",
@@ -1255,7 +1255,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_image_import"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1270,22 +1270,26 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_parsers"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
+ "byteorder",
  "embroiderly_pattern",
+ "encoding_rs",
+ "hex",
+ "itertools",
+ "paste",
  "prettydiff",
  "quick-xml 0.39.4",
  "serde_json",
  "thiserror 2.0.18",
  "tracing",
- "xsp_parsers",
  "zip 8.6.0",
 ]
 
 [[package]]
 name = "embroiderly_pattern"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "alphanumeric-sort",
  "anyhow",
@@ -1295,12 +1299,11 @@ dependencies = [
  "rstest",
  "serde",
  "uuid",
- "xsp_parsers",
 ]
 
 [[package]]
 name = "embroiderly_pdf_export"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1318,7 +1321,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_tracing"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "tracing",
@@ -1328,7 +1331,7 @@ dependencies = [
 
 [[package]]
 name = "embroiderly_wasm"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1352,12 +1355,11 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
- "xsp_parsers",
 ]
 
 [[package]]
 name = "embroiderly_web"
-version = "0.0.0"
+version = "0.7.1"
 dependencies = [
  "anyhow",
  "futures",
@@ -7872,19 +7874,6 @@ name = "xmp-writer"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9440ea3e5aeabb0ac63af70daf835274065238cdd0cec83418f417eae38bacee"
-
-[[package]]
-name = "xsp_parsers"
-version = "0.0.0"
-dependencies = [
- "byteorder",
- "encoding_rs",
- "hex",
- "itertools",
- "paste",
- "thiserror 2.0.18",
- "tracing",
-]
 
 [[package]]
 name = "yaml-rust"

@@ -128,6 +128,7 @@ impl From<embroiderly_parsers::Error> for Error {
   fn from(err: embroiderly_parsers::Error) -> Self {
     match err {
       embroiderly_parsers::Error::UnsupportedPatternType(_) => Self::new(ErrorKind::UnsupportedPatternType),
+      embroiderly_parsers::Error::UnsupportedPaletteType(ext) => Self::new(ErrorKind::UnsupportedPaletteType(ext)),
       embroiderly_parsers::Error::FailedToParse(e) => Self::new(ErrorKind::FailedToParse).with_source(e),
     }
   }

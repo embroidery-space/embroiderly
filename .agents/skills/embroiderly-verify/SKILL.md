@@ -49,7 +49,6 @@ graph LR
 | `embroiderly_pattern` | `crates/embroiderly-pattern/` |
 | `embroiderly_tracing` | `crates/embroiderly-tracing/` |
 | `embroiderly_web`     | `crates/embroiderly-web/`     |
-| `xsp_parsers`         | `crates/xsp-parsers/`         |
 
 ### Wasm modules
 

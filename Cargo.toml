@@ -9,6 +9,7 @@ members = [
 ]
 
 [workspace.package]
+version = "0.7.1"
 edition = "2024"
 
 [profile.dev]
@@ -84,7 +85,6 @@ embroiderly_parsers = { path = "crates/embroiderly-parsers" }
 embroiderly_pattern = { path = "crates/embroiderly-pattern" }
 embroiderly_tracing = { path = "crates/embroiderly-tracing" }
 embroiderly_web = { path = "crates/embroiderly-web" }
-xsp_parsers = { path = "crates/xsp-parsers" }
 
 # Async runtime
 futures = "0.3.32"

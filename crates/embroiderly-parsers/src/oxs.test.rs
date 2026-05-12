@@ -50,15 +50,15 @@ fn reads_and_writes_pattern_properties() {
     &pattern_info,
     spi,
     palette_size.unwrap(),
-    &PackageInfo {
-      name: String::from("MySoftware"),
-      version: String::from("0.0.0"),
-    },
   )
   .unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
-  let diff = prettydiff::diff_lines(&result, xml);
+  let expected = format!(
+    r#"<properties oxsversion="1.0" software="Embroiderly" software_version="{}" chartwidth="20" chartheight="10" charttitle="My Pattern" author="Me" copyright="" instructions="Enjoy the embroidery process!" stitchesperinch="14" stitchesperinch_y="14" palettecount="5"/>"#,
+    env!("CARGO_PKG_VERSION"),
+  );
+  let diff = prettydiff::diff_lines(&result, &expected);
   assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
@@ -88,23 +88,14 @@ fn reads_and_writes_default_pattern_properties() {
   assert_eq!(palette_size, None);
 
   let mut writer = create_writer();
-  write_pattern_properties(
-    &mut writer,
-    pattern_width,
-    pattern_height,
-    &pattern_info,
-    spi,
-    0,
-    &PackageInfo {
-      name: String::from("MySoftware"),
-      version: String::from("0.0.0"),
-    },
-  )
-  .unwrap();
+  write_pattern_properties(&mut writer, pattern_width, pattern_height, &pattern_info, spi, 0).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
-  let expected = r#"<properties oxsversion="1.0" software="MySoftware" software_version="0.0.0" chartwidth="100" chartheight="100" charttitle="" author="" copyright="" instructions="" stitchesperinch="14" stitchesperinch_y="14" palettecount="0"/>"#;
-  let diff = prettydiff::diff_lines(&result, expected);
+  let expected = format!(
+    r#"<properties oxsversion="1.0" software="Embroiderly" software_version="{}" chartwidth="100" chartheight="100" charttitle="" author="" copyright="" instructions="" stitchesperinch="14" stitchesperinch_y="14" palettecount="0"/>"#,
+    env!("CARGO_PKG_VERSION"),
+  );
+  let diff = prettydiff::diff_lines(&result, &expected);
   assert!(diff.diff().len() == 1, "Diff:\n{diff}");
 }
 
@@ -502,7 +493,7 @@ fn reads_and_writes_ornaments() {
   <object x1="5" y1="5" palindex="2" objecttype="tent" direction="1"/>
   <object x1="1" y1="1" palindex="2" objecttype="knot" rotated="false"/>
   <object x1="3.5" y1="1.5" palindex="1" objecttype="bead" rotated="false"/>
-  <object x1="10" y1="5.5" width="2" height="2" palindex="1" objecttype="specialstitch" modindex="0" rotation="90" flip_x="true" flip_y="false"/>
+  <object x1="10" y1="5.5" palindex="1" objecttype="specialstitch" modindex="0" rotation="90" flip_x="true" flip_y="false"/>
 </ornaments_inc_knots_and_beads>"#;
 
   let expected_fullstitches = vec![FullStitch {
@@ -553,8 +544,6 @@ fn reads_and_writes_ornaments() {
   let expected_specialstitches = vec![SpecialStitch {
     x: Coord::new(10.0).unwrap(),
     y: Coord::new(5.5).unwrap(),
-    width: Coord::new(2.0).unwrap(),
-    height: Coord::new(2.0).unwrap(),
     palindex: 0,
     modindex: 0,
     rotation: 90,

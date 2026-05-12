@@ -48,7 +48,6 @@ pub fn default_env_filter() -> tracing_subscriber::EnvFilter {
       format!("{DEFAULT_LOG_LEVEL}"),
       format!("embroiderly={APPLICATION_LOG_LEVEL}"),
       format!("embroiderly_wasm={APPLICATION_LOG_LEVEL}"),
-      format!("xsp_parsers={APPLICATION_LOG_LEVEL}"),
       format!("webview={APPLICATION_LOG_LEVEL}"),
     ];
     tracing_subscriber::EnvFilter::new(directives.join(","))

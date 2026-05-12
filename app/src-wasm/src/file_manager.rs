@@ -312,42 +312,13 @@ impl FileManager {
 
 async fn process_and_save_palette(file_name: &str, data: &[u8], dir: &opfs::DirectoryHandle) -> Result<(), Error> {
   let path = std::path::Path::new(file_name);
-  let extension = path
-    .extension()
-    .and_then(|s| s.to_str())
-    .ok_or_else(|| anyhow::anyhow!("Invalid font file extension"))?
-    .to_lowercase();
   let palette_name = path
     .file_stem()
     .and_then(|s| s.to_str())
     .ok_or_else(|| anyhow::anyhow!("Invalid palette file name"))?
     .to_owned();
 
-  let palette: Vec<BrandPaletteItem> = match extension.as_str() {
-    "master" | "user" => xsp_parsers::pmaker::parse_palette_from_bytes(data, file_name)
-      .map_err(anyhow::Error::from)?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-
-    "threads" => xsp_parsers::ursa::parse_palette_from_bytes(data)
-      .map_err(anyhow::Error::from)?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-
-    "rng" => xsp_parsers::xspro::parse_palette_from_bytes(data)
-      .map_err(anyhow::Error::from)?
-      .into_iter()
-      .map(BrandPaletteItem::from)
-      .collect(),
-
-    "json" => serde_json::from_slice(data).map_err(anyhow::Error::from)?,
-
-    _ => {
-      return Err(Error::new(ErrorKind::UnsupportedPaletteType(extension)));
-    }
-  };
+  let palette: Vec<BrandPaletteItem> = embroiderly_parsers::parse_palette(data, file_name)?;
   let data = serde_json::to_vec(&palette)?;
 
   // TODO: Replace `create: true` with checking that the file exists (prevent overwrites).

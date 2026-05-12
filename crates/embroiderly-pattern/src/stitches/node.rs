@@ -1,5 +1,3 @@
-use xsp_parsers::pmaker;
-
 use super::Coord;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -23,20 +21,6 @@ impl PartialOrd for NodeStitch {
 impl Ord for NodeStitch {
   fn cmp(&self, other: &Self) -> std::cmp::Ordering {
     self.y.cmp(&other.y).then(self.x.cmp(&other.x))
-  }
-}
-
-impl TryFrom<pmaker::NodeStitch> for NodeStitch {
-  type Error = anyhow::Error;
-
-  fn try_from(nodestitch: pmaker::NodeStitch) -> Result<Self, Self::Error> {
-    Ok(Self {
-      x: Coord::new(nodestitch.x)?,
-      y: Coord::new(nodestitch.y)?,
-      rotated: nodestitch.rotated,
-      palindex: nodestitch.palindex as u32,
-      kind: nodestitch.kind.into(),
-    })
   }
 }
 
@@ -70,14 +54,5 @@ impl std::str::FromStr for NodeStitchKind {
     }
 
     Err(anyhow::anyhow!("Unknown node kind: {s}"))
-  }
-}
-
-impl From<pmaker::NodeStitchKind> for NodeStitchKind {
-  fn from(kind: pmaker::NodeStitchKind) -> Self {
-    match kind {
-      pmaker::NodeStitchKind::FrenchKnot => Self::FrenchKnot,
-      pmaker::NodeStitchKind::Bead => Self::Bead,
-    }
   }
 }
