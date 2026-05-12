@@ -64,12 +64,14 @@ jobs:
           if [ "${{ github.ref_name }}" = "main" ]; then
             # Live production.
             echo "cmd=deploy --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
+            echo "alias=" >> $GITHUB_OUTPUT
           else
             # Sanitize branch name for the alias: replace `/` with `-` and lowercase it.
             alias=$(echo "${{ github.ref_name }}" | sed 's/\//-/g' | tr '[:upper:]' '[:lower:]')
 
             # Commit and branch preview.
             echo "cmd=versions upload --preview-alias $alias --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
+            echo "alias=$alias" >> $GITHUB_OUTPUT
           fi
 
       - name: Deploy to Cloudflare
@@ -89,3 +91,30 @@ jobs:
             echo "## Embroiderly deployment on Cloudflare"
             echo "**Preview URL:** <${{ steps.deploy.outputs.deployment-url }}>."
           } >> $GITHUB_STEP_SUMMARY
+
+      - name: Publish a post in Embroiderly Logs
+        env:
+          LOGS_URL: ${{ vars.EMBROIDERLY_LOGS_URL }}
+          LOGS_SECRET: ${{ secrets.EMBROIDERLY_LOGS_SECRET }}
+          COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+          PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
+          ALIAS: ${{ steps.info.outputs.alias }}
+        run: |
+          if [ -n "$ALIAS" ]; then
+            # Derive the base hostname from the preview URL by stripping the UUID prefix, then substitute the branch alias to build the alias URL.
+            BASE=$(echo "$PREVIEW_URL" | sed 's|https://[^-]*-||')
+            ALIAS_URL="https://${ALIAS}-${BASE}"
+            BODY=$(jq -cn \
+              --arg c "$COMMIT_URL" --arg p "$PREVIEW_URL" --arg a "$ALIAS_URL" \
+              '{ commitUrl: $c, previewUrl: $p, aliasUrl: $a }')
+          else
+            BODY=$(jq -cn \
+              --arg c "$COMMIT_URL" --arg p "$PREVIEW_URL" \
+              '{ commitUrl: $c, previewUrl: $p }')
+          fi
+
+          curl --fail-with-body -sS \
+            -X POST "$LOGS_URL" \
+            -H "Content-Type: application/json" \
+            -H "X-Webhook-Secret: $LOGS_SECRET" \
+            -d "$BODY"
