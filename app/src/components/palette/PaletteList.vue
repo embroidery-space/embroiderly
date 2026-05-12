@@ -23,6 +23,7 @@ interface PaletteListProps<T> {
 }
 
 const value = defineModel<V | V[]>({ required: true });
+const filterValue = defineModel<string>("filterValue", { default: "" });
 const {
   options = [],
   optionValue = undefined,
@@ -105,7 +106,7 @@ function optionIsSelected(option: T) {
       class="flex grow flex-col overflow-hidden data-disabled:cursor-not-allowed"
     >
       <div v-if="$slots.filter" class="shrink-0 border-b border-default px-2 py-1">
-        <Listbox.Filter as-child>
+        <Listbox.Filter v-model="filterValue" as-child>
           <slot name="filter"></slot>
         </Listbox.Filter>
       </div>

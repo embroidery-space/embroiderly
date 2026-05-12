@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<ToasterProps>(), {
 });
 defineSlots<ToasterSlots>();
 
-const { messages } = useLocale();
+const locale = useLocale();
 const { toasts, remove } = useToast();
 
 const providerProps = useForwardProps(reactivePick(props, "duration", "label", "swipeThreshold"));
@@ -53,7 +53,7 @@ function onUpdateOpen(value: boolean, id: string | number) {
 </script>
 
 <template>
-  <ToastProvider swipe-direction="right" v-bind="providerProps" :label="messages.toast.notification">
+  <ToastProvider swipe-direction="right" v-bind="providerProps" :label="locale.messages.toast.notification">
     <slot />
 
     <Toast
@@ -75,7 +75,7 @@ function onUpdateOpen(value: boolean, id: string | number) {
 
     <ToastPortal v-bind="portalProps">
       <ToastViewport
-        :label="messages.toast.focus"
+        :label="locale.messages.toast.focus"
         data-slot="viewport"
         :class="ui.viewport({ class: [props.ui?.viewport, props.class] })"
       />

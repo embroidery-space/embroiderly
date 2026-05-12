@@ -105,6 +105,7 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
 <template>
   <PaletteSection :title="$t('palette-catalog')">
     <PaletteList
+      v-model:filter-value="searchQuery"
       :model-value="palette.map((pi) => ({ brand: pi.brand, number: pi.number }))"
       :options="results.map((r) => r.item)"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"

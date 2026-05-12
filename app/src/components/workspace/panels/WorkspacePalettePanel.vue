@@ -13,12 +13,12 @@ import { PaletteSettings, SortPaletteBy, Symbol } from "~/lib/pattern/";
 import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface WorkspacePalettePanel extends SplitterPanelProps {}
+export interface WorkspacePalettePanelProps extends SplitterPanelProps {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface WorkspacePalettePanelEmits extends SplitterPanelEmits {}
 
-const props = defineProps<WorkspacePalettePanel>();
+const props = defineProps<WorkspacePalettePanelProps>();
 const emits = defineEmits<WorkspacePalettePanelEmits>();
 
 const splitterPanelProps = useForwardPropsEmits(props, emits);

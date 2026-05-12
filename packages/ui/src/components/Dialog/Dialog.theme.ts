@@ -8,7 +8,7 @@ export const DialogTheme = tv({
       data-[state=open]:animate-[fade-in_200ms_ease-out]
     `,
     content: `
-      fixed top-1/2 left-1/2 flex size-max max-h-[90%] max-w-[90%] min-w-md
+      fixed top-1/2 left-1/2 flex max-h-[90%] w-max max-w-[90%] min-w-md
       -translate-1/2 flex-col divide-y divide-default rounded-lg bg-default
       shadow-lg ring ring-default
       focus:outline-none

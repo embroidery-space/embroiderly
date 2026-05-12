@@ -16,7 +16,6 @@ import {
   useToast,
 } from "@embroiderly/ui";
 
-import { vElementSize } from "@vueuse/components";
 import { useDebounceFn, useDropZone } from "@vueuse/core";
 import { ref, reactive, onMounted, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
 
@@ -42,8 +41,6 @@ const { files } = useEditor();
 const { fluent } = useI18n();
 const filePicker = useFilePicker();
 const toast = useToast();
-
-const patternCanvas = useTemplateRef("pattern-canvas");
 
 const service = new ImageImportService();
 
@@ -172,7 +169,7 @@ onUnmounted(() => service.destroy());
   <Dialog :title="$t('image-import')" :ui="{ content: 'size-full', body: 'p-0!' }">
     <template #body>
       <div class="flex h-full">
-        <div class="space-y-2 overflow-y-auto p-4 sm:p-6">
+        <div class="w-80 shrink-0 space-y-2 overflow-y-auto p-4 sm:p-6">
           <FilePicker :model-value="imageFile?.name ?? 'No image selected'" class="w-full" @pick="pickImageFile" />
 
           <InputDimensions
@@ -227,12 +224,10 @@ onUnmounted(() => service.destroy());
 
         <Separator decorative orientation="vertical" size="sm" />
 
-        <BlockUI ref="drop-zone" :blocked="importing || isOverDropZone" class="flex size-full flex-col">
+        <BlockUI ref="drop-zone" :blocked="importing || isOverDropZone" class="flex min-h-0 min-w-0 flex-1 flex-col">
           <Progress v-if="importing" size="sm" class="absolute top-0 rounded-none" />
 
           <PatternCanvas
-            ref="pattern-canvas"
-            v-element-size="useDebounceFn(({ width, height }) => patternCanvas?.resizeCanvas(width, height), 100)"
             :pattern="preview?.pattern"
             :options="{ textureManager: { outlineStitches: false } }"
             class="min-h-0 flex-1"

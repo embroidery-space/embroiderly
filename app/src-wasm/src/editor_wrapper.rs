@@ -661,6 +661,15 @@ impl EditorWrapper {
   async fn add_stitch_impl(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let stitch: Stitch = borsh::from_slice(stitch_data)?;
+
+    if self.run(|editor| {
+      editor
+        .get_pattern(&pattern_id)
+        .is_some_and(|patproj| patproj.pattern.contains_stitch(layer_index, &stitch))
+    }) {
+      return Ok(());
+    }
+
     self
       .dispatch(
         pattern_id,
@@ -677,16 +686,27 @@ impl EditorWrapper {
   async fn remove_stitch_impl(&self, pattern_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
     let pattern_id = uuid::Uuid::parse_str(pattern_id)?;
     let stitch: Stitch = borsh::from_slice(stitch_data)?;
-    self
-      .dispatch(
-        pattern_id,
-        EditorAction::Stitch(StitchAction::Remove {
-          layer_index,
-          target_stitch: stitch,
-          actual_stitch: None,
-        }),
-      )
-      .await
+
+    // This command accepts stitches which don't contain all properties (e.g., the palindex is hard-coded to `0`).
+    // Therefore, we need to get the actual stitch from the pattern to delete exactly it.
+    if let Some(target) = self.run(|editor| {
+      editor
+        .get_pattern(&pattern_id)
+        .and_then(|patproj| patproj.pattern.get_stitch(layer_index, &stitch))
+    }) {
+      self
+        .dispatch(
+          pattern_id,
+          EditorAction::Stitch(StitchAction::Remove {
+            layer_index,
+            target_stitch: stitch,
+            actual_stitch: Some(target),
+          }),
+        )
+        .await
+    } else {
+      Ok(())
+    }
   }
 
   #[tracing::instrument(name = "EditorWrapper::update_fabric", level = "debug", skip(self, fabric_data), err)]

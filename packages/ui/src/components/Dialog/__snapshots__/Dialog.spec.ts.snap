@@ -2,7 +2,7 @@
 
 exports[`Dialog > renders correctly with class 1`] = `
 <div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
-  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2 w-96" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg top-1/2 w-96" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
     <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
       <div class="flex-1">
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
@@ -21,7 +21,7 @@ exports[`Dialog > renders correctly with class 1`] = `
 
 exports[`Dialog > renders correctly with description 1`] = `
 <div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
-  <div aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+  <div aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg top-1/2 w-max" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
     <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
       <div class="flex-1">
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
@@ -41,7 +41,7 @@ exports[`Dialog > renders correctly with description 1`] = `
 
 exports[`Dialog > renders correctly with non-dismissible 1`] = `
 <div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
-  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg top-1/2 w-max" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
     <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
       <div class="flex-1">
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
@@ -60,7 +60,7 @@ exports[`Dialog > renders correctly with non-dismissible 1`] = `
 
 exports[`Dialog > renders correctly with title 1`] = `
 <div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
-  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg top-1/2 w-max" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
     <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
       <div class="flex-1">
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
@@ -79,7 +79,7 @@ exports[`Dialog > renders correctly with title 1`] = `
 
 exports[`Dialog > renders correctly with ui 1`] = `
 <div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
-  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg top-1/2 w-max" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
     <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
       <div class="flex-1">
         <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>

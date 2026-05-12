@@ -147,7 +147,6 @@ useEventListener<CustomEvent<TransformEventDetail>>(patternApplication, ToolEven
 
 defineExpose({
   setCanvasZoom: patternApplication.setZoom.bind(patternApplication),
-  resizeCanvas: patternApplication.resize.bind(patternApplication),
 
   setDisplaySettings: (value: DisplaySettings) => patternApplication.view?.setDisplaySettings(value),
 

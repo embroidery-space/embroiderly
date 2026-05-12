@@ -41,7 +41,7 @@ exports[`Menubar > renders correctly with class 1`] = `
               <span class="truncate" data-slot="itemLabel">New</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
           </div>
           <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
@@ -49,7 +49,7 @@ exports[`Menubar > renders correctly with class 1`] = `
               <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
           </div>
         </div>
@@ -59,7 +59,7 @@ exports[`Menubar > renders correctly with class 1`] = `
               <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
           </div>
         </div>
@@ -137,7 +137,7 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
               <span class="truncate" data-slot="itemLabel">New</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
           </div>
           <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
@@ -145,7 +145,7 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
               <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
           </div>
         </div>
@@ -155,7 +155,7 @@ exports[`Menubar > renders correctly with simple menus 1`] = `
               <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
           </div>
         </div>
@@ -182,7 +182,7 @@ exports[`Menubar > renders correctly with size lg 1`] = `
               <span class="truncate" data-slot="itemLabel">New</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
           </div>
           <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
@@ -190,7 +190,7 @@ exports[`Menubar > renders correctly with size lg 1`] = `
               <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
           </div>
         </div>
@@ -200,7 +200,7 @@ exports[`Menubar > renders correctly with size lg 1`] = `
               <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
           </div>
         </div>
@@ -227,7 +227,7 @@ exports[`Menubar > renders correctly with size md 1`] = `
               <span class="truncate" data-slot="itemLabel">New</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
           </div>
           <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
@@ -235,7 +235,7 @@ exports[`Menubar > renders correctly with size md 1`] = `
               <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
           </div>
         </div>
@@ -245,7 +245,7 @@ exports[`Menubar > renders correctly with size md 1`] = `
               <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
           </div>
         </div>
@@ -272,7 +272,7 @@ exports[`Menubar > renders correctly with size sm 1`] = `
               <span class="truncate" data-slot="itemLabel">New</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
           </div>
           <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
@@ -280,7 +280,7 @@ exports[`Menubar > renders correctly with size sm 1`] = `
               <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
           </div>
         </div>
@@ -290,7 +290,7 @@ exports[`Menubar > renders correctly with size sm 1`] = `
               <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
           </div>
         </div>
@@ -341,7 +341,7 @@ exports[`Menubar > renders correctly with ui 1`] = `
               <span class="truncate" data-slot="itemLabel">New</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+N</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+N</kbd>
             </span>
           </div>
           <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
@@ -349,7 +349,7 @@ exports[`Menubar > renders correctly with ui 1`] = `
               <span class="truncate" data-slot="itemLabel">Open</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+O</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+O</kbd>
             </span>
           </div>
         </div>
@@ -359,7 +359,7 @@ exports[`Menubar > renders correctly with ui 1`] = `
               <span class="truncate" data-slot="itemLabel">Save</span>
             </span>
             <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
-              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[10px] text-default" data-slot="base">Ctrl+S</kbd>
+              <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+S</kbd>
             </span>
           </div>
         </div>
