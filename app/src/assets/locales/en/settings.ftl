@@ -60,4 +60,6 @@ settings-autosave-interval =
   .label = Autosave Interval
   .description = If set to 0, autosave is disabled.
 
+settings-show-open-demo-pattern-option = Show "Open demo pattern" option in the "File" menu
+
 settings-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools

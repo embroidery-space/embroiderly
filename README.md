@@ -23,3 +23,4 @@ Different components are subject to different license terms:
 - **Documentation**: All Markdown files, guides, and Vitepress configurations located in the `docs/` directory are licensed under the `CC-BY-SA-4.0` license (see [docs/LICENSE](./docs/LICENSE)).
 - **Libertinus Serif** font (bundled in `packages/pdf-export/src-wasm/assets/fonts/`): © The Libertinus Serif Project Authors.
   Licensed under the [SIL Open Font License 1.1](./packages/pdf-export/src-wasm/assets/fonts/OFL.txt).
+- **Demo Patterns** (bundled in `app/public/demo/`): Copyrighted by their original authors (see [app/public/demo/notes.txt](./app/public/demo/notes.txt)).

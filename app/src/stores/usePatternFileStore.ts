@@ -77,7 +77,10 @@ export const usePatternFileStore = defineStore(
     async function openPattern(options: { file: File }): Promise<string>;
     async function openPattern(options: { filePath: string }): Promise<string>;
     async function openPattern(options: { template: string }): Promise<string>;
-    async function openPattern(options?: { file: File } | { filePath: string } | { template: string }) {
+    async function openPattern(options: { demo: string }): Promise<string>;
+    async function openPattern(
+      options?: { file: File } | { filePath: string } | { template: string } | { demo: string },
+    ) {
       try {
         loading.value = true;
 
@@ -105,11 +108,17 @@ export const usePatternFileStore = defineStore(
 
           fileName = options.filePath.replaceAll("\\", "/").split("/").pop() ?? options.filePath;
           result = await editor.openPatternFromData(data, fileName);
-        } else {
+        } else if ("template" in options) {
           const data = await files.loadPatternTemplate(options.template);
 
           fileName = options.template;
           result = await editor.openPatternFromData(new Uint8Array(data), fileName);
+        } else {
+          const response = await fetch(`/demo/${options.demo}`);
+          const data = new Uint8Array(await response.arrayBuffer());
+
+          fileName = options.demo;
+          result = await editor.openPatternFromData(data, fileName);
         }
 
         addOpenedPattern(result.id, result.title || fileName);

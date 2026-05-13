@@ -8,6 +8,7 @@ app-credits = Developed with love in Ukraine
 
 app-menu-file = File
 app-menu-file-open = Open
+app-menu-file-open-demo = Open demo pattern
 app-menu-file-create = Create
 app-menu-file-save = Save
 app-menu-file-save-as = Save As
@@ -26,6 +27,13 @@ app-menu-help = Help
 app-menu-help-about = About
 app-menu-help-guide = Guide
 app-menu-help-license = License
+
+## Demo patterns.
+
+demo-pattern-piggies = Piggies
+demo-pattern-festive-capy = Festive Capy
+demo-pattern-pumpkin-cupcake = Pumpkin Cupcake
+demo-pattern-whisper-of-the-board = The Whisper of the Board
 
 ## System info.
 

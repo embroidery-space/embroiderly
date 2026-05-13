@@ -8,6 +8,7 @@ app-credits = Розроблено з любовʼю в Україні
 
 app-menu-file = Файл
 app-menu-file-open = Відкрити
+app-menu-file-open-demo = Відкрити демосхему
 app-menu-file-create = Створити
 app-menu-file-save = Зберегти
 app-menu-file-save-as = Зберегти як
@@ -26,6 +27,13 @@ app-menu-help = Допомога
 app-menu-help-about = Про застосунок
 app-menu-help-guide = Посібник
 app-menu-help-license = Ліцензія
+
+## Demo patterns.
+
+demo-pattern-piggies = Поросята
+demo-pattern-festive-capy = Святковий капі
+demo-pattern-pumpkin-cupcake = Гарбузовий кекс
+demo-pattern-whisper-of-the-board = Шепіт дошки
 
 ## System info.
 
