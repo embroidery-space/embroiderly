@@ -172,6 +172,8 @@ async function pickPatternTemplate() {
           <InputNumber v-model="other.autoSaveInterval" class="w-full" />
         </FormField>
 
+        <Checkbox v-model="other.showOpenDemoPatternOption" :label="$t('settings-show-open-demo-pattern-option')" />
+
         <Checkbox
           v-model="other.usePaletteItemColorForStitchTools"
           :label="$t('settings-use-palitem-color-for-stitch-tools')"

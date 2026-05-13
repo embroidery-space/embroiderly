@@ -55,41 +55,6 @@ const menus = computed<MenubarMenu[]>(() => {
             if (patternId) patternFileStore.switchPattern(patternId);
           },
         },
-        {
-          label: fluent.$t("app-menu-file-open-demo"),
-          children: [
-            [
-              {
-                label: fluent.$t("demo-pattern-piggies"),
-                async onSelect() {
-                  const id = await patternFileStore.openPattern({ demo: "Piggies.oxs" });
-                  if (id) patternFileStore.switchPattern(id);
-                },
-              },
-              {
-                label: fluent.$t("demo-pattern-festive-capy"),
-                async onSelect() {
-                  const id = await patternFileStore.openPattern({ demo: "Festive Capy.oxs" });
-                  if (id) patternFileStore.switchPattern(id);
-                },
-              },
-              {
-                label: fluent.$t("demo-pattern-pumpkin-cupcake"),
-                async onSelect() {
-                  const id = await patternFileStore.openPattern({ demo: "Pumpkin Cupcake.oxs" });
-                  if (id) patternFileStore.switchPattern(id);
-                },
-              },
-              {
-                label: fluent.$t("demo-pattern-whisper-of-the-board"),
-                async onSelect() {
-                  const id = await patternFileStore.openPattern({ demo: "The Whisper of the Board.xsd" });
-                  if (id) patternFileStore.switchPattern(id);
-                },
-              },
-            ],
-          ],
-        },
       ],
       [
         {
@@ -162,6 +127,45 @@ const menus = computed<MenubarMenu[]>(() => {
       ],
     ],
   };
+
+  if (settingsStore.other.showOpenDemoPatternOption) {
+    (fileMenu.items as MenubarItem[][])[0]!.push({
+      label: fluent.$t("app-menu-file-open-demo"),
+      children: [
+        [
+          {
+            label: fluent.$t("demo-pattern-piggies"),
+            async onSelect() {
+              const id = await patternFileStore.openPattern({ demo: "Piggies.oxs" });
+              if (id) patternFileStore.switchPattern(id);
+            },
+          },
+          {
+            label: fluent.$t("demo-pattern-festive-capy"),
+            async onSelect() {
+              const id = await patternFileStore.openPattern({ demo: "Festive Capy.oxs" });
+              if (id) patternFileStore.switchPattern(id);
+            },
+          },
+          {
+            label: fluent.$t("demo-pattern-pumpkin-cupcake"),
+            async onSelect() {
+              const id = await patternFileStore.openPattern({ demo: "Pumpkin Cupcake.oxs" });
+              if (id) patternFileStore.switchPattern(id);
+            },
+          },
+          {
+            label: fluent.$t("demo-pattern-whisper-of-the-board"),
+            async onSelect() {
+              const id = await patternFileStore.openPattern({ demo: "The Whisper of the Board.xsd" });
+              if (id) patternFileStore.switchPattern(id);
+            },
+          },
+        ],
+      ],
+    });
+  }
+
   if (__TAURI__) {
     fileMenu.items.push([
       {

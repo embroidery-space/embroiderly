@@ -70,6 +70,12 @@ export interface OtherOptions {
   autoSaveInterval: number;
 
   /**
+   * Whether to show the open demo pattern option in the file menu.
+   * @default true
+   */
+  showOpenDemoPatternOption: boolean;
+
+  /**
    * Whether to use the palette item color for stitch tools.
    * @default true
    */
@@ -121,6 +127,7 @@ export const useSettingsStore = defineStore(
 
     const other = reactive<OtherOptions>({
       autoSaveInterval: 15,
+      showOpenDemoPatternOption: true,
       usePaletteItemColorForStitchTools: true,
     });
 

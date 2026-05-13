@@ -60,4 +60,6 @@ settings-autosave-interval =
   .label = Інтервал автозбереження
   .description = Якщо встановлено 0, автозбереження вимкнено.
 
+settings-show-open-demo-pattern-option = Показувати опцію "Відкрити демосхему" у меню "Файл"
+
 settings-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
