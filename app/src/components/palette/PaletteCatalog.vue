@@ -60,7 +60,11 @@ const paletteCatalogMenuOptions = computed<DropdownMenuItem[]>(() => [
 
 const importingPalettes = ref(false);
 async function importPalettes() {
-  const handles = await filePicker.open({ multiple: true, types: filePicker.filters.palette });
+  const handles = await filePicker.open({
+    multiple: true,
+    types: filePicker.filters.palette,
+    id: filePicker.ids.palette,
+  });
   if (!handles) return;
 
   try {

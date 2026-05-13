@@ -85,7 +85,10 @@ export const usePatternFileStore = defineStore(
         let result: { id: string; title: string; snapshot: Uint8Array };
 
         if (!options) {
-          const fileHandle = await filePicker.open({ types: filePicker.filters.pattern });
+          const fileHandle = await filePicker.open({
+            types: filePicker.filters.pattern,
+            id: filePicker.ids.pattern,
+          });
           if (!fileHandle) return;
 
           fileName = fileHandle.name;
@@ -205,7 +208,11 @@ export const usePatternFileStore = defineStore(
     function pickSaveHandle(id: string) {
       const pattern = openedPatterns.value.find((p) => p.id === id);
       const suggestedName = `${pattern?.title ?? "pattern"}.embproj`;
-      return filePicker.save({ suggestedName, types: filePicker.filters.embproj });
+      return filePicker.save({
+        suggestedName,
+        types: filePicker.filters.embproj,
+        id: filePicker.ids.pattern,
+      });
     }
 
     async function closePattern(id: string, options?: { force?: boolean }) {
@@ -249,6 +256,7 @@ export const usePatternFileStore = defineStore(
       const handle = await filePicker.save({
         suggestedName,
         types: filePicker.filters.oxs,
+        id: filePicker.ids.pattern,
       });
       if (!handle) return;
 
@@ -267,6 +275,7 @@ export const usePatternFileStore = defineStore(
       const handle = await filePicker.save({
         suggestedName: `${pattern.info.title ?? "pattern"}.${variant}.pdf`,
         types: filePicker.filters.pdf,
+        id: filePicker.ids.pdf,
       });
       if (!handle) return;
 

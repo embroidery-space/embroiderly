@@ -32,7 +32,10 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => [
       icon: IconImage,
       label: fluent.$t("canvas-ctx-menu-set-image"),
       async onSelect() {
-        const handle = await filePicker.open({ types: filePicker.filters.image });
+        const handle = await filePicker.open({
+          types: filePicker.filters.image,
+          id: filePicker.ids.image,
+        });
         if (handle) await patternStore.setReferenceImage(await handle.getFile());
       },
     },

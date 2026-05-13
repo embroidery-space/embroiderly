@@ -78,7 +78,10 @@ const menus = computed<MenubarMenu[]>(() => {
               {
                 label: fluent.$t("app-menu-file-import-image"),
                 async onSelect() {
-                  const handle = await filePicker.open({ types: filePicker.filters.image });
+                  const handle = await filePicker.open({
+                    types: filePicker.filters.image,
+                    id: filePicker.ids.image,
+                  });
                   if (!handle) return;
 
                   const patternBytes = await modals.imageImportModal.open({ imageFile: await handle.getFile() }).result;
@@ -188,12 +191,7 @@ const menus = computed<MenubarMenu[]>(() => {
     label: fluent.$t("app-menu-tools"),
     items: [
       [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
-      [
-        {
-          label: fluent.$t("updater-check-for-updates"),
-          onSelect: () => settingsStore.checkForUpdates(),
-        },
-      ],
+      [{ label: fluent.$t("updater-check-for-updates"), onSelect: () => settingsStore.checkForUpdates() }],
     ],
   };
 
@@ -232,12 +230,7 @@ useShortcuts(extractShortcuts(() => menus.value.flatMap((menu) => menu.items as 
 
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
   [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
-  [
-    {
-      label: fluent.$t("updater-check-for-updates"),
-      onSelect: () => settingsStore.checkForUpdates(),
-    },
-  ],
+  [{ label: fluent.$t("updater-check-for-updates"), onSelect: () => settingsStore.checkForUpdates() }],
 ]);
 
 async function showSystemInfo() {
