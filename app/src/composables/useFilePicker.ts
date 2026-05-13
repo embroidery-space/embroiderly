@@ -11,6 +11,14 @@ type OpenReturn<T extends ShowOpenFilePickerOptions> =
   | null;
 
 export const useFilePicker = createSharedComposable(() => ({
+  ids: {
+    pattern: "patterns",
+    palette: "palettes",
+    font: "fonts",
+    image: "images",
+    pdf: "patterns", // PDFs should colocated with their source patterns.
+  },
+
   filters: {
     /** Matches any supported pattern types (`.embproj`, `.oxs`, `.xsd`). */
     pattern: [

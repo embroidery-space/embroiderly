@@ -72,6 +72,7 @@ const wheelActionOptions = computed(() => [
 async function pickPatternTemplate() {
   const fileHandle = await filePicker.open({
     types: filePicker.filters.pattern,
+    id: filePicker.ids.pattern,
   });
   if (!fileHandle) return;
 

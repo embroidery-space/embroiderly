@@ -116,7 +116,11 @@ async function loadFont(fontGroup: string, fontFamily: string) {
 
 /** Imports selected symbol fonts. */
 async function importSymbolFonts() {
-  const handles = await filePicker.open({ multiple: true, types: filePicker.filters.font });
+  const handles = await filePicker.open({
+    multiple: true,
+    types: filePicker.filters.font,
+    id: filePicker.ids.font,
+  });
   if (!handles) return;
 
   try {

@@ -69,7 +69,10 @@ async function loadImageFile(file: File) {
 }
 
 async function pickImageFile() {
-  const handle = await filePicker.open({ types: filePicker.filters.image });
+  const handle = await filePicker.open({
+    types: filePicker.filters.image,
+    id: filePicker.ids.image,
+  });
   if (handle) await loadImageFile(await handle.getFile());
 }
 
