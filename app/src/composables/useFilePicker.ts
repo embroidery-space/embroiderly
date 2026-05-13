@@ -64,11 +64,7 @@ export const useFilePicker = createSharedComposable(() => ({
     palette: [
       {
         description: "Palette files",
-        accept: {
-          "application/octet-stream": [".master", ".user", ".rng"],
-          "text/plain": [".threads"],
-          "application/json": [".json"],
-        },
+        accept: { "application/octet-stream": [".master", ".user", ".rng", ".threads", ".json"] },
       },
     ] satisfies FilePickerAcceptType[],
 
