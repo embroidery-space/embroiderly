@@ -20,6 +20,10 @@ export default Object.freeze<Locale>({
       increment: "Increment",
       decrement: "Decrement",
     },
+    listbox: {
+      search: "Search…",
+      empty: "No items",
+    },
     select: {
       search: "Search…",
       noData: "No data",

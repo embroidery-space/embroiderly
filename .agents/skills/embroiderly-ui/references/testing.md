@@ -39,9 +39,7 @@ describe("Button", () => {
   ] as [string, { props?: ButtonProps; slots?: Partial<ButtonSlots> }][])(
     "renders correctly %s",
     async (_, options) => {
-      const screen = page.render(Button, options);
-      await nextTick();
-
+      const screen = await page.render(Button, options);
       expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
@@ -64,14 +62,13 @@ test("handles async onClick with loadingAuto", async () => {
       }),
   );
 
-  const screen = page.render(Button, {
+  const screen = await page.render(Button, {
     props: {
       label: "Submit",
       loadingAuto: true,
       onClick: asyncHandler,
     },
   });
-  await nextTick();
 
   const button = screen.getByRole("button");
   await expect.element(button).not.toBeDisabled();

@@ -43,6 +43,14 @@ export { default as InputColor, type InputColorProps } from "./InputColor/InputC
 export { default as InputDimensions, type InputDimensionsProps } from "./InputDimensions/InputDimensions.vue";
 export { default as InputNumber, type InputNumberProps } from "./InputNumber/InputNumber.vue";
 export { default as InputNumberSlider, type InputNumberSliderProps } from "./InputNumberSlider/InputNumberSlider.vue";
+export {
+  default as Listbox,
+  type ListboxProps,
+  type ListboxSlots,
+  type ListboxEmits,
+  type ListboxItem,
+  type ListboxItemObject,
+} from "./Listbox/Listbox.vue";
 export { default as RadioGroup, type RadioGroupProps, type RadioGroupItem } from "./RadioGroup/RadioGroup.vue";
 export { default as Select, type SelectProps, type SelectItem, type SelectItemObject } from "./Select/Select.vue";
 export { default as Slider, type SliderProps } from "./Slider/Slider.vue";

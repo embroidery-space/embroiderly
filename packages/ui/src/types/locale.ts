@@ -23,6 +23,10 @@ export type Messages = {
     increment: string;
     decrement: string;
   };
+  listbox: {
+    search: string;
+    empty: string;
+  };
   select: {
     search: string;
     noData: string;
