@@ -10,7 +10,10 @@ import { BasePaletteItem, PaletteSettings } from "~/lib/pattern/";
 
 import PaletteListItem from "./PaletteListItem.vue";
 
-interface PaletteListProps<T> extends Pick<ListboxProps, "disabled" | "multiple" | "scroll" | "filterInput"> {
+interface PaletteListProps<T> extends Pick<
+  ListboxProps,
+  "disabled" | "multiple" | "scroll" | "filterInput" | "selectionBehavior"
+> {
   options?: T[];
   optionValue?: (option: T) => V;
 
@@ -100,6 +103,7 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
       :items="items"
       :multiple="multiple"
       :disabled="disabled"
+      :selection-behavior="selectionBehavior"
       :filter-input="filterInput"
       :scroll="scroll"
       :empty-message="$t('palette-empty')"

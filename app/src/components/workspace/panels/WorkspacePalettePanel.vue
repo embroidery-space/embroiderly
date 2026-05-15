@@ -9,7 +9,7 @@ import { IconCheck, IconMenu, IconPalette } from "~/assets/icons/";
 import { PaletteCatalog, PaletteDisplaySettings, PaletteList, PaletteListItem } from "~/components/palette/";
 import { StitchSymbols } from "~/components/symbols/";
 import { useI18n } from "~/composables/";
-import { PaletteSettings, SortPaletteBy, Symbol } from "~/lib/pattern/";
+import { PaletteItem, PaletteSettings, SortPaletteBy, Symbol } from "~/lib/pattern/";
 import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -33,6 +33,7 @@ const panel = useTemplateRef("panel");
 
 const collapsed = ref(false);
 const disabled = computed(() => patternStore.pattern.isNil);
+const paletteIsEmpty = computed(() => patternStore.pattern.palette.length === 0);
 
 const sectionVisibility = reactive({
   paletteDisplaySettings: false,
@@ -206,7 +207,7 @@ const paletteEditingContextMenuOptions = computed<ContextMenuItem[][]>(() => {
         disabled: !palsize || editorStateStore.selectedPaletteItemIndex === undefined,
         onSelect: () => {
           if (editorStateStore.selectedPaletteItemIndex !== undefined) {
-            patternStore.removePaletteItem(editorStateStore.selectedPaletteItemIndex);
+            handleRemovePaletteItem(editorStateStore.selectedPaletteItemIndex);
           }
         },
       },
@@ -215,7 +216,7 @@ const paletteEditingContextMenuOptions = computed<ContextMenuItem[][]>(() => {
         disabled: !palsize,
         onSelect: () => {
           if (palsize) {
-            patternStore.removePaletteItem(...Array.from({ length: palsize }).keys());
+            handleRemovePaletteItem(...Array.from({ length: palsize }).keys());
           }
         },
       },
@@ -247,6 +248,24 @@ const palettePanelsMenuOptions = computed<DropdownMenuItem[]>(() => [
     },
   },
 ]);
+
+watch(
+  () => editorStateStore.paletteMode,
+  async (value) => {
+    if (value === PaletteMode.Regular) {
+      sectionVisibility.paletteDisplaySettings = false;
+      sectionVisibility.paletteCatalog = false;
+      sectionVisibility.stitchSymbols = false;
+      await updatePaletteDisplaySettings();
+
+      // Restore collapsed state when exiting editing mode.
+      if (editorStateStore.palettePanelCollapsed) panel.value?.collapse();
+    } else {
+      // Forcibly expand the panel when entering editing mode.
+      panel.value?.expand();
+    }
+  },
+);
 
 watch(
   () => editorStateStore.palettePanelCollapsed,
@@ -299,23 +318,32 @@ function handleUnsetSymbol({ fontFamily, codePoint }: { fontFamily: string; code
   patternStore.setPaletteItemSymbol(paletteItem.index, undefined);
 }
 
-watch(
-  () => editorStateStore.paletteMode,
-  async (value) => {
-    if (value === PaletteMode.Regular) {
-      sectionVisibility.paletteDisplaySettings = false;
-      sectionVisibility.paletteCatalog = false;
-      sectionVisibility.stitchSymbols = false;
-      await updatePaletteDisplaySettings();
+async function handleAddPaletteItem(palitem: PaletteItem) {
+  await patternStore.addPaletteItem(palitem);
 
-      // Restore collapsed state when exiting editing mode.
-      if (editorStateStore.palettePanelCollapsed) panel.value?.collapse();
+  if (editorStateStore.selectedPaletteItemIndex !== undefined) return;
+
+  const insertedIndex = patternStore.pattern.palette.items.findIndex((pi) => pi.equals(palitem));
+  if (insertedIndex !== -1) editorStateStore.selectedPaletteItemIndex = insertedIndex;
+}
+
+async function handleRemovePaletteItem(...indexes: number[]) {
+  await patternStore.removePaletteItem(...indexes);
+
+  const selected = editorStateStore.selectedPaletteItemIndex;
+  if (selected !== undefined) {
+    if (indexes.includes(selected)) {
+      // Jump to the new first or last item if the selected one is removed.
+      const newLength = patternStore.pattern.palette.items.length - indexes.length;
+      editorStateStore.selectedPaletteItemIndex =
+        newLength <= 0 ? undefined : Math.min(selected - indexes.filter((i) => i < selected).length, newLength - 1);
     } else {
-      // Forcibly expand the panel when entering editing mode.
-      panel.value?.expand();
+      // Adjust the selected index if items before it are removed.
+      const removedBefore = indexes.reduce((n, i) => n + (i < selected ? 1 : 0), 0);
+      if (removedBefore > 0) editorStateStore.selectedPaletteItemIndex = selected - removedBefore;
     }
-  },
-);
+  }
+}
 
 async function updatePaletteDisplaySettings() {
   if (paletteDisplaySettings.value.equals(patternStore.pattern.paletteDisplaySettings)) return;
@@ -348,10 +376,11 @@ async function updatePaletteDisplaySettings() {
       <PaletteList
         v-model="editorStateStore.selectedPaletteItemIndex"
         :options="patternStore.pattern.palette.itemsInVisualOrder"
-        :option-value="(pi) => pi.index"
+        :option-value="(pi) => patternStore.pattern.palette.items.indexOf(pi)"
         :display-settings="effectiveDisplaySettings"
         :disabled="disabled"
         :draggable="editorStateStore.paletteMode === PaletteMode.Editing"
+        selection-behavior="replace"
         class="grow"
         @reorder="({ oldPosition, newPosition }) => patternStore.reorderPaletteItems(oldPosition, newPosition)"
       >
@@ -388,6 +417,7 @@ async function updatePaletteDisplaySettings() {
               :icon="IconPalette"
               :tooltip="$t('palette-edit')"
               :delay-duration="200"
+              :ui="{ leadingIcon: paletteIsEmpty && !disabled ? 'animate-rainbow-shine' : undefined }"
               @click="
                 () => {
                   editorStateStore.paletteMode =
@@ -432,8 +462,8 @@ async function updatePaletteDisplaySettings() {
       :palette="patternStore.pattern.palette.items"
       class="min-w-max border-l border-default"
       @close="sectionVisibility.paletteCatalog = false"
-      @add-palette-item="patternStore.addPaletteItem"
-      @remove-palette-item="patternStore.removePaletteItem"
+      @add-palette-item="handleAddPaletteItem"
+      @remove-palette-item="handleRemovePaletteItem"
     />
 
     <StitchSymbols
