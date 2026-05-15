@@ -20,6 +20,10 @@ export default Object.freeze<Locale>({
       increment: "Збільшити",
       decrement: "Зменшити",
     },
+    listbox: {
+      search: "Пошук…",
+      empty: "Немає елементів",
+    },
     select: {
       search: "Пошук…",
       noData: "Немає даних",

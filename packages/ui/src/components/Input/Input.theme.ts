@@ -19,12 +19,9 @@ export const InputTheme = tv({
       primary: {},
     },
     variant: {
-      subtle: {
-        base: "bg-elevated ring ring-accented ring-inset",
-      },
-      outline: {
-        base: "bg-default ring ring-accented ring-inset",
-      },
+      subtle: { base: "bg-elevated ring ring-accented ring-inset" },
+      outline: { base: "bg-default ring ring-accented ring-inset" },
+      none: { base: "bg-transparent" },
     },
     size: {
       sm: {

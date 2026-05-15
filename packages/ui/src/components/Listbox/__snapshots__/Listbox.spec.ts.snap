@@ -1,0 +1,350 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Listbox > renders correctly with class 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md w-64" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with custom empty message 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="0">
+      <p class="py-2 text-base text-center text-muted" data-slot="empty">There is nothing for you</p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with disabled 1`] = `
+<div>
+  <div class="cursor-not-allowed flex flex-col min-h-0 opacity-75 overflow-hidden ring ring-default ring-inset rounded-md" data-disabled data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="0">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-listbox-item-v-2" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with filterInput 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div class="border-b border-default inline-flex items-center relative" data-slot="root">
+      <input aria-activedescendant="reka-listbox-item-v-3" aria-disabled="false" class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none gap-2 px-3 py-2 rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" placeholder="Search…" type="text" value>
+    </div>
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-2" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-6" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with filterInput placeholder 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div class="border-b border-default inline-flex items-center relative" data-slot="root">
+      <input aria-activedescendant="reka-listbox-item-v-3" aria-disabled="false" class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none gap-2 px-3 py-2 rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" placeholder="Search items..." type="text" value>
+    </div>
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-2" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-6" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with grouped items 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div class="flex font-semibold gap-2 items-center p-2 text-muted text-sm w-full" data-slot="label" id="reka-listbox-group-v-1">Active</div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+      </div>
+      <div aria-labelledby="reka-listbox-group-v-4" class="p-1" data-slot="group" role="group">
+        <div class="-mx-1 bg-border h-px my-1" data-slot="separator" role="separator"></div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-listbox-item-v-6" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Cancelled</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with items 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with modelValue 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="true" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="checked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+          <span aria-hidden="true">
+            <svg aria-hidden="true" class="iconify iconify--lucide ms-auto shrink-0 size-5 text-primary" data-slot="itemIndicator" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
+          </span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with multiple modelValue 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="true" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="true" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="checked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+          <span aria-hidden="true">
+            <svg aria-hidden="true" class="iconify iconify--lucide ms-auto shrink-0 size-5 text-primary" data-slot="itemIndicator" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
+          </span>
+        </div>
+        <div aria-selected="true" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="checked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+          <span aria-hidden="true">
+            <svg aria-hidden="true" class="iconify iconify--lucide ms-auto shrink-0 size-5 text-primary" data-slot="itemIndicator" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
+          </span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with no items 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="0">
+      <p class="py-2 text-base text-center text-muted" data-slot="empty">No items</p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with scroll 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div class="flex-1 min-h-0 overflow-hidden relative" data-slot="scroll" dir="ltr">
+      <div class="p-0 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+          <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+            <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+              <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+            </div>
+            <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+              <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+            </div>
+            <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+              <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+            </div>
+            <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+              <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style></style>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with size lg 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-sm select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with size md 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-1.5 items-center outline-none p-1.5 rounded-sm select-none text-default text-sm w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-1.5 items-center outline-none p-1.5 rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-1.5 items-center outline-none p-1.5 rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-1.5 items-center outline-none p-1.5 rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with size sm 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-1 items-center outline-none p-1 rounded-sm select-none text-default text-xs w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-1 items-center outline-none p-1 rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-1 items-center outline-none p-1 rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-1 items-center outline-none p-1 rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Listbox > renders correctly with ui 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
+      <div aria-labelledby="reka-listbox-group-v-1" class="p-1" data-slot="group" role="group">
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-none select-none text-base text-default w-full" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-2" role="option" tabindex="0">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-none select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-3" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-none select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-4" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
+        </div>
+        <div aria-selected="false" class="cursor-pointer data-disabled:cursor-not-allowed data-disabled:data-highlighted:bg-transparent data-disabled:opacity-75 data-highlighted:bg-elevated flex gap-2 items-center outline-none p-2 rounded-none select-none text-base text-default w-full" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-listbox-item-v-5" role="option" tabindex="-1">
+          <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

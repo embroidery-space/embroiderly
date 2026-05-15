@@ -185,6 +185,30 @@ exports[`Input > renders correctly with ui 1`] = `
 </div>
 `;
 
+exports[`Input > renders correctly with variant none 1`] = `
+<div>
+  <div class="inline-flex items-center relative" data-slot="root">
+    <input class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none gap-2 px-3 py-2 rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with variant outline 1`] = `
+<div>
+  <div class="inline-flex items-center relative" data-slot="root">
+    <input class="appearance-none bg-default border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+  </div>
+</div>
+`;
+
+exports[`Input > renders correctly with variant subtle 1`] = `
+<div>
+  <div class="inline-flex items-center relative" data-slot="root">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+  </div>
+</div>
+`;
+
 exports[`Input > renders correctly within FormField 1`] = `
 <div>
   <div class data-slot="root">

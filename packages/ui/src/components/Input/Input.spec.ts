@@ -9,13 +9,13 @@ import type { InputProps, InputSlots } from "./Input.vue";
 
 describe("Input", () => {
   const sizes = ["sm", "md", "lg"] as const;
+  const variants = ["subtle", "outline", "none"] as const;
 
   test.each([
     ["with id", { props: { id: "id" } }],
     ["with disabled", { props: { disabled: true } }],
     ...sizes.map((size: string) => [`with size ${size}`, { props: { size } }]),
-    ["with class", { props: { class: "absolute" } }],
-    ["with ui", { props: { ui: { base: "rounded-full" } } }],
+    ...variants.map((variant: string) => [`with variant ${variant}`, { props: { variant } }]),
     ["with icon", { props: { icon: "lucide:rocket" } }],
     ["with icon and leading", { props: { icon: "lucide:rocket", leading: true } }],
     ["with icon and trailing", { props: { icon: "lucide:rocket", trailing: true } }],
@@ -24,6 +24,8 @@ describe("Input", () => {
     ["with leading and trailing icons", { props: { leadingIcon: "lucide:rocket", trailingIcon: "lucide:rocket" } }],
     ["with leading slot", { slots: { leading: () => "Leading slot" } }],
     ["with trailing slot", { slots: { trailing: () => "Trailing slot" } }],
+    ["with class", { props: { class: "absolute" } }],
+    ["with ui", { props: { ui: { base: "rounded-full" } } }],
   ] as [string, { props?: InputProps; slots?: Partial<InputSlots> }][])("renders correctly %s", async (_, options) => {
     // @ts-expect-error Partial slots type is not compatible with `ComponentRenderOptions`.
     const screen = await page.render(Input, options);
