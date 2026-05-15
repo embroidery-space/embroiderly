@@ -67,9 +67,9 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
     [
       {
         label: fluent.$t("palette-edit"),
-        onSelect: (event) => {
-          event.preventDefault();
+        onSelect() {
           editorStateStore.paletteMode = PaletteMode.Editing;
+          sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
         },
       },
     ],
