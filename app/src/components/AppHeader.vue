@@ -5,9 +5,9 @@ import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { openPath } from "@tauri-apps/plugin-opener";
 
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
-import { IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
+import { IconFullscreen, IconFullscreenExit, IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
 import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
@@ -272,6 +272,16 @@ const manageOptions = computed<DropdownMenuItem[][]>(() => [
   [{ label: fluent.$t("updater-check-for-updates"), onSelect: () => settingsStore.checkForUpdates() }],
 ]);
 
+const isFullscreen = ref(!!document.fullscreenElement);
+document.addEventListener("fullscreenchange", () => {
+  isFullscreen.value = !!document.fullscreenElement;
+});
+
+function toggleFullscreen() {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen();
+}
+
 async function showSystemInfo() {
   // @ts-expect-error Ignore the lack of index signature of the system info object.
   const systemInfo = fluent.$ta("system-info", getSystemInfo());
@@ -324,6 +334,15 @@ async function showSystemInfo() {
             :tooltip="$t('app-menu-manage')"
           />
         </DropdownMenu>
+
+        <ButtonIcon
+          v-if="!isTauri"
+          variant="ghost"
+          color="neutral"
+          :icon="isFullscreen ? IconFullscreenExit : IconFullscreen"
+          :tooltip="isFullscreen ? $t('app-fullscreen-exit') : $t('app-fullscreen-enter')"
+          @click="toggleFullscreen"
+        />
       </div>
     </div>
 

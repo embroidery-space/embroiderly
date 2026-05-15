@@ -28,6 +28,9 @@ app-menu-help-about = About
 app-menu-help-guide = Guide
 app-menu-help-license = License
 
+app-fullscreen-enter = Enter fullscreen
+app-fullscreen-exit = Exit fullscreen
+
 ## Demo patterns.
 
 demo-pattern-piggies = Piggies

@@ -28,6 +28,9 @@ app-menu-help-about = Про застосунок
 app-menu-help-guide = Посібник
 app-menu-help-license = Ліцензія
 
+app-fullscreen-enter = Повноекранний режим
+app-fullscreen-exit = Вийти з повноекранного режиму
+
 ## Demo patterns.
 
 demo-pattern-piggies = Поросята
