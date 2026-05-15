@@ -175,7 +175,7 @@ onMounted(async () => {
         :assigned-symbols="assignedSymbols"
         :options="selectedCodePoints"
         :font-family="selectedFontKey.split('/')[1]"
-        scroll-type="always"
+        :scroll="{ type: 'always' }"
         @option-dblclick="handleSetSymbol($event.codePoint)"
       >
         <template #header>

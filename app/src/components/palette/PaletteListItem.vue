@@ -15,7 +15,7 @@ const { paletteItem, selected, displaySettings } = defineProps<PaletteItemProps>
 <template>
   <Tooltip :text="paletteItem.getTitle()" :delay-duration="200" side="left" :ui="{ content: 'text-base' }">
     <div
-      class="flex min-h-8 items-center rounded-md px-2 py-1 outline-2 -outline-offset-4 outline-solid data-highlighted:ring-2 data-highlighted:ring-primary"
+      class="flex min-h-8 w-full min-w-0 items-center rounded-md px-2 py-1 outline-2 -outline-offset-4 outline-solid data-highlighted:ring-2 data-highlighted:ring-primary"
       :style="{
         backgroundColor: paletteItem.hex,
         color: `${paletteItem.contrastColor} !important`,

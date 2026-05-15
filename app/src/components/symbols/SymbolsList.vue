@@ -1,27 +1,17 @@
 <script setup lang="ts">
-import { ScrollArea } from "@embroiderly/ui";
-import type { ScrollType } from "@embroiderly/ui";
-
-import { Listbox } from "reka-ui/namespaced";
+import { Listbox } from "@embroiderly/ui";
+import type { ListboxProps } from "@embroiderly/ui";
 
 import SymbolsListItem from "./SymbolsListItem.vue";
 
-interface SymbolsListProps {
+interface SymbolsListProps extends Pick<ListboxProps, "disabled" | "scroll"> {
   assignedSymbols: number[];
   options?: number[];
   fontFamily?: string;
-  disabled?: boolean;
-  scrollType?: ScrollType;
 }
 
 const selectedSymbol = defineModel<number>("selectedSymbol");
-const {
-  assignedSymbols,
-  options = [],
-  fontFamily = "",
-  disabled = false,
-  scrollType = "hover",
-} = defineProps<SymbolsListProps>();
+const { assignedSymbols, options = [], fontFamily = "" } = defineProps<SymbolsListProps>();
 
 const emit = defineEmits<{
   "option-dblclick": [
@@ -41,51 +31,46 @@ const emit = defineEmits<{
       <slot name="header"></slot>
     </div>
 
-    <Listbox.Root
+    <Listbox
       v-model="selectedSymbol"
+      :items="options"
       :disabled="disabled"
       selection-behavior="replace"
-      class="flex grow flex-col overflow-hidden data-disabled:cursor-not-allowed"
-      @highlight="selectedSymbol = $event?.value as number"
+      :scroll="scroll"
+      :empty-message="$t('stitch-symbols-empty')"
+      class="grow"
+      :ui="{
+        root: 'overflow-hidden rounded-none ring-0',
+        scroll: 'min-h-0 flex-1',
+        content: 'min-h-full',
+        group: 'grid grid-cols-8 gap-1 p-1',
+        item: 'rounded-none p-0 data-highlighted:bg-transparent',
+      }"
+      @highlight="selectedSymbol = $event?.value as number | undefined"
+      @option-contextmenu="({ item }) => (selectedSymbol = item as number)"
+      @option-dblclick="
+        ({ originalEvent, item }) => emit('option-dblclick', { originalEvent, codePoint: item as number })
+      "
     >
-      <ScrollArea :type="scrollType">
-        <Listbox.Content
-          class="grid gap-1 p-1 outline-none"
-          :style="{
-            gridTemplateColumns: `repeat(${options.length ? 8 : 1}, minmax(0px, 1fr))`,
+      <template #option="{ item }">
+        <slot
+          name="option"
+          v-bind="{
+            option: item.value,
+            fontFamily,
+            assigned: assignedSymbols.includes(item.value),
+            selected: selectedSymbol === item.value,
           }"
         >
-          <template v-if="options.length">
-            <Listbox.Item
-              v-for="option in options"
-              :key="option"
-              :value="option"
-              as-child
-              @dblclick="emit('option-dblclick', { originalEvent: $event, codePoint: option })"
-              @contextmenu="selectedSymbol = option"
-            >
-              <slot
-                name="option"
-                v-bind="{
-                  option,
-                  fontFamily,
-                  assigned: assignedSymbols.includes(option),
-                  selected: selectedSymbol === option,
-                }"
-              >
-                <SymbolsListItem
-                  :symbol="String.fromCodePoint(option)"
-                  :font-family="fontFamily"
-                  :assigned="assignedSymbols.includes(option)"
-                  :selected="selectedSymbol === option"
-                />
-              </slot>
-            </Listbox.Item>
-          </template>
-          <p v-else class="px-2">{{ $t("stitch-symbols-empty") }}</p>
-        </Listbox.Content>
-      </ScrollArea>
-    </Listbox.Root>
+          <SymbolsListItem
+            :symbol="String.fromCodePoint(item.value)"
+            :font-family="fontFamily"
+            :assigned="assignedSymbols.includes(item.value)"
+            :selected="selectedSymbol === item.value"
+          />
+        </slot>
+      </template>
+    </Listbox>
 
     <div v-if="$slots.footer" class="border-t border-default px-2 py-1">
       <slot name="footer"></slot>

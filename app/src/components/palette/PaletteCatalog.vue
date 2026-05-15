@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Button, DropdownMenu, Input, useConfirm, useToast } from "@embroiderly/ui";
+import { Button, DropdownMenu, useConfirm, useToast } from "@embroiderly/ui";
 import type { DropdownMenuItem } from "@embroiderly/ui";
 
 import { useFuse } from "@vueuse/integrations/useFuse";
 import { useTemplateRef, ref, computed, shallowRef } from "vue";
 import type { Ref } from "vue";
 
-import { IconMenu, IconSearch } from "~/assets/icons/";
+import { IconMenu } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
@@ -110,8 +110,9 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
       :options="results.map((r) => r.item)"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
+      :scroll="{ type: 'always' }"
+      :filter-input="{ ...$ta('palette-catalog-search'), variant: 'outline', size: 'md' }"
       multiple
-      scroll-type="always"
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
       <template #header>
@@ -128,17 +129,6 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
             <Button :loading="importingPalettes" color="neutral" variant="outline" :icon="IconMenu" />
           </DropdownMenu>
         </div>
-      </template>
-
-      <template #filter>
-        <Input
-          v-model="searchQuery"
-          v-bind="$ta('palette-catalog-search')"
-          size="md"
-          variant="outline"
-          :icon="IconSearch"
-          class="w-full"
-        />
       </template>
 
       <template #option="{ option, displaySettings }">

@@ -12,7 +12,7 @@ import Input from "./Input.vue";
 import type { InputProps } from "./Input.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
-const variants = ["subtle", "outline"] as const;
+const variants = ["subtle", "outline", "none"] as const;
 
 const value = ref("Lorem ipsum");
 const inputState = reactive<InputProps>({

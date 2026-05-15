@@ -23,6 +23,16 @@ exports[`Listbox > renders correctly with class 1`] = `
 </div>
 `;
 
+exports[`Listbox > renders correctly with custom empty message 1`] = `
+<div>
+  <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
+    <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="0">
+      <p class="py-2 text-base text-center text-muted" data-slot="empty">There is nothing for you</p>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Listbox > renders correctly with disabled 1`] = `
 <div>
   <div class="cursor-not-allowed flex flex-col min-h-0 opacity-75 overflow-hidden ring ring-default ring-inset rounded-md" data-disabled data-slot="root" dir="ltr" id="v-0">
@@ -49,10 +59,8 @@ exports[`Listbox > renders correctly with disabled 1`] = `
 exports[`Listbox > renders correctly with filterInput 1`] = `
 <div>
   <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
-    <div class="border-b border-default shrink-0">
-      <div class="inline-flex items-center relative w-full" data-slot="root">
-        <input aria-activedescendant="reka-listbox-item-v-3" aria-disabled="false" class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring-0 ring-accented ring-inset rounded-b-none rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" placeholder="Search…" type="text" value>
-      </div>
+    <div class="border-b border-default inline-flex items-center relative" data-slot="root">
+      <input aria-activedescendant="reka-listbox-item-v-3" aria-disabled="false" class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none gap-2 px-3 py-2 rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" placeholder="Search…" type="text" value>
     </div>
     <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
       <div aria-labelledby="reka-listbox-group-v-2" class="p-1" data-slot="group" role="group">
@@ -77,10 +85,8 @@ exports[`Listbox > renders correctly with filterInput 1`] = `
 exports[`Listbox > renders correctly with filterInput placeholder 1`] = `
 <div>
   <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
-    <div class="border-b border-default shrink-0">
-      <div class="inline-flex items-center relative w-full" data-slot="root">
-        <input aria-activedescendant="reka-listbox-item-v-3" aria-disabled="false" class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring-0 ring-accented ring-inset rounded-b-none rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" placeholder="Search items..." type="text" value>
-      </div>
+    <div class="border-b border-default inline-flex items-center relative" data-slot="root">
+      <input aria-activedescendant="reka-listbox-item-v-3" aria-disabled="false" class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none gap-2 px-3 py-2 rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" placeholder="Search items..." type="text" value>
     </div>
     <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="-1">
       <div aria-labelledby="reka-listbox-group-v-2" class="p-1" data-slot="group" role="group">
@@ -217,7 +223,7 @@ exports[`Listbox > renders correctly with no items 1`] = `
 <div>
   <div class="flex flex-col min-h-0 overflow-hidden ring ring-default ring-inset rounded-md" data-slot="root" dir="ltr" id="v-0">
     <div aria-multiselectable="false" aria-orientation="vertical" class="min-h-full outline-none" data-orientation="vertical" data-slot="content" role="listbox" tabindex="0">
-      <div class="py-2 text-base text-center text-muted" data-slot="empty">No items</div>
+      <p class="py-2 text-base text-center text-muted" data-slot="empty">No items</p>
     </div>
   </div>
 </div>

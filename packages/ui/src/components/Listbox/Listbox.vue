@@ -73,6 +73,9 @@ export interface ListboxProps<T extends ListboxItem = ListboxItem> extends Pick<
    */
   size?: ListboxThemeVariants["size"];
 
+  /** The message to display when the listbox is empty. */
+  emptyMessage?: string;
+
   class?: any;
   ui?: ListboxThemeSlots;
 }
@@ -84,8 +87,8 @@ export interface ListboxEmits<T extends ListboxItem = ListboxItem> {
   highlight: [payload: { ref: HTMLElement; value: T } | undefined];
 }
 
-export interface ListboxSlots<T extends ListboxItem = ListboxItem> {
-  option(props: { item: T; selected: boolean; index: number }): any;
+export interface ListboxSlots {
+  option(props: { item: ListboxItemObject; selected: boolean; index: number }): any;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -98,7 +101,7 @@ const props = withDefaults(defineProps<ListboxProps<T>>(), {
   scroll: true,
 });
 const emits = defineEmits<ListboxEmits<T>>();
-defineSlots<ListboxSlots<T>>();
+defineSlots<ListboxSlots>();
 
 const locale = useLocale();
 const { icons } = useComponentIcons();
@@ -109,6 +112,7 @@ const size = computed(() => props.size ?? formFieldSize.value);
 const filterInputProps = computed<InputProps>(() =>
   defu(typeof props.filterInput === "object" ? props.filterInput : {}, {
     placeholder: locale.value.messages.listbox.search,
+    variant: "none",
   } as InputProps),
 );
 
@@ -198,7 +202,7 @@ const ui = computed(() => {
                 emits('option-contextmenu', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
               "
             >
-              <slot name="option" :item="item.value as T" :selected="isSelected(item)" :index="i">
+              <slot name="option" :item="item" :selected="isSelected(item)" :index="i">
                 <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
                   {{ item.label ?? String(item.value) }}
                 </span>
@@ -215,9 +219,9 @@ const ui = computed(() => {
         </Listbox.Group>
       </template>
 
-      <div v-else data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
-        {{ locale.messages.listbox.empty }}
-      </div>
+      <p v-else data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
+        {{ props.emptyMessage ?? locale.messages.listbox.empty }}
+      </p>
     </Listbox.Content>
   </DefineContentTemplate>
 
@@ -235,17 +239,14 @@ const ui = computed(() => {
     :class="ui.root({ class: [props.ui?.root, props.class] })"
     @highlight="emits('highlight', $event as any)"
   >
-    <div v-if="filterInput" :class="ui.filter({ class: props.ui?.filter })">
-      <!-- Bind the `filterValue` twice to correctly handle the user input. -->
-      <Listbox.Filter v-model="filterValue" as-child>
-        <Input
-          v-model="filterValue"
-          v-bind="filterInputProps"
-          :size="size"
-          :ui="{ root: 'w-full', base: 'ring-0 rounded-b-none bg-transparent' }"
-        />
-      </Listbox.Filter>
-    </div>
+    <Listbox.Filter v-if="filterInput" v-model="filterValue" as-child>
+      <Input
+        v-model="filterValue"
+        :size="size"
+        v-bind="filterInputProps"
+        :class="ui.filter({ class: props.ui?.filter })"
+      />
+    </Listbox.Filter>
 
     <ScrollArea
       v-if="scrollProps !== null"

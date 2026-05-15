@@ -22,6 +22,7 @@ describe("Listbox", () => {
     ["with multiple modelValue", { props: { ...props, multiple: true, modelValue: [items[0], items[1]] } }],
     ["with grouped items", { props: { ...props, items: groupedItems } }],
     ["with no items", { props: { ...props, items: [] } }],
+    ["with custom empty message", { props: { ...props, items: [], emptyMessage: "There is nothing for you" } }],
     ["with filterInput", { props: { ...props, filterInput: true } }],
     ["with filterInput placeholder", { props: { ...props, filterInput: { placeholder: "Search items..." } } }],
     ["with scroll", { props: { ...props, scroll: true } }],

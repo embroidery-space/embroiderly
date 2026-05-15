@@ -18,7 +18,6 @@ const demoState = reactive<ListboxProps>({
   multiple: false,
   disabled: false,
   highlightOnHover: true,
-  filterInput: false,
   size: "md",
   color: "primary",
 });
