@@ -23,20 +23,20 @@ catalog:
   "@vueuse/components": 14.3.0
   "@vueuse/integrations": 14.3.0
   "vue": 3.5.34
-  "vue-component-type-helpers": 3.2.8
+  "vue-component-type-helpers": 3.2.9
   "pinia": 3.0.4
   "pinia-plugin-persistedstate": 4.7.1
   "reka-ui": 2.9.7
 
   # Styling
-  "tailwindcss": 4.2.4
-  "tailwind-merge": 3.5.0
+  "tailwindcss": 4.3.0
+  "tailwind-merge": 3.6.0
   "tailwind-variants": 3.2.2
 
   # Icons
   "@iconify/vue": 5.0.1
-  "@iconify-json/lucide": 1.2.105
-  "@iconify-json/material-symbols": 1.2.70
+  "@iconify-json/lucide": 1.2.107
+  "@iconify-json/material-symbols": 1.2.72
   "@iconify-json/mdi": 1.2.3
   "unplugin-icons": 23.0.1
 
@@ -51,9 +51,9 @@ catalog:
   "@zorsh/zorsh": 0.5.0
 
   # Telemetry
-  "@sentry/core": 10.52.0
-  "@sentry/vue": 10.52.0
-  "posthog-js": 1.372.10
+  "@sentry/core": 10.53.1
+  "@sentry/vue": 10.53.1
+  "posthog-js": 1.373.4
 
   # Utilities
   "@stdlib/math-base-special-roundn": 0.2.3
@@ -79,34 +79,34 @@ catalog:
 
   # Code Quality
   "eslint": 9.39.4
-  "@eslint/compat": 2.0.5
+  "@eslint/compat": 2.1.0
   "@eslint-community/eslint-plugin-eslint-comments": 4.7.1
-  "@intlify/eslint-plugin-vue-i18n": 4.3.0
-  "@vitest/eslint-plugin": 1.6.16
+  "@intlify/eslint-plugin-vue-i18n": 4.4.0
+  "@vitest/eslint-plugin": 1.6.17
   "@vue/eslint-config-prettier": 10.2.0
   "@vue/eslint-config-typescript": 14.7.0
   "eslint-plugin-better-tailwindcss": 4.5.0
   "eslint-plugin-import-x": 4.16.2
   "eslint-plugin-no-only-tests": 3.4.0
-  "eslint-plugin-oxlint": 1.63.0
+  "eslint-plugin-oxlint": 1.64.0
   "eslint-plugin-vue": 10.9.1
   "eslint-plugin-wdio": 9.27.1
   "eslint-plugin-yml": 3.3.2
   "markdownlint-cli2": 0.22.1
-  "oxfmt": 0.48.0
-  "oxlint": 1.63.0
+  "oxfmt": 0.49.0
+  "oxlint": 1.64.0
   "husky": 9.1.7
-  "lint-staged": 17.0.2
+  "lint-staged": 17.0.4
 
   # Build tools
   "concurrently": 9.2.1
-  "vite": 8.0.11
+  "vite": 8.0.13
   "vite-plugin-pwa": 1.3.0
-  "vite-plugin-vue-devtools": 8.1.1
+  "vite-plugin-vue-devtools": 8.1.2
   "@vite-pwa/assets-generator": 1.0.2
   "@vitejs/plugin-vue": 6.0.6
-  "@tailwindcss/vite": 4.2.4
-  "wrangler": 4.90.0
+  "@tailwindcss/vite": 4.3.0
+  "wrangler": 4.91.0
 
   # PWA
   "workbox-precaching": 7.4.1
@@ -118,15 +118,15 @@ catalog:
 
   # TypeScript
   "typescript": 6.0.3
-  "vue-tsc": 3.2.8
+  "vue-tsc": 3.2.9
   "@tsconfig/node24": 24.0.4
   "@tsconfig/strictest": 2.0.8
   "@vue/tsconfig": 0.9.1
 
   # Testing
   "@pinia/testing": 1.0.3
-  "@vitest/browser-webdriverio": 4.1.5
-  "vitest": 4.1.5
+  "@vitest/browser-webdriverio": 4.1.6
+  "vitest": 4.1.6
   "vitest-browser-vue": 2.1.0
   "vue3-snapshot-serializer": 2.13.2
 
@@ -139,7 +139,7 @@ catalog:
 
   # Types
   "@types/mocha": 10.0.10
-  "@types/node": 24.12.3
+  "@types/node": 24.12.4
   "@types/sortablejs": 1.15.9
 
 strictDepBuilds: true
