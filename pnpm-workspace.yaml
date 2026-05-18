@@ -5,6 +5,8 @@ packages:
   - docs
   - "packages/*"
 
+saveExact: true
+
 catalogMode: strict
 cleanupUnusedCatalogs: true
 catalog:
