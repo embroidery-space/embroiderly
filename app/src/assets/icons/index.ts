@@ -30,6 +30,8 @@ export { default as IconUndo } from "~icons/material-symbols/undo-rounded";
 export { default as IconRedo } from "~icons/material-symbols/redo-rounded";
 export { default as IconEdit } from "~icons/material-symbols/edit-rounded";
 export { default as IconClose } from "~icons/material-symbols/close-rounded";
+export { default as IconFullscreen } from "~icons/material-symbols/fullscreen-rounded";
+export { default as IconFullscreenExit } from "~icons/material-symbols/fullscreen-exit-rounded";
 export { default as IconZoomIn } from "~icons/material-symbols/zoom-in-rounded";
 export { default as IconZoomOut } from "~icons/material-symbols/zoom-out-rounded";
 export { default as IconPanelLeftClose } from "~icons/material-symbols/left-panel-close-rounded";
