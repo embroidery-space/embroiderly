@@ -1,5 +1,3 @@
-use std::path::PathBuf;
-
 use super::display::DisplaySettings;
 use super::publish::PublishSettings;
 use super::{Pattern, ReferenceImage};
@@ -12,9 +10,9 @@ mod tests;
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct EmbroiderlyProject {
   pub id: uuid::Uuid,
-  #[cfg_attr(feature = "borsh", borsh(skip))]
-  pub file_path: Option<PathBuf>,
+
   pub reference_image: Option<ReferenceImage>,
+
   pub pattern: Pattern,
   pub display_settings: DisplaySettings,
   pub publish_settings: PublishSettings,
@@ -38,8 +36,9 @@ impl EmbroiderlyProject {
 #[derive(Debug)]
 pub struct EmbroiderlyProjectBuilder {
   pattern: Pattern,
-  file_path: Option<PathBuf>,
+
   reference_image: Option<ReferenceImage>,
+
   display_settings: Option<DisplaySettings>,
   publish_settings: Option<PublishSettings>,
 }
@@ -50,18 +49,12 @@ impl EmbroiderlyProjectBuilder {
   pub const fn new(pattern: Pattern) -> Self {
     Self {
       pattern,
-      file_path: None,
+
       reference_image: None,
+
       display_settings: None,
       publish_settings: None,
     }
-  }
-
-  /// Sets the file path for the project.
-  #[must_use]
-  pub fn file_path(mut self, file_path: impl Into<PathBuf>) -> Self {
-    self.file_path = Some(file_path.into());
-    self
   }
 
   /// Sets the reference image for the project.
@@ -90,8 +83,9 @@ impl EmbroiderlyProjectBuilder {
   pub fn build(self) -> EmbroiderlyProject {
     EmbroiderlyProject {
       id: uuid::Uuid::new_v4(),
-      file_path: self.file_path,
+
       reference_image: self.reference_image,
+
       pattern: self.pattern,
       display_settings: self.display_settings.unwrap_or_default(),
       publish_settings: self.publish_settings.unwrap_or_default(),

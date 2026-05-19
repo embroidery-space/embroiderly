@@ -5,21 +5,11 @@ fn creates_new_embproj_with_defaults() {
   let embproj = EmbroiderlyProject::new(Pattern::default());
 
   assert!(!embproj.id.is_nil());
-  assert!(embproj.file_path.is_none());
 
   assert!(embproj.reference_image.is_none());
 
   assert_eq!(embproj.display_settings, DisplaySettings::default());
   assert_eq!(embproj.publish_settings, PublishSettings::default());
-}
-
-#[test]
-fn builder_sets_file_path() {
-  let embproj = EmbroiderlyProject::builder(Pattern::default())
-    .file_path("test/pattern.embproj")
-    .build();
-
-  assert_eq!(embproj.file_path, Some(PathBuf::from("test/pattern.embproj")));
 }
 
 #[test]
@@ -66,5 +56,4 @@ fn from_pattern_creates_embproj() {
   let embproj: EmbroiderlyProject = Pattern::default().into();
 
   assert!(!embproj.id.is_nil());
-  assert!(embproj.file_path.is_none());
 }
