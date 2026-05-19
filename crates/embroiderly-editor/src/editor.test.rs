@@ -1,4 +1,4 @@
-use embroiderly_pattern::PatternProject;
+use embroiderly_pattern::EmbroiderlyProject;
 
 use super::*;
 use crate::actions::EditorAction;
@@ -7,17 +7,17 @@ use crate::error::Error;
 #[test]
 fn test_editor_new() {
   let editor = Editor::new();
-  assert!(editor.patterns.is_empty());
+  assert!(editor.projects.is_empty());
   assert!(editor.histories.is_empty());
 }
 
 #[test]
 fn test_add_and_remove_pattern() {
   let mut editor = Editor::new();
-  let patproj = PatternProject::default();
-  let id = patproj.id;
+  let embproj = EmbroiderlyProject::default();
+  let id = embproj.id;
 
-  let returned_id = editor.add_pattern(patproj.clone());
+  let returned_id = editor.add_pattern(embproj.clone());
   assert_eq!(id, returned_id);
 
   assert!(editor.get_pattern(&id).is_some());
@@ -56,8 +56,8 @@ fn test_pattern_not_found() {
 #[test]
 fn test_dispatch_undo_redo() {
   let mut editor = Editor::new();
-  let patproj = PatternProject::default();
-  let id = editor.add_pattern(patproj);
+  let embproj = EmbroiderlyProject::default();
+  let id = editor.add_pattern(embproj);
 
   assert!(!editor.has_unsaved_changes(&id).unwrap());
 
@@ -77,8 +77,8 @@ fn test_dispatch_undo_redo() {
 #[test]
 fn test_transactions() {
   let mut editor = Editor::new();
-  let patproj = PatternProject::default();
-  let id = editor.add_pattern(patproj);
+  let embproj = EmbroiderlyProject::default();
+  let id = editor.add_pattern(embproj);
 
   editor.start_transaction(&id).unwrap();
   editor.dispatch(&id, EditorAction::Mock).unwrap();
@@ -95,8 +95,8 @@ fn test_transactions() {
 #[test]
 fn test_checkpoint() {
   let mut editor = Editor::new();
-  let patproj = PatternProject::default();
-  let id = editor.add_pattern(patproj);
+  let embproj = EmbroiderlyProject::default();
+  let id = editor.add_pattern(embproj);
 
   editor.dispatch(&id, EditorAction::Mock).unwrap();
   assert!(editor.has_unsaved_changes(&id).unwrap());

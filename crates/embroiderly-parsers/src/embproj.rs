@@ -1,7 +1,7 @@
 use std::io::{Read as _, Write as _};
 
 use anyhow::Result;
-use embroiderly_pattern::{PatternProject, ReferenceImage};
+use embroiderly_pattern::{EmbroiderlyProject, ReferenceImage};
 
 /// Reads a `ZipFile` and returns a buffered reader for its content.
 macro_rules! read_zip_file {
@@ -18,7 +18,7 @@ macro_rules! read_zip_file {
 }
 
 #[tracing::instrument(name = "parse_embproj", level = "debug", skip_all)]
-pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
+pub fn parse_pattern(data: &[u8]) -> Result<EmbroiderlyProject> {
   let cursor = std::io::Cursor::new(data);
   let mut archive = zip::ZipArchive::new(cursor)?;
 
@@ -55,32 +55,32 @@ pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
       None
     };
 
-  let mut patproj = PatternProject::builder(pattern)
+  let mut embproj = EmbroiderlyProject::builder(pattern)
     .display_settings(display_settings)
     .publish_settings(publish_settings);
 
   if let Some(reference_image) = reference_image {
-    patproj = patproj.reference_image(reference_image);
+    embproj = embproj.reference_image(reference_image);
   }
 
-  Ok(patproj.build())
+  Ok(embproj.build())
 }
 
 #[tracing::instrument(name = "save_embproj", level = "debug", skip_all)]
-pub fn save_pattern(patproj: &PatternProject) -> Result<Vec<u8>> {
+pub fn save_pattern(embproj: &EmbroiderlyProject) -> Result<Vec<u8>> {
   let mut zip = zip::ZipWriter::new(std::io::Cursor::new(Vec::new()));
   let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Deflated);
 
   zip.start_file("pattern.json", options)?;
-  zip.write_all(&serde_json::to_vec(&patproj.pattern)?)?;
+  zip.write_all(&serde_json::to_vec(&embproj.pattern)?)?;
 
   zip.start_file("display_settings.json", options)?;
-  zip.write_all(&serde_json::to_vec(&patproj.display_settings)?)?;
+  zip.write_all(&serde_json::to_vec(&embproj.display_settings)?)?;
 
   zip.start_file("publish_settings.json", options)?;
-  zip.write_all(&serde_json::to_vec(&patproj.publish_settings)?)?;
+  zip.write_all(&serde_json::to_vec(&embproj.publish_settings)?)?;
 
-  if let Some(ref image) = patproj.reference_image {
+  if let Some(ref image) = embproj.reference_image {
     let image_file_name = format!("reference_image.{}", image.format.extensions_str()[0]);
     zip.start_file(image_file_name, options)?;
     zip.write_all(&image.content)?;

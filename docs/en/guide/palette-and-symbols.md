@@ -318,7 +318,7 @@ Embroiderly supports these palette file formats:
 - `.master` and `.user` (Pattern Maker).
 - `.threads` (UrsaSoftware).
 - `.rng` (Cross-Stitch Pro Platinum).
-- `.json` (Embroiderly).
+- `.embpal` (Embroiderly).
 
 When import completes:
 

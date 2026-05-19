@@ -1,4 +1,4 @@
-use embroiderly_pattern::{Bounds, Fabric, PatternProject, Stitch};
+use embroiderly_pattern::{Bounds, EmbroiderlyProject, Fabric, Stitch};
 
 use crate::EditorEvent;
 use crate::error::Result;
@@ -17,18 +17,18 @@ pub enum FabricAction {
 }
 
 impl FabricAction {
-  pub fn perform(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn perform(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Update {
         fabric,
         old_fabric,
         extra_stitches,
       } => {
-        let prev = std::mem::replace(&mut patproj.pattern.fabric, fabric.clone());
+        let prev = std::mem::replace(&mut embproj.pattern.fabric, fabric.clone());
         let mut events = vec![EditorEvent::FabricUpdate(fabric.clone())];
 
         if fabric.width < prev.width || fabric.height < prev.height {
-          let removed = patproj
+          let removed = embproj
             .pattern
             .remove_stitches_outside_bounds(Bounds::new(0, 0, fabric.width, fabric.height));
           events.push(EditorEvent::StitchesRemove {
@@ -39,13 +39,13 @@ impl FabricAction {
         }
 
         old_fabric.get_or_insert(prev);
-        events.push(EditorEvent::PatternChanged(patproj.id));
+        events.push(EditorEvent::PatternChanged(embproj.id));
         Ok(events)
       }
     }
   }
 
-  pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn revoke(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Update {
         old_fabric,
@@ -53,18 +53,18 @@ impl FabricAction {
         ..
       } => {
         let old = old_fabric.take().ok_or(crate::error::Error::ActionNotPerformed)?;
-        patproj.pattern.fabric = old.clone();
+        embproj.pattern.fabric = old.clone();
         let mut events = vec![EditorEvent::FabricUpdate(old)];
 
         if let Some(stitches) = extra_stitches.take() {
-          patproj.pattern.add_stitches(0, stitches.clone());
+          embproj.pattern.add_stitches(0, stitches.clone());
           events.push(EditorEvent::StitchesAdd {
             layer_index: 0,
             stitches,
           });
         }
 
-        events.push(EditorEvent::PatternChanged(patproj.id));
+        events.push(EditorEvent::PatternChanged(embproj.id));
         Ok(events)
       }
     }

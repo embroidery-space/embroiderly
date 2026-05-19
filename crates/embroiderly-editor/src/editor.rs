@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use embroiderly_pattern::PatternProject;
+use embroiderly_pattern::EmbroiderlyProject;
 
 use crate::EditorEvent;
 use crate::actions::EditorAction;
@@ -14,7 +14,7 @@ mod tests;
 /// The unified editor object that owns all open pattern projects and their edit history.
 #[derive(Default)]
 pub struct Editor {
-  patterns: HashMap<uuid::Uuid, PatternProject>,
+  projects: HashMap<uuid::Uuid, EmbroiderlyProject>,
   histories: HashMap<uuid::Uuid, History>,
 }
 
@@ -26,43 +26,43 @@ impl Editor {
 
   /// Returns the IDs of all open patterns.
   #[must_use]
-  pub fn pattern_ids(&self) -> Vec<uuid::Uuid> {
-    self.patterns.keys().copied().collect()
+  pub fn project_ids(&self) -> Vec<uuid::Uuid> {
+    self.projects.keys().copied().collect()
   }
 
   /// Adds a pattern project to the editor. Returns its UUID.
-  pub fn add_pattern(&mut self, patproj: PatternProject) -> uuid::Uuid {
-    let id = patproj.id;
+  pub fn add_pattern(&mut self, embproj: EmbroiderlyProject) -> uuid::Uuid {
+    let id = embproj.id;
 
     self.histories.entry(id).or_default();
-    self.patterns.insert(id, patproj);
+    self.projects.insert(id, embproj);
 
     id
   }
 
   /// Removes a pattern project from the editor. Returns the project if it existed.
-  pub fn remove_pattern(&mut self, id: &uuid::Uuid) -> Option<PatternProject> {
+  pub fn remove_pattern(&mut self, id: &uuid::Uuid) -> Option<EmbroiderlyProject> {
     self.histories.remove(id);
-    self.patterns.remove(id)
+    self.projects.remove(id)
   }
 
   /// Returns a reference to the pattern project.
   #[must_use]
-  pub fn get_pattern(&self, id: &uuid::Uuid) -> Option<&PatternProject> {
-    self.patterns.get(id)
+  pub fn get_pattern(&self, id: &uuid::Uuid) -> Option<&EmbroiderlyProject> {
+    self.projects.get(id)
   }
 
   /// Returns a mutable reference to the pattern project.
-  pub fn get_pattern_mut(&mut self, id: &uuid::Uuid) -> Option<&mut PatternProject> {
-    self.patterns.get_mut(id)
+  pub fn get_pattern_mut(&mut self, id: &uuid::Uuid) -> Option<&mut EmbroiderlyProject> {
+    self.projects.get_mut(id)
   }
 
   /// Performs an action on the pattern project.
   /// All changes are stored in the actions history.
   /// Returns the resulted events to which the caller should react on their side.
   pub fn dispatch(&mut self, id: &uuid::Uuid, mut action: EditorAction) -> Result<Vec<EditorEvent>> {
-    let patproj = self.patterns.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
-    let events = action.perform(patproj)?;
+    let embproj = self.projects.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
+    let events = action.perform(embproj)?;
 
     let history = self.histories.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
     history.push(action);
@@ -72,30 +72,30 @@ impl Editor {
 
   /// Undoes the last action on the pattern project.
   pub fn undo(&mut self, id: &uuid::Uuid) -> Result<Vec<EditorEvent>> {
-    let patproj = self.patterns.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
+    let embproj = self.projects.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
     let history = self.histories.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
-    Ok(history.undo(patproj)?.unwrap_or_default())
+    Ok(history.undo(embproj)?.unwrap_or_default())
   }
 
   /// Redoes the last undone action on the pattern project.
   pub fn redo(&mut self, id: &uuid::Uuid) -> Result<Vec<EditorEvent>> {
-    let patproj = self.patterns.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
+    let embproj = self.projects.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
     let history = self.histories.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
-    Ok(history.redo(patproj)?.unwrap_or_default())
+    Ok(history.redo(embproj)?.unwrap_or_default())
   }
 
   /// Undoes the last transaction on the pattern project.
   pub fn undo_transaction(&mut self, id: &uuid::Uuid) -> Result<Vec<EditorEvent>> {
-    let patproj = self.patterns.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
+    let embproj = self.projects.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
     let history = self.histories.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
-    Ok(history.undo_transaction(patproj)?.unwrap_or_default())
+    Ok(history.undo_transaction(embproj)?.unwrap_or_default())
   }
 
   /// Redoes the last undone transaction on the pattern project.
   pub fn redo_transaction(&mut self, id: &uuid::Uuid) -> Result<Vec<EditorEvent>> {
-    let patproj = self.patterns.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
+    let embproj = self.projects.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
     let history = self.histories.get_mut(id).ok_or(Error::PatternNotFound(*id))?;
-    Ok(history.redo_transaction(patproj)?.unwrap_or_default())
+    Ok(history.redo_transaction(embproj)?.unwrap_or_default())
   }
 
   /// Starts a new transaction on the pattern project.

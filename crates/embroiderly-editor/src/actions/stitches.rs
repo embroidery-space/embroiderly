@@ -1,4 +1,4 @@
-use embroiderly_pattern::{PatternProject, Stitch};
+use embroiderly_pattern::{EmbroiderlyProject, Stitch};
 
 use crate::EditorEvent;
 use crate::error::{Error, Result};
@@ -22,14 +22,14 @@ pub enum StitchAction {
 }
 
 impl StitchAction {
-  pub fn perform(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn perform(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Add {
         layer_index,
         stitch,
         conflicts,
       } => {
-        let removed = patproj.pattern.add_stitch(*layer_index, *stitch);
+        let removed = embproj.pattern.add_stitch(*layer_index, *stitch);
         let mut events = vec![
           EditorEvent::StitchesAdd {
             layer_index: *layer_index,
@@ -41,7 +41,7 @@ impl StitchAction {
           },
         ];
         conflicts.get_or_insert(removed);
-        events.push(EditorEvent::PatternChanged(patproj.id));
+        events.push(EditorEvent::PatternChanged(embproj.id));
         Ok(events)
       }
       Self::Remove {
@@ -49,7 +49,7 @@ impl StitchAction {
         target_stitch,
         actual_stitch,
       } => {
-        let removed = patproj
+        let removed = embproj
           .pattern
           .remove_stitch(*layer_index, *target_stitch)
           .ok_or(Error::StitchNotFound)?;
@@ -59,13 +59,13 @@ impl StitchAction {
             layer_index: *layer_index,
             stitches: vec![removed],
           },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }
   }
 
-  pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn revoke(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Add {
         layer_index,
@@ -73,8 +73,8 @@ impl StitchAction {
         conflicts,
       } => {
         let saved = conflicts.take().ok_or(Error::ActionNotPerformed)?;
-        patproj.pattern.remove_stitch(*layer_index, *stitch);
-        patproj.pattern.add_stitches(*layer_index, saved.clone());
+        embproj.pattern.remove_stitch(*layer_index, *stitch);
+        embproj.pattern.add_stitches(*layer_index, saved.clone());
         Ok(vec![
           EditorEvent::StitchesRemove {
             layer_index: *layer_index,
@@ -84,7 +84,7 @@ impl StitchAction {
             layer_index: *layer_index,
             stitches: saved,
           },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::Remove {
@@ -93,13 +93,13 @@ impl StitchAction {
         ..
       } => {
         let saved = actual_stitch.take().ok_or(Error::ActionNotPerformed)?;
-        patproj.pattern.add_stitch(*layer_index, saved);
+        embproj.pattern.add_stitch(*layer_index, saved);
         Ok(vec![
           EditorEvent::StitchesAdd {
             layer_index: *layer_index,
             stitches: vec![saved],
           },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }

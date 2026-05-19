@@ -318,7 +318,7 @@ Embroiderly підтримує такі формати файлів палітр
 - `.master` та `.user` (Pattern Maker).
 - `.threads` (UrsaSoftware).
 - `.rng` (Cross-Stitch Pro Platinum).
-- `.json` (Embroiderly).
+- `.embpal` (Embroiderly).
 
 Після завершення імпорту:
 

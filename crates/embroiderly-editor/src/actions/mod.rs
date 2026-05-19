@@ -1,4 +1,4 @@
-use embroiderly_pattern::PatternProject;
+use embroiderly_pattern::EmbroiderlyProject;
 
 pub mod display;
 pub use display::DisplayAction;
@@ -47,34 +47,34 @@ pub enum EditorAction {
 }
 
 impl EditorAction {
-  pub fn perform(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn perform(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
-      Self::Stitch(a) => a.perform(patproj),
-      Self::Fabric(a) => a.perform(patproj),
-      Self::Palette(a) => a.perform(patproj),
-      Self::Pattern(a) => a.perform(patproj),
-      Self::Display(a) => a.perform(patproj),
-      Self::Grid(a) => a.perform(patproj),
-      Self::Layer(a) => a.perform(patproj),
-      Self::Publish(a) => a.perform(patproj),
-      Self::Image(a) => a.perform(patproj),
+      Self::Stitch(a) => a.perform(embproj),
+      Self::Fabric(a) => a.perform(embproj),
+      Self::Palette(a) => a.perform(embproj),
+      Self::Pattern(a) => a.perform(embproj),
+      Self::Display(a) => a.perform(embproj),
+      Self::Grid(a) => a.perform(embproj),
+      Self::Layer(a) => a.perform(embproj),
+      Self::Publish(a) => a.perform(embproj),
+      Self::Image(a) => a.perform(embproj),
 
       #[cfg(test)]
       Self::Mock => Ok(vec![]),
     }
   }
 
-  pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn revoke(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
-      Self::Stitch(a) => a.revoke(patproj),
-      Self::Fabric(a) => a.revoke(patproj),
-      Self::Palette(a) => a.revoke(patproj),
-      Self::Pattern(a) => a.revoke(patproj),
-      Self::Display(a) => a.revoke(patproj),
-      Self::Grid(a) => a.revoke(patproj),
-      Self::Layer(a) => a.revoke(patproj),
-      Self::Publish(a) => a.revoke(patproj),
-      Self::Image(a) => a.revoke(patproj),
+      Self::Stitch(a) => a.revoke(embproj),
+      Self::Fabric(a) => a.revoke(embproj),
+      Self::Palette(a) => a.revoke(embproj),
+      Self::Pattern(a) => a.revoke(embproj),
+      Self::Display(a) => a.revoke(embproj),
+      Self::Grid(a) => a.revoke(embproj),
+      Self::Layer(a) => a.revoke(embproj),
+      Self::Publish(a) => a.revoke(embproj),
+      Self::Image(a) => a.revoke(embproj),
 
       #[cfg(test)]
       Self::Mock => Ok(vec![]),

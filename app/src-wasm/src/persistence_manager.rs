@@ -9,41 +9,41 @@ use crate::error::Error;
 const DB_NAME: &str = "embroiderly";
 const DB_VERSION: u32 = 1;
 
-const PATTERN_STORE: &str = "patterns";
+const PROJECT_STORE: &str = "projects";
 const JOURNAL_STORE: &str = "journal";
-const JOURNAL_BY_PATTERN_INDEX: &str = "by_pattern";
+const JOURNAL_BY_PROJECT_INDEX: &str = "by_project";
 
-pub struct PatternEntry {
-  pub pattern_id: String,
+pub struct ProjectEntry {
+  pub project_id: String,
   pub data: Vec<u8>,
   pub handle: Option<JsValue>,
 }
 
-impl From<PatternEntry> for JsValue {
-  fn from(entry: PatternEntry) -> Self {
+impl From<ProjectEntry> for JsValue {
+  fn from(entry: ProjectEntry) -> Self {
     let obj = js_sys::Object::new();
     let set = |k: &str, v: Self| js_sys::Reflect::set(&obj, &k.into(), &v).unwrap();
-    set("pattern_id", entry.pattern_id.into());
+    set("project_id", entry.project_id.into());
     set("data", js_sys::Uint8Array::from(entry.data.as_slice()).into());
     set("handle", entry.handle.unwrap_or(Self::null()));
     obj.into()
   }
 }
 
-impl TryFrom<JsValue> for PatternEntry {
+impl TryFrom<JsValue> for ProjectEntry {
   type Error = anyhow::Error;
   fn try_from(val: JsValue) -> Result<Self, Self::Error> {
     let get = |k: &str| js_sys::Reflect::get(&val, &k.into()).ok();
-    let pattern_id = get("pattern_id")
+    let project_id = get("project_id")
       .and_then(|v| v.as_string())
-      .ok_or_else(|| anyhow::anyhow!("pattern entry missing pattern_id"))?;
+      .ok_or_else(|| anyhow::anyhow!("project entry missing project_id"))?;
     let data = get("data")
       .and_then(|v| v.dyn_into::<js_sys::Uint8Array>().ok())
       .map(|arr| arr.to_vec())
-      .ok_or_else(|| anyhow::anyhow!("pattern entry missing data"))?;
+      .ok_or_else(|| anyhow::anyhow!("project entry missing data"))?;
     let handle = get("handle").filter(|v| !v.is_null() && !v.is_undefined());
     Ok(Self {
-      pattern_id,
+      project_id,
       data,
       handle,
     })
@@ -51,7 +51,7 @@ impl TryFrom<JsValue> for PatternEntry {
 }
 
 struct JournalEntry {
-  pattern_id: String,
+  project_id: String,
   action: Vec<u8>,
 }
 
@@ -59,7 +59,7 @@ impl From<JournalEntry> for JsValue {
   fn from(entry: JournalEntry) -> Self {
     let obj = js_sys::Object::new();
     let set = |k: &str, v: Self| js_sys::Reflect::set(&obj, &k.into(), &v).unwrap();
-    set("pattern_id", entry.pattern_id.into());
+    set("project_id", entry.project_id.into());
     set("action", js_sys::Uint8Array::from(entry.action.as_slice()).into());
     obj.into()
   }
@@ -69,14 +69,14 @@ impl TryFrom<JsValue> for JournalEntry {
   type Error = anyhow::Error;
   fn try_from(val: JsValue) -> Result<Self, Self::Error> {
     let get = |k: &str| js_sys::Reflect::get(&val, &k.into()).ok();
-    let pattern_id = get("pattern_id")
+    let project_id = get("project_id")
       .and_then(|v| v.as_string())
-      .ok_or_else(|| anyhow::anyhow!("journal entry missing pattern_id"))?;
+      .ok_or_else(|| anyhow::anyhow!("journal entry missing project_id"))?;
     let action = get("action")
       .and_then(|v| v.dyn_into::<js_sys::Uint8Array>().ok())
       .map(|arr| arr.to_vec())
       .ok_or_else(|| anyhow::anyhow!("journal entry missing action"))?;
-    Ok(Self { pattern_id, action })
+    Ok(Self { project_id, action })
   }
 }
 
@@ -85,7 +85,7 @@ pub struct PersistenceManager {
   /// The underlying IndexedDB database.
   db: idb::Database<anyhow::Error>,
 
-  /// The in-memory pattern file handles store which is used to:
+  /// The in-memory project file handles store which is used to:
   /// 1. Avoid re-fetching from IndexedDB on every call.
   /// 2. Maintain the granted permissions (required for auto-save).
   handles: RefCell<HashMap<uuid::Uuid, opfs::FileHandle>>,
@@ -99,11 +99,11 @@ impl PersistenceManager {
       .open(DB_NAME, DB_VERSION, |evt| async move {
         let db = evt.database();
         if evt.old_version() < 1 {
-          db.build_object_store(PATTERN_STORE).key_path("pattern_id").create()?;
+          db.build_object_store(PROJECT_STORE).key_path("project_id").create()?;
 
           let journal_store = db.build_object_store(JOURNAL_STORE).auto_increment().create()?;
           journal_store
-            .build_index(JOURNAL_BY_PATTERN_INDEX, "pattern_id")
+            .build_index(JOURNAL_BY_PROJECT_INDEX, "project_id")
             .create()?;
         }
         Ok(())
@@ -116,54 +116,54 @@ impl PersistenceManager {
     })
   }
 
-  /// Returns the stored entry for a single pattern, or `None` if not found.
-  #[tracing::instrument(name = "PersistenceManager::get_pattern_entry", level = "debug", skip(self), err)]
-  pub async fn get_pattern_entry(&self, pattern_id: uuid::Uuid) -> Result<Option<PatternEntry>, Error> {
-    let key = JsValue::from_str(&pattern_id.to_string());
+  /// Returns the stored entry for a single project, or `None` if not found.
+  #[tracing::instrument(name = "PersistenceManager::get_project_entry", level = "debug", skip(self), err)]
+  pub async fn get_project_entry(&self, project_id: uuid::Uuid) -> Result<Option<ProjectEntry>, Error> {
+    let key = JsValue::from_str(&project_id.to_string());
     let result = self
       .db
-      .transaction(&[PATTERN_STORE])
+      .transaction(&[PROJECT_STORE])
       .run(move |tx| async move {
-        let store = tx.object_store(PATTERN_STORE)?;
+        let store = tx.object_store(PROJECT_STORE)?;
         store.get(&key).await
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
 
     match result {
-      Some(val) => Ok(Some(PatternEntry::try_from(val)?)),
+      Some(val) => Ok(Some(ProjectEntry::try_from(val)?)),
       None => Ok(None),
     }
   }
 
-  /// Saves the pattern handle and data as a single entry.
+  /// Saves the project handle and data as a single entry.
   #[tracing::instrument(
-    name = "PersistenceManager::save_pattern_entry",
+    name = "PersistenceManager::save_project_entry",
     level = "debug",
     skip(self, handle, data),
     err
   )]
-  pub async fn save_pattern_entry(
+  pub async fn save_project_entry(
     &self,
-    pattern_id: uuid::Uuid,
+    project_id: uuid::Uuid,
     data: Vec<u8>,
     handle: Option<opfs::FileHandle>,
   ) -> Result<(), Error> {
     if let Some(h) = &handle {
-      self.handles.borrow_mut().insert(pattern_id, h.clone());
+      self.handles.borrow_mut().insert(project_id, h.clone());
     }
 
-    let entry = JsValue::from(PatternEntry {
-      pattern_id: pattern_id.to_string(),
+    let entry = JsValue::from(ProjectEntry {
+      project_id: project_id.to_string(),
       data,
       handle: handle.map(|h| h.into_inner().into()),
     });
     self
       .db
-      .transaction(&[PATTERN_STORE])
+      .transaction(&[PROJECT_STORE])
       .rw()
       .run(move |tx| async move {
-        let store = tx.object_store(PATTERN_STORE)?;
+        let store = tx.object_store(PROJECT_STORE)?;
         store.put(&entry).await
       })
       .await
@@ -172,26 +172,26 @@ impl PersistenceManager {
     Ok(())
   }
 
-  /// Returns the file handle associated with the given pattern ID, or `None` if not found.
+  /// Returns the file handle associated with the given project ID, or `None` if not found.
   #[tracing::instrument(name = "PersistenceManager::get_handle", level = "debug", skip(self), err)]
-  pub async fn get_handle(&self, pattern_id: uuid::Uuid) -> Result<Option<opfs::FileHandle>, Error> {
-    if let Some(handle) = self.handles.borrow().get(&pattern_id) {
+  pub async fn get_handle(&self, project_id: uuid::Uuid) -> Result<Option<opfs::FileHandle>, Error> {
+    if let Some(handle) = self.handles.borrow().get(&project_id) {
       return Ok(Some(handle.clone()));
     }
 
-    let key = JsValue::from_str(&pattern_id.to_string());
+    let key = JsValue::from_str(&project_id.to_string());
     let result = self
       .db
-      .transaction(&[PATTERN_STORE])
+      .transaction(&[PROJECT_STORE])
       .run(move |tx| async move {
-        let store = tx.object_store(PATTERN_STORE)?;
+        let store = tx.object_store(PROJECT_STORE)?;
         store.get(&key).await
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
 
     let handle = result
-      .and_then(|v| PatternEntry::try_from(v).ok())
+      .and_then(|v| ProjectEntry::try_from(v).ok())
       .and_then(|e| e.handle);
 
     Ok(handle.and_then(|h| {
@@ -212,31 +212,31 @@ impl PersistenceManager {
     }))
   }
 
-  /// Updates the stored file handle for an existing pattern entry, preserving the snapshot data.
+  /// Updates the stored file handle for an existing project entry, preserving the snapshot data.
   #[tracing::instrument(name = "PersistenceManager::update_handle", level = "debug", skip(self, handle), err)]
-  pub async fn update_handle(&self, pattern_id: uuid::Uuid, handle: opfs::FileHandle) -> Result<(), Error> {
-    self.handles.borrow_mut().insert(pattern_id, handle.clone());
+  pub async fn update_handle(&self, project_id: uuid::Uuid, handle: opfs::FileHandle) -> Result<(), Error> {
+    self.handles.borrow_mut().insert(project_id, handle.clone());
 
-    let pattern_id = pattern_id.to_string();
+    let project_id = project_id.to_string();
     let handle: JsValue = handle.into_inner().into();
     self
       .db
-      .transaction(&[PATTERN_STORE])
+      .transaction(&[PROJECT_STORE])
       .rw()
       .run(move |tx| async move {
-        let store = tx.object_store(PATTERN_STORE)?;
+        let store = tx.object_store(PROJECT_STORE)?;
 
-        let key = JsValue::from_str(&pattern_id);
+        let key = JsValue::from_str(&project_id);
         let existing = store.get(&key).await?;
 
         let data = existing
-          .and_then(|v| PatternEntry::try_from(v).ok())
+          .and_then(|v| ProjectEntry::try_from(v).ok())
           .map(|e| e.data)
           .unwrap_or_default();
 
         store
-          .put(&JsValue::from(PatternEntry {
-            pattern_id,
+          .put(&JsValue::from(ProjectEntry {
+            project_id,
             handle: Some(handle),
             data,
           }))
@@ -248,18 +248,18 @@ impl PersistenceManager {
     Ok(())
   }
 
-  /// Deletes the pattern entry (handle + snapshot) for the given pattern ID.
-  #[tracing::instrument(name = "PersistenceManager::remove_pattern_entry", level = "debug", skip(self), err)]
-  pub async fn remove_pattern_entry(&self, pattern_id: uuid::Uuid) -> Result<(), Error> {
-    self.handles.borrow_mut().remove(&pattern_id);
+  /// Deletes the project entry (handle + snapshot) for the given project ID.
+  #[tracing::instrument(name = "PersistenceManager::remove_project_entry", level = "debug", skip(self), err)]
+  pub async fn remove_project_entry(&self, project_id: uuid::Uuid) -> Result<(), Error> {
+    self.handles.borrow_mut().remove(&project_id);
 
-    let key = JsValue::from_str(&pattern_id.to_string());
+    let key = JsValue::from_str(&project_id.to_string());
     self
       .db
-      .transaction(&[PATTERN_STORE])
+      .transaction(&[PROJECT_STORE])
       .rw()
       .run(move |tx| async move {
-        let store = tx.object_store(PATTERN_STORE)?;
+        let store = tx.object_store(PROJECT_STORE)?;
         store.delete(&key).await
       })
       .await
@@ -268,16 +268,16 @@ impl PersistenceManager {
     Ok(())
   }
 
-  /// Appends a single journal action for the given pattern ID.
+  /// Appends a single journal action for the given project ID.
   #[tracing::instrument(
     name = "PersistenceManager::append_journal_entry",
     level = "debug",
     skip(self, action),
     err
   )]
-  pub async fn append_journal_entry(&self, pattern_id: uuid::Uuid, action: Vec<u8>) -> Result<(), Error> {
+  pub async fn append_journal_entry(&self, project_id: uuid::Uuid, action: Vec<u8>) -> Result<(), Error> {
     let entry = JsValue::from(JournalEntry {
-      pattern_id: pattern_id.to_string(),
+      project_id: project_id.to_string(),
       action,
     });
     self
@@ -293,17 +293,17 @@ impl PersistenceManager {
     Ok(())
   }
 
-  /// Loads all journal actions for the given pattern ID in insertion order.
+  /// Loads all journal actions for the given project ID in insertion order.
   #[tracing::instrument(name = "PersistenceManager::load_journal_entries", level = "debug", skip(self), err)]
-  pub async fn load_journal_entries(&self, pattern_id: uuid::Uuid) -> Result<Vec<Vec<u8>>, Error> {
-    let pattern_id = JsValue::from_str(&pattern_id.to_string());
+  pub async fn load_journal_entries(&self, project_id: uuid::Uuid) -> Result<Vec<Vec<u8>>, Error> {
+    let project_id = JsValue::from_str(&project_id.to_string());
     let rows = self
       .db
       .transaction(&[JOURNAL_STORE])
       .run(move |tx| async move {
         let store = tx.object_store(JOURNAL_STORE)?;
-        let index = store.index(JOURNAL_BY_PATTERN_INDEX)?;
-        index.get_all_in(pattern_id.clone()..=pattern_id, None).await
+        let index = store.index(JOURNAL_BY_PROJECT_INDEX)?;
+        index.get_all_in(project_id.clone()..=project_id, None).await
       })
       .await
       .map_err(|e| anyhow::anyhow!("{e}"))?;
@@ -316,19 +316,19 @@ impl PersistenceManager {
     Ok(actions)
   }
 
-  /// Deletes all journal entries for the given pattern ID.
+  /// Deletes all journal entries for the given project ID.
   #[tracing::instrument(name = "PersistenceManager::clear_journal", level = "debug", skip(self), err)]
-  pub async fn clear_journal(&self, pattern_id: uuid::Uuid) -> Result<(), Error> {
-    let pattern_id = JsValue::from_str(&pattern_id.to_string());
+  pub async fn clear_journal(&self, project_id: uuid::Uuid) -> Result<(), Error> {
+    let project_id = JsValue::from_str(&project_id.to_string());
     self
       .db
       .transaction(&[JOURNAL_STORE])
       .rw()
       .run(move |tx| async move {
         let store = tx.object_store(JOURNAL_STORE)?;
-        let index = store.index(JOURNAL_BY_PATTERN_INDEX)?;
+        let index = store.index(JOURNAL_BY_PROJECT_INDEX)?;
 
-        let keys = index.get_all_keys_in(pattern_id.clone()..=pattern_id, None).await?;
+        let keys = index.get_all_keys_in(project_id.clone()..=project_id, None).await?;
         for key in keys {
           store.delete(&key).await?;
         }

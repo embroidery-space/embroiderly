@@ -1,4 +1,4 @@
-use embroiderly_pattern::{Grid, PatternProject};
+use embroiderly_pattern::{EmbroiderlyProject, Grid};
 
 use crate::EditorEvent;
 use crate::error::Result;
@@ -13,27 +13,27 @@ pub enum GridAction {
 }
 
 impl GridAction {
-  pub fn perform(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn perform(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Update { grid, old_grid } => {
-        let prev = std::mem::replace(&mut patproj.display_settings.grid, grid.clone());
+        let prev = std::mem::replace(&mut embproj.display_settings.grid, grid.clone());
         old_grid.get_or_insert(prev);
         Ok(vec![
           EditorEvent::GridUpdate(grid.clone()),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }
   }
 
-  pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn revoke(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Update { old_grid, .. } => {
         let old = old_grid.take().ok_or(crate::error::Error::ActionNotPerformed)?;
-        patproj.display_settings.grid = old.clone();
+        embproj.display_settings.grid = old.clone();
         Ok(vec![
           EditorEvent::GridUpdate(old),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }

@@ -34,11 +34,11 @@ macro_rules! unwrap_or_continue {
   };
 }
 
-pub fn parse_pattern(data: &[u8]) -> Result<PatternProject> {
+pub fn parse_pattern(data: &[u8]) -> Result<EmbroiderlyProject> {
   let mut reader = Reader::from_reader(data);
 
   let pattern = parse_pattern_inner(&mut reader)?;
-  Ok(PatternProject::new(pattern))
+  Ok(EmbroiderlyProject::new(pattern))
 }
 
 #[tracing::instrument(name = "parse_oxs", level = "debug", skip_all)]
@@ -141,15 +141,15 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
   Ok(pattern)
 }
 
-pub fn save_pattern(patproj: &PatternProject) -> Result<Vec<u8>> {
+pub fn save_pattern(embproj: &EmbroiderlyProject) -> Result<Vec<u8>> {
   let mut data = Vec::new();
-  save_pattern_inner(&mut data, patproj)?;
+  save_pattern_inner(&mut data, embproj)?;
   Ok(data)
 }
 
 #[tracing::instrument(name = "save_oxs", level = "debug", skip_all)]
-fn save_pattern_inner<W: io::Write>(writer: &mut W, patproj: &PatternProject) -> io::Result<()> {
-  let PatternProject { pattern, .. } = patproj;
+fn save_pattern_inner<W: io::Write>(writer: &mut W, embproj: &EmbroiderlyProject) -> io::Result<()> {
+  let EmbroiderlyProject { pattern, .. } = embproj;
   let flattened_layer = pattern.flatten_visible_layers();
 
   // Create a mapping from actual index to visual position for efficient lookups when writing stitches.

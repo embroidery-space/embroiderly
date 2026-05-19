@@ -1,11 +1,11 @@
-use embroiderly_pattern::{PatternProject, ReferenceImage, ReferenceImageSettings};
+use embroiderly_pattern::{EmbroiderlyProject, ReferenceImage, ReferenceImageSettings};
 
 use crate::actions::ImageAction;
 use crate::{EditorAction, EditorEvent};
 
 #[test]
 fn test_set_reference_image() {
-  let mut patproj = PatternProject::default();
+  let mut embproj = EmbroiderlyProject::default();
 
   let image1 = ReferenceImage {
     format: image::ImageFormat::Png,
@@ -29,59 +29,59 @@ fn test_set_reference_image() {
 
   // Test executing the first action.
   {
-    let events = action1.perform(&mut patproj).unwrap();
+    let events = action1.perform(&mut embproj).unwrap();
     let EditorEvent::ImageSet(img) = &events[0] else {
       panic!("expected ImageSet");
     };
     assert_eq!(img, &Some(image1.clone()));
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test executing the second action.
   {
-    let events = action2.perform(&mut patproj).unwrap();
+    let events = action2.perform(&mut embproj).unwrap();
     let EditorEvent::ImageSet(img) = &events[0] else {
       panic!("expected ImageSet");
     };
     assert_eq!(img, &Some(image2.clone()));
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the second action.
   {
-    let events = action2.revoke(&mut patproj).unwrap();
+    let events = action2.revoke(&mut embproj).unwrap();
     let EditorEvent::ImageSet(img) = &events[0] else {
       panic!("expected ImageSet");
     };
     assert_eq!(img, &Some(image1.clone()));
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the first action.
   {
-    let events = action1.revoke(&mut patproj).unwrap();
+    let events = action1.revoke(&mut embproj).unwrap();
     let EditorEvent::ImageSet(img) = &events[0] else {
       panic!("expected ImageSet");
     };
     assert_eq!(img, &None);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 #[test]
 fn test_remove_reference_image() {
-  let mut patproj = PatternProject::default();
+  let mut embproj = EmbroiderlyProject::default();
 
   let image = ReferenceImage {
     format: image::ImageFormat::Png,
     content: vec![0, 1, 2, 3, 4],
     settings: Default::default(),
   };
-  patproj.reference_image = Some(image.clone());
+  embproj.reference_image = Some(image.clone());
 
   let mut action = EditorAction::Image(ImageAction::SetReferenceImage {
     image: None,
@@ -90,39 +90,39 @@ fn test_remove_reference_image() {
 
   // Test executing the action.
   {
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
     let EditorEvent::ImageSet(img) = &events[0] else {
       panic!("expected ImageSet");
     };
     assert_eq!(img, &None);
-    assert_eq!(patproj.reference_image, None);
+    assert_eq!(embproj.reference_image, None);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
     let EditorEvent::ImageSet(img) = &events[0] else {
       panic!("expected ImageSet");
     };
     assert_eq!(img, &Some(image.clone()));
-    assert_eq!(patproj.reference_image, Some(image));
+    assert_eq!(embproj.reference_image, Some(image));
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 #[test]
 fn test_update_reference_image_settings() {
-  let mut patproj = PatternProject::default();
+  let mut embproj = EmbroiderlyProject::default();
 
   let image = ReferenceImage {
     format: image::ImageFormat::Png,
     content: vec![0, 1, 2, 3, 4],
     settings: Default::default(),
   };
-  patproj.reference_image = Some(image.clone());
+  embproj.reference_image = Some(image.clone());
 
   let new_settings = ReferenceImageSettings {
     x: 10.0,
@@ -139,24 +139,24 @@ fn test_update_reference_image_settings() {
 
   // Test executing the action.
   {
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
     let EditorEvent::ImageSettingsUpdate(s) = &events[0] else {
       panic!("expected ImageSettingsUpdate");
     };
     assert_eq!(s, &new_settings);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
     let old_settings = image.settings;
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
     let EditorEvent::ImageSettingsUpdate(s) = &events[0] else {
       panic!("expected ImageSettingsUpdate");
     };
     assert_eq!(s, &old_settings);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }

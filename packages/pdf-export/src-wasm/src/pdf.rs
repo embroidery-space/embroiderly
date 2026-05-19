@@ -14,14 +14,14 @@ const FONTS: &[&[u8]] = &[
 const TEMPLATE: &str = include_str!("../assets/templates/pattern.typ");
 
 pub fn export_pattern(
-  patproj: PatternProject,
+  embproj: EmbroiderlyProject,
   options: PdfExportOptions,
   variant: PdfVariant,
   symbol_font_data: Vec<Vec<u8>>,
 ) -> Result<Vec<u8>> {
   let frames = {
     let color = matches!(variant, PdfVariant::Color);
-    embroiderly_image::svg::generate_svg(&patproj, color, options.frame_options)?
+    embroiderly_image::svg::generate_svg(&embproj, color, options.frame_options)?
       .into_iter()
       .enumerate()
       .map(|(i, image)| (format!("image{i}.svg"), image))
@@ -29,9 +29,9 @@ pub fn export_pattern(
   };
 
   let typst_content = TypstContent {
-    info: patproj.pattern.info.clone(),
-    fabric: patproj.pattern.fabric.clone(),
-    palette: patproj.pattern.palette,
+    info: embproj.pattern.info.clone(),
+    fabric: embproj.pattern.fabric.clone(),
+    palette: embproj.pattern.palette,
     frames: frames.iter().map(|(name, _)| name).cloned().collect(),
     options,
   };

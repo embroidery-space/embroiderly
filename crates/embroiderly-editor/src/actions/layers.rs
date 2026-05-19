@@ -1,4 +1,4 @@
-use embroiderly_pattern::{Layer, PatternProject};
+use embroiderly_pattern::{EmbroiderlyProject, Layer};
 
 use crate::EditorEvent;
 use crate::error::{Error, Result};
@@ -85,26 +85,26 @@ pub enum LayerAction {
 }
 
 impl LayerAction {
-  pub fn perform(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn perform(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Add { added_index } => {
         let layer = Layer::default();
-        let index = patproj.pattern.layers.push(layer.clone());
+        let index = embproj.pattern.layers.push(layer.clone());
         added_index.get_or_insert(index);
         Ok(vec![
           EditorEvent::LayerAdd { index, layer },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::Remove {
         layer_index,
         removed_layer,
       } => {
-        let layer = patproj.pattern.layers.remove(*layer_index);
+        let layer = embproj.pattern.layers.remove(*layer_index);
         removed_layer.get_or_insert(layer);
         Ok(vec![
           EditorEvent::LayerRemove(*layer_index),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::Rename {
@@ -112,7 +112,7 @@ impl LayerAction {
         name,
         old_name,
       } => {
-        let layer = &mut patproj.pattern.layers[*layer_index];
+        let layer = &mut embproj.pattern.layers[*layer_index];
         old_name.get_or_insert_with(|| layer.name.clone());
         layer.name.clone_from(name);
         Ok(vec![
@@ -120,7 +120,7 @@ impl LayerAction {
             layer_index: *layer_index,
             name: name.clone(),
           },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::UpdateVisibility {
@@ -128,7 +128,7 @@ impl LayerAction {
         visibility,
         old_visibility,
       } => {
-        let layer = &mut patproj.pattern.layers[*layer_index];
+        let layer = &mut embproj.pattern.layers[*layer_index];
         old_visibility.get_or_insert_with(|| LayerVisibility::from(&*layer));
         visibility.apply_to(layer);
         Ok(vec![
@@ -136,7 +136,7 @@ impl LayerAction {
             layer_index: *layer_index,
             visibility: visibility.clone(),
           },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::Move {
@@ -144,24 +144,24 @@ impl LayerAction {
         new_position,
         old_positions,
       } => {
-        old_positions.get_or_insert_with(|| patproj.pattern.layers.positions().to_vec());
-        let new_positions = patproj.pattern.layers.move_layer(*old_position, *new_position);
+        old_positions.get_or_insert_with(|| embproj.pattern.layers.positions().to_vec());
+        let new_positions = embproj.pattern.layers.move_layer(*old_position, *new_position);
         Ok(vec![
           EditorEvent::LayerMove(new_positions),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }
   }
 
-  pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn revoke(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Add { added_index } => {
         let index = added_index.take().ok_or(Error::ActionNotPerformed)?;
-        patproj.pattern.layers.remove(index);
+        embproj.pattern.layers.remove(index);
         Ok(vec![
           EditorEvent::LayerRemove(index),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::Remove {
@@ -169,26 +169,26 @@ impl LayerAction {
         removed_layer,
       } => {
         let layer = removed_layer.take().ok_or(Error::ActionNotPerformed)?;
-        patproj.pattern.layers.insert(*layer_index, layer.clone());
+        embproj.pattern.layers.insert(*layer_index, layer.clone());
         Ok(vec![
           EditorEvent::LayerAdd {
             index: *layer_index,
             layer,
           },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::Rename {
         layer_index, old_name, ..
       } => {
         let old = old_name.take().ok_or(Error::ActionNotPerformed)?;
-        patproj.pattern.layers[*layer_index].name.clone_from(&old);
+        embproj.pattern.layers[*layer_index].name.clone_from(&old);
         Ok(vec![
           EditorEvent::LayerRename {
             layer_index: *layer_index,
             name: old,
           },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::UpdateVisibility {
@@ -197,21 +197,21 @@ impl LayerAction {
         ..
       } => {
         let old = old_visibility.take().ok_or(Error::ActionNotPerformed)?;
-        old.apply_to(&mut patproj.pattern.layers[*layer_index]);
+        old.apply_to(&mut embproj.pattern.layers[*layer_index]);
         Ok(vec![
           EditorEvent::LayerUpdateVisibility {
             layer_index: *layer_index,
             visibility: old,
           },
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
       Self::Move { old_positions, .. } => {
         let old = old_positions.take().ok_or(Error::ActionNotPerformed)?;
-        patproj.pattern.layers.set_positions(old.clone());
+        embproj.pattern.layers.set_positions(old.clone());
         Ok(vec![
           EditorEvent::LayerMove(old),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }

@@ -1,4 +1,4 @@
-use embroiderly_pattern::{PatternProject, PdfExportOptions};
+use embroiderly_pattern::{EmbroiderlyProject, PdfExportOptions};
 
 use crate::EditorEvent;
 use crate::error::Result;
@@ -16,27 +16,27 @@ pub enum PublishAction {
 }
 
 impl PublishAction {
-  pub fn perform(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn perform(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::UpdatePdfExportOptions { options, old_options } => {
-        let prev = std::mem::replace(&mut patproj.publish_settings.pdf, *options);
+        let prev = std::mem::replace(&mut embproj.publish_settings.pdf, *options);
         old_options.get_or_insert(prev);
         Ok(vec![
           EditorEvent::PublishUpdatePdf(*options),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }
   }
 
-  pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn revoke(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::UpdatePdfExportOptions { old_options, .. } => {
         let old = old_options.take().ok_or(crate::error::Error::ActionNotPerformed)?;
-        patproj.publish_settings.pdf = old;
+        embproj.publish_settings.pdf = old;
         Ok(vec![
           EditorEvent::PublishUpdatePdf(old),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }
