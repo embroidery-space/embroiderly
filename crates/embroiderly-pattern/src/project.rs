@@ -1,5 +1,3 @@
-use std::path::PathBuf;
-
 use super::display::DisplaySettings;
 use super::publish::PublishSettings;
 use super::{Pattern, ReferenceImage};
@@ -8,60 +6,91 @@ use super::{Pattern, ReferenceImage};
 #[path = "./project.test.rs"]
 mod tests;
 
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+pub struct EmbroiderlyProjectId(uuid::Uuid);
+
+impl EmbroiderlyProjectId {
+  #[must_use]
+  pub fn new() -> Self {
+    Self(uuid::Uuid::new_v4())
+  }
+
+  #[must_use]
+  pub const fn is_nil(&self) -> bool {
+    self.0.is_nil()
+  }
+}
+
+impl std::fmt::Display for EmbroiderlyProjectId {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    self.0.fmt(f)
+  }
+}
+
+impl std::str::FromStr for EmbroiderlyProjectId {
+  type Err = uuid::Error;
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    uuid::Uuid::parse_str(s).map(Self)
+  }
+}
+
+impl From<uuid::Uuid> for EmbroiderlyProjectId {
+  fn from(uuid: uuid::Uuid) -> Self {
+    Self(uuid)
+  }
+}
+
 #[derive(Debug, Default, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
-pub struct PatternProject {
-  pub id: uuid::Uuid,
-  #[cfg_attr(feature = "borsh", borsh(skip))]
-  pub file_path: Option<PathBuf>,
+pub struct EmbroiderlyProject {
+  pub id: EmbroiderlyProjectId,
+
   pub reference_image: Option<ReferenceImage>,
+
   pub pattern: Pattern,
   pub display_settings: DisplaySettings,
   pub publish_settings: PublishSettings,
 }
 
-impl PatternProject {
-  /// Creates a new `PatternProject` with the given pattern and default settings.
+impl EmbroiderlyProject {
+  /// Creates a new `EmbroiderlyProject` with the given pattern and default settings.
   #[must_use]
   pub fn new(pattern: Pattern) -> Self {
-    PatternProjectBuilder::new(pattern).build()
+    EmbroiderlyProjectBuilder::new(pattern).build()
   }
 
-  /// Creates a new builder for `PatternProject` with the given pattern.
+  /// Creates a new builder for `EmbroiderlyProject` with the given pattern.
   #[must_use]
-  pub const fn builder(pattern: Pattern) -> PatternProjectBuilder {
-    PatternProjectBuilder::new(pattern)
+  pub const fn builder(pattern: Pattern) -> EmbroiderlyProjectBuilder {
+    EmbroiderlyProjectBuilder::new(pattern)
   }
 }
 
-/// A builder for creating `PatternProject`s.
+/// A builder for creating `EmbroiderlyProject`s.
 #[derive(Debug)]
-pub struct PatternProjectBuilder {
+pub struct EmbroiderlyProjectBuilder {
   pattern: Pattern,
-  file_path: Option<PathBuf>,
+
   reference_image: Option<ReferenceImage>,
+
   display_settings: Option<DisplaySettings>,
   publish_settings: Option<PublishSettings>,
 }
 
-impl PatternProjectBuilder {
+impl EmbroiderlyProjectBuilder {
   /// Creates a new builder with the given pattern.
   #[must_use]
   pub const fn new(pattern: Pattern) -> Self {
     Self {
       pattern,
-      file_path: None,
+
       reference_image: None,
+
       display_settings: None,
       publish_settings: None,
     }
-  }
-
-  /// Sets the file path for the project.
-  #[must_use]
-  pub fn file_path(mut self, file_path: impl Into<PathBuf>) -> Self {
-    self.file_path = Some(file_path.into());
-    self
   }
 
   /// Sets the reference image for the project.
@@ -85,13 +114,14 @@ impl PatternProjectBuilder {
     self
   }
 
-  /// Builds the `PatternProject`.
+  /// Builds the `EmbroiderlyProject`.
   #[must_use]
-  pub fn build(self) -> PatternProject {
-    PatternProject {
-      id: uuid::Uuid::new_v4(),
-      file_path: self.file_path,
+  pub fn build(self) -> EmbroiderlyProject {
+    EmbroiderlyProject {
+      id: EmbroiderlyProjectId::new(),
+
       reference_image: self.reference_image,
+
       pattern: self.pattern,
       display_settings: self.display_settings.unwrap_or_default(),
       publish_settings: self.publish_settings.unwrap_or_default(),
@@ -99,8 +129,8 @@ impl PatternProjectBuilder {
   }
 }
 
-impl From<Pattern> for PatternProject {
+impl From<Pattern> for EmbroiderlyProject {
   fn from(pattern: Pattern) -> Self {
-    PatternProjectBuilder::new(pattern).build()
+    EmbroiderlyProjectBuilder::new(pattern).build()
   }
 }

@@ -1,11 +1,11 @@
-use embroiderly_pattern::{Fabric, PatternProject};
+use embroiderly_pattern::{EmbroiderlyProject, Fabric};
 
 use crate::actions::FabricAction;
 use crate::{EditorAction, EditorEvent};
 
 #[test]
 fn test_update_fabric() {
-  let mut patproj = PatternProject::default();
+  let mut embproj = EmbroiderlyProject::default();
   let fabric = Fabric {
     width: 100,
     height: 100,
@@ -22,23 +22,23 @@ fn test_update_fabric() {
 
   // Test executing the command.
   {
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
     let EditorEvent::FabricUpdate(f) = &events[0] else {
       panic!("expected FabricUpdate");
     };
     assert_eq!(f, &fabric);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the command.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
     let EditorEvent::FabricUpdate(f) = &events[0] else {
       panic!("expected FabricUpdate");
     };
     assert_eq!(f, &Fabric::default());
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }

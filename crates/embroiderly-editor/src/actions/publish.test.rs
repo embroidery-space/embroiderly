@@ -1,11 +1,11 @@
-use embroiderly_pattern::{ImageExportOptions, PatternProject, PdfExportOptions};
+use embroiderly_pattern::{EmbroiderlyProject, ImageExportOptions, PdfExportOptions};
 
 use crate::actions::PublishAction;
 use crate::{EditorAction, EditorEvent};
 
 #[test]
 fn test_update_pdf_export_options() {
-  let mut patproj = PatternProject::default();
+  let mut embproj = EmbroiderlyProject::default();
   let options = PdfExportOptions {
     center_frames: true,
     enumerate_frames: true,
@@ -24,23 +24,23 @@ fn test_update_pdf_export_options() {
 
   // Test executing the command.
   {
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
     let EditorEvent::PublishUpdatePdf(opts) = &events[0] else {
       panic!("expected PublishUpdatePdf");
     };
     assert_eq!(opts, &options);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the command.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
     let EditorEvent::PublishUpdatePdf(opts) = &events[0] else {
       panic!("expected PublishUpdatePdf");
     };
     assert_eq!(opts, &PdfExportOptions::default());
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }

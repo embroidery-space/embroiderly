@@ -1,25 +1,15 @@
 use super::*;
 
 #[test]
-fn creates_new_patproj_with_defaults() {
-  let patproj = PatternProject::new(Pattern::default());
+fn creates_new_embproj_with_defaults() {
+  let embproj = EmbroiderlyProject::new(Pattern::default());
 
-  assert!(!patproj.id.is_nil());
-  assert!(patproj.file_path.is_none());
+  assert!(!embproj.id.is_nil());
 
-  assert!(patproj.reference_image.is_none());
+  assert!(embproj.reference_image.is_none());
 
-  assert_eq!(patproj.display_settings, DisplaySettings::default());
-  assert_eq!(patproj.publish_settings, PublishSettings::default());
-}
-
-#[test]
-fn builder_sets_file_path() {
-  let patproj = PatternProject::builder(Pattern::default())
-    .file_path("test/pattern.embproj")
-    .build();
-
-  assert_eq!(patproj.file_path, Some(PathBuf::from("test/pattern.embproj")));
+  assert_eq!(embproj.display_settings, DisplaySettings::default());
+  assert_eq!(embproj.publish_settings, PublishSettings::default());
 }
 
 #[test]
@@ -29,11 +19,11 @@ fn builder_sets_display_settings() {
     ..Default::default()
   };
 
-  let patproj = PatternProject::builder(Pattern::default())
+  let embproj = EmbroiderlyProject::builder(Pattern::default())
     .display_settings(display_settings.clone())
     .build();
 
-  assert_eq!(patproj.display_settings, display_settings);
+  assert_eq!(embproj.display_settings, display_settings);
 }
 
 #[test]
@@ -46,25 +36,24 @@ fn builder_sets_publish_settings() {
     ..Default::default()
   };
 
-  let patproj = PatternProject::builder(Pattern::default())
+  let embproj = EmbroiderlyProject::builder(Pattern::default())
     .publish_settings(publish_settings.clone())
     .build();
 
-  assert_eq!(patproj.publish_settings, publish_settings);
+  assert_eq!(embproj.publish_settings, publish_settings);
 }
 
 #[test]
 fn each_build_creates_unique_id() {
-  let patproj1 = PatternProject::new(Pattern::default());
-  let patproj2 = PatternProject::new(Pattern::default());
+  let embproj1 = EmbroiderlyProject::new(Pattern::default());
+  let embproj2 = EmbroiderlyProject::new(Pattern::default());
 
-  assert_ne!(patproj1.id, patproj2.id);
+  assert_ne!(embproj1.id, embproj2.id);
 }
 
 #[test]
-fn from_pattern_creates_patproj() {
-  let patproj: PatternProject = Pattern::default().into();
+fn from_pattern_creates_embproj() {
+  let embproj: EmbroiderlyProject = Pattern::default().into();
 
-  assert!(!patproj.id.is_nil());
-  assert!(patproj.file_path.is_none());
+  assert!(!embproj.id.is_nil());
 }

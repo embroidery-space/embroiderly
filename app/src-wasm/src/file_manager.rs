@@ -165,11 +165,11 @@ impl FileManager {
   #[tracing::instrument(name = "FileManager::load_palette", level = "debug", skip(self), err)]
   async fn load_palette_impl(&self, group: String, name: String) -> Result<Vec<u8>, Error> {
     let buffer = match group.as_str() {
-      "system" => net::fetch(&format!("/palettes/{name}.json")).await?,
+      "system" => net::fetch(&format!("/palettes/{name}.embpal")).await?,
       "custom" => {
         let file_handle = self
           .palettes_dir
-          .get_file_handle(&format!("{name}.json"), Default::default())
+          .get_file_handle(&format!("{name}.embpal"), Default::default())
           .await?;
         tracing::debug!("{file_handle:?}");
         file_handle.read().await?
@@ -324,7 +324,7 @@ async fn process_and_save_palette(file_name: &str, data: &[u8], dir: &opfs::Dire
   // TODO: Replace `create: true` with checking that the file exists (prevent overwrites).
   let file_handle = dir
     .get_file_handle(
-      &format!("{palette_name}.json"),
+      &format!("{palette_name}.embpal"),
       opfs::GetFileHandleOptions { create: true },
     )
     .await?;

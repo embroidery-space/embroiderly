@@ -2,8 +2,8 @@ use std::collections::HashMap;
 use std::str::FromStr as _;
 
 use embroiderly_pattern::{
-  BrandPaletteItem, Coord, Fabric, FullStitch, FullStitchKind, Layer, Layers, Palette, PaletteItem, Pattern,
-  PatternProject, Stitches,
+  BrandPaletteItem, Coord, EmbroiderlyProject, Fabric, FullStitch, FullStitchKind, Layer, Layers, Palette, PaletteItem,
+  Pattern, Stitches,
 };
 use image::{DynamicImage, GenericImageView as _};
 use palette::color_difference::EuclideanDistance as _;
@@ -89,7 +89,7 @@ impl ImageImportSession {
     let palette = convert_palette_to_oklab(palette).ok_or_else(|| JsError::new("Failed to process target palette"))?;
     let pattern = convert_image_into_pattern(image, &palette, options).map_err(to_js_error)?;
 
-    borsh::to_vec(&PatternProject::new(pattern)).map_err(to_js_error)
+    borsh::to_vec(&EmbroiderlyProject::new(pattern)).map_err(to_js_error)
   }
 }
 

@@ -1,4 +1,4 @@
-use embroiderly_pattern::{BrandPaletteItem, PatternProject};
+use embroiderly_pattern::{BrandPaletteItem, EmbroiderlyProject};
 
 mod error;
 pub use error::*;
@@ -14,7 +14,7 @@ pub mod xspro;
 
 mod utils;
 
-pub fn parse_pattern(data: &[u8], file_name: &str) -> Result<PatternProject> {
+pub fn parse_pattern(data: &[u8], file_name: &str) -> Result<EmbroiderlyProject> {
   match PatternFormat::try_from(file_name)? {
     PatternFormat::Xsd => pmaker::parse_pattern(data),
     PatternFormat::Oxs => oxs::parse_pattern(data),
@@ -23,11 +23,11 @@ pub fn parse_pattern(data: &[u8], file_name: &str) -> Result<PatternProject> {
   .map_err(Error::FailedToParse)
 }
 
-pub fn save_pattern(patproj: &PatternProject, format: PatternFormat) -> Result<Vec<u8>> {
+pub fn save_pattern(embproj: &EmbroiderlyProject, format: PatternFormat) -> Result<Vec<u8>> {
   match format {
     PatternFormat::Xsd => Err(Error::UnsupportedPatternType(PatternFormat::Xsd.to_string()).into()),
-    PatternFormat::Oxs => oxs::save_pattern(patproj),
-    PatternFormat::EmbProj => embproj::save_pattern(patproj),
+    PatternFormat::Oxs => oxs::save_pattern(embproj),
+    PatternFormat::EmbProj => embproj::save_pattern(embproj),
   }
   .map_err(Error::FailedToParse)
 }

@@ -1,6 +1,6 @@
 use embroiderly_pattern::{
-  DisplaySettings, Fabric, Grid, Layer, PaletteItem, PaletteSettings, PatternInfo, PdfExportOptions, ReferenceImage,
-  ReferenceImageSettings, Stitch, Symbol,
+  DisplaySettings, EmbroiderlyProjectId, Fabric, Grid, Layer, PaletteItem, PaletteSettings, PatternInfo,
+  PdfExportOptions, ReferenceImage, ReferenceImageSettings, Stitch, Symbol,
 };
 
 use crate::actions::layers::LayerVisibility;
@@ -59,7 +59,7 @@ pub enum EditorEvent {
   ImageSet(Option<ReferenceImage>),
   ImageSettingsUpdate(ReferenceImageSettings),
 
-  PatternChanged(uuid::Uuid),    // Used for marking the pattern as dirty.
-  PatternCheckpoint(uuid::Uuid), // Used for marking the pattern as clean (not dirty, saved).
-  PatternSaved(uuid::Uuid),      // Used for notifiyng the user about a successful save.
+  PatternChanged(EmbroiderlyProjectId),    // Used for marking the pattern as dirty.
+  PatternCheckpoint(EmbroiderlyProjectId), // Used for marking the pattern as clean (not dirty, saved).
+  PatternSaved(EmbroiderlyProjectId),      // Used for notifiyng the user about a successful save.
 }

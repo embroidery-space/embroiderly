@@ -1,18 +1,18 @@
-use embroiderly_pattern::{PaletteItem, PaletteSettings, PatternProject};
+use embroiderly_pattern::{EmbroiderlyProject, PaletteItem, PaletteSettings};
 use rand::seq::SliceRandom;
 
 use crate::actions::PaletteAction;
 use crate::actions::palette::SortPaletteBy;
 use crate::{EditorAction, EditorEvent};
 
-fn create_pattern_project() -> PatternProject {
+fn create_pattern_project() -> EmbroiderlyProject {
   let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../testdata/patterns/rainbow.oxs");
   embroiderly_parsers::oxs::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap()
 }
 
 #[test]
 fn test_add_palette_item() {
-  let mut patproj = create_pattern_project();
+  let mut embproj = create_pattern_project();
   let palitem = PaletteItem {
     brand: String::from("DMC"),
     number: String::from("3825"),
@@ -27,9 +27,9 @@ fn test_add_palette_item() {
 
   // Test executing the command.
   {
-    assert_eq!(patproj.pattern.palette.len(), 7);
-    let events = action.perform(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.palette.len(), 8);
+    assert_eq!(embproj.pattern.palette.len(), 7);
+    let events = action.perform(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.palette.len(), 8);
 
     let EditorEvent::PaletteAddItem {
       palitem: item,
@@ -41,34 +41,34 @@ fn test_add_palette_item() {
     assert_eq!(item, &palitem);
     assert_eq!(palindex, &7);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the command.
   {
-    assert_eq!(patproj.pattern.palette.len(), 8);
-    let events = action.revoke(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.palette.len(), 7);
+    assert_eq!(embproj.pattern.palette.len(), 8);
+    let events = action.revoke(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.palette.len(), 7);
 
     let EditorEvent::PaletteRemoveItems(palindexes) = &events[0] else {
       panic!("expected PaletteRemoveItems");
     };
     assert_eq!(palindexes, &[7]);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 fn assert_executing_remove_palette_items_action(
   action: &mut EditorAction,
-  patproj: &mut PatternProject,
+  embproj: &mut EmbroiderlyProject,
   expected_palindexes: Vec<u32>,
   initial_palsize: usize,
   expected_palsize: usize,
 ) {
-  assert_eq!(patproj.pattern.palette.len(), initial_palsize);
-  let events = action.perform(patproj).unwrap();
-  assert_eq!(patproj.pattern.palette.len(), expected_palsize);
+  assert_eq!(embproj.pattern.palette.len(), initial_palsize);
+  let events = action.perform(embproj).unwrap();
+  assert_eq!(embproj.pattern.palette.len(), expected_palsize);
 
   let EditorEvent::PaletteRemoveItems(palindexes) = &events[0] else {
     panic!("expected PaletteRemoveItems");
@@ -80,19 +80,19 @@ fn assert_executing_remove_palette_items_action(
   };
   assert!(!stitches.is_empty());
 
-  assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+  assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
 }
 
 fn assert_revoking_remove_palette_items_action(
   action: &mut EditorAction,
-  patproj: &mut PatternProject,
+  embproj: &mut EmbroiderlyProject,
   expected_palindexes: Vec<u32>,
   initial_palsize: usize,
   expected_palsize: usize,
 ) {
-  assert_eq!(patproj.pattern.palette.len(), initial_palsize);
-  let events = action.revoke(patproj).unwrap();
-  assert_eq!(patproj.pattern.palette.len(), expected_palsize);
+  assert_eq!(embproj.pattern.palette.len(), initial_palsize);
+  let events = action.revoke(embproj).unwrap();
+  assert_eq!(embproj.pattern.palette.len(), expected_palsize);
 
   // First events are PaletteAddItem, one per restored palindex.
   for event in events.iter().take(expected_palindexes.len()) {
@@ -108,14 +108,14 @@ fn assert_revoking_remove_palette_items_action(
   };
   assert!(!stitches.is_empty());
 
-  assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+  assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
 }
 
 /// Test removing a set of palette items against corner cases and general use cases.
 #[test]
 fn test_remove_palette_items() {
-  let mut patproj = create_pattern_project();
-  let palette_size = patproj.pattern.palette.len();
+  let mut embproj = create_pattern_project();
+  let palette_size = embproj.pattern.palette.len();
 
   let palindexes_sets = [vec![0, 1, 2], vec![4, 5, 6], vec![2, 3, 5], vec![0, 6]];
   for palindexes in palindexes_sets.into_iter() {
@@ -128,7 +128,7 @@ fn test_remove_palette_items() {
     // Test executing the command.
     assert_executing_remove_palette_items_action(
       &mut action,
-      &mut patproj,
+      &mut embproj,
       palindexes.clone(),
       palette_size,
       palette_size - palindexes.len(),
@@ -137,7 +137,7 @@ fn test_remove_palette_items() {
     // Test revoking the command.
     assert_revoking_remove_palette_items_action(
       &mut action,
-      &mut patproj,
+      &mut embproj,
       palindexes.clone(),
       palette_size - palindexes.len(),
       palette_size,
@@ -148,8 +148,8 @@ fn test_remove_palette_items() {
 /// Test removing a set of palette items against random sets of palette item indixes.
 #[test]
 fn test_remove_random_palette_items() {
-  let mut patproj = create_pattern_project();
-  let palette_size = patproj.pattern.palette.len();
+  let mut embproj = create_pattern_project();
+  let palette_size = embproj.pattern.palette.len();
 
   let mut rng = rand::rng();
   let palindexes: Vec<u32> = (0..(palette_size as u32)).collect();
@@ -167,7 +167,7 @@ fn test_remove_random_palette_items() {
     // Test executing the command.
     assert_executing_remove_palette_items_action(
       &mut action,
-      &mut patproj,
+      &mut embproj,
       {
         let mut expected_palindexes = selected_palindixes.clone();
         expected_palindexes.sort();
@@ -180,7 +180,7 @@ fn test_remove_random_palette_items() {
     // Test revoking the command.
     assert_revoking_remove_palette_items_action(
       &mut action,
-      &mut patproj,
+      &mut embproj,
       selected_palindixes.clone(),
       palette_size - selected_palindixes.len(),
       palette_size,
@@ -190,8 +190,8 @@ fn test_remove_random_palette_items() {
 
 #[test]
 fn test_update_palette_display_settings() {
-  let mut patproj = create_pattern_project();
-  let old_settings = patproj.pattern.palette.settings();
+  let mut embproj = create_pattern_project();
+  let old_settings = embproj.pattern.palette.settings();
   let new_settings = PaletteSettings {
     columns_number: 4,
     color_only: true,
@@ -208,31 +208,31 @@ fn test_update_palette_display_settings() {
 
   // Test executing the command.
   {
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
     let EditorEvent::PaletteUpdateDisplaySettings(settings) = &events[0] else {
       panic!("expected PaletteUpdateDisplaySettings");
     };
     assert_eq!(settings, &new_settings);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the command.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
     let EditorEvent::PaletteUpdateDisplaySettings(settings) = &events[0] else {
       panic!("expected PaletteUpdateDisplaySettings");
     };
     assert_eq!(settings, &old_settings);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 #[test]
 fn test_sort_palette_action() {
-  let mut patproj = create_pattern_project();
-  let initial_positions = patproj.pattern.palette.positions().to_vec();
+  let mut embproj = create_pattern_project();
+  let initial_positions = embproj.pattern.palette.positions().to_vec();
   let mut action = EditorAction::Palette(PaletteAction::Sort {
     sort_by: SortPaletteBy::BrandAndNumber,
     old_positions: None,
@@ -240,8 +240,8 @@ fn test_sort_palette_action() {
 
   // Test executing the action.
   {
-    let events = action.perform(&mut patproj).unwrap();
-    let sorted_positions = patproj.pattern.palette.positions().to_vec();
+    let events = action.perform(&mut embproj).unwrap();
+    let sorted_positions = embproj.pattern.palette.positions().to_vec();
     // Verify positions changed in the pattern.
     assert_ne!(sorted_positions, initial_positions);
 
@@ -255,14 +255,14 @@ fn test_sort_palette_action() {
     sorted_new_positions.sort();
     assert_eq!(sorted_new_positions, initial_positions);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
     // Verify positions restored in the pattern.
-    assert_eq!(patproj.pattern.palette.positions(), initial_positions.as_slice());
+    assert_eq!(embproj.pattern.palette.positions(), initial_positions.as_slice());
 
     let EditorEvent::PaletteSort(restored_positions) = &events[0] else {
       panic!("expected PaletteSort");
@@ -270,14 +270,14 @@ fn test_sort_palette_action() {
     // Verify that old positions were restored.
     assert_eq!(restored_positions, &initial_positions);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 #[test]
 fn test_reorder_palette_items_action() {
-  let mut patproj = create_pattern_project();
-  let initial_positions = patproj.pattern.palette.positions().to_vec();
+  let mut embproj = create_pattern_project();
+  let initial_positions = embproj.pattern.palette.positions().to_vec();
   let old_position = 0u32;
   let new_position = 3u32;
   let mut action = EditorAction::Palette(PaletteAction::Reorder {
@@ -288,7 +288,7 @@ fn test_reorder_palette_items_action() {
 
   // Test executing the action.
   {
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
 
     let EditorEvent::PaletteReorder(new_positions) = &events[0] else {
       panic!("expected PaletteReorder");
@@ -299,21 +299,21 @@ fn test_reorder_palette_items_action() {
       initial_positions[old_position as usize]
     );
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
     // Verify positions restored in the pattern.
-    assert_eq!(patproj.pattern.palette.positions(), initial_positions.as_slice());
+    assert_eq!(embproj.pattern.palette.positions(), initial_positions.as_slice());
 
     let EditorEvent::PaletteReorder(restored_positions) = &events[0] else {
       panic!("expected PaletteReorder");
     };
     assert_eq!(restored_positions, &initial_positions);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
@@ -321,7 +321,7 @@ fn test_reorder_palette_items_action() {
 fn test_set_symbol_action() {
   use embroiderly_pattern::Symbol;
 
-  let mut patproj = create_pattern_project();
+  let mut embproj = create_pattern_project();
 
   let symbol = Symbol {
     char: 'A',
@@ -336,12 +336,12 @@ fn test_set_symbol_action() {
   // Test executing the action.
   {
     // Verify symbol is not set initially.
-    assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_none());
+    assert!(embproj.pattern.palette.get(0).unwrap().symbol.is_none());
 
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
 
     // Verify symbol was set.
-    let set_symbol = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+    let set_symbol = embproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
     assert_eq!(set_symbol.char, 'A');
     assert_eq!(set_symbol.font, "Arial");
 
@@ -354,15 +354,15 @@ fn test_set_symbol_action() {
     assert_eq!(sym.char, 'A');
     assert_eq!(sym.font, "Arial");
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
 
     // Verify symbol was unset.
-    assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_none());
+    assert!(embproj.pattern.palette.get(0).unwrap().symbol.is_none());
 
     let EditorEvent::PaletteSetSymbol { palindex, symbol: sym } = &events[0] else {
       panic!("expected PaletteSetSymbol");
@@ -370,7 +370,7 @@ fn test_set_symbol_action() {
     assert_eq!(palindex, &0);
     assert!(sym.is_none());
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
@@ -378,10 +378,10 @@ fn test_set_symbol_action() {
 fn test_unset_symbol_action() {
   use embroiderly_pattern::Symbol;
 
-  let mut patproj = create_pattern_project();
+  let mut embproj = create_pattern_project();
 
   // Set a symbol on the first palette item.
-  if let Some(item) = patproj.pattern.palette.get_mut(0) {
+  if let Some(item) = embproj.pattern.palette.get_mut(0) {
     item.symbol = Some(Symbol {
       char: 'B',
       font: "Times".to_string(),
@@ -389,7 +389,7 @@ fn test_unset_symbol_action() {
   }
 
   // Verify initial state.
-  assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_some());
+  assert!(embproj.pattern.palette.get(0).unwrap().symbol.is_some());
 
   let mut action = EditorAction::Palette(PaletteAction::SetSymbol {
     palindex: 0,
@@ -399,10 +399,10 @@ fn test_unset_symbol_action() {
 
   // Test executing the action.
   {
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
 
     // Verify symbol was unset.
-    assert!(patproj.pattern.palette.get(0).unwrap().symbol.is_none());
+    assert!(embproj.pattern.palette.get(0).unwrap().symbol.is_none());
 
     let EditorEvent::PaletteSetSymbol { palindex, symbol: sym } = &events[0] else {
       panic!("expected PaletteSetSymbol");
@@ -410,15 +410,15 @@ fn test_unset_symbol_action() {
     assert_eq!(palindex, &0);
     assert!(sym.is_none());
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
 
     // Verify original symbol was restored.
-    let restored = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+    let restored = embproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
     assert_eq!(restored.char, 'B');
     assert_eq!(restored.font, "Times");
 
@@ -431,7 +431,7 @@ fn test_unset_symbol_action() {
     assert_eq!(sym.char, 'B');
     assert_eq!(sym.font, "Times");
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
@@ -439,10 +439,10 @@ fn test_unset_symbol_action() {
 fn test_replace_symbol_action() {
   use embroiderly_pattern::Symbol;
 
-  let mut patproj = create_pattern_project();
+  let mut embproj = create_pattern_project();
 
   // Set initial symbol.
-  if let Some(item) = patproj.pattern.palette.get_mut(0) {
+  if let Some(item) = embproj.pattern.palette.get_mut(0) {
     item.symbol = Some(Symbol {
       char: 'X',
       font: "Font1".to_string(),
@@ -461,10 +461,10 @@ fn test_replace_symbol_action() {
 
   // Test executing the action.
   {
-    let events = action.perform(&mut patproj).unwrap();
+    let events = action.perform(&mut embproj).unwrap();
 
     // Verify new symbol.
-    let set_symbol = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+    let set_symbol = embproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
     assert_eq!(set_symbol.char, 'Y');
     assert_eq!(set_symbol.font, "Font2");
 
@@ -476,15 +476,15 @@ fn test_replace_symbol_action() {
     assert_eq!(sym.char, 'Y');
     assert_eq!(sym.font, "Font2");
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
+    let events = action.revoke(&mut embproj).unwrap();
 
     // Verify original symbol was restored.
-    let restored = patproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
+    let restored = embproj.pattern.palette.get(0).unwrap().symbol.as_ref().unwrap();
     assert_eq!(restored.char, 'X');
     assert_eq!(restored.font, "Font1");
 
@@ -496,6 +496,6 @@ fn test_replace_symbol_action() {
     assert_eq!(sym.char, 'X');
     assert_eq!(sym.font, "Font1");
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }

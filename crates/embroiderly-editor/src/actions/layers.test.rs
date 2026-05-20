@@ -1,24 +1,24 @@
-use embroiderly_pattern::PatternProject;
+use embroiderly_pattern::EmbroiderlyProject;
 
 use crate::actions::LayerAction;
 use crate::actions::layers::LayerVisibility;
 use crate::{EditorAction, EditorEvent};
 
-fn create_pattern_project() -> PatternProject {
-  PatternProject::new(Default::default())
+fn create_pattern_project() -> EmbroiderlyProject {
+  EmbroiderlyProject::new(Default::default())
 }
 
 #[test]
 fn test_add_layer_action() {
-  let mut patproj = create_pattern_project();
+  let mut embproj = create_pattern_project();
   let mut action = EditorAction::Layer(LayerAction::Add { added_index: None });
 
   // Test performing the action.
   {
-    assert_eq!(patproj.pattern.layers.len(), 1);
-    let events = action.perform(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers.len(), 2);
-    assert_eq!(patproj.pattern.layers.positions(), &[1, 0]);
+    assert_eq!(embproj.pattern.layers.len(), 1);
+    let events = action.perform(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.layers.len(), 2);
+    assert_eq!(embproj.pattern.layers.positions(), &[1, 0]);
 
     let EditorEvent::LayerAdd { index, layer } = &events[0] else {
       panic!("expected LayerAdd");
@@ -26,28 +26,28 @@ fn test_add_layer_action() {
     assert_eq!(index, &1);
     assert_eq!(layer.name, "");
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    assert_eq!(patproj.pattern.layers.len(), 2);
-    let events = action.revoke(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers.len(), 1);
+    assert_eq!(embproj.pattern.layers.len(), 2);
+    let events = action.revoke(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.layers.len(), 1);
 
     let EditorEvent::LayerRemove(index) = &events[0] else {
       panic!("expected LayerRemove");
     };
     assert_eq!(index, &1);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 #[test]
 fn test_remove_layer_action() {
-  let mut patproj = create_pattern_project();
-  patproj.pattern.layers.push(embroiderly_pattern::Layer::new("Layer 2"));
+  let mut embproj = create_pattern_project();
+  embproj.pattern.layers.push(embroiderly_pattern::Layer::new("Layer 2"));
 
   let mut action = EditorAction::Layer(LayerAction::Remove {
     layer_index: 1,
@@ -56,24 +56,24 @@ fn test_remove_layer_action() {
 
   // Test performing the action.
   {
-    assert_eq!(patproj.pattern.layers.len(), 2);
-    let events = action.perform(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers.len(), 1);
+    assert_eq!(embproj.pattern.layers.len(), 2);
+    let events = action.perform(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.layers.len(), 1);
 
     let EditorEvent::LayerRemove(index) = &events[0] else {
       panic!("expected LayerRemove");
     };
     assert_eq!(index, &1);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    assert_eq!(patproj.pattern.layers.len(), 1);
-    let events = action.revoke(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers.len(), 2);
-    assert_eq!(patproj.pattern.layers[1].name, "Layer 2");
+    assert_eq!(embproj.pattern.layers.len(), 1);
+    let events = action.revoke(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.layers.len(), 2);
+    assert_eq!(embproj.pattern.layers[1].name, "Layer 2");
 
     let EditorEvent::LayerAdd { index, layer } = &events[0] else {
       panic!("expected LayerAdd");
@@ -81,13 +81,13 @@ fn test_remove_layer_action() {
     assert_eq!(index, &1);
     assert_eq!(layer.name, "Layer 2");
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 #[test]
 fn test_rename_layer_action() {
-  let mut patproj = create_pattern_project();
+  let mut embproj = create_pattern_project();
   let mut action = EditorAction::Layer(LayerAction::Rename {
     layer_index: 0,
     name: "My Layer".to_string(),
@@ -96,9 +96,9 @@ fn test_rename_layer_action() {
 
   // Test performing the action.
   {
-    assert_eq!(patproj.pattern.layers[0].name, "");
-    let events = action.perform(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers[0].name, "My Layer");
+    assert_eq!(embproj.pattern.layers[0].name, "");
+    let events = action.perform(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.layers[0].name, "My Layer");
 
     let EditorEvent::LayerRename { layer_index, name } = &events[0] else {
       panic!("expected LayerRename");
@@ -106,13 +106,13 @@ fn test_rename_layer_action() {
     assert_eq!(layer_index, &0);
     assert_eq!(name, "My Layer");
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers[0].name, "");
+    let events = action.revoke(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.layers[0].name, "");
 
     let EditorEvent::LayerRename { layer_index, name } = &events[0] else {
       panic!("expected LayerRename");
@@ -120,13 +120,13 @@ fn test_rename_layer_action() {
     assert_eq!(layer_index, &0);
     assert_eq!(name, "");
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 #[test]
 fn test_update_layer_visibility_action() {
-  let mut patproj = create_pattern_project();
+  let mut embproj = create_pattern_project();
 
   let new_visibility = LayerVisibility {
     visible: false,
@@ -154,10 +154,10 @@ fn test_update_layer_visibility_action() {
 
   // Test performing the action.
   {
-    assert!(patproj.pattern.layers[0].visible);
-    let events = action.perform(&mut patproj).unwrap();
-    assert!(!patproj.pattern.layers[0].visible);
-    assert!(!patproj.pattern.layers[0].fullstitches_visible);
+    assert!(embproj.pattern.layers[0].visible);
+    let events = action.perform(&mut embproj).unwrap();
+    assert!(!embproj.pattern.layers[0].visible);
+    assert!(!embproj.pattern.layers[0].fullstitches_visible);
 
     let EditorEvent::LayerUpdateVisibility {
       layer_index,
@@ -170,14 +170,14 @@ fn test_update_layer_visibility_action() {
     assert!(!visibility.visible);
     assert!(!visibility.fullstitches_visible);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
-    assert!(patproj.pattern.layers[0].visible);
-    assert!(patproj.pattern.layers[0].fullstitches_visible);
+    let events = action.revoke(&mut embproj).unwrap();
+    assert!(embproj.pattern.layers[0].visible);
+    assert!(embproj.pattern.layers[0].fullstitches_visible);
 
     let EditorEvent::LayerUpdateVisibility {
       layer_index,
@@ -190,14 +190,14 @@ fn test_update_layer_visibility_action() {
     assert!(visibility.visible);
     assert!(visibility.fullstitches_visible);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }
 
 #[test]
 fn test_move_layer_action() {
-  let mut patproj = create_pattern_project();
-  patproj.pattern.layers.push(embroiderly_pattern::Layer::new("Layer A"));
+  let mut embproj = create_pattern_project();
+  embproj.pattern.layers.push(embroiderly_pattern::Layer::new("Layer A"));
 
   let mut action = EditorAction::Layer(LayerAction::Move {
     old_position: 0,
@@ -207,27 +207,27 @@ fn test_move_layer_action() {
 
   // Test performing the action.
   {
-    let events = action.perform(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers.positions(), &[0, 1]);
+    let events = action.perform(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.layers.positions(), &[0, 1]);
 
     let EditorEvent::LayerMove(positions) = &events[0] else {
       panic!("expected LayerMove");
     };
     assert_eq!(positions, &[0, 1]);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 
   // Test revoking the action.
   {
-    let events = action.revoke(&mut patproj).unwrap();
-    assert_eq!(patproj.pattern.layers.positions(), &[1, 0]);
+    let events = action.revoke(&mut embproj).unwrap();
+    assert_eq!(embproj.pattern.layers.positions(), &[1, 0]);
 
     let EditorEvent::LayerMove(positions) = &events[0] else {
       panic!("expected LayerMove");
     };
     assert_eq!(positions, &[1, 0]);
 
-    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == patproj.id));
+    assert!(matches!(events.last(), Some(EditorEvent::PatternChanged(id)) if *id == embproj.id));
   }
 }

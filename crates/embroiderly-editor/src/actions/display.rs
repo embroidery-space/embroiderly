@@ -1,4 +1,4 @@
-use embroiderly_pattern::{DisplaySettings, PatternProject};
+use embroiderly_pattern::{DisplaySettings, EmbroiderlyProject};
 
 use crate::EditorEvent;
 use crate::error::Result;
@@ -16,23 +16,23 @@ pub enum DisplayAction {
 }
 
 impl DisplayAction {
-  pub fn perform(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn perform(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Update {
         display_settings,
         old_display_settings,
       } => {
-        let prev = std::mem::replace(&mut patproj.display_settings, display_settings.clone());
+        let prev = std::mem::replace(&mut embproj.display_settings, display_settings.clone());
         old_display_settings.get_or_insert(prev);
         Ok(vec![
           EditorEvent::DisplayUpdate(display_settings.clone()),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }
   }
 
-  pub fn revoke(&mut self, patproj: &mut PatternProject) -> Result<Vec<EditorEvent>> {
+  pub fn revoke(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Vec<EditorEvent>> {
     match self {
       Self::Update {
         old_display_settings, ..
@@ -40,10 +40,10 @@ impl DisplayAction {
         let old = old_display_settings
           .take()
           .ok_or(crate::error::Error::ActionNotPerformed)?;
-        patproj.display_settings = old.clone();
+        embproj.display_settings = old.clone();
         Ok(vec![
           EditorEvent::DisplayUpdate(old),
-          EditorEvent::PatternChanged(patproj.id),
+          EditorEvent::PatternChanged(embproj.id),
         ])
       }
     }

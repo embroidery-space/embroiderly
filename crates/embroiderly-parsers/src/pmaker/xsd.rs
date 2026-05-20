@@ -574,7 +574,7 @@ pub struct PageMargins {
 }
 
 #[tracing::instrument(name = "parse_xsd", level = "debug", skip_all)]
-pub fn parse_pattern(data: &[u8]) -> Result<embroiderly_pattern::PatternProject> {
+pub fn parse_pattern(data: &[u8]) -> Result<embroiderly_pattern::EmbroiderlyProject> {
   let xsd_pattern = parse_pattern_inner(data)?;
 
   let layer = embroiderly_pattern::Layer {
@@ -677,7 +677,7 @@ pub fn parse_pattern(data: &[u8]) -> Result<embroiderly_pattern::PatternProject>
   };
 
   Ok(
-    embroiderly_pattern::PatternProject::builder(pattern)
+    embroiderly_pattern::EmbroiderlyProject::builder(pattern)
       .display_settings(display_settings)
       .build(),
   )

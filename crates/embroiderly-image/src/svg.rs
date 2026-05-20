@@ -8,15 +8,15 @@ use quick_xml::events::{BytesDecl, BytesText, Event};
 #[path = "svg.test.rs"]
 mod tests;
 
-#[tracing::instrument(skip(patproj))]
+#[tracing::instrument(skip(embproj))]
 pub fn generate_svg(
-  patproj: &PatternProject,
+  embproj: &EmbroiderlyProject,
   color: bool,
   options: ImageExportOptions,
 ) -> anyhow::Result<Vec<Vec<u8>>> {
   let mut frames = Vec::new();
 
-  let (pattern_width, pattern_height) = (patproj.pattern.fabric.width, patproj.pattern.fabric.height);
+  let (pattern_width, pattern_height) = (embproj.pattern.fabric.width, embproj.pattern.fabric.height);
 
   let cell_size = options.cell_size;
   let frame_size = options.frame_size.unwrap_or((pattern_width, pattern_height));
@@ -24,7 +24,7 @@ pub fn generate_svg(
     .preserved_overlap
     .unwrap_or(ImageExportOptions::DEFAULT_PRESERVED_OVERLAP);
 
-  let flattened_layer = patproj.pattern.flatten_visible_layers();
+  let flattened_layer = embproj.pattern.flatten_visible_layers();
 
   // We continiously iterate by frames from the top-left corner of the pattern to the bottom-right corner.
   // So, if we have exceeded the pattern height, we stop.
@@ -101,16 +101,16 @@ pub fn generate_svg(
       .collect::<Vec<_>>();
 
     let pattern_context = PatternContext {
-      fabric: &patproj.pattern.fabric,
-      palette: patproj.pattern.palette.as_ref(),
+      fabric: &embproj.pattern.fabric,
+      palette: embproj.pattern.palette.as_ref(),
       fullstitches: &fullstitches,
       partstitches: &partstitches,
       linestitches: &linestitches,
       nodestitches: &nodestitches,
       specialstitches: &specialstitches,
-      special_stitch_models: &patproj.pattern.special_stitch_models,
+      special_stitch_models: &embproj.pattern.special_stitch_models,
 
-      grid: &patproj.display_settings.grid,
+      grid: &embproj.display_settings.grid,
     };
     let frame_context = FrameContext {
       color,

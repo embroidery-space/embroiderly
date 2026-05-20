@@ -1,4 +1,4 @@
-use embroiderly_pattern::PatternProject;
+use embroiderly_pattern::EmbroiderlyProject;
 
 use crate::EditorEvent;
 use crate::actions::EditorAction;
@@ -110,7 +110,7 @@ impl History {
 
   /// Undoes the last action and return the events produced by the revoke.
   /// Returns `None` if there is nothing to undo (empty stack or only a checkpoint).
-  pub fn undo(&mut self, patproj: &mut PatternProject) -> Result<Option<Vec<EditorEvent>>> {
+  pub fn undo(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Option<Vec<EditorEvent>>> {
     if self.undo_stack.len() == 1 && matches!(self.undo_stack.last(), Some(HistoryEntry::Checkpoint)) {
       return Ok(None);
     }
@@ -125,19 +125,19 @@ impl History {
           // Remove the checkpoint and push it to redo, then undo the next real action.
           let checkpoint = self.undo_stack.pop().unwrap();
           self.redo_stack.push(checkpoint);
-          return self.undo(patproj);
+          return self.undo(embproj);
         }
         HistoryEntry::Single(_) => {
           let HistoryEntry::Single(mut action) = self.undo_stack.pop().unwrap() else {
             unreachable!()
           };
-          let events = action.revoke(patproj)?;
+          let events = action.revoke(embproj)?;
           self.redo_stack.push(HistoryEntry::Single(action));
           return Ok(Some(events));
         }
         HistoryEntry::Transaction(transaction) => {
           if let Some(mut action) = transaction.actions.pop() {
-            let events = action.revoke(patproj)?;
+            let events = action.revoke(embproj)?;
             match self.redo_stack.last_mut() {
               Some(HistoryEntry::Transaction(last_t)) if last_t.id == transaction.id => {
                 last_t.actions.push(action);
@@ -164,20 +164,20 @@ impl History {
 
   /// Redoes the last undone action and returns the events produced by the perform.
   /// Returns `None` if there is nothing to redo.
-  pub fn redo(&mut self, patproj: &mut PatternProject) -> Result<Option<Vec<EditorEvent>>> {
+  pub fn redo(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Option<Vec<EditorEvent>>> {
     if let Some(entry) = self.redo_stack.last_mut() {
       match entry {
         HistoryEntry::Checkpoint => {
           // The checkpoint sits at the top, so we've already redone everything above it.
           // Absorb it back into the undo stack and try the next entry.
           self.undo_stack.push(self.redo_stack.pop().unwrap());
-          return self.redo(patproj);
+          return self.redo(embproj);
         }
         HistoryEntry::Single(_) => {
           let HistoryEntry::Single(mut action) = self.redo_stack.pop().unwrap() else {
             unreachable!()
           };
-          let events = action.perform(patproj)?;
+          let events = action.perform(embproj)?;
           self.undo_stack.push(HistoryEntry::Single(action));
 
           // If the next item in the redo stack is a checkpoint, absorb it into the undo stack.
@@ -189,7 +189,7 @@ impl History {
         }
         HistoryEntry::Transaction(transaction) => {
           if let Some(mut action) = transaction.actions.pop() {
-            let events = action.perform(patproj)?;
+            let events = action.perform(embproj)?;
             match self.undo_stack.last_mut() {
               Some(HistoryEntry::Transaction(last_t)) if last_t.id == transaction.id => {
                 last_t.actions.push(action);
@@ -220,7 +220,7 @@ impl History {
 
   /// Undoes the last transaction (or single action) atomically.
   /// Returns all events from revoking all actions in the entry.
-  pub fn undo_transaction(&mut self, patproj: &mut PatternProject) -> Result<Option<Vec<EditorEvent>>> {
+  pub fn undo_transaction(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Option<Vec<EditorEvent>>> {
     if self.undo_stack.len() == 1 && matches!(self.undo_stack.last(), Some(HistoryEntry::Checkpoint)) {
       return Ok(None);
     }
@@ -235,7 +235,7 @@ impl History {
       match entry {
         HistoryEntry::Checkpoint => unreachable!(),
         HistoryEntry::Single(_) => {
-          return self.undo(patproj);
+          return self.undo(embproj);
         }
         HistoryEntry::Transaction(_) => {
           let HistoryEntry::Transaction(mut transaction) = self.undo_stack.pop().unwrap() else {
@@ -247,7 +247,7 @@ impl History {
           let reversed: Vec<EditorAction> = transaction.actions.drain(..).rev().collect();
           let mut revoked = Vec::new();
           for mut action in reversed {
-            let events = action.revoke(patproj)?;
+            let events = action.revoke(embproj)?;
             all_events.extend(events);
             revoked.push(action);
           }
@@ -274,17 +274,17 @@ impl History {
 
   /// Redoes the last undone transaction (or single action) atomically.
   /// Returns all events from performing all actions in the entry.
-  pub fn redo_transaction(&mut self, patproj: &mut PatternProject) -> Result<Option<Vec<EditorEvent>>> {
+  pub fn redo_transaction(&mut self, embproj: &mut EmbroiderlyProject) -> Result<Option<Vec<EditorEvent>>> {
     if let Some(entry) = self.redo_stack.last() {
       match entry {
         HistoryEntry::Checkpoint => {
           // The checkpoint sits at the top, so we've already redone everything above it.
           // Absorb it back into the undo stack and try the next entry.
           self.undo_stack.push(self.redo_stack.pop().unwrap());
-          return self.redo_transaction(patproj);
+          return self.redo_transaction(embproj);
         }
         HistoryEntry::Single(_) => {
-          return self.redo(patproj);
+          return self.redo(embproj);
         }
         HistoryEntry::Transaction(_) => {
           let HistoryEntry::Transaction(mut transaction) = self.redo_stack.pop().unwrap() else {
@@ -295,7 +295,7 @@ impl History {
           let reversed: Vec<EditorAction> = transaction.actions.drain(..).rev().collect();
           let mut performed = Vec::new();
           for mut action in reversed {
-            let events = action.perform(patproj)?;
+            let events = action.perform(embproj)?;
             all_events.extend(events);
             performed.push(action);
           }
