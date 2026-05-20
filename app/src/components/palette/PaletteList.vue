@@ -4,13 +4,16 @@ import type { ListboxItemObject, ListboxProps } from "@embroiderly/ui";
 
 import { insertNodeAt, removeNode, useSortable } from "@vueuse/integrations/useSortable";
 import { dequal } from "dequal/lite";
-import { computed, nextTick, watchEffect, useTemplateRef } from "vue";
+import { computed, nextTick, ref, watch, watchEffect, useTemplateRef } from "vue";
 
 import { BasePaletteItem, PaletteSettings } from "~/lib/pattern/";
 
 import PaletteListItem from "./PaletteListItem.vue";
 
-interface PaletteListProps<T> extends Pick<ListboxProps, "disabled" | "multiple" | "scroll" | "filterInput"> {
+interface PaletteListProps<T> extends Pick<
+  ListboxProps,
+  "disabled" | "multiple" | "scroll" | "filterInput" | "selectionBehavior"
+> {
   options?: T[];
   optionValue?: (option: T) => V;
 
@@ -47,14 +50,26 @@ const items = computed<PalitemObject[]>(() => {
   }));
 });
 
-const container = useTemplateRef<HTMLElement>("container");
-const groupEl = computed(() => container.value?.querySelector<HTMLElement>('[data-slot="group"]') ?? null);
-const { option: setSortableOption } = useSortable(groupEl, [], {
+const listboxContainer = useTemplateRef("listbox-container");
+const listboxGroupEl = ref<HTMLElement | null>(null);
+
+// Track both the listbox container and items to query the group element when either changes.
+// Simple computed will not work in this case, as the `group` element is only appears when an internal listbox's computed over items is `true`.
+watch(
+  [listboxContainer, items],
+  () => {
+    const el = listboxContainer.value?.querySelector<HTMLElement>('[role="listbox"] [role="group"]') ?? null;
+    if (listboxGroupEl.value !== el) listboxGroupEl.value = el;
+  },
+  { immediate: true },
+);
+
+const { option: setSortableOption } = useSortable(listboxGroupEl, [], {
   animation: 100,
-  disabled: true,
-  forceFallback: true,
-  avoidImplicitDeselect: true,
-  watchElement: true,
+  disabled: true, // Sortable is disabled by default.
+  forceFallback: true, // Use custom implementation instead of built-in HTML5 features.
+  avoidImplicitDeselect: true, // Don't deselect items on click outside.
+  watchElement: true, // Watch for the the provided element, as it is rendered conditionally, so its ref isn't resolved on setup.
   onUpdate: ({ from, item, oldIndex, newIndex }) => {
     if (oldIndex === undefined || newIndex === undefined) return;
 
@@ -87,7 +102,7 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
 </script>
 
 <template>
-  <div ref="container" class="flex min-h-0 grow flex-col">
+  <div ref="listbox-container" class="flex min-h-0 grow flex-col">
     <div v-if="$slots.header" class="border-b border-default p-1">
       <slot name="header"></slot>
     </div>
@@ -96,10 +111,10 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
     <Listbox
       v-model="value"
       v-model:filter-value="filterValue"
-      avoid-implicit-deselect
       :items="items"
       :multiple="multiple"
       :disabled="disabled"
+      :selection-behavior="selectionBehavior"
       :filter-input="filterInput"
       :scroll="scroll"
       :empty-message="$t('palette-empty')"

@@ -213,6 +213,25 @@ export class BrandPaletteItem extends BasePaletteItem {
   }
 }
 
+export function serializeBrandPalette(palette: BrandPaletteItem[]) {
+  return b.vec(BrandPaletteItem.schema).serialize(
+    palette.map((palitem) => ({
+      brand: palitem.brand,
+      number: palitem.number,
+      name: palitem.name,
+      color: palitem.hex.slice(1),
+      blends: palitem.blends ?? null,
+    })),
+  );
+}
+
+export function deserializeBrandPalette(data: Uint8Array) {
+  return b
+    .vec(BrandPaletteItem.schema)
+    .deserialize(data)
+    .map((palitem, index) => new BrandPaletteItem(index, palitem));
+}
+
 /**
  * Represents a _working_ palette item
  *
@@ -376,13 +395,6 @@ export class Palette {
 
     return removed;
   }
-}
-
-export function deserializeBrandPalette(data: Uint8Array) {
-  return b
-    .vec(BrandPaletteItem.schema)
-    .deserialize(data)
-    .map((palitem, index) => new BrandPaletteItem(index, palitem));
 }
 
 export class AddedPaletteItemData {

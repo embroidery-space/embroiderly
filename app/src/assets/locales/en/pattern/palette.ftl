@@ -16,6 +16,7 @@ palette-empty = The palette is empty
 
 palette-edit = Edit Palette
 palette-save = Save Palette
+palette-panels-menu = Palette menu
 
 ## Palette toolbar.
 
@@ -46,6 +47,7 @@ palette-ctx-menu-delete-all = Delete All
 ## Palette catalog.
 
 palette-catalog = Colors
+palette-catalog-menu = Palette options
 
 palette-catalog-menu-import-palettes = Import Palettes
 

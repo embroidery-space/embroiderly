@@ -130,7 +130,13 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
           />
 
           <DropdownMenu :items="paletteCatalogMenuOptions">
-            <Button :loading="importingPalettes" color="neutral" variant="outline" :icon="IconMenu" />
+            <Button
+              :loading="importingPalettes"
+              color="neutral"
+              variant="outline"
+              :icon="IconMenu"
+              :aria-label="$t('palette-catalog-menu')"
+            />
           </DropdownMenu>
         </div>
       </template>

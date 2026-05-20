@@ -49,9 +49,6 @@ const modelValue = defineModel<number>({ required: true });
 const props = defineProps<CanvasLayersProps>();
 const emits = defineEmits<CanvasLayersEmits>();
 
-const treeContainer = useTemplateRef<HTMLElement>("tree-container");
-const treeRootEl = computed(() => treeContainer.value?.querySelector<HTMLElement>('[role="tree"]') ?? null);
-
 const { fluent } = useI18n();
 
 const layerItems = computed<LayerTreeItem[]>(() =>
@@ -165,6 +162,8 @@ const contextMenuItems = computed<ContextMenuItem[]>(() => [
   },
 ]);
 
+const treeContainer = useTemplateRef<HTMLElement>("tree-container");
+const treeRootEl = computed(() => treeContainer.value?.querySelector<HTMLElement>('[role="tree"]') ?? null);
 const { option: setSortableOption } = useSortable(treeRootEl, [], {
   animation: 100,
   disabled: true, // Sortable is disabled by default.
