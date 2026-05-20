@@ -6,6 +6,7 @@ import { defineComponent } from "vue";
 
 import { Layer } from "~/lib/pattern/";
 import { renderComponent } from "~test-utils/render-component.ts";
+import { withBidi } from "~test-utils/with-bidi.ts";
 
 import CanvasLayers from "./CanvasLayers.vue";
 
@@ -46,7 +47,7 @@ describe("CanvasLayers", () => {
     const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0)] },
     });
-    await expect.element(screen.getByRole("treeitem", { level: 1 })).toHaveTextContent("Layer \u20681\u2069"); // Keep BiDi's FSI and PDI characters.
+    await expect.element(screen.getByRole("treeitem", { level: 1 })).toHaveTextContent(withBidi`Layer ${1}`);
   });
 
   test("displays layer name when set", async () => {

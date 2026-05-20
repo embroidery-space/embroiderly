@@ -9,6 +9,7 @@ import { BrandPaletteItem, Pattern, SortPaletteBy, serializeBrandPalette } from 
 import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
 import { createMockEditorContext as originalCreateMockEditorContext } from "~test-utils/mock-editor-context.ts";
 import { renderComponent } from "~test-utils/render-component.ts";
+import { withBidi } from "~test-utils/with-bidi";
 
 import WorkspacePalettePanel from "./WorkspacePalettePanel.vue";
 
@@ -100,7 +101,7 @@ describe("WorkspacePalettePanel", () => {
     test("shows the palette size and the edit button", async () => {
       const screen = await renderPanel();
 
-      await expect.element(screen.getByText(/Palette:.*3.*colors/u)).toBeVisible();
+      await expect.element(screen.getByText(withBidi`Palette: ${withBidi`${3} colors`}`)).toBeVisible();
       await expect.element(screen.getByRole("button", { name: "Edit Palette" })).toBeVisible();
     });
 
@@ -109,7 +110,7 @@ describe("WorkspacePalettePanel", () => {
 
       useEditorStateStore().palettePanelCollapsed = true;
 
-      await expect.element(screen.getByText(/Palette:.*3.*colors/u)).not.toBeVisible();
+      await expect.element(screen.getByText(withBidi`Palette: ${withBidi`${3} colors`}`)).not.toBeVisible();
       await expect.element(screen.getByRole("button", { name: "Edit Palette" })).toBeVisible();
     });
 
@@ -151,7 +152,7 @@ describe("WorkspacePalettePanel", () => {
 
       await userEvent.click(screen.getByRole("button", { name: "Save Palette" }));
 
-      await expect.element(screen.getByText(/Palette:.*3.*colors/u)).toBeVisible();
+      await expect.element(screen.getByText(withBidi`Palette: ${withBidi`${3} colors`}`)).toBeVisible();
       await expect.element(screen.getByRole("button", { name: "Save Palette" })).not.toBeInTheDocument();
 
       expect(useEditorStateStore().paletteMode).toBe(PaletteMode.Regular);
@@ -261,7 +262,7 @@ describe("WorkspacePalettePanel", () => {
       });
 
       await userEvent.click(screen.getByRole("listbox"), { button: "right" });
-      await userEvent.click(screen.getByRole("menuitem", { name: /Delete.*1.*Selected/u }));
+      await userEvent.click(screen.getByRole("menuitem", { name: withBidi`Delete ${1} Selected` }));
 
       expect(usePatternStore().removePaletteItem).toHaveBeenCalledExactlyOnceWith(1);
     });
