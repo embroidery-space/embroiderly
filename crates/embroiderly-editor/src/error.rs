@@ -1,7 +1,7 @@
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
   #[error("Pattern not found: {0}")]
-  PatternNotFound(uuid::Uuid),
+  PatternNotFound(embroiderly_pattern::EmbroiderlyProjectId),
   #[error("Action has not been performed yet")]
   ActionNotPerformed,
   #[error("Stitch not found")]

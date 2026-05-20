@@ -6,10 +6,46 @@ use super::{Pattern, ReferenceImage};
 #[path = "./project.test.rs"]
 mod tests;
 
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+pub struct EmbroiderlyProjectId(uuid::Uuid);
+
+impl EmbroiderlyProjectId {
+  #[must_use]
+  pub fn new() -> Self {
+    Self(uuid::Uuid::new_v4())
+  }
+
+  #[must_use]
+  pub const fn is_nil(&self) -> bool {
+    self.0.is_nil()
+  }
+}
+
+impl std::fmt::Display for EmbroiderlyProjectId {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    self.0.fmt(f)
+  }
+}
+
+impl std::str::FromStr for EmbroiderlyProjectId {
+  type Err = uuid::Error;
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    uuid::Uuid::parse_str(s).map(Self)
+  }
+}
+
+impl From<uuid::Uuid> for EmbroiderlyProjectId {
+  fn from(uuid: uuid::Uuid) -> Self {
+    Self(uuid)
+  }
+}
+
 #[derive(Debug, Default, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct EmbroiderlyProject {
-  pub id: uuid::Uuid,
+  pub id: EmbroiderlyProjectId,
 
   pub reference_image: Option<ReferenceImage>,
 
@@ -82,7 +118,7 @@ impl EmbroiderlyProjectBuilder {
   #[must_use]
   pub fn build(self) -> EmbroiderlyProject {
     EmbroiderlyProject {
-      id: uuid::Uuid::new_v4(),
+      id: EmbroiderlyProjectId::new(),
 
       reference_image: self.reference_image,
 

@@ -1,4 +1,4 @@
-use embroiderly_pattern::EmbroiderlyProject;
+use embroiderly_pattern::{EmbroiderlyProject, EmbroiderlyProjectId};
 
 use super::*;
 use crate::actions::EditorAction;
@@ -34,7 +34,7 @@ fn test_add_and_remove_pattern() {
 #[test]
 fn test_pattern_not_found() {
   let mut editor = Editor::new();
-  let id = uuid::Uuid::new_v4();
+  let id = EmbroiderlyProjectId::new();
 
   assert!(matches!(
     editor.dispatch(&id, EditorAction::Mock),

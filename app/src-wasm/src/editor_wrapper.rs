@@ -9,7 +9,7 @@ use embroiderly_editor::actions::{
 };
 use embroiderly_editor::{Editor, EditorAction, EditorEvent};
 use embroiderly_parsers::PatternFormat;
-use embroiderly_pattern::{EmbroiderlyProject, Pattern, ReferenceImage, Stitch};
+use embroiderly_pattern::{EmbroiderlyProject, EmbroiderlyProjectId, Pattern, ReferenceImage, Stitch};
 use embroiderly_web::{opfs, timers};
 use js_sys::Uint8Array;
 use wasm_bindgen::prelude::*;
@@ -334,7 +334,7 @@ impl EditorWrapper {
   ///
   /// If the journal write fails, the action is rolled back so both states remain identical.
   /// Events are only emitted after a successful journal write.
-  async fn dispatch(&self, project_id: uuid::Uuid, action: EditorAction) -> Result<(), Error> {
+  async fn dispatch(&self, project_id: EmbroiderlyProjectId, action: EditorAction) -> Result<(), Error> {
     let events = self.run(|editor| editor.dispatch(&project_id, action.clone()))?;
     if !events.is_empty() {
       let action_bytes = borsh::to_vec(&JournalEntry::Action(action))?;
@@ -468,7 +468,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::load_pattern", level = "debug", skip(self), err)]
   async fn load_pattern_impl(&self, project_id: &str) -> Result<Vec<u8>, Error> {
-    let id = uuid::Uuid::parse_str(project_id)?;
+    let id = project_id.parse::<EmbroiderlyProjectId>()?;
 
     if let Some(data) = self.run(|editor| editor.get_pattern(&id).map(borsh::to_vec)) {
       return Ok(data?);
@@ -485,7 +485,7 @@ impl EditorWrapper {
   }
 
   async fn restore_project(&self, project_id: &str) -> Result<(), Error> {
-    let id = uuid::Uuid::parse_str(project_id)?;
+    let id = project_id.parse::<EmbroiderlyProjectId>()?;
 
     let entry = self
       .persistence
@@ -568,7 +568,7 @@ impl EditorWrapper {
     err
   )]
   async fn save_pattern_impl(&self, project_id: &str, file_handle: Option<opfs::FileHandle>) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let file_handle = if let Some(file_handle) = file_handle {
       self.persistence.update_handle(project_id, file_handle.clone()).await?;
       file_handle
@@ -621,7 +621,7 @@ impl EditorWrapper {
     err
   )]
   async fn export_pattern_impl(&self, project_id: &str, file_handle: opfs::FileHandle) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let file_name = file_handle.name();
 
     tracing::Span::current().record("file_name", &file_name);
@@ -642,7 +642,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::close_pattern", level = "debug", skip(self), err)]
   async fn close_pattern_impl(&self, project_id: &str, force: bool) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self.run(|editor| {
       if !force {
         let has_changes = editor.has_unsaved_changes(&project_id)?;
@@ -659,7 +659,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::add_stitch", level = "debug", skip(self, stitch_data), err)]
   async fn add_stitch_impl(&self, project_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let stitch: Stitch = borsh::from_slice(stitch_data)?;
 
     if self.run(|editor| {
@@ -684,7 +684,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::remove_stitch", level = "debug", skip(self, stitch_data), err)]
   async fn remove_stitch_impl(&self, project_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let stitch: Stitch = borsh::from_slice(stitch_data)?;
 
     // This command accepts stitches which don't contain all properties (e.g., the palindex is hard-coded to `0`).
@@ -711,7 +711,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::update_fabric", level = "debug", skip(self, fabric_data), err)]
   async fn update_fabric_impl(&self, project_id: &str, fabric_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let fabric = borsh::from_slice(fabric_data)?;
     self
       .dispatch(
@@ -727,7 +727,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::update_grid", level = "debug", skip(self, grid_data), err)]
   async fn update_grid_impl(&self, project_id: &str, grid_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let grid = borsh::from_slice(grid_data)?;
     self
       .dispatch(
@@ -744,7 +744,7 @@ impl EditorWrapper {
     err
   )]
   async fn add_palette_item_impl(&self, project_id: &str, palitem_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let palitem = borsh::from_slice(palitem_data)?;
     self
       .dispatch(project_id, EditorAction::Palette(PaletteAction::AddItem { palitem }))
@@ -753,7 +753,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::remove_palette_items", level = "debug", skip(self), err)]
   async fn remove_palette_items_impl(&self, project_id: &str, palindexes: Vec<u32>) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self
       .dispatch(
         project_id,
@@ -773,7 +773,7 @@ impl EditorWrapper {
     err
   )]
   async fn update_palette_display_settings_impl(&self, project_id: &str, settings_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let settings = borsh::from_slice(settings_data)?;
     self
       .dispatch(
@@ -788,7 +788,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::sort_palette", level = "debug", skip(self), err)]
   async fn sort_palette_impl(&self, project_id: &str, sort_by: &str) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let sort_by = match sort_by {
       "BrandAndNumber" => SortPaletteBy::BrandAndNumber,
       _ => {
@@ -815,7 +815,7 @@ impl EditorWrapper {
     old_position: u32,
     new_position: u32,
   ) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self
       .dispatch(
         project_id,
@@ -840,7 +840,7 @@ impl EditorWrapper {
       palindex: u32,
       symbol: Option<embroiderly_pattern::Symbol>,
     }
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let SetSymbolPayload { palindex, symbol } = borsh::from_slice(symbol_data)?;
     self
       .dispatch(
@@ -861,7 +861,7 @@ impl EditorWrapper {
     err
   )]
   async fn update_pattern_info_impl(&self, project_id: &str, info_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let info = borsh::from_slice(info_data)?;
     self
       .dispatch(
@@ -878,7 +878,7 @@ impl EditorWrapper {
     err
   )]
   async fn update_display_settings_impl(&self, project_id: &str, settings_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let display_settings = borsh::from_slice(settings_data)?;
     self
       .dispatch(
@@ -893,7 +893,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::add_layer", level = "debug", skip(self), err)]
   async fn add_layer_impl(&self, project_id: &str) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self
       .dispatch(project_id, EditorAction::Layer(LayerAction::Add { added_index: None }))
       .await
@@ -901,7 +901,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::remove_layer", level = "debug", skip(self), err)]
   async fn remove_layer_impl(&self, project_id: &str, layer_index: u32) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self
       .dispatch(
         project_id,
@@ -915,7 +915,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::rename_layer", level = "debug", skip(self), err)]
   async fn rename_layer_impl(&self, project_id: &str, layer_index: u32, name: String) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self
       .dispatch(
         project_id,
@@ -940,7 +940,7 @@ impl EditorWrapper {
     layer_index: u32,
     visibility_data: &[u8],
   ) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let visibility: LayerVisibility = borsh::from_slice(visibility_data)?;
     self
       .dispatch(
@@ -956,7 +956,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::move_layer", level = "debug", skip(self), err)]
   async fn move_layer_impl(&self, project_id: &str, old_position: u32, new_position: u32) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self
       .dispatch(
         project_id,
@@ -976,7 +976,7 @@ impl EditorWrapper {
     err
   )]
   async fn update_pdf_export_options_impl(&self, project_id: &str, options_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let options = borsh::from_slice(options_data)?;
     self
       .dispatch(
@@ -996,7 +996,7 @@ impl EditorWrapper {
     err
   )]
   async fn set_reference_image_impl(&self, project_id: &str, image_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let image = ReferenceImage::new(image_data.to_vec(), None);
     self
       .dispatch(
@@ -1011,7 +1011,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::remove_reference_image", level = "debug", skip(self), err)]
   async fn remove_reference_image_impl(&self, project_id: &str) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self
       .dispatch(
         project_id,
@@ -1030,7 +1030,7 @@ impl EditorWrapper {
     err
   )]
   async fn update_reference_image_settings_impl(&self, project_id: &str, settings_data: &[u8]) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let settings = borsh::from_slice(settings_data)?;
     self
       .dispatch(
@@ -1045,7 +1045,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::undo", level = "debug", skip(self), err)]
   async fn undo_impl(&self, project_id: &str, single: bool) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
 
     let (mut events, journal_entry) = if single {
       let events = self.run(|editor| editor.undo(&project_id))?;
@@ -1078,7 +1078,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::redo", level = "debug", skip(self), err)]
   async fn redo_impl(&self, project_id: &str, single: bool) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
 
     let (mut events, journal_entry) = if single {
       let events = self.run(|editor| editor.redo(&project_id))?;
@@ -1111,7 +1111,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::start_transaction", level = "debug", skip(self), err)]
   async fn start_transaction_impl(&self, project_id: &str) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self.run(|editor| editor.start_transaction(&project_id))?;
     let action_bytes = borsh::to_vec(&JournalEntry::StartTransaction)?;
     if let Err(e) = self.persistence.append_journal_entry(project_id, action_bytes).await {
@@ -1125,7 +1125,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::end_transaction", level = "debug", skip(self), err)]
   async fn end_transaction_impl(&self, project_id: &str) -> Result<(), Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     self.run(|editor| editor.end_transaction(&project_id))?;
     let action_bytes = borsh::to_vec(&JournalEntry::EndTransaction)?;
     if let Err(e) = self.persistence.append_journal_entry(project_id, action_bytes).await {
@@ -1139,7 +1139,7 @@ impl EditorWrapper {
 
   #[tracing::instrument(name = "EditorWrapper::has_unsaved_changes", level = "debug", skip(self), ret, err)]
   fn has_unsaved_changes_impl(&self, project_id: &str) -> Result<bool, Error> {
-    let project_id = uuid::Uuid::parse_str(project_id)?;
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     Ok(self.run(|editor| editor.has_unsaved_changes(&project_id))?)
   }
 }

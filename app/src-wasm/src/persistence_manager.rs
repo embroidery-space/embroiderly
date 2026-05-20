@@ -1,6 +1,7 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
 
+use embroiderly_pattern::EmbroiderlyProjectId;
 use embroiderly_web::{idb, opfs};
 use wasm_bindgen::prelude::*;
 
@@ -88,7 +89,7 @@ pub struct PersistenceManager {
   /// The in-memory project file handles store which is used to:
   /// 1. Avoid re-fetching from IndexedDB on every call.
   /// 2. Maintain the granted permissions (required for auto-save).
-  handles: RefCell<HashMap<uuid::Uuid, opfs::FileHandle>>,
+  handles: RefCell<HashMap<EmbroiderlyProjectId, opfs::FileHandle>>,
 }
 
 impl PersistenceManager {
@@ -118,7 +119,7 @@ impl PersistenceManager {
 
   /// Returns the stored entry for a single project, or `None` if not found.
   #[tracing::instrument(name = "PersistenceManager::get_project_entry", level = "debug", skip(self), err)]
-  pub async fn get_project_entry(&self, project_id: uuid::Uuid) -> Result<Option<ProjectEntry>, Error> {
+  pub async fn get_project_entry(&self, project_id: EmbroiderlyProjectId) -> Result<Option<ProjectEntry>, Error> {
     let key = JsValue::from_str(&project_id.to_string());
     let result = self
       .db
@@ -145,7 +146,7 @@ impl PersistenceManager {
   )]
   pub async fn save_project_entry(
     &self,
-    project_id: uuid::Uuid,
+    project_id: EmbroiderlyProjectId,
     data: Vec<u8>,
     handle: Option<opfs::FileHandle>,
   ) -> Result<(), Error> {
@@ -174,7 +175,7 @@ impl PersistenceManager {
 
   /// Returns the file handle associated with the given project ID, or `None` if not found.
   #[tracing::instrument(name = "PersistenceManager::get_handle", level = "debug", skip(self), err)]
-  pub async fn get_handle(&self, project_id: uuid::Uuid) -> Result<Option<opfs::FileHandle>, Error> {
+  pub async fn get_handle(&self, project_id: EmbroiderlyProjectId) -> Result<Option<opfs::FileHandle>, Error> {
     if let Some(handle) = self.handles.borrow().get(&project_id) {
       return Ok(Some(handle.clone()));
     }
@@ -214,7 +215,7 @@ impl PersistenceManager {
 
   /// Updates the stored file handle for an existing project entry, preserving the snapshot data.
   #[tracing::instrument(name = "PersistenceManager::update_handle", level = "debug", skip(self, handle), err)]
-  pub async fn update_handle(&self, project_id: uuid::Uuid, handle: opfs::FileHandle) -> Result<(), Error> {
+  pub async fn update_handle(&self, project_id: EmbroiderlyProjectId, handle: opfs::FileHandle) -> Result<(), Error> {
     self.handles.borrow_mut().insert(project_id, handle.clone());
 
     let project_id = project_id.to_string();
@@ -250,7 +251,7 @@ impl PersistenceManager {
 
   /// Deletes the project entry (handle + snapshot) for the given project ID.
   #[tracing::instrument(name = "PersistenceManager::remove_project_entry", level = "debug", skip(self), err)]
-  pub async fn remove_project_entry(&self, project_id: uuid::Uuid) -> Result<(), Error> {
+  pub async fn remove_project_entry(&self, project_id: EmbroiderlyProjectId) -> Result<(), Error> {
     self.handles.borrow_mut().remove(&project_id);
 
     let key = JsValue::from_str(&project_id.to_string());
@@ -275,7 +276,7 @@ impl PersistenceManager {
     skip(self, action),
     err
   )]
-  pub async fn append_journal_entry(&self, project_id: uuid::Uuid, action: Vec<u8>) -> Result<(), Error> {
+  pub async fn append_journal_entry(&self, project_id: EmbroiderlyProjectId, action: Vec<u8>) -> Result<(), Error> {
     let entry = JsValue::from(JournalEntry {
       project_id: project_id.to_string(),
       action,
@@ -295,7 +296,7 @@ impl PersistenceManager {
 
   /// Loads all journal actions for the given project ID in insertion order.
   #[tracing::instrument(name = "PersistenceManager::load_journal_entries", level = "debug", skip(self), err)]
-  pub async fn load_journal_entries(&self, project_id: uuid::Uuid) -> Result<Vec<Vec<u8>>, Error> {
+  pub async fn load_journal_entries(&self, project_id: EmbroiderlyProjectId) -> Result<Vec<Vec<u8>>, Error> {
     let project_id = JsValue::from_str(&project_id.to_string());
     let rows = self
       .db
@@ -318,7 +319,7 @@ impl PersistenceManager {
 
   /// Deletes all journal entries for the given project ID.
   #[tracing::instrument(name = "PersistenceManager::clear_journal", level = "debug", skip(self), err)]
-  pub async fn clear_journal(&self, project_id: uuid::Uuid) -> Result<(), Error> {
+  pub async fn clear_journal(&self, project_id: EmbroiderlyProjectId) -> Result<(), Error> {
     let project_id = JsValue::from_str(&project_id.to_string());
     self
       .db
