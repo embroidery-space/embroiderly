@@ -10,9 +10,9 @@ import type { BrandPaletteItem } from "~/lib/pattern/";
 import { LoggerService } from "~/services/";
 
 const props = defineProps<Pick<SelectProps, "color" | "variant" | "size">>();
-const emit = defineEmits<{
+const emits = defineEmits<{
   paletteSelected: [group: string, name: string];
-  paletteLoaded: [paletteItems: BrandPaletteItem[]];
+  paletteLoaded: [palette: BrandPaletteItem[]];
 }>();
 
 const { files } = useEditor();
@@ -41,7 +41,7 @@ async function loadPalettesList() {
 
 async function loadPalette(key: string) {
   const [group, name] = key.split("/") as [string, string];
-  emit("paletteSelected", group, name);
+  emits("paletteSelected", group, name);
 
   try {
     let palette = paletteCatalog.get(key);
@@ -53,7 +53,7 @@ async function loadPalette(key: string) {
       paletteCatalog.set(key, palette);
     }
 
-    emit("paletteLoaded", palette);
+    emits("paletteLoaded", palette);
   } catch (err) {
     LoggerService.error(`Failed to load palette ${key}: ${err}`);
     toast.add({ title: fluent.$t("palette-catalog-load-failure", { palette: key }), color: "error" });
@@ -67,9 +67,7 @@ defineExpose({
   loadPalette,
 });
 
-onMounted(async () => {
-  await loadPalettesList();
-});
+onMounted(() => loadPalettesList());
 </script>
 
 <template>

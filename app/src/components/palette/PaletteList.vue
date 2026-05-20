@@ -111,7 +111,6 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
     <Listbox
       v-model="value"
       v-model:filter-value="filterValue"
-      avoid-implicit-deselect
       :items="items"
       :multiple="multiple"
       :disabled="disabled"

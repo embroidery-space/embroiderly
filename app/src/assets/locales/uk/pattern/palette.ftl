@@ -17,6 +17,7 @@ palette-empty = Палітра порожня
 
 palette-edit = Редагувати палітру
 palette-save = Зберегти палітру
+palette-panels-menu = Меню палітри
 
 ## Palette toolbar.
 

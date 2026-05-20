@@ -87,10 +87,10 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
                 checked: columnsNumber === n,
                 onSelect: (event) => {
                   event.preventDefault();
-                  paletteDisplaySettings.value = {
+                  paletteDisplaySettings.value = new PaletteSettings({
                     ...paletteDisplaySettings.value,
                     columnsNumber: n,
-                  };
+                  });
                 },
               })),
             },
@@ -102,10 +102,10 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
               checked: colorOnly,
               onSelect: (event) => {
                 event.preventDefault();
-                paletteDisplaySettings.value = {
+                paletteDisplaySettings.value = new PaletteSettings({
                   ...paletteDisplaySettings.value,
                   colorOnly: !colorOnly,
-                };
+                });
               },
             },
           ],
@@ -117,10 +117,10 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
               disabled: colorOnly,
               onSelect: (event) => {
                 event.preventDefault();
-                paletteDisplaySettings.value = {
+                paletteDisplaySettings.value = new PaletteSettings({
                   ...paletteDisplaySettings.value,
                   showStitchSymbols: !showStitchSymbols,
-                };
+                });
               },
             },
             {
@@ -130,10 +130,10 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
               disabled: colorOnly,
               onSelect: (event) => {
                 event.preventDefault();
-                paletteDisplaySettings.value = {
+                paletteDisplaySettings.value = new PaletteSettings({
                   ...paletteDisplaySettings.value,
                   stitchSymbolsOnContrastBackground: !stitchSymbolsOnContrastBackground,
-                };
+                });
               },
             },
           ],
@@ -145,10 +145,10 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
               disabled: colorOnly,
               onSelect: (event) => {
                 event.preventDefault();
-                paletteDisplaySettings.value = {
+                paletteDisplaySettings.value = new PaletteSettings({
                   ...paletteDisplaySettings.value,
                   showColorBrands: !showColorBrands,
-                };
+                });
               },
             },
             {
@@ -158,10 +158,10 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
               disabled: colorOnly,
               onSelect: (event) => {
                 event.preventDefault();
-                paletteDisplaySettings.value = {
+                paletteDisplaySettings.value = new PaletteSettings({
                   ...paletteDisplaySettings.value,
                   showColorNumbers: !showColorNumbers,
-                };
+                });
               },
             },
             {
@@ -171,10 +171,10 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
               disabled: colorOnly,
               onSelect: (event) => {
                 event.preventDefault();
-                paletteDisplaySettings.value = {
+                paletteDisplaySettings.value = new PaletteSettings({
                   ...paletteDisplaySettings.value,
                   showColorNames: !showColorNames,
-                };
+                });
               },
             },
           ],
@@ -397,7 +397,7 @@ async function updatePaletteDisplaySettings() {
               @click="editorStateStore.paletteMode = PaletteMode.Regular"
             />
             <DropdownMenu :items="palettePanelsMenuOptions">
-              <Button :icon="IconMenu" />
+              <Button :icon="IconMenu" :aria-label="$t('palette-panels-menu')" />
             </DropdownMenu>
           </div>
           <div
