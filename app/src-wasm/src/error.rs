@@ -19,6 +19,10 @@ pub enum ErrorKind {
   // Palette errors.
   UnknownPaletteGroup(String),
   UnsupportedPaletteType(String),
+  PaletteNotFound(String),
+
+  // Font errors.
+  SymbolFontNotFound(String),
 
   // Layer errors.
   CannotRemoveLastLayer,
@@ -40,6 +44,9 @@ impl ErrorKind {
 
       Self::UnknownPaletteGroup(group) => format!("Unknown palette group: {group}."),
       Self::UnsupportedPaletteType(extension) => format!("Unsupported palette type: {extension}."),
+      Self::PaletteNotFound(name) => format!("Palette not found: {name}."),
+
+      Self::SymbolFontNotFound(name) => format!("Symbol font not found: {name}."),
 
       Self::CannotRemoveLastLayer => String::from("Cannot remove the last layer."),
 

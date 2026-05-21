@@ -20,6 +20,10 @@ export function toApplicationError(error: unknown): Error {
         return new UnsavedChangesError(message);
       case "NoFileHandle":
         return new NoFileHandleError(message);
+      case "PaletteNotFound":
+        return new PaletteNotFoundError(message);
+      case "SymbolFontNotFound":
+        return new SymbolFontNotFoundError(message);
       default:
         return new UnknownError(message);
     }
@@ -60,6 +64,20 @@ export class NoFileHandleError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "NoFileHandleError";
+  }
+}
+
+export class PaletteNotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PaletteNotFoundError";
+  }
+}
+
+export class SymbolFontNotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "SymbolFontNotFoundError";
   }
 }
 

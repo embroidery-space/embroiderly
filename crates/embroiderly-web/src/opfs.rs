@@ -6,10 +6,6 @@ use js_sys::futures::stream::JsStream;
 use crate::Error;
 use crate::error::js_to_anyhow;
 
-fn opfs_err(e: wasm_bindgen::JsValue) -> Error {
-  Error::Opfs(js_to_anyhow(e))
-}
-
 /// A handle to a file in the OPFS.
 #[derive(Debug, Clone)]
 pub struct FileHandle(web_sys::FileSystemFileHandle);
@@ -95,6 +91,22 @@ impl DirectoryHandle {
     Ok(fs_file_handle.into())
   }
 
+  /// Like `get_file_handle` but returns `Ok(None)` when the file does not exist.
+  pub async fn try_get_file_handle(
+    &self,
+    name: &str,
+    options: GetFileHandleOptions,
+  ) -> Result<Option<FileHandle>, Error> {
+    let fs_options = web_sys::FileSystemGetFileOptions::new();
+    fs_options.set_create(options.create);
+
+    match JsFuture::from(self.0.get_file_handle_with_options(name, &fs_options)).await {
+      Ok(handle) => Ok(Some(web_sys::FileSystemFileHandle::from(handle).into())),
+      Err(err) if is_not_found(&err) => Ok(None),
+      Err(err) => Err(opfs_err(err)),
+    }
+  }
+
   /// Returns a handle to a directory in this directory.
   pub async fn get_directory_handle(&self, name: &str, options: GetDirectoryHandleOptions) -> Result<Self, Error> {
     let fs_options = web_sys::FileSystemGetDirectoryOptions::new();
@@ -144,4 +156,15 @@ pub async fn get_root_dir() -> Result<DirectoryHandle, Error> {
   );
 
   Ok(DirectoryHandle(root_directory_handle))
+}
+
+fn opfs_err(e: wasm_bindgen::JsValue) -> Error {
+  Error::Opfs(js_to_anyhow(e))
+}
+
+fn is_not_found(err: &wasm_bindgen::JsValue) -> bool {
+  js_sys::Reflect::get(err, &wasm_bindgen::JsValue::from_str("name"))
+    .ok()
+    .and_then(|v| v.as_string())
+    .is_some_and(|name| name == "NotFoundError")
 }
