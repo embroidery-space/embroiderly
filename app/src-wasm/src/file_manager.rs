@@ -169,9 +169,9 @@ impl FileManager {
       "custom" => {
         let file_handle = self
           .palettes_dir
-          .get_file_handle(&format!("{name}.embpal"), Default::default())
-          .await?;
-        tracing::debug!("{file_handle:?}");
+          .try_get_file_handle(&format!("{name}.embpal"), Default::default())
+          .await?
+          .ok_or_else(|| Error::new(ErrorKind::PaletteNotFound(name.clone())))?;
         file_handle.read().await?
       }
       _ => {
@@ -220,17 +220,17 @@ impl FileManager {
     }
 
     for ext in ["ttf", "otf"] {
-      if let Ok(file_handle) = self
+      if let Some(file_handle) = self
         .fonts_dir
-        .get_file_handle(&format!("{name}.{ext}"), Default::default())
-        .await
+        .try_get_file_handle(&format!("{name}.{ext}"), Default::default())
+        .await?
         && let Ok(bytes) = file_handle.read().await
       {
         return Ok(bytes);
       }
     }
 
-    Err(Error::new(ErrorKind::PatternNotFound))
+    Err(Error::new(ErrorKind::SymbolFontNotFound(name.to_owned())))
   }
 
   #[tracing::instrument(name = "FileManager::load_font_code_points", level = "debug", skip(self), err)]
@@ -317,16 +317,21 @@ async fn process_and_save_palette(file_name: &str, data: &[u8], dir: &opfs::Dire
     .and_then(|s| s.to_str())
     .ok_or_else(|| anyhow::anyhow!("Invalid palette file name"))?
     .to_owned();
+  let palette_file_name = format!("{palette_name}.embpal");
 
   let palette: Vec<BrandPaletteItem> = embroiderly_parsers::parse_palette(data, file_name)?;
   let data = serde_json::to_vec(&palette)?;
 
-  // TODO: Replace `create: true` with checking that the file exists (prevent overwrites).
+  if dir
+    .try_get_file_handle(&palette_file_name, Default::default())
+    .await?
+    .is_some()
+  {
+    return Err(anyhow::anyhow!("Palette '{palette_name}' already exists").into());
+  }
+
   let file_handle = dir
-    .get_file_handle(
-      &format!("{palette_name}.embpal"),
-      opfs::GetFileHandleOptions { create: true },
-    )
+    .get_file_handle(&palette_file_name, opfs::GetFileHandleOptions { create: true })
     .await?;
   file_handle.write(&data).await?;
   Ok(())
@@ -361,13 +366,17 @@ async fn process_and_save_font(file_name: &str, data: &[u8], dir: &opfs::Directo
     .extension()
     .and_then(|s| s.to_str())
     .ok_or_else(|| anyhow::anyhow!("Invalid font file extension"))?;
+  let font_file_name = format!("{font_family}.{extension}");
 
-  // TODO: Replace `create: true` with checking that the file exists (prevent overwrites).
+  if dir
+    .try_get_file_handle(&font_file_name, Default::default())
+    .await?
+    .is_some()
+  {
+    return Err(anyhow::anyhow!("Font '{font_family}' already exists").into());
+  }
   let file_handle = dir
-    .get_file_handle(
-      &format!("{font_family}.{extension}"),
-      opfs::GetFileHandleOptions { create: true },
-    )
+    .get_file_handle(&font_file_name, opfs::GetFileHandleOptions { create: true })
     .await?;
   file_handle.write(data).await?;
   Ok(())
