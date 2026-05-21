@@ -51,8 +51,13 @@ useCloseGuard();
 watch(
   () => patternFileStore.currentPatternId,
   async (patternId) => {
-    patternStore.setPattern(patternId ? await patternFileStore.loadPattern(patternId) : undefined);
+    const pattern = patternId ? await patternFileStore.loadPattern(patternId) : undefined;
+    patternStore.setPattern(pattern);
+
     editorStateStore.$reset();
+
+    document.title = pattern ? `${pattern.info.title} | Embroiderly` : "Embroiderly";
+    if (__TAURI__) await getCurrentWebviewWindow().setTitle(document.title);
   },
   { immediate: true },
 );
