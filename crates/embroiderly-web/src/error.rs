@@ -21,6 +21,13 @@ impl From<indexed_db::Error<anyhow::Error>> for Error {
   }
 }
 
+#[cfg(feature = "net")]
+impl From<gloo_net::Error> for Error {
+  fn from(err: gloo_net::Error) -> Self {
+    Self::Net(anyhow::anyhow!("{err}"))
+  }
+}
+
 #[cfg(feature = "__js")]
 impl From<Error> for wasm_bindgen::JsValue {
   fn from(err: Error) -> Self {

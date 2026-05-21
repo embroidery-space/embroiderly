@@ -24,8 +24,8 @@ opfs = [
   "web-sys/Window",
   "js-sys/futures-core-03-stream",
 ]
-net = ["__js", "web-sys/Headers", "web-sys/Request", "web-sys/RequestInit", "web-sys/Response", "web-sys/Window"]
 idb = ["dep:indexed-db"]
+net = ["__js", "dep:gloo-net"]
 timers = ["dep:gloo-timers"]
 __js = ["dep:web-sys", "dep:js-sys", "dep:wasm-bindgen", "dep:wasm-bindgen-futures"]
 
@@ -42,5 +42,6 @@ wasm-bindgen = { workspace = true, optional = true }
 wasm-bindgen-futures = { workspace = true, optional = true }
 js-sys = { workspace = true, optional = true }
 web-sys = { workspace = true, optional = true }
+gloo-net = { workspace = true, optional = true, features = ["http"] }
 gloo-timers = { workspace = true, optional = true }
 indexed-db = { workspace = true, optional = true }
