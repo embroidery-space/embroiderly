@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Separator, ToolSelect, useRemToPx } from "@embroiderly/ui";
+import { ScrollArea, Separator, ToolSelect, useRemToPx } from "@embroiderly/ui";
 import type { ToolSelectItem, ToolSelectProps } from "@embroiderly/ui";
 
 import { computed } from "vue";
@@ -240,7 +240,7 @@ useShortcuts({
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 p-1">
+  <ScrollArea class="h-full" orientation="vertical" size="sm" type="hover" :ui="{ viewport: 'flex flex-col gap-1' }">
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="fullstitches" />
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="petitestitches" />
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="halfstitches" />
@@ -262,5 +262,5 @@ useShortcuts({
       :items="cursor"
       :selection-color="undefined"
     />
-  </div>
+  </ScrollArea>
 </template>
