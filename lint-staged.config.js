@@ -9,5 +9,9 @@ export default {
     // Therefore, run them on the entire codebase.
     return ["cargo clippy --locked --fix --allow-dirty -- -D warnings", "cargo +nightly fmt"];
   },
-  "!(*.md|*.rs)": ["oxlint --fix --format stylish --deny-warnings", "eslint --fix --max-warnings 0", "oxfmt"],
+  "!(*.md|*.rs)": [
+    "oxlint --fix --format stylish --deny-warnings",
+    "eslint --fix --no-warn-ignored --max-warnings 0",
+    "oxfmt",
+  ],
 };
