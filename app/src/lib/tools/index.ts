@@ -13,6 +13,7 @@ import type { Stitch } from "~/lib/pattern/";
 import type { ToolEventDetail } from "~/lib/pixi/";
 
 import { CursorTool } from "./cursor.tool.ts";
+import { EraserTool } from "./eraser.tool.ts";
 import { StitchTool, StitchCorner } from "./stitch.tool.ts";
 
 export const tools = Object.freeze({
@@ -40,6 +41,7 @@ export const tools = Object.freeze({
   Bead: new StitchTool(NodeStitchKind.Bead),
   FrenchKnot: new StitchTool(NodeStitchKind.FrenchKnot),
 
+  Eraser: new EraserTool(),
   Cursor: new CursorTool(),
 });
 
@@ -114,4 +116,4 @@ export interface PatternEditorToolContext extends ToolEventDetail {
   };
 }
 
-export { StitchTool, CursorTool };
+export { StitchTool, EraserTool, CursorTool };

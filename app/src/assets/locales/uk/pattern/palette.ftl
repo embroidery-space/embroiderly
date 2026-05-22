@@ -21,6 +21,7 @@ palette-panels-menu = Меню палітри
 
 ## Palette toolbar.
 
+palette-toolbar-eraser = Ластик
 palette-toolbar-cursor = Курсор
 
 ## Palette display options.

@@ -6,6 +6,7 @@ import { computed } from "vue";
 
 import {
   IconCursor,
+  IconEraser,
   IconStitchBack,
   IconStitchBead,
   IconStitchFrenchKnot,
@@ -189,6 +190,15 @@ const nodestitches = computed<ToolSelectItem[]>(() => [
   },
 ]);
 
+const eraser = computed<ToolSelectItem[]>(() => [
+  {
+    value: tools.Eraser,
+    label: fluent.$t("palette-toolbar-eraser"),
+    icon: IconEraser,
+    shortcut: "E",
+  },
+]);
+
 const cursor = computed<ToolSelectItem[]>(() => [
   {
     value: tools.Cursor,
@@ -208,6 +218,7 @@ useShortcuts(
       ...quarterstitches.value,
       ...linestitches.value,
       ...nodestitches.value,
+      ...eraser.value,
       ...cursor.value,
     ].map((item) => ({
       shortcut: item.shortcut,
@@ -239,6 +250,12 @@ useShortcuts({
 
     <Separator decorative />
 
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      v-bind="toolSelectProps"
+      :items="eraser"
+      :selection-color="undefined"
+    />
     <ToolSelect
       v-model="editorStateStore.selectedTool"
       v-bind="toolSelectProps"

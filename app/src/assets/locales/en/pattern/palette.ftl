@@ -20,6 +20,7 @@ palette-panels-menu = Palette menu
 
 ## Palette toolbar.
 
+palette-toolbar-eraser = Eraser
 palette-toolbar-cursor = Cursor
 
 ## Palette display options.
