@@ -228,15 +228,6 @@ useShortcuts(
     })),
   ),
 );
-
-// Define shorter key sequences for enabling top-left and bottom-left positional stitch tools if the user hasn't typed the full shortcut.
-useShortcuts({
-  "P-T": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
-  "P-B": () => (editorStateStore.selectedTool = tools.PetiteStitchBL),
-
-  "Q-T": () => (editorStateStore.selectedTool = tools.QuarterStitchTL),
-  "Q-B": () => (editorStateStore.selectedTool = tools.QuarterStitchBL),
-});
 </script>
 
 <template>
