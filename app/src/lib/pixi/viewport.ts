@@ -64,6 +64,26 @@ interface TouchState {
  * The main viewport for the pattern editor.
  *
  * It is responsible for handling user input and managing the view of the pattern.
+ *
+ * ## Interaction Mmodel
+ *
+ * ### Mouse
+ *
+ * - Left drag -> main action (e.g., draw).
+ * - Alt + left drag -> anti-action (e.g., erase).
+ * - Right drag -> pan.
+ * - Ctrl + right click -> anti-action.
+ * - Wheel -> zoom (or scroll, depending on the `wheelAction`); `Alt` key swaps the two.
+ *
+ * ### Touch
+ *
+ * - One finger tap -> main action + release (single stitch).
+ * - One finger drag -> main action (draw in a row).
+ * - One finger long-press (≥ 500 ms without movement) -> prevented (no stitch placed).
+ * - Two fingers -> pan + pinch-zoom; any in-progress single-finger draw is canceled first.
+ *
+ * Touch always uses the main action.
+ * The anti-action (e.g., erase) is not reachable via touch because there is no keyboard on mobile---users must switch to the eraser tool through the UI.
  */
 export class PatternViewport extends Container {
   private domElement!: HTMLElement;
@@ -371,8 +391,7 @@ export class PatternViewport extends Container {
           this.touch.drawPending = false;
         }
 
-        if (MODIFIERS.mod3(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
-        else this.emitToolEvent(ToolEvent.ToolMainAction, e);
+        this.emitToolEvent(ToolEvent.ToolMainAction, e);
 
         break;
       }
@@ -410,10 +429,7 @@ export class PatternViewport extends Container {
       // Skip when cancelled before any draw event was emitted (no transaction to close).
       if (e.type !== "pointercancel" || !this.touch.drawPending) {
         // Quick tap without movement: place a single stitch.
-        if (this.touch.drawPending) {
-          if (MODIFIERS.mod3(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
-          else this.emitToolEvent(ToolEvent.ToolMainAction, e);
-        }
+        if (this.touch.drawPending) this.emitToolEvent(ToolEvent.ToolMainAction, e);
         this.emitToolEvent(ToolEvent.ToolRelease, e);
       }
 
