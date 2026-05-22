@@ -133,6 +133,9 @@ function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorT
           await patternStore.removeStitch(editorStateStore.selectedLayerIndex, stitch);
         }
       },
+      async removeStitchAt(x, y) {
+        await patternStore.removeStitchAt(editorStateStore.selectedLayerIndex, x, y);
+      },
 
       async updateReferenceImageSettings(settings) {
         await patternStore.updateReferenceImageSettings(settings);

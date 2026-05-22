@@ -74,10 +74,16 @@ export interface PatternEditorToolContext extends ToolEventDetail {
      */
     addStitch(stitch: Stitch): Promise<void>;
     /**
-     * Removes a stitch from the pattern.
+     * Removes a known stitch from the pattern.
      * @param stitch The stitch to remove.
      */
     removeStitch(stitch: Stitch): Promise<void>;
+    /**
+     * Removes all stitches (Full, Petite, Half, Quarter) at the given raw pattern coordinates.
+     * @param x Raw x coordinate within pattern bounds.
+     * @param y Raw y coordinate within pattern bounds.
+     */
+    removeStitchAt(x: number, y: number): Promise<void>;
 
     updateReferenceImageSettings(settings: ReferenceImageSettings): Promise<void>;
 

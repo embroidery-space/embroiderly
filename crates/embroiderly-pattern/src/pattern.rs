@@ -1,3 +1,5 @@
+use ordered_float::NotNan;
+
 use super::layers::*;
 use super::palette::*;
 use super::stitches::*;
@@ -98,6 +100,58 @@ impl Pattern {
   /// Removes and returns a stitch from the specified layer.
   pub fn remove_stitch(&mut self, layer_index: u32, stitch: Stitch) -> Option<Stitch> {
     self.layers[layer_index].remove_stitch(stitch)
+  }
+
+  /// Removes all stitches (Full, Petite, Half, Quarter) that occupy the given point and returns them.
+  pub fn remove_stitches_at_point(&mut self, layer_index: u32, x: f32, y: f32) -> Vec<Stitch> {
+    let (int_x, int_y) = (x.trunc(), y.trunc());
+    let (frac_x, frac_y) = (x - int_x, y - int_y);
+    let (snap_x, snap_y) = (
+      if frac_x > 0.5 { int_x + 0.5 } else { int_x },
+      if frac_y > 0.5 { int_y + 0.5 } else { int_y },
+    );
+    let direction = if (frac_x < 0.5 && frac_y > 0.5) || (frac_x > 0.5 && frac_y < 0.5) {
+      PartStitchDirection::Forward
+    } else {
+      PartStitchDirection::Backward
+    };
+
+    let (int_x, int_y) = (NotNan::new(int_x).unwrap(), NotNan::new(int_y).unwrap());
+    let (snap_x, snap_y) = (NotNan::new(snap_x).unwrap(), NotNan::new(snap_y).unwrap());
+
+    let candidates: [Stitch; 4] = [
+      Stitch::Full(FullStitch {
+        x: int_x,
+        y: int_y,
+        palindex: 0,
+        kind: FullStitchKind::Full,
+      }),
+      Stitch::Full(FullStitch {
+        x: snap_x,
+        y: snap_y,
+        palindex: 0,
+        kind: FullStitchKind::Petite,
+      }),
+      Stitch::Part(PartStitch {
+        x: int_x,
+        y: int_y,
+        palindex: 0,
+        kind: PartStitchKind::Half,
+        direction,
+      }),
+      Stitch::Part(PartStitch {
+        x: snap_x,
+        y: snap_y,
+        palindex: 0,
+        kind: PartStitchKind::Quarter,
+        direction,
+      }),
+    ];
+
+    candidates
+      .into_iter()
+      .filter_map(|s| self.layers[layer_index].remove_stitch(s))
+      .collect()
   }
 
   /// Removes and returns all stitches with a given palette index from all layers.

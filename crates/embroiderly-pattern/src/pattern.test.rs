@@ -49,6 +49,16 @@ fn french_knot(x: f32, y: f32, palindex: u32) -> Stitch {
   })
 }
 
+fn quarter_stitch(x: f32, y: f32, palindex: u32, direction: PartStitchDirection) -> Stitch {
+  Stitch::Part(PartStitch {
+    x: NotNan::new(x).unwrap(),
+    y: NotNan::new(y).unwrap(),
+    palindex,
+    direction,
+    kind: PartStitchKind::Quarter,
+  })
+}
+
 fn special_stitch(x: f32, y: f32, palindex: u32, modindex: u32) -> SpecialStitch {
   SpecialStitch {
     x: NotNan::new(x).unwrap(),
@@ -114,6 +124,76 @@ fn removes_stitch_from_specified_layer() {
   let removed = pattern.remove_stitch(0, full_stitch(0.0, 0.0, 0));
 
   assert!(removed.is_some());
+  assert!(pattern.layers[0].fullstitches.is_empty());
+}
+
+#[test]
+fn removes_full_stitch_at_point() {
+  let mut pattern = Pattern::default();
+  pattern.add_stitch(0, full_stitch(2.0, 3.0, 5));
+
+  let removed = pattern.remove_stitches_at_point(0, 2.2, 3.2);
+
+  assert_eq!(removed.len(), 1);
+  assert_eq!(removed[0], full_stitch(2.0, 3.0, 5));
+  assert!(pattern.layers[0].fullstitches.is_empty());
+}
+
+#[test]
+fn removes_petite_stitch_at_point() {
+  let mut pattern = Pattern::default();
+  pattern.add_stitch(0, petite_stitch(2.5, 3.0, 7));
+
+  let removed = pattern.remove_stitches_at_point(0, 2.7, 3.2);
+
+  assert_eq!(removed.len(), 1);
+  assert_eq!(removed[0], petite_stitch(2.5, 3.0, 7));
+  assert!(pattern.layers[0].fullstitches.is_empty());
+}
+
+#[test]
+fn removes_backward_half_stitch_at_point() {
+  let mut pattern = Pattern::default();
+  pattern.add_stitch(0, half_stitch(1.0, 1.0, 2, PartStitchDirection::Backward));
+
+  let removed = pattern.remove_stitches_at_point(0, 1.2, 1.3);
+
+  assert_eq!(removed.len(), 1);
+  assert_eq!(removed[0], half_stitch(1.0, 1.0, 2, PartStitchDirection::Backward));
+  assert!(pattern.layers[0].partstitches.is_empty());
+}
+
+#[test]
+fn removes_forward_half_stitch_at_point() {
+  let mut pattern = Pattern::default();
+  pattern.add_stitch(0, half_stitch(1.0, 1.0, 2, PartStitchDirection::Forward));
+
+  let removed = pattern.remove_stitches_at_point(0, 1.2, 1.7);
+
+  assert_eq!(removed.len(), 1);
+  assert_eq!(removed[0], half_stitch(1.0, 1.0, 2, PartStitchDirection::Forward));
+  assert!(pattern.layers[0].partstitches.is_empty());
+}
+
+#[test]
+fn removes_quarter_stitch_at_point() {
+  let mut pattern = Pattern::default();
+  pattern.add_stitch(0, quarter_stitch(0.5, 0.5, 4, PartStitchDirection::Backward));
+
+  let removed = pattern.remove_stitches_at_point(0, 0.7, 0.8);
+
+  assert_eq!(removed.len(), 1);
+  assert_eq!(removed[0], quarter_stitch(0.5, 0.5, 4, PartStitchDirection::Backward));
+  assert!(pattern.layers[0].partstitches.is_empty());
+}
+
+#[test]
+fn removes_no_stitches_at_empty_point() {
+  let mut pattern = Pattern::default();
+
+  let removed = pattern.remove_stitches_at_point(0, 0.3, 0.3);
+
+  assert!(removed.is_empty());
   assert!(pattern.layers[0].fullstitches.is_empty());
 }
 
