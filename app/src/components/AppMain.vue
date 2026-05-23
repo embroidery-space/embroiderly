@@ -11,7 +11,7 @@ import { usePercentOfContainer } from "~/composables/utils/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
 
 import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
-import { EditorWorkspaceTabs, EditorWorkspaceToolbar, EditorWorkspaceFooter } from "./workspace/layout/";
+import { EditorWorkspaceToolbar, EditorWorkspaceFooter } from "./workspace/layout/";
 
 const toast = useToast();
 const { fluent } = useI18n();
@@ -97,9 +97,7 @@ onMounted(async () => {
         :default-size="editorStateStore.palettePanelSize ?? palettePanelDefaultSize"
       />
 
-      <SplitterPanel class="grid min-h-0 min-w-0 grid-cols-[auto_minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)_auto]">
-        <EditorWorkspaceTabs :disabled="patternStore.pattern.isNil" class="col-span-2 border-b border-default" />
-
+      <SplitterPanel class="grid min-h-0 min-w-0 grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto]">
         <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" class="border-r border-default p-1" />
 
         <BlockUI ref="drop-zone" :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone">

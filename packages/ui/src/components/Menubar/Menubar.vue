@@ -133,7 +133,7 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
     :dir="dir"
     :loop="loop"
     data-slot="root"
-    :class="ui.root({ class: props.ui?.root })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
     <slot :model-value="currentMenu">
       <Menubar.Menu v-for="(menu, index) in menus?.filter((menu) => !menu.hidden)" :key="index">
@@ -156,7 +156,7 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
             :size="size"
             :portal="portal"
             data-slot="content"
-            :class="ui.content({ class: [props.ui?.content, props.class] })"
+            :class="ui.content({ class: props.ui?.content })"
             :ui="ui"
           />
         </Menubar.Portal>

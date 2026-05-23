@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { ButtonIcon } from "@embroiderly/ui";
+
+import { IconPanelLeftClose, IconPanelLeftOpen, IconPanelRightClose, IconPanelRightOpen } from "~/assets/icons/";
 import { CanvasZoomControls } from "~/components/canvas/";
 import { MIN_SCALE, MAX_SCALE } from "~/lib/pixi/";
 import { useEditorStateStore } from "~/stores/";
@@ -11,13 +14,31 @@ const editorStateStore = useEditorStateStore();
 </script>
 
 <template>
-  <div class="flex items-center justify-between border-t border-default px-2 py-1">
+  <div class="flex items-center gap-2 border-t border-default px-2 py-1">
+    <ButtonIcon
+      color="neutral"
+      variant="ghost"
+      :icon="editorStateStore.palettePanelCollapsed ? IconPanelLeftOpen : IconPanelLeftClose"
+      :tooltip="editorStateStore.palettePanelCollapsed ? $t('palette-panel-expand') : $t('palette-panel-collapse')"
+      :disabled="disabled"
+      @click="editorStateStore.palettePanelCollapsed = !editorStateStore.palettePanelCollapsed"
+    />
+
     <CanvasZoomControls
       v-model="editorStateStore.canvasZoom"
       :min="MIN_SCALE"
       :max="MAX_SCALE"
       :disabled="disabled"
       class="ml-auto w-full max-w-3xs"
+    />
+
+    <ButtonIcon
+      color="neutral"
+      variant="ghost"
+      :icon="editorStateStore.canvasPanelCollapsed ? IconPanelRightOpen : IconPanelRightClose"
+      :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-panel-expand') : $t('canvas-panel-collapse')"
+      :disabled="disabled"
+      @click="editorStateStore.canvasPanelCollapsed = !editorStateStore.canvasPanelCollapsed"
     />
   </div>
 </template>

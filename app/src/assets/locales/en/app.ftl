@@ -28,6 +28,8 @@ app-menu-help-about = About
 app-menu-help-guide = Guide
 app-menu-help-license = License
 
+app-menu-open = Open application menu
+
 app-fullscreen-enter = Enter fullscreen
 app-fullscreen-exit = Exit fullscreen
 

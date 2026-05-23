@@ -28,6 +28,8 @@ app-menu-help-about = Про застосунок
 app-menu-help-guide = Посібник
 app-menu-help-license = Ліцензія
 
+app-menu-open = Відкрити меню застосунку
+
 app-fullscreen-enter = Повноекранний режим
 app-fullscreen-exit = Вийти з повноекранного режиму
 

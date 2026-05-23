@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ButtonIcon, DropdownMenu, Menubar, Separator, useConfirm } from "@embroiderly/ui";
+import { Button, ButtonIcon, DropdownMenu, Menubar, Separator, Tabs, useConfirm } from "@embroiderly/ui";
 import type { DropdownMenuItem, MenubarItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
@@ -7,7 +7,16 @@ import { openPath } from "@tauri-apps/plugin-opener";
 
 import { computed, ref } from "vue";
 
-import { IconFullscreen, IconFullscreenExit, IconRedo, IconSettings, IconUndo } from "~/assets/icons/";
+import {
+  IconClose,
+  IconDot,
+  IconFullscreen,
+  IconFullscreenExit,
+  IconMenu,
+  IconRedo,
+  IconSettings,
+  IconUndo,
+} from "~/assets/icons/";
 import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
@@ -30,109 +39,106 @@ const settingsStore = useSettingsStore();
 // We must declare it in the setup function, since template doesn't have access to global variables.
 const isTauri = __TAURI__;
 
-const menus = computed<MenubarMenu[]>(() => {
-  const fileMenu: MenubarMenu = {
-    label: fluent.$t("app-menu-file"),
-    items: [
-      [
-        {
-          label: fluent.$t("app-menu-file-create"),
-          shortcut: "Control+N",
-          onSelect() {
-            modals.patternCreationModal.open({
-              fabric: new Fabric(),
-              async onSave(fabric) {
-                patternFileStore.switchPattern(await patternFileStore.createPattern(fabric));
-              },
-            });
-          },
+const appMenu = computed(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const fileItems: any[][] = [
+    [
+      {
+        label: fluent.$t("app-menu-file-create"),
+        shortcut: "Control+N",
+        onSelect() {
+          modals.patternCreationModal.open({
+            fabric: new Fabric(),
+            async onSave(fabric) {
+              patternFileStore.switchPattern(await patternFileStore.createPattern(fabric));
+            },
+          });
         },
-        {
-          label: fluent.$t("app-menu-file-open"),
-          shortcut: "Control+O",
-          async onSelect() {
-            const patternId = await patternFileStore.openPattern();
-            if (patternId) patternFileStore.switchPattern(patternId);
-          },
+      },
+      {
+        label: fluent.$t("app-menu-file-open"),
+        shortcut: "Control+O",
+        async onSelect() {
+          const patternId = await patternFileStore.openPattern();
+          if (patternId) patternFileStore.switchPattern(patternId);
         },
-      ],
-      [
-        {
-          label: fluent.$t("app-menu-file-save"),
-          shortcut: "Control+S",
-          disabled: patternStore.pattern.isNil,
-          onSelect: () => patternFileStore.savePattern(patternStore.pattern.id),
-        },
-        {
-          label: fluent.$t("app-menu-file-save-as"),
-          shortcut: "Control+Shift+S",
-          disabled: patternStore.pattern.isNil,
-          onSelect: () => patternFileStore.savePattern(patternStore.pattern.id, true),
-        },
-      ],
-      [
-        {
-          label: fluent.$t("app-menu-file-import"),
-          children: [
-            [
-              {
-                label: fluent.$t("app-menu-file-import-image"),
-                async onSelect() {
-                  const handle = await filePicker.open({
-                    types: filePicker.filters.image,
-                    id: filePicker.ids.image,
-                  });
-                  if (!handle) return;
-
-                  const patternBytes = await modals.imageImportModal.open({ imageFile: await handle.getFile() }).result;
-                  if (patternBytes) {
-                    const patternId = await patternFileStore.addPattern(patternBytes);
-                    patternFileStore.switchPattern(patternId);
-                  }
-                },
-              },
-            ],
-          ],
-        },
-        {
-          label: fluent.$t("app-menu-file-export"),
-          disabled: patternStore.pattern.isNil,
-          children: [
-            [
-              {
-                label: "OXS",
-                async onSelect() {
-                  await patternFileStore.exportPatternAsOxs(patternStore.pattern.id);
-                },
-              },
-              {
-                label: "PDF",
-                onSelect() {
-                  modals.pdfExportModal.open({
-                    options: patternStore.pattern.pdfExportOptions,
-                    onOptionsUpdate: patternStore.updatePdfExportOptions,
-                    onDocumentExport: (variant) =>
-                      patternFileStore.exportPatternAsPdf(patternStore.pattern.id, variant),
-                  });
-                },
-              },
-            ],
-          ],
-        },
-      ],
-      [
-        {
-          label: fluent.$t("app-menu-file-close"),
-          shortcut: "Control+W",
-          disabled: patternStore.pattern.isNil,
-          onSelect: () => patternFileStore.closePattern(patternStore.pattern.id),
-        },
-      ],
+      },
     ],
-  };
+    [
+      {
+        label: fluent.$t("app-menu-file-save"),
+        shortcut: "Control+S",
+        disabled: patternStore.pattern.isNil,
+        onSelect: () => patternFileStore.savePattern(patternStore.pattern.id),
+      },
+      {
+        label: fluent.$t("app-menu-file-save-as"),
+        shortcut: "Control+Shift+S",
+        disabled: patternStore.pattern.isNil,
+        onSelect: () => patternFileStore.savePattern(patternStore.pattern.id, true),
+      },
+    ],
+    [
+      {
+        label: fluent.$t("app-menu-file-import"),
+        children: [
+          [
+            {
+              label: fluent.$t("app-menu-file-import-image"),
+              async onSelect() {
+                const handle = await filePicker.open({
+                  types: filePicker.filters.image,
+                  id: filePicker.ids.image,
+                });
+                if (!handle) return;
+
+                const patternBytes = await modals.imageImportModal.open({ imageFile: await handle.getFile() }).result;
+                if (patternBytes) {
+                  const patternId = await patternFileStore.addPattern(patternBytes);
+                  patternFileStore.switchPattern(patternId);
+                }
+              },
+            },
+          ],
+        ],
+      },
+      {
+        label: fluent.$t("app-menu-file-export"),
+        disabled: patternStore.pattern.isNil,
+        children: [
+          [
+            {
+              label: "OXS",
+              async onSelect() {
+                await patternFileStore.exportPatternAsOxs(patternStore.pattern.id);
+              },
+            },
+            {
+              label: "PDF",
+              onSelect() {
+                modals.pdfExportModal.open({
+                  options: patternStore.pattern.pdfExportOptions,
+                  onOptionsUpdate: patternStore.updatePdfExportOptions,
+                  onDocumentExport: (variant) => patternFileStore.exportPatternAsPdf(patternStore.pattern.id, variant),
+                });
+              },
+            },
+          ],
+        ],
+      },
+    ],
+    [
+      {
+        label: fluent.$t("app-menu-file-close"),
+        shortcut: "Control+W",
+        disabled: patternStore.pattern.isNil,
+        onSelect: () => patternFileStore.closePattern(patternStore.pattern.id),
+      },
+    ],
+  ];
 
   if (settingsStore.other.showOpenDemoPatternOption) {
-    (fileMenu.items as MenubarItem[][])[0]!.push({
+    fileItems[0]!.push({
       label: fluent.$t("app-menu-file-open-demo"),
       children: [
         [
@@ -170,7 +176,7 @@ const menus = computed<MenubarMenu[]>(() => {
   }
 
   if (__TAURI__) {
-    fileMenu.items.push([
+    fileItems.push([
       {
         label: fluent.$t("app-menu-file-quit"),
         shortcut: "Control+Q",
@@ -179,93 +185,99 @@ const menus = computed<MenubarMenu[]>(() => {
     ]);
   }
 
-  const patternMenu: MenubarMenu = {
-    label: fluent.$t("app-menu-pattern"),
-    hidden: patternStore.pattern.isNil,
-    items: [
-      [
-        {
-          label: fluent.$t("pattern-info"),
-          onSelect() {
-            modals.patternInfoModal.open({
-              patternInfo: patternStore.pattern.info,
-              onSave: patternStore.updatePatternInfo,
-            });
-          },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const patternItems: any[][] = [
+    [
+      {
+        label: fluent.$t("pattern-info"),
+        onSelect() {
+          modals.patternInfoModal.open({
+            patternInfo: patternStore.pattern.info,
+            onSave: patternStore.updatePatternInfo,
+          });
         },
-        {
-          label: fluent.$t("fabric-properties"),
-          onSelect() {
-            modals.fabricModal.open({
-              fabric: patternStore.pattern.fabric,
-              onSave: patternStore.updateFabric,
-            });
-          },
+      },
+      {
+        label: fluent.$t("fabric-properties"),
+        onSelect() {
+          modals.fabricModal.open({
+            fabric: patternStore.pattern.fabric,
+            onSave: patternStore.updateFabric,
+          });
         },
-        {
-          label: fluent.$t("grid-properties"),
-          onSelect() {
-            modals.gridModal.open({
-              grid: patternStore.pattern.grid,
-              onSave: patternStore.updateGrid,
-            });
-          },
+      },
+      {
+        label: fluent.$t("grid-properties"),
+        onSelect() {
+          modals.gridModal.open({
+            grid: patternStore.pattern.grid,
+            onSave: patternStore.updateGrid,
+          });
         },
-      ],
-      [
-        {
-          label: fluent.$t("publish-settings"),
-          onSelect() {
-            modals.pdfExportOptionsModal.open({
-              options: patternStore.pattern.pdfExportOptions,
-              onSave: patternStore.updatePdfExportOptions,
-            });
-          },
-        },
-      ],
+      },
     ],
-  };
-
-  const toolsMenu: MenubarMenu = {
-    label: fluent.$t("app-menu-tools"),
-    items: [
-      [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
-      [{ label: fluent.$t("updater-check-for-updates"), onSelect: () => settingsStore.checkForUpdates() }],
+    [
+      {
+        label: fluent.$t("publish-settings"),
+        onSelect() {
+          modals.pdfExportOptionsModal.open({
+            options: patternStore.pattern.pdfExportOptions,
+            onSave: patternStore.updatePdfExportOptions,
+          });
+        },
+      },
     ],
-  };
+  ];
 
-  const helpMenu: MenubarMenu = {
-    label: fluent.$t("app-menu-help"),
-    items: [
-      [{ label: fluent.$t("app-menu-help-about"), onSelect: showSystemInfo }],
-      [
-        __TAURI__
-          ? {
-              label: fluent.$t("app-menu-help-guide"),
-              async onSelect() {
-                const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
-                await openPath(documentPath);
-              },
-            }
-          : {
-              type: "link",
-              label: fluent.$t("app-menu-help-guide"),
-              href: "https://docs.embroiderly.niusia.me",
-              target: "_blank",
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const helpItems: any[][] = [
+    [{ label: fluent.$t("app-menu-help-about"), onSelect: showSystemInfo }],
+    [
+      __TAURI__
+        ? {
+            label: fluent.$t("app-menu-help-guide"),
+            async onSelect() {
+              const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
+              await openPath(documentPath);
             },
-        {
-          type: "link",
-          label: fluent.$t("app-menu-help-license"),
-          href: "https://github.com/embroidery-space/embroiderly/blob/main/LICENSE",
-          target: "_blank",
-        },
-      ],
+          }
+        : {
+            type: "link",
+            label: fluent.$t("app-menu-help-guide"),
+            href: "https://docs.embroiderly.niusia.me",
+            target: "_blank",
+          },
+      {
+        type: "link",
+        label: fluent.$t("app-menu-help-license"),
+        href: "https://github.com/embroidery-space/embroiderly/blob/main/LICENSE",
+        target: "_blank",
+      },
     ],
-  };
+  ];
 
-  return [fileMenu, patternMenu, toolsMenu, helpMenu];
+  const desktopMenubarMenus: MenubarMenu[] = [
+    { label: fluent.$t("app-menu-file"), items: fileItems },
+    { label: fluent.$t("app-menu-pattern"), hidden: patternStore.pattern.isNil, items: patternItems },
+    { label: fluent.$t("app-menu-help"), items: helpItems },
+  ];
+
+  const mobileDropdownMenuItems: DropdownMenuItem[][] = [
+    [
+      { label: fluent.$t("app-menu-file"), children: fileItems as DropdownMenuItem[][] },
+      ...(patternStore.pattern.isNil
+        ? []
+        : [{ label: fluent.$t("app-menu-pattern"), children: patternItems as DropdownMenuItem[][] }]),
+      { label: fluent.$t("app-menu-help"), children: helpItems as DropdownMenuItem[][] },
+    ],
+  ];
+
+  return { desktopMenubarMenus, mobileDropdownMenuItems };
 });
-useShortcuts(extractShortcuts(() => menus.value.flatMap((menu) => menu.items as MenubarItem[][])));
+
+useShortcuts(
+  extractShortcuts(() => appMenu.value.desktopMenubarMenus.flatMap((menu) => menu.items as MenubarItem[][])),
+);
 
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
   [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
@@ -298,11 +310,57 @@ async function showSystemInfo() {
 </script>
 
 <template>
-  <header class="flex border-b border-default">
-    <div data-tauri-drag-region class="flex h-full grow items-center gap-x-2 p-1">
-      <Menubar :menus="menus" />
+  <header class="grid grid-cols-[1fr_auto] border-b border-default">
+    <div data-tauri-drag-region class="grid h-full grid-cols-[auto_1fr_auto]">
+      <div class="p-1">
+        <DropdownMenu :items="appMenu.mobileDropdownMenuItems">
+          <ButtonIcon
+            :icon="IconMenu"
+            variant="ghost"
+            color="neutral"
+            :tooltip="$t('app-menu-open')"
+            class="lg:hidden"
+          />
+        </DropdownMenu>
 
-      <div class="ml-auto flex h-full items-center gap-2">
+        <Menubar :menus="appMenu.desktopMenubarMenus" class="hidden lg:flex" />
+      </div>
+
+      <Tabs
+        :model-value="patternStore.pattern.id"
+        :items="patternFileStore.openedPatterns.map(({ id, title, dirty }) => ({ label: title, value: id, dirty }))"
+        :content="false"
+        color="neutral"
+        activation-mode="manual"
+        :ui="{
+          root: 'overflow-hidden pt-1',
+          wrapper: 'h-full overflow-hidden rounded-t-lg',
+          list: 'rounded-none bg-transparent p-0',
+          indicator: 'inset-0 h-full rounded-b-none shadow-none',
+          trigger: 'h-full min-w-20 rounded-b-none hover:data-[state=inactive]:bg-accented',
+        }"
+        @update:model-value="patternFileStore.switchPattern($event as string)"
+      >
+        <template #leading="{ item }">
+          <IconDot aria-hidden="true" class="size-3 shrink-0" :class="{ invisible: !item.dirty }" />
+        </template>
+
+        <template #trailing="{ item }">
+          <Button
+            size="sm"
+            variant="ghost"
+            :icon="IconClose"
+            class="p-0"
+            :class="{
+              'text-inverted': patternStore.pattern.id === item.value,
+              'text-default': patternStore.pattern.id !== item.value,
+            }"
+            @click.stop="patternFileStore.closePattern(item.value as string)"
+          />
+        </template>
+      </Tabs>
+
+      <div class="flex h-full items-center gap-2 p-1">
         <template v-if="!patternStore.pattern.isNil">
           <ButtonIcon
             data-testid="undo-button"
