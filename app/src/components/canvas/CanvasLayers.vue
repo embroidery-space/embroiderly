@@ -187,7 +187,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div ref="tree-container" class="flex min-h-0 flex-col gap-1">
+  <div ref="tree-container" class="flex min-h-auto flex-col gap-1 lg:min-h-0">
     <div class="flex items-center gap-1">
       <IconLayers class="m-2 size-5 shrink-0" :class="{ 'opacity-75': disabled }" />
       <span class="ms-1 flex-1 font-medium" :class="{ 'opacity-75': disabled }">{{ $t("canvas-layers") }}</span>

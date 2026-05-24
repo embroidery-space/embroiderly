@@ -2,6 +2,7 @@
 import {
   ButtonIcon,
   Popover,
+  ScrollArea,
   Separator,
   SplitterPanel,
   ToolToggle,
@@ -111,91 +112,99 @@ watch(
   <SplitterPanel
     ref="panel"
     v-bind="splitterPanelProps"
-    class="flex h-full flex-col gap-1 p-1"
+    class="h-full"
     @collapse="editorStateStore.canvasPanelCollapsed = true"
     @expand="editorStateStore.canvasPanelCollapsed = false"
     @resize="editorStateStore.canvasPanelSize = $event"
   >
-    <ToolToggleGroup
-      v-model="displayMode"
-      :items="displayModeOptions"
-      :disabled="patternStore.pattern.isNil"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'left' }"
+    <ScrollArea
+      class="h-full"
       orientation="vertical"
-      class="flex flex-col gap-1"
-    />
+      size="sm"
+      type="hover"
+      :ui="{ viewport: 'flex flex-col gap-1 p-1' }"
+    >
+      <ToolToggleGroup
+        v-model="displayMode"
+        :items="displayModeOptions"
+        :disabled="patternStore.pattern.isNil"
+        :delay-duration="200"
+        :tooltip-options="{ side: 'left' }"
+        orientation="vertical"
+        class="flex flex-col gap-1"
+      />
 
-    <Separator />
+      <Separator />
 
-    <ToolToggle
-      v-model="showSymbols"
-      :icon="IconSymbols"
-      :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-symbols') : undefined"
-      :label="editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t('canvas-symbols')"
-      :disabled="patternStore.pattern.isNil"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'left' }"
-    />
-    <ToolToggle
-      v-model="showGrid"
-      :icon="IconGrid"
-      :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-grid') : undefined"
-      :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-grid')"
-      :disabled="patternStore.pattern.isNil"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'left' }"
-    />
-    <ToolToggle
-      v-model="showRulers"
-      :icon="IconRulers"
-      :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-rulers') : undefined"
-      :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-rulers')"
-      :disabled="patternStore.pattern.isNil"
-      :delay-duration="200"
-      :tooltip-options="{ side: 'left' }"
-    />
+      <ToolToggle
+        v-model="showSymbols"
+        :icon="IconSymbols"
+        :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-symbols') : undefined"
+        :label="editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t('canvas-symbols')"
+        :disabled="patternStore.pattern.isNil"
+        :delay-duration="200"
+        :tooltip-options="{ side: 'left' }"
+      />
+      <ToolToggle
+        v-model="showGrid"
+        :icon="IconGrid"
+        :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-grid') : undefined"
+        :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-grid')"
+        :disabled="patternStore.pattern.isNil"
+        :delay-duration="200"
+        :tooltip-options="{ side: 'left' }"
+      />
+      <ToolToggle
+        v-model="showRulers"
+        :icon="IconRulers"
+        :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-rulers') : undefined"
+        :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-rulers')"
+        :disabled="patternStore.pattern.isNil"
+        :delay-duration="200"
+        :tooltip-options="{ side: 'left' }"
+      />
 
-    <Separator />
+      <Separator />
 
-    <CanvasLayers
-      v-if="!editorStateStore.canvasPanelCollapsed"
-      v-model="editorStateStore.selectedLayerIndex"
-      :layers="patternStore.pattern.layers.itemsInVisualOrder"
-      :disabled="patternStore.pattern.isNil"
-      class="grow"
-      @add-layer="patternStore.addLayer"
-      @remove-layer="handleRemoveLayer"
-      @rename-layer="patternStore.renameLayer"
-      @toggle-layer-visibility="patternStore.updateLayerVisibility"
-      @move-layer="patternStore.moveLayer"
-    />
-    <Popover v-else pinned side="left" align="start" class="flex h-[41.5vh] w-64 p-1">
-      <template #default="{ open }">
-        <ButtonIcon
-          size="lg"
-          color="neutral"
-          :variant="open ? 'soft' : 'ghost'"
-          :icon="open ? IconClose : IconLayers"
-          :disabled="patternStore.pattern.isNil"
-          :tooltip="$t('canvas-layers')"
-          side="left"
-        />
-      </template>
+      <CanvasLayers
+        v-if="!editorStateStore.canvasPanelCollapsed"
+        v-model="editorStateStore.selectedLayerIndex"
+        :layers="patternStore.pattern.layers.itemsInVisualOrder"
+        :disabled="patternStore.pattern.isNil"
+        class="grow"
+        @add-layer="patternStore.addLayer"
+        @remove-layer="handleRemoveLayer"
+        @rename-layer="patternStore.renameLayer"
+        @toggle-layer-visibility="patternStore.updateLayerVisibility"
+        @move-layer="patternStore.moveLayer"
+      />
+      <Popover v-else pinned side="left" align="start" class="flex h-[41.5vh] w-64 p-1">
+        <template #default="{ open }">
+          <ButtonIcon
+            size="lg"
+            color="neutral"
+            :variant="open ? 'soft' : 'ghost'"
+            :icon="open ? IconClose : IconLayers"
+            :disabled="patternStore.pattern.isNil"
+            :tooltip="$t('canvas-layers')"
+            side="left"
+          />
+        </template>
 
-      <template #content>
-        <CanvasLayers
-          v-model="editorStateStore.selectedLayerIndex"
-          :layers="patternStore.pattern.layers.itemsInVisualOrder"
-          :disabled="patternStore.pattern.isNil"
-          class="w-full"
-          @add-layer="patternStore.addLayer"
-          @remove-layer="handleRemoveLayer"
-          @rename-layer="patternStore.renameLayer"
-          @toggle-layer-visibility="patternStore.updateLayerVisibility"
-          @move-layer="patternStore.moveLayer"
-        />
-      </template>
-    </Popover>
+        <template #content>
+          <CanvasLayers
+            v-model="editorStateStore.selectedLayerIndex"
+            :layers="patternStore.pattern.layers.itemsInVisualOrder"
+            :disabled="patternStore.pattern.isNil"
+            class="w-full"
+            @add-layer="patternStore.addLayer"
+            @remove-layer="handleRemoveLayer"
+            @rename-layer="patternStore.renameLayer"
+            @toggle-layer-visibility="patternStore.updateLayerVisibility"
+            @move-layer="patternStore.moveLayer"
+          />
+        </template>
+      </Popover>
+    </ScrollArea>
   </SplitterPanel>
 </template>
