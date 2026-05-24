@@ -13,8 +13,9 @@ export const TooltipTheme = tv({
     arrow: "fill-default",
     text: "truncate",
     kbds: `
-      inline-flex shrink-0 items-center gap-0.5
+      hidden shrink-0 items-center gap-0.5
       not-first:before:me-0.5 not-first:before:content-['·']
+      lg:inline-flex
     `,
   },
 });

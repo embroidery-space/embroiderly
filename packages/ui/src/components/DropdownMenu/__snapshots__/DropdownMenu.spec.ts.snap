@@ -133,7 +133,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
             <span class="truncate" data-slot="itemLabel">Undo</span>
           </span>
-          <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+          <span class="gap-0.5 hidden items-center lg:inline-flex ms-auto" data-slot="itemKbd">
             <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+Z</kbd>
           </span>
         </div>
@@ -141,7 +141,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
             <span class="truncate" data-slot="itemLabel">Redo</span>
           </span>
-          <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+          <span class="gap-0.5 hidden items-center lg:inline-flex ms-auto" data-slot="itemKbd">
             <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+Shift+Z</kbd>
           </span>
         </div>
@@ -149,7 +149,7 @@ exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
           <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
             <span class="truncate" data-slot="itemLabel">Go to Definition</span>
           </span>
-          <span class="flex gap-0.5 inline-flex items-center items-center ms-auto" data-slot="itemTrailing">
+          <span class="gap-0.5 hidden items-center lg:inline-flex ms-auto" data-slot="itemKbd">
             <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">G</kbd>
             <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">D</kbd>
           </span>

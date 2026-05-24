@@ -27,7 +27,10 @@ export const ContextMenuTheme = tv({
       group-data-highlighted:text-default
     `,
     itemTrailing: "ms-auto inline-flex items-center",
-    itemKbd: "flex items-center gap-0.5",
+    itemKbd: `
+      ms-auto hidden items-center gap-0.5
+      lg:inline-flex
+    `,
     itemTrailingIcon: "shrink-0",
     itemBody: "flex min-w-0 flex-1 flex-col",
     itemLabel: "truncate",
