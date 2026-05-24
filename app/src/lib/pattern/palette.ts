@@ -137,13 +137,6 @@ export abstract class BasePaletteItem {
     return this.color.toHex().toUpperCase();
   }
 
-  /** The contrast color (`black` or `white`). */
-  get contrastColor() {
-    const [r, g, b] = this.color.toUint8RgbArray() as [number, number, number];
-    const brightness = r * 0.299 + g * 0.587 + b * 0.114;
-    return brightness > 128 ? "black" : "white";
-  }
-
   /** Return the color title. */
   abstract getTitle(options?: PaletteSettings): string;
 

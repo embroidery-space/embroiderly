@@ -159,19 +159,6 @@ describe("PaletteItem", () => {
     },
   ].map((data, index) => new PaletteItem(index, { blends: null, symbol: null, ...data }));
 
-  test("returns contrast color", () => {
-    expect(PALETTE[0].contrastColor).toBe("white");
-    expect(PALETTE[1].contrastColor).toBe("white");
-    expect(PALETTE[2].contrastColor).toBe("white");
-    expect(PALETTE[3].contrastColor).toBe("white");
-    expect(PALETTE[4].contrastColor).toBe("white");
-    expect(PALETTE[5].contrastColor).toBe("black");
-    expect(PALETTE[6].contrastColor).toBe("black");
-    expect(PALETTE[7].contrastColor).toBe("black");
-    expect(PALETTE[8].contrastColor).toBe("black");
-    expect(PALETTE[9].contrastColor).toBe("black");
-  });
-
   describe("titles", () => {
     test("empty", () => {
       const options = new PaletteSettings({
