@@ -169,7 +169,7 @@ onUnmounted(() => service.destroy());
 </script>
 
 <template>
-  <Dialog :title="$t('image-import')" :ui="{ content: 'size-full', body: 'p-0!' }">
+  <Dialog :title="$t('image-import')" :scroll="false" :ui="{ content: 'size-full', body: 'p-0!' }">
     <template #body>
       <div class="flex h-full">
         <div class="w-80 shrink-0 space-y-2 overflow-y-auto p-4 sm:p-6">
