@@ -61,6 +61,8 @@ jobs:
         env:
           COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
+          COMMIT_MSG=$(echo "$COMMIT_MSG" | head -1)
+
           if [ "${{ github.ref_name }}" = "main" ]; then
             # Live production.
             echo "cmd=deploy --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
