@@ -56,6 +56,7 @@
     "@iconify-json/material-symbols": "catalog:",
     "@iconify-json/mdi": "catalog:",
     "@pinia/testing": "catalog:",
+    "@pixi/devtools": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@tsconfig/node24": "catalog:",
     "@tsconfig/strictest": "catalog:",

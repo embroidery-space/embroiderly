@@ -143,7 +143,7 @@ fn convert_image_into_pattern(
     .quantize_method(options.quantization)
     .ditherer(options.dithering.map(std::convert::Into::into))
     .input_image(image.as_ref())
-    .output_oklab_image();
+    .output_oklab_indexed_image();
 
   finalize_pattern(width, height, &image, target_palette)
 }
@@ -152,59 +152,45 @@ fn convert_image_into_pattern(
 fn finalize_pattern(
   width: u16,
   height: u16,
-  image: &quantette::ImageBuf<Oklab>,
+  image: &quantette::IndexedImage<Oklab>,
   target_palette: &[(Oklab, BrandPaletteItem)],
 ) -> anyhow::Result<Pattern> {
-  // We can't store plain Oklab value in the hashmap as it contains `f32` which doesn't implement `Eq`.
-  // So we convert the underlying `f32` values to their `u32` representation for hashing.
-  type OklabKey = (u32, u32, u32);
-  fn oklab_to_key(color: Oklab) -> OklabKey {
-    let (l, a, b) = color.into_components();
-    (l.to_bits(), a.to_bits(), b.to_bits())
-  }
-
-  let pixels = image.as_slice();
-
-  // Initialize collections.
+  // Resolve each quantized palette color to a brand palette item once.
+  // Then collapse duplicates into the final pattern palette.
   let mut pattern_palette: Vec<BrandPaletteItem> = Vec::new();
-  let mut fullstitches: Vec<FullStitch> = Vec::with_capacity(pixels.len());
-
-  // Initialize caches.
-  let mut pixel_to_palitem: HashMap<OklabKey, BrandPaletteItem> = HashMap::new();
-  let mut palitem_to_palindex: HashMap<BrandPaletteItem, usize> = HashMap::new();
+  let mut palitem_to_palindex: HashMap<BrandPaletteItem, u32> = HashMap::new();
+  let quant_to_palindex: Vec<u32> = image
+    .palette()
+    .iter()
+    .map(|quant_color| {
+      let (_best_color, best_palitem) = target_palette
+        .iter()
+        .min_by_key(|(palitem_color, _palitem)| {
+          let dist_sq = quant_color.distance_squared(*palitem_color);
+          // This unwrap is safe because `distance_squared` always returns valid floats.
+          ordered_float::NotNan::new(dist_sq).unwrap()
+        })
+        // This unwrap is safe because the target palette is guaranteed to be non-empty.
+        .unwrap();
+      *palitem_to_palindex
+        .entry(best_palitem.clone())
+        .or_insert_with_key(|palitem| {
+          let palindex = pattern_palette.len() as u32;
+          pattern_palette.push(palitem.clone());
+          palindex
+        })
+    })
+    .collect();
 
   let width_usize = width as usize;
-  for (x, y, pixel) in pixels.iter().copied().enumerate().map(|(i, pixel)| {
+  let mut fullstitches: Vec<FullStitch> = Vec::with_capacity(image.indices().len());
+  for (i, &qidx) in image.indices().iter().enumerate() {
     let x = i % width_usize;
     let y = i / width_usize;
-    (x, y, pixel)
-  }) {
-    let palitem = pixel_to_palitem
-      .entry(oklab_to_key(pixel))
-      .or_insert_with(|| {
-        let (_best_color, best_palitem) = target_palette
-          .iter()
-          .min_by_key(|(palitem_color, _palitem)| {
-            let dist_sq = pixel.distance_squared(*palitem_color);
-            // This unwrap is safe because `distance_squared` always returns valid floats.
-            ordered_float::NotNan::new(dist_sq).unwrap()
-          })
-          // This unwrap is safe because the target palette is guaranteed to be non-empty.
-          .unwrap();
-        best_palitem.clone()
-      })
-      .clone();
-
-    let palindex = *palitem_to_palindex.entry(palitem).or_insert_with_key(|palitem| {
-      let palindex = pattern_palette.len();
-      pattern_palette.push(palitem.clone());
-      palindex
-    });
-
     fullstitches.push(FullStitch {
       x: Coord::new(x as f32)?,
       y: Coord::new(y as f32)?,
-      palindex: palindex as u32,
+      palindex: quant_to_palindex[qidx as usize],
       kind: FullStitchKind::Full,
     });
   }
