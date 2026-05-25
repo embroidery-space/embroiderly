@@ -107,7 +107,7 @@ typst-as-lib = "0.15.4"
 # Image processing
 image = { version = "0.25.10", default-features = false, features = ["png", "jpeg", "webp"] }
 palette = "0.7.6"
-quantette = "0.5.1"
+quantette = "0.6.0"
 
 # Archiving
 zip = { version = "8.6.0", default-features = false, features = ["deflate", "time"] }
