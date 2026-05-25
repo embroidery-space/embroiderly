@@ -8,7 +8,7 @@ const grid = defineModel<Grid>({ required: true });
 
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <FormField v-bind="$ta('grid-major-lines-interval')">
         <InputNumber
           v-model="grid.majorLinesInterval"
@@ -20,7 +20,7 @@ const grid = defineModel<Grid>({ required: true });
     </div>
 
     <FormFieldSet :legend="$t('grid-major-lines')">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FormField v-bind="$ta('grid-thickness')">
           <InputNumber
             v-model="grid.majorLines.thickness"
@@ -37,7 +37,7 @@ const grid = defineModel<Grid>({ required: true });
     </FormFieldSet>
 
     <FormFieldSet :legend="$t('grid-minor-lines')">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FormField v-bind="$ta('grid-thickness')">
           <InputNumber
             v-model="grid.minorLines.thickness"
