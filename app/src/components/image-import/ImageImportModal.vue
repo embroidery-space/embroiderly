@@ -12,6 +12,7 @@ import {
   InputDimensions,
   InputNumberSlider,
   Progress,
+  ScrollArea,
   Separator,
   useToast,
 } from "@embroiderly/ui";
@@ -174,9 +175,12 @@ onUnmounted(() => service.destroy());
   <Dialog :title="$t('image-import')" :scroll="false" :ui="{ content: 'size-full', body: 'p-0!' }">
     <template #body>
       <div class="flex h-full" :class="{ 'flex-col': isMobilePortrait }">
-        <div
-          class="shrink-0 space-y-2 overflow-y-auto p-4 sm:p-6"
-          :class="isMobilePortrait ? 'max-h-1/4 w-full' : 'w-80'"
+        <ScrollArea
+          type="hover"
+          :ui="{
+            root: isMobilePortrait ? 'max-h-1/4 w-full shrink-0' : 'w-80 shrink-0',
+            viewport: 'space-y-2 p-4 sm:p-6',
+          }"
         >
           <FilePicker :model-value="imageFile?.name ?? 'No image selected'" class="w-full" @pick="pickImageFile" />
 
@@ -228,7 +232,7 @@ onUnmounted(() => service.destroy());
               />
             </FormField>
           </FormFieldSet>
-        </div>
+        </ScrollArea>
 
         <Separator decorative :orientation="isMobilePortrait ? 'horizontal' : 'vertical'" size="sm" />
 
