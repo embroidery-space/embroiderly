@@ -12,7 +12,7 @@ cleanupUnusedCatalogs: true
 catalog:
   # Tauri
   "@tauri-apps/api": 2.11.0
-  "@tauri-apps/cli": 2.11.1
+  "@tauri-apps/cli": 2.11.2
   ## Official Tauri plugins
   "@tauri-apps/plugin-fs": 2.5.1
   "@tauri-apps/plugin-opener": 2.5.4
@@ -25,7 +25,7 @@ catalog:
   "@vueuse/components": 14.3.0
   "@vueuse/integrations": 14.3.0
   "vue": 3.5.34
-  "vue-component-type-helpers": 3.2.9
+  "vue-component-type-helpers": 3.3.1
   "pinia": 3.0.4
   "pinia-plugin-persistedstate": 4.7.1
   "reka-ui": 2.9.7
@@ -37,8 +37,8 @@ catalog:
 
   # Icons
   "@iconify/vue": 5.0.1
-  "@iconify-json/lucide": 1.2.107
-  "@iconify-json/material-symbols": 1.2.72
+  "@iconify-json/lucide": 1.2.109
+  "@iconify-json/material-symbols": 1.2.73
   "@iconify-json/mdi": 1.2.3
   "unplugin-icons": 23.0.1
 
@@ -48,6 +48,7 @@ catalog:
 
   # Canvas rendering
   "pixi.js": 8.18.1
+  "@pixi/devtools": 2.0.1
 
   # De/serialization
   "@zorsh/zorsh": 0.5.0
@@ -55,7 +56,7 @@ catalog:
   # Telemetry
   "@sentry/core": 10.53.1
   "@sentry/vue": 10.53.1
-  "posthog-js": 1.373.4
+  "posthog-js": 1.375.0
 
   # Utilities
   "@stdlib/math-base-special-roundn": 0.2.3
@@ -90,25 +91,25 @@ catalog:
   "eslint-plugin-better-tailwindcss": 4.5.0
   "eslint-plugin-import-x": 4.16.2
   "eslint-plugin-no-only-tests": 3.4.0
-  "eslint-plugin-oxlint": 1.64.0
+  "eslint-plugin-oxlint": 1.66.0
   "eslint-plugin-vue": 10.9.1
   "eslint-plugin-wdio": 9.27.1
   "eslint-plugin-yml": 3.3.2
   "markdownlint-cli2": 0.22.1
-  "oxfmt": 0.49.0
-  "oxlint": 1.64.0
+  "oxfmt": 0.51.0
+  "oxlint": 1.66.0
   "husky": 9.1.7
-  "lint-staged": 17.0.4
+  "lint-staged": 17.0.5
 
   # Build tools
   "concurrently": 9.2.1
-  "vite": 8.0.13
+  "vite": 8.0.14
   "vite-plugin-pwa": 1.3.0
   "vite-plugin-vue-devtools": 8.1.2
   "@vite-pwa/assets-generator": 1.0.2
-  "@vitejs/plugin-vue": 6.0.6
+  "@vitejs/plugin-vue": 6.0.7
   "@tailwindcss/vite": 4.3.0
-  "wrangler": 4.91.0
+  "wrangler": 4.93.1
 
   # PWA
   "workbox-precaching": 7.4.1
@@ -120,15 +121,15 @@ catalog:
 
   # TypeScript
   "typescript": 6.0.3
-  "vue-tsc": 3.2.9
+  "vue-tsc": 3.3.1
   "@tsconfig/node24": 24.0.4
   "@tsconfig/strictest": 2.0.8
   "@vue/tsconfig": 0.9.1
 
   # Testing
   "@pinia/testing": 1.0.3
-  "@vitest/browser-webdriverio": 4.1.6
-  "vitest": 4.1.6
+  "@vitest/browser-webdriverio": 4.1.7
+  "vitest": 4.1.7
   "vitest-browser-vue": 2.1.0
   "vue3-snapshot-serializer": 2.13.2
 

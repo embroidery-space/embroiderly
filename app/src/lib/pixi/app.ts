@@ -1,3 +1,4 @@
+import { initDevtools } from "@pixi/devtools";
 import { debounce } from "es-toolkit";
 import { Application } from "pixi.js";
 import type { ApplicationOptions } from "pixi.js";
@@ -89,6 +90,9 @@ export class PatternApplication extends EventTarget {
       resize(inlineSize, blockSize);
     });
     this.#resizeObserver.observe(wrapper);
+
+    // Init devtools last, so it has access to the fully initialized application.
+    if (import.meta.env.DEV) initDevtools({ app: this.#pixi });
 
     this.initialized = true;
   }
