@@ -48,6 +48,7 @@ catalog:
 
   # Canvas rendering
   "pixi.js": 8.18.1
+  "@pixi/devtools": 2.0.1
 
   # De/serialization
   "@zorsh/zorsh": 0.5.0
