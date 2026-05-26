@@ -14,8 +14,9 @@ export const SelectTheme = tv({
     placeholder: "truncate text-muted",
     trailingIcon: "shrink-0 text-muted",
     content: `
-      pointer-events-auto min-w-(--reka-combobox-trigger-width)
-      origin-(--reka-combobox-content-transform-origin) overflow-hidden
+      pointer-events-auto flex max-h-(--reka-combobox-content-available-height)
+      min-w-(--reka-combobox-trigger-width)
+      origin-(--reka-combobox-content-transform-origin) flex-col overflow-hidden
       rounded-md bg-default shadow-lg ring ring-default
       focus:outline-none
       data-[state=closed]:animate-[scale-out_100ms_ease-in]
