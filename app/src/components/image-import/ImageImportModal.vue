@@ -176,7 +176,8 @@ onUnmounted(() => service.destroy());
     <template #body>
       <div class="flex h-full" :class="{ 'flex-col': isMobilePortrait }">
         <ScrollArea
-          type="hover"
+          type="auto"
+          size="sm"
           :ui="{
             root: isMobilePortrait ? 'max-h-1/4 w-full shrink-0' : 'w-80 shrink-0',
             viewport: 'space-y-2 p-4 sm:p-6',
