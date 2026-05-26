@@ -30,6 +30,7 @@ const DEFAULT_INIT_OPTIONS: Partial<ApplicationOptions> = {
   antialias: true,
   backgroundAlpha: 0,
   preference: "webgl",
+  resolution: window.devicePixelRatio,
 };
 
 export class PatternApplication extends EventTarget {

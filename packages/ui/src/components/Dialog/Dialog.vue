@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { reactivePick } from "@vueuse/core";
+import defu from "defu";
 import { useForwardPropsEmits } from "reka-ui";
 import type { DialogRootProps } from "reka-ui";
 import { Dialog } from "reka-ui/namespaced";
-import { toRef } from "vue";
+import { computed, toRef } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
 import Button from "../Button/Button.vue";
+import ScrollArea from "../ScrollArea/ScrollArea.vue";
+import type { ScrollAreaProps } from "../ScrollArea/ScrollArea.vue";
 
 import { DialogTheme } from "./Dialog.theme.ts";
 import type { DialogThemeSlots } from "./Dialog.theme.ts";
@@ -31,6 +34,13 @@ export interface DialogProps extends Pick<DialogRootProps, "open" | "defaultOpen
    */
   portal?: boolean | string | HTMLElement;
 
+  /**
+   * Configuration for the body scroll area.
+   * Set to `false` to disable, `true` to use defaults.
+   * @default { type: "auto", size: "sm" }
+   */
+  scroll?: boolean | Pick<ScrollAreaProps, "type" | "size" | "ui">;
+
   class?: any;
   ui?: DialogThemeSlots;
 }
@@ -51,6 +61,7 @@ export interface DialogSlots {
 const props = withDefaults(defineProps<DialogProps>(), {
   dismissible: true,
   portal: true,
+  scroll: true,
 });
 const emits = defineEmits<DialogEmits>();
 const slots = defineSlots<DialogSlots>();
@@ -60,6 +71,10 @@ const locale = useLocale();
 
 const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen"), emits);
 const portalProps = usePortal(toRef(() => props.portal));
+const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
+  if (props.scroll === false) return null;
+  return defu(typeof props.scroll === "object" ? props.scroll : {}, { type: "auto", size: "sm" } as const);
+});
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = DialogTheme();
@@ -113,7 +128,20 @@ const ui = DialogTheme();
           </Dialog.Close>
         </header>
 
-        <div data-slot="body" :class="ui.body({ class: props.ui?.body })">
+        <ScrollArea v-if="scrollProps" v-bind="scrollProps">
+          <div data-slot="body" :class="ui.body({ class: props.ui?.body })">
+            <slot
+              name="body"
+              :close="
+                (value?: unknown) => {
+                  emits('close', value);
+                  close();
+                }
+              "
+            />
+          </div>
+        </ScrollArea>
+        <div v-else data-slot="body" :class="ui.body({ class: [props.ui?.body, 'overflow-hidden'] })">
           <slot
             name="body"
             :close="

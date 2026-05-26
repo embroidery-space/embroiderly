@@ -206,6 +206,10 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
     await editor.removeStitch(pattern.value.id, layerIndex, serializeStitch(stitch));
     MetricsService.captureStitchRemoved(stitch.kind);
   }
+  async function removeStitchAt(layerIndex: number, x: number, y: number) {
+    if (pattern.value.isNil) return;
+    await editor.removeStitchAt(pattern.value.id, layerIndex, x, y);
+  }
   events.on("stitches:add", ({ layerIndex, stitches }) => {
     for (const stitch of stitches) pattern.value.addStitch(layerIndex, stitch);
   });
@@ -298,6 +302,7 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
     setPaletteItemSymbol,
     addStitch,
     removeStitch,
+    removeStitchAt,
     updateDisplaySettings,
     setDisplayMode,
     showSymbols,

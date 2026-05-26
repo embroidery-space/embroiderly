@@ -178,25 +178,8 @@ export class StitchTool implements PatternEditorTool {
   async anti({ pattern, event, end: point, api }: PatternEditorToolContext) {
     if (!patternContainsPoint(pattern.fabric, point)) return;
 
-    if (event.target instanceof StitchGraphics) {
-      await api.removeStitch(event.target.stitch.clone());
-    } else {
-      await Promise.all(
-        [FullStitchKind.Full, FullStitchKind.Petite, PartStitchKind.Half, PartStitchKind.Quarter].map(async (kind) => {
-          const { x, y } = adjustStitchCoordinate(point, kind);
-          if (kind === FullStitchKind.Full || kind === FullStitchKind.Petite) {
-            await api.removeStitch(new FullStitch({ x, y, kind, palindex: 0 }));
-          } else {
-            const [fractX, fractY] = [point.x - Math.trunc(x), point.y - Math.trunc(y)];
-            const direction =
-              (fractX < 0.5 && fractY > 0.5) || (fractX > 0.5 && fractY < 0.5)
-                ? PartStitchDirection.Forward
-                : PartStitchDirection.Backward;
-            await api.removeStitch(new PartStitch({ x, y, kind, direction, palindex: 0 }));
-          }
-        }),
-      );
-    }
+    if (event.target instanceof StitchGraphics) await api.removeStitch(event.target.stitch.clone());
+    else await api.removeStitchAt(point.x, point.y);
   }
 
   async release({ pattern, start, end, api }: PatternEditorToolContext) {

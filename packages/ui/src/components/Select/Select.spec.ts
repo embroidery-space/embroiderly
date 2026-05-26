@@ -56,6 +56,9 @@ describe("Select", () => {
     ["with disabled item", { props: { ...props, items: groupedItems } }],
   ] as [string, { props?: SelectProps }][])("renders correctly %s", async (_, options) => {
     const screen = await page.render(Select as any, options);
+
+    await userEvent.click(screen.getByRole("button"));
+
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
@@ -69,6 +72,9 @@ describe("Select", () => {
       `,
     });
     const screen = await page.render(Wrapper);
+
+    await userEvent.click(screen.getByRole("button"));
+
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 

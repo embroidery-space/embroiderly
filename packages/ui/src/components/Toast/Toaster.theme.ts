@@ -11,8 +11,9 @@ export const ToasterTheme = tv({
       data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x)
     `,
     viewport: `
-      fixed right-0 bottom-0 z-100 flex w-96 max-w-[100vw] flex-col-reverse
-      gap-4 p-4 outline-none
+      fixed right-4 bottom-4 z-100 flex w-[calc(100%-2rem)] flex-col-reverse
+      gap-4 outline-none
+      sm:w-96
     `,
   },
   variants: {

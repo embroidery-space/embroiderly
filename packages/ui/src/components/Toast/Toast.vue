@@ -114,6 +114,9 @@ const ui = computed(() => {
           data-slot="close"
           :class="ui.close({ class: props.ui?.close })"
           @click.stop
+          @pointerdown.stop
+          @pointermove.stop
+          @pointerup.stop
         />
       </slot>
     </Toast.Close>

@@ -1,5 +1,5 @@
 import { Container, Graphics, GraphicsContext, Texture } from "pixi.js";
-import type { Renderer, TextureSourceOptions } from "pixi.js";
+import type { Renderer, StrokeStyle, TextureSourceOptions } from "pixi.js";
 
 import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "~/lib/pattern/";
 import { mm2px } from "~/utils/measurement.ts";
@@ -10,18 +10,14 @@ const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
   scaleMode: "linear",
 };
 
+const STITCH_OUTLINE: StrokeStyle = { width: 2, alignment: 0.5, color: 0x000000 };
+
 /** Options for configuring the texture manager. */
 export interface TextureManagerOptions {
   /** Whether stitches should have an outline stroke. */
   outlineStitches?: boolean;
   /** Options for the texture source. */
   textureSourceOptions?: TextureSourceOptions;
-}
-
-/** Options for creating stitch figure graphics. */
-interface StitchFigureOptions {
-  /** Whether the figure should have an outline stroke. */
-  outlined: boolean;
 }
 
 /**
@@ -31,6 +27,7 @@ interface StitchFigureOptions {
 export class TextureManager {
   #renderer: Renderer;
   #textureSourceOptions: TextureSourceOptions;
+
   #outlineStitches: boolean;
 
   #cache = new Map<string, unknown>();
@@ -43,6 +40,7 @@ export class TextureManager {
   constructor(renderer: Renderer, options?: TextureManagerOptions) {
     this.#renderer = renderer;
     this.#textureSourceOptions = { ...DEFAULT_TEXTURE_SOURCE_OPTIONS, ...options?.textureSourceOptions };
+
     this.#outlineStitches = options?.outlineStitches ?? true;
   }
 
@@ -59,18 +57,18 @@ export class TextureManager {
   }
 
   #createFullStitchTexture(mode: DisplayMode, kind: FullStitchKind) {
-    const options: StitchFigureOptions = { outlined: this.#outlineStitches };
-    const figure = (() => {
-      if (mode === DisplayMode.Stitches) {
-        if (kind === FullStitchKind.Full) return createFullStitchShapeFigure(options);
-        return createPetiteStitchShapeFigure(options);
-      }
-
+    let figure;
+    if (mode === DisplayMode.Stitches) {
+      if (kind === FullStitchKind.Full) figure = createFullStitchShapeFigure();
+      else figure = createPetiteStitchShapeFigure();
+    } else {
       // In the solid and mixed mode, full stitches are rendered as solid figures.
-      if (kind === FullStitchKind.Full) return createFullStitchSolidFigure(options);
+      if (kind === FullStitchKind.Full) figure = createFullStitchSolidFigure();
+      else figure = createPetiteStitchSolidFigure();
+    }
 
-      return createPetiteStitchSolidFigure(options);
-    })();
+    if (this.#outlineStitches) figure.stroke(STITCH_OUTLINE);
+
     return this.#createTexture(figure);
   }
 
@@ -87,18 +85,18 @@ export class TextureManager {
   }
 
   #createPartStitchTexture(mode: DisplayMode, kind: PartStitchKind) {
-    const options: StitchFigureOptions = { outlined: this.#outlineStitches };
-    const figure = (() => {
-      if (mode === DisplayMode.Solid) {
-        if (kind === PartStitchKind.Half) return createHalfStitchSolidFigure(options);
-        return createQuarterStitchSolidFigure(options);
-      }
-
+    let figure;
+    if (mode === DisplayMode.Solid) {
+      if (kind === PartStitchKind.Half) figure = createHalfStitchSolidFigure();
+      else figure = createQuarterStitchSolidFigure();
+    } else {
       // In the shape and mixed mode, part stitches are rendered as shape figures.
-      if (kind === PartStitchKind.Half) return createHalfStitchShapeFigure(options);
+      if (kind === PartStitchKind.Half) figure = createHalfStitchShapeFigure();
+      else figure = createQuarterStitchShapeFigure();
+    }
 
-      return createQuarterStitchShapeFigure(options);
-    })();
+    if (this.#outlineStitches) figure.stroke(STITCH_OUTLINE);
+
     return this.#createTexture(figure);
   }
 
@@ -107,21 +105,13 @@ export class TextureManager {
 
     let texture = this.#cache.get(stitchCachekey) as GraphicsContext;
     if (!texture) {
-      texture = kind === NodeStitchKind.FrenchKnot ? this.#createFrenchKnotTexture() : this.#createBeadTexture(bead);
+      texture = kind === NodeStitchKind.FrenchKnot ? createFrenchKnotFigure() : createBeadFigure(bead);
+      if (this.#outlineStitches) texture.stroke(STITCH_OUTLINE);
+
       this.#cache.set(stitchCachekey, texture);
     }
 
     return texture;
-  }
-
-  #createFrenchKnotTexture() {
-    const options: StitchFigureOptions = { outlined: this.#outlineStitches };
-    return createFrenchKnotFigure(options);
-  }
-
-  #createBeadTexture(bead: Bead) {
-    const options: StitchFigureOptions = { outlined: this.#outlineStitches };
-    return createBeadFigure(bead, options);
   }
 
   #createTexture(container: Container, textureSourceOptions?: Partial<TextureSourceOptions>) {
@@ -143,13 +133,11 @@ export class TextureManager {
   }
 }
 
-function createFullStitchSolidFigure(options: StitchFigureOptions) {
-  const graphics = new Graphics().rect(0, 0, 100, 100).fill(0xffffff);
-  if (options.outlined) graphics.stroke({ width: 2, alignment: 0.5, color: 0x000000 });
-  return graphics;
+function createFullStitchSolidFigure() {
+  return new Graphics().rect(0, 0, 100, 100).fill(0xffffff);
 }
-function createFullStitchShapeFigure(options: StitchFigureOptions) {
-  const graphics = new Graphics()
+function createFullStitchShapeFigure() {
+  return new Graphics()
     .poly([
       { x: 0, y: 0 },
       { x: 30, y: 0 },
@@ -169,17 +157,13 @@ function createFullStitchShapeFigure(options: StitchFigureOptions) {
       { x: 0, y: 30 },
     ])
     .fill(0xffffff);
-  if (options.outlined) graphics.stroke({ width: 2, alignment: 0.5, color: 0x000000 });
-  return graphics;
 }
 
-function createPetiteStitchSolidFigure(options: StitchFigureOptions) {
-  const graphics = new Graphics().rect(0, 0, 50, 50).fill(0xffffff);
-  if (options.outlined) graphics.stroke({ width: 1, alignment: 0.5, color: 0x000000 });
-  return graphics;
+function createPetiteStitchSolidFigure() {
+  return new Graphics().rect(0, 0, 50, 50).fill(0xffffff);
 }
-function createPetiteStitchShapeFigure(options: StitchFigureOptions) {
-  const graphics = new Graphics()
+function createPetiteStitchShapeFigure() {
+  return new Graphics()
     .poly([
       { x: 0, y: 0 },
       { x: 15, y: 0 },
@@ -199,17 +183,13 @@ function createPetiteStitchShapeFigure(options: StitchFigureOptions) {
       { x: 0, y: 15 },
     ])
     .fill(0xffffff);
-  if (options.outlined) graphics.stroke({ width: 1, alignment: 0.5, color: 0x000000 });
-  return graphics;
 }
 
-function createHalfStitchSolidFigure(options: StitchFigureOptions) {
-  const graphics = new Graphics().rect(0, 50, 50, 50).rect(50, 0, 50, 50).fill(0xffffff);
-  if (options.outlined) graphics.stroke({ width: 2, alignment: 0.5, color: 0x000000 });
-  return graphics;
+function createHalfStitchSolidFigure() {
+  return new Graphics().rect(0, 50, 50, 50).rect(50, 0, 50, 50).fill(0xffffff);
 }
-function createHalfStitchShapeFigure(options: StitchFigureOptions) {
-  const graphics = new Graphics()
+function createHalfStitchShapeFigure() {
+  return new Graphics()
     .poly([
       { x: 100, y: 0 },
       { x: 100, y: 35 },
@@ -219,17 +199,13 @@ function createHalfStitchShapeFigure(options: StitchFigureOptions) {
       { x: 65, y: 0 },
     ])
     .fill(0xffffff);
-  if (options.outlined) graphics.stroke({ width: 2, alignment: 0.5, color: 0x000000 });
-  return graphics;
 }
 
-function createQuarterStitchSolidFigure(options: StitchFigureOptions) {
-  const graphics = new Graphics().rect(0, 0, 50, 50).fill(0xffffff);
-  if (options.outlined) graphics.stroke({ width: 1, alignment: 0.5, color: 0x000000 });
-  return graphics;
+function createQuarterStitchSolidFigure() {
+  return new Graphics().rect(0, 0, 50, 50).fill(0xffffff);
 }
-function createQuarterStitchShapeFigure(options: StitchFigureOptions) {
-  const graphics = new Graphics()
+function createQuarterStitchShapeFigure() {
+  return new Graphics()
     .poly([
       { x: 50, y: 0 },
       { x: 50, y: 25 },
@@ -239,19 +215,13 @@ function createQuarterStitchShapeFigure(options: StitchFigureOptions) {
       { x: 25, y: 0 },
     ])
     .fill(0xffffff);
-  if (options.outlined) graphics.stroke({ width: 1, alignment: 0.5, color: 0x000000 });
-  return graphics;
 }
 
-function createFrenchKnotFigure(options: StitchFigureOptions) {
-  const context = new GraphicsContext().circle(25, 25, 25).fill(0xffffff);
-  if (options.outlined) context.stroke({ pixelLine: true, alignment: 0.5, color: 0x000000 });
-  return context;
+function createFrenchKnotFigure() {
+  return new GraphicsContext().circle(25, 25, 25).fill(0xffffff);
 }
-function createBeadFigure(bead: Bead, options: StitchFigureOptions) {
+function createBeadFigure(bead: Bead) {
   const width = mm2px(bead.diameter) * 10;
   const height = mm2px(bead.length) * 10;
-  const context = new GraphicsContext().roundRect(0, 0, width, height, width * 0.4).fill(0xffffff);
-  if (options.outlined) context.stroke({ pixelLine: true, alignment: 0.5, color: 0x000000 });
-  return context;
+  return new GraphicsContext().roundRect(0, 0, width, height, width * 0.4).fill(0xffffff);
 }

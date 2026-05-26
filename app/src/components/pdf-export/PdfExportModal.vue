@@ -49,10 +49,8 @@ async function exportPattern(variant: PdfVariant) {
 <template>
   <Dialog :title="$t('pdf-export')" :ui="{ content: 'w-xl' }">
     <template #body>
-      <div class="flex flex-col gap-y-4">
-        <RadioGroup v-model="variant" :items="variantItems" orientation="horizontal" />
-        <PdfExportOptionsForm v-model="options" />
-      </div>
+      <RadioGroup v-model="variant" :items="variantItems" orientation="horizontal" />
+      <PdfExportOptionsForm v-model="options" class="mt-2" />
     </template>
     <template #footer>
       <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />

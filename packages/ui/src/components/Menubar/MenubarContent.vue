@@ -155,7 +155,7 @@ function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarIt
             </span>
           </span>
 
-          <span v-if="item.shortcut" data-slot="itemTrailing" :class="[ui.itemTrailing(), ui.itemKbd()]">
+          <span v-if="item.shortcut" data-slot="itemKbd" :class="ui.itemKbd()">
             <Kbd v-for="(key, i) in parseShortcutDisplay(item.shortcut)" :key="i" :value="key" size="sm" />
           </span>
         </Menubar.Item>

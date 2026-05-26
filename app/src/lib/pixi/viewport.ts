@@ -8,6 +8,7 @@ import { getMouseButtons, MODIFIERS } from "./utils/index.ts";
 import type { ModifiersState } from "./utils/index.ts";
 
 const WHEEL_ZOOM_FACTOR = 0.1;
+const LONG_PRESS_MS = 500;
 
 /** Options for the pattern viewport. */
 export interface ViewportOptions {
@@ -42,10 +43,47 @@ export interface ViewportOptions {
 
 export type WheelAction = "zoom" | "scroll";
 
+type GestureMode = "draw" | "pinch";
+
+interface PinchState {
+  lastDistance: number;
+  lastMidpoint: Point;
+}
+
+interface TouchState {
+  readonly activeTouches: Map<number, Point>;
+
+  gestureMode?: GestureMode;
+  pinchState?: PinchState;
+
+  drawPending: boolean;
+  longPressTimer?: ReturnType<typeof setTimeout>;
+}
+
 /**
  * The main viewport for the pattern editor.
  *
  * It is responsible for handling user input and managing the view of the pattern.
+ *
+ * ## Interaction Mmodel
+ *
+ * ### Mouse
+ *
+ * - Left drag -> main action (e.g., draw).
+ * - Alt + left drag -> anti-action (e.g., erase).
+ * - Right drag -> pan.
+ * - Ctrl + right click -> anti-action.
+ * - Wheel -> zoom (or scroll, depending on the `wheelAction`); `Alt` key swaps the two.
+ *
+ * ### Touch
+ *
+ * - One finger tap -> main action + release (single stitch).
+ * - One finger drag -> main action (draw in a row).
+ * - One finger long-press (≥ 500 ms without movement) -> prevented (no stitch placed).
+ * - Two fingers -> pan + pinch-zoom; any in-progress single-finger draw is canceled first.
+ *
+ * Touch always uses the main action.
+ * The anti-action (e.g., erase) is not reachable via touch because there is no keyboard on mobile---users must switch to the eraser tool through the UI.
  */
 export class PatternViewport extends Container {
   private domElement!: HTMLElement;
@@ -60,6 +98,11 @@ export class PatternViewport extends Container {
 
   private startPoint?: Point;
   private isDragging = false;
+
+  private touch: TouchState = {
+    activeTouches: new Map(),
+    drawPending: false,
+  };
 
   /**
    * The content container for the pattern viewport.
@@ -115,6 +158,8 @@ export class PatternViewport extends Container {
 
     this.domElement.removeEventListener("wheel", this.handleWheel, { capture: true });
     this.domElement.removeEventListener("contextmenu", this.handleContextMenu, { capture: true });
+
+    clearTimeout(this.touch.longPressTimer);
 
     super.destroy(options);
   }
@@ -244,6 +289,21 @@ export class PatternViewport extends Container {
   }
 
   private handlePointerDown(e: FederatedPointerEvent) {
+    if (e.pointerType === "touch") this.handleTouchDown(e);
+    else this.handleMouseDown(e);
+  }
+
+  private handlePointerMove(e: FederatedPointerEvent) {
+    if (e.pointerType === "touch") this.handleTouchMove(e);
+    else this.handleMouseMove(e);
+  }
+
+  private handlePointerUp(e: FederatedPointerEvent) {
+    if (e.pointerType === "touch") this.handleTouchUp(e);
+    else this.handleMouseUp(e);
+  }
+
+  private handleMouseDown(e: FederatedPointerEvent) {
     this.startPoint = this.content.toLocal(e.global);
 
     const buttons = getMouseButtons(e);
@@ -253,7 +313,7 @@ export class PatternViewport extends Container {
     }
   }
 
-  private handlePointerMove(e: FederatedPointerEvent) {
+  private handleMouseMove(e: FederatedPointerEvent) {
     const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (this.startPoint === undefined) return;
@@ -268,7 +328,7 @@ export class PatternViewport extends Container {
     }
   }
 
-  private handlePointerUp(e: FederatedPointerEvent) {
+  private handleMouseUp(e: FederatedPointerEvent) {
     const buttons = getMouseButtons(e);
     if (buttons.left) this.emitToolEvent(ToolEvent.ToolRelease, e);
     else if (buttons.right && MODIFIERS.mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
@@ -280,6 +340,120 @@ export class PatternViewport extends Container {
       this.startPoint = undefined;
       this.isDragging = false;
     }, 0);
+  }
+
+  private handleTouchDown(e: FederatedPointerEvent) {
+    this.touch.activeTouches.set(e.pointerId, e.global.clone());
+    switch (this.touch.activeTouches.size) {
+      case 1: {
+        this.touch.gestureMode = "draw";
+        this.startPoint = this.content.toLocal(e.global);
+
+        this.touch.drawPending = true;
+        this.touch.longPressTimer = setTimeout(() => {
+          // Long press: cancel draw without placing a stitch.
+          this.touch.drawPending = false;
+          this.startPoint = undefined;
+        }, LONG_PRESS_MS);
+
+        break;
+      }
+
+      case 2: {
+        clearTimeout(this.touch.longPressTimer);
+        this.touch.longPressTimer = undefined;
+
+        if (this.touch.gestureMode === "draw") {
+          // Draw was committed via movement before the second finger arrived; close it.
+          if (!this.touch.drawPending) this.emitToolEvent(ToolEvent.ToolRelease, e);
+
+          this.touch.drawPending = false;
+          this.startPoint = undefined;
+        }
+
+        this.touch.gestureMode = "pinch";
+        this.touch.pinchState = this.computePinchState();
+
+        break;
+      }
+    }
+  }
+
+  private handleTouchMove(e: FederatedPointerEvent) {
+    if (!this.touch.activeTouches.has(e.pointerId)) return;
+    this.touch.activeTouches.set(e.pointerId, e.global.clone());
+    switch (this.touch.gestureMode) {
+      case "draw": {
+        // First movement: commit to drawing and cancel the long-press guard.
+        if (this.touch.drawPending) {
+          clearTimeout(this.touch.longPressTimer);
+          this.touch.longPressTimer = undefined;
+          this.touch.drawPending = false;
+        }
+
+        this.emitToolEvent(ToolEvent.ToolMainAction, e);
+
+        break;
+      }
+
+      case "pinch": {
+        if (this.touch.activeTouches.size !== 2 || this.touch.pinchState === undefined) return;
+
+        const { lastDistance, lastMidpoint } = this.touch.pinchState;
+        this.touch.pinchState = this.computePinchState();
+
+        this.moveBy(
+          new Point(
+            this.touch.pinchState.lastMidpoint.x - lastMidpoint.x,
+            this.touch.pinchState.lastMidpoint.y - lastMidpoint.y,
+          ),
+        );
+
+        if (lastDistance > 0) {
+          this.zoomAt(
+            this.content.scale.x * (this.touch.pinchState.lastDistance / lastDistance),
+            this.touch.pinchState.lastMidpoint,
+          );
+        }
+
+        break;
+      }
+    }
+  }
+
+  private handleTouchUp(e: FederatedPointerEvent) {
+    if (this.touch.gestureMode === "draw") {
+      clearTimeout(this.touch.longPressTimer);
+      this.touch.longPressTimer = undefined;
+
+      // Skip when cancelled before any draw event was emitted (no transaction to close).
+      if (e.type !== "pointercancel" || !this.touch.drawPending) {
+        // Quick tap without movement: place a single stitch.
+        if (this.touch.drawPending) this.emitToolEvent(ToolEvent.ToolMainAction, e);
+        this.emitToolEvent(ToolEvent.ToolRelease, e);
+      }
+
+      this.touch.drawPending = false;
+      this.startPoint = undefined;
+      this.touch.gestureMode = undefined;
+    }
+
+    this.touch.activeTouches.delete(e.pointerId);
+
+    if (this.touch.gestureMode === "pinch") {
+      if (this.touch.activeTouches.size <= 1) this.touch.pinchState = undefined;
+      if (this.touch.activeTouches.size === 0) this.touch.gestureMode = undefined;
+    }
+  }
+
+  private computePinchState(): PinchState {
+    const [p1, p2] = this.touch.activeTouches.values();
+    if (!p1 || !p2) return { lastDistance: 0, lastMidpoint: new Point() };
+
+    return {
+      lastDistance: Math.hypot(p2.x - p1.x, p2.y - p1.y),
+      lastMidpoint: new Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2),
+    };
   }
 
   /**
@@ -338,14 +512,16 @@ export class PatternViewport extends Container {
     if (Math.abs(e.deltaY) < 2) return;
 
     const delta = 1 - (e.deltaY > 0 ? WHEEL_ZOOM_FACTOR : -WHEEL_ZOOM_FACTOR);
-    const mousePosition = new Point(e.offsetX, e.offsetY);
+    this.zoomAt(this.content.scale.x * delta, new Point(e.offsetX, e.offsetY));
+  }
 
-    const beforeTransform = this.content.toLocal(mousePosition);
-    this.clampZoom(this.content.scale.x * delta);
-    const afterTransform = this.content.toLocal(mousePosition);
+  private zoomAt(scale: number, anchor: Point) {
+    const before = this.content.toLocal(anchor);
+    this.clampZoom(scale);
+    const after = this.content.toLocal(anchor);
 
-    this.content.position.x += (afterTransform.x - beforeTransform.x) * this.content.scale.x;
-    this.content.position.y += (afterTransform.y - beforeTransform.y) * this.content.scale.y;
+    this.content.position.x += (after.x - before.x) * this.content.scale.x;
+    this.content.position.y += (after.y - before.y) * this.content.scale.y;
 
     this.emitTransformEvent();
   }

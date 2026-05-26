@@ -83,6 +83,6 @@ onErrorCaptured((err, _component, info) => {
     }"
   >
     <AppHeader class="h-10" />
-    <AppMain class="h-[calc(100vh-(--spacing(10)))]" />
+    <AppMain class="h-[calc(100svh-(--spacing(10)))]" />
   </App>
 </template>

@@ -19,6 +19,12 @@ pub enum StitchAction {
     target_stitch: Stitch,
     actual_stitch: Option<Stitch>,
   },
+  RemoveAt {
+    layer_index: u32,
+    x: f32,
+    y: f32,
+    removed_stitches: Option<Vec<Stitch>>,
+  },
 }
 
 impl StitchAction {
@@ -62,6 +68,27 @@ impl StitchAction {
           EditorEvent::PatternChanged(embproj.id),
         ])
       }
+      Self::RemoveAt {
+        layer_index,
+        x,
+        y,
+        removed_stitches,
+      } => {
+        let removed = embproj.pattern.remove_stitches_at_point(*layer_index, *x, *y);
+        removed_stitches.get_or_insert_with(|| removed.clone());
+
+        if removed.is_empty() {
+          return Ok(vec![]);
+        }
+
+        Ok(vec![
+          EditorEvent::StitchesRemove {
+            layer_index: *layer_index,
+            stitches: removed,
+          },
+          EditorEvent::PatternChanged(embproj.id),
+        ])
+      }
     }
   }
 
@@ -98,6 +125,26 @@ impl StitchAction {
           EditorEvent::StitchesAdd {
             layer_index: *layer_index,
             stitches: vec![saved],
+          },
+          EditorEvent::PatternChanged(embproj.id),
+        ])
+      }
+      Self::RemoveAt {
+        layer_index,
+        removed_stitches,
+        ..
+      } => {
+        let saved = removed_stitches.take().ok_or(Error::ActionNotPerformed)?;
+        if saved.is_empty() {
+          return Ok(vec![]);
+        }
+
+        embproj.pattern.add_stitches(*layer_index, saved.clone());
+
+        Ok(vec![
+          EditorEvent::StitchesAdd {
+            layer_index: *layer_index,
+            stitches: saved,
           },
           EditorEvent::PatternChanged(embproj.id),
         ])

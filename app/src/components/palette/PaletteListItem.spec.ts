@@ -44,7 +44,7 @@ describe("PaletteListItem", () => {
     const swatch = getSwatch(screen);
 
     await expect.element(swatch).toHaveStyle(`background-color: ${TEST_PALITEM.hex}`);
-    await expect.element(swatch).toHaveStyle(`color: ${TEST_PALITEM.contrastColor}`);
+    await expect.element(swatch).toHaveStyle(`color: contrast-color(${TEST_PALITEM.hex})`);
   });
 
   test("shows a contrasting outline when selected", async () => {
@@ -57,7 +57,7 @@ describe("PaletteListItem", () => {
 
     screen.rerender({ selected: true });
 
-    await expect.element(swatch).toHaveStyle(`outline-color: ${TEST_PALITEM.contrastColor}`);
+    await expect.element(swatch).toHaveStyle(`outline-color: contrast-color(${TEST_PALITEM.hex})`);
   });
 
   test("renders the composed title when colorOnly is false", async () => {

@@ -105,7 +105,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-x-2">
+  <div class="grid grid-cols-1 gap-x-4 md:grid-cols-2">
     <FormFieldSet :legend="$t('fabric-count-and-kind')">
       <FormField :label="$t('fabric-count')" class="w-full">
         <Select
@@ -163,7 +163,7 @@ onMounted(async () => {
       </p>
     </FormFieldSet>
 
-    <FormFieldSet :legend="$t('fabric-color')" class="row-start-1 row-end-3 w-md">
+    <FormFieldSet :legend="$t('fabric-color')" class="md:col-span-full">
       <PaletteList
         :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
         :options="fabricColors"

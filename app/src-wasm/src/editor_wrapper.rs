@@ -151,10 +151,16 @@ impl EditorWrapper {
     self.add_stitch_impl(project_id, layer_index, stitch_data).await
   }
 
-  /// Removes a stitch from the pattern layer.
+  /// Removes a known stitch from the pattern layer.
   #[wasm_bindgen(js_name = "removeStitch")]
   pub async fn remove_stitch(&self, project_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
     self.remove_stitch_impl(project_id, layer_index, stitch_data).await
+  }
+
+  /// Removes all stitches (Full, Petite, Half, Quarter) at the given raw pattern coordinates.
+  #[wasm_bindgen(js_name = "removeStitchAt")]
+  pub async fn remove_stitch_at(&self, project_id: &str, layer_index: u32, x: f32, y: f32) -> Result<(), Error> {
+    self.remove_stitch_at_impl(project_id, layer_index, x, y).await
   }
 
   /// Updates fabric properties.
@@ -686,27 +692,32 @@ impl EditorWrapper {
   async fn remove_stitch_impl(&self, project_id: &str, layer_index: u32, stitch_data: &[u8]) -> Result<(), Error> {
     let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
     let stitch: Stitch = borsh::from_slice(stitch_data)?;
+    self
+      .dispatch(
+        project_id,
+        EditorAction::Stitch(StitchAction::Remove {
+          layer_index,
+          target_stitch: stitch,
+          actual_stitch: None,
+        }),
+      )
+      .await
+  }
 
-    // This command accepts stitches which don't contain all properties (e.g., the palindex is hard-coded to `0`).
-    // Therefore, we need to get the actual stitch from the pattern to delete exactly it.
-    if let Some(target) = self.run(|editor| {
-      editor
-        .get_pattern(&project_id)
-        .and_then(|embproj| embproj.pattern.get_stitch(layer_index, &stitch))
-    }) {
-      self
-        .dispatch(
-          project_id,
-          EditorAction::Stitch(StitchAction::Remove {
-            layer_index,
-            target_stitch: stitch,
-            actual_stitch: Some(target),
-          }),
-        )
-        .await
-    } else {
-      Ok(())
-    }
+  #[tracing::instrument(name = "EditorWrapper::remove_stitch_at", level = "debug", skip(self), err)]
+  async fn remove_stitch_at_impl(&self, project_id: &str, layer_index: u32, x: f32, y: f32) -> Result<(), Error> {
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
+    self
+      .dispatch(
+        project_id,
+        EditorAction::Stitch(StitchAction::RemoveAt {
+          layer_index,
+          x,
+          y,
+          removed_stitches: None,
+        }),
+      )
+      .await
   }
 
   #[tracing::instrument(name = "EditorWrapper::update_fabric", level = "debug", skip(self, fabric_data), err)]

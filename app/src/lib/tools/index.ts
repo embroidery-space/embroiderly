@@ -13,6 +13,7 @@ import type { Stitch } from "~/lib/pattern/";
 import type { ToolEventDetail } from "~/lib/pixi/";
 
 import { CursorTool } from "./cursor.tool.ts";
+import { EraserTool } from "./eraser.tool.ts";
 import { StitchTool, StitchCorner } from "./stitch.tool.ts";
 
 export const tools = Object.freeze({
@@ -40,6 +41,7 @@ export const tools = Object.freeze({
   Bead: new StitchTool(NodeStitchKind.Bead),
   FrenchKnot: new StitchTool(NodeStitchKind.FrenchKnot),
 
+  Eraser: new EraserTool(),
   Cursor: new CursorTool(),
 });
 
@@ -72,10 +74,16 @@ export interface PatternEditorToolContext extends ToolEventDetail {
      */
     addStitch(stitch: Stitch): Promise<void>;
     /**
-     * Removes a stitch from the pattern.
+     * Removes a known stitch from the pattern.
      * @param stitch The stitch to remove.
      */
     removeStitch(stitch: Stitch): Promise<void>;
+    /**
+     * Removes all stitches (Full, Petite, Half, Quarter) at the given raw pattern coordinates.
+     * @param x Raw x coordinate within pattern bounds.
+     * @param y Raw y coordinate within pattern bounds.
+     */
+    removeStitchAt(x: number, y: number): Promise<void>;
 
     updateReferenceImageSettings(settings: ReferenceImageSettings): Promise<void>;
 
@@ -114,4 +122,4 @@ export interface PatternEditorToolContext extends ToolEventDetail {
   };
 }
 
-export { StitchTool, CursorTool };
+export { StitchTool, EraserTool, CursorTool };

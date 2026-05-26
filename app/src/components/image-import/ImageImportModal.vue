@@ -12,11 +12,12 @@ import {
   InputDimensions,
   InputNumberSlider,
   Progress,
+  ScrollArea,
   Separator,
   useToast,
 } from "@embroiderly/ui";
 
-import { useDebounceFn, useDropZone } from "@vueuse/core";
+import { useDebounceFn, useDropZone, useMediaQuery } from "@vueuse/core";
 import { ref, reactive, onMounted, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
 
 import { PatternCanvas } from "~/components/canvas/";
@@ -43,6 +44,8 @@ const filePicker = useFilePicker();
 const toast = useToast();
 
 const service = new ImageImportService();
+
+const isMobilePortrait = useMediaQuery("(max-width: 767px) and (orientation: portrait)");
 
 const imageFile = ref(props.imageFile);
 const imageDimensions = ref<[number, number]>([0, 0]);
@@ -169,10 +172,17 @@ onUnmounted(() => service.destroy());
 </script>
 
 <template>
-  <Dialog :title="$t('image-import')" :ui="{ content: 'size-full', body: 'p-0!' }">
+  <Dialog :title="$t('image-import')" :scroll="false" :ui="{ content: 'size-full', body: 'p-0!' }">
     <template #body>
-      <div class="flex h-full">
-        <div class="w-80 shrink-0 space-y-2 overflow-y-auto p-4 sm:p-6">
+      <div class="flex h-full" :class="{ 'flex-col': isMobilePortrait }">
+        <ScrollArea
+          type="auto"
+          size="sm"
+          :ui="{
+            root: isMobilePortrait ? 'max-h-1/4 w-full shrink-0' : 'w-80 shrink-0',
+            viewport: 'space-y-2 p-4 sm:p-6',
+          }"
+        >
           <FilePicker :model-value="imageFile?.name ?? 'No image selected'" class="w-full" @pick="pickImageFile" />
 
           <InputDimensions
@@ -223,9 +233,9 @@ onUnmounted(() => service.destroy());
               />
             </FormField>
           </FormFieldSet>
-        </div>
+        </ScrollArea>
 
-        <Separator decorative orientation="vertical" size="sm" />
+        <Separator decorative :orientation="isMobilePortrait ? 'horizontal' : 'vertical'" size="sm" />
 
         <BlockUI ref="drop-zone" :blocked="importing || isOverDropZone" class="flex min-h-0 min-w-0 flex-1 flex-col">
           <Progress v-if="importing" size="sm" class="absolute top-0 rounded-none" />

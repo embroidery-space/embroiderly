@@ -380,6 +380,7 @@ async function updatePaletteDisplaySettings() {
         :display-settings="effectiveDisplaySettings"
         :disabled="disabled"
         :draggable="editorStateStore.paletteMode === PaletteMode.Editing"
+        :scroll="{ type: 'hover', size: 'sm' }"
         selection-behavior="replace"
         class="grow"
         @reorder="({ oldPosition, newPosition }) => patternStore.reorderPaletteItems(oldPosition, newPosition)"

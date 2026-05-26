@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import { Separator, ToolSelect, useRemToPx } from "@embroiderly/ui";
+import { ScrollArea, Separator, ToolSelect, useRemToPx } from "@embroiderly/ui";
 import type { ToolSelectItem, ToolSelectProps } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
 import {
   IconCursor,
+  IconEraser,
   IconStitchBack,
   IconStitchBead,
   IconStitchFrenchKnot,
@@ -189,6 +190,15 @@ const nodestitches = computed<ToolSelectItem[]>(() => [
   },
 ]);
 
+const eraser = computed<ToolSelectItem[]>(() => [
+  {
+    value: tools.Eraser,
+    label: fluent.$t("palette-toolbar-eraser"),
+    icon: IconEraser,
+    shortcut: "E",
+  },
+]);
+
 const cursor = computed<ToolSelectItem[]>(() => [
   {
     value: tools.Cursor,
@@ -208,6 +218,7 @@ useShortcuts(
       ...quarterstitches.value,
       ...linestitches.value,
       ...nodestitches.value,
+      ...eraser.value,
       ...cursor.value,
     ].map((item) => ({
       shortcut: item.shortcut,
@@ -217,19 +228,10 @@ useShortcuts(
     })),
   ),
 );
-
-// Define shorter key sequences for enabling top-left and bottom-left positional stitch tools if the user hasn't typed the full shortcut.
-useShortcuts({
-  "P-T": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
-  "P-B": () => (editorStateStore.selectedTool = tools.PetiteStitchBL),
-
-  "Q-T": () => (editorStateStore.selectedTool = tools.QuarterStitchTL),
-  "Q-B": () => (editorStateStore.selectedTool = tools.QuarterStitchBL),
-});
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 p-1">
+  <ScrollArea class="h-full" orientation="vertical" size="sm" type="hover" :ui="{ viewport: 'flex flex-col gap-1' }">
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="fullstitches" />
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="petitestitches" />
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="halfstitches" />
@@ -242,8 +244,14 @@ useShortcuts({
     <ToolSelect
       v-model="editorStateStore.selectedTool"
       v-bind="toolSelectProps"
+      :items="eraser"
+      :selection-color="undefined"
+    />
+    <ToolSelect
+      v-model="editorStateStore.selectedTool"
+      v-bind="toolSelectProps"
       :items="cursor"
       :selection-color="undefined"
     />
-  </div>
+  </ScrollArea>
 </template>
