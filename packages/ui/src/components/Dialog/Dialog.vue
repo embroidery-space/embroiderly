@@ -37,7 +37,7 @@ export interface DialogProps extends Pick<DialogRootProps, "open" | "defaultOpen
   /**
    * Configuration for the body scroll area.
    * Set to `false` to disable, `true` to use defaults.
-   * @default { type: "always", size: "sm" }
+   * @default { type: "auto", size: "sm" }
    */
   scroll?: boolean | Pick<ScrollAreaProps, "type" | "size" | "ui">;
 
@@ -61,6 +61,7 @@ export interface DialogSlots {
 const props = withDefaults(defineProps<DialogProps>(), {
   dismissible: true,
   portal: true,
+  scroll: true,
 });
 const emits = defineEmits<DialogEmits>();
 const slots = defineSlots<DialogSlots>();
@@ -72,7 +73,7 @@ const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen"
 const portalProps = usePortal(toRef(() => props.portal));
 const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
   if (props.scroll === false) return null;
-  return defu(typeof props.scroll === "object" ? props.scroll : {}, { type: "always", size: "sm" } as const);
+  return defu(typeof props.scroll === "object" ? props.scroll : {}, { type: "auto", size: "sm" } as const);
 });
 
 // eslint-disable-next-line vue/no-dupe-keys

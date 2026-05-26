@@ -13,7 +13,12 @@ exports[`Dialog > renders correctly with class 1`] = `
         </svg>
       </button>
     </header>
-    <div class="overflow-hidden p-4" data-slot="body">Dialog body content</div>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
     <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
   </div>
 </div>
@@ -33,7 +38,12 @@ exports[`Dialog > renders correctly with description 1`] = `
         </svg>
       </button>
     </header>
-    <div class="overflow-hidden p-4" data-slot="body">Dialog body content</div>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
     <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
   </div>
 </div>
@@ -52,7 +62,12 @@ exports[`Dialog > renders correctly with non-dismissible 1`] = `
         </svg>
       </button>
     </header>
-    <div class="overflow-hidden p-4" data-slot="body">Dialog body content</div>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
     <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
   </div>
 </div>
@@ -71,7 +86,12 @@ exports[`Dialog > renders correctly with title 1`] = `
         </svg>
       </button>
     </header>
-    <div class="overflow-hidden p-4" data-slot="body">Dialog body content</div>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
     <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
   </div>
 </div>
@@ -90,7 +110,12 @@ exports[`Dialog > renders correctly with ui 1`] = `
         </svg>
       </button>
     </header>
-    <div class="overflow-hidden p-4" data-slot="body">Dialog body content</div>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
     <footer class="flex gap-1.5 items-center justify-start p-4" data-slot="footer">Footer content</footer>
   </div>
 </div>
