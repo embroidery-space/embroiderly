@@ -108,6 +108,7 @@ onMounted(async () => {
               render: { antialias: settingsStore.viewport.antialias },
               viewport: { wheelAction: settingsStore.viewport.wheelAction },
             }"
+            class="size-full"
           />
         </BlockUI>
 

@@ -14,6 +14,8 @@ import { LoggerService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "~/stores/";
 import { addSymbolFonts } from "~/utils/font-face.ts";
 
+defineOptions({ inheritAttrs: false });
+
 const props = defineProps<{ options?: PatternApplicationOptions }>();
 
 const { events, files } = useEditor();
@@ -203,10 +205,10 @@ async function loadSymbolFonts(fonts: string[]) {
   <ContextMenu :items="canvasContextMenuOptions">
     <PatternCanvas
       ref="patternCanvas"
+      v-bind="$attrs"
       :pattern="patternStore.pattern"
       :options="props.options"
       enable-tool-events
-      class="size-full"
       @tool-main-action="handleToolMainAction"
       @tool-anti-action="handleToolAntiAction"
       @tool-release="handleToolRelease"
