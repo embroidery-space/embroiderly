@@ -1,8 +1,7 @@
 import { b } from "@zorsh/zorsh";
 import { Color } from "pixi.js";
 
-import { PaletteSettings } from "./palette";
-import { BasePaletteItem } from "./palette";
+import { BasePaletteItem } from "./palette.ts";
 
 export class Fabric {
   width: number;
@@ -51,12 +50,8 @@ export class FabricColor extends BasePaletteItem {
     color: b.string(),
   });
 
-  getTitle(_options?: PaletteSettings) {
+  getTitle() {
     return this.name;
-  }
-
-  equals(other: FabricColor) {
-    return this.name === other.name;
   }
 }
 

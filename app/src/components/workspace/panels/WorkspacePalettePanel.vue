@@ -330,7 +330,9 @@ async function handleAddPaletteItem(palitem: PaletteItem) {
 
   if (editorStateStore.selectedPaletteItemIndex !== undefined) return;
 
-  const insertedIndex = patternStore.pattern.palette.items.findIndex((pi) => pi.equals(palitem));
+  const insertedIndex = patternStore.pattern.palette.items.findIndex(
+    (pi) => pi.brand === palitem.brand && pi.number === palitem.number,
+  );
   if (insertedIndex !== -1) editorStateStore.selectedPaletteItemIndex = insertedIndex;
 }
 

@@ -1,4 +1,4 @@
-import { dequal } from "dequal/lite";
+import { isEqual } from "es-toolkit";
 import { Container, Graphics, GraphicsContext, Particle, ParticleContainer, Text, TextStyle, Texture } from "pixi.js";
 import type {
   ColorSource,
@@ -49,7 +49,7 @@ export class StitchGraphicsContainer extends Container implements StitchContaine
   removeStitch(stitch: Stitch) {
     const index = this.children.findIndex((item) => {
       const graphics = item as StitchGraphics;
-      return dequal(graphics.stitch, stitch);
+      return isEqual(graphics.stitch, stitch);
     });
     if (index !== -1) this.removeChildAt(index);
   }
@@ -85,7 +85,7 @@ export class StitchParticleContainer extends ParticleContainer implements Stitch
   removeStitch(stitch: Stitch) {
     const index = this.particleChildren.findIndex((item) => {
       const particle = item as StitchParticle;
-      return dequal(particle.stitch, stitch);
+      return isEqual(particle.stitch, stitch);
     });
     if (index !== -1) this.removeParticleAt(index);
   }
@@ -112,7 +112,7 @@ export class StitchSymbolsContainer extends Container implements StitchContainer
   removeStitch(stitch: Stitch) {
     const index = this.children.findIndex((item) => {
       const symbol = item as StitchSymbol;
-      return dequal(symbol.stitch, stitch);
+      return isEqual(symbol.stitch, stitch);
     });
     if (index !== -1) this.removeChildAt(index);
   }
