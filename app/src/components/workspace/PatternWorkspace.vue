@@ -208,7 +208,6 @@ async function loadSymbolFonts(fonts: string[]) {
       v-bind="$attrs"
       :pattern="patternStore.pattern"
       :options="props.options"
-      enable-tool-events
       @tool-main-action="handleToolMainAction"
       @tool-anti-action="handleToolAntiAction"
       @tool-release="handleToolRelease"

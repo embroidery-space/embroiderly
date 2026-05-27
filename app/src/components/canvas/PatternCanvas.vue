@@ -10,7 +10,6 @@ import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail }
 interface PatternCanvasProps {
   pattern?: Pattern;
   options?: PatternApplicationOptions;
-  enableToolEvents?: boolean;
 }
 
 interface PatternCanvasEmits {
@@ -23,7 +22,6 @@ interface PatternCanvasEmits {
 const props = withDefaults(defineProps<PatternCanvasProps>(), {
   pattern: undefined,
   options: undefined,
-  enableToolEvents: false,
 });
 const emit = defineEmits<PatternCanvasEmits>();
 
@@ -132,17 +130,17 @@ watch(
 );
 
 useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolMainAction, (e) => {
-  if (props.enableToolEvents) emit("tool-main-action", e.detail);
+  emit("tool-main-action", e.detail);
 });
 useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolAntiAction, (e) => {
-  if (props.enableToolEvents) emit("tool-anti-action", e.detail);
+  emit("tool-anti-action", e.detail);
 });
 useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolRelease, (e) => {
-  if (props.enableToolEvents) emit("tool-release", e.detail);
+  emit("tool-release", e.detail);
 });
 useEventListener<CustomEvent<TransformEventDetail>>(patternApplication, ToolEvent.Transform, (e) => {
   patternApplication.view?.adjustZoom(e.detail.scale, e.detail.bounds);
-  if (props.enableToolEvents) emit("transform", e.detail);
+  emit("transform", e.detail);
 });
 
 defineExpose({
