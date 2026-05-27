@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, ContextMenu, DropdownMenu, SplitterPanel, useToast } from "@embroiderly/ui";
+import {
+  Button,
+  ButtonIcon,
+  ContextMenu,
+  DropdownMenu,
+  SplitterPanel,
+  useForwardPropsEmits,
+  useToast,
+} from "@embroiderly/ui";
 import type { ContextMenuItem, DropdownMenuItem, SplitterPanelProps, SplitterPanelEmits } from "@embroiderly/ui";
 
-import { useForwardPropsEmits } from "reka-ui";
 import { computed, reactive, ref, useTemplateRef, watch } from "vue";
 
 import { IconCheck, IconMenu, IconPalette } from "~/assets/icons/";

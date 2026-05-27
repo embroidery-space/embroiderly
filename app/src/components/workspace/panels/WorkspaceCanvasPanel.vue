@@ -8,10 +8,10 @@ import {
   ToolToggle,
   ToolToggleGroup,
   useConfirm,
+  useForwardPropsEmits,
 } from "@embroiderly/ui";
 import type { SplitterPanelProps, SplitterPanelEmits, ToolToggleItem } from "@embroiderly/ui";
 
-import { useForwardPropsEmits } from "reka-ui";
 import { computed, useTemplateRef, watch } from "vue";
 
 import {
