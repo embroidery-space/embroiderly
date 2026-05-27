@@ -7,6 +7,7 @@ import type { DisplaySettings, LineStitch, NodeStitch, Pattern } from "~/lib/pat
 import { PatternApplication } from "~/lib/pixi/";
 import { ToolEvent } from "~/lib/types/";
 import type {
+  PatternOptions,
   RenderOptions,
   TextureManagerOptions,
   ToolEventDetail,
@@ -19,6 +20,7 @@ export interface PatternCanvasProps {
   renderOptions?: RenderOptions;
   viewportOptions?: ViewportOptions;
   textureManagerOptions?: TextureManagerOptions;
+  patternOptions?: PatternOptions;
 }
 
 export interface PatternCanvasEmits {
@@ -43,6 +45,7 @@ function updatePatternView(pattern: Pattern) {
   patternAbortController = new AbortController();
 
   const patternView = patternApplication.setView(pattern);
+  if (props.patternOptions?.layerLayout) patternView.layerLayout = props.patternOptions.layerLayout;
 
   const { signal } = patternAbortController;
 
@@ -132,6 +135,14 @@ watch(
   (pattern, oldPattern) => {
     if (!pattern || pattern.id === oldPattern?.id) return;
     updatePatternView(pattern);
+  },
+);
+
+watch(
+  () => props.patternOptions?.layerLayout,
+  (layerLayout) => {
+    if (!patternApplication.view) return;
+    if (layerLayout) patternApplication.view.layerLayout = layerLayout;
   },
 );
 

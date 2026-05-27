@@ -5,7 +5,8 @@ import { computed, reactive, ref, watch } from "vue";
 
 import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
-import type { RenderOptions, ViewportOptions } from "~/lib/types/";
+import { LayerLayout } from "~/lib/types/";
+import type { PatternOptions, RenderOptions, ViewportOptions } from "~/lib/types/";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
@@ -31,6 +32,7 @@ export interface StartupOptions {
 export interface CanvasOptions {
   renderOptions: RenderOptions;
   viewportOptions: ViewportOptions;
+  patternOptions: PatternOptions;
 }
 
 export interface UpdaterOptions {
@@ -113,6 +115,7 @@ export const useSettingsStore = defineStore(
     const canvas = reactive<CanvasOptions>({
       renderOptions: { antialias: true },
       viewportOptions: { wheelAction: "zoom" },
+      patternOptions: { layerLayout: LayerLayout.ByStitchType },
     });
 
     const updater = reactive<UpdaterOptions>({

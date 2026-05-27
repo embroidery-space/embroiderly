@@ -25,6 +25,7 @@ import {
   SpecialStitchModel,
 } from "~/lib/pattern/";
 import type { Stitch } from "~/lib/pattern/";
+import { LayerLayout } from "~/lib/types/";
 
 import { STITCH_SCALE_FACTOR } from "../../constants.ts";
 import { TextureManager } from "../../texture-manager.ts";
@@ -55,6 +56,21 @@ interface LayerContainers {
   frenchknots: StitchGraphicsContainer;
   beads: StitchGraphicsContainer;
 }
+
+const STITCH_TYPES_BEFORE_GRID = [
+  "fullstitches",
+  "petitestitches",
+  "halfstitches",
+  "quarterstitches",
+  "symbols",
+] as const;
+const STITCH_TYPES_AFTER_GRID = [
+  "specialstitches",
+  "backstitches",
+  "straightstitches",
+  "frenchknots",
+  "beads",
+] as const;
 
 function createLayerContainers(layerIndex: number): LayerContainers {
   return {
@@ -101,36 +117,18 @@ export class PatternView extends Container {
   private displayMode: DisplayMode | undefined;
   private showSymbols = false;
 
-  private stages = {
-    // lowest
-    fabric: new FabricView(),
+  #referenceImage = new ReferenceImageView();
 
-    referenceImage: new ReferenceImageView(),
+  #fabric = new FabricView();
+  #grid = new GridView();
+  #rulers = new Rulers();
 
-    fullstitches: new Container({ label: "Full Stitches" }),
-    petitestitches: new Container({ label: "Petite Stitches" }),
+  #layerLayout: LayerLayout = LayerLayout.ByStitchType;
+  #layerContainers = new Map<number, LayerContainers>();
 
-    halfstitches: new Container({ label: "Half Stitches" }),
-    quarterstitches: new Container({ label: "Quarter Stitches" }),
+  #stitchesHint = new StitchesHint();
 
-    symbols: new Container({ label: "Symbols" }),
-
-    grid: new GridView(),
-
-    specialstitches: new Container({ label: "Special Stitches", eventMode: "passive", interactiveChildren: true }),
-    backstitches: new Container({ label: "Back Stitches", eventMode: "passive", interactiveChildren: true }),
-    straightstitches: new Container({ label: "Straight Stitches", eventMode: "passive", interactiveChildren: true }),
-
-    frenchknots: new Container({ label: "French Knots", eventMode: "passive", interactiveChildren: true }),
-    beads: new Container({ label: "Beads", eventMode: "passive", interactiveChildren: true }),
-
-    stitchesHint: new StitchesHint(),
-    rulers: new Rulers(),
-    // highest
-  };
-  private overlay = new RenderLayer();
-
-  private layerContainers = new Map<number, LayerContainers>();
+  #overlay = new RenderLayer();
 
   constructor(pattern: Pattern, textureManager: TextureManager) {
     super({ label: "Pattern", isRenderGroup: true });
@@ -147,7 +145,7 @@ export class PatternView extends Container {
 
     // Initialize layer containers.
     for (const layer of pattern.layers.items) {
-      this.layerContainers.set(layer.index, createLayerContainers(layer.index));
+      this.#layerContainers.set(layer.index, createLayerContainers(layer.index));
     }
 
     // Set display settings.
@@ -159,7 +157,7 @@ export class PatternView extends Container {
     // Add stitches from each layer to their containers.
     // This must be performed after display settings are set (textures need to be initialized).
     for (const layer of pattern.layers.items) {
-      const lc = this.layerContainers.get(layer.index)!;
+      const lc = this.#layerContainers.get(layer.index)!;
 
       for (const stitch of layer.fullstitches) {
         this.addFullStitch(stitch, lc);
@@ -180,10 +178,9 @@ export class PatternView extends Container {
       }
     }
 
-    // Populate stages with per-layer containers in visual order, then assemble the scene graph.
-    this.reorderLayers();
-    this.addChild(...Object.values(this.stages), this.overlay);
-    this.overlay.attach(this.stages.referenceImage.controls);
+    // Assemble the scene graph and wire the overlay.
+    this.#rebuildSceneGraph();
+    this.#overlay.attach(this.#referenceImage.controls);
   }
 
   override destroy(options?: DestroyOptions) {
@@ -195,27 +192,27 @@ export class PatternView extends Container {
 
   setFabric(fabric: Fabric) {
     const { width, height } = fabric;
-    this.stages.fabric.setFabric(fabric);
+    this.#fabric.setFabric(fabric);
 
     // Set the container bounds.
     this.boundsArea = new Rectangle(0, 0, width, height);
 
     // If the grid is set, adjust it to the new fabric.
-    const grid = this.stages.grid.original;
+    const grid = this.#grid.original;
     if (grid) {
-      this.stages.grid.setGrid(width, height, grid);
-      this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
+      this.#grid.setGrid(width, height, grid);
+      this.#rulers.setRulers(width, height, grid.majorLinesInterval);
     }
   }
 
   setGrid(grid: Grid) {
-    const { width, height } = this.stages.fabric.original;
-    this.stages.grid.setGrid(width, height, grid);
-    this.stages.rulers.setRulers(width, height, grid.majorLinesInterval);
+    const { width, height } = this.#fabric.original;
+    this.#grid.setGrid(width, height, grid);
+    this.#rulers.setRulers(width, height, grid.majorLinesInterval);
   }
 
   addStitch(stitch: Stitch, layerIndex: number) {
-    const lc = this.layerContainers.get(layerIndex);
+    const lc = this.#layerContainers.get(layerIndex);
     if (!lc) return;
 
     if (stitch instanceof FullStitch) this.addFullStitch(stitch, lc);
@@ -227,7 +224,7 @@ export class PatternView extends Container {
   }
 
   removeStitch(stitch: Stitch, layerIndex: number) {
-    const lc = this.layerContainers.get(layerIndex);
+    const lc = this.#layerContainers.get(layerIndex);
     if (!lc) return;
 
     if (stitch instanceof FullStitch) this.removeFullStitch(stitch, lc);
@@ -389,7 +386,127 @@ export class PatternView extends Container {
     lc.specialstitches.addChild(graphics);
   }
 
-  private syncLayerContainers(lc: LayerContainers, layer: Layer) {
+  setDisplayMode(displayMode: DisplayMode | undefined) {
+    this.displayMode = displayMode;
+    for (const [index, lc] of this.#layerContainers) {
+      const layer = this.layers.get(index);
+      if (layer) this.#syncLayerContainers(lc, layer);
+    }
+  }
+
+  setShowSymbols(value: boolean) {
+    this.showSymbols = value;
+    this.setDisplayMode(this.displayMode);
+  }
+
+  setShowGrid(value: boolean) {
+    this.#grid.visible = value;
+    this.#grid.renderable = value;
+  }
+
+  setShowRulers(value: boolean) {
+    this.#rulers.visible = value;
+    this.#rulers.renderable = value;
+  }
+
+  setDisplaySettings(settings: DisplaySettings) {
+    this.setDisplayMode(settings.displayMode);
+    this.setShowSymbols(settings.showSymbols);
+    this.setShowGrid(settings.showGrid);
+    this.setShowRulers(settings.showRulers);
+  }
+
+  addLayer(layerIndex: number) {
+    const lc = createLayerContainers(layerIndex);
+    this.#layerContainers.set(layerIndex, lc);
+
+    const layer = this.layers.get(layerIndex);
+    if (layer) this.#syncLayerContainers(lc, layer);
+
+    this.#rebuildSceneGraph();
+  }
+
+  removeLayer(layerIndex: number) {
+    const lc = this.#layerContainers.get(layerIndex);
+    if (!lc) return;
+
+    this.#layerContainers.delete(layerIndex);
+    for (const container of Object.values(lc)) container.destroy({ children: true });
+
+    this.#rebuildSceneGraph();
+  }
+
+  updateLayerVisibility(layerIndex: number) {
+    const lc = this.#layerContainers.get(layerIndex);
+    const layer = this.layers.get(layerIndex);
+    if (lc && layer) this.#syncLayerContainers(lc, layer);
+  }
+
+  reorderLayers() {
+    this.#rebuildSceneGraph();
+  }
+
+  get layerLayout() {
+    return this.#layerLayout;
+  }
+  set layerLayout(value: LayerLayout) {
+    if (value === this.#layerLayout) return;
+    this.#layerLayout = value;
+    this.#rebuildSceneGraph();
+  }
+
+  #rebuildSceneGraph() {
+    this.removeChildren();
+
+    const visualLayers = this.layers.itemsInVisualOrder
+      .reverse()
+      .map((l) => this.#layerContainers.get(l.index))
+      .filter(Boolean) as LayerContainers[];
+
+    const [stitchTypesBeforeGrid, stitchTypesAfterGrid] =
+      this.#layerLayout === LayerLayout.ByLayerOrder
+        ? this.#assembleLayerFirstOrder(visualLayers)
+        : this.#assembleStitchFirstOrder(visualLayers);
+
+    this.addChild(
+      this.#fabric,
+      this.#referenceImage,
+      ...stitchTypesBeforeGrid,
+      this.#grid,
+      ...stitchTypesAfterGrid,
+      this.#stitchesHint,
+      this.#rulers,
+      this.#overlay,
+    );
+  }
+
+  #assembleStitchFirstOrder(layers: LayerContainers[]): [Container[], Container[]] {
+    const beforeGrid: Container[] = [];
+    for (const type of STITCH_TYPES_BEFORE_GRID) {
+      for (const lc of layers) beforeGrid.push(lc[type]);
+    }
+
+    const afterGrid: Container[] = [];
+    for (const type of STITCH_TYPES_AFTER_GRID) {
+      for (const lc of layers) afterGrid.push(lc[type]);
+    }
+
+    return [beforeGrid, afterGrid];
+  }
+
+  #assembleLayerFirstOrder(layers: LayerContainers[]): [Container[], Container[]] {
+    const beforeGrid: Container[] = [];
+    const afterGrid: Container[] = [];
+
+    for (const lc of layers) {
+      for (const type of STITCH_TYPES_BEFORE_GRID) beforeGrid.push(lc[type]);
+      for (const type of STITCH_TYPES_AFTER_GRID) afterGrid.push(lc[type]);
+    }
+
+    return [beforeGrid, afterGrid];
+  }
+
+  #syncLayerContainers(lc: LayerContainers, layer: Layer) {
     const d = Boolean(this.displayMode);
     const l = layer.visible;
 
@@ -413,89 +530,6 @@ export class PatternView extends Container {
     lc.beads.visible = l && layer.beadsVisible;
   }
 
-  setDisplayMode(displayMode: DisplayMode | undefined) {
-    this.displayMode = displayMode;
-    for (const [index, lc] of this.layerContainers) {
-      const layer = this.layers.get(index);
-      if (layer) this.syncLayerContainers(lc, layer);
-    }
-  }
-
-  setShowSymbols(value: boolean) {
-    this.showSymbols = value;
-    this.setDisplayMode(this.displayMode);
-  }
-
-  setShowGrid(value: boolean) {
-    this.stages.grid.visible = value;
-    this.stages.grid.renderable = value;
-  }
-
-  setShowRulers(value: boolean) {
-    this.stages.rulers.visible = value;
-    this.stages.rulers.renderable = value;
-  }
-
-  setDisplaySettings(settings: DisplaySettings) {
-    this.setDisplayMode(settings.displayMode);
-    this.setShowSymbols(settings.showSymbols);
-    this.setShowGrid(settings.showGrid);
-    this.setShowRulers(settings.showRulers);
-  }
-
-  addLayer(layerIndex: number) {
-    const lc = createLayerContainers(layerIndex);
-    this.layerContainers.set(layerIndex, lc);
-
-    const layer = this.layers.get(layerIndex);
-    if (layer) this.syncLayerContainers(lc, layer);
-
-    this.reorderLayers();
-  }
-
-  removeLayer(layerIndex: number) {
-    const lc = this.layerContainers.get(layerIndex);
-    if (!lc) return;
-
-    this.layerContainers.delete(layerIndex);
-    for (const container of Object.values(lc)) container.destroy({ children: true });
-  }
-
-  updateLayerVisibility(layerIndex: number) {
-    const lc = this.layerContainers.get(layerIndex);
-    const layer = this.layers.get(layerIndex);
-    if (lc && layer) this.syncLayerContainers(lc, layer);
-  }
-
-  reorderLayers() {
-    this.stages.fullstitches.removeChildren();
-    this.stages.petitestitches.removeChildren();
-    this.stages.halfstitches.removeChildren();
-    this.stages.quarterstitches.removeChildren();
-    this.stages.symbols.removeChildren();
-    this.stages.specialstitches.removeChildren();
-    this.stages.backstitches.removeChildren();
-    this.stages.straightstitches.removeChildren();
-    this.stages.frenchknots.removeChildren();
-    this.stages.beads.removeChildren();
-
-    for (const layer of [...this.layers.itemsInVisualOrder].reverse()) {
-      const lc = this.layerContainers.get(layer.index);
-      if (!lc) continue;
-
-      this.stages.fullstitches.addChild(lc.fullstitches);
-      this.stages.petitestitches.addChild(lc.petitestitches);
-      this.stages.halfstitches.addChild(lc.halfstitches);
-      this.stages.quarterstitches.addChild(lc.quarterstitches);
-      this.stages.symbols.addChild(lc.symbols);
-      this.stages.specialstitches.addChild(lc.specialstitches);
-      this.stages.backstitches.addChild(lc.backstitches);
-      this.stages.straightstitches.addChild(lc.straightstitches);
-      this.stages.frenchknots.addChild(lc.frenchknots);
-      this.stages.beads.addChild(lc.beads);
-    }
-  }
-
   async setReferenceImage(
     image: ReferenceImage,
     options?: {
@@ -508,41 +542,41 @@ export class PatternView extends Container {
     },
   ) {
     // Set the image and its settings.
-    await this.stages.referenceImage.setImage(image);
+    await this.#referenceImage.setImage(image);
 
     if (options?.fit ?? true) {
-      const { width, height } = this.stages.fabric;
-      this.stages.referenceImage.fit(width, height);
+      const { width, height } = this.#fabric;
+      this.#referenceImage.fit(width, height);
     }
   }
 
   removeReferenceImage() {
-    this.stages.referenceImage.removeImage();
+    this.#referenceImage.removeImage();
   }
 
   focusReferenceImage() {
-    this.stages.referenceImage.focus();
+    this.#referenceImage.focus();
   }
 
   blurReferenceImage() {
-    this.stages.referenceImage.blur();
+    this.#referenceImage.blur();
   }
 
   get referenceImageSettings() {
-    return this.stages.referenceImage.settings;
+    return this.#referenceImage.settings;
   }
   set referenceImageSettings(settings: ReferenceImageSettings) {
-    this.stages.referenceImage.settings = settings;
+    this.#referenceImage.settings = settings;
   }
 
   drawLineHint(stitch: LineStitch) {
     const palitem = this.palette[stitch.palindex]!;
-    this.stages.stitchesHint.drawLine(stitch, palitem.color);
+    this.#stitchesHint.drawLine(stitch, palitem.color);
   }
 
   drawNodeHint(stitch: NodeStitch) {
     const palitem = this.palette[stitch.palindex]!;
-    this.stages.stitchesHint.drawNode(stitch, palitem.color, this.#textureManager.getNodeTexture(stitch.kind));
+    this.#stitchesHint.drawNode(stitch, palitem.color, this.#textureManager.getNodeTexture(stitch.kind));
   }
 
   /**
@@ -551,7 +585,7 @@ export class PatternView extends Container {
    * @param bounds - The bounds of the viewport to adjust the ruler position.
    */
   adjustZoom(zoom: number, bounds?: Bounds) {
-    this.stages.grid.renderGrid();
-    this.stages.rulers.renderRulers(zoom, bounds);
+    this.#grid.renderGrid();
+    this.#rulers.renderRulers(zoom, bounds);
   }
 }
