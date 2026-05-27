@@ -1,9 +1,12 @@
-export type WheelAction = "zoom" | "scroll";
+export const enum WheelAction {
+  Zoom = "zoom",
+  Scroll = "scroll",
+}
 
 export interface ViewportOptions {
   /**
    * The action to take when the user scrolls the wheel over the viewport.
-   * @default "zoom"
+   * @default WheelAction.Zoom
    */
   wheelAction?: WheelAction;
 }

@@ -6,7 +6,7 @@ import { computed } from "vue";
 
 import { IconLaptop, IconMoon, IconSun } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import { LayerLayout } from "~/lib/types/";
+import { LayerLayout, WheelAction } from "~/lib/types/";
 import { StartupAction, useSettingsStore } from "~/stores/";
 import type {
   CanvasOptions,
@@ -66,8 +66,8 @@ const startupActionOptions = computed(() => [
 ]);
 
 const wheelActionOptions = computed(() => [
-  { label: fluent.$t("settings-workarea-viewport-wheel-action-zoom"), value: "zoom" },
-  { label: fluent.$t("settings-workarea-viewport-wheel-action-scroll"), value: "scroll" },
+  { label: fluent.$t("settings-workarea-viewport-wheel-action-zoom"), value: WheelAction.Zoom },
+  { label: fluent.$t("settings-workarea-viewport-wheel-action-scroll"), value: WheelAction.Scroll },
 ]);
 
 const layerLayoutOptions = computed(() => [

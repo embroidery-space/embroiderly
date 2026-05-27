@@ -1,15 +1,8 @@
 import { Container, Point, Rectangle } from "pixi.js";
 import type { ContainerChild, DestroyOptions, FederatedPointerEvent } from "pixi.js";
 
-import { ToolEvent } from "~/lib/types/";
-import type {
-  Modifiers,
-  ToolEventDetail,
-  TransformEventDetail,
-  ViewportOptions,
-  WheelAction,
-  ZoomState,
-} from "~/lib/types/";
+import { ToolEvent, WheelAction } from "~/lib/types/";
+import type { Modifiers, ToolEventDetail, TransformEventDetail, ViewportOptions, ZoomState } from "~/lib/types/";
 
 import { MIN_SCALE, MAX_SCALE, DEFAULT_CONTAINER_OPTIONS } from "./constants.ts";
 import { getMouseButtons, mod1, mod2, mod3 } from "./utils/index.ts";
@@ -60,7 +53,7 @@ interface TouchState {
 export class PatternViewport extends Container {
   private domElement!: HTMLElement;
 
-  wheelAction: WheelAction = "zoom";
+  wheelAction = WheelAction.Zoom;
 
   screenWidth = window.innerWidth;
   screenHeight = window.innerHeight;
@@ -101,7 +94,7 @@ export class PatternViewport extends Container {
   init(domElement: HTMLElement, options?: ViewportOptions) {
     this.domElement = domElement;
 
-    this.wheelAction = options?.wheelAction ?? "zoom";
+    if (options?.wheelAction) this.wheelAction = options.wheelAction;
 
     this.on("pointerdown", this.handlePointerDown, this);
     this.on("pointermove", this.handlePointerMove, this);
@@ -454,10 +447,10 @@ export class PatternViewport extends Container {
     e.preventDefault();
 
     // We use the mod3 to switch between scroll and zoom actions.
-    const [wheelAction, altWheelAction] = [this.wheelAction, this.wheelAction === "scroll" ? "zoom" : "scroll"];
-    const actualWheelAction = mod3(e) ? altWheelAction : wheelAction;
+    const altWheelAction = this.wheelAction === WheelAction.Scroll ? WheelAction.Zoom : WheelAction.Scroll;
+    const actualWheelAction = mod3(e) ? altWheelAction : this.wheelAction;
 
-    if (actualWheelAction === "scroll") this.handleWheelScroll(e);
+    if (actualWheelAction === WheelAction.Scroll) this.handleWheelScroll(e);
     else this.handleWheelZoom(e);
   }
 

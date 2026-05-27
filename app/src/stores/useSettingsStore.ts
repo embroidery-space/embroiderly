@@ -5,7 +5,7 @@ import { computed, reactive, ref, watch } from "vue";
 
 import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
-import { LayerLayout } from "~/lib/types/";
+import { LayerLayout, WheelAction } from "~/lib/types/";
 import type { PatternOptions, RenderOptions, ViewportOptions } from "~/lib/types/";
 
 export type Theme = "light" | "dark" | "system";
@@ -114,7 +114,7 @@ export const useSettingsStore = defineStore(
 
     const canvas = reactive<CanvasOptions>({
       renderOptions: { antialias: true },
-      viewportOptions: { wheelAction: "zoom" },
+      viewportOptions: { wheelAction: WheelAction.Zoom },
       patternOptions: { layerLayout: LayerLayout.ByStitchType },
     });
 
