@@ -14,7 +14,7 @@ const settingsStore = useSettingsStore();
       <AppSettingsForm
         v-model:ui="settingsStore.ui"
         v-model:startup="settingsStore.startup"
-        v-model:viewport="settingsStore.viewport"
+        v-model:canvas="settingsStore.canvas"
         v-model:updater="settingsStore.updater"
         v-model:telemetry="settingsStore.telemetry"
         v-model:other="settingsStore.other"

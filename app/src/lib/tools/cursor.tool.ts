@@ -1,4 +1,4 @@
-import { ReferenceImageView } from "../pixi/components/pattern/image.ts";
+import { ReferenceImageView } from "~/lib/pixi/";
 
 import type { PatternEditorTool, PatternEditorToolContext } from "./index.ts";
 

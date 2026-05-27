@@ -4,25 +4,31 @@ import { onMounted, onUnmounted, useTemplateRef, watch } from "vue";
 
 import { PatternEvent } from "~/lib/pattern/";
 import type { DisplaySettings, LineStitch, NodeStitch, Pattern } from "~/lib/pattern/";
-import { PatternApplication, ToolEvent } from "~/lib/pixi/";
-import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
+import { PatternApplication } from "~/lib/pixi/";
+import { ToolEvent } from "~/lib/types/";
+import type {
+  RenderOptions,
+  TextureManagerOptions,
+  ToolEventDetail,
+  TransformEventDetail,
+  ViewportOptions,
+} from "~/lib/types/";
 
-interface PatternCanvasProps {
+export interface PatternCanvasProps {
   pattern?: Pattern;
-  options?: PatternApplicationOptions;
+  renderOptions?: RenderOptions;
+  viewportOptions?: ViewportOptions;
+  textureManagerOptions?: TextureManagerOptions;
 }
 
-interface PatternCanvasEmits {
+export interface PatternCanvasEmits {
   (event: "tool-main-action", detail: ToolEventDetail): void;
   (event: "tool-anti-action", detail: ToolEventDetail): void;
   (event: "tool-release", detail: ToolEventDetail): void;
   (event: "transform", detail: TransformEventDetail): void;
 }
 
-const props = withDefaults(defineProps<PatternCanvasProps>(), {
-  pattern: undefined,
-  options: undefined,
-});
+const props = defineProps<PatternCanvasProps>();
 const emit = defineEmits<PatternCanvasEmits>();
 
 const canvas = useTemplateRef("canvas");
@@ -157,7 +163,11 @@ defineExpose({
 });
 
 onMounted(async () => {
-  await patternApplication.init(canvas.value!, props.options);
+  await patternApplication.init(canvas.value!, {
+    render: props.renderOptions,
+    viewport: props.viewportOptions,
+    textureManager: props.textureManagerOptions,
+  });
   if (props.pattern) updatePatternView(props.pattern);
 });
 

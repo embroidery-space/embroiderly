@@ -8,17 +8,17 @@ import { IconLaptop, IconMoon, IconSun } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { StartupAction, useSettingsStore } from "~/stores/";
 import type {
+  CanvasOptions,
   OtherOptions,
   StartupOptions,
   UiOptions,
   UpdaterOptions,
-  ViewportOptions,
   TelemetryOptions,
 } from "~/stores/";
 
 const ui = defineModel<UiOptions>("ui", { required: true });
 const startup = defineModel<StartupOptions>("startup", { required: true });
-const viewport = defineModel<ViewportOptions>("viewport", { required: true });
+const canvas = defineModel<CanvasOptions>("canvas", { required: true });
 const updater = defineModel<UpdaterOptions>("updater", { required: true });
 const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
 const other = defineModel<OtherOptions>("other", { required: true });
@@ -140,10 +140,10 @@ async function pickPatternTemplate() {
       <div class="flex flex-col gap-y-2">
         <p class="text-sm text-neutral-300">{{ $t("settings-viewport-hint") }}</p>
 
-        <Checkbox v-model="viewport.antialias" :label="$t('settings-viewport-antialias')" />
+        <Checkbox v-model="canvas.renderOptions.antialias" :label="$t('settings-viewport-antialias')" />
 
         <FormField :label="$t('settings-viewport-wheel-action')" class="w-full">
-          <Select v-model="viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
+          <Select v-model="canvas.viewportOptions.wheelAction" :items="wheelActionOptions" class="w-full" />
         </FormField>
       </div>
     </template>

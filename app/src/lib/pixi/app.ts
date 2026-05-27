@@ -4,18 +4,24 @@ import { Application } from "pixi.js";
 import type { ApplicationOptions } from "pixi.js";
 
 import { Pattern } from "~/lib/pattern/";
-import type { ZoomState } from "~/lib/types/";
+import { ToolEvent } from "~/lib/types/";
+import type {
+  RenderOptions,
+  TextureManagerOptions,
+  ToolEventDetail,
+  TransformEventDetail,
+  ViewportOptions,
+  ZoomState,
+} from "~/lib/types/";
 
 import { PatternView } from "./components/";
 import { TextureManager } from "./texture-manager.ts";
-import type { TextureManagerOptions } from "./texture-manager.ts";
-import { ToolEvent, PatternViewport } from "./viewport.ts";
-import type { ToolEventDetail, ViewportOptions } from "./viewport.ts";
+import { PatternViewport } from "./viewport.ts";
 
 /** Options for the pattern application. */
 export interface PatternApplicationOptions {
   /** Options for the Pixi.js renderer. */
-  render?: Partial<Omit<ApplicationOptions, "width" | "height" | "eventFeatures" | "preference">>;
+  render?: RenderOptions;
   /** Options for the custom viewport. */
   viewport?: ViewportOptions;
   /** Options for the texture manager. */
@@ -120,7 +126,7 @@ export class PatternApplication extends EventTarget {
   #handleToolRelease(detail: ToolEventDetail) {
     this.dispatchEvent(new CustomEvent(ToolEvent.ToolRelease, { detail }));
   }
-  #handleTransform(detail: ToolEventDetail) {
+  #handleTransform(detail: TransformEventDetail) {
     this.dispatchEvent(new CustomEvent(ToolEvent.Transform, { detail }));
   }
 

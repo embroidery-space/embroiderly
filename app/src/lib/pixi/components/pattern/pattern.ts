@@ -25,8 +25,9 @@ import {
   SpecialStitchModel,
 } from "~/lib/pattern/";
 import type { Stitch } from "~/lib/pattern/";
-import { STITCH_SCALE_FACTOR } from "~/lib/pixi/constants.ts";
-import { TextureManager } from "~/lib/pixi/texture-manager.ts";
+
+import { STITCH_SCALE_FACTOR } from "../../constants.ts";
+import { TextureManager } from "../../texture-manager.ts";
 
 import { FabricView } from "./fabric.ts";
 import { GridView } from "./grid.ts";

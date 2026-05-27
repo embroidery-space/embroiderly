@@ -21,7 +21,8 @@ import {
   Symbol,
 } from "~/lib/pattern/";
 import type { Stitch } from "~/lib/pattern/";
-import { DEFAULT_CONTAINER_OPTIONS, DEFAULT_TEXT_STYLE_OPTIONS, STITCH_SCALE_FACTOR } from "~/lib/pixi/constants.ts";
+
+import { DEFAULT_CONTAINER_OPTIONS, DEFAULT_TEXT_STYLE_OPTIONS, STITCH_SCALE_FACTOR } from "../../constants.ts";
 
 export interface StitchContainer<G> {
   /**

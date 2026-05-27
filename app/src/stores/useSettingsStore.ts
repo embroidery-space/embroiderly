@@ -5,7 +5,7 @@ import { computed, reactive, ref, watch } from "vue";
 
 import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
-import type { WheelAction } from "~/lib/pixi/";
+import type { RenderOptions, ViewportOptions } from "~/lib/types/";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";
@@ -17,10 +17,10 @@ export interface UiOptions {
   language: Language;
 }
 
-export enum StartupAction {
-  Nothing = "Nothing",
-  NewPattern = "NewPattern",
-  CustomTemplate = "CustomTemplate",
+export const enum StartupAction {
+  Nothing = "nothing",
+  NewPattern = "new-pattern",
+  CustomTemplate = "custom-template",
 }
 
 export interface StartupOptions {
@@ -28,11 +28,10 @@ export interface StartupOptions {
   patternTemplate: string;
 }
 
-export interface ViewportOptions {
-  antialias: boolean;
-  wheelAction: WheelAction;
+export interface CanvasOptions {
+  renderOptions: RenderOptions;
+  viewportOptions: ViewportOptions;
 }
-export type { WheelAction };
 
 export interface UpdaterOptions {
   autoCheck: boolean;
@@ -111,9 +110,9 @@ export const useSettingsStore = defineStore(
       patternTemplate: "",
     });
 
-    const viewport = reactive<ViewportOptions>({
-      antialias: true,
-      wheelAction: "zoom",
+    const canvas = reactive<CanvasOptions>({
+      renderOptions: { antialias: true },
+      viewportOptions: { wheelAction: "zoom" },
     });
 
     const updater = reactive<UpdaterOptions>({
@@ -213,7 +212,7 @@ export const useSettingsStore = defineStore(
       loadingUpdate,
       ui,
       startup,
-      viewport,
+      canvas,
       updater,
       telemetry,
       other,

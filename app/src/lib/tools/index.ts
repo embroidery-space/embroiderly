@@ -10,7 +10,7 @@ import {
   ReferenceImageSettings,
 } from "~/lib/pattern/";
 import type { Stitch } from "~/lib/pattern/";
-import type { ToolEventDetail } from "~/lib/pixi/";
+import type { ToolEventDetail } from "~/lib/types/";
 
 import { CursorTool } from "./cursor.tool.ts";
 import { EraserTool } from "./eraser.tool.ts";

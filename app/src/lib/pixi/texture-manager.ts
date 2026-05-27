@@ -2,9 +2,10 @@ import { Container, Graphics, GraphicsContext, Texture } from "pixi.js";
 import type { Renderer, StrokeStyle, TextureSourceOptions } from "pixi.js";
 
 import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "~/lib/pattern/";
+import type { TextureManagerOptions } from "~/lib/types/";
 import { mm2px } from "~/utils/measurement.ts";
 
-const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
+const TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
   resolution: window.devicePixelRatio,
   antialias: true,
   scaleMode: "linear",
@@ -12,21 +13,12 @@ const DEFAULT_TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
 
 const STITCH_OUTLINE: StrokeStyle = { width: 2, alignment: 0.5, color: 0x000000 };
 
-/** Options for configuring the texture manager. */
-export interface TextureManagerOptions {
-  /** Whether stitches should have an outline stroke. */
-  outlineStitches?: boolean;
-  /** Options for the texture source. */
-  textureSourceOptions?: TextureSourceOptions;
-}
-
 /**
  * Manages the textures used to render stitches.
  * This class is responsible for creating and caching stitch textures.
  */
 export class TextureManager {
   #renderer: Renderer;
-  #textureSourceOptions: TextureSourceOptions;
 
   #outlineStitches: boolean;
 
@@ -39,7 +31,6 @@ export class TextureManager {
    */
   constructor(renderer: Renderer, options?: TextureManagerOptions) {
     this.#renderer = renderer;
-    this.#textureSourceOptions = { ...DEFAULT_TEXTURE_SOURCE_OPTIONS, ...options?.textureSourceOptions };
 
     this.#outlineStitches = options?.outlineStitches ?? true;
   }
@@ -114,10 +105,10 @@ export class TextureManager {
     return texture;
   }
 
-  #createTexture(container: Container, textureSourceOptions?: Partial<TextureSourceOptions>) {
+  #createTexture(container: Container) {
     const texture = this.#renderer.generateTexture({
       target: container,
-      textureSourceOptions: { ...this.#textureSourceOptions, ...textureSourceOptions },
+      textureSourceOptions: TEXTURE_SOURCE_OPTIONS,
     });
 
     // The container is temporary, so we should destroy it to free resources.

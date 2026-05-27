@@ -1,49 +1,21 @@
-import { Bounds, Container, Point, Rectangle } from "pixi.js";
+import { Container, Point, Rectangle } from "pixi.js";
 import type { ContainerChild, DestroyOptions, FederatedPointerEvent } from "pixi.js";
 
-import type { ZoomState } from "~/lib/types/";
+import { ToolEvent } from "~/lib/types/";
+import type {
+  Modifiers,
+  ToolEventDetail,
+  TransformEventDetail,
+  ViewportOptions,
+  WheelAction,
+  ZoomState,
+} from "~/lib/types/";
 
 import { MIN_SCALE, MAX_SCALE, DEFAULT_CONTAINER_OPTIONS } from "./constants.ts";
-import { getMouseButtons, MODIFIERS } from "./utils/index.ts";
-import type { ModifiersState } from "./utils/index.ts";
+import { getMouseButtons, mod1, mod2, mod3 } from "./utils/index.ts";
 
 const WHEEL_ZOOM_FACTOR = 0.1;
 const LONG_PRESS_MS = 500;
-
-/** Options for the pattern viewport. */
-export interface ViewportOptions {
-  /**
-   * The width of the screen in pixels.
-   * @default window.innerWidth
-   */
-  screenWidth?: number;
-  /**
-   * The height of the screen in pixels.
-   * @default window.innerHeight
-   */
-  screenHeight?: number;
-
-  /**
-   * The width of the pattern in stitches (which are actually mapped 1 to 1 to pixels, though).
-   * @default options.patternWidth
-   */
-  patternWidth?: number;
-  /**
-   * The height of the pattern in stitches (which are actually mapped 1 to 1 to pixels, though).
-   * @default options.patternHeight
-   */
-  patternHeight?: number;
-
-  /**
-   * The action to take when the user scrolls the wheel over the viewport.
-   * @default "zoom"
-   */
-  wheelAction?: WheelAction;
-}
-
-export type WheelAction = "zoom" | "scroll";
-
-type GestureMode = "draw" | "pinch";
 
 interface PinchState {
   lastDistance: number;
@@ -53,7 +25,7 @@ interface PinchState {
 interface TouchState {
   readonly activeTouches: Map<number, Point>;
 
-  gestureMode?: GestureMode;
+  gestureMode?: "draw" | "pinch";
   pinchState?: PinchState;
 
   drawPending: boolean;
@@ -65,7 +37,7 @@ interface TouchState {
  *
  * It is responsible for handling user input and managing the view of the pattern.
  *
- * ## Interaction Mmodel
+ * ## Interaction Model
  *
  * ### Mouse
  *
@@ -128,11 +100,6 @@ export class PatternViewport extends Container {
    */
   init(domElement: HTMLElement, options?: ViewportOptions) {
     this.domElement = domElement;
-
-    this.screenWidth = options?.screenWidth ?? this.screenWidth;
-    this.screenHeight = options?.screenHeight ?? this.screenHeight;
-    this.patternWidth = options?.patternWidth ?? this.patternWidth;
-    this.patternHeight = options?.patternHeight ?? this.patternHeight;
 
     this.wheelAction = options?.wheelAction ?? "zoom";
 
@@ -308,7 +275,7 @@ export class PatternViewport extends Container {
 
     const buttons = getMouseButtons(e);
     if (buttons.left) {
-      if (MODIFIERS.mod3(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
+      if (mod3(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
       else this.emitToolEvent(ToolEvent.ToolMainAction, e);
     }
   }
@@ -317,10 +284,10 @@ export class PatternViewport extends Container {
     const buttons = getMouseButtons(e);
     if (buttons.left) {
       if (this.startPoint === undefined) return;
-      if (MODIFIERS.mod3(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
+      if (mod3(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
       else this.emitToolEvent(ToolEvent.ToolMainAction, e);
     } else if (buttons.right) {
-      if (MODIFIERS.mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
+      if (mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
       else {
         this.isDragging = true;
         this.moveBy(e.movement);
@@ -331,7 +298,7 @@ export class PatternViewport extends Container {
   private handleMouseUp(e: FederatedPointerEvent) {
     const buttons = getMouseButtons(e);
     if (buttons.left) this.emitToolEvent(ToolEvent.ToolRelease, e);
-    else if (buttons.right && MODIFIERS.mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
+    else if (buttons.right && mod1(e)) this.emitToolEvent(ToolEvent.ToolAntiAction, e);
 
     // Clear the start point and dragging state on the next tick.
     // It is necessary to do this on the next tick to allow the `handleContextMenu` method to access the correct state,
@@ -465,10 +432,10 @@ export class PatternViewport extends Container {
   private emitToolEvent(type: ToolEvent, event: FederatedPointerEvent) {
     if (this.startPoint === undefined) return;
     const point = this.content.toLocal(event.global);
-    const modifiers: ModifiersState = {
-      mod1: MODIFIERS.mod1(event),
-      mod2: MODIFIERS.mod2(event),
-      mod3: MODIFIERS.mod3(event),
+    const modifiers: Modifiers = {
+      mod1: mod1(event),
+      mod2: mod2(event),
+      mod3: mod3(event),
     };
     const detail: ToolEventDetail = { event, modifiers, start: this.startPoint, end: point };
     this.emit(type, detail);
@@ -488,7 +455,7 @@ export class PatternViewport extends Container {
 
     // We use the mod3 to switch between scroll and zoom actions.
     const [wheelAction, altWheelAction] = [this.wheelAction, this.wheelAction === "scroll" ? "zoom" : "scroll"];
-    const actualWheelAction = MODIFIERS.mod3(e) ? altWheelAction : wheelAction;
+    const actualWheelAction = mod3(e) ? altWheelAction : wheelAction;
 
     if (actualWheelAction === "scroll") this.handleWheelScroll(e);
     else this.handleWheelZoom(e);
@@ -500,7 +467,7 @@ export class PatternViewport extends Container {
       this.content.position.x -= e.deltaX;
       this.content.position.y -= e.deltaY;
     } else {
-      if (MODIFIERS.mod2(e)) this.content.position.x -= e.deltaY;
+      if (mod2(e)) this.content.position.x -= e.deltaY;
       else this.content.position.y -= e.deltaY;
     }
 
@@ -528,7 +495,7 @@ export class PatternViewport extends Container {
 
   private handleContextMenu(e: MouseEvent) {
     const buttons = getMouseButtons(e);
-    if (buttons.right && (MODIFIERS.mod1(e) || this.isDragging)) {
+    if (buttons.right && (mod1(e) || this.isDragging)) {
       e.preventDefault();
     }
   }
@@ -541,31 +508,4 @@ export class PatternViewport extends Container {
     const scale = Math.min(Math.max(value, MIN_SCALE), MAX_SCALE);
     this.content.scale.set(scale);
   }
-}
-
-export const enum ToolEvent {
-  ToolMainAction = "tool-main-action",
-  ToolAntiAction = "tool-anti-action",
-  ToolRelease = "tool-release",
-  Transform = "transform",
-}
-
-/** The detail of the tool event. */
-export interface ToolEventDetail {
-  /** The original pointer event. */
-  event: FederatedPointerEvent;
-  /** The state of the modifier keys. */
-  modifiers: ModifiersState;
-  /** The starting point of the event. */
-  start: Point;
-  /** The ending point of the event. */
-  end: Point;
-}
-
-/** The detail of the transform event (zoom or move). */
-export interface TransformEventDetail {
-  /** The current scale of the viewport. */
-  scale: number;
-  /** The current bounds of the viewport. */
-  bounds: Bounds;
 }
