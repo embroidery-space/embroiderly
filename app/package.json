@@ -24,7 +24,6 @@
     "@fluent/bundle": "catalog:",
     "@sentry/core": "catalog:",
     "@sentry/vue": "catalog:",
-    "@stdlib/math-base-special-roundn": "catalog:",
     "@tanstack/vue-hotkeys": "catalog:",
     "@tauri-apps/api": "catalog:",
     "@tauri-apps/plugin-fs": "catalog:",
