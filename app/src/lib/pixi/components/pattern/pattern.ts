@@ -110,12 +110,12 @@ function createLayerContainers(layerIndex: number): LayerContainers {
 export class PatternView extends Container {
   #textureManager: TextureManager;
 
-  private palette: readonly PaletteItem[];
-  private layers: Layers;
-  private specialStitchModels: SpecialStitchModel[];
+  #palette: readonly PaletteItem[];
+  #layers: Layers;
+  #specialStitchModels: SpecialStitchModel[];
 
-  private displayMode: DisplayMode | undefined;
-  private showSymbols = false;
+  #displayMode: DisplayMode | undefined;
+  #showSymbols = false;
 
   #referenceImage = new ReferenceImageView();
 
@@ -134,9 +134,9 @@ export class PatternView extends Container {
     super({ label: "Pattern", isRenderGroup: true });
     this.#textureManager = textureManager;
 
-    this.palette = pattern.palette.items;
-    this.layers = pattern.layers;
-    this.specialStitchModels = pattern.specialStitchModels;
+    this.#palette = pattern.palette.items;
+    this.#layers = pattern.layers;
+    this.#specialStitchModels = pattern.specialStitchModels;
 
     this.setFabric(pattern.fabric);
     this.setGrid(pattern.grid);
@@ -184,8 +184,8 @@ export class PatternView extends Container {
   }
 
   override destroy(options?: DestroyOptions) {
-    this.palette = [];
-    this.specialStitchModels = [];
+    this.#palette = [];
+    this.#specialStitchModels = [];
 
     super.destroy(options);
   }
@@ -238,7 +238,7 @@ export class PatternView extends Container {
   private addSymbol(stitch: Stitch, lc: LayerContainers) {
     if (stitch instanceof LineStitch || stitch instanceof NodeStitch) return;
 
-    const palitem = this.palette[stitch.palindex]!;
+    const palitem = this.#palette[stitch.palindex]!;
     const symbol = new StitchSymbol(stitch, palitem.symbol);
 
     lc.symbols.addStitch(symbol);
@@ -255,7 +255,7 @@ export class PatternView extends Container {
       texture: kind === FullStitchKind.Full ? lc.fullstitches.texture : lc.petitestitches.texture,
       x,
       y,
-      tint: this.palette[palindex]!.color,
+      tint: this.#palette[palindex]!.color,
       scaleX: STITCH_SCALE_FACTOR,
       scaleY: STITCH_SCALE_FACTOR,
     });
@@ -276,7 +276,7 @@ export class PatternView extends Container {
       texture: kind === PartStitchKind.Half ? lc.halfstitches.texture : lc.quarterstitches.texture,
       x,
       y,
-      tint: this.palette[palindex]!.color,
+      tint: this.#palette[palindex]!.color,
       scaleX: direction === PartStitchDirection.Forward ? STITCH_SCALE_FACTOR : -STITCH_SCALE_FACTOR,
       scaleY: STITCH_SCALE_FACTOR,
       anchorX: direction === PartStitchDirection.Forward ? 0 : 1,
@@ -305,7 +305,7 @@ export class PatternView extends Container {
       .moveTo(start.x, start.y)
       .lineTo(end.x, end.y)
       // Draw a line with a smaller width to make it look like a fill.
-      .stroke({ width: 0.2, color: this.palette[palindex]!.color, cap: "round" });
+      .stroke({ width: 0.2, color: this.#palette[palindex]!.color, cap: "round" });
     graphics.eventMode = "static";
 
     if (stitch.kind === LineStitchKind.Back) lc.backstitches.addStitch(graphics);
@@ -319,7 +319,7 @@ export class PatternView extends Container {
 
   private addNodeStitch(stitch: NodeStitch, lc: LayerContainers) {
     const { x, y, palindex, kind, rotated } = stitch;
-    const palitem = this.palette[palindex]!;
+    const palitem = this.#palette[palindex]!;
 
     const graphics = new StitchGraphics(stitch, this.#textureManager.getNodeTexture(kind));
     graphics.eventMode = "static";
@@ -340,7 +340,7 @@ export class PatternView extends Container {
 
   private addSpecialStitch(specialStitch: SpecialStitch, lc: LayerContainers) {
     const { x, y, rotation, flip, palindex, modindex } = specialStitch;
-    const model = this.specialStitchModels[modindex]!;
+    const model = this.#specialStitchModels[modindex]!;
 
     // Special stitches are very rare and complex so it is easier to draw them using graphics.
     const graphics = new Graphics();
@@ -377,7 +377,7 @@ export class PatternView extends Container {
     }
     graphics.scale.set(1);
 
-    graphics.tint = this.palette[palindex]!.color;
+    graphics.tint = this.#palette[palindex]!.color;
     graphics.position.set(x, y);
     graphics.angle = rotation;
     if (flip[0]) graphics.scale.x = -1;
@@ -387,16 +387,16 @@ export class PatternView extends Container {
   }
 
   setDisplayMode(displayMode: DisplayMode | undefined) {
-    this.displayMode = displayMode;
+    this.#displayMode = displayMode;
     for (const [index, lc] of this.#layerContainers) {
-      const layer = this.layers.get(index);
+      const layer = this.#layers.get(index);
       if (layer) this.#syncLayerContainers(lc, layer);
     }
   }
 
   setShowSymbols(value: boolean) {
-    this.showSymbols = value;
-    this.setDisplayMode(this.displayMode);
+    this.#showSymbols = value;
+    this.setDisplayMode(this.#displayMode);
   }
 
   setShowGrid(value: boolean) {
@@ -420,7 +420,7 @@ export class PatternView extends Container {
     const lc = createLayerContainers(layerIndex);
     this.#layerContainers.set(layerIndex, lc);
 
-    const layer = this.layers.get(layerIndex);
+    const layer = this.#layers.get(layerIndex);
     if (layer) this.#syncLayerContainers(lc, layer);
 
     this.#rebuildSceneGraph();
@@ -438,7 +438,7 @@ export class PatternView extends Container {
 
   updateLayerVisibility(layerIndex: number) {
     const lc = this.#layerContainers.get(layerIndex);
-    const layer = this.layers.get(layerIndex);
+    const layer = this.#layers.get(layerIndex);
     if (lc && layer) this.#syncLayerContainers(lc, layer);
   }
 
@@ -458,7 +458,7 @@ export class PatternView extends Container {
   #rebuildSceneGraph() {
     this.removeChildren();
 
-    const visualLayers = this.layers.itemsInVisualOrder
+    const visualLayers = this.#layers.itemsInVisualOrder
       .reverse()
       .map((l) => this.#layerContainers.get(l.index))
       .filter(Boolean) as LayerContainers[];
@@ -507,22 +507,22 @@ export class PatternView extends Container {
   }
 
   #syncLayerContainers(lc: LayerContainers, layer: Layer) {
-    const d = Boolean(this.displayMode);
+    const d = Boolean(this.#displayMode);
     const l = layer.visible;
 
-    if (this.displayMode) {
-      lc.fullstitches.texture = this.#textureManager.getFullStitchTexture(this.displayMode, FullStitchKind.Full); // oxfmt-ignore
-      lc.petitestitches.texture = this.#textureManager.getFullStitchTexture(this.displayMode, FullStitchKind.Petite); // oxfmt-ignore
-      lc.halfstitches.texture = this.#textureManager.getPartStitchTexture(this.displayMode, PartStitchKind.Half); // oxfmt-ignore
-      lc.quarterstitches.texture = this.#textureManager.getPartStitchTexture(this.displayMode, PartStitchKind.Quarter); // oxfmt-ignore
+    if (this.#displayMode) {
+      lc.fullstitches.texture = this.#textureManager.getFullStitchTexture(this.#displayMode, FullStitchKind.Full); // oxfmt-ignore
+      lc.petitestitches.texture = this.#textureManager.getFullStitchTexture(this.#displayMode, FullStitchKind.Petite); // oxfmt-ignore
+      lc.halfstitches.texture = this.#textureManager.getPartStitchTexture(this.#displayMode, PartStitchKind.Half); // oxfmt-ignore
+      lc.quarterstitches.texture = this.#textureManager.getPartStitchTexture(this.#displayMode, PartStitchKind.Quarter); // oxfmt-ignore
     }
 
     lc.fullstitches.visible = l && layer.fullstitchesVisible && d;
     lc.petitestitches.visible = l && layer.petitestitchesVisible && d;
     lc.halfstitches.visible = l && layer.halfstitchesVisible && d;
     lc.quarterstitches.visible = l && layer.quarterstitchesVisible && d;
-    lc.symbols.visible = l && this.showSymbols;
-    lc.symbols.renderable = l && this.showSymbols;
+    lc.symbols.visible = l && this.#showSymbols;
+    lc.symbols.renderable = l && this.#showSymbols;
     lc.specialstitches.visible = l && layer.specialstitchesVisible;
     lc.backstitches.visible = l && layer.backstitchesVisible;
     lc.straightstitches.visible = l && layer.straightstitchesVisible;
@@ -570,12 +570,12 @@ export class PatternView extends Container {
   }
 
   drawLineHint(stitch: LineStitch) {
-    const palitem = this.palette[stitch.palindex]!;
+    const palitem = this.#palette[stitch.palindex]!;
     this.#stitchesHint.drawLine(stitch, palitem.color);
   }
 
   drawNodeHint(stitch: NodeStitch) {
-    const palitem = this.palette[stitch.palindex]!;
+    const palitem = this.#palette[stitch.palindex]!;
     this.#stitchesHint.drawNode(stitch, palitem.color, this.#textureManager.getNodeTexture(stitch.kind));
   }
 
