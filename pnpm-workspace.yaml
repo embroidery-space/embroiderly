@@ -59,7 +59,6 @@ catalog:
   "posthog-js": 1.375.0
 
   # Utilities
-  "bowser": 2.14.1
   "color-convert": 3.1.3
   "comlink": 4.4.2
   "defu": 6.1.7
@@ -69,6 +68,7 @@ catalog:
   "show-open-file-picker": 0.4.0
   "sortablejs": 1.15.7
   "stacktracey": 2.2.0
+  "ua-parser-js": 2.0.10
   "uuid": 14.0.0
 
   # Documentation

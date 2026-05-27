@@ -34,7 +34,6 @@
     "@vueuse/core": "catalog:",
     "@vueuse/integrations": "catalog:",
     "@zorsh/zorsh": "catalog:",
-    "bowser": "catalog:",
     "es-toolkit": "catalog:",
     "eventemitter3": "catalog:",
     "fluent-vue": "catalog:",
@@ -46,6 +45,7 @@
     "show-open-file-picker": "catalog:",
     "sortablejs": "catalog:",
     "stacktracey": "catalog:",
+    "ua-parser-js": "catalog:",
     "uuid": "catalog:",
     "vue": "catalog:"
   },
