@@ -7,7 +7,7 @@ import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
 import { Layer, LayerVisibility, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
-import { FullStitch, PartStitch, LineStitch, SpecialStitchModel } from "./stitches.ts";
+import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitchModel } from "./stitches.ts";
 import type { Stitch } from "./stitches.ts";
 
 export class PatternInfo {
@@ -181,7 +181,8 @@ export class Pattern extends EventTarget {
     if (stitch instanceof FullStitch) layer.fullstitches.push(stitch);
     else if (stitch instanceof PartStitch) layer.partstitches.push(stitch);
     else if (stitch instanceof LineStitch) layer.linestitches.push(stitch);
-    else layer.nodestitches.push(stitch);
+    else if (stitch instanceof NodeStitch) layer.nodestitches.push(stitch);
+    else layer.specialstitches.push(stitch);
 
     this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: { layerIndex, stitch } }));
   }
@@ -199,7 +200,8 @@ export class Pattern extends EventTarget {
     if (stitch instanceof FullStitch) removeStitchFromArray(layer.fullstitches, stitch);
     else if (stitch instanceof PartStitch) removeStitchFromArray(layer.partstitches, stitch);
     else if (stitch instanceof LineStitch) removeStitchFromArray(layer.linestitches, stitch);
-    else removeStitchFromArray(layer.nodestitches, stitch);
+    else if (stitch instanceof NodeStitch) removeStitchFromArray(layer.nodestitches, stitch);
+    else removeStitchFromArray(layer.specialstitches, stitch);
 
     this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: { layerIndex, stitch } }));
   }

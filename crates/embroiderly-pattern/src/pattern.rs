@@ -168,7 +168,7 @@ impl Pattern {
     self
       .layers
       .iter_mut()
-      .flat_map(|l| l.remove_stitches_outside_bounds(bounds))
+      .flat_map(|l| l.remove_stitches_outside_bounds(bounds, &self.special_stitch_models))
       .collect()
   }
 

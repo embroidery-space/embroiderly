@@ -15,7 +15,6 @@ import type {
   PdfExportOptions,
   ReferenceImageSettings,
   SortPaletteBy,
-  StitchKind,
   Symbol,
 } from "~/lib/pattern/";
 
@@ -331,11 +330,11 @@ class MetricsServiceClass {
     this.#capture("layer_moved");
   }
 
-  captureStitchAdded(kind: StitchKind) {
+  captureStitchAdded(kind: string) {
     this.#capture("stitch_added", { kind });
   }
 
-  captureStitchRemoved(kind: StitchKind) {
+  captureStitchRemoved(kind: string) {
     this.#capture("stitch_removed", { kind });
   }
 

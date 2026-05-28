@@ -1,4 +1,4 @@
-import { Bounds, Container, Graphics, Rectangle, RenderLayer } from "pixi.js";
+import { Bounds, Container, Rectangle, RenderLayer } from "pixi.js";
 import type { DestroyOptions } from "pixi.js";
 
 import {
@@ -44,19 +44,6 @@ import {
   StitchesHint,
 } from "./stitches.ts";
 
-interface LayerContainers {
-  fullstitches: StitchParticleContainer;
-  petitestitches: StitchParticleContainer;
-  halfstitches: StitchParticleContainer;
-  quarterstitches: StitchParticleContainer;
-  symbols: StitchSymbolsContainer;
-  specialstitches: StitchGraphicsContainer;
-  backstitches: StitchGraphicsContainer;
-  straightstitches: StitchGraphicsContainer;
-  frenchknots: StitchGraphicsContainer;
-  beads: StitchGraphicsContainer;
-}
-
 const STITCH_TYPES_BEFORE_GRID = [
   "fullstitches",
   "petitestitches",
@@ -71,6 +58,19 @@ const STITCH_TYPES_AFTER_GRID = [
   "frenchknots",
   "beads",
 ] as const;
+
+interface LayerContainers {
+  fullstitches: StitchParticleContainer;
+  petitestitches: StitchParticleContainer;
+  halfstitches: StitchParticleContainer;
+  quarterstitches: StitchParticleContainer;
+  symbols: StitchSymbolsContainer;
+  specialstitches: StitchGraphicsContainer;
+  backstitches: StitchGraphicsContainer;
+  straightstitches: StitchGraphicsContainer;
+  frenchknots: StitchGraphicsContainer;
+  beads: StitchGraphicsContainer;
+}
 
 function createLayerContainers(layerIndex: number): LayerContainers {
   return {
@@ -218,7 +218,8 @@ export class PatternView extends Container {
     if (stitch instanceof FullStitch) this.addFullStitch(stitch, lc);
     else if (stitch instanceof PartStitch) this.addPartStitch(stitch, lc);
     else if (stitch instanceof LineStitch) this.addLineStitch(stitch, lc);
-    else this.addNodeStitch(stitch, lc);
+    else if (stitch instanceof NodeStitch) this.addNodeStitch(stitch, lc);
+    else this.addSpecialStitch(stitch, lc);
 
     this.addSymbol(stitch, lc);
   }
@@ -230,13 +231,14 @@ export class PatternView extends Container {
     if (stitch instanceof FullStitch) this.removeFullStitch(stitch, lc);
     else if (stitch instanceof PartStitch) this.removePartStitch(stitch, lc);
     else if (stitch instanceof LineStitch) this.removeLineStitch(stitch, lc);
-    else this.removeNodeStitch(stitch, lc);
+    else if (stitch instanceof NodeStitch) this.removeNodeStitch(stitch, lc);
+    else this.removeSpecialStitch(stitch, lc);
 
     this.removeSymbol(stitch, lc);
   }
 
   private addSymbol(stitch: Stitch, lc: LayerContainers) {
-    if (stitch instanceof LineStitch || stitch instanceof NodeStitch) return;
+    if (stitch instanceof LineStitch || stitch instanceof NodeStitch || stitch instanceof SpecialStitch) return;
 
     const palitem = this.#palette[stitch.palindex]!;
     const symbol = new StitchSymbol(stitch, palitem.symbol);
@@ -343,7 +345,8 @@ export class PatternView extends Container {
     const model = this.#specialStitchModels[modindex]!;
 
     // Special stitches are very rare and complex so it is easier to draw them using graphics.
-    const graphics = new Graphics();
+    const graphics = new StitchGraphics(specialStitch);
+    graphics.eventMode = "static";
 
     for (const { points } of model.curvedstitches) {
       // Draw a polyline with a larger width to make it look like a border.
@@ -383,7 +386,11 @@ export class PatternView extends Container {
     if (flip[0]) graphics.scale.x = -1;
     if (flip[1]) graphics.scale.y = -1;
 
-    lc.specialstitches.addChild(graphics);
+    lc.specialstitches.addStitch(graphics);
+  }
+
+  private removeSpecialStitch(stitch: SpecialStitch, lc: LayerContainers) {
+    lc.specialstitches.removeStitch(stitch);
   }
 
   setDisplayMode(displayMode: DisplayMode | undefined) {

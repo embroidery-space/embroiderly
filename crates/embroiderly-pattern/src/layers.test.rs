@@ -587,4 +587,111 @@ mod layer {
       assert!(layer.linestitches.is_empty());
     }
   }
+
+  mod special_stitches {
+    use super::*;
+
+    fn special_stitch(x: f32, y: f32, palindex: u32) -> Stitch {
+      Stitch::Special(SpecialStitch {
+        x: NotNan::new(x).unwrap(),
+        y: NotNan::new(y).unwrap(),
+        rotation: 0,
+        flip: (false, false),
+        palindex,
+        modindex: 0,
+      })
+    }
+
+    fn special_stitch_model(width: f32, height: f32) -> SpecialStitchModel {
+      SpecialStitchModel {
+        unique_name: "test".to_string(),
+        name: "Test".to_string(),
+        width,
+        height,
+        nodestitches: vec![],
+        linestitches: vec![],
+        curvedstitches: vec![],
+      }
+    }
+
+    #[test]
+    fn adds_and_removes_special_stitch() {
+      let mut layer = Layer::default();
+      let sps = special_stitch(1.0, 2.0, 0);
+
+      let conflicts = layer.add_stitch(sps.clone());
+
+      assert!(conflicts.is_empty());
+      assert_eq!(layer.specialstitches.len(), 1);
+      assert!(layer.contains_stitch(&sps));
+      assert_eq!(layer.get_stitch(&sps), Some(sps.clone()));
+
+      assert_eq!(layer.remove_stitch(sps.clone()), Some(sps));
+      assert!(layer.specialstitches.is_empty());
+    }
+
+    #[test]
+    fn add_replaces_existing_at_same_position_and_returns_conflict() {
+      let mut layer = Layer::default();
+      let original = special_stitch(3.0, 3.0, 0);
+      let replacement = special_stitch(3.0, 3.0, 1);
+
+      layer.add_stitch(original.clone());
+      let conflicts = layer.add_stitch(replacement);
+
+      assert_eq!(conflicts.len(), 1);
+      assert_eq!(conflicts[0], original);
+      assert_eq!(layer.specialstitches.len(), 1);
+    }
+
+    #[test]
+    fn remove_nonexistent_returns_none() {
+      let mut layer = Layer::default();
+      assert_eq!(layer.remove_stitch(special_stitch(0.0, 0.0, 0)), None);
+    }
+
+    #[test]
+    fn removes_special_stitches_outside_bounds() {
+      let models = vec![special_stitch_model(2.0, 2.0)];
+      let mut layer = Layer::default();
+      layer.add_stitch(special_stitch(1.0, 1.0, 0)); // inside
+      layer.add_stitch(special_stitch(9.0, 9.0, 0)); // partially outside
+
+      let removed = layer.remove_stitches_outside_bounds(Bounds::new(0, 0, 10, 10), &models);
+
+      assert_eq!(layer.specialstitches.len(), 1);
+      assert_eq!(removed.len(), 1);
+    }
+
+    #[test]
+    fn removes_special_stitches_by_palindexes() {
+      let mut layer = Layer::default();
+      layer.add_stitch(special_stitch(0.0, 0.0, 0));
+      layer.add_stitch(special_stitch(1.0, 0.0, 1));
+      layer.add_stitch(special_stitch(2.0, 0.0, 2));
+
+      let removed = layer.remove_stitches_by_palindexes(&[1]);
+      assert_eq!(removed.len(), 1);
+      assert_eq!(layer.specialstitches.len(), 2);
+
+      let remaining: Vec<_> = layer.specialstitches.iter().collect();
+      assert_eq!(remaining[0].palindex, 0);
+      assert_eq!(remaining[1].palindex, 1);
+    }
+
+    #[test]
+    fn restore_stitches_reindexes_and_inserts_specials() {
+      let mut layer = Layer::default();
+      layer.add_stitch(special_stitch(0.0, 0.0, 0));
+      layer.add_stitch(special_stitch(1.0, 0.0, 1));
+
+      layer.restore_stitches(vec![special_stitch(5.0, 5.0, 1)], &[1], 2);
+      assert_eq!(layer.specialstitches.len(), 3);
+
+      let stitches: Vec<_> = layer.specialstitches.iter().collect();
+      assert_eq!(stitches[0].palindex, 0);
+      assert_eq!(stitches[1].palindex, 2);
+      assert_eq!(stitches[2].palindex, 1);
+    }
+  }
 }
