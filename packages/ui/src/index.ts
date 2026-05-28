@@ -8,3 +8,5 @@ export { useToast, type Toast } from "./composables/useToast.ts";
 export type * from "./types/icons.ts";
 export type * from "./types/locale.ts";
 export type * from "./types/scroll.ts";
+
+export { useForwardPropsEmits } from "reka-ui";

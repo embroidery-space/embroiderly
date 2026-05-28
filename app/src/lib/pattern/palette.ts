@@ -139,8 +139,6 @@ export abstract class BasePaletteItem {
 
   /** Return the color title. */
   abstract getTitle(options?: PaletteSettings): string;
-
-  abstract equals(other: this): boolean;
 }
 
 /**
@@ -199,10 +197,6 @@ export class BrandPaletteItem extends BasePaletteItem {
       return [components.join(" "), this.name].join(", ");
     }
     return components.join(" ");
-  }
-
-  equals(other: BrandPaletteItem) {
-    return this.brand === other.brand && this.number === other.number;
   }
 }
 

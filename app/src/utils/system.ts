@@ -1,4 +1,4 @@
-import Bowser from "bowser";
+import { UAParser } from "ua-parser-js";
 
 export interface SystemInfo {
   appVersion: string;
@@ -14,10 +14,8 @@ export interface SystemInfo {
   browserVersion: string;
 }
 
-export function getSystemInfo(): SystemInfo {
-  // @ts-expect-error `navigator.userAgentData` is an experimental API: <https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgentData>.
-  const result = Bowser.parse(navigator.userAgent, navigator.userAgentData);
-
+export async function getSystemInfo(): Promise<SystemInfo> {
+  const result = await UAParser().withClientHints();
   return {
     appVersion: __APP_VERSION__,
 
@@ -25,10 +23,10 @@ export function getSystemInfo(): SystemInfo {
     gitBranch: __GIT_BRANCH__,
     gitDate: new Date(__GIT_DATE__),
 
-    os: result.os.name ?? "Unknown",
-    osVersion: result.os.version ?? "Unknown",
+    os: result.os.name || "Unknown",
+    osVersion: result.os.version || "Unknown",
 
-    browser: result.browser.name ?? "Unknown",
-    browserVersion: result.browser.version ?? "Unknown",
+    browser: result.browser.name || "Unknown",
+    browserVersion: result.browser.version || "Unknown",
   };
 }

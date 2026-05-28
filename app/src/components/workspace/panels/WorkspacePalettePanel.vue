@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, ContextMenu, DropdownMenu, SplitterPanel, useToast } from "@embroiderly/ui";
+import {
+  Button,
+  ButtonIcon,
+  ContextMenu,
+  DropdownMenu,
+  SplitterPanel,
+  useForwardPropsEmits,
+  useToast,
+} from "@embroiderly/ui";
 import type { ContextMenuItem, DropdownMenuItem, SplitterPanelProps, SplitterPanelEmits } from "@embroiderly/ui";
 
-import { useForwardPropsEmits } from "reka-ui";
 import { computed, reactive, ref, useTemplateRef, watch } from "vue";
 
 import { IconCheck, IconMenu, IconPalette } from "~/assets/icons/";
@@ -323,7 +330,9 @@ async function handleAddPaletteItem(palitem: PaletteItem) {
 
   if (editorStateStore.selectedPaletteItemIndex !== undefined) return;
 
-  const insertedIndex = patternStore.pattern.palette.items.findIndex((pi) => pi.equals(palitem));
+  const insertedIndex = patternStore.pattern.palette.items.findIndex(
+    (pi) => pi.brand === palitem.brand && pi.number === palitem.number,
+  );
   if (insertedIndex !== -1) editorStateStore.selectedPaletteItemIndex = insertedIndex;
 }
 

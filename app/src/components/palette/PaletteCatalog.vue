@@ -100,7 +100,7 @@ async function importPalettes() {
 }
 
 function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
-  const palindex = palette.findIndex((palitem) => palitem.equals(option));
+  const palindex = palette.findIndex((palitem) => palitem.brand === option.brand && palitem.number === option.number);
   if (palindex === -1) emit("addPaletteItem", option);
   else emit("removePaletteItem", palindex);
 }
@@ -144,7 +144,7 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
       <template #option="{ option, displaySettings }">
         <PaletteListItem
           :palette-item="option"
-          :selected="palette.some((palitem) => palitem.equals(option))"
+          :selected="palette.some((palitem) => palitem.brand === option.brand && palitem.number === option.number)"
           :display-settings="displaySettings"
         />
       </template>

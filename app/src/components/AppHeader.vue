@@ -296,7 +296,7 @@ function toggleFullscreen() {
 
 async function showSystemInfo() {
   // @ts-expect-error Ignore the lack of index signature of the system info object.
-  const systemInfo = fluent.$ta("system-info", getSystemInfo());
+  const systemInfo = fluent.$ta("system-info", await getSystemInfo());
   const { title, description } = systemInfo as { title: string; description: string };
 
   const accepted = await confirm.open({

@@ -3,7 +3,7 @@ import { Listbox } from "@embroiderly/ui";
 import type { ListboxItemObject, ListboxProps } from "@embroiderly/ui";
 
 import { insertNodeAt, removeNode, useSortable } from "@vueuse/integrations/useSortable";
-import { dequal } from "dequal/lite";
+import { isEqual } from "es-toolkit";
 import { computed, nextTick, ref, watch, watchEffect, useTemplateRef } from "vue";
 
 import { BasePaletteItem, PaletteSettings } from "~/lib/pattern/";
@@ -87,13 +87,13 @@ watchEffect(() => {
 function optionIsSelected(option: T) {
   const transformed = props.optionValue?.(option) ?? option;
   if (props.multiple && Array.isArray(value.value)) {
-    return value.value.some((v) => dequal(v, transformed));
+    return value.value.some((v) => isEqual(v, transformed));
   }
-  return dequal(value.value, transformed);
+  return isEqual(value.value, transformed);
 }
 
 function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: MouseEvent; item: PalitemObject["value"] }) {
-  const palitem = items.value.find((i) => dequal(i.value, item))?.palitem;
+  const palitem = items.value.find((i) => isEqual(i.value, item))?.palitem;
   if (!palitem) return;
 
   const palindex = props.options?.indexOf(palitem);
