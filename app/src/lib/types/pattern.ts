@@ -6,7 +6,7 @@ export const enum LayerLayout {
 export interface PatternOptions {
   /**
    * The layout in which per-layer stitch containers are assembled into the scene graph.
-   * @default LayerLayout.ByStitchType
+   * @default LayerLayout.ByLayerOrder
    */
   layerLayout?: LayerLayout;
 }

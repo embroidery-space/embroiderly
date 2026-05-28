@@ -123,7 +123,7 @@ export class PatternView extends Container {
   #grid = new GridView();
   #rulers = new Rulers();
 
-  #layerLayout: LayerLayout = LayerLayout.ByStitchType;
+  #layerLayout: LayerLayout = LayerLayout.ByLayerOrder;
   #layerContainers = new Map<number, LayerContainers>();
 
   #stitchesHint = new StitchesHint();

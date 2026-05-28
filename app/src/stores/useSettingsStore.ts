@@ -115,7 +115,7 @@ export const useSettingsStore = defineStore(
     const canvas = reactive<CanvasOptions>({
       renderOptions: { antialias: true },
       viewportOptions: { wheelAction: WheelAction.Zoom },
-      patternOptions: { layerLayout: LayerLayout.ByStitchType },
+      patternOptions: { layerLayout: LayerLayout.ByLayerOrder },
     });
 
     const updater = reactive<UpdaterOptions>({
