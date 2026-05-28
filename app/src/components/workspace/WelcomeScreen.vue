@@ -87,9 +87,9 @@ function createPattern() {
 </script>
 
 <template>
-  <ScrollArea data-testid="welcome-screen" type="auto" size="sm" class="flex flex-col">
-    <div class="flex grow items-center justify-center overflow-hidden">
-      <div class="flex w-full max-w-3xl flex-col gap-4 overflow-auto p-4 sm:gap-6 sm:p-6 lg:p-8">
+  <ScrollArea data-testid="welcome-screen" type="auto" size="sm" :ui="{ viewport: 'flex flex-col' }">
+    <div class="flex grow items-center justify-center p-4 sm:p-6">
+      <div class="flex min-w-1/2 flex-col gap-4 sm:gap-6">
         <span class="text-2xl sm:text-3xl lg:text-4xl">{{ $t("welcome") }}</span>
 
         <div>
