@@ -266,6 +266,31 @@ fn removes_stitches_outside_bounds_from_all_layers() {
 }
 
 #[test]
+fn removes_special_stitches_outside_bounds_from_all_layers() {
+  let mut pattern = Pattern::default();
+  pattern.special_stitch_models.push(SpecialStitchModel {
+    unique_name: "test".to_string(),
+    name: "Test".to_string(),
+    width: 2.0,
+    height: 2.0,
+    nodestitches: vec![],
+    linestitches: vec![],
+    curvedstitches: vec![],
+  });
+
+  let layer2_idx = pattern.layers.push(Layer::new("Layer 2"));
+  pattern.add_stitch(0, Stitch::Special(special_stitch(5.0, 5.0, 0, 0))); // Inside bounds.
+  pattern.add_stitch(0, Stitch::Special(special_stitch(1.0, 1.0, 0, 0))); // Entirely outside bounds.
+  pattern.add_stitch(layer2_idx, Stitch::Special(special_stitch(14.0, 5.0, 0, 0))); // Exceeds right edge.
+
+  let removed = pattern.remove_stitches_outside_bounds(Bounds::new(5, 5, 10, 10));
+
+  assert_eq!(removed.len(), 2);
+  assert_eq!(pattern.layers[0].specialstitches.len(), 1);
+  assert_eq!(pattern.layers[layer2_idx].specialstitches.len(), 0);
+}
+
+#[test]
 fn flatten_single_layer_includes_all_stitches() {
   let mut pattern = Pattern::default();
   pattern.add_stitch(0, full_stitch(0.0, 0.0, 0));
