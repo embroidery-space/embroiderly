@@ -29,14 +29,19 @@ settings-startup-action-custom-template = Власний шаблон
 
 settings-startup-template-path = Файл шаблону
 
-settings-viewport = Область перегляду
-settings-viewport-hint = Ці налаштування вимагають перезавантаження.
+settings-workarea = Робоча область
 
-settings-viewport-antialias = Згладжування
+settings-workarea-rendering-antialias =
+  .label = Згладжування
+  .description = Це налаштування вимагає перезавантаження.
 
-settings-viewport-wheel-action = Дія коліщатка миші
-settings-viewport-wheel-action-zoom = Масштабування
-settings-viewport-wheel-action-scroll = Прокручування
+settings-workarea-viewport-wheel-action = Дія коліщатка миші
+settings-workarea-viewport-wheel-action-zoom = Масштабування
+settings-workarea-viewport-wheel-action-scroll = Прокручування
+
+settings-workarea-pattern-layer-layout = Компонування шарів
+settings-workarea-pattern-layer-layout-stitch-type = За типом стібків
+settings-workarea-pattern-layer-layout-layer-order = За порядком шарів
 
 settings-updater = Оновлювач
 

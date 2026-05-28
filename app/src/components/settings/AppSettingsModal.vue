@@ -9,12 +9,12 @@ const settingsStore = useSettingsStore();
 </script>
 
 <template>
-  <Dialog :title="$t('settings')" :ui="{ content: 'w-xl' }">
+  <Dialog :title="$t('settings')" :ui="{ content: 'w-2xl' }">
     <template #body>
       <AppSettingsForm
         v-model:ui="settingsStore.ui"
         v-model:startup="settingsStore.startup"
-        v-model:viewport="settingsStore.viewport"
+        v-model:canvas="settingsStore.canvas"
         v-model:updater="settingsStore.updater"
         v-model:telemetry="settingsStore.telemetry"
         v-model:other="settingsStore.other"

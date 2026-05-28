@@ -6,17 +6,17 @@ import { computed, useTemplateRef, watch } from "vue";
 
 import { IconImage, IconImageOff } from "~/assets/icons/";
 import { PatternCanvas } from "~/components/canvas/";
+import type { PatternCanvasProps } from "~/components/canvas/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
-import { CursorTool } from "~/lib/tools/";
 import type { PatternEditorToolContext } from "~/lib/tools/";
+import type { ToolEventDetail, TransformEventDetail } from "~/lib/types/";
 import { LoggerService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore, usePatternFileStore } from "~/stores/";
 import { addSymbolFonts } from "~/utils/font-face.ts";
 
 defineOptions({ inheritAttrs: false });
 
-const props = defineProps<{ options?: PatternApplicationOptions }>();
+const props = defineProps<Omit<PatternCanvasProps, "pattern">>();
 
 const { events, files } = useEditor();
 const filePicker = useFilePicker();
@@ -66,13 +66,9 @@ watch(
 
 watch(
   () => editorStateStore.selectedTool,
-  (_tool, prevTool) => {
+  () => {
     if (patternStore.pattern.isNil) return;
-
-    if (prevTool instanceof CursorTool) {
-      // Blur the reference image when the cursor tool is deselected.
-      patternCanvas.value?.blurReferenceImage();
-    }
+    patternCanvas.value?.blurReferenceImage();
   },
   { immediate: true },
 );
@@ -205,10 +201,8 @@ async function loadSymbolFonts(fonts: string[]) {
   <ContextMenu :items="canvasContextMenuOptions">
     <PatternCanvas
       ref="patternCanvas"
-      v-bind="$attrs"
+      v-bind="{ ...$attrs, ...props }"
       :pattern="patternStore.pattern"
-      :options="props.options"
-      enable-tool-events
       @tool-main-action="handleToolMainAction"
       @tool-anti-action="handleToolAntiAction"
       @tool-release="handleToolRelease"

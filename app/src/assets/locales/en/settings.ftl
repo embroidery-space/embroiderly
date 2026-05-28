@@ -29,14 +29,19 @@ settings-startup-action-custom-template = Custom Template
 
 settings-startup-template-path = Template File
 
-settings-viewport = Viewport
-settings-viewport-hint = These settings require a restart.
+settings-workarea = Working Area
 
-settings-viewport-antialias = Antialiasing
+settings-workarea-rendering-antialias =
+  .label = Antialiasing
+  .description = This setting requires a restart.
 
-settings-viewport-wheel-action = Mouse Wheel Action
-settings-viewport-wheel-action-zoom = Zoom
-settings-viewport-wheel-action-scroll = Scroll
+settings-workarea-viewport-wheel-action = Mouse Wheel Action
+settings-workarea-viewport-wheel-action-zoom = Zoom
+settings-workarea-viewport-wheel-action-scroll = Scroll
+
+settings-workarea-pattern-layer-layout = Layer Layout
+settings-workarea-pattern-layer-layout-stitch-type = By Stitch Type
+settings-workarea-pattern-layer-layout-layer-order = By Layer Order
 
 settings-updater = Updater
 

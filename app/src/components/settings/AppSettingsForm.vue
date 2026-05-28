@@ -6,19 +6,20 @@ import { computed } from "vue";
 
 import { IconLaptop, IconMoon, IconSun } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
+import { LayerLayout, WheelAction } from "~/lib/types/";
 import { StartupAction, useSettingsStore } from "~/stores/";
 import type {
+  CanvasOptions,
   OtherOptions,
   StartupOptions,
   UiOptions,
   UpdaterOptions,
-  ViewportOptions,
   TelemetryOptions,
 } from "~/stores/";
 
 const ui = defineModel<UiOptions>("ui", { required: true });
 const startup = defineModel<StartupOptions>("startup", { required: true });
-const viewport = defineModel<ViewportOptions>("viewport", { required: true });
+const canvas = defineModel<CanvasOptions>("canvas", { required: true });
 const updater = defineModel<UpdaterOptions>("updater", { required: true });
 const telemetry = defineModel<TelemetryOptions>("telemetry", { required: true });
 const other = defineModel<OtherOptions>("other", { required: true });
@@ -32,7 +33,7 @@ const settingsStore = useSettingsStore();
 const tabs = computed<TabsItem[]>(() => [
   { label: fluent.$t("settings-interface"), slot: "ui" },
   { label: fluent.$t("settings-startup"), slot: "startup" },
-  { label: fluent.$t("settings-viewport"), slot: "viewport" },
+  { label: fluent.$t("settings-workarea"), slot: "workarea" },
   { label: fluent.$t("settings-updater"), slot: "updater" },
   { label: fluent.$t("settings-telemetry"), slot: "telemetry" },
   { label: fluent.$t("settings-other"), slot: "other" },
@@ -65,8 +66,13 @@ const startupActionOptions = computed(() => [
 ]);
 
 const wheelActionOptions = computed(() => [
-  { label: fluent.$t("settings-viewport-wheel-action-zoom"), value: "zoom" },
-  { label: fluent.$t("settings-viewport-wheel-action-scroll"), value: "scroll" },
+  { label: fluent.$t("settings-workarea-viewport-wheel-action-zoom"), value: WheelAction.Zoom },
+  { label: fluent.$t("settings-workarea-viewport-wheel-action-scroll"), value: WheelAction.Scroll },
+]);
+
+const layerLayoutOptions = computed(() => [
+  { label: fluent.$t("settings-workarea-pattern-layer-layout-stitch-type"), value: LayerLayout.ByStitchType },
+  { label: fluent.$t("settings-workarea-pattern-layer-layout-layer-order"), value: LayerLayout.ByLayerOrder },
 ]);
 
 async function pickPatternTemplate() {
@@ -136,14 +142,16 @@ async function pickPatternTemplate() {
       </div>
     </template>
 
-    <template #viewport>
+    <template #workarea>
       <div class="flex flex-col gap-y-2">
-        <p class="text-sm text-neutral-300">{{ $t("settings-viewport-hint") }}</p>
+        <Checkbox v-model="canvas.renderOptions.antialias" v-bind="$ta('settings-workarea-rendering-antialias')" />
 
-        <Checkbox v-model="viewport.antialias" :label="$t('settings-viewport-antialias')" />
+        <FormField :label="$t('settings-workarea-viewport-wheel-action')" class="w-full">
+          <Select v-model="canvas.viewportOptions.wheelAction" :items="wheelActionOptions" class="w-full" />
+        </FormField>
 
-        <FormField :label="$t('settings-viewport-wheel-action')" class="w-full">
-          <Select v-model="viewport.wheelAction" :items="wheelActionOptions" class="w-full" />
+        <FormField :label="$t('settings-workarea-pattern-layer-layout')" class="w-full">
+          <Select v-model="canvas.patternOptions.layerLayout" :items="layerLayoutOptions" class="w-full" />
         </FormField>
       </div>
     </template>

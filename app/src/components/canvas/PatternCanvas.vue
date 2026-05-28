@@ -4,27 +4,33 @@ import { onMounted, onUnmounted, useTemplateRef, watch } from "vue";
 
 import { PatternEvent } from "~/lib/pattern/";
 import type { DisplaySettings, LineStitch, NodeStitch, Pattern } from "~/lib/pattern/";
-import { PatternApplication, ToolEvent } from "~/lib/pixi/";
-import type { PatternApplicationOptions, ToolEventDetail, TransformEventDetail } from "~/lib/pixi/";
+import { PatternApplication } from "~/lib/pixi/";
+import { ToolEvent } from "~/lib/types/";
+import type {
+  PatternOptions,
+  RenderOptions,
+  TextureManagerOptions,
+  ToolEventDetail,
+  TransformEventDetail,
+  ViewportOptions,
+} from "~/lib/types/";
 
-interface PatternCanvasProps {
+export interface PatternCanvasProps {
   pattern?: Pattern;
-  options?: PatternApplicationOptions;
-  enableToolEvents?: boolean;
+  renderOptions?: RenderOptions;
+  viewportOptions?: ViewportOptions;
+  textureManagerOptions?: TextureManagerOptions;
+  patternOptions?: PatternOptions;
 }
 
-interface PatternCanvasEmits {
+export interface PatternCanvasEmits {
   (event: "tool-main-action", detail: ToolEventDetail): void;
   (event: "tool-anti-action", detail: ToolEventDetail): void;
   (event: "tool-release", detail: ToolEventDetail): void;
   (event: "transform", detail: TransformEventDetail): void;
 }
 
-const props = withDefaults(defineProps<PatternCanvasProps>(), {
-  pattern: undefined,
-  options: undefined,
-  enableToolEvents: false,
-});
+const props = defineProps<PatternCanvasProps>();
 const emit = defineEmits<PatternCanvasEmits>();
 
 const canvas = useTemplateRef("canvas");
@@ -39,6 +45,7 @@ function updatePatternView(pattern: Pattern) {
   patternAbortController = new AbortController();
 
   const patternView = patternApplication.setView(pattern);
+  if (props.patternOptions?.layerLayout) patternView.layerLayout = props.patternOptions.layerLayout;
 
   const { signal } = patternAbortController;
 
@@ -131,18 +138,26 @@ watch(
   },
 );
 
+watch(
+  () => props.patternOptions?.layerLayout,
+  (layerLayout) => {
+    if (!patternApplication.view) return;
+    if (layerLayout) patternApplication.view.layerLayout = layerLayout;
+  },
+);
+
 useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolMainAction, (e) => {
-  if (props.enableToolEvents) emit("tool-main-action", e.detail);
+  emit("tool-main-action", e.detail);
 });
 useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolAntiAction, (e) => {
-  if (props.enableToolEvents) emit("tool-anti-action", e.detail);
+  emit("tool-anti-action", e.detail);
 });
 useEventListener<CustomEvent<ToolEventDetail>>(patternApplication, ToolEvent.ToolRelease, (e) => {
-  if (props.enableToolEvents) emit("tool-release", e.detail);
+  emit("tool-release", e.detail);
 });
 useEventListener<CustomEvent<TransformEventDetail>>(patternApplication, ToolEvent.Transform, (e) => {
   patternApplication.view?.adjustZoom(e.detail.scale, e.detail.bounds);
-  if (props.enableToolEvents) emit("transform", e.detail);
+  emit("transform", e.detail);
 });
 
 defineExpose({
@@ -159,7 +174,11 @@ defineExpose({
 });
 
 onMounted(async () => {
-  await patternApplication.init(canvas.value!, props.options);
+  await patternApplication.init(canvas.value!, {
+    render: props.renderOptions,
+    viewport: props.viewportOptions,
+    textureManager: props.textureManagerOptions,
+  });
   if (props.pattern) updatePatternView(props.pattern);
 });
 

@@ -242,7 +242,7 @@ onUnmounted(() => service.destroy());
 
           <PatternCanvas
             :pattern="preview?.pattern"
-            :options="{ textureManager: { outlineStitches: false } }"
+            :texture-manager-options="{ outlineStitches: false }"
             class="min-h-0 flex-1"
             :class="{ hidden: !imageImportOptionsValid }"
           />

@@ -3,7 +3,6 @@ import { ButtonIcon } from "@embroiderly/ui";
 
 import { IconPanelLeftClose, IconPanelLeftOpen, IconPanelRightClose, IconPanelRightOpen } from "~/assets/icons/";
 import { CanvasZoomControls } from "~/components/canvas/";
-import { MIN_SCALE, MAX_SCALE } from "~/lib/pixi/";
 import { useEditorStateStore } from "~/stores/";
 
 const { disabled = false } = defineProps<{
@@ -26,8 +25,8 @@ const editorStateStore = useEditorStateStore();
 
     <CanvasZoomControls
       v-model="editorStateStore.canvasZoom"
-      :min="MIN_SCALE"
-      :max="MAX_SCALE"
+      :min="1"
+      :max="100"
       :disabled="disabled"
       class="ml-auto w-full max-w-3xs"
     />

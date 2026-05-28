@@ -102,14 +102,7 @@ onMounted(async () => {
 
         <BlockUI ref="drop-zone" :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone">
           <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
-          <PatternWorkspace
-            v-else
-            :options="{
-              render: { antialias: settingsStore.viewport.antialias },
-              viewport: { wheelAction: settingsStore.viewport.wheelAction },
-            }"
-            class="size-full"
-          />
+          <PatternWorkspace v-else v-bind="settingsStore.canvas" class="size-full" />
         </BlockUI>
 
         <EditorWorkspaceFooter :disabled="patternStore.pattern.isNil" class="col-span-2" />
