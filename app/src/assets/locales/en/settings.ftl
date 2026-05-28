@@ -31,9 +31,9 @@ settings-startup-template-path = Template File
 
 settings-workarea = Working Area
 
-settings-workarea-hint = These settings require a restart.
-
-settings-workarea-rendering-antialias = Antialiasing
+settings-workarea-rendering-antialias =
+  .label = Antialiasing
+  .description = This setting requires a restart.
 
 settings-workarea-viewport-wheel-action = Mouse Wheel Action
 settings-workarea-viewport-wheel-action-zoom = Zoom

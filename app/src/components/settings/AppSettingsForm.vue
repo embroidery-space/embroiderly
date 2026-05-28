@@ -144,9 +144,7 @@ async function pickPatternTemplate() {
 
     <template #workarea>
       <div class="flex flex-col gap-y-2">
-        <p class="text-sm text-neutral-300">{{ $t("settings-workarea-hint") }}</p>
-
-        <Checkbox v-model="canvas.renderOptions.antialias" :label="$t('settings-workarea-rendering-antialias')" />
+        <Checkbox v-model="canvas.renderOptions.antialias" v-bind="$ta('settings-workarea-rendering-antialias')" />
 
         <FormField :label="$t('settings-workarea-viewport-wheel-action')" class="w-full">
           <Select v-model="canvas.viewportOptions.wheelAction" :items="wheelActionOptions" class="w-full" />

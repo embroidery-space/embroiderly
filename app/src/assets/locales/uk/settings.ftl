@@ -31,9 +31,9 @@ settings-startup-template-path = Файл шаблону
 
 settings-workarea = Робоча область
 
-settings-workarea-hint = Ці налаштування вимагають перезавантаження.
-
-settings-workarea-rendering-antialias = Згладжування
+settings-workarea-rendering-antialias =
+  .label = Згладжування
+  .description = Це налаштування вимагає перезавантаження.
 
 settings-workarea-viewport-wheel-action = Дія коліщатка миші
 settings-workarea-viewport-wheel-action-zoom = Масштабування
