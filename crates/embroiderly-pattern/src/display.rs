@@ -38,11 +38,11 @@ impl Default for Grid {
       major_lines_interval: 10,
       minor_lines: GridLine {
         color: String::from("C8C8C8"),
-        thickness: 0.072,
+        thickness: 1.0,
       },
       major_lines: GridLine {
         color: String::from("646464"),
-        thickness: 0.072,
+        thickness: 1.0,
       },
     }
   }
@@ -55,7 +55,13 @@ impl Default for Grid {
 pub struct GridLine {
   pub color: String,
 
-  /// Counts in points.
+  /// This is a value relative to 1px:
+  /// - `thickness=0.5` means `0.5px` (or `0,036pt`),
+  /// - `thickness=1` means `1px` (or `0,072pt`), and
+  /// - `thickness=2` means `2px` (or `0,144pt`).
+  ///
+  /// When pattern is being exported to PDF, the thickness is calculated as `thickness * (<default cell size> / <user cell size>)`, where `<default cell size>` is `14px`.
+  /// This ensures a proper scaling of grid lines during the export.
   pub thickness: f32,
 }
 

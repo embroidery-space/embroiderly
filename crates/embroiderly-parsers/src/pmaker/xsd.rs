@@ -1112,7 +1112,7 @@ fn read_pattern_and_print_settings<R: Read + Seek>(reader: &mut R) -> io::Result
 
 fn read_grid<R: Read + Seek>(reader: &mut R) -> io::Result<Grid> {
   fn read_grid_line_style<R: Read + Seek>(reader: &mut R) -> io::Result<GridLineStyle> {
-    let thickness = (reader.read_u16::<LittleEndian>()? * 72) as f32 / 1000.0; // Convert to points.
+    let thickness = reader.read_u16::<LittleEndian>()? as f32;
     reader.seek_relative(2)?;
     let color = reader.read_hex_color()?;
     reader.seek_relative(3)?;

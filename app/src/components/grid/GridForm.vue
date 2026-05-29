@@ -21,12 +21,14 @@ const grid = defineModel<Grid>({ required: true });
 
     <FormFieldSet :legend="$t('grid-major-lines')">
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <FormField v-bind="$ta('grid-thickness')">
+        <FormField :label="$t('grid-thickness')">
           <InputNumber
             v-model="grid.majorLines.thickness"
             data-testid="grid-major-lines-thickness-input"
-            :min="0.001"
+            :min="0.5"
+            :max="5"
             :step="0.01"
+            :format-options="{ style: 'percent' }"
             class="w-full"
           />
         </FormField>
@@ -38,12 +40,14 @@ const grid = defineModel<Grid>({ required: true });
 
     <FormFieldSet :legend="$t('grid-minor-lines')">
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <FormField v-bind="$ta('grid-thickness')">
+        <FormField :label="$t('grid-thickness')">
           <InputNumber
             v-model="grid.minorLines.thickness"
             data-testid="grid-minor-lines-thickness-input"
-            :min="0.001"
+            :min="0.5"
+            :max="5"
             :step="0.01"
+            :format-options="{ style: 'percent' }"
             class="w-full"
           />
         </FormField>

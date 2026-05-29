@@ -336,9 +336,7 @@ grid-major-lines = Major Lines
 grid-minor-lines = Minor Lines
 
 grid-color = Color
-grid-thickness =
-  .label = Thickness
-  .hint = In points
+grid-thickness = Thickness
 
 ## Palette panel.
 

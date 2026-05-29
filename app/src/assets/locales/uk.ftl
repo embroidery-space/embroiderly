@@ -336,9 +336,7 @@ grid-major-lines = Головні лінії
 grid-minor-lines = Малі лінії
 
 grid-color = Колір
-grid-thickness =
-  .label = Товщина
-  .hint = У пунктах
+grid-thickness = Товщина
 
 ## Palette panel.
 
