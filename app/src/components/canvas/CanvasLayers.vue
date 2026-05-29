@@ -69,7 +69,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
       children: [
         {
           index: layer.index,
-          label: fluent.$t("canvas-layers-fullstitches"),
+          label: fluent.$t("canvas-layers-full-stitches"),
           value: `layer-${layer.index}-fullstitches`,
           icon: IconStitchFull,
           visible: visibility.fullstitchesVisible,
@@ -77,7 +77,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         },
         {
           index: layer.index,
-          label: fluent.$t("canvas-layers-petitestitches"),
+          label: fluent.$t("canvas-layers-petite-stitches"),
           value: `layer-${layer.index}-petitestitches`,
           icon: IconStitchPetite,
           visible: visibility.petitestitchesVisible,
@@ -85,7 +85,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         },
         {
           index: layer.index,
-          label: fluent.$t("canvas-layers-halfstitches"),
+          label: fluent.$t("canvas-layers-half-stitches"),
           value: `layer-${layer.index}-halfstitches`,
           icon: IconStitchHalf,
           visible: visibility.halfstitchesVisible,
@@ -93,7 +93,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         },
         {
           index: layer.index,
-          label: fluent.$t("canvas-layers-quarterstitches"),
+          label: fluent.$t("canvas-layers-quarter-stitches"),
           value: `layer-${layer.index}-quarterstitches`,
           icon: IconStitchQuarter,
           visible: visibility.quarterstitchesVisible,
@@ -101,7 +101,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         },
         {
           index: layer.index,
-          label: fluent.$t("canvas-layers-specialstitches"),
+          label: fluent.$t("canvas-layers-special-stitches"),
           value: `layer-${layer.index}-specialstitches`,
           icon: IconStitchSpecial,
           visible: visibility.specialstitchesVisible,
@@ -109,7 +109,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         },
         {
           index: layer.index,
-          label: fluent.$t("canvas-layers-backstitches"),
+          label: fluent.$t("canvas-layers-back-stitches"),
           value: `layer-${layer.index}-backstitches`,
           icon: IconStitchBack,
           visible: visibility.backstitchesVisible,
@@ -117,7 +117,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         },
         {
           index: layer.index,
-          label: fluent.$t("canvas-layers-straightstitches"),
+          label: fluent.$t("canvas-layers-straight-stitches"),
           value: `layer-${layer.index}-straightstitches`,
           icon: IconStitchStraight,
           visible: visibility.straightstitchesVisible,
@@ -125,7 +125,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
         },
         {
           index: layer.index,
-          label: fluent.$t("canvas-layers-frenchknots"),
+          label: fluent.$t("canvas-layers-french-knots"),
           value: `layer-${layer.index}-frenchknots`,
           icon: IconStitchFrenchKnot,
           visible: visibility.frenchknotsVisible,

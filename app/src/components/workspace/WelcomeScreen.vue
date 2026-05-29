@@ -37,7 +37,7 @@ const infoSections = computed<InfoSection[]>(() => [
     items: [
       {
         title: fluent.$t("welcome-customization-settings-title"),
-        text: fluent.$t("welcome-customization-settings-descr"),
+        text: fluent.$t("welcome-customization-settings-description"),
         command: settingsStore.openSettingsModal,
       },
     ],
@@ -48,7 +48,7 @@ const infoSections = computed<InfoSection[]>(() => [
       __TAURI__
         ? {
             title: fluent.$t("welcome-info-docs-title"),
-            text: fluent.$t("welcome-info-docs-descr"),
+            text: fluent.$t("welcome-info-docs-description"),
             async command() {
               const documentPath = await resolveResource(`help/embroiderly.${settingsStore.ui.language}.pdf`);
               await openPath(documentPath);
@@ -56,7 +56,7 @@ const infoSections = computed<InfoSection[]>(() => [
           }
         : {
             title: fluent.$t("welcome-info-docs-title"),
-            text: fluent.$t("welcome-info-docs-descr"),
+            text: fluent.$t("welcome-info-docs-description"),
             href: "https://docs.embroiderly.niusia.me",
             target: "_blank",
           },

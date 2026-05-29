@@ -407,7 +407,7 @@ async function updatePaletteDisplaySettings() {
               @click="editorStateStore.paletteMode = PaletteMode.Regular"
             />
             <DropdownMenu :items="palettePanelsMenuOptions">
-              <Button :icon="IconMenu" :aria-label="$t('palette-panels-menu')" />
+              <Button :icon="IconMenu" :aria-label="$t('palette-panel-menu')" />
             </DropdownMenu>
           </div>
           <div

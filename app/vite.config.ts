@@ -13,7 +13,6 @@ import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 import pkg from "./package.json";
-import fluentMerge from "./vite-plugins/fluent-merge";
 
 const git = (() => {
   try {
@@ -46,7 +45,6 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
-    fluentMerge({ localesDir: "./src/assets/locales/" }),
     !isTauri &&
       VitePWA({
         disable: !isPwaEnabled,

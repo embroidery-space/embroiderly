@@ -26,11 +26,6 @@ interface Window {
   openedFiles?: string[];
 }
 
-declare module "virtual:*.ftl" {
-  const content: string;
-  export default content;
-}
-
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }

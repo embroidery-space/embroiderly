@@ -3,8 +3,8 @@ import { createSharedComposable } from "@vueuse/core";
 import { useFluent } from "fluent-vue";
 import { ref } from "vue";
 
-import appEnLocale from "virtual:en.ftl";
-import appUkLocale from "virtual:uk.ftl";
+import appEnLocale from "~/assets/locales/en.ftl?raw";
+import appUkLocale from "~/assets/locales/uk.ftl?raw";
 
 const DEFAULT_LOCALE = "en";
 
