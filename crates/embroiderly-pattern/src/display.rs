@@ -39,10 +39,12 @@ impl Default for Grid {
       minor_lines: GridLine {
         color: String::from("C8C8C8"),
         thickness: 1.0,
+        pixel_line: false,
       },
       major_lines: GridLine {
         color: String::from("646464"),
         thickness: 1.0,
+        pixel_line: false,
       },
     }
   }
@@ -63,6 +65,9 @@ pub struct GridLine {
   /// When pattern is being exported to PDF, the thickness is calculated as `thickness * (<default cell size> / <user cell size>)`, where `<default cell size>` is `14px`.
   /// This ensures a proper scaling of grid lines during the export.
   pub thickness: f32,
+
+  /// If set to `true`, the line will always be rendered wtih 1px thickness regardles of the `thickness` value or the canvas scale.
+  pub pixel_line: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

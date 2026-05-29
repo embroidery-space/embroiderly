@@ -337,6 +337,9 @@ grid-minor-lines = Малі лінії
 
 grid-color = Колір
 grid-thickness = Товщина
+grid-pixel-line =
+  .label = Піксельна лінія
+  .description = Якщо увімкнено, лінія сітки завжди буде малюватися товщиною 1px незалежно від вказаної товщини або масштабу канвасу.
 
 ## Palette panel.
 

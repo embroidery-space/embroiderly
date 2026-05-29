@@ -3,15 +3,18 @@ import { b } from "@zorsh/zorsh";
 export class GridLine {
   color: string;
   thickness: number;
+  pixelLine: boolean;
 
   constructor(data?: b.infer<typeof GridLine.schema>) {
     this.color = data?.color ?? "808080";
     this.thickness = data?.thickness ?? 1;
+    this.pixelLine = data?.pixelLine ?? false;
   }
 
   static readonly schema = b.struct({
     color: b.string(),
     thickness: b.f32(),
+    pixelLine: b.bool(),
   });
 }
 

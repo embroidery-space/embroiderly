@@ -337,6 +337,9 @@ grid-minor-lines = Minor Lines
 
 grid-color = Color
 grid-thickness = Thickness
+grid-pixel-line =
+  .label = Pixel Line
+  .description = If enabled, the grid line will always be drawn as a 1px line regardless of the specified thickness or the canvas zoom.
 
 ## Palette panel.
 

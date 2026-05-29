@@ -499,6 +499,7 @@ impl From<GridLineStyle> for embroiderly_pattern::GridLine {
     Self {
       color: line.color,
       thickness: line.thickness,
+      pixel_line: false,
     }
   }
 }
