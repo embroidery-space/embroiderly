@@ -557,8 +557,16 @@ fn draw_grid<W: io::Write>(
       let pattern_width = bounds.width as f32 * cell_size;
       let pattern_height = bounds.height as f32 * cell_size;
 
-      let minor_lines_thickness = grid.minor_lines.thickness * cell_size;
-      let major_lines_thickness = grid.major_lines.thickness * cell_size;
+      let minor_lines_thickness = if grid.minor_lines.pixel_line {
+        1.0
+      } else {
+        grid.minor_lines.thickness * (ImageExportOptions::DEFAULT_CELL_SIZE / cell_size)
+      };
+      let major_lines_thickness = if grid.major_lines.pixel_line {
+        1.0
+      } else {
+        grid.major_lines.thickness * (ImageExportOptions::DEFAULT_CELL_SIZE / cell_size)
+      };
 
       // Draw horizontal minor lines.
       for i in 0..=bounds.height {

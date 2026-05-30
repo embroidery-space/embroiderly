@@ -55,8 +55,9 @@ export class GridView extends Graphics {
     }
 
     // Apply stroke style for minor lines.
-    const { thickness, color } = this.#grid.minorLines;
-    this.stroke({ width: thickness, color });
+    // Divide by 14 to convert from pixels to points (1px ≈ 0.072pt).
+    const { color, thickness, pixelLine } = this.#grid.minorLines;
+    this.stroke({ color, pixelLine, width: thickness / 14 });
   }
 
   #renderMajorLines() {
@@ -77,7 +78,8 @@ export class GridView extends Graphics {
     }
 
     // Apply stroke style for major lines.
-    const { thickness, color } = this.#grid.majorLines;
-    this.stroke({ width: thickness, color });
+    // Divide by 14 to convert from pixels to points (1px ≈ 0.072pt).
+    const { color, thickness, pixelLine } = this.#grid.majorLines;
+    this.stroke({ color, pixelLine, width: thickness / 14 });
   }
 }

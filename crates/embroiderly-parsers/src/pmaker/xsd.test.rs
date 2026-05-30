@@ -269,19 +269,19 @@ fn reads_grid_settings() {
       major_lines_interval: 10,
       minor_screen_lines: GridLineStyle {
         color: String::from("C8C8C8"),
-        thickness: 0.072,
+        thickness: 1.0,
       },
       major_screen_lines: GridLineStyle {
         color: String::from("646464"),
-        thickness: 0.072,
+        thickness: 1.0,
       },
       minor_printer_lines: GridLineStyle {
         color: String::from("000000"),
-        thickness: 0.144,
+        thickness: 2.0,
       },
       major_printer_lines: GridLineStyle {
         color: String::from("000000"),
-        thickness: 0.504,
+        thickness: 7.0,
       },
     }
   );

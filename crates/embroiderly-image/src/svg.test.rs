@@ -307,25 +307,27 @@ fn writes_node_stitches() {
 #[test]
 fn writes_grid() {
   let xml = r##"<g id="grid">
-  <line x1="0" y1="0" x2="28" y2="0" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="14" x2="28" y2="14" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="28" x2="28" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="0" x2="0" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="14" y1="0" x2="14" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="28" y1="0" x2="28" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="0" x2="28" y2="0" stroke="#000000" stroke-width="0.2016"/>
-  <line x1="0" y1="0" x2="0" y2="28" stroke="#000000" stroke-width="0.2016"/>
+  <line x1="0" y1="0" x2="28" y2="0" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="14" x2="28" y2="14" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="28" x2="28" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="0" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="14" y1="0" x2="14" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="28" y1="0" x2="28" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="28" y2="0" stroke="#000000" stroke-width="2"/>
+  <line x1="0" y1="0" x2="0" y2="28" stroke="#000000" stroke-width="2"/>
 </g>"##;
 
   let grid = Grid {
     major_lines_interval: 10,
     minor_lines: GridLine {
       color: String::from("C8C8C8"),
-      thickness: 0.0072,
+      thickness: 1.0,
+      pixel_line: false,
     },
     major_lines: GridLine {
       color: String::from("000000"),
-      thickness: 0.0144,
+      thickness: 2.0,
+      pixel_line: false,
     },
   };
   let frame = FrameContext {
@@ -349,15 +351,15 @@ fn writes_grid() {
 #[test]
 fn writes_grid_with_line_numbers() {
   let xml = r##"<g id="grid">
-  <line x1="0" y1="0" x2="28" y2="0" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="14" x2="28" y2="14" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="28" x2="28" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="0" x2="0" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="14" y1="0" x2="14" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="28" y1="0" x2="28" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="0" x2="28" y2="0" stroke="#000000" stroke-width="0.2016"/>
+  <line x1="0" y1="0" x2="28" y2="0" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="14" x2="28" y2="14" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="28" x2="28" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="0" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="14" y1="0" x2="14" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="28" y1="0" x2="28" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="28" y2="0" stroke="#000000" stroke-width="2"/>
   <text x="-14" y="0" font-size="11.2" font-weight="bold" text-anchor="start" dominant-baseline="middle">0</text>
-  <line x1="0" y1="0" x2="0" y2="28" stroke="#000000" stroke-width="0.2016"/>
+  <line x1="0" y1="0" x2="0" y2="28" stroke="#000000" stroke-width="2"/>
   <text x="0" y="-14" font-size="11.2" font-weight="bold" text-anchor="middle" dominant-baseline="hanging">0</text>
 </g>"##;
 
@@ -365,11 +367,13 @@ fn writes_grid_with_line_numbers() {
     major_lines_interval: 10,
     minor_lines: GridLine {
       color: String::from("C8C8C8"),
-      thickness: 0.0072,
+      thickness: 1.0,
+      pixel_line: false,
     },
     major_lines: GridLine {
       color: String::from("000000"),
-      thickness: 0.0144,
+      thickness: 2.0,
+      pixel_line: false,
     },
   };
   let frame = FrameContext {
@@ -394,28 +398,28 @@ fn writes_grid_with_line_numbers() {
 #[test]
 fn writes_grid_with_centering_marks() {
   let xml = r##"<g id="grid">
-  <line x1="0" y1="0" x2="28" y2="0" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="14" x2="28" y2="14" stroke="#C8C8C8" stroke-width="0.1008"/>
+  <line x1="0" y1="0" x2="28" y2="0" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="14" x2="28" y2="14" stroke="#C8C8C8" stroke-width="1"/>
   <g transform="translate(-14, 14)">
     <polygon points="0,0 14,7 0,14" fill="darkgrey"/>
   </g>
   <g transform="translate(28, 14)">
     <polygon points="14,0 14,14 0,7" fill="darkgrey"/>
   </g>
-  <line x1="0" y1="28" x2="28" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="0" x2="0" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="14" y1="0" x2="14" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
+  <line x1="0" y1="28" x2="28" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="0" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="14" y1="0" x2="14" y2="28" stroke="#C8C8C8" stroke-width="1"/>
   <g transform="translate(14, -14)">
     <polygon points="0,0 14,0 7,14" fill="darkgrey"/>
   </g>
   <g transform="translate(14, 28)">
     <polygon points="0,14 7,0 14,14" fill="darkgrey"/>
   </g>
-  <line x1="28" y1="0" x2="28" y2="28" stroke="#C8C8C8" stroke-width="0.1008"/>
-  <line x1="0" y1="0" x2="28" y2="0" stroke="#000000" stroke-width="0.2016"/>
-  <line x1="0" y1="28" x2="28" y2="28" stroke="#000000" stroke-width="0.2016"/>
-  <line x1="0" y1="0" x2="0" y2="28" stroke="#000000" stroke-width="0.2016"/>
-  <line x1="28" y1="0" x2="28" y2="28" stroke="#000000" stroke-width="0.2016"/>
+  <line x1="28" y1="0" x2="28" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="28" y2="0" stroke="#000000" stroke-width="2"/>
+  <line x1="0" y1="28" x2="28" y2="28" stroke="#000000" stroke-width="2"/>
+  <line x1="0" y1="0" x2="0" y2="28" stroke="#000000" stroke-width="2"/>
+  <line x1="28" y1="0" x2="28" y2="28" stroke="#000000" stroke-width="2"/>
 </g>"##;
 
   let fabric = Fabric {
@@ -427,11 +431,13 @@ fn writes_grid_with_centering_marks() {
     major_lines_interval: 2,
     minor_lines: GridLine {
       color: String::from("C8C8C8"),
-      thickness: 0.0072,
+      thickness: 1.0,
+      pixel_line: false,
     },
     major_lines: GridLine {
       color: String::from("000000"),
-      thickness: 0.0144,
+      thickness: 2.0,
+      pixel_line: false,
     },
   };
   let frame = FrameContext {
@@ -447,6 +453,50 @@ fn writes_grid_with_centering_marks() {
 
   let mut writer = create_writer();
   draw_grid(&mut writer, &fabric, &grid, frame).unwrap();
+
+  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
+  let diff = prettydiff::diff_lines(&result, xml);
+  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
+}
+
+#[test]
+fn writes_grid_with_pixel_lines() {
+  let xml = r##"<g id="grid">
+  <line x1="0" y1="0" x2="28" y2="0" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="14" x2="28" y2="14" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="28" x2="28" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="0" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="14" y1="0" x2="14" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="28" y1="0" x2="28" y2="28" stroke="#C8C8C8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="28" y2="0" stroke="#000000" stroke-width="1"/>
+  <line x1="0" y1="0" x2="0" y2="28" stroke="#000000" stroke-width="1"/>
+</g>"##;
+
+  let grid = Grid {
+    major_lines_interval: 10,
+    minor_lines: GridLine {
+      color: String::from("C8C8C8"),
+      thickness: 3.0,
+      pixel_line: true,
+    },
+    major_lines: GridLine {
+      color: String::from("000000"),
+      thickness: 3.0,
+      pixel_line: true,
+    },
+  };
+  let frame = FrameContext {
+    bounds: Bounds {
+      x: 0,
+      y: 0,
+      width: 2,
+      height: 2,
+    },
+    ..FRAME
+  };
+
+  let mut writer = create_writer();
+  draw_grid(&mut writer, &Fabric::default(), &grid, frame).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);
