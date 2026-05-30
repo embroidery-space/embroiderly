@@ -41,8 +41,14 @@ async function updateOptions() {
   optionsUpdated.value = true;
 }
 
+const isExporting = ref(false);
 async function exportPattern(variant: PdfVariant) {
-  await props.onDocumentExport?.(variant);
+  try {
+    isExporting.value = true;
+    await props.onDocumentExport?.(variant);
+  } finally {
+    isExporting.value = false;
+  }
 }
 </script>
 
@@ -62,9 +68,9 @@ async function exportPattern(variant: PdfVariant) {
         @click="updateOptions"
       />
       <FormFieldGroup>
-        <Button loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern(variant)" />
+        <Button :loading="isExporting" :label="$t('pdf-export-export-document')" @click="exportPattern(variant)" />
         <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
-          <Button color="primary" variant="solid" :icon="IconChevronDown" />
+          <Button color="primary" variant="solid" :disabled="isExporting" :icon="IconChevronDown" />
         </DropdownMenu>
       </FormFieldGroup>
     </template>
