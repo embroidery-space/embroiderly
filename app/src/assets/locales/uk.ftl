@@ -513,10 +513,6 @@ publish-settings-frame-definition =
 publish-settings-frame-width = Ширина фрейма
 publish-settings-frame-height = Висота фрейма
 
-publish-settings-frame-cell-size =
-  .label = Розмір клітинки
-  .description = Розмір кожної клітинки/стібка в сітці у пікселях.
-
 publish-settings-frame-preserved-overlap =
   .label = Збережене перекриття
   .description = Розмір перекриття між фреймами у стібках.

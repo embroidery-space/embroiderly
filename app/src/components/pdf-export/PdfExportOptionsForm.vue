@@ -25,9 +25,6 @@ const options = defineModel<PdfExportOptions>({ required: true });
         <FormField :label="$t('publish-settings-frame-height')" class="w-full">
           <InputNumber v-model="options.frameOptions.frameSize![1]" orientation="vertical" class="w-full" />
         </FormField>
-        <FormField v-bind="$ta('publish-settings-frame-cell-size')" class="w-full">
-          <InputNumber v-model="options.frameOptions.cellSize" orientation="vertical" class="w-full" />
-        </FormField>
         <FormField v-bind="$ta('publish-settings-frame-preserved-overlap')" class="w-full">
           <InputNumber v-model="options.frameOptions.preservedOverlap" orientation="vertical" class="w-full" />
         </FormField>

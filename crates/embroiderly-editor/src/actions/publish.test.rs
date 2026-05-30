@@ -11,7 +11,6 @@ fn test_update_pdf_export_options() {
     enumerate_frames: true,
     frame_options: ImageExportOptions {
       frame_size: Some((50, 100)),
-      cell_size: 20.0,
       preserved_overlap: None,
       show_grid_line_numbers: true,
       show_centering_marks: true,

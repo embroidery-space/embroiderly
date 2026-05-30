@@ -509,10 +509,6 @@ publish-settings-frame-definition =
 publish-settings-frame-width = Frame Width
 publish-settings-frame-height = Frame Height
 
-publish-settings-frame-cell-size =
-  .label = Cell Size
-  .description = The size of each cell/stitch in the grid, in pixels.
-
 publish-settings-frame-preserved-overlap =
   .label = Preserved Overlap
   .description = The size of overlap between frames, in stitches.

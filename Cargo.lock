@@ -1242,18 +1242,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "embroiderly_image"
-version = "0.7.1"
-dependencies = [
- "anyhow",
- "embroiderly_parsers",
- "embroiderly_pattern",
- "prettydiff",
- "quick-xml 0.40.1",
- "tracing",
-]
-
-[[package]]
 name = "embroiderly_image_import"
 version = "0.7.1"
 dependencies = [
@@ -1307,10 +1295,12 @@ version = "0.7.1"
 dependencies = [
  "anyhow",
  "borsh",
- "embroiderly_image",
+ "embroiderly_parsers",
  "embroiderly_pattern",
  "embroiderly_web",
  "js-sys",
+ "serde",
+ "serde_json",
  "typst",
  "typst-as-lib",
  "typst-pdf",

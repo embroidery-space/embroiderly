@@ -1,4 +1,4 @@
-#[derive(Debug, Default, Clone, Copy, PartialEq)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -6,7 +6,7 @@ pub struct PublishSettings {
   pub pdf: PdfExportOptions,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -26,7 +26,6 @@ impl Default for PdfExportOptions {
       enumerate_frames: true,
       frame_options: ImageExportOptions {
         frame_size: Some((30, 40)),
-        cell_size: 14.0,
         preserved_overlap: Some(ImageExportOptions::DEFAULT_PRESERVED_OVERLAP),
         show_grid_line_numbers: true,
         show_centering_marks: true,
@@ -35,7 +34,7 @@ impl Default for PdfExportOptions {
   }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -43,8 +42,6 @@ pub struct ImageExportOptions {
   /// Maximum size of a frame in stitches (width, height).
   /// If None, the entire pattern is rendered as a single image.
   pub frame_size: Option<(u16, u16)>,
-  /// Size of a single stitch/cell in pixels.
-  pub cell_size: f32,
   /// Number of overlapping rows/columns from adjacent frames to include.
   /// Defaults to 3 if not specified and framing is active.
   pub preserved_overlap: Option<u16>,
@@ -55,23 +52,13 @@ pub struct ImageExportOptions {
 }
 
 impl ImageExportOptions {
-  pub const DEFAULT_CELL_SIZE: f32 = 14.0;
   pub const DEFAULT_PRESERVED_OVERLAP: u16 = 3;
-
-  #[must_use]
-  pub fn new(cell_size: f32) -> Self {
-    Self {
-      cell_size,
-      ..Self::default()
-    }
-  }
 }
 
 impl Default for ImageExportOptions {
   fn default() -> Self {
     Self {
       frame_size: None,
-      cell_size: Self::DEFAULT_CELL_SIZE,
       preserved_overlap: Some(Self::DEFAULT_PRESERVED_OVERLAP),
       show_grid_line_numbers: false,
       show_centering_marks: false,

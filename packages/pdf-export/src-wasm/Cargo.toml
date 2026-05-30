@@ -11,12 +11,13 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 # Embroiderly Core
-embroiderly_image = { workspace = true }
-embroiderly_pattern = { workspace = true, features = ["borsh"] }
+embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
 embroiderly_web = { workspace = true, features = ["opfs"] }
 
 # De/serialization
 borsh = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
 
 # Exporting patterns to PDF
 typst = { workspace = true }
@@ -31,6 +32,9 @@ wasm-bindgen = { workspace = true }
 wasm-bindgen-futures = { workspace = true }
 js-sys = { workspace = true }
 web-sys = { workspace = true, features = ["FileSystemFileHandle"] }
+
+[dev-dependencies]
+embroiderly_parsers = { workspace = true }
 
 [package.metadata.wasm-pack.profile.dev]
 wasm-opt = false

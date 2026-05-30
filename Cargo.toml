@@ -80,7 +80,6 @@ tauri-plugin-prevent-default = "5.0.0"
 
 # Embroiderly Core
 embroiderly_editor = { path = "crates/embroiderly-editor" }
-embroiderly_image = { path = "crates/embroiderly-image" }
 embroiderly_parsers = { path = "crates/embroiderly-parsers" }
 embroiderly_pattern = { path = "crates/embroiderly-pattern" }
 embroiderly_tracing = { path = "crates/embroiderly-tracing" }

@@ -182,7 +182,6 @@ class MetricsServiceClass {
       center_frames: options.centerFrames,
       enumerate_frames: options.enumerateFrames,
       frame_size: frameOptions.frameSize ? [frameOptions.frameSize[0], frameOptions.frameSize[1]] : null,
-      cell_size: frameOptions.cellSize,
       preserved_overlap: frameOptions.preservedOverlap,
       show_grid_line_numbers: frameOptions.showGridLineNumbers,
       show_centering_marks: frameOptions.showCenteringMarks,
