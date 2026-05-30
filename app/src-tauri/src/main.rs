@@ -5,8 +5,13 @@ mod plugins;
 mod services;
 
 fn main() {
+  #[cfg(feature = "cef")]
+  let app = setup_app(tauri::Builder::<tauri::Cef>::default());
+  #[cfg(not(feature = "cef"))]
+  let app = setup_app(tauri::Builder::<tauri::Wry>::default());
+
   #[allow(unused)]
-  setup_app(tauri::Builder::default()).run(|app_handle, event| {
+  app.run(|app_handle, event| {
     match event {
       // Yeah, we don't currently support MacOS, but keep the code for future use.
       #[cfg(any(target_os = "macos", target_os = "ios"))]

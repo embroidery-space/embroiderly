@@ -6,6 +6,9 @@ edition = { workspace = true }
 [lints]
 workspace = true
 
+[features]
+cef = ["tauri/cef"]
+
 [build-dependencies]
 tauri-build = { workspace = true }
 
