@@ -18,18 +18,19 @@
 // 1px black outline shared by full/part stitches and french knots/beads.
 #let outline = px + rgb("000000")
 
-#let place-text(x, y, body, anchor-x: "start", anchor-y: "alphabetic") = context {
-  let m = measure(body)
-  let ox = if anchor-x == "middle" { -m.width / 2 } else if anchor-x == "end" { -m.width } else { 0pt }
-  let oy = if anchor-y == "middle" { -m.height / 2 } else if anchor-y == "hanging" { 0pt } else { -m.height }
-  place(top + left, dx: x + ox, dy: y + oy, body)
-}
-
 // Draws a palette symbol centered at (cx, cy), if the palette item has one.
 #let draw-symbol(cx, cy, symbol, size) = {
   if symbol != none {
-    let body = text(font: symbol.font, size: size, str.from-unicode(symbol.char))
-    place-text(cx, cy, body, anchor-x: "middle", anchor-y: "middle")
+    place(
+      top + left,
+      dx: cx - size / 2,
+      dy: cy - size / 2,
+      box(
+        width: size,
+        height: size,
+        align(center + horizon, text(font: symbol.font, size: size, str.from-unicode(symbol.char))),
+      ),
+    )
   }
 }
 
@@ -225,7 +226,10 @@
       let y = (i - bounds.y) * cell
       place(top + left, line(start: (0pt, y), end: (pw, y), stroke: (paint: major-color, thickness: major-thickness)))
       if show-numbers {
-        place-text(-cell, y, text(weight: "bold", size: 0.8 * cell, str(i)), anchor-x: "start", anchor-y: "middle")
+        place(top + left, dx: -2.2 * cell, dy: y - 0.4 * cell, box(width: 2 * cell, height: 0.8 * cell, align(
+          right + horizon,
+          text(weight: "bold", size: 0.8 * cell, str(i)),
+        )))
       }
     }
   }
@@ -237,7 +241,11 @@
       let x = (i - bounds.x) * cell
       place(top + left, line(start: (x, 0pt), end: (x, ph), stroke: (paint: major-color, thickness: major-thickness)))
       if show-numbers {
-        place-text(x, -cell, text(weight: "bold", size: 0.8 * cell, str(i)), anchor-x: "middle", anchor-y: "hanging")
+        place(top + left, dx: x - cell, dy: -cell, box(width: 2 * cell, align(center, text(
+          weight: "bold",
+          size: 0.8 * cell,
+          str(i),
+        ))))
       }
     }
   }
