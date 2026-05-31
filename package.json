@@ -31,7 +31,7 @@
     "@eslint-community/eslint-plugin-eslint-comments": "catalog:",
     "@eslint/compat": "catalog:",
     "@intlify/eslint-plugin-vue-i18n": "catalog:",
-    "@tauri-apps/cli": "catalog:",
+    "@tauri-apps/cli-cef": "catalog:",
     "@vitest/eslint-plugin": "catalog:",
     "@vue/eslint-config-prettier": "catalog:",
     "@vue/eslint-config-typescript": "catalog:",

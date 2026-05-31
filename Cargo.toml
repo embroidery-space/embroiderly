@@ -66,15 +66,26 @@ cargo = { level = "allow", priority = -1 }
 redundant_feature_names = "deny"
 wildcard_dependencies = "deny"
 
+[patch.crates-io]
+tauri = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef" }
+tauri-plugin = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef" }
+
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.11.2", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
-tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
+tauri = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef", default-features = false, features = [
+  "compression",
+  "wry",
+  "x11",
+  "config-json5",
+] }
+tauri-build = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef", default-features = false, features = [
+  "config-json5",
+] }
 ## Official Tauri plugins
-tauri-plugin-fs = "2.0.3"
-tauri-plugin-opener = "2.5.3"
-tauri-plugin-process = "2.3.1"
-tauri-plugin-updater = "2.10.1"
+tauri-plugin-fs = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
+tauri-plugin-opener = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
+tauri-plugin-process = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
+tauri-plugin-updater = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
 ## Third-party Tauri plugins
 tauri-plugin-prevent-default = "5.0.0"
 
