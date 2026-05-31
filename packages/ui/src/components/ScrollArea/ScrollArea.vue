@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { reactivePick } from "@vueuse/core";
-import { useForwardPropsEmits } from "reka-ui";
-import type { ScrollAreaRootProps } from "reka-ui";
 import { ScrollArea } from "reka-ui/namespaced";
 import { computed } from "vue";
+
+import type { ScrollType } from "../../types/scroll.ts";
 
 import { ScrollAreaTheme } from "./ScrollArea.theme.ts";
 import type { ScrollAreaThemeSlots, ScrollAreaThemeVariants } from "./ScrollArea.theme.ts";
 
-export interface ScrollAreaProps extends ScrollAreaRootProps {
+export interface ScrollAreaProps {
   /**
    * The orientation of the scroll area.
    * @default "vertical"
@@ -21,6 +20,12 @@ export interface ScrollAreaProps extends ScrollAreaRootProps {
    */
   size?: ScrollAreaThemeVariants["size"];
 
+  /**
+   * The type of scroll area.
+   * @default "hover"
+   */
+  type?: ScrollType;
+
   class?: any;
   ui?: ScrollAreaThemeSlots;
 }
@@ -32,10 +37,9 @@ export interface ScrollAreaSlots {
 const props = withDefaults(defineProps<ScrollAreaProps>(), {
   orientation: "vertical",
   size: "lg",
+  type: "hover",
 });
 defineSlots<ScrollAreaSlots>();
-
-const rootProps = useForwardPropsEmits(reactivePick(props, "type", "dir", "scrollHideDelay"));
 
 const ui = computed(() => {
   return ScrollAreaTheme({
@@ -47,7 +51,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <ScrollArea.Root v-bind="rootProps" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <ScrollArea.Root :type="type" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <ScrollArea.Viewport as-child data-slot="viewport" :class="ui.viewport({ class: props.ui?.viewport })">
       <slot />
     </ScrollArea.Viewport>
