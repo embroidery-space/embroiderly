@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Primitive } from "reka-ui";
-import type { PrimitiveProps } from "reka-ui";
 import { computed } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
@@ -12,7 +10,7 @@ import Icon from "../Icon/Icon.vue";
 import { InputTheme } from "./Input.theme.ts";
 import type { InputThemeSlots, InputThemeVariants } from "./Input.theme.ts";
 
-export interface InputProps extends PrimitiveProps, UseComponentIconsProps {
+export interface InputProps extends UseComponentIconsProps {
   id?: string;
 
   /**
@@ -27,7 +25,7 @@ export interface InputProps extends PrimitiveProps, UseComponentIconsProps {
   variant?: InputThemeVariants["variant"];
   /**
    * The size of the input.
-   * @default "lg"
+   * @default "md"
    */
   size?: InputThemeVariants["size"];
 
@@ -47,10 +45,9 @@ defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<string>();
 const props = withDefaults(defineProps<InputProps>(), {
-  as: "div",
-
   color: "primary",
   variant: "subtle",
+  size: "md",
 });
 const slots = defineSlots<InputSlots>();
 
@@ -78,7 +75,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <span v-if="isLeading || !!slots.leading" data-slot="leading" :class="ui.leading({ class: props.ui?.leading })">
       <slot name="leading">
         <Icon
@@ -116,5 +113,5 @@ const ui = computed(() => {
         />
       </slot>
     </span>
-  </Primitive>
+  </div>
 </template>

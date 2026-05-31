@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { reactivePick } from "@vueuse/core";
-import { ConfigProvider, TooltipProvider, useForwardProps } from "reka-ui";
-import type { ConfigProviderProps, TooltipProviderProps } from "reka-ui";
+import { ConfigProvider, TooltipProvider } from "reka-ui";
+import type { TooltipProviderProps } from "reka-ui";
 import { provide, toRef, useId } from "vue";
 
 import { iconsInjectionKey } from "../../composables/useComponentIcons.ts";
@@ -15,7 +14,7 @@ import type { ToasterProps } from "../Toast/Toaster.vue";
 
 import OverlayProvider from "./OverlayProvider.vue";
 
-export interface AppProps extends Omit<ConfigProviderProps, "dir" | "locale" | "useId"> {
+export interface AppProps {
   /** Tooltip options. */
   tooltip?: TooltipProviderProps;
   /** Toast options. Pass `null` to disable toasts. */
@@ -42,7 +41,6 @@ const props = withDefaults(defineProps<AppProps>(), {
 });
 defineSlots<AppSlots>();
 
-const configProps = useForwardProps(reactivePick(props, "scrollBody"));
 const tooltipProps = toRef(() => props.tooltip);
 const toasterProps = toRef(() => props.toaster);
 
@@ -57,7 +55,7 @@ provide(PORTAL_TARGET_INJECTION_KEY, portal);
 </script>
 
 <template>
-  <ConfigProvider v-bind="configProps" :dir="locale.dir" :locale="locale.code" :use-id="useId">
+  <ConfigProvider :dir="locale.dir" :locale="locale.code" :use-id="useId">
     <TooltipProvider v-bind="tooltipProps">
       <Toaster v-if="toasterProps !== null" v-bind="toasterProps">
         <slot />

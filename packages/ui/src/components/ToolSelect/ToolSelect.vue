@@ -35,9 +35,10 @@ export interface ToolSelectProps<T extends ToolSelectItem = ToolSelectItem> exte
 
   /**
    * The size of the tool select.
-   * @default "lg"
+   * @default "md"
    */
   size?: ToolSelectThemeVariants["size"];
+
   /** Custom selection color. */
   selectionColor?: string;
 
@@ -56,7 +57,7 @@ export interface ToolSelectProps<T extends ToolSelectItem = ToolSelectItem> exte
 
 const model = defineModel<unknown>();
 const props = withDefaults(defineProps<ToolSelectProps<T>>(), {
-  size: "lg",
+  size: "md",
 });
 
 const { icons } = useComponentIcons();

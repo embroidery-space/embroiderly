@@ -61,11 +61,12 @@ export interface ButtonSlots {
 const props = withDefaults(defineProps<ButtonProps>(), {
   color: "primary",
   variant: "solid",
+  size: "md",
 });
 defineSlots<ButtonSlots>();
 
 const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-const size = computed(() => props.size ?? fieldGroupSize.value ?? "md");
+const size = computed(() => props.size ?? fieldGroupSize.value);
 
 const loadingAutoState = ref(false);
 const isLoading = computed(() => props.loading || (props.loadingAuto && loadingAutoState.value));

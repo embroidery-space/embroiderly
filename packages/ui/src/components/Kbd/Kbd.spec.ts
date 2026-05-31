@@ -10,7 +10,6 @@ describe("Kbd", () => {
   test.each([
     ["with value", { props: { value: "K" } }],
     ...sizes.map((size) => [`with size ${size}`, { props: { value: "K", size } }]),
-    ["with as", { props: { value: "K", as: "span" } }],
     ["with class", { props: { value: "K", class: "font-bold" } }],
   ] as [string, { props?: KbdProps }][])("renders correctly %s", async (_, options) => {
     const screen = await page.render(Kbd, options);

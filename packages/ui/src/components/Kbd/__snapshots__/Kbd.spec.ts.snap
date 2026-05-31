@@ -1,11 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Kbd > renders correctly with as 1`] = `
-<div>
-  <span class="bg-default font-medium font-sans h-5 inline-flex items-center justify-center min-w-5 px-1 ring ring-accented ring-inset rounded-sm text-[0.6875rem] text-default" data-slot="base">K</span>
-</div>
-`;
-
 exports[`Kbd > renders correctly with class 1`] = `
 <div>
   <kbd class="bg-default font-bold font-sans h-5 inline-flex items-center justify-center min-w-5 px-1 ring ring-accented ring-inset rounded-sm text-[0.6875rem] text-default" data-slot="base">K</kbd>

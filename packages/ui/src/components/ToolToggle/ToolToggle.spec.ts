@@ -17,6 +17,8 @@ const ToolToggleWrapper = defineComponent({
 });
 
 describe("ToolToggle", () => {
+  const sizes = ["sm", "md", "lg"] as const;
+
   test.each([
     ["with icon only", { props: { icon: "lucide:eye" } }],
     ["with tooltip", { props: { icon: "lucide:eye", tooltip: "Show" } }],
@@ -34,6 +36,7 @@ describe("ToolToggle", () => {
     ["with shortcut", { props: { icon: "lucide:eye", tooltip: "Show", shortcut: "S" } }],
     ["when toggled on", { props: { icon: "lucide:eye", modelValue: true } }],
     ["when disabled", { props: { icon: "lucide:eye", disabled: true } }],
+    ...sizes.map((size) => [`with size ${size}`, { props: { icon: "lucide:eye", size } }]),
     ["with class", { props: { icon: "lucide:eye", class: "custom-class" } }],
     ["with ui", { props: { icon: "lucide:eye", ui: { base: "custom-base" } } }],
   ] as [string, { props?: ToolToggleProps & { modelValue: boolean } }][])(

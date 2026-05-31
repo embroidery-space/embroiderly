@@ -22,7 +22,7 @@ async function handleSave() {
 </script>
 
 <template>
-  <Dialog :title="$t('publish-settings')" :ui="{ content: 'w-xl' }">
+  <Dialog :title="$t('publish-settings')">
     <template #body>
       <PdfExportOptionsForm v-model="options" />
     </template>

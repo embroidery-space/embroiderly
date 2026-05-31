@@ -9,7 +9,7 @@ const settingsStore = useSettingsStore();
 </script>
 
 <template>
-  <Dialog :title="$t('settings')" :ui="{ content: 'w-2xl' }">
+  <Dialog :title="$t('settings')">
     <template #body>
       <AppSettingsForm
         v-model:ui="settingsStore.ui"

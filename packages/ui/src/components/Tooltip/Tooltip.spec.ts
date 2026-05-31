@@ -19,7 +19,11 @@ const TooltipWrapper = defineComponent({
 });
 
 describe("Tooltip", () => {
-  const props: TooltipProps = { text: "Tooltip", open: true, portal: false };
+  const props: TooltipProps & { open?: boolean } = {
+    text: "Tooltip",
+    open: true,
+    portal: false,
+  };
 
   test.each([
     ["with text", { props }],

@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends ContextMenuItem">
 import defu from "defu";
-import type { ContextMenuContentProps, ContextMenuRootProps } from "reka-ui";
+import type { ContextMenuContentProps } from "reka-ui";
 import { ContextMenu } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
@@ -52,10 +52,7 @@ export interface ContextMenuItem {
   class?: any;
 }
 
-export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> extends Pick<
-  ContextMenuRootProps,
-  "modal"
-> {
+export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> {
   /** The items to display in the context menu. */
   items?: T[] | T[][];
 
@@ -73,6 +70,9 @@ export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> e
 
   /** Whether the context menu trigger is disabled. */
   disabled?: boolean;
+
+  /** Whether the context menu should block interaction with the outside elements. */
+  modal?: boolean;
 
   /**
    * Render the context menu in a portal.
@@ -96,7 +96,7 @@ const props = withDefaults(defineProps<ContextMenuProps<T>>(), {
   size: "md",
   portal: true,
 });
-const emits = defineEmits<ContextMenuEmits>();
+const emit = defineEmits<ContextMenuEmits>();
 defineSlots<ContextMenuSlots>();
 
 const portalProps = usePortal(toRef(() => props.portal));
@@ -118,7 +118,7 @@ const ui = computed(() => ContextMenuTheme({ size: props.size }));
 </script>
 
 <template>
-  <ContextMenu.Root :modal="modal" @update:open="emits('update:open', $event)">
+  <ContextMenu.Root :modal="modal" @update:open="emit('update:open', $event)">
     <ContextMenu.Trigger :disabled="disabled" as-child>
       <slot />
     </ContextMenu.Trigger>

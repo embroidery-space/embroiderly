@@ -27,7 +27,7 @@ const emit = defineEmits<{
 
 <template>
   <div class="flex min-h-0 grow flex-col">
-    <div v-if="$slots.header" class="border-b border-default px-2 py-1">
+    <div v-if="$slots.header" class="border-b border-default p-1">
       <slot name="header"></slot>
     </div>
 

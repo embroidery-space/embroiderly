@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Primitive } from "reka-ui";
-import type { CheckboxRootProps } from "reka-ui";
 import { Checkbox, Label } from "reka-ui/namespaced";
 import { computed } from "vue";
 
@@ -12,7 +10,9 @@ import Icon from "../Icon/Icon.vue";
 import { CheckboxTheme } from "./Checkbox.theme";
 import type { CheckboxThemeSlots, CheckboxThemeVariants } from "./Checkbox.theme";
 
-export interface CheckboxProps extends Pick<CheckboxRootProps, "as" | "asChild" | "id" | "disabled"> {
+export interface CheckboxProps {
+  id?: string;
+
   /** The label of the checkbox. */
   label?: string;
   /** The description of the checkbox. */
@@ -25,7 +25,7 @@ export interface CheckboxProps extends Pick<CheckboxRootProps, "as" | "asChild" 
   color?: CheckboxThemeVariants["color"];
   /**
    * The size of the checkbox.
-   * @default "lg"
+   * @default "md"
    */
   size?: CheckboxThemeVariants["size"];
 
@@ -34,6 +34,9 @@ export interface CheckboxProps extends Pick<CheckboxRootProps, "as" | "asChild" 
    * @default "icons.check"
    */
   icon?: IconValue;
+
+  /** Whether the checkbox is disabled. */
+  disabled?: boolean;
 
   class?: any;
   ui?: CheckboxThemeSlots;
@@ -44,6 +47,7 @@ defineOptions({ inheritAttrs: false });
 const modelValue = defineModel<boolean>();
 const props = withDefaults(defineProps<CheckboxProps>(), {
   color: "primary",
+  size: "md",
 });
 
 const { icons } = useComponentIcons();
@@ -61,7 +65,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
       <Checkbox.Root
         :id="id"
@@ -83,5 +87,5 @@ const ui = computed(() => {
         {{ description }}
       </p>
     </div>
-  </Primitive>
+  </div>
 </template>

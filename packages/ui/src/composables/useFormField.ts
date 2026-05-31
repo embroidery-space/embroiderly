@@ -33,7 +33,7 @@ export function useFormField(props?: UseFormFieldProps) {
   if (formField && inputId && props?.id) inputId.value = props.id;
 
   const id = computed(() => props?.id ?? inputId?.value ?? useId());
-  const size = computed(() => props?.size ?? formField?.value?.size ?? "lg");
+  const size = computed(() => props?.size ?? formField?.value?.size ?? "md");
 
   /** Builds `aria-describedby` ID parts from the `FormField` context. */
   function describedByParts() {

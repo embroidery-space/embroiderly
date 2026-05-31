@@ -39,11 +39,11 @@ const { isOverDropZone } = useDropZone(useTemplateRef("drop-zone"), {
 
 const { toPercent } = usePercentOfContainer(useTemplateRef("splitter"));
 
-const palettePanelDefaultSize = toPercent(15.5, "rem");
-const palettePanelCollapsedSize = toPercent(2.75, "rem");
+const palettePanelDefaultSize = toPercent(12, "rem");
+const palettePanelCollapsedSize = toPercent(2.25, "rem");
 
 const canvasToolbarDefaultSize = toPercent(12, "rem");
-const canvasToolbarCollapsedSize = toPercent(2.75, "rem");
+const canvasToolbarCollapsedSize = toPercent(2.25, "rem");
 
 useAppStartup();
 useCloseGuard();

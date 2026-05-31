@@ -24,10 +24,10 @@ export interface SplitterPanelSlots {
 }
 
 const props = defineProps<SplitterPanelProps>();
-const emits = defineEmits<SplitterPanelEmits>();
+const emit = defineEmits<SplitterPanelEmits>();
 defineSlots<SplitterPanelSlots>();
 
-const forwarded = useForwardPropsEmits(props, emits);
+const forwarded = useForwardPropsEmits(props, emit);
 const context = inject(SplitterContextKey, null);
 
 const panelRef = useTemplateRef("panel");

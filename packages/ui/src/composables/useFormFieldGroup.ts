@@ -12,6 +12,6 @@ export function useFormFieldGroup() {
     /** Whether the component is inside a `FormFieldGroup`. */
     fieldGroup: computed(() => !!fieldGroup),
     /** The size inherited from `FormFieldGroup` (or `undefined`). */
-    fieldGroupSize: computed(() => fieldGroup?.value.size),
+    fieldGroupSize: computed(() => fieldGroup?.value.size ?? "md"),
   };
 }

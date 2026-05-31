@@ -188,7 +188,6 @@ onMounted(async () => {
               v-model="selectedFontKey"
               :loading="loadingFont"
               :items="symbolFontOptions"
-              size="md"
               variant="outline"
               class="w-full"
               @update:model-value="
@@ -206,7 +205,7 @@ onMounted(async () => {
         </template>
 
         <template #footer>
-          <span class="text-sm text-nowrap">
+          <span class="text-xs text-nowrap">
             {{ $t("stitch-symbols-usage", { total: selectedCodePoints.length, used: assignedSymbols.length }) }}
           </span>
         </template>

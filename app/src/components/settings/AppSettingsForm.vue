@@ -103,7 +103,6 @@ async function pickPatternTemplate() {
     :items="tabs"
     orientation="vertical"
     color="neutral"
-    size="lg"
     :ui="{
       root: 'items-start',
       list: 'items-start rounded-none bg-transparent',

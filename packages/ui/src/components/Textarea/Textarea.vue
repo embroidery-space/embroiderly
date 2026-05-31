@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Primitive } from "reka-ui";
-import type { PrimitiveProps } from "reka-ui";
 import { computed, nextTick, onMounted, useTemplateRef, watch } from "vue";
 
 import { useFormField } from "../../composables/useFormField.ts";
@@ -8,7 +6,7 @@ import { useFormField } from "../../composables/useFormField.ts";
 import { TextareaTheme } from "./Textarea.theme.ts";
 import type { TextareaThemeSlots, TextareaThemeVariants } from "./Textarea.theme.ts";
 
-export interface TextareaProps extends PrimitiveProps {
+export interface TextareaProps {
   id?: string;
 
   /**
@@ -23,7 +21,7 @@ export interface TextareaProps extends PrimitiveProps {
   variant?: TextareaThemeVariants["variant"];
   /**
    * The size of the textarea.
-   * @default "lg"
+   * @default "md"
    */
   size?: TextareaThemeVariants["size"];
 
@@ -52,10 +50,9 @@ defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<string>();
 const props = withDefaults(defineProps<TextareaProps>(), {
-  as: "div",
-
   color: "primary",
   variant: "subtle",
+  size: "md",
 
   rows: 3,
   maxrows: 0,
@@ -107,7 +104,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <textarea
       :id="id"
       ref="textarea"
@@ -118,5 +115,5 @@ onMounted(() => {
       data-slot="base"
       :class="ui.base({ class: props.ui?.base })"
     />
-  </Primitive>
+  </div>
 </template>

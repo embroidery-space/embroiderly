@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { reactivePick } from "@vueuse/core";
-import { useForwardPropsEmits } from "reka-ui";
-import type { AlertDialogProps as AlertDialogRootProps } from "reka-ui";
 import { AlertDialog } from "reka-ui/namespaced";
 import { toRef } from "vue";
 
@@ -13,7 +10,7 @@ import type { ButtonProps } from "../Button/Button.vue";
 import { ConfirmDialogTheme } from "./ConfirmDialog.theme.ts";
 import type { ConfirmDialogThemeSlots } from "./ConfirmDialog.theme.ts";
 
-export interface ConfirmDialogProps extends Pick<AlertDialogRootProps, "open" | "defaultOpen"> {
+export interface ConfirmDialogProps {
   /** The title displayed in the confirm dialog header. */
   title?: string;
   /** The description displayed below the title. */
@@ -35,7 +32,6 @@ export interface ConfirmDialogProps extends Pick<AlertDialogRootProps, "open" | 
 }
 
 export interface ConfirmDialogEmits {
-  "update:open": [value: boolean];
   close: [value?: boolean];
   "after:enter": [];
   "after:leave": [];
@@ -45,27 +41,28 @@ export interface ConfirmDialogSlots {
   default(props: { open: boolean }): any;
 }
 
+const open = defineModel<boolean>("open", { default: false });
 const props = withDefaults(defineProps<ConfirmDialogProps>(), {
   portal: true,
 });
-const emits = defineEmits<ConfirmDialogEmits>();
+const emit = defineEmits<ConfirmDialogEmits>();
 defineSlots<ConfirmDialogSlots>();
 
-const locale = useLocale();
-
-const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen"), emits);
 const portalProps = usePortal(toRef(() => props.portal));
+
+const locale = useLocale();
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = ConfirmDialogTheme();
 
-function onClose(value?: boolean) {
-  emits("close", value);
+function close(value?: boolean) {
+  emit("close", value);
+  open.value = false;
 }
 </script>
 
 <template>
-  <AlertDialog.Root v-slot="{ open, close }" v-bind="rootProps">
+  <AlertDialog.Root v-model:open="open">
     <AlertDialog.Trigger as-child>
       <slot :open="open" />
     </AlertDialog.Trigger>
@@ -76,14 +73,9 @@ function onClose(value?: boolean) {
       <AlertDialog.Content
         data-slot="content"
         :class="ui.content({ class: [props.ui?.content, props.class] })"
-        @escape-key-down="
-          () => {
-            onClose();
-            close();
-          }
-        "
-        @after-enter="emits('after:enter')"
-        @after-leave="emits('after:leave')"
+        @escape-key-down="close()"
+        @after-enter="emit('after:enter')"
+        @after-leave="emit('after:leave')"
       >
         <header data-slot="header" :class="ui.header({ class: props.ui?.header })">
           <AlertDialog.Title data-slot="title" :class="ui.title({ class: props.ui?.title })">
@@ -97,12 +89,7 @@ function onClose(value?: boolean) {
 
         <footer data-slot="footer" :class="ui.footer({ class: props.ui?.footer })">
           <AlertDialog.Cancel as-child>
-            <Button
-              color="neutral"
-              variant="outline"
-              :label="locale.messages.confirmDialog.cancel"
-              @click="onClose()"
-            />
+            <Button color="neutral" variant="outline" :label="locale.messages.confirmDialog.cancel" @click="close()" />
           </AlertDialog.Cancel>
 
           <AlertDialog.Action v-if="props.noButton !== null" as-child>
@@ -111,7 +98,7 @@ function onClose(value?: boolean) {
               variant="soft"
               :label="locale.messages.confirmDialog.no"
               v-bind="props.noButton"
-              @click="onClose(false)"
+              @click="close(false)"
             />
           </AlertDialog.Action>
 
@@ -121,7 +108,7 @@ function onClose(value?: boolean) {
               variant="solid"
               :label="locale.messages.confirmDialog.yes"
               v-bind="props.yesButton"
-              @click="onClose(true)"
+              @click="close(true)"
             />
           </AlertDialog.Action>
         </footer>

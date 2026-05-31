@@ -440,11 +440,16 @@ async function updatePaletteDisplaySettings() {
         </template>
 
         <template #option="{ option: paletteItem, selected, displaySettings }">
-          <PaletteListItem :palette-item="paletteItem" :selected="selected" :display-settings="displaySettings">
+          <PaletteListItem
+            :palette-item="paletteItem"
+            :selected="selected"
+            :display-settings="displaySettings"
+            :class="{ 'justify-center': collapsed }"
+          >
             <template v-if="collapsed || (!displaySettings.colorOnly && displaySettings.showStitchSymbols)">
               <span
                 v-if="paletteItem.symbol"
-                class="mr-2 inline-flex size-5 shrink-0 items-center justify-center"
+                class="inline-flex size-4 shrink-0 items-center justify-center"
                 :class="{
                   'rounded-sm bg-white text-black': displaySettings.stitchSymbolsOnContrastBackground,
                 }"
@@ -453,7 +458,7 @@ async function updatePaletteDisplaySettings() {
                 {{ paletteItem.symbol.char }}
               </span>
               <!-- If the palete item doesn't have a stitch symbol, render an empty `span`, so that the title is properly aligned with those with symbols. -->
-              <span v-else class="mr-2 size-5 shrink-0"></span>
+              <span v-else class="size-4 shrink-0"></span>
             </template>
           </PaletteListItem>
         </template>

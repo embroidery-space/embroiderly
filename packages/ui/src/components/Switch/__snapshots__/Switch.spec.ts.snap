@@ -3,9 +3,9 @@
 exports[`Switch > renders correctly with class 1`] = `
 <div>
   <div class="inline-flex items-start relative" data-slot="root">
-    <div class="flex h-6 items-center" data-slot="container">
-      <button aria-checked="false" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-6 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-11" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
-        <span class="bg-default data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-5 transition-transform" data-slot="thumb" data-state="unchecked"></span>
+    <div class="flex h-5 items-center" data-slot="container">
+      <button aria-checked="false" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-5 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-9" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
+        <span class="bg-default data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-4 transition-transform" data-slot="thumb" data-state="unchecked"></span>
       </button>
     </div>
   </div>
@@ -15,12 +15,12 @@ exports[`Switch > renders correctly with class 1`] = `
 exports[`Switch > renders correctly with description 1`] = `
 <div>
   <div class="flex items-start relative" data-slot="root">
-    <div class="flex h-6 items-center" data-slot="container">
-      <button aria-checked="false" aria-label="Label" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-6 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-11" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
-        <span class="bg-default data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-5 transition-transform" data-slot="thumb" data-state="unchecked"></span>
+    <div class="flex h-5 items-center" data-slot="container">
+      <button aria-checked="false" aria-label="Label" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-5 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-9" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
+        <span class="bg-default data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-4 transition-transform" data-slot="thumb" data-state="unchecked"></span>
       </button>
     </div>
-    <div class="ms-2 text-base w-full" data-slot="wrapper">
+    <div class="ms-2 text-sm w-full" data-slot="wrapper">
       <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0">Label</label>
       <p class="text-muted" data-slot="description">Description</p>
     </div>
@@ -31,9 +31,9 @@ exports[`Switch > renders correctly with description 1`] = `
 exports[`Switch > renders correctly with disabled 1`] = `
 <div>
   <div class="flex items-start opacity-75 relative" data-slot="root">
-    <div class="flex h-6 items-center" data-slot="container">
-      <button aria-checked="false" aria-required="false" class="border-2 border-transparent cursor-not-allowed data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-6 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-11" data-disabled data-slot="base" data-state="unchecked" disabled id="v-0" role="switch" type="button" value="on">
-        <span class="bg-default data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-5 transition-transform" data-disabled data-slot="thumb" data-state="unchecked"></span>
+    <div class="flex h-5 items-center" data-slot="container">
+      <button aria-checked="false" aria-required="false" class="border-2 border-transparent cursor-not-allowed data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-5 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-9" data-disabled data-slot="base" data-state="unchecked" disabled id="v-0" role="switch" type="button" value="on">
+        <span class="bg-default data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-4 transition-transform" data-disabled data-slot="thumb" data-state="unchecked"></span>
       </button>
     </div>
   </div>
@@ -43,9 +43,9 @@ exports[`Switch > renders correctly with disabled 1`] = `
 exports[`Switch > renders correctly with id 1`] = `
 <div>
   <div class="flex items-start relative" data-slot="root">
-    <div class="flex h-6 items-center" data-slot="container">
-      <button aria-checked="false" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-6 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-11" data-slot="base" data-state="unchecked" id="id" role="switch" type="button" value="on">
-        <span class="bg-default data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-5 transition-transform" data-slot="thumb" data-state="unchecked"></span>
+    <div class="flex h-5 items-center" data-slot="container">
+      <button aria-checked="false" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-5 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-9" data-slot="base" data-state="unchecked" id="id" role="switch" type="button" value="on">
+        <span class="bg-default data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-4 transition-transform" data-slot="thumb" data-state="unchecked"></span>
       </button>
     </div>
   </div>
@@ -55,12 +55,12 @@ exports[`Switch > renders correctly with id 1`] = `
 exports[`Switch > renders correctly with label 1`] = `
 <div>
   <div class="flex items-start relative" data-slot="root">
-    <div class="flex h-6 items-center" data-slot="container">
-      <button aria-checked="false" aria-label="Label" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-6 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-11" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
-        <span class="bg-default data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-5 transition-transform" data-slot="thumb" data-state="unchecked"></span>
+    <div class="flex h-5 items-center" data-slot="container">
+      <button aria-checked="false" aria-label="Label" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-5 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-9" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
+        <span class="bg-default data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-4 transition-transform" data-slot="thumb" data-state="unchecked"></span>
       </button>
     </div>
-    <div class="ms-2 text-base w-full" data-slot="wrapper">
+    <div class="ms-2 text-sm w-full" data-slot="wrapper">
       <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0">Label</label>
     </div>
   </div>
@@ -106,9 +106,9 @@ exports[`Switch > renders correctly with size sm 1`] = `
 exports[`Switch > renders correctly with ui 1`] = `
 <div>
   <div class="flex items-start relative" data-slot="root">
-    <div class="flex h-6 items-center" data-slot="container">
-      <button aria-checked="false" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-6 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-11" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
-        <span class="bg-default data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-5 transition-transform" data-slot="thumb" data-state="unchecked"></span>
+    <div class="flex h-5 items-center" data-slot="container">
+      <button aria-checked="false" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-5 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-9" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
+        <span class="bg-default data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-4 transition-transform" data-slot="thumb" data-state="unchecked"></span>
       </button>
     </div>
   </div>
@@ -117,16 +117,16 @@ exports[`Switch > renders correctly with ui 1`] = `
 
 exports[`Switch > renders correctly within FormField 1`] = `
 <div>
-  <div class data-slot="root">
+  <div class="text-sm" data-slot="root">
     <div class data-slot="wrapper"></div>
     <div class data-slot="container">
       <div class="flex items-start relative" data-slot="root">
-        <div class="flex h-6 items-center" data-slot="container">
-          <button aria-checked="false" aria-label="Label" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-6 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-11" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
-            <span class="bg-default data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-5 transition-transform" data-slot="thumb" data-state="unchecked"></span>
+        <div class="flex h-5 items-center" data-slot="container">
+          <button aria-checked="false" aria-label="Label" aria-required="false" class="border-2 border-transparent data-[state=checked]:bg-primary data-[state=unchecked]:bg-accented duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary h-5 inline-flex items-center not-disabled:hover:cursor-pointer rounded-full shrink-0 transition-colors w-9" data-slot="base" data-state="unchecked" id="v-0" role="switch" type="button" value="on">
+            <span class="bg-default data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 duration-200 pointer-events-none ring-0 rounded-full shadow-lg size-4 transition-transform" data-slot="thumb" data-state="unchecked"></span>
           </button>
         </div>
-        <div class="ms-2 text-base w-full" data-slot="wrapper">
+        <div class="ms-2 text-sm w-full" data-slot="wrapper">
           <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0">Label</label>
         </div>
       </div>

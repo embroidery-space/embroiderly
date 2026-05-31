@@ -21,7 +21,7 @@ describe("ButtonIcon", () => {
   const variants = ["solid", "outline", "soft", "subtle", "ghost", "link"] as const;
   const colors = ["primary", "neutral"] as const;
 
-  const props: ButtonIconProps = {
+  const props: ButtonIconProps & { tooltipOptions?: { open?: boolean } } = {
     icon: "lucide:settings",
     tooltip: "Settings",
     tooltipOptions: {

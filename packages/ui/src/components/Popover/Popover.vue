@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { reactivePick } from "@vueuse/core";
 import defu from "defu";
-import { useForwardPropsEmits } from "reka-ui";
-import type { PopoverContentProps, PopoverRootEmits, PopoverRootProps } from "reka-ui";
+import type { PopoverContentProps } from "reka-ui";
 import { Popover } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
@@ -11,7 +9,7 @@ import { usePortal } from "../../composables/usePortal.ts";
 import { PopoverTheme } from "./Popover.theme.ts";
 import type { PopoverThemeSlots } from "./Popover.theme.ts";
 
-export interface PopoverProps extends PopoverRootProps {
+export interface PopoverProps {
   /**
    * The preferred side of the trigger to render against when open.
    * @default "bottom"
@@ -28,6 +26,9 @@ export interface PopoverProps extends PopoverRootProps {
    * @default { side: "bottom", sideOffset: 4, collisionPadding: 4 }
    */
   content?: Omit<PopoverContentProps, "as" | "asChild">;
+
+  /** Whether the popover should block interaction with the outside elements. */
+  modal?: boolean;
 
   /**
    * Render the popover in a portal.
@@ -53,11 +54,8 @@ const props = withDefaults(defineProps<PopoverProps>(), {
 
   portal: true,
 });
-
-const emits = defineEmits<PopoverRootEmits>();
 defineSlots<PopoverSlots>();
 
-const rootProps = useForwardPropsEmits(reactivePick(props, "defaultOpen", "modal"), emits);
 const contentProps = computed<PopoverContentProps>(
   () =>
     defu(props.content, {
@@ -74,7 +72,7 @@ const ui = PopoverTheme();
 </script>
 
 <template>
-  <Popover.Root v-bind="rootProps" v-model:open="open">
+  <Popover.Root v-model:open="open" :modal="modal">
     <Popover.Trigger as-child>
       <slot :open="open" :pinned="pinned" />
     </Popover.Trigger>

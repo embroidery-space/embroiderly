@@ -10,8 +10,9 @@ const emit = defineEmits<{ close: [] }>();
 <template>
   <div class="flex flex-col">
     <div class="flex items-center justify-between border-b border-default px-2 py-1">
-      <span class="text-nowrap">{{ props.title }}</span>
+      <span class="text-sm text-nowrap">{{ props.title }}</span>
       <Button
+        square
         variant="ghost"
         color="neutral"
         :icon="IconClose"

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { PrimitiveProps } from "reka-ui";
 import { Separator } from "reka-ui/namespaced";
 import { computed } from "vue";
 
 import { SeparatorTheme } from "./Separator.theme.ts";
 import type { SeparatorThemeSlots, SeparatorThemeVariants } from "./Separator.theme.ts";
 
-export interface SeparatorProps extends PrimitiveProps {
+export interface SeparatorProps {
   /**
    * The orientation of the separator.
    * @default "horizontal"
@@ -45,8 +44,6 @@ const ui = computed(() => {
 
 <template>
   <Separator
-    :as="as"
-    :as-child="asChild"
     :decorative="decorative"
     :orientation="orientation"
     data-slot="base"

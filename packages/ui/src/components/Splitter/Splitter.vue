@@ -23,12 +23,12 @@ export interface SplitterSlots {
 }
 
 const props = defineProps<SplitterProps>();
-const emits = defineEmits<SplitterEmits>();
+const emit = defineEmits<SplitterEmits>();
 const slots = defineSlots<SplitterSlots>();
 
 const forwarded = useForwardPropsEmits(
   reactivePick(props, "id", "direction", "autoSaveId", "keyboardResizeBy", "storage"),
-  emits,
+  emit,
 );
 
 const panels = computed(() => flattenChildren(slots.default?.() ?? []));

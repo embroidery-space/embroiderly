@@ -29,7 +29,6 @@ export interface ToasterSlots {
 
 const props = withDefaults(defineProps<ToasterProps>(), {
   duration: 5000,
-
   portal: true,
 });
 defineSlots<ToasterSlots>();

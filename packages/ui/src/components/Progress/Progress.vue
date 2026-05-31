@@ -13,15 +13,15 @@ export interface ProgressProps {
   orientation?: ProgressThemeVariants["orientation"];
 
   /**
-   * The size of the progress bar.
-   * @default "md"
-   */
-  size?: ProgressThemeVariants["size"];
-  /**
    * The color of the progress bar.
    * @default "primary"
    */
   color?: ProgressThemeVariants["color"];
+  /**
+   * The size of the progress bar.
+   * @default "md"
+   */
+  size?: ProgressThemeVariants["size"];
 
   class?: any;
   ui?: ProgressThemeSlots;
@@ -34,8 +34,8 @@ export interface ProgressProps {
 const modelValue = defineModel<number | null>({ default: null });
 const props = withDefaults(defineProps<ProgressProps>(), {
   orientation: "horizontal",
-  size: "md",
   color: "primary",
+  size: "md",
 });
 
 const percent = computed(() => {

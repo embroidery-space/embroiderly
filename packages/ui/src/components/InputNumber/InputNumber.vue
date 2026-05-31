@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { NumberFieldRootProps } from "reka-ui";
 import { NumberField } from "reka-ui/namespaced";
 import { computed } from "vue";
 
@@ -12,10 +11,9 @@ import Button from "../Button/Button.vue";
 import { InputNumberTheme } from "./InputNumber.theme.ts";
 import type { InputNumberThemeSlots, InputNumberThemeVariants } from "./InputNumber.theme.ts";
 
-export interface InputNumberProps extends Pick<
-  NumberFieldRootProps,
-  "as" | "asChild" | "id" | "disabled" | "min" | "max" | "step" | "stepSnapping" | "formatOptions"
-> {
+export interface InputNumberProps {
+  id?: string;
+
   /**
    * The color scheme of the input.
    * @default "primary"
@@ -28,9 +26,23 @@ export interface InputNumberProps extends Pick<
   variant?: InputNumberThemeVariants["variant"];
   /**
    * The size of the input.
-   * @default "lg"
+   * @default "md"
    */
   size?: InputNumberThemeVariants["size"];
+
+  /** Whether the input is disabled. */
+  disabled?: boolean;
+
+  /** The minimum value of the input. */
+  min?: number;
+  /** The maximum value of the input. */
+  max?: number;
+  /** The step size of the input. */
+  step?: number;
+  /** Whether to snap the input to the step size. */
+  stepSnapping?: boolean;
+  /** The format options for the input display value. */
+  formatOptions?: Intl.NumberFormatOptions;
 
   /**
    * Whether to show the increment button.
@@ -61,10 +73,9 @@ defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<number | null>();
 const props = withDefaults(defineProps<InputNumberProps>(), {
-  as: "div",
-
   color: "primary",
   variant: "subtle",
+  size: "md",
 
   increment: true,
   decrement: true,
@@ -96,8 +107,6 @@ const ui = computed(() => {
   <NumberField.Root
     :id="id"
     v-model="modelValue"
-    :as="as"
-    :as-child="asChild"
     :min="min"
     :max="max"
     :step="step"

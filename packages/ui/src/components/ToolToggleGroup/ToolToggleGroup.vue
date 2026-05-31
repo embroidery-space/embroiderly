@@ -44,7 +44,7 @@ export interface ToolToggleGroupProps<T extends ToolToggleItem = ToolToggleItem>
   orientation?: "vertical" | "horizontal";
   /**
    * The size of the toggle group.
-   * @default "lg"
+   * @default "md"
    */
   size?: ToolToggleGroupThemeVariants["size"];
 
@@ -60,8 +60,8 @@ export interface ToolToggleGroupProps<T extends ToolToggleItem = ToolToggleItem>
 
 const modelValue = defineModel<AcceptableValue>();
 const props = withDefaults(defineProps<ToolToggleGroupProps<T>>(), {
-  size: "lg",
   orientation: "horizontal",
+  size: "md",
 });
 
 const { size, ariaAttrs } = useFormField(props);

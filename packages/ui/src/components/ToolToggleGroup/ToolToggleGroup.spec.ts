@@ -29,9 +29,13 @@ const ToolToggleGroupWrapper = defineComponent({
 });
 
 describe("ToolToggleGroup", () => {
+  const sizes = ["sm", "md", "lg"] as const;
+
   test.each([
     ["with compact items", { props: { items: COMPACT_ITEMS } }],
+    ...sizes.map((size) => [`with compact items size ${size}`, { props: { items: COMPACT_ITEMS, size } }]),
     ["with expanded items", { props: { items: EXPANDED_ITEMS } }],
+    ...sizes.map((size) => [`with expanded items size ${size}`, { props: { items: EXPANDED_ITEMS, size } }]),
     ["with vertical orientation", { props: { items: COMPACT_ITEMS, orientation: "vertical" } }],
     ["when toggled on", { props: { items: COMPACT_ITEMS, modelValue: "solid" } }],
     ["when disabled", { props: { items: COMPACT_ITEMS, disabled: true } }],
