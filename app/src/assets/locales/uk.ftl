@@ -307,7 +307,8 @@ fabric-size = Розмір
 fabric-width = Ширина
 fabric-height = Висота
 
-fabric-total-size = Розмір (ШxВ): { $width }x{ $height } стібків, { $widthInches }x{ $heightInches } дюймів ({ $widthMm }x{ $heightMm } мм)
+# Use non-breaking space (\u00A0) to prevent text from jumping when changing fabric size.
+fabric-total-size = Розмір{"\u00A0"}(ШxВ): { $width }x{ $height }{"\u00A0"}стібків, { $widthInches }x{ $heightInches }{"\u00A0"}дюймів ({ $widthMm }x{ $heightMm }{"\u00A0"}мм)
 
 unit-stitches = стібків
 unit-inches = дюймів

@@ -307,7 +307,8 @@ fabric-size = Size
 fabric-width = Width
 fabric-height = Height
 
-fabric-total-size = Size (WxH): { $width }x{ $height } stitches, { $widthInches }x{ $heightInches } inches ({ $widthMm }x{ $heightMm } mm)
+# Use non-breaking space (\u00A0) to prevent text from jumping when changing fabric size.
+fabric-total-size = Size{"\u00A0"}(WxH): { $width }x{ $height }{"\u00A0"}stitches, { $widthInches }x{ $heightInches }{"\u00A0"}inches ({ $widthMm }x{ $heightMm }{"\u00A0"}mm)
 
 unit-stitches = stitches
 unit-inches = inches

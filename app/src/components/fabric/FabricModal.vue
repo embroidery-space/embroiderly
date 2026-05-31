@@ -19,7 +19,7 @@ async function handleSave() {
 </script>
 
 <template>
-  <Dialog :title="$t('fabric-properties')" :ui="{ body: 'pt-0!' }">
+  <Dialog :title="$t('fabric-properties')" :ui="{ body: 'pt-0!', content: 'w-2xl' }">
     <template #body>
       <FabricForm v-model="fabric as Fabric" />
     </template>
