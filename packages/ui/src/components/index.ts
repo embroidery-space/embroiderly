@@ -67,13 +67,7 @@ export {
 export { default as ToolSelect, type ToolSelectProps, type ToolSelectItem } from "./ToolSelect/ToolSelect.vue";
 
 // Navigation.
-export {
-  default as Menubar,
-  type MenubarProps,
-  type MenubarSlots,
-  type MenubarItem,
-  type MenubarMenu,
-} from "./Menubar/Menubar.vue";
+export { default as Menubar, type MenubarProps, type MenubarItem, type MenubarMenu } from "./Menubar/Menubar.vue";
 export { default as Tabs, type TabsProps, type TabsSlots, type TabsItem } from "./Tabs/Tabs.vue";
 export { default as Tree, type TreeProps, type TreeSlots, type TreeItem } from "./Tree/Tree.vue";
 
@@ -96,7 +90,6 @@ export { default as Dialog, type DialogProps, type DialogEmits, type DialogSlots
 export {
   default as DropdownMenu,
   type DropdownMenuProps,
-  type DropdownMenuEmits,
   type DropdownMenuSlots,
   type DropdownMenuItem,
 } from "./DropdownMenu/DropdownMenu.vue";

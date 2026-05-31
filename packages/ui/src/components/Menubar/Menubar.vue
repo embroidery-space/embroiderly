@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends MenubarItem">
 import defu from "defu";
-import type { MenubarContentProps, MenubarRootProps } from "reka-ui";
+import type { MenubarContentProps } from "reka-ui";
 import { Menubar } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
@@ -66,10 +66,7 @@ export interface MenubarMenu<T extends MenubarItem = MenubarItem> {
   items: T[] | T[][];
 }
 
-export interface MenubarProps<T extends MenubarItem = MenubarItem> extends Pick<
-  MenubarRootProps,
-  "defaultValue" | "dir" | "loop"
-> {
+export interface MenubarProps<T extends MenubarItem = MenubarItem> {
   /** The menus to display in the menubar. */
   menus?: MenubarMenu<T>[];
 
@@ -95,16 +92,11 @@ export interface MenubarProps<T extends MenubarItem = MenubarItem> extends Pick<
   ui?: MenubarThemeSlots;
 }
 
-export interface MenubarSlots {
-  default(props: { modelValue: string }): any;
-}
-
 const modelValue = defineModel<string>();
 const props = withDefaults(defineProps<MenubarProps<T>>(), {
   size: "md",
   portal: true,
 });
-defineSlots<MenubarSlots>();
 
 const portalProps = usePortal(toRef(() => props.portal));
 const contentProps = computed(
@@ -126,41 +118,31 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
 </script>
 
 <template>
-  <Menubar.Root
-    v-slot="{ modelValue: currentMenu }"
-    v-model="modelValue"
-    :default-value="defaultValue"
-    :dir="dir"
-    :loop="loop"
-    data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
-  >
-    <slot :model-value="currentMenu">
-      <Menubar.Menu v-for="(menu, index) in menus?.filter((menu) => !menu.hidden)" :key="index">
-        <Menubar.Trigger as-child :disabled="menu.disabled">
-          <Button
-            color="neutral"
-            variant="ghost"
-            :label="menu.label"
-            :icon="menu.icon"
-            :size="size"
-            data-slot="trigger"
-            :class="ui.trigger({ class: props.ui?.trigger })"
-          />
-        </Menubar.Trigger>
+  <Menubar.Root v-model="modelValue" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <Menubar.Menu v-for="(menu, index) in menus?.filter((menu) => !menu.hidden)" :key="index">
+      <Menubar.Trigger as-child :disabled="menu.disabled">
+        <Button
+          color="neutral"
+          variant="ghost"
+          :label="menu.label"
+          :icon="menu.icon"
+          :size="size"
+          data-slot="trigger"
+          :class="ui.trigger({ class: props.ui?.trigger })"
+        />
+      </Menubar.Trigger>
 
-        <Menubar.Portal v-bind="portalProps">
-          <MenubarContent
-            v-bind="contentProps"
-            :items="normalizeItems(menu.items)"
-            :size="size"
-            :portal="portal"
-            data-slot="content"
-            :class="ui.content({ class: props.ui?.content })"
-            :ui="ui"
-          />
-        </Menubar.Portal>
-      </Menubar.Menu>
-    </slot>
+      <Menubar.Portal v-bind="portalProps">
+        <MenubarContent
+          v-bind="contentProps"
+          :items="normalizeItems(menu.items)"
+          :size="size"
+          :portal="portal"
+          data-slot="content"
+          :class="ui.content({ class: props.ui?.content })"
+          :ui="ui"
+        />
+      </Menubar.Portal>
+    </Menubar.Menu>
   </Menubar.Root>
 </template>
