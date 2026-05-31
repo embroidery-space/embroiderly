@@ -3,19 +3,19 @@
 exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
 <div>
   <div class="flex gap-2" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -23,27 +23,27 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Unlock aspect ratio" aria-pressed="true" class="active:bg-primary/10 aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-2 hover:bg-primary/10 hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-primary transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Unlock aspect ratio" aria-pressed="true" class="active:bg-primary/10 aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/10 hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-primary text-sm transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
           <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
         </g>
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -58,19 +58,19 @@ exports[`InputDimensions > renders correctly with aspectRatio 1`] = `
 exports[`InputDimensions > renders correctly with class 1`] = `
 <div>
   <div class="flex gap-2 w-64" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -78,24 +78,24 @@ exports[`InputDimensions > renders correctly with class 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-default transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-default text-sm transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -110,19 +110,19 @@ exports[`InputDimensions > renders correctly with class 1`] = `
 exports[`InputDimensions > renders correctly with disabled 1`] = `
 <div>
   <div class="flex gap-2" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-disabled data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-disabled data-slot="base" disabled id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="true" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-disabled data-slot="base" disabled tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-disabled data-slot="base" disabled id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="true" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-disabled data-slot="base" disabled tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="true" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-disabled data-slot="base" disabled tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="true" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-disabled data-slot="base" disabled tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -130,24 +130,24 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="true" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-default transition-colors" data-slot="lockButton" disabled>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="true" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-default text-sm transition-colors" data-slot="lockButton" disabled>
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-disabled data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-disabled data-slot="base" disabled id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="true" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-disabled data-slot="base" disabled tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-disabled data-slot="base" disabled id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="true" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-disabled data-slot="base" disabled tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="true" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-disabled data-slot="base" disabled tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="true" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-disabled data-slot="base" disabled tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -162,19 +162,19 @@ exports[`InputDimensions > renders correctly with disabled 1`] = `
 exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
 <div>
   <div class="flex gap-2" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -182,12 +182,12 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-default transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-default text-sm transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper">
         <div class="flex gap-1 items-center justify-between" data-slot="labelWrapper">
           <label class="block font-medium text-default" data-slot="label" for="v-1" id="v-1-label">Height</label>
@@ -196,15 +196,15 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
       </div>
       <div class="mt-1" data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-describedby="v-1-hint" aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-describedby="v-1-hint" aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -219,19 +219,19 @@ exports[`InputDimensions > renders correctly with heightFieldOptions 1`] = `
 exports[`InputDimensions > renders correctly with heightInputOptions 1`] = `
 <div>
   <div class="flex gap-2" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -239,24 +239,24 @@ exports[`InputDimensions > renders correctly with heightInputOptions 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-default transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-default text-sm transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" aria-valuemax="100" aria-valuemin="0" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" aria-valuemax="100" aria-valuemin="0" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -271,19 +271,19 @@ exports[`InputDimensions > renders correctly with heightInputOptions 1`] = `
 exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
 <div>
   <div class="flex gap-2" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -291,24 +291,24 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-default transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-default text-sm transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -323,19 +323,19 @@ exports[`InputDimensions > renders correctly with orientation horizontal 1`] = `
 exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
 <div>
   <div class="flex flex-col gap-2 pl-8 relative" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -343,24 +343,24 @@ exports[`InputDimensions > renders correctly with orientation vertical 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="-translate-y-1/2 absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center left-0 p-2 rounded-md text-base text-default top-1/2 transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="-translate-y-1/2 absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center left-0 p-1.5 rounded-md text-default text-sm top-1/2 transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -531,19 +531,19 @@ exports[`InputDimensions > renders correctly with size sm 1`] = `
 exports[`InputDimensions > renders correctly with ui 1`] = `
 <div>
   <div class="flex gap-4" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -551,24 +551,24 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-default transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-default text-sm transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -583,7 +583,7 @@ exports[`InputDimensions > renders correctly with ui 1`] = `
 exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
 <div>
   <div class="flex gap-2" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper">
         <div class="flex gap-1 items-center justify-between" data-slot="labelWrapper">
           <label class="block font-medium text-default" data-slot="label" for="v-0" id="v-0-label">Width</label>
@@ -592,15 +592,15 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
       </div>
       <div class="mt-1" data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-describedby="v-0-hint" aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-describedby="v-0-hint" aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -608,24 +608,24 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-default transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-default text-sm transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -640,19 +640,19 @@ exports[`InputDimensions > renders correctly with widthFieldOptions 1`] = `
 exports[`InputDimensions > renders correctly with widthInputOptions 1`] = `
 <div>
   <div class="flex gap-2" data-slot="root">
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" aria-valuemax="100" aria-valuemin="0" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" aria-valuemax="100" aria-valuemin="0" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
@@ -660,24 +660,24 @@ exports[`InputDimensions > renders correctly with widthInputOptions 1`] = `
         </div>
       </div>
     </div>
-    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-2 rounded-md self-end text-base text-default transition-colors" data-slot="lockButton">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-disabled="false" aria-label="Lock aspect ratio" aria-pressed="false" class="active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center mb-0.5 p-1.5 rounded-md self-end text-default text-sm transition-colors" data-slot="lockButton">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m18.84 12.25l1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07a5.006 5.006 0 0 0-6.95 0l-1.72 1.71m-6.58 6.57l-1.71 1.71a5.004 5.004 0 0 0 .12 7.07a5.006 5.006 0 0 0 6.95 0l1.71-1.71M8 2v3M2 8h3m11 11v3m3-6h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
-    <div class="text-base" data-slot="root">
+    <div class="text-sm" data-slot="root">
       <div class data-slot="wrapper"></div>
       <div class data-slot="container">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-1" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+            <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>
-            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+              <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
             </button>

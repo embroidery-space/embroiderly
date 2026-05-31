@@ -24,16 +24,16 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends Pick<
   items?: T[];
 
   /**
-   * The size of the tabs.
-   * @default "md"
-   */
-  size?: TabsThemeVariants["size"];
-
-  /**
    * The orientation of the tabs.
    * @default "horizontal"
    */
   orientation?: TabsThemeVariants["orientation"];
+
+  /**
+   * The size of the tabs.
+   * @default "md"
+   */
+  size?: TabsThemeVariants["size"];
 
   /**
    * Whether to render tab content panels.
@@ -59,8 +59,8 @@ const modelValue = defineModel<string | number>();
 const props = withDefaults(defineProps<TabsProps<T>>(), {
   defaultValue: "0",
 
-  size: "md",
   orientation: "horizontal",
+  size: "md",
 
   content: true,
 

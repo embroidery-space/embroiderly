@@ -56,7 +56,7 @@ export interface DropdownMenuItem {
 
 export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem> extends Pick<
   DropdownMenuRootProps,
-  "open" | "defaultOpen" | "modal"
+  "open" | "defaultOpen"
 > {
   /** The items to display in the dropdown menu. */
   items?: T[] | T[][];

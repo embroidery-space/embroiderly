@@ -22,8 +22,6 @@ export interface FormFieldGroupSlots {
 }
 
 const props = withDefaults(defineProps<FormFieldGroupProps>(), {
-  as: "div",
-
   size: "md",
 });
 defineSlots<FormFieldGroupSlots>();

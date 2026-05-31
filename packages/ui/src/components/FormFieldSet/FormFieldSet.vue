@@ -14,7 +14,7 @@ export interface FormFieldSetProps {
 
   /**
    * The size of the fieldset legend.
-   * @default "lg"
+   * @default "md"
    */
   size?: FormFieldSetThemeVariants["size"];
 
@@ -31,7 +31,7 @@ export interface FormFieldSetSlots {
 
 const open = defineModel<boolean>("open", { default: true });
 const props = withDefaults(defineProps<FormFieldSetProps>(), {
-  size: "lg",
+  size: "md",
 });
 defineSlots<FormFieldSetSlots>();
 

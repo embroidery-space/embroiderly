@@ -44,6 +44,7 @@ export interface SliderProps {
 const modelValue = defineModel<number>();
 const props = withDefaults(defineProps<SliderProps>(), {
   color: "primary",
+  size: "md",
 });
 
 const locale = useLocale();

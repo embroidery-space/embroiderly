@@ -31,7 +31,7 @@ export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
 
   /**
    * The size of the toggle.
-   * @default "lg"
+   * @default "md"
    */
   size?: ToolToggleThemeVariants["size"];
 
@@ -44,7 +44,7 @@ export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
 
 const modelValue = defineModel<boolean>();
 const props = withDefaults(defineProps<ToolToggleProps>(), {
-  size: "lg",
+  size: "md",
 });
 
 const { id, size, ariaAttrs } = useFormField(props);

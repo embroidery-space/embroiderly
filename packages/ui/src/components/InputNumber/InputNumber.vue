@@ -26,7 +26,7 @@ export interface InputNumberProps {
   variant?: InputNumberThemeVariants["variant"];
   /**
    * The size of the input.
-   * @default "lg"
+   * @default "md"
    */
   size?: InputNumberThemeVariants["size"];
 
@@ -75,6 +75,7 @@ const modelValue = defineModel<number | null>();
 const props = withDefaults(defineProps<InputNumberProps>(), {
   color: "primary",
   variant: "subtle",
+  size: "md",
 
   increment: true,
   decrement: true,

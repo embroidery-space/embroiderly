@@ -25,7 +25,7 @@ export interface CheckboxProps {
   color?: CheckboxThemeVariants["color"];
   /**
    * The size of the checkbox.
-   * @default "lg"
+   * @default "md"
    */
   size?: CheckboxThemeVariants["size"];
 
@@ -47,6 +47,7 @@ defineOptions({ inheritAttrs: false });
 const modelValue = defineModel<boolean>();
 const props = withDefaults(defineProps<CheckboxProps>(), {
   color: "primary",
+  size: "md",
 });
 
 const { icons } = useComponentIcons();

@@ -66,7 +66,6 @@ export interface ListboxProps<T extends ListboxItem = ListboxItem> extends Pick<
    * @default "primary"
    */
   color?: ListboxThemeVariants["color"];
-
   /**
    * The size of the listbox.
    * @default "md"
@@ -98,6 +97,7 @@ const filterValue = defineModel<string>("filterValue", { default: "" });
 
 const props = withDefaults(defineProps<ListboxProps<T>>(), {
   color: "primary",
+  size: "md",
   scroll: true,
 });
 const emits = defineEmits<ListboxEmits<T>>();

@@ -2,7 +2,7 @@
 
 exports[`ContextMenu > renders correctly with checkbox items 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -28,7 +28,7 @@ exports[`ContextMenu > renders correctly with checkbox items 1`] = `
 
 exports[`ContextMenu > renders correctly with class 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -88,7 +88,7 @@ exports[`ContextMenu > renders correctly with disabled 1`] = `
 
 exports[`ContextMenu > renders correctly with link items 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -125,7 +125,7 @@ exports[`ContextMenu > renders correctly with link items 1`] = `
 
 exports[`ContextMenu > renders correctly with shortcuts 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -162,7 +162,7 @@ exports[`ContextMenu > renders correctly with shortcuts 1`] = `
 
 exports[`ContextMenu > renders correctly with simple items 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -216,7 +216,7 @@ exports[`ContextMenu > renders correctly with simple items 1`] = `
 
 exports[`ContextMenu > renders correctly with size lg 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -270,7 +270,7 @@ exports[`ContextMenu > renders correctly with size lg 1`] = `
 
 exports[`ContextMenu > renders correctly with size md 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -324,7 +324,7 @@ exports[`ContextMenu > renders correctly with size md 1`] = `
 
 exports[`ContextMenu > renders correctly with size sm 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -378,7 +378,7 @@ exports[`ContextMenu > renders correctly with size sm 1`] = `
 
 exports[`ContextMenu > renders correctly with submenu items 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">
@@ -406,7 +406,7 @@ exports[`ContextMenu > renders correctly with submenu items 1`] = `
 
 exports[`ContextMenu > renders correctly with ui 1`] = `
 <div>
-  <span data-state="open">Trigger</span>
+  <span aria-hidden="true" data-aria-hidden="true" data-state="open">Trigger</span>
   <div data-reka-popper-content-wrapper>
     <div aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-context-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="start" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="right" data-slot="content" data-state="open" dir="ltr" role="menu" tabindex="-1">
       <div aria-labelledby="reka-menu-group-v-0" class="isolate p-1" data-slot="group" role="group">

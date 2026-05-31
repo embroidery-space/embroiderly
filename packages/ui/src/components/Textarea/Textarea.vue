@@ -21,7 +21,7 @@ export interface TextareaProps {
   variant?: TextareaThemeVariants["variant"];
   /**
    * The size of the textarea.
-   * @default "lg"
+   * @default "md"
    */
   size?: TextareaThemeVariants["size"];
 
@@ -52,6 +52,7 @@ const modelValue = defineModel<string>();
 const props = withDefaults(defineProps<TextareaProps>(), {
   color: "primary",
   variant: "subtle",
+  size: "md",
 
   rows: 3,
   maxrows: 0,

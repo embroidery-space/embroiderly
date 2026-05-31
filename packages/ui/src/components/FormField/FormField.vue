@@ -20,7 +20,7 @@ export interface FormFieldProps {
 
   /**
    * The size of the form field.
-   * @default "lg"
+   * @default "md"
    */
   size?: FormFieldThemeVariants["size"];
 
@@ -33,7 +33,7 @@ export interface FormFieldSlots {
 }
 
 const props = withDefaults(defineProps<FormFieldProps>(), {
-  as: "div",
+  size: "md",
 });
 defineSlots<FormFieldSlots>();
 

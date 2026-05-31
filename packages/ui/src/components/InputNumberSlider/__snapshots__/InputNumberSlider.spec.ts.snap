@@ -4,13 +4,13 @@ exports[`InputNumberSlider > renders correctly with class 1`] = `
 <div>
   <div class="flex gap-x-2 items-center w-64" data-slot="root">
     <div class="inline-flex items-center relative" data-slot="root" role="group">
-      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-3 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-2.5 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
     </div>
     <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
@@ -20,20 +20,20 @@ exports[`InputNumberSlider > renders correctly with decrement 1`] = `
 <div>
   <div class="flex gap-x-2 items-center" data-slot="root">
     <div class="inline-flex items-center relative" data-slot="root" role="group">
-      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-      <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-        <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+        <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
       </div>
     </div>
     <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
@@ -43,13 +43,13 @@ exports[`InputNumberSlider > renders correctly with disabled 1`] = `
 <div>
   <div class="flex gap-x-2 items-center" data-slot="root">
     <div class="inline-flex items-center relative" data-disabled data-slot="root" role="group">
-      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-3 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-disabled data-slot="base" disabled id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-2.5 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-disabled data-slot="base" disabled id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
     </div>
     <span aria-disabled="true" class="cursor-not-allowed flex items-center opacity-75 relative select-none touch-none w-full" data-disabled data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-disabled data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-disabled data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-disabled data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-disabled data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-disabled data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider"></span>
     </span>
   </div>
 </div>
@@ -59,20 +59,20 @@ exports[`InputNumberSlider > renders correctly with increment 1`] = `
 <div>
   <div class="flex gap-x-2 items-center" data-slot="root">
     <div class="inline-flex items-center relative" data-slot="root" role="group">
-      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-      <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-        <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+        <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
       </div>
     </div>
     <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
@@ -82,25 +82,25 @@ exports[`InputNumberSlider > renders correctly with increment and decrement 1`] 
 <div>
   <div class="flex gap-x-2 items-center" data-slot="root">
     <div class="inline-flex items-center relative" data-slot="root" role="group">
-      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-9 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
-      <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1.5" data-slot="buttons">
-        <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-8 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <div class="[&amp;&gt;button]:py-0 [&amp;&gt;button]:scale-80 absolute flex flex-col inset-e-0 inset-y-0 justify-center pe-1" data-slot="buttons">
+        <button aria-disabled="false" aria-label="Increment" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m18 15l-6-6l-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
-        <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-2 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-2 rounded-md text-base text-muted transition-colors" data-slot="base" tabindex="-1" type="button">
-          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <button aria-disabled="false" aria-label="Decrement" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-1.5 rounded-md text-muted text-sm transition-colors" data-slot="base" tabindex="-1" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>
       </div>
     </div>
     <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
@@ -110,13 +110,13 @@ exports[`InputNumberSlider > renders correctly with min and max 1`] = `
 <div>
   <div class="flex gap-x-2 items-center" data-slot="root">
     <div class="inline-flex items-center relative" data-slot="root" role="group">
-      <input aria-roledescription="Number field" aria-valuemax="50" aria-valuemin="0" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-3 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <input aria-roledescription="Number field" aria-valuemax="50" aria-valuemin="0" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-2.5 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
     </div>
     <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="50" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="50" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
@@ -174,13 +174,13 @@ exports[`InputNumberSlider > renders correctly with step 1`] = `
 <div>
   <div class="flex gap-x-2 items-center" data-slot="root">
     <div class="inline-flex items-center relative" data-slot="root" role="group">
-      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-3 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-2.5 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
     </div>
     <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
@@ -190,13 +190,13 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
 <div>
   <div class="flex gap-x-2 items-center" data-slot="root">
     <div class="inline-flex items-center relative" data-slot="root" role="group">
-      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-3 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-2.5 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
     </div>
     <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="thumb" data-state="closed" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="thumb" data-state="closed" role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
@@ -206,13 +206,13 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
 <div>
   <div class="flex gap-4 items-center" data-slot="root">
     <div class="inline-flex items-center relative" data-slot="root" role="group">
-      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-3 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+      <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-2.5 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
     </div>
     <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-      <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+      <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
@@ -220,7 +220,7 @@ exports[`InputNumberSlider > renders correctly with ui 1`] = `
 
 exports[`InputNumberSlider > renders correctly within FormField 1`] = `
 <div>
-  <div class data-slot="root">
+  <div class="text-sm" data-slot="root">
     <div class data-slot="wrapper">
       <div class="flex gap-1 items-center justify-between" data-slot="labelWrapper">
         <label class="block font-medium text-default" data-slot="label" for="v-0" id="v-0-label">Label</label>
@@ -231,13 +231,13 @@ exports[`InputNumberSlider > renders correctly within FormField 1`] = `
     <div class="mt-1" data-slot="container">
       <div aria-describedby="v-0-hint v-0-description v-0-help" aria-labelledby="v-0-label" class="flex gap-x-2 items-center" data-slot="root" role="group">
         <div class="inline-flex items-center relative" data-slot="root" role="group">
-          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-3 ps-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
+          <input aria-roledescription="Number field" autocomplete="off" autocorrect="off" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none pe-2.5 ps-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" inputmode="decimal" role="spinbutton" spellcheck="false" tabindex="0" type="text" value>
         </div>
         <span aria-disabled="false" class="flex items-center relative select-none touch-none w-full" data-orientation="horizontal" data-slider-impl data-slot="root" dir="ltr" id="v-1">
-          <span class="bg-accented grow h-2.5 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
+          <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
             <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
           </span>
-          <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-5" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
+          <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="thumb" role="slider" tabindex="0"></span>
         </span>
       </div>
       <p class="mt-1 text-muted" data-slot="help" id="v-0-help">Help</p>

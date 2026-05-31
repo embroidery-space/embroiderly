@@ -31,7 +31,7 @@ export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> {
   color?: RadioGroupThemeVariants["color"];
   /**
    * The size of the radio buttons.
-   * @default "lg"
+   * @default "md"
    */
   size?: RadioGroupThemeVariants["size"];
 
@@ -45,6 +45,7 @@ export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> {
 const modelValue = defineModel<RadioGroupValue>();
 const props = withDefaults(defineProps<RadioGroupProps<T>>(), {
   color: "primary",
+  size: "md",
 });
 
 const { id, size, ariaAttrs } = useFormField(props);

@@ -25,7 +25,7 @@ export interface InputProps extends UseComponentIconsProps {
   variant?: InputThemeVariants["variant"];
   /**
    * The size of the input.
-   * @default "lg"
+   * @default "md"
    */
   size?: InputThemeVariants["size"];
 
@@ -45,10 +45,9 @@ defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<string>();
 const props = withDefaults(defineProps<InputProps>(), {
-  as: "div",
-
   color: "primary",
   variant: "subtle",
+  size: "md",
 });
 const slots = defineSlots<InputSlots>();
 

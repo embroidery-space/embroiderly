@@ -66,7 +66,7 @@ export interface SelectProps<T extends SelectItem = SelectItem> {
   variant?: SelectThemeVariants["variant"];
   /**
    * The size of the select.
-   * @default "lg"
+   * @default "md"
    */
   size?: SelectThemeVariants["size"];
 
@@ -91,6 +91,7 @@ const modelValue = defineModel<string | number | undefined>();
 const props = withDefaults(defineProps<SelectProps<T>>(), {
   color: "primary",
   variant: "subtle",
+  size: "md",
 
   portal: true,
 });

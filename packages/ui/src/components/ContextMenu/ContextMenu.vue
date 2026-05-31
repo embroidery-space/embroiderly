@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends ContextMenuItem">
 import defu from "defu";
-import type { ContextMenuContentProps, ContextMenuRootProps } from "reka-ui";
+import type { ContextMenuContentProps } from "reka-ui";
 import { ContextMenu } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
@@ -52,10 +52,7 @@ export interface ContextMenuItem {
   class?: any;
 }
 
-export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> extends Pick<
-  ContextMenuRootProps,
-  "modal"
-> {
+export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> {
   /** The items to display in the context menu. */
   items?: T[] | T[][];
 
@@ -118,7 +115,7 @@ const ui = computed(() => ContextMenuTheme({ size: props.size }));
 </script>
 
 <template>
-  <ContextMenu.Root :modal="modal" @update:open="emits('update:open', $event)">
+  <ContextMenu.Root @update:open="emits('update:open', $event)">
     <ContextMenu.Trigger :disabled="disabled" as-child>
       <slot />
     </ContextMenu.Trigger>

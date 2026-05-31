@@ -17,7 +17,7 @@ export interface ScrollAreaProps extends ScrollAreaRootProps {
 
   /**
    * The size of the scrollbar.
-   * @default "lg"
+   * @default "md"
    */
   size?: ScrollAreaThemeVariants["size"];
 

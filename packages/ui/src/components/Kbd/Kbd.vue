@@ -7,6 +7,7 @@ import type { KbdThemeSlots, KbdThemeVariants } from "./Kbd.theme.ts";
 export interface KbdProps {
   /** The value to display. */
   value?: string;
+
   /**
    * The size of the kbd.
    * @default "md"
