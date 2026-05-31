@@ -196,7 +196,7 @@ exports[`InputNumberSlider > renders correctly with tooltip 1`] = `
       <span class="bg-accented grow h-2 overflow-hidden relative rounded-full" data-orientation="horizontal" data-slot="track">
         <span class="absolute bg-primary h-full rounded-full" data-orientation="horizontal" data-slot="range"></span>
       </span>
-      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="thumb" data-state="closed" role="slider" tabindex="0"></span>
+      <span aria-label="Thumb" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="bg-default block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ring-2 ring-primary rounded-full size-4" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="thumb" data-state="closed" disable-closing-trigger role="slider" tabindex="0"></span>
     </span>
   </div>
 </div>
