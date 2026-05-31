@@ -71,6 +71,9 @@ export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> {
   /** Whether the context menu trigger is disabled. */
   disabled?: boolean;
 
+  /** Whether the context menu should block interaction with the outside elements. */
+  modal?: boolean;
+
   /**
    * Render the context menu in a portal.
    * @default true
@@ -115,7 +118,7 @@ const ui = computed(() => ContextMenuTheme({ size: props.size }));
 </script>
 
 <template>
-  <ContextMenu.Root @update:open="emit('update:open', $event)">
+  <ContextMenu.Root :modal="modal" @update:open="emit('update:open', $event)">
     <ContextMenu.Trigger :disabled="disabled" as-child>
       <slot />
     </ContextMenu.Trigger>

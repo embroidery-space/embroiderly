@@ -71,6 +71,9 @@ export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem
   /** Whether the dropdown menu trigger is disabled. */
   disabled?: boolean;
 
+  /** Whether the dropdown menu should block interaction with the outside elements. */
+  modal?: boolean;
+
   /**
    * Reference element for the dropdown menu.
    * If provided, the dropdown will be anchored to this element instead of the trigger.
@@ -119,7 +122,7 @@ const ui = computed(() => DropdownMenuTheme({ size: props.size }));
 </script>
 
 <template>
-  <DropdownMenu.Root v-model:open="open">
+  <DropdownMenu.Root v-model:open="open" :modal="modal">
     <DropdownMenu.Trigger :disabled="disabled" as-child>
       <slot :open="open" />
     </DropdownMenu.Trigger>
