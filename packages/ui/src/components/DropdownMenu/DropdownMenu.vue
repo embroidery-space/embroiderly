@@ -103,10 +103,10 @@ const props = withDefaults(defineProps<DropdownMenuProps<T>>(), {
   size: "md",
   portal: true,
 });
-const emits = defineEmits<DropdownMenuEmits>();
+const emit = defineEmits<DropdownMenuEmits>();
 defineSlots<DropdownMenuSlots>();
 
-const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen", "modal"), emits);
+const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen"), emit);
 const portalProps = usePortal(toRef(() => props.portal));
 const contentProps = computed(
   () =>

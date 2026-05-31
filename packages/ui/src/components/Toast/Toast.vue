@@ -44,13 +44,13 @@ export interface ToastSlots {
 const props = withDefaults(defineProps<ToastProps>(), {
   color: "primary",
 });
-const emits = defineEmits<ToastEmits>();
+const emit = defineEmits<ToastEmits>();
 const slots = defineSlots<ToastSlots>();
 
 const { icons } = useComponentIcons();
 const locale = useLocale();
 
-const rootProps = useForwardPropsEmits(reactivePick(props, "defaultOpen", "open", "duration", "type"), emits);
+const rootProps = useForwardPropsEmits(reactivePick(props, "defaultOpen", "open", "duration", "type"), emit);
 
 const ui = computed(() => {
   return ToastTheme({

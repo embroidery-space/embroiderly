@@ -54,10 +54,10 @@ const props = withDefaults(defineProps<PopoverProps>(), {
   portal: true,
 });
 
-const emits = defineEmits<PopoverRootEmits>();
+const emit = defineEmits<PopoverRootEmits>();
 defineSlots<PopoverSlots>();
 
-const rootProps = useForwardPropsEmits(reactivePick(props, "defaultOpen", "modal"), emits);
+const rootProps = useForwardPropsEmits(reactivePick(props, "defaultOpen", "modal"), emit);
 const contentProps = computed<PopoverContentProps>(
   () =>
     defu(props.content, {

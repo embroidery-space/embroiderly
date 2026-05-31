@@ -63,13 +63,13 @@ const props = withDefaults(defineProps<DialogProps>(), {
   portal: true,
   scroll: true,
 });
-const emits = defineEmits<DialogEmits>();
+const emit = defineEmits<DialogEmits>();
 const slots = defineSlots<DialogSlots>();
 
 const { icons } = useComponentIcons();
 const locale = useLocale();
 
-const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen"), emits);
+const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen"), emit);
 const portalProps = usePortal(toRef(() => props.portal));
 const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
   if (props.scroll === false) return null;
@@ -96,8 +96,8 @@ const ui = DialogTheme();
         @pointer-down-outside="!dismissible && $event.preventDefault()"
         @interact-outside="!dismissible && $event.preventDefault()"
         @escape-key-down="!dismissible && $event.preventDefault()"
-        @after-enter="emits('after:enter')"
-        @after-leave="emits('after:leave')"
+        @after-enter="emit('after:enter')"
+        @after-leave="emit('after:leave')"
       >
         <header data-slot="header" :class="ui.header({ class: props.ui?.header })">
           <div class="flex-1">
@@ -134,7 +134,7 @@ const ui = DialogTheme();
               name="body"
               :close="
                 (value?: unknown) => {
-                  emits('close', value);
+                  emit('close', value);
                   close();
                 }
               "
@@ -146,7 +146,7 @@ const ui = DialogTheme();
             name="body"
             :close="
               (value?: unknown) => {
-                emits('close', value);
+                emit('close', value);
                 close();
               }
             "
@@ -158,7 +158,7 @@ const ui = DialogTheme();
             name="footer"
             :close="
               (value?: unknown) => {
-                emits('close', value);
+                emit('close', value);
                 close();
               }
             "

@@ -48,7 +48,7 @@ export interface ConfirmDialogSlots {
 const props = withDefaults(defineProps<ConfirmDialogProps>(), {
   portal: true,
 });
-const emits = defineEmits<ConfirmDialogEmits>();
+const emit = defineEmits<ConfirmDialogEmits>();
 defineSlots<ConfirmDialogSlots>();
 
 const locale = useLocale();
@@ -60,7 +60,7 @@ const portalProps = usePortal(toRef(() => props.portal));
 const ui = ConfirmDialogTheme();
 
 function onClose(value?: boolean) {
-  emits("close", value);
+  emit("close", value);
 }
 </script>
 
@@ -82,8 +82,8 @@ function onClose(value?: boolean) {
             close();
           }
         "
-        @after-enter="emits('after:enter')"
-        @after-leave="emits('after:leave')"
+        @after-enter="emit('after:enter')"
+        @after-leave="emit('after:leave')"
       >
         <header data-slot="header" :class="ui.header({ class: props.ui?.header })">
           <AlertDialog.Title data-slot="title" :class="ui.title({ class: props.ui?.title })">

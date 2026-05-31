@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 
   portal: true,
 });
-const emits = defineEmits<TooltipEmits>();
+const emit = defineEmits<TooltipEmits>();
 defineSlots<TooltipSlots>();
 
 const rootProps = useForwardPropsEmits(
@@ -65,7 +65,7 @@ const rootProps = useForwardPropsEmits(
     "disableClosingTrigger",
     "ignoreNonKeyboardFocus",
   ),
-  emits,
+  emit,
 );
 const contentProps = computed<TooltipContentProps>(() => ({
   side: props.side,

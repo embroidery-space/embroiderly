@@ -100,7 +100,7 @@ const props = withDefaults(defineProps<ListboxProps<T>>(), {
   size: "md",
   scroll: true,
 });
-const emits = defineEmits<ListboxEmits<T>>();
+const emit = defineEmits<ListboxEmits<T>>();
 defineSlots<ListboxSlots>();
 
 const locale = useLocale();
@@ -194,12 +194,12 @@ const ui = computed(() => {
               :disabled="!!item.disabled"
               data-slot="item"
               :class="ui.item({ class: [props.ui?.item, item.class] })"
-              @select="emits('option-select', { originalEvent: $event, item: item.value as T, index: i })"
+              @select="emit('option-select', { originalEvent: $event, item: item.value as T, index: i })"
               @dblclick="
-                emits('option-dblclick', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
+                emit('option-dblclick', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
               "
               @contextmenu="
-                emits('option-contextmenu', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
+                emit('option-contextmenu', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
               "
             >
               <slot name="option" :item="item" :selected="isSelected(item)" :index="i">
@@ -237,7 +237,7 @@ const ui = computed(() => {
     :disabled="disabled"
     data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
-    @highlight="emits('highlight', $event as any)"
+    @highlight="emit('highlight', $event as any)"
   >
     <Listbox.Filter v-if="filterInput" v-model="filterValue" as-child>
       <Input

@@ -93,7 +93,7 @@ const props = withDefaults(defineProps<ContextMenuProps<T>>(), {
   size: "md",
   portal: true,
 });
-const emits = defineEmits<ContextMenuEmits>();
+const emit = defineEmits<ContextMenuEmits>();
 defineSlots<ContextMenuSlots>();
 
 const portalProps = usePortal(toRef(() => props.portal));
@@ -115,7 +115,7 @@ const ui = computed(() => ContextMenuTheme({ size: props.size }));
 </script>
 
 <template>
-  <ContextMenu.Root @update:open="emits('update:open', $event)">
+  <ContextMenu.Root @update:open="emit('update:open', $event)">
     <ContextMenu.Trigger :disabled="disabled" as-child>
       <slot />
     </ContextMenu.Trigger>
