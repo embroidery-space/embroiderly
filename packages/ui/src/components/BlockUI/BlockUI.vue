@@ -1,11 +1,8 @@
 <script lang="ts" setup>
-import { Primitive } from "reka-ui";
-import type { PrimitiveProps } from "reka-ui";
-
 import { BlockUITheme } from "./BlockUI.theme.ts";
 import type { BlockUIThemeSlots } from "./BlockUI.theme.ts";
 
-export interface BlockUIProps extends PrimitiveProps {
+export interface BlockUIProps {
   /** Whether the UI is blocked. */
   blocked?: boolean;
 
@@ -27,14 +24,8 @@ const ui = BlockUITheme();
 </script>
 
 <template>
-  <Primitive
-    :as="as"
-    :as-child="asChild"
-    :aria-busy="blocked"
-    data-slot="base"
-    :class="ui.base({ class: [props.ui?.base, props.class] })"
-  >
+  <div :aria-busy="blocked" data-slot="base" :class="ui.base({ class: [props.ui?.base, props.class] })">
     <slot />
     <div v-if="blocked" data-slot="mask" :class="ui.mask({ class: props.ui?.mask })" />
-  </Primitive>
+  </div>
 </template>

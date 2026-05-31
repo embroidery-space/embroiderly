@@ -20,9 +20,7 @@ export interface ColorPickerProps {
    */
   throttle?: number;
 
-  /**
-   * Whether the color picker is disabled.
-   */
+  /** Whether the color picker is disabled. */
   disabled?: boolean;
 
   class?: any;

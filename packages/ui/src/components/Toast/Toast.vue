@@ -14,7 +14,7 @@ import Progress from "../Progress/Progress.vue";
 import { ToastTheme } from "./Toast.theme.ts";
 import type { ToastThemeSlots, ToastThemeVariants } from "./Toast.theme.ts";
 
-export interface ToastProps extends Pick<ToastRootProps, "as" | "defaultOpen" | "open" | "type" | "duration"> {
+export interface ToastProps extends Pick<ToastRootProps, "defaultOpen" | "open" | "type" | "duration"> {
   title?: string;
   description?: string;
 
@@ -50,7 +50,7 @@ const slots = defineSlots<ToastSlots>();
 const { icons } = useComponentIcons();
 const locale = useLocale();
 
-const rootProps = useForwardPropsEmits(reactivePick(props, "as", "defaultOpen", "open", "duration", "type"), emits);
+const rootProps = useForwardPropsEmits(reactivePick(props, "defaultOpen", "open", "duration", "type"), emits);
 
 const ui = computed(() => {
   return ToastTheme({

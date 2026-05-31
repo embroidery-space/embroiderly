@@ -12,12 +12,12 @@ import type { FilePickerThemeVariants } from "./FilePicker.theme.ts";
 
 export interface FilePickerProps {
   /**
-   * The size of the component.
+   * The size of the file picker.
    * @default "md"
    */
   size?: FilePickerThemeVariants["size"];
 
-  /** Whether the component is disabled. */
+  /** Whether the file picker is disabled. */
   disabled?: boolean;
 
   class?: any;

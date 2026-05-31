@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Primitive } from "reka-ui";
-import type { SwitchRootProps } from "reka-ui";
 import { Switch, Label } from "reka-ui/namespaced";
 import { computed } from "vue";
 
@@ -9,7 +7,9 @@ import { useFormField } from "../../composables/useFormField.ts";
 import { SwitchTheme } from "./Switch.theme";
 import type { SwitchThemeSlots, SwitchThemeVariants } from "./Switch.theme";
 
-export interface SwitchProps extends Pick<SwitchRootProps, "as" | "asChild" | "id" | "disabled"> {
+export interface SwitchProps {
+  id?: string;
+
   /** The label of the switch. */
   label?: string;
   /** The description of the switch. */
@@ -25,6 +25,9 @@ export interface SwitchProps extends Pick<SwitchRootProps, "as" | "asChild" | "i
    * @default "md"
    */
   size?: SwitchThemeVariants["size"];
+
+  /** Whether the switch is disabled. */
+  disabled?: boolean;
 
   class?: any;
   ui?: SwitchThemeSlots;
@@ -50,7 +53,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
       <Switch.Root
         :id="id"
@@ -70,5 +73,5 @@ const ui = computed(() => {
         {{ description }}
       </p>
     </div>
-  </Primitive>
+  </div>
 </template>

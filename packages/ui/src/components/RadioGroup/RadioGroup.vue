@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends RadioGroupItem">
-import type { AcceptableValue, RadioGroupRootProps } from "reka-ui";
+import type { AcceptableValue } from "reka-ui";
 import { RadioGroup, Label } from "reka-ui/namespaced";
 import { computed } from "vue";
 
@@ -18,10 +18,7 @@ export type RadioGroupItem =
       description?: string;
     };
 
-export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> extends Pick<
-  RadioGroupRootProps,
-  "as" | "asChild" | "disabled"
-> {
+export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> {
   id?: string;
 
   /** The items to display in the radio group. */
@@ -37,6 +34,9 @@ export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> exte
    * @default "lg"
    */
   size?: RadioGroupThemeVariants["size"];
+
+  /** Whether the radio group is disabled. */
+  disabled?: boolean;
 
   class?: any;
   ui?: RadioGroupThemeSlots;
@@ -92,8 +92,6 @@ const ui = computed(() => {
     :id="id"
     v-model="modelValue"
     v-bind="ariaAttrs"
-    :as="as"
-    :as-child="asChild"
     :disabled="disabled"
     data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"

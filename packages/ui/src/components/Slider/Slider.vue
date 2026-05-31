@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { SliderRootProps } from "reka-ui";
 import { Slider } from "reka-ui/namespaced";
 import { computed } from "vue";
 
@@ -11,8 +10,9 @@ import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 import { SliderTheme } from "./Slider.theme.ts";
 import type { SliderThemeSlots, SliderThemeVariants } from "./Slider.theme.ts";
 
-export interface SliderProps extends Pick<SliderRootProps, "as" | "asChild" | "disabled" | "min" | "max" | "step"> {
+export interface SliderProps {
   id?: string;
+
   /**
    * The color scheme of the slider.
    * @default "primary"
@@ -23,6 +23,16 @@ export interface SliderProps extends Pick<SliderRootProps, "as" | "asChild" | "d
    * @default "md"
    */
   size?: SliderThemeVariants["size"];
+
+  /** The minimum value of the slider. */
+  min?: number;
+  /** The maximum value of the slider. */
+  max?: number;
+  /** The step interval of the slider. */
+  step?: number;
+
+  /** Whether the slider is disabled. */
+  disabled?: boolean;
 
   /** Show tooltip on thumb with current value. */
   tooltip?: boolean | TooltipProps;
@@ -67,8 +77,6 @@ const ui = computed(() => {
     :id="id"
     v-model="sliderValue"
     v-bind="ariaAttrs"
-    :as="as"
-    :as-child="asChild"
     :min="min"
     :max="max"
     :step="step"

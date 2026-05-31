@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<ScrollAreaProps>(), {
 });
 defineSlots<ScrollAreaSlots>();
 
-const rootProps = useForwardPropsEmits(reactivePick(props, "as", "asChild", "type", "dir", "scrollHideDelay"));
+const rootProps = useForwardPropsEmits(reactivePick(props, "type", "dir", "scrollHideDelay"));
 
 const ui = computed(() => {
   return ScrollAreaTheme({

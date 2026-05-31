@@ -12,7 +12,6 @@ import { ToolToggleTheme } from "./ToolToggle.theme.ts";
 import type { ToolToggleThemeSlots, ToolToggleThemeVariants } from "./ToolToggle.theme.ts";
 
 export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
-  /** The ID of the toggle. */
   id?: string;
 
   /** Visible text beside the button (for expanded mode). */
