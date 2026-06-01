@@ -401,6 +401,7 @@ async function updatePaletteDisplaySettings() {
             @contextmenu.stop.prevent
           >
             <Button
+              data-tour="palette-save"
               :icon="IconCheck"
               :label="$t('palette-save')"
               class="grow justify-center text-sm"
@@ -421,6 +422,7 @@ async function updatePaletteDisplaySettings() {
             </span>
 
             <ButtonIcon
+              data-tour="palette-edit"
               variant="ghost"
               color="neutral"
               :disabled="disabled"
@@ -474,6 +476,7 @@ async function updatePaletteDisplaySettings() {
 
     <PaletteCatalog
       v-if="patternStore.pattern.palette && sectionVisibility.paletteCatalog"
+      data-tour="add-color"
       :palette="patternStore.pattern.palette.items"
       class="min-w-max border-l border-default"
       @close="sectionVisibility.paletteCatalog = false"

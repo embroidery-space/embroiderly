@@ -34,6 +34,7 @@
     "@vueuse/core": "catalog:",
     "@vueuse/integrations": "catalog:",
     "@zorsh/zorsh": "catalog:",
+    "driver.js": "catalog:",
     "es-toolkit": "catalog:",
     "eventemitter3": "catalog:",
     "fluent-vue": "catalog:",

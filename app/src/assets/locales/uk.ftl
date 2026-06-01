@@ -114,9 +114,36 @@ pattern-save-failure = Схему не вдалося зберегти
 pattern-export-success = Схему експортовано
 pattern-export-failure = Схему не вдалося експортувати
 
+## Guided tour.
+
+tour-welcome =
+  .title = Ласкаво просимо до { -app-name }!
+  .description =
+    Хочете пройти інтерактивний тур щодо роботи в { -app-name }?
+    Це не займе багато часу.
+tour-welcome-skip = Пропустити
+tour-welcome-start = Почати тур
+
+tour-edit-palette =
+  .title = Крок 1 — Редагування палітри
+  .description = Натисніть кнопку «Редагувати палітру», щоб перейти в режим редагування та відкрити каталог палітр.
+
+tour-add-color =
+  .title = Крок 2 — Виберіть колір
+  .description = Двічі натисніть будь-який колір, щоб додати його до вашої робочої палітри.
+
+tour-save-palette =
+  .title = Крок 3 — Збереження палітри
+  .description = Натисніть «Зберегти палітру», щоб завершити редагування і повернутися до полотна.
+
+tour-done =
+  .title = Все готово!
+  .description = Тепер ви можете почати створювати чудові схеми в { -app-name }.
+tour-done-button = Готово
+
 ## Welcome screen.
 
-welcome = Ласкаво просимо в { -app-name }!
+welcome = Ласкаво просимо до { -app-name }!
 
 welcome-get-started =
   { $button-open } або { $button-create }, щоб розпочати.
