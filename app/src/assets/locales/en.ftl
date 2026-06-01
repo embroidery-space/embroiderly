@@ -211,6 +211,13 @@ settings-show-open-demo-pattern-option = Show "Open demo pattern" option in the 
 
 settings-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools
 
+## Telemetry prompt.
+
+telemetry-prompt = Help Improve { -app-name }
+telemetry-prompt-notice = * You can change your selection at any time in Settings.
+telemetry-prompt-reject = No, thanks
+telemetry-prompt-accept = Enable
+
 ## Application updater.
 
 updater-check-for-updates = Check for Updates

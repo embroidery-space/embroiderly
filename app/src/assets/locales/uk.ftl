@@ -211,6 +211,13 @@ settings-show-open-demo-pattern-option = Показати опцію "Відкр
 
 settings-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
 
+## Telemetry prompt.
+
+telemetry-prompt = Допоможіть покращити { -app-name }
+telemetry-prompt-notice = * Ви можете змінити свій вибір у будь-який час у налаштуваннях.
+telemetry-prompt-reject = Ні, дякую
+telemetry-prompt-accept = Увімкнути
+
 ## Application updater.
 
 updater-check-for-updates = Перевірити наявність оновлень
