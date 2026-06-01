@@ -3,6 +3,7 @@ import { driver as initDriver } from "driver.js";
 import { ref, watch } from "vue";
 
 import { useI18n } from "~/composables/";
+import { MetricsService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
 
 type TourStep = "offer-tour" | "edit-palette" | "add-color" | "save-palette" | "tour-done";
@@ -17,10 +18,25 @@ export const useTour = createSharedComposable(() => {
   const currentStep = ref<TourStep | null>(null);
   const tourOffered = useLocalStorage("embroiderly-tour-offered", false);
 
+  let tourStartTime = 0;
+
   const driver = initDriver({
     allowClose: true,
     disableActiveInteraction: false,
     onDestroyed: () => {
+      switch (currentStep.value) {
+        case "offer-tour": {
+          MetricsService.captureTourSkipped();
+          break;
+        }
+        case "edit-palette":
+        case "add-color":
+        case "save-palette": {
+          MetricsService.captureTourCancelled(currentStep.value);
+          break;
+        }
+      }
+
       currentStep.value = null;
     },
   });
@@ -58,6 +74,8 @@ export const useTour = createSharedComposable(() => {
     tourOffered.value = true;
     currentStep.value = "offer-tour";
 
+    MetricsService.captureTourOffered();
+
     driver.highlight({
       popover: {
         ...fluent.$ta("tour-welcome"),
@@ -68,7 +86,11 @@ export const useTour = createSharedComposable(() => {
 
         onCloseClick: cancel,
         onPrevClick: cancel,
-        onNextClick: goToEditStep,
+        onNextClick() {
+          tourStartTime = Date.now();
+          MetricsService.captureTourStarted();
+          goToEditStep();
+        },
       },
     });
   }
@@ -133,6 +155,7 @@ export const useTour = createSharedComposable(() => {
         showButtons: ["next"],
         nextBtnText: fluent.$t("tour-done-button"),
         onNextClick: () => {
+          MetricsService.captureTourCompleted(Date.now() - tourStartTime);
           currentStep.value = null;
           driver.destroy();
         },
@@ -142,7 +165,7 @@ export const useTour = createSharedComposable(() => {
 
   /** Immediately cancels the tour and destroys the driver instance. */
   function cancel() {
-    currentStep.value = null;
+    // Do not nullify the current step value here, as the `onDestroyed` hook reads it to attribute the right metric.
     driver.destroy();
   }
 
