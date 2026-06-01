@@ -237,6 +237,10 @@ updater-no-updates-available =
   .title = Оновлень немає
   .description = Наразі немає доступних оновлень.
 
+updater-unsaved-changes =
+  .title = Незбережені зміни
+  .description = Оновлення не може бути встановлено, поки ви не збережете та закриєте всі відкриті схеми.
+
 ## Canvas panel.
 
 canvas-panel-collapse = Згорнути панель полотна
