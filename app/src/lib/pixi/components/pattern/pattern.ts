@@ -586,6 +586,10 @@ export class PatternView extends Container {
     this.#stitchesHint.drawNode(stitch, palitem.color, this.#textureManager.getNodeTexture(stitch.kind));
   }
 
+  clearHint() {
+    this.#stitchesHint.clear();
+  }
+
   /**
    * Adjusts the zoom level of the pattern view.
    * @param zoom - The zoom level in range 1 to 100.
