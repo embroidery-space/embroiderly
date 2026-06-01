@@ -237,6 +237,10 @@ updater-no-updates-available =
   .title = No Update Available
   .description = There are currently no updates available.
 
+updater-unsaved-changes =
+  .title = Unsaved Changes
+  .description = The update cannot be installed until you save and close all open patterns.
+
 ## Canvas panel.
 
 canvas-panel-collapse = Collapse canvas panel

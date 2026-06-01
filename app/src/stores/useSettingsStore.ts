@@ -5,6 +5,7 @@ import { computed, reactive, ref, watch } from "vue";
 
 import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
+import { useCloseAllPatterns } from "~/composables/core/";
 import { LayerLayout, WheelAction } from "~/lib/types/";
 import type { PatternOptions, RenderOptions, ViewportOptions } from "~/lib/types/";
 
@@ -89,6 +90,7 @@ export const useSettingsStore = defineStore(
     const overlay = useOverlay();
     const appSettingModal = overlay.create(AppSettingModal);
 
+    const { closeAllPatterns } = useCloseAllPatterns();
     const { fluent, setLocale } = useI18n();
     const toast = useToast();
 
@@ -162,6 +164,12 @@ export const useSettingsStore = defineStore(
                   async onClick() {
                     try {
                       loadingUpdate.value = true;
+
+                      if (!(await closeAllPatterns())) {
+                        toast.add({ type: "foreground", color: "warning", ...fluent.$ta("updater-unsaved-changes") });
+                        return;
+                      }
+
                       await update.downloadAndInstall();
                       await relaunch();
                     } finally {
@@ -191,6 +199,12 @@ export const useSettingsStore = defineStore(
                   async onClick() {
                     try {
                       loadingUpdate.value = true;
+
+                      if (!(await closeAllPatterns())) {
+                        toast.add({ type: "foreground", color: "warning", ...fluent.$ta("updater-unsaved-changes") });
+                        return;
+                      }
+
                       await pwa.applyUpdate();
                     } finally {
                       loadingUpdate.value = false;
