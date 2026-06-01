@@ -182,7 +182,7 @@ export class StitchTool implements PatternEditorTool {
     else await api.removeStitchAt(point.x, point.y);
   }
 
-  async release({ pattern, start, end, api }: PatternEditorToolContext) {
+  async release({ pattern, start, end, api, ui }: PatternEditorToolContext) {
     if (!patternContainsPoint(pattern.fabric, start, end)) return;
 
     const { x, y } = adjustStitchCoordinate(end, this.kind);
@@ -206,6 +206,8 @@ export class StitchTool implements PatternEditorTool {
     }
 
     this.prevStitchState = undefined;
+
+    ui.hint.clear();
     await api.endTransaction();
   }
 }

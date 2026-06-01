@@ -160,6 +160,9 @@ function createPatternEditorToolContext(detail: ToolEventDetail): PatternEditorT
             patternCanvas.value?.drawNodeHint(stitch);
           }
         },
+        clear() {
+          patternCanvas.value?.clearHint();
+        },
       },
     },
   };
