@@ -34,7 +34,7 @@ runs:
     # Stable Rust must be installed last, so that it is specified as the default one.
     - uses: dtolnay/rust-toolchain@master
       with:
-        toolchain: 1.95.0 # stable
+        toolchain: 1.96.0 # stable
         components: ${{ inputs.stable-components }}
         targets: ${{ inputs.targets }}
     - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
