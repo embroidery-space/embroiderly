@@ -26,12 +26,21 @@ export const useTour = createSharedComposable(() => {
   const currentStep = ref<TourStep | null>(null);
   const tourOffered = useLocalStorage("embroiderly-tour-offered", false);
 
-  let tourStartTime = 0;
+  let tourStartTime = Date.now();
+
+  let cleanupCanvasListener: (() => void) | null = null;
+  let cleanupCanvasPanelListener: (() => void) | null = null;
 
   const driver = initDriver({
     allowClose: true,
     disableActiveInteraction: false,
     onDestroyed: () => {
+      cleanupCanvasListener?.();
+      cleanupCanvasListener = null;
+
+      cleanupCanvasPanelListener?.();
+      cleanupCanvasPanelListener = null;
+
       const step = currentStep.value;
       currentStep.value = null;
 
@@ -57,6 +66,13 @@ export const useTour = createSharedComposable(() => {
     (newLen, oldLen) => {
       if (currentStep.value !== "add-color") return;
       if (newLen > oldLen) goToSaveStep();
+    },
+  );
+
+  watch(
+    () => editorStateStore.selectedTool,
+    () => {
+      if (currentStep.value === "toolbar") goToCanvasStep();
     },
   );
 
@@ -118,6 +134,7 @@ export const useTour = createSharedComposable(() => {
   async function goToCatalogStep() {
     currentStep.value = "add-color";
 
+    // The palette is loaded asynchronously, so wait for the catalog items to render.
     const element = await waitForElement('[data-tour="add-color"] [role="listbox"]');
 
     // Guard: the user may have cancelled while we were waiting for items to load.
@@ -173,13 +190,23 @@ export const useTour = createSharedComposable(() => {
   /** Step 5: highlight the canvas. */
   function goToCanvasStep() {
     currentStep.value = "canvas";
+
+    cleanupCanvasListener = listenOnce('[data-tour="canvas"]', "pointerup", () => {
+      if (currentStep.value === "canvas") goToCanvasPanelStep();
+    });
+
     driver.highlight({
       element: '[data-tour="canvas"]',
       popover: {
         ...fluent.$ta("tour-canvas"),
         showButtons: ["close", "next"],
         nextBtnText: fluent.$t("tour-next"),
-        onNextClick: goToCanvasPanelStep,
+        onNextClick() {
+          cleanupCanvasListener?.();
+          cleanupCanvasListener = null;
+
+          goToCanvasPanelStep();
+        },
       },
     });
   }
@@ -187,13 +214,23 @@ export const useTour = createSharedComposable(() => {
   /** Step 6: highlight the canvas panel. */
   function goToCanvasPanelStep() {
     currentStep.value = "canvas-panel";
+
+    cleanupCanvasPanelListener = listenOnce('[data-tour="canvas-panel"]', "pointerup", () => {
+      if (currentStep.value === "canvas-panel") finish();
+    });
+
     driver.highlight({
       element: '[data-tour="canvas-panel"]',
       popover: {
         ...fluent.$ta("tour-canvas-panel"),
         showButtons: ["close", "next"],
         nextBtnText: fluent.$t("tour-next"),
-        onNextClick: finish,
+        onNextClick() {
+          cleanupCanvasPanelListener?.();
+          cleanupCanvasPanelListener = null;
+
+          finish();
+        },
       },
     });
   }
@@ -263,4 +300,18 @@ function waitForElement(selector: string, timeout = 5000): Promise<Element | nul
     });
     observer.observe(document.body, { childList: true, subtree: true });
   });
+}
+
+/** Attaches a one-time event listener to the first element matching `selector`. */
+function listenOnce(selector: string, event: string, handler: () => void): () => void {
+  const el = document.querySelector(selector);
+  if (!el) return () => {};
+
+  const listener = () => {
+    el.removeEventListener(event, listener);
+    handler();
+  };
+  el.addEventListener(event, listener);
+
+  return () => el.removeEventListener(event, listener);
 }
