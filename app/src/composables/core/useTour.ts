@@ -102,7 +102,11 @@ export const useTour = createSharedComposable(() => {
       element: '[data-tour="palette-edit"]',
       popover: {
         ...fluent.$ta("tour-edit-palette"),
-        showButtons: ["close"],
+        showButtons: ["close", "next"],
+        nextBtnText: fluent.$t("tour-next"),
+        onNextClick: () => {
+          editorStateStore.paletteMode = PaletteMode.Editing;
+        },
       },
     });
   }
@@ -129,7 +133,9 @@ export const useTour = createSharedComposable(() => {
       element,
       popover: {
         ...fluent.$ta("tour-add-color"),
-        showButtons: ["close"],
+        showButtons: ["close", "next"],
+        nextBtnText: fluent.$t("tour-next"),
+        onNextClick: goToSaveStep,
       },
     });
   }
@@ -141,7 +147,11 @@ export const useTour = createSharedComposable(() => {
       element: '[data-tour="palette-save"]',
       popover: {
         ...fluent.$ta("tour-save-palette"),
-        showButtons: ["close"],
+        showButtons: ["close", "next"],
+        nextBtnText: fluent.$t("tour-next"),
+        onNextClick: () => {
+          editorStateStore.paletteMode = PaletteMode.Regular;
+        },
       },
     });
   }
