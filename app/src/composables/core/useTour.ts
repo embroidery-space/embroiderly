@@ -104,7 +104,7 @@ export const useTour = createSharedComposable(() => {
         ...fluent.$ta("tour-edit-palette"),
         showButtons: ["close", "next"],
         nextBtnText: fluent.$t("tour-next"),
-        onNextClick: () => {
+        onNextClick() {
           editorStateStore.paletteMode = PaletteMode.Editing;
         },
       },
@@ -149,7 +149,7 @@ export const useTour = createSharedComposable(() => {
         ...fluent.$ta("tour-save-palette"),
         showButtons: ["close", "next"],
         nextBtnText: fluent.$t("tour-next"),
-        onNextClick: () => {
+        onNextClick() {
           editorStateStore.paletteMode = PaletteMode.Regular;
         },
       },
@@ -206,7 +206,7 @@ export const useTour = createSharedComposable(() => {
         ...fluent.$ta("tour-finish"),
         showButtons: ["next"],
         nextBtnText: fluent.$t("tour-done"),
-        onNextClick: () => {
+        onNextClick() {
           MetricsService.captureTourCompleted(Date.now() - tourStartTime);
           currentStep.value = null;
           driver.destroy();
