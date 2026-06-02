@@ -151,7 +151,7 @@ tour-finish =
   .description = You can now start creating beautiful patterns in { -app-name }.
 
 tour-skip = Skip
-tour-start = Take the Tour
+tour-start = Take Tour
 tour-next = Next
 tour-done = Done
 

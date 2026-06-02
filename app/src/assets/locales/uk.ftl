@@ -151,7 +151,7 @@ tour-finish =
   .description = Тепер ви можете почати створювати чудові схеми в { -app-name }.
 
 tour-skip = Пропустити
-tour-start = Почати тур
+tour-start = Пройти тур
 tour-next = Далі
 tour-done = Готово
 

@@ -18,6 +18,7 @@ import {
   IconUndo,
 } from "~/assets/icons/";
 import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
+import { useTour } from "~/composables/core/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
@@ -26,6 +27,7 @@ import { getSystemInfo } from "~/utils/system.ts";
 import WindowControls from "./WindowControls.vue";
 
 const confirm = useConfirm();
+const tour = useTour();
 const { fluent } = useI18n();
 
 const modals = useEditorModals();
@@ -232,6 +234,17 @@ const appMenu = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const helpItems: any[][] = [
     [{ label: fluent.$t("app-menu-help-about"), onSelect: showSystemInfo }],
+    [
+      {
+        label: fluent.$t("tour-start"),
+        async onSelect() {
+          if (patternStore.pattern.isNil) {
+            patternFileStore.switchPattern(await patternFileStore.createPattern(new Fabric()));
+          }
+          void tour.restart();
+        },
+      },
+    ],
     [
       __TAURI__
         ? {

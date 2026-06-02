@@ -221,11 +221,27 @@ export const useTour = createSharedComposable(() => {
     driver.destroy();
   }
 
-  return { offer, cancel, tourOffered };
+  /**
+   * Starts the tour from the beginning, regardless of whether it has been offered before.
+   * Waits for a pattern to be loaded before proceeding.
+   */
+  async function restart() {
+    driver.destroy();
+
+    await until(() => !patternStore.pattern.isNil).toBe(true, { timeout: 5000 });
+    if (patternStore.pattern.isNil) return;
+
+    tourStartTime = Date.now();
+    MetricsService.captureTourStarted();
+
+    goToEditStep();
+  }
+
+  return { offer, cancel, restart, tourOffered };
 });
 
 /** Waits for an element matching `selector` to appear in the DOM. */
-function waitForElement(selector: string, timeout = 8000): Promise<Element | null> {
+function waitForElement(selector: string, timeout = 5000): Promise<Element | null> {
   const existing = document.querySelector(selector);
   if (existing) return Promise.resolve(existing);
 
