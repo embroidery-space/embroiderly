@@ -6,7 +6,15 @@ import { useI18n } from "~/composables/";
 import { MetricsService } from "~/services/";
 import { PaletteMode, useEditorStateStore, usePatternStore } from "~/stores/";
 
-type TourStep = "offer-tour" | "edit-palette" | "add-color" | "save-palette" | "tour-done";
+type TourStep =
+  | "tour-offer"
+  | "edit-palette"
+  | "add-color"
+  | "save-palette"
+  | "toolbar"
+  | "canvas"
+  | "canvas-panel"
+  | "tour-finish";
 
 /** Provides a one-time guided tour that coaches new users on how to start working in Embroiderly. */
 export const useTour = createSharedComposable(() => {
@@ -24,20 +32,12 @@ export const useTour = createSharedComposable(() => {
     allowClose: true,
     disableActiveInteraction: false,
     onDestroyed: () => {
-      switch (currentStep.value) {
-        case "offer-tour": {
-          MetricsService.captureTourSkipped();
-          break;
-        }
-        case "edit-palette":
-        case "add-color":
-        case "save-palette": {
-          MetricsService.captureTourCancelled(currentStep.value);
-          break;
-        }
-      }
-
+      const step = currentStep.value;
       currentStep.value = null;
+
+      if (step === null || step === "tour-finish") return;
+      if (step === "tour-offer") MetricsService.captureTourSkipped();
+      else MetricsService.captureTourCancelled(step);
     },
   });
 
@@ -47,7 +47,7 @@ export const useTour = createSharedComposable(() => {
       if (newMode === PaletteMode.Editing && oldMode === PaletteMode.Regular && currentStep.value === "edit-palette") {
         void goToCatalogStep();
       } else if (newMode === PaletteMode.Regular && currentStep.value === "save-palette") {
-        finish();
+        goToToolbarStep();
       }
     },
   );
@@ -72,17 +72,17 @@ export const useTour = createSharedComposable(() => {
     if (patternStore.pattern.isNil) return;
 
     tourOffered.value = true;
-    currentStep.value = "offer-tour";
+    currentStep.value = "tour-offer";
 
     MetricsService.captureTourOffered();
 
     driver.highlight({
       popover: {
-        ...fluent.$ta("tour-welcome"),
+        ...fluent.$ta("tour-offer"),
 
         showButtons: ["close", "previous", "next"],
-        prevBtnText: fluent.$t("tour-welcome-skip"),
-        nextBtnText: fluent.$t("tour-welcome-start"),
+        prevBtnText: fluent.$t("tour-skip"),
+        nextBtnText: fluent.$t("tour-start"),
 
         onCloseClick: cancel,
         onPrevClick: cancel,
@@ -146,14 +146,56 @@ export const useTour = createSharedComposable(() => {
     });
   }
 
+  /** Step 4: highlight the tools panel. */
+  function goToToolbarStep() {
+    currentStep.value = "toolbar";
+    driver.highlight({
+      element: '[data-tour="toolbar"]',
+      popover: {
+        ...fluent.$ta("tour-toolbar"),
+        showButtons: ["close", "next"],
+        nextBtnText: fluent.$t("tour-next"),
+        onNextClick: goToCanvasStep,
+      },
+    });
+  }
+
+  /** Step 5: highlight the canvas. */
+  function goToCanvasStep() {
+    currentStep.value = "canvas";
+    driver.highlight({
+      element: '[data-tour="canvas"]',
+      popover: {
+        ...fluent.$ta("tour-canvas"),
+        showButtons: ["close", "next"],
+        nextBtnText: fluent.$t("tour-next"),
+        onNextClick: goToCanvasPanelStep,
+      },
+    });
+  }
+
+  /** Step 6: highlight the canvas panel. */
+  function goToCanvasPanelStep() {
+    currentStep.value = "canvas-panel";
+    driver.highlight({
+      element: '[data-tour="canvas-panel"]',
+      popover: {
+        ...fluent.$ta("tour-canvas-panel"),
+        showButtons: ["close", "next"],
+        nextBtnText: fluent.$t("tour-next"),
+        onNextClick: finish,
+      },
+    });
+  }
+
   /** Final step: show a centered "all set" popover, then clean up. */
   function finish() {
-    currentStep.value = "tour-done";
+    currentStep.value = "tour-finish";
     driver.highlight({
       popover: {
-        ...fluent.$ta("tour-done"),
+        ...fluent.$ta("tour-finish"),
         showButtons: ["next"],
-        nextBtnText: fluent.$t("tour-done-button"),
+        nextBtnText: fluent.$t("tour-done"),
         onNextClick: () => {
           MetricsService.captureTourCompleted(Date.now() - tourStartTime);
           currentStep.value = null;

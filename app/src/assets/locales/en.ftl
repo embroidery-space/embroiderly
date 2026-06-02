@@ -116,13 +116,11 @@ pattern-export-failure = Pattern Export Failed
 
 ## Guided tour.
 
-tour-welcome =
+tour-offer =
   .title = Welcome to { -app-name }!
   .description =
     Would you like to take a guided tour on how to start working in { -app-name }?
     It won't take much time.
-tour-welcome-skip = Skip
-tour-welcome-start = Take the Tour
 
 tour-edit-palette =
   .title = Step 1 — Edit the Palette
@@ -136,10 +134,26 @@ tour-save-palette =
   .title = Step 3 — Save the Palette
   .description = Click "Save Palette" to finish editing and return to the canvas.
 
-tour-done =
+tour-toolbar =
+  .title = Step 4 — Stitch Tools
+  .description = Pick a stitch type here. Each tool lets you draw a different kind of stitch on the canvas.
+
+tour-canvas =
+  .title = Step 5 — The Canvas
+  .description = This is where your design your patterns. Click anywhere on the canvas to draw a stitch using the selected tool and color.
+
+tour-canvas-panel =
+  .title = Step 6 — Canvas Options
+  .description = In this panel, you can switch the display mode, toggle the grid, rulers, and symbols, and manage layers.
+
+tour-finish =
   .title = You're All Set!
   .description = You can now start creating beautiful patterns in { -app-name }.
-tour-done-button = Done
+
+tour-skip = Skip
+tour-start = Take the Tour
+tour-next = Next
+tour-done = Done
 
 ## Welcome panel.
 

@@ -116,13 +116,11 @@ pattern-export-failure = Схему не вдалося експортувати
 
 ## Guided tour.
 
-tour-welcome =
+tour-offer =
   .title = Ласкаво просимо до { -app-name }!
   .description =
     Хочете пройти інтерактивний тур щодо роботи в { -app-name }?
     Це не займе багато часу.
-tour-welcome-skip = Пропустити
-tour-welcome-start = Почати тур
 
 tour-edit-palette =
   .title = Крок 1 — Редагування палітри
@@ -136,10 +134,26 @@ tour-save-palette =
   .title = Крок 3 — Збереження палітри
   .description = Натисніть «Зберегти палітру», щоб завершити редагування і повернутися до полотна.
 
-tour-done =
+tour-toolbar =
+  .title = Крок 4 — Інструменти стібків
+  .description = Виберіть вид стібків тут. Кожен інструмент дозволяє малювати різний вид стібків на полотні.
+
+tour-canvas =
+  .title = Крок 5 — Полотно
+  .description = Тут ви створюєте ваші схеми. Натисніть будь-де на полотні, щоб намалювати стібок вибраним інструментом та кольором.
+
+tour-canvas-panel =
+  .title = Крок 6 — Параметри полотна
+  .description = У цій панелі ви можете перемикати режим відображення, сітку, лінійки, символи та керувати шарами.
+
+tour-finish =
   .title = Все готово!
   .description = Тепер ви можете почати створювати чудові схеми в { -app-name }.
-tour-done-button = Готово
+
+tour-skip = Пропустити
+tour-start = Почати тур
+tour-next = Далі
+tour-done = Готово
 
 ## Welcome screen.
 
