@@ -14,7 +14,7 @@ import type { InputDimensionsThemeSlots, InputDimensionsThemeVariants } from "./
 export interface InputDimensionsProps {
   /**
    * The size of the component.
-   * @default "lg"
+   * @default "md"
    */
   size?: InputDimensionsThemeVariants["size"];
 
@@ -50,7 +50,7 @@ export interface InputDimensionsProps {
 const width = defineModel<number>("width");
 const height = defineModel<number>("height");
 const props = withDefaults(defineProps<InputDimensionsProps>(), {
-  size: "lg",
+  size: "md",
   orientation: "horizontal",
 });
 

@@ -1,8 +1,6 @@
 <script setup lang="ts" generic="T extends DropdownMenuItem">
-import { reactivePick } from "@vueuse/core";
 import defu from "defu";
-import { useForwardPropsEmits } from "reka-ui";
-import type { DropdownMenuContentProps, DropdownMenuRootEmits, DropdownMenuRootProps } from "reka-ui";
+import type { DropdownMenuContentProps } from "reka-ui";
 import { DropdownMenu } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
@@ -54,10 +52,7 @@ export interface DropdownMenuItem {
   class?: any;
 }
 
-export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem> extends Pick<
-  DropdownMenuRootProps,
-  "open" | "defaultOpen" | "modal"
-> {
+export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem> {
   /** The items to display in the dropdown menu. */
   items?: T[] | T[][];
 
@@ -76,6 +71,9 @@ export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem
   /** Whether the dropdown menu trigger is disabled. */
   disabled?: boolean;
 
+  /** Whether the dropdown menu should block interaction with the outside elements. */
+  modal?: boolean;
+
   /**
    * Reference element for the dropdown menu.
    * If provided, the dropdown will be anchored to this element instead of the trigger.
@@ -92,21 +90,17 @@ export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem
   ui?: DropdownMenuThemeSlots;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface DropdownMenuEmits extends DropdownMenuRootEmits {}
-
 export interface DropdownMenuSlots {
   default(props: { open: boolean }): any;
 }
 
+const open = defineModel<boolean>("open", { default: false });
 const props = withDefaults(defineProps<DropdownMenuProps<T>>(), {
   size: "md",
   portal: true,
 });
-const emits = defineEmits<DropdownMenuEmits>();
 defineSlots<DropdownMenuSlots>();
 
-const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen", "modal"), emits);
 const portalProps = usePortal(toRef(() => props.portal));
 const contentProps = computed(
   () =>
@@ -128,7 +122,7 @@ const ui = computed(() => DropdownMenuTheme({ size: props.size }));
 </script>
 
 <template>
-  <DropdownMenu.Root v-slot="{ open }" v-bind="rootProps">
+  <DropdownMenu.Root v-model:open="open" :modal="modal">
     <DropdownMenu.Trigger :disabled="disabled" as-child>
       <slot :open="open" />
     </DropdownMenu.Trigger>

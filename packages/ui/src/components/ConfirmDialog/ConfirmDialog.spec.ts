@@ -5,7 +5,7 @@ import ConfirmDialog from "./ConfirmDialog.vue";
 import type { ConfirmDialogProps } from "./ConfirmDialog.vue";
 
 describe("ConfirmDialog", () => {
-  const props: ConfirmDialogProps = {
+  const props: ConfirmDialogProps & { open?: boolean } = {
     open: true,
     portal: false,
     title: "Confirm",

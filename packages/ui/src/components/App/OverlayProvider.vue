@@ -7,15 +7,6 @@ import type { Overlay } from "../../composables/useOverlay.ts";
 const { overlays, unmount, close } = useOverlay();
 
 const mountedOverlays = computed(() => overlays.filter((overlay: Overlay) => overlay.isMounted));
-
-function onAfterLeave(id: symbol) {
-  close(id);
-  unmount(id);
-}
-
-function onClose(id: symbol, value: unknown) {
-  close(id, value);
-}
 </script>
 
 <template>
@@ -25,7 +16,12 @@ function onClose(id: symbol, value: unknown) {
     :key="overlay.id"
     v-bind="overlay.props"
     v-model:open="overlay.isOpen"
-    @close="(value: unknown) => onClose(overlay.id, value)"
-    @after:leave="onAfterLeave(overlay.id)"
+    @close="close(overlay.id, $event)"
+    @after:leave="
+      () => {
+        close(overlay.id);
+        unmount(overlay.id);
+      }
+    "
   />
 </template>

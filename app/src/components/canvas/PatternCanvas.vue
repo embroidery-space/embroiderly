@@ -171,6 +171,7 @@ defineExpose({
 
   drawLineHint: (stitch: LineStitch) => patternApplication.view?.drawLineHint(stitch),
   drawNodeHint: (stitch: NodeStitch) => patternApplication.view?.drawNodeHint(stitch),
+  clearHint: () => patternApplication.view?.clearHint(),
 });
 
 onMounted(async () => {

@@ -189,13 +189,14 @@ watchEffect(() => {
 <template>
   <div ref="tree-container" class="flex min-h-auto flex-col gap-1 lg:min-h-0">
     <div class="flex items-center gap-1">
-      <IconLayers class="m-2 size-5 shrink-0" :class="{ 'opacity-75': disabled }" />
-      <span class="ms-1 flex-1 font-medium" :class="{ 'opacity-75': disabled }">{{ $t("canvas-layers") }}</span>
+      <IconLayers class="m-1.5 size-4 shrink-0" :class="{ 'opacity-75': disabled }" />
+      <span class="ms-1 flex-1 text-sm font-medium" :class="{ 'opacity-75': disabled }">
+        {{ $t("canvas-layers") }}
+      </span>
 
       <ButtonIcon
         color="neutral"
         variant="ghost"
-        size="lg"
         :icon="IconPlus"
         :disabled="disabled"
         :tooltip="$t('canvas-layers-add')"
@@ -204,7 +205,6 @@ watchEffect(() => {
       <ButtonIcon
         color="neutral"
         variant="ghost"
-        size="lg"
         :icon="IconTrash"
         :disabled="disabled || layers.length <= 1"
         :tooltip="$t('canvas-layers-remove', { name: selectedLayerDisplayName })"
@@ -218,7 +218,6 @@ watchEffect(() => {
         :default-value="selectedLayerItem"
         :scroll="{ type: 'hover' }"
         :disabled="disabled"
-        size="lg"
         selection-behavior="replace"
       >
         <template #item-label="{ item, level }">

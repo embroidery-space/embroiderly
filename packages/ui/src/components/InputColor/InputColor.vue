@@ -20,9 +20,7 @@ export interface InputColorProps extends InputProps {
 defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<string>({ default: "#FF0000" });
-const props = withDefaults(defineProps<InputColorProps>(), {
-  size: "lg",
-});
+const props = defineProps<InputColorProps>();
 
 const { id, size, ariaAttrs } = useFormField(props);
 

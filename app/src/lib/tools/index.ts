@@ -118,6 +118,8 @@ export interface PatternEditorToolContext extends ToolEventDetail {
        * @param stitch The node stitch to draw a hint for.
        */
       drawNode(stitch: NodeStitch): void;
+      /** Clears the current hint. */
+      clear(): void;
     };
   };
 }

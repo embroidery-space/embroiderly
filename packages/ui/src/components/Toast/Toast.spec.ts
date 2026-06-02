@@ -21,7 +21,10 @@ const ToastWrapper = defineComponent({
 });
 
 describe("Toast", () => {
-  const props: ToastProps = { open: true, title: "Toast" };
+  const props: ToastProps & { open?: boolean } = {
+    open: true,
+    title: "Toast",
+  };
 
   test.each([
     ["with title", { props }],

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { reactivePick } from "@vueuse/core";
-import { useForwardPropsEmits } from "reka-ui";
 import type { ToastRootEmits, ToastRootProps } from "reka-ui";
 import { Toast } from "reka-ui/namespaced";
 import { computed } from "vue";
@@ -14,7 +12,7 @@ import Progress from "../Progress/Progress.vue";
 import { ToastTheme } from "./Toast.theme.ts";
 import type { ToastThemeSlots, ToastThemeVariants } from "./Toast.theme.ts";
 
-export interface ToastProps extends Pick<ToastRootProps, "as" | "defaultOpen" | "open" | "type" | "duration"> {
+export interface ToastProps extends Pick<ToastRootProps, "type" | "duration"> {
   title?: string;
   description?: string;
 
@@ -41,16 +39,14 @@ export interface ToastSlots {
   close(): any;
 }
 
+const open = defineModel<boolean>("open", { default: false });
 const props = withDefaults(defineProps<ToastProps>(), {
   color: "primary",
 });
-const emits = defineEmits<ToastEmits>();
 const slots = defineSlots<ToastSlots>();
 
 const { icons } = useComponentIcons();
 const locale = useLocale();
-
-const rootProps = useForwardPropsEmits(reactivePick(props, "as", "defaultOpen", "open", "duration", "type"), emits);
 
 const ui = computed(() => {
   return ToastTheme({
@@ -63,7 +59,9 @@ const ui = computed(() => {
 <template>
   <Toast.Root
     v-slot="{ remaining, duration: totalDuration }"
-    v-bind="rootProps"
+    v-model:open="open"
+    :type="type"
+    :duration="duration"
     data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >

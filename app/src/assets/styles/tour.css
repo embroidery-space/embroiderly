@@ -1,0 +1,88 @@
+/**
+ * Theme overrides for driver.js (the guided tour) popovers.
+ */
+
+@import "driver.js/dist/driver.css";
+
+/* Surface — mirrors `Popover`. */
+.driver-popover {
+  @apply min-w-2xs max-w-sm p-4 text-default bg-default rounded-md shadow-lg ring ring-default;
+}
+
+/* Adopt the application font instead of driver.js' hard-coded stack. */
+.driver-popover,
+.driver-popover * {
+  font-family: inherit;
+}
+
+.driver-popover-title {
+  @apply m-0 text-base leading-5 font-semibold text-default;
+}
+
+.driver-popover-description {
+  @apply mt-1 mb-0 text-sm leading-5 font-normal text-muted;
+}
+
+/* Close (X) button — muted by default, full-contrast on hover (matches `Dialog`). */
+.driver-popover-close-btn {
+  @apply size-8 text-lg text-muted transition-colors;
+}
+.driver-popover-close-btn:hover,
+.driver-popover-close-btn:focus {
+  @apply text-default;
+}
+
+.driver-popover-footer {
+  @apply mt-4 gap-1.5;
+}
+.driver-popover-navigation-btns {
+  @apply gap-1.5;
+}
+/* Spacing between navigation buttons is handled by the flex `gap` above. */
+.driver-popover-navigation-btns button + button {
+  @apply ml-0;
+}
+
+.driver-popover-progress-text {
+  @apply text-xs text-muted;
+}
+
+/* Shared footer button base — mirrors `Button` (size `md`). */
+.driver-popover-footer button {
+  @apply rounded-md border-0 px-2.5 py-1.5 text-sm leading-5 font-medium text-shadow-none transition-colors;
+}
+.driver-popover-footer button:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary;
+}
+
+/* Primary action (Take the tour / Done) — `Button` color="primary" variant="solid". */
+.driver-popover-footer .driver-popover-next-btn {
+  @apply bg-primary text-inverted;
+}
+.driver-popover-footer .driver-popover-next-btn:hover,
+.driver-popover-footer .driver-popover-next-btn:focus {
+  @apply bg-primary/75;
+}
+
+/* Secondary action (Skip) — `Button` color="neutral" variant="ghost". */
+.driver-popover-footer .driver-popover-prev-btn {
+  @apply bg-transparent text-muted;
+}
+.driver-popover-footer .driver-popover-prev-btn:hover,
+.driver-popover-footer .driver-popover-prev-btn:focus {
+  @apply bg-elevated text-default;
+}
+
+/* Arrow — recolour the single visible border per side to the popover surface. */
+.driver-popover-arrow-side-left {
+  @apply border-l-bg;
+}
+.driver-popover-arrow-side-right {
+  @apply border-r-bg;
+}
+.driver-popover-arrow-side-top {
+  @apply border-t-bg;
+}
+.driver-popover-arrow-side-bottom {
+  @apply border-b-bg;
+}

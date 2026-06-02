@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { App, useToast } from "@embroiderly/ui";
+import { App, useOverlay, useToast } from "@embroiderly/ui";
 
-import { useEventListener } from "@vueuse/core";
+import { useEventListener, useLocalStorage } from "@vueuse/core";
+import { randomInt } from "es-toolkit";
 import { onMounted, onErrorCaptured, markRaw, watch } from "vue";
 
 import {
@@ -18,15 +19,23 @@ import {
   IconExternalLink,
 } from "~/assets/icons/";
 
-import { AppHeader, AppMain } from "./components/";
+import AppHeader from "./components/AppHeader.vue";
+import AppMain from "./components/AppMain.vue";
+import TelemetryPrompt from "./components/settings/TelemetryPrompt.vue";
 import { useI18n } from "./composables/";
+import { useTour } from "./composables/core/";
 import { DiagnosticsService, LoggerService, MetricsService } from "./services";
 import { useSettingsStore } from "./stores/";
 
+const settingsStore = useSettingsStore();
+
+const overlay = useOverlay();
 const toast = useToast();
+const tour = useTour();
 const { fluent, currentLocale } = useI18n();
 
-const settingsStore = useSettingsStore();
+const telemetryPrompt = overlay.create(TelemetryPrompt);
+const telemetryPromptShown = useLocalStorage("embroiderly-telemetry-prompt-shown", false);
 
 watch(
   () => settingsStore.telemetry,
@@ -55,6 +64,19 @@ onMounted(async () => {
 
   if (settingsStore.updater.autoCheck) {
     await settingsStore.checkForUpdates({ auto: true });
+  }
+
+  if (!tour.tourOffered.value) await tour.offer();
+  else if (!telemetryPromptShown.value) {
+    const delayMs = randomInt(1, 6) * 60 * 1000;
+    setTimeout(async () => {
+      if (settingsStore.telemetry.diagnostics && settingsStore.telemetry.metrics) return;
+
+      const result = await telemetryPrompt.open().result;
+      if (result) settingsStore.telemetry = result;
+
+      telemetryPromptShown.value = true;
+    }, delayMs);
   }
 });
 

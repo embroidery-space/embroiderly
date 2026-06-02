@@ -183,7 +183,7 @@ export class StitchesHint extends Container {
     });
   }
 
-  private clear(options?: DestroyOptions) {
+  clear(options?: DestroyOptions) {
     for (const child of this.removeChildren()) child.destroy(options);
     return this.addChild(new Graphics());
   }

@@ -17,9 +17,9 @@ export interface EditableProps extends EditableRootProps {
 export interface EditableEmits extends EditableRootEmits {}
 
 const props = defineProps<EditableProps>();
-const emits = defineEmits<EditableEmits>();
+const emit = defineEmits<EditableEmits>();
 
-const rootProps = useForwardPropsEmits(reactiveOmit(props, "class", "ui"), emits);
+const rootProps = useForwardPropsEmits(reactiveOmit(props, "class", "ui"), emit);
 
 const ui = computed(() => EditableTheme({ disabled: props.disabled }));
 </script>

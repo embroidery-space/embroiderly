@@ -20,6 +20,8 @@ export interface ButtonIconProps
   tooltipOptions?: Omit<TooltipProps, "text" | "disabled" | "delayDuration">;
 }
 
+defineOptions({ inheritAttrs: false });
+
 const props = defineProps<ButtonIconProps>();
 const buttonProps = computed<Partial<ButtonProps>>(() => ({
   href: props.href,
@@ -55,6 +57,6 @@ const tooltipProps = computed<TooltipProps>(() => ({
 
 <template>
   <Tooltip v-bind="tooltipProps">
-    <Button v-bind="buttonProps" square :aria-label="tooltip" />
+    <Button v-bind="{ ...$attrs, ...buttonProps }" square :aria-label="tooltip" />
   </Tooltip>
 </template>

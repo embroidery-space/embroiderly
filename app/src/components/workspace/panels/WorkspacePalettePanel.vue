@@ -77,7 +77,6 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
         label: fluent.$t("palette-edit"),
         onSelect() {
           editorStateStore.paletteMode = PaletteMode.Editing;
-          sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
         },
       },
     ],
@@ -268,8 +267,9 @@ watch(
       // Restore collapsed state when exiting editing mode.
       if (editorStateStore.palettePanelCollapsed) panel.value?.collapse();
     } else {
-      // Forcibly expand the panel when entering editing mode.
+      // Forcibly expand the panel and open the palette catalog when entering editing mode.
       panel.value?.expand();
+      sectionVisibility.paletteCatalog = true;
     }
   },
 );
@@ -401,6 +401,7 @@ async function updatePaletteDisplaySettings() {
             @contextmenu.stop.prevent
           >
             <Button
+              data-tour="palette-save"
               :icon="IconCheck"
               :label="$t('palette-save')"
               class="grow justify-center text-sm"
@@ -421,6 +422,7 @@ async function updatePaletteDisplaySettings() {
             </span>
 
             <ButtonIcon
+              data-tour="palette-edit"
               variant="ghost"
               color="neutral"
               :disabled="disabled"
@@ -432,7 +434,6 @@ async function updatePaletteDisplaySettings() {
                 () => {
                   editorStateStore.paletteMode =
                     editorStateStore.paletteMode === PaletteMode.Editing ? PaletteMode.Regular : PaletteMode.Editing;
-                  sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
                 }
               "
             />
@@ -440,11 +441,16 @@ async function updatePaletteDisplaySettings() {
         </template>
 
         <template #option="{ option: paletteItem, selected, displaySettings }">
-          <PaletteListItem :palette-item="paletteItem" :selected="selected" :display-settings="displaySettings">
+          <PaletteListItem
+            :palette-item="paletteItem"
+            :selected="selected"
+            :display-settings="displaySettings"
+            :class="{ 'justify-center': collapsed }"
+          >
             <template v-if="collapsed || (!displaySettings.colorOnly && displaySettings.showStitchSymbols)">
               <span
                 v-if="paletteItem.symbol"
-                class="mr-2 inline-flex size-5 shrink-0 items-center justify-center"
+                class="inline-flex size-4 shrink-0 items-center justify-center"
                 :class="{
                   'rounded-sm bg-white text-black': displaySettings.stitchSymbolsOnContrastBackground,
                 }"
@@ -453,7 +459,7 @@ async function updatePaletteDisplaySettings() {
                 {{ paletteItem.symbol.char }}
               </span>
               <!-- If the palete item doesn't have a stitch symbol, render an empty `span`, so that the title is properly aligned with those with symbols. -->
-              <span v-else class="mr-2 size-5 shrink-0"></span>
+              <span v-else class="size-4 shrink-0"></span>
             </template>
           </PaletteListItem>
         </template>
@@ -469,6 +475,7 @@ async function updatePaletteDisplaySettings() {
 
     <PaletteCatalog
       v-if="patternStore.pattern.palette && sectionVisibility.paletteCatalog"
+      data-tour="add-color"
       :palette="patternStore.pattern.palette.items"
       class="min-w-max border-l border-default"
       @close="sectionVisibility.paletteCatalog = false"

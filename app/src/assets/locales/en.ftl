@@ -114,6 +114,47 @@ pattern-save-failure = Pattern Save Failed
 pattern-export-success = Pattern Exported
 pattern-export-failure = Pattern Export Failed
 
+## Guided tour.
+
+tour-offer =
+  .title = Welcome to { -app-name }!
+  .description =
+    Would you like to take a guided tour on how to start working in { -app-name }?
+    It won't take much time.
+
+tour-edit-palette =
+  .title = Step 1 — Edit the Palette
+  .description = Click the "Edit Palette" button to switch to editing mode and open the palette catalog.
+
+tour-add-color =
+  .title = Step 2 — Pick a Color
+  .description = Double-click any color to add it to your working palette.
+
+tour-save-palette =
+  .title = Step 3 — Save the Palette
+  .description = Click "Save Palette" to finish editing and return to the canvas.
+
+tour-toolbar =
+  .title = Step 4 — Stitch Tools
+  .description = Pick a stitch type here. Each tool lets you draw a different kind of stitch on the canvas.
+
+tour-canvas =
+  .title = Step 5 — The Canvas
+  .description = This is where your design your patterns. Click anywhere on the canvas to draw a stitch using the selected tool and color.
+
+tour-canvas-panel =
+  .title = Step 6 — Canvas Options
+  .description = In this panel, you can switch the display mode, toggle the grid, rulers, and symbols, and manage layers.
+
+tour-finish =
+  .title = You're All Set!
+  .description = You can now start creating beautiful patterns in { -app-name }.
+
+tour-skip = Skip
+tour-start = Take Tour
+tour-next = Next
+tour-done = Done
+
 ## Welcome panel.
 
 welcome = Welcome to { -app-name }!
@@ -211,6 +252,13 @@ settings-show-open-demo-pattern-option = Show "Open demo pattern" option in the 
 
 settings-use-palitem-color-for-stitch-tools = Use palette item color for stitch tools
 
+## Telemetry prompt.
+
+telemetry-prompt = Help Improve { -app-name }
+telemetry-prompt-notice = * You can change your selection at any time in Settings.
+telemetry-prompt-reject = No, thanks
+telemetry-prompt-accept = Enable
+
 ## Application updater.
 
 updater-check-for-updates = Check for Updates
@@ -229,6 +277,10 @@ updater-update-available-pwa =
 updater-no-updates-available =
   .title = No Update Available
   .description = There are currently no updates available.
+
+updater-unsaved-changes =
+  .title = Unsaved Changes
+  .description = The update cannot be installed until you save and close all open patterns.
 
 ## Canvas panel.
 
@@ -307,7 +359,8 @@ fabric-size = Size
 fabric-width = Width
 fabric-height = Height
 
-fabric-total-size = Size (WxH): { $width }x{ $height } stitches, { $widthInches }x{ $heightInches } inches ({ $widthMm }x{ $heightMm } mm)
+# Use non-breaking space (\u00A0) to prevent text from jumping when changing fabric size.
+fabric-total-size = Size{"\u00A0"}(WxH): { $width }x{ $height }{"\u00A0"}stitches, { $widthInches }x{ $heightInches }{"\u00A0"}inches ({ $widthMm }x{ $heightMm }{"\u00A0"}mm)
 
 unit-stitches = stitches
 unit-inches = inches

@@ -3,7 +3,7 @@
 exports[`Input > renders correctly with class 1`] = `
 <div>
   <div class="absolute inline-flex items-center" data-slot="root">
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
@@ -11,7 +11,7 @@ exports[`Input > renders correctly with class 1`] = `
 exports[`Input > renders correctly with disabled 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" disabled id="v-0" type="text">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" disabled id="v-0" type="text">
   </div>
 </div>
 `;
@@ -19,8 +19,8 @@ exports[`Input > renders correctly with disabled 1`] = `
 exports[`Input > renders correctly with icon 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-3" data-slot="leading">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-2.5" data-slot="leading">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
           <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
@@ -28,7 +28,7 @@ exports[`Input > renders correctly with icon 1`] = `
         </g>
       </svg>
     </span>
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 ps-11 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 ps-9 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
@@ -36,8 +36,8 @@ exports[`Input > renders correctly with icon 1`] = `
 exports[`Input > renders correctly with icon and leading 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-3" data-slot="leading">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-2.5" data-slot="leading">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
           <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
@@ -45,7 +45,7 @@ exports[`Input > renders correctly with icon and leading 1`] = `
         </g>
       </svg>
     </span>
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 ps-11 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 ps-9 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
@@ -53,9 +53,9 @@ exports[`Input > renders correctly with icon and leading 1`] = `
 exports[`Input > renders correctly with icon and trailing 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 pe-11 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
-    <span class="absolute flex inset-e-0 inset-y-0 items-center pe-3" data-slot="trailing">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 pe-9 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <span class="absolute flex inset-e-0 inset-y-0 items-center pe-2.5" data-slot="trailing">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
           <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
@@ -70,7 +70,7 @@ exports[`Input > renders correctly with icon and trailing 1`] = `
 exports[`Input > renders correctly with id 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="id" type="text">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="id" type="text">
   </div>
 </div>
 `;
@@ -78,8 +78,8 @@ exports[`Input > renders correctly with id 1`] = `
 exports[`Input > renders correctly with leading and trailing icons 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-3" data-slot="leading">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-2.5" data-slot="leading">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
           <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
@@ -87,9 +87,9 @@ exports[`Input > renders correctly with leading and trailing icons 1`] = `
         </g>
       </svg>
     </span>
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 pe-11 ps-11 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
-    <span class="absolute flex inset-e-0 inset-y-0 items-center pe-3" data-slot="trailing">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 pe-9 ps-9 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <span class="absolute flex inset-e-0 inset-y-0 items-center pe-2.5" data-slot="trailing">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
           <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
@@ -104,8 +104,8 @@ exports[`Input > renders correctly with leading and trailing icons 1`] = `
 exports[`Input > renders correctly with leading icon 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-3" data-slot="leading">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-2.5" data-slot="leading">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
           <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
@@ -113,7 +113,7 @@ exports[`Input > renders correctly with leading icon 1`] = `
         </g>
       </svg>
     </span>
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 ps-11 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 ps-9 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
@@ -121,8 +121,8 @@ exports[`Input > renders correctly with leading icon 1`] = `
 exports[`Input > renders correctly with leading slot 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-3" data-slot="leading">Leading slot</span>
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 ps-11 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <span class="absolute flex inset-s-0 inset-y-0 items-center ps-2.5" data-slot="leading">Leading slot</span>
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 ps-9 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
@@ -154,9 +154,9 @@ exports[`Input > renders correctly with size sm 1`] = `
 exports[`Input > renders correctly with trailing icon 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 pe-11 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
-    <span class="absolute flex inset-e-0 inset-y-0 items-center pe-3" data-slot="trailing">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 pe-9 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <span class="absolute flex inset-e-0 inset-y-0 items-center pe-2.5" data-slot="trailing">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
           <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
@@ -171,8 +171,8 @@ exports[`Input > renders correctly with trailing icon 1`] = `
 exports[`Input > renders correctly with trailing slot 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 pe-11 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
-    <span class="absolute flex inset-e-0 inset-y-0 items-center pe-3" data-slot="trailing">Trailing slot</span>
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 pe-9 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <span class="absolute flex inset-e-0 inset-y-0 items-center pe-2.5" data-slot="trailing">Trailing slot</span>
   </div>
 </div>
 `;
@@ -180,7 +180,7 @@ exports[`Input > renders correctly with trailing slot 1`] = `
 exports[`Input > renders correctly with ui 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-full text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-full text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
@@ -188,7 +188,7 @@ exports[`Input > renders correctly with ui 1`] = `
 exports[`Input > renders correctly with variant none 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none gap-2 px-3 py-2 rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <input class="appearance-none bg-transparent border-0 disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none gap-1.5 px-2.5 py-1.5 rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
@@ -196,7 +196,7 @@ exports[`Input > renders correctly with variant none 1`] = `
 exports[`Input > renders correctly with variant outline 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-default border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <input class="appearance-none bg-default border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
@@ -204,14 +204,14 @@ exports[`Input > renders correctly with variant outline 1`] = `
 exports[`Input > renders correctly with variant subtle 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+    <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
   </div>
 </div>
 `;
 
 exports[`Input > renders correctly within FormField 1`] = `
 <div>
-  <div class data-slot="root">
+  <div class="text-sm" data-slot="root">
     <div class data-slot="wrapper">
       <div class="flex gap-1 items-center justify-between" data-slot="labelWrapper">
         <label class="block font-medium text-default" data-slot="label" for="v-0" id="v-0-label">Label</label>
@@ -221,7 +221,7 @@ exports[`Input > renders correctly within FormField 1`] = `
     </div>
     <div class="mt-1" data-slot="container">
       <div class="inline-flex items-center relative" data-slot="root">
-        <input aria-describedby="v-0-hint v-0-description v-0-help" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" type="text">
+        <input aria-describedby="v-0-hint v-0-description v-0-help" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" type="text">
       </div>
       <p class="mt-1 text-muted" data-slot="help" id="v-0-help">Help</p>
     </div>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Primitive } from "reka-ui";
-import type { PrimitiveProps } from "reka-ui";
 import { computed, provide } from "vue";
 
 import { formFieldGroupInjectionKey } from "../../composables/useFormFieldGroup.ts";
@@ -8,7 +6,7 @@ import { formFieldGroupInjectionKey } from "../../composables/useFormFieldGroup.
 import { FormFieldGroupTheme } from "./FormFieldGroup.theme.ts";
 import type { FormFieldGroupThemeVariants } from "./FormFieldGroup.theme.ts";
 
-export interface FormFieldGroupProps extends PrimitiveProps {
+export interface FormFieldGroupProps {
   /**
    * The size of the grouped children.
    * @default "md"
@@ -24,8 +22,6 @@ export interface FormFieldGroupSlots {
 }
 
 const props = withDefaults(defineProps<FormFieldGroupProps>(), {
-  as: "div",
-
   size: "md",
 });
 defineSlots<FormFieldGroupSlots>();
@@ -44,7 +40,7 @@ const theme = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" :class="theme">
+  <div :class="theme">
     <slot />
-  </Primitive>
+  </div>
 </template>

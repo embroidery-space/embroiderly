@@ -3,7 +3,7 @@
 exports[`Textarea > renders correctly with autoresize 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 resize-none ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" rows="3"></textarea>
+    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 resize-none ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" rows="3"></textarea>
   </div>
 </div>
 `;
@@ -11,7 +11,7 @@ exports[`Textarea > renders correctly with autoresize 1`] = `
 exports[`Textarea > renders correctly with class 1`] = `
 <div>
   <div class="absolute inline-flex items-center" data-slot="root">
-    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" rows="3"></textarea>
+    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" rows="3"></textarea>
   </div>
 </div>
 `;
@@ -19,7 +19,7 @@ exports[`Textarea > renders correctly with class 1`] = `
 exports[`Textarea > renders correctly with disabled 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" disabled id="v-0" rows="3"></textarea>
+    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" disabled id="v-0" rows="3"></textarea>
   </div>
 </div>
 `;
@@ -27,7 +27,7 @@ exports[`Textarea > renders correctly with disabled 1`] = `
 exports[`Textarea > renders correctly with id 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="id" rows="3"></textarea>
+    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="id" rows="3"></textarea>
   </div>
 </div>
 `;
@@ -35,7 +35,7 @@ exports[`Textarea > renders correctly with id 1`] = `
 exports[`Textarea > renders correctly with rows 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" rows="5"></textarea>
+    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" rows="5"></textarea>
   </div>
 </div>
 `;
@@ -67,14 +67,14 @@ exports[`Textarea > renders correctly with size sm 1`] = `
 exports[`Textarea > renders correctly with ui 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-slot="root">
-    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-full text-base transition-colors w-full" data-slot="base" id="v-0" rows="3"></textarea>
+    <textarea class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-full text-sm transition-colors w-full" data-slot="base" id="v-0" rows="3"></textarea>
   </div>
 </div>
 `;
 
 exports[`Textarea > renders correctly within FormField 1`] = `
 <div>
-  <div class data-slot="root">
+  <div class="text-sm" data-slot="root">
     <div class data-slot="wrapper">
       <div class="flex gap-1 items-center justify-between" data-slot="labelWrapper">
         <label class="block font-medium text-default" data-slot="label" for="v-0" id="v-0-label">Label</label>
@@ -84,7 +84,7 @@ exports[`Textarea > renders correctly within FormField 1`] = `
     </div>
     <div class="mt-1" data-slot="container">
       <div class="inline-flex items-center relative" data-slot="root">
-        <textarea aria-describedby="v-0-hint v-0-description v-0-help" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" rows="3"></textarea>
+        <textarea aria-describedby="v-0-hint v-0-description v-0-help" class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" rows="3"></textarea>
       </div>
       <p class="mt-1 text-muted" data-slot="help" id="v-0-help">Help</p>
     </div>

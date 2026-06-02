@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Primitive } from "reka-ui";
-import type { PrimitiveProps } from "reka-ui";
 import { Collapsible } from "reka-ui/namespaced";
 import { computed } from "vue";
 
@@ -10,13 +8,13 @@ import Button from "../Button/Button.vue";
 import { FormFieldSetTheme } from "./FormFieldSet.theme.ts";
 import type { FormFieldSetThemeSlots, FormFieldSetThemeVariants } from "./FormFieldSet.theme.ts";
 
-export interface FormFieldSetProps extends PrimitiveProps {
+export interface FormFieldSetProps {
   /** The legend text for the fieldset. */
   legend: string;
 
   /**
    * The size of the fieldset legend.
-   * @default "lg"
+   * @default "md"
    */
   size?: FormFieldSetThemeVariants["size"];
 
@@ -33,8 +31,7 @@ export interface FormFieldSetSlots {
 
 const open = defineModel<boolean>("open", { default: true });
 const props = withDefaults(defineProps<FormFieldSetProps>(), {
-  as: "fieldset",
-  size: "lg",
+  size: "md",
 });
 defineSlots<FormFieldSetSlots>();
 
@@ -48,21 +45,15 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive
-    v-if="!collapsible"
-    :as="as"
-    :as-child="asChild"
-    data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
-  >
+  <fieldset v-if="!collapsible" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <legend data-slot="legend" :class="ui.legend({ class: props.ui?.legend })">{{ legend }}</legend>
     <slot />
-  </Primitive>
+  </fieldset>
 
   <Collapsible.Root
     v-else
     v-model:open="open"
-    :as="as"
+    as="fieldset"
     data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >

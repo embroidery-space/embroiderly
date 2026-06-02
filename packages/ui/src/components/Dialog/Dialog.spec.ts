@@ -5,7 +5,11 @@ import Dialog from "./Dialog.vue";
 import type { DialogProps } from "./Dialog.vue";
 
 describe("Dialog", () => {
-  const props: DialogProps = { open: true, portal: false, title: "Dialog" };
+  const props: DialogProps & { open?: boolean } = {
+    open: true,
+    portal: false,
+    title: "Dialog",
+  };
 
   test.each([
     ["with title", { props }],

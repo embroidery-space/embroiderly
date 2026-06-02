@@ -39,11 +39,11 @@ const { isOverDropZone } = useDropZone(useTemplateRef("drop-zone"), {
 
 const { toPercent } = usePercentOfContainer(useTemplateRef("splitter"));
 
-const palettePanelDefaultSize = toPercent(15.5, "rem");
-const palettePanelCollapsedSize = toPercent(2.75, "rem");
+const palettePanelDefaultSize = toPercent(12, "rem");
+const palettePanelCollapsedSize = toPercent(2.25, "rem");
 
 const canvasToolbarDefaultSize = toPercent(12, "rem");
-const canvasToolbarCollapsedSize = toPercent(2.75, "rem");
+const canvasToolbarCollapsedSize = toPercent(2.25, "rem");
 
 useAppStartup();
 useCloseGuard();
@@ -98,17 +98,22 @@ onMounted(async () => {
       />
 
       <SplitterPanel class="grid min-h-0 min-w-0 grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto]">
-        <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" class="border-r border-default p-1" />
+        <EditorWorkspaceToolbar
+          :disabled="patternStore.pattern.isNil"
+          class="border-r border-default p-1"
+          data-tour="toolbar"
+        />
 
         <BlockUI ref="drop-zone" :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone">
           <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
-          <PatternWorkspace v-else v-bind="settingsStore.canvas" class="size-full" />
+          <PatternWorkspace v-else v-bind="settingsStore.canvas" data-tour="canvas" class="size-full" />
         </BlockUI>
 
         <EditorWorkspaceFooter :disabled="patternStore.pattern.isNil" class="col-span-2" />
       </SplitterPanel>
 
       <WorkspaceCanvasPanel
+        data-tour="canvas-panel"
         collapsible
         :collapsed-size="canvasToolbarCollapsedSize"
         :min-size="canvasToolbarDefaultSize"

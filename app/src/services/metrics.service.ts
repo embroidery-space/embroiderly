@@ -356,5 +356,36 @@ class MetricsServiceClass {
   captureUiChanged(theme: string, scale: string, language: string) {
     this.#capture("ui_changed", { theme, scale, language });
   }
+
+  /** Captures the offering of a tour. */
+  captureTourOffered() {
+    this.#capture("tour_offered");
+  }
+
+  /** Captures the starting of a tour. */
+  captureTourStarted() {
+    this.#capture("tour_started");
+  }
+
+  /** Captures the skipping of a tour. */
+  captureTourSkipped() {
+    this.#capture("tour_skipped");
+  }
+
+  /**
+   * Captures the completion of a tour.
+   * @param duration The duration of the tour in milliseconds.
+   */
+  captureTourCompleted(duration: number) {
+    this.#capture("tour_completed", { duration });
+  }
+
+  /**
+   * Captures the cancellation of a tour.
+   * @param step The step at which the tour was cancelled.
+   */
+  captureTourCancelled(step: string) {
+    this.#capture("tour_cancelled", { step });
+  }
 }
 export const MetricsService = new MetricsServiceClass();

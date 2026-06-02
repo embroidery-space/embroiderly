@@ -12,12 +12,12 @@ import type { FilePickerThemeVariants } from "./FilePicker.theme.ts";
 
 export interface FilePickerProps {
   /**
-   * The size of the component.
+   * The size of the file picker.
    * @default "md"
    */
   size?: FilePickerThemeVariants["size"];
 
-  /** Whether the component is disabled. */
+  /** Whether the file picker is disabled. */
   disabled?: boolean;
 
   class?: any;
@@ -29,13 +29,15 @@ export interface FilePickerEmits {
 }
 
 const modelValue = defineModel<string>();
-const props = defineProps<FilePickerProps>();
+const props = withDefaults(defineProps<FilePickerProps>(), {
+  size: "md",
+});
 const emit = defineEmits<FilePickerEmits>();
 
 const locale = useLocale();
 
 const { fieldGroupSize } = useFormFieldGroup();
-const size = computed(() => props.size ?? fieldGroupSize.value ?? "lg");
+const size = computed(() => props.size ?? fieldGroupSize.value);
 
 const theme = computed(() => FilePickerTheme({ size: size.value, class: [props.ui?.base, props.class] }));
 </script>

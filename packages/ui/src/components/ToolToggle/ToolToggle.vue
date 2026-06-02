@@ -12,7 +12,6 @@ import { ToolToggleTheme } from "./ToolToggle.theme.ts";
 import type { ToolToggleThemeSlots, ToolToggleThemeVariants } from "./ToolToggle.theme.ts";
 
 export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
-  /** The ID of the toggle. */
   id?: string;
 
   /** Visible text beside the button (for expanded mode). */
@@ -32,7 +31,7 @@ export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
 
   /**
    * The size of the toggle.
-   * @default "lg"
+   * @default "md"
    */
   size?: ToolToggleThemeVariants["size"];
 
@@ -45,7 +44,7 @@ export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
 
 const modelValue = defineModel<boolean>();
 const props = withDefaults(defineProps<ToolToggleProps>(), {
-  size: "lg",
+  size: "md",
 });
 
 const { id, size, ariaAttrs } = useFormField(props);

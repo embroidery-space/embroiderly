@@ -3,8 +3,8 @@
 exports[`ToolToggle > renders correctly when disabled 1`] = `
 <div>
   <div class="flex items-center opacity-75 relative" data-slot="root">
-    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated cursor-not-allowed focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-disabled data-grace-area-trigger data-slot="base" data-state="closed" disabled id="v-1" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated cursor-not-allowed focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-disabled data-grace-area-trigger data-slot="base" data-state="closed" disabled id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />
@@ -18,8 +18,8 @@ exports[`ToolToggle > renders correctly when disabled 1`] = `
 exports[`ToolToggle > renders correctly when toggled on 1`] = `
 <div>
   <div class="flex items-center relative" data-slot="root">
-    <button aria-pressed="true" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-pressed="true" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />
@@ -33,8 +33,8 @@ exports[`ToolToggle > renders correctly when toggled on 1`] = `
 exports[`ToolToggle > renders correctly with class 1`] = `
 <div>
   <div class="custom-class flex items-center relative" data-slot="root">
-    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />
@@ -48,8 +48,8 @@ exports[`ToolToggle > renders correctly with class 1`] = `
 exports[`ToolToggle > renders correctly with icon only 1`] = `
 <div>
   <div class="flex items-center relative" data-slot="root">
-    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />
@@ -63,15 +63,15 @@ exports[`ToolToggle > renders correctly with icon only 1`] = `
 exports[`ToolToggle > renders correctly with label 1`] = `
 <div>
   <div class="flex items-center relative" data-slot="root">
-    <button aria-label="Show symbols" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-0" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-label="Show symbols" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-0" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />
         </g>
       </svg>
     </button>
-    <div class="ms-2 text-base w-full" data-slot="wrapper">
+    <div class="ms-2 text-sm w-full" data-slot="wrapper">
       <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0">Show symbols</label>
     </div>
   </div>
@@ -81,15 +81,15 @@ exports[`ToolToggle > renders correctly with label 1`] = `
 exports[`ToolToggle > renders correctly with label and description 1`] = `
 <div>
   <div class="flex items-start relative" data-slot="root">
-    <button aria-label="Show symbols" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-0" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-label="Show symbols" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-0" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />
         </g>
       </svg>
     </button>
-    <div class="ms-2 text-base w-full" data-slot="wrapper">
+    <div class="ms-2 text-sm w-full" data-slot="wrapper">
       <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0">Show symbols</label>
       <p class="text-muted" data-slot="description">Toggle symbol visibility</p>
     </div>
@@ -100,8 +100,53 @@ exports[`ToolToggle > renders correctly with label and description 1`] = `
 exports[`ToolToggle > renders correctly with shortcut 1`] = `
 <div>
   <div class="flex items-center relative" data-slot="root">
-    <button aria-label="Show" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+    <button aria-label="Show" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
+          <circle cx="12" cy="12" r="3" />
+        </g>
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ToolToggle > renders correctly with size lg 1`] = `
+<div>
+  <div class="flex items-center relative" data-slot="root">
+    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
       <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
+          <circle cx="12" cy="12" r="3" />
+        </g>
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ToolToggle > renders correctly with size md 1`] = `
+<div>
+  <div class="flex items-center relative" data-slot="root">
+    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
+          <circle cx="12" cy="12" r="3" />
+        </g>
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ToolToggle > renders correctly with size sm 1`] = `
+<div>
+  <div class="flex items-center relative" data-slot="root">
+    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />
@@ -115,8 +160,8 @@ exports[`ToolToggle > renders correctly with shortcut 1`] = `
 exports[`ToolToggle > renders correctly with tooltip 1`] = `
 <div>
   <div class="flex items-center relative" data-slot="root">
-    <button aria-label="Show" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-label="Show" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />
@@ -130,8 +175,8 @@ exports[`ToolToggle > renders correctly with tooltip 1`] = `
 exports[`ToolToggle > renders correctly with ui 1`] = `
 <div>
   <div class="flex items-center relative" data-slot="root">
-    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated custom-base focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated custom-base focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-slot="base" data-state="closed" id="v-1" type="button">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
           <circle cx="12" cy="12" r="3" />

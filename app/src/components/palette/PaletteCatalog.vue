@@ -123,7 +123,6 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
         <div class="flex gap-x-1">
           <PaletteSelect
             ref="palette-select"
-            size="md"
             variant="outline"
             class="w-full"
             @palette-loaded="selectedPalette = $event"

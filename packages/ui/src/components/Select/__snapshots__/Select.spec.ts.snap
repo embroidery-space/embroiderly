@@ -3,9 +3,9 @@
 exports[`Select > renders correctly with class 1`] = `
 <div>
   <div class="absolute inline-flex items-center" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -13,16 +13,16 @@ exports[`Select > renders correctly with class 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -37,9 +37,9 @@ exports[`Select > renders correctly with class 1`] = `
 exports[`Select > renders correctly with disabled 1`] = `
 <div>
   <div class="inline-flex items-center relative" data-disabled dir="ltr">
-    <button aria-controls aria-disabled="true" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 cursor-not-allowed disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between opacity-75 px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-disabled data-slot="base" data-state="closed" disabled id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls aria-disabled="true" aria-expanded="false" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 cursor-not-allowed disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between opacity-75 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-disabled data-slot="base" data-state="closed" disabled id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -50,9 +50,9 @@ exports[`Select > renders correctly with disabled 1`] = `
 exports[`Select > renders correctly with disabled item 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -60,14 +60,14 @@ exports[`Select > renders correctly with disabled item 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby="reka-combobox-group-label-v-4" class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div class="flex font-semibold gap-2 items-center p-2 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-4">Active</div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-5" role="option" tabindex="0">
+            <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-4">Active</div>
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-5" role="option" tabindex="0">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="M10.1 2.182a10 10 0 0 1 3.8 0m0 19.636a10 10 0 0 1-3.8 0m7.509-18.097a10 10 0 0 1 2.69 2.7M2.182 13.9a10 10 0 0 1 0-3.8m18.097 7.509a10 10 0 0 1-2.7 2.69M21.818 10.1a10 10 0 0 1 0 3.8M3.721 6.391a10 10 0 0 1 2.7-2.69m-.03 16.578a10 10 0 0 1-2.69-2.7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <circle cx="12" cy="12" fill="none" r="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
@@ -75,8 +75,8 @@ exports[`Select > renders correctly with disabled item 1`] = `
             </div>
           </div>
           <div aria-labelledby="reka-combobox-group-label-v-11" class data-slot="group" id="reka-combobox-group-v-9" role="group">
-            <div class="flex font-semibold gap-2 items-center p-2 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-11">Closed</div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-12" role="option" tabindex="-1">
+            <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-11">Closed</div>
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-12" role="option" tabindex="-1">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                   <circle cx="12" cy="12" r="10" />
@@ -85,7 +85,7 @@ exports[`Select > renders correctly with disabled item 1`] = `
               </svg>
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-combobox-item-v-14" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-combobox-item-v-14" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Cancelled</span>
             </div>
           </div>
@@ -100,9 +100,9 @@ exports[`Select > renders correctly with disabled item 1`] = `
 exports[`Select > renders correctly with grouped items 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -110,14 +110,14 @@ exports[`Select > renders correctly with grouped items 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby="reka-combobox-group-label-v-4" class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div class="flex font-semibold gap-2 items-center p-2 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-4">Active</div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-5" role="option" tabindex="0">
+            <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-4">Active</div>
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-5" role="option" tabindex="0">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="M10.1 2.182a10 10 0 0 1 3.8 0m0 19.636a10 10 0 0 1-3.8 0m7.509-18.097a10 10 0 0 1 2.69 2.7M2.182 13.9a10 10 0 0 1 0-3.8m18.097 7.509a10 10 0 0 1-2.7 2.69M21.818 10.1a10 10 0 0 1 0 3.8M3.721 6.391a10 10 0 0 1 2.7-2.69m-.03 16.578a10 10 0 0 1-2.69-2.7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <circle cx="12" cy="12" fill="none" r="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
@@ -125,8 +125,8 @@ exports[`Select > renders correctly with grouped items 1`] = `
             </div>
           </div>
           <div aria-labelledby="reka-combobox-group-label-v-11" class data-slot="group" id="reka-combobox-group-v-9" role="group">
-            <div class="flex font-semibold gap-2 items-center p-2 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-11">Closed</div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-12" role="option" tabindex="-1">
+            <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-11">Closed</div>
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-12" role="option" tabindex="-1">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                   <circle cx="12" cy="12" r="10" />
@@ -135,7 +135,7 @@ exports[`Select > renders correctly with grouped items 1`] = `
               </svg>
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-combobox-item-v-14" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-combobox-item-v-14" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Cancelled</span>
             </div>
           </div>
@@ -150,9 +150,9 @@ exports[`Select > renders correctly with grouped items 1`] = `
 exports[`Select > renders correctly with icons 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="truncate" data-slot="value">Backlog</span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -160,19 +160,19 @@ exports[`Select > renders correctly with icons 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby="reka-combobox-group-label-v-4" class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div class="flex font-semibold gap-2 items-center p-2 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-4">Active</div>
-            <div aria-selected="true" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="checked" id="reka-combobox-item-v-5" role="option" tabindex="0">
+            <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-4">Active</div>
+            <div aria-selected="true" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="checked" id="reka-combobox-item-v-5" role="option" tabindex="0">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="M10.1 2.182a10 10 0 0 1 3.8 0m0 19.636a10 10 0 0 1-3.8 0m7.509-18.097a10 10 0 0 1 2.69 2.7M2.182 13.9a10 10 0 0 1 0-3.8m18.097 7.509a10 10 0 0 1-2.7 2.69M21.818 10.1a10 10 0 0 1 0 3.8M3.721 6.391a10 10 0 0 1 2.7-2.69m-.03 16.578a10 10 0 0 1-2.69-2.7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
               <span aria-hidden="true">
-                <svg aria-hidden="true" class="iconify iconify--lucide ms-auto shrink-0 size-5 text-primary" data-slot="itemIndicator" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <svg aria-hidden="true" class="iconify iconify--lucide ms-auto shrink-0 size-4 text-primary" data-slot="itemIndicator" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                 </svg>
               </span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <circle cx="12" cy="12" fill="none" r="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
               </svg>
@@ -180,8 +180,8 @@ exports[`Select > renders correctly with icons 1`] = `
             </div>
           </div>
           <div aria-labelledby="reka-combobox-group-label-v-11" class data-slot="group" id="reka-combobox-group-v-9" role="group">
-            <div class="flex font-semibold gap-2 items-center p-2 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-11">Closed</div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-12" role="option" tabindex="-1">
+            <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label" id="reka-combobox-group-label-v-11">Closed</div>
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-12" role="option" tabindex="-1">
               <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                   <circle cx="12" cy="12" r="10" />
@@ -190,7 +190,7 @@ exports[`Select > renders correctly with icons 1`] = `
               </svg>
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-combobox-item-v-14" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" disabled id="reka-combobox-item-v-14" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Cancelled</span>
             </div>
           </div>
@@ -205,9 +205,9 @@ exports[`Select > renders correctly with icons 1`] = `
 exports[`Select > renders correctly with items 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -215,16 +215,16 @@ exports[`Select > renders correctly with items 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -239,9 +239,9 @@ exports[`Select > renders correctly with items 1`] = `
 exports[`Select > renders correctly with loading 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="animate-spin iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="animate-spin iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M21 12a9 9 0 1 1-6.219-8.56" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -249,16 +249,16 @@ exports[`Select > renders correctly with loading 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -273,9 +273,9 @@ exports[`Select > renders correctly with loading 1`] = `
 exports[`Select > renders correctly with modelValue 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="truncate" data-slot="value">Backlog</span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -283,21 +283,21 @@ exports[`Select > renders correctly with modelValue 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div aria-selected="true" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="checked" id="reka-combobox-item-v-4" role="option" tabindex="0">
+            <div aria-selected="true" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="checked" id="reka-combobox-item-v-4" role="option" tabindex="0">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
               <span aria-hidden="true">
-                <svg aria-hidden="true" class="iconify iconify--lucide ms-auto shrink-0 size-5 text-primary" data-slot="itemIndicator" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <svg aria-hidden="true" class="iconify iconify--lucide ms-auto shrink-0 size-4 text-primary" data-slot="itemIndicator" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                 </svg>
               </span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -312,9 +312,9 @@ exports[`Select > renders correctly with modelValue 1`] = `
 exports[`Select > renders correctly with placeholder 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder">Select a status...</span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -322,16 +322,16 @@ exports[`Select > renders correctly with placeholder 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -346,29 +346,29 @@ exports[`Select > renders correctly with placeholder 1`] = `
 exports[`Select > renders correctly with searchInput 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
     <div data-reka-popper-content-wrapper>
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
-        <div class="bg-default border-b border-default inline-flex items-center outline-none placeholder:text-muted px-3 py-2 relative text-base w-full" data-slot="root">
-          <input aria-activedescendant="reka-combobox-item-v-5" aria-autocomplete="list" aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" autocomplete="off" autofocus class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-2" placeholder="Search…" role="combobox" type="text" value>
+        <div class="bg-default border-b border-default inline-flex items-center outline-none placeholder:text-muted px-2.5 py-1.5 relative text-sm w-full" data-slot="root">
+          <input aria-activedescendant="reka-combobox-item-v-5" aria-autocomplete="list" aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" autocomplete="off" autofocus class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-2" placeholder="Search…" role="combobox" type="text" value>
         </div>
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-3" role="group">
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-5" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-5" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-9" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-9" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-11" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-11" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -383,29 +383,29 @@ exports[`Select > renders correctly with searchInput 1`] = `
 exports[`Select > renders correctly with searchInput placeholder 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
     <div data-reka-popper-content-wrapper>
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
-        <div class="bg-default border-b border-default inline-flex items-center outline-none placeholder:text-muted px-3 py-2 relative text-base w-full" data-slot="root">
-          <input aria-activedescendant="reka-combobox-item-v-5" aria-autocomplete="list" aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" autocomplete="off" autofocus class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-2" placeholder="Search..." role="combobox" type="text" value>
+        <div class="bg-default border-b border-default inline-flex items-center outline-none placeholder:text-muted px-2.5 py-1.5 relative text-sm w-full" data-slot="root">
+          <input aria-activedescendant="reka-combobox-item-v-5" aria-autocomplete="list" aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" autocomplete="off" autofocus class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-2" placeholder="Search..." role="combobox" type="text" value>
         </div>
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-3" role="group">
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-5" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-5" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-7" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-9" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-9" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-11" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-11" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -420,9 +420,9 @@ exports[`Select > renders correctly with searchInput placeholder 1`] = `
 exports[`Select > renders correctly with separator 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -430,14 +430,14 @@ exports[`Select > renders correctly with separator 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
             <div aria-hidden="true" class="-mx-1 bg-border h-px my-1" data-slot="separator"></div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -554,9 +554,9 @@ exports[`Select > renders correctly with size sm 1`] = `
 exports[`Select > renders correctly with ui 1`] = `
 <div>
   <div class="inline-flex items-center relative" dir="ltr">
-    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-full text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
+    <button aria-controls="reka-combobox-content-v-1" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-full text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" open="true" tabindex="-1" type="button">
       <span class="text-muted truncate" data-slot="placeholder"></span>
-      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
       </svg>
     </button>
@@ -564,16 +564,16 @@ exports[`Select > renders correctly with ui 1`] = `
       <div aria-multiselectable="false" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] flex flex-col focus:outline-none max-h-(--reka-combobox-content-available-height) min-w-(--reka-combobox-trigger-width) origin-(--reka-combobox-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-side="bottom" data-slot="content" data-state="open" id="reka-combobox-content-v-1" position="popper" role="listbox" tabindex="-1">
         <div class="divide-default divide-y p-1" data-reka-combobox-viewport data-slot="viewport" role="presentation">
           <div aria-labelledby class data-slot="group" id="reka-combobox-group-v-2" role="group">
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-highlighted data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-4" role="option" tabindex="0">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Backlog</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-6" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Todo</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-8" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">In Progress</span>
             </div>
-            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-2 hover:bg-elevated items-center outline-none p-2 rounded-sm select-none text-base text-default" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
+            <div aria-selected="false" class="cursor-pointer data-highlighted:bg-elevated flex gap-1.5 hover:bg-elevated items-center outline-none p-1.5 rounded-sm select-none text-default text-sm" data-reka-collection-item data-slot="item" data-state="unchecked" id="reka-combobox-item-v-10" role="option" tabindex="-1">
               <span class="flex-1 min-w-0 truncate" data-slot="itemLabel">Done</span>
             </div>
           </div>
@@ -587,7 +587,7 @@ exports[`Select > renders correctly with ui 1`] = `
 
 exports[`Select > renders correctly within FormField 1`] = `
 <div>
-  <div class data-slot="root">
+  <div class="text-sm" data-slot="root">
     <div class data-slot="wrapper">
       <div class="flex gap-1 items-center justify-between" data-slot="labelWrapper">
         <label class="block font-medium text-default" data-slot="label" for="v-0" id="v-0-label">Label</label>
@@ -597,9 +597,9 @@ exports[`Select > renders correctly within FormField 1`] = `
     </div>
     <div class="mt-1" data-slot="container">
       <div class="inline-flex items-center relative" dir="ltr">
-        <button aria-controls="reka-combobox-content-v-1" aria-describedby="v-0-hint v-0-description v-0-help" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 inline-flex items-center justify-between px-3 py-2 ring ring-accented ring-inset rounded-md text-base text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" tabindex="-1" type="button">
+        <button aria-controls="reka-combobox-content-v-1" aria-describedby="v-0-hint v-0-description v-0-help" aria-disabled="false" aria-expanded="true" aria-haspopup="listbox" aria-label="Show popup" class="bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 inline-flex items-center justify-between px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm text-start transition-colors w-full" data-slot="base" data-state="open" id="v-0" tabindex="-1" type="button">
           <span class="text-muted truncate" data-slot="placeholder"></span>
-          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-6 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5 text-muted" data-slot="trailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="m6 9l6 6l6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </button>

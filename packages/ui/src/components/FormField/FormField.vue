@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Label, Primitive } from "reka-ui";
-import type { PrimitiveProps } from "reka-ui";
+import { Label } from "reka-ui";
 import { computed, provide, ref, useId } from "vue";
 
 import { formFieldInjectionKey, inputIdInjectionKey } from "../../composables/useFormField.ts";
@@ -9,7 +8,7 @@ import type { FormFieldInjectedOptions } from "../../composables/useFormField.ts
 import { FormFieldTheme } from "./FormField.theme.ts";
 import type { FormFieldThemeSlots, FormFieldThemeVariants } from "./FormField.theme.ts";
 
-export interface FormFieldProps extends PrimitiveProps {
+export interface FormFieldProps {
   /** The label text for the field. */
   label?: string;
   /** A description shown below the label. */
@@ -21,7 +20,7 @@ export interface FormFieldProps extends PrimitiveProps {
 
   /**
    * The size of the form field.
-   * @default "lg"
+   * @default "md"
    */
   size?: FormFieldThemeVariants["size"];
 
@@ -34,7 +33,7 @@ export interface FormFieldSlots {
 }
 
 const props = withDefaults(defineProps<FormFieldProps>(), {
-  as: "div",
+  size: "md",
 });
 defineSlots<FormFieldSlots>();
 
@@ -65,7 +64,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
       <div v-if="label" data-slot="labelWrapper" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })">
         <Label :id="`${ariaId}-label`" :for="id" data-slot="label" :class="ui.label({ class: props.ui?.label })">
@@ -92,5 +91,5 @@ const ui = computed(() => {
         {{ help }}
       </p>
     </div>
-  </Primitive>
+  </div>
 </template>

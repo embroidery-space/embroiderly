@@ -114,9 +114,50 @@ pattern-save-failure = Схему не вдалося зберегти
 pattern-export-success = Схему експортовано
 pattern-export-failure = Схему не вдалося експортувати
 
+## Guided tour.
+
+tour-offer =
+  .title = Ласкаво просимо до { -app-name }!
+  .description =
+    Хочете пройти інтерактивний тур щодо роботи в { -app-name }?
+    Це не займе багато часу.
+
+tour-edit-palette =
+  .title = Крок 1 — Редагування палітри
+  .description = Натисніть кнопку «Редагувати палітру», щоб перейти в режим редагування та відкрити каталог палітр.
+
+tour-add-color =
+  .title = Крок 2 — Виберіть колір
+  .description = Двічі натисніть будь-який колір, щоб додати його до вашої робочої палітри.
+
+tour-save-palette =
+  .title = Крок 3 — Збереження палітри
+  .description = Натисніть «Зберегти палітру», щоб завершити редагування і повернутися до полотна.
+
+tour-toolbar =
+  .title = Крок 4 — Інструменти стібків
+  .description = Виберіть вид стібків тут. Кожен інструмент дозволяє малювати різний вид стібків на полотні.
+
+tour-canvas =
+  .title = Крок 5 — Полотно
+  .description = Тут ви створюєте ваші схеми. Натисніть будь-де на полотні, щоб намалювати стібок вибраним інструментом та кольором.
+
+tour-canvas-panel =
+  .title = Крок 6 — Параметри полотна
+  .description = У цій панелі ви можете перемикати режим відображення, сітку, лінійки, символи та керувати шарами.
+
+tour-finish =
+  .title = Все готово!
+  .description = Тепер ви можете почати створювати чудові схеми в { -app-name }.
+
+tour-skip = Пропустити
+tour-start = Пройти тур
+tour-next = Далі
+tour-done = Готово
+
 ## Welcome screen.
 
-welcome = Ласкаво просимо в { -app-name }!
+welcome = Ласкаво просимо до { -app-name }!
 
 welcome-get-started =
   { $button-open } або { $button-create }, щоб розпочати.
@@ -211,6 +252,13 @@ settings-show-open-demo-pattern-option = Показати опцію "Відкр
 
 settings-use-palitem-color-for-stitch-tools = Використовувати колір елементу палітри для інструментів стібків
 
+## Telemetry prompt.
+
+telemetry-prompt = Допоможіть покращити { -app-name }
+telemetry-prompt-notice = * Ви можете змінити свій вибір у будь-який час у налаштуваннях.
+telemetry-prompt-reject = Ні, дякую
+telemetry-prompt-accept = Увімкнути
+
 ## Application updater.
 
 updater-check-for-updates = Перевірити наявність оновлень
@@ -229,6 +277,10 @@ updater-update-available-pwa =
 updater-no-updates-available =
   .title = Оновлень немає
   .description = Наразі немає доступних оновлень.
+
+updater-unsaved-changes =
+  .title = Незбережені зміни
+  .description = Оновлення не може бути встановлено, поки ви не збережете та закриєте всі відкриті схеми.
 
 ## Canvas panel.
 
@@ -307,7 +359,8 @@ fabric-size = Розмір
 fabric-width = Ширина
 fabric-height = Висота
 
-fabric-total-size = Розмір (ШxВ): { $width }x{ $height } стібків, { $widthInches }x{ $heightInches } дюймів ({ $widthMm }x{ $heightMm } мм)
+# Use non-breaking space (\u00A0) to prevent text from jumping when changing fabric size.
+fabric-total-size = Розмір{"\u00A0"}(ШxВ): { $width }x{ $height }{"\u00A0"}стібків, { $widthInches }x{ $heightInches }{"\u00A0"}дюймів ({ $widthMm }x{ $heightMm }{"\u00A0"}мм)
 
 unit-stitches = стібків
 unit-inches = дюймів

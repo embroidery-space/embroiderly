@@ -12,7 +12,7 @@ import type { InputNumberSliderThemeSlots, InputNumberSliderThemeVariants } from
 
 export interface InputNumberSliderProps extends Pick<
   InputNumberProps,
-  "as" | "asChild" | "id" | "disabled" | "min" | "max" | "step" | "formatOptions"
+  "id" | "disabled" | "min" | "max" | "step" | "formatOptions"
 > {
   /**
    * The size of the input.
@@ -52,6 +52,7 @@ export interface InputNumberSliderProps extends Pick<
 
 const modelValue = defineModel<number>();
 const props = withDefaults(defineProps<InputNumberSliderProps>(), {
+  size: "md",
   increment: false,
   decrement: false,
 });

@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { Primitive } from "reka-ui";
-import type { PrimitiveProps } from "reka-ui";
 import { computed } from "vue";
 
 import { KbdTheme } from "./Kbd.theme.ts";
 import type { KbdThemeSlots, KbdThemeVariants } from "./Kbd.theme.ts";
 
-export interface KbdProps extends PrimitiveProps {
+export interface KbdProps {
   /** The value to display. */
   value?: string;
+
   /**
    * The size of the kbd.
    * @default "md"
@@ -20,8 +19,6 @@ export interface KbdProps extends PrimitiveProps {
 }
 
 const props = withDefaults(defineProps<KbdProps>(), {
-  as: "kbd",
-
   size: "md",
 });
 
@@ -33,7 +30,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :as-child="asChild" data-slot="base" :class="ui.base({ class: [props.ui?.base, props.class] })">
+  <kbd data-slot="base" :class="ui.base({ class: [props.ui?.base, props.class] })">
     {{ value }}
-  </Primitive>
+  </kbd>
 </template>

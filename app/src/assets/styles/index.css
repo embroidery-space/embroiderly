@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@embroiderly/ui";
 
+@import "./tour.css";
+
 @theme {
   --animate-rainbow-shine: rainbow-shine 2.4s linear infinite;
 }

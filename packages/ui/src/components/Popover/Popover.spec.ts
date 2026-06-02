@@ -3,11 +3,13 @@ import { page, userEvent } from "vitest/browser";
 import { h } from "vue";
 
 import Popover from "./Popover.vue";
-
-type PopoverProps = InstanceType<typeof Popover>["$props"];
+import type { PopoverProps } from "./Popover.vue";
 
 describe("Popover", () => {
-  const props: PopoverProps = { open: true, portal: false };
+  const props: PopoverProps & { open?: boolean } = {
+    open: true,
+    portal: false,
+  };
 
   test.each([
     ["with open", { props }],
