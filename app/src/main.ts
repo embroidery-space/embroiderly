@@ -9,7 +9,7 @@ import { EditorContextKey } from "./composables/";
 import { DiagnosticsService } from "./services/";
 import { initEditor } from "./wasm/";
 
-import "./assets/styles.css";
+import "./assets/styles/index.css";
 
 const editorContext = await initEditor();
 

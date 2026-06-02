@@ -77,7 +77,6 @@ const paletteContextMenuOptions = computed<ContextMenuItem[][]>(() => {
         label: fluent.$t("palette-edit"),
         onSelect() {
           editorStateStore.paletteMode = PaletteMode.Editing;
-          sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
         },
       },
     ],
@@ -268,8 +267,9 @@ watch(
       // Restore collapsed state when exiting editing mode.
       if (editorStateStore.palettePanelCollapsed) panel.value?.collapse();
     } else {
-      // Forcibly expand the panel when entering editing mode.
+      // Forcibly expand the panel and open the palette catalog when entering editing mode.
       panel.value?.expand();
+      sectionVisibility.paletteCatalog = true;
     }
   },
 );
@@ -401,6 +401,7 @@ async function updatePaletteDisplaySettings() {
             @contextmenu.stop.prevent
           >
             <Button
+              data-tour="palette-save"
               :icon="IconCheck"
               :label="$t('palette-save')"
               class="grow justify-center text-sm"
@@ -421,6 +422,7 @@ async function updatePaletteDisplaySettings() {
             </span>
 
             <ButtonIcon
+              data-tour="palette-edit"
               variant="ghost"
               color="neutral"
               :disabled="disabled"
@@ -432,7 +434,6 @@ async function updatePaletteDisplaySettings() {
                 () => {
                   editorStateStore.paletteMode =
                     editorStateStore.paletteMode === PaletteMode.Editing ? PaletteMode.Regular : PaletteMode.Editing;
-                  sectionVisibility.paletteCatalog = editorStateStore.paletteMode === PaletteMode.Editing;
                 }
               "
             />
@@ -474,6 +475,7 @@ async function updatePaletteDisplaySettings() {
 
     <PaletteCatalog
       v-if="patternStore.pattern.palette && sectionVisibility.paletteCatalog"
+      data-tour="add-color"
       :palette="patternStore.pattern.palette.items"
       class="min-w-max border-l border-default"
       @close="sectionVisibility.paletteCatalog = false"

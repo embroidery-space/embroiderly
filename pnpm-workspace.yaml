@@ -58,6 +58,9 @@ catalog:
   "@sentry/vue": 10.55.0
   "posthog-js": 1.376.4
 
+  # Onboarding
+  "driver.js": 1.4.0
+
   # Utilities
   "color-convert": 3.1.3
   "comlink": 4.4.2

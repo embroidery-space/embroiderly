@@ -23,6 +23,7 @@ import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
 import TelemetryPrompt from "./components/settings/TelemetryPrompt.vue";
 import { useI18n } from "./composables/";
+import { useTour } from "./composables/core/";
 import { DiagnosticsService, LoggerService, MetricsService } from "./services";
 import { useSettingsStore } from "./stores/";
 
@@ -30,6 +31,7 @@ const settingsStore = useSettingsStore();
 
 const overlay = useOverlay();
 const toast = useToast();
+const tour = useTour();
 const { fluent, currentLocale } = useI18n();
 
 const telemetryPrompt = overlay.create(TelemetryPrompt);
@@ -64,7 +66,8 @@ onMounted(async () => {
     await settingsStore.checkForUpdates({ auto: true });
   }
 
-  if (!telemetryPromptShown.value) {
+  if (!tour.tourOffered.value) await tour.offer();
+  else if (!telemetryPromptShown.value) {
     const delayMs = randomInt(1, 6) * 60 * 1000;
     setTimeout(async () => {
       if (settingsStore.telemetry.diagnostics && settingsStore.telemetry.metrics) return;
