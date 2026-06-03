@@ -5,7 +5,7 @@
 
   Public API:
     #render-frames(data, color) -> array // one content block per frame, ready to lay out
-    #frame-bounds(fabric, frame-options) -> array // list of {x, y, width, height} frame tiles
+    #frame-bounds(fabric, options) -> array // list of {x, y, width, height} frame tiles
     #draw-frame(data, bounds, color) -> (frame, w, h) // a single frame canvas along with its width and height
 
   `data` is the decoded `json("pattern.json")` object composed on the Rust side.
@@ -264,15 +264,14 @@
 }
 
 // Computes the list of frame tiles, iterating from the top-left to the bottom-right corner.
-#let frame-bounds(fabric, frame-options) = {
-  let single = frame-options.frameSize == none
-  let overlap = if frame-options.preservedOverlap == none { 3 } else { frame-options.preservedOverlap }
+#let frame-bounds(fabric, options) = {
+  let overlap = options.preservedOverlap
 
   let pw = fabric.width
   let ph = fabric.height
 
-  let fw = if single { pw } else { frame-options.frameSize.at(0) }
-  let fh = if single { ph } else { frame-options.frameSize.at(1) }
+  let fw = options.frameSize.at(0)
+  let fh = options.frameSize.at(1)
 
   let bounds = ()
   let cx = 0
@@ -281,9 +280,6 @@
     let bw = calc.min(fw, pw - cx)
     let bh = calc.min(fh, ph - cy)
     bounds.push((x: cx, y: cy, width: bw, height: bh))
-
-    // When not framing, a single full-pattern frame is enough.
-    if single { break }
 
     cx = cx + fw - overlap
     if cx >= pw {
@@ -297,8 +293,7 @@
 
 // Draws a single frame: the pattern area surrounded by a margin sized to fit the grid numbers.
 #let draw-frame(data, bounds, color) = {
-  let frame-options = data.pdfExportOptions.frameOptions
-  let overlap = if frame-options.preservedOverlap == none { 3 } else { frame-options.preservedOverlap }
+  let options = data.pdfExportOptions
 
   let bx = bounds.x
   let by = bounds.y
@@ -355,20 +350,20 @@
       data.fabric,
       data.grid,
       bounds,
-      overlap,
-      frame-options.showGridLineNumbers,
-      frame-options.showCenteringMarks,
+      options.preservedOverlap,
+      options.showGridLineNumbers,
+      options.showCenteringMarks,
     )
     draw-special-stitches(data.palette, special-stitches, data.specialStitchModels, color)
     draw-line-stitches(data.palette, line-stitches)
     draw-node-stitches(data.palette, node-stitches)
-    draw-overlapping-zones(bounds, overlap)
+    draw-overlapping-zones(bounds, options.preservedOverlap)
   })
 
   // Reserve a margin around the pattern.
   // One cell is enough for the centering marks, but the grid numbers need as much room as their widest label.
   let margin = (x: cell, y: cell)
-  if frame-options.showGridLineNumbers {
+  if options.showGridLineNumbers {
     let max-label = calc.max(bounds.x + bounds.width, bounds.y + bounds.height)
     let size = measure(grid-label(max-label))
     margin = (
@@ -391,7 +386,7 @@
 
 // Paginates the pattern and returns one fit-to-page content block per frame.
 #let render-frames(data, color) = {
-  frame-bounds(data.fabric, data.pdfExportOptions.frameOptions).map(bounds => {
+  frame-bounds(data.fabric, data.pdfExportOptions).map(bounds => {
     layout(size => {
       let (frame, w, h) = draw-frame(data, bounds, color)
       let s = calc.min(size.width / w, size.height / h)

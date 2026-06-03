@@ -25,14 +25,10 @@
     specialStitchModels: [...],
 
     pdfExportOptions: {
-      centerFrames: bool,
-      enumerateFrames: bool,
-      frameOptions: {
-        frameSize: [w, h] | none,
-        preservedOverlap: number | none,
-        showGridLineNumbers: bool,
-        showCenteringMarks: bool,
-      },
+      frameSize: [w, h],
+      preservedOverlap: number,
+      showGridLineNumbers: bool,
+      showCenteringMarks: bool,
     },
   }
   ```

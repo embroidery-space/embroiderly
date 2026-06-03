@@ -120,6 +120,8 @@ const appMenu = computed(() => {
               onSelect() {
                 modals.pdfExportModal.open({
                   options: patternStore.pattern.pdfExportOptions,
+                  fabricWidth: patternStore.pattern.fabric.width,
+                  fabricHeight: patternStore.pattern.fabric.height,
                   onOptionsUpdate: patternStore.updatePdfExportOptions,
                   onDocumentExport: (variant) => patternFileStore.exportPatternAsPdf(patternStore.pattern.id, variant),
                 });
@@ -224,6 +226,8 @@ const appMenu = computed(() => {
         onSelect() {
           modals.pdfExportOptionsModal.open({
             options: patternStore.pattern.pdfExportOptions,
+            fabricWidth: patternStore.pattern.fabric.width,
+            fabricHeight: patternStore.pattern.fabric.height,
             onSave: patternStore.updatePdfExportOptions,
           });
         },

@@ -14,6 +14,8 @@ import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 
 const props = defineProps<{
   options: PdfExportOptions;
+  fabricWidth: number;
+  fabricHeight: number;
   onOptionsUpdate?: (options: PdfExportOptions) => void | Promise<void>;
   onDocumentExport?: (variant: PdfVariant) => void | Promise<void>;
 }>();
@@ -56,7 +58,12 @@ async function exportPattern(variant: PdfVariant) {
   <Dialog :title="$t('pdf-export')">
     <template #body>
       <RadioGroup v-model="variant" :items="variantItems" orientation="horizontal" />
-      <PdfExportOptionsForm v-model="options" class="mt-2" />
+      <PdfExportOptionsForm
+        v-model="options"
+        :fabric-width="props.fabricWidth"
+        :fabric-height="props.fabricHeight"
+        class="mt-2"
+      />
     </template>
     <template #footer>
       <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />

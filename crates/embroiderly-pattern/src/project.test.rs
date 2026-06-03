@@ -30,7 +30,7 @@ fn builder_sets_display_settings() {
 fn builder_sets_publish_settings() {
   let publish_settings = PublishSettings {
     pdf: crate::PdfExportOptions {
-      center_frames: true, // `false` by default
+      frame_size: (50, 60), // `(30, 40)` by default
       ..Default::default()
     },
     ..Default::default()
