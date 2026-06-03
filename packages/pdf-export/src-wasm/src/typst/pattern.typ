@@ -125,19 +125,5 @@
 #let frames = render-frames(pattern, color)
 #for (i, frame) in frames.enumerate(start: 1) {
   pagebreak(weak: true)
-  set align(if pattern.pdfExportOptions.centerFrames { center } else { left })
-
-  let caption = if pattern.pdfExportOptions.enumerateFrames {
-    [Frame #i/#frames.len()]
-  }
-
-  layout(size => block(
-    height: size.height,
-    grid(
-      rows: (1fr, auto),
-      row-gutter: 0.8em,
-      frame,
-      caption,
-    ),
-  ))
+  figure(frame, numbering: none, caption: [Frame #i/#frames.len()])
 }

@@ -6,7 +6,7 @@
   Public API:
     #render-frames(data, color) -> array // one content block per frame, ready to lay out
     #frame-bounds(fabric, frame-options) -> array // list of {x, y, width, height} frame tiles
-    #draw-frame(data, bounds, color) -> content // a single frame scaled to fit its parent
+    #draw-frame(data, bounds, color) -> (frame, w, h) // a single frame canvas along with its width and height
 
   `data` is the decoded `json("pattern.json")` object composed on the Rust side.
   `color` is a boolean selecting filled (true) vs. outlined (false) stitches, supplied at render time (via `sys.inputs`).
@@ -18,18 +18,18 @@
 // 1px black outline shared by full/part stitches and french knots/beads.
 #let outline = px + rgb("000000")
 
+// Grid line numbers: bold labels placed just outside the pattern area, with a small gap.
+#let grid-label-gap = 0.3 * cell
+#let grid-label(n) = text(weight: "bold", size: 0.8 * cell, str(n))
+
 // Draws a palette symbol centered at (cx, cy), if the palette item has one.
 #let draw-symbol(cx, cy, symbol, size) = {
   if symbol != none {
     place(
-      top + left,
-      dx: cx - size / 2,
-      dy: cy - size / 2,
-      box(
-        width: size,
-        height: size,
-        align(center + horizon, text(font: symbol.font, size: size, str.from-unicode(symbol.char))),
-      ),
+      center + horizon,
+      dx: cx,
+      dy: cy,
+      text(font: symbol.font, size: size, str.from-unicode(symbol.char)),
     )
   }
 }
@@ -56,12 +56,12 @@
     let palitem = palette.at(stitch.palindex)
     let size = if stitch.kind == "Petite" { cell / 2 } else { cell }
     let fill = if color { rgb(palitem.color) } else { none }
-    place(top + left, dx: stitch.x * cell, dy: stitch.y * cell, rect(
-      width: size,
-      height: size,
-      fill: fill,
-      stroke: outline,
-    ))
+    place(
+      top + left,
+      dx: stitch.x * cell,
+      dy: stitch.y * cell,
+      rect(width: size, height: size, fill: fill, stroke: outline),
+    )
     draw-symbol(stitch.x * cell + size / 2, stitch.y * cell + size / 2, palitem.symbol, size * 0.8)
   }
 }
@@ -82,6 +82,20 @@
   }
 }
 
+// The quadrant centers (in cell units) where a part stitch's symbols are drawn: one per
+// quadrant the stitch covers — both diagonal quadrants for halves, a single one for quarters.
+#let part-stitch-symbol-centers(kind, direction) = {
+  if kind == "Half" {
+    if direction == "Forward" {
+      ((0.75, 0.25), (0.25, 0.75))
+    } else {
+      ((0.25, 0.25), (0.75, 0.75))
+    }
+  } else {
+    ((0.25, 0.25),)
+  }
+}
+
 #let draw-part-stitches(palette, stitches, color) = {
   for stitch in stitches {
     let palitem = palette.at(stitch.palindex)
@@ -89,20 +103,11 @@
     let points = part-stitch-points(stitch.kind, stitch.direction).map(((vx, vy)) => (vx * cell, vy * cell))
     place(top + left, dx: stitch.x * cell, dy: stitch.y * cell, polygon(fill: fill, stroke: outline, ..points))
 
-    let size = cell / 2
-    let fs = size * 0.8
     let ox = stitch.x * cell
     let oy = stitch.y * cell
-    if stitch.kind == "Half" {
-      if stitch.direction == "Forward" {
-        draw-symbol(ox + size + size / 2, oy + size / 2, palitem.symbol, fs)
-        draw-symbol(ox + size / 2, oy + size + size / 2, palitem.symbol, fs)
-      } else {
-        draw-symbol(ox + size / 2, oy + size / 2, palitem.symbol, fs)
-        draw-symbol(ox + size + size / 2, oy + size + size / 2, palitem.symbol, fs)
-      }
-    } else {
-      draw-symbol(ox + size / 2, oy + size / 2, palitem.symbol, fs)
+    let fs = cell / 2 * 0.8
+    for (cx, cy) in part-stitch-symbol-centers(stitch.kind, stitch.direction) {
+      draw-symbol(ox + cx * cell, oy + cy * cell, palitem.symbol, fs)
     }
   }
 }
@@ -226,10 +231,8 @@
       let y = (i - bounds.y) * cell
       place(top + left, line(start: (0pt, y), end: (pw, y), stroke: (paint: major-color, thickness: major-thickness)))
       if show-numbers {
-        place(top + left, dx: -2.2 * cell, dy: y - 0.4 * cell, box(width: 2 * cell, height: 0.8 * cell, align(
-          right + horizon,
-          text(weight: "bold", size: 0.8 * cell, str(i)),
-        )))
+        // Anchor the number's right-center just left of the line, vertically centered on it.
+        place(right + horizon, dx: -grid-label-gap, dy: y, grid-label(i))
       }
     }
   }
@@ -241,11 +244,8 @@
       let x = (i - bounds.x) * cell
       place(top + left, line(start: (x, 0pt), end: (x, ph), stroke: (paint: major-color, thickness: major-thickness)))
       if show-numbers {
-        place(top + left, dx: x - cell, dy: -cell, box(width: 2 * cell, align(center, text(
-          weight: "bold",
-          size: 0.8 * cell,
-          str(i),
-        ))))
+        // Anchor the number's bottom-center just above the line, horizontally centered on it.
+        place(center + bottom, dx: x, dy: -grid-label-gap, grid-label(i))
       }
     }
   }
@@ -253,7 +253,7 @@
 
 #let draw-overlapping-zones(bounds, overlap) = {
   if overlap != 0 {
-    let dim = white.transparentize(50%)
+    let dim = silver.transparentize(50%)
     if bounds.x > 0 {
       place(top + left, rect(width: overlap * cell, height: bounds.height * cell, fill: dim, stroke: none))
     }
@@ -295,13 +295,10 @@
   bounds
 }
 
-// Draws a single frame: a fixed canvas with a one-cell margin around the pattern area.
+// Draws a single frame: the pattern area surrounded by a margin sized to fit the grid numbers.
 #let draw-frame(data, bounds, color) = {
   let frame-options = data.pdfExportOptions.frameOptions
   let overlap = if frame-options.preservedOverlap == none { 3 } else { frame-options.preservedOverlap }
-
-  let w = (bounds.width + 2) * cell
-  let h = (bounds.height + 2) * cell
 
   let bx = bounds.x
   let by = bounds.y
@@ -349,43 +346,56 @@
       s
     })
 
-  box(
+  // Everything is drawn in pattern-local coordinates whose origin is the top-left corner of the pattern area.
+  // Grid numbers and centering marks sit at negative coordinates around it.
+  let content = box(width: 0pt, height: 0pt, {
+    draw-full-stitches(data.palette, full-stitches, color)
+    draw-part-stitches(data.palette, part-stitches, color)
+    draw-grid(
+      data.fabric,
+      data.grid,
+      bounds,
+      overlap,
+      frame-options.showGridLineNumbers,
+      frame-options.showCenteringMarks,
+    )
+    draw-special-stitches(data.palette, special-stitches, data.specialStitchModels, color)
+    draw-line-stitches(data.palette, line-stitches)
+    draw-node-stitches(data.palette, node-stitches)
+    draw-overlapping-zones(bounds, overlap)
+  })
+
+  // Reserve a margin around the pattern.
+  // One cell is enough for the centering marks, but the grid numbers need as much room as their widest label.
+  let margin = (x: cell, y: cell)
+  if frame-options.showGridLineNumbers {
+    let max-label = calc.max(bounds.x + bounds.width, bounds.y + bounds.height)
+    let size = measure(grid-label(max-label))
+    margin = (
+      x: calc.max(cell, size.width + grid-label-gap),
+      y: calc.max(cell, size.height + grid-label-gap),
+    )
+  }
+
+  let w = bounds.width * cell + 2 * margin.x
+  let h = bounds.height * cell + 2 * margin.y
+  let frame = box(
     width: w,
     height: h,
     clip: true,
-    place(
-      top + left,
-      dx: cell,
-      dy: cell,
-      box(width: 0pt, height: 0pt, {
-        draw-full-stitches(data.palette, full-stitches, color)
-        draw-part-stitches(data.palette, part-stitches, color)
-        draw-grid(
-          data.fabric,
-          data.grid,
-          bounds,
-          overlap,
-          frame-options.showGridLineNumbers,
-          frame-options.showCenteringMarks,
-        )
-        draw-special-stitches(data.palette, special-stitches, data.specialStitchModels, color)
-        draw-line-stitches(data.palette, line-stitches)
-        draw-node-stitches(data.palette, node-stitches)
-        draw-overlapping-zones(bounds, overlap)
-      }),
-    ),
+    place(top + left, dx: margin.x, dy: margin.y, content),
   )
+
+  (frame, w, h)
 }
 
-// Paginates the pattern and returns one fit-to-page content block per frame. Each frame is a fixed
-// `w` x `h` canvas scaled to fit the available space, preserving its aspect ratio.
+// Paginates the pattern and returns one fit-to-page content block per frame.
 #let render-frames(data, color) = {
   frame-bounds(data.fabric, data.pdfExportOptions.frameOptions).map(bounds => {
-    let w = (bounds.width + 2) * cell
-    let h = (bounds.height + 2) * cell
     layout(size => {
+      let (frame, w, h) = draw-frame(data, bounds, color)
       let s = calc.min(size.width / w, size.height / h)
-      scale(x: s * 100%, y: s * 100%, origin: top + left, reflow: true, draw-frame(data, bounds, color))
+      scale(s * 100%, reflow: true, frame)
     })
   })
 }
