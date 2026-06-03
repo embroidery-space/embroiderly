@@ -179,6 +179,7 @@ function handleKeydown(e: KeyboardEvent) {
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
         @keydown="handleKeydown"
+        @contextmenu.prevent
       >
         <Icon
           :name="currentOption.icon"
