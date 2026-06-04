@@ -14,6 +14,8 @@ import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 
 const props = defineProps<{
   options: PdfExportOptions;
+  fabricWidth: number;
+  fabricHeight: number;
   onOptionsUpdate?: (options: PdfExportOptions) => void | Promise<void>;
   onDocumentExport?: (variant: PdfVariant) => void | Promise<void>;
 }>();
@@ -41,8 +43,14 @@ async function updateOptions() {
   optionsUpdated.value = true;
 }
 
+const isExporting = ref(false);
 async function exportPattern(variant: PdfVariant) {
-  await props.onDocumentExport?.(variant);
+  try {
+    isExporting.value = true;
+    await props.onDocumentExport?.(variant);
+  } finally {
+    isExporting.value = false;
+  }
 }
 </script>
 
@@ -50,7 +58,12 @@ async function exportPattern(variant: PdfVariant) {
   <Dialog :title="$t('pdf-export')">
     <template #body>
       <RadioGroup v-model="variant" :items="variantItems" orientation="horizontal" />
-      <PdfExportOptionsForm v-model="options" class="mt-2" />
+      <PdfExportOptionsForm
+        v-model="options"
+        :fabric-width="props.fabricWidth"
+        :fabric-height="props.fabricHeight"
+        class="mt-2"
+      />
     </template>
     <template #footer>
       <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
@@ -62,9 +75,9 @@ async function exportPattern(variant: PdfVariant) {
         @click="updateOptions"
       />
       <FormFieldGroup>
-        <Button loading-auto :label="$t('pdf-export-export-document')" @click="exportPattern(variant)" />
+        <Button :loading="isExporting" :label="$t('pdf-export-export-document')" @click="exportPattern(variant)" />
         <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
-          <Button color="primary" variant="solid" :icon="IconChevronDown" />
+          <Button color="primary" variant="solid" :disabled="isExporting" :icon="IconChevronDown" />
         </DropdownMenu>
       </FormFieldGroup>
     </template>

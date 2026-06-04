@@ -4,10 +4,20 @@ use wasm_bindgen::prelude::*;
 
 mod pdf;
 
+#[derive(Debug, Clone, Copy)]
 #[wasm_bindgen]
 pub enum PdfVariant {
   Monochrome,
   Color,
+}
+
+impl std::fmt::Display for PdfVariant {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    match self {
+      Self::Monochrome => write!(f, "monochrome"),
+      Self::Color => write!(f, "color"),
+    }
+  }
 }
 
 #[wasm_bindgen]

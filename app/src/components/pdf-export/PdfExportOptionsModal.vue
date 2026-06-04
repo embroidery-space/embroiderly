@@ -9,6 +9,8 @@ import PdfExportOptionsForm from "./PdfExportOptionsForm.vue";
 
 const props = defineProps<{
   options: PdfExportOptions;
+  fabricWidth: number;
+  fabricHeight: number;
   onSave?: (options: PdfExportOptions) => void | Promise<void>;
 }>();
 const emit = defineEmits<{ close: [] }>();
@@ -24,7 +26,7 @@ async function handleSave() {
 <template>
   <Dialog :title="$t('publish-settings')">
     <template #body>
-      <PdfExportOptionsForm v-model="options" />
+      <PdfExportOptionsForm v-model="options" :fabric-width="props.fabricWidth" :fabric-height="props.fabricHeight" />
     </template>
     <template #footer>
       <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />

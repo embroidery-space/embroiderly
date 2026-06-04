@@ -1,4 +1,4 @@
-use embroiderly_pattern::{EmbroiderlyProject, ImageExportOptions, PdfExportOptions};
+use embroiderly_pattern::{EmbroiderlyProject, PdfExportOptions};
 
 use crate::actions::PublishAction;
 use crate::{EditorAction, EditorEvent};
@@ -7,15 +7,10 @@ use crate::{EditorAction, EditorEvent};
 fn test_update_pdf_export_options() {
   let mut embproj = EmbroiderlyProject::default();
   let options = PdfExportOptions {
-    center_frames: true,
-    enumerate_frames: true,
-    frame_options: ImageExportOptions {
-      frame_size: Some((50, 100)),
-      cell_size: 20.0,
-      preserved_overlap: None,
-      show_grid_line_numbers: true,
-      show_centering_marks: true,
-    },
+    frame_size: (50, 100),
+    preserved_overlap: 5,
+    show_grid_line_numbers: true,
+    show_centering_marks: true,
   };
   let mut action = EditorAction::Publish(PublishAction::UpdatePdfExportOptions {
     options,
