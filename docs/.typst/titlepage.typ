@@ -1,6 +1,6 @@
 #let lang = sys.inputs.at("lang", default: "en")
 
-#import "locales/" + lang + ".typ": strings, license
+#import "locales/" + lang + ".typ": license, strings
 
 #let titlepage() = {
   block(height: 100%, width: 100%)[
