@@ -3,6 +3,10 @@ use embroiderly_pattern::*;
 
 use crate::PdfVariant;
 
+#[cfg(test)]
+#[path = "pdf.test.rs"]
+mod tests;
+
 const FONTS: &[&[u8]] = &[
   include_bytes!("../assets/fonts/LibertinusSerif-Italic.ttf"),
   include_bytes!("../assets/fonts/LibertinusSerif-Regular.ttf"),
@@ -28,7 +32,7 @@ pub fn export_pattern(
       use typst::syntax::{FileId, VirtualPath};
       (
         FileId::new(None, VirtualPath::new("pattern.json")),
-        compose_pattern_json(&embproj, &options)?,
+        compose_pattern_json(&embproj, options)?,
       )
     }])
     .build();
@@ -48,7 +52,7 @@ pub fn export_pattern(
     .map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))
 }
 
-fn compose_pattern_json(embproj: &EmbroiderlyProject, options: &PdfExportOptions) -> Result<Vec<u8>> {
+fn compose_pattern_json(embproj: &EmbroiderlyProject, options: PdfExportOptions) -> Result<Vec<u8>> {
   let (palette, layer) = flatten_layers_with_palette_in_visual_order(&embproj.pattern);
   let pattern_data = PatternData::new(embproj, &palette, &layer, options);
   Ok(serde_json::to_vec(&pattern_data)?)
@@ -128,7 +132,7 @@ struct PatternData<'a> {
   specialstitches: &'a Stitches<SpecialStitch>,
   special_stitch_models: &'a [SpecialStitchModel],
 
-  pdf_export_options: &'a PdfExportOptions,
+  pdf_export_options: PdfExportOptions,
 }
 
 impl<'a> PatternData<'a> {
@@ -136,7 +140,7 @@ impl<'a> PatternData<'a> {
     embproj: &'a EmbroiderlyProject,
     palette: &'a [PaletteItem],
     layer: &'a Layer,
-    pdf_export_options: &'a PdfExportOptions,
+    pdf_export_options: PdfExportOptions,
   ) -> Self {
     Self {
       info: &embproj.pattern.info,
