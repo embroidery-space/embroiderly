@@ -2,15 +2,21 @@
 layout: home
 hero:
   name: Embroiderly
-  tagline: A free, open-source, cross-platform desktop application for designing cross-stitch patterns
+  tagline: A free and open-source application for designing cross-stitch patterns
   actions:
     - theme: brand
+      text: Open in Browser
+      link: https://embroiderly.niusia.me
+    - theme: alt
       text: Download
       link: ./download
     - theme: alt
       text: Get Started
       link: ./guide/
 features:
+  - title: Cross-Platform
+    details: Use Embroiderly in any modern browser, access it offline, install it as a PWA, or download a native installer for Windows and Linux
+    link: ./download
   - title: Multiple File Format Support
     details: Work with EMBPROJ, OXS, and XSD formats
     link: ./reference/pattern-formats
