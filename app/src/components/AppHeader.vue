@@ -328,6 +328,23 @@ async function showSystemInfo() {
 useShortcuts({
   "Control+Shift+Z": () => patternStore.undo({ single: true }),
   "Control+Shift+Y": () => patternStore.redo({ single: true }),
+  "Control+Home": () => {
+    const first = patternFileStore.openedPatterns.at(0);
+    if (first) patternFileStore.switchPattern(first.id);
+  },
+  "Control+End": () => {
+    const last = patternFileStore.openedPatterns.at(-1);
+    if (last) patternFileStore.switchPattern(last.id);
+  },
+  ...Object.fromEntries(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => [
+      `Control+${n}`,
+      () => {
+        const pattern = patternFileStore.openedPatterns.at(n - 1);
+        if (pattern) patternFileStore.switchPattern(pattern.id);
+      },
+    ]),
+  ),
 });
 </script>
 
