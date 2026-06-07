@@ -382,8 +382,8 @@ useShortcuts({
             :icon="IconUndo"
             color="neutral"
             variant="ghost"
-            :tooltip="$t('history-undo')"
             shortcut="Control+Z"
+            :tooltip="$t('history-undo')"
             @click="() => patternStore.undo()"
           />
           <ButtonIcon
@@ -391,8 +391,8 @@ useShortcuts({
             :icon="IconRedo"
             color="neutral"
             variant="ghost"
-            :tooltip="$t('history-redo')"
             shortcut="Control+Y"
+            :tooltip="$t('history-redo')"
             @click="() => patternStore.redo()"
           />
           <Separator orientation="vertical" />
@@ -412,6 +412,7 @@ useShortcuts({
           v-if="!isTauri"
           variant="ghost"
           color="neutral"
+          shortcut="F11"
           :icon="isFullscreen ? IconFullscreenExit : IconFullscreen"
           :tooltip="isFullscreen ? $t('app-fullscreen-exit') : $t('app-fullscreen-enter')"
           @click="toggleFullscreen"
