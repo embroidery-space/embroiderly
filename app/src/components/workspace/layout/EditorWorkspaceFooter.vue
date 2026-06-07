@@ -17,6 +17,7 @@ const editorStateStore = useEditorStateStore();
     <ButtonIcon
       color="neutral"
       variant="ghost"
+      shortcut="Ctrl+Shift+L"
       :icon="editorStateStore.palettePanelCollapsed ? IconPanelLeftOpen : IconPanelLeftClose"
       :tooltip="editorStateStore.palettePanelCollapsed ? $t('palette-panel-expand') : $t('palette-panel-collapse')"
       :disabled="disabled"
@@ -34,6 +35,7 @@ const editorStateStore = useEditorStateStore();
     <ButtonIcon
       color="neutral"
       variant="ghost"
+      shortcut="Ctrl+Shift+R"
       :icon="editorStateStore.canvasPanelCollapsed ? IconPanelRightOpen : IconPanelRightClose"
       :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-panel-expand') : $t('canvas-panel-collapse')"
       :disabled="disabled"
