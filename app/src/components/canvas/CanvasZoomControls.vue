@@ -5,7 +5,7 @@ import type { DropdownMenuItem } from "@embroiderly/ui";
 import { computed, ref, watch } from "vue";
 
 import { IconChevronDown, IconZoomIn, IconZoomOut } from "~/assets/icons/";
-import { useI18n, useShortcuts, extractShortcuts } from "~/composables/";
+import { useI18n } from "~/composables/";
 import type { ZoomState } from "~/lib/types/";
 
 const {
@@ -51,13 +51,6 @@ function zoomOut() {
   if (disabled) return;
   emit("update:model-value", Math.max(lastNumericZoom.value - 10, min));
 }
-
-useShortcuts(extractShortcuts(zoomOptions));
-useShortcuts({
-  // Use `=` instead of `+` for defining a shortcut since `+` is triggered by the `Shift` key.
-  "Control+=": zoomIn,
-  "Control+-": zoomOut,
-});
 </script>
 
 <template>
@@ -111,7 +104,7 @@ useShortcuts({
         :icon="IconZoomIn"
         size="sm"
         :tooltip="$t('canvas-zoom-in')"
-        shortcut="Control++"
+        shortcut="Control+="
         :delay-duration="200"
         :disabled="disabled"
         @click="zoomIn"

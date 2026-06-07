@@ -5,7 +5,7 @@ import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { useDropZone } from "@vueuse/core";
 import { onMounted, useTemplateRef, watch } from "vue";
 
-import { useI18n, useShortcuts, useEditor } from "~/composables/";
+import { useI18n, useEditor } from "~/composables/";
 import { useAppStartup, useCloseGuard } from "~/composables/core/";
 import { usePercentOfContainer } from "~/composables/utils/";
 import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
@@ -67,13 +67,6 @@ watch(
   (ms) => editor.setAutoSaveInterval(ms),
   { immediate: true },
 );
-
-useShortcuts({
-  "Control+Z": () => patternStore.undo(),
-  "Control+Shift+Z": () => patternStore.undo({ single: true }),
-  "Control+Y": () => patternStore.redo(),
-  "Control+Shift+Y": () => patternStore.redo({ single: true }),
-});
 
 events.on("app:pattern-saved", (patternId) => {
   if (patternId === patternStore.pattern.id) {

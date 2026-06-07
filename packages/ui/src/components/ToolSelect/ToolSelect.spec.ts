@@ -1,6 +1,6 @@
 import { TooltipProvider } from "reka-ui";
 import { describe, expect, test, vi } from "vitest";
-import { page } from "vitest/browser";
+import { page, userEvent } from "vitest/browser";
 import { defineComponent } from "vue";
 
 import ToolSelect from "./ToolSelect.vue";
@@ -208,6 +208,59 @@ describe("ToolSelect", () => {
 
       expect(onUpdate).toHaveBeenCalledWith(MULTIPLE_ITEMS[1].value);
       await expect.element(dropdownMenu).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Keyboard Shortcuts", () => {
+    test("single-key shortcut updates the model value", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolSelectWrapper, {
+        props: {
+          modelValue: "pencil",
+          items: [
+            { label: "Pencil", icon: "lucide:pencil", value: "pencil", shortcut: "F" },
+            { label: "Eraser", icon: "lucide:eraser", value: "eraser", shortcut: "E" },
+          ],
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("e");
+
+      expect(onUpdate).toHaveBeenCalledWith("eraser");
+    });
+
+    test("sequence shortcut updates the model value", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolSelectWrapper, {
+        props: {
+          modelValue: "tl",
+          items: [
+            { label: "Top Left", icon: "lucide:pencil", value: "tl", shortcut: "P-T-L" },
+            { label: "Top Right", icon: "lucide:pencil", value: "tr", shortcut: "P-T-R" },
+          ],
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("ptr");
+
+      expect(onUpdate).toHaveBeenCalledWith("tr");
+    });
+
+    test("items without shortcut do not register any shortcut", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolSelectWrapper, {
+        props: {
+          modelValue: "pencil",
+          items: MULTIPLE_ITEMS,
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("f");
+
+      expect(onUpdate).not.toHaveBeenCalled();
     });
   });
 });

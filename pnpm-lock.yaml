@@ -386,9 +386,6 @@ importers:
       '@sentry/vue':
         specifier: 'catalog:'
         version: 10.55.0(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(vue@3.5.35(typescript@6.0.3))
-      '@tanstack/vue-hotkeys':
-        specifier: 'catalog:'
-        version: 0.10.0(vue@3.5.35(typescript@6.0.3))
       '@tauri-apps/api':
         specifier: 'catalog:'
         version: 2.11.0
@@ -642,6 +639,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@tanstack/vue-hotkeys':
+        specifier: 'catalog:'
+        version: 0.10.0(vue@3.5.35(typescript@6.0.3))
       '@vueuse/core':
         specifier: 'catalog:'
         version: 14.3.0(vue@3.5.35(typescript@6.0.3))

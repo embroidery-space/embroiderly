@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useHotkeys, useHotkeySequences } from "@tanstack/vue-hotkeys";
 import type { UseHotkeyDefinition, UseHotkeySequenceDefinition } from "@tanstack/vue-hotkeys";
 import { computed, toValue } from "vue";

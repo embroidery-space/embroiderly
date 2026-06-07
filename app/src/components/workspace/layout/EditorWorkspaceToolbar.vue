@@ -26,9 +26,8 @@ import {
   IconStitchQuarterTR,
   IconStitchStraight,
 } from "~/assets/icons/";
-import { useI18n, useShortcuts, extractShortcuts } from "~/composables/";
+import { useI18n } from "~/composables/";
 import { tools } from "~/lib/tools/";
-import type { PatternEditorTool } from "~/lib/tools/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
 
@@ -207,27 +206,6 @@ const cursor = computed<ToolSelectItem[]>(() => [
     shortcut: "C",
   },
 ]);
-
-// Register keyboard shortcuts for all tool groups.
-useShortcuts(
-  extractShortcuts(() =>
-    [
-      ...fullstitches.value,
-      ...petitestitches.value,
-      ...halfstitches.value,
-      ...quarterstitches.value,
-      ...linestitches.value,
-      ...nodestitches.value,
-      ...eraser.value,
-      ...cursor.value,
-    ].map((item) => ({
-      shortcut: item.shortcut,
-      onSelect() {
-        editorStateStore.selectedTool = item.value as PatternEditorTool;
-      },
-    })),
-  ),
-);
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 
 import Menubar from "./Menubar.vue";
@@ -83,5 +83,54 @@ describe("Menubar", () => {
     await userEvent.click(screen.getByRole("menuitem").first());
 
     expect(screen.container.outerHTML).toMatchSnapshot();
+  });
+
+  describe("Keyboard Shortcuts", () => {
+    test("combination shortcut triggers onSelect", async () => {
+      const onSelect = vi.fn();
+      await page.render(Menubar as any, {
+        props: {
+          portal: false,
+          menus: [{ label: "Edit", items: [{ label: "Undo", shortcut: "Control+Z", onSelect }] }],
+        },
+      });
+
+      await userEvent.keyboard("{Control>}z{/Control}");
+
+      expect(onSelect).toHaveBeenCalled();
+    });
+
+    test("nested shortcut in children triggers onSelect", async () => {
+      const onSelect = vi.fn();
+      await page.render(Menubar as any, {
+        props: {
+          portal: false,
+          menus: [
+            {
+              label: "File",
+              items: [{ label: "Export", children: [{ label: "As PNG", shortcut: "Control+E", onSelect }] }],
+            },
+          ],
+        },
+      });
+
+      await userEvent.keyboard("{Control>}e{/Control}");
+
+      expect(onSelect).toHaveBeenCalled();
+    });
+
+    test("hidden menu shortcuts are not registered", async () => {
+      const onSelect = vi.fn();
+      await page.render(Menubar as any, {
+        props: {
+          portal: false,
+          menus: [{ label: "Hidden", hidden: true, items: [{ label: "Action", shortcut: "Control+H", onSelect }] }],
+        },
+      });
+
+      await userEvent.keyboard("{Control>}h{/Control}");
+
+      expect(onSelect).not.toHaveBeenCalled();
+    });
   });
 });

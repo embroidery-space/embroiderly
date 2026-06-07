@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, DropdownMenu, Menubar, Separator, Tabs, useConfirm } from "@embroiderly/ui";
-import type { DropdownMenuItem, MenubarItem, MenubarMenu } from "@embroiderly/ui";
+import { Button, ButtonIcon, DropdownMenu, Menubar, Separator, Tabs, useConfirm, useShortcuts } from "@embroiderly/ui";
+import type { DropdownMenuItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { openPath } from "@tauri-apps/plugin-opener";
 
+import { useMediaQuery } from "@vueuse/core";
 import { computed, ref } from "vue";
 
 import {
@@ -17,7 +18,7 @@ import {
   IconSettings,
   IconUndo,
 } from "~/assets/icons/";
-import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
+import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { useTour } from "~/composables/core/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
@@ -292,14 +293,13 @@ const appMenu = computed(() => {
   return { desktopMenubarMenus, mobileDropdownMenuItems };
 });
 
-useShortcuts(
-  extractShortcuts(() => appMenu.value.desktopMenubarMenus.flatMap((menu) => menu.items as MenubarItem[][])),
-);
-
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
   [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
   [{ label: fluent.$t("updater-check-for-updates"), onSelect: () => settingsStore.checkForUpdates() }],
 ]);
+
+// Matches Tailwind's `lg` breakpoint (1024px).
+const isLargeScreen = useMediaQuery("(min-width: 64rem)");
 
 const isFullscreen = ref(!!document.fullscreenElement);
 document.addEventListener("fullscreenchange", () => {
@@ -324,23 +324,21 @@ async function showSystemInfo() {
   }).result;
   if (accepted) await navigator.clipboard.writeText(description);
 }
+
+useShortcuts({
+  "Control+Shift+Z": () => patternStore.undo({ single: true }),
+  "Control+Shift+Y": () => patternStore.redo({ single: true }),
+});
 </script>
 
 <template>
   <header class="grid grid-cols-[1fr_auto] border-b border-default">
     <div data-tauri-drag-region class="grid h-full grid-cols-[auto_1fr_auto]">
       <div class="p-1">
-        <DropdownMenu :items="appMenu.mobileDropdownMenuItems">
-          <ButtonIcon
-            :icon="IconMenu"
-            variant="ghost"
-            color="neutral"
-            :tooltip="$t('app-menu-open')"
-            class="lg:hidden"
-          />
+        <Menubar v-if="isLargeScreen" :menus="appMenu.desktopMenubarMenus" />
+        <DropdownMenu v-else :items="appMenu.mobileDropdownMenuItems">
+          <ButtonIcon :icon="IconMenu" variant="ghost" color="neutral" :tooltip="$t('app-menu-open')" />
         </DropdownMenu>
-
-        <Menubar :menus="appMenu.desktopMenubarMenus" class="hidden lg:flex" />
       </div>
 
       <Tabs
