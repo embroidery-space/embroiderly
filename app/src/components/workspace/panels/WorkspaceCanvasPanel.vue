@@ -58,18 +58,21 @@ const displayModeOptions = computed<ToolToggleItem[]>(() => [
     tooltip: editorStateStore.canvasPanelCollapsed ? fluent.$t("canvas-view-mix") : undefined,
     label: editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t("canvas-view-mix"),
     value: DisplayMode.Mixed,
+    shortcut: "Shift+V-M",
   },
   {
     icon: IconStitchSquare,
     tooltip: editorStateStore.canvasPanelCollapsed ? fluent.$t("canvas-view-solid") : undefined,
     label: editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t("canvas-view-solid"),
     value: DisplayMode.Solid,
+    shortcut: "Shift+V-S",
   },
   {
     icon: IconStitchFull,
     tooltip: editorStateStore.canvasPanelCollapsed ? fluent.$t("canvas-view-stitches") : undefined,
     label: editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t("canvas-view-stitches"),
     value: DisplayMode.Stitches,
+    shortcut: "Shift+V-X",
   },
 ]);
 
@@ -138,6 +141,7 @@ watch(
 
       <ToolToggle
         v-model="showSymbols"
+        shortcut="Shift+S"
         :icon="IconSymbols"
         :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-symbols') : undefined"
         :label="editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t('canvas-symbols')"
@@ -147,6 +151,7 @@ watch(
       />
       <ToolToggle
         v-model="showGrid"
+        shortcut="Shift+G"
         :icon="IconGrid"
         :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-grid') : undefined"
         :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-grid')"
@@ -156,6 +161,7 @@ watch(
       />
       <ToolToggle
         v-model="showRulers"
+        shortcut="Shift+R"
         :icon="IconRulers"
         :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-rulers') : undefined"
         :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-rulers')"
