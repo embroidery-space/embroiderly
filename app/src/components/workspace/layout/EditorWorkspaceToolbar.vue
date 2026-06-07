@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ScrollArea, Separator, ToolSelect, useRemToPx } from "@embroiderly/ui";
+import { ScrollArea, Separator, ToolSelect, useRemToPx, useShortcuts } from "@embroiderly/ui";
 import type { ToolSelectItem, ToolSelectProps } from "@embroiderly/ui";
 
 import { computed } from "vue";
@@ -185,7 +185,7 @@ const nodestitches = computed<ToolSelectItem[]>(() => [
     value: tools.Bead,
     label: fluent.$t("stitch-bead"),
     icon: IconStitchBead,
-    shortcut: "B",
+    shortcut: "J",
   },
 ]);
 
@@ -206,6 +206,15 @@ const cursor = computed<ToolSelectItem[]>(() => [
     shortcut: "C",
   },
 ]);
+
+// Define shorter key sequences for enabling top-left and bottom-left positional stitch tools if the user hasn't typed the full shortcut.
+useShortcuts({
+  "P-T": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
+  "P-B": () => (editorStateStore.selectedTool = tools.PetiteStitchBL),
+
+  "Q-T": () => (editorStateStore.selectedTool = tools.QuarterStitchTL),
+  "Q-B": () => (editorStateStore.selectedTool = tools.QuarterStitchBL),
+});
 </script>
 
 <template>
