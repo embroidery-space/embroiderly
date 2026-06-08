@@ -95,5 +95,13 @@ They're easier to see and help you orient within the pattern.
 **Minor Lines** are the thinner grid lines that appear between all stitches.
 They help you count individual stitches.
 
-> [!TIP]
-> Click on the color swatch to open a color picker.
+Both **Major Lines** and **Minor Lines** share the same set of options:
+
+- **Pixel Line**. When enabled, the line is always drawn as a single pixel regardless of the canvas zoom level.
+  This gives a crisp, hair-thin appearance at any zoom.
+  When **Pixel Line** is on, the **Thickness** input is disabled, because a pixel-perfect line can't be scaled.
+- **Thickness**. A relative value between 50% and 500% that controls the line width when **Pixel Line** is off.
+- **Color**. The color of the grid line.
+
+  > [!TIP]
+  > Click on the color swatch to open a color picker.
