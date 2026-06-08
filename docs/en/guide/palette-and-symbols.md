@@ -24,19 +24,17 @@ However, "thread" more accurately reflects the physical item, while "color" refe
 ## Palette Panel Overview
 
 The palette panel appears on the left side of the pattern editor.
-It's organized into three main sections: the header, the palette list, and the footer.
+It's organized into two sections: the header and the palette list.
 
 <figure>
   <img src="/images/guide/palette-and-symbols/palette-panel-overview.png">
   <figcaption>The palette panel showing the working palette with several thread colors.</figcaption>
 </figure>
 
-The **header** contains tools for drawing stitches and manipulating the pattern.
+The **header** shows the total number of colors in your palette and provides a quick button to enter the editing mode.
 
 The **palette list** displays all thread colors currently in your working palette.
 Each color is shown as a tile with the thread's color, stitch symbol, and text information based on your palette display settings.
-
-The **footer** shows the total number of colors in your palette and provides a quick button to enter the editing mode.
 
 ## Palette List
 
