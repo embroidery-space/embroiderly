@@ -32,7 +32,7 @@ There are three ways to select a stitch tool:
    The button will be highlighted to indicated that it's active.
 2. **Keyboard Shortcuts**.
    Each tool has a key sequence binded for quick selection.
-   For example, press `F` for full stitch or `H-F` for forward half stitch.
+   Check all available shortcuts in the [shortcuts reference](../reference/shortcuts##stitches-tools).
 3. **Dropdown Menu**.
    Groups with multiple tool variants show a small button with a chevron icon in the bottom right corner.
    You can access the dropdown menu by:
