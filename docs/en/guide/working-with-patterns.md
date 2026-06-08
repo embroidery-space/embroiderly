@@ -1,11 +1,11 @@
 ---
-description: Master pattern editing in Embroiderly - learn about stitch tools, canvas navigation, drawing techniques, and display controls for creating cross-stitch patterns.
+description: Master pattern editing in Embroiderly - learn about stitch tools, canvas navigation, layers, drawing techniques, and display controls for creating cross-stitch patterns.
 ---
 
 # Working with Patterns
 
 This chapter covers everything you need to know about editing patterns in Embroiderly.
-You'll learn how to use stitch tools, navigate the canvas, and customize your workspace for efficient pattern design.
+You'll learn how to use stitch tools, navigate the canvas, work with layers, and customize your workspace for efficient pattern design.
 
 ## Pattern Workspace
 
@@ -29,10 +29,10 @@ There are three ways to select a stitch tool:
 
 1. **Quick Selection**.
    Click any tool button to activate it.
-   The button will be highlighted to indicated that it's active.
+   The button will be highlighted to indicate that it's active.
 2. **Keyboard Shortcuts**.
    Each tool has a key sequence binded for quick selection.
-   Check all available shortcuts in the [shortcuts reference](../reference/shortcuts##stitches-tools).
+   Check all available shortcuts in the [shortcuts reference](../reference/shortcuts).
 3. **Dropdown Menu**.
    Groups with multiple tool variants show a small button with a chevron icon in the bottom right corner.
    You can access the dropdown menu by:
@@ -133,6 +133,18 @@ Beads work the same way as French knots.
 
 Hold `Ctrl` while drawing to rotate the bead 90 degrees.
 
+### Eraser
+
+The **Eraser** tool removes any stitch from the canvas regardless of type.
+Select it from the toolbar and click or drag over any stitch to remove it.
+
+The eraser is especially useful on mobile devices and touchscreens where keyboard shortcuts aren't available.
+
+> [!TIP]
+> You don't need to switch to the eraser to remove a stitch while working.
+> You can remove any stitch with the currently selected stitch tool, too.
+> See the [Removing Stitches](#removing-stitches) section below for more details.
+
 ## Drawing and Editing
 
 ### Basic Drawing
@@ -148,12 +160,14 @@ You can hold down the left mouse button and drag to draw multiple stitches quick
 
 ### Removing Stitches
 
-There are two ways to remove stitches:
+There are three ways to remove stitches:
 
-1. **Alt + Left-Click**.
+1. **Eraser Tool**.
+   Select the **Eraser** from the toolbar and click or drag over any stitch to remove it.
+2. **Alt + Left-Click**.
    Hold `Alt` and left-click to erase stitches as you draw.
    This works with any stitch tool selected.
-2. **Ctrl + Right-Click**.
+3. **Ctrl + Right-Click**.
    Hold `Ctrl` and right-click to erase stitches.
 
 ### Position Locking
@@ -213,9 +227,15 @@ Preset fit options:
 Use the slider or the +/- buttons to adjust zoom incrementally.
 The number shows your current zoom level (you can edit it).
 
-## Pattern Display Controls
+## Canvas Panel
 
-The display controls toolbar on the right side of the pattern workspace lets you customize how your pattern appears.
+The canvas panel sits on the right side of the pattern workspace.
+It gives you quick access to display mode toggles, element visibility controls, and the layers menu.
+
+<!--<figure>
+  <img src="/images/guide/working-with-patterns/canvas-panel.png">
+  <figcaption>The canvas panel showing display modes, element toggles, and the layers menu.</figcaption>
+</figure>-->
 
 ### Stitches Display Modes
 
@@ -238,23 +258,17 @@ Three stitches display modes change how stitches are rendered on the canvas.
   <figcaption>Different stitches display modes.</figcaption>
 </figure>
 
-### Layer Visibility
+### Element Visibility
 
-Control which pattern elements appear on the canvas using the **Layers** panel.
+Below the display mode toggles, there are three buttons which let you show or hide individual canvas elements:
 
-<figure>
-  <img src="/images/guide/working-with-patterns/layer-visibility.png">
-  <figcaption>The layers panel containing checkboxes for stitch types and canvas elements.</figcaption>
-</figure>
-
-Uncheck any layer to hide the corresponding elements.
-This is useful when you want to focus on specific stitch types or reduce visual clutter.
+- **Symbols.** Toggles stitch symbols on the canvas.
+- **Grid.** Toggles the grid overlay.
+- **Rulers.** Toggles the rulers along the canvas edges.
 
 ### Symbols Display
 
-The symbol toggle button shows or hides stitch symbols on the canvas.
-
-When enabled, each stitch displays its assigned symbol from the palette.
+When **Symbols** is enabled, each stitch displays its assigned symbol from the palette.
 This helps you identify which thread color to use when stitching the physical pattern.
 
 Symbols appear at the center of each stitch.
@@ -264,14 +278,52 @@ You can use symbols with any stitches display mode.
 > When symbols are displayed, you can click the active stitches display mode button again to make stitches transparent.
 > This shows only the symbols without the stitch colors underneath.
 
-## Viewport Settings
+### Layers
 
-You can customize how the pattern renders and responds to input through the viewport settings.
-Access these settings from **Settings** -> **Viewport**.
+The **Layers** section at the bottom of the canvas panel lets you organize your pattern into multiple custom layers---just like in any modern graphics application.
+
+<!--<figure>
+  <img src="/images/guide/working-with-patterns/canvas-panel.png">
+  <figcaption>The layers menu showing a custom layer with its stitch layers expanded.</figcaption>
+</figure>-->
+
+The [**Layer Layout** setting](#layer-layout) in **Settings -> Working Area** then controls whether the layer or the stitch type takes priority overall.
+Within the same stitch type, a higher layer always appears in front of a lower one.
+
+#### Custom Layers and Stitch Layers
+
+A **custom layer** is a layer you create yourself.
+Each custom layer automatically contains a fixed set of **stitch layers**---one for each stitch type.
+
+You draw on the currently selected custom layer.
+Selecting a different custom layer before drawing lets you keep different parts of your work isolated from each other.
+
+#### Managing Layers
+
+- **Add a layer.** Click the plus button in the **Layers** header.
+  New layers appear at the top of the list and become the active drawing target.
+- **Remove a layer.** Select the layer and click the trash button.
+  Note that you can't remove the last remaining layer.
+- **Rename a layer.** Double-click the layer name to edit it in place.
+  Press `Enter` or click outside the field to confirm.
+- **Reorder layers.** Drag a custom layer up or down to change its position.
+  Layers higher in the list appear on top in the canvas.
+- **Toggle visibility.** Click the eye icon on the right of any custom layer or stitch layer to show or hide it.
+  Hiding a custom layer hides all its stitch layers at once.
+  Hiding an individual stitch layer hides only that stitch type within its parent custom layer.
+
+> [!IMPORTANT]
+> When exporting to OXS or PDF, only stitches from visible stitch layers inside visible custom layers are included in the output.
+> Hidden layers and overlapped stitches are excluded entirely.
+
+## Working Area Settings
+
+You can customize how the pattern renders and responds to input through the working area settings.
+Access these settings from **Settings -> Working Area**.
 
 <figure>
   <img src="/images/guide/working-with-patterns/viewport-settings.png">
-  <figcaption>Viewport settings for antialiasing and mouse wheel action.</figcaption>
+  <figcaption>Working area settings for antialiasing, mouse wheel action, and layer layout.</figcaption>
 </figure>
 
 ### Antialiasing
@@ -303,3 +355,32 @@ Choose the option that matches your preferred workflow.
 
 > Two-finger scrolling on touchpads also follows this setting---it zooms when set to **Zoom** and scrolls when set to **Scroll**.
 > The `Alt` key modifier works the same way on touchpads as with the mouse wheel.
+
+### Layer Layout
+
+This setting controls how multiple custom layers are composited when their stitches overlap.
+
+- **By Layer Order (default).** Each custom layer is rendered as a complete unit.
+  All of a higher layer's stitches appear in front of all of a lower layer's stitches.
+  This is the most intuitive mode---layers behave exactly as you'd expect from a graphics application.
+
+- **By Stitch Type.** Stitch types are the primary grouping, not layers.
+  All French knots from every layer render together, then all beads from every layer, and so on.
+  This means a lower layer's French knots appear in front of a higher layer's back stitches, because the French knot group renders after the back stitch group.
+
+The table below shows the rendering order for two custom layers, from front (▲) to back (▼):
+
+|     | By Layer Order            | By Stitch Type            |
+| :-: | :------------------------ | :------------------------ |
+|  ▲  | Layer 2 · French Knots    | Layer 2 · French Knots    |
+|     | Layer 2 · Back Stitches   | Layer 1 · French Knots    |
+|     | Layer 1 · French Knots    | Layer 2 · Back Stitches   |
+|     | Layer 1 · Back Stitches   | Layer 1 · Back Stitches   |
+|     | Grid                      | Grid                      |
+|     | Layer 2 · Petite Stitches | Layer 2 · Petite Stitches |
+|     | Layer 2 · Full Stitches   | Layer 1 · Petite Stitches |
+|     | Layer 1 · Petite Stitches | Layer 2 · Full Stitches   |
+|  ▼  | Layer 1 · Full Stitches   | Layer 1 · Full Stitches   |
+
+The grid always sits between cross stitches (full, petite, half, and quarter) and line and node stitches (back stitches, straight stitches, French knots, and beads), regardless of any other setting.
+Line and node stitches always appear in front of the grid, and the grid always appears in front of cross stitches.

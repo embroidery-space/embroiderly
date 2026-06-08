@@ -24,6 +24,7 @@
 )
 
 #show link: underline
+#show table: t => align(center, t)
 
 #titlepage()
 #pagebreak()
