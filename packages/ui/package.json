@@ -17,6 +17,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@tanstack/vue-hotkeys": "catalog:",
     "color-convert": "catalog:",
     "defu": "catalog:",
     "tailwind-merge": "catalog:",

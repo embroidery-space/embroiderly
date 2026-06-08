@@ -1,41 +1,16 @@
-/** Modifier keys in their display order. */
-const MODIFIERS = ["Ctrl", "Alt", "Shift", "Meta"];
+import { formatForDisplay } from "@tanstack/vue-hotkeys";
 
-/** Maps modifier key names (lowercase) to their display values. */
-const KEYS_MAP: Record<string, string> = {
-  ctrl: "Ctrl",
-  control: "Ctrl",
-  alt: "Alt",
-  shift: "Shift",
-  meta: "Meta",
-};
-
-/** Parses a shortcut string into display segments for Kbd components. */
-export function parseShortcutDisplay(shortcut?: string): string[] {
-  const value = shortcut?.trim();
-  if (!value) return [];
-
-  if (value.includes("+")) {
-    // Do not filter empty strings, as it will broke shortcuts with the `+` sign (e.g., `Ctrl++`).
-    // For example, `["Ctrl", "", ""]` will be correctly reconstructed to `Ctrl++`.
-    const parts = value.split("+");
-
-    const modifiers = parts.filter((p) => isModifier(p)).map((p) => KEYS_MAP[p.toLowerCase()] ?? p);
-    const keys = parts.filter((p) => !isModifier(p));
-
-    // Modifier keys are already filtered and mapped, so we can sort them directly.
-    modifiers.sort((a, b) => MODIFIERS.indexOf(a) - MODIFIERS.indexOf(b));
-
-    return [[...modifiers, ...keys].join("+")];
-  }
-
-  if (value.includes("-")) {
-    return value.split("-");
-  }
-
-  return [value];
+/** Parses a shortcut string into display segments for `Kbd` components. */
+export function parseShortcutDisplay(shortcut: string) {
+  return splitShortcutKey(formatForDisplay(shortcut, { useSymbols: false }));
 }
 
-function isModifier(key: string) {
-  return MODIFIERS.includes(KEYS_MAP[key.toLowerCase()] ?? key);
+/**
+ * Splits a shortcut key string into its sequence steps.
+ *
+ * `-` is treated as a sequence separator only when it is **not** immediately preceded by `+`,
+ * so `Ctrl+-` stays intact (the `-` is the key name) while `Shift+V-M` → `['Shift+V', 'M']`.
+ */
+export function splitShortcutKey(key: string) {
+  return key.split(/(?<!\+)-/u);
 }

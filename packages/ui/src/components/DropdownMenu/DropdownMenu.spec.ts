@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { defineComponent } from "vue";
 
@@ -93,5 +93,63 @@ describe("DropdownMenu", () => {
     await userEvent.click(screen.getByText("Trigger"));
 
     expect(screen.container.outerHTML).toMatchSnapshot();
+  });
+
+  describe("Keyboard Shortcuts", () => {
+    test("combination shortcut triggers onSelect", async () => {
+      const onSelect = vi.fn();
+      await page.render(DropdownMenuWrapper, {
+        props: {
+          portal: false,
+          items: [[{ label: "Undo", shortcut: "Control+Z", onSelect }]],
+        },
+      });
+
+      await userEvent.keyboard("{Control>}z{/Control}");
+
+      expect(onSelect).toHaveBeenCalled();
+    });
+
+    test("sequence shortcut triggers onSelect", async () => {
+      const onSelect = vi.fn();
+      await page.render(DropdownMenuWrapper, {
+        props: {
+          portal: false,
+          items: [[{ label: "Go to Definition", shortcut: "G-D", onSelect }]],
+        },
+      });
+
+      await userEvent.keyboard("gd");
+
+      expect(onSelect).toHaveBeenCalled();
+    });
+
+    test("nested shortcut in children triggers onSelect", async () => {
+      const onSelect = vi.fn();
+      await page.render(DropdownMenuWrapper, {
+        props: {
+          portal: false,
+          items: [[{ label: "Edit", children: [{ label: "Undo", shortcut: "Control+Z", onSelect }] }]],
+        },
+      });
+
+      await userEvent.keyboard("{Control>}z{/Control}");
+
+      expect(onSelect).toHaveBeenCalled();
+    });
+
+    test("items without shortcut do not register any shortcut", async () => {
+      const onSelect = vi.fn();
+      await page.render(DropdownMenuWrapper, {
+        props: {
+          portal: false,
+          items: [[{ label: "No Shortcut", onSelect }]],
+        },
+      });
+
+      await userEvent.keyboard("{Control>}z{/Control}");
+
+      expect(onSelect).not.toHaveBeenCalled();
+    });
   });
 });

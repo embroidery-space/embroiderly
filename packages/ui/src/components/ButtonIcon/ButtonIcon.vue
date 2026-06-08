@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import { useShortcuts } from "../../composables/useShortcuts.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 import type { ButtonProps } from "../Button/Button.vue";
@@ -53,6 +54,20 @@ const tooltipProps = computed<TooltipProps>(() => ({
   disabled: props.disabled,
   delayDuration: props.delayDuration,
 }));
+
+useShortcuts(() => {
+  if (!props.shortcut || !props.onClick) return {};
+  return {
+    [props.shortcut]: () => {
+      if (props.disabled) return;
+
+      const event = new MouseEvent("click");
+
+      if (Array.isArray(props.onClick)) props.onClick.forEach((fn) => fn(event));
+      else props.onClick!(event);
+    },
+  };
+});
 </script>
 
 <template>

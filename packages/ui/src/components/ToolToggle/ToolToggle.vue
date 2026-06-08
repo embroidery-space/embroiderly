@@ -3,6 +3,7 @@ import { Label, Toggle } from "reka-ui/namespaced";
 import { computed } from "vue";
 
 import { useFormField } from "../../composables/useFormField.ts";
+import { useShortcuts } from "../../composables/useShortcuts.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 import Tooltip from "../Tooltip/Tooltip.vue";
@@ -48,6 +49,16 @@ const props = withDefaults(defineProps<ToolToggleProps>(), {
 });
 
 const { id, size, ariaAttrs } = useFormField(props);
+
+useShortcuts(() => {
+  if (!props.shortcut) return {};
+  return {
+    [props.shortcut]: () => {
+      if (props.disabled) return;
+      modelValue.value = !modelValue.value;
+    },
+  };
+});
 
 const ui = computed(() => {
   return ToolToggleTheme({

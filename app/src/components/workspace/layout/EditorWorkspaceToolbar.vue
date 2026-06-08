@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ScrollArea, Separator, ToolSelect, useRemToPx } from "@embroiderly/ui";
+import { ScrollArea, Separator, ToolSelect, useRemToPx, useShortcuts } from "@embroiderly/ui";
 import type { ToolSelectItem, ToolSelectProps } from "@embroiderly/ui";
 
 import { computed } from "vue";
@@ -26,9 +26,8 @@ import {
   IconStitchQuarterTR,
   IconStitchStraight,
 } from "~/assets/icons/";
-import { useI18n, useShortcuts, extractShortcuts } from "~/composables/";
+import { useI18n } from "~/composables/";
 import { tools } from "~/lib/tools/";
-import type { PatternEditorTool } from "~/lib/tools/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
 import { useSettingsStore } from "~/stores/";
 
@@ -186,7 +185,7 @@ const nodestitches = computed<ToolSelectItem[]>(() => [
     value: tools.Bead,
     label: fluent.$t("stitch-bead"),
     icon: IconStitchBead,
-    shortcut: "B",
+    shortcut: "J",
   },
 ]);
 
@@ -208,26 +207,14 @@ const cursor = computed<ToolSelectItem[]>(() => [
   },
 ]);
 
-// Register keyboard shortcuts for all tool groups.
-useShortcuts(
-  extractShortcuts(() =>
-    [
-      ...fullstitches.value,
-      ...petitestitches.value,
-      ...halfstitches.value,
-      ...quarterstitches.value,
-      ...linestitches.value,
-      ...nodestitches.value,
-      ...eraser.value,
-      ...cursor.value,
-    ].map((item) => ({
-      shortcut: item.shortcut,
-      onSelect() {
-        editorStateStore.selectedTool = item.value as PatternEditorTool;
-      },
-    })),
-  ),
-);
+// Define shorter key sequences for enabling top-left and bottom-left positional stitch tools if the user hasn't typed the full shortcut.
+useShortcuts({
+  "P-T": () => (editorStateStore.selectedTool = tools.PetiteStitchTL),
+  "P-B": () => (editorStateStore.selectedTool = tools.PetiteStitchBL),
+
+  "Q-T": () => (editorStateStore.selectedTool = tools.QuarterStitchTL),
+  "Q-B": () => (editorStateStore.selectedTool = tools.QuarterStitchBL),
+});
 </script>
 
 <template>

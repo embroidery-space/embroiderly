@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, DropdownMenu, Menubar, Separator, Tabs, useConfirm } from "@embroiderly/ui";
-import type { DropdownMenuItem, MenubarItem, MenubarMenu } from "@embroiderly/ui";
+import { Button, ButtonIcon, DropdownMenu, Menubar, Separator, Tabs, useConfirm, useShortcuts } from "@embroiderly/ui";
+import type { DropdownMenuItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { openPath } from "@tauri-apps/plugin-opener";
 
+import { useMediaQuery } from "@vueuse/core";
 import { computed, ref } from "vue";
 
 import {
@@ -17,7 +18,7 @@ import {
   IconSettings,
   IconUndo,
 } from "~/assets/icons/";
-import { useEditorModals, useFilePicker, useI18n, useShortcuts, extractShortcuts } from "~/composables/";
+import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { useTour } from "~/composables/core/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
@@ -292,14 +293,13 @@ const appMenu = computed(() => {
   return { desktopMenubarMenus, mobileDropdownMenuItems };
 });
 
-useShortcuts(
-  extractShortcuts(() => appMenu.value.desktopMenubarMenus.flatMap((menu) => menu.items as MenubarItem[][])),
-);
-
 const manageOptions = computed<DropdownMenuItem[][]>(() => [
   [{ label: fluent.$t("settings"), shortcut: "Control+,", onSelect: () => settingsStore.openSettingsModal() }],
   [{ label: fluent.$t("updater-check-for-updates"), onSelect: () => settingsStore.checkForUpdates() }],
 ]);
+
+// Matches Tailwind's `lg` breakpoint (1024px).
+const isLargeScreen = useMediaQuery("(min-width: 64rem)");
 
 const isFullscreen = ref(!!document.fullscreenElement);
 document.addEventListener("fullscreenchange", () => {
@@ -324,23 +324,38 @@ async function showSystemInfo() {
   }).result;
   if (accepted) await navigator.clipboard.writeText(description);
 }
+
+useShortcuts({
+  "Control+Shift+Z": () => patternStore.undo({ single: true }),
+  "Control+Shift+Y": () => patternStore.redo({ single: true }),
+  "Control+Home": () => {
+    const first = patternFileStore.openedPatterns.at(0);
+    if (first) patternFileStore.switchPattern(first.id);
+  },
+  "Control+End": () => {
+    const last = patternFileStore.openedPatterns.at(-1);
+    if (last) patternFileStore.switchPattern(last.id);
+  },
+  ...Object.fromEntries(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => [
+      `Control+${n}`,
+      () => {
+        const pattern = patternFileStore.openedPatterns.at(n - 1);
+        if (pattern) patternFileStore.switchPattern(pattern.id);
+      },
+    ]),
+  ),
+});
 </script>
 
 <template>
   <header class="grid grid-cols-[1fr_auto] border-b border-default">
     <div data-tauri-drag-region class="grid h-full grid-cols-[auto_1fr_auto]">
       <div class="p-1">
-        <DropdownMenu :items="appMenu.mobileDropdownMenuItems">
-          <ButtonIcon
-            :icon="IconMenu"
-            variant="ghost"
-            color="neutral"
-            :tooltip="$t('app-menu-open')"
-            class="lg:hidden"
-          />
+        <Menubar v-if="isLargeScreen" :menus="appMenu.desktopMenubarMenus" />
+        <DropdownMenu v-else :items="appMenu.mobileDropdownMenuItems">
+          <ButtonIcon :icon="IconMenu" variant="ghost" color="neutral" :tooltip="$t('app-menu-open')" />
         </DropdownMenu>
-
-        <Menubar :menus="appMenu.desktopMenubarMenus" class="hidden lg:flex" />
       </div>
 
       <Tabs
@@ -384,8 +399,8 @@ async function showSystemInfo() {
             :icon="IconUndo"
             color="neutral"
             variant="ghost"
-            :tooltip="$t('history-undo')"
             shortcut="Control+Z"
+            :tooltip="$t('history-undo')"
             @click="() => patternStore.undo()"
           />
           <ButtonIcon
@@ -393,8 +408,8 @@ async function showSystemInfo() {
             :icon="IconRedo"
             color="neutral"
             variant="ghost"
-            :tooltip="$t('history-redo')"
             shortcut="Control+Y"
+            :tooltip="$t('history-redo')"
             @click="() => patternStore.redo()"
           />
           <Separator orientation="vertical" />
@@ -414,6 +429,7 @@ async function showSystemInfo() {
           v-if="!isTauri"
           variant="ghost"
           color="neutral"
+          shortcut="F11"
           :icon="isFullscreen ? IconFullscreenExit : IconFullscreen"
           :tooltip="isFullscreen ? $t('app-fullscreen-exit') : $t('app-fullscreen-enter')"
           @click="toggleFullscreen"

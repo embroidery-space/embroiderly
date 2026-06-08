@@ -5,6 +5,7 @@ import { DropdownMenu } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
 import { usePortal } from "../../composables/usePortal.ts";
+import { useShortcuts, extractShortcuts } from "../../composables/useShortcuts.ts";
 import type { IconValue } from "../../types/icons.ts";
 
 import { DropdownMenuTheme } from "./DropdownMenu.theme.ts";
@@ -117,6 +118,7 @@ const normalizedItems = computed<T[][]>(() => {
   if (Array.isArray(props.items[0])) return props.items as T[][];
   return [props.items as T[]];
 });
+useShortcuts(extractShortcuts(normalizedItems));
 
 const ui = computed(() => DropdownMenuTheme({ size: props.size }));
 </script>

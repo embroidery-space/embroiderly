@@ -5,6 +5,7 @@ import { Menubar } from "reka-ui/namespaced";
 import { computed, toRef } from "vue";
 
 import { usePortal } from "../../composables/usePortal.ts";
+import { useShortcuts, extractShortcuts } from "../../composables/useShortcuts.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 
@@ -113,6 +114,7 @@ function normalizeItems(items: T[] | T[][]): T[][] {
   if (Array.isArray(items[0])) return items as T[][];
   return [items as T[]];
 }
+useShortcuts(extractShortcuts(() => props.menus?.filter((m) => !m.hidden) ?? []));
 
 const ui = computed(() => MenubarTheme({ size: props.size }));
 </script>

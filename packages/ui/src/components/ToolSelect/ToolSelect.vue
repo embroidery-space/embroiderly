@@ -163,6 +163,7 @@ function handleKeydown(e: KeyboardEvent) {
     <Tooltip
       v-bind="tooltipOptions"
       :text="currentOption.label"
+      :shortcut="currentOption.shortcut"
       :delay-duration="delayDuration"
       :disabled="props.disabled"
     >
