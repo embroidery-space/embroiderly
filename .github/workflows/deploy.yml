@@ -2,6 +2,15 @@ name: Deploy
 on:
   push:
     branches-ignore: ["dependabot/**", dependency-updates]
+    paths:
+      - "app/**"
+      - "crates/**"
+      - "packages/**"
+      - "Cargo.*"
+      - package.json
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+      - .github/workflows/deploy.yml
 permissions:
   contents: read
   deployments: write
