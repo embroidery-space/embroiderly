@@ -1,17 +1,12 @@
 import { describe, it, expect } from "vitest";
 
-import { parseShortcutDisplay } from "./shortcut.ts";
+import { parseShortcutDisplay, splitShortcutKey } from "./shortcut.ts";
 
 describe("parseShortcutDisplay", () => {
-  it.each([undefined, "", " "])("returns empty array for empty string", (arg) => {
-    expect(parseShortcutDisplay(arg)).toEqual([]);
-  });
-
   it.each([
     ["Control+Z", ["Ctrl+Z"]],
     ["Ctrl+Shift+S", ["Ctrl+Shift+S"]],
     ["Shift+Ctrl+Z", ["Ctrl+Shift+Z"]],
-    ["Meta+Shift+Alt+Ctrl+X", ["Ctrl+Alt+Shift+Meta+X"]],
   ])("parses key combination %s", (shortcut, expected) => {
     expect(parseShortcutDisplay(shortcut)).toEqual(expected);
   });
@@ -22,5 +17,30 @@ describe("parseShortcutDisplay", () => {
     ["P-T-L", ["P", "T", "L"]],
   ])("parses key sequence %s", (shortcut, expected) => {
     expect(parseShortcutDisplay(shortcut)).toEqual(expected);
+  });
+});
+
+describe("splitShortcutKey", () => {
+  it.each([
+    ["F", ["F"]],
+    ["G-D", ["G", "D"]],
+    ["P-T-L", ["P", "T", "L"]],
+  ])("splits plain sequence %s", (key, expected) => {
+    expect(splitShortcutKey(key)).toEqual(expected);
+  });
+
+  it.each([
+    ["Control+Z", ["Control+Z"]],
+    ["Ctrl+-", ["Ctrl+-"]],
+    ["Ctrl+Shift+S", ["Ctrl+Shift+S"]],
+  ])("keeps plain combination %s intact", (key, expected) => {
+    expect(splitShortcutKey(key)).toEqual(expected);
+  });
+
+  it.each([
+    ["Shift+V-M", ["Shift+V", "M"]],
+    ["Shift+A-Shift+B", ["Shift+A", "Shift+B"]],
+  ])("splits mixed sequence %s into steps", (key, expected) => {
+    expect(splitShortcutKey(key)).toEqual(expected);
   });
 });

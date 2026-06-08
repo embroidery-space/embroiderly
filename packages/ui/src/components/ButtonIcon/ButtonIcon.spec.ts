@@ -1,6 +1,6 @@
 import { TooltipProvider } from "reka-ui";
-import { describe, expect, test } from "vitest";
-import { page } from "vitest/browser";
+import { describe, expect, test, vi } from "vitest";
+import { page, userEvent } from "vitest/browser";
 import { defineComponent } from "vue";
 
 import ButtonIcon from "./ButtonIcon.vue";
@@ -41,5 +41,40 @@ describe("ButtonIcon", () => {
   ] as [string, { props: ButtonIconProps }][])("renders correctly %s", async (_, options) => {
     const screen = await page.render(ButtonIconWrapper, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
+  });
+
+  describe("Keyboard Shortcuts", () => {
+    test("shortcut works correctly", async () => {
+      const onClick = vi.fn();
+      await page.render(ButtonIconWrapper, {
+        props: {
+          icon: "lucide:minus",
+          tooltip: "Zoom Out",
+          shortcut: "Control+-",
+          onClick,
+        },
+      });
+
+      await userEvent.keyboard("{Control>}-{/Control}");
+
+      expect(onClick).toHaveBeenCalled();
+    });
+
+    test("shortcut does not trigger when the component is disabled", async () => {
+      const onClick = vi.fn();
+      await page.render(ButtonIconWrapper, {
+        props: {
+          icon: "lucide:minus",
+          tooltip: "Zoom Out",
+          shortcut: "Control+-",
+          disabled: true,
+          onClick,
+        },
+      });
+
+      await userEvent.keyboard("{Control>}-{/Control}");
+
+      expect(onClick).not.toHaveBeenCalled();
+    });
   });
 });

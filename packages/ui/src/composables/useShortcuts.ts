@@ -1,39 +1,32 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useHotkeys, useHotkeySequences } from "@tanstack/vue-hotkeys";
 import type { UseHotkeyDefinition, UseHotkeySequenceDefinition } from "@tanstack/vue-hotkeys";
 import { computed, toValue } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
+import { splitShortcutKey } from "../utils/shortcut.ts";
+
 /**
  * Registers keyboard shortcuts for the current component scope.
  * Shortcuts are automatically unregistered when the component unmounts.
  *
- * Keys containing `+` are treated as combinations (e.g., `Control+S`).
- * All other keys are treated as sequences (e.g., `P-T-L` → `['P', 'T', 'L']`, `F` → `['F']`).
+ * A key resolves to a plain combination (e.g. `Control+S`, `Ctrl+-`) when `splitShortcutKey` returns a single part containing `+`.
+ * Everything else is a sequence (e.g. `P-T-L` → `['P', 'T', 'L']`, `Shift+V-M` → `['Shift+V', 'M']`, `F` → `['F']`).
  */
 export function useShortcuts(shortcuts: MaybeRefOrGetter<Record<string, () => void>>) {
-  useHotkeys(() =>
-    Object.entries(toValue(shortcuts))
-      .filter(([key]) => key.includes("+"))
-      .map(
-        ([key, callback]): UseHotkeyDefinition => ({
-          hotkey: key as unknown as UseHotkeyDefinition["hotkey"],
-          callback,
-        }),
-      ),
-  );
+  const combinations: UseHotkeyDefinition[] = [];
+  const sequences: UseHotkeySequenceDefinition[] = [];
 
-  useHotkeySequences(() =>
-    Object.entries(toValue(shortcuts))
-      .filter(([key]) => !key.includes("+"))
-      .map(
-        ([key, callback]): UseHotkeySequenceDefinition => ({
-          sequence: key.split("-") as unknown as UseHotkeySequenceDefinition["sequence"],
-          callback,
-        }),
-      ),
-  );
+  for (const [key, callback] of Object.entries(toValue(shortcuts))) {
+    const components = splitShortcutKey(key);
+    if (components.length === 1 && key.includes("+")) {
+      combinations.push({ hotkey: key as unknown as UseHotkeyDefinition["hotkey"], callback });
+    } else {
+      sequences.push({ sequence: components as unknown as UseHotkeySequenceDefinition["sequence"], callback });
+    }
+  }
+
+  useHotkeys(combinations);
+  useHotkeySequences(sequences);
 }
 
 /**

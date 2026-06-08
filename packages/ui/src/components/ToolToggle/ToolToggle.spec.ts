@@ -1,6 +1,6 @@
 import { TooltipProvider } from "reka-ui";
-import { describe, expect, test } from "vitest";
-import { page } from "vitest/browser";
+import { describe, expect, test, vi } from "vitest";
+import { page, userEvent } from "vitest/browser";
 import { defineComponent } from "vue";
 
 import ToolToggle from "./ToolToggle.vue";
@@ -46,4 +46,40 @@ describe("ToolToggle", () => {
       expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
+
+  describe("Keyboard Shortcuts", () => {
+    test("single-key shortcut toggles modelValue", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolToggleWrapper, {
+        props: {
+          icon: "lucide:eye",
+          tooltip: "Show",
+          shortcut: "S",
+          modelValue: false,
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("s");
+      expect(onUpdate).toHaveBeenLastCalledWith(true);
+    });
+
+    test("shortcut does not fire when component is disabled", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolToggleWrapper, {
+        props: {
+          icon: "lucide:eye",
+          tooltip: "Show",
+          shortcut: "S",
+          disabled: true,
+          modelValue: false,
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("s");
+
+      expect(onUpdate).not.toHaveBeenCalled();
+    });
+  });
 });

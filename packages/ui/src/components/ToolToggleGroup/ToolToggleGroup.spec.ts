@@ -1,6 +1,6 @@
 import { TooltipProvider } from "reka-ui";
-import { describe, expect, test } from "vitest";
-import { page } from "vitest/browser";
+import { describe, expect, test, vi } from "vitest";
+import { page, userEvent } from "vitest/browser";
 import { defineComponent } from "vue";
 
 import ToolToggleGroup from "./ToolToggleGroup.vue";
@@ -16,6 +16,12 @@ const EXPANDED_ITEMS = [
   { icon: "lucide:square", label: "Solid", description: "View as solid squares", value: "solid" },
   { icon: "lucide:grid-2x2", label: "Stitches", description: "View as individual stitches", value: "stitches" },
   { icon: "lucide:blend", label: "Mixed", description: "Mixed display mode", value: "mixed" },
+];
+
+const ITEMS_WITH_SHORTCUTS = [
+  { icon: "lucide:square", tooltip: "Solid", value: "solid", shortcut: "S" },
+  { icon: "lucide:grid-2x2", tooltip: "Stitches", value: "stitches", shortcut: "T" },
+  { icon: "lucide:blend", tooltip: "Mixed", value: "mixed", shortcut: "M" },
 ];
 
 const ToolToggleGroupWrapper = defineComponent({
@@ -48,4 +54,52 @@ describe("ToolToggleGroup", () => {
       expect(screen.container.outerHTML).toMatchSnapshot();
     },
   );
+
+  describe("Keyboard Shortcuts", () => {
+    test("single-key shortcut sets the model to the matching item value", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolToggleGroupWrapper, {
+        props: {
+          items: ITEMS_WITH_SHORTCUTS,
+          modelValue: "solid",
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("t");
+
+      expect(onUpdate).toHaveBeenCalledWith("stitches");
+    });
+
+    test("pressing another item's shortcut switches to that item", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolToggleGroupWrapper, {
+        props: {
+          items: ITEMS_WITH_SHORTCUTS,
+          modelValue: "solid",
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("m");
+
+      expect(onUpdate).toHaveBeenCalledWith("mixed");
+    });
+
+    test("shortcut does not fire when group is disabled", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolToggleGroupWrapper, {
+        props: {
+          items: ITEMS_WITH_SHORTCUTS,
+          modelValue: "solid",
+          disabled: true,
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("t");
+
+      expect(onUpdate).not.toHaveBeenCalled();
+    });
+  });
 });
