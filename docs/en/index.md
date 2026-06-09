@@ -29,9 +29,12 @@ features:
   - title: Palette and Symbols Management
     details: Organize thread colors and customize stitch symbols
     link: ./guide/palette-and-symbols
+  - title: Custom Layers
+    details: Organize your pattern into isolated drawing layers to experiment freely without affecting the rest of your work
+    link: ./guide/working-with-patterns#layers
   - title: Intuitive Drawing Tools
     details: Easy and straightforward pattern creation with immediate visual feedback
-    link: ./guide/working-with-patterns
+    link: ./guide/working-with-patterns#stitch-tools
   - title: Advanced Shortcuts System
     details: Speed up your workflow with keyboard shortcuts
     link: ./reference/shortcuts
