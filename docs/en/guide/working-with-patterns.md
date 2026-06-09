@@ -368,19 +368,10 @@ This setting controls how multiple custom layers are composited when their stitc
   All French knots from every layer render together, then all beads from every layer, and so on.
   This means a lower layer's French knots appear in front of a higher layer's back stitches, because the French knot group renders after the back stitch group.
 
-The table below shows the rendering order for two custom layers, from front (▲) to back (▼):
-
-|     | By Layer Order            | By Stitch Type            |
-| :-: | :------------------------ | :------------------------ |
-|  ▲  | Layer 2 · French Knots    | Layer 2 · French Knots    |
-|     | Layer 2 · Back Stitches   | Layer 1 · French Knots    |
-|     | Layer 1 · French Knots    | Layer 2 · Back Stitches   |
-|     | Layer 1 · Back Stitches   | Layer 1 · Back Stitches   |
-|     | Grid                      | Grid                      |
-|     | Layer 2 · Petite Stitches | Layer 2 · Petite Stitches |
-|     | Layer 2 · Full Stitches   | Layer 1 · Petite Stitches |
-|     | Layer 1 · Petite Stitches | Layer 2 · Full Stitches   |
-|  ▼  | Layer 1 · Full Stitches   | Layer 1 · Full Stitches   |
+<figure>
+  <img src="/images/guide/working-with-patterns/layer-layout.png">
+  <figcaption>The difference between By Layer Order and By Stitch Type options.</figcaption>
+</figure>
 
 The grid always sits between cross stitches (full, petite, half, and quarter) and line and node stitches (back stitches, straight stitches, French knots, and beads), regardless of any other setting.
 Line and node stitches always appear in front of the grid, and the grid always appears in front of cross stitches.
