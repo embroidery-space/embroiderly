@@ -237,6 +237,22 @@ export class PatternView extends Container {
     this.removeSymbol(stitch, lc);
   }
 
+  updatePaletteItemSymbol(palindex: number) {
+    for (const lc of this.#layerContainers.values()) {
+      const toUpdate: StitchSymbol[] = [];
+
+      for (const child of lc.symbols.children) {
+        const symbol = child as StitchSymbol;
+        if (symbol.stitch.palindex === palindex) toUpdate.push(symbol);
+      }
+
+      for (const symbol of toUpdate) {
+        lc.symbols.removeStitch(symbol.stitch);
+        this.addSymbol(symbol.stitch, lc);
+      }
+    }
+  }
+
   private addSymbol(stitch: Stitch, lc: LayerContainers) {
     if (stitch instanceof LineStitch || stitch instanceof NodeStitch || stitch instanceof SpecialStitch) return;
 

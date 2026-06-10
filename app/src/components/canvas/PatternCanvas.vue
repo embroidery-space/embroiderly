@@ -128,6 +128,12 @@ function updatePatternView(pattern: Pattern) {
     (e) => patternView.setDisplaySettings((e as CustomEvent).detail),
     { signal },
   );
+
+  pattern.addEventListener(
+    PatternEvent.SetPaletteItemSymbol,
+    (e) => patternView.updatePaletteItemSymbol((e as CustomEvent).detail.palindex),
+    { signal },
+  );
 }
 
 watch(
