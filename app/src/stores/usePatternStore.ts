@@ -143,11 +143,8 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
     MetricsService.capturePaletteItemSymbolSet(symbol);
   }
   events.on("palette:set_symbol", ({ palindex, symbol }) => {
-    const item = pattern.value.palette.get(palindex);
-    if (item) {
-      item.symbol = symbol;
-      triggerRef(pattern);
-    }
+    pattern.value.setPaletteItemSymbol(palindex, symbol);
+    triggerRef(pattern);
   });
 
   async function addLayer() {
