@@ -13,5 +13,5 @@ runs:
         cache: true
         runtime: node@24.16.0
         install: ${{ inputs.install-deps }}
-        env:
-          HUSKY: 0
+      env:
+        HUSKY: 0
