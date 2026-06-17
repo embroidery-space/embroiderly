@@ -1,4 +1,4 @@
-import "../../src/assets/styles.css";
+import "../../src/assets/styles/index.css";
 
 import { FluentBundle, FluentResource } from "@fluent/bundle";
 import { createFluentVue } from "fluent-vue";
