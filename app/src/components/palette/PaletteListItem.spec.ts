@@ -49,7 +49,7 @@ describe("PaletteListItem", () => {
     expect(swatch.style.color).toBe("contrast-color(var(--palitem-color))");
   });
 
-  test.only("shows a contrasting outline when selected", async () => {
+  test("shows a contrasting outline when selected", async () => {
     const screen = await renderComponent(PaletteListItemWrapper, {
       props: { paletteItem: TEST_PALITEM, selected: false, displaySettings: DEFAULT_DISPLAY_SETTINGS },
     });
