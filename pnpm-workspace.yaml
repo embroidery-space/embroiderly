@@ -28,7 +28,7 @@ catalog:
   "vue-component-type-helpers": 3.3.4
   "pinia": 3.0.4
   "pinia-plugin-persistedstate": 4.7.1
-  "reka-ui": 2.9.10
+  "reka-ui": 2.9.9
 
   # Styling
   "tailwindcss": 4.3.0
