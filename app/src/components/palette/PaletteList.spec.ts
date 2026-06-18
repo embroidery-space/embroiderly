@@ -2,7 +2,7 @@ import { App } from "@embroiderly/ui";
 
 import { describe, expect, test, vi } from "vitest";
 import { userEvent } from "vitest/browser";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 import { PaletteItem, PaletteSettings } from "~/lib/pattern/";
 import { renderComponent } from "~test-utils/render-component.ts";
@@ -27,9 +27,14 @@ const DEFAULT_DISPLAY_SETTINGS = new PaletteSettings({
 const PaletteListWrapper = defineComponent({
   components: { App, PaletteList },
   inheritAttrs: false,
+  setup() {
+    // `modelValue` is required. We don't care about the actual value.
+    // Specify the dummy ref to suppress the unwanted warning logs.
+    return { value: ref() };
+  },
   template: `
     <App>
-      <PaletteList v-bind="$attrs">
+      <PaletteList v-bind="$attrs" v-model="value">
         <template v-for="(_, name) in $slots" #[name]="slotProps">
           <slot :name="name" v-bind="slotProps ?? {}" />
         </template>
