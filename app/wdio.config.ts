@@ -2,6 +2,7 @@ import { ChildProcess, spawn, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { setTimeout } from "node:timers/promises";
 import { fileURLToPath, URL } from "node:url";
 
 import { PatternEditorPage } from "./tests/e2e/shared/pages/";
@@ -99,7 +100,7 @@ export const config: WebdriverIO.Config = {
     // Force disable all CSS animations and transitions during CI.
     if (process.env.CI) {
       await browser.execute(() => {
-        // @ts-expect-error ...
+        // @ts-expect-error The `document` object is available inside this callback.
         const style = document.createElement("style");
         style.innerHTML = `
                 *, *::before, *::after {
@@ -113,10 +114,14 @@ export const config: WebdriverIO.Config = {
       });
     }
 
-    // Close an initial default pattern (wait a while to ensure it is open).
-    await new Promise((resolve) => {
-      setTimeout(resolve, 500);
+    // Disable the tour and telemetry prompts.
+    await browser.execute(() => {
+      localStorage.setItem("embroiderly-tour-offered", "true");
+      localStorage.setItem("embroiderly-telemetry-prompt-shown", "true");
     });
+
+    // Close an initial default pattern (wait a while to ensure it is open).
+    await setTimeout(500);
     await PatternEditorPage.forceCloseAllPatterns();
   },
 
