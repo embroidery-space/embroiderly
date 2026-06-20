@@ -20,9 +20,11 @@ const { paletteItem, selected, displaySettings } = defineProps<PaletteItemProps>
       v-bind="$attrs"
       class="flex min-h-7 w-full min-w-0 items-center gap-2 rounded-md px-1.5 outline-2 -outline-offset-4 outline-solid data-highlighted:ring-2 data-highlighted:ring-primary"
       :style="{
-        backgroundColor: paletteItem.hex,
-        color: `contrast-color(${paletteItem.hex}) !important`,
-        outlineColor: selected ? `contrast-color(${paletteItem.hex})` : 'transparent',
+        '--palitem-color': paletteItem.hex,
+
+        backgroundColor: 'var(--palitem-color)',
+        color: `contrast-color(var(--palitem-color)) !important`,
+        outlineColor: selected ? `contrast-color(var(--palitem-color))` : 'transparent',
       }"
     >
       <slot />

@@ -39,12 +39,14 @@ function getSwatch(screen: Awaited<ReturnType<typeof renderComponent>>) {
 describe("PaletteListItem", () => {
   test("renders the colored swatch", async () => {
     const screen = await renderComponent(PaletteListItemWrapper, {
-      props: { paletteItem: TEST_PALITEM, selected: false, displaySettings: DEFAULT_DISPLAY_SETTINGS },
+      props: { paletteItem: TEST_PALITEM, selected: true, displaySettings: DEFAULT_DISPLAY_SETTINGS },
     });
     const swatch = getSwatch(screen);
 
-    await expect.element(swatch).toHaveStyle(`background-color: ${TEST_PALITEM.hex}`);
-    await expect.element(swatch).toHaveStyle(`color: contrast-color(${TEST_PALITEM.hex})`);
+    await expect.element(swatch).toBeInTheDocument();
+    expect(swatch.style.getPropertyValue("--palitem-color")).toBe(TEST_PALITEM.hex);
+    expect(swatch.style.backgroundColor).toBe("var(--palitem-color)");
+    expect(swatch.style.color).toBe("contrast-color(var(--palitem-color))");
   });
 
   test("shows a contrasting outline when selected", async () => {
@@ -53,11 +55,11 @@ describe("PaletteListItem", () => {
     });
     const swatch = getSwatch(screen);
 
-    await expect.element(swatch).toHaveStyle("outline-color: transparent");
+    expect(swatch.style.getPropertyValue("outline-color")).toBe("transparent");
 
-    screen.rerender({ selected: true });
+    await screen.rerender({ selected: true });
 
-    await expect.element(swatch).toHaveStyle(`outline-color: contrast-color(${TEST_PALITEM.hex})`);
+    expect(swatch.style.getPropertyValue("outline-color")).toBe("contrast-color(var(--palitem-color))");
   });
 
   test("renders the composed title when colorOnly is false", async () => {

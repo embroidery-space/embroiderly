@@ -10,12 +10,8 @@ concurrency:
   group: ${{ github.ref }}-integration
   cancel-in-progress: true
 jobs:
-  test-e2e:
-    strategy:
-      fail-fast: false
-      matrix:
-        platform: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.platform }}
+  test-e2e-desktop-linux:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup-node
@@ -23,21 +19,52 @@ jobs:
         with:
           tools: tauri-driver
 
-      - name: Install system webdriver (Linux)
-        if: matrix.platform == 'ubuntu-latest'
+      - name: Install system webdriver
         run: sudo apt-get install -y webkit2gtk-driver xvfb xdg-user-dirs
 
-      - name: Install system webdriver (Windows)
-        if: matrix.platform == 'windows-latest'
-        run: cargo install --git https://github.com/chippers/msedgedriver-tool
-
-      - name: Run WebdriverIO test suite (Linux)
-        if: matrix.platform == 'ubuntu-latest'
+      - name: Run tests
         run: |
           xdg-user-dirs-update
           source ${HOME}/.config/user-dirs.dirs
-          xvfb-run pnpm --filter @embroiderly/app test:e2e
+          xvfb-run pnpm --filter @embroiderly/app test:e2e:desktop
 
-      - name: Run WebdriverIO test suite (Windows)
-        if: matrix.platform == 'windows-latest'
-        run: pnpm --filter @embroiderly/app test:e2e
+  test-e2e-desktop-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-rust
+        with:
+          tools: tauri-driver
+
+      - name: Install system webdriver
+        run: cargo install --git https://github.com/chippers/msedgedriver-tool
+
+      - name: Run tests
+        run: pnpm --filter @embroiderly/app test:e2e:desktop
+
+  test-e2e-web-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-rust
+        with:
+          targets: wasm32-unknown-unknown
+          tools: wasm-pack
+
+      - name: Run tests
+        run: pnpm --filter @embroiderly/app test:e2e:web
+
+  test-e2e-web-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-rust
+        with:
+          targets: wasm32-unknown-unknown
+          tools: wasm-pack
+
+      - name: Run tests
+        run: pnpm --filter @embroiderly/app test:e2e:web
