@@ -108,12 +108,6 @@ export default defineConfig({
       },
       {
         extends: true,
-        resolve: {
-          alias: {
-            // This is needed for runtime compilation of string templates in tests.
-            vue: "vue/dist/vue.esm-bundler.js",
-          },
-        },
         test: {
           name: "components",
           include: ["./src/components/**/*.spec.ts"],

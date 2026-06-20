@@ -6,6 +6,7 @@ import { Fabric } from "./fabric.ts";
 import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
 import { Layer, LayerVisibility, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
+import type { Symbol } from "./palette.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
 import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitchModel } from "./stitches.ts";
 import type { Stitch } from "./stitches.ts";
@@ -150,6 +151,15 @@ export class Pattern extends EventTarget {
     this.#palette.settings = settings;
   }
 
+  setPaletteItemSymbol(palindex: number, symbol: Symbol | undefined) {
+    const item = this.#palette.get(palindex);
+    if (!item) return;
+
+    item.symbol = symbol;
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.SetPaletteItemSymbol, { detail: { palindex, symbol } }));
+  }
+
   get fabric() {
     return this.#fabric;
   }
@@ -292,6 +302,7 @@ export const enum PatternEvent {
   AddPaletteItem = "palette:add_palette_item",
   RemovePaletteItem = "palette:remove_palette_item",
   UpdatePaletteDisplaySettings = "palette:update_display_settings",
+  SetPaletteItemSymbol = "palette:set_symbol",
 
   UpdateDisplaySettings = "display:update",
   UpdateDisplayMode = "display:set_mode",

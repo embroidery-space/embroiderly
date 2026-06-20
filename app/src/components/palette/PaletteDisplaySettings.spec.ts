@@ -70,7 +70,7 @@ describe("PaletteDisplaySettings", () => {
     expect(onUpdateSettings).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ showStitchSymbols: true }));
   });
 
-  test.only("changing the columns number emits update:settings with the new value", async () => {
+  test("changing the columns number emits update:settings with the new value", async () => {
     const onUpdateSettings = vi.fn();
 
     const screen = await renderComponent(PaletteDisplaySettings, {

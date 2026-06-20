@@ -82,6 +82,9 @@ export default defineConfigWithVueTs(
   {
     files: ["**/*.test.ts", "**/*.spec.ts"],
     plugins: { "no-only-tests": noOnlyTests },
+    rules: {
+      "no-only-tests/no-only-tests": "error",
+    },
   },
   {
     files: ["app/src/**/*.test.ts", "packages/**/*.spec.ts"],
