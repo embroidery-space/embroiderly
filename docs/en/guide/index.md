@@ -10,7 +10,7 @@ Embroiderly is built with modern technologies and with performance and accessabi
 Whether you're a professional designer working on complex patterns or a hobbyist exploring the art of embroidery, Embroiderly provides an intuitive and powerful environment for bringing your creative visions to life.
 
 <figure>
-  <img src="/images/overview/welcome-screen.png">
+  <img src="/images/en/overview/welcome-screen.png">
   <figcaption>The Embroiderly welcome screen.</figcaption>
 </figure>
 
@@ -29,6 +29,6 @@ The pattern will load in the editor, where you can start exploring the interface
 <!--typst-end-exclude-->
 
 <figure>
-  <img src="/images/overview/pattern-editor.png">
+  <img src="/images/en/overview/pattern-editor.png">
   <figcaption>The Embroiderly pattern editor with a loaded sample pattern.</figcaption>
 </figure>

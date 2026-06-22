@@ -1,6 +1,12 @@
 {
   "extends": ["@tsconfig/node24/tsconfig.json", "@tsconfig/strictest/tsconfig.json"],
-  "include": ["wdio.shared.conf.ts", "wdio.desktop.conf.ts", "wdio.web.conf.ts", "tests/e2e/**/*.ts"],
+  "include": [
+    "wdio.shared.conf.ts",
+    "wdio.desktop.conf.ts",
+    "wdio.web.conf.ts",
+    "wdio.docs.conf.ts",
+    "tests/e2e/**/*.ts"
+  ],
   "exclude": ["tests/components/"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.wdio.tsbuildinfo",
@@ -19,6 +25,6 @@
     "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": false,
 
-    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework"]
+    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/visual-service"]
   }
 }

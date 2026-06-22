@@ -10,7 +10,7 @@ Embroiderly створено з використанням сучасних те
 Незалежно від того, чи ви професійний дизайнер, який працює над складними схемами, чи аматор, що досліджує мистецтво вишивання, Embroiderly надає інтуїтивно зрозуміле та потужне середовище для втілення ваших творчих ідей у життя.
 
 <figure>
-  <img src="/images/overview/welcome-screen.png">
+  <img src="/images/uk/overview/welcome-screen.png">
   <figcaption>Стартовий екран Embroiderly.</figcaption>
 </figure>
 
@@ -31,6 +31,6 @@ Embroiderly створено з використанням сучасних те
 <!--typst-end-exclude-->
 
 <figure>
-  <img src="/images/overview/pattern-editor.png">
+  <img src="/images/uk/overview/pattern-editor.png">
   <figcaption>Редактор схем Embroiderly із завантаженою схемою.</figcaption>
 </figure>

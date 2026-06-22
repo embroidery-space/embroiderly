@@ -68,6 +68,7 @@ catalog:
   "es-toolkit": 1.47.1
   "eventemitter3": 5.0.4
   "fuse.js": 7.4.2
+  "sharp": 0.35.1
   "show-open-file-picker": 0.4.0
   "sortablejs": 1.15.7
   "stacktracey": 2.2.0
@@ -140,6 +141,7 @@ catalog:
   "@wdio/local-runner": 9.29.0
   "@wdio/mocha-framework": 9.29.0
   "@wdio/spec-reporter": 9.29.0
+  "@wdio/visual-service": 9.2.3
 
   # Types
   "@types/mocha": 10.0.10

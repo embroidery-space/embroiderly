@@ -44,14 +44,13 @@ features:
 
 <VPSwiper
   :slides="[
-    '/images/overview/welcome-screen.png',
-    '/images/overview/pattern-editor.png',
-    '/images/overview/palette-editing.png',
-    '/images/overview/pattern-info.png',
-    '/images/overview/fabric-properties.png',
-    '/images/overview/grid-properties.png',
-    '/images/overview/pdf-export.png',
-    '/images/overview/image-import.png',
+    '/images/en/overview/welcome-screen.png',
+    '/images/en/overview/pattern-editor.png',
+    '/images/en/overview/palette-editing.png',
+    '/images/en/overview/pattern-info.png',
+    '/images/en/overview/fabric-properties.png',
+    '/images/en/overview/grid-properties.png',
+    '/images/en/overview/pdf-export.png',
   ]"
   :no-fullscreen="true"
 />
