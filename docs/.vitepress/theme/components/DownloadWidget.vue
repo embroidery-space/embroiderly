@@ -36,7 +36,7 @@ async function download(installer: "exe" | "deb" | "rpm") {
     <div class="desktop-platforms">
       <div class="platform-card">
         <div class="platform-logo">
-          <img src="/images/download/windows-logo.png" alt="Windows logo" />
+          <img src="/icons/windows-logo.png" alt="Windows logo" />
         </div>
         <div class="download-buttons">
           <button @click="() => download('exe')">
@@ -48,7 +48,7 @@ async function download(installer: "exe" | "deb" | "rpm") {
 
       <div class="platform-card">
         <div class="platform-logo">
-          <img src="/images/download/linux-logo.png" alt="Linux logo" />
+          <img src="/icons/linux-logo.png" alt="Linux logo" />
         </div>
         <div class="download-buttons">
           <button @click="() => download('deb')">
