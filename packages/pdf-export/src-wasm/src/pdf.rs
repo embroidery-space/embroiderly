@@ -28,13 +28,7 @@ pub fn export_pattern(
     .main_file(TEMPLATE)
     .with_static_source_file_resolver([("draw.typ", DRAWING_MODULE)])
     .fonts(FONTS.iter().copied().chain(symbol_font_data.iter().map(Vec::as_slice)))
-    .with_static_file_resolver([{
-      use typst::syntax::{FileId, VirtualPath};
-      (
-        FileId::new(None, VirtualPath::new("pattern.json")),
-        compose_pattern_json(&embproj, options)?,
-      )
-    }])
+    .with_static_file_resolver([("pattern.json", compose_pattern_json(&embproj, options)?)])
     .build();
 
   let inputs = {

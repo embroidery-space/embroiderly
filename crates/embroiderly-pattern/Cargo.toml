@@ -7,7 +7,7 @@ edition = { workspace = true }
 workspace = true
 
 [features]
-borsh = ["dep:borsh", "uuid/borsh", "ordered-float/borsh"]
+borsh = ["dep:borsh", "borsh/uuid", "ordered-float/borsh"]
 serde = ["dep:serde", "uuid/serde", "ordered-float/serde"]
 
 [dependencies]
