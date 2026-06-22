@@ -100,6 +100,7 @@ export class Rulers extends Container {
       if (!backgroundAlreadyExists) {
         const background = new Graphics()
           .rect(0, -this.#stages.horizontal.height, this.#width, this.#stages.horizontal.height)
+          // oxlint-disable-next-line unicorn/no-array-fill-with-reference-type
           .fill({ color: 0x000000, alpha: 0.75 });
         this.#stages.horizontal.addChildAt(background, 0);
       }
@@ -125,6 +126,7 @@ export class Rulers extends Container {
       if (!backgroundAlreadyExists) {
         const background = new Graphics()
           .rect(-this.#stages.vertical.width, 0, this.#stages.vertical.width, this.#height)
+          // oxlint-disable-next-line unicorn/no-array-fill-with-reference-type
           .fill({ color: 0x000000, alpha: 0.75 });
         this.#stages.vertical.addChildAt(background, 0);
       }
