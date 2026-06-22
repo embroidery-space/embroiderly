@@ -6454,7 +6454,7 @@ dependencies = [
  "tauri-runtime",
  "tauri-runtime-cef",
  "tauri-runtime-wry",
- "tauri-utils 2.9.2 (git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef)",
+ "tauri-utils",
  "thiserror 2.0.18",
  "tokio",
  "url",
@@ -6479,7 +6479,7 @@ dependencies = [
  "semver",
  "serde",
  "serde_json",
- "tauri-utils 2.9.2 (git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef)",
+ "tauri-utils",
  "tauri-winres",
  "walkdir",
 ]
@@ -6502,7 +6502,7 @@ dependencies = [
  "serde_json",
  "sha2",
  "syn 2.0.117",
- "tauri-utils 2.9.2 (git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef)",
+ "tauri-utils",
  "thiserror 2.0.18",
  "time",
  "url",
@@ -6520,7 +6520,7 @@ dependencies = [
  "quote",
  "syn 2.0.117",
  "tauri-codegen",
- "tauri-utils 2.9.2 (git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef)",
+ "tauri-utils",
 ]
 
 [[package]]
@@ -6534,14 +6534,14 @@ dependencies = [
  "schemars 1.2.1",
  "serde",
  "serde_json",
- "tauri-utils 2.9.2 (git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef)",
+ "tauri-utils",
  "walkdir",
 ]
 
 [[package]]
 name = "tauri-plugin-fs"
 version = "2.5.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=feat%2Fcef#bc005c44b0573de9a6b860a4cf2e5cc730611325"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=feat%2Fcef#8049700614f1e70dc679b44387fbe7ffebe3fb22"
 dependencies = [
  "anyhow",
  "dunce",
@@ -6555,16 +6555,14 @@ dependencies = [
  "serde_repr",
  "tauri",
  "tauri-plugin",
- "tauri-utils 2.9.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.18",
- "toml 1.1.2+spec-1.1.0",
  "url",
 ]
 
 [[package]]
 name = "tauri-plugin-opener"
 version = "2.5.4"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=feat%2Fcef#bc005c44b0573de9a6b860a4cf2e5cc730611325"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=feat%2Fcef#8049700614f1e70dc679b44387fbe7ffebe3fb22"
 dependencies = [
  "dunce",
  "glob",
@@ -6599,7 +6597,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-process"
 version = "2.3.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=feat%2Fcef#bc005c44b0573de9a6b860a4cf2e5cc730611325"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=feat%2Fcef#8049700614f1e70dc679b44387fbe7ffebe3fb22"
 dependencies = [
  "tauri",
  "tauri-plugin",
@@ -6608,7 +6606,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-updater"
 version = "2.10.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=feat%2Fcef#bc005c44b0573de9a6b860a4cf2e5cc730611325"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=feat%2Fcef#8049700614f1e70dc679b44387fbe7ffebe3fb22"
 dependencies = [
  "base64 0.22.1",
  "dirs",
@@ -6652,7 +6650,7 @@ dependencies = [
  "raw-window-handle",
  "serde",
  "serde_json",
- "tauri-utils 2.9.2 (git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef)",
+ "tauri-utils",
  "thiserror 2.0.18",
  "url",
  "windows",
@@ -6683,7 +6681,7 @@ dependencies = [
  "serde_json",
  "sha2",
  "tauri-runtime",
- "tauri-utils 2.9.2 (git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef)",
+ "tauri-utils",
  "url",
  "windows",
  "x11-dl",
@@ -6707,42 +6705,12 @@ dependencies = [
  "softbuffer",
  "tao",
  "tauri-runtime",
- "tauri-utils 2.9.2 (git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef)",
+ "tauri-utils",
  "url",
  "webkit2gtk",
  "webview2-com",
  "windows",
  "wry",
-]
-
-[[package]]
-name = "tauri-utils"
-version = "2.9.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "092379df9a707631978e6c56b1bc2401d387f01e2d4a3c123360d167bbb9aa95"
-dependencies = [
- "anyhow",
- "ctor",
- "dunce",
- "glob",
- "http",
- "infer",
- "json-patch",
- "log",
- "memchr",
- "phf 0.13.1",
- "plist",
- "regex",
- "semver",
- "serde",
- "serde-untagged",
- "serde_json",
- "serde_with",
- "thiserror 2.0.18",
- "toml 1.1.2+spec-1.1.0",
- "url",
- "urlpattern",
- "uuid",
 ]
 
 [[package]]
