@@ -51,6 +51,7 @@ features:
     '/images/en/overview/fabric-properties.png',
     '/images/en/overview/grid-properties.png',
     '/images/en/overview/pdf-export.png',
+    '/images/en/overview/image-import.png',
   ]"
   :no-fullscreen="true"
 />

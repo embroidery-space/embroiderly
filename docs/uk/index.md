@@ -42,6 +42,7 @@ features:
     '/images/uk/overview/fabric-properties.png',
     '/images/uk/overview/grid-properties.png',
     '/images/uk/overview/pdf-export.png',
+    '/images/uk/overview/image-import.png',
   ]"
   :no-fullscreen="true"
 />

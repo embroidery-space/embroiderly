@@ -96,6 +96,28 @@ for (const language of ["en", "uk"] as const) {
       await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "pdf-export")}"]]`).waitForDisplayed();
     }
 
+    async function openImageImport() {
+      await $(`button*=${$t(language, "app-menu-file")}`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, "app-menu-file-import")}")]`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, "app-menu-file-import-image")}")]`).click();
+      await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "image-import")}"]]`).waitForDisplayed();
+
+      const fileInput = await $(`input[type="file"]`);
+
+      // Make file input visible.
+      await browser.execute((el) => el.classList.remove("hidden"), fileInput);
+
+      // Set file.
+      const remoteFile = await browser.uploadFile("./tests/e2e/assets/images/fruits.jpg");
+      await fileInput.setValue(remoteFile);
+
+      // Make file input hidden again.
+      await browser.execute((el) => el.classList.add("hidden"), fileInput);
+
+      // Wait for pattern to render.
+      await setTimeout(2000);
+    }
+
     async function openSettings() {
       await browser.keys(["Control", ","]);
       await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "settings")}"]]`).waitForDisplayed();
@@ -119,6 +141,8 @@ for (const language of ["en", "uk"] as const) {
 
     describe("Overview", () => {
       const PREVIEW_DEST = path.join(process.cwd(), "..", "docs", "public", "images", language, "overview");
+
+      before(() => fs.mkdirSync(PREVIEW_DEST, { recursive: true }));
 
       async function stitchImagesDiagonally(dark: string, light: string, output: string) {
         const width = 1920;
@@ -308,6 +332,28 @@ for (const language of ["en", "uk"] as const) {
           path.join(dark.path, dark.fileName),
           path.join(light.path, light.fileName),
           path.join(PREVIEW_DEST, "pdf-export.png"),
+        );
+      });
+
+      it("Image Import", async () => {
+        await setAppUi({ theme: "dark" });
+        await openImageImport();
+        const dark = (await browser.saveFullPageScreen("overview-image-import-dark")) as {
+          fileName: string;
+          path: string;
+        };
+
+        await setAppUi({ theme: "light" });
+        await openImageImport();
+        const light = (await browser.saveFullPageScreen("overview-image-import-light")) as {
+          fileName: string;
+          path: string;
+        };
+
+        await stitchImagesDiagonally(
+          path.join(dark.path, dark.fileName),
+          path.join(light.path, light.fileName),
+          path.join(PREVIEW_DEST, "image-import.png"),
         );
       });
     });
