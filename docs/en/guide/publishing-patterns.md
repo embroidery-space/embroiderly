@@ -17,7 +17,7 @@ To export your pattern as a PDF:
 4. Click **Export Document** to generate the PDF.
 
 <figure>
-  <img src="/images/guide/publishing-patterns/pdf-export-modal.png">
+  <img src="/images/en/guide/publishing-patterns/pdf-export-modal.png">
   <figcaption>The <strong>PDF Export</strong> window showing the publish settings.</figcaption>
 </figure>
 

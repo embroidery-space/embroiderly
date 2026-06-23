@@ -478,6 +478,19 @@ for (const language of ["en", "uk"] as const) {
           );
         });
       });
+
+      describe("Publishing Patterns", () => {
+        before(() => fs.mkdirSync(path.join(GUIDE_DEST, "publishing-patterns"), { recursive: true }));
+
+        it("Image Import", async () => {
+          await openDemoPattern();
+          await openPdfExport();
+
+          await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "pdf-export")}"]]`).saveScreenshot(
+            path.join(GUIDE_DEST, "publishing-patterns/pdf-export-modal.png"),
+          );
+        });
+      });
     });
   });
 }

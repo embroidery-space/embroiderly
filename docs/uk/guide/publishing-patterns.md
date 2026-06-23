@@ -18,7 +18,7 @@ description: Дізнайтеся, як експортувати ваші схе
 5. Натисніть на **Експортувати документ**, щоб створити PDF.
 
 <figure>
-  <img src="/images/guide/publishing-patterns/pdf-export-modal.png">
+  <img src="/images/uk/guide/publishing-patterns/pdf-export-modal.png">
   <figcaption>Вікно <strong>Експорт PDF</strong> з налаштуваннями публікації.</figcaption>
 </figure>
 
