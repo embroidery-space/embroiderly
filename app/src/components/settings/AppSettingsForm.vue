@@ -74,7 +74,7 @@ const layerLayoutOptions = computed(() => [
   { label: fluent.$t("settings-workarea-pattern-layer-layout-layer-order"), value: LayerLayout.ByLayerOrder },
 ]);
 
-async function savePatternTemplate(file: File | null) {
+async function savePatternTemplate(file: File | undefined) {
   if (!file) return;
 
   const data = new Uint8Array(await file.arrayBuffer());

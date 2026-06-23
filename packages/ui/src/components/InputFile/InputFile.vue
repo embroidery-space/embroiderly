@@ -36,7 +36,7 @@ export interface InputFileProps<M extends boolean = false> {
   ui?: { base?: string };
 }
 
-const modelValue = defineModel<(M extends true ? File[] : File) | null>();
+const modelValue = defineModel<M extends true ? File[] : File>();
 const props = withDefaults(defineProps<InputFileProps>(), {
   size: "md",
 });
@@ -57,7 +57,7 @@ function onChange(event: Event) {
   const files = input.files;
 
   if (!files || files.length === 0) {
-    modelValue.value = null;
+    modelValue.value = undefined;
     return;
   }
 
