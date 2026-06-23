@@ -16,7 +16,7 @@ To import an image:
 The **Image Import** window opens with your selected image ready to process.
 
 <figure>
-  <img src="/images/guide/importing-images/image-import-modal.png">
+  <img src="/images/en/guide/importing-images/image-import-modal.png">
   <figcaption>The <strong>Image Import</strong> window showing options and live preview.</figcaption>
 </figure>
 
@@ -92,7 +92,7 @@ This speeds up processing while still producing good results for most images.
 Higher precision values (like 100%) analyze more pixels, which produces more accurate color mapping but takes longer to process.
 
 <figure>
-  <img src="/images/guide/importing-images/sampling-precision-comparison.png">
+  <img src="/images/common/image-import/sampling-precision-comparison.png">
   <figcaption>Comparison of low sampling precision (10%, left) versus high sampling precision (100%, right).</figcaption>
 </figure>
 
@@ -123,7 +123,7 @@ Higher values (like 87.5%, the default) apply stronger dithering.
 This creates better gradients and blending.
 
 <figure>
-  <img src="/images/guide/importing-images/dithering-strength-comparison.png">
+  <img src="/images/common/image-import/dithering-strength-comparison.png">
   <figcaption>Comparison of no dithering (left) versus high dithering strength (87.5%, right).</figcaption>
 </figure>
 

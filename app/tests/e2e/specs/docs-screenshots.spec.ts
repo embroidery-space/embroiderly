@@ -466,6 +466,18 @@ for (const language of ["en", "uk"] as const) {
           );
         });
       });
+
+      describe("Importing Images", () => {
+        before(() => fs.mkdirSync(path.join(GUIDE_DEST, "importing-images"), { recursive: true }));
+
+        it("Image Import", async () => {
+          await openImageImport();
+
+          await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "image-import")}"]]`).saveScreenshot(
+            path.join(GUIDE_DEST, "importing-images/image-import-modal.png"),
+          );
+        });
+      });
     });
   });
 }
