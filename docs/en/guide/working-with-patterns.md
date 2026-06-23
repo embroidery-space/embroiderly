@@ -17,7 +17,7 @@ Embroiderly supports eight types of stitches, organized into groups.
 Each group contains related stitch variants that you can quickly switch between.
 
 <figure>
-  <img src="/images/en/guide/working-with-patterns/toolbar.png">
+  <img src="/images/common/toolbar/toolbar-full.png">
   <figcaption>Stitch tools in the toolbar.</figcaption>
 </figure>
 
@@ -254,7 +254,7 @@ Three stitches display modes change how stitches are rendered on the canvas.
 > They always render with their characteristic appearance.
 
 <figure>
-  <img src="/images/common/canvas-display-modes.png">
+  <img src="/images/common/canvas/display-modes.png">
   <figcaption>Different stitches display modes.</figcaption>
 </figure>
 
@@ -364,7 +364,7 @@ This setting controls how multiple custom layers are composited when their stitc
   This means a lower layer's French knots appear in front of a higher layer's back stitches, because the French knot group renders after the back stitch group.
 
 <figure>
-  <img src="/images/common/canvas-layer-layout.png">
+  <img src="/images/common/canvas/layer-layout.png">
   <figcaption>The difference between By Layer Order and By Stitch Type options.</figcaption>
 </figure>
 
