@@ -17,8 +17,8 @@ Embroiderly supports eight types of stitches, organized into groups.
 Each group contains related stitch variants that you can quickly switch between.
 
 <figure>
-  <img src="/images/guide/working-with-patterns/palette-toolbar.png">
-  <figcaption>Stitch tools in the palette toolbar.</figcaption>
+  <img src="/images/en/guide/working-with-patterns/toolbar.png">
+  <figcaption>Stitch tools in the toolbar.</figcaption>
 </figure>
 
 > There are also other tools available, but they're covered in other chapters.
@@ -51,7 +51,7 @@ This provides a visual reminder of which color you're drawing with.
 You can disable this feature in the application settings if you prefer the standard tool highlighting.
 
 <figure>
-  <img src="/images/guide/working-with-patterns/tool-color-setting.png">
+  <img src="/images/en/guide/working-with-patterns/tool-color-setting.png">
   <figcaption>The setting for the tool color highlighting in the <strong>Other</strong> tab.</figcaption>
 </figure>
 
@@ -214,7 +214,7 @@ You can't zoom so far that the pattern becomes unusable.
 The zoom controls in the footer provide precise zoom management.
 
 <figure>
-  <img src="/images/guide/working-with-patterns/zoom-controls.png">
+  <img src="/images/en/guide/working-with-patterns/zoom-controls.png">
   <figcaption>Canvas zoom controls showing fit options and current zoom level.</figcaption>
 </figure>
 
@@ -232,10 +232,10 @@ The number shows your current zoom level (you can edit it).
 The canvas panel sits on the right side of the pattern workspace.
 It gives you quick access to display mode toggles, element visibility controls, and the layers menu.
 
-<!--<figure>
-  <img src="/images/guide/working-with-patterns/canvas-panel.png">
+<figure>
+  <img src="/images/en/guide/working-with-patterns/canvas-panel.png">
   <figcaption>The canvas panel showing display modes, element toggles, and the layers menu.</figcaption>
-</figure>-->
+</figure>
 
 ### Stitches Display Modes
 
@@ -254,7 +254,7 @@ Three stitches display modes change how stitches are rendered on the canvas.
 > They always render with their characteristic appearance.
 
 <figure>
-  <img src="/images/guide/working-with-patterns/display-modes.png">
+  <img src="/images/common/canvas-display-modes.png">
   <figcaption>Different stitches display modes.</figcaption>
 </figure>
 
@@ -281,11 +281,6 @@ You can use symbols with any stitches display mode.
 ### Layers
 
 The **Layers** section at the bottom of the canvas panel lets you organize your pattern into multiple custom layers---just like in any modern graphics application.
-
-<!--<figure>
-  <img src="/images/guide/working-with-patterns/canvas-panel.png">
-  <figcaption>The layers menu showing a custom layer with its stitch layers expanded.</figcaption>
-</figure>-->
 
 The [**Layer Layout** setting](#layer-layout) in **Settings -> Working Area** then controls whether the layer or the stitch type takes priority overall.
 Within the same stitch type, a higher layer always appears in front of a lower one.
@@ -322,7 +317,7 @@ You can customize how the pattern renders and responds to input through the work
 Access these settings from **Settings -> Working Area**.
 
 <figure>
-  <img src="/images/guide/working-with-patterns/viewport-settings.png">
+  <img src="/images/en/guide/working-with-patterns/workarea-settings.png">
   <figcaption>Working area settings for antialiasing, mouse wheel action, and layer layout.</figcaption>
 </figure>
 
@@ -369,7 +364,7 @@ This setting controls how multiple custom layers are composited when their stitc
   This means a lower layer's French knots appear in front of a higher layer's back stitches, because the French knot group renders after the back stitch group.
 
 <figure>
-  <img src="/images/guide/working-with-patterns/layer-layout.png">
+  <img src="/images/common/canvas-layer-layout.png">
   <figcaption>The difference between By Layer Order and By Stitch Type options.</figcaption>
 </figure>
 

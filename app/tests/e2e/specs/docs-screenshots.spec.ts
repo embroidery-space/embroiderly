@@ -96,6 +96,11 @@ for (const language of ["en", "uk"] as const) {
       await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "pdf-export")}"]]`).waitForDisplayed();
     }
 
+    async function openSettings() {
+      await browser.keys(["Control", ","]);
+      await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "settings")}"]]`).waitForDisplayed();
+    }
+
     beforeEach(async () => {
       await browser.reloadSession();
       await browser.url("/");
@@ -350,6 +355,68 @@ for (const language of ["en", "uk"] as const) {
 
           await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "grid-properties")}"]]`).saveScreenshot(
             path.join(GUIDE_DEST, "pattern-options/grid-modal.png"),
+          );
+        });
+      });
+
+      describe("Working with Patterns", () => {
+        before(() => fs.mkdirSync(path.join(GUIDE_DEST, "working-with-patterns"), { recursive: true }));
+
+        it("Toolbar", async () => {
+          await browser.setViewport({ width: 1920, height: 1080 * 0.6, devicePixelRatio: 1 });
+
+          await openDemoPattern();
+
+          await $(`div[data-tour="toolbar"]`).saveScreenshot(
+            path.join(GUIDE_DEST, "working-with-patterns/toolbar.png"),
+          );
+        });
+
+        it("Workarea Settings", async () => {
+          await openSettings();
+
+          await $(`button*=${$t(language, "settings-workarea")}`).click();
+
+          await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "settings")}"]]`).saveScreenshot(
+            path.join(GUIDE_DEST, "working-with-patterns/workarea-settings.png"),
+          );
+        });
+
+        it("Tool Color Setting", async () => {
+          await openSettings();
+
+          await $(`button*=${$t(language, "settings-other")}`).click();
+
+          const checkbox = await $(`aria/${$t(language, "settings-use-palitem-color-for-stitch-tools")}`);
+          await browser.execute((el) => el.focus({ focusVisible: true }), checkbox);
+
+          await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "settings")}"]]`).saveScreenshot(
+            path.join(GUIDE_DEST, "working-with-patterns/tool-color-setting.png"),
+          );
+        });
+
+        it("Zoom Controls", async () => {
+          await openDemoPattern();
+
+          await $(`//div[input[@role="spinbutton"]]/following-sibling::button[1]`).click();
+
+          const screen = (await browser.saveFullPageScreen("guide-working-with-patterns-zoom-controls")) as {
+            fileName: string;
+            path: string;
+          };
+          await sharp(path.join(screen.path, screen.fileName))
+            .extract({ left: 1920 - 600, top: 1080 - 300, width: 600, height: 300 })
+            .toFile(path.join(GUIDE_DEST, "working-with-patterns/zoom-controls.png"));
+        });
+
+        it("Canvas Panel", async () => {
+          await openDemoPattern();
+
+          await $(`aria/${$t(language, "canvas-panel-expand")}`).click();
+          await $$(`div[data-resize-handle=""]`)[1].dragAndDrop({ x: -150, y: 0 });
+
+          await $(`div[data-tour="canvas-panel"]`).saveScreenshot(
+            path.join(GUIDE_DEST, "working-with-patterns/canvas-panel.png"),
           );
         });
       });
