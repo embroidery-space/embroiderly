@@ -59,6 +59,43 @@ function $t(language: string, key: string, args?: Record<string, FluentVariable>
 
 for (const language of ["en", "uk"] as const) {
   describe(`Embroiderly Screenshots (${language})`, () => {
+    async function openDemoPattern() {
+      await $(`button*=${$t(language, "app-menu-file")}`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, "app-menu-file-open-demo")}")]`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, "demo-pattern-piggies")}")]`).click();
+    }
+
+    async function enterPaletteEditingMode() {
+      await $(`aria/${$t(language, "palette-edit")}`).click();
+      await $(`//div[@role="listbox"][.//div[@role="group"]][.//div[@role="option"]]`).waitForDisplayed();
+      await setTimeout(100); // Wait for canvas to adjust its size.
+    }
+
+    async function openPatternInfo() {
+      await $(`button*=${$t(language, "app-menu-pattern")}`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, "pattern-info")}")]`).click();
+      await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "pattern-info")}"]]`).waitForDisplayed();
+    }
+
+    async function openGridProperties() {
+      await $(`button*=${$t(language, "app-menu-pattern")}`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, "grid-properties")}")]`).click();
+      await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "grid-properties")}"]]`).waitForDisplayed();
+    }
+
+    async function openFabricProperties() {
+      await $(`button*=${$t(language, "app-menu-pattern")}`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, "fabric-properties")}")]`).click();
+      await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "fabric-properties")}"]]`).waitForDisplayed();
+    }
+
+    async function openPdfExport() {
+      await $(`button*=${$t(language, "app-menu-file")}`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, "app-menu-file-export")}")]`).click();
+      await $(`//div[@role="menuitem"][contains(., "PDF")]`).click();
+      await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "pdf-export")}"]]`).waitForDisplayed();
+    }
+
     beforeEach(async () => {
       await browser.reloadSession();
       await browser.url("/");
@@ -105,43 +142,6 @@ for (const language of ["en", "uk"] as const) {
             },
           ])
           .toFile(output);
-      }
-
-      async function openDemoPattern() {
-        await $(`button*=${$t(language, "app-menu-file")}`).click();
-        await $(`//div[@role="menuitem"][contains(., "${$t(language, "app-menu-file-open-demo")}")]`).click();
-        await $(`//div[@role="menuitem"][contains(., "${$t(language, "demo-pattern-piggies")}")]`).click();
-      }
-
-      async function enterPaletteEditingMode() {
-        await $(`aria/${$t(language, "palette-edit")}`).click();
-        await $(`//div[@role="listbox"][.//div[@role="group"]][.//div[@role="option"]]`).waitForDisplayed();
-        await setTimeout(100); // Wait for canvas to adjust its size.
-      }
-
-      async function openPatternInfo() {
-        await $(`button*=${$t(language, "app-menu-pattern")}`).click();
-        await $(`//div[@role="menuitem"][contains(., "${$t(language, "pattern-info")}")]`).click();
-        await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "pattern-info")}"]]`).waitForDisplayed();
-      }
-
-      async function openGridProperties() {
-        await $(`button*=${$t(language, "app-menu-pattern")}`).click();
-        await $(`//div[@role="menuitem"][contains(., "${$t(language, "grid-properties")}")]`).click();
-        await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "grid-properties")}"]]`).waitForDisplayed();
-      }
-
-      async function openFabricProperties() {
-        await $(`button*=${$t(language, "app-menu-pattern")}`).click();
-        await $(`//div[@role="menuitem"][contains(., "${$t(language, "fabric-properties")}")]`).click();
-        await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "fabric-properties")}"]]`).waitForDisplayed();
-      }
-
-      async function openPdfExport() {
-        await $(`button*=${$t(language, "app-menu-file")}`).click();
-        await $(`//div[@role="menuitem"][contains(., "${$t(language, "app-menu-file-export")}")]`).click();
-        await $(`//div[@role="menuitem"][contains(., "PDF")]`).click();
-        await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "pdf-export")}"]]`).waitForDisplayed();
       }
 
       it("Welcome Screen", async () => {
@@ -304,6 +304,54 @@ for (const language of ["en", "uk"] as const) {
           path.join(light.path, light.fileName),
           path.join(PREVIEW_DEST, "pdf-export.png"),
         );
+      });
+    });
+
+    describe("Guides", () => {
+      const GUIDE_DEST = path.join(process.cwd(), "..", "docs", "public", "images", language, "guide");
+
+      describe("Pattern Options", () => {
+        before(() => fs.mkdirSync(path.join(GUIDE_DEST, "pattern-options"), { recursive: true }));
+
+        it("Pattern Menu", async () => {
+          await openDemoPattern();
+          await $(`button*=${$t(language, "app-menu-pattern")}`).click();
+
+          const screen = (await browser.saveFullPageScreen("guide-pattern-options-pattern-menu")) as {
+            fileName: string;
+            path: string;
+          };
+          await sharp(path.join(screen.path, screen.fileName))
+            .extract({ left: 0, top: 0, width: 600, height: 400 })
+            .toFile(path.join(GUIDE_DEST, "pattern-options/pattern-menu.png"));
+        });
+
+        it("Pattern Info", async () => {
+          await openDemoPattern();
+          await openPatternInfo();
+
+          await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "pattern-info")}"]]`).saveScreenshot(
+            path.join(GUIDE_DEST, "pattern-options/pattern-info-modal.png"),
+          );
+        });
+
+        it("Fabric Properties", async () => {
+          await openDemoPattern();
+          await openFabricProperties();
+
+          await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "fabric-properties")}"]]`).saveScreenshot(
+            path.join(GUIDE_DEST, "pattern-options/fabric-modal.png"),
+          );
+        });
+
+        it("Grid Properties", async () => {
+          await openDemoPattern();
+          await openGridProperties();
+
+          await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "grid-properties")}"]]`).saveScreenshot(
+            path.join(GUIDE_DEST, "pattern-options/grid-modal.png"),
+          );
+        });
       });
     });
   });

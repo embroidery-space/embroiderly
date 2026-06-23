@@ -8,7 +8,7 @@ Embroiderly allows you to customize various aspects of your pattern, including p
 You can access these options through the **Pattern** menu in the menu bar.
 
 <figure>
-  <img src="/images/guide/pattern-options/pattern-menu.png"/>
+  <img src="/images/en/guide/pattern-options/pattern-menu.png"/>
   <figcaption>The <strong>Pattern</strong> menu in the menu bar.</figcaption>
 </figure>
 
@@ -18,7 +18,7 @@ Pattern information includes metadata about your pattern, such as the title, aut
 This information is embedded in your pattern file and exported PDF documents.
 
 <figure>
-  <img src="/images/guide/pattern-options/pattern-info-modal.png"/>
+  <img src="/images/en/guide/pattern-options/pattern-info-modal.png"/>
   <figcaption>The <strong>Pattern Information</strong> window showing pattern title, author, copyright, and description.</figcaption>
 </figure>
 
@@ -37,7 +37,7 @@ Fabric properties define the physical characteristics of the fabric you'll stitc
 These settings determine the final size of your pattern and how it appears on the screen.
 
 <figure>
-  <img src="/images/guide/pattern-options/fabric-modal.png" />
+  <img src="/images/en/guide/pattern-options/fabric-modal.png" />
   <figcaption>The <strong>Fabric Properties</strong> window showing fabric count, kind, size, and color options.</figcaption>
 </figure>
 
@@ -83,7 +83,7 @@ The grid overlays your pattern to help you count stitches and navigate within th
 You can customize the grid's appearance by adjusting line intervals, thickness, and colors.
 
 <figure>
-  <img src="/images/guide/pattern-options/grid-modal.png"/>
+  <img src="/images/en/guide/pattern-options/grid-modal.png"/>
   <figcaption>The <strong>Grid Properties</strong> window showing major and minor lines settings.</figcaption>
 </figure>
 
