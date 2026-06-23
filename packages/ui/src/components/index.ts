@@ -20,13 +20,13 @@ export { default as Separator, type SeparatorProps } from "./Separator/Separator
 export { default as Editable, type EditableProps, type EditableEmits } from "./Editable/Editable.vue";
 export { default as Checkbox, type CheckboxProps } from "./Checkbox/Checkbox.vue";
 export { default as ColorPicker, type ColorPickerProps } from "./ColorPicker/ColorPicker.vue";
-export { default as FilePicker, type FilePickerProps, type FilePickerEmits } from "./FilePicker/FilePicker.vue";
 export { default as FormField, type FormFieldProps } from "./FormField/FormField.vue";
 export { default as FormFieldGroup, type FormFieldGroupProps } from "./FormFieldGroup/FormFieldGroup.vue";
 export { default as FormFieldSet, type FormFieldSetProps } from "./FormFieldSet/FormFieldSet.vue";
 export { default as Input, type InputProps } from "./Input/Input.vue";
 export { default as InputColor, type InputColorProps } from "./InputColor/InputColor.vue";
 export { default as InputDimensions, type InputDimensionsProps } from "./InputDimensions/InputDimensions.vue";
+export { default as InputFile, type InputFileProps } from "./InputFile/InputFile.vue";
 export { default as InputNumber, type InputNumberProps } from "./InputNumber/InputNumber.vue";
 export { default as InputNumberSlider, type InputNumberSliderProps } from "./InputNumberSlider/InputNumberSlider.vue";
 export {

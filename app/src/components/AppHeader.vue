@@ -18,7 +18,7 @@ import {
   IconSettings,
   IconUndo,
 } from "~/assets/icons/";
-import { useEditorModals, useFilePicker, useI18n } from "~/composables/";
+import { useEditorModals, useI18n } from "~/composables/";
 import { useTour } from "~/composables/core/";
 import { Fabric } from "~/lib/pattern/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
@@ -32,7 +32,6 @@ const tour = useTour();
 const { fluent } = useI18n();
 
 const modals = useEditorModals();
-const filePicker = useFilePicker();
 
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
@@ -89,13 +88,7 @@ const appMenu = computed(() => {
             {
               label: fluent.$t("app-menu-file-import-image"),
               async onSelect() {
-                const handle = await filePicker.open({
-                  types: filePicker.filters.image,
-                  id: filePicker.ids.image,
-                });
-                if (!handle) return;
-
-                const patternBytes = await modals.imageImportModal.open({ imageFile: await handle.getFile() }).result;
+                const patternBytes = await modals.imageImportModal.open().result;
                 if (patternBytes) {
                   const patternId = await patternFileStore.addPattern(patternBytes);
                   patternFileStore.switchPattern(patternId);

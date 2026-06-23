@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
-export const FilePickerTheme = tv({
+export const InputFileTheme = tv({
   base: "",
   variants: {
     size: {
@@ -12,4 +12,4 @@ export const FilePickerTheme = tv({
   },
 });
 
-export type FilePickerThemeVariants = VariantProps<typeof FilePickerTheme>;
+export type InputFileThemeVariants = VariantProps<typeof InputFileTheme>;

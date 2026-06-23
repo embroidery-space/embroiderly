@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Button, Checkbox, FilePicker, FormField, InputNumber, Select, Tabs } from "@embroiderly/ui";
+import { Button, Checkbox, FormField, InputFile, InputNumber, Select, Tabs } from "@embroiderly/ui";
 import type { TabsItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
 import { IconLaptop, IconMoon, IconSun } from "~/assets/icons/";
-import { useEditor, useFilePicker, useI18n } from "~/composables/";
+import { useEditor, useI18n } from "~/composables/";
 import { LayerLayout, WheelAction } from "~/lib/types/";
 import { StartupAction, useSettingsStore } from "~/stores/";
 import type {
@@ -26,7 +26,6 @@ const other = defineModel<OtherOptions>("other", { required: true });
 
 const { files } = useEditor();
 const { fluent } = useI18n();
-const filePicker = useFilePicker();
 
 const settingsStore = useSettingsStore();
 
@@ -75,14 +74,9 @@ const layerLayoutOptions = computed(() => [
   { label: fluent.$t("settings-workarea-pattern-layer-layout-layer-order"), value: LayerLayout.ByLayerOrder },
 ]);
 
-async function pickPatternTemplate() {
-  const fileHandle = await filePicker.open({
-    types: filePicker.filters.pattern,
-    id: filePicker.ids.pattern,
-  });
-  if (!fileHandle) return;
+async function savePatternTemplate(file: File | null) {
+  if (!file) return;
 
-  const file = await fileHandle.getFile();
   const data = new Uint8Array(await file.arrayBuffer());
 
   if (startup.value.patternTemplate) {
@@ -131,11 +125,12 @@ async function pickPatternTemplate() {
         </FormField>
 
         <FormField :label="$t('settings-startup-template-path')" class="w-full">
-          <FilePicker
-            v-model="startup.patternTemplate"
+          <InputFile
+            accept=".embproj, .oxs, .xsd"
+            :label="startup.patternTemplate"
             :disabled="startup.action !== StartupAction.CustomTemplate"
             class="w-full"
-            @pick="pickPatternTemplate"
+            @update:model-value="savePatternTemplate"
           />
         </FormField>
       </div>

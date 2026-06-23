@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { logEvent } from "histoire/client";
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 
-import FilePicker from "./FilePicker.vue";
-import type { FilePickerProps } from "./FilePicker.vue";
+import InputFile from "./InputFile.vue";
+import type { InputFileProps } from "./InputFile.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
-const value = ref("/path/to/file.txt");
-const state = reactive<FilePickerProps>({
+const state = reactive<InputFileProps>({
   size: "md",
   disabled: false,
 });
@@ -17,9 +16,9 @@ defineExpose({ state });
 </script>
 
 <template>
-  <Story id="file-picker" group="form" title="FilePicker" :layout="{ type: 'single', iframe: false }">
+  <Story id="input-file" group="form" title="InputFile" :layout="{ type: 'single', iframe: false }">
     <Variant id="demo" title="Demo" auto-props-disabled>
-      <FilePicker v-model="value" v-bind="state" @pick="logEvent('pick', {})" />
+      <InputFile v-bind="state" @change="logEvent('change', $event)" />
 
       <template #controls>
         <HstCheckbox v-model="state.disabled" title="Disabled" />
@@ -29,7 +28,7 @@ defineExpose({ state });
 
     <Variant id="sizes" title="Sizes" auto-props-disabled>
       <div class="flex flex-col gap-4">
-        <FilePicker v-for="size in sizes" :key="size" v-model="value" :size="size" />
+        <InputFile v-for="size in sizes" :key="size" :size="size" />
       </div>
     </Variant>
   </Story>
