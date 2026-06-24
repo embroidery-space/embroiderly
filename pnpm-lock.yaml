@@ -522,15 +522,9 @@ importers:
       '@wdio/spec-reporter':
         specifier: 'catalog:'
         version: 9.29.0
-      '@wdio/visual-service':
-        specifier: 'catalog:'
-        version: 9.2.3(webdriverio@9.29.0)
       concurrently:
         specifier: 'catalog:'
         version: 10.0.3
-      sharp:
-        specifier: 'catalog:'
-        version: 0.35.1
       tailwindcss:
         specifier: 'catalog:'
         version: 4.3.1
@@ -583,9 +577,48 @@ importers:
         specifier: 'catalog:'
         version: 3.5.38(typescript@6.0.3)
     devDependencies:
+      '@fluent/bundle':
+        specifier: 'catalog:'
+        version: 0.19.1
+      '@tsconfig/node24':
+        specifier: 'catalog:'
+        version: 24.0.4
+      '@tsconfig/strictest':
+        specifier: 'catalog:'
+        version: 2.0.8
+      '@types/mocha':
+        specifier: 'catalog:'
+        version: 10.0.10
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.2
       '@vite-pwa/assets-generator':
         specifier: 'catalog:'
         version: 1.0.2
+      '@wdio/cli':
+        specifier: 'catalog:'
+        version: 9.29.0(@types/node@24.13.2)(expect-webdriverio@5.6.5)
+      '@wdio/globals':
+        specifier: 'catalog:'
+        version: 9.29.0(expect-webdriverio@5.6.5)(webdriverio@9.29.0)
+      '@wdio/local-runner':
+        specifier: 'catalog:'
+        version: 9.29.0(@wdio/globals@9.29.0)(webdriverio@9.29.0)
+      '@wdio/mocha-framework':
+        specifier: 'catalog:'
+        version: 9.29.0
+      '@wdio/spec-reporter':
+        specifier: 'catalog:'
+        version: 9.29.0
+      '@wdio/visual-service':
+        specifier: 'catalog:'
+        version: 9.2.3(webdriverio@9.29.0)
+      sharp:
+        specifier: 'catalog:'
+        version: 0.35.1
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
       vitepress:
         specifier: 'catalog:'
         version: 2.0.0-alpha.17(@types/node@24.13.2)(change-case@5.4.4)(fuse.js@7.4.2)(jiti@2.7.0)(lightningcss@1.32.0)(postcss@8.5.15)(sortablejs@1.15.7)(terser@5.48.0)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.9.0)

@@ -13,6 +13,7 @@
     "docs:dev": "pnpm -F @embroiderly/docs dev",
     "docs:build": "pnpm -F @embroiderly/docs build",
     "docs:preview": "pnpm -F @embroiderly/docs preview",
+    "docs:screenshots": "pnpm -F @embroiderly/docs screenshots",
     "|----- UI Kit ----|": "",
     "ui:dev": "pnpm -F @embroiderly/ui dev",
     "ui:build": "pnpm -F @embroiderly/ui build",
