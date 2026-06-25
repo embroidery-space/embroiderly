@@ -1,5 +1,4 @@
 import path from "node:path";
-import { setTimeout } from "node:timers/promises";
 
 import sharp from "sharp";
 
@@ -10,9 +9,9 @@ import { prepareSession } from "../../utils/session";
 
 for (const language of LANGUAGES) {
   describe(`Embroiderly Screenshots (${language}) > Guides > Working with Patterns`, () => {
-    const { openDemoPattern, openSettings } = actions(language);
+    const { openDemoPattern, openSettings, openCanvasPanel } = actions(language);
 
-    beforeEach(() => prepareSession(language));
+    beforeEach(() => prepareSession({ language }));
 
     it("Workarea Settings", async () => {
       await openSettings();
@@ -53,12 +52,7 @@ for (const language of LANGUAGES) {
 
     it("Canvas Panel", async () => {
       await openDemoPattern();
-
-      await $(`aria/${$t(language, "canvas-panel-collapse")}`).click();
-      await $(`aria/${$t(language, "canvas-panel-expand")}`).click();
-
-      await $$(`div[data-resize-handle=""]`)[1].dragAndDrop({ x: -150, y: 0 });
-      await setTimeout(100);
+      await openCanvasPanel();
 
       await $(`div[data-tour="canvas-panel"]`).saveScreenshot(
         path.join(guideDest(language, "working-with-patterns"), "canvas-panel.png"),

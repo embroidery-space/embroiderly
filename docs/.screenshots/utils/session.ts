@@ -56,12 +56,25 @@ export async function closeAllPatterns(language: Language) {
   await $(`[data-testid="welcome-screen"]`).waitForDisplayed();
 }
 
+export interface SessionOptions {
+  language: Language;
+  viewport?: ViewportOptions;
+}
+
+export interface ViewportOptions {
+  width: number;
+  height: number;
+  devicePixelRatio?: number;
+}
+
 /** Resets the browser session and app state before each screenshot test. */
-export async function prepareSession(language: Language) {
+export async function prepareSession(options: SessionOptions) {
+  const { language, viewport } = options;
+
   await browser.reloadSession();
   await browser.url("/");
 
-  await browser.setViewport({ width: 1920, height: 1080, devicePixelRatio: 1 });
+  await browser.setViewport({ width: 1920, height: 1080, devicePixelRatio: 1, ...viewport });
 
   await browser.execute(() => {
     localStorage.setItem("embroiderly-tour-offered", "true");

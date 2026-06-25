@@ -15,12 +15,6 @@ export function actions(language: Language) {
       await $(`//div[@role="menuitem"][contains(., "${$t(language, "demo-pattern-piggies")}")]`).click();
     },
 
-    async enterPaletteEditingMode() {
-      await $(`aria/${$t(language, "palette-edit")}`).click();
-      await $(`//div[@role="listbox"][.//div[@role="group"]][.//div[@role="option"]]`).waitForDisplayed();
-      await setTimeout(100); // Wait for canvas to adjust its size.
-    },
-
     async openPatternInfo() {
       await $(`button*=${$t(language, "app-menu-pattern")}`).click();
       await $(`//div[@role="menuitem"][contains(., "${$t(language, "pattern-info")}")]`).click();
@@ -71,6 +65,46 @@ export function actions(language: Language) {
     async openSettings() {
       await browser.keys(["Control", ","]);
       await $(`//div[@role="dialog"][.//h2[text()="${$t(language, "settings")}"]]`).waitForDisplayed();
+    },
+
+    /** Reveals and widens the palette panel so its contents are fully visible in screenshots. */
+    async openPalettePanel() {
+      await $(`aria/${$t(language, "palette-panel-collapse")}`).click();
+      await $(`aria/${$t(language, "palette-panel-expand")}`).click();
+      await $$(`div[data-resize-handle=""]`)[0].dragAndDrop({ x: 100, y: 0 });
+      await setTimeout(100); // Wait for canvas to adjust its size.
+    },
+
+    /** Enters palette editing mode by clicking the "Edit Palette" button and waiting for the palette catalog to appear. */
+    async enterPaletteEditingMode() {
+      await $(`aria/${$t(language, "palette-edit")}`).click();
+      await $(`aria/${$t(language, "palette-catalog")}`)
+        .$(`//div[@role="listbox"][.//div[@role="group"]][.//div[@role="option"]]`)
+        .waitForDisplayed();
+      await setTimeout(100); // Wait for canvas to adjust its size.
+    },
+
+    /** Toggles an item (by its translation key) in the palette panel's "⋮" menu. */
+    async togglePaletteMenuItem(itemKey: string) {
+      await $(`aria/${$t(language, "palette-panel-menu")}`).click();
+      await $(`//div[@role="menuitem"][contains(., "${$t(language, itemKey)}")]`).click();
+    },
+
+    /** Right-clicks the first option inside the listbox of the panel identified by `rootKey`. */
+    async openPaletteContextMenu(rootKey: string) {
+      await $(`aria/${$t(language, rootKey)}`)
+        .$(`//div[@role="listbox"]`)
+        .$(`//div[@role="group"]`)
+        .$(`//div[@role="option"]`)
+        .click({ button: "right" });
+    },
+
+    /** Reveals and widens the canvas panel so its contents are fully visible in screenshots. */
+    async openCanvasPanel() {
+      await $(`aria/${$t(language, "canvas-panel-collapse")}`).click();
+      await $(`aria/${$t(language, "canvas-panel-expand")}`).click();
+      await $$(`div[data-resize-handle=""]`)[1].dragAndDrop({ x: -150, y: 0 });
+      await setTimeout(100); // Wait for canvas to adjust its size.
     },
   };
 }

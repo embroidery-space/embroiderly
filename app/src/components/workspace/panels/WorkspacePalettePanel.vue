@@ -407,7 +407,7 @@ async function updatePaletteDisplaySettings() {
               class="grow justify-center text-sm"
               @click="editorStateStore.paletteMode = PaletteMode.Regular"
             />
-            <DropdownMenu :items="palettePanelsMenuOptions">
+            <DropdownMenu :items="palettePanelsMenuOptions" :content="{ align: 'end' }">
               <Button :icon="IconMenu" :aria-label="$t('palette-panel-menu')" />
             </DropdownMenu>
           </div>

@@ -9,7 +9,7 @@ for (const language of LANGUAGES) {
   describe(`Embroiderly Screenshots (${language}) > Guides > Importing Images`, () => {
     const { openImageImport } = actions(language);
 
-    beforeEach(() => prepareSession(language));
+    beforeEach(() => prepareSession({ language }));
 
     it("Image Import", async () => {
       await openImageImport();

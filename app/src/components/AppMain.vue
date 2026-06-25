@@ -84,6 +84,7 @@ onMounted(async () => {
   <main class="overflow-hidden">
     <Splitter ref="splitter" direction="horizontal" class="size-full">
       <WorkspacePalettePanel
+        :aria-label="$t('palette-panel')"
         collapsible
         :collapsed-size="palettePanelCollapsedSize"
         :min-size="palettePanelDefaultSize"
@@ -106,6 +107,7 @@ onMounted(async () => {
       </SplitterPanel>
 
       <WorkspaceCanvasPanel
+        :aria-label="$t('canvas-panel')"
         data-tour="canvas-panel"
         collapsible
         :collapsed-size="canvasToolbarCollapsedSize"

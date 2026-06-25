@@ -198,8 +198,14 @@ onMounted(async () => {
               "
             />
 
-            <DropdownMenu :items="symbolFontMenuOptions">
-              <Button :loading="importingFonts" color="neutral" variant="outline" :icon="IconMenu" />
+            <DropdownMenu :items="symbolFontMenuOptions" :content="{ align: 'end' }">
+              <Button
+                :aria-label="$t('stitch-symbols-menu')"
+                :loading="importingFonts"
+                color="neutral"
+                variant="outline"
+                :icon="IconMenu"
+              />
             </DropdownMenu>
           </div>
         </template>

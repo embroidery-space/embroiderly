@@ -284,6 +284,8 @@ updater-unsaved-changes =
 
 ## Canvas panel.
 
+canvas-panel = Canvas Panel
+
 canvas-panel-collapse = Collapse canvas panel
 canvas-panel-expand = Expand canvas panel
 
@@ -396,6 +398,8 @@ grid-pixel-line =
 
 ## Palette panel.
 
+palette-panel = Palette Panel
+
 palette-panel-collapse = Collapse palette panel
 palette-panel-expand = Expand palette panel
 
@@ -442,8 +446,8 @@ palette-ctx-menu-delete-all = Delete All
 ## Palette catalog.
 
 palette-catalog = Colors
-palette-catalog-menu = Palette options
 
+palette-catalog-menu = Palette options
 palette-catalog-menu-import-palettes = Import Palettes
 
 palette-catalog-search =
@@ -472,6 +476,7 @@ stitch-symbols-usage = { $total ->
 }
 stitch-symbols-empty = No symbols available
 
+stitch-symbols-menu = Symbols options
 stitch-symbols-menu-import-fonts = Import Fonts
 
 stitch-symbols-ctx-menu-set-symbol = Set Symbol

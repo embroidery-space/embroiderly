@@ -17,7 +17,7 @@ for (const language of LANGUAGES) {
       openImageImport,
     } = actions(language);
 
-    beforeEach(() => prepareSession(language));
+    beforeEach(() => prepareSession({ language }));
 
     it("Welcome Screen", async () => {
       await dualThemeScreenshot("overview-welcome-screen", path.join(overviewDest(language), "welcome-screen.png"));

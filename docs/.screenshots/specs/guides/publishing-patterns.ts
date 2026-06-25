@@ -9,7 +9,7 @@ for (const language of LANGUAGES) {
   describe(`Embroiderly Screenshots (${language}) > Guides > Publishing Patterns`, () => {
     const { openDemoPattern, openPdfExport } = actions(language);
 
-    beforeEach(() => prepareSession(language));
+    beforeEach(() => prepareSession({ language }));
 
     it("PDF Export", async () => {
       await openDemoPattern();

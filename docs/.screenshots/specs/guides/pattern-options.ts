@@ -11,7 +11,7 @@ for (const language of LANGUAGES) {
   describe(`Embroiderly Screenshots (${language}) > Guides > Pattern Options`, () => {
     const { openDemoPattern, openPatternInfo, openFabricProperties, openGridProperties } = actions(language);
 
-    beforeEach(() => prepareSession(language));
+    beforeEach(() => prepareSession({ language }));
 
     it("Pattern Menu", async () => {
       await openDemoPattern();
