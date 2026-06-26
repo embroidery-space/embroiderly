@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { Menubar } from "reka-ui/namespaced";
-import { toRef } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import { usePortal } from "../../composables/usePortal.ts";
 import { getLinkRel, isExternalHref } from "../../utils/link.ts";
 import { parseShortcutDisplay } from "../../utils/shortcut.ts";
 import Icon from "../Icon/Icon.vue";
@@ -17,7 +15,6 @@ interface MenubarContentInternalProps {
 
   size?: string;
 
-  portal?: boolean | string | HTMLElement;
   sub?: boolean;
 
   alignOffset?: number;
@@ -28,13 +25,11 @@ interface MenubarContentInternalProps {
   ui: ReturnType<typeof MenubarTheme>;
 }
 
-const props = withDefaults(defineProps<MenubarContentInternalProps>(), {
+withDefaults(defineProps<MenubarContentInternalProps>(), {
   sub: false,
 });
 
 const { icons } = useComponentIcons();
-
-const portalProps = usePortal(toRef(() => props.portal ?? true));
 
 function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarItem[][] {
   if (!children?.length) return [];
@@ -117,18 +112,15 @@ function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarIt
             </span>
           </Menubar.SubTrigger>
 
-          <Menubar.Portal v-bind="portalProps">
-            <MenubarContent
-              sub
-              :items="normalizeChildren(item.children)"
-              :ui="ui"
-              :size="size"
-              :portal="portal"
-              :align-offset="-4"
-              data-slot="content"
-              :class="ui.content()"
-            />
-          </Menubar.Portal>
+          <MenubarContent
+            sub
+            :items="normalizeChildren(item.children)"
+            :ui="ui"
+            :size="size"
+            :align-offset="-4"
+            data-slot="content"
+            :class="ui.content()"
+          />
         </Menubar.Sub>
 
         <Menubar.Item

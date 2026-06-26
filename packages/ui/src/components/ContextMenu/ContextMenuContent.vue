@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ContextMenu } from "reka-ui/namespaced";
-import { toRef } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import { usePortal } from "../../composables/usePortal.ts";
 import { getLinkRel, isExternalHref } from "../../utils/link.ts";
 import { parseShortcutDisplay } from "../../utils/shortcut.ts";
 import Icon from "../Icon/Icon.vue";
@@ -17,7 +15,6 @@ interface ContextMenuContentInternalProps {
 
   size?: string;
 
-  portal?: boolean | string | HTMLElement;
   sub?: boolean;
 
   alignOffset?: number;
@@ -27,13 +24,11 @@ interface ContextMenuContentInternalProps {
   ui: ReturnType<typeof ContextMenuTheme>;
 }
 
-const props = withDefaults(defineProps<ContextMenuContentInternalProps>(), {
+withDefaults(defineProps<ContextMenuContentInternalProps>(), {
   sub: false,
 });
 
 const { icons } = useComponentIcons();
-
-const portalProps = usePortal(toRef(() => props.portal ?? true));
 
 function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): ContextMenuItem[][] {
   if (!children?.length) return [];
@@ -117,18 +112,15 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
             </span>
           </ContextMenu.SubTrigger>
 
-          <ContextMenu.Portal v-bind="portalProps">
-            <ContextMenuContent
-              sub
-              :items="normalizeChildren(item.children)"
-              :ui="ui"
-              :size="size"
-              :portal="portal"
-              :align-offset="-4"
-              data-slot="content"
-              :class="ui.content()"
-            />
-          </ContextMenu.Portal>
+          <ContextMenuContent
+            sub
+            :items="normalizeChildren(item.children)"
+            :ui="ui"
+            :size="size"
+            :align-offset="-4"
+            data-slot="content"
+            :class="ui.content()"
+          />
         </ContextMenu.Sub>
 
         <ContextMenu.Item
