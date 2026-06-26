@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { DropdownMenu } from "reka-ui/namespaced";
-import { toRef } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import { usePortal } from "../../composables/usePortal.ts";
 import { getLinkRel, isExternalHref } from "../../utils/link.ts";
 import { parseShortcutDisplay } from "../../utils/shortcut.ts";
 import Icon from "../Icon/Icon.vue";
@@ -31,13 +29,11 @@ interface DropdownMenuContentInternalProps {
   ui: ReturnType<typeof DropdownMenuTheme>;
 }
 
-const props = withDefaults(defineProps<DropdownMenuContentInternalProps>(), {
+withDefaults(defineProps<DropdownMenuContentInternalProps>(), {
   sub: false,
 });
 
 const { icons } = useComponentIcons();
-
-const portalProps = usePortal(toRef(() => props.portal ?? true));
 
 function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]): DropdownMenuItem[][] {
   if (!children?.length) return [];
@@ -125,19 +121,16 @@ function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]):
             </span>
           </DropdownMenu.SubTrigger>
 
-          <DropdownMenu.Portal v-bind="portalProps">
-            <DropdownMenuContent
-              sub
-              :items="normalizeChildren(item.children)"
-              :ui="ui"
-              :size="size"
-              :portal="portal"
-              :side-offset="sideOffset"
-              :align-offset="-4"
-              data-slot="content"
-              :class="ui.content()"
-            />
-          </DropdownMenu.Portal>
+          <DropdownMenuContent
+            sub
+            :items="normalizeChildren(item.children)"
+            :ui="ui"
+            :size="size"
+            :side-offset="sideOffset"
+            :align-offset="-4"
+            data-slot="content"
+            :class="ui.content()"
+          />
         </DropdownMenu.Sub>
 
         <DropdownMenu.Item
