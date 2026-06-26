@@ -139,7 +139,6 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
           v-bind="contentProps"
           :items="normalizeItems(menu.items)"
           :size="size"
-          :portal="portal"
           data-slot="content"
           :class="ui.content({ class: props.ui?.content })"
           :ui="ui"
