@@ -22,7 +22,6 @@ export async function setAppUi(ui?: Partial<UiOptions>) {
   await setTimeout(1000);
 
   await browser.execute(() => {
-    // @ts-expect-error The `document` object is available inside this callback.
     const style = document.createElement("style");
     style.innerHTML = `
       *, *::before, *::after {
@@ -30,7 +29,7 @@ export async function setAppUi(ui?: Partial<UiOptions>) {
         transition: none !important;
       }
     `;
-    // @ts-expect-error ...
+
     document.head.append(style);
   });
 }

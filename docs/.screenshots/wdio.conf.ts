@@ -34,15 +34,7 @@ export const config: WebdriverIO.Config = {
   baseUrl: PREVIEW_URL,
   capabilities: [{ browserName: "MicrosoftEdge" }],
 
-  services: [
-    [
-      "visual",
-      {
-        screenshotPath: path.join(ROOT_PATH, "docs", ".screenshots", ".tmp", "screenshots"),
-        formatImageName: "{tag}.{browserName}",
-      } satisfies VisualServiceOptions,
-    ],
-  ],
+  services: [["visual", { formatImageName: "{tag}.{browserName}" } satisfies VisualServiceOptions]],
 
   async onPrepare() {
     // Ensure a fresh production web build exists since we expect `vite preview` to serve it.

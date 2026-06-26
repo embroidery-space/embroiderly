@@ -8,7 +8,7 @@
 
     // Since TypeScript 6.0, the default lib is ES2025, but WebdriverIO doesn't support it yet.
     // Remove "lib" once it does.
-    "lib": ["ES2024"],
+    "lib": ["ES2024", "DOM"],
 
     "module": "ESNext",
     "moduleResolution": "Bundler",
