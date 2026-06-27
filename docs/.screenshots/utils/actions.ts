@@ -69,7 +69,6 @@ export function actions(language: Language) {
 
     /** Reveals and widens the palette panel so its contents are fully visible in screenshots. */
     async openPalettePanel() {
-      await $(`aria/${$t(language, "palette-panel-collapse")}`).click();
       await $(`aria/${$t(language, "palette-panel-expand")}`).click();
       await $$(`div[data-resize-handle=""]`)[0].dragAndDrop({ x: 100, y: 0 });
       await setTimeout(100); // Wait for canvas to adjust its size.
@@ -101,7 +100,6 @@ export function actions(language: Language) {
 
     /** Reveals and widens the canvas panel so its contents are fully visible in screenshots. */
     async openCanvasPanel() {
-      await $(`aria/${$t(language, "canvas-panel-collapse")}`).click();
       await $(`aria/${$t(language, "canvas-panel-expand")}`).click();
       await $$(`div[data-resize-handle=""]`)[1].dragAndDrop({ x: -150, y: 0 });
       await setTimeout(100); // Wait for canvas to adjust its size.
