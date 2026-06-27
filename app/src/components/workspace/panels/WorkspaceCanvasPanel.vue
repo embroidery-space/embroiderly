@@ -115,7 +115,7 @@ watch(
   <SplitterPanel
     ref="panel"
     v-bind="splitterPanelProps"
-    class="h-full"
+    class="h-full min-w-min"
     @collapse="editorStateStore.canvasPanelCollapsed = true"
     @expand="editorStateStore.canvasPanelCollapsed = false"
     @resize="editorStateStore.canvasPanelSize = $event"
@@ -134,7 +134,6 @@ watch(
         :delay-duration="200"
         :tooltip-options="{ side: 'left' }"
         orientation="vertical"
-        class="flex flex-col gap-1"
       />
 
       <Separator />
@@ -187,7 +186,6 @@ watch(
       <Popover v-else pinned side="left" align="start" class="flex h-[41.5vh] w-64 p-1">
         <template #default="{ open }">
           <ButtonIcon
-            size="lg"
             color="neutral"
             :variant="open ? 'soft' : 'ghost'"
             :icon="open ? IconClose : IconLayers"
