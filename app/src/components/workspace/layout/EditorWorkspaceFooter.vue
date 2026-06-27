@@ -3,7 +3,7 @@ import { ButtonIcon } from "@embroiderly/ui";
 
 import { IconPanelLeftClose, IconPanelLeftOpen, IconPanelRightClose, IconPanelRightOpen } from "~/assets/icons/";
 import { CanvasZoomControls } from "~/components/canvas/";
-import { useEditorStateStore } from "~/stores/";
+import { PaletteMode, useEditorStateStore } from "~/stores/";
 
 const { disabled = false } = defineProps<{
   disabled?: boolean;
@@ -20,7 +20,7 @@ const editorStateStore = useEditorStateStore();
       shortcut="Ctrl+Shift+L"
       :icon="editorStateStore.palettePanelCollapsed ? IconPanelLeftOpen : IconPanelLeftClose"
       :tooltip="editorStateStore.palettePanelCollapsed ? $t('palette-panel-expand') : $t('palette-panel-collapse')"
-      :disabled="disabled"
+      :disabled="disabled || editorStateStore.paletteMode === PaletteMode.Editing"
       @click="editorStateStore.palettePanelCollapsed = !editorStateStore.palettePanelCollapsed"
     />
 
