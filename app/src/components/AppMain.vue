@@ -3,6 +3,7 @@ import { BlockUI, Splitter, SplitterPanel, useToast } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { useDropZone } from "@vueuse/core";
+import { round } from "es-toolkit";
 import { onMounted, useTemplateRef, watch } from "vue";
 
 import { useI18n, useEditor } from "~/composables/";
@@ -89,6 +90,9 @@ onMounted(async () => {
         :collapsed-size="palettePanelCollapsedSize"
         :min-size="palettePanelDefaultSize"
         :default-size="editorStateStore.palettePanelSize ?? palettePanelDefaultSize"
+        @collapse="editorStateStore.palettePanelCollapsed = true"
+        @expand="editorStateStore.palettePanelCollapsed = false"
+        @resize="editorStateStore.palettePanelSize = round($event, 2)"
       />
 
       <SplitterPanel class="grid min-h-0 min-w-0 grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto]">
@@ -113,6 +117,9 @@ onMounted(async () => {
         :collapsed-size="canvasToolbarCollapsedSize"
         :min-size="canvasToolbarDefaultSize"
         :default-size="editorStateStore.canvasPanelSize ?? canvasToolbarDefaultSize"
+        @collapse="editorStateStore.canvasPanelCollapsed = true"
+        @expand="editorStateStore.canvasPanelCollapsed = false"
+        @resize="editorStateStore.canvasPanelSize = round($event, 2)"
       />
     </Splitter>
   </main>
