@@ -48,44 +48,47 @@ const confirm = useConfirm();
 
 const panel = useTemplateRef("panel");
 
+const collapsed = computed(() => editorStateStore.canvasPanelCollapsed);
+const disabled = computed(() => patternStore.pattern.isNil);
+
 const displayMode = computed({
-  get: () => (patternStore.pattern.isNil ? undefined : patternStore.pattern.displayMode),
+  get: () => (disabled.value ? undefined : patternStore.pattern.displayMode),
   set: patternStore.setDisplayMode,
 });
 const displayModeOptions = computed<ToolToggleItem[]>(() => [
   {
     icon: IconStitchMix,
-    tooltip: editorStateStore.canvasPanelCollapsed ? fluent.$t("canvas-view-mix") : undefined,
-    label: editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t("canvas-view-mix"),
+    tooltip: collapsed.value ? fluent.$t("canvas-view-mix") : undefined,
+    label: collapsed.value ? undefined : fluent.$t("canvas-view-mix"),
     value: DisplayMode.Mixed,
     shortcut: "Shift+V-M",
   },
   {
     icon: IconStitchSquare,
-    tooltip: editorStateStore.canvasPanelCollapsed ? fluent.$t("canvas-view-solid") : undefined,
-    label: editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t("canvas-view-solid"),
+    tooltip: collapsed.value ? fluent.$t("canvas-view-solid") : undefined,
+    label: collapsed.value ? undefined : fluent.$t("canvas-view-solid"),
     value: DisplayMode.Solid,
     shortcut: "Shift+V-S",
   },
   {
     icon: IconStitchFull,
-    tooltip: editorStateStore.canvasPanelCollapsed ? fluent.$t("canvas-view-stitches") : undefined,
-    label: editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t("canvas-view-stitches"),
+    tooltip: collapsed.value ? fluent.$t("canvas-view-stitches") : undefined,
+    label: collapsed.value ? undefined : fluent.$t("canvas-view-stitches"),
     value: DisplayMode.Stitches,
     shortcut: "Shift+V-X",
   },
 ]);
 
 const showSymbols = computed({
-  get: () => (patternStore.pattern.isNil ? undefined : patternStore.pattern.showSymbols),
+  get: () => (disabled.value ? undefined : patternStore.pattern.showSymbols),
   set: patternStore.showSymbols,
 });
 const showGrid = computed({
-  get: () => (patternStore.pattern.isNil ? undefined : patternStore.pattern.showGrid),
+  get: () => (disabled.value ? undefined : patternStore.pattern.showGrid),
   set: patternStore.showGrid,
 });
 const showRulers = computed({
-  get: () => (patternStore.pattern.isNil ? undefined : patternStore.pattern.showRulers),
+  get: () => (disabled.value ? undefined : patternStore.pattern.showRulers),
   set: patternStore.showRulers,
 });
 
@@ -102,24 +105,14 @@ async function handleRemoveLayer(index: number) {
   }
 }
 
-watch(
-  () => editorStateStore.canvasPanelCollapsed,
-  (value) => {
-    if (value) panel.value?.collapse();
-    else panel.value?.expand();
-  },
-);
+watch(collapsed, (value) => {
+  if (value) panel.value?.collapse();
+  else panel.value?.expand();
+});
 </script>
 
 <template>
-  <SplitterPanel
-    ref="panel"
-    v-bind="splitterPanelProps"
-    class="h-full min-w-min"
-    @collapse="editorStateStore.canvasPanelCollapsed = true"
-    @expand="editorStateStore.canvasPanelCollapsed = false"
-    @resize="editorStateStore.canvasPanelSize = $event"
-  >
+  <SplitterPanel ref="panel" v-bind="splitterPanelProps" class="h-full min-w-min">
     <ScrollArea
       class="h-full"
       orientation="vertical"
@@ -130,7 +123,7 @@ watch(
       <ToolToggleGroup
         v-model="displayMode"
         :items="displayModeOptions"
-        :disabled="patternStore.pattern.isNil"
+        :disabled="disabled"
         :delay-duration="200"
         :tooltip-options="{ side: 'left' }"
         orientation="vertical"
@@ -142,9 +135,9 @@ watch(
         v-model="showSymbols"
         shortcut="Shift+S"
         :icon="IconSymbols"
-        :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-symbols') : undefined"
-        :label="editorStateStore.canvasPanelCollapsed ? undefined : fluent.$t('canvas-symbols')"
-        :disabled="patternStore.pattern.isNil"
+        :tooltip="collapsed ? $t('canvas-symbols') : undefined"
+        :label="collapsed ? undefined : fluent.$t('canvas-symbols')"
+        :disabled="disabled"
         :delay-duration="200"
         :tooltip-options="{ side: 'left' }"
       />
@@ -152,9 +145,9 @@ watch(
         v-model="showGrid"
         shortcut="Shift+G"
         :icon="IconGrid"
-        :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-grid') : undefined"
-        :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-grid')"
-        :disabled="patternStore.pattern.isNil"
+        :tooltip="collapsed ? $t('canvas-grid') : undefined"
+        :label="collapsed ? undefined : $t('canvas-grid')"
+        :disabled="disabled"
         :delay-duration="200"
         :tooltip-options="{ side: 'left' }"
       />
@@ -162,9 +155,9 @@ watch(
         v-model="showRulers"
         shortcut="Shift+R"
         :icon="IconRulers"
-        :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-rulers') : undefined"
-        :label="editorStateStore.canvasPanelCollapsed ? undefined : $t('canvas-rulers')"
-        :disabled="patternStore.pattern.isNil"
+        :tooltip="collapsed ? $t('canvas-rulers') : undefined"
+        :label="collapsed ? undefined : $t('canvas-rulers')"
+        :disabled="disabled"
         :delay-duration="200"
         :tooltip-options="{ side: 'left' }"
       />
@@ -172,10 +165,10 @@ watch(
       <Separator />
 
       <CanvasLayers
-        v-if="!editorStateStore.canvasPanelCollapsed"
+        v-if="!collapsed"
         v-model="editorStateStore.selectedLayerIndex"
         :layers="patternStore.pattern.layers.itemsInVisualOrder"
-        :disabled="patternStore.pattern.isNil"
+        :disabled="disabled"
         class="grow"
         @add-layer="patternStore.addLayer"
         @remove-layer="handleRemoveLayer"
@@ -189,7 +182,7 @@ watch(
             color="neutral"
             :variant="open ? 'soft' : 'ghost'"
             :icon="open ? IconClose : IconLayers"
-            :disabled="patternStore.pattern.isNil"
+            :disabled="disabled"
             :tooltip="$t('canvas-layers')"
             side="left"
           />
@@ -199,7 +192,7 @@ watch(
           <CanvasLayers
             v-model="editorStateStore.selectedLayerIndex"
             :layers="patternStore.pattern.layers.itemsInVisualOrder"
-            :disabled="patternStore.pattern.isNil"
+            :disabled="disabled"
             class="w-full"
             @add-layer="patternStore.addLayer"
             @remove-layer="handleRemoveLayer"

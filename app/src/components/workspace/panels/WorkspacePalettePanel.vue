@@ -38,7 +38,7 @@ const toast = useToast();
 
 const panel = useTemplateRef("panel");
 
-const collapsed = ref(false);
+const collapsed = computed(() => editorStateStore.palettePanelCollapsed);
 const disabled = computed(() => patternStore.pattern.isNil);
 const paletteIsEmpty = computed(() => patternStore.pattern.palette.length === 0);
 
@@ -274,27 +274,10 @@ watch(
   },
 );
 
-watch(
-  () => editorStateStore.palettePanelCollapsed,
-  (collapsed) => {
-    if (collapsed) panel.value?.collapse();
-    else panel.value?.expand();
-  },
-);
-
-function handlePanelCollapse() {
-  collapsed.value = true;
-  if (editorStateStore.paletteMode !== PaletteMode.Editing) {
-    editorStateStore.palettePanelCollapsed = true;
-  }
-}
-
-function handlePanelExpand() {
-  collapsed.value = false;
-  if (editorStateStore.paletteMode !== PaletteMode.Editing) {
-    editorStateStore.palettePanelCollapsed = false;
-  }
-}
+watch(collapsed, (value) => {
+  if (value) panel.value?.collapse();
+  else panel.value?.expand();
+});
 
 function handleSetSymbol({ fontFamily, codePoint }: { fontFamily: string; codePoint: number }) {
   if (editorStateStore.selectedPaletteItemIndex === undefined) {
@@ -369,9 +352,6 @@ async function updatePaletteDisplaySettings() {
     :class="{ 'border-2 border-primary': editorStateStore.paletteMode === PaletteMode.Editing }"
     :style="{ overflow: collapsed ? undefined : 'visible clip' }"
     @keydown.escape="editorStateStore.paletteMode = PaletteMode.Regular"
-    @collapse="handlePanelCollapse"
-    @expand="handlePanelExpand"
-    @resize="editorStateStore.palettePanelSize = $event"
   >
     <ContextMenu
       :disabled="disabled"
