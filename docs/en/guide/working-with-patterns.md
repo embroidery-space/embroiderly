@@ -365,7 +365,7 @@ This setting controls how multiple custom layers are composited when their stitc
 
 <figure>
   <img src="/images/common/canvas/layer-layout.png">
-  <figcaption>The difference between By Layer Order and By Stitch Type options.</figcaption>
+  <figcaption>The difference between <strong>By Layer Order</strong> and <strong>By Stitch Type</strong> options.</figcaption>
 </figure>
 
 The grid always sits between cross stitches (full, petite, half, and quarter) and line and node stitches (back stitches, straight stitches, French knots, and beads), regardless of any other setting.

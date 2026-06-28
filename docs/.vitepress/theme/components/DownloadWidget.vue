@@ -1,7 +1,12 @@
 <script lang="ts" setup>
-const { title, description } = defineProps<{
+const { title, description, openInBrowserLabel, openInBrowserCaption, installAsDesktopApp } = defineProps<{
   title: string;
   description: string;
+
+  openInBrowserLabel: string;
+  openInBrowserCaption: string;
+
+  installAsDesktopApp: string;
 }>();
 
 async function download(installer: "exe" | "deb" | "rpm") {
@@ -24,13 +29,13 @@ async function download(installer: "exe" | "deb" | "rpm") {
 
     <div class="web-option">
       <a href="https://embroiderly.niusia.me" class="launch-button" target="_blank" rel="noopener noreferrer">
-        Open Embroiderly in Your Browser
+        {{ openInBrowserLabel }}
       </a>
-      <p class="web-hint">Free · No sign-up required · Available offline · Installable as a PWA</p>
+      <p class="web-hint">{{ openInBrowserCaption }}</p>
     </div>
 
     <div class="section-divider">
-      <span>or install as a desktop app</span>
+      <span>{{ installAsDesktopApp }}</span>
     </div>
 
     <div class="desktop-platforms">

@@ -11,6 +11,9 @@ lastUpdated: false
 <DownloadWidget
   title="Get Embroiderly"
   description="A free and open-source application for designing cross-stitch patterns"
+  openInBrowserLabel="Open Embroiderly in Your Browser"
+  openInBrowserCaption="Free · No sign-up required · Available offline · Installable as a PWA"
+  installAsDesktopApp="or install as a desktop app"
 />
 
 ## Browser Compatibility
