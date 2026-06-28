@@ -8,7 +8,7 @@ import llmstxt from "vitepress-plugin-llms";
 import * as locales from "./locales/";
 import { betterAnchors } from "./plugins/";
 
-const HOSTNAME = "https://embroiderly.niusia.me";
+const HOSTNAME = "https://docs.embroiderly.niusia.me";
 
 const LANGUAGES = ["en", "uk"];
 const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`, "u");
