@@ -1,5 +1,5 @@
-## Terms.
 
+## Terms.
 -app-name = Embroiderly
 
 ## Application credits.
@@ -284,6 +284,8 @@ updater-unsaved-changes =
 
 ## Canvas panel.
 
+canvas-panel = Панель полотна
+
 canvas-panel-collapse = Згорнути панель полотна
 canvas-panel-expand = Розгорнути панель полотна
 
@@ -396,6 +398,8 @@ grid-pixel-line =
 
 ## Palette panel.
 
+palette-panel = Панель палітри
+
 palette-panel-collapse = Згорнути панель палітри
 palette-panel-expand = Розгорнути панель палітри
 
@@ -445,8 +449,8 @@ palette-ctx-menu-delete-all = Видалити всі
 ## Palette catalog.
 
 palette-catalog = Кольори
-palette-catalog-menu = Опції палітри
 
+palette-catalog-menu = Опції палітри
 palette-catalog-menu-import-palettes = Імпортувати палітри
 
 palette-catalog-search =
@@ -476,6 +480,7 @@ stitch-symbols-usage = { $total ->
 }
 stitch-symbols-empty = Символи відсутні
 
+stitch-symbols-menu = Опції символів
 stitch-symbols-menu-import-fonts = Імпортувати шрифти
 
 stitch-symbols-ctx-menu-set-symbol = Встановити символ

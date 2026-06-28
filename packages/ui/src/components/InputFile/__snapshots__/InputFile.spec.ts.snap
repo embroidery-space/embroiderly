@@ -1,0 +1,127 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InputFile > renders correctly with accept 1`] = `
+<div>
+  <div class="-space-x-px inline-flex relative">
+    <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input accept="image/*" class="hidden" type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InputFile > renders correctly with class 1`] = `
+<div>
+  <div class="-space-x-px inline-flex relative w-64">
+    <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input class="hidden" type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InputFile > renders correctly with custom label 1`] = `
+<div>
+  <div class="-space-x-px inline-flex relative">
+    <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input class="hidden" type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InputFile > renders correctly with disabled 1`] = `
+<div>
+  <div class="-space-x-px inline-flex relative">
+    <button aria-disabled="true" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" disabled>
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input class="hidden" disabled type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" disabled id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InputFile > renders correctly with multiple 1`] = `
+<div>
+  <div class="-space-x-px inline-flex relative">
+    <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input class="hidden" multiple type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InputFile > renders correctly with size lg 1`] = `
+<div>
+  <div class="-space-x-px inline-flex relative">
+    <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-2 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-3 py-2 rounded-md text-base text-inverted transition-colors" data-slot="base">
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input class="hidden" type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-3 py-2 ring ring-accented ring-inset rounded-md text-base transition-colors w-full" data-slot="base" id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InputFile > renders correctly with size md 1`] = `
+<div>
+  <div class="-space-x-px inline-flex relative">
+    <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input class="hidden" type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InputFile > renders correctly with size sm 1`] = `
+<div>
+  <div class="-space-x-px inline-flex relative">
+    <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-1 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-2 py-1 rounded-md text-inverted text-xs transition-colors" data-slot="base">
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input class="hidden" type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-2 py-1 ring ring-accented ring-inset rounded-md text-xs transition-colors w-full" data-slot="base" id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InputFile > renders correctly with ui 1`] = `
+<div>
+  <div class="-space-x-px gap-4 inline-flex relative">
+    <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-1 gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center not-last:not-first:rounded-none not-only:first:rounded-e-none not-only:last:rounded-s-none px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base">
+      <span class="truncate" data-slot="label">Choose file</span>
+    </button>
+    <input class="hidden" type="file">
+    <div class="group has-focus-visible:z-1 inline-flex items-center relative w-full" data-slot="root">
+      <input class="appearance-none bg-elevated border-0 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-1.5 group-not-last:group-not-first:rounded-none group-not-only:group-first:rounded-e-none group-not-only:group-last:rounded-s-none px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-sm transition-colors w-full" data-slot="base" id="v-0" readonly type="text">
+    </div>
+  </div>
+</div>
+`;

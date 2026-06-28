@@ -43,6 +43,15 @@ If you wait longer, the sequence resets and you'll need to start over.
 > Key sequences won't work if you're holding down any modifier keys.
 > If you press a modifier key during a sequence, the sequence will be cancelled.
 
+## Application
+
+- `Ctrl+,` - Open application settings.
+
+## Layout
+
+- `Ctrl+Shift+L` - Toggle the palette panel on the left.
+- `Ctrl+Shift+R` - Toggle the canvas panel on the right.
+
 ## File Operations
 
 - `Ctrl+N` - Create a new pattern.
@@ -50,19 +59,33 @@ If you wait longer, the sequence resets and you'll need to start over.
 - `Ctrl+S` - Save the current pattern.
 - `Ctrl+Shift+S` - Save the current pattern with a new name or location.
 - `Ctrl+W` - Close the current pattern.
+- `Ctrl+Q` - Close the application (available only on desktop).
 
-## Editing & History
+## Navigation
 
-- `Ctrl+Z` - Undo the last action.
-- `Ctrl+Y` - Redo the previously undone action.
-- `Ctrl+Shift+Z` - Undo a single action from the history.
-- `Ctrl+Shift+Y` - Redo a single action from the history.
+- `Ctrl+1`, ..., `Ctrl+9` - Switch to the corresponding pattern.
+- `Ctrl+Home` - Switch to the first pattern.
+- `Ctrl+End` - Switch to the last pattern.
 
 ## Canvas & View
+
+**Canvas scale:**
 
 - `Ctrl++` - Zoom in.
 - `Ctrl+-` - Zoom out.
 - `Ctrl+0` - Fit the pattern to the viewport.
+
+**Pattern display:**
+
+- `Shift+V` + `M` - Enable mixed view.
+- `Shift+V` + `S` - Enable solid view.
+- `Shift+V` + `X` - Enable stitches view.
+
+**Other elements:**
+
+- `Shift+S` - Toggle stitch symbols.
+- `Shift+G` - Toggle grid.
+- `Shift+R` - Toggle rulers.
 
 ## Stitches & Tools
 
@@ -106,12 +129,20 @@ If you wait longer, the sequence resets and you'll need to start over.
 ### Node Stitches
 
 - `K` - French Knot.
-- `B` - Bead.
+- `J` - Bead.
 
 ### Other Tools
 
+- `E` - Eraser.
 - `C` - Cursor (selection tool).
 
-## Application
+## Editing & History
 
-- `Ctrl+,` - Open application settings.
+- `Ctrl+Z` - Undo the last action.
+- `Ctrl+Y` - Redo the previously undone action.
+- `Ctrl+Shift+Z` - Undo a single action from the history.
+- `Ctrl+Shift+Y` - Redo a single action from the history.
+
+> [!TIP]
+> If you have drawn multiple stitches within a single move, `Ctrl+Z` will undo _all_ those stitches, while `Ctrl+Shift+Z` will undo them _one by one_.
+> The same is applied to `Ctrl+Y` and `Ctrl+Shift+Y`.

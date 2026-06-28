@@ -24,19 +24,17 @@ However, "thread" more accurately reflects the physical item, while "color" refe
 ## Palette Panel Overview
 
 The palette panel appears on the left side of the pattern editor.
-It's organized into three main sections: the header, the palette list, and the footer.
+It's organized into two sections: the header and the palette list.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/palette-panel-overview.png">
+  <img src="/images/en/guide/palette-and-symbols/palette-panel-overview.png">
   <figcaption>The palette panel showing the working palette with several thread colors.</figcaption>
 </figure>
 
-The **header** contains tools for drawing stitches and manipulating the pattern.
+The **header** shows the total number of colors in your palette and provides a quick button to enter the editing mode.
 
 The **palette list** displays all thread colors currently in your working palette.
 Each color is shown as a tile with the thread's color, stitch symbol, and text information based on your palette display settings.
-
-The **footer** shows the total number of colors in your palette and provides a quick button to enter the editing mode.
 
 ## Palette List
 
@@ -50,7 +48,7 @@ Each item in the palette list displays:
 The exact information displayed depends on your current palette display settings.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/palette-item-details.png">
+  <img src="/images/common/palette/palette-item-details.png">
   <figcaption>Palette items showing all available information.</figcaption>
 </figure>
 
@@ -64,14 +62,14 @@ The quickest way is to right-click the palette list and select **Display Setting
 The context menu stays open while you adjust settings, letting you see changes in real-time.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/display-settings-menu.png">
+  <img src="/images/en/guide/palette-and-symbols/ctxmenu-regular.png">
   <figcaption>The context menu showing palette display settings.</figcaption>
 </figure>
 
 Alternatively, you can enter the [editing mode](#entering-the-editing-mode), then click the menu button in the header and select **Display Settings** to open a dedicated panel.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/display-settings-panel.png">
+  <img src="/images/en/guide/palette-and-symbols/display-settings.png">
   <figcaption>The <strong>Display Settings</strong> panel with all customization options.</figcaption>
 </figure>
 
@@ -79,11 +77,11 @@ Both the context menu and panel methods work equally well---choose whichever you
 
 The available palette display settings include:
 
-- **Number of columns**. Sets how many columns the palette list uses (1-8 columns).
-- **Color only**. Hides all text information and symbols, showing just the color tiles.
-- **Show stitch symbols**. Toggles the visibility of symbols assigned to palette items.
-- **Contrasting stitch symbols**. Places symbols on a white background for better visibility against thread colors.
-- **Show thread brand**, **Show color number**, and **Show color name**. Control which text information appears for each palette item.
+- **Number of columns.** Sets how many columns the palette list uses (1-8 columns).
+- **Color only.** Hides all text information and symbols, showing just the color tiles.
+- **Show stitch symbols.** Toggles the visibility of symbols assigned to palette items.
+- **Contrasting stitch symbols.** Places symbols on a white background for better visibility against thread colors.
+- **Show thread brand**, **Show color number**, and **Show color name.** Control which text information appears for each palette item.
 
 All changes apply immediately so you can see the results as you adjust settings.
 
@@ -105,11 +103,11 @@ When you select a different color, the previous one is automatically deselected.
 
 You can also navigate and select colors using the keyboard:
 
-- **Arrow Down**. Moves to the next color.
-- **Arrow Up**. Moves to the previous color.
-- **Home**. Jumps to the first color in the palette.
-- **End**. Jumps to the last color in the palette.
-- **Enter**. Selects the currently highlighted color.
+- **Arrow Down.** Moves to the next color.
+- **Arrow Up.** Moves to the previous color.
+- **Home.** Jumps to the first color in the palette.
+- **End.** Jumps to the last color in the palette.
+- **Enter.** Selects the currently highlighted color.
 
 > [!WARNING]
 > In multi-column layouts, arrow keys navigate horizontally (left/right through columns) rather than vertically (up/down through rows).
@@ -128,7 +126,7 @@ There are two ways to enter the editing mode:
 2. Right-click the palette list and select **Edit Palette**.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/editing-mode.png">
+  <img src="/images/en/guide/palette-and-symbols/editing-mode.png">
   <figcaption>The palette panel in the editing mode.</figcaption>
 </figure>
 
@@ -163,7 +161,7 @@ The palette panel's context menu changes based on which mode you're in.
 In the regular mode, the context menu provides access to entering the editing mode and palette display settings:
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/ctxmenu-regular.png">
+  <img src="/images/en/guide/palette-and-symbols/ctxmenu-regular.png">
   <figcaption>The context menu in the regular mode.</figcaption>
 </figure>
 
@@ -174,7 +172,7 @@ This menu is designed for quick adjustments to how you view your working palette
 In the editing mode, the context menu expands to include palette management options:
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/ctxmenu-editing.png">
+  <img src="/images/en/guide/palette-and-symbols/ctxmenu-editing.png">
   <figcaption>The context menu in the editing mode.</figcaption>
 </figure>
 
@@ -190,7 +188,7 @@ To add new colors to your working palette, you can use the **Palette Catalog**.
 2. Click the menu button in the header and select **Colors**, or right-click and select it from the context menu.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/palette-catalog.png">
+  <img src="/images/en/guide/palette-and-symbols/palette-catalog.png">
   <figcaption>The <strong>Palette Catalog</strong> showing available DMC thread colors.</figcaption>
 </figure>
 
@@ -214,7 +212,7 @@ If you know the thread number or name you're looking for, use the search input a
 Type a thread number (like "310") or color name (like "black") to filter the color list.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/palette-catalog-search.png">
+  <img src="/images/en/guide/palette-and-symbols/palette-catalog-search.png">
   <figcaption>Searching for DMC 310 in the <strong>Palette Catalog</strong>.</figcaption>
 </figure>
 
@@ -236,7 +234,7 @@ Besides removing colors through the **Palette Catalog**, you can also remove the
 2. Choose **Delete All** from the context menu.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/ctxmenu-editing.png">
+  <img src="/images/en/guide/palette-and-symbols/ctxmenu-editing.png">
   <figcaption>The context menu in the editing mode with the deletion options.</figcaption>
 </figure>
 
@@ -251,11 +249,6 @@ This is helpful for organizing colors logically, especially in patterns using th
 2. Right-click the palette list.
 3. Select **Sort By** -> **Brand & Number**.
 
-<figure>
-  <img src="/images/guide/palette-and-symbols/palette-sorting.png">
-  <figcaption>The <strong>Sort By</strong> submenu in the editing mode.</figcaption>
-</figure>
-
 The palette is reordered alphanumerically: first by the thread brand, then by the thread number within each brand.
 
 ### Rearranging Palette Items
@@ -267,7 +260,7 @@ For a custom organization, you can manually reorder colors in the editing mode u
 3. Drag and drop it at the desired position.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/drag-drop-reordering.png">
+  <img src="/images/common/palette/drag-drop-reordering.png">
   <figcaption>Dragging a palette item to manually reorder the list.</figcaption>
 </figure>
 
@@ -288,7 +281,7 @@ To switch to a different thread catalog:
 3. Select a different palette from the list.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/palette-selector.png">
+  <img src="/images/en/guide/palette-and-symbols/palette-selector.png">
   <figcaption>The palette selector showing system and custom palettes.</figcaption>
 </figure>
 
@@ -309,7 +302,7 @@ You can import additional palette files to expand your available thread colors.
 4. Choose one or more palette files from your computer.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/palette-catalog-menu.png">
+  <img src="/images/en/guide/palette-and-symbols/palette-catalog-menu.png">
   <figcaption>The catalog menu with the <strong>Import Palettes</strong> option.</figcaption>
 </figure>
 
@@ -341,7 +334,7 @@ They're especially useful when printing patterns on paper.
 2. Click the menu button in the header and select **Symbols**, or right-click and select it from the context menu.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/stitch-symbols.png">
+  <img src="/images/en/guide/palette-and-symbols/stitch-symbols.png">
   <figcaption>The <strong>Symbols</strong> panel showing all available font characters.</figcaption>
 </figure>
 
@@ -374,7 +367,7 @@ To remove a symbol from a palette item:
 2. Select **Unset Symbol**.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/symbol-menu.png">
+  <img src="/images/en/guide/palette-and-symbols/symbol-menu.png">
   <figcaption>The context menu for an assigned symbol showing the **Unset Symbol** option.</figcaption>
 </figure>
 
@@ -393,7 +386,7 @@ To change the symbol font:
 3. Select a different font from the list.
 
 <figure>
-  <img src="/images/guide/palette-and-symbols/font-selector.png">
+  <img src="/images/en/guide/palette-and-symbols/font-selector.png">
   <figcaption>The font selector showing system and custom fonts.</figcaption>
 </figure>
 
@@ -416,6 +409,11 @@ To import new symbol fonts:
 2. Click the menu button next to the font selector.
 3. Select **Import Fonts**.
 4. Choose one or more TrueType (`.ttf`) or OpenType (`.otf`) font files.
+
+<figure>
+  <img src="/images/en/guide/palette-and-symbols/stitch-symbols-menu.png">
+  <figcaption>The catalog menu with the <strong>Import Fonts</strong> option.</figcaption>
+</figure>
 
 The import process works similarly to palette import:
 

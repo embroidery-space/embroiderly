@@ -102,7 +102,21 @@ export const useSettingsStore = defineStore(
     watch(
       ui,
       (newUi) => {
-        document.documentElement.style.colorScheme = newUi.theme === "system" ? "light dark" : newUi.theme;
+        const theme = newUi.theme === "system" ? "light dark" : newUi.theme;
+        document.documentElement.style.colorScheme = theme;
+
+        // Polyfill fallback for LightningCSS transpiled `light-dark()` variables.
+        if (newUi.theme === "light") {
+          document.documentElement.style.setProperty("--lightningcss-light", "initial");
+          document.documentElement.style.setProperty("--lightningcss-dark", " ");
+        } else if (newUi.theme === "dark") {
+          document.documentElement.style.setProperty("--lightningcss-light", " ");
+          document.documentElement.style.setProperty("--lightningcss-dark", "initial");
+        } else {
+          document.documentElement.style.removeProperty("--lightningcss-light");
+          document.documentElement.style.removeProperty("--lightningcss-dark");
+        }
+
         document.documentElement.style.fontSize = newUi.scale;
         setLocale(newUi.language);
       },

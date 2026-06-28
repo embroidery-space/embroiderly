@@ -10,7 +10,7 @@ import { splitShortcutKey } from "../utils/shortcut.ts";
  * Shortcuts are automatically unregistered when the component unmounts.
  *
  * A key resolves to a plain combination (e.g. `Control+S`, `Ctrl+-`) when `splitShortcutKey` returns a single part containing `+`.
- * Everything else is a sequence (e.g. `P-T-L` → `['P', 'T', 'L']`, `Shift+V-M` → `['Shift+V', 'M']`, `F` → `['F']`).
+ * Everything else is a sequence (e.g. `P-T-L` -> `['P', 'T', 'L']`, `Shift+V-M` -> `['Shift+V', 'M']`, `F` -> `['F']`).
  */
 export function useShortcuts(shortcuts: MaybeRefOrGetter<Record<string, () => void>>) {
   const combinations: UseHotkeyDefinition[] = [];

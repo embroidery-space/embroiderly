@@ -77,7 +77,7 @@ export const docsEn: LocaleConfig = {
   root: {
     label: "English",
     lang: "en-US",
-    title: "Embroiderly",
+    title: "Embroiderly Docs",
     description: "A free, open-source, cross-platform desktop application for designing cross-stitch patterns.",
     themeConfig: {
       nav: [download, guide, reference, resources],

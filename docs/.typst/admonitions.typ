@@ -1,9 +1,9 @@
 #let _styles = (
-  "NOTE":      rgb("#0969da"),
-  "TIP":       rgb("#1a7f37"),
+  "NOTE": rgb("#0969da"),
+  "TIP": rgb("#1a7f37"),
   "IMPORTANT": rgb("#8250df"),
-  "WARNING":   rgb("#9a6700"),
-  "CAUTION":   rgb("#d1242f"),
+  "WARNING": rgb("#9a6700"),
+  "CAUTION": rgb("#d1242f"),
 )
 
 #let _get-text(content) = {
@@ -41,7 +41,7 @@
       fill: color.lighten(95%),
       inset: (x: 1em, y: 0.8em),
       radius: (right: 4pt),
-      breakable: false
+      breakable: false,
     )
   } else {
     // Regular blockquote.

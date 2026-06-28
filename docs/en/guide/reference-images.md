@@ -39,7 +39,7 @@ This doesn't affect any stitches you've already drawn.
 The **Cursor** tool lets you adjust your reference image's position, size, rotation, and transparency.
 
 <figure>
-  <img src="/images/guide/reference-images/cursor-tool.png">
+  <img src="/images/common/toolbar/toolbar-cursor.png">
   <figcaption>The <strong>Cursor</strong> tool in the palette toolbar.</figcaption>
 </figure>
 
@@ -49,7 +49,7 @@ Click directly on the reference image to focus it.
 When focused, the image gains a selection outline with control handles around it.
 
 <figure>
-  <img src="/images/guide/reference-images/reference-image-focused.png">
+  <img src="/images/common/canvas/reference-image.png">
   <figcaption>A focused reference image with a visible selection, control handles, and transparency slider.</figcaption>
 </figure>
 

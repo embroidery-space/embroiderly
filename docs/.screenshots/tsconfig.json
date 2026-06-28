@@ -1,0 +1,23 @@
+{
+  "extends": ["@tsconfig/node24/tsconfig.json", "@tsconfig/strictest/tsconfig.json"],
+  "include": ["wdio.conf.ts", "utils/**/*.ts", "specs/**/*.ts"],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+
+    "noEmit": true,
+
+    // Since TypeScript 6.0, the default lib is ES2025, but WebdriverIO doesn't support it yet.
+    // Remove "lib" once it does.
+    "lib": ["ES2024", "DOM"],
+
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    "exactOptionalPropertyTypes": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "strictPropertyInitialization": false,
+    "noUncheckedIndexedAccess": false,
+
+    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/visual-service"]
+  }
+}

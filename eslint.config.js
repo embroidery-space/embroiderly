@@ -80,7 +80,7 @@ export default defineConfigWithVueTs(
 
   // Testing.
   {
-    files: ["**/*.test.ts", "**/*.spec.ts"],
+    files: ["**/*.test.ts", "**/*.spec.ts", "docs/.screenshots/specs/**/*.ts"],
     plugins: { "no-only-tests": noOnlyTests },
     rules: {
       "no-only-tests/no-only-tests": "error",
@@ -104,7 +104,7 @@ export default defineConfigWithVueTs(
     },
   },
   {
-    files: ["app/tests/e2e/**/*.ts"],
+    files: ["app/tests/e2e/**/*.ts", "docs/.screenshots/**/*.ts"],
     extends: [wdio.configs["flat/recommended"]],
   },
 

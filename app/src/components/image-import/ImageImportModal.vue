@@ -6,8 +6,8 @@ import {
   Button,
   Checkbox,
   Dialog,
-  FilePicker,
   FormField,
+  InputFile,
   FormFieldSet,
   InputDimensions,
   InputNumberSlider,
@@ -18,10 +18,10 @@ import {
 } from "@embroiderly/ui";
 
 import { useDebounceFn, useDropZone, useMediaQuery } from "@vueuse/core";
-import { ref, reactive, onMounted, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
+import { ref, reactive, onUnmounted, computed, shallowRef, useTemplateRef, watch } from "vue";
 
 import { PatternCanvas } from "~/components/canvas/";
-import { useEditor, useFilePicker, useI18n } from "~/composables/";
+import { useEditor, useI18n } from "~/composables/";
 import { DisplayMode, DisplaySettings, Pattern } from "~/lib/pattern/";
 import { LoggerService } from "~/services/";
 
@@ -32,7 +32,6 @@ interface ValueBounds {
   max: number;
 }
 
-const props = defineProps<{ imageFile: File }>();
 const emit = defineEmits<{ close: [patternBytes?: Uint8Array] }>();
 
 /** The maximum palette size acceptable for quantization. */
@@ -40,15 +39,19 @@ const MAX_PALETTE_SIZE = 256;
 
 const { files } = useEditor();
 const { fluent } = useI18n();
-const filePicker = useFilePicker();
 const toast = useToast();
 
 const service = new ImageImportService();
 
 const isMobilePortrait = useMediaQuery("(max-width: 767px) and (orientation: portrait)");
 
-const imageFile = ref(props.imageFile);
+const imageFile = ref<File>();
 const imageDimensions = ref<[number, number]>([0, 0]);
+
+watch(imageFile, async (file) => {
+  if (!file) return;
+  await loadImageFile(file);
+});
 
 const { isOverDropZone } = useDropZone(useTemplateRef("drop-zone"), {
   onDrop(files) {
@@ -69,14 +72,6 @@ async function loadImageFile(file: File) {
     LoggerService.error(`Failed to load image file: ${err}`);
     toast.add({ color: "error", title: fluent.$t("error"), duration: 3000 });
   }
-}
-
-async function pickImageFile() {
-  const handle = await filePicker.open({
-    types: filePicker.filters.image,
-    id: filePicker.ids.image,
-  });
-  if (handle) await loadImageFile(await handle.getFile());
 }
 
 const selectedPaletteBytes = ref<Uint8Array | null>(null);
@@ -167,7 +162,6 @@ const updatePreview = useDebounceFn(
 
 watch([imageFile, selectedPaletteBytes, imageImportOptions, applyDithering], () => updatePreview(), { flush: "post" });
 
-onMounted(() => loadImageFile(props.imageFile));
 onUnmounted(() => service.destroy());
 </script>
 
@@ -183,7 +177,7 @@ onUnmounted(() => service.destroy());
             viewport: 'space-y-2 p-4 sm:p-6',
           }"
         >
-          <FilePicker :model-value="imageFile?.name ?? 'No image selected'" class="w-full" @pick="pickImageFile" />
+          <InputFile v-model="imageFile" accept=".png, .jpg, .jpeg, .webp" class="w-full" />
 
           <InputDimensions
             v-model:width="imageImportOptions.patternSize[0]"

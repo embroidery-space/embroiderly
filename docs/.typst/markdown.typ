@@ -28,7 +28,7 @@
 #let _rewrite-relative-links(content) = {
   content.replace(
     _relative_link_re,
-    m => "[" + m.captures.at(0) + "](" + m.captures.at(1) + ")"
+    m => "[" + m.captures.at(0) + "](" + m.captures.at(1) + ")",
   )
 }
 

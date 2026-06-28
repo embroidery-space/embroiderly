@@ -4,7 +4,7 @@ Embroiderly is a cross-stitch pattern design application built as a **web-first*
 The same web application runs directly in a browser, can be installed as a standalone PWA, or is bundled into a native desktop installer.
 All three delivery modes are functionally identical — there is no platform-specific business logic.
 
-**Target platforms:** all major browsers (Chrome, Firefox, Safari, and others, which are based on the same web engines); Windows 10/11 via WebView2; Linux via WebKitGTK.
+**Target platforms:** all major browsers (Chrome, Firefox, Safari, and others, which are based on the same web engines); Windows 10/11 via WebView2; Linux via Chromium Embedded Framework.
 
 ```text
 embroiderly/

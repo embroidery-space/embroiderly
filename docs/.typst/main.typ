@@ -1,6 +1,6 @@
 #let lang = sys.inputs.at("lang", default: "en")
 
-#import "@preview/cmarker:0.1.8"
+#import "@preview/cmarker:0.1.9"
 
 #import "admonitions.typ"
 #import "markdown.typ"
@@ -35,16 +35,17 @@
 
 #cmarker.render(
   markdown.pagebreak
-  + markdown.read("../" + lang + "/guide/index.md")
-  + markdown.read("../" + lang + "/guide/pattern-options.md")
-  + markdown.read("../" + lang + "/guide/palette-and-symbols.md")
-  + markdown.read("../" + lang + "/guide/working-with-patterns.md")
-  + markdown.read("../" + lang + "/guide/importing-images.md")
-  + markdown.read("../" + lang + "/guide/reference-images.md")
-  + markdown.read("../" + lang + "/guide/publishing-patterns.md")
-  + markdown.pagebreak
-  + markdown.read("../" + lang + "/reference/pattern-formats.md")
-  + markdown.read("../" + lang + "/reference/shortcuts.md"),
+    + markdown.read("../" + lang + "/guide/index.md")
+    + markdown.read("../" + lang + "/guide/pattern-options.md")
+    + markdown.read("../" + lang + "/guide/palette-and-symbols.md")
+    + markdown.read("../" + lang + "/guide/working-with-patterns.md")
+    + markdown.read("../" + lang + "/guide/importing-images.md")
+    + markdown.read("../" + lang + "/guide/reference-images.md")
+    + markdown.read("../" + lang + "/guide/publishing-patterns.md")
+    + markdown.pagebreak
+    + markdown.read("../" + lang + "/reference/pattern-formats.md")
+    + markdown.read("../" + lang + "/reference/shortcuts.md"),
+  set-document-title: false,
   scope: (
     image: (source, alt: none, format: auto) => image("../public/" + source, alt: alt, format: format),
     quote: admonitions.quote,

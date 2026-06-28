@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "screenshots": "wdio run .screenshots/wdio.conf.ts",
+    "check-types": "tsc -p .screenshots/tsconfig.json"
   },
   "dependencies": {
     "@cssnr/vitepress-swiper": "catalog:",
@@ -14,7 +16,20 @@
     "vue": "catalog:"
   },
   "devDependencies": {
+    "@fluent/bundle": "catalog:",
+    "@tsconfig/node24": "catalog:",
+    "@tsconfig/strictest": "catalog:",
+    "@types/mocha": "catalog:",
+    "@types/node": "catalog:",
     "@vite-pwa/assets-generator": "catalog:",
+    "@wdio/cli": "catalog:",
+    "@wdio/globals": "catalog:",
+    "@wdio/local-runner": "catalog:",
+    "@wdio/mocha-framework": "catalog:",
+    "@wdio/spec-reporter": "catalog:",
+    "@wdio/visual-service": "catalog:",
+    "sharp": "catalog:",
+    "typescript": "catalog:",
     "vitepress": "catalog:",
     "vitepress-plugin-llms": "catalog:",
     "wrangler": "catalog:"

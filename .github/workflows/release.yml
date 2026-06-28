@@ -39,5 +39,6 @@ jobs:
           # Empty tagName/releaseName skips release creation (PR builds).
           tagName: ${{ github.event_name == 'push' && 'v__VERSION__' || '' }}
           releaseName: ${{ github.event_name == 'push' && 'Embroiderly v__VERSION__' || '' }}
+          releaseBody: "Changelog: <https://docs.embroiderly.niusia.me/resources/changelog/v__VERSION__>."
           args: ${{  matrix.platform == 'ubuntu-latest' && '--features cef' || '' }}
           updaterJsonPreferNsis: true
