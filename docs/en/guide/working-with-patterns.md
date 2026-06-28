@@ -282,7 +282,7 @@ You can use symbols with any stitches display mode.
 
 The **Layers** section at the bottom of the canvas panel lets you organize your pattern into multiple custom layers---just like in any modern graphics application.
 
-The [**Layer Layout** setting](#layer-layout) in **Settings -> Working Area** then controls whether the layer or the stitch type takes priority overall.
+The [**Layer Layout** setting](#layer-layout) in **Settings** -> **Working Area** then controls whether the layer or the stitch type takes priority overall.
 Within the same stitch type, a higher layer always appears in front of a lower one.
 
 #### Custom Layers and Stitch Layers
@@ -314,7 +314,7 @@ Selecting a different custom layer before drawing lets you keep different parts 
 ## Working Area Settings
 
 You can customize how the pattern renders and responds to input through the working area settings.
-Access these settings from **Settings -> Working Area**.
+Access these settings from **Settings** -> **Working Area**.
 
 <figure>
   <img src="/images/en/guide/working-with-patterns/workarea-settings.png">

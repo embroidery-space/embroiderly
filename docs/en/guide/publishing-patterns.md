@@ -12,7 +12,7 @@ This format is perfect for printing, sharing with others, or selling your patter
 To export your pattern as a PDF:
 
 1. Open your pattern in the pattern editor.
-2. Select **File** → **Export** → **PDF** in the menu bar.
+2. Select **File** -> **Export** -> **PDF** in the menu bar.
 3. Adjust the export settings if needed (see [PDF Export Settings](#pdf-export-settings) below).
 4. Click **Export Document** to generate the PDF.
 
