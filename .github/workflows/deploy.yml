@@ -78,7 +78,7 @@ jobs:
             echo "alias=" >> $GITHUB_OUTPUT
           else
             # Sanitize branch name for the alias: replace `/` with `-` and lowercase it.
-            alias=$(echo "${{ github.ref_name }}" | sed 's/\//-/g' | tr '[:upper:]' '[:lower:]')
+            alias=$(echo "${{ github.ref_name }}" | sed 's/[\/\.]/-/g' | tr '[:upper:]' '[:lower:]')
 
             # Commit and branch preview.
             echo "cmd=versions upload --preview-alias $alias --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
