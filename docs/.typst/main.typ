@@ -1,6 +1,6 @@
 #let lang = sys.inputs.at("lang", default: "en")
 
-#import "@preview/cmarker:0.1.8"
+#import "@preview/cmarker:0.1.9"
 
 #import "admonitions.typ"
 #import "markdown.typ"
@@ -45,6 +45,7 @@
     + markdown.pagebreak
     + markdown.read("../" + lang + "/reference/pattern-formats.md")
     + markdown.read("../" + lang + "/reference/shortcuts.md"),
+  set-document-title: false,
   scope: (
     image: (source, alt: none, format: auto) => image("../public/" + source, alt: alt, format: format),
     quote: admonitions.quote,
