@@ -77,11 +77,11 @@ Both the context menu and panel methods work equally well---choose whichever you
 
 The available palette display settings include:
 
-- **Number of columns**. Sets how many columns the palette list uses (1-8 columns).
-- **Color only**. Hides all text information and symbols, showing just the color tiles.
-- **Show stitch symbols**. Toggles the visibility of symbols assigned to palette items.
-- **Contrasting stitch symbols**. Places symbols on a white background for better visibility against thread colors.
-- **Show thread brand**, **Show color number**, and **Show color name**. Control which text information appears for each palette item.
+- **Number of columns.** Sets how many columns the palette list uses (1-8 columns).
+- **Color only.** Hides all text information and symbols, showing just the color tiles.
+- **Show stitch symbols.** Toggles the visibility of symbols assigned to palette items.
+- **Contrasting stitch symbols.** Places symbols on a white background for better visibility against thread colors.
+- **Show thread brand**, **Show color number**, and **Show color name.** Control which text information appears for each palette item.
 
 All changes apply immediately so you can see the results as you adjust settings.
 
@@ -103,11 +103,11 @@ When you select a different color, the previous one is automatically deselected.
 
 You can also navigate and select colors using the keyboard:
 
-- **Arrow Down**. Moves to the next color.
-- **Arrow Up**. Moves to the previous color.
-- **Home**. Jumps to the first color in the palette.
-- **End**. Jumps to the last color in the palette.
-- **Enter**. Selects the currently highlighted color.
+- **Arrow Down.** Moves to the next color.
+- **Arrow Up.** Moves to the previous color.
+- **Home.** Jumps to the first color in the palette.
+- **End.** Jumps to the last color in the palette.
+- **Enter.** Selects the currently highlighted color.
 
 > [!WARNING]
 > In multi-column layouts, arrow keys navigate horizontally (left/right through columns) rather than vertically (up/down through rows).

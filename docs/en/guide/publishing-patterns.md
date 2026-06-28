@@ -33,9 +33,9 @@ You can generate the PDF document in two variants:
 
 Each exported PDF document includes:
 
-- **Pattern information**. Title, author, copyright, fabric details, and description.
-- **Thread palette**. A table with symbols, brands, numbers, and color names.
-- **Pattern frames**. Visual sections of your pattern, split across multiple pages if needed.
+- **Pattern information.** Title, author, copyright, fabric details, and description.
+- **Thread palette.** A table with symbols, brands, numbers, and color names.
+- **Pattern frames.** Visual sections of your pattern, split across multiple pages if needed.
 
 To see what a finished PDF document looks like, check out [sample patterns](#sample-pattern-pdfs) at the end of this chapter.
 
@@ -66,10 +66,10 @@ These saved settings will be used as defaults every time you export this pattern
 
 Frames are parts of your pattern split across multiple pages for large designs.
 
-- **Frame Size**. Maximum dimensions of each frame in stitches (default is 30x40 stitches).
-- **Preserved Overlap**. Number of overlapping rows/columns between adjacent frames (default is 3).
-- **Show Grid Line Numbers**. Displays numbers along the edges to mark grid lines (enabled by default).
-- **Show Centering Marks**. Displays markers for horizontal and vertical center lines (enabled by default).
+- **Frame Size.** Maximum dimensions of each frame in stitches (default is 30x40 stitches).
+- **Preserved Overlap.** Number of overlapping rows/columns between adjacent frames (default is 3).
+- **Show Grid Line Numbers.** Displays numbers along the edges to mark grid lines (enabled by default).
+- **Show Centering Marks.** Displays markers for horizontal and vertical center lines (enabled by default).
 
 ## Sample Pattern PDFs
 

@@ -24,10 +24,10 @@ This information is embedded in your pattern file and exported PDF documents.
 
 The **Pattern Information** window contains a form with four text fields:
 
-- **Title**. The name of your pattern.
-- **Author**. The name of the pattern designer.
-- **Copyright**. Copyright notice or license information.
-- **Description**. A longer text area for additional details about the pattern.
+- **Title.** The name of your pattern.
+- **Author.** The name of the pattern designer.
+- **Copyright.** Copyright notice or license information.
+- **Description.** A longer text area for additional details about the pattern.
 
 Filling the pattern information helps you organize your patterns and provides useful information when sharing patterns with others.
 
@@ -97,11 +97,11 @@ They help you count individual stitches.
 
 Both **Major Lines** and **Minor Lines** share the same set of options:
 
-- **Pixel Line**. When enabled, the line is always drawn as a single pixel regardless of the canvas zoom level.
+- **Pixel Line.** When enabled, the line is always drawn as a single pixel regardless of the canvas zoom level.
   This gives a crisp, hair-thin appearance at any zoom.
   When **Pixel Line** is on, the **Thickness** input is disabled, because a pixel-perfect line can't be scaled.
-- **Thickness**. A relative value between 50% and 500% that controls the line width when **Pixel Line** is off.
-- **Color**. The color of the grid line.
+- **Thickness.** A relative value between 50% and 500% that controls the line width when **Pixel Line** is off.
+- **Color.** The color of the grid line.
 
   > [!TIP]
   > Click on the color swatch to open a color picker.

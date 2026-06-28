@@ -27,13 +27,13 @@ Each group contains related stitch variants that you can quickly switch between.
 
 There are three ways to select a stitch tool:
 
-1. **Quick Selection**.
+1. **Quick Selection.**
    Click any tool button to activate it.
    The button will be highlighted to indicate that it's active.
-2. **Keyboard Shortcuts**.
+2. **Keyboard Shortcuts.**
    Each tool has a key sequence binded for quick selection.
    Check all available shortcuts in the [shortcuts reference](../reference/shortcuts).
-3. **Dropdown Menu**.
+3. **Dropdown Menu.**
    Groups with multiple tool variants show a small button with a chevron icon in the bottom right corner.
    You can access the dropdown menu by:
    - clicking the chevron button,
@@ -66,19 +66,19 @@ Four petite stitches fit in a single grid cell, one in each corner.
 
 Embroiderly provides two ways to place petite stitches:
 
-1. **Dynamic Placement**.
+1. **Dynamic Placement.**
    The stitch position is determined by where the cursor is within the grid cell.
    Move toward any corner to place the petite stitch there.
-2. **Fixed Position**.
+2. **Fixed Position.**
    Select a specific corner variant (Top-Left, Top-Right, Bottom-Right, Bottom-Left) to always place stitches in that position regardless of the cursor location.
 
 ### Half Stitch
 
 The half stitch is one diagonal line of a full stitch---either forward (`/`) or backward (`\`).
 
-1. **Dynamic Direction**.
+1. **Dynamic Direction.**
    The direction is determined by the cursor position within the cell.
-2. **Fixed Direction**.
+2. **Fixed Direction.**
    Select either forward or backward variants to always draw in that direction.
 
 ### Quarter Stitch
@@ -162,12 +162,12 @@ You can hold down the left mouse button and drag to draw multiple stitches quick
 
 There are three ways to remove stitches:
 
-1. **Eraser Tool**.
+1. **Eraser Tool.**
    Select the **Eraser** from the toolbar and click or drag over any stitch to remove it.
-2. **Alt + Left-Click**.
+2. **Alt + Left-Click.**
    Hold `Alt` and left-click to erase stitches as you draw.
    This works with any stitch tool selected.
-3. **Ctrl + Right-Click**.
+3. **Ctrl + Right-Click.**
    Hold `Ctrl` and right-click to erase stitches.
 
 ### Position Locking
@@ -241,13 +241,13 @@ It gives you quick access to display mode toggles, element visibility controls, 
 
 Three stitches display modes change how stitches are rendered on the canvas.
 
-1. **Mixed**. Shows a combination of rendering styles.
+1. **Mixed.** Shows a combination of rendering styles.
    Full and petite stitches are displayed as solid color blocks, while half and quarter stitches are rendered realistically.
    This mode provides a balance between visual clarity and realistic preview.
-2. **Solid**. Displays all stitches as solid color blocks.
+2. **Solid.** Displays all stitches as solid color blocks.
    This mode makes it easier to see the overall color distribution and pattern structure.
    Note that you can't distinguish between petite, half, and quarter stitches in this mode since they all appear as solid blocks.
-3. **Stitches**. Renders stitches with their structural details visible.
+3. **Stitches.** Renders stitches with their structural details visible.
    This mode is useful for understanding exactly how each stitch is constructed.
 
 > Line and node stitches aren't affected by the stitches display modes.
@@ -330,8 +330,8 @@ Antialiasing reduces these jagged edges by blending the colors of pixels along o
 
 When to Use Antialiasing:
 
-- **Enabled (default)**. Provides smoother, more polished visuals that are easier on the eyes during extended design sessions.
-- **Disabled**. May improve performance on older computers or when working with very large patterns.
+- **Enabled (default).** Provides smoother, more polished visuals that are easier on the eyes during extended design sessions.
+- **Disabled.** May improve performance on older computers or when working with very large patterns.
 
 > [!TIP]
 > Antialiasing requires additional processing power.
@@ -341,9 +341,9 @@ When to Use Antialiasing:
 
 This setting determines what happens when you scroll the mouse wheel over the canvas.
 
-- **Zoom (default)**. The mouse wheel zooms in and out, centered on the cursor position.
+- **Zoom (default).** The mouse wheel zooms in and out, centered on the cursor position.
   Hold `Alt` while scrolling to temporarily switch to the scrolling mode.
-- **Scroll**. The mouse wheel scrolls the canvas horizontally and vertically.
+- **Scroll.** The mouse wheel scrolls the canvas horizontally and vertically.
   Hold `Alt` while scrolling to temporarily switch to the zooming mode.
 
 Choose the option that matches your preferred workflow.
