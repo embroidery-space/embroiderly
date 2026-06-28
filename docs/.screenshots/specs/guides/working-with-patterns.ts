@@ -40,6 +40,7 @@ for (const language of LANGUAGES) {
       await openDemoPattern();
 
       await $(`//div[input[@role="spinbutton"]]/following-sibling::button[1]`).click();
+      await $("[data-reka-menu-content]").waitForDisplayed();
 
       const screen = (await browser.saveFullPageScreen("guide-working-with-patterns-zoom-controls")) as {
         fileName: string;
