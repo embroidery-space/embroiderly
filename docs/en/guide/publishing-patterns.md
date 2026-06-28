@@ -73,5 +73,5 @@ Frames are parts of your pattern split across multiple pages for large designs.
 
 ## Sample Pattern PDFs
 
-- [Color variant](https://embroiderly.niusia.me/piggies.color.pdf)
-- [Monochrome variant](https://embroiderly.niusia.me/piggies.monochrome.pdf)
+- [Color variant](https://docs.embroiderly.niusia.me/piggies.color.pdf)
+- [Monochrome variant](https://docs.embroiderly.niusia.me/piggies.monochrome.pdf)

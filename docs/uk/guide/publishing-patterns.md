@@ -73,5 +73,5 @@ description: Дізнайтеся, як експортувати ваші схе
 
 ## Приклади схем PDF
 
-- [Кольоровий варіант](https://embroiderly.niusia.me/piggies.color.pdf)
-- [Чорно-білий варіант](https://embroiderly.niusia.me/piggies.monochrome.pdf)
+- [Кольоровий варіант](https://docs.embroiderly.niusia.me/piggies.color.pdf)
+- [Чорно-білий варіант](https://docs.embroiderly.niusia.me/piggies.monochrome.pdf)
