@@ -11,7 +11,7 @@ export const useRemToPx = createSharedComposable(() => {
   onMounted(() => {
     observer = new MutationObserver(() => {
       const style = getComputedStyle(document.documentElement);
-      rootFontSize.value = parseFloat(style.fontSize) || DEFAULT_FONT_SIZE;
+      rootFontSize.value = Number(style.fontSize) || DEFAULT_FONT_SIZE;
     });
     observer.observe(document.documentElement, {
       attributes: true,

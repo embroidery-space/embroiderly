@@ -67,7 +67,7 @@ const contentProps = computed<PopoverContentProps>(
 );
 const portalProps = usePortal(toRef(() => props.portal));
 
-// eslint-disable-next-line vue/no-dupe-keys
+// oxlint-disable-next-line vue/no-dupe-keys
 const ui = PopoverTheme();
 </script>
 

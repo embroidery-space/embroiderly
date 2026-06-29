@@ -74,10 +74,10 @@ function autoResize() {
   textarea.value.style.overflow = "hidden";
 
   const styles = globalThis.getComputedStyle(textarea.value);
-  const paddingTop = Number.parseInt(styles.paddingTop, 10);
-  const paddingBottom = Number.parseInt(styles.paddingBottom, 10);
+  const paddingTop = Math.trunc(Number(styles.paddingTop));
+  const paddingBottom = Math.trunc(Number(styles.paddingBottom));
   const padding = paddingTop + paddingBottom;
-  const lineHeight = Number.parseInt(styles.lineHeight, 10);
+  const lineHeight = Math.trunc(Number(styles.lineHeight));
   const { scrollHeight } = textarea.value;
   const newRows = (scrollHeight - padding) / lineHeight;
 

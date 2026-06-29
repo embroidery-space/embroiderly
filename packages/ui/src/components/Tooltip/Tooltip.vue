@@ -69,7 +69,7 @@ const contentProps = computed<TooltipContentProps>(() => ({
 }));
 const portalProps = usePortal(toRef(() => props.portal));
 
-// eslint-disable-next-line vue/no-dupe-keys
+// oxlint-disable-next-line vue/no-dupe-keys
 const ui = TooltipTheme();
 </script>
 

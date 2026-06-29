@@ -33,7 +33,7 @@ const forwarded = useForwardPropsEmits(
 
 const panels = computed(() => flattenChildren(slots.default?.() ?? []));
 
-// eslint-disable-next-line vue/no-dupe-keys
+// oxlint-disable-next-line vue/no-dupe-keys
 const ui = SplitterTheme();
 provide(SplitterContextKey, { ui });
 

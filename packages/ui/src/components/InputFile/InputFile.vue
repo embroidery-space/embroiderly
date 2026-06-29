@@ -88,6 +88,7 @@ const displayValue = computed(() => {
       @change="onChange"
     />
 
+    <!-- eslint-disable-next-line better-tailwindcss/enforce-consistent-line-wrapping -->
     <Input readonly :model-value="label ?? displayValue" :size="size" :disabled="disabled" class="w-full" />
   </FormFieldGroup>
 </template>
