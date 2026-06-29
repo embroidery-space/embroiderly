@@ -87,7 +87,7 @@ tauri-plugin-opener = { git = "https://github.com/tauri-apps/plugins-workspace",
 tauri-plugin-process = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
 tauri-plugin-updater = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
 ## Third-party Tauri plugins
-tauri-plugin-prevent-default = "5.0.0"
+tauri-plugin-prevent-default = "5.0.2"
 
 # Embroiderly Core
 embroiderly_editor = { path = "crates/embroiderly-editor" }
@@ -129,17 +129,17 @@ serde-wasm-bindgen = "0.6.5"
 borsh = { version = "1.6.1", features = ["derive"] }
 
 # Error handling
-anyhow = "1.0.102"
+anyhow = "1.0.103"
 thiserror = "2.0.18"
 
 # Logging & Tracing
-log = "0.4.29"
+log = "0.4.33"
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 tracing-panic = "0.1.2"
 
 # Identification
-uuid = { version = "1.23.1", features = ["v4", "v7", "js"] }
+uuid = { version = "1.23.4", features = ["v4", "v7", "js"] }
 
 # Wasm
 wasm-bindgen = "0.2.118"
