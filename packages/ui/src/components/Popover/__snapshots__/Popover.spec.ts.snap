@@ -1,8 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Popover > renders correctly with arrow 1`] = `
-<div>Trigger<div data-reka-popper-content-wrapper>
-    <div aria-labelledby="reka-popover-trigger-v-0" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] focus:outline-none origin-(--reka-popover-content-transform-origin) pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="open" id="reka-popover-content-v-1" role="dialog" tabindex="-1">Content<span>
+<div>Trigger<div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-popover-trigger-v-0" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] focus:outline-none origin-(--reka-popover-content-transform-origin) pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-popover-content-v-1" role="dialog" tabindex="-1">Content<span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
           <path d="M0 0L6 6L12 0" />
         </svg>
@@ -13,8 +13,8 @@ exports[`Popover > renders correctly with arrow 1`] = `
 `;
 
 exports[`Popover > renders correctly with class 1`] = `
-<div>Trigger<div data-reka-popper-content-wrapper>
-    <div aria-labelledby="reka-popover-trigger-v-0" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] focus:outline-none origin-(--reka-popover-content-transform-origin) pointer-events-auto ring ring-default rounded-md shadow-xl" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="open" id="reka-popover-content-v-1" role="dialog" tabindex="-1">Content<span>
+<div>Trigger<div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-popover-trigger-v-0" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] focus:outline-none origin-(--reka-popover-content-transform-origin) pointer-events-auto ring ring-default rounded-md shadow-xl" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-popover-content-v-1" role="dialog" tabindex="-1">Content<span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
           <path d="M0 0L6 6L12 0" />
         </svg>
@@ -25,8 +25,8 @@ exports[`Popover > renders correctly with class 1`] = `
 `;
 
 exports[`Popover > renders correctly with open 1`] = `
-<div>Trigger<div data-reka-popper-content-wrapper>
-    <div aria-labelledby="reka-popover-trigger-v-0" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] focus:outline-none origin-(--reka-popover-content-transform-origin) pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="open" id="reka-popover-content-v-1" role="dialog" tabindex="-1">Content<span>
+<div>Trigger<div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-popover-trigger-v-0" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] focus:outline-none origin-(--reka-popover-content-transform-origin) pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-popover-content-v-1" role="dialog" tabindex="-1">Content<span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
           <path d="M0 0L6 6L12 0" />
         </svg>
@@ -37,8 +37,8 @@ exports[`Popover > renders correctly with open 1`] = `
 `;
 
 exports[`Popover > renders correctly with ui 1`] = `
-<div>Trigger<div data-reka-popper-content-wrapper>
-    <div aria-labelledby="reka-popover-trigger-v-0" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] focus:outline-none origin-(--reka-popover-content-transform-origin) pointer-events-auto ring ring-default rounded-md shadow-xl" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="open" id="reka-popover-content-v-1" role="dialog" tabindex="-1">Content<span>
+<div>Trigger<div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-popover-trigger-v-0" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] focus:outline-none origin-(--reka-popover-content-transform-origin) pointer-events-auto ring ring-default rounded-md shadow-xl" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-popover-content-v-1" role="dialog" tabindex="-1">Content<span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
           <path d="M0 0L6 6L12 0" />
         </svg>

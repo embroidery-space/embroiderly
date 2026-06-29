@@ -10,8 +10,8 @@ exports[`ButtonIcon > renders correctly with color neutral 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -34,8 +34,8 @@ exports[`ButtonIcon > renders correctly with color primary 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -58,8 +58,8 @@ exports[`ButtonIcon > renders correctly with custom class 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -82,8 +82,8 @@ exports[`ButtonIcon > renders correctly with default props 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -106,8 +106,8 @@ exports[`ButtonIcon > renders correctly with disabled 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -127,8 +127,8 @@ exports[`ButtonIcon > renders correctly with loading 1`] = `
       <path d="M21 12a9 9 0 1 1-6.219-8.56" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -151,8 +151,8 @@ exports[`ButtonIcon > renders correctly with size lg 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -175,8 +175,8 @@ exports[`ButtonIcon > renders correctly with size md 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -199,8 +199,8 @@ exports[`ButtonIcon > renders correctly with size sm 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -223,8 +223,8 @@ exports[`ButtonIcon > renders correctly with size xl 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -247,8 +247,8 @@ exports[`ButtonIcon > renders correctly with size xs 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -271,8 +271,8 @@ exports[`ButtonIcon > renders correctly with variant ghost 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -295,8 +295,8 @@ exports[`ButtonIcon > renders correctly with variant link 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -319,8 +319,8 @@ exports[`ButtonIcon > renders correctly with variant outline 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -343,8 +343,8 @@ exports[`ButtonIcon > renders correctly with variant soft 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -367,8 +367,8 @@ exports[`ButtonIcon > renders correctly with variant solid 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
@@ -391,8 +391,8 @@ exports[`ButtonIcon > renders correctly with variant subtle 1`] = `
       </g>
     </svg>
   </button>
-  <div data-reka-popper-content-wrapper>
-    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open">
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
       <span class="truncate" data-slot="text">Settings</span>
       <span>
         <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
