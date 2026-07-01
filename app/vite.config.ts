@@ -65,7 +65,7 @@ export default defineConfig({
           overrideManifestIcons: true,
         },
         injectManifest: {
-          globPatterns: ["**/*.{js,wasm,css,html,ico,png,svg,json,ttf,otf}"],
+          globPatterns: ["**/*.{js,wasm,wasm.br,css,html,ico,png,svg,json,ttf,otf}"],
           maximumFileSizeToCacheInBytes: 30 * 1024 * 1024, // 30 MB. We have quite large Wasm modules.
         },
       }),
