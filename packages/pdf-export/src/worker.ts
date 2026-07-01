@@ -5,13 +5,14 @@ import init, { export_pdf, PdfVariant } from "../src-wasm/pkg/";
 import type { ExportInput } from "./types.ts";
 
 const api = {
-  async export(input: ExportInput): Promise<void> {
+  async export(input: ExportInput): Promise<Uint8Array> {
     await init();
 
-    const { handle, pattern, options, fonts } = input;
+    const { pattern, options, fonts } = input;
     const variant = input.variant === "color" ? PdfVariant.Color : PdfVariant.Monochrome;
 
-    await export_pdf(handle, pattern, options, variant, fonts);
+    const pdfBytes = export_pdf(pattern, options, variant, fonts);
+    return Comlink.transfer(pdfBytes, [pdfBytes.buffer]);
   },
 };
 Comlink.expose(api);

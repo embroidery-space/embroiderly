@@ -292,13 +292,17 @@ export const usePatternFileStore = defineStore(
         loading.value = true;
 
         const { exportPatternAsPdf } = await import("@embroiderly/pdf-export");
-        await exportPatternAsPdf({
-          handle,
+        const pdfBytes = await exportPatternAsPdf({
           pattern: patternData,
           options: PdfExportOptions.schema.serialize(pattern.pdfExportOptions),
           fonts: await Promise.all(pattern.palette.usedSymbolFonts.map((name) => files.loadFontContent(name))),
           variant,
         });
+
+        const writable = await handle.createWritable();
+        // @ts-expect-error `Uint8Array` works just fine here.
+        await writable.write(pdfBytes);
+        await writable.close();
 
         MetricsService.capturePatternExportedAsPdf(pattern.pdfExportOptions);
         toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
