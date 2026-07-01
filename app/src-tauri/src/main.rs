@@ -111,6 +111,23 @@ fn create_webview_window<R: tauri::Runtime>(
     .visible(cfg!(debug_assertions))
     .initialization_script(format!("window.openedFiles = [{}]", files_js.join(",")))
     .disable_drag_drop_handler()
+    .on_web_resource_request(|request, response| {
+      // Correctly resolve content type of custom assets.
+      let path = request.uri().path();
+      if path.ends_with(".embpal") {
+        // Palette files contain plain JSON.
+        response.headers_mut().insert(
+          tauri::http::header::CONTENT_TYPE,
+          tauri::http::HeaderValue::from_static("application/json"),
+        );
+      } else if path.ends_with(".embproj") || path.ends_with(".oxs") || path.ends_with(".xsd") {
+        // Pattern files should be treated as binary data.
+        response.headers_mut().insert(
+          tauri::http::header::CONTENT_TYPE,
+          tauri::http::HeaderValue::from_static("application/octet-stream"),
+        );
+      }
+    })
     .build()?;
 
   // Skip opening devtools for automation testing.
