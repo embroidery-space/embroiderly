@@ -1688,7 +1688,6 @@ dependencies = [
  "borsh",
  "embroiderly_parsers",
  "embroiderly_pattern",
- "embroiderly_web",
  "js-sys",
  "serde",
  "serde_json",

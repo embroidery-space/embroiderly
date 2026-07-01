@@ -12,7 +12,6 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 # Embroiderly Core
 embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
-embroiderly_web = { workspace = true, features = ["opfs"] }
 
 # De/serialization
 borsh = { workspace = true }
