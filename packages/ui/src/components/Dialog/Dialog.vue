@@ -72,7 +72,7 @@ const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | nul
 const { icons } = useComponentIcons();
 const locale = useLocale();
 
-// eslint-disable-next-line vue/no-dupe-keys
+// oxlint-disable-next-line vue/no-dupe-keys
 const ui = DialogTheme();
 
 function close(value?: unknown) {

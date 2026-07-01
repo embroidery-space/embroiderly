@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<InputNumberSliderProps>(), {
 
 const { id, size, groupAttrs } = useFormField(props);
 
-// eslint-disable-next-line vue/no-dupe-keys
+// oxlint-disable-next-line vue/no-dupe-keys
 const ui = computed(() =>
   InputNumberSliderTheme({
     size: size.value,

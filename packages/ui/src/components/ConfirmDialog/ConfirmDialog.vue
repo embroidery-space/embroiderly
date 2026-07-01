@@ -52,7 +52,7 @@ const portalProps = usePortal(toRef(() => props.portal));
 
 const locale = useLocale();
 
-// eslint-disable-next-line vue/no-dupe-keys
+// oxlint-disable-next-line vue/no-dupe-keys
 const ui = ConfirmDialogTheme();
 
 function close(value?: boolean) {
