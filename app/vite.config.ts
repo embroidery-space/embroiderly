@@ -9,6 +9,7 @@ import { webdriverio } from "@vitest/browser-webdriverio";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
+import { compression } from "vite-plugin-compression2";
 import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
 
@@ -67,6 +68,12 @@ export default defineConfig({
           globPatterns: ["**/*.{js,wasm,css,html,ico,png,svg,json,ttf,otf}"],
           maximumFileSizeToCacheInBytes: 30 * 1024 * 1024, // 30 MB. We have quite large Wasm modules.
         },
+      }),
+    !isTauri &&
+      compression({
+        include: /\.(wasm)$/u,
+        algorithms: ["brotli"],
+        deleteOriginalAssets: true,
       }),
     !isTest && vueDevTools(),
   ],
