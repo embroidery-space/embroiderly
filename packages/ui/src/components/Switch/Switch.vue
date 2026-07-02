@@ -1,0 +1,78 @@
+<script setup lang="ts">
+import { Switch, Label } from "reka-ui/namespaced";
+import { computed } from "vue";
+
+import { useFormField } from "../../composables/useFormField.ts";
+
+import { SwitchTheme } from "./Switch.theme";
+import type { SwitchThemeSlots, SwitchThemeVariants } from "./Switch.theme";
+
+export interface SwitchProps {
+  id?: string;
+
+  /** The label of the switch. */
+  label?: string;
+  /** The description of the switch. */
+  description?: string;
+
+  /**
+   * The color of the switch.
+   * @default "primary"
+   */
+  color?: SwitchThemeVariants["color"];
+  /**
+   * The size of the switch.
+   * @default "md"
+   */
+  size?: SwitchThemeVariants["size"];
+
+  /** Whether the switch is disabled. */
+  disabled?: boolean;
+
+  class?: any;
+  ui?: SwitchThemeSlots;
+}
+
+defineOptions({ inheritAttrs: false });
+
+const modelValue = defineModel<boolean>();
+const props = withDefaults(defineProps<SwitchProps>(), {
+  color: "primary",
+  size: "md",
+});
+
+const { id, size, ariaAttrs } = useFormField(props);
+
+const ui = computed(() => {
+  return SwitchTheme({
+    color: props.color,
+    size: size.value,
+
+    disabled: props.disabled,
+  });
+});
+</script>
+
+<template>
+  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
+      <Switch.Root
+        :id="id"
+        v-model="modelValue"
+        v-bind="{ ...$attrs, ...ariaAttrs }"
+        :disabled="disabled"
+        data-slot="base"
+        :class="ui.base({ class: props.ui?.base })"
+      >
+        <Switch.Thumb data-slot="thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
+      </Switch.Root>
+    </div>
+
+    <div v-if="label || description" data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <Label v-if="label" :for="id" data-slot="label" :class="ui.label({ class: props.ui?.label })">{{ label }}</Label>
+      <p v-if="description" data-slot="description" :class="ui.description({ class: props.ui?.description })">
+        {{ description }}
+      </p>
+    </div>
+  </div>
+</template>

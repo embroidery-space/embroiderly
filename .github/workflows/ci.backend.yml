@@ -4,13 +4,14 @@ on:
     branches: [main, dev]
     types: [opened, reopened, edited, synchronize]
     paths:
-      - ".config/**"
       - "app/src-tauri/**"
+      - "app/src-wasm/**"
       - "crates/**"
+      - "packages/*/src-wasm/**"
       - "Cargo.*"
       - rustfmt.toml
+      - clippy.toml
       - .github/workflows/ci.backend.yml
-      - .github/codecov.yml
 permissions:
   contents: read
 concurrency:
@@ -22,16 +23,13 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/actions/setup-rust
         with:
           stable-components: clippy
           nightly-components: rustfmt
-      - name: Check formatting
-        run: cargo +nightly fmt --check
-      - name: Check linting
-        run: cargo clippy --locked -- -D warnings
-
+      - run: cargo +nightly fmt --check
+      - run: cargo clippy --locked -- -D warnings
   test:
     strategy:
       fail-fast: false
@@ -39,35 +37,8 @@ jobs:
         platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/actions/setup-rust
         with:
-          nightly-components: llvm-tools-preview
-          tools: cargo-nextest,cargo-llvm-cov
-
-      # Build sidecars to replace stubs, otherwise cargo-llvm-cov fails on invalid executables.
-      - name: Build sidecars
-        shell: bash
-        run: |
-          TRIPLE=$(rustc -vV | grep 'host:' | sed 's/host: //')
-
-          EXT=""
-          if [[ "${{ matrix.platform }}" == "windows-latest" ]]; then
-            EXT=".exe"
-          fi
-
-          cargo build -p embroiderly_image -p embroiderly_publish
-
-          mv "target/debug/embroiderly_image${EXT}" "app/src-tauri/binaries/embroiderly_image-${TRIPLE}${EXT}"
-          mv "target/debug/embroiderly_publish${EXT}" "app/src-tauri/binaries/embroiderly_publish-${TRIPLE}${EXT}"
-
-      - name: Test
-        run: cargo +nightly llvm-cov nextest --locked -F embroiderly/test --lcov --output-path lcov.info
-
-      - name: Upload coverage to Codecov
-        if: matrix.platform == 'ubuntu-latest'
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
-        with:
-          flags: backend
-          files: lcov.info
-          token: ${{ secrets.CODECOV_TOKEN }}
+          tools: cargo-nextest
+      - run: cargo nextest run --locked

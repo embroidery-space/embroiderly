@@ -1,8 +1,10 @@
-import { ConfirmDialog, FabricModal, PatternInfoModal, GridModal } from "./modals";
+import { ConfirmDialog, FabricModal, PatternInfoModal, GridModal, PatternCreationModal } from "./modals";
 
 /** Page object for the _Pattern Editor_ page. */
 class PatternEditorPage {
   confirmDialog = new ConfirmDialog();
+
+  patternCreationModal = new PatternCreationModal();
 
   patternInfoModal = new PatternInfoModal();
   fabricModal = new FabricModal();
@@ -54,7 +56,7 @@ class PatternEditorPage {
    */
   async createDefaultPattern() {
     await this.openCreatePatternDialog();
-    await this.fabricModal.save();
+    await this.patternCreationModal.save();
   }
 
   /**

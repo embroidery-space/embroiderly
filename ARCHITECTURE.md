@@ -1,74 +1,49 @@
 # Embroiderly Architecture
 
-Embroiderly is a desktop application built with [Tauri](https://tauri.app) and [Vue.js](https://vuejs.org).
-In general, the application is composed of a web frontend and Rust backend.
+Embroiderly is a cross-stitch pattern design application built as a **web-first** product.
+The same web application runs directly in a browser, can be installed as a standalone PWA, or is bundled into a native desktop installer.
+All three delivery modes are functionally identical — there is no platform-specific business logic.
 
-> In case of Tauri applications, the _backend_ is local.
+**Target platforms:** all major browsers (Chrome, Firefox, Safari, and others, which are based on the same web engines); Windows 10/11 via WebView2; Linux via Chromium Embedded Framework.
 
-The application frontend is a thin client though it contains a complex UI logic.
-Its main purpose is to provide a UI, render patterns, and handle the user input.
-The only source of truth is the Rust backend.
-
-The application backend consists of the core module, which defines core entities and executes business logic, and several [sidecars](https://tauri.app/develop/sidecar).
-
-The sidecars are used to extract heavy and specific tasks into dedicated programs.
-At the moment of writing this document, there are two sidecars: one for generating PDFs for patterns and another for converting images into patterns.
-**Important:** Sidecars are an implementation detail so they should not be directly exposed to the frontend.
-
-```mmd
-flowchart LR
-  fe[Frontend] --> be[Backend]
-  be --> pdf[PDF Export Sidecar]
-  be --> image[Image Import Sidecar]
+```text
+embroiderly/
+├── app/                        # Main application
+│   ├── src/                    # Vue.js frontend
+│   ├── src-wasm/               # Wasm module
+│   └── src-tauri/              # Tauri desktop shell
+├── crates/
+│   ├── embroiderly-editor/     # Core editing engine
+│   ├── embroiderly-image/      # Pattern to image conversion
+│   ├── embroiderly-pattern/    # Domain data structures
+│   ├── embroiderly-parsers/    # Pattern file format parsers
+│   ├── embroiderly-tracing/    # Shared logging/tracing configuration
+│   ├── embroiderly-web/        # Shared Web API bindings for Wasm modules
+│   └── xsp-parsers/            # Low-level embroidery file format parsers
+├── packages/
+│   ├── image-import/           # Image import (Wasm + Web Worker)
+│   ├── pdf-export/             # PDF export (Wasm + Web Worker)
+│   └── ui/                     # Custom UI Kit
+└── docs/                       # End-user documentation
 ```
 
-## [Frontend](./app/src/)
+The main application is split into three layers:
 
-The frontend follows a _modular monolith_ architecture.
+- a Vue.js + TypeScript frontend that renders the UI and manages state;
+- a Wasm module that exposes the core pattern editing logic to JavaScript (see [`app/src-wasm/README.md`](app/src-wasm/README.md) for details);
+- and a minimal Tauri desktop shell responsible only for window management, file association handling, disk-based log collection, and packaging.
 
-In our case, each module roughly represents a single page with all of its features.
-Currently, there is only one module - _Pattern Editor_.
+Also, there are other two Wasm modules which provide specialized compute-heavy actions to the web app: [Image Import](packages/image-import/README.md) and [PDF Export](packages/pdf-export/README.md).
+These Wasm modules are wrapped in web workers using the [`comlink`](https://github.com/googlechromelabs/comlink) package to offload all the computations to a separate thread, so that the main thread is not blocked.
 
-**Directory Structure:**
+## Serialization
 
-```txt
-src/
-├── app/               # Application configuration and assets.
-├── modules/           # Core modules.
-│   └── <module-name>/ # Each module has a structure similar to the `shared/` folder and contains a root page component.
-├── plugins/           # Custom Vue.js plugins.
-│   └── <plugin-name>/ # Each plugin has a structure similar to the `shared/` folder and exports public items.
-├── shared/            # Shared components, utils, etc.
-│   ├── api/
-│   ├── components/
-│   ├── composables/
-│   ├── constants/
-│   ├── directives/
-│   ├── lib/
-│   ├── services/
-│   ├── stores/
-│   └── utils/
-├── App.vue
-└── main.ts
-```
+The project uses two serialization formats for different purposes.
 
-## [Backend](./app/src-tauri/src/)
+[Borsh](https://borsh.io) is used for all data that crosses the Rust–JavaScript boundary at runtime.
+It was chosen for its performance, compact binary output, and deterministic encoding.
+TypeScript counterparts of all Rust domain types implement matching Borsh schemas on the frontend side.
 
-On the backend, there is no clearly established architecture.
-
-**Directory Structure:**
-
-```txt
-src/
-├── commands/ # Public API.
-├── core/     # Core modules.
-├── plugins/  # Custom inlined Tauri plugins.
-├── services/ # External services.
-├── sidecars/ # Sidecar wrappers.
-├── startup/  # Tasks executed on the app launch.
-├── utils/    # Shared utils.
-├── error.rs  # Application errors.
-├── lib.rs
-├── main.rs
-└── state.ts  # Application state.
-```
+[JSON](https://json.org) is used where human-readability and long-term stability matter more than runtime efficiency or output size.
+System resources such as palettes and fabric color definitions are stored as JSON in the `app/public/` directory.
+Our custom `.embproj` pattern file format is also JSON-based, making it inspectable and forward-compatible as the application evolves.

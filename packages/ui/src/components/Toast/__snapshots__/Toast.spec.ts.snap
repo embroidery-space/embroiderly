@@ -1,0 +1,346 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Toast > renders correctly with actions 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+          <div class="flex gap-1.5 items-start mt-2.5 shrink-0" data-slot="actions">
+            <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2 py-1 rounded-md text-inverted text-xs transition-colors" data-reka-toast-announce-alt="Retry" data-reka-toast-announce-exclude data-slot="base" type="button">
+              <span class="truncate" data-slot="label">Retry</span>
+            </button>
+          </div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with actions and description 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+          <div class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description">Something went wrong.</div>
+          <div class="flex gap-1.5 items-start mt-2.5 shrink-0" data-slot="actions">
+            <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2 py-1 rounded-md text-inverted text-xs transition-colors" data-reka-toast-announce-alt="Retry" data-reka-toast-announce-exclude data-slot="base" type="button">
+              <span class="truncate" data-slot="label">Retry</span>
+            </button>
+          </div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with actions slot 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+          <div class="flex gap-1.5 items-start mt-2.5 shrink-0" data-slot="actions">Actions slot</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with class 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg w-96" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with close slot 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+        </div>Close slot<div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with color error 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-inset focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-error data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with color neutral 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-inverted focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-inverted data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with color success 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-success focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-success data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with description 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+          <div class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description">This is a toast</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with description slot 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+          <div class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description">Description slot</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with title 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with title and description 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Toast</div>
+          <div class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description">This is a toast</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with title slot 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-medium text-sm" data-slot="title">Title slot</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;
+
+exports[`Toast > renders correctly with ui 1`] = `
+<div>
+  <div aria-label="Notifications (F8)" role="region" tabindex="-1">
+    <span aria-hidden="true" tabindex="0"></span>
+    <ol class="bottom-4 flex flex-col-reverse gap-4 outline-none right-4 sm:w-96 static w-auto z-100" data-slot="viewport" tabindex="-1">
+      <li class="bg-default flex focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none gap-2.5 group items-start overflow-hidden p-4 relative ring ring-default rounded-lg shadow-lg" data-reka-collection-item data-slot="root" data-state="open" data-swipe-direction="right" tabindex="0">
+        <div class="flex flex-1 flex-col w-0" data-slot="wrapper">
+          <div class="font-bold text-sm" data-slot="title">Toast</div>
+        </div>
+        <button aria-disabled="false" aria-label="Close" class="active:text-default aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:cursor-pointer hover:text-default inline-flex items-center justify-center p-0 rounded-md text-muted text-sm transition-colors" data-reka-toast-announce-exclude data-slot="close" type="button">
+          <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+        <div aria-label="100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="absolute bg-accented bottom-0 h-1 inset-x-0 overflow-hidden rounded-full w-full" data-max="100" data-slot="progress" data-state="complete" data-value="100" role="progressbar">
+          <div class="bg-primary data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] rounded-full size-full" data-max="100" data-slot="indicator" data-state="complete" data-value="100"></div>
+        </div>
+      </li>
+    </ol>
+    <span aria-hidden="true" tabindex="0"></span>
+  </div>
+</div>
+`;

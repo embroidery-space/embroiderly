@@ -8,11 +8,11 @@ A free, open-source, cross-platform desktop application for designing cross-stit
 
 </div>
 
-[Download]: https://embroiderly.niusia.me/download
-[Get Started]: https://embroiderly.niusia.me/guide/
-[Contacts]: https://embroiderly.niusia.me/resources/contacts
-[Contributing]: https://embroiderly.niusia.me/resources/contributing
-[Changelog]: https://embroiderly.niusia.me/resources/changelog
+[Download]: https://docs.embroiderly.niusia.me/download
+[Get Started]: https://docs.embroiderly.niusia.me/guide/
+[Contacts]: https://docs.embroiderly.niusia.me/resources/contacts
+[Contributing]: https://docs.embroiderly.niusia.me/resources/contributing
+[Changelog]: https://docs.embroiderly.niusia.me/resources/changelog
 
 ## License
 
@@ -21,3 +21,6 @@ Different components are subject to different license terms:
 
 - **Source Code**: All functional code, including the core application and sub-packages (excluding `docs/`), is licensed under the `GPL-3.0-or-later` license (see [LICENSE](./LICENSE)).
 - **Documentation**: All Markdown files, guides, and Vitepress configurations located in the `docs/` directory are licensed under the `CC-BY-SA-4.0` license (see [docs/LICENSE](./docs/LICENSE)).
+- **Libertinus Serif** font (bundled in `packages/pdf-export/src-wasm/assets/fonts/`): © The Libertinus Serif Project Authors.
+  Licensed under the [SIL Open Font License 1.1](./packages/pdf-export/src-wasm/assets/fonts/OFL.txt).
+- **Demo Patterns** (bundled in `app/public/demo/`): Copyrighted by their original authors (see [app/public/demo/notes.txt](./app/public/demo/notes.txt)).

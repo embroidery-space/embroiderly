@@ -1,2 +1,0 @@
-export { default as EditorWorkspaceLayout } from "./EditorWorkspaceLayout.vue";
-export { default as EditorWorkspaceTabs } from "./EditorWorkspaceTabs.vue";

@@ -1,13 +1,8 @@
 figure {
-  display: flex;
-  flex-flow: column;
-  width: fit-content;
-  max-width: 100%;
-  margin: auto;
+  width: 100%;
 
   img {
-    max-width: 100%;
-    height: auto;
+    margin: 16px auto !important;
   }
 
   figcaption {

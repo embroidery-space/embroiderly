@@ -4,12 +4,15 @@ updates:
     directory: /
     schedule:
       interval: monthly
+      time: "00:00"
     cooldown:
       default-days: 7
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
+      day: monday
+      time: "00:00"
     groups:
       minor-and-patch:
         update-types:
@@ -21,6 +24,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+      day: monday
+      time: "00:00"
     groups:
       minor-and-patch:
         update-types:

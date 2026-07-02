@@ -1,0 +1,110 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ConfirmDialog > renders correctly with class 1`] = `
+<div>
+  <div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby="reka-dialog-description-v-2" aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2 w-96" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="alertdialog" tabindex="-1">
+    <header class="min-h-12 p-4 pb-0" data-slot="header">
+      <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Confirm</h2>
+      <p class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description" id="reka-dialog-description-v-2">Are you sure?</p>
+    </header>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">
+      <button aria-disabled="false" class="active:bg-elevated aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-default disabled:bg-default disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Cancel</span>
+      </button>
+      <button aria-disabled="false" class="active:bg-accented/75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-elevated disabled:bg-elevated disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-accented/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">No</span>
+      </button>
+      <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Yes</span>
+      </button>
+    </footer>
+  </div>
+</div>
+`;
+
+exports[`ConfirmDialog > renders correctly with noButton hidden 1`] = `
+<div>
+  <div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby="reka-dialog-description-v-2" aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="alertdialog" tabindex="-1">
+    <header class="min-h-12 p-4 pb-0" data-slot="header">
+      <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Confirm</h2>
+      <p class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description" id="reka-dialog-description-v-2">Are you sure?</p>
+    </header>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">
+      <button aria-disabled="false" class="active:bg-elevated aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-default disabled:bg-default disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Cancel</span>
+      </button>
+      <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Yes</span>
+      </button>
+    </footer>
+  </div>
+</div>
+`;
+
+exports[`ConfirmDialog > renders correctly with title and description 1`] = `
+<div>
+  <div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby="reka-dialog-description-v-2" aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="alertdialog" tabindex="-1">
+    <header class="min-h-12 p-4 pb-0" data-slot="header">
+      <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Confirm</h2>
+      <p class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description" id="reka-dialog-description-v-2">Are you sure?</p>
+    </header>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">
+      <button aria-disabled="false" class="active:bg-elevated aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-default disabled:bg-default disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Cancel</span>
+      </button>
+      <button aria-disabled="false" class="active:bg-accented/75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-elevated disabled:bg-elevated disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-accented/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">No</span>
+      </button>
+      <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Yes</span>
+      </button>
+    </footer>
+  </div>
+</div>
+`;
+
+exports[`ConfirmDialog > renders correctly with ui 1`] = `
+<div>
+  <div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby="reka-dialog-description-v-2" aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="alertdialog" tabindex="-1">
+    <header class="min-h-12 p-4 pb-0" data-slot="header">
+      <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Confirm</h2>
+      <p class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description" id="reka-dialog-description-v-2">Are you sure?</p>
+    </header>
+    <footer class="flex gap-1.5 items-center justify-start p-4" data-slot="footer">
+      <button aria-disabled="false" class="active:bg-elevated aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-default disabled:bg-default disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Cancel</span>
+      </button>
+      <button aria-disabled="false" class="active:bg-accented/75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-elevated disabled:bg-elevated disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-accented/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">No</span>
+      </button>
+      <button aria-disabled="false" class="active:bg-primary/75 aria-disabled:bg-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-primary disabled:bg-primary disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-1.5 hover:bg-primary/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-inverted text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Yes</span>
+      </button>
+    </footer>
+  </div>
+</div>
+`;
+
+exports[`ConfirmDialog > renders correctly with yesButton hidden 1`] = `
+<div>
+  <div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby="reka-dialog-description-v-2" aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] fixed flex flex-col focus:outline-none left-1/2 max-h-[90%] max-w-[90%] min-w-md ring ring-default rounded-lg shadow-lg size-max top-1/2" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="alertdialog" tabindex="-1">
+    <header class="min-h-12 p-4 pb-0" data-slot="header">
+      <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Confirm</h2>
+      <p class="mt-1 text-muted text-sm whitespace-pre-line" data-slot="description" id="reka-dialog-description-v-2">Are you sure?</p>
+    </header>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">
+      <button aria-disabled="false" class="active:bg-elevated aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-default disabled:bg-default disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 ring ring-accented ring-inset rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">Cancel</span>
+      </button>
+      <button aria-disabled="false" class="active:bg-accented/75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 bg-elevated disabled:bg-elevated disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-accented/75 hover:cursor-pointer inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-default text-sm transition-colors" data-slot="base" type="button">
+        <span class="truncate" data-slot="label">No</span>
+      </button>
+    </footer>
+  </div>
+</div>
+`;

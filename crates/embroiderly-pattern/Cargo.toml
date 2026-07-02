@@ -1,13 +1,14 @@
 [package]
 name = "embroiderly_pattern"
+version = { workspace = true }
 edition = { workspace = true }
 
 [lints]
 workspace = true
 
 [features]
-borsh = ["dep:borsh", "uuid/borsh", "ordered-float/borsh"]
-serde = ["dep:serde", "uuid/serde"]
+borsh = ["dep:borsh", "borsh/uuid", "ordered-float/borsh"]
+serde = ["dep:serde", "uuid/serde", "ordered-float/serde"]
 
 [dependencies]
 # De/serialization
@@ -19,9 +20,6 @@ image = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }
-
-# Embroiderly Core
-xsp_parsers = { workspace = true }
 
 # Other
 alphanumeric-sort = { workspace = true }

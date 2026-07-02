@@ -1,30 +1,47 @@
 ---
-title: Download
-description: Download Embroiderly - a free and open-source cross-stitch pattern design software.
+title: Get Embroiderly
+description: >
+  Use Embroiderly for free in your browser — no installation needed.
+  Desktop installers are also available for Windows and Linux.
 aside: false
 sidebar: false
 lastUpdated: false
 ---
 
 <DownloadWidget
-  title="Download Embroiderly"
-  description="A free and open-source cross-stitch pattern design software"
+  title="Get Embroiderly"
+  description="A free and open-source application for designing cross-stitch patterns"
+  openInBrowserLabel="Open Embroiderly in Your Browser"
+  openInBrowserCaption="Free · No sign-up required · Available offline · Installable as a PWA"
+  installAsDesktopApp="or install as a desktop app"
 />
 
-Embroiderly is available on the following operating systems:
+## Browser Compatibility
 
-- **Windows 10, 11**: Fully supported with a native Windows installer.
-- **Linux**: Available via `.deb` (Debian/Ubuntu) and `.rpm` (Fedora/RHEL) packages.
+Embroiderly runs directly in your browser with no installation required.
+For the best experience, use the latest version of one of these browsers:
+
+- **Google Chrome** (and other Chromium-based browsers like Edge or Brave)
+- **Mozilla Firefox** (and other Gecko-based browsers like Zen)
+- **Apple Safari**
+
+## Desktop Apps
+
+If you prefer a native desktop experience, Embroiderly is also available as an installable app:
+
+- **Windows 10, 11**: A native Windows installer (`.exe`).
+- **Linux**: Available as a `.deb` package (Debian, Ubuntu) or an `.rpm` package (Fedora, Red Hat, SUSE).
 
 > [!NOTE]
-> macOS isn't currently supported due to technical limitations.
-> We hope to add macOS support in future releases.
+> macOS isn't currently supported as a desktop app due to technical limitations.
+> You can still use Embroiderly in your browser on macOS.
 
 Mobile platforms are a subject of consideration, but their support isn't planned in the near future.
+Although the app is adapted for small screens.
 
 > [!IMPORTANT]
-> None of the distributables are currently signed, so you may see alerts from your operating system or antivirus that the application is unsafe.
-> We know about this issue, but we currently don't have the resources to sign them.
+> None of the desktop installers are currently signed, so your operating system or antivirus may warn that the file is unsafe.
+> We're aware of this issue, but we currently don't have the resources to sign them.
 >
 > You can safely ignore those warnings.
 > Please refer to your OS/AV documentation to find out how to proceed with the installation.

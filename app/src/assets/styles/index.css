@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@import "@embroiderly/ui";
+
+@import "./tour.css";
+
+@theme {
+  --animate-rainbow-shine: rainbow-shine 2.4s linear infinite;
+}
+
+@keyframes rainbow-shine {
+  0% {
+    color: var(--ui-color-primary-500);
+  }
+  20% {
+    color: var(--ui-color-error-500);
+  }
+  40% {
+    color: var(--ui-color-warning-500);
+  }
+  60% {
+    color: var(--ui-color-success-500);
+  }
+  80% {
+    color: var(--ui-color-info-500);
+  }
+  100% {
+    color: var(--ui-color-primary-500);
+  }
+}

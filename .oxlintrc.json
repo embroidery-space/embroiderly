@@ -1,0 +1,61 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "pedantic": "warn",
+    "perf": "warn",
+    "style": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "plugins": ["oxc", "eslint", "typescript", "unicorn", "promise", "vue"],
+  "rules": {
+    "no-shadow": "off",
+    "no-inline-comments": "off",
+    "no-lonely-if": "off",
+    "no-await-in-loop": "off",
+    "max-lines-per-function": "off",
+    "max-classes-per-file": "off",
+    "max-lines": "off",
+
+    "eslint/no-underscore-dangle": [
+      "error",
+      { "allow": ["__APP_VERSION__", "__GIT_BRANCH__", "__GIT_COMMIT__", "__GIT_DATE__", "__TAURI__"] }
+    ],
+
+    "typescript/ban-types": "off",
+
+    // Enable when Vue.js base TS config target supports these features.
+    "unicorn/no-array-reverse": "off",
+    "unicorn/no-array-sort": "off",
+    "unicorn/prefer-at": "off",
+
+    "unicorn/no-useless-undefined": "off",
+    "unicorn/consistent-function-scoping": "off",
+    "unicorn/explicit-length-check": "off"
+  },
+  "overrides": [
+    {
+      "files": ["app/src/**/*.{ts,vue}", "packages/**/*.{ts,vue}"],
+      "env": {
+        "es2020": true,
+        "browser": true
+      },
+      "rules": {
+        "no-console": ["warn"]
+      }
+    },
+    {
+      "files": ["scripts/**/*.js"],
+      "env": {
+        "es2020": true,
+        "node": true
+      },
+      "plugins": ["node"],
+      "rules": {
+        "unicorn/no-process-exit": "off"
+      }
+    }
+  ]
+}

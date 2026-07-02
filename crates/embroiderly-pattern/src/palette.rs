@@ -38,7 +38,49 @@
 #[path = "./palette.test.rs"]
 mod tests;
 
-use xsp_parsers::{pmaker, ursa, xspro};
+/// Display settings for the palette panel.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+pub struct PaletteSettings {
+  pub columns_number: u8,
+  pub color_only: bool,
+  pub show_stitch_symbols: bool,
+  pub stitch_symbols_on_contrast_background: bool,
+  pub show_color_brands: bool,
+  pub show_color_numbers: bool,
+  pub show_color_names: bool,
+}
+
+impl PaletteSettings {
+  pub const DEFAULT_COLUMNS_NUMBER: u8 = 1;
+  pub const DEFAULT_COLOR_ONLY: bool = false;
+  pub const DEFAULT_SHOW_STITCH_SYMBOLS: bool = true;
+  pub const DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND: bool = true;
+  pub const DEFAULT_SHOW_COLOR_BRANDS: bool = true;
+  pub const DEFAULT_SHOW_COLOR_NUMBERS: bool = true;
+  pub const DEFAULT_SHOW_COLOR_NAMES: bool = true;
+
+  #[must_use]
+  pub const fn new() -> Self {
+    Self {
+      columns_number: Self::DEFAULT_COLUMNS_NUMBER,
+      color_only: Self::DEFAULT_COLOR_ONLY,
+      show_stitch_symbols: Self::DEFAULT_SHOW_STITCH_SYMBOLS,
+      stitch_symbols_on_contrast_background: Self::DEFAULT_STITCH_SYMBOLS_ON_CONTRAST_BACKGROUND,
+      show_color_brands: Self::DEFAULT_SHOW_COLOR_BRANDS,
+      show_color_numbers: Self::DEFAULT_SHOW_COLOR_NUMBERS,
+      show_color_names: Self::DEFAULT_SHOW_COLOR_NAMES,
+    }
+  }
+}
+
+impl Default for PaletteSettings {
+  fn default() -> Self {
+    Self::new()
+  }
+}
 
 /// Manages palette items and their visual ordering.
 #[derive(Debug, Clone)]
@@ -48,6 +90,8 @@ pub struct Palette {
   items: Vec<PaletteItem>,
   /// Visual ordering of palette items.
   positions: Vec<u32>,
+  /// Display settings for the palette panel.
+  settings: PaletteSettings,
 }
 
 impl Palette {
@@ -57,7 +101,19 @@ impl Palette {
     Self {
       items: Vec::new(),
       positions: Vec::new(),
+      settings: PaletteSettings::new(),
     }
+  }
+
+  /// Returns the palette display settings.
+  #[must_use]
+  pub const fn settings(&self) -> PaletteSettings {
+    self.settings
+  }
+
+  /// Sets the palette display settings.
+  pub const fn set_settings(&mut self, settings: PaletteSettings) {
+    self.settings = settings;
   }
 
   // === Access Methods ===
@@ -257,7 +313,11 @@ impl Default for Palette {
 impl From<Vec<PaletteItem>> for Palette {
   fn from(items: Vec<PaletteItem>) -> Self {
     let positions = (0..items.len() as u32).collect();
-    Self { items, positions }
+    Self {
+      items,
+      positions,
+      settings: PaletteSettings::default(),
+    }
   }
 }
 
@@ -286,6 +346,21 @@ impl From<Palette> for Vec<PaletteItem> {
   }
 }
 
+#[cfg(feature = "serde")]
+impl serde::Serialize for Palette {
+  fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+    self.items.serialize(serializer)
+  }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Palette {
+  fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+    let items = Vec::<PaletteItem>::deserialize(deserializer)?;
+    Ok(Self::from(items))
+  }
+}
+
 impl std::ops::Index<u32> for Palette {
   type Output = PaletteItem;
 
@@ -305,6 +380,8 @@ impl std::ops::IndexMut<u32> for Palette {
 /// It contains all the properties from [`BrandPaletteItem`] plus project-specific display properties.
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct PaletteItem {
   pub brand: String,
   pub number: String,
@@ -330,47 +407,6 @@ impl From<BrandPaletteItem> for PaletteItem {
       name: brand_item.name,
       color: brand_item.color,
       blends: brand_item.blends,
-      symbol: None,
-    }
-  }
-}
-
-impl From<pmaker::PaletteItem> for PaletteItem {
-  fn from(palitem: pmaker::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: palitem
-        .blends
-        .map(|blends| blends.into_iter().map(Blend::from).collect()),
-      symbol: None,
-    }
-  }
-}
-
-impl From<ursa::PaletteItem> for PaletteItem {
-  fn from(palitem: ursa::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-      symbol: None,
-    }
-  }
-}
-
-impl From<xspro::PaletteItem> for PaletteItem {
-  fn from(palitem: xspro::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
       symbol: None,
     }
   }
@@ -403,44 +439,6 @@ pub struct BrandPaletteItem {
   pub color: String,
   #[cfg_attr(feature = "serde", serde(skip_serializing_if = "blends_empty"))]
   pub blends: Option<Vec<Blend>>,
-}
-
-impl From<pmaker::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: pmaker::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: palitem
-        .blends
-        .map(|blends| blends.into_iter().map(Blend::from).collect()),
-    }
-  }
-}
-
-impl From<ursa::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: ursa::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-    }
-  }
-}
-
-impl From<xspro::PaletteItem> for BrandPaletteItem {
-  fn from(palitem: xspro::PaletteItem) -> Self {
-    Self {
-      brand: palitem.brand,
-      number: palitem.number,
-      name: palitem.name,
-      color: palitem.color,
-      blends: None,
-    }
-  }
 }
 
 impl PartialEq for BrandPaletteItem {
@@ -477,6 +475,36 @@ impl Symbol {
   }
 }
 
+#[cfg(feature = "serde")]
+impl serde::Serialize for Symbol {
+  fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+    use serde::ser::SerializeStruct as _;
+
+    let mut state = serializer.serialize_struct("Symbol", 2)?;
+    state.serialize_field("char", &(self.char as u32))?;
+    state.serialize_field("font", &self.font)?;
+
+    state.end()
+  }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Symbol {
+  fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+    #[derive(serde::Deserialize)]
+    struct SymbolData {
+      char: u32,
+      font: String,
+    }
+
+    let data = SymbolData::deserialize(deserializer)?;
+    let char = char::from_u32(data.char)
+      .ok_or_else(|| serde::de::Error::custom(format!("invalid Unicode code point: {}", data.char)))?;
+
+    Ok(Self { char, font: data.font })
+  }
+}
+
 #[cfg(feature = "borsh")]
 impl borsh::BorshSerialize for Symbol {
   fn serialize<W: borsh::io::Write>(&self, writer: &mut W) -> borsh::io::Result<()> {
@@ -508,30 +536,12 @@ pub struct Blend {
   pub number: String,
 }
 
-impl From<pmaker::Blend> for Blend {
-  fn from(blend: pmaker::Blend) -> Self {
-    Self {
-      brand: blend.brand,
-      number: blend.number,
-    }
-  }
-}
-
 /// Represents a bead used in patterns.
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Bead {
   pub length: f32,
   pub diameter: f32,
-}
-
-impl From<pmaker::Bead> for Bead {
-  fn from(bead: pmaker::Bead) -> Self {
-    Self {
-      length: bead.length,
-      diameter: bead.diameter,
-    }
-  }
 }
 
 #[cfg(feature = "serde")]

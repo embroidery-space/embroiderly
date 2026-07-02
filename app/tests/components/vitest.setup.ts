@@ -1,0 +1,12 @@
+import "../../src/assets/styles/index.css";
+
+import { FluentBundle, FluentResource } from "@fluent/bundle";
+import { createFluentVue } from "fluent-vue";
+import { config } from "vitest-browser-vue";
+
+import enLocale from "~/assets/locales/en.ftl?raw";
+
+const bundle = new FluentBundle("en");
+bundle.addResource(new FluentResource(enLocale));
+
+config.global.plugins = [createFluentVue({ bundles: [bundle] })];

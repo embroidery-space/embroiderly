@@ -1,0 +1,56 @@
+import { useHotkeys, useHotkeySequences } from "@tanstack/vue-hotkeys";
+import type { UseHotkeyDefinition, UseHotkeySequenceDefinition } from "@tanstack/vue-hotkeys";
+import { computed, toValue } from "vue";
+import type { MaybeRefOrGetter } from "vue";
+
+import { splitShortcutKey } from "../utils/shortcut.ts";
+
+/**
+ * Registers keyboard shortcuts for the current component scope.
+ * Shortcuts are automatically unregistered when the component unmounts.
+ *
+ * A key resolves to a plain combination (e.g. `Control+S`, `Ctrl+-`) when `splitShortcutKey` returns a single part containing `+`.
+ * Everything else is a sequence (e.g. `P-T-L` -> `['P', 'T', 'L']`, `Shift+V-M` -> `['Shift+V', 'M']`, `F` -> `['F']`).
+ */
+export function useShortcuts(shortcuts: MaybeRefOrGetter<Record<string, () => void>>) {
+  const combinations: UseHotkeyDefinition[] = [];
+  const sequences: UseHotkeySequenceDefinition[] = [];
+
+  for (const [key, callback] of Object.entries(toValue(shortcuts))) {
+    const components = splitShortcutKey(key);
+    if (components.length === 1 && key.includes("+")) {
+      combinations.push({ hotkey: key as unknown as UseHotkeyDefinition["hotkey"], callback });
+    } else {
+      sequences.push({ sequence: components as unknown as UseHotkeySequenceDefinition["sequence"], callback });
+    }
+  }
+
+  useHotkeys(combinations);
+  useHotkeySequences(sequences);
+}
+
+/**
+ * Extracts shortcuts from menu items.
+ *
+ * @param items - An array of menu item groups (e.g., from `DropdownMenu` or `ContextMenu`).
+ * @returns A computed value containing a record of shortcut keys to handlers.
+ */
+export function extractShortcuts(items: MaybeRefOrGetter<any[] | any[][]>) {
+  return computed(() => {
+    const shortcuts: Record<string, () => void> = {};
+
+    function traverse(items: any[]) {
+      for (const item of items) {
+        if (item.shortcut && (item.onSelect || item.onClick)) {
+          shortcuts[item.shortcut] = item.onSelect || item.onClick;
+        }
+
+        if (item.children) traverse(item.children.flat());
+        if (item.items) traverse(item.items.flat());
+      }
+    }
+    traverse(toValue(items).flat());
+
+    return shortcuts;
+  });
+}

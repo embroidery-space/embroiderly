@@ -1,8 +1,15 @@
 [workspace]
 resolver = "3"
-members = ["app/src-tauri/", "crates/*"]
+members = [
+  "app/src-tauri/",
+  "app/src-wasm/",
+  "crates/*",
+  "packages/pdf-export/src-wasm/",
+  "packages/image-import/src-wasm/",
+]
 
 [workspace.package]
+version = "0.8.0"
 edition = "2024"
 
 [profile.dev]
@@ -59,97 +66,100 @@ cargo = { level = "allow", priority = -1 }
 redundant_feature_names = "deny"
 wildcard_dependencies = "deny"
 
+[patch.crates-io]
+tauri = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef" }
+tauri-plugin = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef" }
+
 [workspace.dependencies]
 # Tauri
-tauri = { version = "2.9.5", default-features = false, features = ["compression", "wry", "x11", "config-json5"] }
-tauri-build = { version = "2.4.1", default-features = false, features = ["config-json5"] }
+tauri = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef", default-features = false, features = [
+  "compression",
+  "wry",
+  "x11",
+  "config-json5",
+] }
+tauri-build = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef", default-features = false, features = [
+  "config-json5",
+] }
 ## Official Tauri plugins
-tauri-plugin-clipboard-manager = "2.3.2"
-tauri-plugin-dialog = "2.4.2"
-tauri-plugin-fs = "2.0.3"
-tauri-plugin-opener = "2.5.2"
-tauri-plugin-os = "2.3.2"
-tauri-plugin-process = "2.3.1"
-tauri-plugin-shell = "2.3.3"
-tauri-plugin-updater = "2.9.0"
+tauri-plugin-fs = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
+tauri-plugin-opener = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
+tauri-plugin-process = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
+tauri-plugin-updater = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
 ## Third-party Tauri plugins
-tauri-plugin-better-posthog = "0.1.2"
-tauri-plugin-prevent-default = "4.0.3"
-tauri-plugin-pinia = "4.1.0"
+tauri-plugin-prevent-default = "5.0.2"
 
 # Embroiderly Core
-embroiderly_image = { path = "crates/embroiderly-image" }
+embroiderly_editor = { path = "crates/embroiderly-editor" }
 embroiderly_parsers = { path = "crates/embroiderly-parsers" }
 embroiderly_pattern = { path = "crates/embroiderly-pattern" }
 embroiderly_tracing = { path = "crates/embroiderly-tracing" }
-xsp_parsers = { path = "crates/xsp-parsers" }
+embroiderly_web = { path = "crates/embroiderly-web" }
+
+# Async runtime
+futures = "0.3.32"
 
 # Parsing pattern files
 byteorder = "1.5.0"
 encoding_rs = "0.8.35"
 hex = "0.4.3"
-quick-xml = "0.38.4"
+quick-xml = "0.40.0"
 
 # Fonts handling
-font-kit = "0.14.3"
 ttf-parser = "0.25.1"
 
 # Typst
-typst = "0.14.2"
-typst-pdf = "0.14.2"
+typst = "0.15.0"
+typst-pdf = "0.15.0"
 ## Third-party Typst libraries
-typst-as-lib = "0.15.0"
+typst-as-lib = "0.16.0"
 
 # Image processing
-image = "0.25.9"
+image = { version = "0.25.10", default-features = false, features = ["png", "jpeg", "webp"] }
 palette = "0.7.6"
-quantette = "0.5.1"
+quantette = "0.6.0"
 
 # Archiving
-zip = { version = "7.0.0", default-features = false, features = [ "zstd", "time", ] }
+zip = { version = "8.6.0", default-features = false, features = ["deflate", "time"] }
 
 # De/serialization
 serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.148"
-base64 = "0.22.1"
-borsh = { version = "1.6.0", features = ["derive"] }
-
-# CLI
-argh = { version = "0.1.13", default-features = false }
+serde_json = "1.0.150"
+serde-wasm-bindgen = "0.6.5"
+borsh = { version = "1.6.1", features = ["derive"] }
 
 # Error handling
-anyhow = "1.0.100"
-thiserror = "2.0.17"
+anyhow = "1.0.103"
+thiserror = "2.0.18"
 
 # Logging & Tracing
-log = "0.4.29"
+log = "0.4.33"
 tracing = "0.1.44"
-tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 tracing-panic = "0.1.2"
 
-# Telemetry
-better-posthog = "0.2.2"
-sentry = "0.46.0"
-
 # Identification
-uuid = { version = "1.19.0", features = ["v4", "v7"] }
+uuid = { version = "1.23.4", features = ["v4", "v7", "js"] }
 
-# File system utilities
-tempfile = "3.24.0"
-walkdir = "2.5.0"
+# Wasm
+wasm-bindgen = "0.2.118"
+wasm-bindgen-futures = "0.4.68"
+console_error_panic_hook = "0.1.7"
+gloo-net = { version = "0.7.0", default-features = false }
+gloo-timers = "0.4.0"
+indexed-db = "0.4.2"
+js-sys = "0.3.95"
+web-sys = "0.3.95"
 
 # Iterator utilities
 itertools = "0.14.0"
-rayon = "1.11.0"
 
 # Testing utilities
 rstest = "0.26.1"
 
 # Other
-alphanumeric-sort = "1.5.5"
-async-trait = "0.1.89"
-ordered-float = "5.1.0"
-dyn-clone = "1.0.20"
+alphanumeric-sort = "1.5.6"
+ordered-float = "5.2.0"
 paste = "1.0.15"
 prettydiff = { version = "0.9.0", default-features = false }
-rand = "0.9.2"
+rand = "0.10.1"

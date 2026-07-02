@@ -12,13 +12,12 @@ This format is perfect for printing, sharing with others, or selling your patter
 To export your pattern as a PDF:
 
 1. Open your pattern in the pattern editor.
-2. Select **File** → **Export** → **PDF** in the menu bar.
-3. Choose a destination for the PDF file.
-4. Adjust the export settings if needed (see [PDF Export Settings](#pdf-export-settings) below).
-5. Click **Export Document** to generate the PDF.
+2. Select **File** -> **Export** -> **PDF** in the menu bar.
+3. Adjust the export settings if needed (see [PDF Export Settings](#pdf-export-settings) below).
+4. Click **Export Document** to generate the PDF.
 
 <figure>
-  <img src="/images/guide/publishing-patterns/pdf-export-modal.png">
+  <img src="/images/en/guide/publishing-patterns/pdf-export-modal.png">
   <figcaption>The <strong>PDF Export</strong> window showing the publish settings.</figcaption>
 </figure>
 
@@ -34,9 +33,9 @@ You can generate the PDF document in two variants:
 
 Each exported PDF document includes:
 
-- **Pattern information**. Title, author, copyright, fabric details, and description.
-- **Thread palette**. A table with symbols, brands, numbers, and color names.
-- **Pattern frames**. Visual sections of your pattern, split across multiple pages if needed.
+- **Pattern information.** Title, author, copyright, fabric details, and description.
+- **Thread palette.** A table with symbols, brands, numbers, and color names.
+- **Pattern frames.** Visual sections of your pattern, split across multiple pages if needed.
 
 To see what a finished PDF document looks like, check out [sample patterns](#sample-pattern-pdfs) at the end of this chapter.
 
@@ -46,7 +45,7 @@ You can adjust export settings in two ways:
 
 ### While Exporting
 
-When you open the **PDF Export** windows, click **Publish Settings** to expand the settings menu.
+In the **PDF Export** window, there is a **Frame Options** section where you can play with options.
 This lets you preview how different settings affect your export before generating the final document.
 
 After you're satisfied with the settings, you can:
@@ -56,29 +55,23 @@ After you're satisfied with the settings, you can:
 
 ### In Pattern Properties
 
-For a separate configuration, open **Pattern** → **Publish Settings** from the menu bar.
+For a separate configuration, open **Pattern** -> **Publish Settings** from the menu bar.
 This opens a dedicated window where you can configure all export options.
 
 These saved settings will be used as defaults every time you export this pattern to PDF.
 
 ## Available Export Options
 
-### Print Options
-
-- **Center Frames**. Centers pattern frames on each page (disabled by default).
-- **Enumerate Frames**. Displays frame numbers (e.g., "Frame 1/6") at the bottom of each page (enabled by default).
-
-### Frame Settings
+### Frame Options
 
 Frames are parts of your pattern split across multiple pages for large designs.
 
-- **Frame Size**. Maximum dimensions of each frame in stitches (default is 30x40 stitches).
-- **Cell Size**. Size of each stitch cell in pixels (default is 14 pixels).
-- **Preserved Overlap**. Number of overlapping rows/columns between adjacent frames (default is 3).
-- **Show Grid Line Numbers**. Displays numbers along the edges to mark grid lines (enabled by default).
-- **Show Centering Marks**. Displays markers for horizontal and vertical center lines (enabled by default).
+- **Frame Size.** Maximum dimensions of each frame in stitches (default is 30x40 stitches).
+- **Preserved Overlap.** Number of overlapping rows/columns between adjacent frames (default is 3).
+- **Show Grid Line Numbers.** Displays numbers along the edges to mark grid lines (enabled by default).
+- **Show Centering Marks.** Displays markers for horizontal and vertical center lines (enabled by default).
 
 ## Sample Pattern PDFs
 
-- [Color variant](https://embroiderly.niusia.me/piggies.color.pdf)
-- [Monochrome variant](https://embroiderly.niusia.me/piggies.monochrome.pdf)
+- [Color variant](https://docs.embroiderly.niusia.me/piggies.color.pdf)
+- [Monochrome variant](https://docs.embroiderly.niusia.me/piggies.monochrome.pdf)

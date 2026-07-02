@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@import "./styles/keyframes.css";
+@import "./styles/palette.css";
+@import "./styles/ui.css";
+
+@source "./components/";
+
+@layer theme {
+  :root,
+  :host {
+    color-scheme: light dark;
+
+    --ui-text: light-dark(#2e3440, #eceff4);
+    --ui-text-dimmed: light-dark(#3b4252, #e5e9f0);
+    --ui-text-muted: light-dark(#434c5e, #d8dee9);
+    --ui-text-inverted: var(--ui-bg);
+
+    --ui-bg: light-dark(var(--ui-color-neutral-400), var(--ui-color-neutral-700));
+    --ui-bg-elevated: light-dark(var(--ui-color-neutral-500), var(--ui-color-neutral-600));
+    --ui-bg-accented: light-dark(var(--ui-color-neutral-600), var(--ui-color-neutral-500));
+    --ui-bg-inverted: var(--ui-text);
+
+    --ui-border: light-dark(var(--ui-color-neutral-600), var(--ui-color-neutral-600));
+    --ui-border-elevated: light-dark(var(--ui-color-neutral-700), var(--ui-color-neutral-500));
+    --ui-border-accented: light-dark(var(--ui-color-neutral-800), var(--ui-color-neutral-400));
+    --ui-border-inverted: var(--ui-text);
+
+    --ui-radius: 0.25rem;
+    --ui-container: 80rem;
+  }
+}

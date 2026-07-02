@@ -1,9 +1,9 @@
-use xsp_parsers::pmaker;
-
 use super::Coord;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct LineStitch {
   pub x: (Coord, Coord),
   pub y: (Coord, Coord),
@@ -23,21 +23,9 @@ impl Ord for LineStitch {
   }
 }
 
-impl TryFrom<pmaker::LineStitch> for LineStitch {
-  type Error = anyhow::Error;
-
-  fn try_from(linestitch: pmaker::LineStitch) -> Result<Self, Self::Error> {
-    Ok(Self {
-      x: (Coord::new(linestitch.x.0)?, Coord::new(linestitch.x.1)?),
-      y: (Coord::new(linestitch.y.0)?, Coord::new(linestitch.y.1)?),
-      palindex: linestitch.palindex as u32,
-      kind: linestitch.kind.into(),
-    })
-  }
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum LineStitchKind {
   Back,
   Straight,
@@ -60,15 +48,6 @@ impl std::str::FromStr for LineStitchKind {
       "backstitch" => Ok(Self::Back),
       "straightstitch" => Ok(Self::Straight),
       _ => Ok(Self::Back),
-    }
-  }
-}
-
-impl From<pmaker::LineStitchKind> for LineStitchKind {
-  fn from(kind: pmaker::LineStitchKind) -> Self {
-    match kind {
-      pmaker::LineStitchKind::Back => Self::Back,
-      pmaker::LineStitchKind::Straight => Self::Straight,
     }
   }
 }

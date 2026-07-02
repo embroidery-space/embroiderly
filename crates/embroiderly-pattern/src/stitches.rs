@@ -46,11 +46,13 @@ impl Bounds {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Stitch {
   Full(FullStitch),
   Part(PartStitch),
   Line(LineStitch),
   Node(NodeStitch),
+  Special(SpecialStitch),
 }
 
 impl From<FullStitch> for Stitch {
@@ -70,9 +72,16 @@ impl From<LineStitch> for Stitch {
     Self::Line(linestitch)
   }
 }
+
 impl From<NodeStitch> for Stitch {
   fn from(nodestitch: NodeStitch) -> Self {
     Self::Node(nodestitch)
+  }
+}
+
+impl From<SpecialStitch> for Stitch {
+  fn from(specialstitch: SpecialStitch) -> Self {
+    Self::Special(specialstitch)
   }
 }
 
@@ -144,9 +153,28 @@ impl<T: Ord> Stitches<T> {
   }
 }
 
+#[cfg(feature = "serde")]
+impl<T: Ord + serde::Serialize> serde::Serialize for Stitches<T> {
+  fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+    self.inner.serialize(serializer)
+  }
+}
+
+#[cfg(feature = "serde")]
+impl<'de, T: Ord + serde::Deserialize<'de>> serde::Deserialize<'de> for Stitches<T> {
+  fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+    let items = Vec::<T>::deserialize(deserializer)?;
+    Ok(Self {
+      inner: BTreeSet::from_iter(items),
+    })
+  }
+}
+
 impl<T: Ord> FromIterator<T> for Stitches<T> {
   fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
-    Self { inner: BTreeSet::from_iter(iter) }
+    Self {
+      inner: BTreeSet::from_iter(iter),
+    }
   }
 }
 
@@ -171,7 +199,12 @@ impl Stitches<FullStitch> {
       FullStitch { kind, ..*fullstitch },
       FullStitch { x, kind, ..*fullstitch },
       FullStitch { y, kind, ..*fullstitch },
-      FullStitch { x, y, kind, ..*fullstitch },
+      FullStitch {
+        x,
+        y,
+        kind,
+        ..*fullstitch
+      },
     ] {
       self.remove(&petite).inspect(|&petite| conflicts.push(petite));
     }
@@ -219,7 +252,12 @@ impl Stitches<FullStitch> {
       PartStitchDirection::Backward => {
         for petite in [
           FullStitch { kind, ..fullstitch },
-          FullStitch { x, y, kind, ..fullstitch },
+          FullStitch {
+            x,
+            y,
+            kind,
+            ..fullstitch
+          },
         ] {
           self.remove(&petite).inspect(|&petite| conflicts.push(petite));
         }
@@ -497,11 +535,26 @@ impl Stitches<SpecialStitch> {
       .iter()
       .filter(move |stitch| bounds.contains_point(stitch.x, stitch.y))
   }
+
+  pub fn remove_stitches_outside_bounds(
+    &mut self,
+    bounds: Bounds,
+    special_stitch_models: &[SpecialStitchModel],
+  ) -> Vec<SpecialStitch> {
+    self
+      .inner
+      .extract_if(.., |special| {
+        let model = &special_stitch_models[special.modindex as usize];
+        special.is_outside_bounds(bounds, model)
+      })
+      .collect()
+  }
 }
 
 macro_rules! stitches_with_palindex_impl {
   ($type:ty) => {
     impl Stitches<$type> {
+      /// Removes stitches by their palette item indexes and returns them.
       pub fn remove_stitches_by_palindexes(&mut self, palindexes: &[u32]) -> Vec<$type> {
         let mut remaining_stitches = Vec::new();
         let mut removed_stitches = Vec::new();
@@ -541,10 +594,10 @@ macro_rules! stitches_with_palindex_impl {
         removed_stitches
       }
 
-      pub fn restore_stitches(&mut self, stitches: Vec<$type>, palindexes: &[u32], palsize: u32) {
-        // First, we need to create a map of the old palette item indexes to the new ones.
-        // We do this by iterating over the complete range of current palette item indexes
-        // and incrementing those that are greater than the removed ones.
+      /// Reindexes the palette item indexes of all stitches after palette items have been restored.
+      /// This updates the current stitches to make room for the restored palette items, without inserting any new stitches.
+      pub fn reindex_palindexes(&mut self, palindexes: &[u32], palsize: u32) {
+        // Create a map of old palette item indexes to new ones.
         let mut palindexes_map = std::collections::HashMap::new();
         let mut counter = 0;
         for palindex in 0..palsize {
@@ -555,12 +608,17 @@ macro_rules! stitches_with_palindex_impl {
           palindexes_map.insert(palindex, new_palindex);
         }
 
-        // Then, we need to update the palette item indexes of the stitches.
+        // Update the palette item indexes of the existing stitches.
         for mut stitch in std::mem::take(&mut self.inner).into_iter() {
           let new_palindex = palindexes_map.get(&stitch.palindex).unwrap();
           stitch.palindex = *new_palindex;
           self.inner.insert(stitch);
         }
+      }
+
+      /// Restores the stitches from a given vector, reindexing their palette item indexes first.
+      pub fn restore_stitches(&mut self, stitches: Vec<$type>, palindexes: &[u32], palsize: u32) {
+        self.reindex_palindexes(palindexes, palsize);
         self.inner.extend(stitches);
       }
     }
@@ -571,3 +629,4 @@ stitches_with_palindex_impl!(FullStitch);
 stitches_with_palindex_impl!(PartStitch);
 stitches_with_palindex_impl!(LineStitch);
 stitches_with_palindex_impl!(NodeStitch);
+stitches_with_palindex_impl!(SpecialStitch);

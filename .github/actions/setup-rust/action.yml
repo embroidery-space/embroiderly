@@ -1,5 +1,5 @@
 name: Setup Rust
-description: Sets up Rust toolchain with system dependencies and caching
+description: Sets up Rust toolchain with system dependencies, required components, extra targets and tools, and caching
 inputs:
   stable-components:
     description: Stable Rust components to install (comma-separated list)
@@ -7,6 +7,10 @@ inputs:
     default: ""
   nightly-components:
     description: Nightly Rust components to install (comma-separated list)
+    required: false
+    default: ""
+  targets:
+    description: Targets to install (comma-separated list)
     required: false
     default: ""
   tools:
@@ -30,8 +34,9 @@ runs:
     # Stable Rust must be installed last, so that it is specified as the default one.
     - uses: dtolnay/rust-toolchain@master
       with:
-        toolchain: 1.92.0 # stable
+        toolchain: 1.96.0 # stable
         components: ${{ inputs.stable-components }}
+        targets: ${{ inputs.targets }}
     - uses: swatinem/rust-cache@f13886b937689c021905a6b90929199931d60db1 # v2.8.1
     - uses: taiki-e/install-action@4575ae687efd0e2c78240087f26013fb2484987f # v2.62.6
       if: inputs.tools != ''

@@ -1,5 +1,3 @@
-use std::ffi::OsStr;
-
 use crate::error::Error;
 
 #[derive(Default, Clone, Copy, PartialEq, Eq)]
@@ -20,20 +18,16 @@ pub enum PatternFormat {
   EmbProj,
 }
 
-impl TryFrom<Option<&OsStr>> for PatternFormat {
+impl TryFrom<&str> for PatternFormat {
   type Error = Error;
 
-  fn try_from(value: Option<&OsStr>) -> std::result::Result<Self, Self::Error> {
-    if let Some(extension) = value {
-      let extension = extension.to_str().unwrap();
-      match extension.to_lowercase().as_str() {
-        "xsd" => Ok(Self::Xsd),
-        "oxs" | "xml" => Ok(Self::Oxs),
-        "embproj" => Ok(Self::EmbProj),
-        _ => Err(Error::UnsupportedPatternType(extension.to_string())),
-      }
-    } else {
-      Err(Error::UnsupportedPatternType("No extension".into()))
+  fn try_from(file_name: &str) -> std::result::Result<Self, Self::Error> {
+    let extension = file_name.split('.').next_back().unwrap_or_default();
+    match extension.to_lowercase().as_str() {
+      "xsd" => Ok(Self::Xsd),
+      "oxs" | "xml" => Ok(Self::Oxs),
+      "embproj" => Ok(Self::EmbProj),
+      ext => Err(Error::UnsupportedPatternType(ext.to_string())),
     }
   }
 }
@@ -44,6 +38,36 @@ impl std::fmt::Display for PatternFormat {
       Self::Xsd => write!(f, "xsd"),
       Self::Oxs => write!(f, "oxs"),
       Self::EmbProj => write!(f, "embproj"),
+    }
+  }
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum PaletteFormat {
+  /// Pattern Maker (HobbyWare): `.master` or `.user` files.
+  Pmaker,
+
+  /// Win/MacStitch (UrsaSoftware): `.threads` files.
+  Ursa,
+
+  /// XSPro Platinum (DP Software): `.rng` files.
+  Xspro,
+
+  /// Embroiderly's own JSON palette format.
+  Embroiderly,
+}
+
+impl TryFrom<&str> for PaletteFormat {
+  type Error = Error;
+
+  fn try_from(file_name: &str) -> std::result::Result<Self, Self::Error> {
+    let extension = file_name.split('.').next_back().unwrap_or_default();
+    match extension.to_lowercase().as_str() {
+      "master" | "user" => Ok(Self::Pmaker),
+      "threads" => Ok(Self::Ursa),
+      "rng" => Ok(Self::Xspro),
+      "json" => Ok(Self::Embroiderly),
+      ext => Err(Error::UnsupportedPaletteType(ext.to_string())),
     }
   }
 }

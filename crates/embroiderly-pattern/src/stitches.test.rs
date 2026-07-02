@@ -231,6 +231,29 @@ fn node(base: NotNan<f32>, kind: NodeStitchKind) -> NodeStitch {
   }
 }
 
+fn special(x: f32, y: f32, rotation: u16, modindex: u32) -> SpecialStitch {
+  SpecialStitch {
+    x: NotNan::new(x).unwrap(),
+    y: NotNan::new(y).unwrap(),
+    rotation,
+    flip: (false, false),
+    palindex: 0,
+    modindex,
+  }
+}
+
+fn special_stitch_model(width: f32, height: f32) -> SpecialStitchModel {
+  SpecialStitchModel {
+    unique_name: "test".to_string(),
+    name: "Test".to_string(),
+    width,
+    height,
+    nodestitches: vec![],
+    linestitches: vec![],
+    curvedstitches: vec![],
+  }
+}
+
 #[test]
 fn new_stitches_should_not_conflict() {
   let fullstitch = full(NotNan::new(10.0).unwrap());
@@ -521,6 +544,34 @@ fn node_conflicts_with_node() {
   assert!(TEST_NODES.get(&bead).is_some());
   let bead = node(NotNan::new(1.0).unwrap(), NodeStitchKind::Bead);
   assert!(TEST_NODES.get(&bead).is_some());
+}
+
+#[test]
+fn test_reindex_palindexes() {
+  let mut stitches = Stitches::from_iter([
+    FullStitch {
+      x: NotNan::new(0.0).unwrap(),
+      y: NotNan::new(0.0).unwrap(),
+      palindex: 0,
+      kind: FullStitchKind::Full,
+    },
+    FullStitch {
+      x: NotNan::new(1.0).unwrap(),
+      y: NotNan::new(1.0).unwrap(),
+      palindex: 1,
+      kind: FullStitchKind::Full,
+    },
+  ]);
+
+  // Restore one item at position [1]; current palette has 2 items.
+  // Expected: palindex 0 stays 0, palindex 1 shifts to 2 (skipping the restored slot).
+  stitches.reindex_palindexes(&[1], 2);
+
+  // No stitches are inserted or removed — only indexes shift.
+  assert_eq!(stitches.len(), 2);
+  let all: Vec<_> = stitches.iter().collect();
+  assert_eq!(all[0].palindex, 0);
+  assert_eq!(all[1].palindex, 2);
 }
 
 #[test]
@@ -926,4 +977,119 @@ fn test_remove_nodestitches_all_inside_bounds() {
   // No stitches should be removed.
   assert_eq!(stitches.len(), 2);
   assert_eq!(removed.len(), 0);
+}
+
+#[test]
+fn test_remove_specialstitches_fully_inside() {
+  let models = vec![special_stitch_model(2.0, 2.0)];
+  let mut stitches = Stitches::from_iter([special(5.0, 5.0, 0, 0)]);
+
+  let bounds = Bounds::new(0, 0, 20, 20);
+  let removed = stitches.remove_stitches_outside_bounds(bounds, &models);
+
+  assert_eq!(stitches.len(), 1);
+  assert_eq!(removed.len(), 0);
+}
+
+#[test]
+fn test_remove_specialstitches_anchor_outside() {
+  let models = vec![special_stitch_model(2.0, 2.0)];
+  let mut stitches = Stitches::from_iter([special(15.0, 15.0, 0, 0)]);
+
+  let bounds = Bounds::new(0, 0, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds, &models);
+
+  assert_eq!(stitches.len(), 0);
+  assert_eq!(removed.len(), 1);
+}
+
+#[test]
+fn test_remove_specialstitches_partial_overlap() {
+  let models = vec![special_stitch_model(4.0, 4.0)];
+  let mut stitches = Stitches::from_iter([special(8.0, 8.0, 0, 0)]);
+
+  let bounds = Bounds::new(0, 0, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds, &models);
+
+  assert_eq!(stitches.len(), 0);
+  assert_eq!(removed.len(), 1);
+}
+
+#[test]
+fn test_remove_specialstitches_rotation_90() {
+  let models = vec![special_stitch_model(4.0, 2.0)];
+  let mut stitches = Stitches::from_iter([SpecialStitch {
+    x: NotNan::new(8.0).unwrap(),
+    y: NotNan::new(0.0).unwrap(),
+    rotation: 90,
+    flip: (false, false),
+    palindex: 0,
+    modindex: 0,
+  }]);
+
+  let bounds = Bounds::new(0, 0, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds, &models);
+
+  assert_eq!(stitches.len(), 1);
+  assert_eq!(removed.len(), 0);
+}
+
+#[test]
+fn test_remove_specialstitches_rotation_180_pushes_outside() {
+  let models = vec![special_stitch_model(4.0, 4.0)];
+  let mut stitches = Stitches::from_iter([SpecialStitch {
+    x: NotNan::new(0.0).unwrap(),
+    y: NotNan::new(0.0).unwrap(),
+    rotation: 180,
+    flip: (false, false),
+    palindex: 0,
+    modindex: 0,
+  }]);
+
+  let bounds = Bounds::new(0, 0, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds, &models);
+
+  assert_eq!(stitches.len(), 0);
+  assert_eq!(removed.len(), 1);
+}
+
+#[test]
+fn test_remove_specialstitches_flip_inside() {
+  let models = vec![special_stitch_model(2.0, 2.0)];
+
+  for &(fx, fy) in &[(false, false), (true, false), (false, true), (true, true)] {
+    let mut stitches = Stitches::from_iter([SpecialStitch {
+      x: NotNan::new(5.0).unwrap(),
+      y: NotNan::new(5.0).unwrap(),
+      rotation: 0,
+      flip: (fx, fy),
+      palindex: 0,
+      modindex: 0,
+    }]);
+
+    let bounds = Bounds::new(0, 0, 10, 10);
+    let removed = stitches.remove_stitches_outside_bounds(bounds, &models);
+
+    assert_eq!(stitches.len(), 1);
+    assert_eq!(removed.len(), 0);
+  }
+}
+
+#[test]
+fn test_remove_specialstitches_flip_x_pushes_outside() {
+  let models = vec![special_stitch_model(2.0, 2.0)];
+  let mut stitches = Stitches::from_iter([SpecialStitch {
+    x: NotNan::new(1.0).unwrap(),
+    y: NotNan::new(5.0).unwrap(),
+    rotation: 0,
+    flip: (true, false),
+    palindex: 0,
+    modindex: 0,
+  }]);
+
+  let bounds = Bounds::new(0, 0, 10, 10);
+  let removed = stitches.remove_stitches_outside_bounds(bounds, &models);
+
+  assert_eq!(stitches.len(), 0);
+  assert_eq!(removed.len(), 1);
 }

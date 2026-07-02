@@ -1,0 +1,74 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tooltip > renders correctly with class 1`] = `
+<div>
+  <button aria-describedby="reka-tooltip-content-v-0" data-grace-area-trigger data-state="instant-open">Trigger</button>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-sm" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
+      <span class="truncate" data-slot="text">Tooltip</span>
+      <span>
+        <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
+          <path d="M0 0L6 6L12 0" />
+        </svg>
+      </span>
+      <span aria-hidden="true" id="reka-tooltip-content-v-0" role="tooltip">Tooltip</span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tooltip > renders correctly with shortcut 1`] = `
+<div>
+  <button aria-describedby="reka-tooltip-content-v-0" data-grace-area-trigger data-state="instant-open">Trigger</button>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
+      <span class="truncate" data-slot="text">Tooltip</span>
+      <span class="gap-0.5 hidden items-center lg:inline-flex not-first:before:content-['·'] not-first:before:me-0.5 shrink-0" data-slot="kbds">
+        <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+Z</kbd>
+      </span>
+      <span>
+        <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
+          <path d="M0 0L6 6L12 0" />
+        </svg>
+      </span>
+      <span aria-hidden="true" id="reka-tooltip-content-v-0" role="tooltip">TooltipCtrl+Z</span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tooltip > renders correctly with shortcut only 1`] = `
+<div>
+  <button aria-describedby="reka-tooltip-content-v-0" data-grace-area-trigger data-state="instant-open">Trigger</button>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
+      <span class="gap-0.5 hidden items-center lg:inline-flex not-first:before:content-['·'] not-first:before:me-0.5 shrink-0" data-slot="kbds">
+        <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+S</kbd>
+      </span>
+      <span>
+        <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
+          <path d="M0 0L6 6L12 0" />
+        </svg>
+      </span>
+      <span aria-hidden="true" id="reka-tooltip-content-v-0" role="tooltip">Ctrl+S</span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tooltip > renders correctly with text 1`] = `
+<div>
+  <button aria-describedby="reka-tooltip-content-v-0" data-grace-area-trigger data-state="instant-open">Trigger</button>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] flex gap-1 h-6 items-center origin-(--reka-tooltip-content-transform-origin) pointer-events-auto px-2.5 py-1 ring ring-default rounded-sm select-none shadow-sm text-xs" data-align="center" data-dismissable-layer data-side="bottom" data-slot="content" data-state="instant-open" dir="ltr">
+      <span class="truncate" data-slot="text">Tooltip</span>
+      <span>
+        <svg class="fill-default" data-slot="arrow" height="5" preserveAspectRatio="none" rounded="false" viewBox="0 0 12 6" width="10">
+          <path d="M0 0L6 6L12 0" />
+        </svg>
+      </span>
+      <span aria-hidden="true" id="reka-tooltip-content-v-0" role="tooltip">Tooltip</span>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,29 @@
+<script setup lang="ts">
+import { Button } from "@embroiderly/ui";
+
+import { useId } from "vue";
+
+import { IconClose } from "~/assets/icons/";
+
+const props = defineProps<{ title: string }>();
+const emit = defineEmits<{ close: [] }>();
+
+const sectionId = useId();
+</script>
+
+<template>
+  <div :aria-labelledby="sectionId" class="flex flex-col">
+    <div class="flex items-center justify-between border-b border-default px-2 py-1">
+      <span :id="sectionId" class="text-sm text-nowrap">{{ props.title }}</span>
+      <Button
+        square
+        variant="ghost"
+        color="neutral"
+        :icon="IconClose"
+        :aria-label="$t('modal-close')"
+        @click="emit('close')"
+      />
+    </div>
+    <slot></slot>
+  </div>
+</template>

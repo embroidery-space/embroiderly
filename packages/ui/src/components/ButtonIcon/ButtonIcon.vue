@@ -1,0 +1,77 @@
+<script setup lang="ts">
+import { computed } from "vue";
+
+import { useShortcuts } from "../../composables/useShortcuts.ts";
+import type { IconValue } from "../../types/icons.ts";
+import Button from "../Button/Button.vue";
+import type { ButtonProps } from "../Button/Button.vue";
+import Tooltip from "../Tooltip/Tooltip.vue";
+import type { TooltipProps } from "../Tooltip/Tooltip.vue";
+
+export interface ButtonIconProps
+  extends
+    Omit<ButtonProps, "label" | "leadingIcon" | "trailingIcon" | "leading" | "trailing" | "square">,
+    Pick<TooltipProps, "delayDuration" | "shortcut"> {
+  /** The icon to display. */
+  icon: IconValue;
+  /** The tooltip text. */
+  tooltip: string;
+
+  /** Additional options for the tooltip. */
+  tooltipOptions?: Omit<TooltipProps, "text" | "disabled" | "delayDuration">;
+}
+
+defineOptions({ inheritAttrs: false });
+
+const props = defineProps<ButtonIconProps>();
+const buttonProps = computed<Partial<ButtonProps>>(() => ({
+  href: props.href,
+  target: props.href,
+  rel: props.rel,
+
+  icon: props.icon,
+
+  variant: props.variant,
+  color: props.color,
+  size: props.size,
+
+  loading: props.loading,
+  disabled: props.disabled,
+
+  loadingIcon: props.loadingIcon,
+
+  onClick: props.onClick,
+
+  class: props.class,
+  ui: props.ui,
+}));
+const tooltipProps = computed<TooltipProps>(() => ({
+  ...props.tooltipOptions,
+
+  text: props.tooltip,
+  shortcut: props.shortcut,
+
+  disabled: props.disabled,
+  delayDuration: props.delayDuration,
+}));
+
+useShortcuts(() => {
+  if (!props.shortcut || !props.onClick) return {};
+  return {
+    [props.shortcut]: () => {
+      if (props.disabled) return;
+
+      const event = new MouseEvent("click");
+
+      if (Array.isArray(props.onClick)) props.onClick.forEach((fn) => fn(event));
+      else props.onClick!(event);
+    },
+  };
+});
+</script>
+
+<template>
+  <Tooltip v-bind="tooltipProps">
+    <Button v-bind="{ ...$attrs, ...buttonProps }" square :aria-label="tooltip" />
+  </Tooltip>
+</template>

@@ -1,10 +1,6 @@
 import { PatternEditorPage } from "../shared/pages/";
 
 describe("Pattern Info Management", () => {
-  before(async () => {
-    await browser.setWindowSize(1920, 1080);
-  });
-
   beforeEach(async () => {
     await PatternEditorPage.createDefaultPattern();
     await expect(PatternEditorPage.canvas).toBeDisplayed();

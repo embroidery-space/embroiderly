@@ -1,15 +1,20 @@
 {
   "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
-  "include": ["src/**/*.test.ts"],
+  "include": ["src/**/*.spec.ts", "tests/components/**/*.ts", "env.d.ts"],
   "compilerOptions": {
-    "baseUrl": ".",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
+
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": false,
-    "types": ["node", "vitest-browser-vue"],
+
     "paths": {
-      "#plugins/*": ["./src/plugins/*"]
-    }
+      "~/*": ["./src/*"],
+      "~test-utils/*": ["./tests/components/utils/*"],
+      "@embroiderly/wasm": ["./src-wasm/pkg/"]
+    },
+
+    "types": ["node", "vitest-browser-vue"]
   }
 }

@@ -8,11 +8,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
-    - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+    - uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1.0.0
       with:
-        node-version-file: package.json
-        cache: pnpm
-    - if: inputs.install-deps == 'true'
-      run: pnpm install
-      shell: bash
+        cache: true
+        runtime: node@24.16.0
+        install: ${{ inputs.install-deps }}
+      env:
+        HUSKY: 0

@@ -1,24 +1,22 @@
 import child from "node:child_process";
 import { promisify } from "node:util";
 
+import { withPwa } from "@vite-pwa/vitepress";
 import { defineConfig } from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
 
 import * as locales from "./locales/";
 import { betterAnchors } from "./plugins/";
 
-const HOSTNAME = "https://embroiderly.niusia.me";
+const HOSTNAME = "https://docs.embroiderly.niusia.me";
 
 const LANGUAGES = ["en", "uk"];
-const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`);
+const LANGUAGE_PREFIX_REGEXP = new RegExp(`^(${LANGUAGES.join("|")})/`, "u");
 
 const isCI = process.env.CI === "true";
 const isTauri = process.env.TAURI_ENV_TARGET_TRIPLE !== undefined;
 
-export default defineConfig({
-  outDir: "./dist/",
-  cacheDir: "./cache/",
-
+const config = defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   metaChunk: true,
@@ -41,7 +39,7 @@ export default defineConfig({
   },
 
   themeConfig: {
-    siteTitle: "Embroiderly",
+    siteTitle: "Embroiderly Docs",
     logo: {
       light: "/app-logo.dark.svg",
       dark: "/app-logo.light.svg",
@@ -76,6 +74,24 @@ export default defineConfig({
     },
   },
 
+  pwa: {
+    registerType: "autoUpdate",
+    manifest: {
+      name: "Embroiderly Docs",
+      short_name: "Embroiderly Docs",
+      description: "A free, open-source, cross-platform desktop application for designing cross-stitch patterns.",
+      theme_color: undefined,
+    },
+    pwaAssets: {
+      preset: "minimal-2023",
+      overrideManifestIcons: true,
+    },
+    workbox: {
+      globPatterns: ["**/*.{js,css,html,ico,png,svg,json,xml,pdf,txt,woff2}"],
+      maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MB. We have quite large PDF files.
+    },
+  },
+
   sitemap: {
     hostname: HOSTNAME,
   },
@@ -99,10 +115,11 @@ export default defineConfig({
       await Promise.all(
         LANGUAGES.map((lang) =>
           exec(
-            `typst compile .typst/main.typ dist/embroiderly.${lang}.pdf --root . --input lang=${lang} --font-path .typst/fonts/`,
+            `typst compile .typst/main.typ .vitepress/dist/embroiderly.${lang}.pdf --root . --input lang=${lang} --font-path .typst/fonts/`,
           ),
         ),
       );
     }
   },
 });
+export default withPwa(config);

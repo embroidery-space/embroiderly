@@ -1,0 +1,27 @@
+import { tv } from "tailwind-variants";
+
+export const DialogTheme = tv({
+  slots: {
+    overlay: `
+      fixed inset-0 bg-elevated/75
+      data-[state=closed]:animate-[fade-out_200ms_ease-in]
+      data-[state=open]:animate-[fade-in_200ms_ease-out]
+    `,
+    content: `
+      fixed top-1/2 left-1/2 grid max-h-[90%] w-lg max-w-[90%] -translate-1/2
+      grid-rows-[auto_1fr_auto] divide-y divide-default rounded-lg bg-default
+      shadow-lg ring ring-default
+      focus:outline-none
+      data-[state=closed]:animate-[scale-out_200ms_ease-in]
+      data-[state=open]:animate-[scale-in_200ms_ease-out]
+    `,
+    header: "flex min-h-14 items-center gap-1.5 p-4",
+    title: "font-semibold",
+    description: "mt-1 text-sm text-muted",
+    close: "absolute inset-e-4 top-4",
+    body: "p-4",
+    footer: "flex items-center justify-end gap-1.5 p-4",
+  },
+});
+
+export type DialogThemeSlots = Partial<(typeof DialogTheme)["slots"]>;

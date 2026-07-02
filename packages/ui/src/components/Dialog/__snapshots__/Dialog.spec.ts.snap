@@ -1,0 +1,141 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Dialog > renders correctly with class 1`] = `
+<div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed focus:outline-none grid grid-rows-[auto_1fr_auto] left-1/2 max-h-[90%] max-w-[90%] ring ring-default rounded-lg shadow-lg top-1/2 w-96" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+    <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
+      <div class="flex-1">
+        <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
+      </div>
+      <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex inset-e-4 items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
+      </button>
+    </header>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
+  </div>
+</div>
+`;
+
+exports[`Dialog > renders correctly with description 1`] = `
+<div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed focus:outline-none grid grid-rows-[auto_1fr_auto] left-1/2 max-h-[90%] max-w-[90%] ring ring-default rounded-lg shadow-lg top-1/2 w-lg" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+    <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
+      <div class="flex-1">
+        <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
+        <p class="mt-1 text-muted text-sm" data-slot="description" id="reka-dialog-description-v-2">Are you sure?</p>
+      </div>
+      <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex inset-e-4 items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
+      </button>
+    </header>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
+  </div>
+</div>
+`;
+
+exports[`Dialog > renders correctly with non-dismissible 1`] = `
+<div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed focus:outline-none grid grid-rows-[auto_1fr_auto] left-1/2 max-h-[90%] max-w-[90%] ring ring-default rounded-lg shadow-lg top-1/2 w-lg" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+    <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
+      <div class="flex-1">
+        <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
+      </div>
+      <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex inset-e-4 items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
+      </button>
+    </header>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
+  </div>
+</div>
+`;
+
+exports[`Dialog > renders correctly with title 1`] = `
+<div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed focus:outline-none grid grid-rows-[auto_1fr_auto] left-1/2 max-h-[90%] max-w-[90%] ring ring-default rounded-lg shadow-lg top-1/2 w-lg" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+    <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
+      <div class="flex-1">
+        <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
+      </div>
+      <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex inset-e-4 items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
+      </button>
+    </header>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
+  </div>
+</div>
+`;
+
+exports[`Dialog > renders correctly with ui 1`] = `
+<div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed focus:outline-none grid grid-rows-[auto_1fr_auto] left-1/2 max-h-[90%] max-w-[90%] ring ring-default rounded-lg shadow-lg top-1/2 w-lg" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+    <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
+      <div class="flex-1">
+        <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
+      </div>
+      <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex inset-e-4 items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
+      </button>
+    </header>
+    <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+      <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0">
+        <div class="p-4" data-slot="body">Dialog body content</div>
+      </div>
+      <style></style>
+    </div>
+    <footer class="flex gap-1.5 items-center justify-start p-4" data-slot="footer">Footer content</footer>
+  </div>
+</div>
+`;
+
+exports[`Dialog > renders correctly without scroll 1`] = `
+<div>Open Dialog<div aria-hidden="true" class="bg-elevated/75 data-[state=closed]:animate-[fade-out_200ms_ease-in] data-[state=open]:animate-[fade-in_200ms_ease-out] fixed inset-0" data-aria-hidden="true" data-slot="overlay" data-state="open"></div>
+  <div aria-describedby aria-labelledby="reka-dialog-title-v-1" class="-translate-1/2 bg-default data-[state=closed]:animate-[scale-out_200ms_ease-in] data-[state=open]:animate-[scale-in_200ms_ease-out] divide-default divide-y fixed focus:outline-none grid grid-rows-[auto_1fr_auto] left-1/2 max-h-[90%] max-w-[90%] ring ring-default rounded-lg shadow-lg top-1/2 w-lg" data-dismissable-layer data-slot="content" data-state="open" id="reka-dialog-content-v-0" role="dialog" tabindex="-1">
+    <header class="flex gap-1.5 items-center min-h-14 p-4" data-slot="header">
+      <div class="flex-1">
+        <h2 class="font-semibold" data-slot="title" id="reka-dialog-title-v-1">Dialog</h2>
+      </div>
+      <button aria-disabled="false" aria-label="Close" class="absolute active:bg-elevated aria-disabled:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-75 disabled:bg-transparent disabled:cursor-not-allowed disabled:opacity-75 focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 gap-1.5 hover:bg-elevated hover:cursor-pointer inline-flex inset-e-4 items-center justify-center p-1.5 rounded-md text-default text-sm top-4 transition-colors" data-slot="close" type="button">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="leadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </svg>
+      </button>
+    </header>
+    <div class="overflow-hidden p-4" data-slot="body">Dialog body content</div>
+    <footer class="flex gap-1.5 items-center justify-end p-4" data-slot="footer">Footer content</footer>
+  </div>
+</div>
+`;

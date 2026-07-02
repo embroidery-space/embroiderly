@@ -1,9 +1,9 @@
-use xsp_parsers::pmaker;
-
 use super::{Coord, PartStitch, PartStitchKind};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct FullStitch {
   pub x: Coord,
   pub y: Coord,
@@ -38,21 +38,9 @@ impl From<PartStitch> for FullStitch {
   }
 }
 
-impl TryFrom<pmaker::FullStitch> for FullStitch {
-  type Error = anyhow::Error;
-
-  fn try_from(fullstitch: pmaker::FullStitch) -> Result<Self, Self::Error> {
-    Ok(Self {
-      x: Coord::new(fullstitch.x)?,
-      y: Coord::new(fullstitch.y)?,
-      palindex: fullstitch.palindex as u32,
-      kind: fullstitch.kind.into(),
-    })
-  }
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum FullStitchKind {
   Full,
   Petite,
@@ -63,15 +51,6 @@ impl From<PartStitchKind> for FullStitchKind {
     match kind {
       PartStitchKind::Half => Self::Full,
       PartStitchKind::Quarter => Self::Petite,
-    }
-  }
-}
-
-impl From<pmaker::FullStitchKind> for FullStitchKind {
-  fn from(kind: pmaker::FullStitchKind) -> Self {
-    match kind {
-      pmaker::FullStitchKind::Full => Self::Full,
-      pmaker::FullStitchKind::Petite => Self::Petite,
     }
   }
 }

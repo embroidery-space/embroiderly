@@ -7,7 +7,7 @@ description: Cross-stitch pattern file formats supported by Embroiderly.
 Embroiderly works with several cross-stitch pattern file formats to ensure compatibility with other applications:
 
 - **EMBPROJ**: The native Embroiderly format.
-  EMBPROJ is a regular ZIP archive containing the pattern file in the OXS format along with other files for the internal usage.
+  EMBPROJ is a regular ZIP archive containing the pattern file along with other files for the internal usage.
   While fully supported in Embroiderly, this format is not designed for interchanging with other applications.
 
 - **OXS**: An open XML-based format created by [UrsaSoftware](https://ursasoftware.com/) as a universal interchange format in the embroidery world.

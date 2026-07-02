@@ -1,17 +1,17 @@
 {
   "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/strictest/tsconfig.json"],
-  "include": ["src/**/*.vue", "src/**/*.ts", "env.d.ts", "auto-imports.d.ts", "components.d.ts"],
-  "exclude": ["src/**/*.test.ts"],
+  "include": ["src/**/*.vue", "src/**/*.ts", "env.d.ts"],
+  "exclude": ["src/**/*.spec.ts"],
   "compilerOptions": {
-    "baseUrl": ".",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
     "strictPropertyInitialization": false,
+
     "paths": {
-      "#pattern-editor/*": ["./src/modules/pattern-editor/*"],
-      "#plugins/*": ["./src/plugins/*"],
-      "#shared/*": ["./src/shared/*"]
-    },
-    "types": []
+      "~/*": ["./src/*"],
+      "@embroiderly/wasm": ["./src-wasm/pkg/"]
+    }
   }
 }

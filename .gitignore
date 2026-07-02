@@ -1,12 +1,18 @@
+.tmp/
+
 target/
 logs/
-
-.tmp/
+gen/
+pkg/
 
 node_modules/
 
 cache/
 dist/
+pkg/
 
-coverage/
-lcov.info
+.env
+!.env.example
+
+.wrangler/
+worker-configuration.d.ts

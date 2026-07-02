@@ -1,9 +1,9 @@
 name: Release
 on:
-  # Push to main: builds sidecars, builds app, publishes GitHub release, uploads debug symbols to Sentry.
+  # Push to main: builds the desktop app and publishes a GitHub release.
   push:
     branches: [main]
-  # PR to main: builds sidecars and app only (validates the build works).
+  # PR to main: only validates the build without publishing.
   pull_request:
     branches: [main]
     types: [opened, reopened, edited, synchronize]
@@ -20,88 +20,29 @@ jobs:
       matrix:
         platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
-    outputs:
-      app-version: ${{ steps.tauri.outputs.appVersion }}
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/setup-rust
         with:
-          tools: typst-cli
+          targets: wasm32-unknown-unknown
+          tools: wasm-pack, typst-cli
 
       - name: Build the application
-        id: tauri
-        uses: tauri-apps/tauri-action@19b93bb55601e3e373a93cfb6eb4242e45f5af20 # v0.6.0
+        uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # v0.6.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-          EMBROIDERLY_POSTHOG_API_KEY: ${{ secrets.EMBROIDERLY_POSTHOG_API_KEY }}
-          EMBROIDERLY_SENTRY_DSN: ${{ secrets.EMBROIDERLY_SENTRY_DSN }}
+          VITE_EMBROIDERLY_POSTHOG_API_KEY: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_POSTHOG_API_KEY || '' }}
+          VITE_EMBROIDERLY_SENTRY_DSN: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_SENTRY_DSN || '' }}
         with:
           # Empty tagName/releaseName skips release creation (PR builds).
           tagName: ${{ github.event_name == 'push' && 'v__VERSION__' || '' }}
           releaseName: ${{ github.event_name == 'push' && 'Embroiderly v__VERSION__' || '' }}
+          releaseBody: "Changelog: <https://docs.embroiderly.niusia.me/resources/changelog/v__VERSION__>."
+          tauriScript: pnpm tauri
+          args: ${{ matrix.platform == 'ubuntu-latest' && '--features cef' || '' }}
           updaterJsonPreferNsis: true
-
-      # Debug symbols are only needed for release builds.
-      - name: Upload debug symbols
-        if: github.event_name == 'push'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
-        with:
-          name: debug-symbols-${{ matrix.platform }}
-          path: |
-            target/release/embroiderly.pdb
-            target/release/embroiderly.dwp
-          retention-days: 1
-
-  sentry:
-    if: github.event_name == 'push'
-    needs: release
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    permissions:
-      contents: read
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: embroidery-space
-      SENTRY_PROJECT: embroiderly
-    steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-      - uses: ./.github/actions/setup-node
-
-      - name: Install Sentry CLI
-        run: pnpm install -g @sentry/cli
-
-      - name: Create Sentry release
-        run: |
-          sentry-cli releases new "${{ needs.release.outputs.app-version }}"
-          sentry-cli releases set-commits "${{ needs.release.outputs.app-version }}" --auto || true
-
-      - name: Build frontend with source maps
-        env:
-          TAURI_ENV_DEBUG: "true"
-        run: pnpm app:build-only
-
-      - name: Upload source maps to Sentry
-        run: |
-          sentry-cli sourcemaps inject ./app/dist
-          sentry-cli sourcemaps upload --release="${{ needs.release.outputs.app-version }}" ./app/dist
-
-      - name: Download debug symbols
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
-        with:
-          pattern: debug-symbols-*
-          merge-multiple: true
-
-      - name: Upload debug symbols to Sentry
-        run: |
-          find . -name "embroiderly.pdb" -exec sentry-cli debug-files upload {} + || true
-          find . -name "embroiderly.dwp" -exec sentry-cli debug-files upload {} + || true
-
-      - name: Finalize Sentry release
-        run: sentry-cli releases finalize "${{ needs.release.outputs.app-version }}"

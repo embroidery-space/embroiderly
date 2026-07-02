@@ -1,0 +1,105 @@
+import { TooltipProvider } from "reka-ui";
+import { describe, expect, test, vi } from "vitest";
+import { page, userEvent } from "vitest/browser";
+import { defineComponent } from "vue";
+
+import ToolToggleGroup from "./ToolToggleGroup.vue";
+import type { ToolToggleGroupProps } from "./ToolToggleGroup.vue";
+
+const COMPACT_ITEMS = [
+  { icon: "lucide:square", tooltip: "Solid", value: "solid" },
+  { icon: "lucide:grid-2x2", tooltip: "Stitches", value: "stitches" },
+  { icon: "lucide:blend", tooltip: "Mixed", value: "mixed" },
+];
+
+const EXPANDED_ITEMS = [
+  { icon: "lucide:square", label: "Solid", description: "View as solid squares", value: "solid" },
+  { icon: "lucide:grid-2x2", label: "Stitches", description: "View as individual stitches", value: "stitches" },
+  { icon: "lucide:blend", label: "Mixed", description: "Mixed display mode", value: "mixed" },
+];
+
+const ITEMS_WITH_SHORTCUTS = [
+  { icon: "lucide:square", tooltip: "Solid", value: "solid", shortcut: "S" },
+  { icon: "lucide:grid-2x2", tooltip: "Stitches", value: "stitches", shortcut: "T" },
+  { icon: "lucide:blend", tooltip: "Mixed", value: "mixed", shortcut: "M" },
+];
+
+const ToolToggleGroupWrapper = defineComponent({
+  components: { TooltipProvider, ToolToggleGroup },
+  inheritAttrs: false,
+  template: `
+    <TooltipProvider>
+      <ToolToggleGroup v-bind="$attrs" />
+    </TooltipProvider>
+  `,
+});
+
+describe("ToolToggleGroup", () => {
+  const sizes = ["sm", "md", "lg"] as const;
+
+  test.each([
+    ["with compact items", { props: { items: COMPACT_ITEMS } }],
+    ...sizes.map((size) => [`with compact items size ${size}`, { props: { items: COMPACT_ITEMS, size } }]),
+    ["with expanded items", { props: { items: EXPANDED_ITEMS } }],
+    ...sizes.map((size) => [`with expanded items size ${size}`, { props: { items: EXPANDED_ITEMS, size } }]),
+    ["with vertical orientation", { props: { items: COMPACT_ITEMS, orientation: "vertical" } }],
+    ["when toggled on", { props: { items: COMPACT_ITEMS, modelValue: "solid" } }],
+    ["when disabled", { props: { items: COMPACT_ITEMS, disabled: true } }],
+    ["with class", { props: { items: COMPACT_ITEMS, class: "custom-class", modelValue: "solid" } }],
+    ["with ui", { props: { items: COMPACT_ITEMS, ui: { root: "custom-root" }, modelValue: "solid" } }],
+  ] as [string, { props?: ToolToggleGroupProps & { modelValue: string } }][])(
+    "renders correctly %s",
+    async (_, options) => {
+      const screen = await page.render(ToolToggleGroupWrapper, options);
+      expect(screen.container.outerHTML).toMatchSnapshot();
+    },
+  );
+
+  describe("Keyboard Shortcuts", () => {
+    test("single-key shortcut sets the model to the matching item value", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolToggleGroupWrapper, {
+        props: {
+          items: ITEMS_WITH_SHORTCUTS,
+          modelValue: "solid",
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("t");
+
+      expect(onUpdate).toHaveBeenCalledWith("stitches");
+    });
+
+    test("pressing another item's shortcut switches to that item", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolToggleGroupWrapper, {
+        props: {
+          items: ITEMS_WITH_SHORTCUTS,
+          modelValue: "solid",
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("m");
+
+      expect(onUpdate).toHaveBeenCalledWith("mixed");
+    });
+
+    test("shortcut does not fire when group is disabled", async () => {
+      const onUpdate = vi.fn();
+      await page.render(ToolToggleGroupWrapper, {
+        props: {
+          items: ITEMS_WITH_SHORTCUTS,
+          modelValue: "solid",
+          disabled: true,
+          "onUpdate:modelValue": onUpdate,
+        },
+      });
+
+      await userEvent.keyboard("t");
+
+      expect(onUpdate).not.toHaveBeenCalled();
+    });
+  });
+});

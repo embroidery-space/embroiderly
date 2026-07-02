@@ -1,0 +1,459 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DropdownMenu > renders correctly with checkbox items 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="flex font-semibold gap-1.5 items-center p-1.5 text-sm w-full" data-slot="label" id="reka-menu-group-v-2">View</div>
+        <div aria-orientation="horizontal" class="-mx-1 bg-border h-px my-1" data-slot="separator" role="separator"></div>
+        <div aria-checked="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="checked" role="menuitemcheckbox" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">Show Grid</span>
+          <svg aria-hidden="true" class="iconify iconify--lucide inline-flex items-center ms-auto shrink-0 size-5" data-slot="itemTrailingIcon" data-state="checked" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </div>
+        <div aria-checked="false" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="unchecked" role="menuitemcheckbox" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">Show Rulers</span>
+        </div>
+        <div aria-checked="false" aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" data-state="unchecked" role="menuitemcheckbox" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">Snap to Grid</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with class 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
+          </span>
+        </div>
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
+          </span>
+        </div>
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
+          </span>
+        </div>
+      </div>
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with disabled 1`] = `
+<div>
+  <span aria-expanded="false" aria-haspopup="menu" data-disabled data-state="closed" disabled="true" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with link items 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <a class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" href="/about" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Internal Page</span>
+          </span>
+        </a>
+        <a class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" href="https://example.com" rel="noopener noreferrer" role="menuitem" tabindex="-1" target="_blank">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">External Site</span>
+          </span>
+          <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
+            <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
+          </span>
+        </a>
+        <a aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" href="https://example.com" rel="noopener noreferrer" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Disabled Link</span>
+          </span>
+          <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
+            <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with shortcuts 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Undo</span>
+          </span>
+          <span class="gap-0.5 hidden items-center lg:inline-flex ms-auto" data-slot="itemKbd">
+            <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+Z</kbd>
+          </span>
+        </div>
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Redo</span>
+          </span>
+          <span class="gap-0.5 hidden items-center lg:inline-flex ms-auto" data-slot="itemKbd">
+            <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">Ctrl+Shift+Z</kbd>
+          </span>
+        </div>
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Go to Definition</span>
+          </span>
+          <span class="gap-0.5 hidden items-center lg:inline-flex ms-auto" data-slot="itemKbd">
+            <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">G</kbd>
+            <kbd class="bg-default font-medium font-sans h-4 inline-flex items-center justify-center min-w-4 px-1 ring ring-accented ring-inset rounded-sm text-[0.625rem] text-default" data-slot="base">D</kbd>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with simple items 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
+          </span>
+        </div>
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
+          </span>
+        </div>
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
+          </span>
+        </div>
+      </div>
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with size lg 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
+          </span>
+        </div>
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
+          </span>
+        </div>
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
+          </span>
+        </div>
+      </div>
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-2 group items-center outline-none p-2 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with size md 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
+          </span>
+        </div>
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
+          </span>
+        </div>
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
+          </span>
+        </div>
+      </div>
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with size sm 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
+          </span>
+        </div>
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
+          </span>
+        </div>
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-4 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
+          </span>
+        </div>
+      </div>
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1 group items-center outline-none p-1 relative rounded-sm select-none text-default text-xs w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with submenu items 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div aria-controls="reka-menu-sub-content-v-4" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-3" role="menuitem" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">File</span>
+          <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
+            <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="m9 18l6-6l-6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
+          </span>
+        </div>
+        <div aria-controls="reka-menu-sub-content-v-6" aria-expanded="false" aria-haspopup="menu" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" data-state="closed" id="reka-menu-sub-trigger-v-5" role="menuitem" tabindex="-1">
+          <span class="truncate" data-slot="itemLabel">Edit</span>
+          <span class="inline-flex items-center ms-auto" data-slot="itemTrailing">
+            <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="itemTrailingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path d="m9 18l6-6l-6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DropdownMenu > renders correctly with ui 1`] = `
+<div>
+  <span aria-controls="reka-dropdown-menu-content-v-1" aria-expanded="true" aria-haspopup="menu" data-state="open" disabled="false" id="reka-dropdown-menu-trigger-v-0" type="button">Trigger</span>
+  <div data-reka-popper-content-wrapper dir="ltr">
+    <div aria-labelledby="reka-dropdown-menu-trigger-v-0" aria-orientation="vertical" class="bg-default data-[state=closed]:animate-[scale-out_100ms_ease-in] data-[state=open]:animate-[scale-in_100ms_ease-out] divide-default divide-y focus:outline-none min-w-48 origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden pointer-events-auto ring ring-default rounded-md shadow-lg" data-align="center" data-dismissable-layer data-orientation="vertical" data-reka-menu-content data-side="bottom" data-slot="content" data-state="open" dir="ltr" id="reka-dropdown-menu-content-v-1" role="menu" tabindex="-1">
+      <div aria-labelledby="reka-menu-group-v-2" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <circle cx="6" cy="6" r="3" />
+              <path d="M8.12 8.12L12 12m8-8L8.12 15.88" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M14.8 14.8L20 20" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Cut</span>
+          </span>
+        </div>
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="14" rx="2" ry="2" width="14" x="8" y="8" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Copy</span>
+          </span>
+        </div>
+        <div aria-disabled="true" class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-disabled data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <svg aria-hidden="true" class="group-data-highlighted:text-default iconify iconify--lucide shrink-0 size-5 text-dimmed" data-slot="itemLeadingIcon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <rect height="4" rx="1" ry="1" width="8" x="8" y="2" />
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            </g>
+          </svg>
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Paste</span>
+          </span>
+        </div>
+      </div>
+      <div aria-labelledby="reka-menu-group-v-3" class="isolate p-1" data-slot="group" role="group">
+        <div class="before:absolute before:inset-px before:rounded-md before:z-[-1] cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-75 data-highlighted:before:bg-elevated/50 flex gap-1.5 group items-center outline-none p-1.5 relative rounded-sm select-none text-default text-sm w-full" data-reka-collection-item data-slot="item" role="menuitem" tabindex="-1">
+          <span class="flex flex-1 flex-col min-w-0" data-slot="itemBody">
+            <span class="truncate" data-slot="itemLabel">Select All</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

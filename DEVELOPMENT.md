@@ -10,48 +10,45 @@ Follow it to start working on your ideas, improvements, and fixes.
 Before starting, make sure you have everything needed to work on Embroiderly.
 
 1. Install [system dependencies](https://tauri.app/start/prerequisites/#system-dependencies).
-
 1. Install stable and nightly (only the `fmt` component) [Rust](https://rust-lang.org/tools/install).
+1. Install Rust tools: [`cargo-nextest`](https://nexte.st), [`just`](https://just.systems).
+1. Install [Node.js v24](https://nodejs.org/en/download).
+1. Install **pnpm** using Corepack (see the [official documentation](https://pnpm.io/installation#using-corepack)).
+1. Go to `app/src-tauri/` and create the `.env` file.
+   Copy the contents of the [`.env.example`](app/src-tauri/.env.example) file and specify your own values.
 
-1. Install Rust tools: [`cargo-nextest`](https://nexte.st)
+Once you are done, you can run the application via `just dev` or build it via `just build`.
 
-1. Install [Node.js v24](https://nodejs.org/en/download)
+## AI Agents
 
-1. Install **pnpm** using Corepack (see the [official documentation](https://pnpm.io/installation#using-corepack)):
+We tolerate using AI Agents for developing Embroiderly.
+We maintain [`AGENTS.md`](AGENTS.md) and [`.agents/skills/`](.agents/skills/).
+If your tool doesn’t support these entries out of the box, configure them or create symbolic links to them.
+Ensure that your local agent settings are excluded from being tracked by Git (specify them in the `.git/info/exclude` file).
 
-   ```sh
-   corepack enable pnpm
-   ```
+## Available Commands
 
-Once you are done, run the application via `pnpm tauri dev` and build it via `pnpm tauri build`.
+We use [`just`](https://just.systems) to manage development commands.
+If you don't want to use it, check [`Justfile`](./Justfile) to see all available commands.
 
-## Common commands
+### Development
 
-**Tauri:**
+- `just dev` - Run the application in development mode.
+- `just build` - Build the application and bundle into the installer.
 
-> Refer to the [Tauri CLI reference](https://tauri.app/reference/cli) for all commands and their options.
+### Code Checks
 
-- `pnpm tauri dev` - Run the application in development mode.
-- `pnpm tauri build` - Build the application and bundle into the installer.
+- `just all` - Run all code checks.
+  - `just check` - Check types.
+  - `just fmt` - Check code format.
+  - `just lint` - Check linting.
+  - `just test` - Run all tests.
 
-**Frontend:**
+The code checking commands above have `-fe` and `-be` variants to target the frontend or backend, respectively.
+For example, run `just all-fe` to run all _frontend_ checks.
 
-- `pnpm build` - Build the frontend and check types.
-- `pnpm fmt` - Check formatting.
-- `pnpm fmt:fix` - Fix formatting.
-- `pnpm lint` - Check linting.
-- `pnpm lint:fix` - Fix linting.
-- `pnpm test` - Run all tests.
-- `pnpm --filter @embroiderly/app test:unit` - Run unit tests.
-- `pnpm --filter @embroiderly/app test:components` - Run component tests.
-- `pnpm --filter @embroiderly/app test:e2e` - Run end-to-end tests (see [instructions](#integration-testing) below).
-
-**Backend:**
-
-- `cargo check` - Check types.
-- `cargo +nightly fmt --check` - Check formatting.
-- `cargo clippy -- -D warnings` - Check linting.
-- `cargo nextest run --locked --no-fail-fast -F embroiderly/test` - Run all tests.
+Additionally, there is a `-fix` variant for `fmt` and `lint` recipes.
+For example, run `just fmt-fix` to fix code formatting issues (or `just fmt-fe-fix` to fix only _frontend_).
 
 ## Sidecars Development
 

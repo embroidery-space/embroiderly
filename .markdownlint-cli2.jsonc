@@ -7,6 +7,4 @@
     "no-alt-text": false,
   },
   "gitignore": true,
-  "globs": ["**/*.md"],
-  "ignores": [".github/"],
 }

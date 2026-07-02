@@ -1,0 +1,55 @@
+[package]
+name = "embroiderly_wasm"
+version = { workspace = true }
+edition = { workspace = true }
+
+[lints]
+workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Embroiderly core
+embroiderly_editor = { workspace = true }
+embroiderly_parsers = { workspace = true }
+embroiderly_tracing = { workspace = true }
+embroiderly_pattern = { workspace = true, features = ["borsh", "serde"] }
+embroiderly_web = { workspace = true, features = ["opfs", "net", "idb", "timers"] }
+
+# Async runtime
+futures = { workspace = true }
+
+# De/serialization
+borsh = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde-wasm-bindgen = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+
+# Logging & Tracing
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tracing-panic = { workspace = true }
+
+# Identification
+uuid = { workspace = true }
+
+# Font handling
+ttf-parser = { workspace = true }
+encoding_rs = { workspace = true }
+
+# Wasm
+wasm-bindgen = { workspace = true }
+wasm-bindgen-futures = { workspace = true }
+console_error_panic_hook = { workspace = true }
+js-sys = { workspace = true }
+web-sys = { workspace = true, features = ["FileSystemFileHandle"] }
+
+[package.metadata.wasm-pack.profile.dev]
+wasm-opt = false
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-Os"]

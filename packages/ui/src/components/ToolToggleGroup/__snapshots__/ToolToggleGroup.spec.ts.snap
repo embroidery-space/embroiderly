@@ -1,0 +1,491 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ToolToggleGroup > renders correctly when disabled 1`] = `
+<div>
+  <div class="flex flex-row gap-1 opacity-75" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="-1">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated cursor-not-allowed focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-disabled data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" disabled id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated cursor-not-allowed focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-disabled data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" disabled id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated cursor-not-allowed focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-disabled data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" disabled id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly when toggled on 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="true" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-active data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with class 1`] = `
+<div>
+  <div class="custom-class flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="true" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-active data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with compact items 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with compact items size lg 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with compact items size md 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with compact items size sm 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with expanded items 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+      <div class="ms-2 text-sm w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-9">Solid</label>
+        <p class="text-muted" data-slot="description">View as solid squares</p>
+      </div>
+    </div>
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+      <div class="ms-2 text-sm w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-10">Stitches</label>
+        <p class="text-muted" data-slot="description">View as individual stitches</p>
+      </div>
+    </div>
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+      <div class="ms-2 text-sm w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-11">Mixed</label>
+        <p class="text-muted" data-slot="description">Mixed display mode</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with expanded items size lg 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+      <div class="ms-2 text-base w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-9">Solid</label>
+        <p class="text-muted" data-slot="description">View as solid squares</p>
+      </div>
+    </div>
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+      <div class="ms-2 text-base w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-10">Stitches</label>
+        <p class="text-muted" data-slot="description">View as individual stitches</p>
+      </div>
+    </div>
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-2 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-5" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+      <div class="ms-2 text-base w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-11">Mixed</label>
+        <p class="text-muted" data-slot="description">Mixed display mode</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with expanded items size md 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+      <div class="ms-2 text-sm w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-9">Solid</label>
+        <p class="text-muted" data-slot="description">View as solid squares</p>
+      </div>
+    </div>
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+      <div class="ms-2 text-sm w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-10">Stitches</label>
+        <p class="text-muted" data-slot="description">View as individual stitches</p>
+      </div>
+    </div>
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+      <div class="ms-2 text-sm w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-11">Mixed</label>
+        <p class="text-muted" data-slot="description">Mixed display mode</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with expanded items size sm 1`] = `
+<div>
+  <div class="flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+      <div class="ms-2 text-xs w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-9">Solid</label>
+        <p class="text-muted" data-slot="description">View as solid squares</p>
+      </div>
+    </div>
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+      <div class="ms-2 text-xs w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-10">Stitches</label>
+        <p class="text-muted" data-slot="description">View as individual stitches</p>
+      </div>
+    </div>
+    <div class="flex items-start" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-3" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+      <div class="ms-2 text-xs w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-11">Mixed</label>
+        <p class="text-muted" data-slot="description">Mixed display mode</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with ui 1`] = `
+<div>
+  <div class="custom-root flex flex-row gap-1" data-orientation="horizontal" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="true" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-active data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ToolToggleGroup > renders correctly with vertical orientation 1`] = `
+<div>
+  <div class="flex flex-col gap-1" data-orientation="vertical" data-slot="root" dir="ltr" role="group" tabindex="0">
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Solid" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="closed" id="v-9" tabindex="-1" type="button" value="solid">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect fill="none" height="18" rx="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Stitches" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="closed" id="v-10" tabindex="-1" type="button" value="stitches">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 3v18m-9-9h18" />
+            <rect height="18" rx="2" width="18" x="3" y="3" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center" data-slot="item">
+      <button aria-label="Mixed" aria-pressed="false" class="active:bg-elevated aria-pressed:bg-elevated focus-visible:outline-2 focus-visible:outline-inverted focus-visible:outline-offset-2 inline-flex items-center justify-center not-disabled:aria-pressed:hover:bg-accented not-disabled:hover:bg-elevated not-disabled:hover:cursor-pointer p-1.5 rounded-md text-dimmed transition-colors" data-grace-area-trigger data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="closed" id="v-11" tabindex="-1" type="button" value="mixed">
+        <svg aria-hidden="true" class="iconify iconify--lucide shrink-0 size-4" data-slot="icon" height="1em" role="img" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <circle cx="9" cy="9" r="7" />
+            <circle cx="15" cy="15" r="7" />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;

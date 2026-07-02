@@ -1,9 +1,9 @@
-use xsp_parsers::pmaker;
-
 use super::Coord;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct NodeStitch {
   pub x: Coord,
   pub y: Coord,
@@ -24,22 +24,9 @@ impl Ord for NodeStitch {
   }
 }
 
-impl TryFrom<pmaker::NodeStitch> for NodeStitch {
-  type Error = anyhow::Error;
-
-  fn try_from(nodestitch: pmaker::NodeStitch) -> Result<Self, Self::Error> {
-    Ok(Self {
-      x: Coord::new(nodestitch.x)?,
-      y: Coord::new(nodestitch.y)?,
-      rotated: nodestitch.rotated,
-      palindex: nodestitch.palindex as u32,
-      kind: nodestitch.kind.into(),
-    })
-  }
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum NodeStitchKind {
   FrenchKnot,
   Bead,
@@ -67,14 +54,5 @@ impl std::str::FromStr for NodeStitchKind {
     }
 
     Err(anyhow::anyhow!("Unknown node kind: {s}"))
-  }
-}
-
-impl From<pmaker::NodeStitchKind> for NodeStitchKind {
-  fn from(kind: pmaker::NodeStitchKind) -> Self {
-    match kind {
-      pmaker::NodeStitchKind::FrenchKnot => Self::FrenchKnot,
-      pmaker::NodeStitchKind::Bead => Self::Bead,
-    }
   }
 }

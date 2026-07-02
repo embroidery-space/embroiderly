@@ -1,0 +1,47 @@
+[package]
+name = "embroiderly_web"
+version = { workspace = true }
+edition = { workspace = true }
+
+[lints]
+workspace = true
+
+[features]
+default = []
+opfs = [
+  "__js",
+  "dep:futures",
+  "web-sys/File",
+  "web-sys/FileSystemHandle",
+  "web-sys/FileSystemDirectoryHandle",
+  "web-sys/FileSystemFileHandle",
+  "web-sys/FileSystemGetFileOptions",
+  "web-sys/FileSystemGetDirectoryOptions",
+  "web-sys/FileSystemWritableFileStream",
+  "web-sys/FileSystemCreateWritableOptions",
+  "web-sys/StorageManager",
+  "web-sys/Navigator",
+  "web-sys/Window",
+  "js-sys/futures-core-03-stream",
+]
+idb = ["dep:indexed-db"]
+net = ["__js", "dep:gloo-net"]
+timers = ["dep:gloo-timers"]
+__js = ["dep:web-sys", "dep:js-sys", "dep:wasm-bindgen", "dep:wasm-bindgen-futures"]
+
+[dependencies]
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Asyc runtime
+futures = { workspace = true, optional = true }
+
+# Wasm
+wasm-bindgen = { workspace = true, optional = true }
+wasm-bindgen-futures = { workspace = true, optional = true }
+js-sys = { workspace = true, optional = true }
+web-sys = { workspace = true, optional = true }
+gloo-net = { workspace = true, optional = true, features = ["http"] }
+gloo-timers = { workspace = true, optional = true }
+indexed-db = { workspace = true, optional = true }

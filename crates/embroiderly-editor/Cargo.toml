@@ -1,0 +1,28 @@
+[package]
+name = "embroiderly_editor"
+version = { workspace = true }
+edition = { workspace = true }
+
+[lints]
+workspace = true
+
+[dependencies]
+# Embroiderly Core
+embroiderly_pattern = { workspace = true, features = ["borsh"] }
+
+# De/serialization
+borsh = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+
+# Utils
+uuid = { workspace = true }
+
+[dev-dependencies]
+embroiderly_parsers = { workspace = true }
+
+image = { workspace = true }
+rand = { workspace = true }
+
+rstest = { workspace = true }

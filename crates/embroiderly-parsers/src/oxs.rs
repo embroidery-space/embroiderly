@@ -5,8 +5,7 @@ use embroiderly_pattern::*;
 use quick_xml::events::{BytesDecl, Event};
 use quick_xml::{Reader, Writer};
 
-use self::utils::*;
-use crate::PackageInfo;
+use crate::utils::xml::*;
 
 #[cfg(test)]
 #[path = "oxs.test.rs"]
@@ -35,36 +34,14 @@ macro_rules! unwrap_or_continue {
   };
 }
 
-pub fn parse_pattern<P: AsRef<std::path::Path>>(file_path: P) -> Result<PatternProject> {
-  let file_path = file_path.as_ref();
-  let mut reader = Reader::from_file(file_path)?;
-
-  let mut pattern = parse_pattern_inner(&mut reader)?;
-  if pattern.info.title.is_empty() {
-    pattern.info.title = file_path.file_name().unwrap().to_string_lossy().to_string();
-  }
-
-  Ok(PatternProject::new(
-    file_path.to_owned(),
-    pattern,
-    Default::default(),
-    Default::default(),
-  ))
-}
-
-pub fn parse_pattern_from_reader<R: io::BufRead>(reader: R) -> Result<PatternProject> {
-  let mut reader = Reader::from_reader(reader);
+pub fn parse_pattern(data: &[u8]) -> Result<EmbroiderlyProject> {
+  let mut reader = Reader::from_reader(data);
 
   let pattern = parse_pattern_inner(&mut reader)?;
-  Ok(PatternProject::new(
-    Default::default(),
-    pattern,
-    Default::default(),
-    Default::default(),
-  ))
+  Ok(EmbroiderlyProject::new(pattern))
 }
 
-#[tracing::instrument(name = "parse_oxs", skip_all)]
+#[tracing::instrument(name = "parse_oxs", level = "debug", skip_all)]
 fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern> {
   let reader_config = reader.config_mut();
   reader_config.expand_empty_elements = true;
@@ -82,7 +59,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
     {
       Event::Start(ref e) => {
         let name = e.name();
-        tracing::trace!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
+        tracing::debug!("Parsing {}", String::from_utf8_lossy(name.as_ref()));
 
         match name.as_ref() {
           b"properties" => {
@@ -91,7 +68,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             let oxs_version = attributes.get("oxsversion").unwrap_or("1.0");
             let software = attributes.get("software").unwrap_or("Unknown");
             let software_version = attributes.get("software_version").unwrap_or("Unknown");
-            tracing::trace!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
+            tracing::debug!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
 
             let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes);
             pattern.info = pattern_info;
@@ -110,39 +87,39 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             };
             pattern.palette = palette.into();
           }
-          b"fullstitches" => pattern.fullstitches.extend(
+          b"fullstitches" => pattern.layers[0].fullstitches.extend(
             read_full_stitches(reader)?
               .into_iter()
               .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
           ),
-          b"partstitches" => pattern.partstitches.extend(
+          b"partstitches" => pattern.layers[0].partstitches.extend(
             read_part_stitches(reader)?
               .into_iter()
               .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
           ),
-          b"backstitches" => pattern.linestitches.extend(
+          b"backstitches" => pattern.layers[0].linestitches.extend(
             read_line_stitches(reader)?
               .into_iter()
               .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
           ),
           b"ornaments_inc_knots_and_beads" => {
             let (fullstitches, partstitches, nodestitches, specialstitches) = read_ornaments(reader)?;
-            pattern.fullstitches.extend(
+            pattern.layers[0].fullstitches.extend(
               fullstitches
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
             );
-            pattern.partstitches.extend(
+            pattern.layers[0].partstitches.extend(
               partstitches
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
             );
-            pattern.nodestitches.extend(
+            pattern.layers[0].nodestitches.extend(
               nodestitches
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
             );
-            pattern.specialstitches.extend(
+            pattern.layers[0].specialstitches.extend(
               specialstitches
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
@@ -164,28 +141,16 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
   Ok(pattern)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo) -> Result<()> {
-  let mut file = std::fs::OpenOptions::new()
-    .create(true)
-    .write(true)
-    .truncate(true)
-    .open(&patproj.file_path)?;
-  Ok(save_pattern_inner(&mut file, patproj, package_info)?)
+pub fn save_pattern(embproj: &EmbroiderlyProject) -> Result<Vec<u8>> {
+  let mut data = Vec::new();
+  save_pattern_inner(&mut data, embproj)?;
+  Ok(data)
 }
 
-pub fn save_pattern_to_vec(patproj: &PatternProject, package_info: &PackageInfo) -> Result<Vec<u8>> {
-  let mut buf = Vec::new();
-  save_pattern_inner(&mut buf, patproj, package_info)?;
-  Ok(buf)
-}
-
-#[tracing::instrument(name = "save_oxs", skip_all)]
-fn save_pattern_inner<W: io::Write>(
-  writer: &mut W,
-  patproj: &PatternProject,
-  package_info: &PackageInfo,
-) -> io::Result<()> {
-  let PatternProject { pattern, .. } = patproj;
+#[tracing::instrument(name = "save_oxs", level = "debug", skip_all)]
+fn save_pattern_inner<W: io::Write>(writer: &mut W, embproj: &EmbroiderlyProject) -> io::Result<()> {
+  let EmbroiderlyProject { pattern, .. } = embproj;
+  let flattened_layer = pattern.flatten_visible_layers();
 
   // Create a mapping from actual index to visual position for efficient lookups when writing stitches.
   // This allows us to convert stitch palindex values (which reference actual indexes) to visual positions.
@@ -210,12 +175,11 @@ fn save_pattern_inner<W: io::Write>(
       &pattern.info,
       pattern.fabric.spi,
       pattern.palette.len(),
-      package_info,
     )?;
     write_palette(writer, &pattern.fabric, &pattern.palette)?;
     write_full_stitches(
       writer,
-      pattern
+      flattened_layer
         .fullstitches
         .iter()
         .filter(|stitch| stitch.kind == FullStitchKind::Full)
@@ -226,14 +190,14 @@ fn save_pattern_inner<W: io::Write>(
     )?;
     write_line_stitches(
       writer,
-      pattern.linestitches.iter().map(|stitch| LineStitch {
+      flattened_layer.linestitches.iter().map(|stitch| LineStitch {
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),
     )?;
     write_ornaments(
       writer,
-      pattern
+      flattened_layer
         .fullstitches
         .iter()
         .filter(|stitch| stitch.kind == FullStitchKind::Petite)
@@ -241,15 +205,15 @@ fn save_pattern_inner<W: io::Write>(
           palindex: index_to_position[stitch.palindex as usize],
           ..*stitch
         }),
-      pattern.partstitches.iter().map(|stitch| PartStitch {
+      flattened_layer.partstitches.iter().map(|stitch| PartStitch {
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),
-      pattern.nodestitches.iter().map(|stitch| NodeStitch {
+      flattened_layer.nodestitches.iter().map(|stitch| NodeStitch {
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),
-      pattern.specialstitches.iter().map(|stitch| SpecialStitch {
+      flattened_layer.specialstitches.iter().map(|stitch| SpecialStitch {
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),
@@ -316,14 +280,13 @@ fn write_pattern_properties<W: io::Write>(
   info: &PatternInfo,
   spi: StitchesPerInch,
   palette_size: usize,
-  package_info: &PackageInfo,
 ) -> io::Result<()> {
   writer
     .create_element("properties")
     .with_attributes([
       ("oxsversion", "1.0"),
-      ("software", package_info.name.as_str()),
-      ("software_version", package_info.version.as_str()),
+      ("software", "Embroiderly"),
+      ("software_version", env!("CARGO_PKG_VERSION")),
       ("chartwidth", pattern_width.to_string().as_str()),
       ("chartheight", pattern_height.to_string().as_str()),
       ("charttitle", info.title.as_str()),
@@ -879,8 +842,6 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
     return Ok(Some(OxsOrnament::Special(SpecialStitch {
       x,
       y,
-      width: attributes.get_parsed("width").unwrap_or_default(),
-      height: attributes.get_parsed("height").unwrap_or_default(),
       palindex,
       modindex,
       rotation: attributes.get_parsed("rotation").unwrap_or_default(),
@@ -998,8 +959,6 @@ fn write_ornament<W: io::Write>(writer: &mut Writer<W>, stitch: OxsOrnament) -> 
         .with_attributes([
           ("x1", stitch.x.to_string().as_str()),
           ("y1", stitch.y.to_string().as_str()),
-          ("width", stitch.width.to_string().as_str()),
-          ("height", stitch.height.to_string().as_str()),
           ("palindex", (stitch.palindex + 1).to_string().as_str()),
           ("objecttype", "specialstitch"),
           ("modindex", stitch.modindex.to_string().as_str()),
@@ -1104,92 +1063,4 @@ fn write_special_stitch_models<W: io::Write>(
     })?;
 
   Ok(())
-}
-
-pub mod utils {
-  use embroiderly_pattern::Coord;
-
-  pub struct AttributesMap {
-    inner: std::collections::HashMap<String, String>,
-  }
-
-  impl AttributesMap {
-    pub fn get(&self, key: &str) -> Option<&str> {
-      self.inner.get(key).map(std::string::String::as_str)
-    }
-
-    #[must_use]
-    pub fn get_coord(&self, key: &str) -> Option<Coord> {
-      self.get(key).and_then(|s| {
-        let normalized = s.replace(',', ".");
-        normalized.parse().ok()
-      })
-    }
-
-    #[must_use]
-    pub fn get_palindex(&self, key: &str) -> Option<u32> {
-      match self.get(key).and_then(|s| s.parse::<u32>().ok()) {
-        Some(palindex) if palindex != 0 => Some(palindex - 1),
-        _ => None,
-      }
-    }
-
-    #[must_use]
-    pub fn get_color(&self, key: &str) -> Option<&str> {
-      let color = self.get(key);
-      if color.is_some_and(|c| c.is_empty() || c == "nil") {
-        None
-      } else {
-        color
-      }
-    }
-
-    #[must_use]
-    pub fn get_objecttype(&self, key: &str) -> Option<String> {
-      self
-        .get(key)
-        .and_then(|s| if s.is_empty() { None } else { Some(s.to_owned()) })
-    }
-
-    #[must_use]
-    pub fn get_bool(&self, key: &str) -> Option<bool> {
-      self.get(key).and_then(|s| {
-        let normalized = s.to_lowercase();
-        normalized.parse().ok()
-      })
-    }
-
-    #[must_use]
-    pub fn get_parsed<T: std::str::FromStr>(&self, key: &str) -> Option<T> {
-      self.get(key).and_then(|s| s.parse::<T>().ok())
-    }
-
-    #[must_use]
-    pub fn get_symbol(&self, key: &str) -> Option<char> {
-      self.get(key).and_then(|s| {
-        if s.chars().count() == 1 {
-          // First try to parse as a single character.
-          s.chars().next()
-        } else {
-          // Try to parse as a numeric char code.
-          s.parse::<u32>().ok().and_then(char::from_u32)
-        }
-      })
-    }
-  }
-
-  impl TryFrom<quick_xml::events::attributes::Attributes<'_>> for AttributesMap {
-    type Error = anyhow::Error;
-
-    fn try_from(attributes: quick_xml::events::attributes::Attributes) -> Result<Self, Self::Error> {
-      let mut map = std::collections::HashMap::new();
-      for attr in attributes {
-        let attr = attr?;
-        let key = String::from_utf8(attr.key.as_ref().to_vec())?;
-        let value = String::from_utf8(attr.value.to_vec())?;
-        map.insert(key, value);
-      }
-      Ok(Self { inner: map })
-    }
-  }
 }

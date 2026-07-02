@@ -77,7 +77,7 @@ export const docsUk: LocaleConfig = {
   uk: {
     label: "Українська",
     lang: "uk-UA",
-    title: "Embroiderly",
+    title: "Embroiderly Docs",
     description:
       "Безкоштовний, відкритий і кросплатформний компʼютерний застосунок для створення схем вишивок хрестиком.",
     themeConfig: {

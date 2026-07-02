@@ -1,0 +1,317 @@
+import { b } from "@zorsh/zorsh";
+import { NIL as NIL_UUID, stringify as stringifyUuid } from "uuid";
+
+import { DisplayMode, DisplaySettings, Grid } from "./display.ts";
+import { Fabric } from "./fabric.ts";
+import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
+import { Layer, LayerVisibility, Layers } from "./layers.ts";
+import { Palette, PaletteSettings } from "./palette.ts";
+import type { Symbol } from "./palette.ts";
+import { PdfExportOptions, PublishSettings } from "./publish.ts";
+import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitchModel } from "./stitches.ts";
+import type { Stitch } from "./stitches.ts";
+
+export class PatternInfo {
+  title: string;
+  author: string;
+  copyright: string;
+  description: string;
+
+  constructor(data?: b.infer<typeof PatternInfo.schema>) {
+    this.title = data?.title ?? "";
+    this.author = data?.author ?? "";
+    this.copyright = data?.copyright ?? "";
+    this.description = data?.description ?? "";
+  }
+
+  static readonly schema = b.struct({
+    title: b.string(),
+    author: b.string(),
+    copyright: b.string(),
+    description: b.string(),
+  });
+
+  static deserialize(data: Uint8Array) {
+    return new PatternInfo(PatternInfo.schema.deserialize(data));
+  }
+
+  static serialize(data: PatternInfo) {
+    return PatternInfo.schema.serialize(data);
+  }
+}
+
+/**
+ * Represents a pattern in the embroidery application.
+ *
+ * **Emits:**
+ * - `stitch:add` - Fired when a stitch is added to the pattern.
+ * - `stitch:remove` - Fired when a stitch is removed from the pattern.
+ */
+export class Pattern extends EventTarget {
+  readonly id: string;
+
+  #referenceImage?: ReferenceImage;
+
+  #info: PatternInfo;
+  #fabric: Fabric;
+  #palette: Palette;
+  #layers: Layers;
+  #specialStitchModels: SpecialStitchModel[];
+
+  #displaySettings: DisplaySettings;
+  #publishSettings: PublishSettings;
+
+  #effectiveDisplayMode: DisplayMode | undefined;
+
+  constructor(data?: {
+    id?: string | Uint8Array;
+
+    referenceImage?: b.infer<typeof ReferenceImage.schema> | null;
+
+    info?: b.infer<typeof PatternInfo.schema>;
+    fabric?: b.infer<typeof Fabric.schema>;
+    palette?: b.infer<typeof Palette.schema>;
+    layers?: b.infer<typeof Layers.schema> | Layer[] | Layers;
+    specialStitchModels?: b.infer<typeof SpecialStitchModel.schema>[];
+
+    displaySettings?: Partial<b.infer<typeof DisplaySettings.schema>>;
+    publishSettings?: Partial<b.infer<typeof PublishSettings.schema>>;
+  }) {
+    super();
+
+    this.id = data?.id instanceof Uint8Array ? stringifyUuid(data.id) : (data?.id ?? NIL_UUID);
+
+    if (data?.referenceImage) this.#referenceImage = new ReferenceImage(data.referenceImage);
+
+    this.#info = new PatternInfo(data?.info);
+    this.#fabric = new Fabric(data?.fabric);
+    this.#palette = new Palette(data?.palette);
+    this.#layers = new Layers(data?.layers);
+    this.#specialStitchModels = data?.specialStitchModels?.map((model) => new SpecialStitchModel(model)) ?? [];
+
+    this.#displaySettings = new DisplaySettings(data?.displaySettings);
+    this.#publishSettings = new PublishSettings(data?.publishSettings);
+
+    this.#effectiveDisplayMode = this.#displaySettings.displayMode;
+  }
+
+  /** Returns `true` if the pattern is a new, empty pattern. */
+  get isNil(): boolean {
+    return this.id === NIL_UUID;
+  }
+
+  static readonly schema = b.struct({
+    id: b.bytes(16),
+
+    referenceImage: b.option(ReferenceImage.schema),
+
+    info: PatternInfo.schema,
+    fabric: Fabric.schema,
+    palette: Palette.schema,
+    layers: Layers.schema,
+    specialStitchModels: b.vec(SpecialStitchModel.schema),
+
+    displaySettings: DisplaySettings.schema,
+    publishSettings: PublishSettings.schema,
+  });
+
+  static deserialize(data: Uint8Array) {
+    return new Pattern(Pattern.schema.deserialize(data));
+  }
+
+  get referenceImage() {
+    return this.#referenceImage;
+  }
+  set referenceImage(image: ReferenceImage | undefined) {
+    this.#referenceImage = image;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateReferenceImage, { detail: image }));
+  }
+  // oxlint-disable-next-line accessor-pairs
+  set referenceImageSettings(settings: ReferenceImageSettings) {
+    if (!this.#referenceImage) return;
+    this.#referenceImage.settings = settings;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateReferenceImageSettings, { detail: settings }));
+  }
+
+  get info() {
+    return this.#info;
+  }
+  set info(info: PatternInfo) {
+    this.#info = info;
+  }
+
+  get palette() {
+    return this.#palette;
+  }
+
+  get paletteDisplaySettings() {
+    return this.#palette.settings;
+  }
+  set paletteDisplaySettings(settings: PaletteSettings) {
+    this.#palette.settings = settings;
+  }
+
+  setPaletteItemSymbol(palindex: number, symbol: Symbol | undefined) {
+    const item = this.#palette.get(palindex);
+    if (!item) return;
+
+    item.symbol = symbol;
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.SetPaletteItemSymbol, { detail: { palindex, symbol } }));
+  }
+
+  get fabric() {
+    return this.#fabric;
+  }
+  set fabric(fabric: Fabric) {
+    this.#fabric = fabric;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateFabric, { detail: fabric }));
+  }
+
+  get grid() {
+    return this.#displaySettings.grid;
+  }
+  set grid(grid: Grid) {
+    this.#displaySettings.grid = grid;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateGrid, { detail: grid }));
+  }
+
+  get layers() {
+    return this.#layers;
+  }
+
+  get specialStitchModels() {
+    return this.#specialStitchModels;
+  }
+
+  /** Adds a stitch to the pattern on the given layer. */
+  addStitch(layerIndex: number, stitch: Stitch) {
+    const layer = this.#layers.get(layerIndex)!;
+
+    if (stitch instanceof FullStitch) layer.fullstitches.push(stitch);
+    else if (stitch instanceof PartStitch) layer.partstitches.push(stitch);
+    else if (stitch instanceof LineStitch) layer.linestitches.push(stitch);
+    else if (stitch instanceof NodeStitch) layer.nodestitches.push(stitch);
+    else layer.specialstitches.push(stitch);
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: { layerIndex, stitch } }));
+  }
+
+  /** Removes a stitch from the pattern on the given layer. */
+  removeStitch(layerIndex: number, stitch: Stitch) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function removeStitchFromArray(array: any[], stitch: any) {
+      const index = array.findIndex((item) => item.equals(stitch));
+      if (index !== -1) array.splice(index, 1);
+    }
+
+    const layer = this.#layers.get(layerIndex)!;
+
+    if (stitch instanceof FullStitch) removeStitchFromArray(layer.fullstitches, stitch);
+    else if (stitch instanceof PartStitch) removeStitchFromArray(layer.partstitches, stitch);
+    else if (stitch instanceof LineStitch) removeStitchFromArray(layer.linestitches, stitch);
+    else if (stitch instanceof NodeStitch) removeStitchFromArray(layer.nodestitches, stitch);
+    else removeStitchFromArray(layer.specialstitches, stitch);
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: { layerIndex, stitch } }));
+  }
+
+  /** Inserts a layer. */
+  insertLayer(index: number, layer: Layer) {
+    this.#layers.insert(index, layer);
+    this.dispatchEvent(new CustomEvent(PatternEvent.AddLayer, { detail: { index, layer } }));
+  }
+
+  /** Removes a layer. */
+  removeLayer(index: number) {
+    this.#layers.remove(index);
+    this.dispatchEvent(new CustomEvent(PatternEvent.RemoveLayer, { detail: index }));
+  }
+
+  /** Updates layer visibility. */
+  updateLayerVisibility(layerIndex: number, visibility: LayerVisibility) {
+    const layer = this.#layers.get(layerIndex);
+    if (layer) layer.setVisibility(visibility);
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateLayerVisibility, { detail: { layerIndex, visibility } }));
+  }
+
+  /** Reorders layers. */
+  moveLayer(positions: number[]) {
+    this.#layers.positions = positions;
+    this.dispatchEvent(new CustomEvent(PatternEvent.MoveLayer, { detail: positions }));
+  }
+
+  get displaySettings() {
+    return this.#displaySettings;
+  }
+  set displaySettings(settings: DisplaySettings) {
+    this.#displaySettings = settings;
+    // Sync #effectiveDisplayMode: keep it aligned with new displayMode.
+    this.#effectiveDisplayMode = settings.displayMode;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplaySettings, { detail: settings }));
+  }
+
+  /**
+   * Returns the effective display mode.
+   * - When symbols are hidden, always returns a valid display mode (never `undefined`)
+   * - When symbols are shown, returns the effective mode (can be `undefined` to hide stitches)
+   */
+  get displayMode() {
+    return this.showSymbols ? this.#effectiveDisplayMode : this.#displaySettings.displayMode;
+  }
+  set displayMode(mode: DisplayMode | undefined) {
+    this.#effectiveDisplayMode = mode;
+    if (mode !== undefined) this.#displaySettings.displayMode = mode;
+
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdateDisplayMode, { detail: this.displayMode }));
+  }
+
+  get showSymbols() {
+    return this.#displaySettings.showSymbols;
+  }
+
+  get showGrid() {
+    return this.#displaySettings.showGrid;
+  }
+
+  get showRulers() {
+    return this.#displaySettings.showRulers;
+  }
+
+  get pdfExportOptions() {
+    return this.#publishSettings.pdf;
+  }
+  set pdfExportOptions(options: PdfExportOptions) {
+    this.#publishSettings.pdf = options;
+    this.dispatchEvent(new CustomEvent(PatternEvent.UpdatePdfExportOptions, { detail: options }));
+  }
+}
+
+export const enum PatternEvent {
+  UpdateReferenceImage = "image:set",
+  UpdateReferenceImageSettings = "image:settings:update",
+
+  UpdatePatternInfo = "pattern-info:update",
+
+  UpdateFabric = "fabric:update",
+  UpdateGrid = "grid:update",
+
+  AddStitch = "stitches:add",
+  RemoveStitch = "stitches:remove",
+
+  AddPaletteItem = "palette:add_palette_item",
+  RemovePaletteItem = "palette:remove_palette_item",
+  UpdatePaletteDisplaySettings = "palette:update_display_settings",
+  SetPaletteItemSymbol = "palette:set_symbol",
+
+  UpdateDisplaySettings = "display:update",
+  UpdateDisplayMode = "display:set_mode",
+
+  UpdatePdfExportOptions = "publish:update-pdf",
+
+  AddLayer = "layers:add",
+  RemoveLayer = "layers:remove",
+  RenameLayer = "layers:rename",
+  UpdateLayerVisibility = "layers:update_visibility",
+  MoveLayer = "layers:move",
+}

@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ScrollArea > renders correctly with class 1`] = `
+<div>
+  <div class="h-64 overflow-hidden relative" data-slot="root" dir="ltr">
+    <div class="pr-3 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
+    <style></style>
+    <div class="bg-elevated data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out] duration-200 flex flex-col group/scrollbar h-full hover:bg-accented items-center p-0.75 select-none touch-none transition-colors w-3" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
+      <div class="bg-inverted duration-200 group-hover/scrollbar:w-full! relative rounded-full transition-[width] w-1/2!" data-slot="thumb" data-state="visible"></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ScrollArea > renders correctly with orientation horizontal 1`] = `
+<div>
+  <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+    <div class="pb-3 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
+    <style></style>
+    <div class="bg-elevated data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out] duration-200 flex flex-row group/scrollbar h-3 hover:bg-accented items-center p-0.75 select-none touch-none transition-colors w-full" data-orientation="horizontal" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
+      <div class="bg-inverted duration-200 group-hover/scrollbar:h-full! h-1/2! relative rounded-full transition-[height]" data-slot="thumb" data-state="visible"></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ScrollArea > renders correctly with orientation vertical 1`] = `
+<div>
+  <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+    <div class="pr-3 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
+    <style></style>
+    <div class="bg-elevated data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out] duration-200 flex flex-col group/scrollbar h-full hover:bg-accented items-center p-0.75 select-none touch-none transition-colors w-3" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
+      <div class="bg-inverted duration-200 group-hover/scrollbar:w-full! relative rounded-full transition-[width] w-1/2!" data-slot="thumb" data-state="visible"></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ScrollArea > renders correctly with size lg 1`] = `
+<div>
+  <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+    <div class="pr-3 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
+    <style></style>
+    <div class="bg-elevated data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out] duration-200 flex flex-col group/scrollbar h-full hover:bg-accented items-center p-0.75 select-none touch-none transition-colors w-3" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
+      <div class="bg-inverted duration-200 group-hover/scrollbar:w-full! relative rounded-full transition-[width] w-1/2!" data-slot="thumb" data-state="visible"></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ScrollArea > renders correctly with size md 1`] = `
+<div>
+  <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+    <div class="pr-2 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
+    <style></style>
+    <div class="bg-elevated data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out] duration-200 flex flex-col group/scrollbar h-full hover:bg-accented items-center p-0.5 select-none touch-none transition-colors w-2" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
+      <div class="bg-inverted duration-200 group-hover/scrollbar:w-full! relative rounded-full transition-[width] w-1/2!" data-slot="thumb" data-state="visible"></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ScrollArea > renders correctly with size sm 1`] = `
+<div>
+  <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+    <div class="pr-1 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
+    <style></style>
+    <div class="bg-elevated data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out] duration-200 flex flex-col group/scrollbar h-full hover:bg-accented items-center p-px select-none touch-none transition-colors w-1" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
+      <div class="bg-inverted duration-200 group-hover/scrollbar:w-full! relative rounded-full transition-[width] w-1/2!" data-slot="thumb" data-state="visible"></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ScrollArea > renders correctly with ui 1`] = `
+<div>
+  <div class="overflow-hidden relative" data-slot="root" dir="ltr">
+    <div class="pr-3 size-full" data-reka-scroll-area-viewport data-slot="viewport" tabindex="0"></div>
+    <style></style>
+    <div class="bg-elevated data-[state=hidden]:animate-[fade-out_200ms_ease-in] data-[state=visible]:animate-[fade-in_200ms_ease-out] duration-200 flex flex-col group/scrollbar h-full hover:bg-accented items-center p-0.75 select-none touch-none transition-colors w-3" data-orientation="vertical" data-scrollbarimpl data-slot="scrollbar" data-state="visible">
+      <div class="bg-primary duration-200 group-hover/scrollbar:w-full! relative rounded-full transition-[width] w-1/2!" data-slot="thumb" data-state="visible"></div>
+    </div>
+  </div>
+</div>
+`;

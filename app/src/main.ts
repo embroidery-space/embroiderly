@@ -1,20 +1,28 @@
-import ui from "@nuxt/ui/vue-plugin";
 import { vueIntegration } from "@sentry/vue";
 import { createFluentVue } from "fluent-vue";
+import { createPinia } from "pinia";
+import { createPersistedState } from "pinia-plugin-persistedstate";
 import { createApp } from "vue";
 
-import { router, pinia } from "./app/";
 import App from "./App.vue";
-import { DiagnosticsService } from "./shared/services/";
+import { EditorContextKey } from "./composables/";
+import { DiagnosticsService } from "./services/";
+import { initEditor } from "./wasm/";
+
+import "./assets/styles/index.css";
+
+const editorContext = await initEditor();
 
 const app = createApp(App);
+
+app.provide(EditorContextKey, editorContext);
+
+const pinia = createPinia().use(createPersistedState());
 const fluent = createFluentVue({ bundles: [], componentTag: false });
 
 DiagnosticsService.addIntegration(vueIntegration({ app }));
 
-app.use(router);
 app.use(pinia);
 app.use(fluent);
-app.use(ui);
 
 app.mount("#app");

@@ -1,37 +1,42 @@
+use embroiderly_pattern::{BrandPaletteItem, EmbroiderlyProject};
+
 mod error;
 pub use error::*;
 
+mod format;
+pub use format::{PaletteFormat, PatternFormat};
+
 pub mod embproj;
 pub mod oxs;
-pub mod xsd;
+pub mod pmaker;
+pub mod ursa;
+pub mod xspro;
 
-mod format;
-use embroiderly_pattern::PatternProject;
-pub use format::PatternFormat;
+mod utils;
 
-pub fn parse_pattern(file_path: std::path::PathBuf) -> Result<PatternProject> {
-  match PatternFormat::try_from(file_path.extension())? {
-    PatternFormat::Xsd => xsd::parse_pattern(file_path),
-    PatternFormat::Oxs => oxs::parse_pattern(file_path),
-    PatternFormat::EmbProj => embproj::parse_pattern(file_path),
+pub fn parse_pattern(data: &[u8], file_name: &str) -> Result<EmbroiderlyProject> {
+  match PatternFormat::try_from(file_name)? {
+    PatternFormat::Xsd => pmaker::parse_pattern(data),
+    PatternFormat::Oxs => oxs::parse_pattern(data),
+    PatternFormat::EmbProj => embproj::parse_pattern(data),
   }
   .map_err(Error::FailedToParse)
 }
 
-pub fn save_pattern(patproj: &PatternProject, package_info: &PackageInfo, format: Option<PatternFormat>) -> Result<()> {
-  let file_path = match format {
-    Some(format) => patproj.file_path.with_extension(format.to_string()),
-    None => patproj.file_path.clone(),
-  };
-  match PatternFormat::try_from(file_path.extension())? {
+pub fn save_pattern(embproj: &EmbroiderlyProject, format: PatternFormat) -> Result<Vec<u8>> {
+  match format {
     PatternFormat::Xsd => Err(Error::UnsupportedPatternType(PatternFormat::Xsd.to_string()).into()),
-    PatternFormat::Oxs => oxs::save_pattern(patproj, package_info),
-    PatternFormat::EmbProj => embproj::save_pattern(patproj, package_info),
+    PatternFormat::Oxs => oxs::save_pattern(embproj),
+    PatternFormat::EmbProj => embproj::save_pattern(embproj),
   }
   .map_err(Error::FailedToParse)
 }
 
-pub struct PackageInfo {
-  pub name: String,
-  pub version: String,
+pub fn parse_palette(data: &[u8], file_name: &str) -> Result<Vec<BrandPaletteItem>> {
+  match PaletteFormat::try_from(file_name)? {
+    PaletteFormat::Pmaker => pmaker::parse_palette(data).map_err(Error::FailedToParse),
+    PaletteFormat::Ursa => ursa::parse_palette(data).map_err(Error::FailedToParse),
+    PaletteFormat::Xspro => xspro::parse_palette(data).map_err(Error::FailedToParse),
+    PaletteFormat::Embroiderly => serde_json::from_slice(data).map_err(|e| Error::FailedToParse(e.into())),
+  }
 }
