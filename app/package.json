@@ -76,6 +76,7 @@
     "typescript": "catalog:",
     "unplugin-icons": "catalog:",
     "vite": "catalog:",
+    "vite-plugin-compression2": "catalog:",
     "vite-plugin-pwa": "catalog:",
     "vite-plugin-vue-devtools": "catalog:",
     "vitest": "catalog:",

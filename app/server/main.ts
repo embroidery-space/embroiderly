@@ -1,5 +1,5 @@
 export default {
-  fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     // Handle Sentry tunnel.
@@ -7,6 +7,31 @@ export default {
 
     // Handle PostHog proxy.
     if (url.pathname.startsWith("/usage")) return handlePostHog(request, url, ctx);
+
+    // Handle compressed large Wasm modules.
+    if (url.pathname.endsWith(".wasm")) {
+      const supportsBrotli = request.headers.get("Accept-Encoding")?.includes("br");
+
+      const extension = supportsBrotli ? ".br" : ".gz";
+      const encoding = supportsBrotli ? "br" : "gzip";
+
+      const compressedUrl = new URL(request.url + extension);
+      const compressedRequest = new Request(compressedUrl, request);
+
+      const response = await env.ASSETS.fetch(compressedRequest);
+      if (response.ok) {
+        const headers = new Headers(response.headers);
+        headers.set("Content-Encoding", encoding);
+        headers.set("Content-Type", "application/wasm");
+
+        return new Response(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers,
+          encodeBody: "manual",
+        });
+      }
+    }
 
     // Serve static assets for all other requests.
     return env.ASSETS.fetch(request);
