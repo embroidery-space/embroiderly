@@ -27,7 +27,8 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/setup-rust
         with:
-          tools: typst-cli
+          targets: wasm32-unknown-unknown
+          tools: wasm-pack, typst-cli
 
       - name: Build the application
         uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # v0.6.2
@@ -35,10 +36,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          VITE_EMBROIDERLY_POSTHOG_API_KEY: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_POSTHOG_API_KEY || '' }}
+          VITE_EMBROIDERLY_SENTRY_DSN: ${{ github.ref_name == 'main' && secrets.EMBROIDERLY_SENTRY_DSN || '' }}
         with:
           # Empty tagName/releaseName skips release creation (PR builds).
           tagName: ${{ github.event_name == 'push' && 'v__VERSION__' || '' }}
           releaseName: ${{ github.event_name == 'push' && 'Embroiderly v__VERSION__' || '' }}
           releaseBody: "Changelog: <https://docs.embroiderly.niusia.me/resources/changelog/v__VERSION__>."
-          args: ${{  matrix.platform == 'ubuntu-latest' && '--features cef' || '' }}
+          tauriScript: pnpm tauri
+          args: ${{ matrix.platform == 'ubuntu-latest' && '--features cef' || '' }}
           updaterJsonPreferNsis: true
