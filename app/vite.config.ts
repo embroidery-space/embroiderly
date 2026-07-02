@@ -72,7 +72,6 @@ export default defineConfig({
     !isTauri &&
       compression({
         include: /\.(wasm)$/u,
-        algorithms: ["brotli"],
         deleteOriginalAssets: true,
       }),
     !isTest && vueDevTools(),
