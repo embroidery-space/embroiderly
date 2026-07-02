@@ -115,7 +115,7 @@ jobs:
           ALIAS: ${{ steps.info.outputs.alias }}
         run: |
           GIT_INFO=$(jq -cn \
-            --arg u "$COMMIT_URL" --arg h "$COMMIT_HASH" --arg b "$COMMIT_BRANCH" --arg m "$COMMIT_MESSAGE" \
+            --arg u "$COMMIT_URL" --arg h "$COMMIT_HASH" --arg b "$COMMIT_BRANCH" --arg m "$(echo "$COMMIT_MESSAGE" | head -1)" \
             '{ url: $u, hash: $h, branch: $b, message: $m }')
 
           if [ -n "$ALIAS" ]; then
