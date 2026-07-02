@@ -1,6 +1,8 @@
 /// <reference types="vitest/config" />
 
 import { execSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -9,6 +11,7 @@ import { webdriverio } from "@vitest/browser-webdriverio";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
+import type { Plugin } from "vite";
 import { compression } from "vite-plugin-compression2";
 import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
@@ -34,6 +37,29 @@ const isPwaEnabled = process.env.EMBROIDERLY_PWA !== "false";
 
 const isDev = process.env.NODE_ENV === "development";
 const isTest = process.env.NODE_ENV === "test";
+
+const wasmCleanup: Plugin = {
+  name: "wasm-cleanup",
+  apply: "build",
+  closeBundle: {
+    order: "post", // Forces it to run after VitePWA's `closeBundle` hook.
+    sequential: true,
+    handler() {
+      function clean(dir: string) {
+        if (!fs.existsSync(dir)) return;
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+          const res = path.resolve(dir, entry.name);
+          if (entry.isDirectory()) clean(res);
+          else if (entry.name.endsWith(".wasm")) {
+            if (fs.existsSync(`${res}.gz`) && fs.existsSync(`${res}.br`)) fs.unlinkSync(res);
+            else throw new Error(`Compressed WASM alternative not found: ${res}`);
+          }
+        }
+      }
+      clean(path.resolve("dist"));
+    },
+  },
+};
 
 export default defineConfig({
   plugins: [
@@ -65,15 +91,12 @@ export default defineConfig({
           overrideManifestIcons: true,
         },
         injectManifest: {
-          globPatterns: ["**/*.{js,wasm,wasm.br,css,html,ico,png,svg,json,ttf,otf}"],
+          globPatterns: ["**/*.{js,wasm,css,html,ico,png,svg,json,ttf,otf}"],
           maximumFileSizeToCacheInBytes: 30 * 1024 * 1024, // 30 MB. We have quite large Wasm modules.
         },
       }),
-    !isTauri &&
-      compression({
-        include: /\.(wasm)$/u,
-        deleteOriginalAssets: true,
-      }),
+    !isTauri && compression({ include: /\.(wasm)$/u }),
+    !isTauri && wasmCleanup,
     !isTest && vueDevTools(),
   ],
   clearScreen: false,
