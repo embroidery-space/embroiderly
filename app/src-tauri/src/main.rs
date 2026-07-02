@@ -103,6 +103,7 @@ fn create_webview_window<R: tauri::Runtime>(
     files_js.push(format!("\"{path}\""));
   }
 
+  #[allow(clippy::case_sensitive_file_extension_comparisons)]
   let webview_window = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
     .title(app.package_info().name.clone())
     .min_inner_size(640.0, 480.0)
