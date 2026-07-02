@@ -27,7 +27,8 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/setup-rust
         with:
-          tools: typst-cli
+          targets: wasm32-unknown-unknown
+          tools: wasm-pack, typst-cli
 
       - name: Build the application
         uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # v0.6.2
