@@ -81,6 +81,7 @@
     "vite-plugin-vue-devtools": "catalog:",
     "vitest": "catalog:",
     "vitest-browser-vue": "catalog:",
+    "vue-component-type-helpers": "catalog:",
     "vue-tsc": "catalog:",
     "workbox-precaching": "catalog:",
     "workbox-window": "catalog:",

@@ -555,6 +555,9 @@ importers:
       vitest-browser-vue:
         specifier: 'catalog:'
         version: 2.1.0(vitest@4.1.9)(vue@3.5.39(typescript@6.0.3))
+      vue-component-type-helpers:
+        specifier: 'catalog:'
+        version: 3.3.5
       vue-tsc:
         specifier: 'catalog:'
         version: 3.3.5(typescript@6.0.3)

@@ -9,16 +9,16 @@ import type { EditorContext } from "~/wasm/";
 
 import { createMockEditorContext } from "./mock-editor-context.ts";
 
-// `RenderOptions` are not actually infer component props type.
+// `ComponentRenderOptions` type does not actually infer component props type.
 // `page.render()` has complex generics which we were not successful in replication for out custom utility.
-type RenderOptions = NonNullable<Parameters<(typeof page)["render"]>[1]> & {
+export type ComponentRenderOptions = NonNullable<Parameters<(typeof page)["render"]>[1]> & {
   /** The editor context to provide to the component. */
   editorContext?: boolean | EditorContext;
   /** Options for the Pinia testing store. */
   pinia?: boolean | CreateTestingPiniaOptions;
 };
 
-export async function renderComponent(component: Component, options: RenderOptions = {}) {
+export async function renderComponent(component: Component, options: ComponentRenderOptions = {}) {
   const { pinia, editorContext, global, ...rest } = options;
 
   const plugins = global?.plugins ?? [];
