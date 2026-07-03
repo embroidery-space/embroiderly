@@ -1,7 +1,7 @@
 import { useOverlay, useToast } from "@embroiderly/ui";
 
 import { defineStore } from "pinia";
-import { computed, reactive, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
@@ -94,7 +94,7 @@ export const useSettingsStore = defineStore(
     const { fluent, setLocale } = useI18n();
     const toast = useToast();
 
-    const ui = reactive<UiOptions>({
+    const ui = ref<UiOptions>({
       theme: "system",
       scale: "medium",
       language: "en",
@@ -120,30 +120,30 @@ export const useSettingsStore = defineStore(
         document.documentElement.style.fontSize = newUi.scale;
         setLocale(newUi.language);
       },
-      { immediate: true },
+      { immediate: true, deep: true },
     );
 
-    const startup = reactive<StartupOptions>({
+    const startup = ref<StartupOptions>({
       action: StartupAction.NewPattern,
       patternTemplate: "",
     });
 
-    const canvas = reactive<CanvasOptions>({
+    const canvas = ref<CanvasOptions>({
       renderOptions: { antialias: true },
       viewportOptions: { wheelAction: WheelAction.Zoom },
       patternOptions: { layerLayout: LayerLayout.ByLayerOrder },
     });
 
-    const updater = reactive<UpdaterOptions>({
+    const updater = ref<UpdaterOptions>({
       autoCheck: false,
     });
 
-    const telemetry = reactive<TelemetryOptions>({
+    const telemetry = ref<TelemetryOptions>({
       diagnostics: false,
       metrics: false,
     });
 
-    const other = reactive<OtherOptions>({
+    const other = ref<OtherOptions>({
       autoSaveInterval: 15,
       showOpenDemoPatternOption: true,
       usePaletteItemColorForStitchTools: true,
@@ -237,7 +237,36 @@ export const useSettingsStore = defineStore(
       }
     }
 
-    const autoSaveIntervalInMillis = computed(() => other.autoSaveInterval * 60 * 1000);
+    const autoSaveIntervalInMillis = computed(() => other.value.autoSaveInterval * 60 * 1000);
+
+    function $reset() {
+      ui.value = {
+        theme: "system",
+        scale: "medium",
+        language: "en",
+      };
+      startup.value = {
+        action: StartupAction.NewPattern,
+        patternTemplate: startup.value.patternTemplate,
+      };
+      canvas.value = {
+        renderOptions: { antialias: true },
+        viewportOptions: { wheelAction: WheelAction.Zoom },
+        patternOptions: { layerLayout: LayerLayout.ByLayerOrder },
+      };
+      updater.value = {
+        autoCheck: false,
+      };
+      telemetry.value = {
+        diagnostics: false,
+        metrics: false,
+      };
+      other.value = {
+        autoSaveInterval: 15,
+        showOpenDemoPatternOption: true,
+        usePaletteItemColorForStitchTools: true,
+      };
+    }
 
     return {
       loadingUpdate,
@@ -250,6 +279,7 @@ export const useSettingsStore = defineStore(
       openSettingsModal,
       checkForUpdates,
       autoSaveIntervalInMillis,
+      $reset,
     };
   },
   { persist: { omit: ["loadingUpdate"] } },
