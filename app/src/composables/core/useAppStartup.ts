@@ -5,7 +5,8 @@ import { onMounted } from "vue";
 
 import { useI18n } from "~/composables/";
 import { LoggerService } from "~/services/";
-import { StartupAction, usePatternFileStore, useSettingsStore } from "~/stores/";
+import { StartupAction, useSettingsStore } from "~/settings/";
+import { usePatternFileStore } from "~/stores/";
 
 /** Handles app startup actions, such as opening a pattern on startup. */
 export function useAppStartup() {

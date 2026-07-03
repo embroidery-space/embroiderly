@@ -21,8 +21,8 @@ import {
 import { useEditorModals, useI18n } from "~/composables/";
 import { useTour } from "~/composables/core/";
 import { Fabric } from "~/lib/pattern/";
+import { useSettingsStore } from "~/settings/";
 import { usePatternFileStore, usePatternStore } from "~/stores/";
-import { useSettingsStore } from "~/stores/";
 import { getSystemInfo } from "~/utils/system.ts";
 
 import WindowControls from "./WindowControls.vue";

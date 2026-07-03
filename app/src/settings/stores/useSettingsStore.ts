@@ -3,11 +3,12 @@ import { useOverlay, useToast } from "@embroiderly/ui";
 import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
 
-import AppSettingModal from "~/components/settings/AppSettingsModal.vue";
 import { useI18n } from "~/composables/";
 import { useCloseAllPatterns } from "~/composables/core/";
 import { LayerLayout, WheelAction } from "~/lib/types/";
 import type { PatternOptions, RenderOptions, ViewportOptions } from "~/lib/types/";
+
+import AppSettingModal from "../components/AppSettingsModal.vue";
 
 export type Theme = "light" | "dark" | "system";
 export type Scale = "xx-small" | "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large";

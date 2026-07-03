@@ -21,11 +21,10 @@ import {
 
 import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
-import TelemetryPrompt from "./components/settings/TelemetryPrompt.vue";
 import { useI18n } from "./composables/";
 import { useTour } from "./composables/core/";
-import { DiagnosticsService, LoggerService, MetricsService } from "./services";
-import { useSettingsStore } from "./stores/";
+import { DiagnosticsService, LoggerService, MetricsService } from "./services/";
+import { TelemetryPrompt, useSettingsStore } from "./settings/";
 
 const settingsStore = useSettingsStore();
 
