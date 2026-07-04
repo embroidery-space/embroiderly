@@ -1,14 +1,22 @@
 import { ChildProcess, spawn } from "node:child_process";
 import type { SpawnOptions } from "node:child_process";
+import path from "node:path";
 import { setTimeout } from "node:timers/promises";
 import { fileURLToPath, URL } from "node:url";
 
 import { PatternEditorPage } from "./tests/e2e/shared/pages/";
 
+export const APP_PATH = fileURLToPath(new URL(".", import.meta.url));
 export const ROOT_PATH = fileURLToPath(new URL("..", import.meta.url));
 
+export const TESTS_TEMP_PATH = path.join(ROOT_PATH, "app", "tests", ".tmp");
+
 export const sharedConfig = {
-  specs: ["./tests/e2e/specs/pattern-file-management.spec.ts", "./tests/e2e/specs/pattern-info-management.spec.ts"],
+  specs: [
+    "./tests/e2e/specs/pattern-file-management.spec.ts",
+    "./tests/e2e/specs/pattern-info-management.spec.ts",
+    "./tests/e2e/specs/app-settings.spec.ts",
+  ],
   reporters: ["spec"],
 
   maxInstances: 1,
@@ -75,7 +83,7 @@ export function createManagedProcess(label: string) {
 export function getPlatformBrowserName() {
   switch (process.platform) {
     case "win32":
-      return "MicrosoftEdge";
+      return "msedge";
     case "linux":
       return "firefox";
     case "darwin":

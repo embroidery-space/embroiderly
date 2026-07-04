@@ -2,8 +2,12 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { setTimeout } from "node:timers/promises";
 
+import type { VisualServiceOptions } from "@wdio/visual-service";
+
 import {
+  APP_PATH,
   ROOT_PATH,
+  TESTS_TEMP_PATH,
   closeDefaultPattern,
   createManagedProcess,
   disableAnimationsInCI,
@@ -13,8 +17,7 @@ import {
   suppressPrompts,
 } from "./wdio.shared.conf";
 
-const APP_PATH = path.join(ROOT_PATH, "app");
-const VITE_BIN_PATH = path.join(APP_PATH, "node_modules", "vite", "bin", "vite.js");
+const WRANGLER_BIN_PATH = path.join(APP_PATH, "node_modules", "wrangler", "bin", "wrangler.js");
 
 const PREVIEW_PORT = 1430;
 const PREVIEW_URL = `http://localhost:${PREVIEW_PORT}`;
@@ -37,12 +40,19 @@ async function waitUntilReachable(url: string, timeoutMs: number) {
 
 function buildCapabilities(): WebdriverIO.Capabilities {
   const browserName = getPlatformBrowserName();
+  const capability = { browserName, maxInstances: 1 };
 
   // Run headless in CI. Safari doesn't support headless mode, but CI never targets macOS.
-  if (!process.env.CI) return { browserName };
-  if (browserName === "MicrosoftEdge") return { browserName, "ms:edgeOptions": { args: ["--headless=new"] } };
-  if (browserName === "firefox") return { browserName, "moz:firefoxOptions": { args: ["-headless"] } };
-  return { browserName };
+  if (!process.env.CI) return capability;
+
+  switch (browserName) {
+    case "msedge":
+      return { ...capability, "ms:edgeOptions": { args: ["--headless=new"] } };
+    case "firefox":
+      return { ...capability, "moz:firefoxOptions": { args: ["-headless"] } };
+    default:
+      return capability;
+  }
 }
 
 export const config: WebdriverIO.Config = {
@@ -50,6 +60,17 @@ export const config: WebdriverIO.Config = {
 
   baseUrl: PREVIEW_URL,
   capabilities: [buildCapabilities()],
+
+  services: [
+    [
+      "visual",
+      {
+        screenshotPath: TESTS_TEMP_PATH,
+        formatImageName: "{tag}.web",
+        disableCSSAnimation: true,
+      } satisfies VisualServiceOptions,
+    ],
+  ],
 
   async onPrepare() {
     // Ensure a fresh production web build exists since we expect `vite preview` to serve it.
@@ -62,7 +83,7 @@ export const config: WebdriverIO.Config = {
     });
 
     // Serve the build for the duration of the whole test run.
-    previewServer.start(process.execPath, [VITE_BIN_PATH, "preview", "--port", String(PREVIEW_PORT), "--strictPort"], {
+    previewServer.start(process.execPath, [WRANGLER_BIN_PATH, "dev", "--port", String(PREVIEW_PORT)], {
       cwd: APP_PATH,
       stdio: [null, process.stdout, process.stderr],
     });

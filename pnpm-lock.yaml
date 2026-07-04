@@ -525,6 +525,9 @@ importers:
       '@wdio/spec-reporter':
         specifier: 'catalog:'
         version: 9.29.0
+      '@wdio/visual-service':
+        specifier: 'catalog:'
+        version: 9.2.4(webdriverio@9.29.0)
       concurrently:
         specifier: 'catalog:'
         version: 10.0.3

@@ -1,4 +1,4 @@
-import { ConfirmDialog, FabricModal, PatternInfoModal, GridModal, PatternCreationModal } from "./modals";
+import { ConfirmDialog, FabricModal, PatternInfoModal, GridModal, PatternCreationModal, SettingsModal } from "./modals";
 
 /** Page object for the _Pattern Editor_ page. */
 class PatternEditorPage {
@@ -9,6 +9,7 @@ class PatternEditorPage {
   patternInfoModal = new PatternInfoModal();
   fabricModal = new FabricModal();
   gridModal = new GridModal();
+  settingsModal = new SettingsModal();
 
   /** Returns a button that triggers the _File_ dropdown menu. */
   get fileMenuButton() {
