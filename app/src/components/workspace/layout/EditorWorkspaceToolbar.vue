@@ -28,8 +28,8 @@ import {
 } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
 import { tools } from "~/lib/tools/";
+import { useSettingsStore } from "~/settings/";
 import { useEditorStateStore, usePatternStore } from "~/stores/";
-import { useSettingsStore } from "~/stores/";
 
 export interface EditorWorkspaceToolbarProps {
   /** Whether the toolbar is disabled. */

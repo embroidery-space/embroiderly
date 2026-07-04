@@ -185,6 +185,11 @@ welcome-help-fb = Facebook Group
 
 settings = Settings
 
+settings-reset = Reset to defaults
+settings-reset-confirm =
+  .title = Settings Reset
+  .description = Are you sure you want to reset all settings to their default values?
+
 settings-interface = Interface
 
 settings-theme = Theme

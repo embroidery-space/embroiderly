@@ -2,8 +2,8 @@ import { BaseModal } from "./base";
 
 /** Page object for the _Confirm Dialog_ modal. */
 export class ConfirmDialog extends BaseModal {
-  constructor() {
-    super('//div[@role="alertdialog"][.//h2[text()="Unsaved Changes"]]', { save: "Yes", cancel: "No" });
+  constructor(title = "Unsaved Changes") {
+    super(`//div[@role="alertdialog"][.//h2[text()="${title}"]]`, { save: "Yes", cancel: "No" });
   }
 
   /** Dismisses the modal without taking any action. */

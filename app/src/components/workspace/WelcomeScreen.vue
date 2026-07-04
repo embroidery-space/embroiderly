@@ -8,8 +8,8 @@ import { computed } from "vue";
 import { IconExternalLink, IconFileCreate, IconFileOpen } from "~/assets/icons/";
 import { useEditorModals, useI18n } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
+import { useSettingsStore } from "~/settings/";
 import { usePatternFileStore } from "~/stores/";
-import { useSettingsStore } from "~/stores/";
 
 const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();

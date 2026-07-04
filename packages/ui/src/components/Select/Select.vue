@@ -101,7 +101,7 @@ const { contains } = useFilter({ sensitivity: "base" });
 const locale = useLocale();
 
 const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
+const { id, label, size: formFieldSize, ariaAttrs } = useFormField(props);
 const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
 const portalProps = usePortal(toRef(() => props.portal));
 const searchInputProps = toRef(
@@ -174,6 +174,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     <Combobox.Anchor as-child>
       <Combobox.Trigger
         :id="id"
+        :aria-label="label"
         v-bind="{ ...$attrs, ...ariaAttrs }"
         :disabled="disabled"
         data-slot="base"

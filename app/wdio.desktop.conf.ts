@@ -3,8 +3,11 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
+import { VisualServiceOptions } from "@wdio/visual-service";
+
 import {
   ROOT_PATH,
+  TESTS_TEMP_PATH,
   closeDefaultPattern,
   createManagedProcess,
   disableAnimationsInCI,
@@ -12,8 +15,6 @@ import {
   sharedConfig,
   suppressPrompts,
 } from "./wdio.shared.conf";
-
-const TESTS_TEMP_PATH = path.join(ROOT_PATH, "app", "tests", ".tmp");
 
 const TAURI_DRIVER_PATH = path.resolve(os.homedir(), ".cargo", "bin", "tauri-driver");
 
@@ -36,6 +37,17 @@ export const config: WebdriverIO.Config = {
         application: "../target/debug/embroiderly",
       },
     },
+  ],
+
+  services: [
+    [
+      "visual",
+      {
+        screenshotPath: TESTS_TEMP_PATH,
+        formatImageName: "{tag}.desktop",
+        disableCSSAnimation: true,
+      } satisfies VisualServiceOptions,
+    ],
   ],
 
   onPrepare() {

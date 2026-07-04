@@ -185,6 +185,11 @@ welcome-help-fb = Група у Facebook
 
 settings = Налаштування
 
+settings-reset = Скинути до типових налаштувань
+settings-reset-confirm =
+  .title = Скидання налаштувань
+  .description = Ви впевнені, що хочете скинути всі налаштування до їхніх типових значень?
+
 settings-interface = Інтерфейс
 
 settings-theme = Тема

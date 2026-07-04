@@ -33,6 +33,8 @@ export function useFormField(props?: UseFormFieldProps) {
   if (formField && inputId && props?.id) inputId.value = props.id;
 
   const id = computed(() => props?.id ?? inputId?.value ?? useId());
+
+  const label = computed(() => formField?.value?.label);
   const size = computed(() => props?.size ?? formField?.value?.size ?? "md");
 
   /** Builds `aria-describedby` ID parts from the `FormField` context. */
@@ -67,6 +69,8 @@ export function useFormField(props?: UseFormFieldProps) {
   return {
     /** The ID to use for the input element. */
     id,
+    /** The label text for the input element. */
+    label,
     /** The size inherited from FormField, prop, or default. */
     size,
     /** ARIA attributes for accessibility. */

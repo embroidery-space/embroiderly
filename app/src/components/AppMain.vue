@@ -9,7 +9,8 @@ import { onMounted, useTemplateRef, watch } from "vue";
 import { useI18n, useEditor } from "~/composables/";
 import { useAppStartup, useCloseGuard } from "~/composables/core/";
 import { usePercentOfContainer } from "~/composables/utils/";
-import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore, useSettingsStore } from "~/stores/";
+import { useSettingsStore } from "~/settings/";
+import { PaletteMode, useEditorStateStore, usePatternFileStore, usePatternStore } from "~/stores/";
 
 import { WorkspaceCanvasPanel, WorkspacePalettePanel, PatternWorkspace, WelcomeScreen } from "./workspace/";
 import { EditorWorkspaceToolbar, EditorWorkspaceFooter } from "./workspace/layout/";

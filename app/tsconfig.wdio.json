@@ -19,6 +19,6 @@
     "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": false,
 
-    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework"]
+    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework", "@wdio/visual-service"]
   }
 }

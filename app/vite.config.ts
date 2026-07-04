@@ -17,6 +17,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 import pkg from "./package.json";
+import * as commands from "./tests/components/vitest.commands";
 
 const git = (() => {
   try {
@@ -132,14 +133,14 @@ export default defineConfig({
         test: {
           name: "unit",
           include: ["./src/**/*.spec.ts"],
-          exclude: ["./src/components/**/*.spec.ts"],
+          exclude: ["./src/components/**/*.spec.ts", "./src/settings/components/**/*.spec.ts"],
         },
       },
       {
         extends: true,
         test: {
           name: "components",
-          include: ["./src/components/**/*.spec.ts"],
+          include: ["./src/components/**/*.spec.ts", "./src/settings/components/**/*.spec.ts"],
           setupFiles: ["vitest-browser-vue", "./tests/components/vitest.setup.ts"],
           browser: {
             enabled: true,
@@ -153,6 +154,7 @@ export default defineConfig({
                 throw new Error("Unsupported platform for browser testing");
               })(),
             ],
+            commands,
           },
         },
       },
