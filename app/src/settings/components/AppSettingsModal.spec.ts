@@ -54,7 +54,7 @@ describe("AppSettingsModal", () => {
     test("theme", async () => {
       expect(store.ui.theme).toBe("system");
 
-      await userEvent.click(screen.getByText("System"));
+      await userEvent.click(screen.getByRole("button", { name: "Theme" }));
       await userEvent.click(screen.getByRole("option", { name: "Dark" }));
 
       expect(store.ui.theme).toBe("dark");
@@ -63,7 +63,7 @@ describe("AppSettingsModal", () => {
     test("scale", async () => {
       expect(store.ui.scale).toBe("medium");
 
-      await userEvent.click(screen.getByText("Medium"));
+      await userEvent.click(screen.getByRole("button", { name: "Scale" }));
       await userEvent.click(screen.getByRole("option", { name: "Larger" }));
 
       expect(store.ui.scale).toBe("x-large");
@@ -72,7 +72,7 @@ describe("AppSettingsModal", () => {
     test("language", async () => {
       expect(store.ui.language).toBe("en");
 
-      await userEvent.click(screen.getByText("English"));
+      await userEvent.click(screen.getByRole("button", { name: "Language" }));
       await userEvent.click(screen.getByRole("option", { name: "Українська" }));
 
       expect(store.ui.language).toBe("uk");
@@ -93,7 +93,7 @@ describe("AppSettingsModal", () => {
     test("open on startup", async () => {
       expect(store.startup.action).toBe("new-pattern");
 
-      await userEvent.click(screen.getByText("New Pattern"));
+      await userEvent.click(screen.getByRole("button", { name: "Open on Startup" }));
       await userEvent.click(screen.getByRole("option", { name: "Nothing" }));
 
       expect(store.startup.action).toBe("nothing");
@@ -105,7 +105,7 @@ describe("AppSettingsModal", () => {
       expect(store.startup.action).toBe("new-pattern");
       await expect.element(trigger).toBeDisabled();
 
-      await userEvent.click(screen.getByText("New Pattern"));
+      await userEvent.click(screen.getByRole("button", { name: "Open on Startup" }));
       await userEvent.click(screen.getByRole("option", { name: "Custom Template" }));
 
       expect(store.startup.action).toBe("custom-template");
@@ -165,7 +165,7 @@ describe("AppSettingsModal", () => {
     test("wheel action", async () => {
       expect(store.canvas.viewportOptions.wheelAction).toBe("zoom");
 
-      await userEvent.click(screen.getByText("Zoom"));
+      await userEvent.click(screen.getByRole("button", { name: "Mouse Wheel Action" }));
       await userEvent.click(screen.getByRole("option", { name: "Scroll" }));
 
       expect(store.canvas.viewportOptions.wheelAction).toBe("scroll");
@@ -174,7 +174,7 @@ describe("AppSettingsModal", () => {
     test("layer layout", async () => {
       expect(store.canvas.patternOptions.layerLayout).toBe("layer-order");
 
-      await userEvent.click(screen.getByText("By Layer Order"));
+      await userEvent.click(screen.getByRole("button", { name: "Layer Layout" }));
       await userEvent.click(screen.getByRole("option", { name: "By Stitch Type" }));
 
       expect(store.canvas.patternOptions.layerLayout).toBe("stitch-type");
