@@ -70,18 +70,19 @@ jobs:
         env:
           COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          COMMIT_MSG=$(echo "$COMMIT_MSG" | head -1)
+          # Extract the first line and escape backslashes and double quotes.
+          CLEAN_MSG=$(echo "$COMMIT_MSG" | head -1 | sed 's/\\/\\\\/g; s/"/\\"/g')
 
           if [ "${{ github.ref_name }}" = "main" ]; then
             # Live production.
-            echo "cmd=deploy --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
+            echo "cmd=deploy --message \"$CLEAN_MSG\"" >> $GITHUB_OUTPUT
             echo "alias=" >> $GITHUB_OUTPUT
           else
             # Sanitize branch name for the alias: replace `/` with `-` and lowercase it.
             alias=$(echo "${{ github.ref_name }}" | sed 's/[\/\.]/-/g' | tr '[:upper:]' '[:lower:]')
 
             # Commit and branch preview.
-            echo "cmd=versions upload --preview-alias $alias --message \"$COMMIT_MSG\"" >> $GITHUB_OUTPUT
+            echo "cmd=versions upload --preview-alias $alias --message \"$CLEAN_MSG\"" >> $GITHUB_OUTPUT
             echo "alias=$alias" >> $GITHUB_OUTPUT
           fi
 
