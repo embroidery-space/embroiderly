@@ -12,7 +12,7 @@ jobs:
       - uses: github/combine-prs@2909f404763c3177a456e052bdb7f2e85d3a7cb3 # v5.2.0
         with:
           combine_branch_name: dependency-updates
-          pr_title: "chore: update dependencies"
+          pr_title: "update dependencies"
           pr_body_header: Combined Dependabot PRs
           min_combine_number: 1
           labels: dependencies
