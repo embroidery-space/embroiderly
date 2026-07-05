@@ -1,17 +1,36 @@
-import { BaseModal } from "./base";
+import { BaseModal } from "./core/base.modal";
 
-/** Page object for the _New Pattern_ modal. */
-export class PatternCreationModal extends BaseModal {
+/** Page object for the _Fabric Properties_ modal. */
+export class FabricModal extends BaseModal {
   constructor() {
-    super(`//div[@role="dialog"][.//h2[text()="New Pattern"]]`, { save: "Create" });
+    super(`//div[@role="dialog"][.//h2[text()="Fabric Properties"]]`);
+  }
+
+  /** Opens the Fabric Properties modal by clicking Pattern -> Fabric Properties. */
+  async open() {
+    await $(`button*=Pattern`).click();
+    await $(`//div[@role="menuitem"][contains(., "Fabric Properties")]`).click();
+    await this.modal.waitForDisplayed();
   }
 
   get countSelect() {
     return this.modal.$(`[data-testid="fabric-count-select"]`);
   }
 
+  /** Sets the fabric count (SPI - stitches per inch). */
+  async setSpi(count: number) {
+    await this.countSelect.click();
+    await $(`//div[@role="option" and normalize-space()="${count}"]`).click();
+  }
+
   get kindSelect() {
     return this.modal.$(`[data-testid="fabric-kind-select"]`);
+  }
+
+  /** Sets the fabric kind. */
+  async setKind(kind: "Aida" | "Evenweave" | "Linen") {
+    await this.kindSelect.click();
+    await $(`//div[@role="option" and normalize-space()="${kind}"]`).click();
   }
 
   get unitRadioGroup() {
@@ -30,27 +49,15 @@ export class PatternCreationModal extends BaseModal {
     return this.modal.$(`[data-testid="fabric-dimensions-input"]`).$$(`input`)[1];
   }
 
-  get colorsListbox() {
-    return this.modal.$(`[data-testid="fabric-colors-listbox"]`);
-  }
-
-  /** Sets the fabric count (SPI - stitches per inch). */
-  async setSpi(count: number) {
-    await this.countSelect.click();
-    await $(`//div[@role="option" and normalize-space()="${count}"]`).click();
-  }
-
-  /** Sets the fabric kind. */
-  async setKind(kind: "Aida" | "Evenweave" | "Linen") {
-    await this.kindSelect.click();
-    await $(`//div[@role="option" and normalize-space()="${kind}"]`).click();
-  }
-
   /** Sets the fabric size dimensions. */
   async setSize(width: number, height: number, unit: "stitches" | "inches" | "mm" = "stitches") {
     await this.getUnitRadio(unit).click();
     await this.widthInput.setValue(width);
     await this.heightInput.setValue(height);
+  }
+
+  get colorsListbox() {
+    return this.modal.$(`[data-testid="fabric-colors-listbox"]`);
   }
 
   /** Selects a fabric color from the palette. */

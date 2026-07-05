@@ -17,7 +17,7 @@ const DEFAULT_CONTROLS: ModalControls = {
 };
 
 /** Base class for modal objects. */
-export class BaseModal {
+export abstract class BaseModal {
   protected modalSelector: string;
   protected controls: ModalControls;
 
@@ -29,6 +29,15 @@ export class BaseModal {
   /** Returns the modal element. */
   get modal() {
     return $(this.modalSelector);
+  }
+
+  /** Opens the modal. Must be implemented by subclasses. */
+  abstract open(): void | Promise<void>;
+
+  /** Closes the modal via the close button. */
+  async close() {
+    await this.modal.$(`aria/Close`).click();
+    await this.modal.waitForDisplayed({ reverse: true });
   }
 
   /** Clicks the _Save_ button and waits for modal to close. */

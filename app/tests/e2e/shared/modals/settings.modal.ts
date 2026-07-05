@@ -1,9 +1,27 @@
-import { BaseModal } from "./base";
+import { BaseModal } from "./core/base.modal";
 
 /** Page object for the _Settings_ modal. */
 export class SettingsModal extends BaseModal {
   constructor() {
     super(`//div[@role="dialog"][.//h2[text()="Settings"]]`);
+  }
+
+  /** Opens the Settings modal via the Ctrl+Comma shortcut. */
+  async openViaShortcut() {
+    await browser.keys(["Control", ","]);
+    await this.modal.waitForDisplayed();
+  }
+
+  /** Opens the Settings modal via the Manage menu. */
+  async openViaManageMenu() {
+    await $(`//button[@aria-label="Manage"]`).click();
+    await $(`//div[@role="menuitem"][contains(., "Settings")]`).click();
+    await this.modal.waitForDisplayed();
+  }
+
+  /** Default open method, delegating to the shortcut. */
+  async open() {
+    await this.openViaShortcut();
   }
 
   getTab(label: string) {
@@ -48,11 +66,5 @@ export class SettingsModal extends BaseModal {
   /** Clicks the _Reset to defaults_ button in the modal footer. */
   async clickResetToDefaults() {
     await this.modal.$(`aria/Reset to defaults`).click();
-  }
-
-  /** Closes the settings modal via the close button. */
-  async close() {
-    await this.modal.$(`aria/Close`).click();
-    await this.modal.waitForDisplayed({ reverse: true });
   }
 }

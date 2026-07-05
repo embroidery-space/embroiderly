@@ -1,4 +1,4 @@
-import { PatternEditorPage } from "../shared/pages/";
+import { PatternEditorPage } from "../shared/";
 
 describe("Pattern Info Management", () => {
   beforeEach(async () => {
@@ -12,7 +12,7 @@ describe("Pattern Info Management", () => {
 
   it("updates pattern information", async () => {
     // Open _Pattern Information_ modal.
-    await PatternEditorPage.openPatternInfoDialog();
+    await PatternEditorPage.patternInfoModal.open();
     await expect(PatternEditorPage.patternInfoModal.modal).toBeDisplayed();
 
     // Set pattern information.
@@ -31,7 +31,7 @@ describe("Pattern Info Management", () => {
 
   it("updates pattern fabric settings", async () => {
     // Open _Fabric Properties_ modal.
-    await PatternEditorPage.openFabricPropertiesDialog();
+    await PatternEditorPage.fabricModal.open();
     await expect(PatternEditorPage.fabricModal.modal).toBeDisplayed();
 
     // Update fabric settings.
@@ -49,7 +49,7 @@ describe("Pattern Info Management", () => {
 
   it("updates pattern grid settings", async () => {
     // Open _Grid Properties_ modal.
-    await PatternEditorPage.openGridPropertiesDialog();
+    await PatternEditorPage.gridModal.open();
     await expect(PatternEditorPage.gridModal.modal).toBeDisplayed();
 
     // Update grid settings.
