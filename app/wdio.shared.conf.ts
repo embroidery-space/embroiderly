@@ -4,7 +4,7 @@ import path from "node:path";
 import { setTimeout } from "node:timers/promises";
 import { fileURLToPath, URL } from "node:url";
 
-import { PatternEditorPage } from "./tests/e2e/shared/pages/";
+import { PatternEditorPage } from "./tests/e2e/shared/";
 
 export const APP_PATH = fileURLToPath(new URL(".", import.meta.url));
 export const ROOT_PATH = fileURLToPath(new URL("..", import.meta.url));

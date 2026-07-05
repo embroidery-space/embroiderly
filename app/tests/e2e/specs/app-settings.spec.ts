@@ -1,36 +1,24 @@
-import { PatternEditorPage } from "../shared/pages/";
-import { ConfirmDialog } from "../shared/pages/pattern-editor/modals";
+import { PatternEditorPage, ConfirmDialog } from "../shared/";
 
 describe("App Settings", () => {
-  async function openSettingsViaManageMenu() {
-    await $(`//button[@aria-label="Manage"]`).click();
-    await $(`//div[@role="menuitem"][contains(., "Settings")]`).click();
-    await PatternEditorPage.settingsModal.modal.waitForDisplayed();
-  }
-
-  async function openSettingsViaShortcut() {
-    await browser.keys(["Control", ","]);
-    await PatternEditorPage.settingsModal.modal.waitForDisplayed();
-  }
-
   before(() => PatternEditorPage.forceCloseAllPatterns());
 
   describe("opening the settings modal", () => {
     afterEach(() => PatternEditorPage.settingsModal.close());
 
     it("opens via the Manage menu", async () => {
-      await openSettingsViaManageMenu();
+      await PatternEditorPage.settingsModal.openViaManageMenu();
       await expect(PatternEditorPage.settingsModal.modal).toBeDisplayed();
     });
 
     it("opens via the Ctrl+Comma shortcut", async () => {
-      await openSettingsViaShortcut();
+      await PatternEditorPage.settingsModal.openViaShortcut();
       await expect(PatternEditorPage.settingsModal.modal).toBeDisplayed();
     });
   });
 
   describe("tab switching", () => {
-    before(() => openSettingsViaShortcut());
+    before(() => PatternEditorPage.settingsModal.openViaShortcut());
     after(() => PatternEditorPage.settingsModal.close());
 
     for (const tab of ["Interface", "Startup", "Working Area", "Updater", "Telemetry", "Other"]) {
@@ -44,7 +32,7 @@ describe("App Settings", () => {
   });
 
   describe("visual changes", () => {
-    before(() => openSettingsViaShortcut());
+    before(() => PatternEditorPage.settingsModal.openViaShortcut());
     after(() => PatternEditorPage.settingsModal.close());
 
     it("applies the dark theme", async () => {
@@ -84,7 +72,7 @@ describe("App Settings", () => {
   describe("settings reset", () => {
     const settingsResetConfirmDialog = new ConfirmDialog("Settings Reset");
 
-    beforeEach(() => openSettingsViaShortcut());
+    beforeEach(() => PatternEditorPage.settingsModal.openViaShortcut());
     afterEach(() => PatternEditorPage.settingsModal.close());
 
     it("resets settings to defaults after confirmation", async () => {

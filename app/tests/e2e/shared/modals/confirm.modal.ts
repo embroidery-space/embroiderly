@@ -1,9 +1,16 @@
-import { BaseModal } from "./base";
+import { BaseModal } from "./core/base.modal";
 
 /** Page object for the _Confirm Dialog_ modal. */
 export class ConfirmDialog extends BaseModal {
   constructor(title = "Unsaved Changes") {
     super(`//div[@role="alertdialog"][.//h2[text()="${title}"]]`, { save: "Yes", cancel: "No" });
+  }
+
+  /** ConfirmDialog cannot be opened directly. */
+  open(): void {
+    throw new Error(
+      "ConfirmDialog cannot be opened directly; it is triggered by user actions that prompt for confirmation.",
+    );
   }
 
   /** Dismisses the modal without taking any action. */

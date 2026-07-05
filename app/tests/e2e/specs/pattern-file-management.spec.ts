@@ -1,4 +1,4 @@
-import { PatternEditorPage } from "../shared/pages/";
+import { PatternEditorPage } from "../shared/";
 
 describe("Pattern File Management", () => {
   afterEach(async () => {
@@ -14,7 +14,7 @@ describe("Pattern File Management", () => {
 
   it("creates a new pattern with custom fabric settings", async () => {
     // Open the _Create Pattern_ dialog.
-    await PatternEditorPage.openCreatePatternDialog();
+    await PatternEditorPage.patternCreationModal.open();
     await expect(PatternEditorPage.patternCreationModal.modal).toBeDisplayed();
 
     // Set custom fabric properties.
@@ -61,7 +61,7 @@ describe("Pattern File Management", () => {
     await expect(PatternEditorPage.welcomeScreen).not.toBeDisplayedInViewport();
 
     // Make changes to the pattern (update fabric).
-    await PatternEditorPage.openFabricPropertiesDialog();
+    await PatternEditorPage.fabricModal.open();
     await PatternEditorPage.fabricModal.selectColor("Cream");
     await PatternEditorPage.fabricModal.save();
 
