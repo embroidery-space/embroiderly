@@ -103,7 +103,7 @@ futures = "0.3.32"
 byteorder = "1.5.0"
 encoding_rs = "0.8.35"
 hex = "0.4.3"
-quick-xml = "0.40.0"
+quick-xml = "0.41.0"
 
 # Fonts handling
 ttf-parser = "0.25.1"
@@ -152,7 +152,7 @@ js-sys = "0.3.95"
 web-sys = "0.3.95"
 
 # Iterator utilities
-itertools = "0.14.0"
+itertools = "0.15.0"
 
 # Testing utilities
 rstest = "0.26.1"
