@@ -10,8 +10,8 @@ export default {
     return ["cargo clippy --locked --fix --allow-dirty -- -D warnings", "cargo +nightly fmt"];
   },
   "!(*.md|*.rs)": [
-    "oxlint --fix --format stylish --deny-warnings",
-    "eslint --fix --no-warn-ignored --max-warnings 0",
+    "oxlint --fix --format stylish --deny-warnings --no-error-on-unmatched-pattern",
+    "eslint --fix --no-warn-ignored --max-warnings 0 --no-error-on-unmatched-pattern",
     "oxfmt",
   ],
 };
