@@ -78,7 +78,7 @@ catalog:
   # Documentation
   "@cssnr/vitepress-swiper": 0.3.1
   "@vite-pwa/vitepress": 1.1.0
-  "swiper": 12.2.0
+  "swiper": 14.0.1
   "vitepress": 2.0.0-alpha.17
   "vitepress-plugin-llms": 1.13.2
 
