@@ -12,6 +12,6 @@ export default {
   "!(*.md|*.rs)": [
     "oxlint --fix --format stylish --deny-warnings --no-error-on-unmatched-pattern",
     "eslint --fix --no-warn-ignored --max-warnings 0 --no-error-on-unmatched-pattern",
-    "oxfmt",
+    "oxfmt --no-error-on-unmatched-pattern",
   ],
 };
