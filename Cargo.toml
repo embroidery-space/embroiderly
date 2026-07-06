@@ -152,7 +152,7 @@ js-sys = "0.3.95"
 web-sys = "0.3.95"
 
 # Iterator utilities
-itertools = "0.14.0"
+itertools = "0.15.0"
 
 # Testing utilities
 rstest = "0.26.1"
