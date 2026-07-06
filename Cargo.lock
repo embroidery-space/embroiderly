@@ -1659,7 +1659,7 @@ dependencies = [
  "itertools 0.14.0",
  "paste",
  "prettydiff",
- "quick-xml 0.40.1",
+ "quick-xml 0.41.0",
  "serde_json",
  "thiserror 2.0.18",
  "tracing",
@@ -4960,9 +4960,9 @@ dependencies = [
 
 [[package]]
 name = "quick-xml"
-version = "0.40.1"
+version = "0.41.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2474bd2e5029e7ccb6abb2ba48cf2383a333851dedf495901544281590c7da7f"
+checksum = "e660451e55124f798a69a5af3f49ccfbefbd41910eefd25caf2393e1f3473ec1"
 dependencies = [
  "memchr",
 ]
@@ -6403,7 +6403,7 @@ checksum = "61c41af27dd6d1e27b1b16b489db798443478cef1f06a660c96db617ba5de3b1"
 [[package]]
 name = "tauri"
 version = "2.11.3"
-source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#02f2a52b057ff7257da388162479310501bb37d6"
+source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#3b2823b918d5ea88fca10b472daf349c67c22d51"
 dependencies = [
  "anyhow",
  "bytes",
@@ -6453,7 +6453,7 @@ dependencies = [
 [[package]]
 name = "tauri-build"
 version = "2.6.3"
-source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#02f2a52b057ff7257da388162479310501bb37d6"
+source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#3b2823b918d5ea88fca10b472daf349c67c22d51"
 dependencies = [
  "anyhow",
  "cargo_toml",
@@ -6473,7 +6473,7 @@ dependencies = [
 [[package]]
 name = "tauri-codegen"
 version = "2.6.3"
-source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#02f2a52b057ff7257da388162479310501bb37d6"
+source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#3b2823b918d5ea88fca10b472daf349c67c22d51"
 dependencies = [
  "base64 0.22.1",
  "brotli",
@@ -6499,7 +6499,7 @@ dependencies = [
 [[package]]
 name = "tauri-macros"
 version = "2.6.3"
-source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#02f2a52b057ff7257da388162479310501bb37d6"
+source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#3b2823b918d5ea88fca10b472daf349c67c22d51"
 dependencies = [
  "heck 0.5.0",
  "proc-macro2",
@@ -6624,7 +6624,7 @@ dependencies = [
 [[package]]
 name = "tauri-runtime"
 version = "2.11.3"
-source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#02f2a52b057ff7257da388162479310501bb37d6"
+source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#3b2823b918d5ea88fca10b472daf349c67c22d51"
 dependencies = [
  "cookie",
  "dpi",
@@ -6645,10 +6645,11 @@ dependencies = [
 [[package]]
 name = "tauri-runtime-cef"
 version = "0.1.0"
-source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#02f2a52b057ff7257da388162479310501bb37d6"
+source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#3b2823b918d5ea88fca10b472daf349c67c22d51"
 dependencies = [
  "base64 0.22.1",
  "cef",
+ "cef-dll-sys",
  "dioxus-debug-cell",
  "dirs",
  "dispatch2",
@@ -6679,7 +6680,7 @@ dependencies = [
 [[package]]
 name = "tauri-runtime-wry"
 version = "2.11.3"
-source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#02f2a52b057ff7257da388162479310501bb37d6"
+source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#3b2823b918d5ea88fca10b472daf349c67c22d51"
 dependencies = [
  "gtk",
  "http",
@@ -6705,7 +6706,7 @@ dependencies = [
 [[package]]
 name = "tauri-utils"
 version = "2.9.3"
-source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#02f2a52b057ff7257da388162479310501bb37d6"
+source = "git+https://github.com/tauri-apps/tauri?branch=feat%2Fcef#3b2823b918d5ea88fca10b472daf349c67c22d51"
 dependencies = [
  "anyhow",
  "brotli",
