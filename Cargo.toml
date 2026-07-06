@@ -103,7 +103,7 @@ futures = "0.3.32"
 byteorder = "1.5.0"
 encoding_rs = "0.8.35"
 hex = "0.4.3"
-quick-xml = "0.40.0"
+quick-xml = "0.41.0"
 
 # Fonts handling
 ttf-parser = "0.25.1"
