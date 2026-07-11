@@ -16,6 +16,10 @@ export default Object.freeze<Locale>({
     filePicker: {
       chooseFile: "Choose file",
     },
+    inputDimensions: {
+      lockAspectRatio: "Lock aspect ratio",
+      unlockAspectRatio: "Unlock aspect ratio",
+    },
     inputNumber: {
       increment: "Increment",
       decrement: "Decrement",

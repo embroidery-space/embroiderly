@@ -19,6 +19,10 @@ export type Messages = {
   filePicker: {
     chooseFile: string;
   };
+  inputDimensions: {
+    lockAspectRatio: string;
+    unlockAspectRatio: string;
+  };
   inputNumber: {
     increment: string;
     decrement: string;
