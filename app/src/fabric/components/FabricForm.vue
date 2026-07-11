@@ -130,7 +130,7 @@ onMounted(async () => {
           }
         "
       />
-      <p class="mt-2">{{ $t("fabric-selected-color", { color: fabric.name }) }}</p>
+      <p class="mt-2 text-sm">{{ $t("fabric-selected-color", { color: fabric.name }) }}</p>
     </FormFieldSet>
   </div>
 </template>
