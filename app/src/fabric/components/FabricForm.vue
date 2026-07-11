@@ -63,44 +63,43 @@ onMounted(async () => {
           @update:model-value="fabric.spi[1] = $event as number"
         />
       </FormField>
+
       <FormField :label="$t('fabric-kind')" class="w-full">
         <Select v-model="fabric.kind" :items="fabricKindOptions" class="w-full" data-testid="fabric-kind-select" />
       </FormField>
     </FormFieldSet>
 
-    <FormFieldSet :legend="$t('fabric-size')">
-      <div class="flex gap-4 pb-2">
-        <InputDimensions
-          :width="sizeInUnit.width"
-          :height="sizeInUnit.height"
-          data-testid="fabric-dimensions-input"
-          orientation="vertical"
-          :width-field-options="{ label: $t('fabric-width') }"
-          :height-field-options="{ label: $t('fabric-height') }"
-          :width-input-options="{
-            min: 0.1,
-            step: step.width,
-            stepSnapping: false,
-            formatOptions: { maximumFractionDigits: selectedUnit === MeasurementUnit.Inches ? 2 : 0 },
-          }"
-          :height-input-options="{
-            min: 0.1,
-            step: step.height,
-            stepSnapping: false,
-            formatOptions: { maximumFractionDigits: selectedUnit === MeasurementUnit.Inches ? 2 : 0 },
-          }"
-          @update:width="setDimension('width', $event!)"
-          @update:height="setDimension('height', $event!)"
-        />
-        <RadioGroup
-          v-model="selectedUnit"
-          data-testid="fabric-unit-radio-group"
-          :items="fabricSizeOptions"
-          class="mt-6"
-        />
-      </div>
+    <FormFieldSet :legend="$t('fabric-size')" class="space-y-2">
+      <InputDimensions
+        :width="sizeInUnit.width"
+        :height="sizeInUnit.height"
+        data-testid="fabric-dimensions-input"
+        :width-field-options="{ label: $t('fabric-width') }"
+        :height-field-options="{ label: $t('fabric-height') }"
+        :width-input-options="{
+          min: 0.1,
+          step: step.width,
+          stepSnapping: false,
+          formatOptions: { maximumFractionDigits: selectedUnit === MeasurementUnit.Inches ? 2 : 0 },
+        }"
+        :height-input-options="{
+          min: 0.1,
+          step: step.height,
+          stepSnapping: false,
+          formatOptions: { maximumFractionDigits: selectedUnit === MeasurementUnit.Inches ? 2 : 0 },
+        }"
+        @update:width="setDimension('width', $event!)"
+        @update:height="setDimension('height', $event!)"
+      />
 
-      <p>
+      <RadioGroup
+        v-model="selectedUnit"
+        data-testid="fabric-unit-radio-group"
+        :items="fabricSizeOptions"
+        orientation="horizontal"
+      />
+
+      <p class="text-sm">
         {{
           $t("fabric-total-size", {
             width: size.width,
