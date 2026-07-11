@@ -49,8 +49,9 @@ const appMenu = computed(() => {
         label: fluent.$t("app-menu-file-create"),
         shortcut: "Control+N",
         onSelect() {
-          modals.patternCreationModal.open({
+          modals.fabricModal.open({
             fabric: new Fabric(),
+            mode: "create",
             async onSave(fabric) {
               patternFileStore.switchPattern(await patternFileStore.createPattern(fabric));
             },
@@ -200,6 +201,7 @@ const appMenu = computed(() => {
         onSelect() {
           modals.fabricModal.open({
             fabric: patternStore.pattern.fabric,
+            mode: "edit",
             onSave: patternStore.updateFabric,
           });
         },

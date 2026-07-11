@@ -3,7 +3,6 @@ import type { Renderer, StrokeStyle, TextureSourceOptions } from "pixi.js";
 
 import { Bead, FullStitchKind, NodeStitchKind, PartStitchKind, DisplayMode } from "~/lib/pattern/";
 import type { TextureManagerOptions } from "~/lib/types/";
-import { mm2px } from "~/utils/measurement.ts";
 
 const TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
   resolution: window.devicePixelRatio,
@@ -12,6 +11,8 @@ const TEXTURE_SOURCE_OPTIONS: Partial<TextureSourceOptions> = {
 };
 
 const STITCH_OUTLINE: StrokeStyle = { width: 2, alignment: 0.5, color: 0x000000 };
+
+const PIXELS_IN_MM = 96 / 25.4; // DPI / inches
 
 /**
  * Manages the textures used to render stitches.
@@ -212,7 +213,7 @@ function createFrenchKnotFigure() {
   return new GraphicsContext().circle(25, 25, 25).fill(0xffffff);
 }
 function createBeadFigure(bead: Bead) {
-  const width = mm2px(bead.diameter) * 10;
-  const height = mm2px(bead.length) * 10;
+  const width = bead.diameter * PIXELS_IN_MM * 10;
+  const height = bead.length * PIXELS_IN_MM * 10;
   return new GraphicsContext().roundRect(0, 0, width, height, width * 0.4).fill(0xffffff);
 }

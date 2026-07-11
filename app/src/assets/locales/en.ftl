@@ -367,7 +367,11 @@ fabric-width = Width
 fabric-height = Height
 
 # Use non-breaking space (\u00A0) to prevent text from jumping when changing fabric size.
-fabric-total-size = Size{"\u00A0"}(WxH): { $width }x{ $height }{"\u00A0"}stitches, { $widthInches }x{ $heightInches }{"\u00A0"}inches ({ $widthMm }x{ $heightMm }{"\u00A0"}mm)
+# Example: "Size (WxH): 100x100 stitches, 4.00x4.00 inches (100x100 mm)".
+fabric-total-size =
+  Size{"\u00A0"}(WxH): { $width }x{ $height }{"\u00A0"}stitches,
+  { NUMBER($widthInches, maximumFractionDigits: 2) }x{ NUMBER($heightInches, maximumFractionDigits: 2) }{"\u00A0"}inches
+  ({ NUMBER($widthMm, maximumFractionDigits: 0) }x{ NUMBER($heightMm, maximumFractionDigits: 0) }{"\u00A0"}mm)
 
 unit-stitches = stitches
 unit-inches = inches

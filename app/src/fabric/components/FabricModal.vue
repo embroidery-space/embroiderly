@@ -7,7 +7,11 @@ import { Fabric } from "~/lib/pattern/";
 
 import FabricForm from "./FabricForm.vue";
 
-const props = defineProps<{ fabric: Fabric; onSave?: (fabric: Fabric) => void | Promise<void> }>();
+const props = defineProps<{
+  fabric: Fabric;
+  mode: "create" | "edit";
+  onSave?: (fabric: Fabric) => void | Promise<void>;
+}>();
 const emit = defineEmits<{ close: [] }>();
 
 const fabric = ref<Fabric>(new Fabric(toRaw(props.fabric)));
@@ -19,13 +23,16 @@ async function handleSave() {
 </script>
 
 <template>
-  <Dialog :title="$t('fabric-properties')" :ui="{ body: 'pt-0!', content: 'w-2xl' }">
+  <Dialog
+    :title="mode === 'create' ? $t('pattern-creation') : $t('fabric-properties')"
+    :ui="{ body: 'pt-0!', content: 'w-2xl' }"
+  >
     <template #body>
       <FabricForm v-model="fabric as Fabric" />
     </template>
     <template #footer>
       <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="emit('close')" />
-      <Button loading-auto :label="$t('modal-save')" @click="handleSave" />
+      <Button loading-auto :label="mode === 'create' ? $t('modal-create') : $t('modal-save')" @click="handleSave" />
     </template>
   </Dialog>
 </template>
