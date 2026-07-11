@@ -9,6 +9,7 @@ import RadioGroup from "./RadioGroup.vue";
 import type { RadioGroupItem, RadioGroupProps } from "./RadioGroup.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
+const orientations = ["vertical", "horizontal"] as const;
 
 const items = ref<RadioGroupItem[]>([
   { value: 1, label: "Option 1", description: "Description 1" },
@@ -40,6 +41,7 @@ defineExpose({ inputState, formFieldState });
       <template #controls>
         <HstCheckbox v-model="inputState.disabled" title="Disabled" />
         <HstSelect v-model="formFieldState.size" title="Size" :options="sizes" />
+        <HstSelect v-model="inputState.orientation" title="Orientation" :options="orientations" />
       </template>
     </Variant>
 
