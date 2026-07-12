@@ -57,7 +57,7 @@ async function exportPattern(variant: PdfVariant) {
 <template>
   <Dialog :title="$t('pdf-export')">
     <template #body>
-      <RadioGroup v-model="variant" :items="variantItems" orientation="horizontal" />
+      <RadioGroup v-model="variant" :items="variantItems" />
       <PdfExportOptionsForm
         v-model="options"
         :fabric-width="props.fabricWidth"
