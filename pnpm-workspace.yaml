@@ -25,7 +25,7 @@ catalog:
   "@vueuse/components": 14.3.0
   "@vueuse/integrations": 14.3.0
   "vue": 3.5.39
-  "vue-component-type-helpers": 3.3.6
+  "vue-component-type-helpers": 3.3.7
   "pinia": 3.0.4
   "pinia-plugin-persistedstate": 4.7.1
   "reka-ui": 2.10.1
@@ -37,8 +37,8 @@ catalog:
 
   # Icons
   "@iconify/vue": 5.0.1
-  "@iconify-json/lucide": 1.2.115
-  "@iconify-json/material-symbols": 1.2.82
+  "@iconify-json/lucide": 1.2.116
+  "@iconify-json/material-symbols": 1.2.83
   "@iconify-json/mdi": 1.2.3
   "unplugin-icons": 23.0.1
 
@@ -54,9 +54,9 @@ catalog:
   "@zorsh/zorsh": 0.5.0
 
   # Telemetry
-  "@sentry/core": 10.63.0
-  "@sentry/vue": 10.63.0
-  "posthog-js": 1.396.5
+  "@sentry/core": 10.64.0
+  "@sentry/vue": 10.64.0
+  "posthog-js": 1.398.2
 
   # Onboarding
   "driver.js": 1.6.0
@@ -78,8 +78,8 @@ catalog:
   # Documentation
   "@cssnr/vitepress-swiper": 0.3.1
   "@vite-pwa/vitepress": 1.1.0
-  "swiper": 14.0.1
-  "vitepress": 2.0.0-alpha.17
+  "swiper": 14.0.2
+  "vitepress": 2.0.0-alpha.18
   "vitepress-plugin-llms": 1.13.2
 
   # Code Quality
@@ -87,19 +87,19 @@ catalog:
   "@eslint/compat": 2.1.0
   "@eslint-community/eslint-plugin-eslint-comments": 4.7.2
   "@intlify/eslint-plugin-vue-i18n": 4.5.1
-  "@vitest/eslint-plugin": 1.6.20
+  "@vitest/eslint-plugin": 1.6.21
   "@vue/eslint-config-prettier": 10.2.0
   "@vue/eslint-config-typescript": 14.9.0
-  "eslint-plugin-better-tailwindcss": 4.6.0
+  "eslint-plugin-better-tailwindcss": 4.6.1
   "eslint-plugin-import-x": 4.17.1
   "eslint-plugin-no-only-tests": 3.4.0
-  "eslint-plugin-oxlint": 1.72.0
+  "eslint-plugin-oxlint": 1.73.0
   "eslint-plugin-vue": 10.9.2
   "eslint-plugin-wdio": 9.29.1
-  "eslint-plugin-yml": 3.5.0
+  "eslint-plugin-yml": 3.6.0
   "markdownlint-cli2": 0.23.0
-  "oxfmt": 0.57.0
-  "oxlint": 1.72.0
+  "oxfmt": 0.58.0
+  "oxlint": 1.73.0
   "husky": 9.1.7
   "lint-staged": 17.0.8
 
@@ -112,7 +112,7 @@ catalog:
   "@vite-pwa/assets-generator": 1.0.2
   "@vitejs/plugin-vue": 6.0.7
   "@tailwindcss/vite": 4.3.2
-  "wrangler": 4.107.0
+  "wrangler": 4.107.1
 
   # PWA
   "workbox-precaching": 7.4.1
@@ -124,15 +124,15 @@ catalog:
 
   # TypeScript
   "typescript": 6.0.3
-  "vue-tsc": 3.3.6
+  "vue-tsc": 3.3.7
   "@tsconfig/node24": 24.0.4
   "@tsconfig/strictest": 2.0.8
   "@vue/tsconfig": 0.9.1
 
   # Testing
   "@pinia/testing": 1.0.3
-  "@vitest/browser-webdriverio": 4.1.9
-  "vitest": 4.1.9
+  "@vitest/browser-webdriverio": 4.1.10
+  "vitest": 4.1.10
   "vitest-browser-vue": 2.1.0
   "vue3-snapshot-serializer": 2.13.3
 
@@ -142,7 +142,7 @@ catalog:
   "@wdio/local-runner": 9.29.1
   "@wdio/mocha-framework": 9.29.1
   "@wdio/spec-reporter": 9.29.1
-  "@wdio/visual-service": 10.0.0
+  "@wdio/visual-service": 10.0.1
 
   # Types
   "@types/mocha": 10.0.10
