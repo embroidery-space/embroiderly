@@ -5,6 +5,7 @@ import { useFormField } from "../../composables/useFormField.ts";
 import Button from "../Button/Button.vue";
 import ColorPicker from "../ColorPicker/ColorPicker.vue";
 import type { ColorPickerProps } from "../ColorPicker/ColorPicker.vue";
+import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
 import Input from "../Input/Input.vue";
 import type { InputProps } from "../Input/Input.vue";
 import Popover from "../Popover/Popover.vue";
@@ -34,37 +35,35 @@ function onUpdate(value: string | undefined) {
 </script>
 
 <template>
-  <Input
-    v-bind="{ ...props, ...$attrs, ...ariaAttrs }"
-    :id="id"
-    :size="size"
-    :model-value="hexColor"
-    :maxlength="7"
-    @update:model-value="onUpdate"
-  >
-    <template #leading>
-      <Popover v-bind="popover" class="p-4">
-        <Button
-          square
+  <FormFieldGroup :size="size">
+    <Popover v-bind="popover" :content="{ align: 'start' }" class="p-4">
+      <Button
+        square
+        :disabled="disabled"
+        :style="{ backgroundColor: hexColor }"
+        :class="{
+          'size-6': size === 'sm',
+          'size-8': size === 'md',
+          'size-10': size === 'lg',
+        }"
+      />
+      <template #content>
+        <ColorPicker
+          v-bind="picker"
+          :model-value="hexColor"
           :size="size"
           :disabled="disabled"
-          :style="{ backgroundColor: hexColor }"
-          :class="{
-            'rounded-xs': size === 'sm',
-            'rounded-sm': size === 'md',
-            'rounded-md': size === 'lg',
-          }"
+          @update:model-value="onUpdate"
         />
-        <template #content>
-          <ColorPicker
-            v-bind="picker"
-            :model-value="hexColor"
-            :size="size"
-            :disabled="disabled"
-            @update:model-value="onUpdate"
-          />
-        </template>
-      </Popover>
-    </template>
-  </Input>
+      </template>
+    </Popover>
+
+    <Input
+      v-bind="{ ...props, ...$attrs, ...ariaAttrs }"
+      :id="id"
+      :model-value="hexColor"
+      :maxlength="7"
+      @update:model-value="onUpdate"
+    />
+  </FormFieldGroup>
 </template>
