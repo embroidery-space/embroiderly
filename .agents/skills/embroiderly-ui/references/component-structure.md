@@ -192,7 +192,7 @@ export interface TabsProps<T extends TabsItem = TabsItem> {
 }
 
 export interface TabsSlots<T extends TabsItem = TabsItem> {
-  "default"(props: { item: T; index: number }): any;
+  default(props: { item: T; index: number }): any;
 }
 
 const props = defineProps<TabsProps<T>>();
