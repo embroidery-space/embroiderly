@@ -28,7 +28,6 @@ jobs:
         with:
           stable-components: clippy
           nightly-components: rustfmt
-      - run: cargo check
       - run: cargo +nightly fmt --check
       - run: cargo clippy --locked -- -D warnings
   test:
