@@ -1,5 +1,5 @@
 import { useHotkeys, useHotkeySequences } from "@tanstack/vue-hotkeys";
-import type { UseHotkeyDefinition, UseHotkeySequenceDefinition } from "@tanstack/vue-hotkeys";
+import type { UseHotkeyDefinition, UseHotkeyOptions, UseHotkeySequenceDefinition } from "@tanstack/vue-hotkeys";
 import { computed, toValue } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
@@ -12,7 +12,10 @@ import { splitShortcutKey } from "../utils/shortcut.ts";
  * A key resolves to a plain combination (e.g. `Control+S`, `Ctrl+-`) when `splitShortcutKey` returns a single part containing `+`.
  * Everything else is a sequence (e.g. `P-T-L` -> `['P', 'T', 'L']`, `Shift+V-M` -> `['Shift+V', 'M']`, `F` -> `['F']`).
  */
-export function useShortcuts(shortcuts: MaybeRefOrGetter<Record<string, () => void>>) {
+export function useShortcuts(
+  shortcuts: MaybeRefOrGetter<Record<string, () => void>>,
+  commonOptions?: MaybeRefOrGetter<UseHotkeyOptions>,
+) {
   const combinations: UseHotkeyDefinition[] = [];
   const sequences: UseHotkeySequenceDefinition[] = [];
 
@@ -25,8 +28,8 @@ export function useShortcuts(shortcuts: MaybeRefOrGetter<Record<string, () => vo
     }
   }
 
-  useHotkeys(combinations);
-  useHotkeySequences(sequences);
+  useHotkeys(combinations, commonOptions);
+  useHotkeySequences(sequences, commonOptions);
 }
 
 /**
