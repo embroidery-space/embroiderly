@@ -23,6 +23,7 @@ describe("RadioGroup", () => {
       { props: { items: items.map((opt, count) => ({ ...opt, description: `Description ${count}` })) } },
     ],
     ["with disabled", { props: { items, disabled: true } }],
+    ["with horizontal orientation", { props: { items, orientation: "horizontal" } }],
     ...sizes.map((size: string) => [`with size ${size}`, { props: { items, size, defaultValue: "1" } }]),
     ["with class", { props: { items, class: "absolute" } }],
     ["with ui", { props: { items, ui: { wrapper: "ms-4" } } }],

@@ -2,7 +2,8 @@
 import { computed, ref, watch } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import Button from "../Button/Button.vue";
+import { useLocale } from "../../composables/useLocale.ts";
+import ButtonIcon from "../ButtonIcon/ButtonIcon.vue";
 import FormField from "../FormField/FormField.vue";
 import type { FormFieldProps } from "../FormField/FormField.vue";
 import InputNumber from "../InputNumber/InputNumber.vue";
@@ -55,6 +56,7 @@ const props = withDefaults(defineProps<InputDimensionsProps>(), {
 });
 
 const { icons } = useComponentIcons();
+const locale = useLocale();
 
 const aspectRatioLocked = ref(props.aspectRatio !== undefined);
 const storedAspectRatio = ref(props.aspectRatio);
@@ -118,16 +120,19 @@ const ui = computed(() =>
       />
     </FormField>
 
-    <Button
-      square
+    <ButtonIcon
       :icon="aspectRatioLocked ? icons.link : icons.unlink"
+      :tooltip="
+        aspectRatioLocked
+          ? locale.messages.inputDimensions.unlockAspectRatio
+          : locale.messages.inputDimensions.lockAspectRatio
+      "
       :color="aspectRatioLocked ? 'primary' : 'neutral'"
       variant="ghost"
       :size="size"
       :disabled="disabled"
       data-slot="lockButton"
       :class="ui.lockButton({ class: props.ui?.lockButton })"
-      :aria-label="aspectRatioLocked ? 'Unlock aspect ratio' : 'Lock aspect ratio'"
       :aria-pressed="aspectRatioLocked"
       @click="toggleAspectRatioLock"
     />

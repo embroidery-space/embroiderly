@@ -3,8 +3,8 @@ import type { VariantProps } from "tailwind-variants";
 
 export const RadioGroupTheme = tv({
   slots: {
-    root: "relative flex flex-col items-start",
-    item: "flex items-start",
+    root: "relative flex items-start",
+    item: "flex items-center",
     container: "flex items-center",
     base: `
       overflow-hidden rounded-full ring ring-accented ring-inset
@@ -32,21 +32,26 @@ export const RadioGroupTheme = tv({
     size: {
       sm: {
         item: "text-xs",
-        container: "h-4",
         base: "size-3",
         indicator: "after:size-1",
       },
       md: {
         item: "text-sm",
-        container: "h-5",
         base: "size-4",
         indicator: "after:size-1.5",
       },
       lg: {
         item: "text-base",
-        container: "h-6",
         base: "size-5",
         indicator: "after:size-2",
+      },
+    },
+    orientation: {
+      vertical: {
+        root: "flex-col",
+      },
+      horizontal: {
+        root: "flex-row gap-x-2",
       },
     },
     disabled: {

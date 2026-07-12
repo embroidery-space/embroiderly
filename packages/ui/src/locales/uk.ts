@@ -16,6 +16,10 @@ export default Object.freeze<Locale>({
     filePicker: {
       chooseFile: "Вибрати файл",
     },
+    inputDimensions: {
+      lockAspectRatio: "Зафіксувати співвідношення сторін",
+      unlockAspectRatio: "Зняти фіксацію співвідношення сторін",
+    },
     inputNumber: {
       increment: "Збільшити",
       decrement: "Зменшити",

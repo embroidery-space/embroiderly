@@ -52,6 +52,7 @@ export interface DialogSlots {
   default(props: { open: boolean }): any;
   body(props: { close: (value?: unknown) => void }): any;
   footer(props: { close: (value?: unknown) => void }): any;
+  close?(props: { close: (value?: unknown) => void }): any;
 }
 
 const open = defineModel<boolean>("open", { default: false });
@@ -116,16 +117,18 @@ function close(value?: unknown) {
           </div>
 
           <Dialog.Close as-child>
-            <Button
-              :icon="icons.close"
-              color="neutral"
-              variant="ghost"
-              size="md"
-              square
-              :aria-label="locale.messages.dialog.close"
-              data-slot="close"
-              :class="ui.close({ class: props.ui?.close })"
-            />
+            <slot name="close" :close="close">
+              <Button
+                :icon="icons.close"
+                color="neutral"
+                variant="ghost"
+                size="md"
+                square
+                :aria-label="locale.messages.dialog.close"
+                data-slot="close"
+                :class="ui.close({ class: props.ui?.close })"
+              />
+            </slot>
           </Dialog.Close>
         </header>
 

@@ -18,15 +18,20 @@ describe("Dialog", () => {
     ["without scroll", { props: { ...props, scroll: false } }],
     ["with class", { props: { ...props, class: "w-96" } }],
     ["with ui", { props: { ...props, ui: { footer: "justify-start" } } }],
-  ] as [string, { props?: DialogProps }][])("renders correctly %s", async (_, options) => {
-    const screen = await page.render(Dialog, {
-      ...options,
-      slots: {
-        default: () => "Open Dialog",
-        body: () => "Dialog body content",
-        footer: () => "Footer content",
-      },
-    });
-    expect(screen.container.outerHTML).toMatchSnapshot();
-  });
+    ["with close slot", { props, slots: { close: () => "Close slot" } }],
+  ] as [string, { props?: DialogProps; slots?: Record<string, () => string> }][])(
+    "renders correctly %s",
+    async (_, options) => {
+      const screen = await page.render(Dialog, {
+        ...options,
+        slots: {
+          default: () => "Open Dialog",
+          body: () => "Dialog body content",
+          footer: () => "Footer content",
+          ...options.slots,
+        },
+      });
+      expect(screen.container.outerHTML).toMatchSnapshot();
+    },
+  );
 });

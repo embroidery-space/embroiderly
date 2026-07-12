@@ -77,8 +77,9 @@ async function openPattern() {
 }
 
 function createPattern() {
-  modals.patternCreationModal.open({
+  modals.fabricModal.open({
     fabric: new Fabric(),
+    mode: "create",
     async onSave(fabric) {
       patternFileStore.switchPattern(await patternFileStore.createPattern(fabric));
     },

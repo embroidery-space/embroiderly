@@ -35,6 +35,12 @@ export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> {
    */
   size?: RadioGroupThemeVariants["size"];
 
+  /**
+   * The orientation of the radio group.
+   * @default "vertical"
+   */
+  orientation?: RadioGroupThemeVariants["orientation"];
+
   /** Whether the radio group is disabled. */
   disabled?: boolean;
 
@@ -46,6 +52,8 @@ const modelValue = defineModel<RadioGroupValue>();
 const props = withDefaults(defineProps<RadioGroupProps<T>>(), {
   color: "primary",
   size: "md",
+
+  orientation: "vertical",
 });
 
 const { id, size, ariaAttrs } = useFormField(props);
@@ -83,6 +91,8 @@ const ui = computed(() => {
     color: props.color,
     size: size.value,
 
+    orientation: props.orientation,
+
     disabled: props.disabled,
   });
 });
@@ -94,6 +104,7 @@ const ui = computed(() => {
     v-model="modelValue"
     v-bind="ariaAttrs"
     :disabled="disabled"
+    :orientation="orientation"
     data-slot="root"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
   >

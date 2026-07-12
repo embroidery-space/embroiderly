@@ -1,11 +1,20 @@
-/* eslint-disable vue/one-component-per-file */
-
+import { TooltipProvider } from "reka-ui";
 import { describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 
 import InputDimensions from "./InputDimensions.vue";
 import type { InputDimensionsProps } from "./InputDimensions.vue";
+
+const InputDimensionsWrapper = defineComponent({
+  components: { TooltipProvider, InputDimensions },
+  inheritAttrs: false,
+  template: `
+    <TooltipProvider>
+      <InputDimensions v-bind="$attrs" />
+    </TooltipProvider>
+  `,
+});
 
 describe("InputDimensions", () => {
   const sizes = ["sm", "md", "lg"] as const;
@@ -23,20 +32,15 @@ describe("InputDimensions", () => {
     ["with class", { props: { class: "w-64" } }],
     ["with ui", { props: { ui: { root: "gap-4" } } }],
   ] as [string, { props?: InputDimensionsProps }][])("renders correctly %s", async (_, options) => {
-    const screen = await page.render(InputDimensions, options);
+    const screen = await page.render(InputDimensionsWrapper, options);
     expect(screen.container.outerHTML).toMatchSnapshot();
   });
 
   describe("emits", () => {
     test("update:width event", async () => {
-      const Wrapper = defineComponent({
-        components: { InputDimensions },
-        setup() {
-          return { width: ref(100), height: ref(50) };
-        },
-        template: `<InputDimensions v-model:width="width" v-model:height="height" />`,
+      const screen = await page.render(InputDimensionsWrapper, {
+        props: { width: 100, height: 50 },
       });
-      const screen = await page.render(Wrapper);
 
       const widthInput = screen.getByRole("spinbutton").nth(0);
 
@@ -47,14 +51,9 @@ describe("InputDimensions", () => {
     });
 
     test("update:height event", async () => {
-      const Wrapper = defineComponent({
-        components: { InputDimensions },
-        setup() {
-          return { width: ref(100), height: ref(50) };
-        },
-        template: `<InputDimensions v-model:width="width" v-model:height="height" />`,
+      const screen = await page.render(InputDimensionsWrapper, {
+        props: { width: 100, height: 50 },
       });
-      const screen = await page.render(Wrapper);
 
       const heightInput = screen.getByRole("spinbutton").nth(1);
 
@@ -67,7 +66,7 @@ describe("InputDimensions", () => {
 
   describe("aspect ratio lock", () => {
     test("lock starts inactive without aspectRatio prop", async () => {
-      const screen = await page.render(InputDimensions);
+      const screen = await page.render(InputDimensionsWrapper);
 
       const lockButton = screen.getByRole("button", { name: "Lock aspect ratio" });
 
@@ -76,7 +75,9 @@ describe("InputDimensions", () => {
     });
 
     test("lock starts active with aspectRatio prop", async () => {
-      const screen = await page.render(InputDimensions, { props: { aspectRatio: 2 } });
+      const screen = await page.render(InputDimensionsWrapper, {
+        props: { aspectRatio: 2 },
+      });
 
       const unlockButton = screen.getByRole("button", { name: "Unlock aspect ratio" });
 
@@ -85,7 +86,7 @@ describe("InputDimensions", () => {
     });
 
     test("lock button toggles state", async () => {
-      const screen = await page.render(InputDimensions);
+      const screen = await page.render(InputDimensionsWrapper);
 
       const lockButton = screen.getByRole("button", { name: "Lock aspect ratio" });
       await userEvent.click(lockButton);
@@ -95,14 +96,9 @@ describe("InputDimensions", () => {
     });
 
     test("changing width proportionally updates height when locked", async () => {
-      const Wrapper = defineComponent({
-        components: { InputDimensions },
-        setup() {
-          return { width: ref(100), height: ref(50) };
-        },
-        template: `<InputDimensions v-model:width="width" v-model:height="height" :aspect-ratio="2" />`,
+      const screen = await page.render(InputDimensionsWrapper, {
+        props: { width: 100, height: 50, aspectRatio: 2 },
       });
-      const screen = await page.render(Wrapper);
 
       const widthInput = screen.getByRole("spinbutton").nth(0);
       const heightInput = screen.getByRole("spinbutton").nth(1);
@@ -114,14 +110,9 @@ describe("InputDimensions", () => {
     });
 
     test("changing height proportionally updates width when locked", async () => {
-      const Wrapper = defineComponent({
-        components: { InputDimensions },
-        setup() {
-          return { width: ref(100), height: ref(50) };
-        },
-        template: `<InputDimensions v-model:width="width" v-model:height="height" :aspect-ratio="2" />`,
+      const screen = await page.render(InputDimensionsWrapper, {
+        props: { width: 100, height: 50, aspectRatio: 2 },
       });
-      const screen = await page.render(Wrapper);
 
       const widthInput = screen.getByRole("spinbutton").nth(0);
       const heightInput = screen.getByRole("spinbutton").nth(1);
@@ -133,14 +124,9 @@ describe("InputDimensions", () => {
     });
 
     test("changing width does not update height when unlocked", async () => {
-      const Wrapper = defineComponent({
-        components: { InputDimensions },
-        setup() {
-          return { width: ref(100), height: ref(50) };
-        },
-        template: `<InputDimensions v-model:width="width" v-model:height="height" />`,
+      const screen = await page.render(InputDimensionsWrapper, {
+        props: { width: 100, height: 50 },
       });
-      const screen = await page.render(Wrapper);
 
       const widthInput = screen.getByRole("spinbutton").nth(0);
       const heightInput = screen.getByRole("spinbutton").nth(1);
@@ -152,14 +138,9 @@ describe("InputDimensions", () => {
     });
 
     test("reacts to aspectRatio prop changes", async () => {
-      const Wrapper = defineComponent({
-        components: { InputDimensions },
-        setup() {
-          return { width: ref(100), height: ref(50), aspectRatio: ref(2) };
-        },
-        template: `<InputDimensions v-model:width="width" v-model:height="height" :aspect-ratio="aspectRatio" />`,
+      const screen = await page.render(InputDimensionsWrapper, {
+        props: { width: 100, height: 50, aspectRatio: 2 },
       });
-      const screen = await page.render(Wrapper);
 
       const widthInput = screen.getByRole("spinbutton").nth(0);
       const heightInput = screen.getByRole("spinbutton").nth(1);
@@ -170,7 +151,6 @@ describe("InputDimensions", () => {
       await expect.element(heightInput).toHaveValue("100");
 
       // Update ratio to 1:1.
-      // @ts-expect-error Props type is not inferred.
       await screen.rerender({ aspectRatio: 1 });
 
       // Verify new ratio.

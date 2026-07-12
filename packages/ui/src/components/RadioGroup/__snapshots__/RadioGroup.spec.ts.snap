@@ -2,26 +2,26 @@
 
 exports[`RadioGroup > renders correctly with class 1`] = `
 <div>
-  <div aria-required="false" class="absolute flex flex-col items-start" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
+  <div aria-orientation="vertical" aria-required="false" class="absolute flex flex-col items-start" data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
@@ -33,28 +33,28 @@ exports[`RadioGroup > renders correctly with class 1`] = `
 
 exports[`RadioGroup > renders correctly with description 1`] = `
 <div>
-  <div aria-required="false" class="flex flex-col items-start relative" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
+  <div aria-orientation="vertical" aria-required="false" class="flex flex-col items-start relative" data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
         <p class="text-muted" data-slot="description">Description 0</p>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
         <p class="text-muted" data-slot="description">Description 1</p>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
@@ -67,26 +67,26 @@ exports[`RadioGroup > renders correctly with description 1`] = `
 
 exports[`RadioGroup > renders correctly with disabled 1`] = `
 <div>
-  <div aria-required="false" class="flex flex-col items-start relative" data-disabled data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="-1">
-    <div class="flex items-start opacity-75 text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 1" class="cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-disabled data-reka-collection-item data-slot="base" data-state="unchecked" disabled id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
+  <div aria-orientation="vertical" aria-required="false" class="flex flex-col items-start relative" data-disabled data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="-1">
+    <div class="flex items-center opacity-75 text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 1" class="cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-disabled data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" disabled id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block cursor-not-allowed font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
       </div>
     </div>
-    <div class="flex items-start opacity-75 text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 2" class="cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-disabled data-reka-collection-item data-slot="base" data-state="unchecked" disabled id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+    <div class="flex items-center opacity-75 text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-disabled data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" disabled id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block cursor-not-allowed font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
       </div>
     </div>
-    <div class="flex items-start opacity-75 text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 3" class="cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-disabled data-reka-collection-item data-slot="base" data-state="unchecked" disabled id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+    <div class="flex items-center opacity-75 text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-disabled data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" disabled id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block cursor-not-allowed font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
@@ -96,28 +96,59 @@ exports[`RadioGroup > renders correctly with disabled 1`] = `
 </div>
 `;
 
-exports[`RadioGroup > renders correctly with items 1`] = `
+exports[`RadioGroup > renders correctly with horizontal orientation 1`] = `
 <div>
-  <div aria-required="false" class="flex flex-col items-start relative" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
+  <div aria-orientation="horizontal" aria-required="false" class="flex flex-row gap-x-2 items-start relative" data-orientation="horizontal" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="horizontal" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+      </div>
+      <div class="ms-2 w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`RadioGroup > renders correctly with items 1`] = `
+<div>
+  <div aria-orientation="vertical" aria-required="false" class="flex flex-col items-start relative" data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
+      </div>
+      <div class="ms-2 w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
+      </div>
+    </div>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+      </div>
+      <div class="ms-2 w-full" data-slot="wrapper">
+        <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
+      </div>
+    </div>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
@@ -129,10 +160,10 @@ exports[`RadioGroup > renders correctly with items 1`] = `
 
 exports[`RadioGroup > renders correctly with size lg 1`] = `
 <div>
-  <div aria-required="false" class="flex flex-col items-start relative" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
-    <div class="flex items-start text-base" data-slot="item">
-      <div class="flex h-6 items-center" data-slot="container">
-        <button aria-checked="true" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-5" data-active data-reka-collection-item data-slot="base" data-state="checked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1">
+  <div aria-orientation="vertical" aria-required="false" class="flex flex-col items-start relative" data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+    <div class="flex items-center text-base" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="true" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-5" data-active data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="checked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1">
           <span class="after:bg-default after:rounded-full after:size-2 bg-primary flex items-center justify-center size-full" data-slot="indicator" data-state="checked"></span>
         </button>
       </div>
@@ -140,17 +171,17 @@ exports[`RadioGroup > renders correctly with size lg 1`] = `
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
       </div>
     </div>
-    <div class="flex items-start text-base" data-slot="item">
-      <div class="flex h-6 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-5" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+    <div class="flex items-center text-base" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-5" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
       </div>
     </div>
-    <div class="flex items-start text-base" data-slot="item">
-      <div class="flex h-6 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-5" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+    <div class="flex items-center text-base" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-5" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
@@ -162,10 +193,10 @@ exports[`RadioGroup > renders correctly with size lg 1`] = `
 
 exports[`RadioGroup > renders correctly with size md 1`] = `
 <div>
-  <div aria-required="false" class="flex flex-col items-start relative" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="true" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-active data-reka-collection-item data-slot="base" data-state="checked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1">
+  <div aria-orientation="vertical" aria-required="false" class="flex flex-col items-start relative" data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="true" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-active data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="checked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1">
           <span class="after:bg-default after:rounded-full after:size-1.5 bg-primary flex items-center justify-center size-full" data-slot="indicator" data-state="checked"></span>
         </button>
       </div>
@@ -173,17 +204,17 @@ exports[`RadioGroup > renders correctly with size md 1`] = `
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
@@ -195,10 +226,10 @@ exports[`RadioGroup > renders correctly with size md 1`] = `
 
 exports[`RadioGroup > renders correctly with size sm 1`] = `
 <div>
-  <div aria-required="false" class="flex flex-col items-start relative" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
-    <div class="flex items-start text-xs" data-slot="item">
-      <div class="flex h-4 items-center" data-slot="container">
-        <button aria-checked="true" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-3" data-active data-reka-collection-item data-slot="base" data-state="checked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1">
+  <div aria-orientation="vertical" aria-required="false" class="flex flex-col items-start relative" data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+    <div class="flex items-center text-xs" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="true" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-3" data-active data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="checked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1">
           <span class="after:bg-default after:rounded-full after:size-1 bg-primary flex items-center justify-center size-full" data-slot="indicator" data-state="checked"></span>
         </button>
       </div>
@@ -206,17 +237,17 @@ exports[`RadioGroup > renders correctly with size sm 1`] = `
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
       </div>
     </div>
-    <div class="flex items-start text-xs" data-slot="item">
-      <div class="flex h-4 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-3" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+    <div class="flex items-center text-xs" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-3" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
       </div>
     </div>
-    <div class="flex items-start text-xs" data-slot="item">
-      <div class="flex h-4 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-3" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+    <div class="flex items-center text-xs" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-3" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
       </div>
       <div class="ms-2 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
@@ -228,26 +259,26 @@ exports[`RadioGroup > renders correctly with size sm 1`] = `
 
 exports[`RadioGroup > renders correctly with ui 1`] = `
 <div>
-  <div aria-required="false" class="flex flex-col items-start relative" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
+  <div aria-orientation="vertical" aria-required="false" class="flex flex-col items-start relative" data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:1" required="false" role="radio" tabindex="-1" type="button" value="1"></button>
       </div>
       <div class="ms-4 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:1">Option 1</label>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:2" required="false" role="radio" tabindex="-1" type="button" value="2"></button>
       </div>
       <div class="ms-4 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:2">Option 2</label>
       </div>
     </div>
-    <div class="flex items-start text-sm" data-slot="item">
-      <div class="flex h-5 items-center" data-slot="container">
-        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
+    <div class="flex items-center text-sm" data-slot="item">
+      <div class="flex items-center" data-slot="container">
+        <button aria-checked="false" aria-label="Option 3" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:3" required="false" role="radio" tabindex="-1" type="button" value="3"></button>
       </div>
       <div class="ms-4 w-full" data-slot="wrapper">
         <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:3">Option 3</label>
@@ -262,18 +293,18 @@ exports[`RadioGroup > renders correctly within FormField 1`] = `
   <div class="text-sm" data-slot="root">
     <div class data-slot="wrapper"></div>
     <div class data-slot="container">
-      <div aria-required="false" class="flex flex-col items-start relative" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
-        <div class="flex items-start text-sm" data-slot="item">
-          <div class="flex h-5 items-center" data-slot="container">
-            <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:Option 1" required="false" role="radio" tabindex="-1" type="button" value="Option 1"></button>
+      <div aria-orientation="vertical" aria-required="false" class="flex flex-col items-start relative" data-orientation="vertical" data-slot="root" dir="ltr" id="v-0" role="radiogroup" tabindex="0">
+        <div class="flex items-center text-sm" data-slot="item">
+          <div class="flex items-center" data-slot="container">
+            <button aria-checked="false" aria-label="Option 1" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:Option 1" required="false" role="radio" tabindex="-1" type="button" value="Option 1"></button>
           </div>
           <div class="ms-2 w-full" data-slot="wrapper">
             <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:Option 1">Option 1</label>
           </div>
         </div>
-        <div class="flex items-start text-sm" data-slot="item">
-          <div class="flex h-5 items-center" data-slot="container">
-            <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:Option 2" required="false" role="radio" tabindex="-1" type="button" value="Option 2"></button>
+        <div class="flex items-center text-sm" data-slot="item">
+          <div class="flex items-center" data-slot="container">
+            <button aria-checked="false" aria-label="Option 2" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary not-disabled:hover:cursor-pointer overflow-hidden ring ring-accented ring-inset rounded-full size-4" data-orientation="vertical" data-reka-collection-item data-slot="base" data-state="unchecked" id="v-0:Option 2" required="false" role="radio" tabindex="-1" type="button" value="Option 2"></button>
           </div>
           <div class="ms-2 w-full" data-slot="wrapper">
             <label class="block font-medium not-disabled:hover:cursor-pointer text-default" data-slot="label" for="v-0:Option 2">Option 2</label>
