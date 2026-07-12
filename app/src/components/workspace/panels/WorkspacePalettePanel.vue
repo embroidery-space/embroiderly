@@ -385,7 +385,11 @@ async function updatePaletteDisplaySettings() {
               :icon="IconCheck"
               :label="$t('palette-save')"
               class="grow justify-center text-sm"
-              @click="editorStateStore.paletteMode = PaletteMode.Regular"
+              @click="
+                () => {
+                  editorStateStore.paletteMode = PaletteMode.Regular;
+                }
+              "
             />
             <DropdownMenu :items="palettePanelsMenuOptions" :content="{ align: 'end' }">
               <Button :icon="IconMenu" :aria-label="$t('palette-panel-menu')" />

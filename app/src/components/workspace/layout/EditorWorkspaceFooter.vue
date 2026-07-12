@@ -21,7 +21,11 @@ const editorStateStore = useEditorStateStore();
       :icon="editorStateStore.palettePanelCollapsed ? IconPanelLeftOpen : IconPanelLeftClose"
       :tooltip="editorStateStore.palettePanelCollapsed ? $t('palette-panel-expand') : $t('palette-panel-collapse')"
       :disabled="disabled || editorStateStore.paletteMode === PaletteMode.Editing"
-      @click="editorStateStore.palettePanelCollapsed = !editorStateStore.palettePanelCollapsed"
+      @click="
+        () => {
+          editorStateStore.palettePanelCollapsed = !editorStateStore.palettePanelCollapsed;
+        }
+      "
     />
 
     <CanvasZoomControls
@@ -39,7 +43,11 @@ const editorStateStore = useEditorStateStore();
       :icon="editorStateStore.canvasPanelCollapsed ? IconPanelRightOpen : IconPanelRightClose"
       :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-panel-expand') : $t('canvas-panel-collapse')"
       :disabled="disabled"
-      @click="editorStateStore.canvasPanelCollapsed = !editorStateStore.canvasPanelCollapsed"
+      @click="
+        () => {
+          editorStateStore.canvasPanelCollapsed = !editorStateStore.canvasPanelCollapsed;
+        }
+      "
     />
   </div>
 </template>
