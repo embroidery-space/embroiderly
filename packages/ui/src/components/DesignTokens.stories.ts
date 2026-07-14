@@ -1,6 +1,14 @@
-<template>
-  <Story id="design-tokens" group="general" title="Design Tokens" :layout="{ type: 'single', iframe: false }">
-    <Variant id="demo" title="Demo" auto-props-disabled>
+import type { Meta, StoryObj } from "@storybook/vue3-vite";
+
+const meta = {
+  title: "General/Design Tokens",
+} satisfies Meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Demo: Story = {
+  render: () => ({
+    template: `
       <div class="space-y-6">
         <h3 class="mb-3 text-lg font-semibold">Colors</h3>
         <div class="flex items-center gap-x-2">
@@ -48,6 +56,8 @@
           <div class="inline-block rounded-3xl border-2 px-4 py-1.5 font-bold">3xl</div>
         </div>
       </div>
-    </Variant>
-  </Story>
-</template>
+    `,
+  }),
+};
+
+export default meta;

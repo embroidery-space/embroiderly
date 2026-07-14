@@ -10,6 +10,9 @@
     }
   },
   "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "preview": "vite preview --outDir storybook-static",
     "story:dev": "histoire dev",
     "story:build": "histoire build",
     "story:preview": "histoire preview",
@@ -28,6 +31,9 @@
     "@histoire/plugin-vue": "catalog:",
     "@iconify-json/lucide": "catalog:",
     "@iconify/vue": "catalog:",
+    "@storybook/addon-docs": "catalog:",
+    "@storybook/addon-vitest": "catalog:",
+    "@storybook/vue3-vite": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@tsconfig/node24": "catalog:",
     "@tsconfig/strictest": "catalog:",
@@ -36,6 +42,8 @@
     "@vitest/browser-webdriverio": "catalog:",
     "@vue/tsconfig": "catalog:",
     "histoire": "catalog:",
+    "storybook": "catalog:",
+    "storybook-addon-vis": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:",

@@ -1,8 +1,3 @@
----
-id: overview
-group: overview
----
-
 # Embroiderly UI Kit
 
 A custom component library built specifically for the Embroiderly application.
