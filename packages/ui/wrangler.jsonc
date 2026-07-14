@@ -6,7 +6,7 @@
 
   "preview_urls": true,
   "assets": {
-    "directory": "./dist/",
+    "directory": "./storybook-static/",
     "not_found_handling": "single-page-application",
   },
 }
