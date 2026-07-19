@@ -46,10 +46,10 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends Pick<
 }
 
 export interface TabsSlots<T extends TabsItem = TabsItem> {
-  "leading"(props: { item: T; index: number }): any;
-  "default"(props: { item: T; index: number }): any;
-  "trailing"(props: { item: T; index: number }): any;
-  "content"(props: { item: T; index: number }): any;
+  leading(props: { item: T; index: number }): any;
+  default(props: { item: T; index: number }): any;
+  trailing(props: { item: T; index: number }): any;
+  content(props: { item: T; index: number }): any;
   "list-leading"(props?: object): any;
   "list-trailing"(props?: object): any;
   [key: string]: (props: { item: T; index: number }) => any;

@@ -120,6 +120,13 @@ catalog:
   "histoire": 1.0.0-beta.1
   "@histoire/plugin-vue": 1.0.0-beta.1
 
+  # Storybook
+  "storybook": 10.5.0
+  "@storybook/vue3-vite": 10.5.0
+  "@storybook/addon-docs": 10.5.0
+  "@storybook/addon-vitest": 10.5.0
+  "storybook-addon-vis": 4.2.3
+
   # TypeScript
   "typescript": 6.0.3
   "vue-tsc": 3.3.7

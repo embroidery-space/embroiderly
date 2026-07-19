@@ -16,7 +16,13 @@ import yml from "eslint-plugin-yml";
 
 export default defineConfigWithVueTs(
   // Common options.
-  includeIgnoreFile(fileURLToPath(new URL(".gitignore", import.meta.url)), { gitignoreResolution: true }),
+  includeIgnoreFile(
+    [
+      fileURLToPath(new URL(".gitignore", import.meta.url)),
+      fileURLToPath(new URL("packages/ui/.gitignore", import.meta.url)),
+    ],
+    { gitignoreResolution: true },
+  ),
 
   // Vue.js configs.
   vue.configs["flat/recommended"],
