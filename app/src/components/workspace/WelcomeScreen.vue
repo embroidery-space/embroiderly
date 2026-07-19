@@ -100,7 +100,6 @@ function createPattern() {
             <template #button-create="{ buttonCreateLabel }">
               <Button variant="link" :label="buttonCreateLabel" class="p-0" @click="createPattern" />
             </template>
-            <br />
           </i18n>
           <p>{{ $t("welcome-get-started-dnd") }}</p>
         </div>
@@ -159,8 +158,11 @@ function createPattern() {
       </div>
     </div>
 
-    <div class="w-full py-2 text-center text-xs">
-      {{ $t("app-credits") }}
-    </div>
+    <i18n tag="p" path="app-credits" class="my-2 text-center align-middle text-xs">
+      <template #tryzub>
+        <!-- eslint-disable-next-line vue-i18n/no-raw-text -->
+        <span class="font-features-['ss14'] text-lg font-semibold">A</span>
+      </template>
+    </i18n>
   </ScrollArea>
 </template>
