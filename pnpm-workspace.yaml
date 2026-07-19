@@ -26,7 +26,7 @@ catalog:
   "@vueuse/integrations": 14.3.0
   "vue": 3.5.39
   "vue-component-type-helpers": 3.3.7
-  "pinia": 4.0.1
+  "pinia": 4.0.2
   "pinia-plugin-persistedstate": 4.7.1
   "reka-ui": 2.10.1
 
@@ -130,7 +130,7 @@ catalog:
   "@vue/tsconfig": 0.9.1
 
   # Testing
-  "@pinia/testing": 2.0.0
+  "@pinia/testing": 2.0.1
   "@vitest/browser-webdriverio": 4.1.10
   "vitest": 4.1.10
   "vitest-browser-vue": 2.1.0
