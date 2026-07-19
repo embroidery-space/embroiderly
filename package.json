@@ -29,8 +29,6 @@
     "test": "pnpm -r --workspace-concurrency 1 test"
   },
   "devDependencies": {
-    "@eslint-community/eslint-plugin-eslint-comments": "catalog:",
-    "@eslint/compat": "catalog:",
     "@intlify/eslint-plugin-vue-i18n": "catalog:",
     "@tauri-apps/cli-cef": "catalog:",
     "@vitest/eslint-plugin": "catalog:",

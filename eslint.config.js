@@ -1,11 +1,10 @@
 import { fileURLToPath, URL } from "node:url";
 
-import { includeIgnoreFile } from "@eslint/compat";
-import eslintComments from "@eslint-community/eslint-plugin-eslint-comments";
 import vueI18n from "@intlify/eslint-plugin-vue-i18n";
 import vitest from "@vitest/eslint-plugin";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
+import { includeIgnoreFile } from "eslint/config";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import { getDefaultSelectors as getDefaultBetterTailwindcssSelectors } from "eslint-plugin-better-tailwindcss/defaults";
 import importX from "eslint-plugin-import-x";
@@ -17,7 +16,7 @@ import yml from "eslint-plugin-yml";
 
 export default defineConfigWithVueTs(
   // Common options.
-  includeIgnoreFile(fileURLToPath(new URL(".gitignore", import.meta.url))),
+  includeIgnoreFile(fileURLToPath(new URL(".gitignore", import.meta.url)), { gitignoreResolution: true }),
 
   // Vue.js configs.
   vue.configs["flat/recommended"],
@@ -52,10 +51,7 @@ export default defineConfigWithVueTs(
   {
     files: ["**/*.vue"],
     ignores: ["**/*.story.vue", "**/story/*.vue"],
-    plugins: {
-      "vue-i18n": vueI18n,
-      "eslint-comments": eslintComments,
-    },
+    plugins: { "vue-i18n": vueI18n },
     rules: {
       "vue-i18n/no-raw-text": [
         "error",
@@ -75,7 +71,6 @@ export default defineConfigWithVueTs(
           },
         },
       ],
-      "eslint-comments/no-restricted-disable": ["error", "vue-i18n/no-raw-text"],
     },
   },
 

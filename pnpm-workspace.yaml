@@ -83,9 +83,7 @@ catalog:
   "vitepress-plugin-llms": 1.13.3
 
   # Code Quality
-  "eslint": 9.39.5
-  "@eslint/compat": 2.1.0
-  "@eslint-community/eslint-plugin-eslint-comments": 4.7.2
+  "eslint": 10.7.0
   "@intlify/eslint-plugin-vue-i18n": 4.5.1
   "@vitest/eslint-plugin": 1.6.23
   "@vue/eslint-config-prettier": 10.2.0
