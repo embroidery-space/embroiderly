@@ -90,15 +90,15 @@ function createPattern() {
   <ScrollArea data-testid="welcome-screen" type="auto" size="sm" :ui="{ viewport: 'flex flex-col' }">
     <div class="flex grow items-center justify-center p-4 sm:p-6">
       <div class="flex min-w-1/2 flex-col gap-4 sm:gap-6">
-        <span class="text-2xl sm:text-3xl lg:text-4xl">{{ $t("welcome") }}</span>
+        <span class="text-2xl font-medium sm:text-3xl lg:text-4xl">{{ $t("welcome") }}</span>
 
         <div>
           <i18n tag="p" path="welcome-get-started">
             <template #button-open="{ buttonOpenLabel }">
-              <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="openPattern" />
+              <Button variant="link" :label="buttonOpenLabel" class="p-0 text-base" @click="openPattern" />
             </template>
             <template #button-create="{ buttonCreateLabel }">
-              <Button variant="link" :label="buttonCreateLabel" class="p-0" @click="createPattern" />
+              <Button variant="link" :label="buttonCreateLabel" class="p-0 text-base" @click="createPattern" />
             </template>
           </i18n>
           <p>{{ $t("welcome-get-started-dnd") }}</p>
@@ -112,14 +112,14 @@ function createPattern() {
                 variant="ghost"
                 :icon="IconFileCreate"
                 :label="$t('welcome-create-pattern')"
-                class="justify-start"
+                class="justify-start text-base"
                 @click="createPattern"
               />
               <Button
                 variant="ghost"
                 :icon="IconFileOpen"
                 :label="$t('welcome-open-pattern')"
-                class="justify-start"
+                class="justify-start text-base"
                 @click="openPattern"
               />
             </div>
