@@ -6,6 +6,7 @@ import type { Preview } from "@storybook/vue3-vite";
 import App from "../src/components/App/App.vue";
 
 import Placeholder from "./components/Placeholder.vue";
+import DocsTemplate from "./DocsTemplate.mdx";
 
 import "../src/index.css";
 
@@ -49,11 +50,12 @@ export default {
   },
   initialGlobals: { theme: "light" },
   parameters: {
+    docs: { page: DocsTemplate },
     options: {
       storySort: {
         order: ["General", "Layout", "Element", "Form", "Toolbar", "Data", "Navigation", "Overlay"],
       },
     },
   },
-  tags: ["autodocs", "snapshot"],
+  tags: ["autodocs", "snapshot", "!dev"],
 } satisfies Preview;
