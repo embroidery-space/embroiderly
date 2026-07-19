@@ -4,7 +4,7 @@
 
 ## Application credits.
 
-app-credits = Developed with love in Ukraine
+app-credits = Developed with love in Ukraine { $tryzub }
 
 ## Application menu.
 

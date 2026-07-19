@@ -206,7 +206,7 @@ impl FileManager {
 
   #[tracing::instrument(name = "FileManager::get_fonts_list", level = "debug", skip(self), ret, err)]
   async fn get_fonts_list_impl(&self) -> Result<GroupedFilesList, Error> {
-    let system = serde_json::from_slice(&net::fetch("/fonts/index.json").await?)?;
+    let system = serde_json::from_slice(&net::fetch("/symbols/index.json").await?)?;
     let custom = Self::list_file_names(&self.fonts_dir).await?;
     Ok(GroupedFilesList { system, custom })
   }
@@ -214,7 +214,7 @@ impl FileManager {
   #[tracing::instrument(name = "FileManager::load_font_content", level = "debug", skip(self), err)]
   async fn load_font_content_impl(&self, name: &str) -> Result<Vec<u8>, Error> {
     for ext in ["ttf", "otf"] {
-      if let Ok(bytes) = net::fetch(&format!("/fonts/{name}.{ext}")).await {
+      if let Ok(bytes) = net::fetch(&format!("/symbols/{name}.{ext}")).await {
         return Ok(bytes);
       }
     }

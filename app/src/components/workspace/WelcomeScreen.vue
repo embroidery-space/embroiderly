@@ -90,17 +90,16 @@ function createPattern() {
   <ScrollArea data-testid="welcome-screen" type="auto" size="sm" :ui="{ viewport: 'flex flex-col' }">
     <div class="flex grow items-center justify-center p-4 sm:p-6">
       <div class="flex min-w-1/2 flex-col gap-4 sm:gap-6">
-        <span class="text-2xl sm:text-3xl lg:text-4xl">{{ $t("welcome") }}</span>
+        <span class="text-2xl font-medium sm:text-3xl lg:text-4xl">{{ $t("welcome") }}</span>
 
         <div>
           <i18n tag="p" path="welcome-get-started">
             <template #button-open="{ buttonOpenLabel }">
-              <Button variant="link" :label="buttonOpenLabel" class="p-0" @click="openPattern" />
+              <Button variant="link" :label="buttonOpenLabel" class="p-0 text-base" @click="openPattern" />
             </template>
             <template #button-create="{ buttonCreateLabel }">
-              <Button variant="link" :label="buttonCreateLabel" class="p-0" @click="createPattern" />
+              <Button variant="link" :label="buttonCreateLabel" class="p-0 text-base" @click="createPattern" />
             </template>
-            <br />
           </i18n>
           <p>{{ $t("welcome-get-started-dnd") }}</p>
         </div>
@@ -113,14 +112,14 @@ function createPattern() {
                 variant="ghost"
                 :icon="IconFileCreate"
                 :label="$t('welcome-create-pattern')"
-                class="justify-start"
+                class="justify-start text-base"
                 @click="createPattern"
               />
               <Button
                 variant="ghost"
                 :icon="IconFileOpen"
                 :label="$t('welcome-open-pattern')"
-                class="justify-start"
+                class="justify-start text-base"
                 @click="openPattern"
               />
             </div>
@@ -159,8 +158,11 @@ function createPattern() {
       </div>
     </div>
 
-    <div class="w-full py-2 text-center text-xs">
-      {{ $t("app-credits") }}
-    </div>
+    <i18n tag="p" path="app-credits" class="my-2 text-center align-middle text-xs">
+      <template #tryzub>
+        <!-- eslint-disable-next-line vue-i18n/no-raw-text -->
+        <span class="font-features-['ss14'] text-lg font-semibold">A</span>
+      </template>
+    </i18n>
   </ScrollArea>
 </template>

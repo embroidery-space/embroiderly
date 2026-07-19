@@ -3,7 +3,16 @@
 
 @import "./tour.css";
 
+@font-face {
+  src: url("/fonts/FixelVariable.ttf") format("truetype");
+  font-family: "Fixel";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
+  --font-sans: "Fixel", ui-sans-serif, system-ui, sans-serif;
   --animate-rainbow-shine: rainbow-shine 2.4s linear infinite;
 }
 
