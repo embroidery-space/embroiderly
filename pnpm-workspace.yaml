@@ -130,7 +130,7 @@ catalog:
   "@vue/tsconfig": 0.9.1
 
   # Testing
-  "@pinia/testing": 1.0.3
+  "@pinia/testing": 2.0.0
   "@vitest/browser-webdriverio": 4.1.10
   "vitest": 4.1.10
   "vitest-browser-vue": 2.1.0
