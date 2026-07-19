@@ -72,7 +72,7 @@ export interface TreeProps<T extends TreeItem = TreeItem> extends Pick<
 }
 
 export interface TreeSlots<T extends TreeItem = TreeItem> {
-  "item"(props: TreeItemSlotProps<T>): any;
+  item(props: TreeItemSlotProps<T>): any;
   "item-leading"(props: TreeItemSlotProps<T>): any;
   "item-label"(props: TreeItemSlotProps<T>): any;
   "item-trailing"(props: TreeItemSlotProps<T>): any;
