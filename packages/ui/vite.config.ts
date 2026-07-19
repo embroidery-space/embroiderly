@@ -91,7 +91,12 @@ export default defineConfig({
           browser: {
             enabled: true,
             headless: isCI,
-            provider: webdriverio(),
+            provider: webdriverio({
+              capabilities: {
+                "ms:edgeOptions": { args: ["--force-device-scale-factor=1"] },
+                "moz:firefoxOptions": { prefs: { "layout.css.devPixelsPerPx": "1.0" } },
+              },
+            }),
             instances: [
               (() => {
                 if (process.platform === "win32") return { browser: "edge" };
