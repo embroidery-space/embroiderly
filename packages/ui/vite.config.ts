@@ -68,8 +68,21 @@ export default defineConfig({
         plugins: [
           storybookTest({ configDir: path.join(import.meta.dirname, ".storybook") }),
           storybookVis({
-            snapshotRootDir: ({ rootDir }) => rootDir,
             subject: "[data-vis-subject]",
+            snapshotRootDir: ({ rootDir }) => rootDir,
+            // Flatten the baseline path down to just the component name, so that `src/components/Separator/Separator.stories.ts` becomes `Separator/`.
+            snapshotSubpath: ({ subpath }) => {
+              const segments = subpath.split("/");
+              if (segments[0] === "src") segments.shift();
+              if (segments[0] === "components") segments.shift();
+
+              const name = segments.pop()!.replace(/\.stories\.tsx?$/u, "");
+
+              // Most components live in a directory of the same name — don't repeat it.
+              if (segments.at(-1) === name) return segments.join("/");
+
+              return [...segments, name].join("/");
+            },
           }),
         ],
         test: {
