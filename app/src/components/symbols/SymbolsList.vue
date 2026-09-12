@@ -10,7 +10,7 @@ interface SymbolsListProps extends Pick<ListboxProps, "disabled" | "scroll"> {
   fontFamily?: string;
 }
 
-const selectedSymbol = defineModel<number>("selectedSymbol");
+const selectedSymbol = defineModel<number | undefined>("selectedSymbol", { default: undefined });
 const { assignedSymbols, options = [], fontFamily = "" } = defineProps<SymbolsListProps>();
 
 const emit = defineEmits<{
