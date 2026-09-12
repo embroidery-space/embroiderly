@@ -7,7 +7,7 @@ edition = { workspace = true }
 workspace = true
 
 [features]
-cef = ["tauri/cef"]
+cef = ["dep:tauri-runtime-cef"]
 
 [build-dependencies]
 tauri-build = { workspace = true }
@@ -15,6 +15,8 @@ tauri-build = { workspace = true }
 [dependencies]
 # Tauri
 tauri = { workspace = true, features = ["devtools"] }
+tauri-runtime-wry = { workspace = true, features = ["devtools"] }
+tauri-runtime-cef = { workspace = true, optional = true, features = ["devtools"] }
 ## Official plugins
 tauri-plugin-fs = { workspace = true }
 tauri-plugin-opener = { workspace = true }

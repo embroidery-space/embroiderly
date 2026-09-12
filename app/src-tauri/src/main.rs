@@ -6,9 +6,9 @@ mod services;
 
 fn main() {
   #[cfg(feature = "cef")]
-  let app = setup_app(tauri::Builder::<tauri::Cef>::default());
+  let app = setup_app(tauri::Builder::default().runtime(tauri_runtime_cef::Cef::default()));
   #[cfg(not(feature = "cef"))]
-  let app = setup_app(tauri::Builder::<tauri::Wry>::default());
+  let app = setup_app(tauri::Builder::default().runtime(tauri_runtime_wry::Wry::default()));
 
   #[allow(unused)]
   app.run(|app_handle, event| {

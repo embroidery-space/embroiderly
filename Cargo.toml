@@ -74,13 +74,13 @@ tauri-plugin = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef
 # Tauri
 tauri = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef", default-features = false, features = [
   "compression",
-  "wry",
-  "x11",
   "config-json5",
 ] }
 tauri-build = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef", default-features = false, features = [
   "config-json5",
 ] }
+tauri-runtime-wry = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef", default-features = false }
+tauri-runtime-cef = { git = "https://github.com/tauri-apps/tauri", branch = "feat/cef", default-features = false }
 ## Official Tauri plugins
 tauri-plugin-fs = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
 tauri-plugin-opener = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "feat/cef" }
