@@ -50,18 +50,5 @@
     "oxlint": "catalog:",
     "tailwindcss": "catalog:"
   },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "12.3.4",
-      "onFail": "download"
-    },
-    "runtime": [
-      {
-        "name": "node",
-        "version": "24.19.0",
-        "onFail": "download"
-      }
-    ]
-  }
+  "packageManager": "pnpm@11.26.0"
 }
