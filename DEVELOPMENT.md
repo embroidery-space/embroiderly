@@ -13,21 +13,16 @@ Before starting, make sure you have everything needed to work on Embroiderly.
 1. Install stable and nightly (only the `fmt` component) [Rust](https://rust-lang.org/tools/install).
 1. Install Rust tools: [`cargo-nextest`](https://nexte.st), [`just`](https://just.systems).
 1. Install [Node.js v24](https://nodejs.org/en/download).
-1. Install **pnpm** using Corepack (see the [official documentation](https://pnpm.io/installation#using-corepack)).
-1. Go to `app/src-tauri/` and create the `.env` file.
-   Copy the contents of the [`.env.example`](app/src-tauri/.env.example) file and specify your own values.
+1. Install [pnpm](https://pnpm.io/installation).
+1. Go to `app/` and create the `.env` file.
+   Copy the contents of the [`.env.example`](app/.env.example) file and specify your own values.
 
-Once you are done, you can run the application via `just dev` or build it via `just build`.
+Once you are done, you can run the application via `pnpm app:dev` or build it via `pnpm app:build`.
 
 ## Available Commands
 
 We use [`just`](https://just.systems) to manage development commands.
 If you don't want to use it, check [`Justfile`](./Justfile) to see all available commands.
-
-### Development
-
-- `just dev` - Run the application in development mode.
-- `just build` - Build the application and bundle into the installer.
 
 ### Code Checks
 
@@ -43,41 +38,10 @@ For example, run `just all-fe` to run all _frontend_ checks.
 Additionally, there is a `-fix` variant for `fmt` and `lint` recipes.
 For example, run `just fmt-fix` to fix code formatting issues (or `just fmt-fe-fix` to fix only _frontend_).
 
-## Sidecars Development
-
-The `app/src-tauri/binaries/` directory contains **stub files** that are placeholders for the actual sidecar binaries.
-These stubs are committed to the repository so that the project structure is complete, but they are not valid executables.
-
-If you run the application without building the sidecars first, you will get a runtime error when the application tries to execute them.
-
-To build the sidecars, run:
-
-```sh
-cargo build -p embroiderly_image
-cargo build -p embroiderly_publish
-```
-
-The binaries will appear in `target/debug/` and the application will use them during development.
-
-> [!IMPORTANT]
-> Sidecars must be rebuilt each time their code changes.
-> The application does not automatically detect source changes --- it only sees the compiled binaries.
-
-Alternatively, you can run sidecars directly:
-
-```sh
-cargo run -p embroiderly_image -- [args]
-cargo run -p embroiderly_publish -- [args]
-```
-
 ## Tests Organization
 
 Unit and component tests are extracted into separate files near the source file in the form of `<source-file>.test.{ts,rs}`.
-
-Integration tests are store separately in the `tests/` directory:
-
-- `app/tests/` - Frontend integration tests.
-- `app/src-tauri/tests/` - Backend integration tests.
+Integration tests are stored separately in the `app/tests/` directory:
 
 ## Integration Testing
 
@@ -112,4 +76,4 @@ Last, install [`tauri-driver`](https://github.com/tauri-apps/tauri/tree/dev/crat
 cargo install tauri-driver
 ```
 
-Then you can run end-to-end tests via `pnpm --filter @embroiderly/app test:e2e`.
+Then you can run end-to-end tests via `pnpm -F @embroiderly/app test:e2e`.
