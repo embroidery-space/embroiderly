@@ -40,7 +40,7 @@ catalog:
   "@iconify-json/lucide": 1.2.132
   "@iconify-json/material-symbols": 1.2.92
   "@iconify-json/mdi": 1.2.3
-  "unplugin-icons": 23.0.1
+  "unplugin-icons": 24.0.0
 
   # Localization
   "@fluent/bundle": 0.19.1
