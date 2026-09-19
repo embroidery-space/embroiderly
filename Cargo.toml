@@ -155,7 +155,7 @@ web-sys = "0.3.95"
 itertools = "0.15.0"
 
 # Testing utilities
-rstest = "0.26.1"
+rstest = "0.27.0"
 
 # Other
 alphanumeric-sort = "1.5.6"
