@@ -12,5 +12,3 @@ runs:
       with:
         cache: true
         install: ${{ inputs.install-deps }}
-      env:
-        HUSKY: 0

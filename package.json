@@ -2,7 +2,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "husky",
     "|----- TOOLS -----|": "",
     "tauri": "tauri",
     "|----- APPLICATION -----|": "",
@@ -43,8 +42,6 @@
     "eslint-plugin-vue": "catalog:",
     "eslint-plugin-wdio": "catalog:",
     "eslint-plugin-yml": "catalog:",
-    "husky": "catalog:",
-    "lint-staged": "catalog:",
     "markdownlint-cli2": "catalog:",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",

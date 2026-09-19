@@ -98,8 +98,6 @@ catalog:
   "markdownlint-cli2": 0.23.2
   "oxfmt": 0.68.0
   "oxlint": 1.83.0
-  "husky": 9.1.7
-  "lint-staged": 17.5.1
 
   # Build tools
   "concurrently": 10.0.5
