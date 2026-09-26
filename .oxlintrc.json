@@ -9,7 +9,7 @@
     "restriction": "off",
     "nursery": "off"
   },
-  "plugins": ["oxc", "eslint", "typescript", "unicorn", "promise", "vue"],
+  "plugins": ["oxc", "eslint", "typescript", "unicorn", "promise", "import", "vue"],
   "rules": {
     "no-shadow": "off",
     "no-inline-comments": "off",
@@ -33,7 +33,13 @@
 
     "unicorn/no-useless-undefined": "off",
     "unicorn/consistent-function-scoping": "off",
-    "unicorn/explicit-length-check": "off"
+    "unicorn/explicit-length-check": "off",
+
+    "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+    "import/no-unassigned-import": ["error", { "allow": ["**/*.css", "pixi.js/*"] }],
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/max-dependencies": "off"
   },
   "overrides": [
     {

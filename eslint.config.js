@@ -3,15 +3,14 @@ import { fileURLToPath, URL } from "node:url";
 import vitest from "@vitest/eslint-plugin";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
-import { includeIgnoreFile } from "eslint/config";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import { getDefaultSelectors as getDefaultBetterTailwindcssSelectors } from "eslint-plugin-better-tailwindcss/defaults";
-import importX from "eslint-plugin-import-x";
 import noOnlyTests from "eslint-plugin-no-only-tests";
 import oxlint from "eslint-plugin-oxlint";
 import vue from "eslint-plugin-vue";
 import * as wdio from "eslint-plugin-wdio";
 import yml from "eslint-plugin-yml";
+import { includeIgnoreFile } from "eslint/config";
 
 export default defineConfigWithVueTs(
   // Common options.
@@ -80,44 +79,6 @@ export default defineConfigWithVueTs(
   {
     files: ["app/tests/e2e/**/*.ts", "docs/.screenshots/**/*.ts"],
     extends: [wdio.configs["flat/recommended"]],
-  },
-
-  // Imports organization.
-  {
-    files: ["**/*.{js,ts,vue}"],
-    plugins: { "import-x": importX },
-    rules: {
-      "import-x/order": [
-        "warn",
-        {
-          groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
-          pathGroups: [
-            {
-              pattern: "{@embroiderly/**,@tauri-apps/**}",
-              group: "external",
-              position: "before",
-            },
-            {
-              pattern: "~*/**",
-              group: "internal",
-            },
-            {
-              pattern: "virtual:*",
-              group: "internal",
-              position: "after",
-            },
-          ],
-          pathGroupsExcludedImportTypes: ["builtin"],
-          "newlines-between": "always",
-          alphabetize: {
-            order: "asc", // Value imports go first...
-            orderImportKind: "desc", // ...then go type imports.
-            caseInsensitive: true,
-          },
-        },
-      ],
-      "import-x/consistent-type-specifier-style": ["warn", "prefer-top-level"],
-    },
   },
 
   // TailwindCSS classes validation.

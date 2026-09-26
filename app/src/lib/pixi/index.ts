@@ -1,5 +1,4 @@
 import "pixi.js/math-extras";
-
 import { CullerPlugin, extensions } from "pixi.js";
 
 extensions.add(CullerPlugin);

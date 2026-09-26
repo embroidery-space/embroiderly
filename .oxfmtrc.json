@@ -1,4 +1,41 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "printWidth": 120
+  "printWidth": 120,
+
+  "sortImports": {
+    "newlinesBetween": true,
+    "caseSensitive": false,
+    "order": "asc",
+    "groups": [
+      "builtin",
+      "embroiderly-tauri",
+      "external",
+      "tilde-internal",
+      "internal",
+      "virtual-imports",
+      "parent",
+      "sibling",
+      "index",
+      "unknown",
+      "css-imports"
+    ],
+    "customGroups": [
+      {
+        "groupName": "embroiderly-tauri",
+        "elementNamePattern": ["@embroiderly/**", "@tauri-apps/**"]
+      },
+      {
+        "groupName": "tilde-internal",
+        "elementNamePattern": ["~*/**"]
+      },
+      {
+        "groupName": "virtual-imports",
+        "elementNamePattern": ["virtual:*"]
+      },
+      {
+        "groupName": "css-imports",
+        "elementNamePattern": ["**/*.css"]
+      }
+    ]
+  }
 }

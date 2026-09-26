@@ -1,5 +1,5 @@
-import { addCollection } from "@iconify/vue";
 import lucideIcons from "@iconify-json/lucide/icons.json";
+import { addCollection } from "@iconify/vue";
 import { setup } from "@storybook/vue3-vite";
 import type { Preview } from "@storybook/vue3-vite";
 

@@ -35,7 +35,6 @@
     "@vue/eslint-config-typescript": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-better-tailwindcss": "catalog:",
-    "eslint-plugin-import-x": "catalog:",
     "eslint-plugin-no-only-tests": "catalog:",
     "eslint-plugin-oxlint": "catalog:",
     "eslint-plugin-vue": "catalog:",
