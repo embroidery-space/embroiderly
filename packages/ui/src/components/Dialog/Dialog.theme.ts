@@ -8,19 +8,30 @@ export const DialogTheme = tv({
       data-[state=open]:animate-[fade-in_200ms_ease-out]
     `,
     content: `
-      fixed top-1/2 left-1/2 grid max-h-[90%] w-lg max-w-[90%] -translate-1/2
-      grid-rows-[auto_1fr_auto] divide-y divide-default rounded-lg bg-default
-      shadow-lg ring ring-default
+      fixed flex flex-col divide-y divide-default bg-default
       focus:outline-none
       data-[state=closed]:animate-[scale-out_200ms_ease-in]
       data-[state=open]:animate-[scale-in_200ms_ease-out]
     `,
-    header: "flex min-h-14 items-center gap-1.5 p-4",
+    header: "flex items-center gap-1.5 p-4",
     title: "font-semibold",
     description: "mt-1 text-sm text-muted",
     close: "absolute inset-e-4 top-4",
-    body: "p-4",
+    body: "flex-1 overflow-y-auto p-4",
     footer: "flex items-center justify-end gap-1.5 p-4",
+  },
+  variants: {
+    fullscreen: {
+      true: {
+        content: "inset-0",
+      },
+      false: {
+        content: `
+          top-1/2 left-1/2 max-h-[90%] w-lg max-w-[90%] -translate-1/2
+          rounded-lg shadow-lg ring ring-default
+        `,
+      },
+    },
   },
 });
 

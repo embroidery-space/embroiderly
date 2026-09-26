@@ -166,7 +166,7 @@ onUnmounted(() => service.destroy());
 </script>
 
 <template>
-  <Dialog :title="$t('image-import')" :scroll="false" :ui="{ content: 'size-full', body: 'p-0!' }">
+  <Dialog fullscreen :title="$t('image-import')" :scroll="false" :ui="{ body: 'p-0!' }">
     <template #body>
       <div class="flex h-full" :class="{ 'flex-col': isMobilePortrait }">
         <ScrollArea
