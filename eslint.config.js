@@ -1,6 +1,5 @@
 import { fileURLToPath, URL } from "node:url";
 
-import vueI18n from "@intlify/eslint-plugin-vue-i18n";
 import vitest from "@vitest/eslint-plugin";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
@@ -50,33 +49,6 @@ export default defineConfigWithVueTs(
       "vue/no-dupe-keys": "off",
 
       "vue/require-explicit-slots": "error",
-    },
-  },
-
-  // I18n.
-  {
-    files: ["**/*.vue"],
-    ignores: ["**/*.story.vue", "**/story/*.vue"],
-    plugins: { "vue-i18n": vueI18n },
-    rules: {
-      "vue-i18n/no-raw-text": [
-        "error",
-        {
-          attributes: {
-            "/.+/": [
-              "title",
-              "label",
-              "description",
-              "help",
-              "hint",
-              "aria-label",
-              "aria-placeholder",
-              "placeholder",
-              "alt",
-            ],
-          },
-        },
-      ],
     },
   },
 
