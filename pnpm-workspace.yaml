@@ -23,7 +23,7 @@ catalog:
   "@tanstack/vue-hotkeys": 0.11.0
   "@vueuse/core": 15.0.0
   "@vueuse/components": 15.0.0
-  "@vueuse/integrations": 14.4.0
+  "@vueuse/integrations": 15.0.0
   "vue": 3.5.43
   "vue-component-type-helpers": 3.3.11
   "pinia": 4.0.3
