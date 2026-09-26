@@ -22,7 +22,7 @@ catalog:
   # Vue
   "@tanstack/vue-hotkeys": 0.10.0
   "@vueuse/core": 14.4.0
-  "@vueuse/components": 14.4.0
+  "@vueuse/components": 15.0.0
   "@vueuse/integrations": 14.4.0
   "vue": 3.5.42
   "vue-component-type-helpers": 3.3.11
