@@ -3,18 +3,12 @@ import { computed, provide } from "vue";
 
 import { formFieldGroupInjectionKey } from "../../composables/useFormFieldGroup.ts";
 
-import { FormFieldGroupTheme } from "./FormFieldGroup.theme.ts";
-import type { FormFieldGroupThemeVariants } from "./FormFieldGroup.theme.ts";
-
 export interface FormFieldGroupProps {
   /**
    * The size of the grouped children.
    * @default "md"
    */
-  size?: FormFieldGroupThemeVariants["size"];
-
-  class?: any;
-  ui?: { base?: string };
+  size?: "sm" | "md" | "lg";
 }
 
 export interface FormFieldGroupSlots {
@@ -30,17 +24,21 @@ provide(
   formFieldGroupInjectionKey,
   computed(() => ({ size: props.size })),
 );
-
-const theme = computed(() => {
-  return FormFieldGroupTheme({
-    size: props.size,
-    class: [props.ui?.base, props.class],
-  });
-});
 </script>
 
 <template>
-  <div :class="theme">
+  <div data-slot="base" :class="$style.base">
     <slot />
   </div>
 </template>
+
+<style module>
+.base {
+  position: relative;
+  display: inline-flex;
+}
+
+:where(.base > :not(:last-child)) {
+  margin-inline-end: -1px;
+}
+</style>
