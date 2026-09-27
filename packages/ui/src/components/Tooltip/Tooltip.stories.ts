@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect } from "storybook/test";
 
-import Button from "../Button/Button.vue";
-
+import TooltipDemo from "./stories/TooltipDemo.vue";
 import Tooltip from "./Tooltip.vue";
 
 const sides = ["top", "right", "bottom", "left"] as const;
@@ -37,31 +36,15 @@ export const Demo: Story = {
     disabled: false,
   },
   render: (args) => ({
-    components: { Tooltip, Button },
+    components: { TooltipDemo },
     setup: () => ({ args }),
-    template: `
-      <div class="inline-flex p-8">
-        <Tooltip v-bind="args">
-          <Button label="Button" />
-        </Tooltip>
-      </div>
-    `,
+    template: `<TooltipDemo v-bind="args" />`,
   }),
 };
 
 export const Open: Story = {
   args: { ...Demo.args, open: true, portal: false },
-  render: (args) => ({
-    components: { Tooltip, Button },
-    setup: () => ({ args }),
-    template: `
-      <div class="inline-flex p-8">
-        <Tooltip v-bind="args">
-          <Button label="Button" />
-        </Tooltip>
-      </div>
-    `,
-  }),
+  render: Demo.render,
   async play({ canvas }) {
     await expect(canvas.getByText("Lorem ipsum")).toBeVisible();
   },
