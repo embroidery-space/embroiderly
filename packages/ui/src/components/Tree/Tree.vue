@@ -241,7 +241,10 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
             :disabled="isDisabled"
             tabindex="-1"
             data-slot="itemChevron"
-            :class="ui.itemChevron({ class: [props.ui?.itemChevron, isExpanded && 'rotate-180'] })"
+            :class="[
+              ui.itemChevron({ class: [props.ui?.itemChevron, isExpanded && 'rotate-180'] }),
+              $style.itemChevron,
+            ]"
             @click.stop="handleToggle()"
           />
 
@@ -294,3 +297,11 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
     <ReuseTreeTemplate :items="items ?? []" :level="1" />
   </Tree.Root>
 </template>
+
+<style module>
+/* Outweighs the color transition of the `Button` root. */
+.itemChevron[data-slot="itemChevron"] {
+  transition-duration: 200ms;
+  transition-property: transform, translate, scale, rotate;
+}
+</style>

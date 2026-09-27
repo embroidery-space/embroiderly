@@ -13,6 +13,7 @@ const isCI = process.env.CI === "true";
 
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
+  css: { modules: { localsConvention: "camelCase" } },
   resolve: {
     alias: {
       "~storybook-utils": path.join(import.meta.dirname, ".storybook/utils"),

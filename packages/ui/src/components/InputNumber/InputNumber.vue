@@ -121,7 +121,7 @@ const ui = computed(() => {
       :class="ui.base({ class: props.ui?.base })"
     />
 
-    <div v-if="hasButtons" data-slot="buttons" :class="ui.buttons({ class: props.ui?.buttons })">
+    <div v-if="hasButtons" data-slot="buttons" :class="[ui.buttons({ class: props.ui?.buttons }), $style.buttons]">
       <NumberField.Increment v-if="increment" as-child :disabled="disabled">
         <Button
           square
@@ -146,3 +146,10 @@ const ui = computed(() => {
     </div>
   </NumberField.Root>
 </template>
+
+<style module>
+/* Outweighs the square padding of the `Button` root. */
+.buttons[data-slot="buttons"] > button[data-slot="base"] {
+  padding-block: 0;
+}
+</style>

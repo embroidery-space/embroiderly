@@ -110,7 +110,7 @@ const ui = computed(() => {
           size="md"
           :aria-label="locale.messages.toast.close"
           data-slot="close"
-          :class="ui.close({ class: props.ui?.close })"
+          :class="[ui.close({ class: props.ui?.close }), $style.close]"
           @click.stop
           @pointerdown.stop
           @pointermove.stop
@@ -131,6 +131,11 @@ const ui = computed(() => {
 </template>
 
 <style module>
+/* Outweighs the size padding of the `Button` root. */
+button.close[data-slot="close"] {
+  padding: 0;
+}
+
 /* Outweighs the `position: relative` of the `Progress` root. */
 .progress[data-slot="progress"] {
   position: absolute;
