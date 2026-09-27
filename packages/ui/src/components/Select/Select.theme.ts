@@ -35,10 +35,6 @@ export const SelectTheme = tv({
     itemLeadingIcon: "shrink-0 text-dimmed",
     itemLabel: "min-w-0 flex-1 truncate",
     itemIndicator: "ms-auto shrink-0 text-primary",
-    input: `
-      w-full border-b border-default bg-default outline-none
-      placeholder:text-muted
-    `,
     empty: "text-center text-sm text-muted",
   },
   variants: {
@@ -61,7 +57,6 @@ export const SelectTheme = tv({
         item: "gap-1 p-1 text-xs",
         itemLeadingIcon: "size-4",
         itemIndicator: "size-3",
-        input: "px-2 py-1 text-xs",
         empty: "py-1 text-xs",
       },
       md: {
@@ -71,7 +66,6 @@ export const SelectTheme = tv({
         item: "gap-1.5 p-1.5 text-sm",
         itemLeadingIcon: "size-5",
         itemIndicator: "size-4",
-        input: "px-2.5 py-1.5 text-sm",
         empty: "py-1.5 text-sm",
       },
       lg: {
@@ -81,7 +75,6 @@ export const SelectTheme = tv({
         item: "gap-2 p-2 text-base",
         itemLeadingIcon: "size-5",
         itemIndicator: "size-5",
-        input: "px-3 py-2 text-base",
         empty: "py-2 text-base",
       },
     },

@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect } from "storybook/test";
 
-import Input from "../Input/Input.vue";
-
 import FormFieldSet from "./FormFieldSet.vue";
+import FormFieldSetCollapsible from "./stories/FormFieldSetCollapsible.vue";
+import FormFieldSetDemo from "./stories/FormFieldSetDemo.vue";
+import FormFieldSetSizes from "./stories/FormFieldSetSizes.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -27,61 +28,33 @@ export const Demo: Story = {
     collapsible: false,
   },
   render: (args) => ({
-    components: { FormFieldSet, Input },
+    components: { FormFieldSetDemo },
     setup: () => ({ args }),
-    template: `
-      <FormFieldSet v-bind="args" class="w-sm">
-        <div class="grid grid-cols-2 gap-4">
-          <Input placeholder="Enter value" class="w-full" />
-          <Input placeholder="Enter value" class="w-full" />
-          <Input placeholder="Enter value" class="w-full" />
-          <Input placeholder="Enter value" class="w-full" />
-        </div>
-      </FormFieldSet>
-    `,
+    template: `<FormFieldSetDemo v-bind="args" />`,
   }),
 };
 
 export const Sizes: Story = {
   args: { legend: "Legend" },
   render: () => ({
-    components: { FormFieldSet, Input },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-4">
-        <FormFieldSet v-for="size in sizes" :key="size" :legend="\`Size: \${size}\`" :size="size">
-          <Input placeholder="Input" class="w-full" />
-        </FormFieldSet>
-      </div>
-    `,
+    components: { FormFieldSetSizes },
+    template: `<FormFieldSetSizes />`,
   }),
 };
 
 export const Collapsed: Story = {
   args: { legend: "Legend", collapsible: true, open: false },
   render: (args) => ({
-    components: { FormFieldSet, Input },
+    components: { FormFieldSetCollapsible },
     setup: () => ({ args }),
-    template: `
-      <FormFieldSet v-bind="args" class="w-sm">
-        <Input placeholder="Enter value" class="w-full" />
-      </FormFieldSet>
-    `,
+    template: `<FormFieldSetCollapsible v-bind="args" />`,
   }),
 };
 
 export const Collapsible: Story = {
   args: { legend: "Legend", collapsible: true },
   tags: ["!autodocs", "!snapshot"],
-  render: (args) => ({
-    components: { FormFieldSet, Input },
-    setup: () => ({ args }),
-    template: `
-      <FormFieldSet v-bind="args" class="w-sm">
-        <Input placeholder="Enter value" class="w-full" />
-      </FormFieldSet>
-    `,
-  }),
+  render: Collapsed.render,
   async play({ canvas, userEvent }) {
     const trigger = canvas.getByRole("button");
 

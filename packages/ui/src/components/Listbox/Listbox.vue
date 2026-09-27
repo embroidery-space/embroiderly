@@ -156,16 +156,11 @@ const ui = computed(() => {
     :by="by as any"
     :disabled="disabled"
     data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    :class="[ui.root({ class: [props.ui?.root, props.class] }), $style.root]"
     @highlight="emit('highlight', $event as any)"
   >
     <Listbox.Filter v-if="filterInput" v-model="filterValue" as-child>
-      <Input
-        v-model="filterValue"
-        :size="size"
-        v-bind="filterInputProps"
-        :class="ui.filter({ class: props.ui?.filter })"
-      />
+      <Input v-model="filterValue" :size="size" v-bind="filterInputProps" />
     </Listbox.Filter>
 
     <Listbox.Content data-slot="content" :class="ui.content({ class: props.ui?.content })">
@@ -229,3 +224,9 @@ const ui = computed(() => {
     </Listbox.Content>
   </Listbox.Root>
 </template>
+
+<style module>
+.root > [data-slot="root"] {
+  border-bottom: 1px solid var(--border-color-default);
+}
+</style>

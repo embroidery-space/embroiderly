@@ -214,17 +214,10 @@ function normalizeItem(item: SelectItem): SelectItemObject {
         :side-offset="4"
         :collision-padding="4"
         data-slot="content"
-        :class="ui.content({ class: props.ui?.content })"
+        :class="[ui.content({ class: props.ui?.content }), $style.content, $style[`size-${size}`]]"
       >
         <Combobox.Input v-if="!!searchInput" v-model="searchValue" as-child>
-          <Input
-            v-bind="searchInputProps"
-            autofocus
-            autocomplete="off"
-            :size="size"
-            data-slot="input"
-            :class="ui.input({ class: props.ui?.input })"
-          />
+          <Input v-bind="searchInputProps" autofocus autocomplete="off" :size="size" data-slot="input" />
         </Combobox.Input>
 
         <Combobox.Viewport data-slot="viewport" :class="ui.viewport({ class: props.ui?.viewport })">
@@ -284,3 +277,33 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     </Combobox.Portal>
   </Combobox.Root>
 </template>
+
+<style module>
+.content > [data-slot="root"] {
+  width: 100%;
+  border-bottom: 1px solid var(--border-color-default);
+  background-color: var(--background-color-default);
+  outline-style: none;
+}
+
+.content.size-sm > [data-slot="root"] {
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+}
+
+.content.size-md > [data-slot="root"] {
+  padding-block: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 2.5);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+
+.content.size-lg > [data-slot="root"] {
+  padding-block: calc(var(--spacing) * 2);
+  padding-inline: calc(var(--spacing) * 3);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+</style>

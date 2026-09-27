@@ -7,7 +7,6 @@ export const ListboxTheme = tv({
       flex min-h-0 flex-col overflow-hidden rounded-md ring ring-default
       ring-inset
     `,
-    filter: "border-b border-default",
     content: "min-h-0 flex-1 overflow-y-auto outline-none",
     group: "p-1",
     label: "flex w-full items-center font-semibold text-muted",

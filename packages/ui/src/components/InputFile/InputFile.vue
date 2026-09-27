@@ -74,7 +74,7 @@ const displayValue = computed(() => {
 </script>
 
 <template>
-  <FormFieldGroup :size="size" :class="InputFileTheme({ size, class: [props.ui?.base, props.class] })">
+  <FormFieldGroup :size="size" :class="InputFileTheme({ size, class: [props.ui?.base, props.class, $style.root] })">
     <Button :label="locale.messages.filePicker.chooseFile" :size="size" :disabled="disabled" @click="openPicker" />
 
     <!-- Keep this hidden input between other elements, so that they receive correct border radius. -->
@@ -88,7 +88,12 @@ const displayValue = computed(() => {
       @change="onChange"
     />
 
-    <!-- eslint-disable-next-line better-tailwindcss/enforce-consistent-line-wrapping -->
-    <Input readonly :model-value="label ?? displayValue" :size="size" :disabled="disabled" class="w-full" />
+    <Input readonly :model-value="label ?? displayValue" :size="size" :disabled="disabled" />
   </FormFieldGroup>
 </template>
+
+<style module>
+.root > [data-slot="root"] {
+  width: 100%;
+}
+</style>
