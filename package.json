@@ -23,8 +23,8 @@
     "check-types": "pnpm -r check-types",
     "fmt": "oxfmt --check",
     "fmt:fix": "oxfmt --write",
-    "lint": "oxlint --format stylish --deny-warnings && eslint --concurrency auto --max-warnings 0 && markdownlint-cli2 \"**/*.md\"",
-    "lint:fix": "oxlint --fix --format stylish --deny-warnings && eslint --fix --concurrency auto --max-warnings 0 && markdownlint-cli2 --fix \"**/*.md\"",
+    "lint": "oxlint --format stylish --deny-warnings && eslint --concurrency auto --max-warnings 0 && stylelint \"**/*.{css,vue}\" --max-warnings 0 -i .gitignore -i packages/ui/.gitignore && markdownlint-cli2 \"**/*.md\"",
+    "lint:fix": "oxlint --fix --format stylish --deny-warnings && eslint --fix --concurrency auto --max-warnings 0 && stylelint \"**/*.{css,vue}\" --fix --max-warnings 0 -i .gitignore -i packages/ui/.gitignore && markdownlint-cli2 \"**/*.md\" --fix",
     "test": "pnpm -r --workspace-concurrency 1 test",
     "test:unit": "pnpm -r test:unit"
   },
@@ -43,6 +43,9 @@
     "markdownlint-cli2": "catalog:",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
+    "stylelint": "catalog:",
+    "stylelint-config-clean-order": "catalog:",
+    "stylelint-config-recommended-vue": "catalog:",
     "tailwindcss": "catalog:"
   },
   "packageManager": "pnpm@11.27.1"

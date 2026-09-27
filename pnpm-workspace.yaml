@@ -96,6 +96,9 @@ catalog:
   "markdownlint-cli2": 0.23.3
   "oxfmt": 0.70.0
   "oxlint": 1.85.0
+  "stylelint": 17.15.0
+  "stylelint-config-recommended-vue": 2.0.0
+  "stylelint-config-clean-order": 10.0.0
 
   # Build tools
   "concurrently": 10.0.5
