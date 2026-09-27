@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
 import BlockUI from "./BlockUI.vue";
+import BlockUIDemo from "./stories/BlockUIDemo.vue";
 
 const meta = {
   title: "Overlay/BlockUI",
@@ -16,16 +17,9 @@ export const Demo: Story = {
     blocked: false,
   },
   render: (args) => ({
-    components: { BlockUI },
+    components: { BlockUIDemo },
     setup: () => ({ args }),
-    template: `
-      <BlockUI v-bind="args" :ui="{ base: 'p-2', mask: 'rounded-lg' }">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Architecto nemo consequatur dolor.
-          Officia aut perspiciatis iure accusamus dolor sit alias autem.
-          Odio et aut qui consequatur, laboriosam hic porro at!
-      </BlockUI>
-    `,
+    template: `<BlockUIDemo v-bind="args" />`,
   }),
 };
 
