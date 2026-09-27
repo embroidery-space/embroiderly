@@ -10,14 +10,13 @@ import type { Component } from "vue";
 export function renderWithLocalModel<T extends { modelValue?: unknown }>(
   component: Component,
   tag: string,
-  options: { attrs?: string; wrapperClass?: string } = {},
+  options: { attrs?: string } = {},
 ) {
-  const { attrs = "", wrapperClass } = options;
-  const markup = `<${tag} v-bind="args" v-model="value"${attrs ? ` ${attrs}` : ""} />`;
+  const { attrs = "" } = options;
 
   return (args: T) => ({
     components: { [tag]: component },
     setup: () => ({ args, value: ref(args.modelValue) }),
-    template: wrapperClass ? `<div class="${wrapperClass}">${markup}</div>` : markup,
+    template: `<${tag} v-bind="args" v-model="value"${attrs ? ` ${attrs}` : ""} />`,
   });
 }
