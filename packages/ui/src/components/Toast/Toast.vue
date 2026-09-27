@@ -125,7 +125,16 @@ const ui = computed(() => {
       :color="color"
       size="sm"
       data-slot="progress"
-      :class="ui.progress({ class: props.ui?.progress })"
+      :class="[ui.progress({ class: props.ui?.progress }), $style.progress]"
     />
   </Toast.Root>
 </template>
+
+<style module>
+/* Outweighs the `position: relative` of the `Progress` root. */
+.progress[data-slot="progress"] {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+}
+</style>

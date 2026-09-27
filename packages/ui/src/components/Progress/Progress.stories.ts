@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
 import Progress from "./Progress.vue";
+import ProgressColors from "./stories/ProgressColors.vue";
+import ProgressDemo from "./stories/ProgressDemo.vue";
+import ProgressSizes from "./stories/ProgressSizes.vue";
 
 const colors = ["primary", "error", "warning", "success", "info", "help", "neutral"];
 const sizes = ["xs", "sm", "md", "lg", "xl"];
@@ -26,36 +29,22 @@ export const Demo: Story = {
     size: "md",
   },
   render: (args) => ({
-    components: { Progress },
+    components: { ProgressDemo },
     setup: () => ({ args }),
-    template: `
-      <div :class="args.orientation === 'horizontal' ? 'w-96 flex-col' : 'h-48 flex-row'">
-        <Progress v-bind="args" />
-      </div>
-    `,
+    template: `<ProgressDemo v-bind="args" />`,
   }),
 };
 
 export const Colors: Story = {
   render: () => ({
-    components: { Progress },
-    setup: () => ({ colors }),
-    template: `
-      <div class="flex w-96 flex-col gap-4">
-        <Progress v-for="color in colors" :key="color" :color="color" />
-      </div>
-    `,
+    components: { ProgressColors },
+    template: `<ProgressColors />`,
   }),
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Progress },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex w-96 flex-col gap-4">
-        <Progress v-for="size in sizes" :key="size" :size="size" />
-      </div>
-    `,
+    components: { ProgressSizes },
+    template: `<ProgressSizes />`,
   }),
 };
