@@ -5,10 +5,10 @@ export const TabsTheme = tv({
   slots: {
     root: "flex gap-2",
     wrapper: "inline-flex",
-    scroll: "grow",
+    scroll: "grow overflow-auto",
     list: `
-      relative flex size-full items-center overflow-hidden rounded-lg
-      bg-accented p-1
+      relative flex size-full min-h-fit min-w-fit items-center overflow-hidden
+      rounded-lg bg-accented p-1
     `,
     indicator: `
       absolute rounded-md bg-inverted shadow-xs

@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import defu from "defu";
 import { Dialog } from "reka-ui/namespaced";
-import { computed, toRef, useTemplateRef } from "vue";
+import { toRef, useTemplateRef } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
 import Button from "../Button/Button.vue";
-import ScrollArea from "../ScrollArea/ScrollArea.vue";
-import type { ScrollAreaProps } from "../ScrollArea/ScrollArea.vue";
 
 import { DialogTheme } from "./Dialog.theme.ts";
 import type { DialogThemeSlots } from "./Dialog.theme.ts";
@@ -31,13 +28,6 @@ export interface DialogProps {
    */
   portal?: boolean | string | HTMLElement;
 
-  /**
-   * Configuration for the body scroll area.
-   * Set to `false` to disable, `true` to use defaults.
-   * @default { type: "auto", size: "sm" }
-   */
-  scroll?: boolean | Pick<ScrollAreaProps, "type" | "size" | "ui">;
-
   class?: any;
   ui?: DialogThemeSlots;
 }
@@ -59,16 +49,11 @@ const open = defineModel<boolean>("open", { default: false });
 const props = withDefaults(defineProps<DialogProps>(), {
   dismissible: true,
   portal: true,
-  scroll: true,
 });
 const emit = defineEmits<DialogEmits>();
 const slots = defineSlots<DialogSlots>();
 
 const portalProps = usePortal(toRef(() => props.portal));
-const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
-  if (props.scroll === false) return null;
-  return defu(typeof props.scroll === "object" ? props.scroll : {}, { type: "auto", size: "sm" } as const);
-});
 
 const { icons } = useComponentIcons();
 const locale = useLocale();
@@ -136,12 +121,7 @@ defineExpose({ contentRef });
           </Dialog.Close>
         </header>
 
-        <ScrollArea v-if="scrollProps" v-bind="scrollProps">
-          <div data-slot="body" :class="ui.body({ class: props.ui?.body })">
-            <slot name="body" :close="close" />
-          </div>
-        </ScrollArea>
-        <div v-else data-slot="body" :class="ui.body({ class: [props.ui?.body, 'overflow-hidden'] })">
+        <div data-slot="body" :class="ui.body({ class: props.ui?.body })">
           <slot name="body" :close="close" />
         </div>
 

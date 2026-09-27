@@ -42,6 +42,11 @@ export const TreeTheme = tv({
         itemChevron: "size-5",
       },
     },
+    scroll: {
+      true: {
+        root: "overflow-y-auto",
+      },
+    },
   },
 });
 

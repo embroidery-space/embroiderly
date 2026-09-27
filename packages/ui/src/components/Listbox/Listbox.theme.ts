@@ -8,8 +8,7 @@ export const ListboxTheme = tv({
       ring-inset
     `,
     filter: "border-b border-default",
-    scroll: "min-h-0 flex-1",
-    content: "min-h-full outline-none",
+    content: "min-h-0 flex-1 overflow-y-auto outline-none",
     group: "p-1",
     label: "flex w-full items-center font-semibold text-muted",
     separator: "-mx-1 my-1 h-px bg-border",

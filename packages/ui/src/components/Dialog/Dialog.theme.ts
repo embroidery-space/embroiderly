@@ -19,7 +19,7 @@ export const DialogTheme = tv({
     title: "font-semibold",
     description: "mt-1 text-sm text-muted",
     close: "absolute inset-e-4 top-4",
-    body: "p-4",
+    body: "overflow-y-auto p-4",
     footer: "flex items-center justify-end gap-1.5 p-4",
   },
 });

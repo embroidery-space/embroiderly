@@ -225,7 +225,7 @@ watchEffect(() => {
       <Tree
         :items="layerItems"
         :default-value="selectedLayerItem"
-        :scroll="{ type: 'hover' }"
+        scroll
         :disabled="disabled"
         selection-behavior="replace"
       >

@@ -11,7 +11,7 @@ const telemetry = reactive({ diagnostics: false, metrics: false });
 </script>
 
 <template>
-  <Dialog :title="$t('telemetry-prompt')" :dismissible="false" :scroll="false">
+  <Dialog :title="$t('telemetry-prompt')" :dismissible="false">
     <template #body>
       <Checkbox v-model="telemetry.diagnostics" v-bind="$ta('settings-telemetry-diagnostics')" />
       <Checkbox v-model="telemetry.metrics" v-bind="$ta('settings-telemetry-metrics')" />

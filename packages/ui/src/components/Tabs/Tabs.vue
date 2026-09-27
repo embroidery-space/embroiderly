@@ -3,8 +3,6 @@ import type { TabsRootProps } from "reka-ui";
 import { Tabs } from "reka-ui/namespaced";
 import { computed } from "vue";
 
-import ScrollArea from "../ScrollArea/ScrollArea.vue";
-
 import { TabsTheme } from "./Tabs.theme.ts";
 import type { TabsThemeSlots, TabsThemeVariants } from "./Tabs.theme.ts";
 
@@ -89,13 +87,7 @@ const ui = computed(() => {
     <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
       <slot name="list-leading" />
 
-      <ScrollArea
-        :orientation="orientation"
-        :size="size"
-        type="hover"
-        data-slot="scroll"
-        :class="ui.scroll({ class: props.ui?.scroll })"
-      >
+      <div data-slot="scroll" :class="ui.scroll({ class: props.ui?.scroll })">
         <Tabs.List data-slot="list" :class="ui.list({ class: props.ui?.list })">
           <Tabs.Indicator
             v-if="items?.length"
@@ -120,7 +112,7 @@ const ui = computed(() => {
             <slot name="trailing" :item="item" :index="index" />
           </Tabs.Trigger>
         </Tabs.List>
-      </ScrollArea>
+      </div>
 
       <slot name="list-trailing" />
     </div>

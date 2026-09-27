@@ -4,7 +4,7 @@ import type { ListboxProps } from "@embroiderly/ui";
 
 import SymbolsListItem from "./SymbolsListItem.vue";
 
-interface SymbolsListProps extends Pick<ListboxProps, "disabled" | "scroll"> {
+interface SymbolsListProps extends Pick<ListboxProps, "disabled"> {
   assignedSymbols: number[];
   options?: number[];
   fontFamily?: string;
@@ -36,13 +36,10 @@ const emit = defineEmits<{
       :items="options"
       :disabled="disabled"
       selection-behavior="replace"
-      :scroll="scroll"
       :empty-message="$t('stitch-symbols-empty')"
       class="grow"
       :ui="{
         root: 'overflow-hidden rounded-none ring-0',
-        scroll: 'min-h-0 flex-1',
-        content: 'min-h-full',
         group: 'grid grid-cols-8 gap-1 p-1',
         item: 'rounded-none p-0 data-highlighted:bg-transparent',
       }"

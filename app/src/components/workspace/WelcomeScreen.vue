@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, Icon, ScrollArea } from "@embroiderly/ui";
+import { Button, Icon } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { openPath } from "@tauri-apps/plugin-opener";
 
@@ -88,7 +88,7 @@ function createPattern() {
 </script>
 
 <template>
-  <ScrollArea data-testid="welcome-screen" type="auto" size="sm" :ui="{ viewport: 'flex flex-col' }">
+  <div data-testid="welcome-screen" class="flex flex-col overflow-y-auto">
     <div class="flex grow items-center justify-center p-4 sm:p-6">
       <div class="flex min-w-1/2 flex-col gap-4 sm:gap-6">
         <span class="text-2xl font-medium sm:text-3xl lg:text-4xl">{{ $t("welcome") }}</span>
@@ -165,5 +165,5 @@ function createPattern() {
         <span class="font-features-['ss14'] text-lg font-semibold">A</span>
       </template>
     </i18n>
-  </ScrollArea>
+  </div>
 </template>

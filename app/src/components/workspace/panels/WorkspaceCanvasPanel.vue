@@ -2,7 +2,6 @@
 import {
   ButtonIcon,
   Popover,
-  ScrollArea,
   Separator,
   SplitterPanel,
   ToolToggle,
@@ -113,13 +112,7 @@ watch(collapsed, (value) => {
 
 <template>
   <SplitterPanel ref="panel" v-bind="splitterPanelProps" class="h-full min-w-min">
-    <ScrollArea
-      class="h-full"
-      orientation="vertical"
-      size="sm"
-      type="hover"
-      :ui="{ viewport: 'flex flex-col gap-1 p-1' }"
-    >
+    <div class="flex h-full flex-col gap-1 overflow-y-auto p-1">
       <ToolToggleGroup
         v-model="displayMode"
         :items="displayModeOptions"
@@ -202,6 +195,6 @@ watch(collapsed, (value) => {
           />
         </template>
       </Popover>
-    </ScrollArea>
+    </div>
   </SplitterPanel>
 </template>

@@ -1,5 +1,4 @@
 <script setup lang="ts" generic="T extends ListboxItem">
-import { createReusableTemplate } from "@vueuse/core";
 import defu from "defu";
 import type { AcceptableValue, ListboxRootProps } from "reka-ui";
 import { Listbox } from "reka-ui/namespaced";
@@ -11,8 +10,6 @@ import { useLocale } from "../../composables/useLocale.ts";
 import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
 import type { InputProps } from "../Input/Input.vue";
-import ScrollArea from "../ScrollArea/ScrollArea.vue";
-import type { ScrollAreaProps } from "../ScrollArea/ScrollArea.vue";
 
 import { ListboxTheme } from "./Listbox.theme.ts";
 import type { ListboxThemeSlots, ListboxThemeVariants } from "./Listbox.theme.ts";
@@ -55,13 +52,6 @@ export interface ListboxProps<T extends ListboxItem = ListboxItem> extends Pick<
   filterInput?: boolean | InputProps;
 
   /**
-   * Wrap the content in a `ScrollArea`.
-   * Pass an object to configure it.
-   * @default true
-   */
-  scroll?: boolean | Pick<ScrollAreaProps, "type" | "size" | "ui">;
-
-  /**
    * The color scheme of the listbox.
    * @default "primary"
    */
@@ -98,7 +88,6 @@ const filterValue = defineModel<string>("filterValue", { default: "" });
 const props = withDefaults(defineProps<ListboxProps<T>>(), {
   color: "primary",
   size: "md",
-  scroll: true,
 });
 const emit = defineEmits<ListboxEmits<T>>();
 defineSlots<ListboxSlots>();
@@ -115,13 +104,6 @@ const filterInputProps = computed<InputProps>(() =>
     variant: "none",
   } as InputProps),
 );
-
-const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
-  if (props.scroll === false) return null;
-  return defu(typeof props.scroll === "object" ? props.scroll : {}, { type: "hover" as const });
-});
-
-const [DefineContentTemplate, ContentTemplate] = createReusableTemplate();
 
 const normalizedGroups = computed<ListboxItemObject[][]>(() => {
   if (!props.items?.length) return [];
@@ -163,7 +145,29 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <DefineContentTemplate>
+  <Listbox.Root
+    :id="id"
+    v-model="modelValue as AcceptableValue | undefined"
+    v-bind="{ ...$attrs, ...ariaAttrs }"
+    :multiple="multiple"
+    :selection-behavior="selectionBehavior"
+    :highlight-on-hover="highlightOnHover"
+    :orientation="orientation"
+    :by="by as any"
+    :disabled="disabled"
+    data-slot="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    @highlight="emit('highlight', $event as any)"
+  >
+    <Listbox.Filter v-if="filterInput" v-model="filterValue" as-child>
+      <Input
+        v-model="filterValue"
+        :size="size"
+        v-bind="filterInputProps"
+        :class="ui.filter({ class: props.ui?.filter })"
+      />
+    </Listbox.Filter>
+
     <Listbox.Content data-slot="content" :class="ui.content({ class: props.ui?.content })">
       <template v-if="hasItems">
         <Listbox.Group
@@ -223,40 +227,5 @@ const ui = computed(() => {
         {{ props.emptyMessage ?? locale.messages.listbox.empty }}
       </p>
     </Listbox.Content>
-  </DefineContentTemplate>
-
-  <Listbox.Root
-    :id="id"
-    v-model="modelValue as AcceptableValue | undefined"
-    v-bind="{ ...$attrs, ...ariaAttrs }"
-    :multiple="multiple"
-    :selection-behavior="selectionBehavior"
-    :highlight-on-hover="highlightOnHover"
-    :orientation="orientation"
-    :by="by as any"
-    :disabled="disabled"
-    data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
-    @highlight="emit('highlight', $event as any)"
-  >
-    <Listbox.Filter v-if="filterInput" v-model="filterValue" as-child>
-      <Input
-        v-model="filterValue"
-        :size="size"
-        v-bind="filterInputProps"
-        :class="ui.filter({ class: props.ui?.filter })"
-      />
-    </Listbox.Filter>
-
-    <ScrollArea
-      v-if="scrollProps !== null"
-      v-bind="scrollProps"
-      :size="scrollProps.size ?? size"
-      data-slot="scroll"
-      :class="ui.scroll({ class: [scrollProps.ui?.root, props.ui?.scroll] })"
-    >
-      <ContentTemplate />
-    </ScrollArea>
-    <ContentTemplate v-else />
   </Listbox.Root>
 </template>

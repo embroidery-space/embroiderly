@@ -12,7 +12,7 @@ import PaletteListItem from "./PaletteListItem.vue";
 
 interface PaletteListProps<T> extends Pick<
   ListboxProps,
-  "disabled" | "multiple" | "scroll" | "filterInput" | "selectionBehavior"
+  "disabled" | "multiple" | "filterInput" | "selectionBehavior"
 > {
   options?: T[];
   optionValue?: (option: T) => V;
@@ -116,15 +116,12 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
       :disabled="disabled"
       :selection-behavior="selectionBehavior"
       :filter-input="filterInput"
-      :scroll="scroll"
       :empty-message="$t('palette-empty')"
       class="grow"
       :style="{ '--palette-cols': displaySettings.columnsNumber }"
       :ui="{
         root: 'overflow-hidden rounded-none ring-0',
         filter: 'p-1',
-        scroll: 'min-h-0 flex-1',
-        content: 'min-h-full',
         group: 'grid grid-cols-[repeat(var(--palette-cols),minmax(0,1fr))] gap-1 p-1',
         item: 'rounded-none p-0 data-highlighted:bg-transparent',
         empty: 'text-xs',
