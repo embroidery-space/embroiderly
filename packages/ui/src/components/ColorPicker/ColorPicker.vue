@@ -4,15 +4,12 @@ import { computed, ref, useTemplateRef, watch } from "vue";
 import { useColorDraggable } from "../../composables/useColorDraggable.ts";
 import { hexToHsv, hsvToHex, isValidHex } from "../../utils/color.ts";
 
-import { ColorPickerTheme } from "./ColorPicker.theme.ts";
-import type { ColorPickerThemeSlots, ColorPickerThemeVariants } from "./ColorPicker.theme.ts";
-
 export interface ColorPickerProps {
   /**
    * The size of the color picker.
    * @default "md"
    */
-  size?: ColorPickerThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /**
    * Throttle time in milliseconds for drag updates.
@@ -22,9 +19,6 @@ export interface ColorPickerProps {
 
   /** Whether the color picker is disabled. */
   disabled?: boolean;
-
-  class?: any;
-  ui?: ColorPickerThemeSlots;
 }
 
 const modelValue = defineModel<string>({ default: "#FF0000" });
@@ -77,36 +71,22 @@ const { y: trackDragY } = useColorDraggable({
 
 const currentSelectorBackgroundColor = computed(() => hsvToHex({ h: hsv.value.h, s: 100, v: 100 }));
 const currentTrackThumbColor = computed(() => hsvToHex(hsv.value));
-
-const ui = computed(() => {
-  return ColorPickerTheme({
-    size: props.size,
-  });
-});
 </script>
 
 <template>
-  <div
-    :data-disabled="disabled ? true : undefined"
-    data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
-  >
-    <div data-slot="picker" :class="ui.picker({ class: props.ui?.picker })">
-      <div ref="selector" data-slot="selector" :class="ui.selector({ class: props.ui?.selector })">
+  <div :data-disabled="disabled ? true : undefined" data-slot="root" :class="[$style.root, $style[`size-${size}`]]">
+    <div data-slot="picker" :class="$style.picker">
+      <div ref="selector" data-slot="selector" :class="$style.selector">
         <div
           data-slot="selector-background"
-          :class="ui.selectorBackground({ class: props.ui?.selectorBackground })"
+          :class="$style.selectorBackground"
           :style="{ backgroundColor: currentSelectorBackgroundColor }"
         />
-        <div
-          data-color-picker-selector
-          data-slot="selector-background"
-          :class="ui.selectorBackground({ class: props.ui?.selectorBackground })"
-        />
+        <div data-color-picker-selector data-slot="selector-background" :class="$style.selectorBackground" />
         <div
           :data-disabled="disabled ? true : undefined"
           data-slot="selector-thumb"
-          :class="ui.selectorThumb({ class: props.ui?.selectorThumb })"
+          :class="$style.selectorThumb"
           :style="{
             left: `${selectorDragX}%`,
             top: `${selectorDragY}%`,
@@ -115,11 +95,11 @@ const ui = computed(() => {
         />
       </div>
 
-      <div ref="track" data-color-picker-track data-slot="track" :class="ui.track({ class: props.ui?.track })">
+      <div ref="track" data-color-picker-track data-slot="track" :class="$style.track">
         <div
           :data-disabled="disabled ? true : undefined"
           data-slot="track-thumb"
-          :class="ui.trackThumb({ class: props.ui?.trackThumb })"
+          :class="$style.trackThumb"
           :style="{
             top: `${trackDragY}%`,
             backgroundColor: currentSelectorBackgroundColor,
@@ -130,14 +110,105 @@ const ui = computed(() => {
   </div>
 </template>
 
-<style>
-[data-color-picker-selector] {
-  background-image:
-    linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
+<style module>
+.root {
+  &[data-disabled] {
+    opacity: 75%;
+  }
 }
 
-[data-color-picker-track] {
+.picker {
+  display: flex;
+  gap: calc(var(--spacing) * 4);
+}
+
+.selector {
+  touch-action: none;
+  position: relative;
+
+  .size-sm & {
+    width: calc(var(--spacing) * 38);
+    height: calc(var(--spacing) * 38);
+  }
+
+  .size-md & {
+    width: calc(var(--spacing) * 42);
+    height: calc(var(--spacing) * 42);
+  }
+
+  .size-lg & {
+    width: calc(var(--spacing) * 46);
+    height: calc(var(--spacing) * 46);
+  }
+}
+
+.selector-background {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+
+  &[data-color-picker-selector] {
+    background-image:
+      linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 100%),
+      linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  }
+}
+
+.selector-thumb {
+  cursor: pointer;
+
+  position: absolute;
+  translate: -50% -50%;
+
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  border-radius: calc(infinity * 1px);
+
+  box-shadow: 0 0 0 2px var(--color-white);
+
+  &[data-disabled] {
+    cursor: not-allowed;
+  }
+}
+
+.track {
+  touch-action: none;
+
+  position: relative;
+
+  width: calc(var(--spacing) * 2);
+  border-radius: var(--radius-md);
+
   background-image: linear-gradient(0deg, red 0%, magenta 17%, blue 33%, cyan 50%, lime 67%, yellow 83%, red 100%);
+
+  .size-sm & {
+    height: calc(var(--spacing) * 38);
+  }
+
+  .size-md & {
+    height: calc(var(--spacing) * 42);
+  }
+
+  .size-lg & {
+    height: calc(var(--spacing) * 46);
+  }
+}
+
+.track-thumb {
+  cursor: pointer;
+
+  position: absolute;
+  left: 50%;
+  translate: -50% -50%;
+
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  border-radius: calc(infinity * 1px);
+
+  box-shadow: 0 0 0 2px var(--color-white);
+
+  &[data-disabled] {
+    cursor: not-allowed;
+  }
 }
 </style>
