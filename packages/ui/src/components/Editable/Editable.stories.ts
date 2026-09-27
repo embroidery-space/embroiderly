@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect } from "storybook/test";
 
 import Editable from "./Editable.vue";
+import EditableStates from "./stories/EditableStates.vue";
 
 const meta = {
   title: "Form/Editable",
@@ -28,13 +29,8 @@ export const Demo: Story = {
 
 export const States: Story = {
   render: () => ({
-    components: { Editable },
-    template: `
-      <div class="flex flex-col gap-2">
-        <Editable default-value="Default" />
-        <Editable default-value="Disabled" disabled />
-      </div>
-    `,
+    components: { EditableStates },
+    template: `<EditableStates />`,
   }),
 };
 
