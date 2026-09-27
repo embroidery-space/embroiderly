@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, useTemplateRef, watch } from "vue";
+import { nextTick, onMounted, useTemplateRef, watch } from "vue";
 
 import { useFormField } from "../../composables/useFormField.ts";
-
-import { TextareaTheme } from "./Textarea.theme.ts";
-import type { TextareaThemeSlots, TextareaThemeVariants } from "./Textarea.theme.ts";
 
 export interface TextareaProps {
   id?: string;
@@ -13,17 +10,17 @@ export interface TextareaProps {
    * The color scheme of the textarea.
    * @default "primary"
    */
-  color?: TextareaThemeVariants["color"];
+  color?: "primary";
   /**
    * The style variant of the textarea.
    * @default "subtle"
    */
-  variant?: TextareaThemeVariants["variant"];
+  variant?: "subtle" | "outline";
   /**
    * The size of the textarea.
    * @default "md"
    */
-  size?: TextareaThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /**
    * The number of visible text lines.
@@ -41,9 +38,6 @@ export interface TextareaProps {
   autoresize?: boolean;
   /** Whether the textarea is disabled. */
   disabled?: boolean;
-
-  class?: any;
-  ui?: TextareaThemeSlots;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -88,23 +82,22 @@ function autoResize() {
   textarea.value.style.overflow = overflow;
 }
 
-const ui = computed(() => {
-  return TextareaTheme({
-    color: props.color,
-    variant: props.variant,
-    size: size.value,
-
-    autoresize: props.autoresize,
-  });
-});
-
 onMounted(() => {
   autoResize();
 });
 </script>
 
 <template>
-  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div
+    data-slot="root"
+    :class="[
+      $style.root,
+      $style[`color-${color}`],
+      $style[`variant-${variant}`],
+      $style[`size-${size}`],
+      autoresize && $style.autoresize,
+    ]"
+  >
     <textarea
       :id="id"
       ref="textarea"
@@ -113,7 +106,87 @@ onMounted(() => {
       :rows="rows"
       :disabled="disabled"
       data-slot="base"
-      :class="ui.base({ class: props.ui?.base })"
+      :class="$style.base"
     />
   </div>
 </template>
+
+<style module>
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.base {
+  width: 100%;
+  border-width: 0;
+  border-radius: var(--radius-md);
+
+  appearance: none;
+
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+
+  &:focus {
+    outline-style: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 75%;
+  }
+
+  .variant-subtle > & {
+    background-color: var(--background-color-elevated);
+    box-shadow: inset 0 0 0 1px var(--border-color-accented);
+  }
+
+  .variant-outline > & {
+    background-color: var(--background-color-default);
+    box-shadow: inset 0 0 0 1px var(--border-color-accented);
+  }
+
+  .size-sm > & {
+    gap: calc(var(--spacing) * 1);
+
+    padding-block: calc(var(--spacing) * 1);
+    padding-inline: calc(var(--spacing) * 2);
+
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  .size-md > & {
+    gap: calc(var(--spacing) * 1.5);
+
+    padding-block: calc(var(--spacing) * 1.5);
+    padding-inline: calc(var(--spacing) * 2.5);
+
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .size-lg > & {
+    gap: calc(var(--spacing) * 2);
+
+    padding-block: calc(var(--spacing) * 2);
+    padding-inline: calc(var(--spacing) * 3);
+
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+
+  .autoresize > & {
+    resize: none;
+  }
+
+  .color-primary.variant-subtle > &,
+  .color-primary.variant-outline > & {
+    &:focus-visible {
+      box-shadow: inset 0 0 0 2px var(--color-primary);
+    }
+  }
+}
+</style>
