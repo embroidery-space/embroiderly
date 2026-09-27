@@ -36,7 +36,7 @@ function onUpdate(value: string | undefined) {
 
 <template>
   <FormFieldGroup :size="size">
-    <Popover v-bind="popover" :content="{ align: 'start' }" class="p-4">
+    <Popover v-bind="popover" :content="{ align: 'start' }">
       <Button
         square
         :disabled="disabled"
@@ -50,6 +50,7 @@ function onUpdate(value: string | undefined) {
       <template #content>
         <ColorPicker
           v-bind="picker"
+          :class="$style.picker"
           :model-value="hexColor"
           :size="size"
           :disabled="disabled"
@@ -67,3 +68,9 @@ function onUpdate(value: string | undefined) {
     />
   </FormFieldGroup>
 </template>
+
+<style module>
+.picker {
+  padding: calc(var(--spacing) * 4);
+}
+</style>

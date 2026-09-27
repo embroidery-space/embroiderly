@@ -6,9 +6,6 @@ import { computed, toRef } from "vue";
 
 import { usePortal } from "../../composables/usePortal.ts";
 
-import { PopoverTheme } from "./Popover.theme.ts";
-import type { PopoverThemeSlots } from "./Popover.theme.ts";
-
 export interface PopoverProps {
   /**
    * The preferred side of the trigger to render against when open.
@@ -35,9 +32,6 @@ export interface PopoverProps {
    * @default true
    */
   portal?: boolean | string | HTMLElement;
-
-  class?: any;
-  ui?: PopoverThemeSlots;
 }
 
 export interface PopoverSlots {
@@ -66,9 +60,6 @@ const contentProps = computed<PopoverContentProps>(
     }) as PopoverContentProps,
 );
 const portalProps = usePortal(toRef(() => props.portal));
-
-// oxlint-disable-next-line vue/no-dupe-keys
-const ui = PopoverTheme();
 </script>
 
 <template>
@@ -81,7 +72,7 @@ const ui = PopoverTheme();
       <Popover.Content
         v-bind="contentProps"
         data-slot="content"
-        :class="ui.content({ class: [props.ui?.content, props.class] })"
+        :class="$style.content"
         @pointer-down-outside="pinned && $event.preventDefault()"
         @interact-outside="pinned && $event.preventDefault()"
         @focus-outside="pinned && $event.preventDefault()"
@@ -92,8 +83,39 @@ const ui = PopoverTheme();
           :unpin="() => (pinned = false)"
           :close="() => (open = false)"
         />
-        <Popover.Arrow data-slot="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
+        <Popover.Arrow data-slot="arrow" :class="$style.arrow" />
       </Popover.Content>
     </Popover.Portal>
   </Popover.Root>
 </template>
+
+<style module>
+.content {
+  pointer-events: auto;
+
+  transform-origin: var(--reka-popover-content-transform-origin);
+
+  border-radius: var(--radius-md);
+
+  background-color: var(--background-color-default);
+  box-shadow:
+    0 0 0 1px var(--border-color-default),
+    var(--shadow-lg);
+
+  &:focus {
+    outline-style: none;
+  }
+
+  &[data-state="closed"] {
+    animation: global(scale-out) 100ms ease-in;
+  }
+
+  &[data-state="open"] {
+    animation: global(scale-in) 100ms ease-out;
+  }
+}
+
+.arrow {
+  fill: var(--border-color-default);
+}
+</style>
