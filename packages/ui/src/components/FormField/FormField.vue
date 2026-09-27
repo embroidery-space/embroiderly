@@ -5,9 +5,6 @@ import { computed, provide, ref, useId } from "vue";
 import { formFieldInjectionKey, inputIdInjectionKey } from "../../composables/useFormField.ts";
 import type { FormFieldInjectedOptions } from "../../composables/useFormField.ts";
 
-import { FormFieldTheme } from "./FormField.theme.ts";
-import type { FormFieldThemeSlots, FormFieldThemeVariants } from "./FormField.theme.ts";
-
 export interface FormFieldProps {
   /** The label text for the field. */
   label?: string;
@@ -22,10 +19,7 @@ export interface FormFieldProps {
    * The size of the form field.
    * @default "md"
    */
-  size?: FormFieldThemeVariants["size"];
-
-  class?: any;
-  ui?: FormFieldThemeSlots;
+  size?: "sm" | "md" | "lg";
 }
 
 export interface FormFieldSlots {
@@ -55,41 +49,81 @@ provide(
       }) satisfies FormFieldInjectedOptions,
   ),
 );
-
-const ui = computed(() => {
-  return FormFieldTheme({
-    size: props.size,
-  });
-});
 </script>
 
 <template>
-  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
-    <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
-      <div v-if="label" data-slot="label-wrapper" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })">
-        <Label :id="`${ariaId}-label`" :for="id" data-slot="label" :class="ui.label({ class: props.ui?.label })">
+  <div data-slot="root" :class="[$style.root, $style[`size-${size}`]]">
+    <div data-slot="wrapper">
+      <div v-if="label" data-slot="label-wrapper" :class="$style.labelWrapper">
+        <Label :id="`${ariaId}-label`" :for="id" data-slot="label" :class="$style.label">
           {{ label }}
         </Label>
-        <span v-if="hint" :id="`${ariaId}-hint`" data-slot="hint" :class="ui.hint({ class: props.ui?.hint })">
+        <span v-if="hint" :id="`${ariaId}-hint`" data-slot="hint" :class="$style.hint">
           {{ hint }}
         </span>
       </div>
 
-      <p
-        v-if="description"
-        :id="`${ariaId}-description`"
-        data-slot="description"
-        :class="ui.description({ class: props.ui?.description })"
-      >
+      <p v-if="description" :id="`${ariaId}-description`" data-slot="description" :class="$style.description">
         {{ description }}
       </p>
     </div>
 
-    <div :class="[(label || description) && ui.container({ class: props.ui?.container })]" data-slot="container">
+    <div :class="[(label || description) && $style.container]" data-slot="container">
       <slot />
-      <p v-if="help" :id="`${ariaId}-help`" data-slot="help" :class="ui.help({ class: props.ui?.help })">
+      <p v-if="help" :id="`${ariaId}-help`" data-slot="help" :class="$style.help">
         {{ help }}
       </p>
     </div>
   </div>
 </template>
+
+<style module>
+.root {
+  width: fit-content;
+
+  &.size-sm {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  &.size-md {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  &.size-lg {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+}
+
+.label-wrapper {
+  display: flex;
+  gap: calc(var(--spacing) * 1);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  display: block;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color-default);
+}
+
+.hint {
+  color: var(--text-color-muted);
+}
+
+.description {
+  color: var(--text-color-muted);
+}
+
+.container {
+  margin-top: calc(var(--spacing) * 1);
+}
+
+.help {
+  margin-top: calc(var(--spacing) * 1);
+  color: var(--text-color-muted);
+}
+</style>
