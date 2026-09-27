@@ -4,11 +4,12 @@ import { expect, fn } from "storybook/test";
 
 import { renderWithLocalModel } from "~storybook-utils/render-with-local-model";
 
-import Button from "../Button/Button.vue";
-import FormField from "../FormField/FormField.vue";
-import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
-
 import InputNumber from "./InputNumber.vue";
+import InputNumberDemo from "./stories/InputNumberDemo.vue";
+import InputNumberFieldGroup from "./stories/InputNumberFieldGroup.vue";
+import InputNumberSizes from "./stories/InputNumberSizes.vue";
+import InputNumberStates from "./stories/InputNumberStates.vue";
+import InputNumberVariants from "./stories/InputNumberVariants.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 const variants = ["subtle", "outline"] as const;
@@ -48,66 +49,38 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, InputNumber },
+      components: { InputNumberDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <FormField>
-          <InputNumber v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
-        </FormField>
-      `,
+      template: `<InputNumberDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { InputNumber },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="size in sizes" :key="size">
-          <InputNumber :size="size" :placeholder="\`Size: \${size}\`" />
-        </template>
-      </div>
-    `,
+    components: { InputNumberSizes },
+    template: `<InputNumberSizes />`,
   }),
 };
 
 export const Variants: Story = {
   render: () => ({
-    components: { InputNumber },
-    setup: () => ({ variants }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="variant in variants" :key="variant">
-          <InputNumber :variant="variant" :placeholder="\`Variant: \${variant}\`" />
-        </template>
-      </div>
-    `,
+    components: { InputNumberVariants },
+    template: `<InputNumberVariants />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { InputNumber },
-    template: `
-      <div class="flex flex-col gap-2">
-        <InputNumber placeholder="Default" />
-        <InputNumber placeholder="Disabled" disabled />
-      </div>
-    `,
+    components: { InputNumberStates },
+    template: `<InputNumberStates />`,
   }),
 };
 
 export const FieldGroup: Story = {
   render: () => ({
-    components: { InputNumber, Button, FormFieldGroup },
-    template: `
-      <FormFieldGroup>
-        <InputNumber :increment="false" :decrement="false" />
-        <Button label="Apply" />
-      </FormFieldGroup>
-    `,
+    components: { InputNumberFieldGroup },
+    template: `<InputNumberFieldGroup />`,
   }),
 };
 
