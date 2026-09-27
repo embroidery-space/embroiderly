@@ -101,6 +101,7 @@ export default defineConfigWithVueTs(
   },
   {
     files: ["packages/ui/src/**/*.vue", "packages/ui/src/**/*.theme.ts"],
+    ignores: ["packages/ui/src/**/stories/*.vue"],
     extends: [betterTailwindcss.configs["recommended"]],
     settings: {
       "better-tailwindcss": {
