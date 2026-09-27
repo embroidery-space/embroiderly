@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
-import FormField from "../FormField/FormField.vue";
-
 import Checkbox from "./Checkbox.vue";
+import CheckboxDemo from "./stories/CheckboxDemo.vue";
+import CheckboxSizes from "./stories/CheckboxSizes.vue";
+import CheckboxStates from "./stories/CheckboxStates.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -31,42 +32,24 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, Checkbox },
+      components: { CheckboxDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <FormField>
-          <Checkbox v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
-        </FormField>
-      `,
+      template: `<CheckboxDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Checkbox },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="size in sizes" :key="size">
-          <Checkbox :size="size" :label="\`Size: \${size}\`" />
-        </template>
-      </div>
-    `,
+    components: { CheckboxSizes },
+    template: `<CheckboxSizes />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { Checkbox },
-    template: `
-      <div class="flex flex-col gap-2">
-        <Checkbox label="Default" />
-        <Checkbox label="Disabled" disabled />
-        <Checkbox label="Checked" :model-value="true" />
-        <Checkbox label="Checked disabled" :model-value="true" disabled />
-      </div>
-    `,
+    components: { CheckboxStates },
+    template: `<CheckboxStates />`,
   }),
 };
 
