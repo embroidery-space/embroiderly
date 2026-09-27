@@ -4,9 +4,10 @@ import { expect, fn } from "storybook/test";
 
 import { renderWithLocalModel } from "~storybook-utils/render-with-local-model";
 
-import FormField from "../FormField/FormField.vue";
-
 import InputColor from "./InputColor.vue";
+import InputColorDemo from "./stories/InputColorDemo.vue";
+import InputColorSizes from "./stories/InputColorSizes.vue";
+import InputColorStates from "./stories/InputColorStates.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -31,40 +32,24 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, InputColor },
+      components: { InputColorDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <FormField>
-          <InputColor v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
-        </FormField>
-      `,
+      template: `<InputColorDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { InputColor },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="size in sizes" :key="size">
-          <InputColor :size="size" />
-        </template>
-      </div>
-    `,
+    components: { InputColorSizes },
+    template: `<InputColorSizes />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { InputColor },
-    template: `
-      <div class="flex flex-col gap-2">
-        <InputColor />
-        <InputColor disabled />
-      </div>
-    `,
+    components: { InputColorStates },
+    template: `<InputColorStates />`,
   }),
 };
 
