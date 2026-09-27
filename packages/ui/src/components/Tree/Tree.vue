@@ -210,12 +210,12 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
             <Icon
               v-if="item.icon"
               :name="item.icon"
-              data-slot="itemLeadingIcon"
+              data-slot="item-leading-icon"
               :class="ui.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
             />
           </slot>
 
-          <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
+          <span data-slot="item-label" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
             <slot
               name="item-label"
               :item="item"
@@ -240,7 +240,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
             :icon="icons.chevronDown"
             :disabled="isDisabled"
             tabindex="-1"
-            data-slot="itemChevron"
+            data-slot="item-chevron"
             :class="[
               ui.itemChevron({ class: [props.ui?.itemChevron, isExpanded && 'rotate-180'] }),
               $style.itemChevron,
@@ -300,7 +300,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
 
 <style module>
 /* Outweighs the color transition of the `Button` root. */
-.itemChevron[data-slot="itemChevron"] {
+.item-chevron[data-slot="item-chevron"] {
   transition-duration: 200ms;
   transition-property: transform, translate, scale, rotate;
 }

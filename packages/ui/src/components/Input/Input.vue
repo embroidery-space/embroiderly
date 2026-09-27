@@ -81,7 +81,7 @@ const ui = computed(() => {
           v-if="isLeading && leadingIconName"
           aria-hidden="true"
           :name="leadingIconName"
-          data-slot="leadingIcon"
+          data-slot="leading-icon"
           :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
         />
       </slot>
@@ -107,7 +107,7 @@ const ui = computed(() => {
           v-if="isTrailing && trailingIconName"
           aria-hidden="true"
           :name="trailingIconName"
-          data-slot="trailingIcon"
+          data-slot="trailing-icon"
           :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
         />
       </slot>

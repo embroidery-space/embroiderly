@@ -131,7 +131,7 @@ const ui = computed(() =>
       variant="ghost"
       :size="size"
       :disabled="disabled"
-      data-slot="lockButton"
+      data-slot="lock-button"
       :class="ui.lockButton({ class: props.ui?.lockButton })"
       :aria-pressed="aspectRatioLocked"
       @click="toggleAspectRatioLock"

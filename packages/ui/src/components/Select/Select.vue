@@ -196,13 +196,13 @@ function normalizeItem(item: SelectItem): SelectItemObject {
         <Icon
           v-if="loading"
           :name="icons.loading"
-          data-slot="trailingIcon"
+          data-slot="trailing-icon"
           :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
         />
         <Icon
           v-else
           :name="icons.chevronDown"
-          data-slot="trailingIcon"
+          data-slot="trailing-icon"
           :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
         />
       </Combobox.Trigger>
@@ -263,16 +263,16 @@ function normalizeItem(item: SelectItem): SelectItemObject {
                 <Icon
                   v-if="item.icon"
                   :name="item.icon"
-                  data-slot="itemLeadingIcon"
+                  data-slot="item-leading-icon"
                   :class="ui.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
                 />
-                <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
+                <span data-slot="item-label" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
                   {{ item.label }}
                 </span>
                 <Combobox.ItemIndicator>
                   <Icon
                     :name="icons.check"
-                    data-slot="itemIndicator"
+                    data-slot="item-indicator"
                     :class="ui.itemIndicator({ class: props.ui?.itemIndicator })"
                   />
                 </Combobox.ItemIndicator>

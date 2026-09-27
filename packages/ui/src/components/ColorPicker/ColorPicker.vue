@@ -94,18 +94,18 @@ const ui = computed(() => {
     <div data-slot="picker" :class="ui.picker({ class: props.ui?.picker })">
       <div ref="selector" data-slot="selector" :class="ui.selector({ class: props.ui?.selector })">
         <div
-          data-slot="selectorBackground"
+          data-slot="selector-background"
           :class="ui.selectorBackground({ class: props.ui?.selectorBackground })"
           :style="{ backgroundColor: currentSelectorBackgroundColor }"
         />
         <div
           data-color-picker-selector
-          data-slot="selectorBackground"
+          data-slot="selector-background"
           :class="ui.selectorBackground({ class: props.ui?.selectorBackground })"
         />
         <div
           :data-disabled="disabled ? true : undefined"
-          data-slot="selectorThumb"
+          data-slot="selector-thumb"
           :class="ui.selectorThumb({ class: props.ui?.selectorThumb })"
           :style="{
             left: `${selectorDragX}%`,
@@ -118,7 +118,7 @@ const ui = computed(() => {
       <div ref="track" data-color-picker-track data-slot="track" :class="ui.track({ class: props.ui?.track })">
         <div
           :data-disabled="disabled ? true : undefined"
-          data-slot="trackThumb"
+          data-slot="track-thumb"
           :class="ui.trackThumb({ class: props.ui?.trackThumb })"
           :style="{
             top: `${trackDragY}%`,

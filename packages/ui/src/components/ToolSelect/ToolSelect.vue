@@ -188,7 +188,7 @@ function handleKeydown(e: KeyboardEvent) {
         :disabled="props.disabled"
         :aria-haspopup="items.length > 1 ? 'menu' : undefined"
         :aria-expanded="items.length > 1 ? dropdownMenuOpen : undefined"
-        data-slot="mainButton"
+        data-slot="main-button"
         :class="ui.mainButton({ class: props.ui?.mainButton })"
         :style="{ color: selected ? props.selectionColor : undefined }"
         @pointerdown="handlePointerDown"
@@ -198,7 +198,7 @@ function handleKeydown(e: KeyboardEvent) {
       >
         <Icon
           :name="currentOption.icon"
-          data-slot="mainButtonIcon"
+          data-slot="main-button-icon"
           :class="ui.mainButtonIcon({ class: props.ui?.mainButtonIcon })"
         />
       </button>
@@ -220,12 +220,12 @@ function handleKeydown(e: KeyboardEvent) {
         :disabled="props.disabled"
         tabindex="-1"
         aria-hidden="true"
-        data-slot="dropdownButton"
+        data-slot="dropdown-button"
         :class="ui.dropdownButton({ class: props.ui?.dropdownButton })"
       >
         <Icon
           :name="icons.chevronDown"
-          data-slot="dropdownButtonIcon"
+          data-slot="dropdown-button-icon"
           :class="ui.dropdownButtonIcon({ class: props.ui?.dropdownButtonIcon })"
         />
       </button>

@@ -117,7 +117,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
         v-if="isLeading && leadingIconName"
         aria-hidden="true"
         :name="leadingIconName"
-        data-slot="leadingIcon"
+        data-slot="leading-icon"
         :class="[$style.leadingIcon, { [$style.loading]: isLeadingSpinning }]"
       />
     </slot>
@@ -131,7 +131,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
         v-if="isTrailing && trailingIconName"
         aria-hidden="true"
         :name="trailingIconName"
-        data-slot="trailingIcon"
+        data-slot="trailing-icon"
         :class="[$style.trailingIcon, { [$style.loading]: isTrailingSpinning }]"
       />
     </slot>
@@ -440,8 +440,8 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
   }
 }
 
-.leadingIcon,
-.trailingIcon {
+.leading-icon,
+.trailing-icon {
   flex-shrink: 0;
 
   &.loading {

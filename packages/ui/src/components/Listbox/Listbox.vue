@@ -207,13 +207,13 @@ const ui = computed(() => {
               "
             >
               <slot name="option" :item="item" :selected="isSelected(item)" :index="i">
-                <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
+                <span data-slot="item-label" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
                   {{ item.label ?? String(item.value) }}
                 </span>
                 <Listbox.ItemIndicator>
                   <Icon
                     :name="icons.check"
-                    data-slot="itemIndicator"
+                    data-slot="item-indicator"
                     :class="ui.itemIndicator({ class: props.ui?.itemIndicator })"
                   />
                 </Listbox.ItemIndicator>

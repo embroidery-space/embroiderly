@@ -79,11 +79,11 @@ function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]):
           @update:model-value="item.onUpdateChecked"
           @select="item.onSelect"
         >
-          <span data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
+          <span data-slot="item-label" :class="ui.itemLabel()">{{ item.label }}</span>
           <DropdownMenu.ItemIndicator as-child>
             <Icon
               :name="icons.check"
-              data-slot="itemTrailingIcon"
+              data-slot="item-trailing-icon"
               :class="[ui.itemTrailing(), ui.itemTrailingIcon()]"
             />
           </DropdownMenu.ItemIndicator>
@@ -97,27 +97,27 @@ function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]):
           @select="item.onSelect"
         >
           <a :href="item.href" :target="item.target" :rel="getLinkRel(item)" data-slot="item">
-            <Icon v-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
+            <Icon v-if="item.icon" :name="item.icon" data-slot="item-leading-icon" :class="ui.itemLeadingIcon()" />
 
-            <span v-if="item.label || item.description" data-slot="itemBody" :class="ui.itemBody()">
-              <span v-if="item.label" data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
-              <span v-if="item.description" data-slot="itemDescription" :class="ui.itemDescription()">
+            <span v-if="item.label || item.description" data-slot="item-body" :class="ui.itemBody()">
+              <span v-if="item.label" data-slot="item-label" :class="ui.itemLabel()">{{ item.label }}</span>
+              <span v-if="item.description" data-slot="item-description" :class="ui.itemDescription()">
                 {{ item.description }}
               </span>
             </span>
 
-            <span v-if="isExternalHref(item.href)" data-slot="itemTrailing" :class="ui.itemTrailing()">
-              <Icon :name="icons.external" data-slot="itemTrailingIcon" :class="ui.itemTrailingIcon()" />
+            <span v-if="isExternalHref(item.href)" data-slot="item-trailing" :class="ui.itemTrailing()">
+              <Icon :name="icons.external" data-slot="item-trailing-icon" :class="ui.itemTrailingIcon()" />
             </span>
           </a>
         </DropdownMenu.Item>
 
         <DropdownMenu.Sub v-else-if="item.children?.length">
           <DropdownMenu.SubTrigger :disabled="item.disabled" data-slot="item" :class="ui.item({ class: item.class })">
-            <Icon v-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
-            <span data-slot="itemLabel" :class="ui.itemLabel()">{{ item.label }}</span>
-            <span data-slot="itemTrailing" :class="ui.itemTrailing()">
-              <Icon :name="icons.chevronRight" data-slot="itemTrailingIcon" :class="ui.itemTrailingIcon()" />
+            <Icon v-if="item.icon" :name="item.icon" data-slot="item-leading-icon" :class="ui.itemLeadingIcon()" />
+            <span data-slot="item-label" :class="ui.itemLabel()">{{ item.label }}</span>
+            <span data-slot="item-trailing" :class="ui.itemTrailing()">
+              <Icon :name="icons.chevronRight" data-slot="item-trailing-icon" :class="ui.itemTrailingIcon()" />
             </span>
           </DropdownMenu.SubTrigger>
 
@@ -143,21 +143,21 @@ function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]):
           <Icon
             v-if="item.loading"
             :name="icons.loading"
-            data-slot="itemLeadingIcon"
+            data-slot="item-leading-icon"
             :class="[ui.itemLeadingIcon(), 'animate-spin']"
           />
-          <Icon v-else-if="item.icon" :name="item.icon" data-slot="itemLeadingIcon" :class="ui.itemLeadingIcon()" />
+          <Icon v-else-if="item.icon" :name="item.icon" data-slot="item-leading-icon" :class="ui.itemLeadingIcon()" />
 
-          <span v-if="item.label || item.description" data-slot="itemBody" :class="ui.itemBody()">
-            <span v-if="item.label" data-slot="itemLabel" :class="ui.itemLabel()">
+          <span v-if="item.label || item.description" data-slot="item-body" :class="ui.itemBody()">
+            <span v-if="item.label" data-slot="item-label" :class="ui.itemLabel()">
               {{ item.label }}
             </span>
-            <span v-if="item.description" data-slot="itemDescription" :class="ui.itemDescription()">
+            <span v-if="item.description" data-slot="item-description" :class="ui.itemDescription()">
               {{ item.description }}
             </span>
           </span>
 
-          <span v-if="item.shortcut" data-slot="itemKbd" :class="ui.itemKbd()">
+          <span v-if="item.shortcut" data-slot="item-kbd" :class="ui.itemKbd()">
             <Kbd v-for="(key, i) in parseShortcutDisplay(item.shortcut)" :key="i" :value="key" size="sm" />
           </span>
         </DropdownMenu.Item>

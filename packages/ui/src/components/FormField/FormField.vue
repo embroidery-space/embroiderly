@@ -66,7 +66,7 @@ const ui = computed(() => {
 <template>
   <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
-      <div v-if="label" data-slot="labelWrapper" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })">
+      <div v-if="label" data-slot="label-wrapper" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })">
         <Label :id="`${ariaId}-label`" :for="id" data-slot="label" :class="ui.label({ class: props.ui?.label })">
           {{ label }}
         </Label>
