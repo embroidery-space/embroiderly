@@ -1,7 +1,110 @@
-@layer base {
-  body {
-    @apply antialiased text-default bg-default;
-  }
+/*
+  TEMPORARY: keeps not-yet-migrated components rendering as before.
+  Remove once every component is migrated off Tailwind.
+*/
+
+:root,
+:host {
+  --ui-color-primary-50: var(--color-primary-50);
+  --ui-color-primary-100: var(--color-primary-100);
+  --ui-color-primary-200: var(--color-primary-200);
+  --ui-color-primary-300: var(--color-primary-300);
+  --ui-color-primary-400: var(--color-primary-400);
+  --ui-color-primary-500: var(--color-primary-500);
+  --ui-color-primary-600: var(--color-primary-600);
+  --ui-color-primary-700: var(--color-primary-700);
+  --ui-color-primary-800: var(--color-primary-800);
+  --ui-color-primary-900: var(--color-primary-900);
+  --ui-color-primary-950: var(--color-primary-950);
+
+  --ui-color-error-50: var(--color-error-50);
+  --ui-color-error-100: var(--color-error-100);
+  --ui-color-error-200: var(--color-error-200);
+  --ui-color-error-300: var(--color-error-300);
+  --ui-color-error-400: var(--color-error-400);
+  --ui-color-error-500: var(--color-error-500);
+  --ui-color-error-600: var(--color-error-600);
+  --ui-color-error-700: var(--color-error-700);
+  --ui-color-error-800: var(--color-error-800);
+  --ui-color-error-900: var(--color-error-900);
+  --ui-color-error-950: var(--color-error-950);
+
+  --ui-color-warning-50: var(--color-warning-50);
+  --ui-color-warning-100: var(--color-warning-100);
+  --ui-color-warning-200: var(--color-warning-200);
+  --ui-color-warning-300: var(--color-warning-300);
+  --ui-color-warning-400: var(--color-warning-400);
+  --ui-color-warning-500: var(--color-warning-500);
+  --ui-color-warning-600: var(--color-warning-600);
+  --ui-color-warning-700: var(--color-warning-700);
+  --ui-color-warning-800: var(--color-warning-800);
+  --ui-color-warning-900: var(--color-warning-900);
+  --ui-color-warning-950: var(--color-warning-950);
+
+  --ui-color-success-50: var(--color-success-50);
+  --ui-color-success-100: var(--color-success-100);
+  --ui-color-success-200: var(--color-success-200);
+  --ui-color-success-300: var(--color-success-300);
+  --ui-color-success-400: var(--color-success-400);
+  --ui-color-success-500: var(--color-success-500);
+  --ui-color-success-600: var(--color-success-600);
+  --ui-color-success-700: var(--color-success-700);
+  --ui-color-success-800: var(--color-success-800);
+  --ui-color-success-900: var(--color-success-900);
+  --ui-color-success-950: var(--color-success-950);
+
+  --ui-color-info-50: var(--color-info-50);
+  --ui-color-info-100: var(--color-info-100);
+  --ui-color-info-200: var(--color-info-200);
+  --ui-color-info-300: var(--color-info-300);
+  --ui-color-info-400: var(--color-info-400);
+  --ui-color-info-500: var(--color-info-500);
+  --ui-color-info-600: var(--color-info-600);
+  --ui-color-info-700: var(--color-info-700);
+  --ui-color-info-800: var(--color-info-800);
+  --ui-color-info-900: var(--color-info-900);
+  --ui-color-info-950: var(--color-info-950);
+
+  --ui-color-help-50: var(--color-help-50);
+  --ui-color-help-100: var(--color-help-100);
+  --ui-color-help-200: var(--color-help-200);
+  --ui-color-help-300: var(--color-help-300);
+  --ui-color-help-400: var(--color-help-400);
+  --ui-color-help-500: var(--color-help-500);
+  --ui-color-help-600: var(--color-help-600);
+  --ui-color-help-700: var(--color-help-700);
+  --ui-color-help-800: var(--color-help-800);
+  --ui-color-help-900: var(--color-help-900);
+  --ui-color-help-950: var(--color-help-950);
+
+  --ui-color-neutral-50: var(--color-neutral-50);
+  --ui-color-neutral-100: var(--color-neutral-100);
+  --ui-color-neutral-200: var(--color-neutral-200);
+  --ui-color-neutral-300: var(--color-neutral-300);
+  --ui-color-neutral-400: var(--color-neutral-400);
+  --ui-color-neutral-500: var(--color-neutral-500);
+  --ui-color-neutral-600: var(--color-neutral-600);
+  --ui-color-neutral-700: var(--color-neutral-700);
+  --ui-color-neutral-800: var(--color-neutral-800);
+  --ui-color-neutral-900: var(--color-neutral-900);
+  --ui-color-neutral-950: var(--color-neutral-950);
+
+  --ui-text: var(--text-color-default);
+  --ui-text-dimmed: var(--text-color-dimmed);
+  --ui-text-muted: var(--text-color-muted);
+  --ui-text-inverted: var(--text-color-inverted);
+
+  --ui-bg: var(--background-color-default);
+  --ui-bg-elevated: var(--background-color-elevated);
+  --ui-bg-accented: var(--background-color-accented);
+  --ui-bg-inverted: var(--background-color-inverted);
+
+  --ui-border: var(--border-color-default);
+  --ui-border-elevated: var(--border-color-elevated);
+  --ui-border-accented: var(--border-color-accented);
+  --ui-border-inverted: var(--border-color-inverted);
+
+  --ui-radius: var(--radius);
 }
 
 @theme default inline {

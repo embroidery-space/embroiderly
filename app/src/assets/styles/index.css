@@ -1,26 +1,34 @@
+/* Keep the UI Kit layers below Tailwind's `utilities`, which would otherwise come first and lose to them. */
+@layer theme, base, ui.preflight, ui.variables, ui.base, components, utilities;
+
 @import "tailwindcss";
 @import "@embroiderly/ui";
 
 @import "./tour.css";
 
 @font-face {
-  src: url("/fonts/FixelVariable.ttf") format("truetype");
   font-family: "Fixel";
   font-weight: 100 900;
   font-style: normal;
+
   font-display: swap;
+  src: url("/fonts/FixelVariable.ttf") format("truetype");
 }
 
 @font-face {
-  src: url("/fonts/FixelVariableItalic.ttf") format("truetype");
   font-family: "Fixel";
   font-weight: 100 900;
   font-style: italic;
+
   font-display: swap;
+  src: url("/fonts/FixelVariableItalic.ttf") format("truetype");
+}
+
+:root {
+  --font-sans: "Fixel", ui-sans-serif, system-ui, sans-serif;
 }
 
 @theme {
-  --font-sans: "Fixel", ui-sans-serif, system-ui, sans-serif;
   --animate-rainbow-shine: rainbow-shine 2.4s linear infinite;
 }
 

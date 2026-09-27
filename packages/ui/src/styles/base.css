@@ -1,0 +1,7 @@
+body {
+  color: var(--text-color-default);
+  background-color: var(--background-color-default);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

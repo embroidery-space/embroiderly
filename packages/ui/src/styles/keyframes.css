@@ -1,3 +1,15 @@
+:root,
+:host {
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-spin: spin 1s linear infinite;
+}
+
 @keyframes carousel {
   from {
     transform: translateX(-100%);
@@ -60,48 +72,54 @@
 
 @keyframes scale-in {
   from {
-    opacity: 0;
     transform: scale(0.95);
+    opacity: 0;
   }
 
   to {
-    opacity: 1;
     transform: scale(1);
+    opacity: 1;
   }
 }
 
 @keyframes scale-out {
   from {
-    opacity: 1;
     transform: scale(1);
+    opacity: 1;
   }
 
   to {
-    opacity: 0;
     transform: scale(0.95);
+    opacity: 0;
   }
 }
 
 @keyframes slide-in-right {
   from {
-    opacity: 0;
     transform: translateX(100%);
+    opacity: 0;
   }
 
   to {
-    opacity: 1;
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
 @keyframes slide-out-right {
   from {
-    opacity: 1;
     transform: translateX(0);
+    opacity: 1;
   }
 
   to {
-    opacity: 0;
     transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
