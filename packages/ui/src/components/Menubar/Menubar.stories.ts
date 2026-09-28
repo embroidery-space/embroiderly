@@ -3,6 +3,8 @@ import { expect, fn } from "storybook/test";
 
 import Menubar from "./Menubar.vue";
 import type { MenubarMenu } from "./Menubar.vue";
+import MenubarDemo from "./stories/MenubarDemo.vue";
+import MenubarOpen from "./stories/MenubarOpen.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -79,9 +81,9 @@ export const Demo: Story = {
     size: "md",
   },
   render: (args) => ({
-    components: { Menubar },
+    components: { MenubarDemo },
     setup: () => ({ args, menus: demoMenus }),
-    template: `<Menubar v-bind="args" :menus="menus" />`,
+    template: `<MenubarDemo v-bind="args" :menus="menus" />`,
   }),
 };
 
@@ -92,13 +94,9 @@ export const Open: Story = {
     portal: false, // `portal` must be disabled here so the opened content stays inside the captured snapshot subject.
   },
   render: (args) => ({
-    components: { Menubar },
+    components: { MenubarOpen },
     setup: () => ({ args, menus: demoMenus }),
-    template: `
-      <div class="min-h-56 min-w-xs">
-        <Menubar v-bind="args" :menus="menus" />
-      </div>
-    `,
+    template: `<MenubarOpen v-bind="args" :menus="menus" />`,
   }),
   async play({ canvas }) {
     await expect(canvas.getByRole("menuitem", { name: /New/u })).toBeVisible();
@@ -108,10 +106,10 @@ export const Open: Story = {
 export const DisabledMenu: Story = {
   args: { size: "md", portal: false },
   render: (args) => ({
-    components: { Menubar },
+    components: { MenubarDemo },
     // oxlint-disable-next-line oxc/no-map-spread
     setup: () => ({ args, menus: demoMenus.map((menu) => ({ ...menu, disabled: true })) }),
-    template: `<Menubar v-bind="args" :menus="menus" />`,
+    template: `<MenubarDemo v-bind="args" :menus="menus" />`,
   }),
 };
 
@@ -126,9 +124,9 @@ export const ShortcutTriggered: Story = {
       },
     ];
     return {
-      components: { Menubar },
+      components: { MenubarDemo },
       setup: () => ({ menus }),
-      template: `<Menubar :menus="menus" :portal="false" />`,
+      template: `<MenubarDemo :menus="menus" :portal="false" />`,
     };
   },
   async play({ userEvent, args }) {

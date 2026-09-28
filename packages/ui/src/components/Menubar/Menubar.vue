@@ -9,8 +9,6 @@ import { useShortcuts, extractShortcuts } from "../../composables/useShortcuts.t
 import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 
-import { MenubarTheme } from "./Menubar.theme.ts";
-import type { MenubarThemeSlots, MenubarThemeVariants } from "./Menubar.theme.ts";
 import MenubarContent from "./MenubarContent.vue";
 
 export interface MenubarItem {
@@ -84,16 +82,13 @@ export interface MenubarProps<T extends MenubarItem = MenubarItem> {
    * The size of the menubar.
    * @default "md"
    */
-  size?: MenubarThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /**
    * Render the menubar dropdowns in a portal.
    * @default true
    */
   portal?: boolean | string | HTMLElement;
-
-  class?: any;
-  ui?: MenubarThemeSlots;
 }
 
 const modelValue = defineModel<string>();
@@ -118,17 +113,10 @@ function normalizeItems(items: T[] | T[][]): T[][] {
   return [items as T[]];
 }
 useShortcuts(extractShortcuts(() => props.menus?.filter((m) => !m.hidden) ?? []));
-
-const ui = computed(() => MenubarTheme({ size: props.size }));
 </script>
 
 <template>
-  <Menubar.Root
-    v-model="modelValue"
-    :default-value="defaultValue"
-    data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
-  >
+  <Menubar.Root v-model="modelValue" :default-value="defaultValue" data-slot="root" :class="$style.root">
     <Menubar.Menu v-for="menu in menus?.filter((menu) => !menu.hidden)" :key="menu.label" :value="menu.label">
       <Menubar.Trigger as-child :disabled="menu.disabled">
         <Button
@@ -138,20 +126,20 @@ const ui = computed(() => MenubarTheme({ size: props.size }));
           :icon="menu.icon"
           :size="size"
           data-slot="trigger"
-          :class="ui.trigger({ class: props.ui?.trigger })"
         />
       </Menubar.Trigger>
 
       <Menubar.Portal v-bind="portalProps">
-        <MenubarContent
-          v-bind="contentProps"
-          :items="normalizeItems(menu.items)"
-          :size="size"
-          data-slot="content"
-          :class="ui.content({ class: props.ui?.content })"
-          :ui="ui"
-        />
+        <MenubarContent v-bind="contentProps" :items="normalizeItems(menu.items)" :size="size" data-slot="content" />
       </Menubar.Portal>
     </Menubar.Menu>
   </Menubar.Root>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  gap: calc(var(--spacing) * 1);
+  align-items: center;
+}
+</style>
