@@ -3,7 +3,6 @@
 import path from "node:path";
 
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
-import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { webdriverio } from "@vitest/browser-webdriverio";
 import { storybookVis } from "storybook-addon-vis/vitest-plugin";
@@ -12,7 +11,7 @@ import { defineConfig } from "vite";
 const isCI = process.env.CI === "true";
 
 export default defineConfig({
-  plugins: [vue(), tailwindcss()],
+  plugins: [vue()],
   css: { modules: { localsConvention: "camelCase" } },
   resolve: {
     alias: {

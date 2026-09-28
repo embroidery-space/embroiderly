@@ -2,7 +2,6 @@
 
 import { fileURLToPath, URL } from "node:url";
 
-import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { webdriverio } from "@vitest/browser-webdriverio";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
@@ -39,7 +38,6 @@ export default defineConfig({
       },
     }),
     cssModulesOptimizer(),
-    tailwindcss(),
     !isTauri &&
       VitePWA({
         disable: !isPwaEnabled,

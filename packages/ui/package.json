@@ -5,8 +5,8 @@
   "exports": {
     ".": {
       "types": "./src/index.ts",
-      "import": "./src/index.ts",
-      "style": "./src/index.css"
+      "style": "./src/index.css",
+      "import": "./src/index.ts"
     }
   },
   "scripts": {
@@ -21,8 +21,6 @@
     "@tanstack/vue-hotkeys": "catalog:",
     "color-convert": "catalog:",
     "defu": "catalog:",
-    "tailwind-merge": "catalog:",
-    "tailwind-variants": "catalog:",
     "vue-component-type-helpers": "catalog:"
   },
   "devDependencies": {
@@ -31,7 +29,6 @@
     "@storybook/addon-docs": "catalog:",
     "@storybook/addon-vitest": "catalog:",
     "@storybook/vue3-vite": "catalog:",
-    "@tailwindcss/vite": "catalog:",
     "@tsconfig/node24": "catalog:",
     "@tsconfig/strictest": "catalog:",
     "@types/node": "catalog:",
@@ -49,7 +46,6 @@
   "peerDependencies": {
     "@vueuse/core": "catalog:",
     "reka-ui": "catalog:",
-    "tailwindcss": "catalog:",
     "vue": "catalog:"
   }
 }
