@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Label, Toggle } from "reka-ui/namespaced";
-import { computed } from "vue";
 
 import { useFormField } from "../../composables/useFormField.ts";
 import { useShortcuts } from "../../composables/useShortcuts.ts";
@@ -8,9 +7,6 @@ import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 import Tooltip from "../Tooltip/Tooltip.vue";
 import type { TooltipProps } from "../Tooltip/Tooltip.vue";
-
-import { ToolToggleTheme } from "./ToolToggle.theme.ts";
-import type { ToolToggleThemeSlots, ToolToggleThemeVariants } from "./ToolToggle.theme.ts";
 
 export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
   id?: string;
@@ -34,13 +30,10 @@ export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
    * The size of the toggle.
    * @default "md"
    */
-  size?: ToolToggleThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** Whether the toggle is disabled. */
   disabled?: boolean;
-
-  class?: any;
-  ui?: ToolToggleThemeSlots;
 }
 
 const modelValue = defineModel<boolean>();
@@ -59,19 +52,12 @@ useShortcuts(() => {
     },
   };
 });
-
-const ui = computed(() => {
-  return ToolToggleTheme({
-    size: size.value,
-    disabled: props.disabled,
-  });
-});
 </script>
 
 <template>
   <div
     data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class, description ? 'items-start' : 'items-center'] })"
+    :class="[$style.root, $style[`size-${size}`], disabled && $style.disabled, description && $style.hasDescription]"
   >
     <Tooltip
       v-bind="tooltipOptions"
@@ -87,17 +73,146 @@ const ui = computed(() => {
         :disabled="disabled"
         :aria-label="label ?? tooltip"
         data-slot="base"
-        :class="ui.base({ class: props.ui?.base })"
+        :class="$style.base"
       >
-        <Icon :name="icon" data-slot="icon" :class="ui.icon({ class: props.ui?.icon })" />
+        <Icon :name="icon" data-slot="icon" :class="$style.icon" />
       </Toggle>
     </Tooltip>
 
-    <div v-if="label || description" data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
-      <Label v-if="label" :for="id" data-slot="label" :class="ui.label({ class: props.ui?.label })">{{ label }}</Label>
-      <p v-if="description" data-slot="description" :class="ui.description({ class: props.ui?.description })">
+    <div v-if="label || description" data-slot="wrapper" :class="$style.wrapper">
+      <Label v-if="label" :for="id" data-slot="label" :class="$style.label">{{ label }}</Label>
+      <p v-if="description" data-slot="description" :class="$style.description">
         {{ description }}
       </p>
     </div>
   </div>
 </template>
+
+<style module>
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &.has-description {
+    align-items: flex-start;
+  }
+
+  &.disabled {
+    opacity: 75%;
+  }
+}
+
+.base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--radius-md);
+
+  color: var(--text-color-dimmed);
+
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+
+  .size-sm & {
+    padding: calc(var(--spacing) * 1);
+  }
+
+  .size-md & {
+    padding: calc(var(--spacing) * 1.5);
+  }
+
+  .size-lg & {
+    padding: calc(var(--spacing) * 2);
+  }
+
+  .disabled & {
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--border-color-inverted);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    background-color: var(--background-color-elevated);
+  }
+
+  &[aria-pressed="true"] {
+    background-color: var(--background-color-elevated);
+  }
+
+  &:not(:disabled):hover {
+    cursor: pointer;
+    background-color: var(--background-color-elevated);
+  }
+
+  &:not(:disabled)[aria-pressed="true"]:hover {
+    background-color: var(--background-color-accented);
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+
+  .size-sm & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .size-md & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .size-lg & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+}
+
+.wrapper {
+  width: 100%;
+  margin-inline-start: calc(var(--spacing) * 2);
+
+  .size-sm & {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  .size-md & {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .size-lg & {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+}
+
+.label {
+  display: block;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color-default);
+
+  .disabled & {
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    cursor: pointer;
+  }
+}
+
+.description {
+  color: var(--text-color-muted);
+
+  .disabled & {
+    cursor: not-allowed;
+  }
+}
+</style>

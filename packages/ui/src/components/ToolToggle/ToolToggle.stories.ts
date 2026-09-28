@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
+import ToolToggleDemo from "./stories/ToolToggleDemo.vue";
+import ToolToggleStates from "./stories/ToolToggleStates.vue";
 import ToolToggle from "./ToolToggle.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
@@ -39,10 +41,10 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { ToolToggle },
+      components: { ToolToggleDemo },
       setup: () => ({ args, updateArgs }),
       template: `
-        <ToolToggle v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
+        <ToolToggleDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
       `,
     };
   },
@@ -51,17 +53,17 @@ export const Demo: Story = {
 export const Compact: Story = {
   args: { icon: "lucide:eye" },
   render: () => ({
-    components: { ToolToggle },
-    template: `<ToolToggle icon="lucide:eye" tooltip="Show symbols" shortcut="Ctrl+S" />`,
+    components: { ToolToggleDemo },
+    template: `<ToolToggleDemo icon="lucide:eye" tooltip="Show symbols" shortcut="Ctrl+S" />`,
   }),
 };
 
 export const Expanded: Story = {
   args: { icon: "lucide:eye" },
   render: () => ({
-    components: { ToolToggle },
+    components: { ToolToggleDemo },
     template: `
-      <ToolToggle
+      <ToolToggleDemo
         icon="lucide:eye"
         label="Show symbols"
         description="Toggle symbol visibility on the canvas"
@@ -74,15 +76,8 @@ export const Expanded: Story = {
 export const States: Story = {
   args: { icon: "lucide:eye" },
   render: () => ({
-    components: { ToolToggle },
-    template: `
-      <div class="flex flex-col gap-2">
-        <ToolToggle icon="lucide:eye" tooltip="Default" />
-        <ToolToggle icon="lucide:eye" tooltip="Disabled" disabled />
-        <ToolToggle icon="lucide:eye" tooltip="Toggled" :model-value="true" />
-        <ToolToggle icon="lucide:eye" tooltip="Toggled disabled" :model-value="true" disabled />
-      </div>
-    `,
+    components: { ToolToggleStates },
+    template: `<ToolToggleStates />`,
   }),
 };
 
