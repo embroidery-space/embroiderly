@@ -2,13 +2,10 @@
 import { useForwardPropsEmits } from "reka-ui";
 import type { SplitterPanelEmits as _SplitterPanelEmits, SplitterPanelProps as _SplitterPanelProps } from "reka-ui";
 import { Splitter } from "reka-ui/namespaced";
-import { inject, useTemplateRef } from "vue";
+import { useTemplateRef } from "vue";
 
-import { SplitterContextKey } from "./context.ts";
-
-export interface SplitterPanelProps extends _SplitterPanelProps {
-  class?: any;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SplitterPanelProps extends _SplitterPanelProps {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SplitterPanelEmits extends _SplitterPanelEmits {}
@@ -28,7 +25,6 @@ const emit = defineEmits<SplitterPanelEmits>();
 defineSlots<SplitterPanelSlots>();
 
 const forwarded = useForwardPropsEmits(props, emit);
-const context = inject(SplitterContextKey, null);
 
 const panelRef = useTemplateRef("panel");
 
@@ -47,13 +43,7 @@ defineExpose({
 </script>
 
 <template>
-  <Splitter.Panel
-    ref="panel"
-    v-slot="slotProps"
-    v-bind="forwarded"
-    data-slot="panel"
-    :class="context?.ui.panel({ class: props.class })"
-  >
+  <Splitter.Panel ref="panel" v-slot="slotProps" v-bind="forwarded" data-slot="panel">
     <slot v-bind="slotProps" />
   </Splitter.Panel>
 </template>
