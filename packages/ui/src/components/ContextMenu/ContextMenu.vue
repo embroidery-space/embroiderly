@@ -8,8 +8,6 @@ import { usePortal } from "../../composables/usePortal.ts";
 import { useShortcuts, extractShortcuts } from "../../composables/useShortcuts.ts";
 import type { IconValue } from "../../types/icons.ts";
 
-import { ContextMenuTheme } from "./ContextMenu.theme.ts";
-import type { ContextMenuThemeSlots, ContextMenuThemeVariants } from "./ContextMenu.theme.ts";
 import ContextMenuContent from "./ContextMenuContent.vue";
 
 export interface ContextMenuItem {
@@ -67,7 +65,7 @@ export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> {
    * The size of the context menu.
    * @default "md"
    */
-  size?: ContextMenuThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** Whether the context menu trigger is disabled. */
   disabled?: boolean;
@@ -80,9 +78,6 @@ export interface ContextMenuProps<T extends ContextMenuItem = ContextMenuItem> {
    * @default true
    */
   portal?: boolean | string | HTMLElement;
-
-  class?: any;
-  ui?: ContextMenuThemeSlots;
 }
 
 export interface ContextMenuEmits {
@@ -117,8 +112,6 @@ const normalizedItems = computed<T[][]>(() => {
 
 // Allow conflicts, since context menu usually duplicates options which may already be declared somewhere else in the application.
 useShortcuts(extractShortcuts(normalizedItems), { conflictBehavior: "allow" });
-
-const ui = computed(() => ContextMenuTheme({ size: props.size }));
 </script>
 
 <template>
@@ -128,14 +121,7 @@ const ui = computed(() => ContextMenuTheme({ size: props.size }));
     </ContextMenu.Trigger>
 
     <ContextMenu.Portal v-bind="portalProps">
-      <ContextMenuContent
-        v-bind="contentProps"
-        :items="normalizedItems"
-        :size="size"
-        data-slot="content"
-        :class="ui.content({ class: [props.ui?.content, props.class] })"
-        :ui="ui"
-      />
+      <ContextMenuContent v-bind="contentProps" :items="normalizedItems" :size="size" data-slot="content" />
     </ContextMenu.Portal>
   </ContextMenu.Root>
 </template>
