@@ -8,8 +8,6 @@ import { usePortal } from "../../composables/usePortal.ts";
 import { useShortcuts, extractShortcuts } from "../../composables/useShortcuts.ts";
 import type { IconValue } from "../../types/icons.ts";
 
-import { DropdownMenuTheme } from "./DropdownMenu.theme.ts";
-import type { DropdownMenuThemeSlots, DropdownMenuThemeVariants } from "./DropdownMenu.theme.ts";
 import DropdownMenuContent from "./DropdownMenuContent.vue";
 
 export interface DropdownMenuItem {
@@ -67,7 +65,7 @@ export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem
    * The size of the dropdown menu.
    * @default "md"
    */
-  size?: DropdownMenuThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** Whether the dropdown menu trigger is disabled. */
   disabled?: boolean;
@@ -86,9 +84,6 @@ export interface DropdownMenuProps<T extends DropdownMenuItem = DropdownMenuItem
    * @default true
    */
   portal?: boolean | string | HTMLElement;
-
-  class?: any;
-  ui?: DropdownMenuThemeSlots;
 }
 
 export interface DropdownMenuSlots {
@@ -119,8 +114,6 @@ const normalizedItems = computed<T[][]>(() => {
   return [props.items as T[]];
 });
 useShortcuts(extractShortcuts(normalizedItems));
-
-const ui = computed(() => DropdownMenuTheme({ size: props.size }));
 </script>
 
 <template>
@@ -130,14 +123,7 @@ const ui = computed(() => DropdownMenuTheme({ size: props.size }));
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Portal v-bind="portalProps">
-      <DropdownMenuContent
-        v-bind="contentProps"
-        :items="normalizedItems"
-        :size="size"
-        data-slot="content"
-        :class="ui.content({ class: [props.ui?.content, props.class] })"
-        :ui="ui"
-      />
+      <DropdownMenuContent v-bind="contentProps" :items="normalizedItems" :size="size" data-slot="content" />
     </DropdownMenu.Portal>
   </DropdownMenu.Root>
 </template>
