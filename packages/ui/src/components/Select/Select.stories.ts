@@ -2,10 +2,13 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
-import FormField from "../FormField/FormField.vue";
-
 import Select from "./Select.vue";
 import type { SelectItem } from "./Select.vue";
+import SelectDemo from "./stories/SelectDemo.vue";
+import SelectOpen from "./stories/SelectOpen.vue";
+import SelectSizes from "./stories/SelectSizes.vue";
+import SelectStates from "./stories/SelectStates.vue";
+import SelectVariants from "./stories/SelectVariants.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 const variants = ["subtle", "outline"] as const;
@@ -59,17 +62,14 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, Select },
+      components: { SelectDemo },
       setup: () => ({ args, richItems, updateArgs }),
       template: `
-        <FormField>
-          <Select
-            v-bind="args"
-            :items="richItems"
-            class="w-48"
-            @update:model-value="(value) => updateArgs({ modelValue: value })"
-          />
-        </FormField>
+        <SelectDemo
+          v-bind="args"
+          :items="richItems"
+          @update:model-value="(value) => updateArgs({ modelValue: value })"
+        />
       `,
     };
   },
@@ -77,43 +77,25 @@ export const Demo: Story = {
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Select },
-    setup: () => ({ sizes, items }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="size in sizes" :key="size">
-          <Select :items="items" :size="size" :model-value="'todo'" class="w-40" />
-        </template>
-      </div>
-    `,
+    components: { SelectSizes },
+    setup: () => ({ items }),
+    template: `<SelectSizes :items="items" />`,
   }),
 };
 
 export const Variants: Story = {
   render: () => ({
-    components: { Select },
-    setup: () => ({ variants, items }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="variant in variants" :key="variant">
-          <Select :items="items" :variant="variant" :model-value="'todo'" class="w-40" />
-        </template>
-      </div>
-    `,
+    components: { SelectVariants },
+    setup: () => ({ items }),
+    template: `<SelectVariants :items="items" />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { Select },
+    components: { SelectStates },
     setup: () => ({ items }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <Select :items="items" placeholder="Default" class="w-40" />
-        <Select :items="items" placeholder="Loading" loading class="w-40" />
-        <Select :items="items" placeholder="Disabled" disabled class="w-40" />
-      </div>
-    `,
+    template: `<SelectStates :items="items" />`,
   }),
 };
 
@@ -124,15 +106,9 @@ export const Open: Story = {
     portal: false, // `portal` must be disabled here so the opened content stays inside the captured snapshot subject.
   },
   render: (args) => ({
-    components: { FormField, Select },
+    components: { SelectOpen },
     setup: () => ({ args, richItems }),
-    template: `
-      <div class="min-h-96 min-w-64">
-        <FormField>
-          <Select v-bind="args" :items="richItems" class="w-48" />
-        </FormField>
-      </div>
-    `,
+    template: `<SelectOpen v-bind="args" :items="richItems" />`,
   }),
   async play({ canvas }) {
     await expect(canvas.getByRole("option", { name: "Backlog" })).toBeVisible();
