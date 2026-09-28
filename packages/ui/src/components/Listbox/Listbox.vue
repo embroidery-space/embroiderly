@@ -11,9 +11,6 @@ import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
 import type { InputProps } from "../Input/Input.vue";
 
-import { ListboxTheme } from "./Listbox.theme.ts";
-import type { ListboxThemeSlots, ListboxThemeVariants } from "./Listbox.theme.ts";
-
 export interface ListboxItemObject {
   /** The type of the item. */
   type?: "separator" | "label";
@@ -55,18 +52,15 @@ export interface ListboxProps<T extends ListboxItem = ListboxItem> extends Pick<
    * The color scheme of the listbox.
    * @default "primary"
    */
-  color?: ListboxThemeVariants["color"];
+  color?: "primary" | "neutral";
   /**
    * The size of the listbox.
    * @default "md"
    */
-  size?: ListboxThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** The message to display when the listbox is empty. */
   emptyMessage?: string;
-
-  class?: any;
-  ui?: ListboxThemeSlots;
 }
 
 export interface ListboxEmits<T extends ListboxItem = ListboxItem> {
@@ -134,14 +128,6 @@ function compareValues(a: any, b: any): boolean {
   if (typeof props.by === "string") return a?.[props.by] === b?.[props.by];
   return a === b;
 }
-
-const ui = computed(() => {
-  return ListboxTheme({
-    color: props.color,
-    size: size.value,
-    disabled: props.disabled,
-  });
-});
 </script>
 
 <template>
@@ -156,27 +142,18 @@ const ui = computed(() => {
     :by="by as any"
     :disabled="disabled"
     data-slot="root"
-    :class="[ui.root({ class: [props.ui?.root, props.class] }), $style.root]"
+    :class="[$style.root, $style[`color-${color}`], $style[`size-${size}`], { [$style.disabled]: disabled }]"
     @highlight="emit('highlight', $event as any)"
   >
     <Listbox.Filter v-if="filterInput" v-model="filterValue" as-child>
       <Input v-model="filterValue" :size="size" v-bind="filterInputProps" />
     </Listbox.Filter>
 
-    <Listbox.Content data-slot="content" :class="ui.content({ class: props.ui?.content })">
+    <Listbox.Content data-slot="content" :class="$style.content">
       <template v-if="hasItems">
-        <Listbox.Group
-          v-for="(group, gi) in normalizedGroups"
-          :key="gi"
-          data-slot="group"
-          :class="ui.group({ class: props.ui?.group })"
-        >
+        <Listbox.Group v-for="(group, gi) in normalizedGroups" :key="gi" data-slot="group" :class="$style.group">
           <template v-for="(item, i) in group" :key="`${gi}-${i}`">
-            <Listbox.GroupLabel
-              v-if="item.type === 'label'"
-              data-slot="label"
-              :class="ui.label({ class: [props.ui?.label, item.class] })"
-            >
+            <Listbox.GroupLabel v-if="item.type === 'label'" data-slot="label" :class="[$style.label, item.class]">
               {{ item.label }}
             </Listbox.GroupLabel>
 
@@ -184,7 +161,7 @@ const ui = computed(() => {
               v-else-if="item.type === 'separator'"
               role="separator"
               data-slot="separator"
-              :class="ui.separator({ class: [props.ui?.separator, item.class] })"
+              :class="[$style.separator, item.class]"
             />
 
             <Listbox.Item
@@ -192,7 +169,7 @@ const ui = computed(() => {
               :value="item.value as AcceptableValue"
               :disabled="!!item.disabled"
               data-slot="item"
-              :class="ui.item({ class: [props.ui?.item, item.class] })"
+              :class="[$style.item, item.class]"
               @select="emit('option-select', { originalEvent: $event, item: item.value as T, index: i })"
               @dblclick="
                 emit('option-dblclick', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
@@ -202,15 +179,11 @@ const ui = computed(() => {
               "
             >
               <slot name="option" :item="item" :selected="isSelected(item)" :index="i">
-                <span data-slot="item-label" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
+                <span data-slot="item-label" :class="$style.itemLabel">
                   {{ item.label ?? String(item.value) }}
                 </span>
                 <Listbox.ItemIndicator>
-                  <Icon
-                    :name="icons.check"
-                    data-slot="item-indicator"
-                    :class="ui.itemIndicator({ class: props.ui?.itemIndicator })"
-                  />
+                  <Icon :name="icons.check" data-slot="item-indicator" :class="$style.itemIndicator" />
                 </Listbox.ItemIndicator>
               </slot>
             </Listbox.Item>
@@ -218,7 +191,7 @@ const ui = computed(() => {
         </Listbox.Group>
       </template>
 
-      <p v-else data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
+      <p v-else data-slot="empty" :class="$style.empty">
         {{ props.emptyMessage ?? locale.messages.listbox.empty }}
       </p>
     </Listbox.Content>
@@ -226,7 +199,182 @@ const ui = computed(() => {
 </template>
 
 <style module>
-.root > [data-slot="root"] {
-  border-bottom: 1px solid var(--border-color-default);
+.root {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+  border-radius: var(--radius-md);
+
+  box-shadow: inset 0 0 0 1px var(--border-color-default);
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 75%;
+  }
+
+  & > [data-slot="root"] {
+    border-bottom: 1px solid var(--border-color-default);
+  }
+}
+
+.content {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  outline-style: none;
+}
+
+.group {
+  padding: calc(var(--spacing) * 1);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color-muted);
+
+  .size-sm & {
+    gap: calc(var(--spacing) * 1);
+    padding: calc(var(--spacing) * 1);
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  .size-md & {
+    gap: calc(var(--spacing) * 1.5);
+    padding: calc(var(--spacing) * 1.5);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .size-lg & {
+    gap: calc(var(--spacing) * 2);
+    padding: calc(var(--spacing) * 2);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+}
+
+.separator {
+  height: 1px;
+  margin-block: calc(var(--spacing) * 1);
+  margin-inline: calc(var(--spacing) * -1);
+  background-color: var(--border-color-default);
+}
+
+.item {
+  cursor: pointer;
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  border-radius: var(--radius-sm);
+
+  color: var(--text-color-default);
+
+  outline-style: none;
+
+  &[data-disabled] {
+    cursor: not-allowed;
+    opacity: 75%;
+  }
+
+  &[data-highlighted] {
+    background-color: var(--background-color-elevated);
+  }
+
+  &[data-disabled][data-highlighted] {
+    background-color: transparent;
+  }
+
+  .size-sm & {
+    gap: calc(var(--spacing) * 1);
+    padding: calc(var(--spacing) * 1);
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  .size-md & {
+    gap: calc(var(--spacing) * 1.5);
+    padding: calc(var(--spacing) * 1.5);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .size-lg & {
+    gap: calc(var(--spacing) * 2);
+    padding: calc(var(--spacing) * 2);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+}
+
+.item-label {
+  overflow: hidden;
+  flex: 1;
+
+  min-width: 0;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-indicator {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+
+  .color-primary & {
+    color: var(--color-primary);
+  }
+
+  .color-neutral & {
+    color: var(--text-color-default);
+  }
+
+  .size-sm & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .size-md & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .size-lg & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+}
+
+.empty {
+  color: var(--text-color-muted);
+  text-align: center;
+
+  .size-sm & {
+    padding-block: calc(var(--spacing) * 1);
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  .size-md & {
+    padding-block: calc(var(--spacing) * 1.5);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .size-lg & {
+    padding-block: calc(var(--spacing) * 2);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
 }
 </style>
