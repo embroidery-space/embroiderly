@@ -26,8 +26,8 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="flex min-h-0 grow flex-col">
-    <div v-if="$slots.header" class="border-b border-default p-1">
+  <div :class="$style.root">
+    <div v-if="$slots.header" :class="$style.header">
       <slot name="header"></slot>
     </div>
 
@@ -37,12 +37,7 @@ const emit = defineEmits<{
       :disabled="disabled"
       selection-behavior="replace"
       :empty-message="$t('stitch-symbols-empty')"
-      class="grow"
-      :ui="{
-        root: 'overflow-hidden rounded-none ring-0',
-        group: 'grid grid-cols-8 gap-1 p-1',
-        item: 'rounded-none p-0 data-highlighted:bg-transparent',
-      }"
+      :class="$style.listbox"
       @highlight="selectedSymbol = $event?.value as number | undefined"
       @option-contextmenu="({ item }) => (selectedSymbol = item as number)"
       @option-dblclick="
@@ -69,8 +64,50 @@ const emit = defineEmits<{
       </template>
     </Listbox>
 
-    <div v-if="$slots.footer" class="border-t border-default px-2 py-1">
+    <div v-if="$slots.footer" :class="$style.footer">
       <slot name="footer"></slot>
     </div>
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.header {
+  padding: calc(var(--spacing) * 1);
+  border-bottom: 1px solid var(--border-color-default);
+}
+
+.listbox[data-slot="root"] {
+  flex-grow: 1;
+  border-radius: 0;
+  box-shadow: none;
+
+  [data-slot="group"] {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: calc(var(--spacing) * 1);
+    padding: calc(var(--spacing) * 1);
+  }
+
+  [data-slot="group"] > [data-slot="item"] {
+    padding: 0;
+    border-radius: 0;
+
+    &[data-highlighted] {
+      background-color: transparent;
+    }
+  }
+}
+
+.footer {
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2);
+  border-top: 1px solid var(--border-color-default);
+}
+</style>

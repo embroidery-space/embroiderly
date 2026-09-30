@@ -39,6 +39,8 @@ export interface DialogSlots {
   close?(props: { close: (value?: unknown) => void }): any;
 }
 
+defineOptions({ inheritAttrs: false });
+
 const open = defineModel<boolean>("open", { default: false });
 const props = withDefaults(defineProps<DialogProps>(), {
   dismissible: true,
@@ -72,6 +74,7 @@ defineExpose({ contentRef });
 
       <Dialog.Content
         ref="content"
+        v-bind="$attrs"
         :aria-describedby="description ? undefined : ''"
         data-slot="content"
         :class="$style.content"

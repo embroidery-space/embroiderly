@@ -119,13 +119,8 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
       <template #header>
-        <div class="flex gap-x-1">
-          <PaletteSelect
-            ref="palette-select"
-            variant="outline"
-            class="w-full"
-            @palette-loaded="selectedPalette = $event"
-          />
+        <div :class="$style.header">
+          <PaletteSelect ref="palette-select" variant="outline" @palette-loaded="selectedPalette = $event" />
 
           <DropdownMenu :items="paletteCatalogMenuOptions" :content="{ align: 'end' }">
             <Button
@@ -149,3 +144,14 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
     </PaletteList>
   </PaletteSection>
 </template>
+
+<style module>
+.header {
+  display: flex;
+  column-gap: calc(var(--spacing) * 1);
+
+  > [data-slot="root"] {
+    width: 100%;
+  }
+}
+</style>

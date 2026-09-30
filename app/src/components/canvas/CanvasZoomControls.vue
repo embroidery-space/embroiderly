@@ -54,8 +54,8 @@ function zoomOut() {
 </script>
 
 <template>
-  <div class="flex items-center gap-x-2">
-    <FormFieldGroup class="w-16">
+  <div :class="$style.root">
+    <FormFieldGroup :class="$style.zoom">
       <InputNumber
         :model-value="lastNumericZoom"
         variant="outline"
@@ -65,7 +65,7 @@ function zoomOut() {
         :increment="false"
         :decrement="false"
         :disabled="disabled"
-        :ui="{ base: 'ps-2 pe-2' }"
+        :class="$style.zoomInput"
         @update:model-value="emit('update:model-value', $event!)"
       />
 
@@ -74,7 +74,7 @@ function zoomOut() {
       </DropdownMenu>
     </FormFieldGroup>
 
-    <div class="flex grow items-center gap-x-1">
+    <div :class="$style.controls">
       <ButtonIcon
         color="neutral"
         variant="ghost"
@@ -94,7 +94,7 @@ function zoomOut() {
         :min="min"
         :max="max"
         :disabled="disabled"
-        class="grow"
+        :class="$style.slider"
         @update:model-value="emit('update:model-value', $event as number)"
       />
 
@@ -112,3 +112,31 @@ function zoomOut() {
     </div>
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  column-gap: calc(var(--spacing) * 2);
+  align-items: center;
+}
+
+.zoom {
+  width: calc(var(--spacing) * 16);
+}
+
+.zoom input.zoom-input[data-slot="base"] {
+  padding-inline-start: calc(var(--spacing) * 2);
+  padding-inline-end: calc(var(--spacing) * 2);
+}
+
+.controls {
+  display: flex;
+  flex-grow: 1;
+  column-gap: calc(var(--spacing) * 1);
+  align-items: center;
+}
+
+.slider {
+  flex-grow: 1;
+}
+</style>

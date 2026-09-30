@@ -196,10 +196,10 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div ref="tree-container" class="flex min-h-auto flex-col gap-1 lg:min-h-0">
-    <div class="flex items-center gap-1">
-      <IconLayers class="m-1.5 size-4 shrink-0" :class="{ 'opacity-75': disabled }" />
-      <span class="ms-1 flex-1 text-sm font-medium" :class="{ 'opacity-75': disabled }">
+  <div ref="tree-container" :class="$style.root">
+    <div :class="$style.header">
+      <IconLayers :class="[$style.icon, { [$style.disabled]: disabled }]" />
+      <span :class="[$style.title, { [$style.disabled]: disabled }]">
         {{ $t("canvas-layers") }}
       </span>
 
@@ -236,10 +236,10 @@ watchEffect(() => {
             :placeholder="item.placeholder"
             activation-mode="dblclick"
             submit-mode="both"
-            class="w-full min-w-0"
+            :class="$style.editable"
             @submit="(value) => emits('renameLayer', item.index, value ?? '')"
           />
-          <span v-else class="truncate">{{ item.label }}</span>
+          <span v-else :class="$style.label">{{ item.label }}</span>
         </template>
 
         <template #item-trailing="{ item, disabled: itemDisabled }">
@@ -257,3 +257,54 @@ watchEffect(() => {
     </ContextMenu>
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 1);
+  min-height: auto;
+
+  @media (width >= 64rem) {
+    min-height: 0;
+  }
+}
+
+.header {
+  display: flex;
+  gap: calc(var(--spacing) * 1);
+  align-items: center;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  margin: calc(var(--spacing) * 1.5);
+}
+
+.title {
+  flex: 1;
+
+  margin-inline-start: calc(var(--spacing) * 1);
+
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--text-sm--line-height);
+}
+
+.disabled {
+  opacity: 75%;
+}
+
+.editable {
+  width: 100%;
+  min-width: 0;
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

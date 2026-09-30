@@ -111,8 +111,8 @@ watch(collapsed, (value) => {
 </script>
 
 <template>
-  <SplitterPanel ref="panel" v-bind="splitterPanelProps" class="h-full min-w-min">
-    <div class="flex h-full flex-col gap-1 overflow-y-auto p-1">
+  <SplitterPanel ref="panel" v-bind="splitterPanelProps" :class="$style.panel">
+    <div :class="$style.root">
       <ToolToggleGroup
         v-model="displayMode"
         :items="displayModeOptions"
@@ -162,14 +162,14 @@ watch(collapsed, (value) => {
         v-model="editorStateStore.selectedLayerIndex"
         :layers="patternStore.pattern.layers.itemsInVisualOrder"
         :disabled="disabled"
-        class="grow"
+        :class="$style.layers"
         @add-layer="patternStore.addLayer"
         @remove-layer="handleRemoveLayer"
         @rename-layer="patternStore.renameLayer"
         @toggle-layer-visibility="patternStore.updateLayerVisibility"
         @move-layer="patternStore.moveLayer"
       />
-      <Popover v-else pinned side="left" align="start" class="flex h-[41.5vh] w-64 p-1">
+      <Popover v-else pinned side="left" align="start">
         <template #default="{ open }">
           <ButtonIcon
             color="neutral"
@@ -182,19 +182,53 @@ watch(collapsed, (value) => {
         </template>
 
         <template #content>
-          <CanvasLayers
-            v-model="editorStateStore.selectedLayerIndex"
-            :layers="patternStore.pattern.layers.itemsInVisualOrder"
-            :disabled="disabled"
-            class="w-full"
-            @add-layer="patternStore.addLayer"
-            @remove-layer="handleRemoveLayer"
-            @rename-layer="patternStore.renameLayer"
-            @toggle-layer-visibility="patternStore.updateLayerVisibility"
-            @move-layer="patternStore.moveLayer"
-          />
+          <div :class="$style.popover">
+            <CanvasLayers
+              v-model="editorStateStore.selectedLayerIndex"
+              :layers="patternStore.pattern.layers.itemsInVisualOrder"
+              :disabled="disabled"
+              :class="$style.popoverLayers"
+              @add-layer="patternStore.addLayer"
+              @remove-layer="handleRemoveLayer"
+              @rename-layer="patternStore.renameLayer"
+              @toggle-layer-visibility="patternStore.updateLayerVisibility"
+              @move-layer="patternStore.moveLayer"
+            />
+          </div>
         </template>
       </Popover>
     </div>
   </SplitterPanel>
 </template>
+
+<style module>
+.panel {
+  min-width: min-content;
+  height: 100%;
+}
+
+.root {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 1);
+
+  height: 100%;
+  padding: calc(var(--spacing) * 1);
+}
+
+.layers {
+  flex-grow: 1;
+}
+
+.popover {
+  display: flex;
+  width: calc(var(--spacing) * 64);
+  height: 41.5vh;
+  padding: calc(var(--spacing) * 1);
+}
+
+.popover-layers {
+  width: 100%;
+}
+</style>

@@ -15,13 +15,12 @@ function updateSettings<K extends keyof PaletteSettings>(key: K, value: PaletteS
 
 <template>
   <PaletteSection :title="$t('palette-display-options')">
-    <div class="flex flex-col gap-y-2 p-2">
-      <FormField :label="$t('palette-columns-number')" class="w-full">
+    <div :class="$style.root">
+      <FormField :label="$t('palette-columns-number')">
         <InputNumber
           :model-value="props.settings.columnsNumber"
           :min="1"
           :max="8"
-          class="w-full"
           @update:model-value="updateSettings('columnsNumber', $event!)"
         />
       </FormField>
@@ -32,7 +31,7 @@ function updateSettings<K extends keyof PaletteSettings>(key: K, value: PaletteS
         @update:model-value="updateSettings('colorOnly', $event as boolean)"
       />
 
-      <div class="flex flex-col gap-y-1">
+      <div :class="$style.checkboxes">
         <Checkbox
           :model-value="props.settings.showStitchSymbols"
           :disabled="props.settings.colorOnly"
@@ -67,3 +66,18 @@ function updateSettings<K extends keyof PaletteSettings>(key: K, value: PaletteS
     </div>
   </PaletteSection>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(var(--spacing) * 2);
+  padding: calc(var(--spacing) * 2);
+}
+
+.checkboxes {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(var(--spacing) * 1);
+}
+</style>

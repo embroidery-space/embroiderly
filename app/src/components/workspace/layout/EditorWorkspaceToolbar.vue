@@ -53,7 +53,7 @@ useShortcuts({
 </script>
 
 <template>
-  <div class="flex h-full flex-col gap-1 overflow-y-auto">
+  <div :class="$style.root">
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="fullstitches" />
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="petitestitches" />
     <ToolSelect v-model="editorStateStore.selectedTool" v-bind="toolSelectProps" :items="halfstitches" />
@@ -77,3 +77,14 @@ useShortcuts({
     />
   </div>
 </template>
+
+<style module>
+.root {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 1);
+
+  height: 100%;
+}
+</style>

@@ -142,6 +142,14 @@
   --text-base--line-height: calc(1.5 / 1);
   --text-lg: 1.125rem;
   --text-lg--line-height: calc(1.75 / 1.125);
+  --text-xl: 1.25rem;
+  --text-xl--line-height: calc(1.75 / 1.25);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(2 / 1.5);
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: calc(2.25 / 1.875);
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: calc(2.5 / 2.25);
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -154,11 +162,14 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
   /* Containers. */
+  --container-3xs: 16rem;
   --container-2xs: 18rem;
   --container-xs: 20rem;
   --container-sm: 24rem;
   --container-md: 28rem;
   --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
 
   color-scheme: light dark;
 }

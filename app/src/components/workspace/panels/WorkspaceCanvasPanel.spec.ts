@@ -16,7 +16,7 @@ const WorkspaceCanvasPanelWrapper = defineComponent({
   inheritAttrs: false,
   template: `
     <App>
-      <Splitter direction="horizontal" class="size-full">
+      <Splitter direction="horizontal" style="width: 100%; height: 100%">
         <SplitterPanel :default-size="70" />
         <WorkspaceCanvasPanel
           v-bind="$attrs"

@@ -12,8 +12,8 @@ const props = defineProps<{
 
 <template>
   <div>
-    <FormFieldSet :legend="$t('publish-settings-frame-options')" class="m-0! space-y-2">
-      <p class="text-sm whitespace-pre-line text-dimmed">{{ $t("publish-settings-frame-definition") }}</p>
+    <FormFieldSet :legend="$t('publish-settings-frame-options')" :class="$style.frame">
+      <p :class="$style.definition">{{ $t("publish-settings-frame-definition") }}</p>
 
       <InputDimensions
         v-model:width="options.frameSize[0]"
@@ -25,8 +25,8 @@ const props = defineProps<{
         :aspect-ratio="options.frameSize[0] / options.frameSize[1]"
       />
 
-      <FormField v-bind="$ta('publish-settings-frame-preserved-overlap')" class="w-full">
-        <InputNumber v-model="options.preservedOverlap" :min="0" orientation="vertical" class="w-full" />
+      <FormField v-bind="$ta('publish-settings-frame-preserved-overlap')">
+        <InputNumber v-model="options.preservedOverlap" :min="0" orientation="vertical" />
       </FormField>
 
       <Checkbox v-model="options.showGridLineNumbers" :label="$t('publish-settings-frame-show-grid-line-numbers')" />
@@ -34,3 +34,20 @@ const props = defineProps<{
     </FormFieldSet>
   </div>
 </template>
+
+<style module>
+fieldset.frame {
+  margin: 0;
+
+  > :not(:last-child) {
+    margin-block-end: calc(var(--spacing) * 2);
+  }
+}
+
+.definition {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--text-color-dimmed);
+  white-space: pre-line;
+}
+</style>

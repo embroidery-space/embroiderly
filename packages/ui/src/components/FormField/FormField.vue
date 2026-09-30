@@ -79,7 +79,12 @@ provide(
 
 <style module>
 .root {
-  width: fit-content;
+  width: 100%;
+
+  /* Stretches the control. */
+  > [data-slot="container"] > :first-child {
+    width: 100%;
+  }
 
   &.size-sm {
     font-size: var(--text-xs);

@@ -146,22 +146,12 @@ async function handleSave() {
 </script>
 
 <template>
-  <Dialog
-    ref="dialog"
-    v-model:open="open"
-    :title="$t('fabric-colors')"
-    :dismissible="!isDirty"
-    :ui="{ content: 'w-xl', footer: 'block' }"
-  >
+  <Dialog ref="dialog" v-model:open="open" :title="$t('fabric-colors')" :dismissible="!isDirty" :class="$style.dialog">
     <template #body>
-      <div ref="rows" class="flex flex-col gap-1">
-        <div
-          v-for="row in working"
-          :key="row.id"
-          class="grid grid-cols-[auto_7rem_minmax(0,1fr)_auto] items-center gap-2"
-        >
-          <span data-drag-handle class="cursor-grab text-muted">
-            <IconDragHandle class="size-4" />
+      <div ref="rows" :class="$style.rows">
+        <div v-for="row in working" :key="row.id" :class="$style.row">
+          <span data-drag-handle :class="$style.handle">
+            <IconDragHandle :class="$style.handleIcon" />
           </span>
 
           <InputColor
@@ -174,7 +164,7 @@ async function handleSave() {
             v-model="row.name"
             :aria-label="$t('fabric-colors-name')"
             :aria-invalid="invalidIds.has(row.id)"
-            :ui="{ base: invalidIds.has(row.id) ? 'ring-error' : undefined }"
+            :class="{ [$style.invalid]: invalidIds.has(row.id) }"
             @blur="history.commit"
           />
 
@@ -190,25 +180,25 @@ async function handleSave() {
     </template>
 
     <template #footer>
-      <p v-if="invalidIds.size" class="mb-2 text-sm text-error">{{ $t("fabric-colors-invalid-names") }}</p>
+      <p v-if="invalidIds.size" :class="$style.error">{{ $t("fabric-colors-invalid-names") }}</p>
 
       <!--
         `flex-wrap` keeps this row's min-content width down to its single widest button. Without
         it, the row's forced width (sum of all five controls) blows out the dialog's implicit
         single grid column below ~480px, since `Dialog.Content` has no `minmax(0, ...)` clamp.
       -->
-      <div class="flex flex-wrap items-center gap-1.5">
+      <div :class="$style.actions">
         <Button
           variant="outline"
           color="neutral"
           :icon="IconPlus"
           :label="$t('fabric-colors-add')"
-          class="rounded-full border-dashed"
+          :class="$style.add"
           @click="addColor"
         />
         <Button :label="$t('fabric-colors-restore-default')" color="neutral" variant="link" @click="restoreDefaults" />
 
-        <div class="ms-auto flex items-center gap-1.5">
+        <div :class="$style.confirm">
           <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="handleClose" />
           <Button loading-auto :label="$t('modal-save')" :disabled="!canSave" @click="handleSave" />
         </div>
@@ -216,3 +206,68 @@ async function handleSave() {
     </template>
   </Dialog>
 </template>
+
+<style module>
+.dialog[data-slot="content"] {
+  width: var(--container-xl);
+
+  > [data-slot="footer"] {
+    display: block;
+  }
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 1);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto 7rem minmax(0, 1fr) auto;
+  gap: calc(var(--spacing) * 2);
+  align-items: center;
+}
+
+.handle {
+  cursor: grab;
+  color: var(--text-color-muted);
+}
+
+.handle-icon {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+}
+
+/* `Input` passes the class to its `input`. Outweighs the variants of `Input`. */
+input.invalid[data-slot="base"] {
+  box-shadow: inset 0 0 0 1px var(--color-error);
+}
+
+.error {
+  margin-bottom: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-error);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 1.5);
+  align-items: center;
+}
+
+/* Outweighs the radius of `Button`. */
+button.add[data-slot="base"] {
+  border-style: dashed;
+  border-radius: calc(infinity * 1px);
+}
+
+.confirm {
+  display: flex;
+  gap: calc(var(--spacing) * 1.5);
+  align-items: center;
+  margin-inline-start: auto;
+}
+</style>
