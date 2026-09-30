@@ -90,9 +90,9 @@ const radii = [
 #design-tokens {
   & > h3 {
     margin-bottom: calc(var(--spacing) * 3);
+
     font-size: var(--text-lg);
     font-weight: var(--font-weight-semibold);
-    line-height: var(--text-lg--line-height);
   }
 
   & > div {
@@ -106,8 +106,10 @@ const radii = [
 
     & > * {
       display: inline-block;
+
       padding-block: calc(var(--spacing) * 1.5);
       padding-inline: calc(var(--spacing) * 4);
+
       font-weight: var(--font-weight-bold);
     }
   }
@@ -118,7 +120,9 @@ const radii = [
 
   .inverted {
     border-radius: var(--radius-md);
+
     color: var(--text-color-inverted);
+
     background-color: var(--background-color-inverted);
   }
 

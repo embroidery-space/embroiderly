@@ -60,6 +60,7 @@ const rootProps = useForwardPropsEmits(props, emit);
 
   .disabled > & {
     cursor: not-allowed;
+
     opacity: 50%;
   }
 }

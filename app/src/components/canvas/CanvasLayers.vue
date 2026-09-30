@@ -263,6 +263,7 @@ watchEffect(() => {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 1);
+
   min-height: auto;
 
   @media (width >= 64rem) {
@@ -278,6 +279,7 @@ watchEffect(() => {
 
 .icon {
   flex-shrink: 0;
+
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   margin: calc(var(--spacing) * 1.5);
@@ -290,7 +292,6 @@ watchEffect(() => {
 
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  line-height: var(--text-sm--line-height);
 }
 
 .disabled {
@@ -304,6 +305,7 @@ watchEffect(() => {
 
 .label {
   overflow: hidden;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }

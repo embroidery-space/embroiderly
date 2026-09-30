@@ -112,6 +112,7 @@ function close(value?: boolean) {
 .overlay {
   position: fixed;
   inset: 0;
+
   background-color: color-mix(in oklab, var(--background-color-elevated) 75%, transparent);
 
   &[data-state="closed"] {
@@ -171,7 +172,6 @@ function close(value?: boolean) {
   margin-top: calc(var(--spacing) * 1);
 
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
   color: var(--text-color-muted);
   white-space: pre-line;
 }

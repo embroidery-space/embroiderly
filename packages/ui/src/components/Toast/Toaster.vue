@@ -85,6 +85,7 @@ function onUpdateOpen(value: boolean, id: string | number) {
 
   &[data-swipe="cancel"] {
     translate: 0 0;
+
     transition-timing-function: var(--default-transition-timing-function);
     transition-duration: var(--default-transition-duration);
     transition-property: transform, translate, scale, rotate;
@@ -115,6 +116,7 @@ function onUpdateOpen(value: boolean, id: string | number) {
 
   &.inline {
     position: static;
+
     width: auto;
 
     @media (width >= 40rem) {

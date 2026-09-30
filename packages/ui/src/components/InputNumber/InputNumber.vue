@@ -135,6 +135,7 @@ const hasButtons = computed(() => props.increment || props.decrement);
 <style module>
 .root {
   position: relative;
+
   display: inline-flex;
   align-items: center;
 
@@ -160,6 +161,7 @@ const hasButtons = computed(() => props.increment || props.decrement);
 
   &:disabled {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -175,29 +177,23 @@ const hasButtons = computed(() => props.increment || props.decrement);
 
   .size-sm > & {
     padding-block: calc(var(--spacing) * 1);
-    padding-inline-start: calc(var(--spacing) * 2);
-    padding-inline-end: calc(var(--spacing) * 7);
+    padding-inline: calc(var(--spacing) * 2) calc(var(--spacing) * 7);
 
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md > & {
     padding-block: calc(var(--spacing) * 1.5);
-    padding-inline-start: calc(var(--spacing) * 2.5);
-    padding-inline-end: calc(var(--spacing) * 8);
+    padding-inline: calc(var(--spacing) * 2.5) calc(var(--spacing) * 8);
 
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg > & {
     padding-block: calc(var(--spacing) * 2);
-    padding-inline-start: calc(var(--spacing) * 3);
-    padding-inline-end: calc(var(--spacing) * 9);
+    padding-inline: calc(var(--spacing) * 3) calc(var(--spacing) * 9);
 
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 
   .color-primary.variant-subtle > &,
@@ -219,7 +215,7 @@ const hasButtons = computed(() => props.increment || props.decrement);
     padding-inline-end: calc(var(--spacing) * 3);
   }
 
-  .field-group:not(:last-child):not(:first-child) > & {
+  .field-group:not(:last-child, :first-child) > & {
     border-radius: 0;
   }
 
@@ -257,6 +253,7 @@ const hasButtons = computed(() => props.increment || props.decrement);
 
   &[data-slot="buttons"] > button[data-slot="base"] {
     scale: 80%;
+
     padding-block: 0;
   }
 }

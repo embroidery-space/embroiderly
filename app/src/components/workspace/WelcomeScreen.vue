@@ -187,6 +187,7 @@ function createPattern() {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 4);
+
   min-width: 50%;
 
   @media (width >= 40rem) {
@@ -197,23 +198,20 @@ function createPattern() {
 .title {
   font-size: var(--text-2xl);
   font-weight: var(--font-weight-medium);
-  line-height: var(--text-2xl--line-height);
 
   @media (width >= 40rem) {
     font-size: var(--text-3xl);
-    line-height: var(--text-3xl--line-height);
   }
 
   @media (width >= 64rem) {
     font-size: var(--text-4xl);
-    line-height: var(--text-4xl--line-height);
   }
 }
 
 button.link[data-slot="base"] {
   padding: 0;
+
   font-size: var(--text-base);
-  line-height: var(--text-base--line-height);
 }
 
 .sections {
@@ -231,20 +229,20 @@ button.link[data-slot="base"] {
 
 .heading {
   font-size: var(--text-lg);
-  line-height: var(--text-lg--line-height);
 }
 
 .actions {
   display: flex;
   flex-direction: column;
   row-gap: calc(var(--spacing) * 1);
+
   max-width: max-content;
 }
 
 button.action[data-slot="base"] {
   justify-content: flex-start;
+
   font-size: var(--text-base);
-  line-height: var(--text-base--line-height);
 }
 
 .info {
@@ -271,6 +269,7 @@ button.action[data-slot="base"] {
 
   &:hover {
     cursor: pointer;
+
     background-color: var(--background-color-elevated);
   }
 
@@ -293,7 +292,6 @@ button.action[data-slot="base"] {
   margin-block: calc(var(--spacing) * 2);
 
   font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
   text-align: center;
   vertical-align: middle;
 }
@@ -302,6 +300,5 @@ button.action[data-slot="base"] {
   font-size: var(--text-lg);
   font-feature-settings: "ss14";
   font-weight: var(--font-weight-semibold);
-  line-height: var(--text-lg--line-height);
 }
 </style>

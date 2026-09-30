@@ -217,6 +217,7 @@ function handleKeydown(e: KeyboardEvent) {
 <style module>
 .root {
   position: relative;
+
   display: inline-block;
 
   &.disabled {
@@ -264,6 +265,7 @@ function handleKeydown(e: KeyboardEvent) {
 
   &:not(:disabled):hover {
     cursor: pointer;
+
     background-color: var(--background-color-elevated);
   }
 

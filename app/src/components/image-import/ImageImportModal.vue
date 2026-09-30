@@ -266,6 +266,7 @@ onUnmounted(() => service.destroy());
 
 .layout {
   display: flex;
+
   height: 100%;
 
   &.portrait {
@@ -276,6 +277,7 @@ onUnmounted(() => service.destroy());
 .options {
   overflow-y: auto;
   flex-shrink: 0;
+
   width: calc(var(--spacing) * 80);
   padding: calc(var(--spacing) * 4);
 
@@ -317,11 +319,13 @@ onUnmounted(() => service.destroy());
 .progress[data-slot="base"] {
   position: absolute;
   top: 0;
+
   border-radius: 0;
 }
 
 .canvas {
   flex: 1;
+
   min-height: 0;
 
   &.hidden {
@@ -335,6 +339,5 @@ onUnmounted(() => service.destroy());
   border-top: 1px solid var(--border-color-default);
 
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
 }
 </style>

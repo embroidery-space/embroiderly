@@ -99,7 +99,6 @@ const portalProps = usePortal(toRef(() => props.portal));
   border-radius: var(--radius-sm);
 
   font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
 
   background-color: var(--background-color-default);
   box-shadow:
@@ -117,6 +116,7 @@ const portalProps = usePortal(toRef(() => props.portal));
 
 .text {
   overflow: hidden;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -129,6 +129,7 @@ const portalProps = usePortal(toRef(() => props.portal));
 
   &:not(:first-child)::before {
     content: "·";
+
     margin-inline-end: calc(var(--spacing) * 0.5);
   }
 

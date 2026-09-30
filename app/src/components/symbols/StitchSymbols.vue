@@ -230,7 +230,6 @@ onMounted(async () => {
 
 .usage {
   font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
   text-wrap: nowrap;
 }
 </style>

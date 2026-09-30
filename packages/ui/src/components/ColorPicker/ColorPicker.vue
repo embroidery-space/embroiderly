@@ -124,6 +124,7 @@ const currentTrackThumbColor = computed(() => hsvToHex(hsv.value));
 
 .selector {
   touch-action: none;
+
   position: relative;
 
   .size-sm & {
@@ -145,12 +146,13 @@ const currentTrackThumbColor = computed(() => hsvToHex(hsv.value));
 .selector-background {
   position: absolute;
   inset: 0;
+
   border-radius: var(--radius-md);
 
   &[data-color-picker-selector] {
     background-image:
-      linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 100%),
-      linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
+      linear-gradient(to top, #000 0%, rgb(0 0 0 / 0%) 100%),
+      linear-gradient(to right, #fff 0%, rgb(255 255 255 / 0%) 100%);
   }
 }
 

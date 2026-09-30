@@ -60,8 +60,11 @@ const indicatorStyle = computed(() => {
 <style module>
 .base {
   position: relative;
+
   overflow: hidden;
+
   border-radius: calc(infinity * 1px);
+
   background-color: var(--background-color-accented);
 
   &.orientation-horizontal {

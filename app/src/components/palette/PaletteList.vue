@@ -150,6 +150,7 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
   min-height: 0;
 }
 
@@ -161,7 +162,9 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
 /* Outweighs the styles of `Listbox`. */
 .listbox[data-slot="root"] {
   flex-grow: 1;
+
   border-radius: 0;
+
   box-shadow: none;
 
   /* The filter input. */
@@ -173,6 +176,7 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
     display: grid;
     grid-template-columns: repeat(var(--palette-cols), minmax(0, 1fr));
     gap: calc(var(--spacing) * 1);
+
     padding: calc(var(--spacing) * 1);
   }
 
@@ -187,7 +191,6 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
 
   [data-slot="content"] > [data-slot="empty"] {
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 }
 

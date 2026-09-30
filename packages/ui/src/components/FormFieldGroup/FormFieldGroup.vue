@@ -35,6 +35,7 @@ provide(
 <style module>
 .base {
   position: relative;
+
   display: inline-flex;
 }
 

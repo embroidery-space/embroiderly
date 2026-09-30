@@ -179,18 +179,17 @@ const hasTitle = computed(() => !!props.title || !!slots.title);
   display: flex;
   flex: 1;
   flex-direction: column;
+
   width: 0;
 }
 
 .title {
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  line-height: var(--text-sm--line-height);
 }
 
 .description {
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
   color: var(--text-color-muted);
   white-space: pre-line;
 

@@ -100,6 +100,7 @@ const sliderValue = computed({
 
   &.disabled {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 }
@@ -129,6 +130,7 @@ const sliderValue = computed({
 
 .range {
   position: absolute;
+
   height: 100%;
   border-radius: calc(infinity * 1px);
 

@@ -5,6 +5,7 @@
 @import "driver.js/dist/driver.css";
 
 /* Surface — mirrors `Popover`. */
+
 .driver-popover {
   min-width: var(--container-2xs);
   max-width: var(--container-sm);
@@ -20,6 +21,7 @@
 }
 
 /* Adopt the application font instead of driver.js' hard-coded stack. */
+
 .driver-popover,
 .driver-popover * {
   font-family: inherit;
@@ -45,18 +47,19 @@
 }
 
 /* Close (X) button — muted by default, full-contrast on hover (matches `Dialog`). */
+
 .driver-popover-close-btn {
   width: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
 
   font-size: var(--text-lg);
-  line-height: var(--text-lg--line-height);
   color: var(--text-color-muted);
 
   transition-timing-function: var(--default-transition-timing-function);
   transition-duration: var(--default-transition-duration);
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
 }
+
 .driver-popover-close-btn:hover,
 .driver-popover-close-btn:focus {
   color: var(--text-color-default);
@@ -64,23 +67,28 @@
 
 .driver-popover-footer {
   gap: calc(var(--spacing) * 1.5);
+
   margin-top: calc(var(--spacing) * 4);
 }
+
 .driver-popover-navigation-btns {
   gap: calc(var(--spacing) * 1.5);
 }
+
 /* Spacing between navigation buttons is handled by the flex `gap` above. */
+
 .driver-popover-navigation-btns button + button {
   margin-left: 0;
 }
 
 .driver-popover-progress-text {
   font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
   color: var(--text-color-muted);
 }
 
 /* Shared footer button base — mirrors `Button` (size `md`). */
+
+/* stylelint-disable-next-line no-descending-specificity */
 .driver-popover-footer button {
   padding-block: calc(var(--spacing) * 1.5);
   padding-inline: calc(var(--spacing) * 2.5);
@@ -97,42 +105,54 @@
   transition-duration: var(--default-transition-duration);
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
 }
+
 .driver-popover-footer button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
 /* Primary action (Take the tour / Done) — `Button` color="primary" variant="solid". */
+
 .driver-popover-footer .driver-popover-next-btn {
   color: var(--text-color-inverted);
+
   background-color: var(--color-primary);
 }
+
 .driver-popover-footer .driver-popover-next-btn:hover,
 .driver-popover-footer .driver-popover-next-btn:focus {
   background-color: color-mix(in oklab, var(--color-primary) 75%, transparent);
 }
 
 /* Secondary action (Skip) — `Button` color="neutral" variant="ghost". */
+
 .driver-popover-footer .driver-popover-prev-btn {
   color: var(--text-color-muted);
+
   background-color: transparent;
 }
+
 .driver-popover-footer .driver-popover-prev-btn:hover,
 .driver-popover-footer .driver-popover-prev-btn:focus {
   color: var(--text-color-default);
+
   background-color: var(--background-color-elevated);
 }
 
 /* Arrow — recolour the single visible border per side to the popover surface. */
+
 .driver-popover-arrow-side-left {
   border-left-color: var(--background-color-default);
 }
+
 .driver-popover-arrow-side-right {
   border-right-color: var(--background-color-default);
 }
+
 .driver-popover-arrow-side-top {
   border-top-color: var(--background-color-default);
 }
+
 .driver-popover-arrow-side-bottom {
   border-bottom-color: var(--background-color-default);
 }

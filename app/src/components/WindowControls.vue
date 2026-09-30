@@ -61,6 +61,7 @@ useTauriListener(async () => {
   &:hover,
   &:focus-visible {
     cursor: pointer;
+
     background-color: color-mix(in oklab, currentcolor 6%, transparent);
   }
 
@@ -72,11 +73,13 @@ useTauriListener(async () => {
     &:hover,
     &:focus-visible {
       color: var(--color-white);
+
       background-color: red;
     }
 
     &:active {
       color: var(--color-white);
+
       background-color: darkred;
     }
   }

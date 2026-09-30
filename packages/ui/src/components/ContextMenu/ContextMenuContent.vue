@@ -187,6 +187,7 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
 
 .group {
   isolation: isolate;
+
   padding: calc(var(--spacing) * 1);
 }
 
@@ -194,34 +195,40 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
   height: 1px;
   margin-block: calc(var(--spacing) * 1);
   margin-inline: calc(var(--spacing) * -1);
+
   background-color: var(--border-color-default);
 }
 
 .label {
   display: flex;
   align-items: center;
+
   width: 100%;
+
   font-weight: var(--font-weight-semibold);
 
   .size-sm & {
     gap: calc(var(--spacing) * 1);
+
     padding: calc(var(--spacing) * 1);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     gap: calc(var(--spacing) * 1.5);
+
     padding: calc(var(--spacing) * 1.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     gap: calc(var(--spacing) * 2);
+
     padding: calc(var(--spacing) * 2);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 }
 
@@ -253,6 +260,7 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
 
   &[data-disabled] {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -262,28 +270,32 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
 
   .size-sm & {
     gap: calc(var(--spacing) * 1);
+
     padding: calc(var(--spacing) * 1);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     gap: calc(var(--spacing) * 1.5);
+
     padding: calc(var(--spacing) * 1.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     gap: calc(var(--spacing) * 2);
+
     padding: calc(var(--spacing) * 2);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 }
 
 .item-leading-icon {
   flex-shrink: 0;
+
   color: var(--text-color-dimmed);
 
   .size-sm & {
@@ -310,17 +322,20 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
   display: flex;
   flex: 1;
   flex-direction: column;
+
   min-width: 0;
 }
 
 .item-label {
   overflow: hidden;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .item-description {
   overflow: hidden;
+
   color: var(--text-color-muted);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -329,6 +344,7 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
 .item-trailing {
   display: inline-flex;
   align-items: center;
+
   margin-inline-start: auto;
 }
 
@@ -351,6 +367,7 @@ function normalizeChildren(children: ContextMenuItem[] | ContextMenuItem[][]): C
   display: none;
   gap: calc(var(--spacing) * 0.5);
   align-items: center;
+
   margin-inline-start: auto;
 
   @media (width >= 64rem) {

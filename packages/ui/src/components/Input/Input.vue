@@ -111,6 +111,7 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
 <style module>
 .root {
   position: relative;
+
   display: inline-flex;
   align-items: center;
 
@@ -142,6 +143,7 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
 
 .leading-icon {
   flex-shrink: 0;
+
   color: var(--text-color-dimmed);
 
   &.loading {
@@ -181,6 +183,7 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
 
   &:disabled {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -205,7 +208,6 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
     padding-inline: calc(var(--spacing) * 2);
 
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md > & {
@@ -215,7 +217,6 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
     padding-inline: calc(var(--spacing) * 2.5);
 
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg > & {
@@ -225,7 +226,6 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
     padding-inline: calc(var(--spacing) * 3);
 
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 
   .color-primary.variant-subtle > &,
@@ -259,7 +259,7 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
     padding-inline-end: calc(var(--spacing) * 11);
   }
 
-  .field-group:not(:last-child):not(:first-child) > & {
+  .field-group:not(:last-child, :first-child) > & {
     border-radius: 0;
   }
 
@@ -297,6 +297,7 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
 
 .trailing-icon {
   flex-shrink: 0;
+
   color: var(--text-color-dimmed);
 
   &.loading {

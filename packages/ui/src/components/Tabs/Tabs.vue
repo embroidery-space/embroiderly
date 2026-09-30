@@ -171,6 +171,7 @@ const slots = defineSlots<TabsSlots<T>>();
     inset-block: calc(var(--spacing) * 1);
     left: 0;
     translate: var(--reka-tabs-indicator-position) 0;
+
     width: var(--reka-tabs-indicator-size);
   }
 
@@ -178,6 +179,7 @@ const slots = defineSlots<TabsSlots<T>>();
     inset-inline: calc(var(--spacing) * 1);
     top: 0;
     translate: 0 var(--reka-tabs-indicator-position);
+
     height: var(--reka-tabs-indicator-size);
   }
 }
@@ -203,6 +205,7 @@ const slots = defineSlots<TabsSlots<T>>();
 
   &:disabled {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -217,27 +220,28 @@ const slots = defineSlots<TabsSlots<T>>();
   .size-sm > * > * > * > & {
     padding-block: calc(var(--spacing) * 1);
     padding-inline: calc(var(--spacing) * 2);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md > * > * > * > & {
     padding-block: calc(var(--spacing) * 1.5);
     padding-inline: calc(var(--spacing) * 2.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg > * > * > * > & {
     padding-block: calc(var(--spacing) * 2);
     padding-inline: calc(var(--spacing) * 3);
+
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 
 .label {
   overflow: hidden;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }

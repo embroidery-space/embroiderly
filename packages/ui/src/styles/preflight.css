@@ -7,6 +7,7 @@
   1. Prevent padding and border from affecting element width.
   2. Remove default margins and padding
   3. Reset all borders.
+  4. Derive the line-height from the element's own font-size.
 */
 *,
 ::after,
@@ -17,20 +18,20 @@
   margin: 0; /* 2 */
   padding: 0; /* 2 */
   border: 0 solid; /* 3 */
+
+  line-height: var(--line-height); /* 4 */
 }
 
 /*
-  1. Use a consistent sensible line-height in all browsers.
-  2. Use a more readable tab size.
-  3. Use the configured `sans` font-family by default.
+  1. Use a more readable tab size.
+  2. Use the configured `sans` font-family by default.
 */
 html,
 :host {
-  font-family: var(--font-sans); /* 3 */
-  font-feature-settings: normal; /* 3 */
-  font-variation-settings: normal; /* 3 */
-  line-height: 1.5; /* 1 */
-  tab-size: 4; /* 2 */
+  font-family: var(--font-sans); /* 2 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 2 */
+  tab-size: 4; /* 1 */
 }
 
 /*
@@ -41,6 +42,7 @@ html,
 hr {
   height: 0; /* 1 */
   border-top-width: 1px; /* 3 */
+
   color: inherit; /* 2 */
 }
 
@@ -95,6 +97,7 @@ small {
 sub,
 sup {
   position: relative;
+
   font-size: 75%;
   line-height: 0;
   vertical-align: baseline;
@@ -115,7 +118,9 @@ sup {
 */
 table {
   border-collapse: collapse; /* 3 */
+
   border-color: inherit; /* 2 */
+
   text-indent: 0; /* 1 */
 }
 
@@ -154,6 +159,7 @@ iframe,
 embed,
 object {
   display: block; /* 1 */
+
   vertical-align: middle; /* 2 */
 }
 
@@ -181,10 +187,11 @@ textarea,
   font: inherit; /* 1 */
   font-feature-settings: inherit; /* 1 */
   font-variation-settings: inherit; /* 1 */
+  line-height: var(--line-height); /* `font` resets it to `inherit` */
   color: inherit; /* 1 */
   letter-spacing: inherit; /* 1 */
 
-  opacity: 1; /* 4 */
+  opacity: 100%; /* 4 */
   background-color: transparent; /* 3 */
 }
 
@@ -209,7 +216,8 @@ textarea,
 */
 ::placeholder {
   color: color-mix(in oklab, currentcolor 50%, transparent); /* 2 */
-  opacity: 1; /* 1 */
+
+  opacity: 100%; /* 1 */
 }
 
 /* Prevent resizing textareas horizontally by default. */
@@ -228,6 +236,7 @@ textarea {
 */
 ::-webkit-date-and-time-value {
   min-height: 1lh; /* 1 */
+
   text-align: inherit; /* 2 */
 }
 
@@ -267,6 +276,7 @@ textarea {
 button,
 input:where([type="button"], [type="reset"], [type="submit"]),
 ::file-selector-button {
+  /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
   appearance: button;
 }
 

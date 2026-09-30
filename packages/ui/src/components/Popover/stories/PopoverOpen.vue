@@ -24,6 +24,7 @@ defineOptions({ inheritAttrs: false });
 
 .popover-open-placeholder {
   display: inline-flex;
+
   width: calc(var(--spacing) * 48);
   height: calc(var(--spacing) * 48);
   margin: calc(var(--spacing) * 4);

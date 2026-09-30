@@ -143,7 +143,9 @@ function handleHeightChange(newHeight: number) {
 
   &.orientation-vertical {
     position: relative;
+
     flex-direction: column;
+
     padding-left: calc(var(--spacing) * 8);
   }
 }
@@ -151,6 +153,7 @@ function handleHeightChange(newHeight: number) {
 .lock-button {
   .orientation-horizontal > & {
     align-self: flex-end;
+
     margin-bottom: calc(var(--spacing) * 0.5);
   }
 

@@ -58,6 +58,7 @@ const { paletteItem, selected, displaySettings } = defineProps<PaletteItemProps>
 
 .title {
   overflow: hidden;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }

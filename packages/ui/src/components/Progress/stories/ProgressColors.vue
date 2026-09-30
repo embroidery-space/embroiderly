@@ -24,6 +24,7 @@ const colors: NonNullable<ProgressProps["color"]>[] = [
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 4);
+
   width: calc(var(--spacing) * 96);
 }
 </style>

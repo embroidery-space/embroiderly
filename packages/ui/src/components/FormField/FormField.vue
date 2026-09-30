@@ -88,17 +88,14 @@ provide(
 
   &.size-sm {
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   &.size-md {
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   &.size-lg {
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 
@@ -111,6 +108,7 @@ provide(
 
 .label {
   display: block;
+
   font-weight: var(--font-weight-medium);
   color: var(--text-color-default);
 }
@@ -129,6 +127,7 @@ provide(
 
 .help {
   margin-top: calc(var(--spacing) * 1);
+
   color: var(--text-color-muted);
 }
 </style>

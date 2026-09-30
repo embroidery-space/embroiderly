@@ -202,7 +202,9 @@ async function reset() {
 
   [data-slot="list"] {
     align-items: flex-start;
+
     border-radius: 0;
+
     background-color: transparent;
   }
 }
@@ -220,6 +222,7 @@ async function reset() {
 /* Outweighs the size variants of `Button`. */
 button.check[data-slot="base"] {
   justify-content: center;
+
   width: 100%;
 }
 </style>

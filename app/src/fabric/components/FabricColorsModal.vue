@@ -231,6 +231,7 @@ async function handleSave() {
 
 .handle {
   cursor: grab;
+
   color: var(--text-color-muted);
 }
 
@@ -246,8 +247,8 @@ input.invalid[data-slot="base"] {
 
 .error {
   margin-bottom: calc(var(--spacing) * 2);
+
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
   color: var(--color-error);
 }
 
@@ -268,6 +269,7 @@ button.add[data-slot="base"] {
   display: flex;
   gap: calc(var(--spacing) * 1.5);
   align-items: center;
+
   margin-inline-start: auto;
 }
 </style>

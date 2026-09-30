@@ -75,6 +75,7 @@ const emit = defineEmits<{
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
   min-height: 0;
 }
 
@@ -85,13 +86,16 @@ const emit = defineEmits<{
 
 .listbox[data-slot="root"] {
   flex-grow: 1;
+
   border-radius: 0;
+
   box-shadow: none;
 
   [data-slot="group"] {
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: calc(var(--spacing) * 1);
+
     padding: calc(var(--spacing) * 1);
   }
 

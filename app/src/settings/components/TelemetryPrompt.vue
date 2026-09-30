@@ -32,8 +32,8 @@ const telemetry = reactive({ diagnostics: false, metrics: false });
 <style module>
 .notice {
   margin-top: calc(var(--spacing) * 2);
+
   font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
   color: var(--text-color-muted);
 }
 </style>

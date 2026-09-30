@@ -25,6 +25,7 @@ defineProps<Pick<DialogProps, "title">>();
 <style>
 .dialog-demo-placeholder {
   display: inline-flex;
+
   width: 100%;
   height: calc(var(--spacing) * 48);
 }

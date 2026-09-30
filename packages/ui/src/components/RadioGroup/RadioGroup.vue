@@ -117,6 +117,7 @@ const items = computed(() => {
 <style module>
 .root {
   position: relative;
+
   display: flex;
   align-items: flex-start;
 
@@ -136,17 +137,14 @@ const items = computed(() => {
 
   .size-sm & {
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 
   .disabled & {
@@ -161,7 +159,9 @@ const items = computed(() => {
 
 .base {
   overflow: hidden;
+
   border-radius: calc(infinity * 1px);
+
   box-shadow: inset 0 0 0 1px var(--border-color-accented);
 
   .size-sm & {
@@ -207,7 +207,9 @@ const items = computed(() => {
 
   &::after {
     content: "";
+
     border-radius: calc(infinity * 1px);
+
     background-color: var(--background-color-default);
   }
 
@@ -238,6 +240,7 @@ const items = computed(() => {
 
 .label {
   display: block;
+
   font-weight: var(--font-weight-medium);
   color: var(--text-color-default);
 

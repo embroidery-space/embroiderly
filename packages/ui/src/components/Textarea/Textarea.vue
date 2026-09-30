@@ -114,6 +114,7 @@ onMounted(() => {
 <style module>
 .root {
   position: relative;
+
   display: inline-flex;
   align-items: center;
 }
@@ -135,6 +136,7 @@ onMounted(() => {
 
   &:disabled {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -155,7 +157,6 @@ onMounted(() => {
     padding-inline: calc(var(--spacing) * 2);
 
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md > & {
@@ -165,7 +166,6 @@ onMounted(() => {
     padding-inline: calc(var(--spacing) * 2.5);
 
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg > & {
@@ -175,7 +175,6 @@ onMounted(() => {
     padding-inline: calc(var(--spacing) * 3);
 
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 
   .autoresize > & {

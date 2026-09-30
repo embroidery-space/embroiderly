@@ -127,6 +127,7 @@ defineExpose({ contentRef });
 .overlay {
   position: fixed;
   inset: 0;
+
   background-color: color-mix(in oklab, var(--background-color-elevated) 75%, transparent);
 
   &[data-state="closed"] {
@@ -193,8 +194,8 @@ defineExpose({ contentRef });
 
 .description {
   margin-top: calc(var(--spacing) * 1);
+
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
   color: var(--text-color-muted);
 }
 
@@ -206,6 +207,7 @@ defineExpose({ contentRef });
 
 .body {
   overflow-y: auto;
+
   padding: calc(var(--spacing) * 4);
 }
 

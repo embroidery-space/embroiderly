@@ -478,7 +478,9 @@ async function updatePaletteDisplaySettings() {
 <style module>
 .panel {
   display: flex;
+
   height: 100%;
+
   outline-style: none;
 
   &.editing {
@@ -498,8 +500,8 @@ async function updatePaletteDisplaySettings() {
 button.save[data-slot="base"] {
   flex-grow: 1;
   justify-content: center;
+
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
 }
 
 .info {
@@ -514,7 +516,6 @@ button.save[data-slot="base"] {
 
 .size {
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
   text-wrap: nowrap;
 }
 
@@ -537,7 +538,9 @@ button.save[data-slot="base"] {
 
   &.contrast {
     border-radius: var(--radius-sm);
+
     color: var(--color-black);
+
     background-color: var(--color-white);
   }
 }

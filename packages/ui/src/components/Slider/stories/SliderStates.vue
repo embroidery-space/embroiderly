@@ -14,6 +14,7 @@ import Slider from "../Slider.vue";
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 4);
+
   width: calc(var(--spacing) * 64);
 }
 </style>

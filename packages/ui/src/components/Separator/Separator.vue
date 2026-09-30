@@ -38,6 +38,7 @@ withDefaults(defineProps<SeparatorProps>(), {
 <style module>
 .base {
   flex-shrink: 0;
+
   border-color: var(--border-color-default);
   border-style: solid;
 

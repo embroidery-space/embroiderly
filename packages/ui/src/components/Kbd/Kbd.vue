@@ -40,18 +40,21 @@ withDefaults(defineProps<KbdProps>(), {
   &.size-sm {
     min-width: calc(var(--spacing) * 4);
     height: calc(var(--spacing) * 4);
+
     font-size: 0.625rem; /* 10px */
   }
 
   &.size-md {
     min-width: calc(var(--spacing) * 5);
     height: calc(var(--spacing) * 5);
+
     font-size: 0.6875rem; /* 11px */
   }
 
   &.size-lg {
     min-width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
+
     font-size: 0.75rem; /* 12px */
   }
 }

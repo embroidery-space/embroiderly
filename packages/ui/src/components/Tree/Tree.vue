@@ -297,22 +297,22 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
   .size-sm & {
     padding-block: calc(var(--spacing) * 1);
     padding-inline: calc(var(--spacing) * 2);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     padding-block: calc(var(--spacing) * 1.5);
     padding-inline: calc(var(--spacing) * 2.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     padding-block: calc(var(--spacing) * 2);
     padding-inline: calc(var(--spacing) * 3);
+
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 
   &:focus-visible {
@@ -321,6 +321,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
 
   &[aria-disabled="true"] {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -339,6 +340,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
 
 .item-leading-icon {
   flex-shrink: 0;
+
   color: var(--text-color-muted);
 
   .size-sm & {
@@ -393,8 +395,10 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
 
 .list {
   position: relative;
+
   margin-top: calc(var(--spacing) * 0.5);
   padding-inline-start: var(--tree-indent);
+
   list-style-type: none;
 
   &::before {
@@ -417,7 +421,9 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
 
 .root {
   user-select: none;
+
   width: 100%;
+
   list-style-type: none;
 
   &.size-sm {

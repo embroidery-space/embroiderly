@@ -16,6 +16,7 @@ const sizes: NonNullable<SeparatorProps["size"]>[] = ["xs", "sm", "md", "lg", "x
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 4);
+
   width: calc(var(--spacing) * 96);
 }
 </style>

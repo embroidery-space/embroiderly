@@ -72,6 +72,7 @@ function updateSettings<K extends keyof PaletteSettings>(key: K, value: PaletteS
   display: flex;
   flex-direction: column;
   row-gap: calc(var(--spacing) * 2);
+
   padding: calc(var(--spacing) * 2);
 }
 

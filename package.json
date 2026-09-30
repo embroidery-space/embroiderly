@@ -44,7 +44,8 @@
     "oxlint": "catalog:",
     "stylelint": "catalog:",
     "stylelint-config-clean-order": "catalog:",
-    "stylelint-config-recommended-vue": "catalog:"
+    "stylelint-config-recommended-vue": "catalog:",
+    "stylelint-config-standard": "catalog:"
   },
   "packageManager": "pnpm@11.27.1"
 }

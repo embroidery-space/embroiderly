@@ -125,8 +125,7 @@ function zoomOut() {
 }
 
 .zoom input.zoom-input[data-slot="base"] {
-  padding-inline-start: calc(var(--spacing) * 2);
-  padding-inline-end: calc(var(--spacing) * 2);
+  padding-inline: calc(var(--spacing) * 2);
 }
 
 .controls {

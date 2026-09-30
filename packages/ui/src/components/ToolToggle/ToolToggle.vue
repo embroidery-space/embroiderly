@@ -91,6 +91,7 @@ useShortcuts(() => {
 <style module>
 .root {
   position: relative;
+
   display: flex;
   align-items: center;
 
@@ -147,6 +148,7 @@ useShortcuts(() => {
 
   &:not(:disabled):hover {
     cursor: pointer;
+
     background-color: var(--background-color-elevated);
   }
 
@@ -180,22 +182,20 @@ useShortcuts(() => {
 
   .size-sm & {
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 
 .label {
   display: block;
+
   font-weight: var(--font-weight-medium);
   color: var(--text-color-default);
 

@@ -16,6 +16,7 @@ defineOptions({ inheritAttrs: false });
 <style>
 #tooltip-demo {
   display: inline-flex;
+
   padding: calc(var(--spacing) * 8);
 }
 </style>

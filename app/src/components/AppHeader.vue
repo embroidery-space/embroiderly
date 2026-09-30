@@ -446,12 +446,14 @@ useShortcuts({
 .header {
   display: grid;
   grid-template-columns: 1fr auto;
+
   border-bottom: 1px solid var(--border-color-default);
 }
 
 .bar {
   display: grid;
   grid-template-columns: auto 1fr auto;
+
   height: 100%;
 }
 
@@ -461,10 +463,12 @@ useShortcuts({
 
 .tabs {
   overflow: hidden;
+
   padding-top: calc(var(--spacing) * 1);
 
   > [data-slot="wrapper"] {
     overflow: hidden;
+
     height: 100%;
     border-top-left-radius: var(--radius-lg);
     border-top-right-radius: var(--radius-lg);
@@ -473,6 +477,7 @@ useShortcuts({
   [data-slot="list"] {
     padding: 0;
     border-radius: 0;
+
     background-color: transparent;
   }
 
@@ -500,6 +505,7 @@ useShortcuts({
 
 .dirty {
   flex-shrink: 0;
+
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
 

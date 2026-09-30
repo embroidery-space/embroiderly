@@ -162,11 +162,13 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
   &:disabled,
   &[aria-disabled="true"] {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
   &.variant-solid.color-primary {
     color: var(--text-color-inverted);
+
     background-color: var(--color-primary);
 
     &:hover {
@@ -189,6 +191,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
 
   &.variant-solid.color-neutral {
     color: var(--text-color-inverted);
+
     background-color: var(--background-color-inverted);
 
     &:hover {
@@ -211,6 +214,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
 
   &.variant-outline.color-primary {
     color: var(--color-primary);
+
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-primary) 50%, transparent);
 
     &:hover {
@@ -232,6 +236,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
 
   &.variant-outline.color-neutral {
     color: var(--text-color-default);
+
     background-color: var(--background-color-default);
     box-shadow: inset 0 0 0 1px var(--border-color-accented);
 
@@ -255,6 +260,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
   &.variant-soft.color-primary,
   &.variant-subtle.color-primary {
     color: var(--color-primary);
+
     background-color: color-mix(in oklab, var(--color-primary) 10%, transparent);
 
     &:hover {
@@ -281,6 +287,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
   &.variant-soft.color-neutral,
   &.variant-subtle.color-neutral {
     color: var(--text-color-default);
+
     background-color: var(--background-color-elevated);
 
     &:hover {
@@ -384,7 +391,6 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
     padding-inline: calc(var(--spacing) * 2);
 
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
 
     &.square {
       padding: calc(var(--spacing) * 1);
@@ -398,7 +404,6 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
     padding-inline: calc(var(--spacing) * 2.5);
 
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
 
     &.square {
       padding: calc(var(--spacing) * 1.5);
@@ -412,7 +417,6 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
     padding-inline: calc(var(--spacing) * 3);
 
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
 
     &.square {
       padding: calc(var(--spacing) * 2);
@@ -424,7 +428,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
       z-index: 1;
     }
 
-    &:not(:last-child):not(:first-child) {
+    &:not(:last-child, :first-child) {
       border-radius: 0;
     }
 
@@ -466,6 +470,7 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
 
 .label {
   overflow: hidden;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }

@@ -254,6 +254,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 <style module>
 .root {
   position: relative;
+
   display: inline-flex;
   align-items: center;
 
@@ -283,6 +284,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
   &:disabled {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -303,7 +305,6 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     padding-inline: calc(var(--spacing) * 2);
 
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md > & {
@@ -313,7 +314,6 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     padding-inline: calc(var(--spacing) * 2.5);
 
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg > & {
@@ -323,11 +323,11 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     padding-inline: calc(var(--spacing) * 3);
 
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 
   .disabled > & {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -338,7 +338,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     }
   }
 
-  .field-group:not(:last-child):not(:first-child) > & {
+  .field-group:not(:last-child, :first-child) > & {
     border-radius: 0;
   }
 
@@ -355,12 +355,14 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
 .value {
   overflow: hidden;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .placeholder {
   overflow: hidden;
+
   color: var(--text-color-muted);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -368,6 +370,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
 .trailing-icon {
   flex-shrink: 0;
+
   color: var(--text-color-muted);
 
   .size-sm > * > & {
@@ -423,6 +426,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
   & > [data-slot="root"] {
     width: 100%;
     border-bottom: 1px solid var(--border-color-default);
+
     background-color: var(--background-color-default);
     outline-style: none;
   }
@@ -430,22 +434,22 @@ function normalizeItem(item: SelectItem): SelectItemObject {
   &.size-sm > [data-slot="root"] {
     padding-block: calc(var(--spacing) * 1);
     padding-inline: calc(var(--spacing) * 2);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   &.size-md > [data-slot="root"] {
     padding-block: calc(var(--spacing) * 1.5);
     padding-inline: calc(var(--spacing) * 2.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   &.size-lg > [data-slot="root"] {
     padding-block: calc(var(--spacing) * 2);
     padding-inline: calc(var(--spacing) * 3);
+
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 
@@ -463,20 +467,20 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
   .content.size-sm & {
     padding-block: calc(var(--spacing) * 1);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .content.size-md & {
     padding-block: calc(var(--spacing) * 1.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .content.size-lg & {
     padding-block: calc(var(--spacing) * 2);
+
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 
@@ -484,34 +488,40 @@ function normalizeItem(item: SelectItem): SelectItemObject {
   height: 1px;
   margin-block: calc(var(--spacing) * 1);
   margin-inline: calc(var(--spacing) * -1);
+
   background-color: var(--border-color-default);
 }
 
 .label {
   display: flex;
   align-items: center;
+
   width: 100%;
+
   font-weight: var(--font-weight-semibold);
 
   .content.size-sm & {
     gap: calc(var(--spacing) * 1);
+
     padding: calc(var(--spacing) * 1);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .content.size-md & {
     gap: calc(var(--spacing) * 1.5);
+
     padding: calc(var(--spacing) * 1.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .content.size-lg & {
     gap: calc(var(--spacing) * 2);
+
     padding: calc(var(--spacing) * 2);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 }
 
@@ -538,28 +548,32 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
   .content.size-sm & {
     gap: calc(var(--spacing) * 1);
+
     padding: calc(var(--spacing) * 1);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .content.size-md & {
     gap: calc(var(--spacing) * 1.5);
+
     padding: calc(var(--spacing) * 1.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .content.size-lg & {
     gap: calc(var(--spacing) * 2);
+
     padding: calc(var(--spacing) * 2);
+
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 
 .item-leading-icon {
   flex-shrink: 0;
+
   color: var(--text-color-dimmed);
 
   .content.size-sm & {
@@ -586,7 +600,9 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
 .item-indicator {
   flex-shrink: 0;
+
   margin-inline-start: auto;
+
   color: var(--color-primary);
 
   .content.size-sm & {

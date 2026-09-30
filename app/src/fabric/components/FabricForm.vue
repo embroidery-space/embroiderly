@@ -166,7 +166,6 @@ onMounted(async () => {
 
 .text {
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
 }
 
 .color {
@@ -179,6 +178,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   margin-top: calc(var(--spacing) * 2);
 }
 

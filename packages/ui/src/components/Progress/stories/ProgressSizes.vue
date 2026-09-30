@@ -16,6 +16,7 @@ const sizes: NonNullable<ProgressProps["size"]>[] = ["xs", "sm", "md", "lg", "xl
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 4);
+
   width: calc(var(--spacing) * 96);
 }
 </style>

@@ -46,7 +46,6 @@ fieldset.frame {
 
 .definition {
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
   color: var(--text-color-dimmed);
   white-space: pre-line;
 }

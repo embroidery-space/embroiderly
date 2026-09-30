@@ -223,6 +223,7 @@ watch(collapsed, (value) => {
 
 .popover {
   display: flex;
+
   width: calc(var(--spacing) * 64);
   height: 41.5vh;
   padding: calc(var(--spacing) * 1);

@@ -46,7 +46,6 @@ const sectionId = useId();
 
 .title {
   font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
   text-wrap: nowrap;
 }
 </style>

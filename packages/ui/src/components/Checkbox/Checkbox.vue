@@ -80,6 +80,7 @@ const { id, size, ariaAttrs } = useFormField(props);
 <style module>
 .root {
   position: relative;
+
   display: flex;
   align-items: flex-start;
 
@@ -107,7 +108,9 @@ const { id, size, ariaAttrs } = useFormField(props);
 
 .base {
   overflow: hidden;
+
   border-radius: var(--radius-sm);
+
   box-shadow: inset 0 0 0 1px var(--border-color-accented);
 
   .size-sm & {
@@ -160,6 +163,7 @@ const { id, size, ariaAttrs } = useFormField(props);
 
 .icon {
   flex-shrink: 0;
+
   width: 100%;
   height: 100%;
   margin-top: 1px;
@@ -171,22 +175,20 @@ const { id, size, ariaAttrs } = useFormField(props);
 
   .size-sm & {
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 
 .label {
   display: block;
+
   font-weight: var(--font-weight-medium);
   color: var(--text-color-default);
 

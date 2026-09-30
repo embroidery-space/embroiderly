@@ -211,6 +211,7 @@ function compareValues(a: any, b: any): boolean {
 
   &.disabled {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -222,7 +223,9 @@ function compareValues(a: any, b: any): boolean {
 .content {
   overflow-y: auto;
   flex: 1;
+
   min-height: 0;
+
   outline-style: none;
 }
 
@@ -241,23 +244,26 @@ function compareValues(a: any, b: any): boolean {
 
   .size-sm & {
     gap: calc(var(--spacing) * 1);
+
     padding: calc(var(--spacing) * 1);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     gap: calc(var(--spacing) * 1.5);
+
     padding: calc(var(--spacing) * 1.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     gap: calc(var(--spacing) * 2);
+
     padding: calc(var(--spacing) * 2);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 }
 
@@ -265,6 +271,7 @@ function compareValues(a: any, b: any): boolean {
   height: 1px;
   margin-block: calc(var(--spacing) * 1);
   margin-inline: calc(var(--spacing) * -1);
+
   background-color: var(--border-color-default);
 }
 
@@ -284,6 +291,7 @@ function compareValues(a: any, b: any): boolean {
 
   &[data-disabled] {
     cursor: not-allowed;
+
     opacity: 75%;
   }
 
@@ -297,23 +305,26 @@ function compareValues(a: any, b: any): boolean {
 
   .size-sm & {
     gap: calc(var(--spacing) * 1);
+
     padding: calc(var(--spacing) * 1);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     gap: calc(var(--spacing) * 1.5);
+
     padding: calc(var(--spacing) * 1.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     gap: calc(var(--spacing) * 2);
+
     padding: calc(var(--spacing) * 2);
+
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 
@@ -329,6 +340,7 @@ function compareValues(a: any, b: any): boolean {
 
 .item-indicator {
   flex-shrink: 0;
+
   margin-inline-start: auto;
 
   .color-primary & {
@@ -361,20 +373,20 @@ function compareValues(a: any, b: any): boolean {
 
   .size-sm & {
     padding-block: calc(var(--spacing) * 1);
+
     font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
   }
 
   .size-md & {
     padding-block: calc(var(--spacing) * 1.5);
+
     font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
   }
 
   .size-lg & {
     padding-block: calc(var(--spacing) * 2);
+
     font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
   }
 }
 </style>

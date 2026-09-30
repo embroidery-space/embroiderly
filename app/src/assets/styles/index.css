@@ -4,7 +4,7 @@
 @import "./tour.css";
 
 @font-face {
-  font-family: "Fixel";
+  font-family: Fixel;
   font-weight: 100 900;
   font-style: normal;
 
@@ -13,7 +13,7 @@
 }
 
 @font-face {
-  font-family: "Fixel";
+  font-family: Fixel;
   font-weight: 100 900;
   font-style: italic;
 
