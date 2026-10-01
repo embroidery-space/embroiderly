@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect, fn, within } from "storybook/test";
 
+import TreeDemo from "./stories/TreeDemo.vue";
+import TreeSizes from "./stories/TreeSizes.vue";
+import TreeStates from "./stories/TreeStates.vue";
 import Tree from "./Tree.vue";
 import type { TreeItem } from "./Tree.vue";
 
@@ -82,43 +85,34 @@ export const Demo: Story = {
     disabled: false,
   },
   render: (args) => ({
-    components: { Tree },
+    components: { TreeDemo },
     setup: () => ({ args, items }),
-    template: `<Tree v-bind="args" :items="items" />`,
+    template: `<TreeDemo v-bind="args" :items="items" />`,
   }),
 };
 
 export const Nested: Story = {
   render: () => ({
-    components: { Tree },
+    components: { TreeDemo },
     setup: () => ({ nestedItems }),
-    template: `<Tree :items="nestedItems" />`,
+    template: `<TreeDemo :items="nestedItems" />`,
   }),
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Tree },
-    setup: () => ({ sizes, items }),
-    template: `
-      <div class="flex gap-4">
-        <Tree v-for="size in sizes" :key="size" :items="items" :size="size" />
-      </div>
-    `,
+    components: { TreeSizes },
+    setup: () => ({ items }),
+    template: `<TreeSizes :items="items" />`,
   }),
 };
 
 export const States: Story = {
   args: { items },
   render: () => ({
-    components: { Tree },
+    components: { TreeStates },
     setup: () => ({ items }),
-    template: `
-      <div class="flex gap-4">
-        <Tree :items="items" />
-        <Tree :items="items" disabled />
-      </div>
-    `,
+    template: `<TreeStates :items="items" />`,
   }),
 };
 

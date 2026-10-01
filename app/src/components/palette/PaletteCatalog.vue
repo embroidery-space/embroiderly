@@ -114,19 +114,13 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
       :options="results.map((r) => r.item)"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
-      :scroll="{ type: 'always' }"
       :filter-input="{ ...$ta('palette-catalog-search'), variant: 'outline', size: 'md' }"
       multiple
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >
       <template #header>
-        <div class="flex gap-x-1">
-          <PaletteSelect
-            ref="palette-select"
-            variant="outline"
-            class="w-full"
-            @palette-loaded="selectedPalette = $event"
-          />
+        <div :class="$style.header">
+          <PaletteSelect ref="palette-select" variant="outline" @palette-loaded="selectedPalette = $event" />
 
           <DropdownMenu :items="paletteCatalogMenuOptions" :content="{ align: 'end' }">
             <Button
@@ -150,3 +144,14 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
     </PaletteList>
   </PaletteSection>
 </template>
+
+<style module>
+.header {
+  display: flex;
+  column-gap: calc(var(--spacing) * 1);
+
+  > [data-slot="root"] {
+    width: 100%;
+  }
+}
+</style>

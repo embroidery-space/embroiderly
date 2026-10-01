@@ -2,8 +2,10 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
-import FormField from "../FormField/FormField.vue";
-
+import TextareaDemo from "./stories/TextareaDemo.vue";
+import TextareaSizes from "./stories/TextareaSizes.vue";
+import TextareaStates from "./stories/TextareaStates.vue";
+import TextareaVariants from "./stories/TextareaVariants.vue";
 import Textarea from "./Textarea.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
@@ -38,54 +40,31 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, Textarea },
+      components: { TextareaDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <FormField>
-          <Textarea v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
-        </FormField>
-      `,
+      template: `<TextareaDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Textarea },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="size in sizes" :key="size">
-          <Textarea :size="size" :model-value="\`Size: \${size}\`" />
-        </template>
-      </div>
-    `,
+    components: { TextareaSizes },
+    template: `<TextareaSizes />`,
   }),
 };
 
 export const Variants: Story = {
   render: () => ({
-    components: { Textarea },
-    setup: () => ({ variants }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="variant in variants" :key="variant">
-          <Textarea :model-value="\`Variant: \${variant}\`" :variant="variant" />
-        </template>
-      </div>
-    `,
+    components: { TextareaVariants },
+    template: `<TextareaVariants />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { Textarea },
-    template: `
-      <div class="flex flex-col gap-2">
-        <Textarea model-value="Default" />
-        <Textarea model-value="Disabled" disabled />
-      </div>
-    `,
+    components: { TextareaStates },
+    template: `<TextareaStates />`,
   }),
 };
 

@@ -35,7 +35,7 @@ beforeAll(() => {
     [data-vis-subject] {
       width: fit-content;
       padding: 1rem;
-      background-color: var(--ui-bg);
+      background-color: var(--background-color-default);
     }
   `;
 

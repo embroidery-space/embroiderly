@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import Button from "../Button/Button.vue";
-import Input from "../Input/Input.vue";
-import InputNumber from "../InputNumber/InputNumber.vue";
-
 import FormFieldGroup from "./FormFieldGroup.vue";
+import FormFieldGroupDemo from "./stories/FormFieldGroupDemo.vue";
+import FormFieldGroupSizes from "./stories/FormFieldGroupSizes.vue";
+import FormFieldGroupWithButtons from "./stories/FormFieldGroupWithButtons.vue";
+import FormFieldGroupWithInput from "./stories/FormFieldGroupWithInput.vue";
+import FormFieldGroupWithInputNumber from "./stories/FormFieldGroupWithInputNumber.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -25,67 +26,36 @@ export const Demo: Story = {
     size: "md",
   },
   render: (args) => ({
-    components: { FormFieldGroup, Input, Button },
+    components: { FormFieldGroupDemo },
     setup: () => ({ args }),
-    template: `
-      <FormFieldGroup v-bind="args">
-        <Input />
-        <Button label="Submit" />
-      </FormFieldGroup>
-    `,
+    template: `<FormFieldGroupDemo v-bind="args" />`,
   }),
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { FormFieldGroup, Input, Button },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-4">
-        <template v-for="size in sizes" :key="size">
-          <FormFieldGroup :size="size">
-            <Input :model-value="\`Size: \${size}\`" />
-            <Button label="Submit" />
-          </FormFieldGroup>
-        </template>
-      </div>
-    `,
+    components: { FormFieldGroupSizes },
+    template: `<FormFieldGroupSizes />`,
   }),
 };
 
 export const WithButtons: Story = {
   render: () => ({
-    components: { FormFieldGroup, Button },
-    template: `
-      <FormFieldGroup>
-        <Button label="First" variant="outline" color="neutral" />
-        <Button label="Second" variant="outline" color="neutral" />
-        <Button label="Third" variant="outline" color="neutral" />
-      </FormFieldGroup>
-    `,
+    components: { FormFieldGroupWithButtons },
+    template: `<FormFieldGroupWithButtons />`,
   }),
 };
 
 export const WithInput: Story = {
   render: () => ({
-    components: { FormFieldGroup, Input, Button },
-    template: `
-      <FormFieldGroup>
-        <Input model-value="john.doe@example.com" />
-        <Button label="Submit" />
-      </FormFieldGroup>
-    `,
+    components: { FormFieldGroupWithInput },
+    template: `<FormFieldGroupWithInput />`,
   }),
 };
 
 export const WithInputNumber: Story = {
   render: () => ({
-    components: { FormFieldGroup, InputNumber, Button },
-    template: `
-      <FormFieldGroup>
-        <InputNumber :model-value="42" :increment="false" :decrement="false" />
-        <Button label="Apply" />
-      </FormFieldGroup>
-    `,
+    components: { FormFieldGroupWithInputNumber },
+    template: `<FormFieldGroupWithInputNumber />`,
   }),
 };

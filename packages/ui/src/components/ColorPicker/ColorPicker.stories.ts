@@ -3,6 +3,8 @@ import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
 import ColorPicker from "./ColorPicker.vue";
+import ColorPickerDemo from "./stories/ColorPickerDemo.vue";
+import ColorPickerSizes from "./stories/ColorPickerSizes.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -31,44 +33,26 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { ColorPicker },
+      components: { ColorPickerDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <div class="w-64">
-          <ColorPicker v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
-        </div>
-      `,
+      template: `<ColorPickerDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { ColorPicker },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex w-64 flex-col gap-6">
-        <template v-for="size in sizes" :key="size">
-          <div class="space-y-2">
-            <span class="block text-xs text-dimmed">Size: {{ size }}</span>
-            <ColorPicker :size="size" />
-          </div>
-        </template>
-      </div>
-    `,
+    components: { ColorPickerSizes },
+    template: `<ColorPickerSizes />`,
   }),
 };
 
 export const Disabled: Story = {
   args: { modelValue: "#FF0000", disabled: true, "onUpdate:modelValue": fn() },
   render: (args) => ({
-    components: { ColorPicker },
+    components: { ColorPickerDemo },
     setup: () => ({ args }),
-    template: `
-      <div class="w-64">
-        <ColorPicker v-bind="args" />
-      </div>
-    `,
+    template: `<ColorPickerDemo v-bind="args" />`,
   }),
   async play({ canvasElement, args }) {
     const selector = canvasElement.querySelector<HTMLElement>("[data-color-picker-selector]")!;
@@ -90,15 +74,7 @@ export const Disabled: Story = {
 export const SelectorDragged: Story = {
   args: { modelValue: "#FF0000", "onUpdate:modelValue": fn() },
   tags: ["!autodocs", "!snapshot"],
-  render: (args) => ({
-    components: { ColorPicker },
-    setup: () => ({ args }),
-    template: `
-      <div class="w-64">
-        <ColorPicker v-bind="args" />
-      </div>
-    `,
-  }),
+  render: Disabled.render,
   async play({ canvasElement, args }) {
     const selector = canvasElement.querySelector<HTMLElement>("[data-color-picker-selector]")!;
     const rect = selector.getBoundingClientRect();
@@ -119,15 +95,7 @@ export const SelectorDragged: Story = {
 export const TrackDragged: Story = {
   args: { modelValue: "#FF0000", "onUpdate:modelValue": fn() },
   tags: ["!autodocs", "!snapshot"],
-  render: (args) => ({
-    components: { ColorPicker },
-    setup: () => ({ args }),
-    template: `
-      <div class="w-64">
-        <ColorPicker v-bind="args" />
-      </div>
-    `,
-  }),
+  render: Disabled.render,
   async play({ canvasElement, args }) {
     const track = canvasElement.querySelector<HTMLElement>("[data-color-picker-track]")!;
     const rect = track.getBoundingClientRect();

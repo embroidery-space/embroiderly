@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
 import Icon from "./Icon.vue";
+import IconSizes from "./stories/IconSizes.vue";
 
 const meta = {
   title: "Element/Icon",
@@ -23,15 +24,7 @@ export const Demo: Story = {
 export const Sizes: Story = {
   args: { name: "lucide:rocket" },
   render: () => ({
-    components: { Icon },
-    template: `
-      <div class="flex items-end gap-4">
-        <Icon name="lucide:rocket" class="size-4" />
-        <Icon name="lucide:rocket" class="size-6" />
-        <Icon name="lucide:rocket" class="size-8" />
-        <Icon name="lucide:rocket" class="size-12" />
-        <Icon name="lucide:rocket" class="size-16" />
-      </div>
-    `,
+    components: { IconSizes },
+    template: `<IconSizes />`,
   }),
 };

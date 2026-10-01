@@ -93,43 +93,34 @@ async function reset() {
 <template>
   <Dialog :title="$t('settings')">
     <template #body>
-      <Tabs
-        :items="tabs"
-        orientation="vertical"
-        color="neutral"
-        :ui="{
-          root: 'items-start',
-          list: 'items-start rounded-none bg-transparent',
-        }"
-      >
+      <Tabs :items="tabs" orientation="vertical" color="neutral" :class="$style.tabs">
         <template #ui>
-          <div class="flex flex-col gap-y-2">
-            <FormField :label="$t('settings-theme')" class="w-full">
-              <Select v-model="settingsStore.ui.theme" :items="themeOptions" :icon="themeIcon" class="w-full" />
+          <div :class="$style.fields">
+            <FormField :label="$t('settings-theme')">
+              <Select v-model="settingsStore.ui.theme" :items="themeOptions" :icon="themeIcon" />
             </FormField>
 
-            <FormField :label="$t('settings-scale')" class="w-full">
-              <Select v-model="settingsStore.ui.scale" :items="scaleOptions" class="w-full" />
+            <FormField :label="$t('settings-scale')">
+              <Select v-model="settingsStore.ui.scale" :items="scaleOptions" />
             </FormField>
 
-            <FormField :label="$t('settings-language')" class="w-full">
-              <Select v-model="settingsStore.ui.language" :items="languageOptions" class="w-full" />
+            <FormField :label="$t('settings-language')">
+              <Select v-model="settingsStore.ui.language" :items="languageOptions" />
             </FormField>
           </div>
         </template>
 
         <template #startup>
-          <div class="flex flex-col gap-y-2">
-            <FormField :label="$t('settings-startup-action')" class="w-full">
-              <Select v-model="settingsStore.startup.action" :items="startupActionOptions" class="w-full" />
+          <div :class="$style.fields">
+            <FormField :label="$t('settings-startup-action')">
+              <Select v-model="settingsStore.startup.action" :items="startupActionOptions" />
             </FormField>
 
-            <FormField :label="$t('settings-startup-template-path')" class="w-full">
+            <FormField :label="$t('settings-startup-template-path')">
               <InputFile
                 accept=".embproj, .oxs, .xsd"
                 :label="settingsStore.startup.patternTemplate"
                 :disabled="settingsStore.startup.action !== StartupAction.CustomTemplate"
-                class="w-full"
                 @update:model-value="savePatternTemplate"
               />
             </FormField>
@@ -137,36 +128,28 @@ async function reset() {
         </template>
 
         <template #workarea>
-          <div class="flex flex-col gap-y-2">
+          <div :class="$style.fields">
             <Checkbox
               v-model="settingsStore.canvas.renderOptions.antialias"
               v-bind="$ta('settings-workarea-rendering-antialias')"
             />
 
-            <FormField :label="$t('settings-workarea-viewport-wheel-action')" class="w-full">
-              <Select
-                v-model="settingsStore.canvas.viewportOptions.wheelAction"
-                :items="wheelActionOptions"
-                class="w-full"
-              />
+            <FormField :label="$t('settings-workarea-viewport-wheel-action')">
+              <Select v-model="settingsStore.canvas.viewportOptions.wheelAction" :items="wheelActionOptions" />
             </FormField>
 
-            <FormField :label="$t('settings-workarea-pattern-layer-layout')" class="w-full">
-              <Select
-                v-model="settingsStore.canvas.patternOptions.layerLayout"
-                :items="layerLayoutOptions"
-                class="w-full"
-              />
+            <FormField :label="$t('settings-workarea-pattern-layer-layout')">
+              <Select v-model="settingsStore.canvas.patternOptions.layerLayout" :items="layerLayoutOptions" />
             </FormField>
           </div>
         </template>
 
         <template #updater>
-          <div class="space-y-2">
+          <div :class="$style.stack">
             <Button
               :loading="settingsStore.loadingUpdate"
               :label="$t('updater-check-for-updates')"
-              class="w-full justify-center"
+              :class="$style.check"
               @click="() => settingsStore.checkForUpdates()"
             />
             <Checkbox v-model="settingsStore.updater.autoCheck" v-bind="$ta('settings-updater-auto-check')" />
@@ -174,16 +157,16 @@ async function reset() {
         </template>
 
         <template #telemetry>
-          <div class="space-y-2">
+          <div :class="$style.stack">
             <Checkbox v-model="settingsStore.telemetry.diagnostics" v-bind="$ta('settings-telemetry-diagnostics')" />
             <Checkbox v-model="settingsStore.telemetry.metrics" v-bind="$ta('settings-telemetry-metrics')" />
           </div>
         </template>
 
         <template #other>
-          <div class="space-y-2">
-            <FormField v-bind="$ta('settings-autosave-interval')" class="w-full">
-              <InputNumber v-model="settingsStore.other.autoSaveInterval" class="w-full" />
+          <div :class="$style.stack">
+            <FormField v-bind="$ta('settings-autosave-interval')">
+              <InputNumber v-model="settingsStore.other.autoSaveInterval" />
             </FormField>
 
             <Checkbox
@@ -211,3 +194,35 @@ async function reset() {
     </template>
   </Dialog>
 </template>
+
+<style module>
+/* Outweighs the styles of `Tabs`. */
+.tabs[data-slot="root"] {
+  align-items: flex-start;
+
+  [data-slot="list"] {
+    align-items: flex-start;
+
+    border-radius: 0;
+
+    background-color: transparent;
+  }
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(var(--spacing) * 2);
+}
+
+.stack > :not(:last-child) {
+  margin-block-end: calc(var(--spacing) * 2);
+}
+
+/* Outweighs the size variants of `Button`. */
+button.check[data-slot="base"] {
+  justify-content: center;
+
+  width: 100%;
+}
+</style>

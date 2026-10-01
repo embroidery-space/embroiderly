@@ -55,14 +55,14 @@ async function exportPattern(variant: PdfVariant) {
 </script>
 
 <template>
-  <Dialog :title="$t('pdf-export')" class="w-xl">
+  <Dialog :title="$t('pdf-export')" :class="$style.dialog">
     <template #body>
       <RadioGroup v-model="variant" :items="variantItems" />
       <PdfExportOptionsForm
         v-model="options"
         :fabric-width="props.fabricWidth"
         :fabric-height="props.fabricHeight"
-        class="mt-2"
+        :class="$style.options"
       />
     </template>
     <template #footer>
@@ -83,3 +83,13 @@ async function exportPattern(variant: PdfVariant) {
     </template>
   </Dialog>
 </template>
+
+<style module>
+.dialog[data-slot="content"] {
+  width: var(--container-xl);
+}
+
+.options {
+  margin-top: calc(var(--spacing) * 2);
+}
+</style>

@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
-import FormField from "../FormField/FormField.vue";
-
+import SwitchDemo from "./stories/SwitchDemo.vue";
+import SwitchSizes from "./stories/SwitchSizes.vue";
+import SwitchStates from "./stories/SwitchStates.vue";
 import Switch from "./Switch.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
@@ -31,42 +32,24 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, Switch },
+      components: { SwitchDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <FormField>
-          <Switch v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
-        </FormField>
-      `,
+      template: `<SwitchDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Switch },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="size in sizes" :key="size">
-          <Switch :size="size" :label="\`Size: \${size}\`" />
-        </template>
-      </div>
-    `,
+    components: { SwitchSizes },
+    template: `<SwitchSizes />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { Switch },
-    template: `
-      <div class="flex flex-col gap-2">
-        <Switch label="Default" />
-        <Switch label="Disabled" disabled />
-        <Switch label="Checked" :model-value="true" />
-        <Switch label="Checked disabled" :model-value="true" disabled />
-      </div>
-    `,
+    components: { SwitchStates },
+    template: `<SwitchStates />`,
   }),
 };
 

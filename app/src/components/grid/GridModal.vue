@@ -19,7 +19,7 @@ async function handleSave() {
 </script>
 
 <template>
-  <Dialog :title="$t('grid-properties')" :ui="{ content: 'w-lg' }">
+  <Dialog :title="$t('grid-properties')">
     <template #body>
       <GridForm v-model="grid" />
     </template>

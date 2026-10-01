@@ -23,10 +23,7 @@ async function handleSave() {
 </script>
 
 <template>
-  <Dialog
-    :title="mode === 'create' ? $t('pattern-creation') : $t('fabric-properties')"
-    :ui="{ body: 'pt-0!', content: 'w-2xl' }"
-  >
+  <Dialog :title="mode === 'create' ? $t('pattern-creation') : $t('fabric-properties')" :class="$style.dialog">
     <template #body>
       <FabricForm v-model="fabric as Fabric" />
     </template>
@@ -36,3 +33,13 @@ async function handleSave() {
     </template>
   </Dialog>
 </template>
+
+<style module>
+.dialog[data-slot="content"] {
+  width: var(--container-2xl);
+
+  > [data-slot="body"] {
+    padding-top: 0;
+  }
+}
+</style>

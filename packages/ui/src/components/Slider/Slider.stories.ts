@@ -4,9 +4,11 @@ import { expect, fn } from "storybook/test";
 
 import { renderWithLocalModel } from "~storybook-utils/render-with-local-model";
 
-import FormField from "../FormField/FormField.vue";
-
 import Slider from "./Slider.vue";
+import SliderChanged from "./stories/SliderChanged.vue";
+import SliderDemo from "./stories/SliderDemo.vue";
+import SliderSizes from "./stories/SliderSizes.vue";
+import SliderStates from "./stories/SliderStates.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -40,45 +42,24 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, Slider },
+      components: { SliderDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <FormField>
-          <div class="w-64">
-            <Slider v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
-          </div>
-        </FormField>
-      `,
+      template: `<SliderDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Slider },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex w-64 flex-col gap-4">
-        <template v-for="size in sizes" :key="size">
-          <div class="space-y-2">
-            <span class="block text-xs text-dimmed">Size: {{ size }}</span>
-            <Slider :size="size" />
-          </div>
-        </template>
-      </div>
-    `,
+    components: { SliderSizes },
+    template: `<SliderSizes />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { Slider },
-    template: `
-      <div class="flex w-64 flex-col gap-4">
-        <Slider :model-value="50" />
-        <Slider :model-value="50" disabled />
-      </div>
-    `,
+    components: { SliderStates },
+    template: `<SliderStates />`,
   }),
 };
 
@@ -88,7 +69,7 @@ export const Changed: Story = {
     "onUpdate:modelValue": fn(),
   },
   tags: ["!autodocs"],
-  render: renderWithLocalModel(Slider, "Slider", { wrapperClass: "w-64" }),
+  render: renderWithLocalModel(SliderChanged, "SliderChanged"),
   async play({ canvas, userEvent, args }) {
     canvas.getByRole("slider").focus();
     await userEvent.keyboard("{ArrowRight}");

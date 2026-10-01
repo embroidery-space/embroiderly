@@ -30,11 +30,6 @@ catalog:
   "pinia-plugin-persistedstate": 4.7.1
   "reka-ui": 2.10.5
 
-  # Styling
-  "tailwindcss": 4.3.3
-  "tailwind-merge": 3.7.0
-  "tailwind-variants": 3.3.1
-
   # Icons
   "@iconify/vue": 5.0.3
   "@iconify-json/lucide": 1.2.136
@@ -87,7 +82,6 @@ catalog:
   "@vitest/eslint-plugin": 1.6.27
   "@vue/eslint-config-prettier": 10.2.0
   "@vue/eslint-config-typescript": 14.9.0
-  "eslint-plugin-better-tailwindcss": 4.7.0
   "eslint-plugin-no-only-tests": 3.4.0
   "eslint-plugin-oxlint": 1.85.0
   "eslint-plugin-vue": 10.11.0
@@ -96,6 +90,10 @@ catalog:
   "markdownlint-cli2": 0.23.3
   "oxfmt": 0.70.0
   "oxlint": 1.85.0
+  "stylelint": 17.15.0
+  "stylelint-config-standard": 40.0.0
+  "stylelint-config-recommended-vue": 2.0.0
+  "stylelint-config-clean-order": 10.0.0
 
   # Build tools
   "concurrently": 10.0.5
@@ -105,7 +103,6 @@ catalog:
   "vite-plugin-vue-devtools": 8.2.1
   "@vite-pwa/assets-generator": 2.0.0
   "@vitejs/plugin-vue": 6.0.9
-  "@tailwindcss/vite": 4.3.3
   "wrangler": 4.136.3
 
   # PWA

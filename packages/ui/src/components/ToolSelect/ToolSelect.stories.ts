@@ -2,6 +2,10 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
+import ToolSelectDemo from "./stories/ToolSelectDemo.vue";
+import ToolSelectOpen from "./stories/ToolSelectOpen.vue";
+import ToolSelectSizes from "./stories/ToolSelectSizes.vue";
+import ToolSelectStates from "./stories/ToolSelectStates.vue";
 import ToolSelect from "./ToolSelect.vue";
 import type { ToolSelectItem } from "./ToolSelect.vue";
 
@@ -37,10 +41,10 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { ToolSelect },
+      components: { ToolSelectDemo },
       setup: () => ({ args, multipleItems, updateArgs }),
       template: `
-        <ToolSelect
+        <ToolSelectDemo
           v-bind="args"
           :items="multipleItems"
           @update:model-value="(value) => updateArgs({ modelValue: value })"
@@ -53,60 +57,45 @@ export const Demo: Story = {
 export const SingleItem: Story = {
   args: { modelValue: "pencil", items: singleItem },
   render: (args) => ({
-    components: { ToolSelect },
+    components: { ToolSelectDemo },
     setup: () => ({ args, singleItem }),
-    template: `<ToolSelect v-bind="args" :items="singleItem" />`,
+    template: `<ToolSelectDemo v-bind="args" :items="singleItem" />`,
   }),
 };
 
 export const CustomSelectionColor: Story = {
   args: { modelValue: "pencil", items: multipleItems },
   render: (args) => ({
-    components: { ToolSelect },
+    components: { ToolSelectDemo },
     setup: () => ({ args, multipleItems }),
-    template: `<ToolSelect v-bind="args" :items="multipleItems" selection-color="var(--color-error)" />`,
+    template: `<ToolSelectDemo v-bind="args" :items="multipleItems" selection-color="var(--color-error)" />`,
   }),
 };
 
 export const Sizes: Story = {
   args: { items: multipleItems },
   render: () => ({
-    components: { ToolSelect },
-    setup: () => ({ sizes, multipleItems }),
-    template: `
-      <div class="flex items-start gap-4">
-        <template v-for="size in sizes" :key="size">
-          <ToolSelect model-value="pencil" :items="multipleItems" :size="size" />
-        </template>
-      </div>
-    `,
+    components: { ToolSelectSizes },
+    setup: () => ({ multipleItems }),
+    template: `<ToolSelectSizes :items="multipleItems" />`,
   }),
 };
 
 export const States: Story = {
   args: { items: multipleItems },
   render: () => ({
-    components: { ToolSelect },
+    components: { ToolSelectStates },
     setup: () => ({ multipleItems }),
-    template: `
-      <div class="flex items-start gap-4">
-        <ToolSelect model-value="pencil" :items="multipleItems" />
-        <ToolSelect model-value="pencil" :items="multipleItems" disabled />
-      </div>
-    `,
+    template: `<ToolSelectStates :items="multipleItems" />`,
   }),
 };
 
 export const Open: Story = {
   args: { ...Demo.args, defaultOpen: true, portal: false },
   render: (args) => ({
-    components: { ToolSelect },
+    components: { ToolSelectOpen },
     setup: () => ({ args, multipleItems }),
-    template: `
-      <div class="size-48">
-        <ToolSelect v-bind="args" :items="multipleItems" />
-      </div>
-    `,
+    template: `<ToolSelectOpen v-bind="args" :items="multipleItems" />`,
   }),
 };
 
@@ -114,9 +103,9 @@ export const Selected: Story = {
   args: { items: multipleItems, portal: false, "onUpdate:modelValue": fn() },
   tags: ["!autodocs", "!snapshot"],
   render: (args) => ({
-    components: { ToolSelect },
+    components: { ToolSelectDemo },
     setup: () => ({ args, multipleItems }),
-    template: `<ToolSelect v-bind="args" :items="multipleItems" />`,
+    template: `<ToolSelectDemo v-bind="args" :items="multipleItems" />`,
   }),
   async play({ canvas, userEvent, args }) {
     await userEvent.click(canvas.getByTestId("tool-selector-dropdown-button"));
@@ -129,9 +118,9 @@ export const ShortcutSelected: Story = {
   args: { items: multipleItems, "onUpdate:modelValue": fn() },
   tags: ["!autodocs", "!snapshot"],
   render: (args) => ({
-    components: { ToolSelect },
+    components: { ToolSelectDemo },
     setup: () => ({ args, multipleItems }),
-    template: `<ToolSelect v-bind="args" :items="multipleItems" />`,
+    template: `<ToolSelectDemo v-bind="args" :items="multipleItems" />`,
   }),
   async play({ userEvent, args }) {
     await userEvent.keyboard("b");

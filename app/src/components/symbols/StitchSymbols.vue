@@ -179,17 +179,15 @@ onMounted(async () => {
         :assigned-symbols="assignedSymbols"
         :options="selectedCodePoints"
         :font-family="selectedFontKey.split('/')[1]"
-        :scroll="{ type: 'always' }"
         @option-dblclick="handleSetSymbol($event.codePoint)"
       >
         <template #header>
-          <div class="flex gap-x-1">
+          <div :class="$style.header">
             <Select
               v-model="selectedFontKey"
               :loading="loadingFont"
               :items="symbolFontOptions"
               variant="outline"
-              class="w-full"
               @update:model-value="
                 async (key) => {
                   const [fontGroup, fontFamily] = (key as string).split('/') as [string, string];
@@ -211,7 +209,7 @@ onMounted(async () => {
         </template>
 
         <template #footer>
-          <span class="text-xs text-nowrap">
+          <span :class="$style.usage">
             {{ $t("stitch-symbols-usage", { total: selectedCodePoints.length, used: assignedSymbols.length }) }}
           </span>
         </template>
@@ -219,3 +217,19 @@ onMounted(async () => {
     </ContextMenu>
   </PaletteSection>
 </template>
+
+<style module>
+.header {
+  display: flex;
+  column-gap: calc(var(--spacing) * 1);
+
+  > [data-slot="root"] {
+    width: 100%;
+  }
+}
+
+.usage {
+  font-size: var(--text-xs);
+  text-wrap: nowrap;
+}
+</style>

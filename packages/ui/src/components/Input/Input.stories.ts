@@ -2,12 +2,13 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
-import Button from "../Button/Button.vue";
-import FormField from "../FormField/FormField.vue";
-import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
-import Icon from "../Icon/Icon.vue";
-
 import Input from "./Input.vue";
+import InputDemo from "./stories/InputDemo.vue";
+import InputFieldGroup from "./stories/InputFieldGroup.vue";
+import InputSizes from "./stories/InputSizes.vue";
+import InputStates from "./stories/InputStates.vue";
+import InputVariants from "./stories/InputVariants.vue";
+import InputWithSlots from "./stories/InputWithSlots.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 const variants = ["subtle", "outline", "none"] as const;
@@ -42,96 +43,45 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, Input },
+      components: { InputDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <FormField>
-          <Input v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />
-        </FormField>
-      `,
+      template: `<InputDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Input },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="size in sizes" :key="size">
-          <Input :model-value="\`Size: \${size}\`" :size="size" />
-        </template>
-      </div>
-    `,
+    components: { InputSizes },
+    template: `<InputSizes />`,
   }),
 };
 
 export const Variants: Story = {
   render: () => ({
-    components: { Input },
-    setup: () => ({ variants }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <template v-for="variant in variants" :key="variant">
-          <Input :model-value="\`Variant: \${variant}\`" :variant="variant" />
-        </template>
-      </div>
-    `,
+    components: { InputVariants },
+    template: `<InputVariants />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { Input },
-    template: `
-      <div class="flex flex-col gap-2">
-        <Input model-value="Default" />
-        <Input model-value="Disabled" disabled />
-      </div>
-    `,
+    components: { InputStates },
+    template: `<InputStates />`,
   }),
 };
 
 export const WithSlots: Story = {
   render: () => ({
-    components: { Input, Icon },
-    template: `
-      <div class="flex flex-col gap-2">
-        <Input model-value="With leading slot">
-          <template #leading>
-            <Icon name="lucide:rocket" />
-          </template>
-        </Input>
-
-        <Input model-value="With trailing slot">
-          <template #trailing>
-            <Icon name="lucide:rocket" />
-          </template>
-        </Input>
-
-        <Input model-value="With both slots">
-          <template #leading>
-            <Icon name="lucide:rocket" />
-          </template>
-          <template #trailing>
-            <Icon name="lucide:rocket" />
-          </template>
-        </Input>
-      </div>
-    `,
+    components: { InputWithSlots },
+    template: `<InputWithSlots />`,
   }),
 };
 
 export const FieldGroup: Story = {
   render: () => ({
-    components: { Input, Button, FormFieldGroup },
-    template: `
-      <FormFieldGroup>
-        <Input />
-        <Button label="Submit" />
-      </FormFieldGroup>
-    `,
+    components: { InputFieldGroup },
+    template: `<InputFieldGroup />`,
   }),
 };
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, Icon, ScrollArea } from "@embroiderly/ui";
+import { Button, Icon } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { openPath } from "@tauri-apps/plugin-opener";
 
@@ -88,68 +88,63 @@ function createPattern() {
 </script>
 
 <template>
-  <ScrollArea data-testid="welcome-screen" type="auto" size="sm" :ui="{ viewport: 'flex flex-col' }">
-    <div class="flex grow items-center justify-center p-4 sm:p-6">
-      <div class="flex min-w-1/2 flex-col gap-4 sm:gap-6">
-        <span class="text-2xl font-medium sm:text-3xl lg:text-4xl">{{ $t("welcome") }}</span>
+  <div data-testid="welcome-screen" :class="$style.root">
+    <div :class="$style.main">
+      <div :class="$style.content">
+        <span :class="$style.title">{{ $t("welcome") }}</span>
 
         <div>
           <i18n tag="p" path="welcome-get-started">
             <template #button-open="{ buttonOpenLabel }">
-              <Button variant="link" :label="buttonOpenLabel" class="p-0 text-base" @click="openPattern" />
+              <Button variant="link" :label="buttonOpenLabel" :class="$style.link" @click="openPattern" />
             </template>
             <template #button-create="{ buttonCreateLabel }">
-              <Button variant="link" :label="buttonCreateLabel" class="p-0 text-base" @click="createPattern" />
+              <Button variant="link" :label="buttonCreateLabel" :class="$style.link" @click="createPattern" />
             </template>
           </i18n>
           <p>{{ $t("welcome-get-started-dnd") }}</p>
         </div>
 
-        <div class="flex flex-wrap justify-between gap-4">
-          <div class="flex flex-col gap-y-1">
-            <span class="text-lg">{{ $t("welcome-section-starting") }}</span>
-            <div class="flex max-w-max flex-col gap-y-1">
+        <div :class="$style.sections">
+          <div :class="$style.section">
+            <span :class="$style.heading">{{ $t("welcome-section-starting") }}</span>
+            <div :class="$style.actions">
               <Button
                 variant="ghost"
                 :icon="IconFileCreate"
                 :label="$t('welcome-create-pattern')"
-                class="justify-start text-base"
+                :class="$style.action"
                 @click="createPattern"
               />
               <Button
                 variant="ghost"
                 :icon="IconFileOpen"
                 :label="$t('welcome-open-pattern')"
-                class="justify-start text-base"
+                :class="$style.action"
                 @click="openPattern"
               />
             </div>
           </div>
 
-          <div class="flex flex-col gap-y-5">
-            <div v-for="section in infoSections" :key="section.title" class="flex flex-col gap-1">
-              <span class="text-lg">{{ section.title }}</span>
+          <div :class="$style.info">
+            <div v-for="section in infoSections" :key="section.title" :class="$style.infoSection">
+              <span :class="$style.heading">{{ section.title }}</span>
               <template v-for="item in section.items" :key="item.title">
                 <a
                   v-if="item.href"
                   :href="item.href"
                   :target="item.target"
                   rel="noopener noreferrer"
-                  class="block rounded-md p-2 transition-colors duration-initial hover:cursor-pointer hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  :class="$style.item"
                 >
-                  <span class="flex items-center gap-2 font-medium text-primary">
+                  <span :class="$style.itemTitle">
                     {{ item.title }}
                     <Icon :name="IconExternalLink" />
                   </span>
                   <span v-if="item.text">{{ item.text }}</span>
                 </a>
-                <div
-                  v-else
-                  tabindex="0"
-                  class="rounded-md p-2 transition-colors duration-initial hover:cursor-pointer hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  @click="item?.command"
-                >
-                  <span class="flex items-center gap-2 font-medium text-primary">{{ item.title }}</span>
+                <div v-else tabindex="0" :class="$style.item" @click="item?.command">
+                  <span :class="$style.itemTitle">{{ item.title }}</span>
                   <span v-if="item.text">{{ item.text }}</span>
                 </div>
               </template>
@@ -159,11 +154,151 @@ function createPattern() {
       </div>
     </div>
 
-    <i18n tag="p" path="app-credits" class="my-2 text-center align-middle text-xs">
+    <i18n tag="p" path="app-credits" :class="$style.credits">
       <template #tryzub>
         <!-- eslint-disable-next-line vue-i18n/no-raw-text -->
-        <span class="font-features-['ss14'] text-lg font-semibold">A</span>
+        <span :class="$style.tryzub">A</span>
       </template>
     </i18n>
-  </ScrollArea>
+  </div>
 </template>
+
+<style module>
+.root {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+
+  padding: calc(var(--spacing) * 4);
+
+  @media (width >= 40rem) {
+    padding: calc(var(--spacing) * 6);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 4);
+
+  min-width: 50%;
+
+  @media (width >= 40rem) {
+    gap: calc(var(--spacing) * 6);
+  }
+}
+
+.title {
+  font-size: var(--text-2xl);
+  font-weight: 500;
+
+  @media (width >= 40rem) {
+    font-size: var(--text-3xl);
+  }
+
+  @media (width >= 64rem) {
+    font-size: var(--text-4xl);
+  }
+}
+
+button.link[data-slot="base"] {
+  padding: 0;
+
+  font-size: var(--text-base);
+}
+
+.sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 4);
+  justify-content: space-between;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(var(--spacing) * 1);
+}
+
+.heading {
+  font-size: var(--text-lg);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(var(--spacing) * 1);
+
+  max-width: max-content;
+}
+
+button.action[data-slot="base"] {
+  justify-content: flex-start;
+
+  font-size: var(--text-base);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(var(--spacing) * 5);
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 1);
+}
+
+.item {
+  display: block;
+
+  padding: calc(var(--spacing) * 2);
+  border-radius: var(--radius-md);
+
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: initial;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+
+  &:hover {
+    cursor: pointer;
+
+    background-color: var(--background-color-elevated);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.item-title {
+  display: flex;
+  gap: calc(var(--spacing) * 2);
+  align-items: center;
+
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.credits {
+  margin-block: calc(var(--spacing) * 2);
+
+  font-size: var(--text-xs);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tryzub {
+  font-size: var(--text-lg);
+  font-feature-settings: "ss14";
+  font-weight: 600;
+}
+</style>

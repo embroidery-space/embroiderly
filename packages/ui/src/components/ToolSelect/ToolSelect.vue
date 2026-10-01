@@ -12,9 +12,6 @@ import Icon from "../Icon/Icon.vue";
 import Tooltip from "../Tooltip/Tooltip.vue";
 import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 
-import { ToolSelectTheme } from "./ToolSelect.theme.ts";
-import type { ToolSelectThemeSlots, ToolSelectThemeVariants } from "./ToolSelect.theme.ts";
-
 export interface ToolSelectItem {
   /** The icon to display. */
   icon: IconValue;
@@ -37,7 +34,7 @@ export interface ToolSelectProps<T extends ToolSelectItem = ToolSelectItem> exte
    * The size of the tool select.
    * @default "md"
    */
-  size?: ToolSelectThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** Custom selection color. */
   selectionColor?: string;
@@ -62,9 +59,6 @@ export interface ToolSelectProps<T extends ToolSelectItem = ToolSelectItem> exte
    * @default true
    */
   portal?: boolean | string | HTMLElement;
-
-  class?: any;
-  ui?: ToolSelectThemeSlots;
 }
 
 const model = defineModel<unknown>();
@@ -108,14 +102,6 @@ watch(
 );
 
 const selected = computed(() => currentOption.value.value === toRaw(model.value) && !props.disabled);
-
-const ui = computed(() => {
-  return ToolSelectTheme({
-    size: props.size,
-    selected: selected.value,
-    disabled: props.disabled,
-  });
-});
 
 const mainButton = useTemplateRef("main-button");
 const dropdownButton = useTemplateRef("dropdown-button") as MaybeRefOrGetter;
@@ -172,7 +158,10 @@ function handleKeydown(e: KeyboardEvent) {
 </script>
 
 <template>
-  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div
+    data-slot="root"
+    :class="[$style.root, $style[`size-${size}`], selected && $style.selected, props.disabled && $style.disabled]"
+  >
     <Tooltip
       v-bind="tooltipOptions"
       :text="currentOption.label"
@@ -188,19 +177,15 @@ function handleKeydown(e: KeyboardEvent) {
         :disabled="props.disabled"
         :aria-haspopup="items.length > 1 ? 'menu' : undefined"
         :aria-expanded="items.length > 1 ? dropdownMenuOpen : undefined"
-        data-slot="mainButton"
-        :class="ui.mainButton({ class: props.ui?.mainButton })"
+        data-slot="main-button"
+        :class="$style.mainButton"
         :style="{ color: selected ? props.selectionColor : undefined }"
         @pointerdown="handlePointerDown"
         @pointerup="handlePointerUp"
         @keydown="handleKeydown"
         @contextmenu.prevent
       >
-        <Icon
-          :name="currentOption.icon"
-          data-slot="mainButtonIcon"
-          :class="ui.mainButtonIcon({ class: props.ui?.mainButtonIcon })"
-        />
+        <Icon :name="currentOption.icon" data-slot="main-button-icon" :class="$style.mainButtonIcon" />
       </button>
     </Tooltip>
 
@@ -220,15 +205,147 @@ function handleKeydown(e: KeyboardEvent) {
         :disabled="props.disabled"
         tabindex="-1"
         aria-hidden="true"
-        data-slot="dropdownButton"
-        :class="ui.dropdownButton({ class: props.ui?.dropdownButton })"
+        data-slot="dropdown-button"
+        :class="$style.dropdownButton"
       >
-        <Icon
-          :name="icons.chevronDown"
-          data-slot="dropdownButtonIcon"
-          :class="ui.dropdownButtonIcon({ class: props.ui?.dropdownButtonIcon })"
-        />
+        <Icon :name="icons.chevronDown" data-slot="dropdown-button-icon" :class="$style.dropdownButtonIcon" />
       </button>
     </DropdownMenu>
   </div>
 </template>
+
+<style module>
+.root {
+  position: relative;
+
+  display: inline-block;
+
+  &.disabled {
+    opacity: 75%;
+  }
+}
+
+.main-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--radius-md);
+
+  color: var(--text-color-dimmed);
+
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+
+  .size-sm > & {
+    padding: calc(var(--spacing) * 1);
+  }
+
+  .size-md > & {
+    padding: calc(var(--spacing) * 1.5);
+  }
+
+  .size-lg > & {
+    padding: calc(var(--spacing) * 2);
+  }
+
+  .selected > & {
+    background-color: var(--background-color-elevated);
+  }
+
+  .disabled > & {
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--border-color-inverted);
+    outline-offset: 2px;
+  }
+
+  &:not(:disabled):hover {
+    cursor: pointer;
+
+    background-color: var(--background-color-elevated);
+  }
+
+  &:not(:disabled):active {
+    background-color: var(--background-color-elevated);
+  }
+}
+
+.main-button-icon {
+  flex-shrink: 0;
+
+  .size-sm > * > & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .size-md > * > & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .size-lg > * > & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+}
+
+.dropdown-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  padding: 0;
+  border-style: none;
+  border-radius: var(--radius-sm);
+
+  .size-sm > & {
+    width: calc(var(--spacing) * 2);
+    height: calc(var(--spacing) * 2);
+  }
+
+  .size-md > & {
+    width: calc(var(--spacing) * 2.5);
+    height: calc(var(--spacing) * 2.5);
+  }
+
+  .size-lg > & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .disabled > & {
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    cursor: pointer;
+  }
+}
+
+.dropdown-button-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  rotate: -45deg;
+
+  .size-sm > * > & {
+    width: calc(var(--spacing) * 2);
+    height: calc(var(--spacing) * 2);
+  }
+
+  .size-md > * > & {
+    width: calc(var(--spacing) * 2.5);
+    height: calc(var(--spacing) * 2.5);
+  }
+
+  .size-lg > * > & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+}
+</style>

@@ -36,20 +36,17 @@ function onUpdate(value: string | undefined) {
 
 <template>
   <FormFieldGroup :size="size">
-    <Popover v-bind="popover" :content="{ align: 'start' }" class="p-4">
+    <Popover v-bind="popover" :content="{ align: 'start' }">
       <Button
         square
         :disabled="disabled"
         :style="{ backgroundColor: hexColor }"
-        :class="{
-          'size-6': size === 'sm',
-          'size-8': size === 'md',
-          'size-10': size === 'lg',
-        }"
+        :class="[$style.swatch, $style[`size-${size}`]]"
       />
       <template #content>
         <ColorPicker
           v-bind="picker"
+          :class="$style.picker"
           :model-value="hexColor"
           :size="size"
           :disabled="disabled"
@@ -67,3 +64,26 @@ function onUpdate(value: string | undefined) {
     />
   </FormFieldGroup>
 </template>
+
+<style module>
+.swatch {
+  &.size-sm {
+    width: calc(var(--spacing) * 6);
+    height: calc(var(--spacing) * 6);
+  }
+
+  &.size-md {
+    width: calc(var(--spacing) * 8);
+    height: calc(var(--spacing) * 8);
+  }
+
+  &.size-lg {
+    width: calc(var(--spacing) * 10);
+    height: calc(var(--spacing) * 10);
+  }
+}
+
+.picker {
+  padding: calc(var(--spacing) * 4);
+}
+</style>

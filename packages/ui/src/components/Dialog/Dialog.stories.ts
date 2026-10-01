@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect } from "storybook/test";
 
-import Button from "../Button/Button.vue";
-
 import Dialog from "./Dialog.vue";
+import DialogDemo from "./stories/DialogDemo.vue";
+import DialogOpen from "./stories/DialogOpen.vue";
 
 const meta = {
   title: "Overlay/Dialog",
@@ -24,22 +24,9 @@ export const Demo: Story = {
     description: "This is a description of the dialog.",
   },
   render: (args) => ({
-    components: { Dialog, Button },
+    components: { DialogDemo },
     setup: () => ({ args }),
-    template: `
-      <Dialog v-bind="args">
-        <Button label="Open Dialog" />
-
-        <template #body>
-          <Placeholder class="inline-flex h-48 w-full" />
-        </template>
-
-        <template #footer="{ close }">
-          <Button label="Cancel" color="neutral" variant="outline" @click="close" />
-          <Button label="Confirm" @click="close" />
-        </template>
-      </Dialog>
-    `,
+    template: `<DialogDemo v-bind="args" />`,
   }),
 };
 
@@ -47,24 +34,9 @@ export const Open: Story = {
   args: { ...Demo.args, open: true, portal: false },
   tags: ["!autodocs"],
   render: (args) => ({
-    components: { Dialog, Button },
+    components: { DialogOpen },
     setup: () => ({ args }),
-    template: `
-      <div class="h-screen w-screen">
-        <Dialog v-bind="args">
-          <Button label="Open Dialog" />
-
-          <template #body>
-            <Placeholder class="inline-flex h-48 w-full" />
-          </template>
-
-          <template #footer="{ close }">
-            <Button label="Cancel" color="neutral" variant="outline" @click="close" />
-            <Button label="Confirm" @click="close" />
-          </template>
-        </Dialog>
-      </div>
-    `,
+    template: `<DialogOpen v-bind="args" />`,
   }),
   async play({ canvas, args }) {
     await expect(canvas.getByText(args.title!)).toBeVisible();

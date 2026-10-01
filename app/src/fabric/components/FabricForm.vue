@@ -58,24 +58,23 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 gap-x-4 md:grid-cols-2">
+  <div :class="$style.root">
     <FormFieldSet :legend="$t('fabric-count-and-kind')">
-      <FormField :label="$t('fabric-count')" class="w-full">
+      <FormField :label="$t('fabric-count')">
         <Select
           v-model="fabric.spi[0]"
           :items="fabricCountOptions"
-          class="w-full"
           data-testid="fabric-count-select"
           @update:model-value="fabric.spi[1] = $event as number"
         />
       </FormField>
 
-      <FormField :label="$t('fabric-kind')" class="w-full">
-        <Select v-model="fabric.kind" :items="fabricKindOptions" class="w-full" data-testid="fabric-kind-select" />
+      <FormField :label="$t('fabric-kind')">
+        <Select v-model="fabric.kind" :items="fabricKindOptions" data-testid="fabric-kind-select" />
       </FormField>
     </FormFieldSet>
 
-    <FormFieldSet :legend="$t('fabric-size')" class="space-y-2">
+    <FormFieldSet :legend="$t('fabric-size')" :class="$style.size">
       <InputDimensions
         :width="sizeInUnit.width"
         :height="sizeInUnit.height"
@@ -105,7 +104,7 @@ onMounted(async () => {
         orientation="horizontal"
       />
 
-      <p class="text-sm">
+      <p :class="$style.text">
         {{
           $t("fabric-total-size", {
             width: size.width,
@@ -119,7 +118,7 @@ onMounted(async () => {
       </p>
     </FormFieldSet>
 
-    <FormFieldSet :legend="$t('fabric-color')" class="md:col-span-full">
+    <FormFieldSet :legend="$t('fabric-color')" :class="$style.color">
       <PaletteList
         :model-value="{ name: fabric.name, color: fabric.color.toHex().substring(1).toUpperCase() }"
         :options="fabricColorOptions"
@@ -136,16 +135,55 @@ onMounted(async () => {
           }
         "
       />
-      <div class="mt-2 flex items-center justify-between">
-        <p class="text-sm">{{ $t("fabric-selected-color", { color: fabric.name }) }}</p>
+      <div :class="$style.selected">
+        <p :class="$style.text">{{ $t("fabric-selected-color", { color: fabric.name }) }}</p>
         <Button
           variant="link"
           color="neutral"
           :label="$t('fabric-colors')"
-          class="p-0"
+          :class="$style.link"
           @click="openFabricColorsModal"
         />
       </div>
     </FormFieldSet>
   </div>
 </template>
+
+<style module>
+.root {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  column-gap: calc(var(--spacing) * 4);
+
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.size > :not(:last-child) {
+  margin-block-end: calc(var(--spacing) * 2);
+}
+
+.text {
+  font-size: var(--text-sm);
+}
+
+.color {
+  @media (width >= 48rem) {
+    grid-column: 1 / -1;
+  }
+}
+
+.selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: calc(var(--spacing) * 2);
+}
+
+/* Outweighs the size variants of `Button`. */
+button.link[data-slot="base"] {
+  padding: 0;
+}
+</style>

@@ -4,6 +4,8 @@ import { computed, ref } from "vue";
 
 import ContextMenu from "./ContextMenu.vue";
 import type { ContextMenuItem } from "./ContextMenu.vue";
+import ContextMenuDemo from "./stories/ContextMenuDemo.vue";
+import ContextMenuOpen from "./stories/ContextMenuOpen.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -83,13 +85,9 @@ export const Demo: Story = {
     const showRulers = ref(false);
     const items = computed(() => demoItems(showGrid, showRulers));
     return {
-      components: { ContextMenu: ContextMenu as any },
+      components: { ContextMenuDemo },
       setup: () => ({ args, items }),
-      template: `
-        <ContextMenu v-bind="args" :items="items">
-          <Placeholder class="inline-flex size-48 items-center justify-center">Right-click here</Placeholder>
-        </ContextMenu>
-      `,
+      template: `<ContextMenuDemo v-bind="args" :items="items" />`,
     };
   },
 };
@@ -101,15 +99,9 @@ export const Open: Story = {
     const showRulers = ref(false);
     const items = computed(() => demoItems(showGrid, showRulers));
     return {
-      components: { ContextMenu: ContextMenu as any },
+      components: { ContextMenuOpen },
       setup: () => ({ args, items }),
-      template: `
-        <div class="min-h-96 min-w-96">
-          <ContextMenu v-bind="args" :items="items">
-            <Placeholder class="inline-flex size-48 items-center justify-center">Right-click here</Placeholder>
-          </ContextMenu>
-        </div>
-      `,
+      template: `<ContextMenuOpen v-bind="args" :items="items" />`,
     };
   },
   async play({ canvas, userEvent }) {
@@ -135,13 +127,9 @@ export const ShortcutTriggered: Story = {
       ],
     ];
     return {
-      components: { ContextMenu: ContextMenu as any },
+      components: { ContextMenuDemo },
       setup: () => ({ args, items }),
-      template: `
-        <ContextMenu v-bind="args" :items="items" :portal="false">
-          <Placeholder class="inline-flex size-48 items-center justify-center">Right-click here</Placeholder>
-        </ContextMenu>
-      `,
+      template: `<ContextMenuDemo v-bind="args" :items="items" :portal="false" />`,
     };
   },
   async play({ userEvent, args }) {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
 import InputFile from "./InputFile.vue";
+import InputFileSizes from "./stories/InputFileSizes.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -26,12 +27,7 @@ export const Demo: Story = {
 
 export const Sizes: Story = {
   render: () => ({
-    components: { InputFile },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-4">
-        <InputFile v-for="size in sizes" :key="size" :size="size" />
-      </div>
-    `,
+    components: { InputFileSizes },
+    template: `<InputFileSizes />`,
   }),
 };

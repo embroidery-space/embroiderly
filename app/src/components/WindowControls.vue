@@ -21,30 +21,72 @@ useTauriListener(async () => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center">
-    <button
-      :title="$t('window-minimize')"
-      class="inline-flex size-10 items-center justify-center text-default hover:cursor-pointer hover:bg-current/6 focus-visible:bg-current/6 active:bg-current/12"
-      @click="appWindow.minimize()"
-    >
-      <IconWindowMinimize class="size-3" />
+  <div :class="$style.root">
+    <button :title="$t('window-minimize')" :class="$style.button" @click="appWindow.minimize()">
+      <IconWindowMinimize :class="$style.icon" />
     </button>
 
     <button
       :title="isMaximized ? $t('window-restore') : $t('window-maximize')"
-      class="inline-flex size-10 items-center justify-center text-default hover:cursor-pointer hover:bg-current/6 focus-visible:bg-current/6 active:bg-current/12"
+      :class="$style.button"
       @click="appWindow.toggleMaximize()"
     >
-      <IconWindowRestore v-if="isMaximized" class="size-3" />
-      <IconWindowMaximize v-else class="size-3" />
+      <IconWindowRestore v-if="isMaximized" :class="$style.icon" />
+      <IconWindowMaximize v-else :class="$style.icon" />
     </button>
 
-    <button
-      :title="$t('window-close')"
-      class="inline-flex size-10 items-center justify-center text-default hover:cursor-pointer hover:bg-red-600 hover:text-white focus-visible:bg-red-600 focus-visible:text-white active:bg-red-700"
-      @click="appWindow.close()"
-    >
-      <IconWindowClose class="size-3" />
+    <button :title="$t('window-close')" :class="[$style.button, $style.close]" @click="appWindow.close()">
+      <IconWindowClose :class="$style.icon" />
     </button>
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: calc(var(--spacing) * 10);
+  height: calc(var(--spacing) * 10);
+
+  color: var(--text-color-default);
+
+  &:hover,
+  &:focus-visible {
+    cursor: pointer;
+
+    background-color: color-mix(in oklab, currentcolor 6%, transparent);
+  }
+
+  &:active {
+    background-color: color-mix(in oklab, currentcolor 12%, transparent);
+  }
+
+  &.close {
+    &:hover,
+    &:focus-visible {
+      color: var(--color-white);
+
+      background-color: red;
+    }
+
+    &:active {
+      color: var(--color-white);
+
+      background-color: darkred;
+    }
+  }
+}
+
+.icon {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+}
+</style>
