@@ -211,7 +211,7 @@ function normalizeChildren(children: DropdownMenuItem[] | DropdownMenuItem[][]):
 
   width: 100%;
 
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600;
 
   .size-sm & {
     gap: calc(var(--spacing) * 1);

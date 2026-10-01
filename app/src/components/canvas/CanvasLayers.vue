@@ -291,7 +291,7 @@ watchEffect(() => {
   margin-inline-start: calc(var(--spacing) * 1);
 
   font-size: var(--text-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
 }
 
 .disabled {

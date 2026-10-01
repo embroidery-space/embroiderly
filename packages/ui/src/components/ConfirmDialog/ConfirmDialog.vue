@@ -165,7 +165,7 @@ function close(value?: boolean) {
 }
 
 .title {
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600;
 }
 
 .description {

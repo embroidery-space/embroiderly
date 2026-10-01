@@ -144,12 +144,7 @@
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
 
-  /* Scales with the font-size of the element using it, snapped up to the 4px grid. */
   --line-height: round(up, 1.15em + 0.125rem, 0.25rem);
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
 
   /* Shadows. */
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 5%);

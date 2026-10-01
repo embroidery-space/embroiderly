@@ -73,7 +73,7 @@ const { icons } = useComponentIcons();
 }
 
 .legend {
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   color: var(--text-color-default);
 
   .size-sm > & {

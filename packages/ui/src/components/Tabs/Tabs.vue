@@ -196,7 +196,7 @@ const slots = defineSlots<TabsSlots<T>>();
 
   border-radius: var(--radius-md);
 
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   color: var(--text-color-muted);
 
   &:focus-visible {

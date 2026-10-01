@@ -109,7 +109,7 @@ provide(
 .label {
   display: block;
 
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   color: var(--text-color-default);
 }
 

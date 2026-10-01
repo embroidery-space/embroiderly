@@ -197,7 +197,7 @@ function createPattern() {
 
 .title {
   font-size: var(--text-2xl);
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
 
   @media (width >= 40rem) {
     font-size: var(--text-3xl);
@@ -284,7 +284,7 @@ button.action[data-slot="base"] {
   gap: calc(var(--spacing) * 2);
   align-items: center;
 
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   color: var(--color-primary);
 }
 
@@ -299,6 +299,6 @@ button.action[data-slot="base"] {
 .tryzub {
   font-size: var(--text-lg);
   font-feature-settings: "ss14";
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600;
 }
 </style>

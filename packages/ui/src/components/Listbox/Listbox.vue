@@ -239,7 +239,7 @@ function compareValues(a: any, b: any): boolean {
 
   width: 100%;
 
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600;
   color: var(--text-color-muted);
 
   .size-sm & {

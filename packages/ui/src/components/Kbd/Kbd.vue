@@ -31,7 +31,7 @@ withDefaults(defineProps<KbdProps>(), {
   border-radius: var(--radius-sm);
 
   font-family: var(--font-sans);
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   color: var(--text-color-default);
 
   background-color: var(--background-color-default);

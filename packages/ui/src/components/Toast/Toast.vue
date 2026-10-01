@@ -185,7 +185,7 @@ const hasTitle = computed(() => !!props.title || !!slots.title);
 
 .title {
   font-size: var(--text-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
 }
 
 .description {

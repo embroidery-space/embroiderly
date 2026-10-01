@@ -92,7 +92,7 @@ const radii = [
     margin-bottom: calc(var(--spacing) * 3);
 
     font-size: var(--text-lg);
-    font-weight: var(--font-weight-semibold);
+    font-weight: 600;
   }
 
   & > div {
@@ -110,7 +110,7 @@ const radii = [
       padding-block: calc(var(--spacing) * 1.5);
       padding-inline: calc(var(--spacing) * 4);
 
-      font-weight: var(--font-weight-bold);
+      font-weight: 700;
     }
   }
 

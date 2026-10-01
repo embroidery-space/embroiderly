@@ -498,7 +498,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
   width: 100%;
 
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600;
 
   .content.size-sm & {
     gap: calc(var(--spacing) * 1);
