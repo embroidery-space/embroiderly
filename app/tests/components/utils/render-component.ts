@@ -1,6 +1,7 @@
 import { createTestingPinia } from "@pinia/testing";
 import type { TestingOptions as CreateTestingPiniaOptions } from "@pinia/testing";
-import { vi } from "vitest";
+import { disposePinia } from "pinia";
+import { onTestFinished, vi } from "vitest";
 import { page } from "vitest/browser";
 import type { Component } from "vue";
 
@@ -24,13 +25,16 @@ export async function renderComponent(component: Component, options: ComponentRe
   const plugins = global?.plugins ?? [];
   if (pinia) {
     const piniaOptions = typeof pinia === "object" ? pinia : {};
-    plugins.unshift(
-      createTestingPinia({
-        stubActions: true,
-        createSpy: vi.fn,
-        ...piniaOptions,
-      }),
-    );
+    const testingPinia = createTestingPinia({
+      stubActions: true,
+      createSpy: vi.fn,
+      ...piniaOptions,
+    });
+
+    plugins.unshift(testingPinia);
+
+    // Stores outlive the unmounted component, so dispose them to not leak their state into the next test.
+    onTestFinished(() => disposePinia(testingPinia));
   }
 
   const provide: Record<string | symbol, unknown> = { ...global?.provide };

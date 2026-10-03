@@ -128,6 +128,7 @@ export default defineConfig({
                 throw new Error("Unsupported platform for browser testing");
               })(),
             ],
+            locators: { exact: false },
             commands,
           },
         },
