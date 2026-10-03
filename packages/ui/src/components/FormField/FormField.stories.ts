@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect } from "storybook/test";
 
-import Input from "../Input/Input.vue";
-
 import FormField from "./FormField.vue";
 import type { FormFieldProps } from "./FormField.vue";
+import FormFieldAccessibility from "./stories/FormFieldAccessibility.vue";
+import FormFieldDemo from "./stories/FormFieldDemo.vue";
+import FormFieldSizes from "./stories/FormFieldSizes.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -33,27 +34,16 @@ export const Demo: StoryObj<FormFieldProps> = {
     help: "",
   },
   render: (args) => ({
-    components: { FormField, Input },
+    components: { FormFieldDemo },
     setup: () => ({ args }),
-    template: `
-      <FormField v-bind="args">
-        <Input placeholder="you@example.com" class="w-full" />
-      </FormField>
-    `,
+    template: `<FormFieldDemo v-bind="args" />`,
   }),
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { FormField, Input },
-    setup: () => ({ sizes }),
-    template: `
-      <div class="flex flex-col gap-4">
-        <FormField v-for="size in sizes" :key="size" :label="\`Size: \${size}\`" :size="size">
-          <Input placeholder="Input" class="w-full" />
-        </FormField>
-      </div>
-    `,
+    components: { FormFieldSizes },
+    template: `<FormFieldSizes />`,
   }),
 };
 
@@ -65,13 +55,9 @@ export const Accessibility: Story = {
     help: "Help",
   },
   render: (args) => ({
-    components: { FormField, Input },
+    components: { FormFieldAccessibility },
     setup: () => ({ args }),
-    template: `
-      <FormField v-bind="args">
-        <Input class="w-full" />
-      </FormField>
-    `,
+    template: `<FormFieldAccessibility v-bind="args" />`,
   }),
   async play({ canvas }) {
     const input = canvas.getByRole("textbox");

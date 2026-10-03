@@ -1,12 +1,6 @@
 <script setup lang="ts" generic="T extends TabsItem">
 import type { TabsRootProps } from "reka-ui";
 import { Tabs } from "reka-ui/namespaced";
-import { computed } from "vue";
-
-import ScrollArea from "../ScrollArea/ScrollArea.vue";
-
-import { TabsTheme } from "./Tabs.theme.ts";
-import type { TabsThemeSlots, TabsThemeVariants } from "./Tabs.theme.ts";
 
 export interface TabsItem {
   label?: string;
@@ -27,22 +21,19 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends Pick<
    * The orientation of the tabs.
    * @default "horizontal"
    */
-  orientation?: TabsThemeVariants["orientation"];
+  orientation?: "horizontal" | "vertical";
 
   /**
    * The size of the tabs.
    * @default "md"
    */
-  size?: TabsThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /**
    * Whether to render tab content panels.
    * @default true
    */
   content?: boolean;
-
-  class?: any;
-  ui?: TabsThemeSlots;
 }
 
 export interface TabsSlots<T extends TabsItem = TabsItem> {
@@ -56,7 +47,7 @@ export interface TabsSlots<T extends TabsItem = TabsItem> {
 }
 
 const modelValue = defineModel<string | number>();
-const props = withDefaults(defineProps<TabsProps<T>>(), {
+withDefaults(defineProps<TabsProps<T>>(), {
   defaultValue: "0",
 
   orientation: "horizontal",
@@ -67,13 +58,6 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
   unmountOnHide: true,
 });
 const slots = defineSlots<TabsSlots<T>>();
-
-const ui = computed(() => {
-  return TabsTheme({
-    orientation: props.orientation,
-    size: props.size,
-  });
-});
 </script>
 
 <template>
@@ -84,24 +68,14 @@ const ui = computed(() => {
     :activation-mode="activationMode"
     :unmount-on-hide="unmountOnHide"
     data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    :class="[$style.root, $style[`orientation-${orientation}`], $style[`size-${size}`]]"
   >
-    <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+    <div data-slot="wrapper" :class="$style.wrapper">
       <slot name="list-leading" />
 
-      <ScrollArea
-        :orientation="orientation"
-        :size="size"
-        type="hover"
-        data-slot="scroll"
-        :class="ui.scroll({ class: props.ui?.scroll })"
-      >
-        <Tabs.List data-slot="list" :class="ui.list({ class: props.ui?.list })">
-          <Tabs.Indicator
-            v-if="items?.length"
-            data-slot="indicator"
-            :class="ui.indicator({ class: props.ui?.indicator })"
-          />
+      <div data-slot="scroll" :class="$style.scroll">
+        <Tabs.List data-slot="list" :class="$style.list">
+          <Tabs.Indicator v-if="items?.length" data-slot="indicator" :class="$style.indicator" />
 
           <Tabs.Trigger
             v-for="(item, index) in items"
@@ -109,18 +83,18 @@ const ui = computed(() => {
             :value="item.value ?? String(index)"
             :disabled="item.disabled"
             data-slot="trigger"
-            :class="ui.trigger({ class: props.ui?.trigger })"
+            :class="$style.trigger"
           >
             <slot name="leading" :item="item" :index="index" />
 
-            <span v-if="item.label || !!slots.default" data-slot="label" :class="ui.label({ class: props.ui?.label })">
+            <span v-if="item.label || !!slots.default" data-slot="label" :class="$style.label">
               <slot :item="item" :index="index">{{ item.label }}</slot>
             </span>
 
             <slot name="trailing" :item="item" :index="index" />
           </Tabs.Trigger>
         </Tabs.List>
-      </ScrollArea>
+      </div>
 
       <slot name="list-trailing" />
     </div>
@@ -131,7 +105,7 @@ const ui = computed(() => {
         :key="index"
         :value="item.value ?? String(index)"
         data-slot="content"
-        :class="ui.content({ class: props.ui?.content })"
+        :class="$style.content"
       >
         <slot :name="(item.slot || 'content') as keyof TabsSlots" :item="item" :index="index">
           {{ item.content }}
@@ -140,3 +114,143 @@ const ui = computed(() => {
     </template>
   </Tabs.Root>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  gap: calc(var(--spacing) * 2);
+
+  &.orientation-horizontal {
+    flex-direction: column;
+  }
+}
+
+.wrapper {
+  display: inline-flex;
+}
+
+.scroll {
+  overflow: auto;
+  flex-grow: 1;
+}
+
+.list {
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-width: fit-content;
+  height: 100%;
+  min-height: fit-content;
+  padding: calc(var(--spacing) * 1);
+  border-radius: var(--radius-lg);
+
+  background-color: var(--background-color-accented);
+
+  .orientation-vertical > * > * > & {
+    flex-direction: column;
+  }
+}
+
+.indicator {
+  position: absolute;
+
+  border-radius: var(--radius-md);
+
+  background-color: var(--background-color-inverted);
+  box-shadow: var(--shadow-xs);
+
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: 200ms;
+  transition-property: translate, width, height;
+
+  .orientation-horizontal > * > * > * > & {
+    inset-block: calc(var(--spacing) * 1);
+    left: 0;
+    translate: var(--reka-tabs-indicator-position) 0;
+
+    width: var(--reka-tabs-indicator-size);
+  }
+
+  .orientation-vertical > * > * > * > & {
+    inset-inline: calc(var(--spacing) * 1);
+    top: 0;
+    translate: 0 var(--reka-tabs-indicator-position);
+
+    height: var(--reka-tabs-indicator-size);
+  }
+}
+
+.trigger {
+  cursor: pointer;
+
+  position: relative;
+
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: calc(var(--spacing) * 1.5);
+  align-items: center;
+
+  border-radius: var(--radius-md);
+
+  font-weight: 500;
+  color: var(--text-color-muted);
+
+  &:focus-visible {
+    outline: 2px solid var(--border-color-inverted);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    opacity: 75%;
+  }
+
+  &[data-state="active"] {
+    color: var(--text-color-inverted);
+  }
+
+  .orientation-vertical > * > * > * > & {
+    width: 100%;
+  }
+
+  .size-sm > * > * > * > & {
+    padding-block: calc(var(--spacing) * 1);
+    padding-inline: calc(var(--spacing) * 2);
+
+    font-size: var(--text-xs);
+  }
+
+  .size-md > * > * > * > & {
+    padding-block: calc(var(--spacing) * 1.5);
+    padding-inline: calc(var(--spacing) * 2.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .size-lg > * > * > * > & {
+    padding-block: calc(var(--spacing) * 2);
+    padding-inline: calc(var(--spacing) * 3);
+
+    font-size: var(--text-base);
+  }
+}
+
+.label {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content {
+  width: 100%;
+
+  &:focus-visible {
+    outline-style: none;
+  }
+}
+</style>

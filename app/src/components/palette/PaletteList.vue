@@ -12,7 +12,7 @@ import PaletteListItem from "./PaletteListItem.vue";
 
 interface PaletteListProps<T> extends Pick<
   ListboxProps,
-  "disabled" | "multiple" | "scroll" | "filterInput" | "selectionBehavior"
+  "disabled" | "multiple" | "filterInput" | "selectionBehavior"
 > {
   options?: T[];
   optionValue?: (option: T) => V;
@@ -102,8 +102,8 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
 </script>
 
 <template>
-  <div ref="listbox-container" class="flex min-h-0 grow flex-col">
-    <div v-if="$slots.header" class="border-b border-default p-1">
+  <div ref="listbox-container" :class="$style.root">
+    <div v-if="$slots.header" :class="$style.header">
       <slot name="header"></slot>
     </div>
 
@@ -116,19 +116,9 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
       :disabled="disabled"
       :selection-behavior="selectionBehavior"
       :filter-input="filterInput"
-      :scroll="scroll"
       :empty-message="$t('palette-empty')"
-      class="grow"
       :style="{ '--palette-cols': displaySettings.columnsNumber }"
-      :ui="{
-        root: 'overflow-hidden rounded-none ring-0',
-        filter: 'p-1',
-        scroll: 'min-h-0 flex-1',
-        content: 'min-h-full',
-        group: 'grid grid-cols-[repeat(var(--palette-cols),minmax(0,1fr))] gap-1 p-1',
-        item: 'rounded-none p-0 data-highlighted:bg-transparent',
-        empty: 'text-xs',
-      }"
+      :class="$style.listbox"
       @option-dblclick="handleOptionDoubleClick"
     >
       <template #option="{ item }">
@@ -149,8 +139,64 @@ function handleOptionDoubleClick({ originalEvent, item }: { originalEvent: Mouse
       </template>
     </Listbox>
 
-    <div v-if="$slots.footer" class="border-t border-default px-2 py-1">
+    <div v-if="$slots.footer" :class="$style.footer">
       <slot name="footer"></slot>
     </div>
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  min-height: 0;
+}
+
+.header {
+  padding: calc(var(--spacing) * 1);
+  border-bottom: 1px solid var(--border-color-default);
+}
+
+/* Outweighs the styles of `Listbox`. */
+.listbox[data-slot="root"] {
+  flex-grow: 1;
+
+  border-radius: 0;
+
+  box-shadow: none;
+
+  /* The filter input. */
+  > [data-slot="root"] {
+    padding: calc(var(--spacing) * 1);
+  }
+
+  [data-slot="group"] {
+    display: grid;
+    grid-template-columns: repeat(var(--palette-cols), minmax(0, 1fr));
+    gap: calc(var(--spacing) * 1);
+
+    padding: calc(var(--spacing) * 1);
+  }
+
+  [data-slot="group"] > [data-slot="item"] {
+    padding: 0;
+    border-radius: 0;
+
+    &[data-highlighted] {
+      background-color: transparent;
+    }
+  }
+
+  [data-slot="content"] > [data-slot="empty"] {
+    font-size: var(--text-xs);
+  }
+}
+
+.footer {
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2);
+  border-top: 1px solid var(--border-color-default);
+}
+</style>

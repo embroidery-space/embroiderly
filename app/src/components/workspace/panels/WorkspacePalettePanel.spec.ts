@@ -43,7 +43,7 @@ const WorkspacePalettePanelWrapper = defineComponent({
   inheritAttrs: false,
   template: `
     <App>
-      <Splitter direction="horizontal" class="size-full">
+      <Splitter direction="horizontal" style="width: 100%; height: 100%">
         <WorkspacePalettePanel
           v-bind="$attrs"
           collapsible

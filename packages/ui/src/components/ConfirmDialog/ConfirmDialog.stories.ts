@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect } from "storybook/test";
 
-import Button from "../Button/Button.vue";
-
 import ConfirmDialog from "./ConfirmDialog.vue";
+import ConfirmDialogDemo from "./stories/ConfirmDialogDemo.vue";
+import ConfirmDialogOpen from "./stories/ConfirmDialogOpen.vue";
 
 const meta = {
   title: "Overlay/ConfirmDialog",
@@ -24,13 +24,9 @@ export const Demo: Story = {
     description: "Do you want to save your changes before closing?",
   },
   render: (args) => ({
-    components: { ConfirmDialog, Button },
+    components: { ConfirmDialogDemo },
     setup: () => ({ args }),
-    template: `
-      <ConfirmDialog v-bind="args">
-        <Button label="Open Confirm Dialog" />
-      </ConfirmDialog>
-    `,
+    template: `<ConfirmDialogDemo v-bind="args" />`,
   }),
 };
 
@@ -38,15 +34,9 @@ export const Open: Story = {
   args: { ...Demo.args, open: true, portal: false },
   tags: ["!autodocs"],
   render: (args) => ({
-    components: { ConfirmDialog, Button },
+    components: { ConfirmDialogOpen },
     setup: () => ({ args }),
-    template: `
-      <div class="h-screen w-screen">
-        <ConfirmDialog v-bind="args">
-          <Button label="Open Confirm Dialog" />
-        </ConfirmDialog>
-      </div>
-    `,
+    template: `<ConfirmDialogOpen v-bind="args" />`,
   }),
   async play({ canvas, args }) {
     await expect(canvas.getByText(args.title!)).toBeVisible();

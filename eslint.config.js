@@ -3,8 +3,6 @@ import { fileURLToPath, URL } from "node:url";
 import vitest from "@vitest/eslint-plugin";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
-import betterTailwindcss from "eslint-plugin-better-tailwindcss";
-import { getDefaultSelectors as getDefaultBetterTailwindcssSelectors } from "eslint-plugin-better-tailwindcss/defaults";
 import noOnlyTests from "eslint-plugin-no-only-tests";
 import oxlint from "eslint-plugin-oxlint";
 import vue from "eslint-plugin-vue";
@@ -45,7 +43,6 @@ export default defineConfigWithVueTs(
       "vue/require-default-prop": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-reserved-component-names": "off",
-      "vue/no-dupe-keys": "off",
 
       "vue/require-explicit-slots": "error",
     },
@@ -79,41 +76,6 @@ export default defineConfigWithVueTs(
   {
     files: ["app/tests/e2e/**/*.ts", "docs/.screenshots/**/*.ts"],
     extends: [wdio.configs["flat/recommended"]],
-  },
-
-  // TailwindCSS classes validation.
-  {
-    files: ["app/src/**/*.vue"],
-    extends: [betterTailwindcss.configs["recommended"]],
-    settings: {
-      "better-tailwindcss": {
-        entryPoint: fileURLToPath(new URL("app/src/assets/styles/index.css", import.meta.url)),
-        selectors: [
-          ...getDefaultBetterTailwindcssSelectors(),
-          {
-            kind: "attribute",
-            match: [{ type: "objectValues" }],
-            name: "^v-bind:ui$",
-          },
-        ],
-      },
-    },
-  },
-  {
-    files: ["packages/ui/src/**/*.vue", "packages/ui/src/**/*.theme.ts"],
-    extends: [betterTailwindcss.configs["recommended"]],
-    settings: {
-      "better-tailwindcss": {
-        entryPoint: fileURLToPath(new URL("packages/ui/src/index.css", import.meta.url)),
-      },
-    },
-  },
-  // Disable consistent line wrapping for app and UI story files.
-  {
-    files: ["app/src/**/*.vue", "packages/ui/src/**/*.story.vue"],
-    rules: {
-      "better-tailwindcss/enforce-consistent-line-wrapping": "off",
-    },
   },
 
   // YAML validation.

@@ -14,9 +14,6 @@ import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
 import type { InputProps } from "../Input/Input.vue";
 
-import { SelectTheme } from "./Select.theme.ts";
-import type { SelectThemeSlots, SelectThemeVariants } from "./Select.theme.ts";
-
 export interface SelectItemObject {
   /** The type of the item. */
   type?: "separator" | "label";
@@ -58,17 +55,17 @@ export interface SelectProps<T extends SelectItem = SelectItem> {
    * The color scheme of the select.
    * @default "primary"
    */
-  color?: SelectThemeVariants["color"];
+  color?: "primary";
   /**
    * The style variant of the select.
    * @default "subtle"
    */
-  variant?: SelectThemeVariants["variant"];
+  variant?: "subtle" | "outline";
   /**
    * The size of the select.
    * @default "md"
    */
-  size?: SelectThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** Whether the select is in a loading state. */
   loading?: boolean;
@@ -86,9 +83,6 @@ export interface SelectProps<T extends SelectItem = SelectItem> {
    * @default true
    */
   portal?: boolean | string | HTMLElement;
-
-  class?: any;
-  ui?: SelectThemeSlots;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -143,17 +137,6 @@ const displayValue = computed(() => {
   return found?.label;
 });
 
-const ui = computed(() => {
-  return SelectTheme({
-    color: props.color,
-    variant: props.variant,
-    size: size.value,
-    loading: props.loading,
-    disabled: props.disabled,
-    fieldGroup: fieldGroup.value,
-  });
-});
-
 function normalizeItem(item: SelectItem): SelectItemObject {
   if (typeof item === "string" || typeof item === "number") {
     return { label: String(item), value: item };
@@ -169,7 +152,15 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     :disabled="disabled"
     :ignore-filter="!searchInput"
     :reset-search-term-on-blur="false"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    data-slot="root"
+    :class="[
+      $style.root,
+      $style[`color-${color}`],
+      $style[`variant-${variant}`],
+      $style[`size-${size}`],
+      disabled && $style.disabled,
+      fieldGroup && $style.fieldGroup,
+    ]"
     @update:open="
       (value) => {
         open = value;
@@ -184,27 +175,22 @@ function normalizeItem(item: SelectItem): SelectItemObject {
         v-bind="{ ...$attrs, ...ariaAttrs }"
         :disabled="disabled"
         data-slot="base"
-        :class="ui.base({ class: [props.ui?.base] })"
+        :class="$style.base"
       >
-        <span v-if="displayValue" data-slot="value" :class="ui.value({ class: props.ui?.value })">
+        <span v-if="displayValue" data-slot="value" :class="$style.value">
           {{ displayValue }}
         </span>
-        <span v-else data-slot="placeholder" :class="ui.placeholder({ class: props.ui?.placeholder })">
+        <span v-else data-slot="placeholder" :class="$style.placeholder">
           {{ placeholder }}
         </span>
 
         <Icon
           v-if="loading"
           :name="icons.loading"
-          data-slot="trailingIcon"
-          :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
+          data-slot="trailing-icon"
+          :class="[$style.trailingIcon, $style.loading]"
         />
-        <Icon
-          v-else
-          :name="icons.chevronDown"
-          data-slot="trailingIcon"
-          :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
-        />
+        <Icon v-else :name="icons.chevronDown" data-slot="trailing-icon" :class="$style.trailingIcon" />
       </Combobox.Trigger>
     </Combobox.Anchor>
 
@@ -214,42 +200,26 @@ function normalizeItem(item: SelectItem): SelectItemObject {
         :side-offset="4"
         :collision-padding="4"
         data-slot="content"
-        :class="ui.content({ class: props.ui?.content })"
+        :class="[$style.content, $style[`size-${size}`]]"
       >
         <Combobox.Input v-if="!!searchInput" v-model="searchValue" as-child>
-          <Input
-            v-bind="searchInputProps"
-            autofocus
-            autocomplete="off"
-            :size="size"
-            data-slot="input"
-            :class="ui.input({ class: props.ui?.input })"
-          />
+          <Input v-bind="searchInputProps" autofocus autocomplete="off" :size="size" data-slot="input" />
         </Combobox.Input>
 
-        <Combobox.Viewport data-slot="viewport" :class="ui.viewport({ class: props.ui?.viewport })">
-          <Combobox.Empty data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
+        <Combobox.Viewport data-slot="viewport" :class="$style.viewport">
+          <Combobox.Empty data-slot="empty" :class="$style.empty">
             {{ searchValue ? locale.messages.select.noMatches : locale.messages.select.noData }}
           </Combobox.Empty>
 
-          <Combobox.Group
-            v-for="(group, groupIndex) in filteredGroups"
-            :key="`group-${groupIndex}`"
-            data-slot="group"
-            :class="ui.group({ class: props.ui?.group })"
-          >
+          <Combobox.Group v-for="(group, groupIndex) in filteredGroups" :key="`group-${groupIndex}`" data-slot="group">
             <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
               <Combobox.Separator
                 v-if="item.type === 'separator'"
                 data-slot="separator"
-                :class="ui.separator({ class: [props.ui?.separator, item.class] })"
+                :class="[$style.separator, item.class]"
               />
 
-              <Combobox.Label
-                v-else-if="item.type === 'label'"
-                data-slot="label"
-                :class="ui.label({ class: [props.ui?.label, item.class] })"
-              >
+              <Combobox.Label v-else-if="item.type === 'label'" data-slot="label" :class="[$style.label, item.class]">
                 {{ item.label }}
               </Combobox.Label>
 
@@ -258,23 +228,19 @@ function normalizeItem(item: SelectItem): SelectItemObject {
                 :value="item.value!"
                 :disabled="item.disabled"
                 data-slot="item"
-                :class="ui.item({ class: [props.ui?.item, item.class] })"
+                :class="[$style.item, item.class]"
               >
                 <Icon
                   v-if="item.icon"
                   :name="item.icon"
-                  data-slot="itemLeadingIcon"
-                  :class="ui.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
+                  data-slot="item-leading-icon"
+                  :class="$style.itemLeadingIcon"
                 />
-                <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
+                <span data-slot="item-label" :class="$style.itemLabel">
                   {{ item.label }}
                 </span>
                 <Combobox.ItemIndicator>
-                  <Icon
-                    :name="icons.check"
-                    data-slot="itemIndicator"
-                    :class="ui.itemIndicator({ class: props.ui?.itemIndicator })"
-                  />
+                  <Icon :name="icons.check" data-slot="item-indicator" :class="$style.itemIndicator" />
                 </Combobox.ItemIndicator>
               </Combobox.Item>
             </template>
@@ -284,3 +250,374 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     </Combobox.Portal>
   </Combobox.Root>
 </template>
+
+<style module>
+.root {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  &.field-group:has(*:focus-visible) {
+    z-index: 1;
+  }
+}
+
+.base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  border-width: 0;
+  border-radius: var(--radius-md);
+
+  text-align: start;
+
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+
+  &:focus {
+    outline-style: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    opacity: 75%;
+  }
+
+  .variant-subtle > & {
+    background-color: var(--background-color-elevated);
+    box-shadow: inset 0 0 0 1px var(--border-color-accented);
+  }
+
+  .variant-outline > & {
+    background-color: var(--background-color-default);
+    box-shadow: inset 0 0 0 1px var(--border-color-accented);
+  }
+
+  .size-sm > & {
+    gap: calc(var(--spacing) * 1);
+
+    padding-block: calc(var(--spacing) * 1);
+    padding-inline: calc(var(--spacing) * 2);
+
+    font-size: var(--text-xs);
+  }
+
+  .size-md > & {
+    gap: calc(var(--spacing) * 1.5);
+
+    padding-block: calc(var(--spacing) * 1.5);
+    padding-inline: calc(var(--spacing) * 2.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .size-lg > & {
+    gap: calc(var(--spacing) * 2);
+
+    padding-block: calc(var(--spacing) * 2);
+    padding-inline: calc(var(--spacing) * 3);
+
+    font-size: var(--text-base);
+  }
+
+  .disabled > & {
+    cursor: not-allowed;
+
+    opacity: 75%;
+  }
+
+  .color-primary.variant-subtle > &,
+  .color-primary.variant-outline > & {
+    &:focus-visible {
+      box-shadow: inset 0 0 0 2px var(--color-primary);
+    }
+  }
+
+  .field-group:not(:last-child, :first-child) > & {
+    border-radius: 0;
+  }
+
+  .field-group:not(:only-child):first-child > & {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .field-group:not(:only-child):last-child > & {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+}
+
+.value {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  overflow: hidden;
+
+  color: var(--text-color-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trailing-icon {
+  flex-shrink: 0;
+
+  color: var(--text-color-muted);
+
+  .size-sm > * > & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .size-md > * > & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+
+  .size-lg > * > & {
+    width: calc(var(--spacing) * 6);
+    height: calc(var(--spacing) * 6);
+  }
+
+  &.loading {
+    animation: var(--animate-spin);
+  }
+}
+
+.content {
+  pointer-events: auto;
+
+  transform-origin: var(--reka-combobox-content-transform-origin);
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  min-width: var(--reka-combobox-trigger-width);
+  max-height: var(--reka-combobox-content-available-height);
+  border-radius: var(--radius-md);
+
+  background-color: var(--background-color-default);
+  box-shadow:
+    0 0 0 1px var(--border-color-default),
+    var(--shadow-lg);
+
+  &:focus {
+    outline-style: none;
+  }
+
+  &[data-state="closed"] {
+    animation: global(scale-out) 100ms ease-in;
+  }
+
+  &[data-state="open"] {
+    animation: global(scale-in) 100ms ease-out;
+  }
+
+  & > [data-slot="root"] {
+    width: 100%;
+    border-bottom: 1px solid var(--border-color-default);
+
+    background-color: var(--background-color-default);
+    outline-style: none;
+  }
+
+  &.size-sm > [data-slot="root"] {
+    padding-block: calc(var(--spacing) * 1);
+    padding-inline: calc(var(--spacing) * 2);
+
+    font-size: var(--text-xs);
+  }
+
+  &.size-md > [data-slot="root"] {
+    padding-block: calc(var(--spacing) * 1.5);
+    padding-inline: calc(var(--spacing) * 2.5);
+
+    font-size: var(--text-sm);
+  }
+
+  &.size-lg > [data-slot="root"] {
+    padding-block: calc(var(--spacing) * 2);
+    padding-inline: calc(var(--spacing) * 3);
+
+    font-size: var(--text-base);
+  }
+}
+
+.viewport {
+  padding: calc(var(--spacing) * 1);
+
+  & > :not(:last-child) {
+    border-bottom: 1px solid var(--border-color-default);
+  }
+}
+
+.empty {
+  color: var(--text-color-muted);
+  text-align: center;
+
+  .content.size-sm & {
+    padding-block: calc(var(--spacing) * 1);
+
+    font-size: var(--text-xs);
+  }
+
+  .content.size-md & {
+    padding-block: calc(var(--spacing) * 1.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .content.size-lg & {
+    padding-block: calc(var(--spacing) * 2);
+
+    font-size: var(--text-base);
+  }
+}
+
+.separator {
+  height: 1px;
+  margin-block: calc(var(--spacing) * 1);
+  margin-inline: calc(var(--spacing) * -1);
+
+  background-color: var(--border-color-default);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  font-weight: 600;
+
+  .content.size-sm & {
+    gap: calc(var(--spacing) * 1);
+
+    padding: calc(var(--spacing) * 1);
+
+    font-size: var(--text-xs);
+  }
+
+  .content.size-md & {
+    gap: calc(var(--spacing) * 1.5);
+
+    padding: calc(var(--spacing) * 1.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .content.size-lg & {
+    gap: calc(var(--spacing) * 2);
+
+    padding: calc(var(--spacing) * 2);
+
+    font-size: var(--text-sm);
+  }
+}
+
+.item {
+  cursor: pointer;
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: var(--radius-sm);
+
+  color: var(--text-color-default);
+
+  outline-style: none;
+
+  &:hover {
+    background-color: var(--background-color-elevated);
+  }
+
+  &[data-highlighted] {
+    background-color: var(--background-color-elevated);
+  }
+
+  .content.size-sm & {
+    gap: calc(var(--spacing) * 1);
+
+    padding: calc(var(--spacing) * 1);
+
+    font-size: var(--text-xs);
+  }
+
+  .content.size-md & {
+    gap: calc(var(--spacing) * 1.5);
+
+    padding: calc(var(--spacing) * 1.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .content.size-lg & {
+    gap: calc(var(--spacing) * 2);
+
+    padding: calc(var(--spacing) * 2);
+
+    font-size: var(--text-base);
+  }
+}
+
+.item-leading-icon {
+  flex-shrink: 0;
+
+  color: var(--text-color-dimmed);
+
+  .content.size-sm & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .content.size-md &,
+  .content.size-lg & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+}
+
+.item-label {
+  overflow: hidden;
+  flex: 1;
+
+  min-width: 0;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-indicator {
+  flex-shrink: 0;
+
+  margin-inline-start: auto;
+
+  color: var(--color-primary);
+
+  .content.size-sm & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .content.size-md & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .content.size-lg & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+}
+</style>

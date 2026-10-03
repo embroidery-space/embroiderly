@@ -5,6 +5,9 @@ import { computed, ref } from "vue";
 
 import Listbox from "./Listbox.vue";
 import type { ListboxItem } from "./Listbox.vue";
+import ListboxDemo from "./stories/ListboxDemo.vue";
+import ListboxSizes from "./stories/ListboxSizes.vue";
+import ListboxStates from "./stories/ListboxStates.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 const colors = ["primary", "neutral"] as const;
@@ -42,13 +45,12 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { Listbox },
+      components: { ListboxDemo },
       setup: () => ({ args, flatItems, updateArgs }),
       template: `
-        <Listbox
+        <ListboxDemo
           v-bind="args"
           :items="flatItems"
-          class="w-56"
           @update:model-value="(value) => updateArgs({ modelValue: value })"
         />
       `,
@@ -58,15 +60,15 @@ export const Demo: Story = {
 
 export const Grouped: Story = {
   render: () => ({
-    components: { Listbox },
+    components: { ListboxDemo },
     setup: () => ({ groupedItems }),
-    template: `<Listbox :items="groupedItems" class="w-56" />`,
+    template: `<ListboxDemo :items="groupedItems" />`,
   }),
 };
 
 export const Filtering: Story = {
   render: () => ({
-    components: { Listbox },
+    components: { ListboxDemo },
     setup() {
       const filterValue = ref("");
       const filteredItems = computed(() =>
@@ -78,33 +80,23 @@ export const Filtering: Story = {
       );
       return { filterValue, filteredItems };
     },
-    template: `<Listbox v-model:filter-value="filterValue" :items="filteredItems" filter-input class="w-56" />`,
+    template: `<ListboxDemo v-model:filter-value="filterValue" :items="filteredItems" filter-input />`,
   }),
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Listbox },
-    setup: () => ({ sizes, flatItems }),
-    template: `
-      <div class="flex gap-4">
-        <Listbox v-for="size in sizes" :key="size" :items="flatItems" :size="size" class="w-40" />
-      </div>
-    `,
+    components: { ListboxSizes },
+    setup: () => ({ flatItems }),
+    template: `<ListboxSizes :items="flatItems" />`,
   }),
 };
 
 export const States: Story = {
   render: () => ({
-    components: { Listbox },
+    components: { ListboxStates },
     setup: () => ({ flatItems }),
-    template: `
-      <div class="flex gap-4">
-        <Listbox :items="flatItems" class="w-40" />
-        <Listbox :items="flatItems" disabled class="w-40" />
-        <Listbox :items="[]" class="w-40" />
-      </div>
-    `,
+    template: `<ListboxStates :items="flatItems" />`,
   }),
 };
 

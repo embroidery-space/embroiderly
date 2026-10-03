@@ -360,9 +360,9 @@ useShortcuts({
 </script>
 
 <template>
-  <header class="grid grid-cols-[1fr_auto] border-b border-default">
-    <div data-tauri-drag-region class="grid h-full grid-cols-[auto_1fr_auto]">
-      <div class="p-1">
+  <header :class="$style.header">
+    <div data-tauri-drag-region :class="$style.bar">
+      <div :class="$style.menu">
         <Menubar v-if="isLargeScreen" :menus="appMenu.desktopMenubarMenus" />
         <DropdownMenu v-else :items="appMenu.mobileDropdownMenuItems">
           <ButtonIcon :icon="IconMenu" variant="ghost" color="neutral" :tooltip="$t('app-menu-open')" />
@@ -375,17 +375,11 @@ useShortcuts({
         :content="false"
         color="neutral"
         activation-mode="manual"
-        :ui="{
-          root: 'overflow-hidden pt-1',
-          wrapper: 'h-full overflow-hidden rounded-t-lg',
-          list: 'rounded-none bg-transparent p-0',
-          indicator: 'inset-0 h-full rounded-b-none shadow-none',
-          trigger: 'h-full min-w-20 rounded-b-none hover:data-[state=inactive]:bg-accented',
-        }"
+        :class="$style.tabs"
         @update:model-value="patternFileStore.switchPattern($event as string)"
       >
         <template #leading="{ item }">
-          <IconDot aria-hidden="true" class="size-3 shrink-0" :class="{ invisible: !item.dirty }" />
+          <IconDot aria-hidden="true" :class="[$style.dirty, { [$style.invisible]: !item.dirty }]" />
         </template>
 
         <template #trailing="{ item }">
@@ -393,17 +387,13 @@ useShortcuts({
             size="sm"
             variant="ghost"
             :icon="IconClose"
-            class="p-0"
-            :class="{
-              'text-inverted': patternStore.pattern.id === item.value,
-              'text-default': patternStore.pattern.id !== item.value,
-            }"
+            :class="[$style.close, patternStore.pattern.id === item.value ? $style.active : $style.inactive]"
             @click.stop="patternFileStore.closePattern(item.value as string)"
           />
         </template>
       </Tabs>
 
-      <div class="flex h-full items-center gap-2 p-1">
+      <div :class="$style.actions">
         <template v-if="!patternStore.pattern.isNil">
           <ButtonIcon
             data-testid="undo-button"
@@ -451,3 +441,97 @@ useShortcuts({
     <WindowControls v-if="isTauri" />
   </header>
 </template>
+
+<style module>
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+
+  border-bottom: 1px solid var(--border-color-default);
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+
+  height: 100%;
+}
+
+.menu {
+  padding: calc(var(--spacing) * 1);
+}
+
+.tabs {
+  overflow: hidden;
+
+  padding-top: calc(var(--spacing) * 1);
+
+  > [data-slot="wrapper"] {
+    overflow: hidden;
+
+    height: 100%;
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+  }
+
+  [data-slot="list"] {
+    padding: 0;
+    border-radius: 0;
+
+    background-color: transparent;
+  }
+
+  [data-slot="list"] > [data-slot="indicator"] {
+    inset: 0;
+
+    height: 100%;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+
+    box-shadow: none;
+  }
+
+  [data-slot="list"] > [data-slot="trigger"] {
+    min-width: calc(var(--spacing) * 20);
+    height: 100%;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+
+    &:hover[data-state="inactive"] {
+      background-color: var(--background-color-accented);
+    }
+  }
+}
+
+.dirty {
+  flex-shrink: 0;
+
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+
+  &.invisible {
+    visibility: hidden;
+  }
+}
+
+.tabs button.close[data-slot="base"] {
+  padding: 0;
+
+  &.active {
+    color: var(--text-color-inverted);
+  }
+
+  &.inactive {
+    color: var(--text-color-default);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: calc(var(--spacing) * 2);
+  align-items: center;
+
+  height: 100%;
+  padding: calc(var(--spacing) * 1);
+}
+</style>

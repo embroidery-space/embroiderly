@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
+import ToolToggleGroupDemo from "./stories/ToolToggleGroupDemo.vue";
+import ToolToggleGroupStates from "./stories/ToolToggleGroupStates.vue";
 import ToolToggleGroup from "./ToolToggleGroup.vue";
 import type { ToolToggleItem } from "./ToolToggleGroup.vue";
 
@@ -51,10 +53,10 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { ToolToggleGroup },
+      components: { ToolToggleGroupDemo },
       setup: () => ({ args, compactItems, updateArgs }),
       template: `
-        <ToolToggleGroup
+        <ToolToggleGroupDemo
           v-bind="args"
           :items="compactItems"
           @update:model-value="(value) => updateArgs({ modelValue: value })"
@@ -67,32 +69,27 @@ export const Demo: Story = {
 export const Compact: Story = {
   args: { modelValue: "solid", items: compactItems },
   render: (args) => ({
-    components: { ToolToggleGroup },
+    components: { ToolToggleGroupDemo },
     setup: () => ({ args, compactItems }),
-    template: `<ToolToggleGroup v-bind="args" :items="compactItems" />`,
+    template: `<ToolToggleGroupDemo v-bind="args" :items="compactItems" />`,
   }),
 };
 
 export const Expanded: Story = {
   args: { modelValue: "solid", items: expandedItems },
   render: (args) => ({
-    components: { ToolToggleGroup },
+    components: { ToolToggleGroupDemo },
     setup: () => ({ args, expandedItems }),
-    template: `<ToolToggleGroup v-bind="args" :items="expandedItems" orientation="vertical" />`,
+    template: `<ToolToggleGroupDemo v-bind="args" :items="expandedItems" orientation="vertical" />`,
   }),
 };
 
 export const States: Story = {
   args: { items: compactItems },
   render: () => ({
-    components: { ToolToggleGroup },
+    components: { ToolToggleGroupStates },
     setup: () => ({ compactItems }),
-    template: `
-      <div class="flex flex-col gap-2">
-        <ToolToggleGroup :items="compactItems" model-value="solid" />
-        <ToolToggleGroup :items="compactItems" model-value="solid" disabled />
-      </div>
-    `,
+    template: `<ToolToggleGroupStates :items="compactItems" />`,
   }),
 };
 

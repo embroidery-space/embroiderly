@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect } from "storybook/test";
 
-import Button from "../Button/Button.vue";
-
 import Popover from "./Popover.vue";
+import PopoverDemo from "./stories/PopoverDemo.vue";
+import PopoverOpen from "./stories/PopoverOpen.vue";
+import PopoverOutsideClick from "./stories/PopoverOutsideClick.vue";
 
 const sides = ["top", "right", "bottom", "left"] as const;
 const aligns = ["start", "center", "end"] as const;
@@ -28,34 +29,18 @@ export const Demo: Story = {
     modal: false,
   },
   render: (args) => ({
-    components: { Popover, Button },
+    components: { PopoverDemo },
     setup: () => ({ args }),
-    template: `
-      <Popover v-bind="args">
-        <Button label="Open Popover" />
-        <template #content>
-          <Placeholder class="m-4 inline-flex size-48" />
-        </template>
-      </Popover>
-    `,
+    template: `<PopoverDemo v-bind="args" />`,
   }),
 };
 
 export const Open: Story = {
   args: { ...Demo.args, open: true, portal: false },
   render: (args) => ({
-    components: { Popover, Button },
+    components: { PopoverOpen },
     setup: () => ({ args }),
-    template: `
-      <div class="min-h-64 min-w-64">
-        <Popover v-bind="args">
-          <Button label="Open Popover" />
-          <template #content>
-            <Placeholder class="m-4 inline-flex size-48" />
-          </template>
-        </Popover>
-      </div>
-    `,
+    template: `<PopoverOpen v-bind="args" />`,
   }),
 };
 
@@ -63,16 +48,9 @@ export const ClosesOnOutsideClick: Story = {
   args: { portal: false },
   tags: ["!autodocs", "!snapshot"],
   render: (args) => ({
-    components: { Popover, Button },
+    components: { PopoverOutsideClick },
     setup: () => ({ args }),
-    template: `
-      <div class="min-h-64 min-w-64">
-        <Popover v-bind="args">
-          <Button label="Open Popover" />
-          <template #content>Popover content</template>
-        </Popover>
-      </div>
-    `,
+    template: `<PopoverOutsideClick v-bind="args" />`,
   }),
   async play({ canvas, userEvent }) {
     await userEvent.click(canvas.getByRole("button"));
@@ -86,18 +64,7 @@ export const ClosesOnOutsideClick: Story = {
 export const PinnedStaysOpenOnOutsideClick: Story = {
   args: { portal: false, pinned: true },
   tags: ["!autodocs", "!snapshot"],
-  render: (args) => ({
-    components: { Popover, Button },
-    setup: () => ({ args }),
-    template: `
-      <div class="min-h-64 min-w-64">
-        <Popover v-bind="args">
-          <Button label="Open Popover" />
-          <template #content>Popover content</template>
-        </Popover>
-      </div>
-    `,
-  }),
+  render: ClosesOnOutsideClick.render,
   async play({ canvas, userEvent }) {
     await userEvent.click(canvas.getByRole("button"));
     await expect(canvas.getByText("Popover content")).toBeVisible();

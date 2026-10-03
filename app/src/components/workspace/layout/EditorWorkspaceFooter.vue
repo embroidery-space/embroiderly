@@ -13,7 +13,7 @@ const editorStateStore = useEditorStateStore();
 </script>
 
 <template>
-  <div class="flex items-center gap-2 border-t border-default px-2 py-1">
+  <div :class="$style.footer">
     <ButtonIcon
       color="neutral"
       variant="ghost"
@@ -33,7 +33,7 @@ const editorStateStore = useEditorStateStore();
       :min="1"
       :max="100"
       :disabled="disabled"
-      class="ml-auto w-full max-w-3xs"
+      :class="$style.zoom"
     />
 
     <ButtonIcon
@@ -51,3 +51,21 @@ const editorStateStore = useEditorStateStore();
     />
   </div>
 </template>
+
+<style module>
+.footer {
+  display: flex;
+  gap: calc(var(--spacing) * 2);
+  align-items: center;
+
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2);
+  border-top: 1px solid var(--border-color-default);
+}
+
+.zoom {
+  width: 100%;
+  max-width: var(--container-3xs);
+  margin-left: auto;
+}
+</style>

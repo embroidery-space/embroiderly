@@ -7,9 +7,6 @@ import { usePortal } from "../../composables/usePortal.ts";
 import Button from "../Button/Button.vue";
 import type { ButtonProps } from "../Button/Button.vue";
 
-import { ConfirmDialogTheme } from "./ConfirmDialog.theme.ts";
-import type { ConfirmDialogThemeSlots } from "./ConfirmDialog.theme.ts";
-
 export interface ConfirmDialogProps {
   /** The title displayed in the confirm dialog header. */
   title?: string;
@@ -26,9 +23,6 @@ export interface ConfirmDialogProps {
    * @default true
    */
   portal?: boolean | string | HTMLElement;
-
-  class?: any;
-  ui?: ConfirmDialogThemeSlots;
 }
 
 export interface ConfirmDialogEmits {
@@ -52,9 +46,6 @@ const portalProps = usePortal(toRef(() => props.portal));
 
 const locale = useLocale();
 
-// oxlint-disable-next-line vue/no-dupe-keys
-const ui = ConfirmDialogTheme();
-
 function close(value?: boolean) {
   emit("close", value);
   open.value = false;
@@ -68,26 +59,26 @@ function close(value?: boolean) {
     </AlertDialog.Trigger>
 
     <AlertDialog.Portal v-bind="portalProps">
-      <AlertDialog.Overlay data-slot="overlay" :class="ui.overlay({ class: props.ui?.overlay })" />
+      <AlertDialog.Overlay data-slot="overlay" :class="$style.overlay" />
 
       <AlertDialog.Content
         data-slot="content"
-        :class="ui.content({ class: [props.ui?.content, props.class] })"
+        :class="$style.content"
         @escape-key-down="close()"
         @after-enter="emit('after:enter')"
         @after-leave="emit('after:leave')"
       >
-        <header data-slot="header" :class="ui.header({ class: props.ui?.header })">
-          <AlertDialog.Title data-slot="title" :class="ui.title({ class: props.ui?.title })">
+        <header data-slot="header" :class="$style.header">
+          <AlertDialog.Title data-slot="title" :class="$style.title">
             {{ title }}
           </AlertDialog.Title>
 
-          <AlertDialog.Description data-slot="description" :class="ui.description({ class: props.ui?.description })">
+          <AlertDialog.Description data-slot="description" :class="$style.description">
             {{ description }}
           </AlertDialog.Description>
         </header>
 
-        <footer data-slot="footer" :class="ui.footer({ class: props.ui?.footer })">
+        <footer data-slot="footer" :class="$style.footer">
           <AlertDialog.Cancel as-child>
             <Button color="neutral" variant="outline" :label="locale.messages.confirmDialog.cancel" @click="close()" />
           </AlertDialog.Cancel>
@@ -116,3 +107,81 @@ function close(value?: boolean) {
     </AlertDialog.Portal>
   </AlertDialog.Root>
 </template>
+
+<style module>
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  background-color: color-mix(in oklab, var(--background-color-elevated) 75%, transparent);
+
+  &[data-state="closed"] {
+    animation: global(fade-out) 200ms ease-in;
+  }
+
+  &[data-state="open"] {
+    animation: global(fade-in) 200ms ease-out;
+  }
+}
+
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  display: flex;
+  flex-direction: column;
+
+  width: max-content;
+  min-width: var(--container-md);
+  max-width: 90%;
+  height: max-content;
+  max-height: 90%;
+  border-radius: var(--radius-lg);
+
+  background-color: var(--background-color-default);
+  box-shadow:
+    0 0 0 1px var(--border-color-default),
+    var(--shadow-lg);
+
+  &:focus {
+    outline-style: none;
+  }
+
+  &[data-state="closed"] {
+    animation: global(scale-out) 200ms ease-in;
+  }
+
+  &[data-state="open"] {
+    animation: global(scale-in) 200ms ease-out;
+  }
+}
+
+.header {
+  min-height: calc(var(--spacing) * 12);
+  padding: calc(var(--spacing) * 4);
+  padding-bottom: 0;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.description {
+  margin-top: calc(var(--spacing) * 1);
+
+  font-size: var(--text-sm);
+  color: var(--text-color-muted);
+  white-space: pre-line;
+}
+
+.footer {
+  display: flex;
+  gap: calc(var(--spacing) * 1.5);
+  align-items: center;
+  justify-content: flex-end;
+
+  padding: calc(var(--spacing) * 4);
+}
+</style>

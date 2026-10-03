@@ -103,7 +103,17 @@ onErrorCaptured((err, _component, info) => {
       plus: markRaw(IconPlus),
     }"
   >
-    <AppHeader class="h-10" />
-    <AppMain class="h-[calc(100svh-(--spacing(10)))]" />
+    <AppHeader :class="$style.header" />
+    <AppMain :class="$style.main" />
   </App>
 </template>
+
+<style module>
+.header {
+  height: calc(var(--spacing) * 10);
+}
+
+.main {
+  height: calc(100svh - var(--spacing) * 10);
+}
+</style>

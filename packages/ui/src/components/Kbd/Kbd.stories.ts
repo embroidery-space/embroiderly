@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import { parseShortcutDisplay } from "../../utils/shortcut.ts";
-
 import Kbd from "./Kbd.vue";
+import KbdDemo from "./stories/KbdDemo.vue";
+import KbdSizes from "./stories/KbdSizes.vue";
 
 const meta = {
   title: "Element/Kbd",
@@ -23,24 +23,15 @@ export const Demo: Story = {
     size: "md",
   },
   render: (args) => ({
-    components: { Kbd },
-    setup: () => ({ args, parseShortcutDisplay }),
-    template: `
-      <div class="flex items-center gap-1">
-        <Kbd v-for="(key, i) in parseShortcutDisplay(args.value)" :key="i" v-bind="args" :value="key" />
-      </div>
-    `,
+    components: { KbdDemo },
+    setup: () => ({ args }),
+    template: `<KbdDemo v-bind="args" />`,
   }),
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Kbd },
-    setup: () => ({ sizes: ["sm", "md", "lg"] }),
-    template: `
-      <div class="flex items-center gap-1">
-        <Kbd v-for="size in sizes" :key="size" :value="size.toUpperCase()" :size="size" />
-      </div>
-    `,
+    components: { KbdSizes },
+    template: `<KbdSizes />`,
   }),
 };

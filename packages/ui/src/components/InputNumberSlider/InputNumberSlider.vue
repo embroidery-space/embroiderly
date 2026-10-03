@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { computed } from "vue";
-
 import { useFormField } from "../../composables/useFormField.ts";
 import InputNumber from "../InputNumber/InputNumber.vue";
 import type { InputNumberProps } from "../InputNumber/InputNumber.vue";
 import Slider from "../Slider/Slider.vue";
 import type { SliderProps } from "../Slider/Slider.vue";
-
-import { InputNumberSliderTheme } from "./InputNumberSlider.theme.ts";
-import type { InputNumberSliderThemeSlots, InputNumberSliderThemeVariants } from "./InputNumberSlider.theme.ts";
 
 export interface InputNumberSliderProps extends Pick<
   InputNumberProps,
@@ -18,7 +13,7 @@ export interface InputNumberSliderProps extends Pick<
    * The size of the input.
    * @default "md"
    */
-  size?: InputNumberSliderThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /**
    * Whether to show the increment button on the input.
@@ -45,9 +40,6 @@ export interface InputNumberSliderProps extends Pick<
    * Additional options for the Slider component.
    */
   sliderOptions?: Omit<SliderProps, "modelValue" | "disabled" | "min" | "max" | "step" | "tooltip" | "size">;
-
-  class?: any;
-  ui?: InputNumberSliderThemeSlots;
 }
 
 const modelValue = defineModel<number>();
@@ -58,17 +50,10 @@ const props = withDefaults(defineProps<InputNumberSliderProps>(), {
 });
 
 const { id, size, groupAttrs } = useFormField(props);
-
-// oxlint-disable-next-line vue/no-dupe-keys
-const ui = computed(() =>
-  InputNumberSliderTheme({
-    size: size.value,
-  }),
-);
 </script>
 
 <template>
-  <div v-bind="groupAttrs" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div v-bind="groupAttrs" data-slot="root" :class="$style.root">
     <InputNumber
       :id="id"
       v-model="modelValue"
@@ -91,7 +76,19 @@ const ui = computed(() =>
       :max="max"
       :step="step"
       :tooltip="tooltip"
-      class="w-full"
+      :class="$style.slider"
     />
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  column-gap: calc(var(--spacing) * 2);
+  align-items: center;
+}
+
+.slider {
+  width: 100%;
+}
+</style>

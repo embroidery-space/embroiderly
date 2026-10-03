@@ -12,9 +12,9 @@ const sectionId = useId();
 </script>
 
 <template>
-  <div :aria-labelledby="sectionId" class="flex flex-col">
-    <div class="flex items-center justify-between border-b border-default px-2 py-1">
-      <span :id="sectionId" class="text-sm text-nowrap">{{ props.title }}</span>
+  <div :aria-labelledby="sectionId" :class="$style.root">
+    <div :class="$style.header">
+      <span :id="sectionId" :class="$style.title">{{ props.title }}</span>
       <Button
         square
         variant="ghost"
@@ -27,3 +27,25 @@ const sectionId = useId();
     <slot></slot>
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2);
+  border-bottom: 1px solid var(--border-color-default);
+}
+
+.title {
+  font-size: var(--text-sm);
+  text-wrap: nowrap;
+}
+</style>
