@@ -43,7 +43,6 @@ export default defineConfigWithVueTs(
       "vue/require-default-prop": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-reserved-component-names": "off",
-      "vue/no-dupe-keys": "off",
 
       "vue/require-explicit-slots": "error",
     },
