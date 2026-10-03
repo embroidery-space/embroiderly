@@ -165,7 +165,7 @@ onUnmounted(() => service.destroy());
 </script>
 
 <template>
-  <Dialog :title="$t('image-import')" :class="$style.dialog">
+  <Dialog fullscreen :title="$t('image-import')" :class="$style.dialog">
     <template #body>
       <div :class="[$style.layout, { [$style.portrait]: isMobilePortrait }]">
         <div :class="$style.options">
@@ -255,13 +255,8 @@ onUnmounted(() => service.destroy());
 </template>
 
 <style module>
-.dialog[data-slot="content"] {
-  width: 100%;
-  height: 100%;
-
-  > [data-slot="body"] {
-    padding: 0;
-  }
+.dialog[data-slot="content"] > [data-slot="body"] {
+  padding: 0;
 }
 
 .layout {
