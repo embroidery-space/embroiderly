@@ -509,13 +509,13 @@ importers:
   app:
     dependencies:
       '@embroiderly/image-import':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../packages/image-import
       '@embroiderly/pdf-export':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../packages/pdf-export
       '@embroiderly/ui':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../packages/ui
       '@fluent/bundle':
         specifier: 'catalog:'
