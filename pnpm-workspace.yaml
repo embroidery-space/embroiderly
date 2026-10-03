@@ -49,7 +49,7 @@ catalog:
   "@zorsh/zorsh": 0.5.1
 
   # Telemetry
-  "@sentry/core": 10.75.2
+  "@sentry/core": 11.1.0
   "@sentry/vue": 10.75.2
   "posthog-js": 1.434.9
 
