@@ -1,0 +1,1 @@
+export { getGitInfo } from "./getGitInfo";

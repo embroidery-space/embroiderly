@@ -1,34 +1,20 @@
 /// <reference types="vitest/config" />
 
-import { execSync } from "node:child_process";
-import fs from "node:fs";
-import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 
-import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { webdriverio } from "@vitest/browser-webdriverio";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
-import type { Plugin } from "vite";
 import { compression } from "vite-plugin-compression2";
 import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 import pkg from "./package.json" with { type: "json" };
 import * as commands from "./tests/components/vitest.commands.js";
-
-const git = (() => {
-  try {
-    const commit = execSync("git rev-parse --short HEAD").toString().trim();
-    const branch = execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
-    const date = execSync("git log -1 --format=%cI").toString().trim();
-    return { commit, branch, date };
-  } catch {
-    return { commit: "unknown", branch: "unknown", date: new Date().toISOString() };
-  }
-})();
+import { cssModulesOptimizer, wasmCleanup } from "./vite/plugins/";
+import { getGitInfo } from "./vite/utils/";
 
 const isCI = !!process.env.CI;
 const isTauri = !!process.env.TAURI_ENV_TARGET_TRIPLE;
@@ -39,28 +25,7 @@ const isPwaEnabled = process.env.EMBROIDERLY_PWA !== "false";
 const isDev = process.env.NODE_ENV === "development";
 const isTest = process.env.NODE_ENV === "test";
 
-const wasmCleanup: Plugin = {
-  name: "wasm-cleanup",
-  apply: "build",
-  closeBundle: {
-    order: "post", // Forces it to run after VitePWA's `closeBundle` hook.
-    sequential: true,
-    handler() {
-      function clean(dir: string) {
-        if (!fs.existsSync(dir)) return;
-        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-          const res = path.resolve(dir, entry.name);
-          if (entry.isDirectory()) clean(res);
-          else if (entry.name.endsWith(".wasm")) {
-            if (fs.existsSync(`${res}.gz`) && fs.existsSync(`${res}.br`)) fs.unlinkSync(res);
-            else throw new Error(`Compressed WASM alternative not found: ${res}`);
-          }
-        }
-      }
-      clean(path.resolve("dist"));
-    },
-  },
-};
+const git = getGitInfo();
 
 export default defineConfig({
   plugins: [
@@ -72,7 +37,7 @@ export default defineConfig({
         window: FileSystemIconLoader("./src/assets/icons/window"),
       },
     }),
-    tailwindcss(),
+    cssModulesOptimizer(),
     !isTauri &&
       VitePWA({
         disable: !isPwaEnabled,
@@ -97,10 +62,11 @@ export default defineConfig({
         },
       }),
     !isTauri && compression({ include: /\.(wasm)$/u }),
-    !isTauri && wasmCleanup,
+    !isTauri && wasmCleanup(),
     !isTest && vueDevTools(),
   ],
   clearScreen: false,
+  css: { modules: { localsConvention: "camelCase" } },
   optimizeDeps: { exclude: ["@embroiderly/wasm", "@embroiderly/pdf-export", "@embroiderly/image-import"] },
   worker: { format: "es" },
   server: { port: 1420, strictPort: true, watch: { ignored: ["src-tauri/**", "src-wasm/**"] } },

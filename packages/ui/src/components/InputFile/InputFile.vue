@@ -7,9 +7,6 @@ import Button from "../Button/Button.vue";
 import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
 import Input from "../Input/Input.vue";
 
-import { InputFileTheme } from "./InputFile.theme.ts";
-import type { InputFileThemeVariants } from "./InputFile.theme.ts";
-
 export interface InputFileProps<M extends boolean = false> {
   /**
    * A custom label for the file input.
@@ -21,7 +18,7 @@ export interface InputFileProps<M extends boolean = false> {
    * The size of the file input.
    * @default "md"
    */
-  size?: InputFileThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** Specifies the allowed file types for the input. */
   accept?: string;
@@ -31,9 +28,6 @@ export interface InputFileProps<M extends boolean = false> {
 
   /** Whether the file input is disabled. */
   disabled?: boolean;
-
-  class?: any;
-  ui?: { base?: string };
 }
 
 const modelValue = defineModel<M extends true ? File[] : File>();
@@ -74,7 +68,7 @@ const displayValue = computed(() => {
 </script>
 
 <template>
-  <FormFieldGroup :size="size" :class="InputFileTheme({ size, class: [props.ui?.base, props.class] })">
+  <FormFieldGroup :size="size" :class="$style.root">
     <Button :label="locale.messages.filePicker.chooseFile" :size="size" :disabled="disabled" @click="openPicker" />
 
     <!-- Keep this hidden input between other elements, so that they receive correct border radius. -->
@@ -84,11 +78,16 @@ const displayValue = computed(() => {
       :accept="accept"
       :multiple="multiple"
       :disabled="disabled"
-      class="hidden"
+      hidden
       @change="onChange"
     />
 
-    <!-- eslint-disable-next-line better-tailwindcss/enforce-consistent-line-wrapping -->
-    <Input readonly :model-value="label ?? displayValue" :size="size" :disabled="disabled" class="w-full" />
+    <Input readonly :model-value="label ?? displayValue" :size="size" :disabled="disabled" />
   </FormFieldGroup>
 </template>
+
+<style module>
+.root > [data-slot="root"] {
+  width: 100%;
+}
+</style>

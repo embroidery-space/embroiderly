@@ -83,8 +83,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="overflow-hidden">
-    <Splitter ref="splitter" direction="horizontal" class="size-full">
+  <main :class="$style.main">
+    <Splitter ref="splitter" direction="horizontal" :class="$style.splitter">
       <WorkspacePalettePanel
         :aria-label="$t('palette-panel')"
         collapsible
@@ -96,19 +96,15 @@ onMounted(async () => {
         @resize="editorStateStore.palettePanelSize = round($event, 2)"
       />
 
-      <SplitterPanel class="grid min-h-0 min-w-0 grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto]">
-        <EditorWorkspaceToolbar
-          :disabled="patternStore.pattern.isNil"
-          class="border-r border-default p-1"
-          data-tour="toolbar"
-        />
+      <SplitterPanel :class="$style.workspace">
+        <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" data-tour="toolbar" :class="$style.toolbar" />
 
         <BlockUI ref="drop-zone" :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone">
-          <WelcomeScreen v-if="patternStore.pattern.isNil" class="size-full" />
-          <PatternWorkspace v-else v-bind="settingsStore.canvas" data-tour="canvas" class="size-full" />
+          <WelcomeScreen v-if="patternStore.pattern.isNil" :class="$style.content" />
+          <PatternWorkspace v-else v-bind="settingsStore.canvas" data-tour="canvas" :class="$style.content" />
         </BlockUI>
 
-        <EditorWorkspaceFooter :disabled="patternStore.pattern.isNil" class="col-span-2" />
+        <EditorWorkspaceFooter :disabled="patternStore.pattern.isNil" :class="$style.footer" />
       </SplitterPanel>
 
       <WorkspaceCanvasPanel
@@ -125,3 +121,37 @@ onMounted(async () => {
     </Splitter>
   </main>
 </template>
+
+<style module>
+.main {
+  overflow: hidden;
+}
+
+.splitter {
+  width: 100%;
+  height: 100%;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+
+  min-width: 0;
+  min-height: 0;
+}
+
+.toolbar {
+  padding: calc(var(--spacing) * 1);
+  border-right: 1px solid var(--border-color-default);
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  grid-column: span 2 / span 2;
+}
+</style>

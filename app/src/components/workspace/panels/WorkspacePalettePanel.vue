@@ -348,8 +348,7 @@ async function updatePaletteDisplaySettings() {
     ref="panel"
     v-bind="splitterPanelProps"
     tabindex="-1"
-    class="flex h-full outline-none"
-    :class="{ 'border-2 border-primary': editorStateStore.paletteMode === PaletteMode.Editing }"
+    :class="[$style.panel, { [$style.editing]: editorStateStore.paletteMode === PaletteMode.Editing }]"
     :style="{ overflow: collapsed ? undefined : 'visible clip' }"
     @keydown.escape="editorStateStore.paletteMode = PaletteMode.Regular"
   >
@@ -369,22 +368,21 @@ async function updatePaletteDisplaySettings() {
         :display-settings="effectiveDisplaySettings"
         :disabled="disabled"
         :draggable="editorStateStore.paletteMode === PaletteMode.Editing"
-        :scroll="{ type: 'hover', size: 'sm' }"
         selection-behavior="replace"
-        class="grow"
+        :class="$style.list"
         @reorder="({ oldPosition, newPosition }) => patternStore.reorderPaletteItems(oldPosition, newPosition)"
       >
         <template #header>
           <div
             v-if="editorStateStore.paletteMode === PaletteMode.Editing"
-            class="flex gap-x-1"
+            :class="$style.header"
             @contextmenu.stop.prevent
           >
             <Button
               data-tour="palette-save"
               :icon="IconCheck"
               :label="$t('palette-save')"
-              class="grow justify-center text-sm"
+              :class="$style.save"
               @click="
                 () => {
                   editorStateStore.paletteMode = PaletteMode.Regular;
@@ -395,13 +393,8 @@ async function updatePaletteDisplaySettings() {
               <Button :icon="IconMenu" :aria-label="$t('palette-panel-menu')" />
             </DropdownMenu>
           </div>
-          <div
-            v-else
-            class="flex items-center"
-            :class="collapsed ? 'justify-center' : 'justify-between'"
-            @contextmenu.stop.prevent
-          >
-            <span v-show="!collapsed" class="text-sm text-nowrap">
+          <div v-else :class="[$style.info, { [$style.collapsed]: collapsed }]" @contextmenu.stop.prevent>
+            <span v-show="!collapsed" :class="$style.size">
               {{ $t("palette-size", { size: patternStore.pattern.palette.length ?? 0 }) }}
             </span>
 
@@ -413,7 +406,7 @@ async function updatePaletteDisplaySettings() {
               :icon="IconPalette"
               :tooltip="$t('palette-edit')"
               :delay-duration="200"
-              :ui="{ leadingIcon: paletteIsEmpty && !disabled ? 'animate-rainbow-shine' : undefined }"
+              :class="{ [$style.rainbow]: paletteIsEmpty && !disabled }"
               @click="
                 () => {
                   editorStateStore.paletteMode =
@@ -429,21 +422,18 @@ async function updatePaletteDisplaySettings() {
             :palette-item="paletteItem"
             :selected="selected"
             :display-settings="displaySettings"
-            :class="{ 'justify-center': collapsed }"
+            :class="{ [$style.centered]: collapsed }"
           >
             <template v-if="collapsed || (!displaySettings.colorOnly && displaySettings.showStitchSymbols)">
               <span
                 v-if="paletteItem.symbol"
-                class="inline-flex size-4 shrink-0 items-center justify-center"
-                :class="{
-                  'rounded-sm bg-white text-black': displaySettings.stitchSymbolsOnContrastBackground,
-                }"
+                :class="[$style.symbol, { [$style.contrast]: displaySettings.stitchSymbolsOnContrastBackground }]"
                 :style="{ fontFamily: paletteItem.symbol.font }"
               >
                 {{ paletteItem.symbol.char }}
               </span>
               <!-- If the palete item doesn't have a stitch symbol, render an empty `span`, so that the title is properly aligned with those with symbols. -->
-              <span v-else class="size-4 shrink-0"></span>
+              <span v-else :class="$style.symbol"></span>
             </template>
           </PaletteListItem>
         </template>
@@ -453,7 +443,7 @@ async function updatePaletteDisplaySettings() {
     <PaletteDisplaySettings
       v-if="sectionVisibility.paletteDisplaySettings"
       v-model:settings="paletteDisplaySettings"
-      class="border-l border-default"
+      :class="$style.settings"
       @close="sectionVisibility.paletteDisplaySettings = false"
     />
 
@@ -461,7 +451,7 @@ async function updatePaletteDisplaySettings() {
       v-if="patternStore.pattern.palette && sectionVisibility.paletteCatalog"
       data-tour="add-color"
       :palette="patternStore.pattern.palette.items"
-      class="min-w-max border-l border-default"
+      :class="$style.section"
       @close="sectionVisibility.paletteCatalog = false"
       @add-palette-item="handleAddPaletteItem"
       @remove-palette-item="handleRemovePaletteItem"
@@ -477,10 +467,90 @@ async function updatePaletteDisplaySettings() {
             fontFamily: pi.symbol!.font,
           }))
       "
-      class="min-w-max border-l border-default"
+      :class="$style.section"
       @close="sectionVisibility.stitchSymbols = false"
       @set-symbol="handleSetSymbol"
       @unset-symbol="handleUnsetSymbol"
     />
   </SplitterPanel>
 </template>
+
+<style module>
+.panel {
+  display: flex;
+
+  height: 100%;
+
+  outline-style: none;
+
+  &.editing {
+    border: 2px solid var(--color-primary);
+  }
+}
+
+.list {
+  flex-grow: 1;
+}
+
+.header {
+  display: flex;
+  column-gap: calc(var(--spacing) * 1);
+}
+
+button.save[data-slot="base"] {
+  flex-grow: 1;
+  justify-content: center;
+
+  font-size: var(--text-sm);
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &.collapsed {
+    justify-content: center;
+  }
+}
+
+.size {
+  font-size: var(--text-sm);
+  text-wrap: nowrap;
+}
+
+.rainbow > [data-slot="leading-icon"] {
+  animation: var(--animate-rainbow-shine);
+}
+
+.centered {
+  justify-content: center;
+}
+
+.symbol {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+
+  &.contrast {
+    border-radius: var(--radius-sm);
+
+    color: var(--color-black);
+
+    background-color: var(--color-white);
+  }
+}
+
+.settings {
+  border-left: 1px solid var(--border-color-default);
+}
+
+.section {
+  min-width: max-content;
+  border-left: 1px solid var(--border-color-default);
+}
+</style>

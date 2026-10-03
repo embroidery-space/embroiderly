@@ -8,11 +8,6 @@ import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 import Icon from "../Icon/Icon.vue";
-import ScrollArea from "../ScrollArea/ScrollArea.vue";
-import type { ScrollAreaProps } from "../ScrollArea/ScrollArea.vue";
-
-import { TreeTheme } from "./Tree.theme.ts";
-import type { TreeThemeSlots, TreeThemeVariants } from "./Tree.theme.ts";
 
 export interface TreeItem {
   /** Display text. */
@@ -60,19 +55,16 @@ export interface TreeProps<T extends TreeItem = TreeItem> extends Pick<
    * The size of the tree.
    * @default "md"
    */
-  size?: TreeThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /**
-   * When provided, wraps the tree in a scroll area.
-   * Pass `true` to use defaults, or an object to configure the scroll area.
+   * Whether the tree scrolls vertically when it overflows its container.
+   * @default false
    */
-  scroll?: boolean | Pick<ScrollAreaProps, "type" | "size" | "ui">;
+  scroll?: boolean;
 
   /** Called when any item is selected (tree-level). */
   onSelect?: (e: TreeItemSelectEvent<T>) => void;
-
-  class?: any;
-  ui?: TreeThemeSlots;
 }
 
 export interface TreeSlots<T extends TreeItem = TreeItem> {
@@ -93,17 +85,10 @@ const props = withDefaults(defineProps<TreeProps<T>>(), {
 });
 defineSlots<TreeSlots<T>>();
 
-const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
-  if (!props.scroll) return null;
-  return typeof props.scroll === "boolean" ? {} : props.scroll;
-});
-
 const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item: T; index: number; level: number }>();
 const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items: T[]; level: number }>();
 
 const { icons } = useComponentIcons();
-
-const ui = computed(() => TreeTheme({ size: props.size }));
 
 const defaultExpanded = computed<string[]>(() => {
   const keys = new Set<string>(props.defaultExpanded ?? []);
@@ -190,7 +175,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
         :aria-selected="isSelected || undefined"
         :aria-disabled="isDisabled || undefined"
         :data-ancestor-selected="selectedAncestors.has(item.value ?? item.label) || undefined"
-        :class="ui.item({ class: props.ui?.item })"
+        :class="$style.item"
       >
         <slot
           :name="(item.slot || 'item') as keyof TreeSlots"
@@ -214,15 +199,10 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
             :handle-select="handleSelect"
             :handle-toggle="handleToggle"
           >
-            <Icon
-              v-if="item.icon"
-              :name="item.icon"
-              data-slot="itemLeadingIcon"
-              :class="ui.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
-            />
+            <Icon v-if="item.icon" :name="item.icon" data-slot="item-leading-icon" :class="$style.itemLeadingIcon" />
           </slot>
 
-          <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
+          <span data-slot="item-label" :class="$style.itemLabel">
             <slot
               name="item-label"
               :item="item"
@@ -247,8 +227,8 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
             :icon="icons.chevronDown"
             :disabled="isDisabled"
             tabindex="-1"
-            data-slot="itemChevron"
-            :class="ui.itemChevron({ class: [props.ui?.itemChevron, isExpanded && 'rotate-180'] })"
+            data-slot="item-chevron"
+            :class="[$style.itemChevron, { [$style.expanded]: isExpanded }]"
             @click.stop="handleToggle()"
           />
 
@@ -266,7 +246,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
         </slot>
       </div>
 
-      <ul v-if="isExpanded && item.children?.length" data-slot="list" :class="ui.list({ class: props.ui?.list })">
+      <ul v-if="isExpanded && item.children?.length" data-slot="list" :class="$style.list">
         <ReuseTreeTemplate :items="item.children as T[]" :level="level + 1" />
       </ul>
     </Tree.Item>
@@ -284,27 +264,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
     />
   </DefineTreeTemplate>
 
-  <ScrollArea v-if="scrollProps" v-bind="scrollProps" orientation="vertical">
-    <Tree.Root
-      v-bind="$attrs"
-      v-model="modelValue"
-      v-model:expanded="expanded"
-      :items="items"
-      :default-value="defaultValue"
-      :default-expanded="defaultExpanded"
-      :get-key="(item) => item.value ?? item.label"
-      :disabled="disabled"
-      :multiple="false"
-      :selection-behavior="props.selectionBehavior"
-      data-slot="root"
-      :class="ui.root({ class: [props.ui?.root, props.class] })"
-    >
-      <ReuseTreeTemplate :items="items ?? []" :level="1" />
-    </Tree.Root>
-  </ScrollArea>
-
   <Tree.Root
-    v-else
     v-bind="$attrs"
     v-model="modelValue"
     v-model:expanded="expanded"
@@ -316,8 +276,174 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
     :multiple="false"
     :selection-behavior="props.selectionBehavior"
     data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    :class="[$style.root, $style[`size-${size}`], { [$style.scroll]: scroll }]"
   >
     <ReuseTreeTemplate :items="items ?? []" :level="1" />
   </Tree.Root>
 </template>
+
+<style module>
+.item {
+  cursor: pointer;
+
+  display: flex;
+  gap: calc(var(--spacing) * 1.5);
+  align-items: center;
+
+  border-radius: var(--radius-md);
+
+  color: var(--text-color-default);
+
+  .size-sm & {
+    padding-block: calc(var(--spacing) * 1);
+    padding-inline: calc(var(--spacing) * 2);
+
+    font-size: var(--text-xs);
+  }
+
+  .size-md & {
+    padding-block: calc(var(--spacing) * 1.5);
+    padding-inline: calc(var(--spacing) * 2.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .size-lg & {
+    padding-block: calc(var(--spacing) * 2);
+    padding-inline: calc(var(--spacing) * 3);
+
+    font-size: var(--text-base);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--border-color-inverted);
+  }
+
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+
+    opacity: 75%;
+  }
+
+  &[aria-selected="true"] {
+    background-color: var(--background-color-elevated);
+  }
+
+  &[data-ancestor-selected] {
+    background-color: var(--background-color-elevated);
+  }
+
+  &:not([aria-disabled="true"]):hover {
+    background-color: var(--background-color-elevated);
+  }
+}
+
+.item-leading-icon {
+  flex-shrink: 0;
+
+  color: var(--text-color-muted);
+
+  .size-sm & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .size-md & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .size-lg & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+}
+
+.item-label {
+  overflow: hidden;
+  flex: 1;
+
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-chevron[data-slot="item-chevron"] {
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: 200ms;
+  transition-property: transform, translate, scale, rotate;
+
+  &.expanded {
+    rotate: 180deg;
+  }
+
+  .size-sm & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .size-md & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .size-lg & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+}
+
+.list {
+  position: relative;
+
+  margin-top: calc(var(--spacing) * 0.5);
+  padding-inline-start: var(--tree-indent);
+
+  list-style-type: none;
+
+  &::before {
+    pointer-events: none;
+    content: "";
+
+    position: absolute;
+    inset-block: 0;
+    left: calc(var(--tree-indent) * 0.75);
+
+    width: 1px;
+
+    background-color: var(--border-color-default);
+  }
+
+  & > :not(:last-child) {
+    margin-block-end: calc(var(--spacing) * 0.5);
+  }
+}
+
+.root {
+  user-select: none;
+
+  width: 100%;
+
+  list-style-type: none;
+
+  &.size-sm {
+    --tree-indent: 1rem;
+  }
+
+  &.size-md {
+    --tree-indent: 1.25rem;
+  }
+
+  &.size-lg {
+    --tree-indent: 1.5rem;
+  }
+
+  &.scroll {
+    overflow-y: auto;
+  }
+
+  & > :not(:last-child) {
+    margin-block-end: calc(var(--spacing) * 0.5);
+  }
+}
+</style>

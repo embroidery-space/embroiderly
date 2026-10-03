@@ -4,9 +4,9 @@ import { expect, fn } from "storybook/test";
 
 import { renderWithLocalModel } from "~storybook-utils/render-with-local-model";
 
-import FormField from "../FormField/FormField.vue";
-
 import InputNumberSlider from "./InputNumberSlider.vue";
+import InputNumberSliderDemo from "./stories/InputNumberSliderDemo.vue";
+import InputNumberSliderFilled from "./stories/InputNumberSliderFilled.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -45,17 +45,9 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { FormField, InputNumberSlider },
+      components: { InputNumberSliderDemo },
       setup: () => ({ args, updateArgs }),
-      template: `
-        <FormField>
-          <InputNumberSlider
-            v-bind="args"
-            class="w-96"
-            @update:model-value="(value) => updateArgs({ modelValue: value })"
-          />
-        </FormField>
-      `,
+      template: `<InputNumberSliderDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
 };
@@ -63,7 +55,7 @@ export const Demo: Story = {
 export const Filled: Story = {
   args: { modelValue: 50, min: 0, max: 100, "onUpdate:modelValue": fn() },
   tags: ["!autodocs", "!snapshot"],
-  render: renderWithLocalModel(InputNumberSlider, "InputNumberSlider", { attrs: 'class="w-96"' }),
+  render: renderWithLocalModel(InputNumberSliderFilled, "InputNumberSliderFilled"),
   async play({ canvas, userEvent, args }) {
     const input = canvas.getByRole("spinbutton");
 
@@ -78,7 +70,7 @@ export const Filled: Story = {
 export const Changed: Story = {
   args: { modelValue: 50, min: 0, max: 100, "onUpdate:modelValue": fn() },
   tags: ["!autodocs", "!snapshot"],
-  render: renderWithLocalModel(InputNumberSlider, "InputNumberSlider", { attrs: 'class="w-96"' }),
+  render: Filled.render,
   async play({ canvas, userEvent, args }) {
     canvas.getByRole("slider").focus();
     await userEvent.keyboard("{ArrowRight}");

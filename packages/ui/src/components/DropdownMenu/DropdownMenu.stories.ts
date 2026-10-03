@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect, fn } from "storybook/test";
 import { computed, ref } from "vue";
 
-import Button from "../Button/Button.vue";
-
 import DropdownMenu from "./DropdownMenu.vue";
 import type { DropdownMenuItem } from "./DropdownMenu.vue";
+import DropdownMenuDemo from "./stories/DropdownMenuDemo.vue";
+import DropdownMenuOpen from "./stories/DropdownMenuOpen.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -85,13 +85,9 @@ export const Demo: Story = {
     const showRulers = ref(false);
     const items = computed(() => demoItems(showGrid, showRulers));
     return {
-      components: { DropdownMenu: DropdownMenu as any, Button },
+      components: { DropdownMenuDemo },
       setup: () => ({ args, items }),
-      template: `
-        <DropdownMenu v-bind="args" :items="items">
-          <Button icon="lucide:menu" label="Open menu" />
-        </DropdownMenu>
-      `,
+      template: `<DropdownMenuDemo v-bind="args" :items="items" />`,
     };
   },
 };
@@ -103,15 +99,9 @@ export const Open: Story = {
     const showRulers = ref(false);
     const items = computed(() => demoItems(showGrid, showRulers));
     return {
-      components: { DropdownMenu: DropdownMenu as any, Button },
+      components: { DropdownMenuOpen },
       setup: () => ({ args, items }),
-      template: `
-        <div class="size-96">
-          <DropdownMenu v-bind="args" :items="items">
-            <Button icon="lucide:menu" label="Open menu" />
-          </DropdownMenu>
-        </div>
-      `,
+      template: `<DropdownMenuOpen v-bind="args" :items="items" />`,
     };
   },
   async play({ canvas }) {
@@ -135,13 +125,9 @@ export const ShortcutTriggered: Story = {
       ],
     ];
     return {
-      components: { DropdownMenu: DropdownMenu as any, Button },
+      components: { DropdownMenuDemo },
       setup: () => ({ args, items }),
-      template: `
-        <DropdownMenu v-bind="args" :items="items" :portal="false">
-          <Button icon="lucide:menu" label="Open menu" />
-        </DropdownMenu>
-      `,
+      template: `<DropdownMenuDemo v-bind="args" :items="items" :portal="false" />`,
     };
   },
   async play({ userEvent, args }) {

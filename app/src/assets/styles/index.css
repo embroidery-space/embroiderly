@@ -1,46 +1,42 @@
-@import "tailwindcss";
 @import "@embroiderly/ui";
 
+@import "./keyframes.css";
 @import "./tour.css";
 
 @font-face {
-  src: url("/fonts/FixelVariable.ttf") format("truetype");
-  font-family: "Fixel";
+  font-family: Fixel;
   font-weight: 100 900;
   font-style: normal;
+
   font-display: swap;
+  src: url("/fonts/FixelVariable.ttf") format("truetype");
 }
 
 @font-face {
-  src: url("/fonts/FixelVariableItalic.ttf") format("truetype");
-  font-family: "Fixel";
+  font-family: Fixel;
   font-weight: 100 900;
   font-style: italic;
+
   font-display: swap;
+  src: url("/fonts/FixelVariableItalic.ttf") format("truetype");
 }
 
-@theme {
+:root {
   --font-sans: "Fixel", ui-sans-serif, system-ui, sans-serif;
-  --animate-rainbow-shine: rainbow-shine 2.4s linear infinite;
 }
 
-@keyframes rainbow-shine {
-  0% {
-    color: var(--ui-color-primary-500);
-  }
-  20% {
-    color: var(--ui-color-error-500);
-  }
-  40% {
-    color: var(--ui-color-warning-500);
-  }
-  60% {
-    color: var(--ui-color-success-500);
-  }
-  80% {
-    color: var(--ui-color-info-500);
-  }
-  100% {
-    color: var(--ui-color-primary-500);
-  }
+body {
+  user-select: none;
+
+  overflow: hidden;
+  overscroll-behavior: none;
+
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
 }

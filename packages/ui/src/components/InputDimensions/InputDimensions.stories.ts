@@ -3,6 +3,8 @@ import { useArgs } from "storybook/preview-api";
 import { expect } from "storybook/test";
 
 import InputDimensions from "./InputDimensions.vue";
+import InputDimensionsDemo from "./stories/InputDimensionsDemo.vue";
+import InputDimensionsSizes from "./stories/InputDimensionsSizes.vue";
 
 const sizes = ["sm", "md", "lg"] as const;
 const orientations = ["horizontal", "vertical"] as const;
@@ -38,10 +40,10 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { InputDimensions },
+      components: { InputDimensionsDemo },
       setup: () => ({ args, updateArgs }),
       template: `
-        <InputDimensions
+        <InputDimensionsDemo
           v-bind="args"
           @update:width="(value) => updateArgs({ width: value })"
           @update:height="(value) => updateArgs({ height: value })"
@@ -54,20 +56,9 @@ export const Demo: Story = {
 export const Sizes: Story = {
   args: { width: 800, height: 600 },
   render: (args) => ({
-    components: { InputDimensions },
-    setup: () => ({ args, sizes }),
-    template: `
-      <div class="flex flex-col gap-4">
-        <InputDimensions
-          v-for="size in sizes"
-          :key="size"
-          v-bind="args"
-          :size="size"
-          :width-field-options="{ label: 'Width' }"
-          :height-field-options="{ label: 'Height' }"
-        />
-      </div>
-    `,
+    components: { InputDimensionsSizes },
+    setup: () => ({ args }),
+    template: `<InputDimensionsSizes v-bind="args" />`,
   }),
 };
 

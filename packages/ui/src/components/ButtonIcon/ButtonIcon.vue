@@ -41,9 +41,6 @@ const buttonProps = computed<Partial<ButtonProps>>(() => ({
   loadingIcon: props.loadingIcon,
 
   onClick: props.onClick,
-
-  class: props.class,
-  ui: props.ui,
 }));
 const tooltipProps = computed<TooltipProps>(() => ({
   ...props.tooltipOptions,

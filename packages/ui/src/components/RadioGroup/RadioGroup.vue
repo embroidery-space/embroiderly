@@ -5,9 +5,6 @@ import { computed } from "vue";
 
 import { useFormField } from "../../composables/useFormField.ts";
 
-import { RadioGroupTheme } from "./RagioGroup.theme.ts";
-import type { RadioGroupThemeSlots, RadioGroupThemeVariants } from "./RagioGroup.theme.ts";
-
 export type RadioGroupValue = AcceptableValue;
 
 export type RadioGroupItem =
@@ -28,24 +25,21 @@ export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> {
    * The color of the radio buttons.
    * @default "primary"
    */
-  color?: RadioGroupThemeVariants["color"];
+  color?: "primary";
   /**
    * The size of the radio buttons.
    * @default "md"
    */
-  size?: RadioGroupThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /**
    * The orientation of the radio group.
    * @default "vertical"
    */
-  orientation?: RadioGroupThemeVariants["orientation"];
+  orientation?: "vertical" | "horizontal";
 
   /** Whether the radio group is disabled. */
   disabled?: boolean;
-
-  class?: any;
-  ui?: RadioGroupThemeSlots;
 }
 
 const modelValue = defineModel<RadioGroupValue>();
@@ -85,17 +79,6 @@ const items = computed(() => {
     };
   });
 });
-
-const ui = computed(() => {
-  return RadioGroupTheme({
-    color: props.color,
-    size: size.value,
-
-    orientation: props.orientation,
-
-    disabled: props.disabled,
-  });
-});
 </script>
 
 <template>
@@ -106,23 +89,175 @@ const ui = computed(() => {
     :disabled="disabled"
     :orientation="orientation"
     data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    :class="[
+      $style.root,
+      $style[`color-${color}`],
+      $style[`size-${size}`],
+      $style[`orientation-${orientation}`],
+      { [$style.disabled]: disabled },
+    ]"
   >
-    <div v-for="item in items" :key="item.id" data-slot="item" :class="ui.item({ class: props.ui?.item })">
-      <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
-        <RadioGroup.Item :id="item.id" :value="item.value" data-slot="base" :class="ui.base({ class: props.ui?.base })">
-          <RadioGroup.Indicator data-slot="indicator" :class="ui.indicator({ class: props.ui?.indicator })" />
+    <div v-for="item in items" :key="item.id" data-slot="item" :class="$style.item">
+      <div data-slot="container" :class="$style.container">
+        <RadioGroup.Item :id="item.id" :value="item.value" data-slot="base" :class="$style.base">
+          <RadioGroup.Indicator data-slot="indicator" :class="$style.indicator" />
         </RadioGroup.Item>
       </div>
 
-      <div v-if="item.label || item.description" data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
-        <Label v-if="item.label" :for="item.id" data-slot="label" :class="ui.label({ class: props.ui?.label })">{{
-          item.label
-        }}</Label>
-        <p v-if="item.description" data-slot="description" :class="ui.description({ class: props.ui?.description })">
+      <div v-if="item.label || item.description" data-slot="wrapper" :class="$style.wrapper">
+        <Label v-if="item.label" :for="item.id" data-slot="label" :class="$style.label">{{ item.label }}</Label>
+        <p v-if="item.description" data-slot="description" :class="$style.description">
           {{ item.description }}
         </p>
       </div>
     </div>
   </RadioGroup.Root>
 </template>
+
+<style module>
+.root {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+
+  &.orientation-vertical {
+    flex-direction: column;
+  }
+
+  &.orientation-horizontal {
+    flex-direction: row;
+    column-gap: calc(var(--spacing) * 2);
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+
+  .size-sm & {
+    font-size: var(--text-xs);
+  }
+
+  .size-md & {
+    font-size: var(--text-sm);
+  }
+
+  .size-lg & {
+    font-size: var(--text-base);
+  }
+
+  .disabled & {
+    opacity: 75%;
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.base {
+  overflow: hidden;
+
+  border-radius: calc(infinity * 1px);
+
+  box-shadow: inset 0 0 0 1px var(--border-color-accented);
+
+  .size-sm & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .size-md & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .size-lg & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+
+  .disabled & {
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid;
+    outline-offset: 2px;
+  }
+
+  .color-primary &:focus-visible {
+    outline-color: var(--color-primary);
+  }
+
+  &:not(:disabled):hover {
+    cursor: pointer;
+  }
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  &::after {
+    content: "";
+
+    border-radius: calc(infinity * 1px);
+
+    background-color: var(--background-color-default);
+  }
+
+  .color-primary & {
+    background-color: var(--color-primary);
+  }
+
+  .size-sm &::after {
+    width: calc(var(--spacing) * 1);
+    height: calc(var(--spacing) * 1);
+  }
+
+  .size-md &::after {
+    width: calc(var(--spacing) * 1.5);
+    height: calc(var(--spacing) * 1.5);
+  }
+
+  .size-lg &::after {
+    width: calc(var(--spacing) * 2);
+    height: calc(var(--spacing) * 2);
+  }
+}
+
+.wrapper {
+  width: 100%;
+  margin-inline-start: calc(var(--spacing) * 2);
+}
+
+.label {
+  display: block;
+
+  font-weight: 500;
+  color: var(--text-color-default);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .disabled & {
+    cursor: not-allowed;
+  }
+}
+
+.description {
+  color: var(--text-color-muted);
+
+  .disabled & {
+    cursor: not-allowed;
+  }
+}
+</style>

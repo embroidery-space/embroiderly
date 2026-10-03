@@ -12,7 +12,6 @@ import {
   InputDimensions,
   InputNumberSlider,
   Progress,
-  ScrollArea,
   Separator,
   useToast,
 } from "@embroiderly/ui";
@@ -166,18 +165,11 @@ onUnmounted(() => service.destroy());
 </script>
 
 <template>
-  <Dialog :title="$t('image-import')" :scroll="false" :ui="{ content: 'size-full', body: 'p-0!' }">
+  <Dialog :title="$t('image-import')" :class="$style.dialog">
     <template #body>
-      <div class="flex h-full" :class="{ 'flex-col': isMobilePortrait }">
-        <ScrollArea
-          type="auto"
-          size="sm"
-          :ui="{
-            root: isMobilePortrait ? 'max-h-1/4 w-full shrink-0' : 'w-80 shrink-0',
-            viewport: 'space-y-2 p-4 sm:p-6',
-          }"
-        >
-          <InputFile v-model="imageFile" accept=".png, .jpg, .jpeg, .webp" class="w-full" />
+      <div :class="[$style.layout, { [$style.portrait]: isMobilePortrait }]">
+        <div :class="$style.options">
+          <InputFile v-model="imageFile" accept=".png, .jpg, .jpeg, .webp" :class="$style.file" />
 
           <InputDimensions
             v-model:width="imageImportOptions.patternSize[0]"
@@ -189,21 +181,20 @@ onUnmounted(() => service.destroy());
             :aspect-ratio="imageDimensions[0] / imageDimensions[1]"
           />
 
-          <FormField :label="$t('image-import-palette')" class="w-full">
+          <FormField :label="$t('image-import-palette')">
             <PaletteSelect
               variant="subtle"
-              class="w-full"
               @palette-selected="async (group, name) => (selectedPaletteBytes = await files.loadPalette(group, name))"
               @palette-loaded="(palette) => (selectedPaletteSize = palette.length)"
             />
           </FormField>
 
-          <FormField :label="$t('image-import-palette-size')" class="w-full">
+          <FormField :label="$t('image-import-palette-size')">
             <InputNumberSlider v-model="imageImportOptions.paletteSize" v-bind="paletteSizeBounds" />
           </FormField>
 
-          <FormFieldSet :legend="$t('image-import-quant')" class="w-full space-y-2">
-            <FormField :label="$t('image-import-quant-sampling')" class="w-full">
+          <FormFieldSet :legend="$t('image-import-quant')" :class="$style.fieldset">
+            <FormField :label="$t('image-import-quant-sampling')">
               <InputNumberSlider
                 v-model="imageImportOptions.quantization.samplingFactor"
                 :min="0"
@@ -214,10 +205,10 @@ onUnmounted(() => service.destroy());
             </FormField>
           </FormFieldSet>
 
-          <FormFieldSet :legend="$t('image-import-dither')" class="w-full space-y-2">
+          <FormFieldSet :legend="$t('image-import-dither')" :class="$style.fieldset">
             <Checkbox v-model="applyDithering" :label="$t('image-import-dither-enable')" />
 
-            <FormField :label="$t('image-import-dither-error')" class="w-full">
+            <FormField :label="$t('image-import-dither-error')">
               <InputNumberSlider
                 v-model="imageImportOptions.dithering!.errorDiffusion"
                 :min="0"
@@ -227,21 +218,20 @@ onUnmounted(() => service.destroy());
               />
             </FormField>
           </FormFieldSet>
-        </ScrollArea>
+        </div>
 
         <Separator decorative :orientation="isMobilePortrait ? 'horizontal' : 'vertical'" size="sm" />
 
-        <BlockUI ref="drop-zone" :blocked="importing || isOverDropZone" class="flex min-h-0 min-w-0 flex-1 flex-col">
-          <Progress v-if="importing" size="sm" class="absolute top-0 rounded-none" />
+        <BlockUI ref="drop-zone" :blocked="importing || isOverDropZone" :class="$style.preview">
+          <Progress v-if="importing" size="sm" :class="$style.progress" />
 
           <PatternCanvas
             :pattern="preview?.pattern"
             :texture-manager-options="{ outlineStitches: false }"
-            class="min-h-0 flex-1"
-            :class="{ hidden: !imageImportOptionsValid }"
+            :class="[$style.canvas, { [$style.hidden]: !imageImportOptionsValid }]"
           />
 
-          <div v-if="preview" class="border-t border-default px-2 py-1 text-sm">
+          <div v-if="preview" :class="$style.properties">
             {{
               $t("image-import-pattern-properties", {
                 paletteSize: preview.pattern.palette.length,
@@ -263,3 +253,91 @@ onUnmounted(() => service.destroy());
     </template>
   </Dialog>
 </template>
+
+<style module>
+.dialog[data-slot="content"] {
+  width: 100%;
+  height: 100%;
+
+  > [data-slot="body"] {
+    padding: 0;
+  }
+}
+
+.layout {
+  display: flex;
+
+  height: 100%;
+
+  &.portrait {
+    flex-direction: column;
+  }
+}
+
+.options {
+  overflow-y: auto;
+  flex-shrink: 0;
+
+  width: calc(var(--spacing) * 80);
+  padding: calc(var(--spacing) * 4);
+
+  > :not(:last-child) {
+    margin-block-end: calc(var(--spacing) * 2);
+  }
+
+  .portrait > & {
+    width: 100%;
+    max-height: 25%;
+  }
+
+  @media (width >= 40rem) {
+    padding: calc(var(--spacing) * 6);
+  }
+}
+
+.file[data-slot="base"] {
+  width: 100%;
+}
+
+.fieldset {
+  width: 100%;
+
+  > :not(:last-child) {
+    margin-block-end: calc(var(--spacing) * 2);
+  }
+}
+
+.preview {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
+}
+
+.progress[data-slot="base"] {
+  position: absolute;
+  top: 0;
+
+  border-radius: 0;
+}
+
+.canvas {
+  flex: 1;
+
+  min-height: 0;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.properties {
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2);
+  border-top: 1px solid var(--border-color-default);
+
+  font-size: var(--text-sm);
+}
+</style>

@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { Collapsible } from "reka-ui/namespaced";
-import { computed } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import Button from "../Button/Button.vue";
-
-import { FormFieldSetTheme } from "./FormFieldSet.theme.ts";
-import type { FormFieldSetThemeSlots, FormFieldSetThemeVariants } from "./FormFieldSet.theme.ts";
 
 export interface FormFieldSetProps {
   /** The legend text for the fieldset. */
@@ -16,13 +12,10 @@ export interface FormFieldSetProps {
    * The size of the fieldset legend.
    * @default "md"
    */
-  size?: FormFieldSetThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** When true, the fieldset content can be collapsed by clicking the legend.*/
   collapsible?: boolean;
-
-  class?: any;
-  ui?: FormFieldSetThemeSlots;
 }
 
 export interface FormFieldSetSlots {
@@ -36,17 +29,11 @@ const props = withDefaults(defineProps<FormFieldSetProps>(), {
 defineSlots<FormFieldSetSlots>();
 
 const { icons } = useComponentIcons();
-
-const ui = computed(() => {
-  return FormFieldSetTheme({
-    size: props.size,
-  });
-});
 </script>
 
 <template>
-  <fieldset v-if="!collapsible" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
-    <legend data-slot="legend" :class="ui.legend({ class: props.ui?.legend })">{{ legend }}</legend>
+  <fieldset v-if="!collapsible" data-slot="root" :class="[$style.root, $style[`size-${size}`]]">
+    <legend data-slot="legend" :class="$style.legend">{{ legend }}</legend>
     <slot />
   </fieldset>
 
@@ -55,9 +42,9 @@ const ui = computed(() => {
     v-model:open="open"
     as="fieldset"
     data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    :class="[$style.root, $style[`size-${size}`]]"
   >
-    <legend data-slot="legend" :class="ui.legend({ class: props.ui?.legend })">
+    <legend data-slot="legend" :class="$style.legend">
       <Collapsible.Trigger as-child>
         <Button
           :label="legend"
@@ -69,8 +56,48 @@ const ui = computed(() => {
       </Collapsible.Trigger>
     </legend>
 
-    <Collapsible.Content data-slot="content" :class="ui.content({ class: props.ui?.content })">
+    <Collapsible.Content data-slot="content" :class="$style.content">
       <slot />
     </Collapsible.Content>
   </Collapsible.Root>
 </template>
+
+<style module>
+.root {
+  margin-top: calc(var(--spacing) * 2);
+  padding-top: calc(var(--spacing) * 2);
+  padding-bottom: calc(var(--spacing) * 4);
+  padding-inline: calc(var(--spacing) * 4);
+  border: 1px solid var(--border-color-default);
+  border-radius: var(--radius-md);
+}
+
+.legend {
+  font-weight: 500;
+  color: var(--text-color-default);
+
+  .size-sm > & {
+    font-size: var(--text-xs);
+  }
+
+  .size-md > & {
+    font-size: var(--text-sm);
+  }
+
+  .size-lg > & {
+    font-size: var(--text-base);
+  }
+}
+
+.content {
+  overflow: hidden;
+
+  &[data-state="closed"] {
+    animation: global(collapsible-up) 200ms ease-out;
+  }
+
+  &[data-state="open"] {
+    animation: global(collapsible-down) 200ms ease-out;
+  }
+}
+</style>

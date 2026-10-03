@@ -2,15 +2,13 @@
 import { reactivePick } from "@vueuse/core";
 import { ToastPortal, ToastProvider, ToastViewport, useForwardProps } from "reka-ui";
 import type { ToastProviderProps } from "reka-ui";
-import { computed, toRef } from "vue";
+import { toRef } from "vue";
 
 import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
 import { useToast } from "../../composables/useToast.ts";
 
 import Toast from "./Toast.vue";
-import { ToasterTheme } from "./Toaster.theme.ts";
-import type { ToasterThemeSlots } from "./Toaster.theme.ts";
 
 export interface ToasterProps extends Pick<ToastProviderProps, "duration" | "label" | "swipeThreshold"> {
   /**
@@ -18,9 +16,6 @@ export interface ToasterProps extends Pick<ToastProviderProps, "duration" | "lab
    * @default true
    */
   portal?: boolean | string | HTMLElement;
-
-  class?: any;
-  ui?: ToasterThemeSlots;
 }
 
 export interface ToasterSlots {
@@ -38,12 +33,6 @@ const { toasts, remove } = useToast();
 
 const providerProps = useForwardProps(reactivePick(props, "duration", "label", "swipeThreshold"));
 const portalProps = usePortal(toRef(() => props.portal));
-
-const ui = computed(() =>
-  ToasterTheme({
-    inline: props.portal === false,
-  }),
-);
 
 function onUpdateOpen(value: boolean, id: string | number) {
   if (value) return;
@@ -68,7 +57,7 @@ function onUpdateOpen(value: boolean, id: string | number) {
         open: toast.open,
       }"
       data-slot="base"
-      :class="ui.base({ class: props.ui?.base })"
+      :class="$style.base"
       @update:open="onUpdateOpen($event, toast.id)"
     />
 
@@ -76,8 +65,67 @@ function onUpdateOpen(value: boolean, id: string | number) {
       <ToastViewport
         :label="locale.messages.toast.focus"
         data-slot="viewport"
-        :class="ui.viewport({ class: [props.ui?.viewport, props.class] })"
+        :class="[$style.viewport, { [$style.inline]: portal === false }]"
       />
     </ToastPortal>
   </ToastProvider>
 </template>
+
+<style module>
+.base {
+  pointer-events: auto;
+
+  &[data-state="closed"] {
+    animation: global(slide-out-right) 200ms ease-in;
+  }
+
+  &[data-state="open"] {
+    animation: global(slide-in-right) 200ms ease-out;
+  }
+
+  &[data-swipe="cancel"] {
+    translate: 0 0;
+
+    transition-timing-function: var(--default-transition-timing-function);
+    transition-duration: var(--default-transition-duration);
+    transition-property: transform, translate, scale, rotate;
+  }
+
+  &[data-swipe="end"] {
+    animation: global(slide-out-right) 100ms ease-out;
+  }
+
+  &[data-swipe="move"] {
+    translate: var(--reka-toast-swipe-move-x) 0;
+  }
+}
+
+.viewport {
+  position: fixed;
+  z-index: 100;
+  right: calc(var(--spacing) * 4);
+  bottom: calc(var(--spacing) * 4);
+
+  display: flex;
+  flex-direction: column-reverse;
+  gap: calc(var(--spacing) * 4);
+
+  width: calc(100% - 2rem);
+
+  outline-style: none;
+
+  &.inline {
+    position: static;
+
+    width: auto;
+
+    @media (width >= 40rem) {
+      width: calc(var(--spacing) * 96);
+    }
+  }
+
+  @media (width >= 40rem) {
+    width: calc(var(--spacing) * 96);
+  }
+}
+</style>

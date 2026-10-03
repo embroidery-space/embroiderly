@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
+import TabsDemo from "./stories/TabsDemo.vue";
+import TabsSizes from "./stories/TabsSizes.vue";
 import Tabs from "./Tabs.vue";
 import type { TabsItem } from "./Tabs.vue";
 
@@ -36,10 +38,10 @@ export const Demo: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
-      components: { Tabs },
+      components: { TabsDemo },
       setup: () => ({ args, items, updateArgs }),
       template: `
-        <Tabs
+        <TabsDemo
           v-bind="args"
           :items="items"
           @update:model-value="(value) => updateArgs({ modelValue: value })"
@@ -51,21 +53,17 @@ export const Demo: Story = {
 
 export const Vertical: Story = {
   render: () => ({
-    components: { Tabs },
+    components: { TabsDemo },
     setup: () => ({ items }),
-    template: `<Tabs :items="items" orientation="vertical" />`,
+    template: `<TabsDemo :items="items" orientation="vertical" />`,
   }),
 };
 
 export const Sizes: Story = {
   render: () => ({
-    components: { Tabs },
-    setup: () => ({ sizes, items }),
-    template: `
-      <div class="flex flex-col gap-4">
-        <Tabs v-for="size in sizes" :key="size" :items="items" :size="size" />
-      </div>
-    `,
+    components: { TabsSizes },
+    setup: () => ({ items }),
+    template: `<TabsSizes :items="items" />`,
   }),
 };
 

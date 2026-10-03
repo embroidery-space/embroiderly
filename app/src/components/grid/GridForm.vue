@@ -8,20 +8,15 @@ const grid = defineModel<Grid>({ required: true });
 
 <template>
   <div>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div :class="$style.general">
       <FormField v-bind="$ta('grid-major-lines-interval')">
-        <InputNumber
-          v-model="grid.majorLinesInterval"
-          data-testid="grid-major-lines-interval-input"
-          :min="1"
-          class="w-full"
-        />
+        <InputNumber v-model="grid.majorLinesInterval" data-testid="grid-major-lines-interval-input" :min="1" />
       </FormField>
     </div>
 
     <FormFieldSet :legend="$t('grid-major-lines')">
-      <div class="grid grid-cols-2 gap-4">
-        <Checkbox v-bind="$ta('grid-pixel-line')" v-model="grid.majorLines.pixelLine" class="col-span-2" />
+      <div :class="$style.lines">
+        <Checkbox v-bind="$ta('grid-pixel-line')" v-model="grid.majorLines.pixelLine" />
 
         <FormField :label="$t('grid-thickness')">
           <InputNumber
@@ -32,19 +27,18 @@ const grid = defineModel<Grid>({ required: true });
             :step="0.01"
             :format-options="{ style: 'percent' }"
             :disabled="grid.majorLines.pixelLine"
-            class="w-full"
           />
         </FormField>
 
         <FormField :label="$t('grid-color')">
-          <InputColor v-model="grid.majorLines.color" data-testid="grid-major-lines-color-input" class="w-full" />
+          <InputColor v-model="grid.majorLines.color" data-testid="grid-major-lines-color-input" />
         </FormField>
       </div>
     </FormFieldSet>
 
     <FormFieldSet :legend="$t('grid-minor-lines')">
-      <div class="grid grid-cols-2 gap-4">
-        <Checkbox v-bind="$ta('grid-pixel-line')" v-model="grid.minorLines.pixelLine" class="col-span-2" />
+      <div :class="$style.lines">
+        <Checkbox v-bind="$ta('grid-pixel-line')" v-model="grid.minorLines.pixelLine" />
 
         <FormField :label="$t('grid-thickness')">
           <InputNumber
@@ -55,14 +49,36 @@ const grid = defineModel<Grid>({ required: true });
             :step="0.01"
             :format-options="{ style: 'percent' }"
             :disabled="grid.minorLines.pixelLine"
-            class="w-full"
           />
         </FormField>
 
         <FormField :label="$t('grid-color')">
-          <InputColor v-model="grid.minorLines.color" data-testid="grid-minor-lines-color-input" class="w-full" />
+          <InputColor v-model="grid.minorLines.color" data-testid="grid-minor-lines-color-input" />
         </FormField>
       </div>
     </FormFieldSet>
   </div>
 </template>
+
+<style module>
+.general {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: calc(var(--spacing) * 4);
+
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.lines {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--spacing) * 4);
+
+  /* The "pixel line" checkbox. */
+  > :first-child {
+    grid-column: span 2 / span 2;
+  }
+}
+</style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
@@ -9,15 +9,12 @@ import type { FormFieldProps } from "../FormField/FormField.vue";
 import InputNumber from "../InputNumber/InputNumber.vue";
 import type { InputNumberProps } from "../InputNumber/InputNumber.vue";
 
-import { InputDimensionsTheme } from "./InputDimensions.theme.ts";
-import type { InputDimensionsThemeSlots, InputDimensionsThemeVariants } from "./InputDimensions.theme.ts";
-
 export interface InputDimensionsProps {
   /**
    * The size of the component.
    * @default "md"
    */
-  size?: InputDimensionsThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /**
    * The layout orientation of the two inputs.
@@ -43,9 +40,6 @@ export interface InputDimensionsProps {
   widthInputOptions?: Omit<InputNumberProps, "modelValue" | "disabled" | "size">;
   /** Additional options for the height `InputNumber` component. */
   heightInputOptions?: Omit<InputNumberProps, "modelValue" | "disabled" | "size">;
-
-  class?: any;
-  ui?: InputDimensionsThemeSlots;
 }
 
 const width = defineModel<number>("width");
@@ -99,17 +93,10 @@ function handleHeightChange(newHeight: number) {
     width.value = Math.round(newHeight * storedAspectRatio.value);
   }
 }
-
-const ui = computed(() =>
-  InputDimensionsTheme({
-    size: props.size,
-    orientation: props.orientation,
-  }),
-);
 </script>
 
 <template>
-  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div data-slot="root" :class="[$style.root, $style[`orientation-${orientation}`]]">
     <FormField v-bind="widthFieldOptions" :size="size">
       <InputNumber
         v-bind="widthInputOptions"
@@ -131,8 +118,8 @@ const ui = computed(() =>
       variant="ghost"
       :size="size"
       :disabled="disabled"
-      data-slot="lockButton"
-      :class="ui.lockButton({ class: props.ui?.lockButton })"
+      data-slot="lock-button"
+      :class="$style.lockButton"
       :aria-pressed="aspectRatioLocked"
       @click="toggleAspectRatioLock"
     />
@@ -148,3 +135,33 @@ const ui = computed(() =>
     </FormField>
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  gap: calc(var(--spacing) * 2);
+
+  &.orientation-vertical {
+    position: relative;
+
+    flex-direction: column;
+
+    padding-left: calc(var(--spacing) * 8);
+  }
+}
+
+.lock-button {
+  .orientation-horizontal > & {
+    align-self: flex-end;
+
+    margin-bottom: calc(var(--spacing) * 0.5);
+  }
+
+  .orientation-vertical > & {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    translate: 0 -50%;
+  }
+}
+</style>

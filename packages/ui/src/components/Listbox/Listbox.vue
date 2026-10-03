@@ -1,5 +1,4 @@
 <script setup lang="ts" generic="T extends ListboxItem">
-import { createReusableTemplate } from "@vueuse/core";
 import defu from "defu";
 import type { AcceptableValue, ListboxRootProps } from "reka-ui";
 import { Listbox } from "reka-ui/namespaced";
@@ -11,11 +10,6 @@ import { useLocale } from "../../composables/useLocale.ts";
 import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
 import type { InputProps } from "../Input/Input.vue";
-import ScrollArea from "../ScrollArea/ScrollArea.vue";
-import type { ScrollAreaProps } from "../ScrollArea/ScrollArea.vue";
-
-import { ListboxTheme } from "./Listbox.theme.ts";
-import type { ListboxThemeSlots, ListboxThemeVariants } from "./Listbox.theme.ts";
 
 export interface ListboxItemObject {
   /** The type of the item. */
@@ -55,28 +49,18 @@ export interface ListboxProps<T extends ListboxItem = ListboxItem> extends Pick<
   filterInput?: boolean | InputProps;
 
   /**
-   * Wrap the content in a `ScrollArea`.
-   * Pass an object to configure it.
-   * @default true
-   */
-  scroll?: boolean | Pick<ScrollAreaProps, "type" | "size" | "ui">;
-
-  /**
    * The color scheme of the listbox.
    * @default "primary"
    */
-  color?: ListboxThemeVariants["color"];
+  color?: "primary" | "neutral";
   /**
    * The size of the listbox.
    * @default "md"
    */
-  size?: ListboxThemeVariants["size"];
+  size?: "sm" | "md" | "lg";
 
   /** The message to display when the listbox is empty. */
   emptyMessage?: string;
-
-  class?: any;
-  ui?: ListboxThemeSlots;
 }
 
 export interface ListboxEmits<T extends ListboxItem = ListboxItem> {
@@ -98,7 +82,6 @@ const filterValue = defineModel<string>("filterValue", { default: "" });
 const props = withDefaults(defineProps<ListboxProps<T>>(), {
   color: "primary",
   size: "md",
-  scroll: true,
 });
 const emit = defineEmits<ListboxEmits<T>>();
 defineSlots<ListboxSlots>();
@@ -115,13 +98,6 @@ const filterInputProps = computed<InputProps>(() =>
     variant: "none",
   } as InputProps),
 );
-
-const scrollProps = computed<Pick<ScrollAreaProps, "type" | "size" | "ui"> | null>(() => {
-  if (props.scroll === false) return null;
-  return defu(typeof props.scroll === "object" ? props.scroll : {}, { type: "hover" as const });
-});
-
-const [DefineContentTemplate, ContentTemplate] = createReusableTemplate();
 
 const normalizedGroups = computed<ListboxItemObject[][]>(() => {
   if (!props.items?.length) return [];
@@ -152,79 +128,9 @@ function compareValues(a: any, b: any): boolean {
   if (typeof props.by === "string") return a?.[props.by] === b?.[props.by];
   return a === b;
 }
-
-const ui = computed(() => {
-  return ListboxTheme({
-    color: props.color,
-    size: size.value,
-    disabled: props.disabled,
-  });
-});
 </script>
 
 <template>
-  <DefineContentTemplate>
-    <Listbox.Content data-slot="content" :class="ui.content({ class: props.ui?.content })">
-      <template v-if="hasItems">
-        <Listbox.Group
-          v-for="(group, gi) in normalizedGroups"
-          :key="gi"
-          data-slot="group"
-          :class="ui.group({ class: props.ui?.group })"
-        >
-          <template v-for="(item, i) in group" :key="`${gi}-${i}`">
-            <Listbox.GroupLabel
-              v-if="item.type === 'label'"
-              data-slot="label"
-              :class="ui.label({ class: [props.ui?.label, item.class] })"
-            >
-              {{ item.label }}
-            </Listbox.GroupLabel>
-
-            <div
-              v-else-if="item.type === 'separator'"
-              role="separator"
-              data-slot="separator"
-              :class="ui.separator({ class: [props.ui?.separator, item.class] })"
-            />
-
-            <Listbox.Item
-              v-else
-              :value="item.value as AcceptableValue"
-              :disabled="!!item.disabled"
-              data-slot="item"
-              :class="ui.item({ class: [props.ui?.item, item.class] })"
-              @select="emit('option-select', { originalEvent: $event, item: item.value as T, index: i })"
-              @dblclick="
-                emit('option-dblclick', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
-              "
-              @contextmenu="
-                emit('option-contextmenu', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
-              "
-            >
-              <slot name="option" :item="item" :selected="isSelected(item)" :index="i">
-                <span data-slot="itemLabel" :class="ui.itemLabel({ class: props.ui?.itemLabel })">
-                  {{ item.label ?? String(item.value) }}
-                </span>
-                <Listbox.ItemIndicator>
-                  <Icon
-                    :name="icons.check"
-                    data-slot="itemIndicator"
-                    :class="ui.itemIndicator({ class: props.ui?.itemIndicator })"
-                  />
-                </Listbox.ItemIndicator>
-              </slot>
-            </Listbox.Item>
-          </template>
-        </Listbox.Group>
-      </template>
-
-      <p v-else data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
-        {{ props.emptyMessage ?? locale.messages.listbox.empty }}
-      </p>
-    </Listbox.Content>
-  </DefineContentTemplate>
-
   <Listbox.Root
     :id="id"
     v-model="modelValue as AcceptableValue | undefined"
@@ -236,27 +142,251 @@ const ui = computed(() => {
     :by="by as any"
     :disabled="disabled"
     data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    :class="[$style.root, $style[`color-${color}`], $style[`size-${size}`], { [$style.disabled]: disabled }]"
     @highlight="emit('highlight', $event as any)"
   >
     <Listbox.Filter v-if="filterInput" v-model="filterValue" as-child>
-      <Input
-        v-model="filterValue"
-        :size="size"
-        v-bind="filterInputProps"
-        :class="ui.filter({ class: props.ui?.filter })"
-      />
+      <Input v-model="filterValue" :size="size" v-bind="filterInputProps" />
     </Listbox.Filter>
 
-    <ScrollArea
-      v-if="scrollProps !== null"
-      v-bind="scrollProps"
-      :size="scrollProps.size ?? size"
-      data-slot="scroll"
-      :class="ui.scroll({ class: [scrollProps.ui?.root, props.ui?.scroll] })"
-    >
-      <ContentTemplate />
-    </ScrollArea>
-    <ContentTemplate v-else />
+    <Listbox.Content data-slot="content" :class="$style.content">
+      <template v-if="hasItems">
+        <Listbox.Group v-for="(group, gi) in normalizedGroups" :key="gi" data-slot="group" :class="$style.group">
+          <template v-for="(item, i) in group" :key="`${gi}-${i}`">
+            <Listbox.GroupLabel v-if="item.type === 'label'" data-slot="label" :class="[$style.label, item.class]">
+              {{ item.label }}
+            </Listbox.GroupLabel>
+
+            <div
+              v-else-if="item.type === 'separator'"
+              role="separator"
+              data-slot="separator"
+              :class="[$style.separator, item.class]"
+            />
+
+            <Listbox.Item
+              v-else
+              :value="item.value as AcceptableValue"
+              :disabled="!!item.disabled"
+              data-slot="item"
+              :class="[$style.item, item.class]"
+              @select="emit('option-select', { originalEvent: $event, item: item.value as T, index: i })"
+              @dblclick="
+                emit('option-dblclick', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
+              "
+              @contextmenu="
+                emit('option-contextmenu', { originalEvent: $event as MouseEvent, item: item.value as T, index: i })
+              "
+            >
+              <slot name="option" :item="item" :selected="isSelected(item)" :index="i">
+                <span data-slot="item-label" :class="$style.itemLabel">
+                  {{ item.label ?? String(item.value) }}
+                </span>
+                <Listbox.ItemIndicator>
+                  <Icon :name="icons.check" data-slot="item-indicator" :class="$style.itemIndicator" />
+                </Listbox.ItemIndicator>
+              </slot>
+            </Listbox.Item>
+          </template>
+        </Listbox.Group>
+      </template>
+
+      <p v-else data-slot="empty" :class="$style.empty">
+        {{ props.emptyMessage ?? locale.messages.listbox.empty }}
+      </p>
+    </Listbox.Content>
   </Listbox.Root>
 </template>
+
+<style module>
+.root {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+  border-radius: var(--radius-md);
+
+  box-shadow: inset 0 0 0 1px var(--border-color-default);
+
+  &.disabled {
+    cursor: not-allowed;
+
+    opacity: 75%;
+  }
+
+  & > [data-slot="root"] {
+    border-bottom: 1px solid var(--border-color-default);
+  }
+}
+
+.content {
+  overflow-y: auto;
+  flex: 1;
+
+  min-height: 0;
+
+  outline-style: none;
+}
+
+.group {
+  padding: calc(var(--spacing) * 1);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  font-weight: 600;
+  color: var(--text-color-muted);
+
+  .size-sm & {
+    gap: calc(var(--spacing) * 1);
+
+    padding: calc(var(--spacing) * 1);
+
+    font-size: var(--text-xs);
+  }
+
+  .size-md & {
+    gap: calc(var(--spacing) * 1.5);
+
+    padding: calc(var(--spacing) * 1.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .size-lg & {
+    gap: calc(var(--spacing) * 2);
+
+    padding: calc(var(--spacing) * 2);
+
+    font-size: var(--text-sm);
+  }
+}
+
+.separator {
+  height: 1px;
+  margin-block: calc(var(--spacing) * 1);
+  margin-inline: calc(var(--spacing) * -1);
+
+  background-color: var(--border-color-default);
+}
+
+.item {
+  cursor: pointer;
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  border-radius: var(--radius-sm);
+
+  color: var(--text-color-default);
+
+  outline-style: none;
+
+  &[data-disabled] {
+    cursor: not-allowed;
+
+    opacity: 75%;
+  }
+
+  &[data-highlighted] {
+    background-color: var(--background-color-elevated);
+  }
+
+  &[data-disabled][data-highlighted] {
+    background-color: transparent;
+  }
+
+  .size-sm & {
+    gap: calc(var(--spacing) * 1);
+
+    padding: calc(var(--spacing) * 1);
+
+    font-size: var(--text-xs);
+  }
+
+  .size-md & {
+    gap: calc(var(--spacing) * 1.5);
+
+    padding: calc(var(--spacing) * 1.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .size-lg & {
+    gap: calc(var(--spacing) * 2);
+
+    padding: calc(var(--spacing) * 2);
+
+    font-size: var(--text-base);
+  }
+}
+
+.item-label {
+  overflow: hidden;
+  flex: 1;
+
+  min-width: 0;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-indicator {
+  flex-shrink: 0;
+
+  margin-inline-start: auto;
+
+  .color-primary & {
+    color: var(--color-primary);
+  }
+
+  .color-neutral & {
+    color: var(--text-color-default);
+  }
+
+  .size-sm & {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+
+  .size-md & {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+
+  .size-lg & {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+}
+
+.empty {
+  color: var(--text-color-muted);
+  text-align: center;
+
+  .size-sm & {
+    padding-block: calc(var(--spacing) * 1);
+
+    font-size: var(--text-xs);
+  }
+
+  .size-md & {
+    padding-block: calc(var(--spacing) * 1.5);
+
+    font-size: var(--text-sm);
+  }
+
+  .size-lg & {
+    padding-block: calc(var(--spacing) * 2);
+
+    font-size: var(--text-base);
+  }
+}
+</style>

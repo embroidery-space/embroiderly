@@ -11,11 +11,11 @@ const telemetry = reactive({ diagnostics: false, metrics: false });
 </script>
 
 <template>
-  <Dialog :title="$t('telemetry-prompt')" :dismissible="false" :scroll="false">
+  <Dialog :title="$t('telemetry-prompt')" :dismissible="false">
     <template #body>
       <Checkbox v-model="telemetry.diagnostics" v-bind="$ta('settings-telemetry-diagnostics')" />
       <Checkbox v-model="telemetry.metrics" v-bind="$ta('settings-telemetry-metrics')" />
-      <p class="mt-2 text-xs text-muted">{{ $t("telemetry-prompt-notice") }}</p>
+      <p :class="$style.notice">{{ $t("telemetry-prompt-notice") }}</p>
     </template>
 
     <template #footer>
@@ -28,3 +28,12 @@ const telemetry = reactive({ diagnostics: false, metrics: false });
     </template>
   </Dialog>
 </template>
+
+<style module>
+.notice {
+  margin-top: calc(var(--spacing) * 2);
+
+  font-size: var(--text-xs);
+  color: var(--text-color-muted);
+}
+</style>

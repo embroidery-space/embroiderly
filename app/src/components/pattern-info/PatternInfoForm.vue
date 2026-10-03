@@ -7,23 +7,26 @@ const patternInfo = defineModel<PatternInfo>({ required: true });
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-2">
-    <FormField :label="$t('pattern-info-title')" class="w-full">
-      <Input v-model="patternInfo.title" data-testid="pattern-title-input" class="w-full" />
+  <div :class="$style.root">
+    <FormField :label="$t('pattern-info-title')">
+      <Input v-model="patternInfo.title" data-testid="pattern-title-input" />
     </FormField>
-    <FormField :label="$t('pattern-info-author')" class="w-full">
-      <Input v-model="patternInfo.author" data-testid="pattern-author-input" class="w-full" />
+    <FormField :label="$t('pattern-info-author')">
+      <Input v-model="patternInfo.author" data-testid="pattern-author-input" />
     </FormField>
-    <FormField :label="$t('pattern-info-copyright')" class="w-full">
-      <Input v-model="patternInfo.copyright" data-testid="pattern-copyright-input" class="w-full" />
+    <FormField :label="$t('pattern-info-copyright')">
+      <Input v-model="patternInfo.copyright" data-testid="pattern-copyright-input" />
     </FormField>
-    <FormField :label="$t('pattern-info-description')" class="w-full">
-      <Textarea
-        v-model="patternInfo.description"
-        data-testid="pattern-description-textarea"
-        autoresize
-        class="w-full"
-      />
+    <FormField :label="$t('pattern-info-description')">
+      <Textarea v-model="patternInfo.description" data-testid="pattern-description-textarea" autoresize />
     </FormField>
   </div>
 </template>
+
+<style module>
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(var(--spacing) * 2);
+}
+</style>
