@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { Plugin } from "vite";
+import type { Plugin } from "vite";
 
 export function wasmCleanup(): Plugin {
   return {

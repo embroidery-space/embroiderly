@@ -1,6 +1,6 @@
-import { Plugin, UserConfig } from "vite";
+import type { Plugin } from "vite";
 
-import { counter } from "./counter";
+import { counter } from "./counter.ts";
 
 export function cssModulesOptimizer(): Plugin {
   const next = counter();
@@ -8,7 +8,7 @@ export function cssModulesOptimizer(): Plugin {
   return {
     name: "optimize-css-modules",
     apply: "build",
-    config: (): UserConfig => ({
+    config: () => ({
       css: {
         modules: {
           generateScopedName: (name: string, fileName: string) => {
