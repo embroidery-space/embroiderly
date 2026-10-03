@@ -7,13 +7,12 @@ import { webdriverio } from "@vitest/browser-webdriverio";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
-import { compression } from "vite-plugin-compression2";
 import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 import pkg from "./package.json" with { type: "json" };
 import * as commands from "./tests/components/vitest.commands.ts";
-import { cssModulesOptimizer, wasmCleanup } from "./vite/plugins/index.ts";
+import { cssModulesOptimizer, wasmOptimizer } from "./vite/plugins/index.ts";
 import { getGitInfo } from "./vite/utils/index.ts";
 
 const isCI = !!process.env.CI;
@@ -38,6 +37,7 @@ export default defineConfig({
       },
     }),
     cssModulesOptimizer(),
+    !isTauri && wasmOptimizer(),
     !isTauri &&
       VitePWA({
         disable: !isPwaEnabled,
@@ -61,8 +61,6 @@ export default defineConfig({
           maximumFileSizeToCacheInBytes: 30 * 1024 * 1024, // 30 MB. We have quite large Wasm modules.
         },
       }),
-    !isTauri && compression({ include: /\.(wasm)$/u }),
-    !isTauri && wasmCleanup(),
     !isTest && vueDevTools(),
   ],
   clearScreen: false,
