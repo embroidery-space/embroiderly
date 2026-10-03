@@ -12,9 +12,9 @@ import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 import pkg from "./package.json" with { type: "json" };
-import * as commands from "./tests/components/vitest.commands.js";
-import { cssModulesOptimizer, wasmCleanup } from "./vite/plugins/";
-import { getGitInfo } from "./vite/utils/";
+import * as commands from "./tests/components/vitest.commands.ts";
+import { cssModulesOptimizer, wasmCleanup } from "./vite/plugins/index.ts";
+import { getGitInfo } from "./vite/utils/index.ts";
 
 const isCI = !!process.env.CI;
 const isTauri = !!process.env.TAURI_ENV_TARGET_TRIPLE;
@@ -128,6 +128,7 @@ export default defineConfig({
                 throw new Error("Unsupported platform for browser testing");
               })(),
             ],
+            locators: { exact: false },
             commands,
           },
         },

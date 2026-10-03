@@ -1,1 +1,1 @@
-export { getGitInfo } from "./getGitInfo";
+export { getGitInfo } from "./getGitInfo.ts";

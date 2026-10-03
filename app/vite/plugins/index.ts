@@ -1,2 +1,2 @@
-export { cssModulesOptimizer } from "./css-modules-optimizer/";
-export { wasmCleanup } from "./wasm-cleanup/";
+export { cssModulesOptimizer } from "./css-modules-optimizer/index.ts";
+export { wasmCleanup } from "./wasm-cleanup/index.ts";

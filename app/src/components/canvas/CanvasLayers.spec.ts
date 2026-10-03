@@ -47,14 +47,14 @@ describe("CanvasLayers", () => {
     const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0)] },
     });
-    await expect.element(screen.getByRole("treeitem", { level: 1 })).toHaveTextContent(withBidi`Layer ${1}`);
+    await expect.element(screen.getByRole("treeitem", { level: 1 })).toMatchTextContent(withBidi`Layer ${1}`);
   });
 
   test("displays layer name when set", async () => {
     const screen = await renderComponent(CanvasLayersWrapper, {
       props: { modelValue: 0, layers: [new Layer(0, { name: "My Layer" })] },
     });
-    await expect.element(screen.getByRole("treeitem", { level: 1 })).toHaveTextContent("My Layer");
+    await expect.element(screen.getByRole("treeitem", { level: 1 })).toMatchTextContent("My Layer");
   });
 
   test("remove button is disabled with a single layer", async () => {
