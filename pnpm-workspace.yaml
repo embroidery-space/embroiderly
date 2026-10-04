@@ -30,6 +30,9 @@ catalog:
   "pinia-plugin-persistedstate": 4.7.1
   "reka-ui": 2.10.5
 
+  # CodeMirror
+  "codemirror": 6.0.2
+
   # Icons
   "@iconify/vue": 5.0.3
   "@iconify-json/lucide": 1.2.137
