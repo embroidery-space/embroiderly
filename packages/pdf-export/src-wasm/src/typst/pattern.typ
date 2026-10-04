@@ -96,6 +96,7 @@
 // Symbol   Brand   Number   Color Name
 // ------------------------------------
 //    X     DMC     310      Black
+// ```
 #table(
   stroke: none,
   columns: 4,

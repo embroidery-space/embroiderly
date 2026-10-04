@@ -31,7 +31,11 @@ catalog:
   "reka-ui": 2.10.5
 
   # CodeMirror
+  "@codemirror/state": 6.7.6
+  "@lezer/highlight": 1.2.5
+  "@uiw/codemirror-themes": 4.25.12
   "codemirror": 6.0.2
+  "codemirror-lang-typst": 0.6.0
 
   # Icons
   "@iconify/vue": 5.0.3
