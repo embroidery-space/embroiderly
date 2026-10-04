@@ -129,12 +129,6 @@
   --spacing: 0.25rem;
 
   /* Fonts. */
-  --font-sans:
-    -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Arial", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono:
-    ui-monospace, "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
-
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;

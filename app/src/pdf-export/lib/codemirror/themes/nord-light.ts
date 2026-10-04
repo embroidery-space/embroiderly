@@ -15,6 +15,7 @@ export const nordLight = createTheme({
     gutterForeground: "var(--nord-3)",
     gutterActiveForeground: "var(--nord-0)",
     gutterBorder: "transparent",
+    fontFamily: "var(--font-mono)",
   },
   styles: [
     // Markup.
