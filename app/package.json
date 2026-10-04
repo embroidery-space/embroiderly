@@ -20,7 +20,11 @@
     "test:e2e:web": "wdio run wdio.web.conf.ts"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "catalog:",
+    "@codemirror/language": "catalog:",
+    "@codemirror/search": "catalog:",
     "@codemirror/state": "catalog:",
+    "@codemirror/view": "catalog:",
     "@embroiderly/image-import": "workspace:*",
     "@embroiderly/pdf-export": "workspace:*",
     "@embroiderly/ui": "workspace:*",
@@ -38,7 +42,6 @@
     "@vueuse/core": "catalog:",
     "@vueuse/integrations": "catalog:",
     "@zorsh/zorsh": "catalog:",
-    "codemirror": "catalog:",
     "codemirror-lang-typst": "catalog:",
     "driver.js": "catalog:",
     "es-toolkit": "catalog:",

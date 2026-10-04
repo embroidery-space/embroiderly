@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { Compartment, Prec } from "@codemirror/state";
-import { EditorView, basicSetup } from "codemirror";
+import { EditorView } from "@codemirror/view";
 import { typst_lezer as typst } from "codemirror-lang-typst/lezer";
 import { shallowRef, useTemplateRef, onMounted, onBeforeUnmount, watch } from "vue";
 
 import { DEFAULT_PATTERN_TEMPLATE } from "../constants.ts";
-import { nordDark, nordLight } from "../lib/codemirror/";
+import { editorSetup, nordDark, nordLight } from "../lib/codemirror/";
 
 export interface TypstEditorProps {
   /**
@@ -33,7 +33,7 @@ watch(
 onMounted(() => {
   editor.value = new EditorView({
     doc: DEFAULT_PATTERN_TEMPLATE,
-    extensions: [basicSetup, Prec.high(typst()), Prec.highest(theme.of(isDark ? nordDark : nordLight))],
+    extensions: [editorSetup, Prec.high(typst()), Prec.highest(theme.of(isDark ? nordDark : nordLight))],
     parent: container.value!,
   });
 });

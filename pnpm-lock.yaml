@@ -164,9 +164,21 @@ settings:
 
 catalogs:
   default:
+    '@codemirror/autocomplete':
+      specifier: 6.20.3
+      version: 6.20.3
+    '@codemirror/language':
+      specifier: 6.12.4
+      version: 6.12.4
+    '@codemirror/search':
+      specifier: 6.7.2
+      version: 6.7.2
     '@codemirror/state':
       specifier: 6.7.6
       version: 6.7.6
+    '@codemirror/view':
+      specifier: 6.43.13
+      version: 6.43.13
     '@cssnr/vitepress-swiper':
       specifier: 0.3.1
       version: 0.3.1
@@ -302,9 +314,6 @@ catalogs:
     '@zorsh/zorsh':
       specifier: 0.5.1
       version: 0.5.1
-    codemirror:
-      specifier: 6.0.2
-      version: 6.0.2
     codemirror-lang-typst:
       specifier: 0.6.0
       version: 0.6.0
@@ -520,9 +529,21 @@ importers:
 
   app:
     dependencies:
+      '@codemirror/autocomplete':
+        specifier: 'catalog:'
+        version: 6.20.3
+      '@codemirror/language':
+        specifier: 'catalog:'
+        version: 6.12.4
+      '@codemirror/search':
+        specifier: 'catalog:'
+        version: 6.7.2
       '@codemirror/state':
         specifier: 'catalog:'
         version: 6.7.6
+      '@codemirror/view':
+        specifier: 'catalog:'
+        version: 6.43.13
       '@embroiderly/image-import':
         specifier: workspace:*
         version: link:../packages/image-import
@@ -574,9 +595,6 @@ importers:
       '@zorsh/zorsh':
         specifier: 'catalog:'
         version: 0.5.1
-      codemirror:
-        specifier: 'catalog:'
-        version: 6.0.2
       codemirror-lang-typst:
         specifier: 'catalog:'
         version: 0.6.0
@@ -1533,9 +1551,6 @@ packages:
 
   '@codemirror/autocomplete@6.20.3':
     resolution: {integrity: sha512-tlosUqb+3BbxCxZdu4tKeRghPFC+QM7q4X5YhKV2eCmPG+1r2F3f4AaSz5sCrFqUtX4Jh20VFTKecl16MgiV9g==}
-
-  '@codemirror/commands@6.11.1':
-    resolution: {integrity: sha512-O/4hG3SC1YwcmQ0d2UVNDs+AsaNWd1iHVxbTeEBuqH+6bExAiPK3iS/BvpY6rZGURALv4ZD3sIgcCmRvw3ehBg==}
 
   '@codemirror/language@6.12.4':
     resolution: {integrity: sha512-1q4PaT+o6PbgpkJt4Q8Fv5XJxTy4FUZ4MWETtyiDw3J0Pyr9E2vqcKL+k9wcvjNTIsauxvE7OfmWj3FRPHQ76A==}
@@ -4795,9 +4810,6 @@ packages:
 
   codemirror-lang-typst@0.6.0:
     resolution: {integrity: sha512-arxPg4g2tc+VeDErihW0+PuYQ5Hl7sAQ1FgqF/Hbta+0pRF6YER6L+S+QUFE56ev9azfxWYqMqHOuPQmPjEgSQ==}
-
-  codemirror@6.0.2:
-    resolution: {integrity: sha512-VhydHotNW5w1UGK0Qj96BwSk/Zqbp9WbnyK2W/eVMv4QyF41INRGpjUhFJY7/uDNuudSc33a/PKr4iDqRduvHw==}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -10050,13 +10062,6 @@ snapshots:
       '@codemirror/view': 6.43.13
       '@lezer/common': 1.5.3
 
-  '@codemirror/commands@6.11.1':
-    dependencies:
-      '@codemirror/language': 6.12.4
-      '@codemirror/state': 6.7.6
-      '@codemirror/view': 6.43.13
-      '@lezer/common': 1.5.3
-
   '@codemirror/language@6.12.4':
     dependencies:
       '@codemirror/state': 6.7.6
@@ -13142,16 +13147,6 @@ snapshots:
       '@codemirror/view': 6.43.13
       '@lezer/common': 1.5.3
       '@lezer/highlight': 1.2.5
-
-  codemirror@6.0.2:
-    dependencies:
-      '@codemirror/autocomplete': 6.20.3
-      '@codemirror/commands': 6.11.1
-      '@codemirror/language': 6.12.4
-      '@codemirror/lint': 6.9.7
-      '@codemirror/search': 6.7.2
-      '@codemirror/state': 6.7.6
-      '@codemirror/view': 6.43.13
 
   color-convert@2.0.1:
     dependencies:
