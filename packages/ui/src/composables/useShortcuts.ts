@@ -1,9 +1,31 @@
-import { useHotkeys, useHotkeySequences } from "@tanstack/vue-hotkeys";
+import { provideHotkeysContext, useHotkeys, useHotkeySequences } from "@tanstack/vue-hotkeys";
 import type { HotkeyOptions, UseHotkeyDefinition, UseHotkeySequenceDefinition } from "@tanstack/vue-hotkeys";
 import { computed, toValue } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
 import { splitShortcutKey } from "../utils/shortcut.ts";
+
+export interface ShortcutsOptions extends Pick<HotkeyOptions, "conflictBehavior"> {
+  /**
+   * Whether the sequence is active.
+   * @default true
+   */
+  enabled?: MaybeRefOrGetter<boolean>;
+  /**
+   * The DOM element to attach the event listener to.
+   * @default document
+   */
+  target?: MaybeRefOrGetter<HTMLElement | Document | Window | null>;
+}
+
+export function provideShortcutsContext(defaultOptions?: MaybeRefOrGetter<ShortcutsOptions | undefined>) {
+  provideHotkeysContext(
+    computed(() => ({
+      hotkey: toValue(defaultOptions),
+      hotkeySequence: toValue(defaultOptions),
+    })),
+  );
+}
 
 /**
  * Registers keyboard shortcuts for the current component scope.
@@ -14,20 +36,7 @@ import { splitShortcutKey } from "../utils/shortcut.ts";
  */
 export function useShortcuts(
   shortcuts: MaybeRefOrGetter<Record<string, () => void>>,
-  commonOptions?: MaybeRefOrGetter<
-    Pick<HotkeyOptions, "conflictBehavior"> & {
-      /**
-       * Whether the sequence is active.
-       * @default true
-       */
-      enabled?: MaybeRefOrGetter<boolean>;
-      /**
-       * The DOM element to attach the event listener to.
-       * @default document
-       */
-      target?: MaybeRefOrGetter<HTMLElement | Document | Window | null>;
-    }
-  >,
+  commonOptions?: MaybeRefOrGetter<ShortcutsOptions>,
 ) {
   const combinations: UseHotkeyDefinition[] = [];
   const sequences: UseHotkeySequenceDefinition[] = [];

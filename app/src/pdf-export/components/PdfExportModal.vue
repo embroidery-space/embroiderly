@@ -17,7 +17,7 @@ const isDark = computed(() => {
 </script>
 
 <template>
-  <Dialog fullscreen :title="$t('pdf-export')" :class="$style.dialog">
+  <Dialog fullscreen :dismissible="false" :title="$t('pdf-export')" :class="$style.dialog">
     <template #body>
       <Splitter direction="horizontal" :class="$style.splitter">
         <SplitterPanel>

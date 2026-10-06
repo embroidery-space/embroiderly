@@ -341,7 +341,7 @@ useShortcuts({
 </script>
 
 <template>
-  <header :class="$style.header">
+  <header tabindex="-1" :class="$style.header">
     <div data-tauri-drag-region :class="$style.bar">
       <div :class="$style.menu">
         <Menubar v-if="isLargeScreen" :menus="appMenu.desktopMenubarMenus" />

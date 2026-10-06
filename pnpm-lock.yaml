@@ -167,6 +167,9 @@ catalogs:
     '@codemirror/autocomplete':
       specifier: 6.20.3
       version: 6.20.3
+    '@codemirror/commands':
+      specifier: 6.11.1
+      version: 6.11.1
     '@codemirror/language':
       specifier: 6.12.4
       version: 6.12.4
@@ -222,8 +225,8 @@ catalogs:
       specifier: 10.6.1
       version: 10.6.1
     '@tanstack/vue-hotkeys':
-      specifier: 0.12.1
-      version: 0.12.1
+      specifier: 0.13.0
+      version: 0.13.0
     '@tauri-apps/api':
       specifier: 2.12.0
       version: 2.12.0
@@ -532,6 +535,9 @@ importers:
       '@codemirror/autocomplete':
         specifier: 'catalog:'
         version: 6.20.3
+      '@codemirror/commands':
+        specifier: 'catalog:'
+        version: 6.11.1
       '@codemirror/language':
         specifier: 'catalog:'
         version: 6.12.4
@@ -847,7 +853,7 @@ importers:
     dependencies:
       '@tanstack/vue-hotkeys':
         specifier: 'catalog:'
-        version: 0.12.1(vue@3.5.43(typescript@6.0.3))
+        version: 0.13.0(vue@3.5.43(typescript@6.0.3))
       '@vueuse/core':
         specifier: 'catalog:'
         version: 15.0.0(vue@3.5.43(typescript@6.0.3))
@@ -1551,6 +1557,9 @@ packages:
 
   '@codemirror/autocomplete@6.20.3':
     resolution: {integrity: sha512-tlosUqb+3BbxCxZdu4tKeRghPFC+QM7q4X5YhKV2eCmPG+1r2F3f4AaSz5sCrFqUtX4Jh20VFTKecl16MgiV9g==}
+
+  '@codemirror/commands@6.11.1':
+    resolution: {integrity: sha512-O/4hG3SC1YwcmQ0d2UVNDs+AsaNWd1iHVxbTeEBuqH+6bExAiPK3iS/BvpY6rZGURALv4ZD3sIgcCmRvw3ehBg==}
 
   '@codemirror/language@6.12.4':
     resolution: {integrity: sha512-1q4PaT+o6PbgpkJt4Q8Fv5XJxTy4FUZ4MWETtyiDw3J0Pyr9E2vqcKL+k9wcvjNTIsauxvE7OfmWj3FRPHQ76A==}
@@ -3630,8 +3639,8 @@ packages:
   '@swc/helpers@0.5.18':
     resolution: {integrity: sha512-TXTnIcNJQEKwThMMqBXsZ4VGAza6bvN4pa41Rkqoio6QBKMvo+5lexeTMScGCIxtzgQJzElcvIltani+adC5PQ==}
 
-  '@tanstack/hotkeys@0.10.1':
-    resolution: {integrity: sha512-Rp4OGFrelk9O67PtLr0I1fs5lO+c1OByN0ZkHOvmhdYsKfzMejAbxrBzbJlXJ1eVVmwrGJC11bHCaG2XD+M8xw==}
+  '@tanstack/hotkeys@0.11.0':
+    resolution: {integrity: sha512-uFKTuknj3sNp5ERoxsI0ISMMOVw3KmSkgy2iIcp19QR/zheYm7bkwzNndMv5NDAqhXpavOn6h4A6HPVJFCBXPg==}
     engines: {node: '>=20'}
 
   '@tanstack/store@0.11.2':
@@ -3640,8 +3649,8 @@ packages:
   '@tanstack/virtual-core@3.13.18':
     resolution: {integrity: sha512-Mx86Hqu1k39icq2Zusq+Ey2J6dDWTjDvEv43PJtRCoEYTLyfaPnxIQ6iy7YAOK0NV/qOEmZQ/uCufrppZxTgcg==}
 
-  '@tanstack/vue-hotkeys@0.12.1':
-    resolution: {integrity: sha512-0cxzLrRDZETqYhKhlH0fAzDFIiGqG0jJw2BPTAOLaqsfe37CYXRhS2vw3YG5260tMltNUHgNo9PFMI4jeqBnQQ==}
+  '@tanstack/vue-hotkeys@0.13.0':
+    resolution: {integrity: sha512-24uIyRbP7a13hHy/rLeFtgE17S5uk0cF0ggqJVOMlSWcR2GXQ0+mIdgWVjtSxAc1ekkalMAg2H58OICLAtgLRw==}
     engines: {node: '>=20'}
     peerDependencies:
       vue: '>=3.0.0'
@@ -10062,6 +10071,13 @@ snapshots:
       '@codemirror/view': 6.43.13
       '@lezer/common': 1.5.3
 
+  '@codemirror/commands@6.11.1':
+    dependencies:
+      '@codemirror/language': 6.12.4
+      '@codemirror/state': 6.7.6
+      '@codemirror/view': 6.43.13
+      '@lezer/common': 1.5.3
+
   '@codemirror/language@6.12.4':
     dependencies:
       '@codemirror/state': 6.7.6
@@ -11579,7 +11595,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tanstack/hotkeys@0.10.1':
+  '@tanstack/hotkeys@0.11.0':
     dependencies:
       '@tanstack/store': 0.11.2
 
@@ -11587,9 +11603,9 @@ snapshots:
 
   '@tanstack/virtual-core@3.13.18': {}
 
-  '@tanstack/vue-hotkeys@0.12.1(vue@3.5.43(typescript@6.0.3))':
+  '@tanstack/vue-hotkeys@0.13.0(vue@3.5.43(typescript@6.0.3))':
     dependencies:
-      '@tanstack/hotkeys': 0.10.1
+      '@tanstack/hotkeys': 0.11.0
       '@tanstack/vue-store': 0.11.2(vue@3.5.43(typescript@6.0.3))
       vue: 3.5.43(typescript@6.0.3)
     transitivePeerDependencies:

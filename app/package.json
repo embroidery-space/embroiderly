@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@codemirror/autocomplete": "catalog:",
+    "@codemirror/commands": "catalog:",
     "@codemirror/language": "catalog:",
     "@codemirror/search": "catalog:",
     "@codemirror/state": "catalog:",

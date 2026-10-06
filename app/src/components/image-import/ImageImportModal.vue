@@ -165,7 +165,7 @@ onUnmounted(() => service.destroy());
 </script>
 
 <template>
-  <Dialog fullscreen :title="$t('image-import')" :class="$style.dialog">
+  <Dialog fullscreen :dismissible="false" :title="$t('image-import')" :class="$style.dialog">
     <template #body>
       <div :class="[$style.layout, { [$style.portrait]: isMobilePortrait }]">
         <div :class="$style.options">
