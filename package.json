@@ -47,5 +47,5 @@
     "stylelint-config-recommended-vue": "catalog:",
     "stylelint-config-standard": "catalog:"
   },
-  "packageManager": "pnpm@11.28.3"
+  "packageManager": "pnpm@11.28.5"
 }

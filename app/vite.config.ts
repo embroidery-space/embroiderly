@@ -116,7 +116,7 @@ export default defineConfig({
           setupFiles: ["vitest-browser-vue", "./tests/components/vitest.setup.ts"],
           browser: {
             enabled: true,
-            headless: isCI,
+            headless: true,
             provider: webdriverio(),
             instances: [
               (() => {

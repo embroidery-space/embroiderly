@@ -15,6 +15,7 @@ export default defineConfigWithVueTs(
   includeIgnoreFile(
     [
       fileURLToPath(new URL(".gitignore", import.meta.url)),
+      fileURLToPath(new URL("app/.gitignore", import.meta.url)),
       fileURLToPath(new URL("packages/ui/.gitignore", import.meta.url)),
     ],
     { gitignoreResolution: true },
