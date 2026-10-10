@@ -1,20 +1,14 @@
-export const DEFAULT_PATTERN_TEMPLATE = `#import "draw.typ": render-frames
-
 #let pattern = json("pattern.json")
 #let color = sys.inputs.at("color", default: true)
 
-// Set the document metadata.
 #set document(
   title: [#pattern.info.title],
   author: pattern.info.author,
   description: [#pattern.info.description],
 )
 
-// Set the document styles.
 #set page(
   paper: "a4",
-
-  // Example: \`Page 1    _Pattern Title_                _Author_\`.
   header: context [
     #set text(10pt)
     Page #counter(page).display("1") #h(1em)
@@ -23,15 +17,7 @@ export const DEFAULT_PATTERN_TEMPLATE = `#import "draw.typ": render-frames
 )
 #set text(font: "Fixel", size: 14pt)
 
-// Render the pattern information.
-// Example:
-// \`\`\`
-// Pattern name: My Pattern
-// Designed by:  John Doe © 2025
-// Fabric:       Aida White, 100W x 100H Stitches
-// Description:
-// This is a sample description of the pattern.
-// \`\`\`
+// Pattern info.
 #table(
   stroke: none,
   columns: 2,
@@ -52,13 +38,7 @@ export const DEFAULT_PATTERN_TEMPLATE = `#import "draw.typ": render-frames
   table.cell(colspan: 2, [#pattern.info.description]),
 )
 
-// Render the palette information.
-// Example:
-// \`\`\`
-// Symbol   Brand   Number   Color Name
-// ------------------------------------
-//    X     DMC     310      Black
-// \`\`\`
+// Palette.
 #table(
   stroke: none,
   columns: 4,
@@ -80,10 +60,9 @@ export const DEFAULT_PATTERN_TEMPLATE = `#import "draw.typ": render-frames
   },
 )
 
-// Render the pattern frames. Each frame fills its own page.
+// Pattern frames.
 #let frames = render-frames(pattern, color)
 #for (i, frame) in frames.enumerate(start: 1) {
   pagebreak(weak: true)
   figure(frame, numbering: none, caption: [Frame #i/#frames.len()])
 }
-`;

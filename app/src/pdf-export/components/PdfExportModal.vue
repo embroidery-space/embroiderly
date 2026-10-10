@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { Dialog, Splitter, SplitterPanel } from "@embroiderly/ui";
 
-import { computed } from "vue";
+import { ref, computed, toRaw } from "vue";
 
+import { PatternPdf } from "~/lib/pattern/";
 import { useSettingsStore } from "~/settings/";
-
-import { DEFAULT_PATTERN_TEMPLATE } from "../constants.ts";
 
 import TypstEditor from "./TypstEditor.vue";
 
+const props = defineProps<{ pdf: PatternPdf }>();
+
 const settingsStore = useSettingsStore();
+
+const pdf = ref<PatternPdf>(new PatternPdf(toRaw(props.pdf)));
 
 const isDark = computed(() => {
   return settingsStore.ui.theme === "system"
@@ -23,7 +26,7 @@ const isDark = computed(() => {
     <template #body>
       <Splitter direction="horizontal" :class="$style.splitter">
         <SplitterPanel>
-          <TypstEditor :doc="DEFAULT_PATTERN_TEMPLATE" :dark="isDark" @update:doc="console.log" />
+          <TypstEditor v-model="pdf.template" :dark="isDark" />
         </SplitterPanel>
 
         <SplitterPanel :class="$style.splitterPanel">PDF Preview</SplitterPanel>

@@ -7,6 +7,7 @@ import { ReferenceImage, ReferenceImageSettings } from "./image.ts";
 import { Layer, LayerVisibility, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import type { Symbol } from "./palette.ts";
+import { PatternPdf } from "./pattern-pdf.ts";
 import { PdfExportOptions, PublishSettings } from "./publish.ts";
 import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitchModel } from "./stitches.ts";
 import type { Stitch } from "./stitches.ts";
@@ -58,6 +59,8 @@ export class Pattern extends EventTarget {
   #layers: Layers;
   #specialStitchModels: SpecialStitchModel[];
 
+  #pdf: PatternPdf;
+
   #displaySettings: DisplaySettings;
   #publishSettings: PublishSettings;
 
@@ -74,6 +77,8 @@ export class Pattern extends EventTarget {
     layers?: b.infer<typeof Layers.schema> | Layer[] | Layers;
     specialStitchModels?: b.infer<typeof SpecialStitchModel.schema>[];
 
+    pdf?: Partial<b.infer<typeof PatternPdf.schema>>;
+
     displaySettings?: Partial<b.infer<typeof DisplaySettings.schema>>;
     publishSettings?: Partial<b.infer<typeof PublishSettings.schema>>;
   }) {
@@ -88,6 +93,8 @@ export class Pattern extends EventTarget {
     this.#palette = new Palette(data?.palette);
     this.#layers = new Layers(data?.layers);
     this.#specialStitchModels = data?.specialStitchModels?.map((model) => new SpecialStitchModel(model)) ?? [];
+
+    this.#pdf = new PatternPdf(data?.pdf);
 
     this.#displaySettings = new DisplaySettings(data?.displaySettings);
     this.#publishSettings = new PublishSettings(data?.publishSettings);
@@ -110,6 +117,8 @@ export class Pattern extends EventTarget {
     palette: Palette.schema,
     layers: Layers.schema,
     specialStitchModels: b.vec(SpecialStitchModel.schema),
+
+    pdf: PatternPdf.schema,
 
     displaySettings: DisplaySettings.schema,
     publishSettings: PublishSettings.schema,
@@ -284,6 +293,13 @@ export class Pattern extends EventTarget {
   set pdfExportOptions(options: PdfExportOptions) {
     this.#publishSettings.pdf = options;
     this.dispatchEvent(new CustomEvent(PatternEvent.UpdatePdfExportOptions, { detail: options }));
+  }
+
+  get pdf() {
+    return this.#pdf;
+  }
+  set pdf(pdf: PatternPdf) {
+    this.#pdf = pdf;
   }
 }
 

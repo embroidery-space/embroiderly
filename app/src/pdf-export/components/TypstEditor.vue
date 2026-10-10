@@ -14,7 +14,7 @@ export interface TypstEditorProps {
   dark?: boolean;
 }
 
-const doc = defineModel<string>("doc", { required: true });
+const doc = defineModel<string>({ required: true });
 const { dark: isDark = false } = defineProps<TypstEditorProps>();
 
 const container = useTemplateRef("container");
