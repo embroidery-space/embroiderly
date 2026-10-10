@@ -117,7 +117,7 @@ catalog:
 
   # TypeScript
   "typescript": 6.0.3
-  "vue-tsc": 3.3.12
+  "vue-tsc": 3.3.11
   "@tsconfig/node24": 24.0.5
   "@tsconfig/strictest": 2.0.8
   "@vue/tsconfig": 0.9.1
