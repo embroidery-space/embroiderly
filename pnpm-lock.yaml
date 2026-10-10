@@ -173,6 +173,9 @@ catalogs:
     '@codemirror/language':
       specifier: 6.12.4
       version: 6.12.4
+    '@codemirror/lint':
+      specifier: 6.9.7
+      version: 6.9.7
     '@codemirror/search':
       specifier: 6.7.2
       version: 6.7.2
@@ -541,6 +544,9 @@ importers:
       '@codemirror/language':
         specifier: 'catalog:'
         version: 6.12.4
+      '@codemirror/lint':
+        specifier: 'catalog:'
+        version: 6.9.7
       '@codemirror/search':
         specifier: 'catalog:'
         version: 6.7.2

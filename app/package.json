@@ -23,6 +23,7 @@
     "@codemirror/autocomplete": "catalog:",
     "@codemirror/commands": "catalog:",
     "@codemirror/language": "catalog:",
+    "@codemirror/lint": "catalog:",
     "@codemirror/search": "catalog:",
     "@codemirror/state": "catalog:",
     "@codemirror/view": "catalog:",
