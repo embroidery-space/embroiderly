@@ -10,8 +10,7 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-      day: saturday
+      interval: monthly
       time: "00:00"
     groups:
       minor-and-patch:
@@ -20,11 +19,11 @@ updates:
           - patch
     cooldown:
       default-days: 3
+      semver-major-days: 7
   - package-ecosystem: cargo
     directory: /
     schedule:
-      interval: weekly
-      day: saturday
+      interval: monthly
       time: "00:00"
     groups:
       minor-and-patch:
@@ -33,3 +32,4 @@ updates:
           - patch
     cooldown:
       default-days: 3
+      semver-major-days: 7
