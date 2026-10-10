@@ -85,7 +85,7 @@ catalog:
   "eslint-plugin-no-only-tests": 3.4.0
   "eslint-plugin-oxlint": 1.86.0
   "eslint-plugin-vue": 10.11.1
-  "eslint-plugin-wdio": 9.31.3
+  "eslint-plugin-wdio": 10.0.0
   "eslint-plugin-yml": 3.8.1
   "markdownlint-cli2": 0.23.3
   "oxfmt": 0.71.0

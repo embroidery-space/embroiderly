@@ -324,8 +324,8 @@ catalogs:
       specifier: 10.11.1
       version: 10.11.1
     eslint-plugin-wdio:
-      specifier: 9.31.3
-      version: 9.31.3
+      specifier: 10.0.0
+      version: 10.0.0
     eslint-plugin-yml:
       specifier: 3.8.1
       version: 3.8.1
@@ -477,7 +477,7 @@ importers:
         version: 10.11.1(@typescript-eslint/parser@8.60.1(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(vue-eslint-parser@10.4.0(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2))
       eslint-plugin-wdio:
         specifier: 'catalog:'
-        version: 9.31.3(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(globals@17.6.0)(typescript-eslint@8.60.1(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))
+        version: 10.0.0(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(globals@17.6.0)(typescript-eslint@8.60.1(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))
       eslint-plugin-yml:
         specifier: 'catalog:'
         version: 3.8.1(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))
@@ -5230,13 +5230,13 @@ packages:
       '@typescript-eslint/parser':
         optional: true
 
-  eslint-plugin-wdio@9.31.3:
-    resolution: {integrity: sha512-jjBSFcrC1RbbOX4uCms2ICxhikBS/gSIWmZ7/xFu6WT6NZGI1Gt1YZTsaoYvs01Qdhlhf+oqeLDAulNTJ5OrTA==}
-    engines: {node: '>=18.20.0'}
+  eslint-plugin-wdio@10.0.0:
+    resolution: {integrity: sha512-fIPH2OG8Q5HAvytEfBfumb8prNWexUyLuY9mihgvakODoLuJlcNgV+5zQ+hJaKz7oeQdflhaLB3xlfCXbCI9XA==}
+    engines: {node: '>=22.19.0'}
     peerDependencies:
-      eslint: ^9.39.2 || ^10.0.0
+      eslint: ^10.0.0
       globals: ^16.5.0 || ^17.0.0
-      typescript-eslint: ^8.54.0
+      typescript-eslint: ^8.56.0
     peerDependenciesMeta:
       typescript-eslint:
         optional: true
@@ -13580,7 +13580,7 @@ snapshots:
     optionalDependencies:
       '@typescript-eslint/parser': 8.60.1(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
 
-  eslint-plugin-wdio@9.31.3(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(globals@17.6.0)(typescript-eslint@8.60.1(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)):
+  eslint-plugin-wdio@10.0.0(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(globals@17.6.0)(typescript-eslint@8.60.1(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)):
     dependencies:
       eslint: 10.7.0(jiti@2.7.0)(supports-color@10.2.2)
       globals: 17.6.0
