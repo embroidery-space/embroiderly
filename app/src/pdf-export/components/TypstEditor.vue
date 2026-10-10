@@ -4,7 +4,6 @@ import { EditorView } from "@codemirror/view";
 import { typst_lezer as typst } from "codemirror-lang-typst/lezer";
 import { shallowRef, useTemplateRef, onMounted, onBeforeUnmount, watch } from "vue";
 
-import { DEFAULT_PATTERN_TEMPLATE } from "../constants.ts";
 import { editorSetup, nordDark, nordLight } from "../lib/codemirror/";
 
 export interface TypstEditorProps {
@@ -15,6 +14,7 @@ export interface TypstEditorProps {
   dark?: boolean;
 }
 
+const doc = defineModel<string>("doc", { required: true });
 const { dark: isDark = false } = defineProps<TypstEditorProps>();
 
 const container = useTemplateRef("container");
@@ -32,8 +32,20 @@ watch(
 
 onMounted(() => {
   editor.value = new EditorView({
-    doc: DEFAULT_PATTERN_TEMPLATE,
-    extensions: [editorSetup, Prec.high(typst()), Prec.highest(theme.of(isDark ? nordDark : nordLight))],
+    doc: doc.value,
+    extensions: [
+      editorSetup,
+
+      Prec.high(typst()),
+      Prec.highest(theme.of(isDark ? nordDark : nordLight)),
+
+      EditorView.updateListener.of((update) => {
+        if (!update.docChanged) return;
+
+        const content = update.state.doc.toString();
+        if (content !== doc.value) doc.value = content;
+      }),
+    ],
     parent: container.value!,
   });
 });

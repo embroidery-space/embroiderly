@@ -5,6 +5,8 @@ import { computed } from "vue";
 
 import { useSettingsStore } from "~/settings/";
 
+import { DEFAULT_PATTERN_TEMPLATE } from "../constants.ts";
+
 import TypstEditor from "./TypstEditor.vue";
 
 const settingsStore = useSettingsStore();
@@ -21,7 +23,7 @@ const isDark = computed(() => {
     <template #body>
       <Splitter direction="horizontal" :class="$style.splitter">
         <SplitterPanel>
-          <TypstEditor :dark="isDark" />
+          <TypstEditor :doc="DEFAULT_PATTERN_TEMPLATE" :dark="isDark" @update:doc="console.log" />
         </SplitterPanel>
 
         <SplitterPanel :class="$style.splitterPanel">PDF Preview</SplitterPanel>
