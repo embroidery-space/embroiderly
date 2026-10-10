@@ -7,6 +7,7 @@ updates:
       time: "00:00"
     cooldown:
       default-days: 7
+      semver-major-days: 14
   - package-ecosystem: npm
     directory: /
     schedule:
@@ -19,6 +20,7 @@ updates:
           - patch
     cooldown:
       default-days: 3
+      semver-major-days: 7
   - package-ecosystem: cargo
     directory: /
     schedule:
@@ -31,3 +33,4 @@ updates:
           - patch
     cooldown:
       default-days: 3
+      semver-major-days: 7
