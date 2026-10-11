@@ -1,6 +1,5 @@
 use super::display::DisplaySettings;
 use super::pattern_pdf::PatternPdf;
-use super::publish::PublishSettings;
 use super::{Pattern, ReferenceImage};
 
 #[cfg(test)]
@@ -54,7 +53,6 @@ pub struct EmbroiderlyProject {
   pub pattern_pdf: PatternPdf,
 
   pub display_settings: DisplaySettings,
-  pub publish_settings: PublishSettings,
 }
 
 impl EmbroiderlyProject {
@@ -80,7 +78,6 @@ pub struct EmbroiderlyProjectBuilder {
   reference_image: Option<ReferenceImage>,
 
   display_settings: Option<DisplaySettings>,
-  publish_settings: Option<PublishSettings>,
 }
 
 impl EmbroiderlyProjectBuilder {
@@ -94,7 +91,6 @@ impl EmbroiderlyProjectBuilder {
       reference_image: None,
 
       display_settings: None,
-      publish_settings: None,
     }
   }
 
@@ -119,13 +115,6 @@ impl EmbroiderlyProjectBuilder {
     self
   }
 
-  /// Sets the publish settings for the project.
-  #[must_use]
-  pub const fn publish_settings(mut self, publish_settings: PublishSettings) -> Self {
-    self.publish_settings = Some(publish_settings);
-    self
-  }
-
   /// Builds the `EmbroiderlyProject`.
   #[must_use]
   pub fn build(self) -> EmbroiderlyProject {
@@ -138,7 +127,6 @@ impl EmbroiderlyProjectBuilder {
       pattern_pdf: self.pattern_pdf.unwrap_or_default(),
 
       display_settings: self.display_settings.unwrap_or_default(),
-      publish_settings: self.publish_settings.unwrap_or_default(),
     }
   }
 }

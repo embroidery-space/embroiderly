@@ -171,9 +171,9 @@ class MetricsServiceClass {
     this.#capture("pattern_exported_as_pdf", { color });
   }
 
-  // capturePdfExportOptionsUpdated(options: PdfExportOptions) {
-  //   this.#capture("pdf_export_settings_updated", this.#pdfExportProperties(options));
-  // }
+  capturePatternPdfUpdated(color: boolean) {
+    this.#capture("pattern_pdf_updated", { color });
+  }
 
   captureReferenceImageSet(file: File) {
     this.#capture("reference_image_set", {

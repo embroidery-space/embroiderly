@@ -589,3 +589,7 @@ pdf-export-save-template = Зберегти шаблон
 pdf-export-export-document = Експортувати документ
 pdf-export-export-document-monochrome = Експортувати чорно-білий документ
 pdf-export-export-document-color = Експортувати кольоровий документ
+
+pdf-export-discard-confirm =
+  .title = Відхилити зміни
+  .description = У вас є незбережені зміни до шаблону PDF. Чи хочете ви скасувати їх?

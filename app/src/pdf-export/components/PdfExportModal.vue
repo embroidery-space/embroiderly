@@ -8,33 +8,38 @@ import {
   Splitter,
   SplitterPanel,
   Switch,
+  useConfirm,
   useToast,
 } from "@embroiderly/ui";
 import type { DropdownMenuItem } from "@embroiderly/ui";
 
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { isEqual } from "es-toolkit";
+import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick } from "vue";
 
 import { IconChevronDown } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import { Pattern, PatternPdf } from "~/lib/pattern/";
+import { PatternPdf } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
 import { useSettingsStore } from "~/settings/";
+import { usePatternStore } from "~/stores/";
 
 import TypstEditor from "./TypstEditor.vue";
 
-const props = defineProps<{ patternId: string }>();
+const open = defineModel<boolean>("open", { default: false });
 
+const patternStore = usePatternStore();
 const settingsStore = useSettingsStore();
 
 const { editor, files } = useEditor();
 const filePicker = useFilePicker();
 const { fluent } = useI18n();
+const confirm = useConfirm();
 const toast = useToast();
 
 const service = new PdfExportService();
 
-const title = ref<string>();
-const pdf = ref(new PatternPdf());
+const pdf = ref(new PatternPdf(toRaw(patternStore.pattern.pdf)));
+const isDirty = computed(() => !isEqual(patternStore.pattern.pdf, pdf.value));
 
 const isDark = computed(() => {
   return settingsStore.ui.theme === "system"
@@ -46,19 +51,44 @@ const exportItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
       label: fluent.$t("pdf-export-export-document-monochrome"),
-      onSelect: () => exportPattern(new PatternPdf({ ...pdf.value, color: false })),
+      onSelect: () => handleExport(new PatternPdf({ ...pdf.value, color: false })),
     },
     {
       label: fluent.$t("pdf-export-export-document-color"),
-      onSelect: () => exportPattern(new PatternPdf({ ...pdf.value, color: true })),
+      onSelect: () => handleExport(new PatternPdf({ ...pdf.value, color: true })),
     },
   ],
 ]);
 
+let forceClosing = false;
+watch(open, async (value) => {
+  if (value || forceClosing || !isDirty.value) return;
+
+  open.value = true; // Reka UI flips this to `false` on its own; revert immediately.
+
+  const accepted = await confirm.open(fluent.$ta("pdf-export-discard-confirm")).result;
+  if (!accepted) return;
+
+  forceClosing = true;
+  open.value = false;
+});
+
+function handleClose() {
+  open.value = false; // The watcher above handles the confirmation.
+}
+
+async function handleSave() {
+  await patternStore.updatePatternPdf(pdf.value);
+
+  // Close the modal next tick, so that the pattern in the store is updated and `isDirty` becomes `fasle`.
+  await nextTick();
+  open.value = false;
+}
+
 const isExporting = ref(false);
-async function exportPattern(pdf: PatternPdf) {
+async function handleExport(pdf: PatternPdf) {
   const handle = await filePicker.save({
-    suggestedName: `${title.value ?? "pattern"}.${pdf.color ? "color" : "monochrome"}.pdf`,
+    suggestedName: `${patternStore.pattern.info.title ?? "pattern"}.${pdf.color ? "color" : "monochrome"}.pdf`,
     types: filePicker.filters.pdf,
     id: filePicker.ids.pdf,
   });
@@ -85,14 +115,9 @@ async function exportPattern(pdf: PatternPdf) {
 }
 
 onMounted(async () => {
-  const patternData = await editor.loadPattern(props.patternId);
-  const pattern = Pattern.deserialize(patternData);
-
-  title.value = pattern.info.title;
-  pdf.value = pattern.pdf;
-
+  const patternData = await editor.loadPattern(patternStore.pattern.id);
   const fontData = await Promise.all(
-    [...pattern.palette.usedSymbolFonts, "/fonts/FixelVariable.ttf", "/fonts/FixelVariableItalic.ttf"].map(
+    [...patternStore.pattern.palette.usedSymbolFonts, "/fonts/FixelVariable.ttf", "/fonts/FixelVariableItalic.ttf"].map(
       async (resource) => {
         if (resource.startsWith("/fonts/")) {
           return new Uint8Array((await fetch(resource).then((r) => r.arrayBuffer())) as ArrayBuffer);
@@ -109,13 +134,13 @@ onUnmounted(() => service.destroy());
 </script>
 
 <template>
-  <Dialog fullscreen :dismissible="false" :title="$t('pdf-export')" :class="$style.dialog">
+  <Dialog v-model:open="open" fullscreen :dismissible="false" :title="$t('pdf-export')" :class="$style.dialog">
     <template #body>
       <div :class="$style.toolbar">
         <Switch v-model="pdf.color" :label="$t('pdf-export-color')" />
 
         <FormFieldGroup>
-          <Button :loading="isExporting" :label="$t('pdf-export-export-document')" @click="exportPattern(pdf)" />
+          <Button :loading="isExporting" :label="$t('pdf-export-export-document')" @click="handleExport(pdf)" />
           <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
             <Button :disabled="isExporting" :icon="IconChevronDown" />
           </DropdownMenu>
@@ -127,6 +152,11 @@ onUnmounted(() => service.destroy());
           <TypstEditor v-model="pdf.template" :dark="isDark" />
         </SplitterPanel>
       </Splitter>
+    </template>
+
+    <template #footer>
+      <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="handleClose" />
+      <Button loading-auto :label="$t('pdf-export-save-template')" @click="handleSave" />
     </template>
   </Dialog>
 </template>

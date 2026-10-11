@@ -8,7 +8,6 @@ import { Layer, LayerVisibility, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import type { Symbol } from "./palette.ts";
 import { PatternPdf } from "./pattern-pdf.ts";
-import { PdfExportOptions, PublishSettings } from "./publish.ts";
 import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitchModel } from "./stitches.ts";
 import type { Stitch } from "./stitches.ts";
 
@@ -62,7 +61,6 @@ export class Pattern extends EventTarget {
   #pdf: PatternPdf;
 
   #displaySettings: DisplaySettings;
-  #publishSettings: PublishSettings;
 
   #effectiveDisplayMode: DisplayMode | undefined;
 
@@ -80,7 +78,6 @@ export class Pattern extends EventTarget {
     pdf?: Partial<b.infer<typeof PatternPdf.schema>>;
 
     displaySettings?: Partial<b.infer<typeof DisplaySettings.schema>>;
-    publishSettings?: Partial<b.infer<typeof PublishSettings.schema>>;
   }) {
     super();
 
@@ -97,7 +94,6 @@ export class Pattern extends EventTarget {
     this.#pdf = new PatternPdf(data?.pdf);
 
     this.#displaySettings = new DisplaySettings(data?.displaySettings);
-    this.#publishSettings = new PublishSettings(data?.publishSettings);
 
     this.#effectiveDisplayMode = this.#displaySettings.displayMode;
   }
@@ -121,7 +117,6 @@ export class Pattern extends EventTarget {
     pdf: PatternPdf.schema,
 
     displaySettings: DisplaySettings.schema,
-    publishSettings: PublishSettings.schema,
   });
 
   static deserialize(data: Uint8Array) {
@@ -287,14 +282,6 @@ export class Pattern extends EventTarget {
     return this.#displaySettings.showRulers;
   }
 
-  get pdfExportOptions() {
-    return this.#publishSettings.pdf;
-  }
-  set pdfExportOptions(options: PdfExportOptions) {
-    this.#publishSettings.pdf = options;
-    this.dispatchEvent(new CustomEvent(PatternEvent.UpdatePdfExportOptions, { detail: options }));
-  }
-
   get pdf() {
     return this.#pdf;
   }
@@ -323,7 +310,7 @@ export const enum PatternEvent {
   UpdateDisplaySettings = "display:update",
   UpdateDisplayMode = "display:set_mode",
 
-  UpdatePdfExportOptions = "publish:update-pdf",
+  UpdatePatternPdf = "pattern-pdf:update",
 
   AddLayer = "layers:add",
   RemoveLayer = "layers:remove",

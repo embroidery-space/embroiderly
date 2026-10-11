@@ -13,9 +13,9 @@ import {
   SetSymbolData,
   DisplayMode,
   DisplaySettings,
-  PdfExportOptions,
   PatternInfo,
   ReferenceImageSettings,
+  PatternPdf,
   SpecialStitch,
   serializeStitch,
 } from "~/lib/pattern/";
@@ -255,13 +255,13 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
     return await updateDisplaySettings(new DisplaySettings({ ...pattern.value.displaySettings, showRulers: value }));
   }
 
-  async function updatePdfExportOptions(options: PdfExportOptions) {
+  async function updatePatternPdf(pdf: PatternPdf) {
     if (pattern.value.isNil) return;
-    await editor.updatePdfExportOptions(pattern.value.id, PdfExportOptions.serialize(options));
-    // MetricsService.capturePdfExportOptionsUpdated(options);
+    await editor.updatePatternPdf(pattern.value.id, PatternPdf.serialize(pdf));
+    MetricsService.capturePatternPdfUpdated(pdf.color);
   }
-  events.on("publish:update-pdf", (options) => {
-    pattern.value.pdfExportOptions = options;
+  events.on("pattern-pdf:update", (pdf) => {
+    pattern.value.pdf = pdf;
   });
 
   async function undo(options?: { single?: boolean }) {
@@ -312,7 +312,7 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
     showSymbols,
     showGrid,
     showRulers,
-    updatePdfExportOptions,
+    updatePatternPdf,
     undo,
     redo,
     startTransaction,

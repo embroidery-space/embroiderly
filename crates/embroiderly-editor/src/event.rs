@@ -1,6 +1,6 @@
 use embroiderly_pattern::{
-  DisplaySettings, EmbroiderlyProjectId, Fabric, Grid, Layer, PaletteItem, PaletteSettings, PatternInfo,
-  PdfExportOptions, ReferenceImage, ReferenceImageSettings, Stitch, Symbol,
+  DisplaySettings, EmbroiderlyProjectId, Fabric, Grid, Layer, PaletteItem, PaletteSettings, PatternInfo, PatternPdf,
+  ReferenceImage, ReferenceImageSettings, Stitch, Symbol,
 };
 
 use crate::actions::layers::LayerVisibility;
@@ -35,6 +35,8 @@ pub enum EditorEvent {
 
   PatternInfoUpdate(PatternInfo),
 
+  PatternPdfUpdate(PatternPdf),
+
   DisplayUpdate(DisplaySettings),
 
   GridUpdate(Grid),
@@ -53,8 +55,6 @@ pub enum EditorEvent {
     visibility: LayerVisibility,
   },
   LayerMove(Vec<u32>),
-
-  PublishUpdatePdf(PdfExportOptions),
 
   ImageSet(Option<ReferenceImage>),
   ImageSettingsUpdate(ReferenceImageSettings),

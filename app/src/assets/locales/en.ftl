@@ -585,3 +585,7 @@ pdf-export-save-template = Save Template
 pdf-export-export-document = Export Document
 pdf-export-export-document-monochrome = Export black and white document
 pdf-export-export-document-color = Export color document
+
+pdf-export-discard-confirm =
+  .title = Discard Changes
+  .description = You have unsaved changes to the PDF template. Do you want to discard them?
