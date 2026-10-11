@@ -80,7 +80,7 @@ function handleClose() {
 async function handleSave() {
   await patternStore.updatePatternPdf(pdf.value);
 
-  // Close the modal next tick, so that the pattern in the store is updated and `isDirty` becomes `fasle`.
+  // Close the modal next tick, so that the pattern in the store is updated and `isDirty` becomes `false`.
   await nextTick();
   open.value = false;
 }
