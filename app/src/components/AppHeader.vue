@@ -114,7 +114,7 @@ const appMenu = computed(() => {
             {
               label: "PDF",
               onSelect() {
-                modals.pdfExportModal.open({ pdf: patternStore.pattern.pdf });
+                modals.pdfExportModal.open({ patternId: patternStore.pattern.id });
               },
             },
           ],

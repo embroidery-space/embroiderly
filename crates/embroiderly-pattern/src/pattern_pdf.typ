@@ -1,6 +1,3 @@
-#let pattern = json("pattern.json")
-#let color = sys.inputs.at("color", default: true)
-
 #set document(
   title: [#pattern.info.title],
   author: pattern.info.author,
@@ -61,7 +58,13 @@
 )
 
 // Pattern frames.
-#let frames = render-frames(pattern, color)
+#let frames = render-frames(
+  pattern,
+  frame-size: (30, 40),
+  preserved-overlap: 3,
+  show-grid-line-numbers: true,
+  show-centering-marks: true,
+)
 #for (i, frame) in frames.enumerate(start: 1) {
   pagebreak(weak: true)
   figure(frame, numbering: none, caption: [Frame #i/#frames.len()])

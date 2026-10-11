@@ -258,7 +258,7 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
   async function updatePdfExportOptions(options: PdfExportOptions) {
     if (pattern.value.isNil) return;
     await editor.updatePdfExportOptions(pattern.value.id, PdfExportOptions.serialize(options));
-    MetricsService.capturePdfExportOptionsUpdated(options);
+    // MetricsService.capturePdfExportOptionsUpdated(options);
   }
   events.on("publish:update-pdf", (options) => {
     pattern.value.pdfExportOptions = options;

@@ -1,33 +1,30 @@
 use anyhow::Result;
 use embroiderly_pattern::*;
 
-use crate::PdfVariant;
-
 #[cfg(test)]
 #[path = "pdf.test.rs"]
 mod tests;
 
-const TEMPLATE: &str = include_str!("./typst/pattern.typ");
-const DRAWING_MODULE: &str = include_str!("./typst/draw.typ");
-
-pub fn export_pattern(
-  embproj: EmbroiderlyProject,
-  options: PdfExportOptions,
-  variant: PdfVariant,
-  font_data: Vec<Vec<u8>>,
-) -> Result<Vec<u8>> {
+pub fn export_pattern(embproj: &EmbroiderlyProject, font_data: &[Vec<u8>], pattern_pdf: PatternPdf) -> Result<Vec<u8>> {
   let typst_template = typst_as_lib::TypstEngine::builder()
-    .main_file(TEMPLATE)
-    .with_static_source_file_resolver([("draw.typ", DRAWING_MODULE)])
+    .main_file(
+      [
+        "#import \"draw.typ\": render-frames",
+        "#let pattern = json(\"pattern.json\")",
+        &pattern_pdf.template,
+      ]
+      .join("\n\n"),
+    )
+    .with_static_source_file_resolver([("draw.typ", include_str!("./typst/draw.typ"))])
     .fonts(font_data.iter().map(Vec::as_slice))
-    .with_static_file_resolver([("pattern.json", compose_pattern_json(&embproj, options)?)])
+    .with_static_file_resolver([("pattern.json", compose_pattern_json(embproj)?)])
     .build();
 
   let inputs = {
     use typst::foundations::{Dict, IntoValue as _};
 
     let mut inputs = Dict::new();
-    inputs.insert("color".into(), matches!(variant, PdfVariant::Color).into_value());
+    inputs.insert("color".into(), pattern_pdf.color.into_value());
 
     inputs
   };
@@ -38,9 +35,9 @@ pub fn export_pattern(
     .map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))
 }
 
-fn compose_pattern_json(embproj: &EmbroiderlyProject, options: PdfExportOptions) -> Result<Vec<u8>> {
+fn compose_pattern_json(embproj: &EmbroiderlyProject) -> Result<Vec<u8>> {
   let (palette, layer) = flatten_layers_with_palette_in_visual_order(&embproj.pattern);
-  let pattern_data = PatternData::new(embproj, &palette, &layer, options);
+  let pattern_data = PatternData::new(embproj, &palette, &layer);
   Ok(serde_json::to_vec(&pattern_data)?)
 }
 
@@ -117,17 +114,10 @@ struct PatternData<'a> {
   nodestitches: &'a Stitches<NodeStitch>,
   specialstitches: &'a Stitches<SpecialStitch>,
   special_stitch_models: &'a [SpecialStitchModel],
-
-  pdf_export_options: PdfExportOptions,
 }
 
 impl<'a> PatternData<'a> {
-  fn new(
-    embproj: &'a EmbroiderlyProject,
-    palette: &'a [PaletteItem],
-    layer: &'a Layer,
-    pdf_export_options: PdfExportOptions,
-  ) -> Self {
+  fn new(embproj: &'a EmbroiderlyProject, palette: &'a [PaletteItem], layer: &'a Layer) -> Self {
     Self {
       info: &embproj.pattern.info,
 
@@ -142,8 +132,6 @@ impl<'a> PatternData<'a> {
       nodestitches: &layer.nodestitches,
       specialstitches: &layer.specialstitches,
       special_stitch_models: &embproj.pattern.special_stitch_models,
-
-      pdf_export_options,
     }
   }
 }

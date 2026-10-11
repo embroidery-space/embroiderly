@@ -30,6 +30,11 @@ watch(
   },
 );
 
+watch(doc, (newDoc) => {
+  if (!editor.value || newDoc === editor.value.state.doc.toString()) return;
+  editor.value.dispatch({ changes: { from: 0, to: editor.value.state.doc.length, insert: newDoc } });
+});
+
 onMounted(() => {
   editor.value = new EditorView({
     doc: doc.value,
