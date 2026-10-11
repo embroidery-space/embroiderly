@@ -590,6 +590,6 @@ pdf-export-export-document = Експортувати документ
 pdf-export-export-document-monochrome = Експортувати чорно-білий документ
 pdf-export-export-document-color = Експортувати кольоровий документ
 
-pdf-export-discard-confirm =
-  .title = Відхилити зміни
-  .description = У вас є незбережені зміни до шаблону PDF. Чи хочете ви скасувати їх?
+pdf-export-unsaved-changes =
+  .title = Незбережені зміни
+  .description = Шаблон PDF має незбережені зміни. Чи хочете ви зберегти його перед закриттям?

@@ -66,8 +66,9 @@ watch(open, async (value) => {
 
   open.value = true; // Reka UI flips this to `false` on its own; revert immediately.
 
-  const accepted = await confirm.open(fluent.$ta("pdf-export-discard-confirm")).result;
-  if (!accepted) return;
+  const accepted = await confirm.open(fluent.$ta("pdf-export-unsaved-changes")).result;
+  if (accepted === undefined) return;
+  else if (accepted) await patternStore.updatePatternPdf(pdf.value);
 
   forceClosing = true;
   open.value = false;
