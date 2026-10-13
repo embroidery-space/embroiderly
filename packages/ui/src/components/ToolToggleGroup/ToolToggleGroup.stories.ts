@@ -7,9 +7,6 @@ import ToolToggleGroupStates from "./stories/ToolToggleGroupStates.vue";
 import ToolToggleGroup from "./ToolToggleGroup.vue";
 import type { ToolToggleItem } from "./ToolToggleGroup.vue";
 
-const orientations = ["horizontal", "vertical"] as const;
-const sizes = ["sm", "md", "lg"] as const;
-
 const compactItems: ToolToggleItem[] = [
   { icon: "lucide:square", tooltip: "Solid", value: "solid" },
   { icon: "lucide:grid-2x2", tooltip: "Stitches", value: "stitches" },
@@ -32,10 +29,6 @@ const meta = {
   title: "Toolbar/ToolToggleGroup",
   // @ts-expect-error `ToolToggleGroup` is a generic component.
   component: ToolToggleGroup,
-  argTypes: {
-    orientation: { control: "select", options: orientations },
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof ToolToggleGroup>;
 
 export default meta;
@@ -47,7 +40,6 @@ export const Demo: Story = {
     modelValue: "solid",
     items: compactItems,
     orientation: "horizontal",
-    size: "lg",
     disabled: false,
   },
   render: (args) => {

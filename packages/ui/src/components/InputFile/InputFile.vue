@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="M extends boolean = false">
 import { computed, ref } from "vue";
 
-import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Button from "../Button/Button.vue";
 import FormFieldGroup from "../FormFieldGroup/FormFieldGroup.vue";
@@ -14,12 +13,6 @@ export interface InputFileProps<M extends boolean = false> {
    */
   label?: string;
 
-  /**
-   * The size of the file input.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
   /** Specifies the allowed file types for the input. */
   accept?: string;
 
@@ -31,14 +24,9 @@ export interface InputFileProps<M extends boolean = false> {
 }
 
 const modelValue = defineModel<M extends true ? File[] : File>();
-const props = withDefaults(defineProps<InputFileProps>(), {
-  size: "md",
-});
+const props = defineProps<InputFileProps>();
 
 const locale = useLocale();
-
-const { fieldGroupSize } = useFormFieldGroup();
-const size = computed(() => props.size ?? fieldGroupSize.value);
 
 const input = ref<HTMLInputElement | null>(null);
 
@@ -68,8 +56,8 @@ const displayValue = computed(() => {
 </script>
 
 <template>
-  <FormFieldGroup :size="size" :class="$style.root">
-    <Button :label="locale.messages.filePicker.chooseFile" :size="size" :disabled="disabled" @click="openPicker" />
+  <FormFieldGroup :class="$style.root">
+    <Button :label="locale.messages.filePicker.chooseFile" :disabled="disabled" @click="openPicker" />
 
     <!-- Keep this hidden input between other elements, so that they receive correct border radius. -->
     <input
@@ -82,7 +70,7 @@ const displayValue = computed(() => {
       @change="onChange"
     />
 
-    <Input readonly :model-value="label ?? displayValue" :size="size" :disabled="disabled" />
+    <Input readonly :model-value="label ?? displayValue" :disabled="disabled" />
   </FormFieldGroup>
 </template>
 

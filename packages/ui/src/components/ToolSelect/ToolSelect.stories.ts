@@ -9,8 +9,6 @@ import ToolSelectStates from "./stories/ToolSelectStates.vue";
 import ToolSelect from "./ToolSelect.vue";
 import type { ToolSelectItem } from "./ToolSelect.vue";
 
-const sizes = ["sm", "md", "lg"] as const;
-
 const singleItem: ToolSelectItem[] = [{ label: "Pencil", icon: "lucide:pencil", value: "pencil" }];
 const multipleItems: ToolSelectItem[] = [
   { label: "Pencil", icon: "lucide:pencil", value: "pencil", shortcut: "P" },
@@ -22,9 +20,6 @@ const meta = {
   title: "Toolbar/ToolSelect",
   // @ts-expect-error `ToolSelect` is a generic component.
   component: ToolSelect,
-  argTypes: {
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof ToolSelect>;
 
 export default meta;
@@ -35,7 +30,6 @@ export const Demo: Story = {
   args: {
     modelValue: "pencil",
     items: multipleItems,
-    size: "lg",
     disabled: false,
   },
   render: (args) => {

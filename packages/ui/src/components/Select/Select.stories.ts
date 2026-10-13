@@ -6,12 +6,8 @@ import Select from "./Select.vue";
 import type { SelectItem } from "./Select.vue";
 import SelectDemo from "./stories/SelectDemo.vue";
 import SelectOpen from "./stories/SelectOpen.vue";
-import SelectSizes from "./stories/SelectSizes.vue";
 import SelectStates from "./stories/SelectStates.vue";
 import SelectVariants from "./stories/SelectVariants.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
-const variants = ["subtle", "outline"] as const;
 
 const items: SelectItem[] = [
   { label: "Backlog", value: "backlog" },
@@ -39,10 +35,6 @@ const meta = {
   title: "Form/Select",
   // @ts-expect-error `Select` is a generic component.
   component: Select,
-  argTypes: {
-    variant: { control: "select", options: variants },
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof Select>;
 
 export default meta;
@@ -52,8 +44,6 @@ type Story = StoryObj<typeof meta>;
 export const Demo: Story = {
   args: {
     variant: "subtle",
-    size: "md",
-
     disabled: false,
     loading: false,
     searchInput: false,
@@ -73,14 +63,6 @@ export const Demo: Story = {
       `,
     };
   },
-};
-
-export const Sizes: Story = {
-  render: () => ({
-    components: { SelectSizes },
-    setup: () => ({ items }),
-    template: `<SelectSizes :items="items" />`,
-  }),
 };
 
 export const Variants: Story = {

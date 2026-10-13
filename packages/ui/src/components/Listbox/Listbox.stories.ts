@@ -9,9 +9,6 @@ import ListboxDemo from "./stories/ListboxDemo.vue";
 import ListboxSizes from "./stories/ListboxSizes.vue";
 import ListboxStates from "./stories/ListboxStates.vue";
 
-const sizes = ["sm", "md", "lg"] as const;
-const colors = ["primary", "neutral"] as const;
-
 const flatItems: ListboxItem[] = ["Backlog", "Todo", "In Progress", "Done", "Cancelled"];
 
 const groupedItems: ListboxItem[][] = [
@@ -23,10 +20,6 @@ const meta = {
   title: "Form/Listbox",
   // @ts-expect-error `Listbox` is a generic component.
   component: Listbox,
-  argTypes: {
-    color: { control: "select", options: colors },
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof Listbox>;
 
 export default meta;

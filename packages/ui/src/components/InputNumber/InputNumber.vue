@@ -3,29 +3,15 @@ import { NumberField } from "reka-ui/namespaced";
 import { computed } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import { useFormField } from "../../composables/useFormField.ts";
-import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Button from "../Button/Button.vue";
 
 export interface InputNumberProps {
-  id?: string;
-
-  /**
-   * The color scheme of the input.
-   * @default "primary"
-   */
-  color?: "primary";
   /**
    * The style variant of the input.
    * @default "subtle"
    */
   variant?: "subtle" | "outline";
-  /**
-   * The size of the input.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
 
   /** Whether the input is disabled. */
   disabled?: boolean;
@@ -67,7 +53,6 @@ defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<number | null>();
 const props = withDefaults(defineProps<InputNumberProps>(), {
-  color: "primary",
   variant: "subtle",
 
   increment: true,
@@ -77,16 +62,11 @@ const props = withDefaults(defineProps<InputNumberProps>(), {
 const { icons } = useComponentIcons();
 const locale = useLocale();
 
-const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
-const size = computed(() => props.size ?? (fieldGroup.value ? fieldGroupSize.value : formFieldSize.value));
-
 const hasButtons = computed(() => props.increment || props.decrement);
 </script>
 
 <template>
   <NumberField.Root
-    :id="id"
     v-model="modelValue"
     :min="min"
     :max="max"
@@ -95,16 +75,9 @@ const hasButtons = computed(() => props.increment || props.decrement);
     :format-options="formatOptions"
     :disabled="disabled"
     data-slot="root"
-    :class="[
-      $style.root,
-      $style[`color-${color}`],
-      $style[`variant-${variant}`],
-      $style[`size-${size}`],
-      hasButtons && $style.hasButtons,
-      fieldGroup && $style.fieldGroup,
-    ]"
+    :class="[$style.root, $style[`variant-${variant}`], hasButtons && $style.hasButtons]"
   >
-    <NumberField.Input v-bind="{ ...$attrs, ...ariaAttrs }" data-slot="base" :class="$style.base" />
+    <NumberField.Input v-bind="$attrs" data-slot="base" :class="$style.base" />
 
     <div v-if="hasButtons" data-slot="buttons" :class="$style.buttons">
       <NumberField.Increment v-if="increment" as-child :disabled="disabled">
@@ -113,7 +86,6 @@ const hasButtons = computed(() => props.increment || props.decrement);
           color="neutral"
           variant="link"
           :icon="incrementIcon ?? icons.chevronUp"
-          :size="size"
           :aria-label="locale.messages.inputNumber.increment"
         />
       </NumberField.Increment>
@@ -124,7 +96,6 @@ const hasButtons = computed(() => props.increment || props.decrement);
           color="neutral"
           variant="link"
           :icon="decrementIcon ?? icons.chevronDown"
-          :size="size"
           :aria-label="locale.messages.inputNumber.decrement"
         />
       </NumberField.Decrement>
@@ -138,16 +109,17 @@ const hasButtons = computed(() => props.increment || props.decrement);
 
   display: inline-flex;
   align-items: center;
-
-  &.field-group:has(*:focus-visible) {
-    z-index: 1;
-  }
 }
 
 .base {
   width: 100%;
+
+  padding-block: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 2.5) calc(var(--spacing) * 8);
   border-width: 0;
   border-radius: var(--radius-md);
+
+  font-size: var(--text-sm);
 
   appearance: none;
 
@@ -157,6 +129,10 @@ const hasButtons = computed(() => props.increment || props.decrement);
 
   &:focus {
     outline-style: none;
+  }
+
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--color-primary);
   }
 
   &:disabled {
@@ -175,58 +151,8 @@ const hasButtons = computed(() => props.increment || props.decrement);
     box-shadow: inset 0 0 0 1px var(--border-color-accented);
   }
 
-  .size-sm > & {
-    padding-block: calc(var(--spacing) * 1);
-    padding-inline: calc(var(--spacing) * 2) calc(var(--spacing) * 7);
-
-    font-size: var(--text-xs);
-  }
-
-  .size-md > & {
-    padding-block: calc(var(--spacing) * 1.5);
-    padding-inline: calc(var(--spacing) * 2.5) calc(var(--spacing) * 8);
-
-    font-size: var(--text-sm);
-  }
-
-  .size-lg > & {
-    padding-block: calc(var(--spacing) * 2);
-    padding-inline: calc(var(--spacing) * 3) calc(var(--spacing) * 9);
-
-    font-size: var(--text-base);
-  }
-
-  .color-primary.variant-subtle > &,
-  .color-primary.variant-outline > & {
-    &:focus-visible {
-      box-shadow: inset 0 0 0 2px var(--color-primary);
-    }
-  }
-
-  .size-sm:not(.has-buttons) > & {
-    padding-inline-end: calc(var(--spacing) * 2);
-  }
-
-  .size-md:not(.has-buttons) > & {
+  &:not(.has-buttons > &) {
     padding-inline-end: calc(var(--spacing) * 2.5);
-  }
-
-  .size-lg:not(.has-buttons) > & {
-    padding-inline-end: calc(var(--spacing) * 3);
-  }
-
-  .field-group:not(:last-child, :first-child) > & {
-    border-radius: 0;
-  }
-
-  .field-group:not(:only-child):first-child > & {
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-  }
-
-  .field-group:not(:only-child):last-child > & {
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
   }
 }
 
@@ -239,17 +165,7 @@ const hasButtons = computed(() => props.increment || props.decrement);
   flex-direction: column;
   justify-content: center;
 
-  .size-sm > & {
-    padding-inline-end: calc(var(--spacing) * 1);
-  }
-
-  .size-md > & {
-    padding-inline-end: calc(var(--spacing) * 1);
-  }
-
-  .size-lg > & {
-    padding-inline-end: calc(var(--spacing) * 1.5);
-  }
+  padding-inline-end: calc(var(--spacing) * 1);
 
   &[data-slot="buttons"] > button[data-slot="base"] {
     scale: 80%;

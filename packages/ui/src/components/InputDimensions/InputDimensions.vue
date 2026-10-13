@@ -11,12 +11,6 @@ import type { InputNumberProps } from "../InputNumber/InputNumber.vue";
 
 export interface InputDimensionsProps {
   /**
-   * The size of the component.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
-  /**
    * The layout orientation of the two inputs.
    * @default "horizontal"
    */
@@ -32,20 +26,19 @@ export interface InputDimensionsProps {
   disabled?: boolean;
 
   /** Additional options for the width `FormField` wrapper. */
-  widthFieldOptions?: Omit<FormFieldProps, "size">;
+  widthFieldOptions?: FormFieldProps;
   /** Additional options for the height `FormField` wrapper. */
-  heightFieldOptions?: Omit<FormFieldProps, "size">;
+  heightFieldOptions?: FormFieldProps;
 
   /** Additional options for the width `InputNumber` component. */
-  widthInputOptions?: Omit<InputNumberProps, "modelValue" | "disabled" | "size">;
+  widthInputOptions?: Omit<InputNumberProps, "modelValue" | "disabled">;
   /** Additional options for the height `InputNumber` component. */
-  heightInputOptions?: Omit<InputNumberProps, "modelValue" | "disabled" | "size">;
+  heightInputOptions?: Omit<InputNumberProps, "modelValue" | "disabled">;
 }
 
 const width = defineModel<number>("width");
 const height = defineModel<number>("height");
 const props = withDefaults(defineProps<InputDimensionsProps>(), {
-  size: "md",
   orientation: "horizontal",
 });
 
@@ -97,10 +90,9 @@ function handleHeightChange(newHeight: number) {
 
 <template>
   <div data-slot="root" :class="[$style.root, $style[`orientation-${orientation}`]]">
-    <FormField v-bind="widthFieldOptions" :size="size">
+    <FormField v-bind="widthFieldOptions">
       <InputNumber
         v-bind="widthInputOptions"
-        :size="size"
         :disabled="disabled"
         :model-value="width"
         @update:model-value="handleWidthChange($event!)"
@@ -116,7 +108,6 @@ function handleHeightChange(newHeight: number) {
       "
       :color="aspectRatioLocked ? 'primary' : 'neutral'"
       variant="ghost"
-      :size="size"
       :disabled="disabled"
       data-slot="lock-button"
       :class="$style.lockButton"
@@ -124,10 +115,9 @@ function handleHeightChange(newHeight: number) {
       @click="toggleAspectRatioLock"
     />
 
-    <FormField v-bind="heightFieldOptions" :size="size">
+    <FormField v-bind="heightFieldOptions">
       <InputNumber
         v-bind="heightInputOptions"
-        :size="size"
         :disabled="disabled"
         :model-value="height"
         @update:model-value="handleHeightChange($event!)"

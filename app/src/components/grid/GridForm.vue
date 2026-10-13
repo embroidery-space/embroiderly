@@ -9,7 +9,7 @@ const grid = defineModel<Grid>({ required: true });
 <template>
   <div>
     <div :class="$style.general">
-      <FormField v-bind="$ta('grid-major-lines-interval')">
+      <FormField :label="$t('grid-major-lines-interval')">
         <InputNumber v-model="grid.majorLinesInterval" data-testid="grid-major-lines-interval-input" :min="1" />
       </FormField>
     </div>

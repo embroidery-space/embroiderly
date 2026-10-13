@@ -114,7 +114,7 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
       :options="results.map((r) => r.item)"
       :option-value="(pi) => ({ brand: pi.brand, number: pi.number })"
       :display-settings="PALETTE_CATALOG_DISPLAY_SETTINGS"
-      :filter-input="{ ...$ta('palette-catalog-search'), variant: 'outline', size: 'md' }"
+      :filter-input="{ ...$ta('palette-catalog-search') }"
       multiple
       @option-dblclick="({ palitem }) => handlePaletteCatalogOptionDoubleClick(palitem)"
     >

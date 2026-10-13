@@ -1,27 +1,10 @@
 <script setup lang="ts">
+import { useCurrentElement } from "@vueuse/core";
+import { injectFieldRootContext } from "reka-ui";
+import { Field } from "reka-ui/namespaced";
 import { nextTick, onMounted, useTemplateRef, watch } from "vue";
 
-import { useFormField } from "../../composables/useFormField.ts";
-
 export interface TextareaProps {
-  id?: string;
-
-  /**
-   * The color scheme of the textarea.
-   * @default "primary"
-   */
-  color?: "primary";
-  /**
-   * The style variant of the textarea.
-   * @default "subtle"
-   */
-  variant?: "subtle" | "outline";
-  /**
-   * The size of the textarea.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
   /**
    * The number of visible text lines.
    * @default 3
@@ -44,21 +27,16 @@ defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<string>();
 const props = withDefaults(defineProps<TextareaProps>(), {
-  color: "primary",
-  variant: "subtle",
-  size: "md",
-
   rows: 3,
   maxrows: 0,
 });
-
-const { id, size, ariaAttrs } = useFormField(props);
+const fieldContext = injectFieldRootContext(null);
 
 watch(modelValue, () => {
   nextTick(autoResize);
 });
 
-const textarea = useTemplateRef("textarea");
+const textarea = useCurrentElement(useTemplateRef("textarea"));
 function autoResize() {
   if (!props.autoresize || !textarea.value) return;
 
@@ -88,21 +66,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    data-slot="root"
-    :class="[
-      $style.root,
-      $style[`color-${color}`],
-      $style[`variant-${variant}`],
-      $style[`size-${size}`],
-      autoresize && $style.autoresize,
-    ]"
-  >
-    <textarea
-      :id="id"
+  <div data-slot="root" :class="[$style.root, autoresize && $style.autoresize]">
+    <Field.Control
+      v-if="fieldContext"
       ref="textarea"
       v-model="modelValue"
-      v-bind="{ ...$attrs, ...ariaAttrs }"
+      v-bind="$attrs"
+      as="textarea"
+      :rows="rows"
+      :disabled="disabled"
+      data-slot="base"
+      :class="$style.base"
+    />
+    <textarea
+      v-else
+      ref="textarea"
+      v-model="modelValue"
+      v-bind="$attrs"
       :rows="rows"
       :disabled="disabled"
       data-slot="base"
@@ -120,11 +100,21 @@ onMounted(() => {
 }
 
 .base {
+  gap: calc(var(--spacing) * 1.5);
+
   width: 100%;
+
+  padding-block: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 2.5);
   border-width: 0;
   border-radius: var(--radius-md);
 
+  font-size: var(--text-sm);
+
   appearance: none;
+
+  background-color: var(--background-color-elevated);
+  box-shadow: inset 0 0 0 1px var(--border-color-accented);
 
   transition-timing-function: var(--default-transition-timing-function);
   transition-duration: var(--default-transition-duration);
@@ -134,58 +124,18 @@ onMounted(() => {
     outline-style: none;
   }
 
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--color-primary);
+  }
+
   &:disabled {
     cursor: not-allowed;
 
     opacity: 75%;
   }
 
-  .variant-subtle > & {
-    background-color: var(--background-color-elevated);
-    box-shadow: inset 0 0 0 1px var(--border-color-accented);
-  }
-
-  .variant-outline > & {
-    background-color: var(--background-color-default);
-    box-shadow: inset 0 0 0 1px var(--border-color-accented);
-  }
-
-  .size-sm > & {
-    gap: calc(var(--spacing) * 1);
-
-    padding-block: calc(var(--spacing) * 1);
-    padding-inline: calc(var(--spacing) * 2);
-
-    font-size: var(--text-xs);
-  }
-
-  .size-md > & {
-    gap: calc(var(--spacing) * 1.5);
-
-    padding-block: calc(var(--spacing) * 1.5);
-    padding-inline: calc(var(--spacing) * 2.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .size-lg > & {
-    gap: calc(var(--spacing) * 2);
-
-    padding-block: calc(var(--spacing) * 2);
-    padding-inline: calc(var(--spacing) * 3);
-
-    font-size: var(--text-base);
-  }
-
   .autoresize > & {
     resize: none;
-  }
-
-  .color-primary.variant-subtle > &,
-  .color-primary.variant-outline > & {
-    &:focus-visible {
-      box-shadow: inset 0 0 0 2px var(--color-primary);
-    }
   }
 }
 </style>

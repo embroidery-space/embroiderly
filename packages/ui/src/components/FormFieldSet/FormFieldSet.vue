@@ -8,12 +8,6 @@ export interface FormFieldSetProps {
   /** The legend text for the fieldset. */
   legend: string;
 
-  /**
-   * The size of the fieldset legend.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
   /** When true, the fieldset content can be collapsed by clicking the legend.*/
   collapsible?: boolean;
 }
@@ -23,36 +17,22 @@ export interface FormFieldSetSlots {
 }
 
 const open = defineModel<boolean>("open", { default: true });
-const props = withDefaults(defineProps<FormFieldSetProps>(), {
-  size: "md",
-});
+defineProps<FormFieldSetProps>();
 defineSlots<FormFieldSetSlots>();
 
 const { icons } = useComponentIcons();
 </script>
 
 <template>
-  <fieldset v-if="!collapsible" data-slot="root" :class="[$style.root, $style[`size-${size}`]]">
+  <fieldset v-if="!collapsible" data-slot="root" :class="[$style.root]">
     <legend data-slot="legend" :class="$style.legend">{{ legend }}</legend>
     <slot />
   </fieldset>
 
-  <Collapsible.Root
-    v-else
-    v-model:open="open"
-    as="fieldset"
-    data-slot="root"
-    :class="[$style.root, $style[`size-${size}`]]"
-  >
+  <Collapsible.Root v-else v-model:open="open" as="fieldset" data-slot="root" :class="[$style.root]">
     <legend data-slot="legend" :class="$style.legend">
       <Collapsible.Trigger as-child>
-        <Button
-          :label="legend"
-          :leading-icon="open ? icons.minus : icons.plus"
-          color="neutral"
-          variant="ghost"
-          :size="props.size"
-        />
+        <Button :label="legend" :leading-icon="open ? icons.minus : icons.plus" color="neutral" variant="ghost" />
       </Collapsible.Trigger>
     </legend>
 
@@ -73,20 +53,9 @@ const { icons } = useComponentIcons();
 }
 
 .legend {
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--text-color-default);
-
-  .size-sm > & {
-    font-size: var(--text-xs);
-  }
-
-  .size-md > & {
-    font-size: var(--text-sm);
-  }
-
-  .size-lg > & {
-    font-size: var(--text-base);
-  }
 }
 
 .content {

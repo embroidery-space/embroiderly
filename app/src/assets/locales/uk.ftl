@@ -415,9 +415,7 @@ fabric-colors-discard-confirm =
 
 grid-properties = Параметри сітки
 
-grid-major-lines-interval =
-  .label = Інтервал головних ліній
-  .hint = У стібках
+grid-major-lines-interval = Інтервал головних ліній
 
 grid-major-lines = Головні лінії
 grid-minor-lines = Малі лінії

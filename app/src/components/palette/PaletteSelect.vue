@@ -9,7 +9,7 @@ import { deserializeBrandPalette } from "~/lib/pattern/";
 import type { BrandPaletteItem } from "~/lib/pattern/";
 import { LoggerService } from "~/services/";
 
-const props = defineProps<Pick<SelectProps, "color" | "variant" | "size">>();
+const props = defineProps<Pick<SelectProps, "variant">>();
 const emits = defineEmits<{
   paletteSelected: [group: string, name: string];
   paletteLoaded: [palette: BrandPaletteItem[]];

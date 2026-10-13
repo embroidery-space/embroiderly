@@ -1,31 +1,13 @@
 <script setup lang="ts">
+import { injectFieldRootContext } from "reka-ui";
+import { Field } from "reka-ui/namespaced";
 import { computed } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import type { UseComponentIconsProps } from "../../composables/useComponentIcons.ts";
-import { useFormField } from "../../composables/useFormField.ts";
-import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
 import Icon from "../Icon/Icon.vue";
 
 export interface InputProps extends UseComponentIconsProps {
-  id?: string;
-
-  /**
-   * The color scheme of the input.
-   * @default "primary"
-   */
-  color?: "primary";
-  /**
-   * The style variant of the input.
-   * @default "subtle"
-   */
-  variant?: "subtle" | "outline" | "none";
-  /**
-   * The size of the input.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
   /** Whether the input is disabled. */
   disabled?: boolean;
 }
@@ -38,15 +20,9 @@ export interface InputSlots {
 defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<string>();
-const props = withDefaults(defineProps<InputProps>(), {
-  color: "primary",
-  variant: "subtle",
-});
+const props = defineProps<InputProps>();
 const slots = defineSlots<InputSlots>();
-
-const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
-const size = computed(() => props.size ?? (fieldGroup.value ? fieldGroupSize.value : formFieldSize.value));
+const fieldContext = injectFieldRootContext(null);
 
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
   computed(() => ({ ...props, loading: props.loading })),
@@ -60,18 +36,7 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
 </script>
 
 <template>
-  <div
-    data-slot="root"
-    :class="[
-      $style.root,
-      $style[`color-${color}`],
-      $style[`variant-${variant}`],
-      $style[`size-${size}`],
-      hasLeading && $style.hasLeading,
-      hasTrailing && $style.hasTrailing,
-      fieldGroup && $style.fieldGroup,
-    ]"
-  >
+  <div data-slot="root" :class="[$style.root, hasLeading && $style.hasLeading, hasTrailing && $style.hasTrailing]">
     <span v-if="hasLeading" data-slot="leading" :class="$style.leading">
       <slot name="leading">
         <Icon
@@ -84,10 +49,20 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
       </slot>
     </span>
 
-    <input
-      :id="id"
+    <Field.Control
+      v-if="fieldContext"
       v-model="modelValue"
-      v-bind="{ ...$attrs, ...ariaAttrs }"
+      v-bind="$attrs"
+      as="input"
+      type="text"
+      :disabled="disabled"
+      data-slot="base"
+      :class="$style.base"
+    />
+    <input
+      v-else
+      v-model="modelValue"
+      v-bind="$attrs"
       type="text"
       :disabled="disabled"
       data-slot="base"
@@ -114,10 +89,6 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
 
   display: inline-flex;
   align-items: center;
-
-  &.field-group:has(*:focus-visible) {
-    z-index: 1;
-  }
 }
 
 .leading {
@@ -128,50 +99,39 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
   display: flex;
   align-items: center;
 
-  .size-sm > & {
-    padding-inline-start: calc(var(--spacing) * 2);
-  }
-
-  .size-md > & {
-    padding-inline-start: calc(var(--spacing) * 2.5);
-  }
-
-  .size-lg > & {
-    padding-inline-start: calc(var(--spacing) * 3);
-  }
+  padding-inline-start: calc(var(--spacing) * 2.5);
 }
 
 .leading-icon {
   flex-shrink: 0;
+
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
 
   color: var(--text-color-dimmed);
 
   &.loading {
     animation: var(--animate-spin);
   }
-
-  .size-sm > * > & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .size-md > * > & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-lg > * > & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
 }
 
 .base {
+  gap: calc(var(--spacing) * 1.5);
+
   width: 100%;
+
+  padding-block: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 2.5);
+
   border-width: 0;
   border-radius: var(--radius-md);
 
+  font-size: var(--text-sm);
+
   appearance: none;
+
+  background-color: var(--background-color-elevated);
+  box-shadow: inset 0 0 0 1px var(--border-color-accented);
 
   transition-timing-function: var(--default-transition-timing-function);
   transition-duration: var(--default-transition-duration);
@@ -181,96 +141,22 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
     outline-style: none;
   }
 
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--color-primary);
+  }
+
   &:disabled {
     cursor: not-allowed;
 
     opacity: 75%;
   }
 
-  .variant-subtle > & {
-    background-color: var(--background-color-elevated);
-    box-shadow: inset 0 0 0 1px var(--border-color-accented);
-  }
-
-  .variant-outline > & {
-    background-color: var(--background-color-default);
-    box-shadow: inset 0 0 0 1px var(--border-color-accented);
-  }
-
-  .variant-none > & {
-    background-color: transparent;
-  }
-
-  .size-sm > & {
-    gap: calc(var(--spacing) * 1);
-
-    padding-block: calc(var(--spacing) * 1);
-    padding-inline: calc(var(--spacing) * 2);
-
-    font-size: var(--text-xs);
-  }
-
-  .size-md > & {
-    gap: calc(var(--spacing) * 1.5);
-
-    padding-block: calc(var(--spacing) * 1.5);
-    padding-inline: calc(var(--spacing) * 2.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .size-lg > & {
-    gap: calc(var(--spacing) * 2);
-
-    padding-block: calc(var(--spacing) * 2);
-    padding-inline: calc(var(--spacing) * 3);
-
-    font-size: var(--text-base);
-  }
-
-  .color-primary.variant-subtle > &,
-  .color-primary.variant-outline > & {
-    &:focus-visible {
-      box-shadow: inset 0 0 0 2px var(--color-primary);
-    }
-  }
-
-  .size-sm.has-leading > & {
-    padding-inline-start: calc(var(--spacing) * 7);
-  }
-
-  .size-md.has-leading > & {
+  .has-leading > & {
     padding-inline-start: calc(var(--spacing) * 9);
   }
 
-  .size-lg.has-leading > & {
-    padding-inline-start: calc(var(--spacing) * 11);
-  }
-
-  .size-sm.has-trailing > & {
-    padding-inline-end: calc(var(--spacing) * 7);
-  }
-
-  .size-md.has-trailing > & {
+  .has-trailing > & {
     padding-inline-end: calc(var(--spacing) * 9);
-  }
-
-  .size-lg.has-trailing > & {
-    padding-inline-end: calc(var(--spacing) * 11);
-  }
-
-  .field-group:not(:last-child, :first-child) > & {
-    border-radius: 0;
-  }
-
-  .field-group:not(:only-child):first-child > & {
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-  }
-
-  .field-group:not(:only-child):last-child > & {
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
   }
 }
 
@@ -282,41 +168,19 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
   display: flex;
   align-items: center;
 
-  .size-sm > & {
-    padding-inline-end: calc(var(--spacing) * 2);
-  }
-
-  .size-md > & {
-    padding-inline-end: calc(var(--spacing) * 2.5);
-  }
-
-  .size-lg > & {
-    padding-inline-end: calc(var(--spacing) * 3);
-  }
+  padding-inline-end: calc(var(--spacing) * 2.5);
 }
 
 .trailing-icon {
   flex-shrink: 0;
 
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+
   color: var(--text-color-dimmed);
 
   &.loading {
     animation: var(--animate-spin);
-  }
-
-  .size-sm > * > & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .size-md > * > & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-lg > * > & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
   }
 }
 </style>

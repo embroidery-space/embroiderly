@@ -1,29 +1,15 @@
 <script setup lang="ts">
-import { Checkbox, Label } from "reka-ui/namespaced";
+import { Checkbox, Field } from "reka-ui/namespaced";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import { useFormField } from "../../composables/useFormField.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 
 export interface CheckboxProps {
-  id?: string;
-
   /** The label of the checkbox. */
   label?: string;
   /** The description of the checkbox. */
   description?: string;
-
-  /**
-   * The color of the checkbox.
-   * @default "primary"
-   */
-  color?: "primary";
-  /**
-   * The size of the checkbox.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
 
   /**
    * The icon displayed when checked.
@@ -38,30 +24,15 @@ export interface CheckboxProps {
 defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<boolean>();
-const props = withDefaults(defineProps<CheckboxProps>(), {
-  color: "primary",
-  size: "md",
-});
+defineProps<CheckboxProps>();
 
 const { icons } = useComponentIcons();
-
-const { id, size, ariaAttrs } = useFormField(props);
 </script>
 
 <template>
-  <div
-    data-slot="root"
-    :class="[$style.root, $style[`color-${color}`], $style[`size-${size}`], { [$style.disabled]: disabled }]"
-  >
+  <Field.Root data-slot="root" :class="[$style.root, { [$style.disabled]: disabled }]">
     <div data-slot="container" :class="$style.container">
-      <Checkbox.Root
-        :id="id"
-        v-model="modelValue"
-        v-bind="{ ...$attrs, ...ariaAttrs }"
-        :disabled="disabled"
-        data-slot="base"
-        :class="$style.base"
-      >
+      <Checkbox.Root v-model="modelValue" v-bind="$attrs" :disabled="disabled" data-slot="base" :class="$style.base">
         <Checkbox.Indicator data-slot="indicator" :class="$style.indicator">
           <Icon :name="icon ?? icons.check" data-slot="icon" :class="$style.icon" />
         </Checkbox.Indicator>
@@ -69,12 +40,12 @@ const { id, size, ariaAttrs } = useFormField(props);
     </div>
 
     <div v-if="label || description" data-slot="wrapper" :class="$style.wrapper">
-      <Label v-if="label" :for="id" data-slot="label" :class="$style.label">{{ label }}</Label>
-      <p v-if="description" data-slot="description" :class="$style.description">
+      <Field.Label v-if="label" data-slot="label" :class="$style.label">{{ label }}</Field.Label>
+      <Field.Description v-if="description" data-slot="description" :class="$style.description">
         {{ description }}
-      </p>
+      </Field.Description>
     </div>
-  </div>
+  </Field.Root>
 </template>
 
 <style module>
@@ -93,52 +64,26 @@ const { id, size, ariaAttrs } = useFormField(props);
   display: flex;
   align-items: center;
 
-  .size-sm & {
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-md & {
-    height: calc(var(--spacing) * 5);
-  }
-
-  .size-lg & {
-    height: calc(var(--spacing) * 6);
-  }
+  height: calc(var(--spacing) * 5);
 }
 
 .base {
   overflow: hidden;
 
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+
   border-radius: var(--radius-sm);
 
   box-shadow: inset 0 0 0 1px var(--border-color-accented);
-
-  .size-sm & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .size-md & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-lg & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
 
   .disabled & {
     cursor: not-allowed;
   }
 
   &:focus-visible {
-    outline: 2px solid;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
-  }
-
-  .color-primary &:focus-visible {
-    outline-color: var(--color-primary);
   }
 
   &:not(:disabled):hover {
@@ -156,9 +101,7 @@ const { id, size, ariaAttrs } = useFormField(props);
 
   color: var(--text-color-inverted);
 
-  .color-primary & {
-    background-color: var(--color-primary);
-  }
+  background-color: var(--color-primary);
 }
 
 .icon {
@@ -173,17 +116,7 @@ const { id, size, ariaAttrs } = useFormField(props);
   width: 100%;
   margin-inline-start: calc(var(--spacing) * 2);
 
-  .size-sm & {
-    font-size: var(--text-xs);
-  }
-
-  .size-md & {
-    font-size: var(--text-sm);
-  }
-
-  .size-lg & {
-    font-size: var(--text-base);
-  }
+  font-size: var(--text-sm);
 }
 
 .label {
