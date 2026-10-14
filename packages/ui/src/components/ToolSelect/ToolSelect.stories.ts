@@ -4,7 +4,6 @@ import { expect, fn } from "storybook/test";
 
 import ToolSelectDemo from "./stories/ToolSelectDemo.vue";
 import ToolSelectOpen from "./stories/ToolSelectOpen.vue";
-import ToolSelectSizes from "./stories/ToolSelectSizes.vue";
 import ToolSelectStates from "./stories/ToolSelectStates.vue";
 import ToolSelect from "./ToolSelect.vue";
 import type { ToolSelectItem } from "./ToolSelect.vue";
@@ -63,15 +62,6 @@ export const CustomSelectionColor: Story = {
     components: { ToolSelectDemo },
     setup: () => ({ args, multipleItems }),
     template: `<ToolSelectDemo v-bind="args" :items="multipleItems" selection-color="var(--color-error)" />`,
-  }),
-};
-
-export const Sizes: Story = {
-  args: { items: multipleItems },
-  render: () => ({
-    components: { ToolSelectSizes },
-    setup: () => ({ multipleItems }),
-    template: `<ToolSelectSizes :items="multipleItems" />`,
   }),
 };
 
