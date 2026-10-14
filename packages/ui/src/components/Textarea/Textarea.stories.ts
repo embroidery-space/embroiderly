@@ -16,13 +16,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Demo: Story = {
-  args: {
-    rows: 3,
-    maxrows: 0,
-
-    autoresize: false,
-    disabled: false,
-  },
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
