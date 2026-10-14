@@ -59,13 +59,12 @@ function zoomOut() {
       <InputNumber
         :model-value="lastNumericZoom"
         variant="outline"
-        size="sm"
         :min="min"
         :max="max"
         :increment="false"
         :decrement="false"
         :disabled="disabled"
-        :class="$style.zoomInput"
+        :class="$style.input"
         @update:model-value="emit('update:model-value', $event!)"
       />
 
@@ -90,7 +89,6 @@ function zoomOut() {
       <Slider
         :model-value="lastNumericZoom"
         tooltip
-        size="sm"
         :min="min"
         :max="max"
         :disabled="disabled"
@@ -124,10 +122,6 @@ function zoomOut() {
   width: calc(var(--spacing) * 16);
 }
 
-.zoom input.zoom-input[data-slot="base"] {
-  padding-inline: calc(var(--spacing) * 2);
-}
-
 .controls {
   display: flex;
   flex-grow: 1;
@@ -135,7 +129,25 @@ function zoomOut() {
   align-items: center;
 }
 
+/* Make the input and slider a bit smaller. */
+
+.input[data-slot="base"] {
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2);
+
+  font-size: var(--text-xs);
+}
+
 .slider {
   flex-grow: 1;
+
+  [data-slot="track"] {
+    height: calc(var(--spacing) * 1.5);
+  }
+
+  [data-slot="thumb"] {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
 }
 </style>

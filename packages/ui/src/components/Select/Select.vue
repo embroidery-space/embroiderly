@@ -5,8 +5,6 @@ import { Combobox } from "reka-ui/namespaced";
 import { computed, ref, toRef } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import { useFormField } from "../../composables/useFormField.ts";
-import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
 import type { IconValue } from "../../types/icons.ts";
@@ -52,20 +50,10 @@ export interface SelectProps<T extends SelectItem = SelectItem> {
   searchInput?: boolean | InputProps;
 
   /**
-   * The color scheme of the select.
-   * @default "primary"
-   */
-  color?: "primary";
-  /**
    * The style variant of the select.
    * @default "subtle"
    */
   variant?: "subtle" | "outline";
-  /**
-   * The size of the select.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
 
   /** Whether the select is in a loading state. */
   loading?: boolean;
@@ -89,10 +77,7 @@ defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<string | number | undefined>();
 const props = withDefaults(defineProps<SelectProps<T>>(), {
-  color: "primary",
   variant: "subtle",
-  size: "md",
-
   portal: true,
 });
 
@@ -100,9 +85,6 @@ const { icons } = useComponentIcons();
 const { contains } = useFilter({ sensitivity: "base" });
 const locale = useLocale();
 
-const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-const { id, label, size: formFieldSize, ariaAttrs } = useFormField(props);
-const size = computed(() => props.size ?? fieldGroupSize.value ?? formFieldSize.value);
 const portalProps = usePortal(toRef(() => props.portal));
 const searchInputProps = toRef(
   () => defu(props.searchInput, { placeholder: locale.value.messages.select.search }) as InputProps,
@@ -153,14 +135,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     :ignore-filter="!searchInput"
     :reset-search-term-on-blur="false"
     data-slot="root"
-    :class="[
-      $style.root,
-      $style[`color-${color}`],
-      $style[`variant-${variant}`],
-      $style[`size-${size}`],
-      disabled && $style.disabled,
-      fieldGroup && $style.fieldGroup,
-    ]"
+    :class="[$style.root, $style[`variant-${variant}`], disabled && $style.disabled]"
     @update:open="
       (value) => {
         open = value;
@@ -169,14 +144,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     "
   >
     <Combobox.Anchor as-child>
-      <Combobox.Trigger
-        :id="id"
-        :aria-label="label"
-        v-bind="{ ...$attrs, ...ariaAttrs }"
-        :disabled="disabled"
-        data-slot="base"
-        :class="$style.base"
-      >
+      <Combobox.Trigger :id="id" v-bind="$attrs" :disabled="disabled" data-slot="base" :class="$style.base">
         <span v-if="displayValue" data-slot="value" :class="$style.value">
           {{ displayValue }}
         </span>
@@ -200,10 +168,10 @@ function normalizeItem(item: SelectItem): SelectItemObject {
         :side-offset="4"
         :collision-padding="4"
         data-slot="content"
-        :class="[$style.content, $style[`size-${size}`]]"
+        :class="$style.content"
       >
         <Combobox.Input v-if="!!searchInput" v-model="searchValue" as-child>
-          <Input v-bind="searchInputProps" autofocus autocomplete="off" :size="size" data-slot="input" />
+          <Input v-bind="searchInputProps" autofocus autocomplete="off" data-slot="input" />
         </Combobox.Input>
 
         <Combobox.Viewport data-slot="viewport" :class="$style.viewport">
@@ -257,22 +225,25 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
   display: inline-flex;
   align-items: center;
-
-  &.field-group:has(*:focus-visible) {
-    z-index: 1;
-  }
 }
 
 .base {
   display: inline-flex;
+
+  gap: calc(var(--spacing) * 1.5);
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
+  padding-block: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 2.5);
   border-width: 0;
   border-radius: var(--radius-md);
 
+  font-size: var(--text-sm);
   text-align: start;
+
+  appearance: none;
 
   transition-timing-function: var(--default-transition-timing-function);
   transition-duration: var(--default-transition-duration);
@@ -280,6 +251,10 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
   &:focus {
     outline-style: none;
+  }
+
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--color-primary);
   }
 
   &:disabled {
@@ -298,58 +273,10 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     box-shadow: inset 0 0 0 1px var(--border-color-accented);
   }
 
-  .size-sm > & {
-    gap: calc(var(--spacing) * 1);
-
-    padding-block: calc(var(--spacing) * 1);
-    padding-inline: calc(var(--spacing) * 2);
-
-    font-size: var(--text-xs);
-  }
-
-  .size-md > & {
-    gap: calc(var(--spacing) * 1.5);
-
-    padding-block: calc(var(--spacing) * 1.5);
-    padding-inline: calc(var(--spacing) * 2.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .size-lg > & {
-    gap: calc(var(--spacing) * 2);
-
-    padding-block: calc(var(--spacing) * 2);
-    padding-inline: calc(var(--spacing) * 3);
-
-    font-size: var(--text-base);
-  }
-
   .disabled > & {
     cursor: not-allowed;
 
     opacity: 75%;
-  }
-
-  .color-primary.variant-subtle > &,
-  .color-primary.variant-outline > & {
-    &:focus-visible {
-      box-shadow: inset 0 0 0 2px var(--color-primary);
-    }
-  }
-
-  .field-group:not(:last-child, :first-child) > & {
-    border-radius: 0;
-  }
-
-  .field-group:not(:only-child):first-child > & {
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-  }
-
-  .field-group:not(:only-child):last-child > & {
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
   }
 }
 
@@ -371,22 +298,10 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 .trailing-icon {
   flex-shrink: 0;
 
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+
   color: var(--text-color-muted);
-
-  .size-sm > * > & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-md > * > & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
-
-  .size-lg > * > & {
-    width: calc(var(--spacing) * 6);
-    height: calc(var(--spacing) * 6);
-  }
 
   &.loading {
     animation: var(--animate-spin);
@@ -425,31 +340,15 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
   & > [data-slot="root"] {
     width: 100%;
+
+    padding-block: calc(var(--spacing) * 1.5);
+    padding-inline: calc(var(--spacing) * 2.5);
     border-bottom: 1px solid var(--border-color-default);
+
+    font-size: var(--text-sm);
 
     background-color: var(--background-color-default);
     outline-style: none;
-  }
-
-  &.size-sm > [data-slot="root"] {
-    padding-block: calc(var(--spacing) * 1);
-    padding-inline: calc(var(--spacing) * 2);
-
-    font-size: var(--text-xs);
-  }
-
-  &.size-md > [data-slot="root"] {
-    padding-block: calc(var(--spacing) * 1.5);
-    padding-inline: calc(var(--spacing) * 2.5);
-
-    font-size: var(--text-sm);
-  }
-
-  &.size-lg > [data-slot="root"] {
-    padding-block: calc(var(--spacing) * 2);
-    padding-inline: calc(var(--spacing) * 3);
-
-    font-size: var(--text-base);
   }
 }
 
@@ -462,26 +361,11 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 }
 
 .empty {
+  padding-block: calc(var(--spacing) * 1.5);
+
+  font-size: var(--text-sm);
   color: var(--text-color-muted);
   text-align: center;
-
-  .content.size-sm & {
-    padding-block: calc(var(--spacing) * 1);
-
-    font-size: var(--text-xs);
-  }
-
-  .content.size-md & {
-    padding-block: calc(var(--spacing) * 1.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .content.size-lg & {
-    padding-block: calc(var(--spacing) * 2);
-
-    font-size: var(--text-base);
-  }
 }
 
 .separator {
@@ -494,35 +378,15 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
 .label {
   display: flex;
+  gap: calc(var(--spacing) * 1.5);
   align-items: center;
 
   width: 100%;
+  padding: calc(var(--spacing) * 1.5);
+
+  font-size: var(--text-sm);
 
   font-weight: 600;
-
-  .content.size-sm & {
-    gap: calc(var(--spacing) * 1);
-
-    padding: calc(var(--spacing) * 1);
-
-    font-size: var(--text-xs);
-  }
-
-  .content.size-md & {
-    gap: calc(var(--spacing) * 1.5);
-
-    padding: calc(var(--spacing) * 1.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .content.size-lg & {
-    gap: calc(var(--spacing) * 2);
-
-    padding: calc(var(--spacing) * 2);
-
-    font-size: var(--text-sm);
-  }
 }
 
 .item {
@@ -530,9 +394,14 @@ function normalizeItem(item: SelectItem): SelectItemObject {
   user-select: none;
 
   display: flex;
+  gap: calc(var(--spacing) * 1.5);
   align-items: center;
 
+  padding: calc(var(--spacing) * 1.5);
+
   border-radius: var(--radius-sm);
+
+  font-size: var(--text-sm);
 
   color: var(--text-color-default);
 
@@ -545,47 +414,15 @@ function normalizeItem(item: SelectItem): SelectItemObject {
   &[data-highlighted] {
     background-color: var(--background-color-elevated);
   }
-
-  .content.size-sm & {
-    gap: calc(var(--spacing) * 1);
-
-    padding: calc(var(--spacing) * 1);
-
-    font-size: var(--text-xs);
-  }
-
-  .content.size-md & {
-    gap: calc(var(--spacing) * 1.5);
-
-    padding: calc(var(--spacing) * 1.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .content.size-lg & {
-    gap: calc(var(--spacing) * 2);
-
-    padding: calc(var(--spacing) * 2);
-
-    font-size: var(--text-base);
-  }
 }
 
 .item-leading-icon {
   flex-shrink: 0;
 
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+
   color: var(--text-color-dimmed);
-
-  .content.size-sm & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .content.size-md &,
-  .content.size-lg & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
 }
 
 .item-label {
@@ -601,23 +438,11 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 .item-indicator {
   flex-shrink: 0;
 
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+
   margin-inline-start: auto;
 
   color: var(--color-primary);
-
-  .content.size-sm & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .content.size-md & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .content.size-lg & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
 }
 </style>

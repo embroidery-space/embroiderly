@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { Label, Toggle } from "reka-ui/namespaced";
+import { Field, Toggle } from "reka-ui/namespaced";
 
-import { useFormField } from "../../composables/useFormField.ts";
 import { useShortcuts } from "../../composables/useShortcuts.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
@@ -9,8 +8,6 @@ import Tooltip from "../Tooltip/Tooltip.vue";
 import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 
 export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
-  id?: string;
-
   /** Visible text beside the button (for expanded mode). */
   label?: string;
   /** Visible text below the label (for expanded mode). */
@@ -26,22 +23,12 @@ export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
   /** Additional options for the tooltip. */
   tooltipOptions?: Omit<TooltipProps, "text" | "shortcut" | "disabled" | "delayDuration">;
 
-  /**
-   * The size of the toggle.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
   /** Whether the toggle is disabled. */
   disabled?: boolean;
 }
 
 const modelValue = defineModel<boolean>();
-const props = withDefaults(defineProps<ToolToggleProps>(), {
-  size: "md",
-});
-
-const { id, size, ariaAttrs } = useFormField(props);
+const props = withDefaults(defineProps<ToolToggleProps>(), {});
 
 useShortcuts(() => {
   if (!props.shortcut) return {};
@@ -55,9 +42,9 @@ useShortcuts(() => {
 </script>
 
 <template>
-  <div
+  <Field.Root
     data-slot="root"
-    :class="[$style.root, $style[`size-${size}`], disabled && $style.disabled, description && $style.hasDescription]"
+    :class="[$style.root, disabled && $style.disabled, description && $style.hasDescription]"
   >
     <Tooltip
       v-bind="tooltipOptions"
@@ -67,9 +54,8 @@ useShortcuts(() => {
       :delay-duration="delayDuration"
     >
       <Toggle
-        :id="id"
         v-model="modelValue"
-        v-bind="ariaAttrs"
+        v-bind="$attrs"
         :disabled="disabled"
         :aria-label="label ?? tooltip"
         data-slot="base"
@@ -80,12 +66,12 @@ useShortcuts(() => {
     </Tooltip>
 
     <div v-if="label || description" data-slot="wrapper" :class="$style.wrapper">
-      <Label v-if="label" :for="id" data-slot="label" :class="$style.label">{{ label }}</Label>
-      <p v-if="description" data-slot="description" :class="$style.description">
+      <Field.Label v-if="label" data-slot="label" :class="$style.label">{{ label }}</Field.Label>
+      <Field.Description v-if="description" data-slot="description" :class="$style.description">
         {{ description }}
-      </p>
+      </Field.Description>
     </div>
-  </div>
+  </Field.Root>
 </template>
 
 <style module>
@@ -109,6 +95,8 @@ useShortcuts(() => {
   align-items: center;
   justify-content: center;
 
+  padding: calc(var(--spacing) * 1.5);
+
   border-radius: var(--radius-md);
 
   color: var(--text-color-dimmed);
@@ -116,18 +104,6 @@ useShortcuts(() => {
   transition-timing-function: var(--default-transition-timing-function);
   transition-duration: var(--default-transition-duration);
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-
-  .size-sm & {
-    padding: calc(var(--spacing) * 1);
-  }
-
-  .size-md & {
-    padding: calc(var(--spacing) * 1.5);
-  }
-
-  .size-lg & {
-    padding: calc(var(--spacing) * 2);
-  }
 
   .disabled & {
     cursor: not-allowed;
@@ -160,37 +136,15 @@ useShortcuts(() => {
 .icon {
   flex-shrink: 0;
 
-  .size-sm & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .size-md & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-lg & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
 }
 
 .wrapper {
   width: 100%;
   margin-inline-start: calc(var(--spacing) * 2);
 
-  .size-sm & {
-    font-size: var(--text-xs);
-  }
-
-  .size-md & {
-    font-size: var(--text-sm);
-  }
-
-  .size-lg & {
-    font-size: var(--text-base);
-  }
+  font-size: var(--text-sm);
 }
 
 .label {

@@ -5,7 +5,6 @@ import { Listbox } from "reka-ui/namespaced";
 import { computed } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import { useFormField } from "../../composables/useFormField.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
@@ -35,8 +34,6 @@ export interface ListboxProps<T extends ListboxItem = ListboxItem> extends Pick<
   ListboxRootProps<T>,
   "multiple" | "selectionBehavior" | "highlightOnHover" | "orientation" | "by" | "disabled"
 > {
-  id?: string;
-
   /** The items to display in the listbox. */
   items?: T[] | T[][];
 
@@ -47,17 +44,6 @@ export interface ListboxProps<T extends ListboxItem = ListboxItem> extends Pick<
    * @default false
    */
   filterInput?: boolean | InputProps;
-
-  /**
-   * The color scheme of the listbox.
-   * @default "primary"
-   */
-  color?: "primary" | "neutral";
-  /**
-   * The size of the listbox.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
 
   /** The message to display when the listbox is empty. */
   emptyMessage?: string;
@@ -79,18 +65,12 @@ defineOptions({ inheritAttrs: false });
 const modelValue = defineModel<T | T[]>();
 const filterValue = defineModel<string>("filterValue", { default: "" });
 
-const props = withDefaults(defineProps<ListboxProps<T>>(), {
-  color: "primary",
-  size: "md",
-});
+const props = withDefaults(defineProps<ListboxProps<T>>(), {});
 const emit = defineEmits<ListboxEmits<T>>();
 defineSlots<ListboxSlots>();
 
 const locale = useLocale();
 const { icons } = useComponentIcons();
-
-const { id, size: formFieldSize, ariaAttrs } = useFormField(props);
-const size = computed(() => props.size ?? formFieldSize.value);
 
 const filterInputProps = computed<InputProps>(() =>
   defu(typeof props.filterInput === "object" ? props.filterInput : {}, {
@@ -132,9 +112,8 @@ function compareValues(a: any, b: any): boolean {
 
 <template>
   <Listbox.Root
-    :id="id"
     v-model="modelValue as AcceptableValue | undefined"
-    v-bind="{ ...$attrs, ...ariaAttrs }"
+    v-bind="$attrs"
     :multiple="multiple"
     :selection-behavior="selectionBehavior"
     :highlight-on-hover="highlightOnHover"
@@ -142,11 +121,11 @@ function compareValues(a: any, b: any): boolean {
     :by="by as any"
     :disabled="disabled"
     data-slot="root"
-    :class="[$style.root, $style[`color-${color}`], $style[`size-${size}`], { [$style.disabled]: disabled }]"
+    :class="[$style.root, { [$style.disabled]: disabled }]"
     @highlight="emit('highlight', $event as any)"
   >
     <Listbox.Filter v-if="filterInput" v-model="filterValue" as-child>
-      <Input v-model="filterValue" :size="size" v-bind="filterInputProps" />
+      <Input v-model="filterValue" v-bind="filterInputProps" />
     </Listbox.Filter>
 
     <Listbox.Content data-slot="content" :class="$style.content">
@@ -235,36 +214,18 @@ function compareValues(a: any, b: any): boolean {
 
 .label {
   display: flex;
+
+  gap: calc(var(--spacing) * 1.5);
   align-items: center;
 
   width: 100%;
 
+  padding: calc(var(--spacing) * 1.5);
+
+  font-size: var(--text-sm);
+
   font-weight: 600;
   color: var(--text-color-muted);
-
-  .size-sm & {
-    gap: calc(var(--spacing) * 1);
-
-    padding: calc(var(--spacing) * 1);
-
-    font-size: var(--text-xs);
-  }
-
-  .size-md & {
-    gap: calc(var(--spacing) * 1.5);
-
-    padding: calc(var(--spacing) * 1.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .size-lg & {
-    gap: calc(var(--spacing) * 2);
-
-    padding: calc(var(--spacing) * 2);
-
-    font-size: var(--text-sm);
-  }
 }
 
 .separator {
@@ -280,10 +241,16 @@ function compareValues(a: any, b: any): boolean {
   user-select: none;
 
   display: flex;
+
+  gap: calc(var(--spacing) * 1.5);
   align-items: center;
 
   width: 100%;
+
+  padding: calc(var(--spacing) * 1.5);
   border-radius: var(--radius-sm);
+
+  font-size: var(--text-sm);
 
   color: var(--text-color-default);
 
@@ -302,30 +269,6 @@ function compareValues(a: any, b: any): boolean {
   &[data-disabled][data-highlighted] {
     background-color: transparent;
   }
-
-  .size-sm & {
-    gap: calc(var(--spacing) * 1);
-
-    padding: calc(var(--spacing) * 1);
-
-    font-size: var(--text-xs);
-  }
-
-  .size-md & {
-    gap: calc(var(--spacing) * 1.5);
-
-    padding: calc(var(--spacing) * 1.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .size-lg & {
-    gap: calc(var(--spacing) * 2);
-
-    padding: calc(var(--spacing) * 2);
-
-    font-size: var(--text-base);
-  }
 }
 
 .item-label {
@@ -341,52 +284,23 @@ function compareValues(a: any, b: any): boolean {
 .item-indicator {
   flex-shrink: 0;
 
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+
   margin-inline-start: auto;
 
-  .color-primary & {
-    color: var(--color-primary);
-  }
+  color: var(--color-primary);
 
   .color-neutral & {
     color: var(--text-color-default);
   }
-
-  .size-sm & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .size-md & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-lg & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
 }
 
 .empty {
+  padding-block: calc(var(--spacing) * 1.5);
+
+  font-size: var(--text-sm);
   color: var(--text-color-muted);
   text-align: center;
-
-  .size-sm & {
-    padding-block: calc(var(--spacing) * 1);
-
-    font-size: var(--text-xs);
-  }
-
-  .size-md & {
-    padding-block: calc(var(--spacing) * 1.5);
-
-    font-size: var(--text-sm);
-  }
-
-  .size-lg & {
-    padding-block: calc(var(--spacing) * 2);
-
-    font-size: var(--text-base);
-  }
 }
 </style>

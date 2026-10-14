@@ -2,25 +2,11 @@
 import { Slider } from "reka-ui/namespaced";
 import { computed } from "vue";
 
-import { useFormField } from "../../composables/useFormField.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Tooltip from "../Tooltip/Tooltip.vue";
 import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 
 export interface SliderProps {
-  id?: string;
-
-  /**
-   * The color scheme of the slider.
-   * @default "primary"
-   */
-  color?: "primary";
-  /**
-   * The size of the slider.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
   /** The minimum value of the slider. */
   min?: number;
   /** The maximum value of the slider. */
@@ -36,14 +22,9 @@ export interface SliderProps {
 }
 
 const modelValue = defineModel<number>();
-const props = withDefaults(defineProps<SliderProps>(), {
-  color: "primary",
-  size: "md",
-});
+defineProps<SliderProps>();
 
 const locale = useLocale();
-
-const { id, size, ariaAttrs } = useFormField(props);
 
 // Convert single value to array for Reka UI.
 const sliderValue = computed({
@@ -60,15 +41,14 @@ const sliderValue = computed({
 
 <template>
   <Slider.Root
-    :id="id"
     v-model="sliderValue"
-    v-bind="ariaAttrs"
+    v-bind="$attrs"
     :min="min"
     :max="max"
     :step="step"
     :disabled="disabled"
     data-slot="root"
-    :class="[$style.root, $style[`color-${color}`], $style[`size-${size}`], { [$style.disabled]: disabled }]"
+    :class="[$style.root, { [$style.disabled]: disabled }]"
   >
     <Slider.Track data-slot="track" :class="$style.track">
       <Slider.Range data-slot="range" :class="$style.range" />
@@ -111,21 +91,11 @@ const sliderValue = computed({
   overflow: hidden;
   flex-grow: 1;
 
+  height: calc(var(--spacing) * 2);
+
   border-radius: calc(infinity * 1px);
 
   background-color: var(--background-color-accented);
-
-  .size-sm & {
-    height: calc(var(--spacing) * 1.5);
-  }
-
-  .size-md & {
-    height: calc(var(--spacing) * 2);
-  }
-
-  .size-lg & {
-    height: calc(var(--spacing) * 2.5);
-  }
 }
 
 .range {
@@ -134,9 +104,7 @@ const sliderValue = computed({
   height: 100%;
   border-radius: calc(infinity * 1px);
 
-  .color-primary & {
-    background-color: var(--color-primary);
-  }
+  background-color: var(--color-primary);
 }
 
 .thumb {
@@ -144,41 +112,23 @@ const sliderValue = computed({
 
   display: block;
 
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+
   border-radius: calc(infinity * 1px);
 
   background-color: var(--background-color-default);
   box-shadow: 0 0 0 2px currentcolor;
 
-  .size-sm & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .size-md & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-lg & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
-
-  .color-primary & {
-    box-shadow: 0 0 0 2px var(--color-primary);
-  }
+  box-shadow: 0 0 0 2px var(--color-primary);
 
   .disabled & {
     cursor: not-allowed;
   }
 
   &:focus-visible {
-    outline: 2px solid;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
-  }
-
-  .color-primary &:focus-visible {
-    outline-color: var(--color-primary);
   }
 }
 </style>

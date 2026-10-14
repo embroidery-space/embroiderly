@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useFormField } from "../../composables/useFormField.ts";
 import InputNumber from "../InputNumber/InputNumber.vue";
 import type { InputNumberProps } from "../InputNumber/InputNumber.vue";
 import Slider from "../Slider/Slider.vue";
@@ -7,14 +6,8 @@ import type { SliderProps } from "../Slider/Slider.vue";
 
 export interface InputNumberSliderProps extends Pick<
   InputNumberProps,
-  "id" | "disabled" | "min" | "max" | "step" | "formatOptions"
+  "disabled" | "min" | "max" | "step" | "formatOptions"
 > {
-  /**
-   * The size of the input.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
   /**
    * Whether to show the increment button on the input.
    * @default false
@@ -43,22 +36,17 @@ export interface InputNumberSliderProps extends Pick<
 }
 
 const modelValue = defineModel<number>();
-const props = withDefaults(defineProps<InputNumberSliderProps>(), {
-  size: "md",
+withDefaults(defineProps<InputNumberSliderProps>(), {
   increment: false,
   decrement: false,
 });
-
-const { id, size, groupAttrs } = useFormField(props);
 </script>
 
 <template>
-  <div v-bind="groupAttrs" data-slot="root" :class="$style.root">
+  <div data-slot="root" :class="$style.root">
     <InputNumber
-      :id="id"
       v-model="modelValue"
       v-bind="inputOptions"
-      :size="size"
       :min="min"
       :max="max"
       :step="step"
@@ -71,7 +59,6 @@ const { id, size, groupAttrs } = useFormField(props);
       v-model="modelValue"
       v-bind="sliderOptions"
       :disabled="disabled"
-      :size="size"
       :min="min"
       :max="max"
       :step="step"

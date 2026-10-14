@@ -7,20 +7,11 @@ import { renderWithLocalModel } from "~storybook-utils/render-with-local-model";
 import Slider from "./Slider.vue";
 import SliderChanged from "./stories/SliderChanged.vue";
 import SliderDemo from "./stories/SliderDemo.vue";
-import SliderSizes from "./stories/SliderSizes.vue";
 import SliderStates from "./stories/SliderStates.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
 
 const meta = {
   title: "Form/Slider",
   component: Slider,
-  argTypes: {
-    size: { control: "select", options: sizes },
-    min: { control: "number" },
-    max: { control: "number" },
-    step: { control: "number" },
-  },
 } satisfies Meta<typeof Slider>;
 
 export default meta;
@@ -35,7 +26,6 @@ export const Demo: Story = {
     max: 100,
     step: 1,
 
-    size: "md",
     tooltip: false,
     disabled: false,
   },
@@ -47,13 +37,6 @@ export const Demo: Story = {
       template: `<SliderDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
-};
-
-export const Sizes: Story = {
-  render: () => ({
-    components: { SliderSizes },
-    template: `<SliderSizes />`,
-  }),
 };
 
 export const States: Story = {

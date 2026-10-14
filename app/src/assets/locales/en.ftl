@@ -415,9 +415,7 @@ fabric-colors-discard-confirm =
 
 grid-properties = Grid Properties
 
-grid-major-lines-interval =
-  .label = Major Lines Interval
-  .hint = In stitches
+grid-major-lines-interval =Major Lines Interval
 
 grid-major-lines = Major Lines
 grid-minor-lines = Minor Lines

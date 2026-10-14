@@ -4,19 +4,10 @@ import { expect } from "storybook/test";
 
 import InputDimensions from "./InputDimensions.vue";
 import InputDimensionsDemo from "./stories/InputDimensionsDemo.vue";
-import InputDimensionsSizes from "./stories/InputDimensionsSizes.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
-const orientations = ["horizontal", "vertical"] as const;
 
 const meta = {
   title: "Form/InputDimensions",
   component: InputDimensions,
-  argTypes: {
-    size: { control: "select", options: sizes },
-    orientation: { control: "select", options: orientations },
-    aspectRatio: { control: "number" },
-  },
 } satisfies Meta<typeof InputDimensions>;
 
 export default meta;
@@ -28,7 +19,6 @@ export const Demo: Story = {
     width: 800,
     height: 600,
 
-    size: "md",
     orientation: "horizontal",
     aspectRatio: undefined,
 
@@ -51,15 +41,6 @@ export const Demo: Story = {
       `,
     };
   },
-};
-
-export const Sizes: Story = {
-  args: { width: 800, height: 600 },
-  render: (args) => ({
-    components: { InputDimensionsSizes },
-    setup: () => ({ args }),
-    template: `<InputDimensionsSizes v-bind="args" />`,
-  }),
 };
 
 export const AspectRatioLocked: Story = {

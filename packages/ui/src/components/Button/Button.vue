@@ -4,7 +4,6 @@ import { computed, ref } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import type { UseComponentIconsProps } from "../../composables/useComponentIcons.ts";
-import { useFormFieldGroup } from "../../composables/useFormFieldGroup.ts";
 import { getLinkRel, isExternalHref } from "../../utils/link.ts";
 import Icon from "../Icon/Icon.vue";
 
@@ -55,11 +54,9 @@ export interface ButtonSlots {
 const props = withDefaults(defineProps<ButtonProps>(), {
   color: "primary",
   variant: "solid",
+  size: "md",
 });
 defineSlots<ButtonSlots>();
-
-const { fieldGroup, fieldGroupSize } = useFormFieldGroup();
-const size = computed(() => props.size ?? fieldGroupSize.value);
 
 const loadingAutoState = ref(false);
 const isLoading = computed(() => props.loading || (props.loadingAuto && loadingAutoState.value));
@@ -108,7 +105,6 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
       $style[`variant-${variant}`],
       $style[`size-${size}`],
       square && $style.square,
-      fieldGroup && $style.fieldGroup,
     ]"
     @click="onClickWrapper"
   >
@@ -420,26 +416,6 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
 
     &.square {
       padding: calc(var(--spacing) * 2);
-    }
-  }
-
-  &.field-group {
-    &:focus-visible {
-      z-index: 1;
-    }
-
-    &:not(:last-child, :first-child) {
-      border-radius: 0;
-    }
-
-    &:not(:only-child):first-child {
-      border-start-end-radius: 0;
-      border-end-end-radius: 0;
-    }
-
-    &:not(:only-child):last-child {
-      border-start-start-radius: 0;
-      border-end-start-radius: 0;
     }
   }
 }

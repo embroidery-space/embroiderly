@@ -3,18 +3,12 @@ import { useArgs } from "storybook/preview-api";
 import { expect, fn } from "storybook/test";
 
 import SwitchDemo from "./stories/SwitchDemo.vue";
-import SwitchSizes from "./stories/SwitchSizes.vue";
 import SwitchStates from "./stories/SwitchStates.vue";
 import Switch from "./Switch.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
 
 const meta = {
   title: "Form/Switch",
   component: Switch,
-  argTypes: {
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof Switch>;
 
 export default meta;
@@ -25,9 +19,6 @@ export const Demo: Story = {
   args: {
     label: "Switch",
     description: "Description",
-
-    size: "md",
-    disabled: false,
   },
   render: (args) => {
     const [, updateArgs] = useArgs();
@@ -37,13 +28,6 @@ export const Demo: Story = {
       template: `<SwitchDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
-};
-
-export const Sizes: Story = {
-  render: () => ({
-    components: { SwitchSizes },
-    template: `<SwitchSizes />`,
-  }),
 };
 
 export const States: Story = {

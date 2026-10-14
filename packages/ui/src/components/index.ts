@@ -20,7 +20,7 @@ export { default as Editable, type EditableProps, type EditableEmits } from "./E
 export { default as Checkbox, type CheckboxProps } from "./Checkbox/Checkbox.vue";
 export { default as ColorPicker, type ColorPickerProps } from "./ColorPicker/ColorPicker.vue";
 export { default as FormField, type FormFieldProps } from "./FormField/FormField.vue";
-export { default as FormFieldGroup, type FormFieldGroupProps } from "./FormFieldGroup/FormFieldGroup.vue";
+export { default as FormFieldGroup } from "./FormFieldGroup/FormFieldGroup.vue";
 export { default as FormFieldSet, type FormFieldSetProps } from "./FormFieldSet/FormFieldSet.vue";
 export { default as Input, type InputProps } from "./Input/Input.vue";
 export { default as InputColor, type InputColorProps } from "./InputColor/InputColor.vue";

@@ -1,9 +1,7 @@
 <script setup lang="ts" generic="T extends ToolToggleItem">
 import type { AcceptableValue } from "reka-ui";
-import { Label, ToggleGroup } from "reka-ui/namespaced";
-import { useId } from "vue";
+import { Field, ToggleGroup } from "reka-ui/namespaced";
 
-import { useFormField } from "../../composables/useFormField.ts";
 import { useShortcuts } from "../../composables/useShortcuts.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
@@ -40,11 +38,6 @@ export interface ToolToggleGroupProps<T extends ToolToggleItem = ToolToggleItem>
    * @default "horizontal"
    */
   orientation?: "vertical" | "horizontal";
-  /**
-   * The size of the toggle group.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
 
   /** Whether the toggle group is disabled. */
   disabled?: boolean;
@@ -56,10 +49,7 @@ export interface ToolToggleGroupProps<T extends ToolToggleItem = ToolToggleItem>
 const modelValue = defineModel<AcceptableValue>();
 const props = withDefaults(defineProps<ToolToggleGroupProps<T>>(), {
   orientation: "horizontal",
-  size: "md",
 });
-
-const { size, ariaAttrs } = useFormField(props);
 
 useShortcuts(() => {
   return Object.fromEntries(
@@ -83,40 +73,42 @@ useShortcuts(() => {
     :disabled="disabled"
     type="single"
     data-slot="root"
-    :class="[$style.root, $style[`orientation-${orientation}`], $style[`size-${size}`], disabled && $style.disabled]"
+    :class="[$style.root, $style[`orientation-${orientation}`], disabled && $style.disabled]"
   >
-    <template v-for="(item, index) in items.map((o) => ({ id: useId(), ...o }))" :key="index">
-      <div data-slot="item" :class="[$style.item, item.description && $style.hasDescription]">
-        <Tooltip
-          v-bind="tooltipOptions"
-          :text="item.label ? undefined : item.tooltip"
-          :shortcut="item.shortcut"
+    <Field.Root
+      v-for="(item, index) in items"
+      :key="index"
+      data-slot="item"
+      :class="[$style.item, item.description && $style.hasDescription]"
+    >
+      <Tooltip
+        v-bind="tooltipOptions"
+        :text="item.label ? undefined : item.tooltip"
+        :shortcut="item.shortcut"
+        :disabled="disabled"
+        :delay-duration="delayDuration"
+      >
+        <ToggleGroup.Item
+          :value="item.value"
+          v-bind="$attrs"
           :disabled="disabled"
-          :delay-duration="delayDuration"
+          :aria-label="item.label ?? item.tooltip"
+          data-slot="base"
+          :class="$style.base"
         >
-          <ToggleGroup.Item
-            :id="item.id"
-            :value="item.value"
-            v-bind="ariaAttrs"
-            :disabled="disabled"
-            :aria-label="item.label ?? item.tooltip"
-            data-slot="base"
-            :class="$style.base"
-          >
-            <Icon :name="item.icon" data-slot="icon" :class="$style.icon" />
-          </ToggleGroup.Item>
-        </Tooltip>
+          <Icon :name="item.icon" data-slot="icon" :class="$style.icon" />
+        </ToggleGroup.Item>
+      </Tooltip>
 
-        <div v-if="item.label || item.description" data-slot="wrapper" :class="$style.wrapper">
-          <Label v-if="item.label" :for="item.id" data-slot="label" :class="$style.label">
-            {{ item.label }}
-          </Label>
-          <p v-if="item.description" data-slot="description" :class="$style.description">
-            {{ item.description }}
-          </p>
-        </div>
+      <div v-if="item.label || item.description" data-slot="wrapper" :class="$style.wrapper">
+        <Field.Label v-if="item.label" data-slot="label" :class="$style.label">
+          {{ item.label }}
+        </Field.Label>
+        <Field.Description v-if="item.description" data-slot="description" :class="$style.description">
+          {{ item.description }}
+        </Field.Description>
       </div>
-    </template>
+    </Field.Root>
   </ToggleGroup.Root>
 </template>
 
@@ -152,6 +144,8 @@ useShortcuts(() => {
   align-items: center;
   justify-content: center;
 
+  padding: calc(var(--spacing) * 1.5);
+
   border-radius: var(--radius-md);
 
   color: var(--text-color-dimmed);
@@ -159,18 +153,6 @@ useShortcuts(() => {
   transition-timing-function: var(--default-transition-timing-function);
   transition-duration: var(--default-transition-duration);
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-
-  .size-sm & {
-    padding: calc(var(--spacing) * 1);
-  }
-
-  .size-md & {
-    padding: calc(var(--spacing) * 1.5);
-  }
-
-  .size-lg & {
-    padding: calc(var(--spacing) * 2);
-  }
 
   .disabled & {
     cursor: not-allowed;
@@ -203,37 +185,15 @@ useShortcuts(() => {
 .icon {
   flex-shrink: 0;
 
-  .size-sm & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .size-md & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-lg & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
 }
 
 .wrapper {
   width: 100%;
   margin-inline-start: calc(var(--spacing) * 2);
 
-  .size-sm & {
-    font-size: var(--text-xs);
-  }
-
-  .size-md & {
-    font-size: var(--text-sm);
-  }
-
-  .size-lg & {
-    font-size: var(--text-base);
-  }
+  font-size: var(--text-sm);
 }
 
 .label {

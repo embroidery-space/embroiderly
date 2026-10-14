@@ -4,17 +4,10 @@ import { expect, fn } from "storybook/test";
 
 import ColorPicker from "./ColorPicker.vue";
 import ColorPickerDemo from "./stories/ColorPickerDemo.vue";
-import ColorPickerSizes from "./stories/ColorPickerSizes.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
 
 const meta = {
   title: "Form/ColorPicker",
   component: ColorPicker,
-  argTypes: {
-    size: { control: "select", options: sizes },
-    throttle: { control: "number" },
-  },
 } satisfies Meta<typeof ColorPicker>;
 
 export default meta;
@@ -22,14 +15,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Demo: Story = {
-  args: {
-    modelValue: "#FF0000",
-
-    size: "md",
-    throttle: 50,
-
-    disabled: false,
-  },
+  args: { modelValue: "#FF0000" },
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
@@ -38,13 +24,6 @@ export const Demo: Story = {
       template: `<ColorPickerDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
-};
-
-export const Sizes: Story = {
-  render: () => ({
-    components: { ColorPickerSizes },
-    template: `<ColorPickerSizes />`,
-  }),
 };
 
 export const Disabled: Story = {
