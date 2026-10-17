@@ -27,10 +27,7 @@ mod export {
 
   #[test]
   fn exports_pattern_to_color_pdf() {
-    let worker = PdfExportWorker {
-      embproj: load_fixture(),
-      font_data: load_fonts(),
-    };
+    let worker = PdfExportWorker::init(load_fixture(), load_fonts());
 
     let expected =
       std::fs::read(std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/piggies.color.pdf")))
@@ -47,10 +44,7 @@ mod export {
 
   #[test]
   fn exports_pattern_to_monochrome_pdf() {
-    let worker = PdfExportWorker {
-      embproj: load_fixture(),
-      font_data: load_fonts(),
-    };
+    let worker = PdfExportWorker::init(load_fixture(), load_fonts());
 
     let expected = std::fs::read(
       std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/piggies.monochrome.pdf")),

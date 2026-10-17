@@ -22,7 +22,6 @@ serde_json = { workspace = true }
 typst = { workspace = true }
 typst-layout = { workspace = true }
 typst-pdf = { workspace = true }
-typst-as-lib = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

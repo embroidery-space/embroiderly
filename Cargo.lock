@@ -838,10 +838,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c673075a2e0e5f4a1dde27ce9dee1ea4558c7ffe648f576438a20ca1d2acc4b0"
 dependencies = [
  "iana-time-zone",
- "js-sys",
  "num-traits",
  "serde",
- "wasm-bindgen",
  "windows-link 0.2.1",
 ]
 
@@ -1694,7 +1692,6 @@ dependencies = [
  "serde",
  "serde_json",
  "typst",
- "typst-as-lib",
  "typst-layout",
  "typst-pdf",
  "wasm-bindgen",
@@ -7534,20 +7531,6 @@ dependencies = [
  "typst-syntax",
  "typst-timing",
  "typst-utils",
-]
-
-[[package]]
-name = "typst-as-lib"
-version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83771d795ff59eb1f198153120beb55cd0acf6200077b31c6aad928e954b5c53"
-dependencies = [
- "chrono",
- "comemo",
- "dirs",
- "ecow",
- "thiserror 2.0.21",
- "typst",
 ]
 
 [[package]]
