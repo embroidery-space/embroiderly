@@ -1695,6 +1695,7 @@ dependencies = [
  "serde_json",
  "typst",
  "typst-as-lib",
+ "typst-layout",
  "typst-pdf",
  "wasm-bindgen",
  "wasm-bindgen-futures",

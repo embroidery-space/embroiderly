@@ -110,6 +110,7 @@ ttf-parser = "0.25.1"
 
 # Typst
 typst = "0.15.1"
+typst-layout = "0.15.1"
 typst-pdf = "0.15.1"
 ## Third-party Typst libraries
 typst-as-lib = "0.17.0"

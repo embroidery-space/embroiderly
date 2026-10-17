@@ -1,8 +1,13 @@
 #![allow(clippy::future_not_send)]
 
+use anyhow::Result;
 use wasm_bindgen::prelude::*;
 
-mod export;
+mod utils;
+
+#[cfg(test)]
+#[path = "lib.test.rs"]
+mod tests;
 
 #[wasm_bindgen]
 pub struct PdfExportWorker {
@@ -24,11 +29,45 @@ impl PdfExportWorker {
 
   #[wasm_bindgen]
   pub fn export(&self, pattern_pdf: &[u8]) -> Result<Vec<u8>, JsError> {
-    export::export_pattern(
-      &self.embproj,
-      &self.font_data,
-      borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?,
-    )
-    .map_err(|e| JsError::new(&e.to_string()))
+    let pattern_pdf = borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?;
+    self.export_impl(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))
+  }
+}
+
+impl PdfExportWorker {
+  fn prepare_document(&self, pattern_pdf: embroiderly_pattern::PatternPdf) -> Result<typst_layout::PagedDocument> {
+    let typst_template = typst_as_lib::TypstEngine::builder()
+      .main_file(
+        [
+          "#import \"draw.typ\": render-frames",
+          "#let pattern = json(\"pattern.json\")",
+          &pattern_pdf.template,
+        ]
+        .join("\n\n"),
+      )
+      .with_static_source_file_resolver([("draw.typ", include_str!("./typst/draw.typ"))])
+      .with_static_file_resolver([("pattern.json", utils::compose_pattern_json(&self.embproj)?)])
+      .fonts(self.font_data.iter().map(Vec::as_slice))
+      .build();
+
+    let inputs = {
+      use typst::foundations::{Dict, IntoValue as _};
+
+      let mut inputs = Dict::new();
+      inputs.insert("color".into(), pattern_pdf.color.into_value());
+
+      inputs
+    };
+
+    typst_template
+      .compile_with_input(inputs)
+      .output
+      .map_err(|e| anyhow::anyhow!("Failed to compile Typst template: {e}"))
+  }
+
+  fn export_impl(&self, pattern_pdf: embroiderly_pattern::PatternPdf) -> Result<Vec<u8>> {
+    let doc = self.prepare_document(pattern_pdf)?;
+    typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
+      .map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))
   }
 }

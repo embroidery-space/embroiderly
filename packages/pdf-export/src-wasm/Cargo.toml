@@ -20,6 +20,7 @@ serde_json = { workspace = true }
 
 # Exporting patterns to PDF
 typst = { workspace = true }
+typst-layout = { workspace = true }
 typst-pdf = { workspace = true }
 typst-as-lib = { workspace = true }
 
