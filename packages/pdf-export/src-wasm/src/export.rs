@@ -2,7 +2,7 @@ use anyhow::Result;
 use embroiderly_pattern::*;
 
 #[cfg(test)]
-#[path = "pdf.test.rs"]
+#[path = "export.test.rs"]
 mod tests;
 
 pub fn export_pattern(embproj: &EmbroiderlyProject, font_data: &[Vec<u8>], pattern_pdf: PatternPdf) -> Result<Vec<u8>> {

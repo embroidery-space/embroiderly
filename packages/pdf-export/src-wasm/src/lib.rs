@@ -2,7 +2,7 @@
 
 use wasm_bindgen::prelude::*;
 
-mod pdf;
+mod export;
 
 #[wasm_bindgen]
 pub struct PdfExportWorker {
@@ -24,7 +24,7 @@ impl PdfExportWorker {
 
   #[wasm_bindgen]
   pub fn export(&self, pattern_pdf: &[u8]) -> Result<Vec<u8>, JsError> {
-    pdf::export_pattern(
+    export::export_pattern(
       &self.embproj,
       &self.font_data,
       borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?,
