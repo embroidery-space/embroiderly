@@ -9,7 +9,7 @@ fn test_update_fabric() {
   let fabric = Fabric {
     width: 100,
     height: 100,
-    spi: (16, 16),
+    count: 16,
     name: String::from("Light Mocha"),
     color: String::from("DAC9B6"),
     kind: String::from("Aida"),

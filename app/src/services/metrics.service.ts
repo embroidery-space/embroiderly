@@ -125,7 +125,7 @@ class MetricsServiceClass {
       format,
 
       fabric_size: [fabric.width, fabric.height],
-      fabric_spi: fabric.spi,
+      fabric_count: fabric.count,
       fabric_kind: fabric.kind,
       fabric_color: fabric.color.toHex().toUpperCase(),
 
@@ -154,7 +154,7 @@ class MetricsServiceClass {
   capturePatternCreated(fabric: Fabric) {
     this.#capture("pattern_created", {
       fabric_size: [fabric.width, fabric.height],
-      fabric_spi: fabric.spi,
+      fabric_count: fabric.count,
       fabric_kind: fabric.kind,
       fabric_color: fabric.color.toHex().toUpperCase(),
     });
@@ -219,7 +219,7 @@ class MetricsServiceClass {
   captureFabricUpdated(fabric: Fabric) {
     this.#capture("fabric_updated", {
       fabric_size: [fabric.width, fabric.height],
-      fabric_spi: fabric.spi,
+      fabric_count: fabric.count,
       fabric_kind: fabric.kind,
       fabric_color: fabric.color.toHex().toUpperCase(),
     });
