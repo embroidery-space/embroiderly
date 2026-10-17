@@ -32,17 +32,17 @@ const fabricKindOptions = computed(() => [
 
 const selectedUnit = ref<MeasurementUnit>(MeasurementUnit.Stitches);
 
-const size = computed(() => new FabricSize(fabric.value.width, fabric.value.height, fabric.value.spi));
+const size = computed(() => new FabricSize(fabric.value.width, fabric.value.height, fabric.value.count));
 const sizeInUnit = computed(() => size.value.in(selectedUnit.value));
 const sizeInInches = computed(() => size.value.in(MeasurementUnit.Inches));
 const sizeInMm = computed(() => size.value.in(MeasurementUnit.Mm));
 
 // The physical size of one stitch in the selected unit, per axis.
 // It is used as the input step so arrows/typing always move by a whole stitch.
-const step = computed(() => new FabricSize(1, 1, fabric.value.spi).in(selectedUnit.value));
+const step = computed(() => new FabricSize(1, 1, fabric.value.count).in(selectedUnit.value));
 
 function setDimension(dimension: "width" | "height", value: number) {
-  const next = FabricSize.from({ ...sizeInUnit.value, [dimension]: value }, selectedUnit.value, fabric.value.spi);
+  const next = FabricSize.from({ ...sizeInUnit.value, [dimension]: value }, selectedUnit.value, fabric.value.count);
   fabric.value.width = next.width;
   fabric.value.height = next.height;
 }
@@ -61,12 +61,7 @@ onMounted(async () => {
   <div :class="$style.root">
     <FormFieldSet :legend="$t('fabric-count-and-kind')">
       <FormField :label="$t('fabric-count')">
-        <Select
-          v-model="fabric.spi[0]"
-          :items="fabricCountOptions"
-          data-testid="fabric-count-select"
-          @update:model-value="fabric.spi[1] = $event as number"
-        />
+        <Select v-model="fabric.count" :items="fabricCountOptions" data-testid="fabric-count-select" />
       </FormField>
 
       <FormField :label="$t('fabric-kind')">

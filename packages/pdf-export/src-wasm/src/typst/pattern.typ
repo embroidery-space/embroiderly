@@ -11,7 +11,7 @@
   {
     info: { title, author, copyright, description },
 
-    fabric: { width, height, spi: [x, y], kind, name, color },
+    fabric: { width, height, count, kind, name, color },
     grid: { majorLinesInterval, minorLines: { color, thickness, pixelLine }, majorLines: {...} },
 
     // Palette is already in the visual order.
