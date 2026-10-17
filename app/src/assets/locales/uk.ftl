@@ -327,7 +327,6 @@ canvas-layers-back-stitches = Зворотні стібки
 canvas-layers-straight-stitches = Прямі стібки
 canvas-layers-french-knots = Фр. вузлики
 canvas-layers-beads = Бісер
-canvas-layers-special-stitches = Спеціальні стібки
 
 canvas-layers-placeholder = Шар { $index }
 

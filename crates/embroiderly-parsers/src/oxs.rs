@@ -103,7 +103,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
               .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
           ),
           "ornaments_inc_knots_and_beads" => {
-            let (fullstitches, partstitches, nodestitches, specialstitches) = read_ornaments(reader)?;
+            let (fullstitches, partstitches, nodestitches) = read_ornaments(reader)?;
             pattern.layers[0].fullstitches.extend(
               fullstitches
                 .into_iter()
@@ -119,15 +119,7 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
                 .into_iter()
                 .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
             );
-            pattern.layers[0].specialstitches.extend(
-              specialstitches
-                .into_iter()
-                .filter(|stitch| stitch.palindex < pattern.palette.len() as u32),
-            );
           }
-          "special_stitch_models" => pattern
-            .special_stitch_models
-            .extend(read_special_stitch_models(reader)?),
           _ => {}
         }
       }
@@ -213,12 +205,7 @@ fn save_pattern_inner<W: io::Write>(writer: &mut W, embproj: &EmbroiderlyProject
         palindex: index_to_position[stitch.palindex as usize],
         ..*stitch
       }),
-      flattened_layer.specialstitches.iter().map(|stitch| SpecialStitch {
-        palindex: index_to_position[stitch.palindex as usize],
-        ..*stitch
-      }),
     )?;
-    write_special_stitch_models(writer, &pattern.special_stitch_models)?;
     Ok(())
   })?;
 
@@ -628,7 +615,7 @@ fn read_line_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Line
     match reader.read_event_into(&mut buf)? {
       Event::Start(ref e) if e.name().as_ref() == "backstitch" => {
         let attributes = AttributesMap::try_from(e.attributes())?;
-        if let Some(OxsLineStitch::LineStitch(stitch)) = read_line_stitch(attributes)? {
+        if let Some(stitch) = read_line_stitch(attributes)? {
           linestitches.push(stitch);
         }
       }
@@ -641,12 +628,7 @@ fn read_line_stitches<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<Line
   Ok(linestitches)
 }
 
-enum OxsLineStitch {
-  LineStitch(LineStitch),
-  CurvedStitch(CurvedStitch),
-}
-
-fn read_line_stitch(attributes: AttributesMap) -> Result<Option<OxsLineStitch>> {
+fn read_line_stitch(attributes: AttributesMap) -> Result<Option<LineStitch>> {
   let palindex = unwrap_or_continue!(attributes.get_palindex("palindex"), Ok(None));
   let kind = unwrap_or_continue!(attributes.get_objecttype("objecttype"), Ok(None));
 
@@ -658,30 +640,12 @@ fn read_line_stitch(attributes: AttributesMap) -> Result<Option<OxsLineStitch>> 
       let y1 = unwrap_or_continue!(attributes.get_coord("y1"), Ok(None));
       let y2 = unwrap_or_continue!(attributes.get_coord("y2"), Ok(None));
 
-      Some(OxsLineStitch::LineStitch(LineStitch {
+      Some(LineStitch {
         x: (x1, x2),
         y: (y1, y2),
         palindex,
         kind: kind.parse()?,
-      }))
-    }
-    "curvedstitch" => {
-      let mut points = Vec::new();
-
-      let mut i = 1;
-      loop {
-        let x = attributes.get_coord(format!("x{i}").as_str());
-        let y = attributes.get_coord(format!("y{i}").as_str());
-
-        if x.is_none() || y.is_none() {
-          break;
-        }
-
-        i += 1;
-        points.push((x.unwrap(), y.unwrap()));
-      }
-
-      Some(OxsLineStitch::CurvedStitch(CurvedStitch { points }))
+      })
     }
     _ => None,
   };
@@ -695,7 +659,7 @@ fn write_line_stitches<W: io::Write>(
 ) -> io::Result<()> {
   writer.create_element("backstitches").write_inner_content(|writer| {
     for linestitch in linestitches {
-      write_line_stitch(writer, OxsLineStitch::LineStitch(linestitch))?;
+      write_line_stitch(writer, linestitch)?;
     }
     Ok(())
   })?;
@@ -703,61 +667,28 @@ fn write_line_stitches<W: io::Write>(
   Ok(())
 }
 
-fn write_line_stitch<W: io::Write>(writer: &mut Writer<W>, stitch: OxsLineStitch) -> io::Result<()> {
-  match stitch {
-    OxsLineStitch::LineStitch(linestitch) => {
-      writer
-        .create_element("backstitch")
-        .with_attributes([
-          ("x1", linestitch.x.0.to_string().as_str()),
-          ("x2", linestitch.x.1.to_string().as_str()),
-          ("y1", linestitch.y.0.to_string().as_str()),
-          ("y2", linestitch.y.1.to_string().as_str()),
-          ("palindex", (linestitch.palindex + 1).to_string().as_str()),
-          ("objecttype", linestitch.kind.to_string().as_str()),
-        ])
-        .write_empty()?;
-    }
-    OxsLineStitch::CurvedStitch(curvedstitch) => {
-      let attributes = curvedstitch
-        .points
-        .into_iter()
-        .enumerate()
-        .flat_map(|(i, (x, y))| {
-          [
-            (format!("x{}", i + 1), x.to_string()),
-            (format!("y{}", i + 1), y.to_string()),
-          ]
-        })
-        .collect::<Vec<_>>();
-
-      writer
-        .create_element("backstitch")
-        .with_attributes(
-          [
-            attributes
-              .iter()
-              .map(|(key, value)| (key.as_str(), value.as_str()))
-              .collect::<Vec<_>>(),
-            vec![("palindex", 1.to_string().as_str()), ("objecttype", "curvedstitch")],
-          ]
-          .concat(),
-        )
-        .write_empty()?;
-    }
-  }
+fn write_line_stitch<W: io::Write>(writer: &mut Writer<W>, linestitch: LineStitch) -> io::Result<()> {
+  writer
+    .create_element("backstitch")
+    .with_attributes([
+      ("x1", linestitch.x.0.to_string().as_str()),
+      ("x2", linestitch.x.1.to_string().as_str()),
+      ("y1", linestitch.y.0.to_string().as_str()),
+      ("y2", linestitch.y.1.to_string().as_str()),
+      ("palindex", (linestitch.palindex + 1).to_string().as_str()),
+      ("objecttype", linestitch.kind.to_string().as_str()),
+    ])
+    .write_empty()?;
 
   Ok(())
 }
 
-#[expect(clippy::type_complexity)]
 fn read_ornaments<R: io::BufRead>(
   reader: &mut Reader<R>,
-) -> Result<(Vec<FullStitch>, Vec<PartStitch>, Vec<NodeStitch>, Vec<SpecialStitch>)> {
+) -> Result<(Vec<FullStitch>, Vec<PartStitch>, Vec<NodeStitch>)> {
   let mut fullstitches = Vec::new();
   let mut partstitches = Vec::new();
   let mut nodestitches = Vec::new();
-  let mut specialstitches = Vec::new();
 
   let mut buf = Vec::new();
   loop {
@@ -768,7 +699,6 @@ fn read_ornaments<R: io::BufRead>(
           Some(OxsOrnament::Full(stitch)) => fullstitches.push(stitch),
           Some(OxsOrnament::Part(stitch)) => partstitches.push(stitch),
           Some(OxsOrnament::Node(stitch)) => nodestitches.push(stitch),
-          Some(OxsOrnament::Special(stitch)) => specialstitches.push(stitch),
           None => {}
         }
       }
@@ -778,14 +708,13 @@ fn read_ornaments<R: io::BufRead>(
     buf.clear();
   }
 
-  Ok((fullstitches, partstitches, nodestitches, specialstitches))
+  Ok((fullstitches, partstitches, nodestitches))
 }
 
 enum OxsOrnament {
   Full(FullStitch),
   Part(PartStitch),
   Node(NodeStitch),
-  Special(SpecialStitch),
 }
 
 fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
@@ -796,8 +725,7 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
   let kind = unwrap_or_continue!(attributes.get_objecttype("objecttype"), Ok(None));
 
   if kind == "quarter" {
-    let is_petit = attributes.get_bool("petit");
-    if is_petit.is_none_or(|v| v) {
+    if attributes.get_bool("petit").unwrap_or_default() {
       return Ok(Some(OxsOrnament::Full(FullStitch {
         x,
         y,
@@ -806,17 +734,11 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
       })));
     }
 
-    let (x_fract, y_fract) = (x.fract(), y.fract());
-    let direction = if x_fract == 0.0 && y_fract == 0.0 || x_fract == 0.5 && y_fract == 0.5 {
-      PartStitchDirection::Backward
-    } else {
-      PartStitchDirection::Forward
-    };
     return Ok(Some(OxsOrnament::Part(PartStitch {
       x,
       y,
       palindex,
-      direction,
+      direction: PartStitchDirection::from((x, y)),
       kind: PartStitchKind::Quarter,
     })));
   }
@@ -825,7 +747,7 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
     let direction = match attributes.get_parsed("direction") {
       Some(1) => PartStitchDirection::Backward,
       Some(2) => PartStitchDirection::Forward,
-      _ => PartStitchDirection::Forward,
+      _ => PartStitchDirection::from((x, y)),
     };
     return Ok(Some(OxsOrnament::Part(PartStitch {
       x,
@@ -833,22 +755,6 @@ fn read_ornament(attributes: AttributesMap) -> Result<Option<OxsOrnament>> {
       palindex,
       direction,
       kind: PartStitchKind::Half,
-    })));
-  }
-
-  if kind == "specialstitch" {
-    let modindex: u32 = unwrap_or_continue!(attributes.get_parsed("modindex"), Ok(None));
-
-    return Ok(Some(OxsOrnament::Special(SpecialStitch {
-      x,
-      y,
-      palindex,
-      modindex,
-      rotation: attributes.get_parsed("rotation").unwrap_or_default(),
-      flip: (
-        attributes.get_bool("flip_x").unwrap_or_default(),
-        attributes.get_bool("flip_y").unwrap_or_default(),
-      ),
     })));
   }
 
@@ -870,7 +776,6 @@ fn write_ornaments<W: io::Write>(
   fullstitches: impl Iterator<Item = FullStitch>,
   partstitches: impl Iterator<Item = PartStitch>,
   nodestitches: impl Iterator<Item = NodeStitch>,
-  specialstitches: impl Iterator<Item = SpecialStitch>,
 ) -> io::Result<()> {
   writer
     .create_element("ornaments_inc_knots_and_beads")
@@ -885,10 +790,6 @@ fn write_ornaments<W: io::Write>(
 
       for nodestitch in nodestitches {
         write_ornament(writer, OxsOrnament::Node(nodestitch))?;
-      }
-
-      for specialstitch in specialstitches {
-        write_ornament(writer, OxsOrnament::Special(specialstitch))?;
       }
 
       Ok(())
@@ -953,114 +854,7 @@ fn write_ornament<W: io::Write>(writer: &mut Writer<W>, stitch: OxsOrnament) -> 
         ])
         .write_empty()?;
     }
-    OxsOrnament::Special(stitch) => {
-      writer
-        .create_element("object")
-        .with_attributes([
-          ("x1", stitch.x.to_string().as_str()),
-          ("y1", stitch.y.to_string().as_str()),
-          ("palindex", (stitch.palindex + 1).to_string().as_str()),
-          ("objecttype", "specialstitch"),
-          ("modindex", stitch.modindex.to_string().as_str()),
-          ("rotation", stitch.rotation.to_string().as_str()),
-          ("flip_x", stitch.flip.0.to_string().as_str()),
-          ("flip_y", stitch.flip.1.to_string().as_str()),
-        ])
-        .write_empty()?;
-    }
   }
-
-  Ok(())
-}
-
-fn read_special_stitch_models<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Vec<SpecialStitchModel>> {
-  let mut special_stitch_models = Vec::new();
-
-  let mut buf = Vec::new();
-  loop {
-    match reader.read_event_into(&mut buf)? {
-      Event::Start(ref e) if e.name().as_ref() == "model" => {
-        let attributes = AttributesMap::try_from(e.attributes())?;
-
-        let mut linestitches = Vec::new();
-        let mut nodestitches = Vec::new();
-        let mut curvedstitches = Vec::new();
-        loop {
-          match reader.read_event_into(&mut buf)? {
-            Event::Start(ref e) if e.name().as_ref() == "backstitch" => {
-              let attributes = AttributesMap::try_from(e.attributes())?;
-              match read_line_stitch(attributes)? {
-                Some(OxsLineStitch::LineStitch(stitch)) => linestitches.push(stitch),
-                Some(OxsLineStitch::CurvedStitch(stitch)) => curvedstitches.push(stitch),
-                None => {}
-              }
-            }
-            Event::Start(ref e) if e.name().as_ref() == "object" => {
-              let attributes = AttributesMap::try_from(e.attributes())?;
-              if let Some(OxsOrnament::Node(stitch)) = read_ornament(attributes)? {
-                nodestitches.push(stitch);
-              }
-            }
-            Event::End(ref e) if e.name().as_ref() == "model" => {
-              special_stitch_models.push(SpecialStitchModel {
-                unique_name: attributes.get("unique_name").unwrap_or_default().to_string(),
-                name: attributes.get("name").unwrap_or_default().to_string(),
-                width: attributes.get_parsed("width").unwrap_or_default(),
-                height: attributes.get_parsed("height").unwrap_or_default(),
-                linestitches,
-                nodestitches,
-                curvedstitches,
-              });
-              break;
-            }
-            _ => {}
-          }
-        }
-      }
-      Event::End(ref e) if e.name().as_ref() == "special_stitch_models" => break,
-      _ => {}
-    }
-  }
-
-  Ok(special_stitch_models)
-}
-
-fn write_special_stitch_models<W: io::Write>(
-  writer: &mut Writer<W>,
-  special_stitch_models: &[SpecialStitchModel],
-) -> io::Result<()> {
-  writer
-    .create_element("special_stitch_models")
-    .write_inner_content(|writer| {
-      for (index, spsmodel) in special_stitch_models.iter().enumerate() {
-        writer
-          .create_element("model")
-          .with_attributes([
-            ("index", (index).to_string().as_str()),
-            ("unique_name", spsmodel.unique_name.as_str()),
-            ("name", spsmodel.name.as_str()),
-            ("width", spsmodel.width.to_string().as_str()),
-            ("height", spsmodel.height.to_string().as_str()),
-          ])
-          .write_inner_content(|writer| {
-            for linestitch in spsmodel.linestitches.iter().copied() {
-              write_line_stitch(writer, OxsLineStitch::LineStitch(linestitch))?;
-            }
-
-            for nodestitch in spsmodel.nodestitches.iter().copied() {
-              write_ornament(writer, OxsOrnament::Node(nodestitch))?;
-            }
-
-            for curvedstitch in spsmodel.curvedstitches.iter().cloned() {
-              write_line_stitch(writer, OxsLineStitch::CurvedStitch(curvedstitch))?;
-            }
-
-            Ok(())
-          })?;
-      }
-
-      Ok(())
-    })?;
 
   Ok(())
 }

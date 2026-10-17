@@ -19,7 +19,6 @@ import {
   IconStitchStraight,
   IconStitchFrenchKnot,
   IconStitchBead,
-  IconStitchSpecial,
 } from "~/assets/icons/";
 import { useI18n } from "~/composables/";
 import type { LayerVisibility } from "~/lib/pattern/";
@@ -101,15 +100,6 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           icon: IconStitchQuarter,
           visible: visibility.quarterstitchesVisible,
           toggledVisibility: { ...visibility, quarterstitchesVisible: !visibility.quarterstitchesVisible },
-          disabled: !visibility.visible,
-        },
-        {
-          index: layer.index,
-          label: fluent.$t("canvas-layers-special-stitches"),
-          value: `layer-${layer.index}-specialstitches`,
-          icon: IconStitchSpecial,
-          visible: visibility.specialstitchesVisible,
-          toggledVisibility: { ...visibility, specialstitchesVisible: !visibility.specialstitchesVisible },
           disabled: !visibility.visible,
         },
         {

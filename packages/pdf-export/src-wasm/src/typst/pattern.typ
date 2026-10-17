@@ -21,8 +21,6 @@
     partstitches: [...],
     linestitches: [...],
     nodestitches: [...],
-    specialstitches: [...],
-    specialStitchModels: [...],
 
     pdfExportOptions: {
       frameSize: [w, h],

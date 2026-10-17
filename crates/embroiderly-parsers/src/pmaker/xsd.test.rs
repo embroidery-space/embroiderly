@@ -83,7 +83,6 @@ fn reads_palette() {
         back: Some(2),
         straight: Some(2),
         french_knot: Some(2),
-        special: Some(2),
       }),
     },
   ];
@@ -126,12 +125,6 @@ fn reads_formats() {
         color: String::from("000000"),
         thickness: 4.0,
       },
-      special_stitch: LineStitchFormat {
-        use_alt_color: false,
-        color: String::from("000000"),
-        style: 5,
-        thickness: 1.0,
-      },
       font: FontFormat {
         font_name: Some(String::from("CrossStitch3")),
         bold: false,
@@ -169,12 +162,6 @@ fn reads_formats() {
         use_alt_color: false,
         color: String::from("FFFFFF"),
         thickness: 4.0,
-      },
-      special_stitch: LineStitchFormat {
-        use_alt_color: false,
-        color: String::from("FFFFFF"),
-        style: 5,
-        thickness: 1.5,
       },
       font: FontFormat {
         font_name: Some(String::from("CrossStitch3")),
@@ -314,7 +301,6 @@ fn reads_stitch_settings() {
         back: 1,
         straight: 1,
         french_knot: 2,
-        special: 2,
       },
       display_thickness: [1.0, 1.5, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 4.0,],
       outlined_stitches: true,
@@ -479,93 +465,9 @@ fn reads_stitches() {
 }
 
 #[test]
-fn reads_special_stitch_models() {
-  let loaded_special_stitch_models = read_special_stitch_models(&mut load_fixture("special_stitch_models")).unwrap();
-  let expected_speciql_stitch_models = vec![
-    SpecialStitchModel {
-      unique_name: String::from("Lasy Daisy Over 2x1"),
-      name: String::from(""),
-      width: 2.0,
-      height: 2.0,
-      nodestitches: vec![],
-      linestitches: vec![],
-      curvedstitches: vec![CurvedStitch {
-        points: vec![
-          (1.5666666, 2.0666666),
-          (0.6, 0.8333333),
-          (0.6333333, 0.23333333),
-          (0.79999995, 0.06666667),
-          (1.1333333, 0.2),
-          (1.3666667, 0.56666666),
-          (1.5666666, 2.0666666),
-        ],
-      }],
-    },
-    SpecialStitchModel {
-      unique_name: String::from("Rhodes Heart - over 6"),
-      name: String::from("Rhodes Heart"),
-      width: 3.0,
-      height: 2.5,
-      nodestitches: vec![],
-      linestitches: vec![
-        LineStitch {
-          x: (1.0, 2.0),
-          y: (2.0, 0.0),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (0.5, 2.5),
-          y: (1.5, 0.0),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (0.0, 3.0),
-          y: (1.0, 0.5),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (0.0, 3.0),
-          y: (0.5, 1.0),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (0.5, 2.5),
-          y: (0.0, 1.5),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (1.0, 2.0),
-          y: (0.0, 2.0),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (1.5, 1.5),
-          y: (0.5, 2.5),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-      ],
-      curvedstitches: vec![],
-    },
-  ];
-  for (loaded, expected) in loaded_special_stitch_models
-    .iter()
-    .zip(expected_speciql_stitch_models.iter())
-  {
-    assert_eq!(loaded, expected);
-  }
-}
 
-#[test]
 fn reads_joints() {
-  let (loaded_linestitches, loaded_nodestitches, loaded_special_stitches, _) =
-    read_joints(&mut load_fixture("joints"), 16).unwrap();
+  let (loaded_linestitches, loaded_nodestitches) = read_joints(&mut load_fixture("joints"), 16).unwrap();
 
   let expected_nodestitches = [
     NodeStitch {
@@ -621,84 +523,6 @@ fn reads_joints() {
     },
   ];
   for (loaded, expected) in loaded_linestitches.iter().zip(expected_linestitches.iter()) {
-    assert_eq!(loaded, expected);
-  }
-
-  let expected_special_stitches = [
-    SpecialStitch {
-      x: 5.5,
-      y: 1.0,
-      rotation: 0,
-      flip: (false, false),
-      palindex: 0,
-      modindex: 0,
-    },
-    SpecialStitch {
-      x: 9.0,
-      y: 1.0,
-      rotation: 0,
-      flip: (true, false),
-      palindex: 0,
-      modindex: 0,
-    },
-    SpecialStitch {
-      x: 8.5,
-      y: 3.0,
-      rotation: 0,
-      flip: (false, true),
-      palindex: 0,
-      modindex: 0,
-    },
-    SpecialStitch {
-      x: 12.0,
-      y: 3.0,
-      rotation: 0,
-      flip: (true, true),
-      palindex: 0,
-      modindex: 0,
-    },
-    SpecialStitch {
-      x: 9.0,
-      y: 4.5,
-      rotation: 90,
-      flip: (false, false),
-      palindex: 0,
-      modindex: 0,
-    },
-    SpecialStitch {
-      x: 9.0,
-      y: 5.5,
-      rotation: 270,
-      flip: (false, false),
-      palindex: 0,
-      modindex: 0,
-    },
-    SpecialStitch {
-      x: 9.0,
-      y: 6.5,
-      rotation: 90,
-      flip: (false, true),
-      palindex: 0,
-      modindex: 0,
-    },
-    SpecialStitch {
-      x: 9.0,
-      y: 8.0,
-      rotation: 90,
-      flip: (true, false),
-      palindex: 0,
-      modindex: 0,
-    },
-    SpecialStitch {
-      x: 11.0,
-      y: 5.0,
-      rotation: 0,
-      flip: (false, false),
-      palindex: 1,
-      modindex: 1,
-    },
-  ];
-  for (loaded, expected) in loaded_special_stitches.iter().zip(expected_special_stitches.iter()) {
     assert_eq!(loaded, expected);
   }
 }

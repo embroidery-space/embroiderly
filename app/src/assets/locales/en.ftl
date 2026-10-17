@@ -327,7 +327,6 @@ canvas-layers-back-stitches = Back Stitches
 canvas-layers-straight-stitches = Straight Stitches
 canvas-layers-french-knots = French Knots
 canvas-layers-beads = Beads
-canvas-layers-special-stitches = Special Stitches
 
 canvas-layers-placeholder = Layer { $index }
 

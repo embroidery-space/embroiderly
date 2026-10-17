@@ -16,7 +16,6 @@ import {
   PdfExportOptions,
   PatternInfo,
   ReferenceImageSettings,
-  SpecialStitch,
   serializeStitch,
 } from "~/lib/pattern/";
 import type { Stitch, Symbol } from "~/lib/pattern/";
@@ -199,16 +198,14 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
 
     await editor.addStitch(pattern.value.id, layerIndex, serializeStitch(stitch));
 
-    if (stitch instanceof SpecialStitch) MetricsService.captureStitchAdded("Special");
-    else MetricsService.captureStitchAdded(stitch.kind);
+    MetricsService.captureStitchAdded(stitch.kind);
   }
   async function removeStitch(layerIndex: number, stitch: Stitch) {
     if (pattern.value.isNil) return;
 
     await editor.removeStitch(pattern.value.id, layerIndex, serializeStitch(stitch));
 
-    if (stitch instanceof SpecialStitch) MetricsService.captureStitchRemoved("Special");
-    else MetricsService.captureStitchRemoved(stitch.kind);
+    MetricsService.captureStitchRemoved(stitch.kind);
   }
   async function removeStitchAt(layerIndex: number, x: number, y: number) {
     if (pattern.value.isNil) return;

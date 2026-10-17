@@ -18,7 +18,6 @@ pub struct Pattern {
   pub fabric: Fabric,
   pub palette: Palette,
   pub layers: Layers,
-  pub special_stitch_models: Vec<SpecialStitchModel>,
 }
 
 impl Pattern {
@@ -168,7 +167,7 @@ impl Pattern {
     self
       .layers
       .iter_mut()
-      .flat_map(|l| l.remove_stitches_outside_bounds(bounds, &self.special_stitch_models))
+      .flat_map(|l| l.remove_stitches_outside_bounds(bounds))
       .collect()
   }
 
@@ -235,12 +234,6 @@ impl Pattern {
         };
         if visible {
           result.add_stitch(Stitch::Node(stitch));
-        }
-      }
-
-      if layer.specialstitches_visible {
-        for &stitch in layer.specialstitches.iter() {
-          result.specialstitches.insert(stitch);
         }
       }
     }

@@ -111,7 +111,6 @@ describe("Layer", () => {
     expect(vis.straightstitchesVisible).toBe(true);
     expect(vis.frenchknotsVisible).toBe(true);
     expect(vis.beadsVisible).toBe(true);
-    expect(vis.specialstitchesVisible).toBe(true);
   });
 
   test("setVisibility updates all flags", () => {
@@ -126,7 +125,6 @@ describe("Layer", () => {
       straightstitchesVisible: false,
       frenchknotsVisible: false,
       beadsVisible: false,
-      specialstitchesVisible: false,
     });
 
     const vis = layer.getVisibility();
@@ -139,6 +137,5 @@ describe("Layer", () => {
     expect(vis.straightstitchesVisible).toBe(false);
     expect(vis.frenchknotsVisible).toBe(false);
     expect(vis.beadsVisible).toBe(false);
-    expect(vis.specialstitchesVisible).toBe(false);
   });
 });

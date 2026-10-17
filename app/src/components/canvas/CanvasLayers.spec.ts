@@ -132,7 +132,6 @@ describe("CanvasLayers", () => {
       quarterstitchesVisible: true,
       backstitchesVisible: true,
       straightstitchesVisible: true,
-      specialstitchesVisible: true,
       frenchknotsVisible: true,
       beadsVisible: true,
     });
@@ -158,7 +157,6 @@ describe("CanvasLayers", () => {
       quarterstitchesVisible: true,
       backstitchesVisible: true,
       straightstitchesVisible: true,
-      specialstitchesVisible: true,
       frenchknotsVisible: true,
       beadsVisible: true,
     });
