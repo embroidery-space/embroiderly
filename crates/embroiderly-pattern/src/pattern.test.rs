@@ -59,17 +59,6 @@ fn quarter_stitch(x: f32, y: f32, palindex: u32, direction: PartStitchDirection)
   })
 }
 
-fn special_stitch(x: f32, y: f32, palindex: u32, modindex: u32) -> SpecialStitch {
-  SpecialStitch {
-    x: NotNan::new(x).unwrap(),
-    y: NotNan::new(y).unwrap(),
-    rotation: 0,
-    flip: (false, false),
-    palindex,
-    modindex,
-  }
-}
-
 #[test]
 fn creates_pattern_with_default_layer() {
   let pattern = Pattern::default();
@@ -266,31 +255,6 @@ fn removes_stitches_outside_bounds_from_all_layers() {
 }
 
 #[test]
-fn removes_special_stitches_outside_bounds_from_all_layers() {
-  let mut pattern = Pattern::default();
-  pattern.special_stitch_models.push(SpecialStitchModel {
-    unique_name: "test".to_string(),
-    name: "Test".to_string(),
-    width: 2.0,
-    height: 2.0,
-    nodestitches: vec![],
-    linestitches: vec![],
-    curvedstitches: vec![],
-  });
-
-  let layer2_idx = pattern.layers.push(Layer::new("Layer 2"));
-  pattern.add_stitch(0, Stitch::Special(special_stitch(5.0, 5.0, 0, 0))); // Inside bounds.
-  pattern.add_stitch(0, Stitch::Special(special_stitch(1.0, 1.0, 0, 0))); // Entirely outside bounds.
-  pattern.add_stitch(layer2_idx, Stitch::Special(special_stitch(14.0, 5.0, 0, 0))); // Exceeds right edge.
-
-  let removed = pattern.remove_stitches_outside_bounds(Bounds::new(5, 5, 10, 10));
-
-  assert_eq!(removed.len(), 2);
-  assert_eq!(pattern.layers[0].specialstitches.len(), 1);
-  assert_eq!(pattern.layers[layer2_idx].specialstitches.len(), 0);
-}
-
-#[test]
 fn flatten_single_layer_includes_all_stitches() {
   let mut pattern = Pattern::default();
   pattern.add_stitch(0, full_stitch(0.0, 0.0, 0));
@@ -380,21 +344,4 @@ fn flatten_top_layer_full_stitch_displaces_bottom_layer_part_stitches() {
   // The full stitch from layer2 should have displaced the part stitches.
   assert_eq!(flat.fullstitches.len(), 1);
   assert_eq!(flat.partstitches.len(), 0);
-}
-
-#[test]
-fn flatten_higher_layer_special_stitch_overrides_lower_at_same_position() {
-  let mut pattern = Pattern::default();
-  // Default (visual bottom): special stitch at (0, 0) with palindex 0.
-  pattern.layers[0].specialstitches.insert(special_stitch(0.0, 0.0, 0, 0));
-  // Layer 2 (visual top): special stitch at (0, 0) with palindex 1.
-  let layer2_idx = pattern.layers.push(Layer::new("Layer 2"));
-  pattern.layers[layer2_idx]
-    .specialstitches
-    .insert(special_stitch(0.0, 0.0, 1, 0));
-
-  let flat = pattern.flatten_visible_layers();
-
-  assert_eq!(flat.specialstitches.len(), 1);
-  assert_eq!(flat.specialstitches.iter().next().unwrap().palindex, 1);
 }

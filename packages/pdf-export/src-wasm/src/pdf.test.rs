@@ -61,8 +61,6 @@ mod preparation {
       "partstitches",
       "linestitches",
       "nodestitches",
-      "specialstitches",
-      "specialStitchModels",
       "pdfExportOptions",
     ] {
       assert!(value.get(key).is_some(), r#"missing key "{key}" in pattern.json"#);

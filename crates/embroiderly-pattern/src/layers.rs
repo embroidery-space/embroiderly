@@ -257,9 +257,6 @@ pub struct Layer {
   pub nodestitches: Stitches<NodeStitch>,
   pub frenchknots_visible: bool,
   pub beads_visible: bool,
-
-  pub specialstitches: Stitches<SpecialStitch>,
-  pub specialstitches_visible: bool,
 }
 
 impl Default for Layer {
@@ -283,9 +280,6 @@ impl Default for Layer {
       nodestitches: Stitches::new(),
       frenchknots_visible: true,
       beads_visible: true,
-
-      specialstitches: Stitches::new(),
-      specialstitches_visible: true,
     }
   }
 }
@@ -363,7 +357,6 @@ impl Layer {
       Stitch::Part(partstitch) => self.partstitches.get(partstitch).copied().map(Stitch::Part),
       Stitch::Node(node) => self.nodestitches.get(node).copied().map(Stitch::Node),
       Stitch::Line(line) => self.linestitches.get(line).copied().map(Stitch::Line),
-      Stitch::Special(special) => self.specialstitches.get(special).copied().map(Stitch::Special),
     }
   }
 
@@ -375,7 +368,6 @@ impl Layer {
       Stitch::Part(partstitch) => self.partstitches.contains(partstitch),
       Stitch::Node(node) => self.nodestitches.contains(node),
       Stitch::Line(line) => self.linestitches.contains(line),
-      Stitch::Special(special) => self.specialstitches.contains(special),
     }
   }
 
@@ -478,11 +470,6 @@ impl Layer {
           conflicts.push(Stitch::Line(line));
         }
       }
-      Stitch::Special(special) => {
-        if let Some(special) = self.specialstitches.insert(special) {
-          conflicts.push(Stitch::Special(special));
-        }
-      }
     }
     conflicts
   }
@@ -501,7 +488,6 @@ impl Layer {
       Stitch::Part(partstitch) => self.partstitches.remove(&partstitch).map(Into::into),
       Stitch::Node(node) => self.nodestitches.remove(&node).map(Into::into),
       Stitch::Line(line) => self.linestitches.remove(&line).map(Into::into),
-      Stitch::Special(special) => self.specialstitches.remove(&special).map(Into::into),
     }
   }
 
@@ -536,22 +522,11 @@ impl Layer {
         .into_iter()
         .map(Stitch::Node),
     );
-    removed.extend(
-      self
-        .specialstitches
-        .remove_stitches_by_palindexes(palindexes)
-        .into_iter()
-        .map(Stitch::Special),
-    );
     removed
   }
 
   /// Removes all stitches that are outside the bounds.
-  pub fn remove_stitches_outside_bounds(
-    &mut self,
-    bounds: Bounds,
-    special_stitch_models: &[SpecialStitchModel],
-  ) -> Vec<Stitch> {
+  pub fn remove_stitches_outside_bounds(&mut self, bounds: Bounds) -> Vec<Stitch> {
     let mut removed = Vec::new();
     removed.extend(
       self
@@ -581,13 +556,6 @@ impl Layer {
         .into_iter()
         .map(Stitch::Node),
     );
-    removed.extend(
-      self
-        .specialstitches
-        .remove_stitches_outside_bounds(bounds, special_stitch_models)
-        .into_iter()
-        .map(Stitch::Special),
-    );
     removed
   }
 
@@ -597,7 +565,6 @@ impl Layer {
     self.partstitches.reindex_palindexes(palindexes, palsize);
     self.linestitches.reindex_palindexes(palindexes, palsize);
     self.nodestitches.reindex_palindexes(palindexes, palsize);
-    self.specialstitches.reindex_palindexes(palindexes, palsize);
   }
 
   /// Restores the given stitches into the layer.
@@ -606,14 +573,12 @@ impl Layer {
     let mut partstitches = Vec::new();
     let mut linestitches = Vec::new();
     let mut nodestitches = Vec::new();
-    let mut specialstitches = Vec::new();
     for stitch in stitches {
       match stitch {
         Stitch::Full(fullstitch) => fullstitches.push(fullstitch),
         Stitch::Part(partstitch) => partstitches.push(partstitch),
         Stitch::Line(line) => linestitches.push(line),
         Stitch::Node(node) => nodestitches.push(node),
-        Stitch::Special(special) => specialstitches.push(special),
       }
     }
 
@@ -621,8 +586,5 @@ impl Layer {
     self.partstitches.restore_stitches(partstitches, palindexes, palsize);
     self.linestitches.restore_stitches(linestitches, palindexes, palsize);
     self.nodestitches.restore_stitches(nodestitches, palindexes, palsize);
-    self
-      .specialstitches
-      .restore_stitches(specialstitches, palindexes, palsize);
   }
 }

@@ -14,9 +14,6 @@ pub use node::*;
 mod line;
 pub use line::*;
 
-mod special;
-pub use special::*;
-
 #[cfg(test)]
 #[path = "./stitches.test.rs"]
 mod tests;
@@ -52,7 +49,6 @@ pub enum Stitch {
   Part(PartStitch),
   Line(LineStitch),
   Node(NodeStitch),
-  Special(SpecialStitch),
 }
 
 impl From<FullStitch> for Stitch {
@@ -76,12 +72,6 @@ impl From<LineStitch> for Stitch {
 impl From<NodeStitch> for Stitch {
   fn from(nodestitch: NodeStitch) -> Self {
     Self::Node(nodestitch)
-  }
-}
-
-impl From<SpecialStitch> for Stitch {
-  fn from(specialstitch: SpecialStitch) -> Self {
-    Self::Special(specialstitch)
   }
 }
 
@@ -528,29 +518,6 @@ impl Stitches<NodeStitch> {
   }
 }
 
-impl Stitches<SpecialStitch> {
-  pub fn get_stitches_in_bounds(&self, bounds: Bounds) -> impl Iterator<Item = &SpecialStitch> {
-    self
-      .inner
-      .iter()
-      .filter(move |stitch| bounds.contains_point(stitch.x, stitch.y))
-  }
-
-  pub fn remove_stitches_outside_bounds(
-    &mut self,
-    bounds: Bounds,
-    special_stitch_models: &[SpecialStitchModel],
-  ) -> Vec<SpecialStitch> {
-    self
-      .inner
-      .extract_if(.., |special| {
-        let model = &special_stitch_models[special.modindex as usize];
-        special.is_outside_bounds(bounds, model)
-      })
-      .collect()
-  }
-}
-
 macro_rules! stitches_with_palindex_impl {
   ($type:ty) => {
     impl Stitches<$type> {
@@ -629,4 +596,3 @@ stitches_with_palindex_impl!(FullStitch);
 stitches_with_palindex_impl!(PartStitch);
 stitches_with_palindex_impl!(LineStitch);
 stitches_with_palindex_impl!(NodeStitch);
-stitches_with_palindex_impl!(SpecialStitch);

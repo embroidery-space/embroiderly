@@ -47,12 +47,10 @@ const FONT_NAME_LENGTH: usize = 32;
 /// This is the maximum size of the palette.
 const FORMAT_LENGTH: usize = 240;
 
-/// Full, petite, half, quarter, back, straight, french knot, bead, special.
+/// Full, petite, half, quarter, back, straight, french knot and bead.
 const STITCH_TYPES_NUMBER: usize = 9;
 
 const PAGE_HEADER_AND_FOOTER_LENGTH: usize = 119;
-
-const SPECIAL_STITCH_NAME_LENGTH: usize = 255;
 
 #[allow(clippy::struct_field_names)]
 #[derive(Debug, PartialEq)]
@@ -66,8 +64,6 @@ pub struct Pattern {
   pub partstitches: Vec<PartStitch>,
   pub linestitches: Vec<LineStitch>,
   pub nodestitches: Vec<NodeStitch>,
-  pub specialstitches: Vec<SpecialStitch>,
-  pub special_stitch_models: Vec<SpecialStitchModel>,
   pub grid: Grid,
   pub pattern_settings: PatternSettings,
   pub stitch_settings: StitchSettings,
@@ -138,7 +134,6 @@ pub struct StitchStrands<T> {
   pub back: T,
   pub straight: T,
   pub french_knot: T,
-  pub special: T,
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -170,7 +165,6 @@ pub struct Formats {
   pub straight_stitch: LineStitchFormat,
   pub french_knot: NodeStitchFormat,
   pub bead: NodeStitchFormat,
-  pub special_stitch: LineStitchFormat,
   pub font: FontFormat,
 }
 
@@ -387,89 +381,6 @@ impl From<NodeStitchKind> for embroiderly_pattern::NodeStitchKind {
 }
 
 #[derive(Debug, PartialEq)]
-pub struct SpecialStitch {
-  pub x: f32,
-  pub y: f32,
-  pub rotation: u16,
-  pub flip: (bool, bool),
-  pub palindex: u8,
-  pub modindex: u8,
-}
-
-impl TryFrom<SpecialStitch> for embroiderly_pattern::SpecialStitch {
-  type Error = anyhow::Error;
-
-  fn try_from(special_stitch: SpecialStitch) -> Result<Self, Self::Error> {
-    Ok(Self {
-      x: embroiderly_pattern::Coord::new(special_stitch.x)?,
-      y: embroiderly_pattern::Coord::new(special_stitch.y)?,
-      rotation: special_stitch.rotation,
-      flip: special_stitch.flip,
-      palindex: special_stitch.palindex as u32,
-      modindex: special_stitch.modindex as u32,
-    })
-  }
-}
-
-#[derive(Debug, Default, PartialEq)]
-pub struct SpecialStitchModel {
-  pub unique_name: String,
-  pub name: String,
-  pub width: f32,
-  pub height: f32,
-  pub linestitches: Vec<LineStitch>,
-  pub nodestitches: Vec<NodeStitch>,
-  pub curvedstitches: Vec<CurvedStitch>,
-}
-
-impl TryFrom<SpecialStitchModel> for embroiderly_pattern::SpecialStitchModel {
-  type Error = anyhow::Error;
-
-  fn try_from(spsmodel: SpecialStitchModel) -> Result<Self, Self::Error> {
-    Ok(Self {
-      unique_name: spsmodel.unique_name,
-      name: spsmodel.name,
-      width: spsmodel.width,
-      height: spsmodel.height,
-      nodestitches: spsmodel
-        .nodestitches
-        .into_iter()
-        .map(embroiderly_pattern::NodeStitch::try_from)
-        .collect::<Result<Vec<_>, _>>()?,
-      linestitches: spsmodel
-        .linestitches
-        .into_iter()
-        .map(embroiderly_pattern::LineStitch::try_from)
-        .collect::<Result<Vec<_>, _>>()?,
-      curvedstitches: spsmodel
-        .curvedstitches
-        .into_iter()
-        .map(embroiderly_pattern::CurvedStitch::try_from)
-        .collect::<Result<Vec<_>, _>>()?,
-    })
-  }
-}
-
-#[derive(Debug, PartialEq)]
-pub struct CurvedStitch {
-  pub points: Vec<(f32, f32)>,
-}
-
-impl TryFrom<CurvedStitch> for embroiderly_pattern::CurvedStitch {
-  type Error = anyhow::Error;
-
-  fn try_from(cs: CurvedStitch) -> Result<Self, Self::Error> {
-    Ok(Self {
-      points: cs
-        .points
-        .into_iter()
-        .map(|(x, y)| Ok((embroiderly_pattern::Coord::new(x)?, embroiderly_pattern::Coord::new(y)?)))
-        .collect::<Result<Vec<_>, Self::Error>>()?,
-    })
-  }
-}
-
-#[derive(Debug, PartialEq)]
 pub struct Grid {
   pub major_lines_interval: u16,
   pub minor_screen_lines: GridLineStyle,
@@ -607,13 +518,6 @@ pub fn parse_pattern(data: &[u8]) -> Result<embroiderly_pattern::EmbroiderlyProj
         .map(TryInto::try_into)
         .collect::<Result<Vec<_>, _>>()?,
     ),
-    specialstitches: embroiderly_pattern::Stitches::from_iter(
-      xsd_pattern
-        .specialstitches
-        .into_iter()
-        .map(TryInto::try_into)
-        .collect::<Result<Vec<_>, _>>()?,
-    ),
     ..embroiderly_pattern::Layer::default()
   };
 
@@ -660,11 +564,6 @@ pub fn parse_pattern(data: &[u8]) -> Result<embroiderly_pattern::EmbroiderlyProj
       })
       .collect(),
     layers: embroiderly_pattern::Layers::new_with_layer(layer),
-    special_stitch_models: xsd_pattern
-      .special_stitch_models
-      .into_iter()
-      .map(TryInto::try_into)
-      .collect::<Result<Vec<_>, _>>()?,
   };
 
   let display_settings = embroiderly_pattern::DisplaySettings {
@@ -742,9 +641,9 @@ fn parse_pattern_inner(data: &[u8]) -> Result<Pattern> {
     small_stitches_count,
   )?;
 
-  let special_stitch_models = read_special_stitch_models(&mut cursor)?;
+  skip_special_stitch_models(&mut cursor)?;
 
-  let (linestitches, nodestitches, specialstitches, _curvedstitches) = read_joints(&mut cursor, joints_count)?;
+  let (linestitches, nodestitches) = read_joints(&mut cursor, joints_count)?;
 
   Ok(Pattern {
     info: pattern_info,
@@ -763,8 +662,6 @@ fn parse_pattern_inner(data: &[u8]) -> Result<Pattern> {
     partstitches,
     nodestitches,
     linestitches,
-    specialstitches,
-    special_stitch_models,
     grid,
     pattern_settings,
     stitch_settings,
@@ -905,8 +802,10 @@ fn read_palette_item_strands<R: Read>(reader: &mut R) -> io::Result<StitchStrand
     back: map_strands(reader.read_u16::<LittleEndian>()?),
     french_knot: map_strands(reader.read_u16::<LittleEndian>()?),
     petite: map_strands(reader.read_u16::<LittleEndian>()?),
-    special: map_strands(reader.read_u16::<LittleEndian>()?),
-    straight: map_strands(reader.read_u16::<LittleEndian>()?),
+    straight: {
+      let _ = reader.read_u16::<LittleEndian>()?; // special
+      map_strands(reader.read_u16::<LittleEndian>()?)
+    },
   })
 }
 
@@ -916,7 +815,7 @@ fn read_formats<R: Read + Seek>(reader: &mut R, palette_size: usize) -> io::Resu
   let symbol_formats = read_symbol_formats(reader, palette_size)?;
   let back_stitch_formats = read_line_formats(reader, palette_size)?;
   reader.seek_relative((FORMAT_LENGTH * 4) as i64)?; // Skip unknown formats.
-  let special_stitch_formats = read_line_formats(reader, palette_size)?;
+  let _special_stitch_formats = read_line_formats(reader, palette_size)?;
   let straight_stitch_formats = read_line_formats(reader, palette_size)?;
   let french_knot_formats = read_node_formats(reader, palette_size)?;
   let bead_formats = read_node_formats(reader, palette_size)?;
@@ -928,17 +827,15 @@ fn read_formats<R: Read + Seek>(reader: &mut R, palette_size: usize) -> io::Resu
     straight_stitch_formats,
     french_knot_formats,
     bead_formats,
-    special_stitch_formats,
     font_formats,
   )
   .map(
-    |(symbol, back_stitch, straight_stitch, french_knot, bead, special_stitch, font)| Formats {
+    |(symbol, back_stitch, straight_stitch, french_knot, bead, font)| Formats {
       symbol,
       back_stitch,
       straight_stitch,
       french_knot,
       bead,
-      special_stitch,
       font,
     },
   )
@@ -1158,9 +1055,11 @@ fn read_stitch_settings<R: Read + Seek>(reader: &mut R) -> io::Result<StitchSett
     quarter: reader.read_u16::<LittleEndian>()? as u8,
     back: reader.read_u16::<LittleEndian>()? as u8,
     petite: reader.read_u16::<LittleEndian>()? as u8,
-    special: reader.read_u16::<LittleEndian>()? as u8,
     french_knot: 2,
-    straight: reader.read_u16::<LittleEndian>()? as u8,
+    straight: {
+      let _ = reader.read_u16::<LittleEndian>()?; // special
+      reader.read_u16::<LittleEndian>()? as u8
+    },
   };
   let display_thickness = {
     let mut arr = [0.0; 13];
@@ -1441,43 +1340,32 @@ fn adjust_small_stitch_coors(x: f32, y: f32, kind: XsdSmallStitchKind) -> (f32, 
   }
 }
 
-fn read_special_stitch_models<R: Read + Seek>(reader: &mut R) -> io::Result<Vec<SpecialStitchModel>> {
-  tracing::debug!("Reading special stitch models");
+fn skip_special_stitch_models<R: Read + Seek>(reader: &mut R) -> io::Result<()> {
+  tracing::debug!("Skipping special stitch models");
 
   reader.seek_relative(2)?;
-  let special_stith_models_count = reader.read_u16::<LittleEndian>()? as usize;
-  let mut special_stitch_models = Vec::with_capacity(special_stith_models_count);
+  let models_count = reader.read_u16::<LittleEndian>()? as usize;
 
-  for _ in 0..special_stith_models_count {
+  for _ in 0..models_count {
     if reader.read_u16::<LittleEndian>()? != 4 {
       continue;
     }
 
     reader.seek_relative(2)?;
-    let mut special_stitch_kind_buf = vec![0; 4];
-    reader.read_exact(&mut special_stitch_kind_buf)?;
+    let mut stitch_kind_buf = vec![0; 4];
+    reader.read_exact(&mut stitch_kind_buf)?;
 
-    if String::from_utf8(special_stitch_kind_buf).unwrap() != "sps1" {
+    if String::from_utf8(stitch_kind_buf).unwrap() != "sps1" {
       continue;
     }
 
-    let mut special_stitch_model = SpecialStitchModel {
-      unique_name: reader.read_cstring(SPECIAL_STITCH_NAME_LENGTH)?,
-      name: reader.read_cstring(SPECIAL_STITCH_NAME_LENGTH)?,
-      ..Default::default()
-    };
-    let mut shift = (0.0, 0.0);
+    reader.seek_relative(256 * 2)?;
     reader.seek_relative(2)?;
 
     for i in 0..3 {
       if i == 0 {
         reader.seek_relative(2)?;
-        shift = (
-          reader.read_u16::<LittleEndian>()? as f32 / 2.0,
-          reader.read_u16::<LittleEndian>()? as f32 / 2.0,
-        );
-        special_stitch_model.width = reader.read_u16::<LittleEndian>()? as f32 / 2.0;
-        special_stitch_model.height = reader.read_u16::<LittleEndian>()? as f32 / 2.0;
+        reader.seek_relative(8)?;
       } else {
         reader.seek_relative(10)?;
       }
@@ -1491,25 +1379,11 @@ fn read_special_stitch_models<R: Read + Seek>(reader: &mut R) -> io::Result<Vec<
         continue;
       }
 
-      if i == 0 || i == 2 {
-        let (linestitches, nodestitches, _specialstitches, curvedstitches) = read_joints(reader, joints_count)?;
-        special_stitch_model.linestitches.extend(linestitches);
-        special_stitch_model.nodestitches.extend(nodestitches);
-        special_stitch_model.curvedstitches.extend(curvedstitches);
-      } else {
-        read_joints(reader, joints_count)?;
-      }
+      read_joints(reader, joints_count)?;
     }
-
-    // Adjust the coordinates of the curvedstitches.
-    for curve in special_stitch_model.curvedstitches.iter_mut() {
-      curve.points = curve.points.iter().map(|(x, y)| (*x - shift.0, *y - shift.1)).collect();
-    }
-
-    special_stitch_models.push(special_stitch_model);
   }
 
-  Ok(special_stitch_models)
+  Ok(())
 }
 
 #[derive(Debug, PartialEq)]
@@ -1536,17 +1410,12 @@ impl From<u16> for XsdJointKind {
   }
 }
 
-type Joints = (Vec<LineStitch>, Vec<NodeStitch>, Vec<SpecialStitch>, Vec<CurvedStitch>);
-
-/// Reads the french knots, beads, back, straight and special stitches and curved stitches used in the pattern.
-#[expect(clippy::too_many_lines)]
-fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<Joints> {
+/// Reads the french knots, beads, back, straight and curved stitches used in the pattern.
+fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<(Vec<LineStitch>, Vec<NodeStitch>)> {
   tracing::debug!("Reading joints");
 
   let mut linestitches = Vec::new();
   let mut nodestitches = Vec::new();
-  let mut specialstitches = Vec::new();
-  let mut curvedstitches = Vec::new();
 
   for _ in 0..joints_count {
     let joint_kind = XsdJointKind::from(reader.read_u16::<LittleEndian>()?);
@@ -1590,66 +1459,13 @@ fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<
 
       XsdJointKind::Curve => {
         reader.seek_relative(3)?;
+
         let points_count = reader.read_u16::<LittleEndian>()? as usize;
-        let mut curve = CurvedStitch {
-          points: Vec::with_capacity(points_count),
-        };
-        for _ in 0..points_count {
-          // 15.0 is the resolution of the curve points.
-          // 2.0 is the factor that is used to convert the XSD coordinates to the pattern coordinates.
-          let x = reader.read_u16::<LittleEndian>()? as f32 / 15.0 / 2.0;
-          let y = reader.read_u16::<LittleEndian>()? as f32 / 15.0 / 2.0;
-          curve.points.push((x, y));
-        }
-        curvedstitches.push(curve);
+        reader.seek_relative((points_count * 4) as i64)?;
       }
 
       XsdJointKind::Special => {
-        reader.seek_relative(2)?;
-        let palindex = reader.read_u8()?;
-        reader.seek_relative(4)?;
-        let x = reader.read_u16::<LittleEndian>()? as f32 / 2.0;
-        let y = reader.read_u16::<LittleEndian>()? as f32 / 2.0;
-        let (rotation, flip) = {
-          let mut flip = (false, false);
-          let mut rotation = 0;
-
-          let param1 = reader.read_u16::<LittleEndian>()?;
-          let param2 = reader.read_u16::<LittleEndian>()?;
-          let param3 = reader.read_u16::<LittleEndian>()?;
-          let param4 = reader.read_u16::<LittleEndian>()?;
-
-          if param1 == 0xFFFF && param2 == 0 && param3 == 0 && param4 == 1 {
-            flip.0 = true;
-          } else if param1 == 1 && param2 == 0 && param3 == 0 && param4 == 0xFFFF {
-            flip.1 = true;
-          } else if param1 == 0xFFFF && param2 == 0 && param3 == 0 && param4 == 0xFFFF {
-            flip.0 = true;
-            flip.1 = true;
-          } else if param1 == 0 && param2 == 0xFFFF && param3 == 1 && param4 == 0 {
-            rotation = 90;
-          } else if param1 == 0 && param2 == 1 && param3 == 0xFFFF && param4 == 0 {
-            rotation = 270;
-          } else if param1 == 0 && param2 == 1 && param3 == 1 && param4 == 0 {
-            flip.1 = true;
-            rotation = 90;
-          } else if param1 == 0 && param2 == 0xFFFF && param3 == 0xFFFF && param4 == 0 {
-            flip.0 = true;
-            rotation = 90;
-          }
-
-          (rotation, flip)
-        };
-        reader.seek_relative(2)?;
-        let modindex = reader.read_u16::<LittleEndian>()? as u8;
-        specialstitches.push(SpecialStitch {
-          x,
-          y,
-          rotation,
-          flip,
-          palindex,
-          modindex,
-        });
+        reader.seek_relative(23)?;
       }
 
       XsdJointKind::Bead => {
@@ -1670,5 +1486,5 @@ fn read_joints<R: Read + Seek>(reader: &mut R, joints_count: u16) -> io::Result<
     }
   }
 
-  Ok((linestitches, nodestitches, specialstitches, curvedstitches))
+  Ok((linestitches, nodestitches))
 }

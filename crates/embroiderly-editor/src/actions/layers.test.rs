@@ -142,8 +142,6 @@ fn test_update_layer_visibility_action() {
 
     frenchknots_visible: true,
     beads_visible: true,
-
-    specialstitches_visible: true,
   };
 
   let mut action = EditorAction::Layer(LayerAction::UpdateVisibility {

@@ -9,7 +9,6 @@ import {
   LineStitchKind,
   NodeStitch,
   NodeStitchKind,
-  SpecialStitch,
 } from "./stitches.ts";
 
 export class LayerVisibility {
@@ -27,8 +26,6 @@ export class LayerVisibility {
   frenchknotsVisible: boolean;
   beadsVisible: boolean;
 
-  specialstitchesVisible: boolean;
-
   constructor(data: b.infer<typeof LayerVisibility.schema>) {
     this.visible = data.visible;
 
@@ -43,8 +40,6 @@ export class LayerVisibility {
 
     this.frenchknotsVisible = data.frenchknotsVisible;
     this.beadsVisible = data.beadsVisible;
-
-    this.specialstitchesVisible = data.specialstitchesVisible;
   }
 
   // Field order matches the Rust `LayerVisibility` struct declaration for Borsh compatibility.
@@ -62,8 +57,6 @@ export class LayerVisibility {
 
     frenchknotsVisible: b.bool(),
     beadsVisible: b.bool(),
-
-    specialstitchesVisible: b.bool(),
   });
 
   static deserialize(data: Uint8Array) {
@@ -96,9 +89,6 @@ export class Layer {
   frenchknotsVisible: boolean;
   beadsVisible: boolean;
 
-  specialstitches: SpecialStitch[];
-  specialstitchesVisible: boolean;
-
   constructor(index: number, data?: Partial<b.infer<typeof Layer.schema>>) {
     this.index = index;
     this.name = data?.name ?? "";
@@ -119,9 +109,6 @@ export class Layer {
     this.nodestitches = data?.nodestitches?.map((s) => new NodeStitch(s)) ?? [];
     this.frenchknotsVisible = data?.frenchknotsVisible ?? true;
     this.beadsVisible = data?.beadsVisible ?? true;
-
-    this.specialstitches = data?.specialstitches?.map((s) => new SpecialStitch(s)) ?? [];
-    this.specialstitchesVisible = data?.specialstitchesVisible ?? true;
   }
 
   static readonly schema = b.struct({
@@ -143,9 +130,6 @@ export class Layer {
     nodestitches: b.vec(NodeStitch.schema),
     frenchknotsVisible: b.bool(),
     beadsVisible: b.bool(),
-
-    specialstitches: b.vec(SpecialStitch.schema),
-    specialstitchesVisible: b.bool(),
   });
 
   static deserialize(data: Uint8Array) {
@@ -163,7 +147,6 @@ export class Layer {
       straightStitches: this.linestitches.filter((s) => s.kind === LineStitchKind.Straight).length,
       frenchKnots: this.nodestitches.filter((s) => s.kind === NodeStitchKind.FrenchKnot).length,
       beads: this.nodestitches.filter((s) => s.kind === NodeStitchKind.Bead).length,
-      specialStitches: this.specialstitches.length,
     };
   }
 
@@ -182,8 +165,6 @@ export class Layer {
 
       frenchknotsVisible: this.frenchknotsVisible,
       beadsVisible: this.beadsVisible,
-
-      specialstitchesVisible: this.specialstitchesVisible,
     });
   }
 
@@ -201,8 +182,6 @@ export class Layer {
 
     this.frenchknotsVisible = vis.frenchknotsVisible;
     this.beadsVisible = vis.beadsVisible;
-
-    this.specialstitchesVisible = vis.specialstitchesVisible;
   }
 }
 
