@@ -577,31 +577,13 @@ image-import-pattern-properties = Palette size: { $paletteSize }. Total stitches
 
 pdf-export = PDF Export
 
-pdf-export-variant-monochrome = Export black and white document
-pdf-export-variant-color = Export color document
+pdf-export-color = Color export
 
-pdf-export-save-settings = Save Settings
+pdf-export-save-template = Save Template
 pdf-export-export-document = Export Document
+pdf-export-export-document-monochrome = Export black and white document
+pdf-export-export-document-color = Export color document
 
-## Publish settings.
-
-publish-settings = Publish Settings
-
-publish-settings-print-options = Print Options
-publish-settings-print-center-frames = Center frames
-publish-settings-print-enumerate-frames = Enumerate frames
-
-publish-settings-frame-options = Frame Options
-publish-settings-frame-definition =
-  A frame is a part of the pattern.
-  Large patterns can be split into several frames. Each frame is placed on a separate page.
-
-publish-settings-frame-width = Frame Width
-publish-settings-frame-height = Frame Height
-
-publish-settings-frame-preserved-overlap =
-  .label = Preserved Overlap
-  .description = The size of overlap between frames, in stitches.
-
-publish-settings-frame-show-grid-line-numbers = Show grid line numbers
-publish-settings-frame-show-centering-marks = Show centering marks
+pdf-export-unsaved-changes =
+  .title = Unsaved Changes
+  .description = The PDF template has unsaved changes. Do you want to save it before closing?

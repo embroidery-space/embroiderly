@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { App, useOverlay, useToast } from "@embroiderly/ui";
 
-import { useEventListener, useLocalStorage } from "@vueuse/core";
+import { useEventListener, useLocalStorage, useParentElement } from "@vueuse/core";
 import { randomInt } from "es-toolkit";
 import { onMounted, onErrorCaptured, markRaw, watch } from "vue";
+import type { ShallowRef } from "vue";
 
 import {
   IconCheck,
@@ -35,6 +36,8 @@ const { fluent, currentLocale } = useI18n();
 
 const telemetryPrompt = overlay.create(TelemetryPrompt);
 const telemetryPromptShown = useLocalStorage("embroiderly-telemetry-prompt-shown", false);
+
+const appElement = useParentElement() as Readonly<ShallowRef<HTMLElement>>;
 
 watch(
   () => settingsStore.telemetry,
@@ -102,6 +105,7 @@ onErrorCaptured((err, _component, info) => {
       minus: markRaw(IconMinus),
       plus: markRaw(IconPlus),
     }"
+    :shortcuts="{ target: appElement }"
   >
     <AppHeader :class="$style.header" />
     <AppMain :class="$style.main" />

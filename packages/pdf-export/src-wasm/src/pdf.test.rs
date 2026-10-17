@@ -5,6 +5,21 @@ fn load_fixture() -> EmbroiderlyProject {
   embroiderly_parsers::embproj::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap()
 }
 
+fn load_fonts() -> Vec<Vec<u8>> {
+  vec![
+    std::fs::read(std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/fonts/FixelVariable.ttf"))
+      .unwrap(),
+    std::fs::read(
+      std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/fonts/FixelVariableItalic.ttf"),
+    )
+    .unwrap(),
+    std::fs::read(
+      std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/symbols/Ursasoftware.ttf"),
+    )
+    .unwrap(),
+  ]
+}
+
 mod preparation {
   use super::*;
 
@@ -49,7 +64,7 @@ mod preparation {
   fn composes_expected_pattern_json() {
     let embproj = load_fixture();
 
-    let pattern_json = compose_pattern_json(&embproj, PdfExportOptions::default()).unwrap();
+    let pattern_json = compose_pattern_json(&embproj).unwrap();
     let value: serde_json::Value = serde_json::from_slice(&pattern_json).unwrap();
 
     for key in [
@@ -63,7 +78,6 @@ mod preparation {
       "nodestitches",
       "specialstitches",
       "specialStitchModels",
-      "pdfExportOptions",
     ] {
       assert!(value.get(key).is_some(), r#"missing key "{key}" in pattern.json"#);
     }
@@ -79,30 +93,45 @@ mod export {
   use super::*;
 
   #[test]
-  fn exports_pattern_to_pdf() {
+  fn exports_pattern_to_color_pdf() {
     let embproj = load_fixture();
-    let fonts = vec![
-      std::fs::read(
-        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/fonts/FixelVariable.ttf"),
-      )
-      .unwrap(),
-      std::fs::read(
-        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/fonts/FixelVariableItalic.ttf"),
-      )
-      .unwrap(),
-      std::fs::read(
-        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/symbols/Ursasoftware.ttf"),
-      )
-      .unwrap(),
-    ];
+    let fonts = load_fonts();
 
-    for variant in [PdfVariant::Monochrome, PdfVariant::Color] {
-      let expected = std::fs::read(
-        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/piggies.{variant}.pdf")),
-      )
-      .unwrap();
-      let exported = export_pattern(embproj.clone(), PdfExportOptions::default(), variant, fonts.clone()).unwrap();
-      assert_eq!(expected, exported, "pdf export for {variant} doesn't match")
-    }
+    let expected =
+      std::fs::read(std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/piggies.color.pdf")))
+        .unwrap();
+    let exported = export_pattern(
+      &embproj,
+      &fonts,
+      PatternPdf {
+        color: true,
+        ..Default::default()
+      },
+    )
+    .unwrap();
+
+    assert_eq!(expected, exported, "color pdf export doesn't match")
+  }
+
+  #[test]
+  fn exports_pattern_to_monochrome_pdf() {
+    let embproj = load_fixture();
+    let fonts = load_fonts();
+
+    let expected = std::fs::read(
+      std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/piggies.monochrome.pdf")),
+    )
+    .unwrap();
+    let exported = export_pattern(
+      &embproj,
+      &fonts,
+      PatternPdf {
+        color: false,
+        ..Default::default()
+      },
+    )
+    .unwrap();
+
+    assert_eq!(expected, exported, "monochrome pdf export doesn't match")
   }
 }

@@ -111,7 +111,7 @@ watch(collapsed, (value) => {
 </script>
 
 <template>
-  <SplitterPanel ref="panel" v-bind="splitterPanelProps" :class="$style.panel">
+  <SplitterPanel ref="panel" v-bind="splitterPanelProps" tabindex="-1" :class="$style.panel">
     <div :class="$style.root">
       <ToolToggleGroup
         v-model="displayMode"

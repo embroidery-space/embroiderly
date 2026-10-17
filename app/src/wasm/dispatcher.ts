@@ -9,7 +9,7 @@ import {
   Grid,
   PaletteSettings,
   PatternInfo,
-  PdfExportOptions,
+  PatternPdf,
   ReferenceImage,
   ReferenceImageSettings,
   RenamedLayerData,
@@ -46,6 +46,8 @@ const HANDLERS: Array<(bus: EditorEventBus, payload: Uint8Array) => void> = [
 
   (bus, payload) => bus.emit("pattern-info:update", PatternInfo.deserialize(payload)),
 
+  (bus, payload) => bus.emit("pattern-pdf:update", PatternPdf.deserialize(payload)),
+
   (bus, payload) => bus.emit("display:update", DisplaySettings.deserialize(payload)),
 
   (bus, payload) => bus.emit("grid:update", Grid.deserialize(payload)),
@@ -58,8 +60,6 @@ const HANDLERS: Array<(bus: EditorEventBus, payload: Uint8Array) => void> = [
   (bus, payload) => bus.emit("layers:rename", RenamedLayerData.deserialize(payload)),
   (bus, payload) => bus.emit("layers:update_visibility", UpdatedLayerVisibilityData.deserialize(payload)),
   (bus, payload) => bus.emit("layers:move", b.vec(b.u32()).deserialize(payload)),
-
-  (bus, payload) => bus.emit("publish:update-pdf", PdfExportOptions.deserialize(payload)),
 
   (bus, payload) => bus.emit("image:set", ReferenceImage.deserialize(payload)),
   (bus, payload) => bus.emit("image:settings:update", ReferenceImageSettings.deserialize(payload)),

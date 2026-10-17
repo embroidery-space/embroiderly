@@ -1,5 +1,5 @@
 use super::display::DisplaySettings;
-use super::publish::PublishSettings;
+use super::pattern_pdf::PatternPdf;
 use super::{Pattern, ReferenceImage};
 
 #[cfg(test)]
@@ -50,8 +50,9 @@ pub struct EmbroiderlyProject {
   pub reference_image: Option<ReferenceImage>,
 
   pub pattern: Pattern,
+  pub pattern_pdf: PatternPdf,
+
   pub display_settings: DisplaySettings,
-  pub publish_settings: PublishSettings,
 }
 
 impl EmbroiderlyProject {
@@ -72,11 +73,11 @@ impl EmbroiderlyProject {
 #[derive(Debug)]
 pub struct EmbroiderlyProjectBuilder {
   pattern: Pattern,
+  pattern_pdf: Option<PatternPdf>,
 
   reference_image: Option<ReferenceImage>,
 
   display_settings: Option<DisplaySettings>,
-  publish_settings: Option<PublishSettings>,
 }
 
 impl EmbroiderlyProjectBuilder {
@@ -85,12 +86,19 @@ impl EmbroiderlyProjectBuilder {
   pub const fn new(pattern: Pattern) -> Self {
     Self {
       pattern,
+      pattern_pdf: None,
 
       reference_image: None,
 
       display_settings: None,
-      publish_settings: None,
     }
+  }
+
+  /// Sets the pattern PDF for the project.
+  #[must_use]
+  pub fn pattern_pdf(mut self, pattern_pdf: PatternPdf) -> Self {
+    self.pattern_pdf = Some(pattern_pdf);
+    self
   }
 
   /// Sets the reference image for the project.
@@ -107,13 +115,6 @@ impl EmbroiderlyProjectBuilder {
     self
   }
 
-  /// Sets the publish settings for the project.
-  #[must_use]
-  pub const fn publish_settings(mut self, publish_settings: PublishSettings) -> Self {
-    self.publish_settings = Some(publish_settings);
-    self
-  }
-
   /// Builds the `EmbroiderlyProject`.
   #[must_use]
   pub fn build(self) -> EmbroiderlyProject {
@@ -123,8 +124,9 @@ impl EmbroiderlyProjectBuilder {
       reference_image: self.reference_image,
 
       pattern: self.pattern,
+      pattern_pdf: self.pattern_pdf.unwrap_or_default(),
+
       display_settings: self.display_settings.unwrap_or_default(),
-      publish_settings: self.publish_settings.unwrap_or_default(),
     }
   }
 }

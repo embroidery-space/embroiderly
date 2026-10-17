@@ -1,12 +1,5 @@
-@import "../../src/index.css";
-
-/*
-  Mirrors the `Fixel` font setup from `app/src/assets/styles/index.css` so Storybook renders text the same way the main app does.
-  `font-display: block` (not `swap`) avoids a fallback-font flash while visual snapshots are captured.
-*/
-
 @font-face {
-  font-family: "Fixel";
+  font-family: Fixel;
   font-weight: 100 900;
   font-style: normal;
 
@@ -15,7 +8,7 @@
 }
 
 @font-face {
-  font-family: "Fixel";
+  font-family: Fixel;
   font-weight: 100 900;
   font-style: italic;
 
@@ -23,12 +16,17 @@
   src: url("/fonts/FixelVariableItalic.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Monaspace Krypton";
+  font-weight: 100 900;
+  font-style: normal;
+
+  font-display: swap;
+  src: url("/fonts/Monaspace Krypton Var.ttf") format("truetype");
+}
+
 :root,
 :host {
   --font-sans: "Fixel", ui-sans-serif, system-ui, sans-serif;
-}
-
-html,
-body {
-  font-family: var(--font-sans);
+  --font-mono: "Monaspace Krypton", ui-monospace, monospace;
 }
