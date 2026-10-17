@@ -109,10 +109,10 @@ quick-xml = "0.42.0"
 ttf-parser = "0.25.1"
 
 # Typst
-typst = "0.15.0"
-typst-pdf = "0.15.0"
+typst = "0.15.1"
+typst-pdf = "0.15.1"
 ## Third-party Typst libraries
-typst-as-lib = "0.16.0"
+typst-as-lib = "0.17.0"
 
 # Image processing
 image = { version = "0.25.10", default-features = false, features = ["png", "jpeg", "webp"] }
