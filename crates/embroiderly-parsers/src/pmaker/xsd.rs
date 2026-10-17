@@ -95,7 +95,7 @@ impl From<PatternInfo> for embroiderly_pattern::PatternInfo {
 pub struct Fabric {
   pub width: u16,
   pub height: u16,
-  pub stitches_per_inch: (u8, u8),
+  pub count: u8,
   pub kind: String,
   pub name: String,
   pub color: String,
@@ -106,7 +106,7 @@ impl From<Fabric> for embroiderly_pattern::Fabric {
     Self {
       width: fabric.width,
       height: fabric.height,
-      spi: fabric.stitches_per_inch,
+      count: fabric.count,
       kind: fabric.kind,
       name: fabric.name,
       color: fabric.color,
@@ -607,10 +607,9 @@ fn parse_pattern_inner(data: &[u8]) -> Result<Pattern> {
   let small_stitches_count = cursor.read_u32::<LittleEndian>()? as usize;
   let joints_count = cursor.read_u16::<LittleEndian>()?;
 
-  let stitches_per_inch = (
-    cursor.read_u16::<LittleEndian>()? as u8,
-    cursor.read_u16::<LittleEndian>()? as u8,
-  );
+  let fabric_count = cursor.read_u16::<LittleEndian>()? as u8; // spi.x
+  cursor.seek_relative(2)?; // spi.y
+
   cursor.seek_relative(6)?;
 
   let palette = read_palette(&mut cursor)?;
@@ -651,10 +650,10 @@ fn parse_pattern_inner(data: &[u8]) -> Result<Pattern> {
     fabric: Fabric {
       width: pattern_width,
       height: pattern_height,
+      count: fabric_count,
       kind: fabric_kind_name,
       name: fabric_color_name,
       color: fabric_color,
-      stitches_per_inch,
     },
     palette,
     formats,

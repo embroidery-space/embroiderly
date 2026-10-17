@@ -70,11 +70,11 @@ fn parse_pattern_inner<R: io::BufRead>(reader: &mut Reader<R>) -> Result<Pattern
             let software_version = attributes.get("software_version").unwrap_or("Unknown");
             tracing::debug!("OXS version: {oxs_version}. In {software} ({software_version}) edition.");
 
-            let (pattern_width, pattern_height, pattern_info, spi, palsize) = read_pattern_properties(attributes);
+            let (pattern_width, pattern_height, pattern_info, count, palsize) = read_pattern_properties(attributes);
             pattern.info = pattern_info;
             pattern.fabric.width = pattern_width;
             pattern.fabric.height = pattern_height;
-            pattern.fabric.spi = spi;
+            pattern.fabric.count = count;
             palette_size = palsize;
           }
           "palette" => {
@@ -165,7 +165,7 @@ fn save_pattern_inner<W: io::Write>(writer: &mut W, embproj: &EmbroiderlyProject
       pattern.fabric.width,
       pattern.fabric.height,
       &pattern.info,
-      pattern.fabric.spi,
+      pattern.fabric.count,
       pattern.palette.len(),
     )?;
     write_palette(writer, &pattern.fabric, &pattern.palette)?;
@@ -236,7 +236,7 @@ fn write_format<W: io::Write>(writer: &mut Writer<W>) -> io::Result<()> {
   Ok(())
 }
 
-fn read_pattern_properties(attributes: AttributesMap) -> (u16, u16, PatternInfo, StitchesPerInch, Option<usize>) {
+fn read_pattern_properties(attributes: AttributesMap) -> (u16, u16, PatternInfo, u8, Option<usize>) {
   let pattern_width = attributes.get_parsed("chartwidth").unwrap_or(Fabric::DEFAULT_WIDTH);
   let pattern_height = attributes.get_parsed("chartheight").unwrap_or(Fabric::DEFAULT_HEIGHT);
 
@@ -247,17 +247,12 @@ fn read_pattern_properties(attributes: AttributesMap) -> (u16, u16, PatternInfo,
     description: attributes.get("instructions").unwrap_or_default().to_owned(),
   };
 
-  let spi = {
-    // If `stitchesperinch` is not specified, use the default value.
-    let x = attributes.get_parsed("stitchesperinch").unwrap_or(Fabric::DEFAULT_SPI);
-    // If `stitchesperinch_y` is not specified, use the same value as `stitchesperinch`.
-    let y = attributes.get_parsed("stitchesperinch_y").unwrap_or(x);
-    (x, y)
-  };
-
+  let count = attributes
+    .get_parsed("stitchesperinch")
+    .unwrap_or(Fabric::DEFAULT_COUNT);
   let palette_size = attributes.get_parsed("palettecount");
 
-  (pattern_width, pattern_height, info, spi, palette_size)
+  (pattern_width, pattern_height, info, count, palette_size)
 }
 
 fn write_pattern_properties<W: io::Write>(
@@ -265,7 +260,7 @@ fn write_pattern_properties<W: io::Write>(
   pattern_width: u16,
   pattern_height: u16,
   info: &PatternInfo,
-  spi: StitchesPerInch,
+  count: u8,
   palette_size: usize,
 ) -> io::Result<()> {
   writer
@@ -280,8 +275,8 @@ fn write_pattern_properties<W: io::Write>(
       ("author", info.author.as_str()),
       ("copyright", info.copyright.as_str()),
       ("instructions", info.description.as_str()),
-      ("stitchesperinch", spi.0.to_string().as_str()),
-      ("stitchesperinch_y", spi.1.to_string().as_str()),
+      ("stitchesperinch", count.to_string().as_str()),
+      ("stitchesperinch_y", count.to_string().as_str()),
       ("palettecount", palette_size.to_string().as_str()),
     ])
     .write_empty()?;

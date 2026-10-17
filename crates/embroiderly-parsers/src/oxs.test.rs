@@ -26,7 +26,7 @@ fn reads_and_writes_pattern_properties() {
     unreachable!()
   };
 
-  let (pattern_width, pattern_height, pattern_info, spi, palette_size) = read_pattern_properties(attributes);
+  let (pattern_width, pattern_height, pattern_info, count, palette_size) = read_pattern_properties(attributes);
 
   assert_eq!(pattern_width, 20);
   assert_eq!(pattern_height, 10);
@@ -39,7 +39,7 @@ fn reads_and_writes_pattern_properties() {
       description: String::from("Enjoy the embroidery process!"),
     }
   );
-  assert_eq!(spi, (14, 14));
+  assert_eq!(count, 14);
   assert_eq!(palette_size, Some(5));
 
   let mut writer = create_writer();
@@ -48,7 +48,7 @@ fn reads_and_writes_pattern_properties() {
     pattern_width,
     pattern_height,
     &pattern_info,
-    spi,
+    count,
     palette_size.unwrap(),
   )
   .unwrap();
@@ -71,7 +71,7 @@ fn reads_and_writes_default_pattern_properties() {
     unreachable!()
   };
 
-  let (pattern_width, pattern_height, pattern_info, spi, palette_size) = read_pattern_properties(attributes);
+  let (pattern_width, pattern_height, pattern_info, count, palette_size) = read_pattern_properties(attributes);
 
   assert_eq!(pattern_width, Fabric::DEFAULT_WIDTH);
   assert_eq!(pattern_height, Fabric::DEFAULT_HEIGHT);
@@ -84,11 +84,11 @@ fn reads_and_writes_default_pattern_properties() {
       description: String::from(""),
     }
   );
-  assert_eq!(spi, (Fabric::DEFAULT_SPI, Fabric::DEFAULT_SPI));
+  assert_eq!(count, Fabric::DEFAULT_COUNT);
   assert_eq!(palette_size, None);
 
   let mut writer = create_writer();
-  write_pattern_properties(&mut writer, pattern_width, pattern_height, &pattern_info, spi, 0).unwrap();
+  write_pattern_properties(&mut writer, pattern_width, pattern_height, &pattern_info, count, 0).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let expected = format!(
@@ -109,7 +109,7 @@ fn round_trips_pattern_properties_with_special_characters() {
   };
 
   let mut writer = create_writer();
-  write_pattern_properties(&mut writer, 20, 10, &pattern_info, (14, 14), 5).unwrap();
+  write_pattern_properties(&mut writer, 20, 10, &pattern_info, 14, 5).unwrap();
   let xml = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
   // The special characters must be escaped in the serialized XML.
