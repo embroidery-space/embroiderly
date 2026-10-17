@@ -6,18 +6,9 @@ import ToolToggleDemo from "./stories/ToolToggleDemo.vue";
 import ToolToggleStates from "./stories/ToolToggleStates.vue";
 import ToolToggle from "./ToolToggle.vue";
 
-const sizes = ["sm", "md", "lg"] as const;
-
 const meta = {
   title: "Toolbar/ToolToggle",
   component: ToolToggle,
-  argTypes: {
-    label: { control: "text" },
-    description: { control: "text" },
-    shortcut: { control: "text" },
-    tooltip: { control: "text" },
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof ToolToggle>;
 
 export default meta;
@@ -35,7 +26,6 @@ export const Demo: Story = {
     shortcut: "Ctrl+S",
     tooltip: "Show symbols",
 
-    size: "lg",
     disabled: false,
   },
   render: (args) => {

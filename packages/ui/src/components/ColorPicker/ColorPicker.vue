@@ -6,12 +6,6 @@ import { hexToHsv, hsvToHex, isValidHex } from "../../utils/color.ts";
 
 export interface ColorPickerProps {
   /**
-   * The size of the color picker.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
-  /**
    * Throttle time in milliseconds for drag updates.
    * @default 50
    */
@@ -23,7 +17,6 @@ export interface ColorPickerProps {
 
 const modelValue = defineModel<string>({ default: "#FF0000" });
 const props = withDefaults(defineProps<ColorPickerProps>(), {
-  size: "md",
   throttle: 50,
 });
 
@@ -74,7 +67,7 @@ const currentTrackThumbColor = computed(() => hsvToHex(hsv.value));
 </script>
 
 <template>
-  <div :data-disabled="disabled ? true : undefined" data-slot="root" :class="[$style.root, $style[`size-${size}`]]">
+  <div :data-disabled="disabled ? true : undefined" data-slot="root" :class="[$style.root]">
     <div data-slot="picker" :class="$style.picker">
       <div ref="selector" data-slot="selector" :class="$style.selector">
         <div
@@ -127,20 +120,8 @@ const currentTrackThumbColor = computed(() => hsvToHex(hsv.value));
 
   position: relative;
 
-  .size-sm & {
-    width: calc(var(--spacing) * 38);
-    height: calc(var(--spacing) * 38);
-  }
-
-  .size-md & {
-    width: calc(var(--spacing) * 42);
-    height: calc(var(--spacing) * 42);
-  }
-
-  .size-lg & {
-    width: calc(var(--spacing) * 46);
-    height: calc(var(--spacing) * 46);
-  }
+  width: calc(var(--spacing) * 42);
+  height: calc(var(--spacing) * 42);
 }
 
 .selector-background {
@@ -179,21 +160,11 @@ const currentTrackThumbColor = computed(() => hsvToHex(hsv.value));
   position: relative;
 
   width: calc(var(--spacing) * 2);
+
+  height: calc(var(--spacing) * 42);
   border-radius: var(--radius-md);
 
   background-image: linear-gradient(0deg, red 0%, magenta 17%, blue 33%, cyan 50%, lime 67%, yellow 83%, red 100%);
-
-  .size-sm & {
-    height: calc(var(--spacing) * 38);
-  }
-
-  .size-md & {
-    height: calc(var(--spacing) * 42);
-  }
-
-  .size-lg & {
-    height: calc(var(--spacing) * 46);
-  }
 }
 
 .track-thumb {

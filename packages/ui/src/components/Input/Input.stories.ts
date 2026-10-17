@@ -5,23 +5,12 @@ import { expect, fn } from "storybook/test";
 import Input from "./Input.vue";
 import InputDemo from "./stories/InputDemo.vue";
 import InputFieldGroup from "./stories/InputFieldGroup.vue";
-import InputSizes from "./stories/InputSizes.vue";
 import InputStates from "./stories/InputStates.vue";
-import InputVariants from "./stories/InputVariants.vue";
 import InputWithSlots from "./stories/InputWithSlots.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
-const variants = ["subtle", "outline", "none"] as const;
 
 const meta = {
   title: "Form/Input",
   component: Input,
-  argTypes: {
-    variant: { control: "select", options: variants },
-    size: { control: "select", options: sizes },
-    leadingIcon: { control: "text" },
-    trailingIcon: { control: "text" },
-  },
 } satisfies Meta<typeof Input>;
 
 export default meta;
@@ -31,9 +20,6 @@ type Story = StoryObj<typeof meta>;
 export const Demo: Story = {
   args: {
     modelValue: "Lorem ipsum",
-
-    variant: "subtle",
-    size: "md",
 
     leadingIcon: "",
     trailingIcon: "",
@@ -48,20 +34,6 @@ export const Demo: Story = {
       template: `<InputDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
-};
-
-export const Sizes: Story = {
-  render: () => ({
-    components: { InputSizes },
-    template: `<InputSizes />`,
-  }),
-};
-
-export const Variants: Story = {
-  render: () => ({
-    components: { InputVariants },
-    template: `<InputVariants />`,
-  }),
 };
 
 export const States: Story = {

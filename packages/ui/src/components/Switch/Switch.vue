@@ -1,26 +1,11 @@
 <script setup lang="ts">
-import { Switch, Label } from "reka-ui/namespaced";
-
-import { useFormField } from "../../composables/useFormField.ts";
+import { Field, Switch } from "reka-ui/namespaced";
 
 export interface SwitchProps {
-  id?: string;
-
   /** The label of the switch. */
   label?: string;
   /** The description of the switch. */
   description?: string;
-
-  /**
-   * The color of the switch.
-   * @default "primary"
-   */
-  color?: "primary";
-  /**
-   * The size of the switch.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
 
   /** Whether the switch is disabled. */
   disabled?: boolean;
@@ -29,39 +14,24 @@ export interface SwitchProps {
 defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<boolean>();
-const props = withDefaults(defineProps<SwitchProps>(), {
-  color: "primary",
-  size: "md",
-});
-
-const { id, size, ariaAttrs } = useFormField(props);
+defineProps<SwitchProps>();
 </script>
 
 <template>
-  <div
-    data-slot="root"
-    :class="[$style.root, $style[`color-${color}`], $style[`size-${size}`], { [$style.disabled]: disabled }]"
-  >
+  <Field.Root data-slot="root" :class="[$style.root, { [$style.disabled]: disabled }]">
     <div data-slot="container" :class="$style.container">
-      <Switch.Root
-        :id="id"
-        v-model="modelValue"
-        v-bind="{ ...$attrs, ...ariaAttrs }"
-        :disabled="disabled"
-        data-slot="base"
-        :class="$style.base"
-      >
+      <Switch.Root v-model="modelValue" v-bind="$attrs" :disabled="disabled" data-slot="base" :class="$style.base">
         <Switch.Thumb data-slot="thumb" :class="$style.thumb" />
       </Switch.Root>
     </div>
 
     <div v-if="label || description" data-slot="wrapper" :class="$style.wrapper">
-      <Label v-if="label" :for="id" data-slot="label" :class="$style.label">{{ label }}</Label>
-      <p v-if="description" data-slot="description" :class="$style.description">
+      <Field.Label v-if="label" data-slot="label" :class="$style.label">{{ label }}</Field.Label>
+      <Field.Description v-if="description" data-slot="description" :class="$style.description">
         {{ description }}
-      </p>
+      </Field.Description>
     </div>
-  </div>
+  </Field.Root>
 </template>
 
 <style module>
@@ -80,23 +50,16 @@ const { id, size, ariaAttrs } = useFormField(props);
   display: flex;
   align-items: center;
 
-  .size-sm & {
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-md & {
-    height: calc(var(--spacing) * 5);
-  }
-
-  .size-lg & {
-    height: calc(var(--spacing) * 6);
-  }
+  height: calc(var(--spacing) * 5);
 }
 
 .base {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
+
+  width: calc(var(--spacing) * 9);
+  height: calc(var(--spacing) * 5);
 
   border: 2px solid transparent;
   border-radius: calc(infinity * 1px);
@@ -109,38 +72,17 @@ const { id, size, ariaAttrs } = useFormField(props);
     background-color: var(--background-color-accented);
   }
 
-  .size-sm & {
-    width: calc(var(--spacing) * 7);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-md & {
-    width: calc(var(--spacing) * 9);
-    height: calc(var(--spacing) * 5);
-  }
-
-  .size-lg & {
-    width: calc(var(--spacing) * 11);
-    height: calc(var(--spacing) * 6);
-  }
-
   .disabled & {
     cursor: not-allowed;
   }
 
   &:focus-visible {
-    outline: 2px solid;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
-  .color-primary & {
-    &:focus-visible {
-      outline-color: var(--color-primary);
-    }
-
-    &[data-state="checked"] {
-      background-color: var(--color-primary);
-    }
+  &[data-state="checked"] {
+    background-color: var(--color-primary);
   }
 
   &:not(:disabled):hover {
@@ -150,6 +92,9 @@ const { id, size, ariaAttrs } = useFormField(props);
 
 .thumb {
   pointer-events: none;
+
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
 
   border-radius: calc(infinity * 1px);
 
@@ -164,31 +109,8 @@ const { id, size, ariaAttrs } = useFormField(props);
     translate: 0 0;
   }
 
-  .size-sm & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-
-    &[data-state="checked"] {
-      translate: calc(var(--spacing) * 3) 0;
-    }
-  }
-
-  .size-md & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-
-    &[data-state="checked"] {
-      translate: calc(var(--spacing) * 4) 0;
-    }
-  }
-
-  .size-lg & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-
-    &[data-state="checked"] {
-      translate: calc(var(--spacing) * 5) 0;
-    }
+  &[data-state="checked"] {
+    translate: calc(var(--spacing) * 4) 0;
   }
 }
 
@@ -196,17 +118,7 @@ const { id, size, ariaAttrs } = useFormField(props);
   width: 100%;
   margin-inline-start: calc(var(--spacing) * 2);
 
-  .size-sm & {
-    font-size: var(--text-xs);
-  }
-
-  .size-md & {
-    font-size: var(--text-sm);
-  }
-
-  .size-lg & {
-    font-size: var(--text-base);
-  }
+  font-size: var(--text-sm);
 }
 
 .label {

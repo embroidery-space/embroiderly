@@ -8,17 +8,9 @@ import InputNumberSlider from "./InputNumberSlider.vue";
 import InputNumberSliderDemo from "./stories/InputNumberSliderDemo.vue";
 import InputNumberSliderFilled from "./stories/InputNumberSliderFilled.vue";
 
-const sizes = ["sm", "md", "lg"] as const;
-
 const meta = {
   title: "Form/InputNumberSlider",
   component: InputNumberSlider,
-  argTypes: {
-    size: { control: "select", options: sizes },
-    min: { control: "number" },
-    max: { control: "number" },
-    step: { control: "number" },
-  },
 } satisfies Meta<typeof InputNumberSlider>;
 
 export default meta;
@@ -28,8 +20,6 @@ type Story = StoryObj<typeof meta>;
 export const Demo: Story = {
   args: {
     modelValue: 50,
-
-    size: "md",
 
     min: 0,
     max: 100,

@@ -1,109 +1,47 @@
 <script setup lang="ts">
-import { Label } from "reka-ui";
-import { computed, provide, ref, useId } from "vue";
-
-import { formFieldInjectionKey, inputIdInjectionKey } from "../../composables/useFormField.ts";
-import type { FormFieldInjectedOptions } from "../../composables/useFormField.ts";
+import { Field } from "reka-ui/namespaced";
 
 export interface FormFieldProps {
   /** The label text for the field. */
   label?: string;
   /** A description shown below the label. */
   description?: string;
-  /** Help text shown below the input. */
-  help?: string;
-  /** A hint shown next to the label. */
-  hint?: string;
-
-  /**
-   * The size of the form field.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
 }
 
 export interface FormFieldSlots {
   default(): any;
 }
 
-const props = withDefaults(defineProps<FormFieldProps>(), {
-  size: "md",
-});
+defineProps<FormFieldProps>();
 defineSlots<FormFieldSlots>();
-
-const id = ref(useId());
-const ariaId = id.value;
-
-provide(inputIdInjectionKey, id);
-provide(
-  formFieldInjectionKey,
-  computed(
-    () =>
-      ({
-        ariaId,
-        label: props.label,
-        size: props.size,
-        hint: props.hint,
-        description: props.description,
-        help: props.help,
-      }) satisfies FormFieldInjectedOptions,
-  ),
-);
 </script>
 
 <template>
-  <div data-slot="root" :class="[$style.root, $style[`size-${size}`]]">
-    <div data-slot="wrapper">
-      <div v-if="label" data-slot="label-wrapper" :class="$style.labelWrapper">
-        <Label :id="`${ariaId}-label`" :for="id" data-slot="label" :class="$style.label">
-          {{ label }}
-        </Label>
-        <span v-if="hint" :id="`${ariaId}-hint`" data-slot="hint" :class="$style.hint">
-          {{ hint }}
-        </span>
-      </div>
+  <Field.Root data-slot="root" :class="$style.root">
+    <Field.Label v-if="label" data-slot="label" :class="$style.label">
+      {{ label }}
+    </Field.Label>
 
-      <p v-if="description" :id="`${ariaId}-description`" data-slot="description" :class="$style.description">
-        {{ description }}
-      </p>
-    </div>
+    <Field.Description v-if="description" data-slot="description" :class="$style.description">
+      {{ description }}
+    </Field.Description>
 
     <div :class="[(label || description) && $style.container]" data-slot="container">
       <slot />
-      <p v-if="help" :id="`${ariaId}-help`" data-slot="help" :class="$style.help">
-        {{ help }}
-      </p>
     </div>
-  </div>
+  </Field.Root>
 </template>
 
 <style module>
 .root {
   width: 100%;
 
+  font-size: var(--text-sm);
+
   /* Stretches the control. */
   > [data-slot="container"] > :first-child {
     width: 100%;
   }
-
-  &.size-sm {
-    font-size: var(--text-xs);
-  }
-
-  &.size-md {
-    font-size: var(--text-sm);
-  }
-
-  &.size-lg {
-    font-size: var(--text-base);
-  }
-}
-
-.label-wrapper {
-  display: flex;
-  gap: calc(var(--spacing) * 1);
-  align-items: center;
-  justify-content: space-between;
 }
 
 .label {
@@ -113,21 +51,11 @@ provide(
   color: var(--text-color-default);
 }
 
-.hint {
-  color: var(--text-color-muted);
-}
-
 .description {
   color: var(--text-color-muted);
 }
 
 .container {
   margin-top: calc(var(--spacing) * 1);
-}
-
-.help {
-  margin-top: calc(var(--spacing) * 1);
-
-  color: var(--text-color-muted);
 }
 </style>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { useFormField } from "../../composables/useFormField.ts";
 import Button from "../Button/Button.vue";
 import ColorPicker from "../ColorPicker/ColorPicker.vue";
 import type { ColorPickerProps } from "../ColorPicker/ColorPicker.vue";
@@ -23,8 +22,6 @@ defineOptions({ inheritAttrs: false });
 const modelValue = defineModel<string>({ default: "#FF0000" });
 const props = defineProps<InputColorProps>();
 
-const { id, size, ariaAttrs } = useFormField(props);
-
 const hexColor = computed(() => (modelValue.value?.startsWith("#") ? modelValue.value : `#${modelValue.value}`));
 
 function onUpdate(value: string | undefined) {
@@ -35,52 +32,28 @@ function onUpdate(value: string | undefined) {
 </script>
 
 <template>
-  <FormFieldGroup :size="size">
+  <FormFieldGroup>
     <Popover v-bind="popover" :content="{ align: 'start' }">
-      <Button
-        square
-        :disabled="disabled"
-        :style="{ backgroundColor: hexColor }"
-        :class="[$style.swatch, $style[`size-${size}`]]"
-      />
+      <Button square :disabled="disabled" :style="{ backgroundColor: hexColor }" :class="[$style.swatch]" />
       <template #content>
         <ColorPicker
           v-bind="picker"
           :class="$style.picker"
           :model-value="hexColor"
-          :size="size"
           :disabled="disabled"
           @update:model-value="onUpdate"
         />
       </template>
     </Popover>
 
-    <Input
-      v-bind="{ ...props, ...$attrs, ...ariaAttrs }"
-      :id="id"
-      :model-value="hexColor"
-      :maxlength="7"
-      @update:model-value="onUpdate"
-    />
+    <Input v-bind="{ ...props, ...$attrs }" :model-value="hexColor" :maxlength="7" @update:model-value="onUpdate" />
   </FormFieldGroup>
 </template>
 
 <style module>
 .swatch {
-  &.size-sm {
-    width: calc(var(--spacing) * 6);
-    height: calc(var(--spacing) * 6);
-  }
-
-  &.size-md {
-    width: calc(var(--spacing) * 8);
-    height: calc(var(--spacing) * 8);
-  }
-
-  &.size-lg {
-    width: calc(var(--spacing) * 10);
-    height: calc(var(--spacing) * 10);
-  }
+  width: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 8);
 }
 
 .picker {

@@ -5,18 +5,12 @@ import { expect, fn } from "storybook/test";
 import RadioGroup from "./RadioGroup.vue";
 import RadioGroupDemo from "./stories/RadioGroupDemo.vue";
 import RadioGroupHorizontal from "./stories/RadioGroupHorizontal.vue";
-import RadioGroupSizes from "./stories/RadioGroupSizes.vue";
 import RadioGroupStates from "./stories/RadioGroupStates.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
 
 const meta = {
   title: "Form/RadioGroup",
   // @ts-expect-error `RadioGroup` is a generic component.
   component: RadioGroup,
-  argTypes: {
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof RadioGroup>;
 
 export default meta;
@@ -24,10 +18,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Demo: Story = {
-  args: {
-    size: "md",
-    disabled: false,
-  },
   render: (args) => {
     const [, updateArgs] = useArgs();
     return {
@@ -36,13 +26,6 @@ export const Demo: Story = {
       template: `<RadioGroupDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
-};
-
-export const Sizes: Story = {
-  render: () => ({
-    components: { RadioGroupSizes },
-    template: `<RadioGroupSizes />`,
-  }),
 };
 
 export const Horizontal: Story = {

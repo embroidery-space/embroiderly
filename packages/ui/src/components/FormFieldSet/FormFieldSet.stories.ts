@@ -4,17 +4,10 @@ import { expect } from "storybook/test";
 import FormFieldSet from "./FormFieldSet.vue";
 import FormFieldSetCollapsible from "./stories/FormFieldSetCollapsible.vue";
 import FormFieldSetDemo from "./stories/FormFieldSetDemo.vue";
-import FormFieldSetSizes from "./stories/FormFieldSetSizes.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
 
 const meta = {
   title: "Form/FormFieldSet",
   component: FormFieldSet,
-  argTypes: {
-    legend: { control: "text" },
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof FormFieldSet>;
 
 export default meta;
@@ -24,21 +17,12 @@ type Story = StoryObj<typeof meta>;
 export const Demo: Story = {
   args: {
     legend: "Legend",
-    size: "lg",
     collapsible: false,
   },
   render: (args) => ({
     components: { FormFieldSetDemo },
     setup: () => ({ args }),
     template: `<FormFieldSetDemo v-bind="args" />`,
-  }),
-};
-
-export const Sizes: Story = {
-  args: { legend: "Legend" },
-  render: () => ({
-    components: { FormFieldSetSizes },
-    template: `<FormFieldSetSizes />`,
   }),
 };
 

@@ -30,12 +30,6 @@ export interface ToolSelectProps<T extends ToolSelectItem = ToolSelectItem> exte
   /** The items to display. */
   items: T[];
 
-  /**
-   * The size of the tool select.
-   * @default "md"
-   */
-  size?: "sm" | "md" | "lg";
-
   /** Custom selection color. */
   selectionColor?: string;
 
@@ -63,7 +57,6 @@ export interface ToolSelectProps<T extends ToolSelectItem = ToolSelectItem> exte
 
 const model = defineModel<unknown>();
 const props = withDefaults(defineProps<ToolSelectProps<T>>(), {
-  size: "md",
   portal: true,
 });
 
@@ -158,10 +151,7 @@ function handleKeydown(e: KeyboardEvent) {
 </script>
 
 <template>
-  <div
-    data-slot="root"
-    :class="[$style.root, $style[`size-${size}`], selected && $style.selected, props.disabled && $style.disabled]"
-  >
+  <div data-slot="root" :class="[$style.root, selected && $style.selected, props.disabled && $style.disabled]">
     <Tooltip
       v-bind="tooltipOptions"
       :text="currentOption.label"
@@ -192,7 +182,6 @@ function handleKeydown(e: KeyboardEvent) {
     <DropdownMenu
       v-model:open="dropdownMenuOpen"
       :items="dropdownItems"
-      :size="size"
       :content="dropdownOptions"
       :reference="mainButton"
       :portal="props.portal"
@@ -230,6 +219,8 @@ function handleKeydown(e: KeyboardEvent) {
   align-items: center;
   justify-content: center;
 
+  padding: calc(var(--spacing) * 1.5);
+
   border-radius: var(--radius-md);
 
   color: var(--text-color-dimmed);
@@ -237,18 +228,6 @@ function handleKeydown(e: KeyboardEvent) {
   transition-timing-function: var(--default-transition-timing-function);
   transition-duration: var(--default-transition-duration);
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-
-  .size-sm > & {
-    padding: calc(var(--spacing) * 1);
-  }
-
-  .size-md > & {
-    padding: calc(var(--spacing) * 1.5);
-  }
-
-  .size-lg > & {
-    padding: calc(var(--spacing) * 2);
-  }
 
   .selected > & {
     background-color: var(--background-color-elevated);
@@ -277,20 +256,8 @@ function handleKeydown(e: KeyboardEvent) {
 .main-button-icon {
   flex-shrink: 0;
 
-  .size-sm > * > & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
-
-  .size-md > * > & {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
-  }
-
-  .size-lg > * > & {
-    width: calc(var(--spacing) * 5);
-    height: calc(var(--spacing) * 5);
-  }
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
 }
 
 .dropdown-button {
@@ -298,24 +265,12 @@ function handleKeydown(e: KeyboardEvent) {
   right: 0;
   bottom: 0;
 
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 2.5);
+
   padding: 0;
   border-style: none;
   border-radius: var(--radius-sm);
-
-  .size-sm > & {
-    width: calc(var(--spacing) * 2);
-    height: calc(var(--spacing) * 2);
-  }
-
-  .size-md > & {
-    width: calc(var(--spacing) * 2.5);
-    height: calc(var(--spacing) * 2.5);
-  }
-
-  .size-lg > & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
 
   .disabled > & {
     cursor: not-allowed;
@@ -333,19 +288,7 @@ function handleKeydown(e: KeyboardEvent) {
   translate: -50% -50%;
   rotate: -45deg;
 
-  .size-sm > * > & {
-    width: calc(var(--spacing) * 2);
-    height: calc(var(--spacing) * 2);
-  }
-
-  .size-md > * > & {
-    width: calc(var(--spacing) * 2.5);
-    height: calc(var(--spacing) * 2.5);
-  }
-
-  .size-lg > * > & {
-    width: calc(var(--spacing) * 3);
-    height: calc(var(--spacing) * 3);
-  }
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 2.5);
 }
 </style>

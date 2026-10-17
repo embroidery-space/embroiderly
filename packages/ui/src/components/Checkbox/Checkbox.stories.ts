@@ -4,17 +4,11 @@ import { expect, fn } from "storybook/test";
 
 import Checkbox from "./Checkbox.vue";
 import CheckboxDemo from "./stories/CheckboxDemo.vue";
-import CheckboxSizes from "./stories/CheckboxSizes.vue";
 import CheckboxStates from "./stories/CheckboxStates.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
 
 const meta = {
   title: "Form/Checkbox",
   component: Checkbox,
-  argTypes: {
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof Checkbox>;
 
 export default meta;
@@ -25,9 +19,6 @@ export const Demo: Story = {
   args: {
     label: "Checkbox",
     description: "Description",
-
-    size: "md",
-    disabled: false,
   },
   render: (args) => {
     const [, updateArgs] = useArgs();
@@ -37,13 +28,6 @@ export const Demo: Story = {
       template: `<CheckboxDemo v-bind="args" @update:model-value="(value) => updateArgs({ modelValue: value })" />`,
     };
   },
-};
-
-export const Sizes: Story = {
-  render: () => ({
-    components: { CheckboxSizes },
-    template: `<CheckboxSizes />`,
-  }),
 };
 
 export const States: Story = {

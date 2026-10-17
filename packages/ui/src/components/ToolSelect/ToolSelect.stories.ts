@@ -4,12 +4,9 @@ import { expect, fn } from "storybook/test";
 
 import ToolSelectDemo from "./stories/ToolSelectDemo.vue";
 import ToolSelectOpen from "./stories/ToolSelectOpen.vue";
-import ToolSelectSizes from "./stories/ToolSelectSizes.vue";
 import ToolSelectStates from "./stories/ToolSelectStates.vue";
 import ToolSelect from "./ToolSelect.vue";
 import type { ToolSelectItem } from "./ToolSelect.vue";
-
-const sizes = ["sm", "md", "lg"] as const;
 
 const singleItem: ToolSelectItem[] = [{ label: "Pencil", icon: "lucide:pencil", value: "pencil" }];
 const multipleItems: ToolSelectItem[] = [
@@ -22,9 +19,6 @@ const meta = {
   title: "Toolbar/ToolSelect",
   // @ts-expect-error `ToolSelect` is a generic component.
   component: ToolSelect,
-  argTypes: {
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof ToolSelect>;
 
 export default meta;
@@ -35,7 +29,6 @@ export const Demo: Story = {
   args: {
     modelValue: "pencil",
     items: multipleItems,
-    size: "lg",
     disabled: false,
   },
   render: (args) => {
@@ -69,15 +62,6 @@ export const CustomSelectionColor: Story = {
     components: { ToolSelectDemo },
     setup: () => ({ args, multipleItems }),
     template: `<ToolSelectDemo v-bind="args" :items="multipleItems" selection-color="var(--color-error)" />`,
-  }),
-};
-
-export const Sizes: Story = {
-  args: { items: multipleItems },
-  render: () => ({
-    components: { ToolSelectSizes },
-    setup: () => ({ multipleItems }),
-    template: `<ToolSelectSizes :items="multipleItems" />`,
   }),
 };
 
