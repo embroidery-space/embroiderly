@@ -10,7 +10,7 @@ export const enum MeasurementUnit {
 }
 
 /**
- * The fabric size. Canonical representation is integer stitch counts plus the fabric's stitches-per-inch.
+ * The fabric size. Canonical representation is integer stitch counts plus the fabric's count.
  * Physical units (inches, mm) are derived projections and are never stored.
  * Unit switching is lossless — the stitch grid changes only when the user enters a new physical size.
  */
@@ -18,13 +18,13 @@ export class FabricSize {
   readonly width: number;
   readonly height: number;
 
-  readonly spi: [number, number];
+  readonly count: number;
 
-  constructor(width: number, height: number, spi: [number, number]) {
+  constructor(width: number, height: number, count: number) {
     this.width = width;
     this.height = height;
 
-    this.spi = spi;
+    this.count = count;
   }
 
   /** Projects canonical stitch counts into the given unit. Returns exact floats — no rounding. */
@@ -37,13 +37,13 @@ export class FabricSize {
         };
       case MeasurementUnit.Inches:
         return {
-          width: this.width / this.spi[0],
-          height: this.height / this.spi[1],
+          width: this.width / this.count,
+          height: this.height / this.count,
         };
       case MeasurementUnit.Mm:
         return {
-          width: (this.width / this.spi[0]) * MM_PER_INCH,
-          height: (this.height / this.spi[1]) * MM_PER_INCH,
+          width: (this.width / this.count) * MM_PER_INCH,
+          height: (this.height / this.count) * MM_PER_INCH,
         };
     }
   }
@@ -52,17 +52,17 @@ export class FabricSize {
    * Builds a new `FabricSize` instance from a size in the given unit.
    * Rounds to integer stitches (discrete grid).
    */
-  static from(size: { width: number; height: number }, unit: MeasurementUnit, spi: [number, number]): FabricSize {
+  static from(size: { width: number; height: number }, unit: MeasurementUnit, count: number): FabricSize {
     switch (unit) {
       case MeasurementUnit.Stitches:
-        return new FabricSize(round(size.width), round(size.height), spi);
+        return new FabricSize(round(size.width), round(size.height), count);
       case MeasurementUnit.Inches:
-        return new FabricSize(round(size.width * spi[0]), round(size.height * spi[1]), spi);
+        return new FabricSize(round(size.width * count), round(size.height * count), count);
       case MeasurementUnit.Mm:
         return new FabricSize(
-          round((size.width / MM_PER_INCH) * spi[0]),
-          round((size.height / MM_PER_INCH) * spi[1]),
-          spi,
+          round((size.width / MM_PER_INCH) * count),
+          round((size.height / MM_PER_INCH) * count),
+          count,
         );
     }
   }

@@ -18,7 +18,6 @@ pub struct Pattern {
   pub fabric: Fabric,
   pub palette: Palette,
   pub layers: Layers,
-  pub special_stitch_models: Vec<SpecialStitchModel>,
 }
 
 impl Pattern {
@@ -168,7 +167,7 @@ impl Pattern {
     self
       .layers
       .iter_mut()
-      .flat_map(|l| l.remove_stitches_outside_bounds(bounds, &self.special_stitch_models))
+      .flat_map(|l| l.remove_stitches_outside_bounds(bounds))
       .collect()
   }
 
@@ -237,12 +236,6 @@ impl Pattern {
           result.add_stitch(Stitch::Node(stitch));
         }
       }
-
-      if layer.specialstitches_visible {
-        for &stitch in layer.specialstitches.iter() {
-          result.specialstitches.insert(stitch);
-        }
-      }
     }
     result
   }
@@ -270,8 +263,6 @@ impl Default for PatternInfo {
   }
 }
 
-pub type StitchesPerInch = (u8, u8);
-
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -279,7 +270,7 @@ pub type StitchesPerInch = (u8, u8);
 pub struct Fabric {
   pub width: u16,
   pub height: u16,
-  pub spi: StitchesPerInch,
+  pub count: u8,
   pub kind: String,
   pub name: String,
   pub color: String,
@@ -288,7 +279,7 @@ pub struct Fabric {
 impl Fabric {
   pub const DEFAULT_WIDTH: u16 = 100;
   pub const DEFAULT_HEIGHT: u16 = 100;
-  pub const DEFAULT_SPI: u8 = 14;
+  pub const DEFAULT_COUNT: u8 = 14;
   pub const DEFAULT_KIND: &'static str = "Aida";
   pub const DEFAULT_NAME: &'static str = "White";
   pub const DEFAULT_COLOR: &'static str = "FFFFFF";
@@ -299,7 +290,7 @@ impl Default for Fabric {
     Self {
       width: Self::DEFAULT_WIDTH,
       height: Self::DEFAULT_HEIGHT,
-      spi: (Self::DEFAULT_SPI, Self::DEFAULT_SPI),
+      count: Self::DEFAULT_COUNT,
       kind: String::from(Self::DEFAULT_KIND),
       name: String::from(Self::DEFAULT_NAME),
       color: String::from(Self::DEFAULT_COLOR),

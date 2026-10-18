@@ -106,7 +106,6 @@ class MetricsServiceClass {
     let straight_stitches_number = 0;
     let french_knots_number = 0;
     let beads_number = 0;
-    let special_stitches_number = 0;
     for (const layer of pattern.layers.items) {
       const counts = layer.stitchCounts();
       full_stitches_number += counts.fullStitches;
@@ -117,14 +116,13 @@ class MetricsServiceClass {
       straight_stitches_number += counts.straightStitches;
       french_knots_number += counts.frenchKnots;
       beads_number += counts.beads;
-      special_stitches_number += counts.specialStitches;
     }
 
     this.#capture("pattern_opened", {
       format,
 
       fabric_size: [fabric.width, fabric.height],
-      fabric_spi: fabric.spi,
+      fabric_count: fabric.count,
       fabric_kind: fabric.kind,
       fabric_color: fabric.color.toHex().toUpperCase(),
 
@@ -142,7 +140,6 @@ class MetricsServiceClass {
       straight_stitches_number,
       french_knots_number,
       beads_number,
-      special_stitches_number,
 
       has_reference_image: pattern.referenceImage !== undefined,
       reference_image_size: pattern.referenceImage?.size ?? null,
@@ -153,7 +150,7 @@ class MetricsServiceClass {
   capturePatternCreated(fabric: Fabric) {
     this.#capture("pattern_created", {
       fabric_size: [fabric.width, fabric.height],
-      fabric_spi: fabric.spi,
+      fabric_count: fabric.count,
       fabric_kind: fabric.kind,
       fabric_color: fabric.color.toHex().toUpperCase(),
     });
@@ -209,7 +206,7 @@ class MetricsServiceClass {
   captureFabricUpdated(fabric: Fabric) {
     this.#capture("fabric_updated", {
       fabric_size: [fabric.width, fabric.height],
-      fabric_spi: fabric.spi,
+      fabric_count: fabric.count,
       fabric_kind: fabric.kind,
       fabric_color: fabric.color.toHex().toUpperCase(),
     });
@@ -307,8 +304,6 @@ class MetricsServiceClass {
 
       frenchknots_visible: visibility.frenchknotsVisible,
       beads_visible: visibility.beadsVisible,
-
-      specialstitches_visible: visibility.specialstitchesVisible,
     });
   }
 

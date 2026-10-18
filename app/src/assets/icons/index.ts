@@ -65,7 +65,6 @@ export { default as IconStitchBack } from "~icons/stitches/back";
 export { default as IconStitchStraight } from "~icons/stitches/straight";
 export { default as IconStitchFrenchKnot } from "~icons/stitches/french-knot";
 export { default as IconStitchBead } from "~icons/stitches/bead";
-export { default as IconStitchSpecial } from "~icons/stitches/special";
 export { default as IconStitchMix } from "~icons/stitches/mix";
 export { default as IconStitchSquare } from "~icons/stitches/square";
 

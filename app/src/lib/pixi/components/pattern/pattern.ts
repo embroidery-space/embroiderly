@@ -21,8 +21,6 @@ import {
   Pattern,
   ReferenceImage,
   ReferenceImageSettings,
-  SpecialStitch,
-  SpecialStitchModel,
 } from "~/lib/pattern/";
 import type { Stitch } from "~/lib/pattern/";
 import { LayerLayout } from "~/lib/types/";
@@ -51,13 +49,7 @@ const STITCH_TYPES_BEFORE_GRID = [
   "quarterstitches",
   "symbols",
 ] as const;
-const STITCH_TYPES_AFTER_GRID = [
-  "specialstitches",
-  "backstitches",
-  "straightstitches",
-  "frenchknots",
-  "beads",
-] as const;
+const STITCH_TYPES_AFTER_GRID = ["backstitches", "straightstitches", "frenchknots", "beads"] as const;
 
 interface LayerContainers {
   fullstitches: StitchParticleContainer;
@@ -65,7 +57,6 @@ interface LayerContainers {
   halfstitches: StitchParticleContainer;
   quarterstitches: StitchParticleContainer;
   symbols: StitchSymbolsContainer;
-  specialstitches: StitchGraphicsContainer;
   backstitches: StitchGraphicsContainer;
   straightstitches: StitchGraphicsContainer;
   frenchknots: StitchGraphicsContainer;
@@ -79,11 +70,6 @@ function createLayerContainers(layerIndex: number): LayerContainers {
     halfstitches: new StitchParticleContainer({ label: `Layer ${layerIndex} Half Stitches` }),
     quarterstitches: new StitchParticleContainer({ label: `Layer ${layerIndex} Quarter Stitches` }),
     symbols: new StitchSymbolsContainer({ label: `Layer ${layerIndex} Symbols` }),
-    specialstitches: new StitchGraphicsContainer({
-      label: `Layer ${layerIndex} Special Stitches`,
-      eventMode: "passive",
-      interactiveChildren: true,
-    }),
     backstitches: new StitchGraphicsContainer({
       label: `Layer ${layerIndex} Back Stitches`,
       eventMode: "passive",
@@ -112,7 +98,6 @@ export class PatternView extends Container {
 
   #palette: readonly PaletteItem[];
   #layers: Layers;
-  #specialStitchModels: SpecialStitchModel[];
 
   #displayMode: DisplayMode | undefined;
   #showSymbols = false;
@@ -136,7 +121,6 @@ export class PatternView extends Container {
 
     this.#palette = pattern.palette.items;
     this.#layers = pattern.layers;
-    this.#specialStitchModels = pattern.specialStitchModels;
 
     this.setFabric(pattern.fabric);
     this.setGrid(pattern.grid);
@@ -173,9 +157,6 @@ export class PatternView extends Container {
       for (const stitch of layer.nodestitches) {
         this.addNodeStitch(stitch, lc);
       }
-      for (const stitch of layer.specialstitches) {
-        this.addSpecialStitch(stitch, lc);
-      }
     }
 
     // Assemble the scene graph and wire the overlay.
@@ -185,8 +166,6 @@ export class PatternView extends Container {
 
   override destroy(options?: DestroyOptions) {
     this.#palette = [];
-    this.#specialStitchModels = [];
-
     super.destroy(options);
   }
 
@@ -219,7 +198,6 @@ export class PatternView extends Container {
     else if (stitch instanceof PartStitch) this.addPartStitch(stitch, lc);
     else if (stitch instanceof LineStitch) this.addLineStitch(stitch, lc);
     else if (stitch instanceof NodeStitch) this.addNodeStitch(stitch, lc);
-    else this.addSpecialStitch(stitch, lc);
 
     this.addSymbol(stitch, lc);
   }
@@ -232,7 +210,6 @@ export class PatternView extends Container {
     else if (stitch instanceof PartStitch) this.removePartStitch(stitch, lc);
     else if (stitch instanceof LineStitch) this.removeLineStitch(stitch, lc);
     else if (stitch instanceof NodeStitch) this.removeNodeStitch(stitch, lc);
-    else this.removeSpecialStitch(stitch, lc);
 
     this.removeSymbol(stitch, lc);
   }
@@ -254,7 +231,7 @@ export class PatternView extends Container {
   }
 
   private addSymbol(stitch: Stitch, lc: LayerContainers) {
-    if (stitch instanceof LineStitch || stitch instanceof NodeStitch || stitch instanceof SpecialStitch) return;
+    if (stitch instanceof LineStitch || stitch instanceof NodeStitch) return;
 
     const palitem = this.#palette[stitch.palindex]!;
     const symbol = new StitchSymbol(stitch, palitem.symbol);
@@ -354,59 +331,6 @@ export class PatternView extends Container {
   private removeNodeStitch(stitch: NodeStitch, lc: LayerContainers) {
     if (stitch.kind === NodeStitchKind.FrenchKnot) lc.frenchknots.removeStitch(stitch);
     else lc.beads.removeStitch(stitch);
-  }
-
-  private addSpecialStitch(specialStitch: SpecialStitch, lc: LayerContainers) {
-    const { x, y, rotation, flip, palindex, modindex } = specialStitch;
-    const model = this.#specialStitchModels[modindex]!;
-
-    // Special stitches are very rare and complex so it is easier to draw them using graphics.
-    const graphics = new StitchGraphics(specialStitch);
-    graphics.eventMode = "static";
-
-    for (const { points } of model.curvedstitches) {
-      // Draw a polyline with a larger width to make it look like a border.
-      graphics.poly(points.flat(), false).stroke({ width: 0.225, color: 0x000000, cap: "round", join: "round" });
-      // Draw a polyline with a smaller width to make it look like a fill.
-      graphics.poly(points.flat(), false).stroke({ width: 0.2, cap: "round", join: "round" });
-    }
-
-    for (const { x, y } of model.linestitches) {
-      const start = { x: x[0], y: y[0] };
-      const end = { x: x[1], y: y[1] };
-      graphics
-        // Draw a line with a larger width to make it look like a border.
-        .moveTo(start.x, start.y)
-        .lineTo(end.x, end.y)
-        .stroke({ width: 0.225, color: 0x000000, cap: "round" })
-        // Draw a line with a smaller width to make it look like a fill.
-        .moveTo(start.x, start.y)
-        .lineTo(end.x, end.y)
-        .stroke({ width: 0.2, cap: "round" });
-    }
-
-    // Decrease the scale factor to draw the nodes with more points.
-    graphics.scale.set(0.1);
-    for (const { x, y } of model.nodestitches) {
-      // All nodes are french knotes there.
-      graphics
-        .circle(x * 10, y * 10, 5)
-        .stroke({ pixelLine: true, color: 0x000000, cap: "round" })
-        .fill(0xffffff);
-    }
-    graphics.scale.set(1);
-
-    graphics.tint = this.#palette[palindex]!.color;
-    graphics.position.set(x, y);
-    graphics.angle = rotation;
-    if (flip[0]) graphics.scale.x = -1;
-    if (flip[1]) graphics.scale.y = -1;
-
-    lc.specialstitches.addStitch(graphics);
-  }
-
-  private removeSpecialStitch(stitch: SpecialStitch, lc: LayerContainers) {
-    lc.specialstitches.removeStitch(stitch);
   }
 
   setDisplayMode(displayMode: DisplayMode | undefined) {
@@ -546,7 +470,6 @@ export class PatternView extends Container {
     lc.quarterstitches.visible = l && layer.quarterstitchesVisible && d;
     lc.symbols.visible = l && this.#showSymbols;
     lc.symbols.renderable = l && this.#showSymbols;
-    lc.specialstitches.visible = l && layer.specialstitchesVisible;
     lc.backstitches.visible = l && layer.backstitchesVisible;
     lc.straightstitches.visible = l && layer.straightstitchesVisible;
     lc.frenchknots.visible = l && layer.frenchknotsVisible;

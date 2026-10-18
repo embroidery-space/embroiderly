@@ -22,8 +22,6 @@ pub struct LayerVisibility {
 
   pub frenchknots_visible: bool,
   pub beads_visible: bool,
-
-  pub specialstitches_visible: bool,
 }
 
 impl From<&Layer> for LayerVisibility {
@@ -38,7 +36,6 @@ impl From<&Layer> for LayerVisibility {
       straightstitches_visible: layer.straightstitches_visible,
       frenchknots_visible: layer.frenchknots_visible,
       beads_visible: layer.beads_visible,
-      specialstitches_visible: layer.specialstitches_visible,
     }
   }
 }
@@ -54,7 +51,6 @@ impl LayerVisibility {
     layer.straightstitches_visible = self.straightstitches_visible;
     layer.frenchknots_visible = self.frenchknots_visible;
     layer.beads_visible = self.beads_visible;
-    layer.specialstitches_visible = self.specialstitches_visible;
   }
 }
 

@@ -8,7 +8,7 @@ import { Layer, LayerVisibility, Layers } from "./layers.ts";
 import { Palette, PaletteSettings } from "./palette.ts";
 import type { Symbol } from "./palette.ts";
 import { PatternPdf } from "./pattern-pdf.ts";
-import { FullStitch, PartStitch, LineStitch, NodeStitch, SpecialStitchModel } from "./stitches.ts";
+import { FullStitch, PartStitch, LineStitch, NodeStitch } from "./stitches.ts";
 import type { Stitch } from "./stitches.ts";
 
 export class PatternInfo {
@@ -56,7 +56,6 @@ export class Pattern extends EventTarget {
   #fabric: Fabric;
   #palette: Palette;
   #layers: Layers;
-  #specialStitchModels: SpecialStitchModel[];
 
   #pdf: PatternPdf;
 
@@ -73,7 +72,6 @@ export class Pattern extends EventTarget {
     fabric?: b.infer<typeof Fabric.schema>;
     palette?: b.infer<typeof Palette.schema>;
     layers?: b.infer<typeof Layers.schema> | Layer[] | Layers;
-    specialStitchModels?: b.infer<typeof SpecialStitchModel.schema>[];
 
     pdf?: Partial<b.infer<typeof PatternPdf.schema>>;
 
@@ -89,7 +87,6 @@ export class Pattern extends EventTarget {
     this.#fabric = new Fabric(data?.fabric);
     this.#palette = new Palette(data?.palette);
     this.#layers = new Layers(data?.layers);
-    this.#specialStitchModels = data?.specialStitchModels?.map((model) => new SpecialStitchModel(model)) ?? [];
 
     this.#pdf = new PatternPdf(data?.pdf);
 
@@ -112,7 +109,6 @@ export class Pattern extends EventTarget {
     fabric: Fabric.schema,
     palette: Palette.schema,
     layers: Layers.schema,
-    specialStitchModels: b.vec(SpecialStitchModel.schema),
 
     pdf: PatternPdf.schema,
 
@@ -184,10 +180,6 @@ export class Pattern extends EventTarget {
     return this.#layers;
   }
 
-  get specialStitchModels() {
-    return this.#specialStitchModels;
-  }
-
   /** Adds a stitch to the pattern on the given layer. */
   addStitch(layerIndex: number, stitch: Stitch) {
     const layer = this.#layers.get(layerIndex)!;
@@ -196,7 +188,6 @@ export class Pattern extends EventTarget {
     else if (stitch instanceof PartStitch) layer.partstitches.push(stitch);
     else if (stitch instanceof LineStitch) layer.linestitches.push(stitch);
     else if (stitch instanceof NodeStitch) layer.nodestitches.push(stitch);
-    else layer.specialstitches.push(stitch);
 
     this.dispatchEvent(new CustomEvent(PatternEvent.AddStitch, { detail: { layerIndex, stitch } }));
   }
@@ -215,7 +206,6 @@ export class Pattern extends EventTarget {
     else if (stitch instanceof PartStitch) removeStitchFromArray(layer.partstitches, stitch);
     else if (stitch instanceof LineStitch) removeStitchFromArray(layer.linestitches, stitch);
     else if (stitch instanceof NodeStitch) removeStitchFromArray(layer.nodestitches, stitch);
-    else removeStitchFromArray(layer.specialstitches, stitch);
 
     this.dispatchEvent(new CustomEvent(PatternEvent.RemoveStitch, { detail: { layerIndex, stitch } }));
   }

@@ -1,8 +1,8 @@
 use super::*;
 
 fn load_fixture() -> EmbroiderlyProject {
-  let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("./testdata/piggies.embproj");
-  embroiderly_parsers::embproj::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap()
+  let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/demo/Piggies.oxs");
+  embroiderly_parsers::oxs::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap()
 }
 
 #[test]
@@ -58,8 +58,6 @@ fn composes_expected_pattern_json() {
     "partstitches",
     "linestitches",
     "nodestitches",
-    "specialstitches",
-    "specialStitchModels",
   ] {
     assert!(value.get(key).is_some(), r#"missing key "{key}" in pattern.json"#);
   }

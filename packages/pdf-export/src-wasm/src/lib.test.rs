@@ -3,8 +3,8 @@ use embroiderly_pattern::{EmbroiderlyProject, PatternPdf};
 use super::*;
 
 fn load_fixture() -> EmbroiderlyProject {
-  let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("./testdata/piggies.embproj");
-  embroiderly_parsers::embproj::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap()
+  let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/demo/Piggies.oxs");
+  embroiderly_parsers::oxs::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap()
 }
 
 fn load_fonts() -> Vec<Vec<u8>> {

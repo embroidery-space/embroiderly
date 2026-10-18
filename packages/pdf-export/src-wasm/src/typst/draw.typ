@@ -156,39 +156,6 @@
   }
 }
 
-#let draw-special-stitches(palette, stitches, models, color) = {
-  for stitch in stitches {
-    let palitem = palette.at(stitch.palindex)
-    let model = models.at(stitch.modindex)
-
-    let sx = if stitch.flip.at(0) { -100% } else { 100% }
-    let sy = if stitch.flip.at(1) { -100% } else { 100% }
-
-    // The model geometry is drawn in local cell-space relative to the stitch origin, then flipped, rotated, and translated.
-    let inner = box(
-      width: 0pt,
-      height: 0pt,
-      {
-        draw-node-stitches((palitem,), model.nodestitches)
-        draw-line-stitches((palitem,), model.linestitches)
-        draw-curved-stitches(rgb(palitem.color), model.curvedstitches)
-      },
-    )
-
-    place(
-      top + left,
-      dx: stitch.x * cell,
-      dy: stitch.y * cell,
-      rotate(
-        stitch.rotation * 1deg,
-        origin: top + left,
-        reflow: false,
-        scale(x: sx, y: sy, origin: top + left, reflow: false, inner),
-      ),
-    )
-  }
-}
-
 #let draw-grid(fabric, grid, bounds, overlap, show-numbers, show-marks) = {
   let pw = bounds.width * cell
   let ph = bounds.height * cell
@@ -320,14 +287,6 @@
       s.y = s.y - by
       s
     })
-  let special-stitches = data
-    .specialstitches
-    .filter(s => inside(s.x, s.y))
-    .map(s => {
-      s.x = s.x - bx
-      s.y = s.y - by
-      s
-    })
   let line-stitches = data
     .linestitches
     .filter(s => inside(s.x.at(0), s.y.at(0)) or inside(s.x.at(1), s.y.at(1)))
@@ -358,7 +317,6 @@
       show-grid-line-numbers,
       show-centering-marks,
     )
-    draw-special-stitches(data.palette, special-stitches, data.specialStitchModels, color)
     draw-line-stitches(data.palette, line-stitches)
     draw-node-stitches(data.palette, node-stitches)
     draw-overlapping-zones(bounds, preserved-overlap)

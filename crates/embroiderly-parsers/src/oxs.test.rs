@@ -26,7 +26,7 @@ fn reads_and_writes_pattern_properties() {
     unreachable!()
   };
 
-  let (pattern_width, pattern_height, pattern_info, spi, palette_size) = read_pattern_properties(attributes);
+  let (pattern_width, pattern_height, pattern_info, count, palette_size) = read_pattern_properties(attributes);
 
   assert_eq!(pattern_width, 20);
   assert_eq!(pattern_height, 10);
@@ -39,7 +39,7 @@ fn reads_and_writes_pattern_properties() {
       description: String::from("Enjoy the embroidery process!"),
     }
   );
-  assert_eq!(spi, (14, 14));
+  assert_eq!(count, 14);
   assert_eq!(palette_size, Some(5));
 
   let mut writer = create_writer();
@@ -48,7 +48,7 @@ fn reads_and_writes_pattern_properties() {
     pattern_width,
     pattern_height,
     &pattern_info,
-    spi,
+    count,
     palette_size.unwrap(),
   )
   .unwrap();
@@ -71,7 +71,7 @@ fn reads_and_writes_default_pattern_properties() {
     unreachable!()
   };
 
-  let (pattern_width, pattern_height, pattern_info, spi, palette_size) = read_pattern_properties(attributes);
+  let (pattern_width, pattern_height, pattern_info, count, palette_size) = read_pattern_properties(attributes);
 
   assert_eq!(pattern_width, Fabric::DEFAULT_WIDTH);
   assert_eq!(pattern_height, Fabric::DEFAULT_HEIGHT);
@@ -84,11 +84,11 @@ fn reads_and_writes_default_pattern_properties() {
       description: String::from(""),
     }
   );
-  assert_eq!(spi, (Fabric::DEFAULT_SPI, Fabric::DEFAULT_SPI));
+  assert_eq!(count, Fabric::DEFAULT_COUNT);
   assert_eq!(palette_size, None);
 
   let mut writer = create_writer();
-  write_pattern_properties(&mut writer, pattern_width, pattern_height, &pattern_info, spi, 0).unwrap();
+  write_pattern_properties(&mut writer, pattern_width, pattern_height, &pattern_info, count, 0).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let expected = format!(
@@ -109,7 +109,7 @@ fn round_trips_pattern_properties_with_special_characters() {
   };
 
   let mut writer = create_writer();
-  write_pattern_properties(&mut writer, 20, 10, &pattern_info, (14, 14), 5).unwrap();
+  write_pattern_properties(&mut writer, 20, 10, &pattern_info, 14, 5).unwrap();
   let xml = String::from_utf8(writer.into_inner().into_inner()).unwrap();
 
   // The special characters must be escaped in the serialized XML.
@@ -522,7 +522,6 @@ fn reads_and_writes_ornaments() {
   <object x1="5" y1="5" palindex="2" objecttype="tent" direction="1"/>
   <object x1="1" y1="1" palindex="2" objecttype="knot" rotated="false"/>
   <object x1="3.5" y1="1.5" palindex="1" objecttype="bead" rotated="false"/>
-  <object x1="10" y1="5.5" palindex="1" objecttype="specialstitch" modindex="0" rotation="90" flip_x="true" flip_y="false"/>
 </ornaments_inc_knots_and_beads>"#;
 
   let expected_fullstitches = vec![FullStitch {
@@ -570,22 +569,13 @@ fn reads_and_writes_ornaments() {
       kind: NodeStitchKind::Bead,
     },
   ];
-  let expected_specialstitches = vec![SpecialStitch {
-    x: Coord::new(10.0).unwrap(),
-    y: Coord::new(5.5).unwrap(),
-    palindex: 0,
-    modindex: 0,
-    rotation: 90,
-    flip: (true, false),
-  }];
 
   let mut reader = create_reader(xml);
   reader.read_event().unwrap(); // Consume the start `ornaments` tag.
-  let (fullstitches, partstitches, nodestitches, specialstitches) = read_ornaments(&mut reader).unwrap();
+  let (fullstitches, partstitches, nodestitches) = read_ornaments(&mut reader).unwrap();
   assert_eq!(fullstitches, expected_fullstitches);
   assert_eq!(partstitches, expected_partstitches);
   assert_eq!(nodestitches, expected_nodestitches);
-  assert_eq!(specialstitches, expected_specialstitches);
 
   let mut writer = create_writer();
   write_ornaments(
@@ -593,122 +583,8 @@ fn reads_and_writes_ornaments() {
     fullstitches.into_iter(),
     partstitches.into_iter(),
     nodestitches.into_iter(),
-    specialstitches.into_iter(),
   )
   .unwrap();
-
-  let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
-  let diff = prettydiff::diff_lines(&result, xml);
-  assert!(diff.diff().len() == 1, "Diff:\n{diff}");
-}
-
-#[test]
-fn reads_and_writes_special_stitch_models() {
-  let xml = r#"<special_stitch_models>
-  <model index="0" unique_name="Rhodes Heart - over 6" name="Rhodes Heart" width="3" height="2.5">
-    <backstitch x1="1" x2="2" y1="2" y2="0" palindex="1" objecttype="straightstitch"/>
-    <backstitch x1="0.5" x2="2.5" y1="1.5" y2="0" palindex="1" objecttype="straightstitch"/>
-    <backstitch x1="0" x2="3" y1="1" y2="0.5" palindex="1" objecttype="straightstitch"/>
-    <backstitch x1="0" x2="3" y1="0.5" y2="1" palindex="1" objecttype="straightstitch"/>
-    <backstitch x1="0.5" x2="2.5" y1="0" y2="1.5" palindex="1" objecttype="straightstitch"/>
-    <backstitch x1="1" x2="2" y1="0" y2="2" palindex="1" objecttype="straightstitch"/>
-    <backstitch x1="1.5" x2="1.5" y1="0.5" y2="2.5" palindex="1" objecttype="straightstitch"/>
-  </model>
-  <model index="1" unique_name="Lazy Daisy" name="Lazy Daisy" width="1" height="1.5">
-    <backstitch x1="1" y1="0" x2="0.43" y2="0.26" x3="0.06" y3="0.66" x4="0.06" y4="1.03" x5="0.5" y5="1.06" x6="0.89" y6="0.66" x7="1.1" y7="0.1" palindex="1" objecttype="curvedstitch"/>
-    <backstitch x1="0.03" y1="1.13" x2="0.23" y2="0.93" palindex="1" objecttype="curvedstitch"/>
-  </model>
-</special_stitch_models>"#;
-
-  let expected_models = vec![
-    SpecialStitchModel {
-      unique_name: String::from("Rhodes Heart - over 6"),
-      name: String::from("Rhodes Heart"),
-      width: 3.0,
-      height: 2.5,
-      linestitches: vec![
-        LineStitch {
-          x: (Coord::new(1.0).unwrap(), Coord::new(2.0).unwrap()),
-          y: (Coord::new(2.0).unwrap(), Coord::new(0.0).unwrap()),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (Coord::new(0.5).unwrap(), Coord::new(2.5).unwrap()),
-          y: (Coord::new(1.5).unwrap(), Coord::new(0.0).unwrap()),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (Coord::new(0.0).unwrap(), Coord::new(3.0).unwrap()),
-          y: (Coord::new(1.0).unwrap(), Coord::new(0.5).unwrap()),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (Coord::new(0.0).unwrap(), Coord::new(3.0).unwrap()),
-          y: (Coord::new(0.5).unwrap(), Coord::new(1.0).unwrap()),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (Coord::new(0.5).unwrap(), Coord::new(2.5).unwrap()),
-          y: (Coord::new(0.0).unwrap(), Coord::new(1.5).unwrap()),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (Coord::new(1.0).unwrap(), Coord::new(2.0).unwrap()),
-          y: (Coord::new(0.0).unwrap(), Coord::new(2.0).unwrap()),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-        LineStitch {
-          x: (Coord::new(1.5).unwrap(), Coord::new(1.5).unwrap()),
-          y: (Coord::new(0.5).unwrap(), Coord::new(2.5).unwrap()),
-          palindex: 0,
-          kind: LineStitchKind::Straight,
-        },
-      ],
-      nodestitches: vec![],
-      curvedstitches: vec![],
-    },
-    SpecialStitchModel {
-      unique_name: String::from("Lazy Daisy"),
-      name: String::from("Lazy Daisy"),
-      width: 1.0,
-      height: 1.5,
-      linestitches: vec![],
-      nodestitches: vec![],
-      curvedstitches: vec![
-        CurvedStitch {
-          points: vec![
-            (Coord::new(1.00).unwrap(), Coord::new(0.00).unwrap()),
-            (Coord::new(0.43).unwrap(), Coord::new(0.26).unwrap()),
-            (Coord::new(0.06).unwrap(), Coord::new(0.66).unwrap()),
-            (Coord::new(0.06).unwrap(), Coord::new(1.03).unwrap()),
-            (Coord::new(0.50).unwrap(), Coord::new(1.06).unwrap()),
-            (Coord::new(0.89).unwrap(), Coord::new(0.66).unwrap()),
-            (Coord::new(1.10).unwrap(), Coord::new(0.10).unwrap()),
-          ],
-        },
-        CurvedStitch {
-          points: vec![
-            (Coord::new(0.03).unwrap(), Coord::new(1.13).unwrap()),
-            (Coord::new(0.23).unwrap(), Coord::new(0.93).unwrap()),
-          ],
-        },
-      ],
-    },
-  ];
-
-  let mut reader = create_reader(xml);
-  reader.read_event().unwrap(); // Consume the start `special_stitch_models` tag.
-  let models = read_special_stitch_models(&mut reader).unwrap();
-  assert_eq!(models, expected_models);
-
-  let mut writer = create_writer();
-  write_special_stitch_models(&mut writer, &models).unwrap();
 
   let result = String::from_utf8(writer.into_inner().into_inner()).unwrap();
   let diff = prettydiff::diff_lines(&result, xml);

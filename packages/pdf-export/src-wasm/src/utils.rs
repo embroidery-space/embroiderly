@@ -54,14 +54,6 @@ fn flatten_layers_with_palette_in_visual_order(pattern: &Pattern) -> (Vec<Palett
       ..*s
     })
     .collect();
-  layer.specialstitches = layer
-    .specialstitches
-    .iter()
-    .map(|s| SpecialStitch {
-      palindex: remap[s.palindex as usize],
-      ..*s
-    })
-    .collect();
 
   (palette, layer)
 }
@@ -81,12 +73,10 @@ struct PatternData<'a> {
   partstitches: &'a Stitches<PartStitch>,
   linestitches: &'a Stitches<LineStitch>,
   nodestitches: &'a Stitches<NodeStitch>,
-  specialstitches: &'a Stitches<SpecialStitch>,
-  special_stitch_models: &'a [SpecialStitchModel],
 }
 
 impl<'a> PatternData<'a> {
-  fn new(embproj: &'a EmbroiderlyProject, palette: &'a [PaletteItem], layer: &'a Layer) -> Self {
+  const fn new(embproj: &'a EmbroiderlyProject, palette: &'a [PaletteItem], layer: &'a Layer) -> Self {
     Self {
       info: &embproj.pattern.info,
 
@@ -99,8 +89,6 @@ impl<'a> PatternData<'a> {
       partstitches: &layer.partstitches,
       linestitches: &layer.linestitches,
       nodestitches: &layer.nodestitches,
-      specialstitches: &layer.specialstitches,
-      special_stitch_models: &embproj.pattern.special_stitch_models,
     }
   }
 }
