@@ -1689,14 +1689,10 @@ dependencies = [
  "embroiderly_parsers",
  "embroiderly_pattern",
  "js-sys",
- "serde",
- "serde_json",
  "typst",
  "typst-layout",
  "typst-pdf",
  "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
 ]
 
 [[package]]

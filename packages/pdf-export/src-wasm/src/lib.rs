@@ -1,9 +1,12 @@
 #![allow(clippy::future_not_send)]
 
 use anyhow::Result;
+use typst::foundations::{Bytes, Dict, IntoValue as _, Value};
+use typst::text::{Font, FontBook};
+use typst::utils::LazyHash;
 use wasm_bindgen::prelude::*;
 
-mod utils;
+mod conversion;
 mod world;
 
 #[cfg(test)]
@@ -13,12 +16,12 @@ mod tests;
 #[wasm_bindgen]
 pub struct PdfExportWorker {
   /// The target pattern for export.
-  embproj: embroiderly_pattern::EmbroiderlyProject,
+  embproj: Value,
 
   /// An array of fonts (both text and symbol) used in the document.
-  fonts: Vec<typst::text::Font>,
+  fonts: Vec<Font>,
   /// Pre-built font book metadata.
-  font_book: typst::utils::LazyHash<typst::text::FontBook>,
+  font_book: LazyHash<FontBook>,
 }
 
 #[wasm_bindgen]
@@ -41,43 +44,41 @@ impl PdfExportWorker {
   #[must_use]
   pub fn init(embproj: embroiderly_pattern::EmbroiderlyProject, font_data: Vec<Vec<u8>>) -> Self {
     let mut fonts = Vec::new();
-    let mut font_book = typst::text::FontBook::new();
+    let mut font_book = FontBook::new();
 
     for fd in font_data {
-      for font in typst::text::Font::iter(typst::foundations::Bytes::new(fd)) {
+      for font in Font::iter(Bytes::new(fd)) {
         font_book.push(font.info().clone());
         fonts.push(font);
       }
     }
 
     Self {
-      embproj,
+      embproj: conversion::convert_embproj_into_typst_value(embproj),
 
       fonts,
-      font_book: typst::utils::LazyHash::new(font_book),
+      font_book: LazyHash::new(font_book),
     }
   }
 
   fn prepare_document(&self, pattern_pdf: embroiderly_pattern::PatternPdf) -> Result<typst_layout::PagedDocument> {
     let template = [
       "#import \"draw.typ\": render-frames",
-      "#let pattern = json(\"pattern.json\")",
+      "#let pattern = sys.inputs.at(\"pattern\")",
       &pattern_pdf.template,
     ]
     .join("\n\n");
 
     let inputs = {
-      use typst::foundations::{Dict, IntoValue as _};
-
       let mut inputs = Dict::new();
+
       inputs.insert("color".into(), pattern_pdf.color.into_value());
+      inputs.insert("pattern".into(), self.embproj.clone());
 
       inputs
     };
 
-    let pattern_json = utils::compose_pattern_json(&self.embproj)?;
-
-    let world = world::PdfExportWorld::new(template, inputs, pattern_json, &self.fonts, &self.font_book);
+    let world = world::PdfExportWorld::new(template, inputs, &self.fonts, &self.font_book);
 
     typst::compile(&world)
       .output

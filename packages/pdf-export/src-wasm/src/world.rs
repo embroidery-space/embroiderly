@@ -15,28 +15,17 @@ static DRAW_ID: LazyLock<FileId> =
 static DRAW_SOURCE: LazyLock<Source> =
   LazyLock::new(|| Source::new(*DRAW_ID, include_str!("./typst/draw.typ").to_string()));
 
-static PATTERN_ID: LazyLock<FileId> =
-  LazyLock::new(|| RootedPath::new(VirtualRoot::Project, VirtualPath::new("pattern.json").unwrap()).intern());
-
 pub struct PdfExportWorld<'a> {
   main_source: Source,
-  pattern_json: Bytes,
   library: LazyHash<Library>,
   fonts: &'a [Font],
   font_book: &'a LazyHash<FontBook>,
 }
 
 impl<'a> PdfExportWorld<'a> {
-  pub fn new(
-    template: String,
-    inputs: Dict,
-    pattern_json: Vec<u8>,
-    fonts: &'a [Font],
-    font_book: &'a LazyHash<FontBook>,
-  ) -> Self {
+  pub fn new(template: String, inputs: Dict, fonts: &'a [Font], font_book: &'a LazyHash<FontBook>) -> Self {
     Self {
       main_source: Source::new(*MAIN_ID, template),
-      pattern_json: Bytes::new(pattern_json),
       library: LazyHash::new(Library::builder().with_inputs(inputs).build()),
       fonts,
       font_book,
@@ -68,11 +57,7 @@ impl typst::World for PdfExportWorld<'_> {
   }
 
   fn file(&self, id: FileId) -> FileResult<Bytes> {
-    if id == *PATTERN_ID {
-      Ok(self.pattern_json.clone())
-    } else {
-      Err(FileError::NotFound(id.vpath().get_without_slash().into()))
-    }
+    Err(FileError::NotFound(id.vpath().get_without_slash().into()))
   }
 
   fn font(&self, index: usize) -> Option<Font> {

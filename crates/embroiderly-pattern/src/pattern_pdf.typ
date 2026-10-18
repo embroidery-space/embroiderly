@@ -47,7 +47,7 @@
         #if palitem.symbol != none {
           set text(font: palitem.symbol.font)
           set align(center)
-          str.from-unicode(palitem.symbol.char)
+          palitem.symbol.char
         }
       ],
       [#palitem.brand],
