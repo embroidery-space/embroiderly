@@ -5,11 +5,6 @@
 
   Public API:
     #render-frames(data, color) -> array // one content block per frame, ready to lay out
-    #frame-bounds(fabric, options) -> array // list of {x, y, width, height} frame tiles
-    #draw-frame(data, bounds, color) -> (frame, w, h) // a single frame canvas along with its width and height
-
-  `data` is the decoded `json("pattern.json")` object composed on the Rust side.
-  `color` is a boolean selecting filled (true) vs. outlined (false) stitches, supplied at render time (via `sys.inputs`).
 */
 
 #let cell = 1pt
@@ -64,7 +59,12 @@
     )
 
     if palitem.symbol != none {
-      draw-symbol(stitch.x * cell + size / 2, stitch.y * cell + size / 2, palitem.symbol, size * 0.8)
+      draw-symbol(
+        stitch.x * cell + size / 2,
+        stitch.y * cell + size / 2,
+        palitem.symbol,
+        size * 0.8,
+      )
     }
   }
 }
@@ -105,13 +105,20 @@
     let fill = if color { palitem.color } else { none }
     let points = part-stitch-points(stitch.kind, stitch.direction).map(((vx, vy)) => (vx * cell, vy * cell))
 
-    place(top + left, dx: stitch.x * cell, dy: stitch.y * cell, polygon(fill: fill, stroke: outline, ..points))
+    place(top + left, dx: stitch.x * cell, dy: stitch.y * cell, polygon(
+      fill: fill,
+      stroke: outline,
+      ..points,
+    ))
 
     if palitem.symbol != none {
       let ox = stitch.x * cell
       let oy = stitch.y * cell
       let fs = cell / 2 * 0.8
-      for (cx, cy) in part-stitch-symbol-centers(stitch.kind, stitch.direction) {
+      for (cx, cy) in part-stitch-symbol-centers(
+        stitch.kind,
+        stitch.direction,
+      ) {
         draw-symbol(ox + cx * cell, oy + cy * cell, palitem.symbol, fs)
       }
     }
@@ -152,7 +159,10 @@
   // Horizontal minor lines.
   for i in range(0, bounds.height + 1) {
     let y = i * cell
-    place(top + left, line(start: (0pt, y), end: (pw, y), stroke: (paint: grid.minor-lines.color, thickness: grid.minor-lines.thickness * px)))
+    place(top + left, line(start: (0pt, y), end: (pw, y), stroke: (
+      paint: grid.minor-lines.color,
+      thickness: grid.minor-lines.thickness * px,
+    )))
 
     if show-marks and i + bounds.y == calc.floor(fabric.height / 2) {
       let ya = if calc.rem(i + bounds.y, 10) == 0 { y - cell / 2 } else { y }
@@ -164,7 +174,10 @@
   // Vertical minor lines.
   for i in range(0, bounds.width + 1) {
     let x = i * cell
-    place(top + left, line(start: (x, 0pt), end: (x, ph), stroke: (paint: grid.minor-lines.color, thickness: grid.minor-lines.thickness * px)))
+    place(top + left, line(start: (x, 0pt), end: (x, ph), stroke: (
+      paint: grid.minor-lines.color,
+      thickness: grid.minor-lines.thickness * px,
+    )))
 
     if show-marks and i + bounds.x == calc.floor(fabric.width / 2) {
       let xa = if calc.rem(i + bounds.x, 10) == 0 { x - cell / 2 } else { x }
@@ -178,7 +191,10 @@
   for i in range(0, bounds.y + bounds.height + 1, step: grid.major-lines-interval) {
     if i >= h-threshold {
       let y = (i - bounds.y) * cell
-      place(top + left, line(start: (0pt, y), end: (pw, y), stroke: (paint: grid.major-lines.color, thickness: grid.major-lines.thickness * px)))
+      place(top + left, line(start: (0pt, y), end: (pw, y), stroke: (
+        paint: grid.major-lines.color,
+        thickness: grid.major-lines.thickness * px,
+      )))
       if show-numbers {
         // Anchor the number's right-center just left of the line, vertically centered on it.
         place(right + horizon, dx: -grid-label-gap, dy: y, grid-label(i))
@@ -191,7 +207,10 @@
   for i in range(0, bounds.x + bounds.width + 1, step: grid.major-lines-interval) {
     if i >= v-threshold {
       let x = (i - bounds.x) * cell
-      place(top + left, line(start: (x, 0pt), end: (x, ph), stroke: (paint: grid.major-lines.color, thickness: grid.major-lines.thickness * px)))
+      place(top + left, line(start: (x, 0pt), end: (x, ph), stroke: (
+        paint: grid.major-lines.color,
+        thickness: grid.major-lines.thickness * px,
+      )))
       if show-numbers {
         // Anchor the number's bottom-center just above the line, horizontally centered on it.
         place(center + bottom, dx: x, dy: -grid-label-gap, grid-label(i))
@@ -204,10 +223,20 @@
   if overlap != 0 {
     let dim = silver.transparentize(50%)
     if bounds.x > 0 {
-      place(top + left, rect(width: overlap * cell, height: bounds.height * cell, fill: dim, stroke: none))
+      place(top + left, rect(
+        width: overlap * cell,
+        height: bounds.height * cell,
+        fill: dim,
+        stroke: none,
+      ))
     }
     if bounds.y > 0 {
-      place(top + left, rect(width: bounds.width * cell, height: overlap * cell, fill: dim, stroke: none))
+      place(top + left, rect(
+        width: bounds.width * cell,
+        height: overlap * cell,
+        fill: dim,
+        stroke: none,
+      ))
     }
   }
 }
@@ -245,7 +274,7 @@
   color: true,
   preserved-overlap: 3,
   show-grid-line-numbers: true,
-  show-centering-marks: true
+  show-centering-marks: true,
 ) = {
   let bx = bounds.x
   let by = bounds.y
@@ -335,7 +364,11 @@
   show-grid-line-numbers: true,
   show-centering-marks: true,
 ) = {
-  frame-bounds(pattern.fabric, frame-size: frame-size, preserved-overlap: preserved-overlap).map(bounds => {
+  frame-bounds(
+    pattern.fabric,
+    frame-size: frame-size,
+    preserved-overlap: preserved-overlap,
+  ).map(bounds => {
     layout(size => {
       let (frame, w, h) = draw-frame(
         pattern,
@@ -343,7 +376,7 @@
         color: sys.inputs.at("color", default: true),
         preserved-overlap: preserved-overlap,
         show-grid-line-numbers: show-grid-line-numbers,
-        show-centering-marks: show-centering-marks
+        show-centering-marks: show-centering-marks,
       )
       let s = calc.min(size.width / w, size.height / h)
       scale(s * 100%, reflow: true, frame)
