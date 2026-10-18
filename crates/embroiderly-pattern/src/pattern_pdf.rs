@@ -12,7 +12,9 @@ pub struct PatternPdf {
 impl Default for PatternPdf {
   fn default() -> Self {
     Self {
-      template: String::from(include_str!("pattern_pdf.typ")),
+      template: String::from(include_str!(
+        "../../../packages/pdf-export/src-wasm/src/typst/pattern.typ"
+      )),
       color: true,
     }
   }

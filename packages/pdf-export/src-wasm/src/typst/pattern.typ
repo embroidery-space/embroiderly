@@ -1,3 +1,7 @@
+#import "draw.typ": render-frames
+
+#let pattern = sys.inputs.at("pattern")
+
 #set document(
   title: [#pattern.info.title],
   author: pattern.info.author,
