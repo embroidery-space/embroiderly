@@ -112,6 +112,7 @@ ttf-parser = "0.25.1"
 typst = "0.15.1"
 typst-layout = "0.15.1"
 typst-pdf = "0.15.1"
+typst-render = "0.15.1"
 
 # Image processing
 image = { version = "0.25.10", default-features = false, features = ["png", "jpeg", "webp"] }

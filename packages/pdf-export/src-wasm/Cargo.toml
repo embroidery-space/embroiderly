@@ -20,6 +20,7 @@ borsh = { workspace = true }
 typst = { workspace = true }
 typst-layout = { workspace = true }
 typst-pdf = { workspace = true }
+typst-render = { workspace = true }
 
 # Error handling
 anyhow = { workspace = true }

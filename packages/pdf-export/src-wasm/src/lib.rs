@@ -82,4 +82,24 @@ impl PdfExportWorker {
     typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
       .map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))
   }
+
+  fn preview_impl(&self, pattern_pdf: PatternPdf, page: usize) -> Result<Vec<u8>> {
+    let doc = self.prepare_document(pattern_pdf)?;
+    let page = doc
+      .pages()
+      .get(page)
+      .ok_or(anyhow::anyhow!("Page index is out of bounds"))?;
+
+    let pixmap = typst_render::render(page, &typst_render::RenderOptions::default());
+
+    // In tests, return the encoded PNG to inspect the result.
+    #[cfg(test)]
+    return pixmap
+      .encode_png()
+      .map_err(|e| anyhow::anyhow!("Failed to encode PNG: {e:?}"));
+
+    // In production, return raw buffer to display it on the canvas.
+    #[cfg(not(test))]
+    return Ok(pixmap.take());
+  }
 }
