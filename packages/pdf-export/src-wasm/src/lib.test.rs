@@ -83,7 +83,7 @@ mod preview {
         .unwrap();
         assert_eq!(expected, preview, "color pdf preview doesn't match");
       } else {
-        // We reached the last page in the document.
+        // We havereached the last page of the document.
         break;
       }
 
@@ -109,7 +109,7 @@ mod preview {
         .unwrap();
         assert_eq!(expected, preview, "monochrome pdf preview doesn't match");
       } else {
-        // We reached the last page in the document.
+        // We have reached the last page of the document.
         break;
       }
 
