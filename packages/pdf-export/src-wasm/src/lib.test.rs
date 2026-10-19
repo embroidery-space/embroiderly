@@ -29,9 +29,10 @@ mod export {
   fn exports_pattern_to_color_pdf() {
     let worker = PdfExportWorker::init(load_fixture(), load_fonts());
 
-    let expected =
-      std::fs::read(std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/piggies.color.pdf")))
-        .unwrap();
+    let expected = std::fs::read(
+      std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/export/piggies.color.pdf")),
+    )
+    .unwrap();
     let exported = worker
       .export_impl(PatternPdf {
         color: true,
@@ -47,7 +48,7 @@ mod export {
     let worker = PdfExportWorker::init(load_fixture(), load_fonts());
 
     let expected = std::fs::read(
-      std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/piggies.monochrome.pdf")),
+      std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/export/piggies.monochrome.pdf")),
     )
     .unwrap();
     let exported = worker
