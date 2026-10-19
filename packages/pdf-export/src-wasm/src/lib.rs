@@ -1,6 +1,5 @@
-#![allow(clippy::future_not_send)]
-
 use anyhow::Result;
+use embroiderly_pattern::{EmbroiderlyProject, PatternPdf};
 use typst::foundations::{Bytes, Dict, IntoValue as _, Value};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
@@ -42,7 +41,7 @@ impl PdfExportWorker {
 
 impl PdfExportWorker {
   #[must_use]
-  pub fn init(embproj: embroiderly_pattern::EmbroiderlyProject, font_data: Vec<Vec<u8>>) -> Self {
+  pub fn init(embproj: EmbroiderlyProject, font_data: Vec<Vec<u8>>) -> Self {
     let mut fonts = Vec::new();
     let mut font_book = FontBook::new();
 
@@ -61,31 +60,24 @@ impl PdfExportWorker {
     }
   }
 
-  fn prepare_document(&self, pattern_pdf: embroiderly_pattern::PatternPdf) -> Result<typst_layout::PagedDocument> {
-    let template = [
-      "#import \"draw.typ\": render-frames",
-      "#let pattern = sys.inputs.at(\"pattern\")",
-      &pattern_pdf.template,
-    ]
-    .join("\n\n");
-
+  fn prepare_document(&self, pattern_pdf: PatternPdf) -> Result<typst_layout::PagedDocument> {
+    let PatternPdf { template, color } = pattern_pdf;
     let inputs = {
       let mut inputs = Dict::new();
 
-      inputs.insert("color".into(), pattern_pdf.color.into_value());
+      inputs.insert("color".into(), color.into_value());
       inputs.insert("pattern".into(), self.embproj.clone());
 
       inputs
     };
 
     let world = world::PdfExportWorld::new(template, inputs, &self.fonts, &self.font_book);
-
     typst::compile(&world)
       .output
       .map_err(|e| anyhow::anyhow!("Failed to compile Typst template: {e:?}"))
   }
 
-  fn export_impl(&self, pattern_pdf: embroiderly_pattern::PatternPdf) -> Result<Vec<u8>> {
+  fn export_impl(&self, pattern_pdf: PatternPdf) -> Result<Vec<u8>> {
     let doc = self.prepare_document(pattern_pdf)?;
     typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
       .map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))
