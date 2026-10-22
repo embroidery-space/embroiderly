@@ -52,6 +52,7 @@ export { default as ToolSelect, type ToolSelectProps, type ToolSelectItem } from
 
 // Navigation.
 export { default as Menubar, type MenubarProps, type MenubarItem, type MenubarMenu } from "./Menubar/Menubar.vue";
+export { default as Pagination, type PaginationProps, type PaginationEmits } from "./Pagination/Pagination.vue";
 export { default as Tabs, type TabsProps, type TabsItem } from "./Tabs/Tabs.vue";
 export { default as Tree, type TreeProps, type TreeItem } from "./Tree/Tree.vue";
 
