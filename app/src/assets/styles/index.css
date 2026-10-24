@@ -3,28 +3,6 @@
 @import "./keyframes.css";
 @import "./tour.css";
 
-@font-face {
-  font-family: Fixel;
-  font-weight: 100 900;
-  font-style: normal;
-
-  font-display: swap;
-  src: url("/fonts/FixelVariable.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: Fixel;
-  font-weight: 100 900;
-  font-style: italic;
-
-  font-display: swap;
-  src: url("/fonts/FixelVariableItalic.ttf") format("truetype");
-}
-
-:root {
-  --font-sans: "Fixel", ui-sans-serif, system-ui, sans-serif;
-}
-
 body {
   user-select: none;
 

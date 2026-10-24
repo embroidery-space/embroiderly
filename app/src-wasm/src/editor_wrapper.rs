@@ -4,7 +4,7 @@ use std::rc::Rc;
 use embroiderly_editor::actions::layers::LayerVisibility;
 use embroiderly_editor::actions::palette::SortPaletteBy;
 use embroiderly_editor::actions::{
-  DisplayAction, FabricAction, GridAction, ImageAction, LayerAction, PaletteAction, PatternAction, PublishAction,
+  DisplayAction, FabricAction, GridAction, ImageAction, LayerAction, PaletteAction, PatternAction, PatternPdfAction,
   StitchAction,
 };
 use embroiderly_editor::{Editor, EditorAction, EditorEvent};
@@ -226,6 +226,12 @@ impl EditorWrapper {
     self.update_pattern_info_impl(project_id, info_data).await
   }
 
+  /// Updates Typst template.
+  #[wasm_bindgen(js_name = "updatePatternPdf")]
+  pub async fn update_pattern_pdf(&self, project_id: &str, pattern_pdf_data: &[u8]) -> Result<(), Error> {
+    self.update_pattern_pdf_impl(project_id, pattern_pdf_data).await
+  }
+
   /// Updates display settings.
   #[wasm_bindgen(js_name = "updateDisplaySettings")]
   pub async fn update_display_settings(&self, project_id: &str, settings_data: &[u8]) -> Result<(), Error> {
@@ -267,12 +273,6 @@ impl EditorWrapper {
   #[wasm_bindgen(js_name = "moveLayer")]
   pub async fn move_layer(&self, project_id: &str, old_position: u32, new_position: u32) -> Result<(), Error> {
     self.move_layer_impl(project_id, old_position, new_position).await
-  }
-
-  /// Updates PDF export options.
-  #[wasm_bindgen(js_name = "updatePdfExportOptions")]
-  pub async fn update_pdf_export_options(&self, project_id: &str, options_data: &[u8]) -> Result<(), Error> {
-    self.update_pdf_export_options_impl(project_id, options_data).await
   }
 
   /// Sets the reference image.
@@ -883,6 +883,26 @@ impl EditorWrapper {
   }
 
   #[tracing::instrument(
+    name = "EditorWrapper::update_pattern_pdf",
+    level = "debug",
+    skip(self, pattern_pdf_data),
+    err
+  )]
+  async fn update_pattern_pdf_impl(&self, project_id: &str, pattern_pdf_data: &[u8]) -> Result<(), Error> {
+    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
+    let pattern_pdf = borsh::from_slice(pattern_pdf_data)?;
+    self
+      .dispatch(
+        project_id,
+        EditorAction::PatternPdf(PatternPdfAction::UpdatePatternPdf {
+          template: pattern_pdf,
+          old_template: None,
+        }),
+      )
+      .await
+  }
+
+  #[tracing::instrument(
     name = "EditorWrapper::update_display_settings",
     level = "debug",
     skip(self, settings_data),
@@ -975,26 +995,6 @@ impl EditorWrapper {
           old_position,
           new_position,
           old_positions: None,
-        }),
-      )
-      .await
-  }
-
-  #[tracing::instrument(
-    name = "EditorWrapper::update_pdf_export_options",
-    level = "debug",
-    skip(self, options_data),
-    err
-  )]
-  async fn update_pdf_export_options_impl(&self, project_id: &str, options_data: &[u8]) -> Result<(), Error> {
-    let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
-    let options = borsh::from_slice(options_data)?;
-    self
-      .dispatch(
-        project_id,
-        EditorAction::Publish(PublishAction::UpdatePdfExportOptions {
-          options,
-          old_options: None,
         }),
       )
       .await

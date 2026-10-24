@@ -2,9 +2,12 @@
 export { default as IconCheck } from "~icons/material-symbols/check-rounded";
 export { default as IconChevronUp } from "~icons/material-symbols/keyboard-arrow-up-rounded";
 export { default as IconChevronDown } from "~icons/material-symbols/keyboard-arrow-down-rounded";
-export { default as IconChevronLeft } from "~icons/material-symbols/chevron-left-rounded";
-export { default as IconChevronRight } from "~icons/material-symbols/chevron-right-rounded";
+export { default as IconChevronLeft } from "~icons/material-symbols/keyboard-arrow-left-rounded";
+export { default as IconChevronRight } from "~icons/material-symbols/keyboard-arrow-right-rounded";
+export { default as IconChevronsLeft } from "~icons/material-symbols/keyboard-double-arrow-left-rounded";
+export { default as IconChevronsRight } from "~icons/material-symbols/keyboard-double-arrow-right-rounded";
 export { default as IconCursor } from "~icons/material-symbols/arrow-selector-tool-rounded";
+export { default as IconEllipsis } from "~icons/mdi/dots-horizontal";
 export { default as IconExternalLink } from "~icons/material-symbols/open-in-new-rounded";
 export { default as IconFile } from "~icons/material-symbols/draft-rounded";
 export { default as IconFileCreate } from "~icons/material-symbols/edit-document-rounded";

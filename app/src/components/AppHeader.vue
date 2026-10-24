@@ -114,13 +114,7 @@ const appMenu = computed(() => {
             {
               label: "PDF",
               onSelect() {
-                modals.pdfExportModal.open({
-                  options: patternStore.pattern.pdfExportOptions,
-                  fabricWidth: patternStore.pattern.fabric.width,
-                  fabricHeight: patternStore.pattern.fabric.height,
-                  onOptionsUpdate: patternStore.updatePdfExportOptions,
-                  onDocumentExport: (variant) => patternFileStore.exportPatternAsPdf(patternStore.pattern.id, variant),
-                });
+                modals.pdfExportModal.open();
               },
             },
           ],
@@ -213,19 +207,6 @@ const appMenu = computed(() => {
           modals.gridModal.open({
             grid: patternStore.pattern.grid,
             onSave: patternStore.updateGrid,
-          });
-        },
-      },
-    ],
-    [
-      {
-        label: fluent.$t("publish-settings"),
-        onSelect() {
-          modals.pdfExportOptionsModal.open({
-            options: patternStore.pattern.pdfExportOptions,
-            fabricWidth: patternStore.pattern.fabric.width,
-            fabricHeight: patternStore.pattern.fabric.height,
-            onSave: patternStore.updatePdfExportOptions,
           });
         },
       },
@@ -360,7 +341,7 @@ useShortcuts({
 </script>
 
 <template>
-  <header :class="$style.header">
+  <header tabindex="-1" :class="$style.header">
     <div data-tauri-drag-region :class="$style.bar">
       <div :class="$style.menu">
         <Menubar v-if="isLargeScreen" :menus="appMenu.desktopMenubarMenus" />

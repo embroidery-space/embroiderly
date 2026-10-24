@@ -8,7 +8,7 @@ import App from "../src/components/App/App.vue";
 import Placeholder from "./components/Placeholder.vue";
 import DocsTemplate from "./DocsTemplate.mdx";
 
-import "./styles/index.css";
+import "../src/index.css";
 
 // Load Lucide icons offline.
 addCollection(lucideIcons);

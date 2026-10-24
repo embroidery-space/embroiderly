@@ -9,7 +9,20 @@ fn creates_new_embproj_with_defaults() {
   assert!(embproj.reference_image.is_none());
 
   assert_eq!(embproj.display_settings, DisplaySettings::default());
-  assert_eq!(embproj.publish_settings, PublishSettings::default());
+}
+
+#[test]
+fn builder_sets_pattern_pdf() {
+  let pattern_pdf = PatternPdf {
+    color: false,
+    ..Default::default()
+  };
+
+  let embproj = EmbroiderlyProject::builder(Pattern::default())
+    .pattern_pdf(pattern_pdf.clone())
+    .build();
+
+  assert_eq!(embproj.pattern_pdf, pattern_pdf);
 }
 
 #[test]
@@ -24,23 +37,6 @@ fn builder_sets_display_settings() {
     .build();
 
   assert_eq!(embproj.display_settings, display_settings);
-}
-
-#[test]
-fn builder_sets_publish_settings() {
-  let publish_settings = PublishSettings {
-    pdf: crate::PdfExportOptions {
-      frame_size: (50, 60), // `(30, 40)` by default
-      ..Default::default()
-    },
-    ..Default::default()
-  };
-
-  let embproj = EmbroiderlyProject::builder(Pattern::default())
-    .publish_settings(publish_settings.clone())
-    .build();
-
-  assert_eq!(embproj.publish_settings, publish_settings);
 }
 
 #[test]

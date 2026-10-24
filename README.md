@@ -28,6 +28,8 @@ Different components are subject to different license terms:
 
 - **Source Code**: All functional code, including the core application and sub-packages (excluding `docs/`), is licensed under the `GPL-3.0-or-later` license (see [LICENSE](./LICENSE)).
 - **Documentation**: All Markdown files, guides, and Vitepress configurations located in the `docs/` directory are licensed under the `CC-BY-SA-4.0` license (see [docs/LICENSE](./docs/LICENSE)).
-- **Fixel** font (bundled in `app/public/fonts/`): © MacPaw Inc.
-  Licensed under the [SIL Open Font License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL) (see <https://fixel.macpaw.com/>).
+- **Fixel** font (bundled in `app/public/fonts/`): © MacPaw Way Ltd.
+  Licensed under the [SIL Open Font License](https://github.com/MacPaw/Fixel/blob/main/OFL.txt) (see <https://fixel.macpaw.com/>).
+- **Monaspace** font (bundled in `app/public/fonts/`): © GitHub Inc.
+  Licensed under the [SIL Open Font License](https://github.com/githubnext/monaspace/blob/main/LICENSE) (see <https://monaspace.githubnext.com/>).
 - **Demo Patterns** (bundled in `app/public/demo/`): Copyrighted by their original authors (see [app/public/demo/notes.txt](./app/public/demo/notes.txt)).

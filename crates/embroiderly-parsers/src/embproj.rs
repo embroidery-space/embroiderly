@@ -23,13 +23,13 @@ pub fn parse_pattern(data: &[u8]) -> Result<EmbroiderlyProject> {
   let mut archive = zip::ZipArchive::new(cursor)?;
 
   let pattern = serde_json::from_slice(&read_zip_file!(archive, "pattern.json")?)?;
-
-  let display_settings = match read_zip_file!(archive, "display_settings.json") {
+  let pattern_pdf = match read_zip_file!(archive, "pattern_pdf.json") {
     Ok(file) => serde_json::from_slice(&file)?,
     Err(zip::result::ZipError::FileNotFound) => Default::default(),
     Err(e) => return Err(e.into()),
   };
-  let publish_settings = match read_zip_file!(archive, "publish_settings.json") {
+
+  let display_settings = match read_zip_file!(archive, "display_settings.json") {
     Ok(file) => serde_json::from_slice(&file)?,
     Err(zip::result::ZipError::FileNotFound) => Default::default(),
     Err(e) => return Err(e.into()),
@@ -56,8 +56,8 @@ pub fn parse_pattern(data: &[u8]) -> Result<EmbroiderlyProject> {
     };
 
   let mut embproj = EmbroiderlyProject::builder(pattern)
-    .display_settings(display_settings)
-    .publish_settings(publish_settings);
+    .pattern_pdf(pattern_pdf)
+    .display_settings(display_settings);
 
   if let Some(reference_image) = reference_image {
     embproj = embproj.reference_image(reference_image);
@@ -74,11 +74,11 @@ pub fn save_pattern(embproj: &EmbroiderlyProject) -> Result<Vec<u8>> {
   zip.start_file("pattern.json", options)?;
   zip.write_all(&serde_json::to_vec(&embproj.pattern)?)?;
 
+  zip.start_file("pattern_pdf.json", options)?;
+  zip.write_all(&serde_json::to_vec(&embproj.pattern_pdf)?)?;
+
   zip.start_file("display_settings.json", options)?;
   zip.write_all(&serde_json::to_vec(&embproj.display_settings)?)?;
-
-  zip.start_file("publish_settings.json", options)?;
-  zip.write_all(&serde_json::to_vec(&embproj.publish_settings)?)?;
 
   if let Some(ref image) = embproj.reference_image {
     let image_file_name = format!("reference_image.{}", image.format.extensions_str()[0]);

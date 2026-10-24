@@ -6,8 +6,8 @@ import { ref } from "vue";
 
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { NoFileHandleError, UnsavedChangesError, UnsupportedPatternTypeError } from "~/lib/errors.ts";
-import { Fabric, Pattern, PdfExportOptions } from "~/lib/pattern/";
-import { LoggerService, MetricsService } from "~/services/";
+import { Fabric, Pattern } from "~/lib/pattern/";
+import { MetricsService } from "~/services/";
 
 export interface OpenPattern {
   id: string;
@@ -277,43 +277,6 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    async function exportPatternAsPdf(id: string, variant: "monochrome" | "color") {
-      const patternData = await editor.loadPattern(id);
-      const pattern = Pattern.deserialize(patternData);
-
-      const handle = await filePicker.save({
-        suggestedName: `${pattern.info.title ?? "pattern"}.${variant}.pdf`,
-        types: filePicker.filters.pdf,
-        id: filePicker.ids.pdf,
-      });
-      if (!handle) return;
-
-      try {
-        loading.value = true;
-
-        const { exportPatternAsPdf } = await import("@embroiderly/pdf-export");
-        const pdfBytes = await exportPatternAsPdf({
-          pattern: patternData,
-          options: PdfExportOptions.schema.serialize(pattern.pdfExportOptions),
-          symbolFonts: await Promise.all(pattern.palette.usedSymbolFonts.map((name) => files.loadFontContent(name))),
-          variant,
-        });
-
-        const writable = await handle.createWritable();
-        // @ts-expect-error `Uint8Array` works just fine here.
-        await writable.write(pdfBytes);
-        await writable.close();
-
-        MetricsService.capturePatternExportedAsPdf(pattern.pdfExportOptions);
-        toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
-      } catch (err) {
-        LoggerService.error(`Failed to export pattern as PDF: ${err}`);
-        toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
-      } finally {
-        loading.value = false;
-      }
-    }
-
     // Listen to change/checkpoint events to correctly identify dirty state.
     events.on("app:pattern-changed", (id) => {
       const pattern = openedPatterns.value.find((p) => p.id === id);
@@ -337,7 +300,6 @@ export const usePatternFileStore = defineStore(
       savePattern,
       closePattern,
       exportPatternAsOxs,
-      exportPatternAsPdf,
     };
   },
   {

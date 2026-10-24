@@ -99,7 +99,11 @@ onMounted(async () => {
       <SplitterPanel :class="$style.workspace">
         <EditorWorkspaceToolbar :disabled="patternStore.pattern.isNil" data-tour="toolbar" :class="$style.toolbar" />
 
-        <BlockUI ref="drop-zone" :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone">
+        <BlockUI
+          ref="drop-zone"
+          :blocked="editorStateStore.paletteMode === PaletteMode.Editing || isOverDropZone"
+          tabindex="-1"
+        >
           <WelcomeScreen v-if="patternStore.pattern.isNil" :class="$style.content" />
           <PatternWorkspace v-else v-bind="settingsStore.canvas" data-tour="canvas" :class="$style.content" />
         </BlockUI>

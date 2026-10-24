@@ -21,8 +21,8 @@ pub use palette::PaletteAction;
 pub mod pattern;
 pub use pattern::PatternAction;
 
-pub mod publish;
-pub use publish::PublishAction;
+pub mod pattern_pdf;
+pub use pattern_pdf::PatternPdfAction;
 
 pub mod stitches;
 pub use stitches::StitchAction;
@@ -36,10 +36,10 @@ pub enum EditorAction {
   Fabric(FabricAction),
   Palette(PaletteAction),
   Pattern(PatternAction),
+  PatternPdf(PatternPdfAction),
   Display(DisplayAction),
   Grid(GridAction),
   Layer(LayerAction),
-  Publish(PublishAction),
   Image(ImageAction),
 
   #[cfg(test)]
@@ -53,10 +53,10 @@ impl EditorAction {
       Self::Fabric(a) => a.perform(embproj),
       Self::Palette(a) => a.perform(embproj),
       Self::Pattern(a) => a.perform(embproj),
+      Self::PatternPdf(a) => a.perform(embproj),
       Self::Display(a) => a.perform(embproj),
       Self::Grid(a) => a.perform(embproj),
       Self::Layer(a) => a.perform(embproj),
-      Self::Publish(a) => a.perform(embproj),
       Self::Image(a) => a.perform(embproj),
 
       #[cfg(test)]
@@ -70,10 +70,10 @@ impl EditorAction {
       Self::Fabric(a) => a.revoke(embproj),
       Self::Palette(a) => a.revoke(embproj),
       Self::Pattern(a) => a.revoke(embproj),
+      Self::PatternPdf(a) => a.revoke(embproj),
       Self::Display(a) => a.revoke(embproj),
       Self::Grid(a) => a.revoke(embproj),
       Self::Layer(a) => a.revoke(embproj),
-      Self::Publish(a) => a.revoke(embproj),
       Self::Image(a) => a.revoke(embproj),
 
       #[cfg(test)]
