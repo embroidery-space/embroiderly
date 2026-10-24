@@ -128,7 +128,7 @@ onMounted(async () => {
     ),
   );
 
-  await service.start(patternData, fontData);
+  await service.init(patternData, fontData);
 });
 
 onUnmounted(() => service.destroy());

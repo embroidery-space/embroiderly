@@ -27,7 +27,7 @@ mod export {
 
   #[test]
   fn exports_pattern_to_color_pdf() {
-    let worker = PdfExportWorker::init(load_fixture(), load_fonts());
+    let worker = PdfExporter::init(load_fixture(), load_fonts());
 
     let expected = std::fs::read(
       std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/export/piggies.color.pdf")),
@@ -45,7 +45,7 @@ mod export {
 
   #[test]
   fn exports_pattern_to_monochrome_pdf() {
-    let worker = PdfExportWorker::init(load_fixture(), load_fonts());
+    let worker = PdfExporter::init(load_fixture(), load_fonts());
 
     let expected = std::fs::read(
       std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/export/piggies.monochrome.pdf")),
@@ -67,7 +67,7 @@ mod preview {
 
   #[test]
   fn previews_pattern_color_pdf() {
-    let worker = PdfExportWorker::init(load_fixture(), load_fonts());
+    let worker = PdfExporter::init(load_fixture(), load_fonts());
     let pattern_pdf = PatternPdf {
       color: true,
       ..Default::default()
@@ -93,7 +93,7 @@ mod preview {
 
   #[test]
   fn previews_pattern_monochrome_pdf() {
-    let worker = PdfExportWorker::init(load_fixture(), load_fonts());
+    let worker = PdfExporter::init(load_fixture(), load_fonts());
     let pattern_pdf = PatternPdf {
       color: false,
       ..Default::default()

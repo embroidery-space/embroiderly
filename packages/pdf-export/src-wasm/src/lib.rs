@@ -13,7 +13,7 @@ mod world;
 mod tests;
 
 #[wasm_bindgen]
-pub struct PdfExportWorker {
+pub struct PdfExporter {
   /// The target pattern for export.
   embproj: Value,
 
@@ -24,7 +24,7 @@ pub struct PdfExportWorker {
 }
 
 #[wasm_bindgen]
-impl PdfExportWorker {
+impl PdfExporter {
   #[wasm_bindgen(constructor)]
   pub fn new(embproj: &[u8], font_data: Vec<js_sys::Uint8Array>) -> Result<Self, JsError> {
     let embproj = borsh::from_slice(embproj).map_err(|e| JsError::new(&e.to_string()))?;
@@ -39,7 +39,7 @@ impl PdfExportWorker {
   }
 }
 
-impl PdfExportWorker {
+impl PdfExporter {
   #[must_use]
   pub fn init(embproj: EmbroiderlyProject, font_data: impl IntoIterator<Item = Vec<u8>>) -> Self {
     let mut fonts = Vec::new();

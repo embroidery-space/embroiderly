@@ -1,24 +1,20 @@
 import * as Comlink from "comlink";
 
-interface PdfExportWorkerApi {
-  start: (patternData: Uint8Array, fontData: Uint8Array[]) => Promise<void>;
-  export: (patternPdf: Uint8Array) => Promise<Uint8Array>;
-}
+import type { PdfExporterWrapper } from "./worker.ts";
 
 export class PdfExportService {
-  #api: Comlink.Remote<PdfExportWorkerApi> | null;
+  #exporter: Comlink.Remote<PdfExporterWrapper> | null;
   #worker: Worker | null;
 
   constructor() {
-    const worker = new Worker(new URL("./worker.ts", import.meta.url), { type: "module" });
-
-    this.#api = Comlink.wrap<PdfExportWorkerApi>(worker);
-    this.#worker = worker;
+    this.#worker = new Worker(new URL("./worker.ts", import.meta.url), { type: "module" });
   }
 
-  async start(patternData: Uint8Array, fontData: Uint8Array[]) {
-    if (!this.#api) throw new Error("PDF Export service has been destroyed");
-    return await this.#api.start(
+  async init(patternData: Uint8Array, fontData: Uint8Array[]) {
+    if (!this.#worker) throw new Error("PDF Export service has been destroyed");
+
+    const PdfExporter = Comlink.wrap<typeof PdfExporterWrapper>(this.#worker);
+    this.#exporter = await new PdfExporter(
       Comlink.transfer(patternData, [patternData.buffer]),
       Comlink.transfer(
         fontData,
@@ -28,13 +24,13 @@ export class PdfExportService {
   }
 
   async export(patternPdf: Uint8Array) {
-    if (!this.#api) throw new Error("PDF Export service has been destroyed");
-    return await this.#api.export(patternPdf);
+    if (!this.#exporter) throw new Error("PDF Export service has been destroyed");
+    return await this.#exporter.export(patternPdf);
   }
 
   destroy() {
-    this.#api?.[Comlink.releaseProxy]();
-    this.#api = null;
+    this.#exporter?.[Comlink.releaseProxy]();
+    this.#exporter = null;
 
     this.#worker?.terminate();
     this.#worker = null;
