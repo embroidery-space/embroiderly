@@ -68,52 +68,56 @@ mod preview {
   #[test]
   fn previews_pattern_color_pdf() {
     let worker = PdfExporter::init(load_fixture(), load_fonts());
-    let pattern_pdf = PatternPdf {
+
+    let doc = worker.build_document_impl(PatternPdf {
       color: true,
       ..Default::default()
-    };
+    });
+    assert!(doc.is_ok_and(|doc| doc.pages().len() == 7));
 
-    let mut i = 0;
+    let mut page = 0;
     loop {
-      if let Ok(preview) = worker.preview_impl(pattern_pdf.clone(), i) {
+      if let Ok(preview) = worker.preview_impl(page) {
         let expected = std::fs::read(
           std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-            .join(format!("./testdata/preview/color/piggies.color.{i}.png")),
+            .join(format!("./testdata/preview/color/piggies.color.{page}.png")),
         )
         .unwrap();
-        assert_eq!(expected, preview, "color pdf preview doesn't match");
+        assert_eq!(expected, preview.buffer, "color pdf preview doesn't match");
       } else {
         // We havereached the last page of the document.
         break;
       }
 
-      i += 1;
+      page += 1;
     }
   }
 
   #[test]
   fn previews_pattern_monochrome_pdf() {
     let worker = PdfExporter::init(load_fixture(), load_fonts());
-    let pattern_pdf = PatternPdf {
-      color: false,
-      ..Default::default()
-    };
 
-    let mut i = 0;
+    let doc = worker.build_document_impl(PatternPdf {
+      color: true,
+      ..Default::default()
+    });
+    assert!(doc.is_ok_and(|doc| doc.pages().len() == 7));
+
+    let mut page = 0;
     loop {
-      if let Ok(preview) = worker.preview_impl(pattern_pdf.clone(), i) {
+      if let Ok(preview) = worker.preview_impl(page) {
         let expected = std::fs::read(
           std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-            .join(format!("./testdata/preview/monochrome/piggies.monochrome.{i}.png")),
+            .join(format!("./testdata/preview/monochrome/piggies.monochrome.{page}.png")),
         )
         .unwrap();
-        assert_eq!(expected, preview, "monochrome pdf preview doesn't match");
+        assert_eq!(expected, preview.buffer, "monochrome pdf preview doesn't match");
       } else {
         // We have reached the last page of the document.
         break;
       }
 
-      i += 1;
+      page += 1;
     }
   }
 }

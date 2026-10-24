@@ -3,6 +3,7 @@ use embroiderly_pattern::{EmbroiderlyProject, PatternPdf};
 use typst::foundations::{Bytes, Dict, IntoValue as _, Value};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
+use typst_layout::PagedDocument;
 use wasm_bindgen::prelude::*;
 
 mod conversion;
@@ -21,6 +22,9 @@ pub struct PdfExporter {
   fonts: Vec<Font>,
   /// Pre-built font book metadata.
   font_book: LazyHash<FontBook>,
+
+  /// The working document used for previewing.
+  doc: Option<PagedDocument>,
 }
 
 #[wasm_bindgen]
@@ -32,10 +36,29 @@ impl PdfExporter {
     Ok(Self::init(embproj, font_data))
   }
 
+  #[wasm_bindgen(js_name = "buildDocument")]
+  pub fn build_document(&mut self, pattern_pdf: &[u8]) -> Result<usize, JsError> {
+    let pattern_pdf = borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?;
+
+    let doc = self
+      .build_document_impl(pattern_pdf)
+      .map_err(|e| JsError::new(&e.to_string()))?;
+    let total_pages = doc.pages().len();
+
+    self.doc = Some(doc);
+
+    Ok(total_pages)
+  }
+
   #[wasm_bindgen]
   pub fn export(&self, pattern_pdf: &[u8]) -> Result<Vec<u8>, JsError> {
     let pattern_pdf = borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?;
     self.export_impl(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))
+  }
+
+  #[wasm_bindgen]
+  pub fn preview(&self, page: usize) -> Result<RenderedPage, JsError> {
+    self.preview_impl(page).map_err(|e| JsError::new(&e.to_string()))
   }
 }
 
@@ -57,10 +80,12 @@ impl PdfExporter {
 
       fonts,
       font_book: LazyHash::new(font_book),
+
+      doc: None,
     }
   }
 
-  fn prepare_document(&self, pattern_pdf: PatternPdf) -> Result<typst_layout::PagedDocument> {
+  fn build_document_impl(&self, pattern_pdf: PatternPdf) -> Result<PagedDocument> {
     let PatternPdf { template, color } = pattern_pdf;
     let inputs = {
       let mut inputs = Dict::new();
@@ -78,28 +103,63 @@ impl PdfExporter {
   }
 
   fn export_impl(&self, pattern_pdf: PatternPdf) -> Result<Vec<u8>> {
-    let doc = self.prepare_document(pattern_pdf)?;
+    let doc = self.build_document_impl(pattern_pdf)?;
     typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
       .map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))
   }
 
-  fn preview_impl(&self, pattern_pdf: PatternPdf, page: usize) -> Result<Vec<u8>> {
-    let doc = self.prepare_document(pattern_pdf)?;
-    let page = doc
-      .pages()
-      .get(page)
-      .ok_or(anyhow::anyhow!("Page index is out of bounds"))?;
+  fn preview_impl(&self, page: usize) -> Result<RenderedPage> {
+    if let Some(doc) = self.doc.as_ref() {
+      let page = doc
+        .pages()
+        .get(page)
+        .ok_or(anyhow::anyhow!("Page index is out of bounds"))?;
 
-    let pixmap = typst_render::render(page, &typst_render::RenderOptions::default());
+      let pixmap = typst_render::render(page, &typst_render::RenderOptions::default());
 
-    // In tests, return the encoded PNG to inspect the result.
-    #[cfg(test)]
-    return pixmap
-      .encode_png()
-      .map_err(|e| anyhow::anyhow!("Failed to encode PNG: {e:?}"));
+      Ok(RenderedPage {
+        width: pixmap.width(),
+        height: pixmap.height(),
 
-    // In production, return raw buffer to display it on the canvas.
-    #[cfg(not(test))]
-    return Ok(pixmap.take());
+        // In tests, return the encoded PNG to inspect the result.
+        #[cfg(test)]
+        buffer: pixmap
+          .encode_png()
+          .map_err(|e| anyhow::anyhow!("Failed to encode PNG: {e:?}"))?,
+
+        // In production, return raw buffer to display it on the canvas.
+        #[cfg(not(test))]
+        buffer: pixmap.take(),
+      })
+    } else {
+      anyhow::bail!("The working document was not built");
+    }
+  }
+}
+
+#[wasm_bindgen]
+pub struct RenderedPage {
+  buffer: Vec<u8>,
+
+  pub width: u32,
+  pub height: u32,
+}
+
+#[wasm_bindgen]
+impl RenderedPage {
+  #[allow(clippy::must_use_candidate, clippy::missing_const_for_fn)]
+  #[wasm_bindgen(getter)]
+  pub fn ptr(&self) -> *const u8 {
+    self.buffer.as_ptr()
+  }
+
+  #[allow(
+    clippy::must_use_candidate,
+    clippy::missing_const_for_fn,
+    clippy::len_without_is_empty
+  )]
+  #[wasm_bindgen(getter)]
+  pub fn len(&self) -> usize {
+    self.buffer.len()
   }
 }
