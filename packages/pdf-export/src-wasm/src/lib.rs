@@ -28,7 +28,7 @@ impl PdfExportWorker {
   #[wasm_bindgen(constructor)]
   pub fn new(embproj: &[u8], font_data: Vec<js_sys::Uint8Array>) -> Result<Self, JsError> {
     let embproj = borsh::from_slice(embproj).map_err(|e| JsError::new(&e.to_string()))?;
-    let font_data = font_data.iter().map(js_sys::Uint8Array::to_vec).collect();
+    let font_data = font_data.into_iter().map(|js_array| js_array.to_vec());
     Ok(Self::init(embproj, font_data))
   }
 
@@ -41,7 +41,7 @@ impl PdfExportWorker {
 
 impl PdfExportWorker {
   #[must_use]
-  pub fn init(embproj: EmbroiderlyProject, font_data: Vec<Vec<u8>>) -> Self {
+  pub fn init(embproj: EmbroiderlyProject, font_data: impl IntoIterator<Item = Vec<u8>>) -> Self {
     let mut fonts = Vec::new();
     let mut font_book = FontBook::new();
 
