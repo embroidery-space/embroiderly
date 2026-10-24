@@ -6,6 +6,7 @@ import { Pagination } from "reka-ui/namespaced";
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Button from "../Button/Button.vue";
+import ButtonIcon from "../ButtonIcon/ButtonIcon.vue";
 
 export type PaginationProps = PaginationRootProps;
 export type PaginationEmits = PaginationRootEmits;
@@ -24,24 +25,24 @@ const locale = useLocale();
     <Pagination.List data-slot="list" :class="$style.list">
       <template #default="{ items }">
         <Pagination.First as-child>
-          <Button
+          <ButtonIcon
             square
             variant="outline"
             color="neutral"
             :icon="icons.chevronsLeft"
             data-slot="first"
-            :aria-label="locale.messages.pagination.firstPage"
+            :tooltip="locale.messages.pagination.firstPage"
           />
         </Pagination.First>
 
         <Pagination.Prev as-child>
-          <Button
+          <ButtonIcon
             square
             variant="outline"
             color="neutral"
             :icon="icons.chevronLeft"
             data-slot="prev"
-            :aria-label="locale.messages.pagination.prevPage"
+            :tooltip="locale.messages.pagination.prevPage"
           />
         </Pagination.Prev>
 
@@ -69,24 +70,24 @@ const locale = useLocale();
         </template>
 
         <Pagination.Next as-child>
-          <Button
+          <ButtonIcon
             square
             variant="outline"
             color="neutral"
             :icon="icons.chevronRight"
             data-slot="next"
-            :aria-label="locale.messages.pagination.nextPage"
+            :tooltip="locale.messages.pagination.nextPage"
           />
         </Pagination.Next>
 
         <Pagination.Last as-child>
-          <Button
+          <ButtonIcon
             square
             variant="outline"
             color="neutral"
             :icon="icons.chevronsRight"
             data-slot="last"
-            :aria-label="locale.messages.pagination.lastPage"
+            :tooltip="locale.messages.pagination.lastPage"
           />
         </Pagination.Last>
       </template>
