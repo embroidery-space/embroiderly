@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { PdfExportService } from "@embroiderly/pdf-export";
 import {
+  BlockUI,
   Button,
   Dialog,
   DropdownMenu,
   FormFieldGroup,
   Pagination,
+  Progress,
   Splitter,
   SplitterPanel,
   Switch,
@@ -14,6 +16,7 @@ import {
 } from "@embroiderly/ui";
 import type { DropdownMenuItem } from "@embroiderly/ui";
 
+import { useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
 import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick, useTemplateRef } from "vue";
 
@@ -82,43 +85,30 @@ watch(open, async (value) => {
 
 watch(
   pdf,
-  async (pdf) => {
-    await buildDocument(pdf);
-    await updatePreview(currentPage.value);
-  },
+  useDebounceFn((pdf) => updatePreview({ pdf, page: currentPage.value }), 1000),
   { deep: true },
 );
-watch(currentPage, (page) => updatePreview(page - 1));
+watch(
+  currentPage,
+  useThrottleFn((page) => updatePreview({ page }), 1000),
+);
 
-function close() {
-  open.value = false; // The watcher above handles the confirmation.
-}
-
-async function saveTemplate() {
-  await patternStore.updatePatternPdf(pdf.value);
-
-  // Close the modal next tick, so that the pattern in the store is updated and `isDirty` becomes `false`.
-  await nextTick();
-  open.value = false;
-}
-
-async function buildDocument(pdf: PatternPdf) {
+const previewInProgress = ref(false);
+async function updatePreview(options?: { pdf?: PatternPdf; page?: number }) {
+  previewInProgress.value = true;
   try {
-    totalPages.value = await service.buildDocument(PatternPdf.serialize(pdf));
+    if (options?.pdf !== undefined) {
+      totalPages.value = await service.buildDocument(PatternPdf.serialize(options.pdf));
+    }
+    if (options?.page !== undefined) await service.preview(options.page - 1);
   } catch {
     // If the error occurs, the template is invalid.
+  } finally {
+    previewInProgress.value = false;
   }
 }
 
-async function updatePreview(page: number) {
-  try {
-    await service.preview(page);
-  } catch {
-    // If the error occurs, the template is invalid.
-  }
-}
-
-const isExporting = ref(false);
+const exportInProgress = ref(false);
 async function exportDocument(pdf: PatternPdf) {
   const handle = await filePicker.save({
     suggestedName: `${patternStore.pattern.info.title ?? "pattern"}.${pdf.color ? "color" : "monochrome"}.pdf`,
@@ -128,7 +118,7 @@ async function exportDocument(pdf: PatternPdf) {
   if (!handle) return;
 
   try {
-    isExporting.value = true;
+    exportInProgress.value = true;
 
     const pdfBytes = await service.export(PatternPdf.serialize(pdf));
 
@@ -143,8 +133,20 @@ async function exportDocument(pdf: PatternPdf) {
     LoggerService.error(`Failed to export pattern as PDF: ${err}`);
     toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
   } finally {
-    isExporting.value = false;
+    exportInProgress.value = false;
   }
+}
+
+async function saveTemplate() {
+  await patternStore.updatePatternPdf(pdf.value);
+
+  // Close the modal next tick, so that the pattern in the store is updated and `isDirty` becomes `false`.
+  await nextTick();
+  open.value = false;
+}
+
+function close() {
+  open.value = false; // The watcher above handles the confirmation.
 }
 
 onMounted(async () => {
@@ -162,8 +164,7 @@ onMounted(async () => {
 
   await service.init(canvas.value!.transferControlToOffscreen(), patternData, fontData);
 
-  await buildDocument(pdf.value);
-  await updatePreview(currentPage.value);
+  await updatePreview({ pdf: pdf.value, page: currentPage.value });
 });
 
 onUnmounted(() => service.destroy());
@@ -176,9 +177,9 @@ onUnmounted(() => service.destroy());
         <Switch v-model="pdf.color" :label="$t('pdf-export-color')" />
 
         <FormFieldGroup>
-          <Button :loading="isExporting" :label="$t('pdf-export-export-document')" @click="exportDocument(pdf)" />
+          <Button :loading="exportInProgress" :label="$t('pdf-export-export-document')" @click="exportDocument(pdf)" />
           <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
-            <Button :disabled="isExporting" :icon="IconChevronDown" />
+            <Button :disabled="exportInProgress" :icon="IconChevronDown" />
           </DropdownMenu>
         </FormFieldGroup>
       </div>
@@ -189,11 +190,18 @@ onUnmounted(() => service.destroy());
         </SplitterPanel>
 
         <SplitterPanel :class="$style.previewPanel">
-          <div :class="$style.canvasWrapper">
+          <BlockUI :blocked="previewInProgress" :class="$style.previewContent">
+            <Progress v-if="previewInProgress" size="sm" :class="$style.previewProgress" />
             <canvas ref="canvas"></canvas>
-          </div>
+          </BlockUI>
 
-          <Pagination v-model:page="currentPage" show-edges :total="totalPages" :items-per-page="1" />
+          <Pagination
+            v-model:page="currentPage"
+            show-edges
+            :total="totalPages"
+            :items-per-page="1"
+            :class="$style.previewPagination"
+          />
         </SplitterPanel>
       </Splitter>
     </template>
@@ -225,7 +233,8 @@ onUnmounted(() => service.destroy());
 .preview-panel {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing) * 8);
+
+  /* gap: calc(var(--spacing) * 8); */
   align-items: center;
   justify-content: space-between;
 
@@ -234,11 +243,9 @@ onUnmounted(() => service.destroy());
 
   /* Ensure the panel doesn't overflow its parent container. */
   min-height: 0;
-
-  padding: calc(var(--spacing) * 8);
 }
 
-.canvas-wrapper {
+.preview-content {
   display: flex;
 
   /* Allow the canvas wrapper to absorb remaining space while allowing shrinking. */
@@ -249,11 +256,30 @@ onUnmounted(() => service.destroy());
   width: 100%;
   min-height: 0;
 
+  padding: calc(var(--spacing) * 8);
+
   canvas {
     max-width: 100%;
     max-height: 100%;
 
     object-fit: contain;
   }
+}
+
+.preview-progress {
+  position: absolute;
+  top: 0;
+
+  border-radius: 0;
+}
+
+.preview-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: calc(var(--spacing) * 4) calc(var(--spacing) * 8);
+  border-top: 1px solid var(--border-color-default);
 }
 </style>
