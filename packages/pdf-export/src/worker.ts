@@ -2,6 +2,8 @@ import * as Comlink from "comlink";
 
 import init, { PdfExporter } from "../src-wasm/pkg/";
 
+import type { CompilationOutput } from "./types.ts";
+
 const wasm = await init();
 
 export class PdfExporterWrapper {
@@ -13,12 +15,13 @@ export class PdfExporterWrapper {
     this.#exporter = new PdfExporter(patternData, fontData);
   }
 
-  buildDocument(patternPdf: Uint8Array) {
-    return this.#exporter.buildDocument(patternPdf);
+  compileDocument(patternPdf: Uint8Array): CompilationOutput<number> {
+    return this.#exporter.compileDocument(patternPdf);
   }
 
-  export(patternPdf: Uint8Array) {
-    return this.#exporter.export(patternPdf);
+  export(patternPdf: Uint8Array): CompilationOutput<Uint8Array> {
+    const { output, diagnostics } = this.#exporter.export(patternPdf) as CompilationOutput<number[]>;
+    return { output: output === null ? null : new Uint8Array(output), diagnostics };
   }
 
   preview(page: number) {

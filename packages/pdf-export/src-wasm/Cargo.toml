@@ -15,6 +15,8 @@ embroiderly_pattern = { workspace = true, features = ["borsh"] }
 
 # De/serialization
 borsh = { workspace = true }
+serde = { workspace = true }
+serde-wasm-bindgen = { workspace = true }
 
 # Exporting patterns to PDF
 typst = { workspace = true }

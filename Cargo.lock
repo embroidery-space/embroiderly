@@ -1689,6 +1689,8 @@ dependencies = [
  "embroiderly_parsers",
  "embroiderly_pattern",
  "js-sys",
+ "serde",
+ "serde-wasm-bindgen",
  "typst",
  "typst-layout",
  "typst-pdf",

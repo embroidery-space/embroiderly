@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { setDiagnostics } from "@codemirror/lint";
+import type { Diagnostic } from "@codemirror/lint";
 import { Compartment, Prec } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
-import { typst_lezer as typst } from "codemirror-lang-typst/lezer";
 import { shallowRef, useTemplateRef, onMounted, onBeforeUnmount, watch } from "vue";
 
-import { editorSetup, nordDark, nordLight } from "../lib/codemirror/";
+import { editorSetup, nordDark, nordLight, typst } from "../lib/codemirror/";
 
 export interface TypstEditorProps {
   /**
@@ -58,6 +59,13 @@ onMounted(() => {
 onBeforeUnmount(() => {
   editor.value?.destroy();
   editor.value = null;
+});
+
+defineExpose({
+  setDiagnostics(diagnostics: readonly Diagnostic[]) {
+    if (!editor.value) return;
+    editor.value.dispatch(setDiagnostics(editor.value.state, diagnostics));
+  },
 });
 </script>
 

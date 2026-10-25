@@ -34,7 +34,7 @@ const open = defineModel<boolean>("open", { default: false });
 const patternStore = usePatternStore();
 const settingsStore = useSettingsStore();
 
-const { editor, files } = useEditor();
+const { editor: patternEditor, files: patternFiles } = useEditor();
 const filePicker = useFilePicker();
 const { fluent } = useI18n();
 const confirm = useConfirm();
@@ -42,6 +42,7 @@ const toast = useToast();
 
 const service = new PdfExportService();
 
+const typstEditor = useTemplateRef("typst-editor");
 const canvas = useTemplateRef("canvas");
 
 const pdf = ref(new PatternPdf(toRaw(patternStore.pattern.pdf)));
@@ -98,11 +99,14 @@ async function updatePreview(options?: { pdf?: PatternPdf; page?: number }) {
   previewInProgress.value = true;
   try {
     if (options?.pdf !== undefined) {
-      totalPages.value = await service.buildDocument(PatternPdf.serialize(options.pdf));
+      const { output, diagnostics } = await service.compileDocument(PatternPdf.serialize(options.pdf));
+      if (output !== null) totalPages.value = output;
+
+      typstEditor.value?.setDiagnostics(diagnostics);
     }
     if (options?.page !== undefined) await service.preview(options.page - 1);
-  } catch {
-    // If the error occurs, the template is invalid.
+  } catch (err) {
+    LoggerService.error(`Failed to update the PDF preview: ${err}`);
   } finally {
     previewInProgress.value = false;
   }
@@ -120,11 +124,16 @@ async function exportDocument(pdf: PatternPdf) {
   try {
     exportInProgress.value = true;
 
-    const pdfBytes = await service.export(PatternPdf.serialize(pdf));
+    const { output, diagnostics } = await service.export(PatternPdf.serialize(pdf));
+    if (output === null) {
+      LoggerService.error(`Failed to export pattern as PDF: ${diagnostics}`);
+      toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
+      return;
+    }
 
     const writable = await handle.createWritable();
     // @ts-expect-error `Uint8Array` works just fine here.
-    await writable.write(pdfBytes);
+    await writable.write(output);
     await writable.close();
 
     MetricsService.capturePatternExportedAsPdf(pdf.color);
@@ -150,14 +159,14 @@ function close() {
 }
 
 onMounted(async () => {
-  const patternData = await editor.loadPattern(patternStore.pattern.id);
+  const patternData = await patternEditor.loadPattern(patternStore.pattern.id);
   const fontData = await Promise.all(
     [...patternStore.pattern.palette.usedSymbolFonts, "/fonts/FixelVariable.ttf", "/fonts/FixelVariableItalic.ttf"].map(
       async (resource) => {
         if (resource.startsWith("/fonts/")) {
           return new Uint8Array((await fetch(resource).then((r) => r.arrayBuffer())) as ArrayBuffer);
         }
-        return files.loadFontContent(resource);
+        return patternFiles.loadFontContent(resource);
       },
     ),
   );
@@ -186,7 +195,7 @@ onUnmounted(() => service.destroy());
 
       <Splitter direction="horizontal">
         <SplitterPanel>
-          <TypstEditor v-model="pdf.template" :dark="isDark" />
+          <TypstEditor ref="typst-editor" v-model="pdf.template" :dark="isDark" />
         </SplitterPanel>
 
         <SplitterPanel :class="$style.previewPanel">

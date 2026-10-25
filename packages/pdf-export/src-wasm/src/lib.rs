@@ -36,24 +36,31 @@ impl PdfExporter {
     Ok(Self::init(embproj, font_data))
   }
 
-  #[wasm_bindgen(js_name = "buildDocument")]
-  pub fn build_document(&mut self, pattern_pdf: &[u8]) -> Result<usize, JsError> {
+  #[wasm_bindgen(js_name = "compileDocument")]
+  pub fn compile_document(&mut self, pattern_pdf: &[u8]) -> Result<JsValue, JsError> {
     let pattern_pdf = borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?;
 
-    let doc = self
-      .build_document_impl(pattern_pdf)
-      .map_err(|e| JsError::new(&e.to_string()))?;
-    let total_pages = doc.pages().len();
+    let CompilationOutput { output, diagnostics } = self.compile_document_impl(pattern_pdf);
+    let total_pages = if let Some(doc) = output {
+      let total_pages = doc.pages().len();
 
-    self.doc = Some(doc);
+      self.doc = Some(doc);
 
-    Ok(total_pages)
+      Some(total_pages)
+    } else {
+      None
+    };
+
+    Ok(serde_wasm_bindgen::to_value(&CompilationOutput {
+      output: total_pages,
+      diagnostics,
+    })?)
   }
 
   #[wasm_bindgen]
-  pub fn export(&self, pattern_pdf: &[u8]) -> Result<Vec<u8>, JsError> {
+  pub fn export(&self, pattern_pdf: &[u8]) -> Result<JsValue, JsError> {
     let pattern_pdf = borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?;
-    self.export_impl(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))
+    Ok(serde_wasm_bindgen::to_value(&self.export_impl(pattern_pdf))?)
   }
 
   #[wasm_bindgen]
@@ -85,7 +92,7 @@ impl PdfExporter {
     }
   }
 
-  fn build_document_impl(&self, pattern_pdf: PatternPdf) -> Result<PagedDocument> {
+  fn compile_document_impl(&self, pattern_pdf: PatternPdf) -> CompilationOutput<PagedDocument> {
     let PatternPdf { template, color } = pattern_pdf;
     let inputs = {
       let mut inputs = Dict::new();
@@ -97,15 +104,55 @@ impl PdfExporter {
     };
 
     let world = world::PdfExportWorld::new(template, inputs, &self.fonts, &self.font_book);
-    typst::compile(&world)
-      .output
-      .map_err(|e| anyhow::anyhow!("Failed to compile Typst template: {e:?}"))
+    let typst::diag::Warned {
+      output: result,
+      warnings,
+    } = typst::compile(&world);
+
+    match result {
+      Ok(output) => CompilationOutput {
+        output: Some(output),
+        diagnostics: warnings
+          .into_iter()
+          .filter_map(|diag| map_diagnostic(&world, diag))
+          .collect(),
+      },
+      Err(errors) => CompilationOutput {
+        output: None,
+        diagnostics: errors
+          .into_iter()
+          .chain(warnings)
+          .filter_map(|diag| map_diagnostic(&world, diag))
+          .collect(),
+      },
+    }
   }
 
-  fn export_impl(&self, pattern_pdf: PatternPdf) -> Result<Vec<u8>> {
-    let doc = self.build_document_impl(pattern_pdf)?;
-    typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
-      .map_err(|warnings| anyhow::anyhow!("Failed to export PDF: {warnings:?}"))
+  fn export_impl(&self, pattern_pdf: PatternPdf) -> CompilationOutput<Vec<u8>> {
+    let CompilationOutput {
+      output: doc,
+      diagnostics,
+    } = self.compile_document_impl(pattern_pdf);
+    if doc.is_none() {
+      return CompilationOutput {
+        output: None,
+        diagnostics,
+      };
+    }
+
+    let result = typst_pdf::pdf(&doc.unwrap(), &typst_pdf::PdfOptions::default());
+    match result {
+      Ok(buf) => CompilationOutput {
+        output: Some(buf),
+        diagnostics: Vec::new(),
+      },
+
+      // Currently, we don't handle PDF diagnostics, as we don't know what can go wrong and how to display them on the interface.
+      Err(_errors) => CompilationOutput {
+        output: None,
+        diagnostics: Vec::new(),
+      },
+    }
   }
 
   fn preview_impl(&self, page: usize) -> Result<RenderedPage> {
@@ -123,9 +170,7 @@ impl PdfExporter {
 
         // In tests, return the encoded PNG to inspect the result.
         #[cfg(test)]
-        buffer: pixmap
-          .encode_png()
-          .map_err(|e| anyhow::anyhow!("Failed to encode PNG: {e:?}"))?,
+        buffer: pixmap.encode_png().unwrap(),
 
         // In production, return raw buffer to display it on the canvas.
         #[cfg(not(test))]
@@ -162,4 +207,44 @@ impl RenderedPage {
   pub fn len(&self) -> usize {
     self.buffer.len()
   }
+}
+
+#[derive(Debug, serde::Serialize)]
+pub struct CompilationOutput<T> {
+  output: Option<T>,
+  diagnostics: Vec<Diagnostic>,
+}
+
+#[derive(Debug, serde::Serialize)]
+pub struct Diagnostic {
+  from: usize,
+  to: usize,
+  severity: DiagnosticSeverity,
+  message: String,
+}
+
+#[derive(Debug, serde::Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum DiagnosticSeverity {
+  Error,
+  Warning,
+}
+
+impl From<typst::diag::Severity> for DiagnosticSeverity {
+  fn from(value: typst::diag::Severity) -> Self {
+    match value {
+      typst::diag::Severity::Error => Self::Error,
+      typst::diag::Severity::Warning => Self::Warning,
+    }
+  }
+}
+
+fn map_diagnostic(world: &world::PdfExportWorld, diag: typst::diag::SourceDiagnostic) -> Option<Diagnostic> {
+  let std::ops::Range { start, end } = typst::WorldExt::range(&world, diag.span)?;
+  Some(Diagnostic {
+    from: start,
+    to: end,
+    severity: diag.severity.into(),
+    message: diag.message.to_string(),
+  })
 }

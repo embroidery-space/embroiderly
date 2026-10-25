@@ -33,14 +33,17 @@ mod export {
       std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/export/piggies.color.pdf")),
     )
     .unwrap();
-    let exported = worker
-      .export_impl(PatternPdf {
-        color: true,
-        ..Default::default()
-      })
-      .unwrap();
+    let CompilationOutput {
+      output: exported,
+      diagnostics,
+    } = worker.export_impl(PatternPdf {
+      color: true,
+      ..Default::default()
+    });
 
-    assert_eq!(expected, exported, "color pdf export doesn't match")
+    assert!(exported.is_some());
+    assert!(diagnostics.is_empty());
+    assert_eq!(expected, exported.unwrap(), "color pdf export doesn't match")
   }
 
   #[test]
@@ -51,14 +54,17 @@ mod export {
       std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("./testdata/export/piggies.monochrome.pdf")),
     )
     .unwrap();
-    let exported = worker
-      .export_impl(PatternPdf {
-        color: false,
-        ..Default::default()
-      })
-      .unwrap();
+    let CompilationOutput {
+      output: exported,
+      diagnostics,
+    } = worker.export_impl(PatternPdf {
+      color: false,
+      ..Default::default()
+    });
 
-    assert_eq!(expected, exported, "monochrome pdf export doesn't match")
+    assert!(exported.is_some());
+    assert!(diagnostics.is_empty());
+    assert_eq!(expected, exported.unwrap(), "monochrome pdf export doesn't match")
   }
 }
 
@@ -69,11 +75,13 @@ mod preview {
   fn previews_pattern_color_pdf() {
     let worker = PdfExporter::init(load_fixture(), load_fonts());
 
-    let doc = worker.build_document_impl(PatternPdf {
+    let CompilationOutput { output, diagnostics } = worker.compile_document_impl(PatternPdf {
       color: true,
       ..Default::default()
     });
-    assert!(doc.is_ok_and(|doc| doc.pages().len() == 7));
+
+    assert!(output.is_some_and(|doc| doc.pages().len() == 7));
+    assert!(diagnostics.is_empty());
 
     let mut page = 0;
     loop {
@@ -97,11 +105,13 @@ mod preview {
   fn previews_pattern_monochrome_pdf() {
     let worker = PdfExporter::init(load_fixture(), load_fonts());
 
-    let doc = worker.build_document_impl(PatternPdf {
-      color: true,
+    let CompilationOutput { output, diagnostics } = worker.compile_document_impl(PatternPdf {
+      color: false,
       ..Default::default()
     });
-    assert!(doc.is_ok_and(|doc| doc.pages().len() == 7));
+
+    assert!(output.is_some_and(|doc| doc.pages().len() == 7));
+    assert!(diagnostics.is_empty());
 
     let mut page = 0;
     loop {

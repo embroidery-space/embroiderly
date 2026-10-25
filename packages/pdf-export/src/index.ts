@@ -31,9 +31,9 @@ export class PdfExportService {
     );
   }
 
-  async buildDocument(patternPdf: Uint8Array) {
+  async compileDocument(patternPdf: Uint8Array) {
     if (!this.#exporter) throw new Error("PDF Export service has been destroyed");
-    return await this.#exporter.buildDocument(patternPdf);
+    return await this.#exporter.compileDocument(patternPdf);
   }
 
   async export(patternPdf: Uint8Array) {
@@ -54,3 +54,5 @@ export class PdfExportService {
     this.#worker = null;
   }
 }
+
+export * from "./types.ts";
