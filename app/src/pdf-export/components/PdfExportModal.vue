@@ -204,13 +204,15 @@ onUnmounted(() => service.destroy());
             <canvas ref="canvas"></canvas>
           </BlockUI>
 
-          <Pagination
-            v-model:page="currentPage"
-            show-edges
-            :total="totalPages"
-            :items-per-page="1"
-            :class="$style.previewPagination"
-          />
+          <div :class="$style.previewFooter">
+            <Pagination
+              v-model:page="currentPage"
+              show-edges
+              :total="totalPages"
+              :items-per-page="1"
+              :class="$style.previewPagination"
+            />
+          </div>
         </SplitterPanel>
       </Splitter>
     </template>
@@ -282,13 +284,16 @@ onUnmounted(() => service.destroy());
   border-radius: 0;
 }
 
-.preview-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.preview-footer {
+  overflow: auto;
 
   width: 100%;
   padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
   border-top: 1px solid var(--border-color-default);
+}
+
+.preview-pagination {
+  width: fit-content;
+  margin: 0 auto;
 }
 </style>
