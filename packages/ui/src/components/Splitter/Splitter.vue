@@ -3,7 +3,7 @@ import { reactivePick } from "@vueuse/core";
 import { useForwardPropsEmits } from "reka-ui";
 import type { SplitterGroupEmits, SplitterGroupProps } from "reka-ui";
 import { Splitter } from "reka-ui/namespaced";
-import { computed, Fragment } from "vue";
+import { computed, Fragment, vShow } from "vue";
 import type { VNode } from "vue";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -35,13 +35,26 @@ function flattenChildren(children: VNode[]): VNode[] {
     return [child];
   });
 }
+
+function isVNodeVisible(vnode: VNode) {
+  if (vnode.dirs) {
+    const vShowDir = vnode.dirs.find((d) => d.dir === vShow);
+    if (vShowDir && !vShowDir.value) return false;
+  }
+
+  return true;
+}
 </script>
 
 <template>
   <Splitter.Group v-bind="forwarded" data-slot="base">
     <template v-for="(panel, index) in panels" :key="index">
       <component :is="panel" data-slot="panel" />
-      <Splitter.ResizeHandle v-if="index < panels.length - 1" data-slot="handle" :class="$style.handle" />
+      <Splitter.ResizeHandle
+        v-if="index < panels.length - 1 && isVNodeVisible(panel) && isVNodeVisible(panels[index + 1]!)"
+        data-slot="handle"
+        :class="$style.handle"
+      />
     </template>
   </Splitter.Group>
 </template>
