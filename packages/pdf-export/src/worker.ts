@@ -26,6 +26,8 @@ export class PdfExporterWrapper {
 
   preview(page: number) {
     const renderedPage = this.#exporter.preview(page);
+    if (!renderedPage) return;
+
     const { width, height, ptr: bufferPointer, len: bufferLength } = renderedPage;
 
     const wasmMemoryView = new Uint8ClampedArray(wasm.memory.buffer, bufferPointer, bufferLength);

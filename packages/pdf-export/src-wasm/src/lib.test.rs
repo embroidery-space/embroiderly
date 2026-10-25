@@ -85,7 +85,7 @@ mod preview {
 
     let mut page = 0;
     loop {
-      if let Ok(preview) = worker.preview_impl(page) {
+      if let Some(preview) = worker.preview_impl(page) {
         let expected = std::fs::read(
           std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join(format!("./testdata/preview/color/piggies.color.{page}.png")),
@@ -115,7 +115,7 @@ mod preview {
 
     let mut page = 0;
     loop {
-      if let Ok(preview) = worker.preview_impl(page) {
+      if let Some(preview) = worker.preview_impl(page) {
         let expected = std::fs::read(
           std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join(format!("./testdata/preview/monochrome/piggies.monochrome.{page}.png")),

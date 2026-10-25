@@ -64,8 +64,8 @@ impl PdfExporter {
   }
 
   #[wasm_bindgen]
-  pub fn preview(&self, page: usize) -> Result<RenderedPage, JsError> {
-    self.preview_impl(page).map_err(|e| JsError::new(&e.to_string()))
+  pub fn preview(&self, page: usize) -> Option<RenderedPage> {
+    self.preview_impl(page)
   }
 }
 
@@ -155,30 +155,23 @@ impl PdfExporter {
     }
   }
 
-  fn preview_impl(&self, page: usize) -> Result<RenderedPage> {
-    if let Some(doc) = self.doc.as_ref() {
-      let page = doc
-        .pages()
-        .get(page)
-        .ok_or(anyhow::anyhow!("Page index is out of bounds"))?;
+  fn preview_impl(&self, page: usize) -> Option<RenderedPage> {
+    let page = self.doc.as_ref()?.pages().get(page)?;
 
-      let pixmap = typst_render::render(page, &typst_render::RenderOptions::default());
+    let pixmap = typst_render::render(page, &typst_render::RenderOptions::default());
 
-      Ok(RenderedPage {
-        width: pixmap.width(),
-        height: pixmap.height(),
+    Some(RenderedPage {
+      width: pixmap.width(),
+      height: pixmap.height(),
 
-        // In tests, return the encoded PNG to inspect the result.
-        #[cfg(test)]
-        buffer: pixmap.encode_png().unwrap(),
+      // In tests, return the encoded PNG to inspect the result.
+      #[cfg(test)]
+      buffer: pixmap.encode_png().unwrap(),
 
-        // In production, return raw buffer to display it on the canvas.
-        #[cfg(not(test))]
-        buffer: pixmap.take(),
-      })
-    } else {
-      anyhow::bail!("The working document was not built");
-    }
+      // In production, return raw buffer to display it on the canvas.
+      #[cfg(not(test))]
+      buffer: pixmap.take(),
+    })
   }
 }
 
