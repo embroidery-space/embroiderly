@@ -6,6 +6,7 @@ export { default as IconChevronLeft } from "~icons/material-symbols/keyboard-arr
 export { default as IconChevronRight } from "~icons/material-symbols/keyboard-arrow-right-rounded";
 export { default as IconChevronsLeft } from "~icons/material-symbols/keyboard-double-arrow-left-rounded";
 export { default as IconChevronsRight } from "~icons/material-symbols/keyboard-double-arrow-right-rounded";
+export { default as IconCode } from "~icons/material-symbols/code-rounded";
 export { default as IconCursor } from "~icons/material-symbols/arrow-selector-tool-rounded";
 export { default as IconEllipsis } from "~icons/mdi/dots-horizontal";
 export { default as IconExternalLink } from "~icons/material-symbols/open-in-new-rounded";
@@ -48,6 +49,7 @@ export { default as IconGrid } from "~icons/material-symbols/grid-4x4-rounded";
 export { default as IconRulers } from "~icons/mdi/ruler-square";
 export { default as IconDot } from "~icons/mdi/circle-medium";
 export { default as IconEraser } from "~icons/mdi/eraser";
+export { default as IconSplitView } from "~icons/material-symbols/vertical-split-rounded";
 
 // Stitches (custom collection)
 export { default as IconStitchFull } from "~icons/stitches/full";

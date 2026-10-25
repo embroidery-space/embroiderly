@@ -576,6 +576,10 @@ image-import-pattern-properties = Palette size: { $paletteSize }. Total stitches
 
 pdf-export = PDF Export
 
+pdf-export-view-mode-code = Code
+pdf-export-view-mode-split-view = Split View
+pdf-export-view-mode-preview = Preview
+
 pdf-export-color = Color export
 
 pdf-export-save-template = Save Template

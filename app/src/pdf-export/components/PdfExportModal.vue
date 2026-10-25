@@ -11,16 +11,17 @@ import {
   Splitter,
   SplitterPanel,
   Switch,
+  ToolToggleGroup,
   useConfirm,
   useToast,
 } from "@embroiderly/ui";
-import type { DropdownMenuItem } from "@embroiderly/ui";
+import type { DropdownMenuItem, ToolToggleItem } from "@embroiderly/ui";
 
 import { useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
 import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick, useTemplateRef } from "vue";
 
-import { IconChevronDown } from "~/assets/icons/";
+import { IconChevronDown, IconCode, IconSplitView, IconVisibility } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { PatternPdf } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
@@ -28,6 +29,12 @@ import { useSettingsStore } from "~/settings/";
 import { usePatternStore } from "~/stores/";
 
 import TypstEditor from "./TypstEditor.vue";
+
+const enum EditorViewMode {
+  Code = "code",
+  SplitView = "split-view",
+  Preview = "preview",
+}
 
 const open = defineModel<boolean>("open", { default: false });
 
@@ -51,11 +58,19 @@ const isDirty = computed(() => !isEqual(patternStore.pattern.pdf, pdf.value));
 const totalPages = ref<number>();
 const currentPage = ref(1);
 
+const viewMode = ref(EditorViewMode.SplitView);
+
 const isDark = computed(() => {
   return settingsStore.ui.theme === "system"
     ? window.matchMedia("(prefers-color-scheme: dark)").matches
     : settingsStore.ui.theme === "dark";
 });
+
+const viewModeItems = computed<ToolToggleItem[]>(() => [
+  { icon: IconCode, value: "code", tooltip: fluent.$t("pdf-export-view-mode-code") },
+  { icon: IconSplitView, value: "split-view", tooltip: fluent.$t("pdf-export-view-mode-split-view") },
+  { icon: IconVisibility, value: "preview", tooltip: fluent.$t("pdf-export-view-mode-preview") },
+]);
 
 const exportItems = computed<DropdownMenuItem[][]>(() => [
   [
@@ -183,6 +198,8 @@ onUnmounted(() => service.destroy());
   <Dialog v-model:open="open" fullscreen :dismissible="false" :title="$t('pdf-export')" :class="$style.dialog">
     <template #body>
       <div :class="$style.toolbar">
+        <ToolToggleGroup v-model="viewMode" :items="viewModeItems" />
+
         <Switch v-model="pdf.color" :label="$t('pdf-export-color')" />
 
         <FormFieldGroup>
@@ -194,11 +211,11 @@ onUnmounted(() => service.destroy());
       </div>
 
       <Splitter direction="horizontal">
-        <SplitterPanel :min-size="10">
+        <SplitterPanel v-show="viewMode !== EditorViewMode.Preview" :min-size="10">
           <TypstEditor ref="typst-editor" v-model="pdf.template" :dark="isDark" />
         </SplitterPanel>
 
-        <SplitterPanel :min-size="10" :class="$style.previewPanel">
+        <SplitterPanel v-show="viewMode !== EditorViewMode.Code" :min-size="10" :class="$style.previewPanel">
           <BlockUI :blocked="previewInProgress" :class="$style.previewContent">
             <Progress v-if="previewInProgress" size="sm" :class="$style.previewProgress" />
             <canvas ref="canvas"></canvas>
