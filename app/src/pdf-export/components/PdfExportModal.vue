@@ -194,11 +194,11 @@ onUnmounted(() => service.destroy());
       </div>
 
       <Splitter direction="horizontal">
-        <SplitterPanel>
+        <SplitterPanel :min-size="10">
           <TypstEditor ref="typst-editor" v-model="pdf.template" :dark="isDark" />
         </SplitterPanel>
 
-        <SplitterPanel :class="$style.previewPanel">
+        <SplitterPanel :min-size="10" :class="$style.previewPanel">
           <BlockUI :blocked="previewInProgress" :class="$style.previewContent">
             <Progress v-if="previewInProgress" size="sm" :class="$style.previewProgress" />
             <canvas ref="canvas"></canvas>
