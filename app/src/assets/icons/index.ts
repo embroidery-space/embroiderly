@@ -50,6 +50,7 @@ export { default as IconRulers } from "~icons/mdi/ruler-square";
 export { default as IconDot } from "~icons/mdi/circle-medium";
 export { default as IconEraser } from "~icons/mdi/eraser";
 export { default as IconSplitView } from "~icons/material-symbols/vertical-split-rounded";
+export { default as IconLineWrapping } from "~icons/material-symbols/wrap-text-rounded";
 
 // Stitches (custom collection)
 export { default as IconStitchFull } from "~icons/stitches/full";

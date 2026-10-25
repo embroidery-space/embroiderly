@@ -584,6 +584,8 @@ pdf-export-view-mode-code = Код
 pdf-export-view-mode-split-view = Розділений вигляд
 pdf-export-view-mode-preview = Преʼю
 
+pdf-export-line-wrapping = Перенесення рядків
+
 pdf-export-color = Кольоровий експорт
 
 pdf-export-save-template = Зберегти шаблон

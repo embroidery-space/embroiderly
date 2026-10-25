@@ -13,10 +13,16 @@ export interface TypstEditorProps {
    * @default false
    */
   dark?: boolean;
+
+  /**
+   * Whether lines are wrapped.
+   * @default false
+   */
+  wrapLines?: boolean;
 }
 
 const doc = defineModel<string>({ required: true });
-const { dark: isDark = false } = defineProps<TypstEditorProps>();
+const { dark = false, wrapLines = false } = defineProps<TypstEditorProps>();
 
 const container = useTemplateRef("container");
 
@@ -24,10 +30,19 @@ const editor = shallowRef<EditorView | null>(null);
 
 const theme = new Compartment();
 watch(
-  () => isDark,
+  () => dark,
   (value) => {
     if (!editor.value) return;
     editor.value.dispatch({ effects: theme.reconfigure(Prec.highest(value ? nordDark : nordLight)) });
+  },
+);
+
+const lineWrapping = new Compartment();
+watch(
+  () => wrapLines,
+  (value) => {
+    if (!editor.value) return;
+    editor.value.dispatch({ effects: lineWrapping.reconfigure(value ? EditorView.lineWrapping : []) });
   },
 );
 
@@ -41,9 +56,10 @@ onMounted(() => {
     doc: doc.value,
     extensions: [
       editorSetup,
+      lineWrapping.of(wrapLines ? EditorView.lineWrapping : []),
 
       Prec.high(typst()),
-      Prec.highest(theme.of(isDark ? nordDark : nordLight)),
+      Prec.highest(theme.of(dark ? nordDark : nordLight)),
 
       EditorView.updateListener.of((update) => {
         if (!update.docChanged) return;

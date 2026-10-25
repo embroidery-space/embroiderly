@@ -12,8 +12,10 @@ import {
   SplitterPanel,
   Switch,
   ToolToggleGroup,
+  ToolToggle,
   useConfirm,
   useToast,
+  Separator,
 } from "@embroiderly/ui";
 import type { DropdownMenuItem, ToolToggleItem } from "@embroiderly/ui";
 
@@ -21,7 +23,7 @@ import { useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
 import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick, useTemplateRef } from "vue";
 
-import { IconChevronDown, IconCode, IconSplitView, IconVisibility } from "~/assets/icons/";
+import { IconChevronDown, IconCode, IconLineWrapping, IconSplitView, IconVisibility } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { PatternPdf } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
@@ -59,6 +61,7 @@ const totalPages = ref<number>();
 const currentPage = ref(1);
 
 const viewMode = ref(EditorViewMode.SplitView);
+const wrapLines = ref(false);
 
 const isDark = computed(() => {
   return settingsStore.ui.theme === "system"
@@ -198,21 +201,30 @@ onUnmounted(() => service.destroy());
   <Dialog v-model:open="open" fullscreen :dismissible="false" :title="$t('pdf-export')" :class="$style.dialog">
     <template #body>
       <div :class="$style.toolbar">
-        <ToolToggleGroup v-model="viewMode" :items="viewModeItems" />
+        <div :class="$style.toolbarGroup">
+          <ToolToggleGroup v-model="viewMode" :items="viewModeItems" />
+          <Separator orientation="vertical" />
+          <ToolToggle v-model="wrapLines" :icon="IconLineWrapping" :tooltip="$t('pdf-export-line-wrapping')" />
+        </div>
 
-        <Switch v-model="pdf.color" :label="$t('pdf-export-color')" />
-
-        <FormFieldGroup>
-          <Button :loading="exportInProgress" :label="$t('pdf-export-export-document')" @click="exportDocument(pdf)" />
-          <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
-            <Button :disabled="exportInProgress" :icon="IconChevronDown" />
-          </DropdownMenu>
-        </FormFieldGroup>
+        <div :class="$style.toolbarGroup">
+          <Switch v-model="pdf.color" :label="$t('pdf-export-color')" />
+          <FormFieldGroup>
+            <Button
+              :loading="exportInProgress"
+              :label="$t('pdf-export-export-document')"
+              @click="exportDocument(pdf)"
+            />
+            <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
+              <Button :disabled="exportInProgress" :icon="IconChevronDown" />
+            </DropdownMenu>
+          </FormFieldGroup>
+        </div>
       </div>
 
       <Splitter direction="horizontal">
         <SplitterPanel v-show="viewMode !== EditorViewMode.Preview" :min-size="10">
-          <TypstEditor ref="typst-editor" v-model="pdf.template" :dark="isDark" />
+          <TypstEditor ref="typst-editor" v-model="pdf.template" :dark="isDark" :wrap-lines="wrapLines" />
         </SplitterPanel>
 
         <SplitterPanel v-show="viewMode !== EditorViewMode.Code" :min-size="10" :class="$style.previewPanel">
@@ -256,6 +268,14 @@ onUnmounted(() => service.destroy());
 
   padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
   border-bottom: 1px solid var(--border-color-default);
+}
+
+.toolbar-group {
+  display: flex;
+  gap: calc(var(--spacing) * 2);
+  align-items: center;
+
+  height: 100%;
 }
 
 .preview-panel {
