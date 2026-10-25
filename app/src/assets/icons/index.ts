@@ -7,6 +7,7 @@ export { default as IconChevronRight } from "~icons/material-symbols/keyboard-ar
 export { default as IconChevronsLeft } from "~icons/material-symbols/keyboard-double-arrow-left-rounded";
 export { default as IconChevronsRight } from "~icons/material-symbols/keyboard-double-arrow-right-rounded";
 export { default as IconCode } from "~icons/material-symbols/code-rounded";
+export { default as IconColors } from "~icons/material-symbols/invert-colors-rounded";
 export { default as IconCursor } from "~icons/material-symbols/arrow-selector-tool-rounded";
 export { default as IconEllipsis } from "~icons/mdi/dots-horizontal";
 export { default as IconExternalLink } from "~icons/material-symbols/open-in-new-rounded";

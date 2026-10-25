@@ -10,7 +10,6 @@ import {
   Progress,
   Splitter,
   SplitterPanel,
-  Switch,
   ToolToggleGroup,
   ToolToggle,
   useConfirm,
@@ -23,7 +22,14 @@ import { useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
 import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick, useTemplateRef } from "vue";
 
-import { IconChevronDown, IconCode, IconLineWrapping, IconSplitView, IconVisibility } from "~/assets/icons/";
+import {
+  IconChevronDown,
+  IconCode,
+  IconColors,
+  IconLineWrapping,
+  IconSplitView,
+  IconVisibility,
+} from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { PatternPdf } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
@@ -208,7 +214,7 @@ onUnmounted(() => service.destroy());
         </div>
 
         <div :class="$style.toolbarGroup">
-          <Switch v-model="pdf.color" :label="$t('pdf-export-color')" />
+          <ToolToggle v-model="pdf.color" :icon="IconColors" :tooltip="$t('pdf-export-color')" />
           <FormFieldGroup>
             <Button
               :loading="exportInProgress"
