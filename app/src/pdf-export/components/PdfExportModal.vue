@@ -265,7 +265,7 @@ onUnmounted(() => service.destroy());
   width: 100%;
   min-height: 0;
 
-  padding: calc(var(--spacing) * 8);
+  padding: calc(var(--spacing) * 4);
 
   canvas {
     max-width: 100%;
@@ -288,7 +288,7 @@ onUnmounted(() => service.destroy());
   justify-content: center;
 
   width: 100%;
-  padding: calc(var(--spacing) * 4) calc(var(--spacing) * 8);
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
   border-top: 1px solid var(--border-color-default);
 }
 </style>
