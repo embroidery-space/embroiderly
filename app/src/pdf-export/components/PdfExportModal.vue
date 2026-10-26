@@ -36,18 +36,16 @@ import { LoggerService, MetricsService } from "~/services/";
 import { useSettingsStore } from "~/settings/";
 import { usePatternStore } from "~/stores/";
 
-import TypstEditor from "./TypstEditor.vue";
+import { useTypstEditorStateStore, TypstEditorViewMode } from "../stores/useTypstEditorStateStore.ts";
 
-const enum EditorViewMode {
-  Code = "code",
-  SplitView = "split-view",
-  Preview = "preview",
-}
+import TypstEditor from "./TypstEditor.vue";
 
 const open = defineModel<boolean>("open", { default: false });
 
 const patternStore = usePatternStore();
 const settingsStore = useSettingsStore();
+
+const typstEditorStateStore = useTypstEditorStateStore();
 
 const { editor: patternEditor, files: patternFiles } = useEditor();
 const filePicker = useFilePicker();
@@ -65,9 +63,6 @@ const isDirty = computed(() => !isEqual(patternStore.pattern.pdf, pdf.value));
 
 const totalPages = ref<number>();
 const currentPage = ref(1);
-
-const viewMode = ref(EditorViewMode.SplitView);
-const wrapLines = ref(false);
 
 const isDark = computed(() => {
   return settingsStore.ui.theme === "system"
@@ -208,9 +203,15 @@ onUnmounted(() => service.destroy());
     <template #body>
       <div :class="$style.toolbar">
         <div :class="$style.toolbarGroup">
-          <ToolToggleGroup v-model="viewMode" :items="viewModeItems" />
+          <ToolToggleGroup v-model="typstEditorStateStore.viewMode" :items="viewModeItems" />
+
           <Separator orientation="vertical" />
-          <ToolToggle v-model="wrapLines" :icon="IconLineWrapping" :tooltip="$t('pdf-export-line-wrapping')" />
+
+          <ToolToggle
+            v-model="typstEditorStateStore.wrapLines"
+            :icon="IconLineWrapping"
+            :tooltip="$t('pdf-export-line-wrapping')"
+          />
         </div>
 
         <div :class="$style.toolbarGroup">
@@ -229,11 +230,20 @@ onUnmounted(() => service.destroy());
       </div>
 
       <Splitter direction="horizontal">
-        <SplitterPanel v-show="viewMode !== EditorViewMode.Preview" :min-size="10">
-          <TypstEditor ref="typst-editor" v-model="pdf.template" :dark="isDark" :wrap-lines="wrapLines" />
+        <SplitterPanel v-show="typstEditorStateStore.viewMode !== TypstEditorViewMode.Preview" :min-size="10">
+          <TypstEditor
+            ref="typst-editor"
+            v-model="pdf.template"
+            :dark="isDark"
+            :wrap-lines="typstEditorStateStore.wrapLines"
+          />
         </SplitterPanel>
 
-        <SplitterPanel v-show="viewMode !== EditorViewMode.Code" :min-size="10" :class="$style.previewPanel">
+        <SplitterPanel
+          v-show="typstEditorStateStore.viewMode !== TypstEditorViewMode.Code"
+          :min-size="10"
+          :class="$style.previewPanel"
+        >
           <BlockUI :blocked="previewInProgress" :class="$style.previewContent">
             <Progress v-if="previewInProgress" size="sm" :class="$style.previewProgress" />
             <canvas ref="canvas"></canvas>
