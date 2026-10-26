@@ -140,7 +140,15 @@ impl PdfExporter {
       };
     }
 
-    let result = typst_pdf::pdf(&doc.unwrap(), &typst_pdf::PdfOptions::default());
+    let result = typst_pdf::pdf(
+      &doc.unwrap(),
+      &typst_pdf::PdfOptions {
+        creator: typst::foundations::Smart::Custom(Some(format!("Embroiderly {}", env!("CARGO_PKG_VERSION")))),
+        standards: typst_pdf::PdfStandards::new(&[typst_pdf::PdfStandard::V_2_0])
+          .expect("PDF v2.0 can't conflict, as it is the only specified PDF standard."),
+        ..Default::default()
+      },
+    );
     match result {
       Ok(buf) => CompilationOutput {
         output: Some(buf),
