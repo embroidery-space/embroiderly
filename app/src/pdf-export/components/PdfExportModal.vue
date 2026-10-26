@@ -16,7 +16,7 @@ import {
   useToast,
   Separator,
 } from "@embroiderly/ui";
-import type { DropdownMenuItem, ToolToggleItem } from "@embroiderly/ui";
+import type { DropdownMenuItem } from "@embroiderly/ui";
 
 import { useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
@@ -69,12 +69,6 @@ const isDark = computed(() => {
     ? window.matchMedia("(prefers-color-scheme: dark)").matches
     : settingsStore.ui.theme === "dark";
 });
-
-const viewModeItems = computed<ToolToggleItem[]>(() => [
-  { icon: IconCode, value: "code", tooltip: fluent.$t("pdf-export-view-mode-code") },
-  { icon: IconSplitView, value: "split-view", tooltip: fluent.$t("pdf-export-view-mode-split-view") },
-  { icon: IconVisibility, value: "preview", tooltip: fluent.$t("pdf-export-view-mode-preview") },
-]);
 
 const exportItems = computed<DropdownMenuItem[][]>(() => [
   [
@@ -203,7 +197,26 @@ onUnmounted(() => service.destroy());
     <template #body>
       <div :class="$style.toolbar">
         <div :class="$style.toolbarGroup">
-          <ToolToggleGroup v-model="typstEditorStateStore.viewMode" :items="viewModeItems" />
+          <ToolToggleGroup
+            v-model="typstEditorStateStore.viewMode"
+            :items="[
+              {
+                icon: IconCode,
+                value: TypstEditorViewMode.Code,
+                tooltip: $t('pdf-export-view-mode-code'),
+              },
+              {
+                icon: IconSplitView,
+                value: TypstEditorViewMode.SplitView,
+                tooltip: $t('pdf-export-view-mode-split-view'),
+              },
+              {
+                icon: IconVisibility,
+                value: TypstEditorViewMode.Preview,
+                tooltip: $t('pdf-export-view-mode-preview'),
+              },
+            ]"
+          />
 
           <Separator orientation="vertical" />
 
