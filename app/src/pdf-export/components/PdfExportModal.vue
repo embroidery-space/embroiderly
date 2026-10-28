@@ -18,14 +18,16 @@ import {
 } from "@embroiderly/ui";
 import type { DropdownMenuItem } from "@embroiderly/ui";
 
-import { useDebounceFn, useThrottleFn } from "@vueuse/core";
+import { refAutoReset, useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
 import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick, useTemplateRef } from "vue";
 
 import {
+  IconCheck,
   IconChevronDown,
   IconCode,
   IconColors,
+  IconDownload,
   IconLineWrapping,
   IconSplitView,
   IconVisibility,
@@ -126,6 +128,7 @@ async function updatePreview(options?: { pdf?: PatternPdf; page?: number }) {
 }
 
 const exportInProgress = ref(false);
+const documentExported = refAutoReset(false, 1000);
 async function exportDocument(pdf: PatternPdf) {
   const handle = await filePicker.save({
     suggestedName: `${patternStore.pattern.info.title ?? "pattern"}.${pdf.color ? "color" : "monochrome"}.pdf`,
@@ -149,8 +152,9 @@ async function exportDocument(pdf: PatternPdf) {
     await writable.write(output);
     await writable.close();
 
+    documentExported.value = true;
+
     MetricsService.capturePatternExportedAsPdf(pdf.color);
-    toast.add({ color: "success", title: fluent.$t("pattern-export-success"), duration: 3000 });
   } catch (err) {
     LoggerService.error(`Failed to export pattern as PDF: ${err}`);
     toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
@@ -263,6 +267,7 @@ onUnmounted(() => service.destroy());
           <FormFieldGroup>
             <Button
               :loading="exportInProgress"
+              :icon="documentExported ? IconCheck : IconDownload"
               :label="$t('pdf-export-export-document')"
               @click="exportDocument(pdf)"
             />

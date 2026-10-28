@@ -9,6 +9,7 @@ export { default as IconChevronsRight } from "~icons/material-symbols/keyboard-d
 export { default as IconCode } from "~icons/material-symbols/code-rounded";
 export { default as IconColors } from "~icons/material-symbols/invert-colors-rounded";
 export { default as IconCursor } from "~icons/material-symbols/arrow-selector-tool-rounded";
+export { default as IconDownload } from "~icons/material-symbols/download-rounded";
 export { default as IconEllipsis } from "~icons/mdi/dots-horizontal";
 export { default as IconExternalLink } from "~icons/material-symbols/open-in-new-rounded";
 export { default as IconFile } from "~icons/material-symbols/draft-rounded";
