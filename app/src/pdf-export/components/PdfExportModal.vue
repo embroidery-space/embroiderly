@@ -171,18 +171,49 @@ function close() {
   open.value = false; // The watcher above handles the confirmation.
 }
 
+async function loadFonts(fonts: string[]) {
+  const results = await Promise.allSettled(
+    fonts.map(async (resource) => {
+      if (resource.startsWith("/fonts/")) {
+        return new Uint8Array((await fetch(resource).then((r) => r.arrayBuffer())) as ArrayBuffer);
+      }
+      return patternFiles.loadFontContent(resource);
+    }),
+  );
+
+  const { succeededFonts, failedFonts } = results.reduce<{ succeededFonts: Uint8Array[]; failedFonts: string[] }>(
+    (acc, result, index) => {
+      if (result.status === "fulfilled") {
+        acc.succeededFonts.push(result.value);
+        return acc;
+      }
+
+      const fontName = fonts[index]!;
+
+      acc.failedFonts.push(fontName);
+      LoggerService.error(`Failed to load symbol font "${fontName}": ${result.reason}`);
+
+      return acc;
+    },
+    { succeededFonts: [], failedFonts: [] },
+  );
+
+  if (failedFonts.length) {
+    const failedFontsMessage = fluent.$ta("canvas-symbol-fonts-load-failure", { fonts: failedFonts.join(", ") });
+    const { title, description } = failedFontsMessage as { title: string; description: string };
+    toast.add({ title, description, color: "error" });
+  }
+
+  return succeededFonts;
+}
+
 onMounted(async () => {
   const patternData = await patternEditor.loadPattern(patternStore.pattern.id);
-  const fontData = await Promise.all(
-    [...patternStore.pattern.palette.usedSymbolFonts, "/fonts/FixelVariable.ttf", "/fonts/FixelVariableItalic.ttf"].map(
-      async (resource) => {
-        if (resource.startsWith("/fonts/")) {
-          return new Uint8Array((await fetch(resource).then((r) => r.arrayBuffer())) as ArrayBuffer);
-        }
-        return patternFiles.loadFontContent(resource);
-      },
-    ),
-  );
+  const fontData = await loadFonts([
+    "/fonts/FixelVariable.ttf",
+    "/fonts/FixelVariableItalic.ttf",
+    ...patternStore.pattern.palette.usedSymbolFonts,
+  ]);
 
   await service.init(canvas.value!.transferControlToOffscreen(), patternData, fontData);
 
