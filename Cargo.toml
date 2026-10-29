@@ -156,6 +156,7 @@ itertools = "0.15.0"
 
 # Testing utilities
 rstest = "0.27.0"
+insta = "1.49.0"
 
 # Other
 alphanumeric-sort = "1.5.6"

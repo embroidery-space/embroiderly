@@ -32,7 +32,11 @@ wasm-bindgen = { workspace = true }
 js-sys = { workspace = true }
 
 [dev-dependencies]
+# Embroiderly Core
 embroiderly_parsers = { workspace = true }
+
+# Testing utilities
+insta = { workspace = true }
 
 [package.metadata.wasm-pack.profile.dev]
 wasm-opt = false

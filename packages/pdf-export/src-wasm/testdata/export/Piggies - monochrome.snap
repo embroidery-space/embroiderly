@@ -1,0 +1,6 @@
+---
+source: packages/pdf-export/src-wasm/src/lib.test.rs
+expression: output.unwrap()
+extension: pdf
+snapshot_kind: binary
+---
