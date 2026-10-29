@@ -37,6 +37,7 @@ embroiderly_parsers = { workspace = true }
 
 # Testing utilities
 insta = { workspace = true }
+rstest = { workspace = true }
 
 [package.metadata.wasm-pack.profile.dev]
 wasm-opt = false
