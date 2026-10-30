@@ -9,7 +9,7 @@ import type {
   PaletteItem,
   PaletteSettings,
   PatternInfo,
-  PdfExportOptions,
+  PatternPdf,
   ReferenceImage,
   ReferenceImageSettings,
   Symbol,
@@ -31,6 +31,8 @@ export interface EditorEvents {
 
   "pattern-info:update": [PatternInfo];
 
+  "pattern-pdf:update": [PatternPdf];
+
   "display:update": [DisplaySettings];
 
   "grid:update": [Grid];
@@ -40,8 +42,6 @@ export interface EditorEvents {
   "layers:rename": [{ layerIndex: number; name: string }];
   "layers:update_visibility": [{ layerIndex: number; visibility: LayerVisibility }];
   "layers:move": [number[]];
-
-  "publish:update-pdf": [PdfExportOptions];
 
   "image:set": [ReferenceImage | undefined];
   "image:settings:update": [ReferenceImageSettings];

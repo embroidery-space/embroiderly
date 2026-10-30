@@ -580,31 +580,19 @@ image-import-pattern-properties = Розмір палітри: { $paletteSize }.
 
 pdf-export = Експорт PDF
 
-pdf-export-variant-monochrome = Експортувати чорно-біле документ
-pdf-export-variant-color = Експортувати кольоровий документ
+pdf-export-view-mode-code = Код
+pdf-export-view-mode-split-view = Розділений вигляд
+pdf-export-view-mode-preview = Преʼю
 
-pdf-export-save-settings = Зберегти налаштування
+pdf-export-line-wrapping = Перенесення рядків
+
+pdf-export-color = Кольоровий експорт
+
+pdf-export-save-template = Зберегти шаблон
 pdf-export-export-document = Експортувати документ
+pdf-export-export-document-monochrome = Експортувати чорно-білий документ
+pdf-export-export-document-color = Експортувати кольоровий документ
 
-## Publish settings.
-
-publish-settings = Налаштування публікації
-
-publish-settings-print-options = Налаштування друку
-publish-settings-print-center-frames = Центрувати фрейми
-publish-settings-print-enumerate-frames = Нумерувати фрейми
-
-publish-settings-frame-options = Параметри фрейма
-publish-settings-frame-definition =
-  Фрейм — це частина схеми.
-  Великі схеми можуть бути розділені на кілька фреймів. Кожен фрейм розміщується на окремій сторінці.
-
-publish-settings-frame-width = Ширина фрейма
-publish-settings-frame-height = Висота фрейма
-
-publish-settings-frame-preserved-overlap =
-  .label = Збережене перекриття
-  .description = Розмір перекриття між фреймами у стібках.
-
-publish-settings-frame-show-grid-line-numbers = Показати номери ліній сітки
-publish-settings-frame-show-centering-marks = Показати центрувальні мітки
+pdf-export-unsaved-changes =
+  .title = Незбережені зміни
+  .description = Шаблон PDF має незбережені зміни. Чи хочете ви зберегти його перед закриттям?

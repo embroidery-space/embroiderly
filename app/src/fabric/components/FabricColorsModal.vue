@@ -240,7 +240,6 @@ async function handleSave() {
   height: calc(var(--spacing) * 4);
 }
 
-/* `Input` passes the class to its `input`. Outweighs the variants of `Input`. */
 input.invalid[data-slot="base"] {
   box-shadow: inset 0 0 0 1px var(--color-error);
 }
@@ -259,9 +258,7 @@ input.invalid[data-slot="base"] {
   align-items: center;
 }
 
-/* Outweighs the radius of `Button`. */
 button.add[data-slot="base"] {
-  border-style: dashed;
   border-radius: calc(infinity * 1px);
 }
 

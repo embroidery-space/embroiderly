@@ -1,24 +1,46 @@
 import * as Comlink from "comlink";
 
-import init, { export_pdf, PdfVariant } from "../src-wasm/pkg/";
+import init, { PdfExporter } from "../src-wasm/pkg/";
 
-import type { ExportInput } from "./types.ts";
+import type { CompilationOutput } from "./types.ts";
 
-const api = {
-  async export(input: ExportInput): Promise<Uint8Array> {
-    await init();
+const wasm = await init();
 
-    const { pattern, options, symbolFonts } = input;
-    const variant = input.variant === "color" ? PdfVariant.Color : PdfVariant.Monochrome;
+export class PdfExporterWrapper {
+  #offscreenCanvasContext: OffscreenCanvasRenderingContext2D;
+  #exporter: PdfExporter;
 
-    const textFonts = await Promise.all(
-      ["/fonts/FixelVariable.ttf", "/fonts/FixelVariableItalic.ttf"].map(
-        async (url) => new Uint8Array((await fetch(url).then((r) => r.arrayBuffer())) as ArrayBuffer),
-      ),
-    );
+  constructor(canvas: OffscreenCanvas, patternData: Uint8Array, fontData: Uint8Array[]) {
+    this.#offscreenCanvasContext = canvas.getContext("2d")!;
+    this.#exporter = new PdfExporter(patternData, fontData);
+  }
 
-    const pdfBytes = export_pdf(pattern, options, variant, [...textFonts, ...symbolFonts]);
-    return Comlink.transfer(pdfBytes, [pdfBytes.buffer]);
-  },
-};
-Comlink.expose(api);
+  compileDocument(patternPdf: Uint8Array): CompilationOutput<number> {
+    return this.#exporter.compileDocument(patternPdf);
+  }
+
+  export(patternPdf: Uint8Array): CompilationOutput<Uint8Array> {
+    const { output, diagnostics } = this.#exporter.export(patternPdf) as CompilationOutput<number[]>;
+    return { output: output === null ? null : new Uint8Array(output), diagnostics };
+  }
+
+  preview(page: number) {
+    const renderedPage = this.#exporter.preview(page);
+    if (!renderedPage) return;
+
+    const { width, height, ptr: bufferPointer, len: bufferLength } = renderedPage;
+
+    const wasmMemoryView = new Uint8ClampedArray(wasm.memory.buffer, bufferPointer, bufferLength);
+    const imageData = new ImageData(wasmMemoryView, width, height);
+
+    this.#offscreenCanvasContext.canvas.width = width;
+    this.#offscreenCanvasContext.canvas.height = height;
+
+    this.#offscreenCanvasContext.putImageData(imageData, 0, 0);
+
+    renderedPage.free();
+  }
+}
+
+Comlink.expose(PdfExporterWrapper);
+postMessage("READY");

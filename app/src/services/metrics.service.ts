@@ -12,7 +12,6 @@ import type {
   PaletteSettings,
   Pattern,
   PatternInfo,
-  PdfExportOptions,
   ReferenceImageSettings,
   SortPaletteBy,
   Symbol,
@@ -165,21 +164,12 @@ class MetricsServiceClass {
     this.#capture("pattern_closed");
   }
 
-  capturePatternExportedAsPdf(options: PdfExportOptions) {
-    this.#capture("pattern_exported_as_pdf", this.#pdfExportProperties(options));
+  capturePatternExportedAsPdf(color: boolean) {
+    this.#capture("pattern_exported_as_pdf", { color });
   }
 
-  capturePdfExportOptionsUpdated(options: PdfExportOptions) {
-    this.#capture("pdf_export_settings_updated", this.#pdfExportProperties(options));
-  }
-
-  #pdfExportProperties(options: PdfExportOptions) {
-    return {
-      frame_size: [options.frameSize[0], options.frameSize[1]],
-      preserved_overlap: options.preservedOverlap,
-      show_grid_line_numbers: options.showGridLineNumbers,
-      show_centering_marks: options.showCenteringMarks,
-    };
+  capturePatternPdfUpdated(color: boolean) {
+    this.#capture("pattern_pdf_updated", { color });
   }
 
   captureReferenceImageSet(file: File) {

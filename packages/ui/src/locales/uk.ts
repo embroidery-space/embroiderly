@@ -28,6 +28,12 @@ export default Object.freeze<Locale>({
       search: "Пошук…",
       empty: "Немає елементів",
     },
+    pagination: {
+      firstPage: "Перша сторінка",
+      lastPage: "Остання сторінка",
+      prevPage: "Попередня сторінка",
+      nextPage: "Наступна сторінка",
+    },
     select: {
       search: "Пошук…",
       noData: "Немає даних",

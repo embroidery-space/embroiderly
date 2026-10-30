@@ -18,6 +18,11 @@ export interface DialogProps {
    * @default true
    */
   dismissible?: boolean;
+  /**
+   * Whether to display the dialog in fullscreen mode.
+   * @default false
+   */
+  fullscreen?: boolean;
 
   /**
    * Render the dialog in a portal.
@@ -44,6 +49,8 @@ defineOptions({ inheritAttrs: false });
 const open = defineModel<boolean>("open", { default: false });
 const props = withDefaults(defineProps<DialogProps>(), {
   dismissible: true,
+  fullscreen: false,
+
   portal: true,
 });
 const emit = defineEmits<DialogEmits>();
@@ -77,7 +84,7 @@ defineExpose({ contentRef });
         v-bind="$attrs"
         :aria-describedby="description ? undefined : ''"
         data-slot="content"
-        :class="$style.content"
+        :class="[$style.content, { [$style.fullscreen]: fullscreen }]"
         @pointer-down-outside="!dismissible && $event.preventDefault()"
         @interact-outside="!dismissible && $event.preventDefault()"
         @escape-key-down="!dismissible && $event.preventDefault()"
@@ -157,6 +164,18 @@ defineExpose({ contentRef });
   box-shadow:
     0 0 0 1px var(--border-color-default),
     var(--shadow-lg);
+
+  &.fullscreen {
+    inset: 0;
+    translate: none;
+
+    width: auto;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+
+    box-shadow: none;
+  }
 
   &:focus {
     outline-style: none;

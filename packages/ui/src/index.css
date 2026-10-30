@@ -2,7 +2,9 @@
 
 @import "./styles/preflight.css" layer(preflight);
 
-@import "./styles/variables.css" layer(variables);
 @import "./styles/keyframes.css" layer(variables);
+@import "./styles/nord-palette.css" layer(variables);
+@import "./styles/variables.css" layer(variables);
 
 @import "./styles/base.css" layer(base);
+@import "./styles/fonts.css" layer(base);

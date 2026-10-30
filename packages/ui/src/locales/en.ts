@@ -28,6 +28,12 @@ export default Object.freeze<Locale>({
       search: "Search…",
       empty: "No items",
     },
+    pagination: {
+      firstPage: "First page",
+      lastPage: "Last page",
+      prevPage: "Previous page",
+      nextPage: "Next page",
+    },
     select: {
       search: "Search…",
       noData: "No data",

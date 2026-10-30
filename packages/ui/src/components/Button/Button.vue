@@ -233,7 +233,6 @@ const isTrailingSpinning = computed(() => isLoading.value && !isLeading.value &&
   &.variant-outline.color-neutral {
     color: var(--text-color-default);
 
-    background-color: var(--background-color-default);
     box-shadow: inset 0 0 0 1px var(--border-color-accented);
 
     &:hover {

@@ -31,6 +31,12 @@ export type Messages = {
     search: string;
     empty: string;
   };
+  pagination: {
+    firstPage: string;
+    lastPage: string;
+    prevPage: string;
+    nextPage: string;
+  };
   select: {
     search: string;
     noData: string;

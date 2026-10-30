@@ -13,7 +13,7 @@ const editorStateStore = useEditorStateStore();
 </script>
 
 <template>
-  <div :class="$style.footer">
+  <div tabindex="-1" :class="$style.footer">
     <ButtonIcon
       color="neutral"
       variant="ghost"

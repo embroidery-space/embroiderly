@@ -1,21 +1,26 @@
 <script lang="ts" setup>
 import { App, useOverlay, useToast } from "@embroiderly/ui";
 
-import { useEventListener, useLocalStorage } from "@vueuse/core";
+import { useEventListener, useLocalStorage, useParentElement } from "@vueuse/core";
 import { randomInt } from "es-toolkit";
 import { onMounted, onErrorCaptured, markRaw, watch } from "vue";
+import type { ShallowRef } from "vue";
 
 import {
   IconCheck,
   IconChevronUp,
   IconChevronDown,
+  IconChevronLeft,
   IconChevronRight,
+  IconChevronsLeft,
+  IconChevronsRight,
   IconClose,
   IconLoaderCircle,
   IconLink,
   IconUnlink,
   IconMinus,
   IconPlus,
+  IconEllipsis,
   IconExternalLink,
 } from "~/assets/icons/";
 
@@ -35,6 +40,8 @@ const { fluent, currentLocale } = useI18n();
 
 const telemetryPrompt = overlay.create(TelemetryPrompt);
 const telemetryPromptShown = useLocalStorage("embroiderly-telemetry-prompt-shown", false);
+
+const appElement = useParentElement() as Readonly<ShallowRef<HTMLElement>>;
 
 watch(
   () => settingsStore.telemetry,
@@ -93,8 +100,12 @@ onErrorCaptured((err, _component, info) => {
       check: markRaw(IconCheck),
       chevronUp: markRaw(IconChevronUp),
       chevronDown: markRaw(IconChevronDown),
+      chevronLeft: markRaw(IconChevronLeft),
       chevronRight: markRaw(IconChevronRight),
+      chevronsLeft: markRaw(IconChevronsLeft),
+      chevronsRight: markRaw(IconChevronsRight),
       close: markRaw(IconClose),
+      ellipsis: markRaw(IconEllipsis),
       external: markRaw(IconExternalLink),
       loading: markRaw(IconLoaderCircle),
       link: markRaw(IconLink),
@@ -102,6 +113,7 @@ onErrorCaptured((err, _component, info) => {
       minus: markRaw(IconMinus),
       plus: markRaw(IconPlus),
     }"
+    :shortcuts="{ target: appElement }"
   >
     <AppHeader :class="$style.header" />
     <AppMain :class="$style.main" />

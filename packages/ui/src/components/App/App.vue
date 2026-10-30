@@ -6,6 +6,8 @@ import { provide, toRef, useId } from "vue";
 import { iconsInjectionKey } from "../../composables/useComponentIcons.ts";
 import { localeInjectionKey } from "../../composables/useLocale.ts";
 import { GLOBAL_PORTAL, PORTAL_TARGET_INJECTION_KEY } from "../../composables/usePortal.ts";
+import { provideShortcutsContext } from "../../composables/useShortcuts.ts";
+import type { ShortcutsOptions } from "../../composables/useShortcuts.ts";
 import { DEFAULT_ICONS } from "../../icons.ts";
 import { locales } from "../../locales/index.ts";
 import type { Icons } from "../../types/icons.ts";
@@ -19,6 +21,8 @@ export interface AppProps {
   tooltip?: TooltipProviderProps;
   /** Toast options. Pass `null` to disable toasts. */
   toaster?: ToasterProps | null;
+  /** Shortcuts options. */
+  shortcuts?: ShortcutsOptions;
 
   /**
    * The locale to use for the application.
@@ -41,8 +45,7 @@ const props = withDefaults(defineProps<AppProps>(), {
 });
 defineSlots<AppSlots>();
 
-const tooltipProps = toRef(() => props.tooltip);
-const toasterProps = toRef(() => props.toaster);
+provideShortcutsContext(() => props.shortcuts);
 
 const locale = toRef(() => locales[props.locale]!);
 provide(localeInjectionKey, locale);
@@ -56,8 +59,8 @@ provide(PORTAL_TARGET_INJECTION_KEY, portal);
 
 <template>
   <ConfigProvider :dir="locale.dir" :locale="locale.code" :use-id="useId">
-    <TooltipProvider v-bind="tooltipProps">
-      <Toaster v-if="toasterProps !== null" v-bind="toasterProps">
+    <TooltipProvider v-bind="tooltip">
+      <Toaster v-if="toaster !== null" v-bind="toaster">
         <slot />
       </Toaster>
       <slot v-else />

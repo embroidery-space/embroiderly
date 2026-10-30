@@ -1,12 +1,13 @@
-export type PdfVariant = "monochrome" | "color";
-
-export interface ExportInput {
-  /** Borsh-serialised `EmbroiderlyProject`. */
-  pattern: Uint8Array;
-  /** Borsh-serialised `PdfExportOptions`. */
-  options: Uint8Array;
-  /** Whether the document is black-and-white (monochrome) or color. */
-  variant: PdfVariant;
-  /** Raw bytes of every symbol font referenced by the pattern palette. */
-  symbolFonts: Uint8Array[];
+export interface CompilationOutput<T> {
+  output: T | null;
+  diagnostics: Diagnostic[];
 }
+
+export interface Diagnostic {
+  from: number;
+  to: number;
+  severity: DiagnosticSeverity;
+  message: string;
+}
+
+export type DiagnosticSeverity = "error" | "warning";

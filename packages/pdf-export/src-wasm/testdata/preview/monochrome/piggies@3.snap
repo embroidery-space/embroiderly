@@ -1,0 +1,5 @@
+---
+source: packages/pdf-export/src-wasm/src/lib.test.rs
+extension: png
+snapshot_kind: binary
+---
