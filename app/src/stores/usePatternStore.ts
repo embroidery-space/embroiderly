@@ -255,7 +255,7 @@ export const usePatternStore = defineStore("embroiderly-pattern", () => {
   async function updatePatternPdf(pdf: PatternPdf) {
     if (pattern.value.isNil) return;
     await editor.updatePatternPdf(pattern.value.id, PatternPdf.serialize(pdf));
-    MetricsService.capturePatternPdfUpdated(pdf.color);
+    MetricsService.capturePatternPdfUpdated();
   }
   events.on("pattern-pdf:update", (pdf) => {
     pattern.value.pdf = pdf;

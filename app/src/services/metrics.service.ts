@@ -164,12 +164,12 @@ class MetricsServiceClass {
     this.#capture("pattern_closed");
   }
 
-  capturePatternExportedAsPdf(color: boolean) {
-    this.#capture("pattern_exported_as_pdf", { color });
+  capturePatternExportedAsPdf() {
+    this.#capture("pattern_exported_as_pdf");
   }
 
-  capturePatternPdfUpdated(color: boolean) {
-    this.#capture("pattern_pdf_updated", { color });
+  capturePatternPdfUpdated() {
+    this.#capture("pattern_pdf_updated");
   }
 
   captureReferenceImageSet(file: File) {

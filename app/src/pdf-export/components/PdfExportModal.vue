@@ -4,8 +4,6 @@ import {
   BlockUI,
   Button,
   Dialog,
-  DropdownMenu,
-  FormFieldGroup,
   Pagination,
   Progress,
   Splitter,
@@ -16,22 +14,12 @@ import {
   useToast,
   Separator,
 } from "@embroiderly/ui";
-import type { DropdownMenuItem } from "@embroiderly/ui";
 
 import { refAutoReset, useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
 import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick, useTemplateRef } from "vue";
 
-import {
-  IconCheck,
-  IconChevronDown,
-  IconCode,
-  IconColors,
-  IconDownload,
-  IconLineWrapping,
-  IconSplitView,
-  IconVisibility,
-} from "~/assets/icons/";
+import { IconCheck, IconCode, IconDownload, IconLineWrapping, IconSplitView, IconVisibility } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { PatternPdf } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
@@ -71,19 +59,6 @@ const isDark = computed(() => {
     ? window.matchMedia("(prefers-color-scheme: dark)").matches
     : settingsStore.ui.theme === "dark";
 });
-
-const exportItems = computed<DropdownMenuItem[][]>(() => [
-  [
-    {
-      label: fluent.$t("pdf-export-export-document-monochrome"),
-      onSelect: () => exportDocument(new PatternPdf({ ...pdf.value, color: false })),
-    },
-    {
-      label: fluent.$t("pdf-export-export-document-color"),
-      onSelect: () => exportDocument(new PatternPdf({ ...pdf.value, color: true })),
-    },
-  ],
-]);
 
 let forceClosing = false;
 watch(open, async (value) => {
@@ -131,7 +106,7 @@ const exportInProgress = ref(false);
 const documentExported = refAutoReset(false, 1000);
 async function exportDocument(pdf: PatternPdf) {
   const handle = await filePicker.save({
-    suggestedName: `${patternStore.pattern.info.title ?? "pattern"}.${pdf.color ? "color" : "monochrome"}.pdf`,
+    suggestedName: `${patternStore.pattern.info.title ?? "pattern"}.pdf`,
     types: filePicker.filters.pdf,
     id: filePicker.ids.pdf,
   });
@@ -154,7 +129,7 @@ async function exportDocument(pdf: PatternPdf) {
 
     documentExported.value = true;
 
-    MetricsService.capturePatternExportedAsPdf(pdf.color);
+    MetricsService.capturePatternExportedAsPdf();
   } catch (err) {
     LoggerService.error(`Failed to export pattern as PDF: ${err}`);
     toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
@@ -262,20 +237,12 @@ onUnmounted(() => service.destroy());
           />
         </div>
 
-        <div :class="$style.toolbarGroup">
-          <ToolToggle v-model="pdf.color" :icon="IconColors" :tooltip="$t('pdf-export-color')" />
-          <FormFieldGroup>
-            <Button
-              :loading="exportInProgress"
-              :icon="documentExported ? IconCheck : IconDownload"
-              :label="$t('pdf-export-export-document')"
-              @click="exportDocument(pdf)"
-            />
-            <DropdownMenu :items="exportItems" :modal="false" :content="{ align: 'end' }">
-              <Button :disabled="exportInProgress" :icon="IconChevronDown" />
-            </DropdownMenu>
-          </FormFieldGroup>
-        </div>
+        <Button
+          :loading="exportInProgress"
+          :icon="documentExported ? IconCheck : IconDownload"
+          :label="$t('pdf-export-export-document')"
+          @click="exportDocument(pdf)"
+        />
       </div>
 
       <Splitter direction="horizontal">
