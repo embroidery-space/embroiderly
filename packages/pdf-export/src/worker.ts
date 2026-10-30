@@ -19,8 +19,8 @@ export class PdfExporterWrapper {
     return this.#exporter.compileDocument(patternPdf);
   }
 
-  export(patternPdf: Uint8Array): CompilationOutput<Uint8Array> {
-    const { output, diagnostics } = this.#exporter.export(patternPdf) as CompilationOutput<number[]>;
+  export(): CompilationOutput<Uint8Array> {
+    const { output, diagnostics } = this.#exporter.export() as CompilationOutput<number[]>;
     return { output: output === null ? null : new Uint8Array(output), diagnostics };
   }
 

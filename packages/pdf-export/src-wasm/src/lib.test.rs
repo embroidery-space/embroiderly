@@ -24,11 +24,13 @@ fn load_fonts() -> Vec<Vec<u8>> {
 
 #[test]
 fn exports_pattern() {
-  let worker = PdfExporter::init(load_fixture(), load_fonts());
+  let mut worker = PdfExporter::init(load_fixture(), load_fonts());
 
-  let CompilationOutput { output, diagnostics } = worker.export_impl(PatternPdf::default());
+  let CompilationOutput { output, diagnostics } = worker.compile_document_impl(PatternPdf::default());
 
-  assert!(output.is_some());
+  worker.doc = output;
+
+  assert!(worker.doc.as_ref().is_some_and(|doc| doc.pages().len() == 13));
   assert!(diagnostics.is_empty());
 
   insta::with_settings!(
@@ -37,7 +39,7 @@ fn exports_pattern() {
       prepend_module_to_snapshot => false,
       omit_expression => true
     },
-    { insta::assert_binary_snapshot!("piggies.pdf", output.unwrap()); }
+    { insta::assert_binary_snapshot!("piggies.pdf", worker.export_impl().output.unwrap()); }
   );
 }
 

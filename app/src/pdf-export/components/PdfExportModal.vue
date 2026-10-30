@@ -104,7 +104,7 @@ async function updatePreview(options?: { pdf?: PatternPdf; page?: number }) {
 
 const exportInProgress = ref(false);
 const documentExported = refAutoReset(false, 1000);
-async function exportDocument(pdf: PatternPdf) {
+async function exportDocument() {
   const handle = await filePicker.save({
     suggestedName: `${patternStore.pattern.info.title ?? "pattern"}.pdf`,
     types: filePicker.filters.pdf,
@@ -115,7 +115,7 @@ async function exportDocument(pdf: PatternPdf) {
   try {
     exportInProgress.value = true;
 
-    const { output, diagnostics } = await service.export(PatternPdf.serialize(pdf));
+    const { output, diagnostics } = await service.export();
     if (output === null) {
       LoggerService.error(`Failed to export pattern as PDF: ${diagnostics}`);
       toast.add({ color: "error", title: fluent.$t("pattern-export-failure"), duration: 3000 });
@@ -241,7 +241,7 @@ onUnmounted(() => service.destroy());
           :loading="exportInProgress"
           :icon="documentExported ? IconCheck : IconDownload"
           :label="$t('pdf-export-export-document')"
-          @click="exportDocument(pdf)"
+          @click="exportDocument"
         />
       </div>
 

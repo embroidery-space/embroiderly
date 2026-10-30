@@ -5,7 +5,7 @@ export class PdfExporter {
     free(): void;
     [Symbol.dispose](): void;
     compileDocument(pattern_pdf: Uint8Array): any;
-    export(pattern_pdf: Uint8Array): any;
+    export(): any;
     constructor(embproj: Uint8Array, font_data: Uint8Array[]);
     preview(page: number): RenderedPage | undefined;
 }
@@ -31,7 +31,7 @@ export interface InitOutput {
     readonly __wbg_set_renderedpage_height: (a: number, b: number) => void;
     readonly __wbg_set_renderedpage_width: (a: number, b: number) => void;
     readonly pdfexporter_compileDocument: (a: number, b: number, c: number) => [number, number, number];
-    readonly pdfexporter_export: (a: number, b: number, c: number) => [number, number, number];
+    readonly pdfexporter_export: (a: number) => [number, number, number];
     readonly pdfexporter_new: (a: number, b: number, c: number, d: number) => [number, number, number];
     readonly pdfexporter_preview: (a: number, b: number) => number;
     readonly renderedpage_len: (a: number) => number;
