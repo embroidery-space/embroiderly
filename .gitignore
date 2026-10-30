@@ -3,13 +3,14 @@
 target/
 logs/
 gen/
-pkg/
+
+**/pkg/*
+!**/pkg/*.d.ts
 
 node_modules/
 
 cache/
 dist/
-pkg/
 
 .env
 !.env.example

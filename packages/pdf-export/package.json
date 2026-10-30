@@ -9,8 +9,8 @@
     }
   },
   "scripts": {
-    "wasm:build": "wasm-pack build src-wasm --release --target web --out-dir pkg",
-    "wasm:build-dev": "wasm-pack build src-wasm --dev --target web --out-dir pkg",
+    "wasm:build": "wasm-pack build src-wasm --release --target web --out-dir pkg --no-gitignore",
+    "wasm:build-dev": "wasm-pack build src-wasm --dev --target web --out-dir pkg --no-gitignore",
     "check-types": "tsc -b --noEmit"
   },
   "dependencies": {
