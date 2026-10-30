@@ -1,6 +1,6 @@
 use anyhow::Result;
 use embroiderly_pattern::{EmbroiderlyProject, PatternPdf};
-use typst::foundations::{Bytes, Dict, IntoValue as _, Value};
+use typst::foundations::{Bytes, Dict, Value};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
 use typst_layout::PagedDocument;
@@ -93,11 +93,10 @@ impl PdfExporter {
   }
 
   fn compile_document_impl(&self, pattern_pdf: PatternPdf) -> CompilationOutput<PagedDocument> {
-    let PatternPdf { template, color } = pattern_pdf;
+    let PatternPdf { template } = pattern_pdf;
     let inputs = {
       let mut inputs = Dict::new();
 
-      inputs.insert("color".into(), color.into_value());
       inputs.insert("pattern".into(), self.embproj.clone());
 
       inputs
