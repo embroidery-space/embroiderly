@@ -1690,7 +1690,6 @@ dependencies = [
  "embroiderly_pattern",
  "insta",
  "js-sys",
- "rstest",
  "serde",
  "serde-wasm-bindgen",
  "typst",

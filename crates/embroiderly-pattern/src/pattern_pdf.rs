@@ -5,8 +5,6 @@
 pub struct PatternPdf {
   /// The Typst template.
   pub template: String,
-  /// Whether the document is black-and-white (monochrome) or color.
-  pub color: bool,
 }
 
 impl Default for PatternPdf {
@@ -15,7 +13,6 @@ impl Default for PatternPdf {
       template: String::from(include_str!(
         "../../../packages/pdf-export/src-wasm/src/typst/pattern.typ"
       )),
-      color: true,
     }
   }
 }

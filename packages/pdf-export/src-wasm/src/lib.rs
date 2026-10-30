@@ -1,6 +1,6 @@
 use anyhow::Result;
 use embroiderly_pattern::{EmbroiderlyProject, PatternPdf};
-use typst::foundations::{Bytes, Dict, IntoValue as _, Value};
+use typst::foundations::{Bytes, Dict, Value};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
 use typst_layout::PagedDocument;
@@ -58,9 +58,8 @@ impl PdfExporter {
   }
 
   #[wasm_bindgen]
-  pub fn export(&self, pattern_pdf: &[u8]) -> Result<JsValue, JsError> {
-    let pattern_pdf = borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?;
-    Ok(serde_wasm_bindgen::to_value(&self.export_impl(pattern_pdf))?)
+  pub fn export(&self) -> Result<JsValue, JsError> {
+    Ok(serde_wasm_bindgen::to_value(&self.export_impl())?)
   }
 
   #[wasm_bindgen]
@@ -93,11 +92,10 @@ impl PdfExporter {
   }
 
   fn compile_document_impl(&self, pattern_pdf: PatternPdf) -> CompilationOutput<PagedDocument> {
-    let PatternPdf { template, color } = pattern_pdf;
+    let PatternPdf { template } = pattern_pdf;
     let inputs = {
       let mut inputs = Dict::new();
 
-      inputs.insert("color".into(), color.into_value());
       inputs.insert("pattern".into(), self.embproj.clone());
 
       inputs
@@ -128,20 +126,16 @@ impl PdfExporter {
     }
   }
 
-  fn export_impl(&self, pattern_pdf: PatternPdf) -> CompilationOutput<Vec<u8>> {
-    let CompilationOutput {
-      output: doc,
-      diagnostics,
-    } = self.compile_document_impl(pattern_pdf);
-    if doc.is_none() {
+  fn export_impl(&self) -> CompilationOutput<Vec<u8>> {
+    if self.doc.is_none() {
       return CompilationOutput {
         output: None,
-        diagnostics,
+        diagnostics: Vec::new(),
       };
     }
 
     let result = typst_pdf::pdf(
-      &doc.unwrap(),
+      self.doc.as_ref().unwrap(),
       &typst_pdf::PdfOptions {
         creator: typst::foundations::Smart::Custom(Some(format!("Embroiderly {}", env!("CARGO_PKG_VERSION")))),
         standards: typst_pdf::PdfStandards::new(&[typst_pdf::PdfStandard::V_2_0])

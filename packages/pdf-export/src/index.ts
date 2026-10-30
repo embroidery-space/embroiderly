@@ -36,9 +36,9 @@ export class PdfExportService {
     return await this.#exporter.compileDocument(patternPdf);
   }
 
-  async export(patternPdf: Uint8Array) {
+  async export() {
     if (!this.#exporter) throw new Error("PDF Export service has been destroyed");
-    return await this.#exporter.export(patternPdf);
+    return await this.#exporter.export();
   }
 
   async preview(page: number) {
