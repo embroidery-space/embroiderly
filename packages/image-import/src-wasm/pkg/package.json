@@ -1,0 +1,15 @@
+{
+  "name": "embroiderly_image_import",
+  "type": "module",
+  "version": "0.8.0",
+  "files": [
+    "embroiderly_image_import_bg.wasm",
+    "embroiderly_image_import.js",
+    "embroiderly_image_import.d.ts"
+  ],
+  "main": "embroiderly_image_import.js",
+  "types": "embroiderly_image_import.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

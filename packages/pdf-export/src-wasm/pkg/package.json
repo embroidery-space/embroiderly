@@ -1,0 +1,15 @@
+{
+  "name": "embroiderly_pdf_export",
+  "type": "module",
+  "version": "0.8.0",
+  "files": [
+    "embroiderly_pdf_export_bg.wasm",
+    "embroiderly_pdf_export.js",
+    "embroiderly_pdf_export.d.ts"
+  ],
+  "main": "embroiderly_pdf_export.js",
+  "types": "embroiderly_pdf_export.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

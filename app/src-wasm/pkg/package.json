@@ -1,0 +1,15 @@
+{
+  "name": "embroiderly_wasm",
+  "type": "module",
+  "version": "0.8.0",
+  "files": [
+    "embroiderly_wasm_bg.wasm",
+    "embroiderly_wasm.js",
+    "embroiderly_wasm.d.ts"
+  ],
+  "main": "embroiderly_wasm.js",
+  "types": "embroiderly_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
