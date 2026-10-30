@@ -359,6 +359,7 @@
 // Paginates the pattern and returns one fit-to-page content block per frame.
 #let render-frames(
   pattern,
+  color: true,
   frame-size: (30, 40),
   preserved-overlap: 3,
   show-grid-line-numbers: true,
@@ -373,7 +374,7 @@
       let (frame, w, h) = draw-frame(
         pattern,
         bounds,
-        color: sys.inputs.at("color", default: true),
+        color: color,
         preserved-overlap: preserved-overlap,
         show-grid-line-numbers: show-grid-line-numbers,
         show-centering-marks: show-centering-marks,

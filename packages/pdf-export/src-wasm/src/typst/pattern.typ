@@ -61,14 +61,15 @@
   },
 )
 
-// Pattern frames.
-#let frames = render-frames(
-  pattern,
-  frame-size: (30, 40),
-  preserved-overlap: 3,
-  show-grid-line-numbers: true,
-  show-centering-marks: true,
-)
+// Color pattern frames.
+#let frames = render-frames(pattern, color: true)
+#for (i, frame) in frames.enumerate(start: 1) {
+  pagebreak(weak: true)
+  figure(frame, numbering: none, caption: [Frame #i/#frames.len()])
+}
+
+// Monochrome pattern frames.
+#let frames = render-frames(pattern, color: false)
 #for (i, frame) in frames.enumerate(start: 1) {
   pagebreak(weak: true)
   figure(frame, numbering: none, caption: [Frame #i/#frames.len()])
