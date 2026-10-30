@@ -3,13 +3,16 @@
 target/
 logs/
 gen/
-pkg/
+
+**/pkg/*
+!**/pkg/*.d.ts
+!**/pkg/package.json
+**/pkg/*.wasm.d.ts
 
 node_modules/
 
 cache/
 dist/
-pkg/
 
 .env
 !.env.example
