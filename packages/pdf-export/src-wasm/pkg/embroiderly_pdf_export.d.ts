@@ -4,7 +4,7 @@
 export class PdfExporter {
     free(): void;
     [Symbol.dispose](): void;
-    compileDocument(pattern_pdf: Uint8Array): any;
+    compileDocument(template: string): any;
     export(): any;
     constructor(embproj: Uint8Array, font_data: Uint8Array[]);
     preview(page: number): RenderedPage | undefined;

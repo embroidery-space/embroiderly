@@ -75,9 +75,8 @@ watch(open, async (value) => {
 });
 
 watch(
-  pdf,
-  useDebounceFn((pdf) => updatePreview({ pdf, page: currentPage.value }), 1000),
-  { deep: true },
+  () => pdf.value.template,
+  useDebounceFn((template) => updatePreview({ template, page: currentPage.value }), 1000),
 );
 watch(
   currentPage,
@@ -85,11 +84,11 @@ watch(
 );
 
 const previewInProgress = ref(false);
-async function updatePreview(options?: { pdf?: PatternPdf; page?: number }) {
+async function updatePreview(options?: { template?: string; page?: number }) {
   previewInProgress.value = true;
   try {
-    if (options?.pdf !== undefined) {
-      const { output, diagnostics } = await service.compileDocument(PatternPdf.serialize(options.pdf));
+    if (options?.template !== undefined) {
+      const { output, diagnostics } = await service.compileDocument(options.template);
       if (output !== null) totalPages.value = output;
 
       typstEditor.value?.setDiagnostics(diagnostics);
@@ -196,7 +195,7 @@ onMounted(async () => {
 
   await service.init(canvas.value!.transferControlToOffscreen(), patternData, fontData);
 
-  await updatePreview({ pdf: pdf.value, page: currentPage.value });
+  await updatePreview({ template: pdf.value.template, page: currentPage.value });
 });
 
 onUnmounted(() => service.destroy());

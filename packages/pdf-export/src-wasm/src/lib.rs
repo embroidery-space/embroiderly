@@ -1,5 +1,4 @@
 use anyhow::Result;
-use embroiderly_pattern::{EmbroiderlyProject, PatternPdf};
 use typst::foundations::{Bytes, Dict, Value};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
@@ -37,10 +36,8 @@ impl PdfExporter {
   }
 
   #[wasm_bindgen(js_name = "compileDocument")]
-  pub fn compile_document(&mut self, pattern_pdf: &[u8]) -> Result<JsValue, JsError> {
-    let pattern_pdf = borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?;
-
-    let CompilationOutput { output, diagnostics } = self.compile_document_impl(pattern_pdf);
+  pub fn compile_document(&mut self, template: String) -> Result<JsValue, JsError> {
+    let CompilationOutput { output, diagnostics } = self.compile_document_impl(template);
     let total_pages = if let Some(doc) = output {
       let total_pages = doc.pages().len();
 
@@ -70,7 +67,7 @@ impl PdfExporter {
 
 impl PdfExporter {
   #[must_use]
-  pub fn init(embproj: EmbroiderlyProject, font_data: impl IntoIterator<Item = Vec<u8>>) -> Self {
+  pub fn init(embproj: embroiderly_pattern::EmbroiderlyProject, font_data: impl IntoIterator<Item = Vec<u8>>) -> Self {
     let mut fonts = Vec::new();
     let mut font_book = FontBook::new();
 
@@ -91,8 +88,7 @@ impl PdfExporter {
     }
   }
 
-  fn compile_document_impl(&self, pattern_pdf: PatternPdf) -> CompilationOutput<PagedDocument> {
-    let PatternPdf { template } = pattern_pdf;
+  fn compile_document_impl(&self, template: String) -> CompilationOutput<PagedDocument> {
     let inputs = {
       let mut inputs = Dict::new();
 

@@ -26,7 +26,7 @@ fn load_fonts() -> Vec<Vec<u8>> {
 fn exports_pattern() {
   let mut worker = PdfExporter::init(load_fixture(), load_fonts());
 
-  let CompilationOutput { output, diagnostics } = worker.compile_document_impl(PatternPdf::default());
+  let CompilationOutput { output, diagnostics } = worker.compile_document_impl(PatternPdf::default().template);
 
   worker.doc = output;
 
@@ -47,7 +47,7 @@ fn exports_pattern() {
 fn previews_pattern() {
   let mut worker = PdfExporter::init(load_fixture(), load_fonts());
 
-  let CompilationOutput { output, diagnostics } = worker.compile_document_impl(PatternPdf::default());
+  let CompilationOutput { output, diagnostics } = worker.compile_document_impl(PatternPdf::default().template);
 
   worker.doc = output;
 

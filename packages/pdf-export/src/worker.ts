@@ -15,8 +15,8 @@ export class PdfExporterWrapper {
     this.#exporter = new PdfExporter(patternData, fontData);
   }
 
-  compileDocument(patternPdf: Uint8Array): CompilationOutput<number> {
-    return this.#exporter.compileDocument(patternPdf);
+  compileDocument(template: string): CompilationOutput<number> {
+    return this.#exporter.compileDocument(template);
   }
 
   export(): CompilationOutput<Uint8Array> {
