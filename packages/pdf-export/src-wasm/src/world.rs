@@ -1,7 +1,7 @@
 use std::sync::LazyLock;
 
 use typst::diag::{FileError, FileResult};
-use typst::foundations::{Bytes, Datetime, Dict};
+use typst::foundations::{Bytes, Datetime, Dict, Duration};
 use typst::syntax::{FileId, RootedPath, Source, VirtualPath, VirtualRoot};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
@@ -64,7 +64,14 @@ impl typst::World for PdfExportWorld<'_> {
     self.fonts.get(index).cloned()
   }
 
-  fn today(&self, _offset: Option<typst::foundations::Duration>) -> Option<Datetime> {
-    None
+  fn today(&self, offset: Option<Duration>) -> Option<Datetime> {
+    let now = match offset {
+      Some(offset) => {
+        let utc = time::OffsetDateTime::now_utc();
+        utc.checked_add(offset.into())?
+      }
+      None => time::OffsetDateTime::now_local().ok()?,
+    };
+    Some(Datetime::Datetime(time::PrimitiveDateTime::new(now.date(), now.time())))
   }
 }

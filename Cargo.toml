@@ -154,6 +154,9 @@ web-sys = "0.3.95"
 # Iterator utilities
 itertools = "0.15.0"
 
+# Time utilities
+time = "0.3.55"
+
 # Testing utilities
 rstest = "0.27.0"
 insta = "1.49.0"
