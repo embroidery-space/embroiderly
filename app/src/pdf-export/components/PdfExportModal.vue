@@ -19,15 +19,28 @@ import { refAutoReset, useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
 import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick, useTemplateRef } from "vue";
 
-import { IconCheck, IconCode, IconDownload, IconLineWrapping, IconSplitView, IconVisibility } from "~/assets/icons/";
+import {
+  IconCheck,
+  IconCode,
+  IconDownload,
+  IconFileStorage,
+  IconLineWrapping,
+  IconSplitView,
+  IconVisibility,
+} from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
-import { PatternPdf } from "~/lib/pattern/";
+import { PatternPdf, PdfAsset } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
 import { useSettingsStore } from "~/settings/";
 import { usePatternStore } from "~/stores/";
 
-import { useTypstEditorStateStore, TypstEditorViewMode } from "../stores/useTypstEditorStateStore.ts";
+import {
+  useTypstEditorStateStore,
+  TypstEditorViewMode,
+  TypstEditorAsideBlock,
+} from "../stores/useTypstEditorStateStore.ts";
 
+import TypstAssets from "./TypstAssets.vue";
 import TypstEditor from "./TypstEditor.vue";
 
 const open = defineModel<boolean>("open", { default: false });
@@ -48,7 +61,7 @@ const service = new PdfExportService();
 const typstEditor = useTemplateRef("typst-editor");
 const canvas = useTemplateRef("canvas");
 
-const pdf = ref(new PatternPdf(toRaw(patternStore.pattern.pdf)));
+const pdf = ref(new PatternPdf(structuredClone(toRaw(patternStore.pattern.pdf))));
 const isDirty = computed(() => !isEqual(patternStore.pattern.pdf, pdf.value));
 
 const totalPages = ref<number>();
@@ -184,16 +197,32 @@ async function loadFonts(fonts: string[]) {
 
   return succeededFonts;
 }
+async function addCustomFonts(fonts: PdfAsset[]) {
+  await service.addCustomFonts(fonts.map((f) => f.content));
+  await updatePreview({ template: pdf.value.template, page: currentPage.value });
+  pdf.value.customFonts.push(...fonts);
+}
+
+async function removeCustomFont(index: number) {
+  await service.removeCustomFont(index);
+  await updatePreview({ template: pdf.value.template, page: currentPage.value });
+  pdf.value.customFonts.splice(index, 1);
+}
 
 onMounted(async () => {
-  const patternData = await patternEditor.loadPattern(patternStore.pattern.id);
-  const fontData = await loadFonts([
+  const pattern = await patternEditor.loadPattern(patternStore.pattern.id);
+  const baseFonts = await loadFonts([
     "/fonts/FixelVariable.ttf",
     "/fonts/FixelVariableItalic.ttf",
     ...patternStore.pattern.palette.usedSymbolFonts,
   ]);
 
-  await service.init(canvas.value!.transferControlToOffscreen(), patternData, fontData);
+  await service.init(
+    canvas.value!.transferControlToOffscreen(),
+    pattern,
+    baseFonts,
+    toRaw(pdf.value.customFonts).map((f) => f.content),
+  );
 
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
 });
@@ -204,6 +233,24 @@ onUnmounted(() => service.destroy());
 <template>
   <Dialog v-model:open="open" fullscreen :dismissible="false" :title="$t('pdf-export')" :class="$style.dialog">
     <template #body>
+      <div :class="$style.aside">
+        <ToolToggle
+          :model-value="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Assets"
+          :icon="IconFileStorage"
+          :tooltip="$t('pdf-export-assets')"
+          :tooltip-options="{ side: 'right' }"
+          @update:model-value="typstEditorStateStore.toggleAsideBlock(TypstEditorAsideBlock.Assets)"
+        />
+      </div>
+
+      <TypstAssets
+        v-if="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Assets"
+        :fonts="pdf.customFonts"
+        :class="$style.assets"
+        @add-fonts="addCustomFonts"
+        @remove-font="removeCustomFont"
+      />
+
       <div :class="$style.toolbar">
         <div :class="$style.toolbarGroup">
           <ToolToggleGroup
@@ -244,7 +291,7 @@ onUnmounted(() => service.destroy());
         />
       </div>
 
-      <Splitter direction="horizontal">
+      <Splitter direction="horizontal" :class="$style.splitter">
         <SplitterPanel v-show="typstEditorStateStore.viewMode !== TypstEditorViewMode.Preview" :min-size="10">
           <TypstEditor
             ref="typst-editor"
@@ -287,13 +334,14 @@ onUnmounted(() => service.destroy());
 <style module>
 .dialog[data-slot="content"] > [data-slot="body"] {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template: "aside settings toolbar" auto "aside settings main" 1fr / auto auto 1fr;
 
   padding: 0;
 }
 
 .toolbar {
   display: flex;
+  grid-area: toolbar;
   align-items: center;
   justify-content: space-between;
 
@@ -307,6 +355,30 @@ onUnmounted(() => service.destroy());
   align-items: center;
 
   height: 100%;
+}
+
+.aside {
+  display: flex;
+  grid-area: aside;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 1);
+
+  height: 100%;
+  padding: calc(var(--spacing) * 1);
+  border-right: 1px solid var(--border-color-default);
+}
+
+.assets {
+  grid-area: settings;
+
+  width: var(--container-3xs);
+  height: 100%;
+  padding: calc(var(--spacing) * 1);
+  border-right: 1px solid var(--border-color-default);
+}
+
+.splitter {
+  grid-area: main;
 }
 
 .preview-panel {

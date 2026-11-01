@@ -1,7 +1,8 @@
 use anyhow::Result;
-use typst::foundations::{Bytes, Dict, Value};
+use typst::foundations::{Bytes, Dict};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
+use typst::{Library, LibraryExt as _};
 use typst_layout::PagedDocument;
 use wasm_bindgen::prelude::*;
 
@@ -14,25 +15,45 @@ mod tests;
 
 #[wasm_bindgen]
 pub struct PdfExporter {
-  /// The target pattern for export.
-  embproj: Value,
+  /// The app text font (Fixel) and symbol fonts used in the pattern.
+  base_fonts: Vec<Font>,
+  /// Fonts the user has uploaded manually.
+  custom_fonts: Vec<Font>,
 
-  /// An array of fonts (both text and symbol) used in the document.
-  fonts: Vec<Font>,
   /// Pre-built font book metadata.
   font_book: LazyHash<FontBook>,
+  /// Pre-build standard library with inputs.
+  library: LazyHash<Library>,
 
-  /// The working document used for previewing.
+  /// The working document.
   doc: Option<PagedDocument>,
 }
 
 #[wasm_bindgen]
 impl PdfExporter {
   #[wasm_bindgen(constructor)]
-  pub fn new(embproj: &[u8], font_data: Vec<js_sys::Uint8Array>) -> Result<Self, JsError> {
+  pub fn new(
+    embproj: &[u8],
+    base_fonts: Vec<js_sys::Uint8Array>,
+    custom_fonts: Vec<js_sys::Uint8Array>,
+  ) -> Result<Self, JsError> {
     let embproj = borsh::from_slice(embproj).map_err(|e| JsError::new(&e.to_string()))?;
-    let font_data = font_data.into_iter().map(|js_array| js_array.to_vec());
-    Ok(Self::init(embproj, font_data))
+
+    let base_fonts = base_fonts.into_iter().map(|js_array| js_array.to_vec());
+    let custom_fonts = custom_fonts.into_iter().map(|js_array| js_array.to_vec());
+
+    Ok(Self::init(embproj, base_fonts, custom_fonts))
+  }
+
+  #[wasm_bindgen(js_name = "addCustomFonts")]
+  pub fn add_custom_fonts(&mut self, fonts: Vec<js_sys::Uint8Array>) {
+    let fonts = fonts.into_iter().map(|js_array| js_array.to_vec());
+    self.add_custom_fonts_impl(fonts);
+  }
+
+  #[wasm_bindgen(js_name = "removeCustomFont")]
+  pub fn remove_custom_font(&mut self, index: usize) {
+    self.remove_custom_font_impl(index);
   }
 
   #[wasm_bindgen(js_name = "compileDocument")]
@@ -67,37 +88,61 @@ impl PdfExporter {
 
 impl PdfExporter {
   #[must_use]
-  pub fn init(embproj: embroiderly_pattern::EmbroiderlyProject, font_data: impl IntoIterator<Item = Vec<u8>>) -> Self {
-    let mut fonts = Vec::new();
-    let mut font_book = FontBook::new();
+  fn init(
+    embproj: embroiderly_pattern::EmbroiderlyProject,
+    base_fonts: impl IntoIterator<Item = Vec<u8>>,
+    custom_fonts: impl IntoIterator<Item = Vec<u8>>,
+  ) -> Self {
+    let base_fonts: Vec<Font> = base_fonts
+      .into_iter()
+      .flat_map(|buf| Font::iter(Bytes::new(buf)))
+      .collect();
+    let custom_fonts: Vec<Font> = custom_fonts
+      .into_iter()
+      .flat_map(|buf| Font::iter(Bytes::new(buf)))
+      .collect();
 
-    for fd in font_data {
-      for font in Font::iter(Bytes::new(fd)) {
-        font_book.push(font.info().clone());
-        fonts.push(font);
-      }
-    }
+    let font_book = FontBook::from_fonts(base_fonts.iter().chain(&custom_fonts));
+    let library = Library::builder()
+      .with_inputs({
+        let mut inputs = Dict::new();
+
+        inputs.insert("pattern".into(), conversion::convert_embproj_into_typst_value(embproj));
+
+        inputs
+      })
+      .build();
 
     Self {
-      embproj: conversion::convert_embproj_into_typst_value(embproj),
+      base_fonts,
+      custom_fonts,
 
-      fonts,
       font_book: LazyHash::new(font_book),
+      library: LazyHash::new(library),
 
       doc: None,
     }
   }
 
+  fn add_custom_fonts_impl(&mut self, fonts: impl IntoIterator<Item = Vec<u8>>) {
+    self
+      .custom_fonts
+      .extend(fonts.into_iter().flat_map(|buf| Font::iter(Bytes::new(buf))));
+    self.font_book = LazyHash::new(FontBook::from_fonts(self.base_fonts.iter().chain(&self.custom_fonts)));
+  }
+
+  fn remove_custom_font_impl(&mut self, index: usize) {
+    self.custom_fonts.remove(index);
+    self.font_book = LazyHash::new(FontBook::from_fonts(self.base_fonts.iter().chain(&self.custom_fonts)));
+  }
+
   fn compile_document_impl(&self, template: String) -> CompilationOutput<PagedDocument> {
-    let inputs = {
-      let mut inputs = Dict::new();
-
-      inputs.insert("pattern".into(), self.embproj.clone());
-
-      inputs
-    };
-
-    let world = world::PdfExportWorld::new(template, inputs, &self.fonts, &self.font_book);
+    let world = world::PdfExportWorld::new(
+      template,
+      (&self.base_fonts, &self.custom_fonts),
+      &self.font_book,
+      &self.library,
+    );
     let typst::diag::Warned {
       output: result,
       warnings,

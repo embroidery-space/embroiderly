@@ -582,12 +582,18 @@ pdf-export-view-mode-preview = Preview
 
 pdf-export-line-wrapping = Line wrapping
 
-pdf-export-color = Color export
-
 pdf-export-save-template = Save Template
 pdf-export-export-document = Export Document
-pdf-export-export-document-monochrome = Export black and white document
-pdf-export-export-document-color = Export color document
+
+pdf-export-assets = Assets
+pdf-export-assets-fonts = Fonts
+
+pdf-export-assets-add-fonts = Add fonts
+pdf-export-assets-remove-file = Remove file
+
+pdf-export-assets-file-removal =
+  .title = Confirm removal
+  .description = Do you really want to remove the { $fileName } file?
 
 pdf-export-unsaved-changes =
   .title = Unsaved Changes

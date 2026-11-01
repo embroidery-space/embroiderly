@@ -586,12 +586,18 @@ pdf-export-view-mode-preview = Преʼю
 
 pdf-export-line-wrapping = Перенесення рядків
 
-pdf-export-color = Кольоровий експорт
-
 pdf-export-save-template = Зберегти шаблон
 pdf-export-export-document = Експортувати документ
-pdf-export-export-document-monochrome = Експортувати чорно-білий документ
-pdf-export-export-document-color = Експортувати кольоровий документ
+
+pdf-export-assets = Ресурси
+pdf-export-assets-fonts = Шрифти
+
+pdf-export-assets-add-fonts = Додати шрифти
+pdf-export-assets-remove-file = Видалити файл
+
+pdf-export-assets-file-removal =
+  .title = Підтвердіть видалення
+  .description = Ви дійсно хочете видалити файл { $fileName }?
 
 pdf-export-unsaved-changes =
   .title = Незбережені зміни

@@ -4,10 +4,12 @@
 export class PdfExporter {
     free(): void;
     [Symbol.dispose](): void;
+    addCustomFonts(fonts: Uint8Array[]): void;
     compileDocument(template: string): any;
     export(): any;
-    constructor(embproj: Uint8Array, font_data: Uint8Array[]);
+    constructor(embproj: Uint8Array, base_fonts: Uint8Array[], custom_fonts: Uint8Array[]);
     preview(page: number): RenderedPage | undefined;
+    removeCustomFont(index: number): void;
 }
 
 export class RenderedPage {
@@ -30,17 +32,19 @@ export interface InitOutput {
     readonly __wbg_renderedpage_free: (a: number, b: number) => void;
     readonly __wbg_set_renderedpage_height: (a: number, b: number) => void;
     readonly __wbg_set_renderedpage_width: (a: number, b: number) => void;
+    readonly pdfexporter_addCustomFonts: (a: number, b: number, c: number) => void;
     readonly pdfexporter_compileDocument: (a: number, b: number, c: number) => [number, number, number];
     readonly pdfexporter_export: (a: number) => [number, number, number];
-    readonly pdfexporter_new: (a: number, b: number, c: number, d: number) => [number, number, number];
+    readonly pdfexporter_new: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number, number];
     readonly pdfexporter_preview: (a: number, b: number) => number;
+    readonly pdfexporter_removeCustomFont: (a: number, b: number) => void;
     readonly renderedpage_len: (a: number) => number;
     readonly renderedpage_ptr: (a: number) => number;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
     readonly __wbindgen_externrefs: WebAssembly.Table;
-    readonly __externref_table_dealloc: (a: number) => void;
     readonly __externref_table_alloc: () => number;
+    readonly __externref_table_dealloc: (a: number) => void;
     readonly __wbindgen_start: () => void;
 }
 

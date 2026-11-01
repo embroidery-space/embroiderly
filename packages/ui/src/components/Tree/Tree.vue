@@ -204,7 +204,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
             <Icon v-if="item.icon" :name="item.icon" data-slot="item-leading-icon" :class="$style.itemLeadingIcon" />
           </slot>
 
-          <span data-slot="item-label" :class="$style.itemLabel">
+          <span data-slot="item-label" :title="item.label" :class="$style.itemLabel">
             <slot
               name="item-label"
               :item="item"
