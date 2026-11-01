@@ -155,7 +155,7 @@ web-sys = "0.3.95"
 itertools = "0.15.0"
 
 # Testing utilities
-rstest = "0.27.0"
+rstest = "0.28.0"
 insta = "1.49.0"
 
 # Other
