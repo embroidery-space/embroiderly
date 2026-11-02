@@ -17,6 +17,10 @@ updates:
         update-types:
           - minor
           - patch
+    ignore:
+      # TanStack have changed the API significantly.
+      # We will review our implementation once we rework our shortcuts system.
+      - dependency-name: "@tanstack/vue-hotkeys"
     cooldown:
       default-days: 3
       semver-major-days: 7
