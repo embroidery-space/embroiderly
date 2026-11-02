@@ -1,8 +1,9 @@
 import { formatForDisplay } from "@tanstack/vue-hotkeys";
+import type { RegisterableHotkey } from "@tanstack/vue-hotkeys";
 
 /** Parses a shortcut string into display segments for `Kbd` components. */
 export function parseShortcutDisplay(shortcut: string) {
-  return splitShortcutKey(formatForDisplay(shortcut, { useSymbols: false }));
+  return splitShortcutKey(formatForDisplay(shortcut as RegisterableHotkey, { useSymbols: false }));
 }
 
 /**
