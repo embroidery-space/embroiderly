@@ -8,9 +8,9 @@ use typst::syntax::{FileId, Source};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
 
-static MAIN_ID: LazyLock<FileId> = LazyLock::new(|| crate::path::project_path("sources/main.typ".to_string()));
+static MAIN_ID: LazyLock<FileId> = LazyLock::new(|| crate::path::project_path("main.typ"));
 
-static DRAW_ID: LazyLock<FileId> = LazyLock::new(|| crate::path::project_path("sources/draw.typ".to_string()));
+static DRAW_ID: LazyLock<FileId> = LazyLock::new(|| crate::path::project_path("draw.typ"));
 static DRAW_SOURCE: LazyLock<Source> =
   LazyLock::new(|| Source::new(*DRAW_ID, include_str!("./typst/draw.typ").to_string()));
 

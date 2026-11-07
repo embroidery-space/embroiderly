@@ -101,12 +101,12 @@ impl PdfExporter {
   ) -> Self {
     let files: IndexMap<FileId, Bytes> = files
       .into_iter()
-      .map(|PdfAsset { file_name, content }| (path::project_path(format!("files/{file_name}")), Bytes::new(content)))
+      .map(|PdfAsset { file_name, content }| (path::project_path(file_name), Bytes::new(content)))
       .collect();
     let fonts: IndexMap<FileId, Font> = fonts
       .into_iter()
       .flat_map(|PdfAsset { file_name, content }| {
-        Font::iter(Bytes::new(content)).map(move |font| (path::project_path(format!("fonts/{file_name}")), font))
+        Font::iter(Bytes::new(content)).map(move |font| (path::project_path(&file_name), font))
       })
       .collect();
 
@@ -136,29 +136,25 @@ impl PdfExporter {
     self.files.extend(
       files
         .into_iter()
-        .map(|PdfAsset { file_name, content }| (path::project_path(format!("files/{file_name}")), Bytes::new(content))),
+        .map(|PdfAsset { file_name, content }| (path::project_path(file_name), Bytes::new(content))),
     );
   }
 
   fn remove_file_impl(&mut self, file_name: String) {
-    self
-      .files
-      .shift_remove(&path::project_path(format!("files/{file_name}")));
+    self.files.shift_remove(&path::project_path(file_name));
   }
 
   fn add_fonts_impl(&mut self, fonts: impl IntoIterator<Item = PdfAsset>) {
     self
       .fonts
       .extend(fonts.into_iter().flat_map(|PdfAsset { file_name, content }| {
-        Font::iter(Bytes::new(content)).map(move |font| (path::project_path(format!("fonts/{file_name}")), font))
+        Font::iter(Bytes::new(content)).map(move |font| (path::project_path(&file_name), font))
       }));
     self.font_book = LazyHash::new(FontBook::from_fonts(self.fonts.values()));
   }
 
   fn remove_font_impl(&mut self, file_name: String) {
-    self
-      .fonts
-      .shift_remove(&path::project_path(format!("fonts/{file_name}")));
+    self.fonts.shift_remove(&path::project_path(file_name));
     self.font_book = LazyHash::new(FontBook::from_fonts(self.fonts.values()));
   }
 
