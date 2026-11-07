@@ -1687,6 +1687,7 @@ dependencies = [
  "borsh",
  "embroiderly_parsers",
  "embroiderly_pattern",
+ "indexmap 2.14.0",
  "insta",
  "js-sys",
  "serde",

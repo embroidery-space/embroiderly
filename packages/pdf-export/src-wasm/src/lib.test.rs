@@ -1,57 +1,66 @@
 use super::*;
 
-fn load_pattern() -> embroiderly_pattern::EmbroiderlyProject {
+fn load_pattern() -> EmbroiderlyProject {
   let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/demo/Piggies.oxs");
   embroiderly_parsers::oxs::parse_pattern(&std::fs::read(file_path).unwrap()).unwrap()
 }
 
-fn load_fixel_normal_font() -> Vec<u8> {
-  std::fs::read(std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/fonts/FixelVariable.ttf"))
-    .unwrap()
+fn load_fixel_normal_font() -> PdfAsset {
+  let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/fonts/FixelVariable.ttf");
+  PdfAsset {
+    file_name: file_path.file_name().unwrap().to_string_lossy().to_string(),
+    content: std::fs::read(file_path).unwrap(),
+  }
 }
 
-fn load_fixel_italic_font() -> Vec<u8> {
-  std::fs::read(
-    std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/fonts/FixelVariableItalic.ttf"),
-  )
-  .unwrap()
+fn load_fixel_italic_font() -> PdfAsset {
+  let file_path =
+    std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/fonts/FixelVariableItalic.ttf");
+  PdfAsset {
+    file_name: file_path.file_name().unwrap().to_string_lossy().to_string(),
+    content: std::fs::read(file_path).unwrap(),
+  }
 }
 
-fn load_ursasoftware_font() -> Vec<u8> {
-  std::fs::read(std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/symbols/Ursasoftware.ttf"))
-    .unwrap()
-}
-
-#[test]
-fn adds_custom_fonts() {
-  let mut exporter = PdfExporter::init(load_pattern(), Vec::new(), Vec::new());
-
-  assert!(exporter.base_fonts.is_empty());
-  assert!(exporter.custom_fonts.is_empty());
-
-  exporter.add_custom_fonts_impl(vec![load_fixel_normal_font(), load_fixel_italic_font()]);
-
-  assert!(exporter.base_fonts.is_empty());
-  assert_eq!(exporter.custom_fonts.len(), 2);
+fn load_ursasoftware_font() -> PdfAsset {
+  let file_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../app/public/symbols/Ursasoftware.ttf");
+  PdfAsset {
+    file_name: file_path.file_name().unwrap().to_string_lossy().to_string(),
+    content: std::fs::read(file_path).unwrap(),
+  }
 }
 
 #[test]
-fn removes_custom_font() {
-  let mut exporter = PdfExporter::init(load_pattern(), Vec::new(), vec![load_ursasoftware_font()]);
+fn adds_fonts() {
+  let mut exporter = PdfExporter::init(load_pattern(), Vec::new());
 
-  assert_eq!(exporter.custom_fonts.len(), 1);
+  assert_eq!(exporter.fonts.len(), 0);
 
-  exporter.remove_custom_font_impl(0);
+  exporter.add_fonts_impl(vec![load_fixel_normal_font(), load_fixel_italic_font()]);
 
-  assert_eq!(exporter.custom_fonts.len(), 0);
+  assert_eq!(exporter.fonts.len(), 2);
+}
+
+#[test]
+fn removes_font() {
+  let mut exporter = PdfExporter::init(load_pattern(), vec![load_ursasoftware_font()]);
+
+  assert_eq!(exporter.fonts.len(), 1);
+
+  exporter.remove_font_impl("Ursasoftware.ttf".to_string());
+
+  assert_eq!(exporter.fonts.len(), 0);
 }
 
 #[test]
 fn exports_pattern() {
   let mut exporter = PdfExporter::init(
     load_pattern(),
-    vec![load_fixel_normal_font(), load_fixel_italic_font()],
-    vec![load_ursasoftware_font()],
+    vec![
+      load_fixel_normal_font(),
+      load_fixel_italic_font(),
+      load_ursasoftware_font(),
+    ],
   );
 
   let CompilationOutput { output, diagnostics } =
@@ -76,8 +85,11 @@ fn exports_pattern() {
 fn previews_pattern() {
   let mut exporter = PdfExporter::init(
     load_pattern(),
-    vec![load_fixel_normal_font(), load_fixel_italic_font()],
-    vec![load_ursasoftware_font()],
+    vec![
+      load_fixel_normal_font(),
+      load_fixel_italic_font(),
+      load_ursasoftware_font(),
+    ],
   );
 
   let CompilationOutput { output, diagnostics } =

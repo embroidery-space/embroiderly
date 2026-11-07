@@ -18,8 +18,8 @@ export class PdfAsset {
     return new PdfAsset(PdfAsset.schema.deserialize(data));
   }
 
-  static serialize(data: PdfAsset) {
-    return PdfAsset.schema.serialize(data);
+  static serialize(data: PdfAsset | PdfAsset[]) {
+    return Array.isArray(data) ? b.vec(PdfAsset.schema).serialize(data) : PdfAsset.schema.serialize(data);
   }
 }
 

@@ -11,7 +11,7 @@ import { PdfAsset } from "~/lib/pattern/";
 const { fonts } = defineProps<{ fonts: PdfAsset[] }>();
 const emit = defineEmits<{
   addFonts: [fonts: PdfAsset[]];
-  removeFont: [index: number];
+  removeFont: [index: number, fileNmae: string];
 }>();
 
 const confirm = useConfirm();
@@ -48,7 +48,7 @@ async function addFonts() {
 
 async function removeFont(index: number, fileName: string) {
   const accepted = await confirm.open(fluent.$t("pdf-export-assets-file-removal", { fileName })).result;
-  if (accepted) emit("removeFont", index);
+  if (accepted) emit("removeFont", index, fileName);
 }
 </script>
 

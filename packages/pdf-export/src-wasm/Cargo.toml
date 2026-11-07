@@ -34,6 +34,9 @@ time = { workspace = true, features = ["local-offset", "wasm-bindgen"] }
 wasm-bindgen = { workspace = true }
 js-sys = { workspace = true }
 
+# Other
+indexmap = { workspace = true }
+
 [dev-dependencies]
 # Embroiderly Core
 embroiderly_parsers = { workspace = true }

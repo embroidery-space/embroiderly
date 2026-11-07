@@ -165,14 +165,23 @@ function close() {
 async function loadFonts(fonts: string[]) {
   const results = await Promise.allSettled(
     fonts.map(async (resource) => {
+      // Text fonts bundled within the app.
       if (resource.startsWith("/fonts/")) {
-        return new Uint8Array((await fetch(resource).then((r) => r.arrayBuffer())) as ArrayBuffer);
+        return new PdfAsset({
+          fileName: resource.slice(7),
+          content: new Uint8Array((await fetch(resource).then((r) => r.arrayBuffer())) as ArrayBuffer),
+        });
       }
-      return patternFiles.loadFontContent(resource);
+
+      // Symbol fonts uploaded into the app by the user.
+      return new PdfAsset({
+        fileName: `${resource}.ttf`,
+        content: await patternFiles.loadFontContent(resource),
+      });
     }),
   );
 
-  const { succeededFonts, failedFonts } = results.reduce<{ succeededFonts: Uint8Array[]; failedFonts: string[] }>(
+  const { succeededFonts, failedFonts } = results.reduce<{ succeededFonts: PdfAsset[]; failedFonts: string[] }>(
     (acc, result, index) => {
       if (result.status === "fulfilled") {
         acc.succeededFonts.push(result.value);
@@ -197,14 +206,15 @@ async function loadFonts(fonts: string[]) {
 
   return succeededFonts;
 }
-async function addCustomFonts(fonts: PdfAsset[]) {
-  await service.addCustomFonts(fonts.map((f) => f.content));
+
+async function addFonts(fonts: PdfAsset[]) {
+  await service.addFonts(PdfAsset.serialize(fonts));
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
   pdf.value.customFonts.push(...fonts);
 }
 
-async function removeCustomFont(index: number) {
-  await service.removeCustomFont(index);
+async function removeFont(index: number, fileName: string) {
+  await service.removeFont(fileName);
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
   pdf.value.customFonts.splice(index, 1);
 }
@@ -220,8 +230,7 @@ onMounted(async () => {
   await service.init(
     canvas.value!.transferControlToOffscreen(),
     pattern,
-    baseFonts,
-    toRaw(pdf.value.customFonts).map((f) => f.content),
+    PdfAsset.serialize([...baseFonts, ...pdf.value.customFonts]),
   );
 
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
@@ -247,8 +256,8 @@ onUnmounted(() => service.destroy());
         v-if="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Assets"
         :fonts="pdf.customFonts"
         :class="$style.assets"
-        @add-fonts="addCustomFonts"
-        @remove-font="removeCustomFont"
+        @add-fonts="addFonts"
+        @remove-font="removeFont"
       />
 
       <div :class="$style.toolbar">

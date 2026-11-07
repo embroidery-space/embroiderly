@@ -1,24 +1,23 @@
 use std::sync::LazyLock;
 
+use indexmap::IndexMap;
 use typst::Library;
 use typst::diag::{FileError, FileResult};
 use typst::foundations::{Bytes, Datetime, Duration};
-use typst::syntax::{FileId, RootedPath, Source, VirtualPath, VirtualRoot};
+use typst::syntax::{FileId, Source};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
 
-static MAIN_ID: LazyLock<FileId> =
-  LazyLock::new(|| RootedPath::new(VirtualRoot::Project, VirtualPath::new("main.typ").unwrap()).intern());
+static MAIN_ID: LazyLock<FileId> = LazyLock::new(|| crate::path::project_path("sources/main.typ".to_string()));
 
-static DRAW_ID: LazyLock<FileId> =
-  LazyLock::new(|| RootedPath::new(VirtualRoot::Project, VirtualPath::new("draw.typ").unwrap()).intern());
+static DRAW_ID: LazyLock<FileId> = LazyLock::new(|| crate::path::project_path("sources/draw.typ".to_string()));
 static DRAW_SOURCE: LazyLock<Source> =
   LazyLock::new(|| Source::new(*DRAW_ID, include_str!("./typst/draw.typ").to_string()));
 
 pub struct PdfExportWorld<'a> {
   main_source: Source,
 
-  fonts: (&'a [Font], &'a [Font]),
+  fonts: &'a IndexMap<FileId, Font>,
 
   font_book: &'a LazyHash<FontBook>,
   library: &'a LazyHash<Library>,
@@ -27,13 +26,15 @@ pub struct PdfExportWorld<'a> {
 impl<'a> PdfExportWorld<'a> {
   pub fn new(
     template: String,
-    fonts: (&'a [Font], &'a [Font]),
+    fonts: &'a IndexMap<FileId, Font>,
     font_book: &'a LazyHash<FontBook>,
     library: &'a LazyHash<Library>,
   ) -> Self {
     Self {
       main_source: Source::new(*MAIN_ID, template),
+
       fonts,
+
       font_book,
       library,
     }
@@ -68,11 +69,8 @@ impl typst::World for PdfExportWorld<'_> {
   }
 
   fn font(&self, index: usize) -> Option<Font> {
-    let (base_fonts, custom_fonts) = self.fonts;
-    match base_fonts.get(index) {
-      Some(font) => Some(font.clone()),
-      None => custom_fonts.get(index - base_fonts.len()).cloned(),
-    }
+    let (_file_id, font) = self.fonts.get_index(index)?;
+    Some(font.to_owned())
   }
 
   fn today(&self, offset: Option<Duration>) -> Option<Datetime> {
