@@ -103,8 +103,8 @@ impl EmbroiderlyProjectBuilder {
 
   /// Sets the reference image for the project.
   #[must_use]
-  pub fn reference_image(mut self, reference_image: ReferenceImage) -> Self {
-    self.reference_image = Some(reference_image);
+  pub fn reference_image(mut self, reference_image: Option<ReferenceImage>) -> Self {
+    self.reference_image = reference_image;
     self
   }
 
