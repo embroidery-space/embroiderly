@@ -207,16 +207,28 @@ async function loadFonts(fonts: string[]) {
   return succeededFonts;
 }
 
+async function addFiles(files: PdfAsset[]) {
+  await service.addFiles(PdfAsset.serialize(files));
+  await updatePreview({ template: pdf.value.template, page: currentPage.value });
+  pdf.value.files.push(...files);
+}
+
+async function removeFile(index: number, fileName: string) {
+  await service.removeFile(fileName);
+  await updatePreview({ template: pdf.value.template, page: currentPage.value });
+  pdf.value.files.splice(index, 1);
+}
+
 async function addFonts(fonts: PdfAsset[]) {
   await service.addFonts(PdfAsset.serialize(fonts));
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.customFonts.push(...fonts);
+  pdf.value.fonts.push(...fonts);
 }
 
 async function removeFont(index: number, fileName: string) {
   await service.removeFont(fileName);
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.customFonts.splice(index, 1);
+  pdf.value.fonts.splice(index, 1);
 }
 
 onMounted(async () => {
@@ -230,7 +242,8 @@ onMounted(async () => {
   await service.init(
     canvas.value!.transferControlToOffscreen(),
     pattern,
-    PdfAsset.serialize([...baseFonts, ...pdf.value.customFonts]),
+    PdfAsset.serialize(pdf.value.files),
+    PdfAsset.serialize([...baseFonts, ...pdf.value.fonts]),
   );
 
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
@@ -254,8 +267,11 @@ onUnmounted(() => service.destroy());
 
       <TypstAssets
         v-if="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Assets"
-        :fonts="pdf.customFonts"
+        :files="pdf.files"
+        :fonts="pdf.fonts"
         :class="$style.assets"
+        @add-files="addFiles"
+        @remove-file="removeFile"
         @add-fonts="addFonts"
         @remove-font="removeFont"
       />

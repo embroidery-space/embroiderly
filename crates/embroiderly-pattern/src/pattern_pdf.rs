@@ -4,7 +4,8 @@
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct PatternPdf {
   pub template: String,
-  pub custom_fonts: Vec<PdfAsset>,
+  pub files: Vec<PdfAsset>,
+  pub fonts: Vec<PdfAsset>,
 }
 
 impl Default for PatternPdf {
@@ -13,7 +14,8 @@ impl Default for PatternPdf {
       template: String::from(include_str!(
         "../../../packages/pdf-export/src-wasm/src/typst/pattern.typ"
       )),
-      custom_fonts: Vec::new(),
+      files: Vec::new(),
+      fonts: Vec::new(),
     }
   }
 }

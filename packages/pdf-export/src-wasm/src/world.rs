@@ -17,6 +17,7 @@ static DRAW_SOURCE: LazyLock<Source> =
 pub struct PdfExportWorld<'a> {
   main_source: Source,
 
+  files: &'a IndexMap<FileId, Bytes>,
   fonts: &'a IndexMap<FileId, Font>,
 
   font_book: &'a LazyHash<FontBook>,
@@ -26,6 +27,7 @@ pub struct PdfExportWorld<'a> {
 impl<'a> PdfExportWorld<'a> {
   pub fn new(
     template: String,
+    files: &'a IndexMap<FileId, Bytes>,
     fonts: &'a IndexMap<FileId, Font>,
     font_book: &'a LazyHash<FontBook>,
     library: &'a LazyHash<Library>,
@@ -33,6 +35,7 @@ impl<'a> PdfExportWorld<'a> {
     Self {
       main_source: Source::new(*MAIN_ID, template),
 
+      files,
       fonts,
 
       font_book,
@@ -65,7 +68,10 @@ impl typst::World for PdfExportWorld<'_> {
   }
 
   fn file(&self, id: FileId) -> FileResult<Bytes> {
-    Err(FileError::NotFound(id.vpath().get_without_slash().into()))
+    match self.files.get(&id) {
+      Some(content) => Ok(content.clone()),
+      None => Err(FileError::NotFound(id.vpath().get_without_slash().into())),
+    }
   }
 
   fn font(&self, index: usize) -> Option<Font> {

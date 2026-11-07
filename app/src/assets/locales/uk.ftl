@@ -591,8 +591,9 @@ pdf-export-export-document = Експортувати документ
 
 pdf-export-assets = Ресурси
 pdf-export-assets-fonts = Шрифти
+pdf-export-assets-files = Зображення та інші файли
 
-pdf-export-assets-add-fonts = Додати шрифти
+pdf-export-assets-add-files = Додати файли
 pdf-export-assets-remove-file = Видалити файл
 
 pdf-export-assets-file-removal =

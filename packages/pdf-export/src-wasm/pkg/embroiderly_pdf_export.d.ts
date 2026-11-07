@@ -4,11 +4,13 @@
 export class PdfExporter {
     free(): void;
     [Symbol.dispose](): void;
+    addFiles(files: Uint8Array): void;
     addFonts(fonts: Uint8Array): void;
     compileDocument(template: string): any;
     export(): any;
-    constructor(embproj: Uint8Array, fonts: Uint8Array);
+    constructor(embproj: Uint8Array, files: Uint8Array, fonts: Uint8Array);
     preview(page: number): RenderedPage | undefined;
+    removeFile(file_name: string): void;
     removeFont(file_name: string): void;
 }
 
@@ -32,11 +34,13 @@ export interface InitOutput {
     readonly __wbg_renderedpage_free: (a: number, b: number) => void;
     readonly __wbg_set_renderedpage_height: (a: number, b: number) => void;
     readonly __wbg_set_renderedpage_width: (a: number, b: number) => void;
+    readonly pdfexporter_addFiles: (a: number, b: number, c: number) => [number, number];
     readonly pdfexporter_addFonts: (a: number, b: number, c: number) => [number, number];
     readonly pdfexporter_compileDocument: (a: number, b: number, c: number) => [number, number, number];
     readonly pdfexporter_export: (a: number) => [number, number, number];
-    readonly pdfexporter_new: (a: number, b: number, c: number, d: number) => [number, number, number];
+    readonly pdfexporter_new: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number, number];
     readonly pdfexporter_preview: (a: number, b: number) => number;
+    readonly pdfexporter_removeFile: (a: number, b: number, c: number) => void;
     readonly pdfexporter_removeFont: (a: number, b: number, c: number) => void;
     readonly renderedpage_len: (a: number) => number;
     readonly renderedpage_ptr: (a: number) => number;

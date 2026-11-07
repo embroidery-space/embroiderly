@@ -10,7 +10,7 @@ export class PdfExportService {
     this.#worker = new Worker(new URL("./worker.ts", import.meta.url), { type: "module" });
   }
 
-  async init(canvas: OffscreenCanvas, patternData: Uint8Array, fonts: Uint8Array) {
+  async init(canvas: OffscreenCanvas, patternData: Uint8Array, files: Uint8Array, fonts: Uint8Array) {
     if (!this.#worker) throw new Error("PDF Export service has been destroyed");
 
     // Wait for the ready signal before wrapping/instantiating.
@@ -21,7 +21,17 @@ export class PdfExportService {
     });
 
     const PdfExporter = Comlink.wrap<typeof PdfExporterWrapper>(this.#worker);
-    this.#exporter = await new PdfExporter(Comlink.transfer(canvas, [canvas]), patternData, fonts);
+    this.#exporter = await new PdfExporter(Comlink.transfer(canvas, [canvas]), patternData, files, fonts);
+  }
+
+  async addFiles(files: Uint8Array) {
+    if (!this.#exporter) throw new Error("PDF Export service has been destroyed");
+    await this.#exporter.addFiles(files);
+  }
+
+  async removeFile(fileName: string) {
+    if (!this.#exporter) throw new Error("PDF Export service has been destroyed");
+    await this.#exporter.removeFile(fileName);
   }
 
   async addFonts(fonts: Uint8Array) {

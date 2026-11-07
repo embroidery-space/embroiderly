@@ -19,6 +19,7 @@ mod tests;
 
 #[wasm_bindgen]
 pub struct PdfExporter {
+  files: IndexMap<FileId, Bytes>,
   fonts: IndexMap<FileId, Font>,
 
   font_book: LazyHash<FontBook>,
@@ -30,10 +31,23 @@ pub struct PdfExporter {
 #[wasm_bindgen]
 impl PdfExporter {
   #[wasm_bindgen(constructor)]
-  pub fn new(embproj: &[u8], fonts: &[u8]) -> Result<Self, JsError> {
+  pub fn new(embproj: &[u8], files: &[u8], fonts: &[u8]) -> Result<Self, JsError> {
     let embproj = borsh::from_slice(embproj).map_err(|e| JsError::new(&e.to_string()))?;
+    let files: Vec<PdfAsset> = borsh::from_slice(files).map_err(|e| JsError::new(&e.to_string()))?;
     let fonts: Vec<PdfAsset> = borsh::from_slice(fonts).map_err(|e| JsError::new(&e.to_string()))?;
-    Ok(Self::init(embproj, fonts))
+    Ok(Self::init(embproj, files, fonts))
+  }
+
+  #[wasm_bindgen(js_name = "addFiles")]
+  pub fn add_files(&mut self, files: &[u8]) -> Result<(), JsError> {
+    let files: Vec<PdfAsset> = borsh::from_slice(files).map_err(|e| JsError::new(&e.to_string()))?;
+    self.add_files_impl(files);
+    Ok(())
+  }
+
+  #[wasm_bindgen(js_name = "removeFile")]
+  pub fn remove_file(&mut self, file_name: String) {
+    self.remove_file_impl(file_name);
   }
 
   #[wasm_bindgen(js_name = "addFonts")]
@@ -80,7 +94,15 @@ impl PdfExporter {
 
 impl PdfExporter {
   #[must_use]
-  fn init(embproj: EmbroiderlyProject, fonts: impl IntoIterator<Item = PdfAsset>) -> Self {
+  fn init(
+    embproj: EmbroiderlyProject,
+    files: impl IntoIterator<Item = PdfAsset>,
+    fonts: impl IntoIterator<Item = PdfAsset>,
+  ) -> Self {
+    let files: IndexMap<FileId, Bytes> = files
+      .into_iter()
+      .map(|PdfAsset { file_name, content }| (path::project_path(format!("files/{file_name}")), Bytes::new(content)))
+      .collect();
     let fonts: IndexMap<FileId, Font> = fonts
       .into_iter()
       .flat_map(|PdfAsset { file_name, content }| {
@@ -100,6 +122,7 @@ impl PdfExporter {
       .build();
 
     Self {
+      files,
       fonts,
 
       font_book: LazyHash::new(font_book),
@@ -107,6 +130,20 @@ impl PdfExporter {
 
       doc: None,
     }
+  }
+
+  fn add_files_impl(&mut self, files: impl IntoIterator<Item = PdfAsset>) {
+    self.files.extend(
+      files
+        .into_iter()
+        .map(|PdfAsset { file_name, content }| (path::project_path(format!("files/{file_name}")), Bytes::new(content))),
+    );
+  }
+
+  fn remove_file_impl(&mut self, file_name: String) {
+    self
+      .files
+      .shift_remove(&path::project_path(format!("files/{file_name}")));
   }
 
   fn add_fonts_impl(&mut self, fonts: impl IntoIterator<Item = PdfAsset>) {
@@ -126,7 +163,7 @@ impl PdfExporter {
   }
 
   fn compile_document_impl(&self, template: String) -> CompilationOutput<PagedDocument> {
-    let world = world::PdfExportWorld::new(template, &self.fonts, &self.font_book, &self.library);
+    let world = world::PdfExportWorld::new(template, &self.files, &self.fonts, &self.font_book, &self.library);
     let typst::diag::Warned {
       output: result,
       warnings,

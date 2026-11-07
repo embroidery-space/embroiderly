@@ -25,16 +25,19 @@ export class PdfAsset {
 
 export class PatternPdf {
   template: string;
-  customFonts: PdfAsset[];
+  files: PdfAsset[];
+  fonts: PdfAsset[];
 
   constructor(data?: Partial<b.infer<typeof PatternPdf.schema>>) {
     this.template = data?.template ?? "";
-    this.customFonts = data?.customFonts ?? [];
+    this.files = data?.files ?? [];
+    this.fonts = data?.fonts ?? [];
   }
 
   static readonly schema = b.struct({
     template: b.string(),
-    customFonts: b.vec(PdfAsset.schema),
+    files: b.vec(PdfAsset.schema),
+    fonts: b.vec(PdfAsset.schema),
   });
 
   static deserialize(data: Uint8Array) {

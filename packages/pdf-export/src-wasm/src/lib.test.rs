@@ -31,24 +31,62 @@ fn load_ursasoftware_font() -> PdfAsset {
 }
 
 #[test]
-fn adds_fonts() {
-  let mut exporter = PdfExporter::init(load_pattern(), Vec::new());
+fn adds_files() {
+  let mut exporter = PdfExporter::init(load_pattern(), vec![], vec![]);
 
+  assert_eq!(exporter.files.len(), 0);
+  assert_eq!(exporter.fonts.len(), 0);
+
+  exporter.add_files_impl(vec![load_fixel_normal_font(), load_fixel_italic_font()]);
+
+  assert_eq!(exporter.files.len(), 2);
+  assert_eq!(exporter.fonts.len(), 0);
+}
+
+#[test]
+fn removes_file() {
+  let mut exporter = PdfExporter::init(
+    load_pattern(),
+    vec![load_ursasoftware_font()],
+    vec![load_ursasoftware_font()],
+  );
+
+  assert_eq!(exporter.files.len(), 1);
+  assert_eq!(exporter.fonts.len(), 1);
+
+  exporter.remove_file_impl("Ursasoftware.ttf".to_string());
+
+  assert_eq!(exporter.files.len(), 0);
+  assert_eq!(exporter.fonts.len(), 1);
+}
+
+#[test]
+fn adds_fonts() {
+  let mut exporter = PdfExporter::init(load_pattern(), vec![], vec![]);
+
+  assert_eq!(exporter.files.len(), 0);
   assert_eq!(exporter.fonts.len(), 0);
 
   exporter.add_fonts_impl(vec![load_fixel_normal_font(), load_fixel_italic_font()]);
 
+  assert_eq!(exporter.files.len(), 0);
   assert_eq!(exporter.fonts.len(), 2);
 }
 
 #[test]
 fn removes_font() {
-  let mut exporter = PdfExporter::init(load_pattern(), vec![load_ursasoftware_font()]);
+  let mut exporter = PdfExporter::init(
+    load_pattern(),
+    vec![load_ursasoftware_font()],
+    vec![load_ursasoftware_font()],
+  );
 
+  assert_eq!(exporter.files.len(), 1);
   assert_eq!(exporter.fonts.len(), 1);
 
   exporter.remove_font_impl("Ursasoftware.ttf".to_string());
 
+  assert_eq!(exporter.files.len(), 1);
   assert_eq!(exporter.fonts.len(), 0);
 }
 
@@ -56,6 +94,7 @@ fn removes_font() {
 fn exports_pattern() {
   let mut exporter = PdfExporter::init(
     load_pattern(),
+    vec![],
     vec![
       load_fixel_normal_font(),
       load_fixel_italic_font(),
@@ -85,6 +124,7 @@ fn exports_pattern() {
 fn previews_pattern() {
   let mut exporter = PdfExporter::init(
     load_pattern(),
+    vec![],
     vec![
       load_fixel_normal_font(),
       load_fixel_italic_font(),

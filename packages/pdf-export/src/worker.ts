@@ -10,9 +10,17 @@ export class PdfExporterWrapper {
   #offscreenCanvasContext: OffscreenCanvasRenderingContext2D;
   #exporter: PdfExporter;
 
-  constructor(canvas: OffscreenCanvas, patternData: Uint8Array, fonts: Uint8Array) {
+  constructor(canvas: OffscreenCanvas, patternData: Uint8Array, files: Uint8Array, fonts: Uint8Array) {
     this.#offscreenCanvasContext = canvas.getContext("2d")!;
-    this.#exporter = new PdfExporter(patternData, fonts);
+    this.#exporter = new PdfExporter(patternData, files, fonts);
+  }
+
+  addFiles(files: Uint8Array) {
+    this.#exporter.addFiles(files);
+  }
+
+  removeFile(fileName: string) {
+    this.#exporter.removeFile(fileName);
   }
 
   addFonts(fonts: Uint8Array) {

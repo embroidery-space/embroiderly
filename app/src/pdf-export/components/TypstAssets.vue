@@ -2,14 +2,23 @@
 import { ButtonIcon, Tree, useConfirm } from "@embroiderly/ui";
 import type { TreeItem } from "@embroiderly/ui";
 
-import { computed } from "vue";
+import { computed, h } from "vue";
+import type { Component } from "vue";
 
 import { IconPlus, IconTrash } from "~/assets/icons/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { PdfAsset } from "~/lib/pattern/";
 
-const { fonts } = defineProps<{ fonts: PdfAsset[] }>();
+interface AssetTreeItem extends TreeItem {
+  children?: AssetTreeItem[];
+  trailingButton: Component;
+}
+
+const { files, fonts } = defineProps<{ files: PdfAsset[]; fonts: PdfAsset[] }>();
 const emit = defineEmits<{
+  addFiles: [files: PdfAsset[]];
+  removeFile: [index: number, fileNmae: string];
+
   addFonts: [fonts: PdfAsset[]];
   removeFont: [index: number, fileNmae: string];
 }>();
@@ -18,14 +27,95 @@ const confirm = useConfirm();
 const filePicker = useFilePicker();
 const { fluent } = useI18n();
 
-const fontItems = computed<TreeItem[]>(() => [
+const fontItems = computed<AssetTreeItem[]>(() => [
   {
     label: fluent.$t("pdf-export-assets-fonts"),
-    children: fonts.map((f) => ({ label: f.fileName })),
+    children: fonts.map((item, index) => ({
+      label: item.fileName,
+      trailingButton: h(ButtonIcon, {
+        square: true,
+        color: "neutral",
+        variant: "ghost",
+        size: "sm",
+        icon: IconTrash,
+        tooltip: fluent.$t("pdf-export-assets-remove-file"),
+        async onClick(e) {
+          e.stopPropagation();
+          await removeFont(index, item.fileName);
+        },
+      }),
+    })),
+    trailingButton: h(ButtonIcon, {
+      square: true,
+      color: "neutral",
+      variant: "ghost",
+      size: "sm",
+      icon: IconPlus,
+      tooltip: fluent.$t("pdf-export-assets-add-files"),
+      async onClick(e) {
+        e.stopPropagation();
+        await addFonts();
+      },
+    }),
+    defaultExpanded: true,
+    nested: true,
+  },
+  {
+    label: fluent.$t("pdf-export-assets-files"),
+    children: files.map((item, index) => ({
+      label: item.fileName,
+      trailingButton: h(ButtonIcon, {
+        square: true,
+        color: "neutral",
+        variant: "ghost",
+        size: "sm",
+        icon: IconTrash,
+        tooltip: fluent.$t("pdf-export-assets-remove-file"),
+        async onClick(e) {
+          e.stopPropagation();
+          await removeFile(index, item.fileName);
+        },
+      }),
+    })),
+    trailingButton: h(ButtonIcon, {
+      square: true,
+      color: "neutral",
+      variant: "ghost",
+      size: "sm",
+      icon: IconPlus,
+      tooltip: fluent.$t("pdf-export-assets-add-files"),
+      async onClick(e) {
+        e.stopPropagation();
+        await addFiles();
+      },
+    }),
     defaultExpanded: true,
     nested: true,
   },
 ]);
+
+async function addFiles() {
+  const handles = await filePicker.open({
+    id: filePicker.ids.other,
+    multiple: true,
+  });
+  if (!handles) return;
+
+  const files = await Promise.all(
+    handles.map(async (handle) => {
+      const fileName = handle.name;
+      const content = await handle.getFile().then((f) => f.bytes());
+      return new PdfAsset({ fileName, content });
+    }),
+  );
+
+  emit("addFiles", files);
+}
+
+async function removeFile(index: number, fileName: string) {
+  const accepted = await confirm.open(fluent.$t("pdf-export-assets-file-removal", { fileName })).result;
+  if (accepted) emit("removeFile", index, fileName);
+}
 
 async function addFonts() {
   const handles = await filePicker.open({
@@ -54,27 +144,8 @@ async function removeFont(index: number, fileName: string) {
 
 <template>
   <Tree :items="fontItems" scroll :class="$style.tree">
-    <template #item-trailing="{ item, level, index }">
-      <ButtonIcon
-        v-if="level === 1"
-        square
-        color="neutral"
-        variant="ghost"
-        size="sm"
-        :icon="IconPlus"
-        :tooltip="$t('pdf-export-assets-add-fonts')"
-        @click.stop="addFonts"
-      />
-      <ButtonIcon
-        v-else
-        square
-        color="neutral"
-        variant="ghost"
-        size="sm"
-        :icon="IconTrash"
-        :tooltip="$t('pdf-export-assets-remove-file')"
-        @click.stop="removeFont(index, item.label)"
-      />
+    <template #item-trailing="{ item }">
+      <Component :is="item.trailingButton" />
     </template>
   </Tree>
 </template>
