@@ -587,7 +587,14 @@ pdf-export-view-mode-preview = Преʼю
 pdf-export-line-wrapping = Перенесення рядків
 
 pdf-export-save-template = Зберегти шаблон
+pdf-export-save-template-failed =
+  .title = Помилка
+  .description = Не вдалося зберегти шаблон Typst.
+
 pdf-export-export-document = Експортувати документ
+pdf-export-export-document-failed =
+  .title = Помилка
+  .description = Не вдалося експортувати документ PDF.
 
 pdf-export-assets = Ресурси
 pdf-export-assets-fonts = Шрифти

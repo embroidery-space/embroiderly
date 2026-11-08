@@ -583,7 +583,14 @@ pdf-export-view-mode-preview = Preview
 pdf-export-line-wrapping = Line wrapping
 
 pdf-export-save-template = Save Template
+pdf-export-save-template-failed =
+  .title = Error
+  .description = Failed to save the Typst template.
+
 pdf-export-export-document = Export Document
+pdf-export-export-document-failed =
+  .title = Error
+  .description = Failed to export the PDF document.
 
 pdf-export-assets = Assets
 pdf-export-assets-fonts = Fonts

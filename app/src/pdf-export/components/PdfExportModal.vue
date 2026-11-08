@@ -17,7 +17,7 @@ import {
 
 import { refAutoReset, useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
-import { ref, computed, onMounted, onUnmounted, toRaw, watch, nextTick, useTemplateRef } from "vue";
+import { ref, computed, onMounted, onUnmounted, toRaw, watch, useTemplateRef } from "vue";
 
 import {
   IconCheck,
@@ -25,6 +25,7 @@ import {
   IconDownload,
   IconFileStorage,
   IconLineWrapping,
+  IconSave,
   IconSplitView,
   IconVisibility,
 } from "~/assets/icons/";
@@ -150,16 +151,21 @@ async function exportDocument() {
   }
 }
 
+const saveInProgress = ref(false);
+const templateSaved = refAutoReset(false, 1000);
 async function saveTemplate() {
-  await patternStore.updatePatternPdf(pdf.value);
+  try {
+    saveInProgress.value = true;
 
-  // Close the modal next tick, so that the pattern in the store is updated and `isDirty` becomes `false`.
-  await nextTick();
-  open.value = false;
-}
+    await patternStore.updatePatternPdf(pdf.value);
 
-function close() {
-  open.value = false; // The watcher above handles the confirmation.
+    templateSaved.value = true;
+  } catch (err) {
+    LoggerService.error(`Failed to save Typst template: ${err}`);
+    toast.add({ color: "error", duration: 3000, ...fluent.$ta("pdf-export-save-template-failed") });
+  } finally {
+    saveInProgress.value = false;
+  }
 }
 
 async function loadFonts(fonts: string[]) {
@@ -309,6 +315,14 @@ onUnmounted(() => service.destroy());
         </div>
 
         <Button
+          :loading="saveInProgress"
+          variant="outline"
+          :icon="templateSaved ? IconCheck : IconSave"
+          :label="$t('pdf-export-save-template')"
+          @click="saveTemplate"
+        />
+
+        <Button
           :loading="exportInProgress"
           :icon="documentExported ? IconCheck : IconDownload"
           :label="$t('pdf-export-export-document')"
@@ -348,11 +362,6 @@ onUnmounted(() => service.destroy());
         </SplitterPanel>
       </Splitter>
     </template>
-
-    <template #footer>
-      <Button :label="$t('modal-cancel')" color="neutral" variant="outline" @click="close" />
-      <Button loading-auto :label="$t('pdf-export-save-template')" @click="saveTemplate" />
-    </template>
   </Dialog>
 </template>
 
@@ -367,8 +376,8 @@ onUnmounted(() => service.destroy());
 .toolbar {
   display: flex;
   grid-area: toolbar;
+  gap: calc(var(--spacing) * 2);
   align-items: center;
-  justify-content: space-between;
 
   padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
   border-bottom: 1px solid var(--border-color-default);
@@ -380,6 +389,7 @@ onUnmounted(() => service.destroy());
   align-items: center;
 
   height: 100%;
+  margin-right: auto;
 }
 
 .aside {
@@ -389,7 +399,7 @@ onUnmounted(() => service.destroy());
   gap: calc(var(--spacing) * 1);
 
   height: 100%;
-  padding: calc(var(--spacing) * 1);
+  padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 1);
   border-right: 1px solid var(--border-color-default);
 }
 
@@ -398,7 +408,7 @@ onUnmounted(() => service.destroy());
 
   width: var(--container-3xs);
   height: 100%;
-  padding: calc(var(--spacing) * 1);
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 1);
   border-right: 1px solid var(--border-color-default);
 }
 
