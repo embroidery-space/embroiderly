@@ -52,8 +52,7 @@ export function actions(language: Language) {
       await browser.execute((el) => el.classList.remove("hidden"), fileInput);
 
       // Set file.
-      const remoteFile = await browser.uploadFile(FRUITS_IMAGE_PATH);
-      await fileInput.setValue(remoteFile);
+      await fileInput.setFiles(FRUITS_IMAGE_PATH);
 
       // Make file input hidden again.
       await browser.execute((el) => el.classList.add("hidden"), fileInput);
