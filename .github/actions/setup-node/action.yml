@@ -8,7 +8,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1.0.0
+    - uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
       with:
         cache: true
         runtime: node@24.21.0
