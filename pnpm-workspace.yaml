@@ -97,7 +97,7 @@ catalog:
   "eslint-plugin-no-only-tests": 3.4.0
   "eslint-plugin-oxlint": 1.90.0
   "eslint-plugin-vue": 10.12.0
-  "eslint-plugin-wdio": 10.1.0
+  "eslint-plugin-wdio": 10.2.0
   "eslint-plugin-yml": 3.10.0
   "markdownlint-cli2": 0.24.0
   "oxfmt": 0.76.0
@@ -141,12 +141,12 @@ catalog:
   "vitest-browser-vue": 3.1.0
 
   # WebdriverIO
-  "@wdio/cli": 9.32.0
-  "@wdio/globals": 10.1.0
-  "@wdio/local-runner": 10.1.0
-  "@wdio/mocha-framework": 9.32.0
-  "@wdio/spec-reporter": 10.1.0
-  "@wdio/visual-service": 10.2.1
+  "@wdio/cli": 10.2.0
+  "@wdio/globals": 10.2.0
+  "@wdio/local-runner": 10.2.0
+  "@wdio/mocha-framework": 10.2.0
+  "@wdio/spec-reporter": 10.2.0
+  "@wdio/visual-service": 11.1.0
 
   # Types
   "@types/mocha": 10.0.10
