@@ -38,7 +38,7 @@ runs:
         components: ${{ inputs.stable-components }}
         targets: ${{ inputs.targets }}
     - uses: swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
-    - uses: taiki-e/install-action@4575ae687efd0e2c78240087f26013fb2484987f # v2.62.6
+    - uses: taiki-e/install-action@1919c4a95903d2c33e4a221102edca87309fc14b # v2.89.0
       if: inputs.tools != ''
       with:
         tool: ${{ inputs.tools }}
