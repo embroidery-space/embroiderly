@@ -9,6 +9,8 @@ import { IconPlus, IconTrash } from "~/assets/icons/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { PdfAsset } from "~/lib/pattern/";
 
+import AsideBlock from "./utils/AsideBlock.vue";
+
 interface AssetTreeItem extends TreeItem {
   children?: AssetTreeItem[];
   trailingButton: Component;
@@ -143,11 +145,13 @@ async function removeFont(index: number, fileName: string) {
 </script>
 
 <template>
-  <Tree :items="fontItems" scroll :class="$style.tree">
-    <template #item-trailing="{ item }">
-      <Component :is="item.trailingButton" />
-    </template>
-  </Tree>
+  <AsideBlock :title="$t('pdf-export-assets')">
+    <Tree :items="fontItems" scroll :class="$style.tree">
+      <template #item-trailing="{ item }">
+        <Component :is="item.trailingButton" />
+      </template>
+    </Tree>
+  </AsideBlock>
 </template>
 
 <style module>

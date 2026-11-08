@@ -24,8 +24,8 @@ import {
   IconCode,
   IconDownload,
   IconFileStorage,
-  IconLineWrapping,
   IconSave,
+  IconSettings,
   IconSplitView,
   IconVisibility,
 } from "~/assets/icons/";
@@ -43,6 +43,7 @@ import {
 
 import TypstAssets from "./TypstAssets.vue";
 import TypstEditor from "./TypstEditor.vue";
+import TypstSettings from "./TypstSettings.vue";
 
 const open = defineModel<boolean>("open", { default: false });
 
@@ -294,33 +295,41 @@ onUnmounted(() => service.destroy());
           ]"
           :tooltip-options="{ side: 'right' }"
         />
+
+        <ToolToggle
+          :model-value="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Settings"
+          :icon="IconSettings"
+          :tooltip="$t('pdf-export-settings')"
+          :tooltip-options="{ side: 'right' }"
+          style="margin-top: auto"
+          @update:model-value="typstEditorStateStore.toggleAsideBlock(TypstEditorAsideBlock.Settings)"
+        />
       </div>
 
       <TypstAssets
         v-if="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Assets"
         :files="pdf.files"
         :fonts="pdf.fonts"
-        :class="$style.assets"
+        :class="$style.asideBlock"
         @add-files="addFiles"
         @remove-file="removeFile"
         @add-fonts="addFonts"
         @remove-font="removeFont"
       />
 
-      <div :class="$style.toolbar">
-        <div :class="$style.toolbarGroup">
-          <ToolToggle
-            v-model="typstEditorStateStore.wrapLines"
-            :icon="IconLineWrapping"
-            :tooltip="$t('pdf-export-line-wrapping')"
-          />
-        </div>
+      <TypstSettings
+        v-if="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Settings"
+        v-model:wrap-lines="typstEditorStateStore.wrapLines"
+        :class="$style.asideBlock"
+      />
 
+      <div :class="$style.toolbar">
         <Button
           :loading="saveInProgress"
           variant="outline"
           :icon="templateSaved ? IconCheck : IconSave"
           :label="$t('pdf-export-save-template')"
+          style="margin-left: auto"
           @click="saveTemplate"
         />
 
@@ -385,15 +394,6 @@ onUnmounted(() => service.destroy());
   border-bottom: 1px solid var(--border-color-default);
 }
 
-.toolbar-group {
-  display: flex;
-  gap: calc(var(--spacing) * 2);
-  align-items: center;
-
-  height: 100%;
-  margin-right: auto;
-}
-
 .aside {
   display: flex;
   grid-area: aside;
@@ -405,12 +405,11 @@ onUnmounted(() => service.destroy());
   border-right: 1px solid var(--border-color-default);
 }
 
-.assets {
+.aside-block {
   grid-area: settings;
 
   width: var(--container-3xs);
   height: 100%;
-  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 1);
   border-right: 1px solid var(--border-color-default);
 }
 

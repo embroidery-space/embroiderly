@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 export const enum TypstEditorAsideBlock {
   Assets = "assets",
+  Settings = "settings",
 }
 
 export const enum TypstEditorViewMode {

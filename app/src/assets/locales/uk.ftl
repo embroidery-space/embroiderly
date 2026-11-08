@@ -584,8 +584,6 @@ pdf-export-view-mode-code = Код
 pdf-export-view-mode-split-view = Розділений вигляд
 pdf-export-view-mode-preview = Преʼю
 
-pdf-export-line-wrapping = Перенесення рядків
-
 pdf-export-save-template = Зберегти шаблон
 pdf-export-save-template-failed =
   .title = Помилка
@@ -606,6 +604,9 @@ pdf-export-assets-remove-file = Видалити файл
 pdf-export-assets-file-removal =
   .title = Підтвердіть видалення
   .description = Ви дійсно хочете видалити файл { $fileName }?
+
+pdf-export-settings = Налаштування
+pdf-export-settings-line-wrapping = Увімкнути перенесення рядків
 
 pdf-export-unsaved-changes =
   .title = Незбережені зміни

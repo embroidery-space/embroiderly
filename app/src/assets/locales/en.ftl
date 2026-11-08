@@ -580,7 +580,6 @@ pdf-export-view-mode-code = Code
 pdf-export-view-mode-split-view = Split view
 pdf-export-view-mode-preview = Preview
 
-pdf-export-line-wrapping = Line wrapping
 
 pdf-export-save-template = Save Template
 pdf-export-save-template-failed =
@@ -602,6 +601,9 @@ pdf-export-assets-remove-file = Remove file
 pdf-export-assets-file-removal =
   .title = Confirm removal
   .description = Do you really want to remove the { $fileName } file?
+
+pdf-export-settings = Settings
+pdf-export-settings-line-wrapping = Enable line wrapping
 
 pdf-export-unsaved-changes =
   .title = Unsaved Changes
