@@ -269,6 +269,31 @@ onUnmounted(() => service.destroy());
           :tooltip-options="{ side: 'right' }"
           @update:model-value="typstEditorStateStore.toggleAsideBlock(TypstEditorAsideBlock.Assets)"
         />
+
+        <Separator />
+
+        <ToolToggleGroup
+          v-model="typstEditorStateStore.viewMode"
+          orientation="vertical"
+          :items="[
+            {
+              icon: IconCode,
+              value: TypstEditorViewMode.Code,
+              tooltip: $t('pdf-export-view-mode-code'),
+            },
+            {
+              icon: IconSplitView,
+              value: TypstEditorViewMode.SplitView,
+              tooltip: $t('pdf-export-view-mode-split-view'),
+            },
+            {
+              icon: IconVisibility,
+              value: TypstEditorViewMode.Preview,
+              tooltip: $t('pdf-export-view-mode-preview'),
+            },
+          ]"
+          :tooltip-options="{ side: 'right' }"
+        />
       </div>
 
       <TypstAssets
@@ -284,29 +309,6 @@ onUnmounted(() => service.destroy());
 
       <div :class="$style.toolbar">
         <div :class="$style.toolbarGroup">
-          <ToolToggleGroup
-            v-model="typstEditorStateStore.viewMode"
-            :items="[
-              {
-                icon: IconCode,
-                value: TypstEditorViewMode.Code,
-                tooltip: $t('pdf-export-view-mode-code'),
-              },
-              {
-                icon: IconSplitView,
-                value: TypstEditorViewMode.SplitView,
-                tooltip: $t('pdf-export-view-mode-split-view'),
-              },
-              {
-                icon: IconVisibility,
-                value: TypstEditorViewMode.Preview,
-                tooltip: $t('pdf-export-view-mode-preview'),
-              },
-            ]"
-          />
-
-          <Separator orientation="vertical" />
-
           <ToolToggle
             v-model="typstEditorStateStore.wrapLines"
             :icon="IconLineWrapping"
@@ -396,10 +398,10 @@ onUnmounted(() => service.destroy());
   display: flex;
   grid-area: aside;
   flex-direction: column;
-  gap: calc(var(--spacing) * 1);
+  gap: calc(var(--spacing) * 2);
 
   height: 100%;
-  padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 1);
+  padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 2);
   border-right: 1px solid var(--border-color-default);
 }
 
