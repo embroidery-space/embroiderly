@@ -319,7 +319,7 @@ onUnmounted(() => service.destroy());
 
       <TypstSettings
         v-if="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Settings"
-        v-model:wrap-lines="typstEditorStateStore.wrapLines"
+        v-model="typstEditorStateStore.settings"
         :class="$style.asideBlock"
       />
 
@@ -347,7 +347,7 @@ onUnmounted(() => service.destroy());
             ref="typst-editor"
             v-model="pdf.template"
             :dark="isDark"
-            :wrap-lines="typstEditorStateStore.wrapLines"
+            :settings="typstEditorStateStore.settings"
           />
         </SplitterPanel>
 
@@ -408,7 +408,7 @@ onUnmounted(() => service.destroy());
 .aside-block {
   grid-area: settings;
 
-  width: var(--container-3xs);
+  width: var(--container-xs);
   height: 100%;
   border-right: 1px solid var(--border-color-default);
 }
@@ -421,7 +421,6 @@ onUnmounted(() => service.destroy());
   display: flex;
   flex-direction: column;
 
-  /* gap: calc(var(--spacing) * 8); */
   align-items: center;
   justify-content: space-between;
 

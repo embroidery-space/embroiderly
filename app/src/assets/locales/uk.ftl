@@ -606,7 +606,11 @@ pdf-export-assets-file-removal =
   .description = Ви дійсно хочете видалити файл { $fileName }?
 
 pdf-export-settings = Налаштування
-pdf-export-settings-line-wrapping = Увімкнути перенесення рядків
+pdf-export-settings-font-size = Розмір шрифту
+pdf-export-settings-font-ligatures =
+  .label = Злиття знаків коду (лігатури)
+  .description = Перетворювати комбінації знаків на кшталт -> або != у суцільні символи (→ та ≠ відповідно).
+pdf-export-settings-line-wrapping = Перенесення рядків
 
 pdf-export-unsaved-changes =
   .title = Незбережені зміни

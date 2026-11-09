@@ -266,7 +266,6 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
-    readonly init: () => void;
     readonly __wbg_filemanager_free: (a: number, b: number) => void;
     readonly __wbg_get_groupedfileslist_custom: (a: number) => [number, number];
     readonly __wbg_get_groupedfileslist_system: (a: number) => [number, number];
@@ -289,6 +288,7 @@ export interface InitOutput {
     readonly filemanager_loadPatternTemplate: (a: number, b: number, c: number) => any;
     readonly filemanager_saveFabricColors: (a: number, b: number, c: number) => any;
     readonly filemanager_savePatternTemplate: (a: number, b: number, c: number, d: number, e: number) => any;
+    readonly init: () => void;
     readonly __wbg_editorwrapper_free: (a: number, b: number) => void;
     readonly __wbg_get_openpatternresult_id: (a: number) => [number, number];
     readonly __wbg_get_openpatternresult_snapshot: (a: number) => [number, number];

@@ -603,7 +603,11 @@ pdf-export-assets-file-removal =
   .description = Do you really want to remove the { $fileName } file?
 
 pdf-export-settings = Settings
-pdf-export-settings-line-wrapping = Enable line wrapping
+pdf-export-settings-font-size = Font size
+pdf-export-settings-font-ligatures =
+  .label = Code character combinations (ligatures)
+  .description = Convert character combinations like -> or != into single visual symbols (→ and ≠ correspondingly).
+pdf-export-settings-line-wrapping = Line wrapping
 
 pdf-export-unsaved-changes =
   .title = Unsaved Changes

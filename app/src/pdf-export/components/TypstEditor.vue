@@ -5,61 +5,44 @@ import { Compartment, Prec } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { shallowRef, useTemplateRef, onMounted, onBeforeUnmount, watch } from "vue";
 
-import { editorSetup, nordDark, nordLight, typst } from "../lib/codemirror/";
+import { editorSetup, typst, typstTheme } from "../lib/codemirror/";
+import type { TypstEditorSettings } from "../lib/codemirror/";
 
 export interface TypstEditorProps {
-  /**
-   * Whether the dark theme is applied.
-   * @default false
-   */
   dark?: boolean;
-
-  /**
-   * Whether lines are wrapped.
-   * @default false
-   */
-  wrapLines?: boolean;
+  settings?: TypstEditorSettings;
 }
 
 const doc = defineModel<string>({ required: true });
-const { dark = false, wrapLines = false } = defineProps<TypstEditorProps>();
+const { dark = false, settings = undefined } = defineProps<TypstEditorProps>();
 
 const container = useTemplateRef("container");
 
 const editor = shallowRef<EditorView | null>(null);
-
-const theme = new Compartment();
-watch(
-  () => dark,
-  (value) => {
-    if (!editor.value) return;
-    editor.value.dispatch({ effects: theme.reconfigure(Prec.highest(value ? nordDark : nordLight)) });
-  },
-);
-
-const lineWrapping = new Compartment();
-watch(
-  () => wrapLines,
-  (value) => {
-    if (!editor.value) return;
-    editor.value.dispatch({ effects: lineWrapping.reconfigure(value ? EditorView.lineWrapping : []) });
-  },
-);
 
 watch(doc, (newDoc) => {
   if (!editor.value || newDoc === editor.value.state.doc.toString()) return;
   editor.value.dispatch({ changes: { from: 0, to: editor.value.state.doc.length, insert: newDoc } });
 });
 
+const theme = new Compartment();
+watch(
+  [() => dark, () => settings],
+  ([dark, settings]) => {
+    if (!editor.value) return;
+    editor.value.dispatch({ effects: theme.reconfigure(Prec.highest(typstTheme(dark, settings))) });
+  },
+  { deep: true },
+);
+
 onMounted(() => {
   editor.value = new EditorView({
     doc: doc.value,
     extensions: [
       editorSetup,
-      lineWrapping.of(wrapLines ? EditorView.lineWrapping : []),
 
       Prec.high(typst()),
-      Prec.highest(theme.of(dark ? nordDark : nordLight)),
+      Prec.highest(theme.of(typstTheme(dark, settings))),
 
       EditorView.updateListener.of((update) => {
         if (!update.docChanged) return;
