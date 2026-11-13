@@ -15,7 +15,7 @@ pub mod xspro;
 mod utils;
 
 pub fn parse_pattern(data: &[u8], file_name: &str) -> Result<EmbroiderlyProject> {
-  match PatternFormat::try_from(file_name)? {
+  match file_name.parse()? {
     PatternFormat::Xsd => pmaker::parse_pattern(data),
     PatternFormat::Oxs => oxs::parse_pattern(data),
     PatternFormat::EmbProj => embproj::parse_pattern(data),
@@ -33,7 +33,7 @@ pub fn save_pattern(embproj: &EmbroiderlyProject, format: PatternFormat) -> Resu
 }
 
 pub fn parse_palette(data: &[u8], file_name: &str) -> Result<Vec<BrandPaletteItem>> {
-  match PaletteFormat::try_from(file_name)? {
+  match file_name.parse()? {
     PaletteFormat::Pmaker => pmaker::parse_palette(data).map_err(Error::FailedToParse),
     PaletteFormat::Ursa => ursa::parse_palette(data).map_err(Error::FailedToParse),
     PaletteFormat::Xspro => xspro::parse_palette(data).map_err(Error::FailedToParse),

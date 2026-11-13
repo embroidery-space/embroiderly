@@ -33,7 +33,7 @@ import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { PatternPdf, PdfAsset } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
 import { useSettingsStore } from "~/settings/";
-import { usePatternStore } from "~/stores/";
+import { usePatternFileStore, usePatternStore } from "~/stores/";
 
 import {
   useTypstEditorStateStore,
@@ -48,6 +48,7 @@ import TypstSettings from "./TypstSettings.vue";
 const open = defineModel<boolean>("open", { default: false });
 
 const patternStore = usePatternStore();
+const patternFileStore = usePatternFileStore();
 const settingsStore = useSettingsStore();
 
 const typstEditorStateStore = useTypstEditorStateStore();
@@ -249,7 +250,12 @@ onMounted(async () => {
   await service.init(
     canvas.value!.transferControlToOffscreen(),
     pattern,
-    PdfAsset.serialize(pdf.value.files),
+    PdfAsset.serialize([
+      await patternFileStore
+        .exportPattern(patternStore.pattern.id, "oxs")
+        .then((content) => new PdfAsset({ fileName: "pattern.oxs", content })),
+      ...pdf.value.files,
+    ]),
     PdfAsset.serialize([...baseFonts, ...pdf.value.fonts]),
   );
 

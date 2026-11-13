@@ -18,10 +18,10 @@ pub enum PatternFormat {
   EmbProj,
 }
 
-impl TryFrom<&str> for PatternFormat {
-  type Error = Error;
+impl std::str::FromStr for PatternFormat {
+  type Err = Error;
 
-  fn try_from(file_name: &str) -> std::result::Result<Self, Self::Error> {
+  fn from_str(file_name: &str) -> std::result::Result<Self, Self::Err> {
     let extension = file_name.split('.').next_back().unwrap_or_default();
     match extension.to_lowercase().as_str() {
       "xsd" => Ok(Self::Xsd),
@@ -57,10 +57,10 @@ pub enum PaletteFormat {
   Embroiderly,
 }
 
-impl TryFrom<&str> for PaletteFormat {
-  type Error = Error;
+impl std::str::FromStr for PaletteFormat {
+  type Err = Error;
 
-  fn try_from(file_name: &str) -> std::result::Result<Self, Self::Error> {
+  fn from_str(file_name: &str) -> std::result::Result<Self, Self::Err> {
     let extension = file_name.split('.').next_back().unwrap_or_default();
     match extension.to_lowercase().as_str() {
       "master" | "user" => Ok(Self::Pmaker),

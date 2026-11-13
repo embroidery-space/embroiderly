@@ -47,10 +47,10 @@ export class EditorWrapper {
      */
     endTransaction(project_id: string): Promise<void>;
     /**
-     * Encodes the pattern and writes it to the given handle without updating the stored handle.
+     * Encodes the pattern and returns the resulting buffer without updating the stored handle.
      * Use this for one-off exports (e.g. OXS). Does not checkpoint.
      */
-    exportPattern(project_id: string, file_handle: FileSystemFileHandle): Promise<void>;
+    exportPattern(project_id: string, format: string): Promise<Uint8Array>;
     /**
      * Checks if the pattern with the given ID has unsaved changes.
      */
@@ -305,7 +305,7 @@ export interface InitOutput {
     readonly editorwrapper_create: (a: any) => any;
     readonly editorwrapper_createPattern: (a: number, b: number, c: number) => any;
     readonly editorwrapper_endTransaction: (a: number, b: number, c: number) => any;
-    readonly editorwrapper_exportPattern: (a: number, b: number, c: number, d: any) => any;
+    readonly editorwrapper_exportPattern: (a: number, b: number, c: number, d: number, e: number) => any;
     readonly editorwrapper_hasUnsavedChanges: (a: number, b: number, c: number) => [number, number, number];
     readonly editorwrapper_loadPattern: (a: number, b: number, c: number) => any;
     readonly editorwrapper_moveLayer: (a: number, b: number, c: number, d: number, e: number) => any;

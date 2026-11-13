@@ -259,19 +259,19 @@ export const usePatternFileStore = defineStore(
       }
     }
 
-    async function exportPatternAsOxs(id: string) {
-      const pattern = openedPatterns.value.find((p) => p.id === id);
-      const suggestedName = `${pattern?.title ?? "pattern"}.oxs`;
-      const handle = await filePicker.save({
-        suggestedName,
-        types: filePicker.filters.oxs,
-        id: filePicker.ids.pattern,
-      });
-      if (!handle) return;
-
+    async function exportPattern(id: string, format: string, handle?: FileSystemFileHandle) {
       try {
         loading.value = true;
-        await editor.exportPattern(id, handle);
+
+        const data = await editor.exportPattern(id, format);
+        if (handle) {
+          const writable = await handle.createWritable();
+          // @ts-expect-error `Uint8Array` works just fine here.
+          await writable.write(data);
+          await writable.close();
+        }
+
+        return data;
       } finally {
         loading.value = false;
       }
@@ -299,7 +299,7 @@ export const usePatternFileStore = defineStore(
       createPattern,
       savePattern,
       closePattern,
-      exportPatternAsOxs,
+      exportPattern,
     };
   },
   {

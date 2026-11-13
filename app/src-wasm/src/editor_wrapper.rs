@@ -127,15 +127,11 @@ impl EditorWrapper {
     self.save_pattern_impl(project_id, file_handle.map(Into::into)).await
   }
 
-  /// Encodes the pattern and writes it to the given handle without updating the stored handle.
+  /// Encodes the pattern and returns the resulting buffer without updating the stored handle.
   /// Use this for one-off exports (e.g. OXS). Does not checkpoint.
   #[wasm_bindgen(js_name = "exportPattern")]
-  pub async fn export_pattern(
-    &self,
-    project_id: &str,
-    file_handle: web_sys::FileSystemFileHandle,
-  ) -> Result<(), Error> {
-    self.export_pattern_impl(project_id, file_handle.into()).await
+  pub async fn export_pattern(&self, project_id: &str, format: &str) -> Result<Vec<u8>, Error> {
+    self.export_pattern_impl(project_id, format).await
   }
 
   /// Removes the pattern from the editor and cleans up its persisted entry from IndexedDB.
@@ -587,7 +583,7 @@ impl EditorWrapper {
     };
 
     let file_name = file_handle.name();
-    let format = PatternFormat::try_from(file_name.as_str())?;
+    let format = file_name.as_str().parse()?;
 
     tracing::Span::current().record("file_name", &file_name);
 
@@ -619,31 +615,17 @@ impl EditorWrapper {
     Ok(())
   }
 
-  #[tracing::instrument(
-    name = "EditorWrapper::export_pattern",
-    level = "debug",
-    skip(self, file_handle),
-    fields(file_name),
-    err
-  )]
-  async fn export_pattern_impl(&self, project_id: &str, file_handle: opfs::FileHandle) -> Result<(), Error> {
+  #[tracing::instrument(name = "EditorWrapper::export_pattern", level = "debug", skip(self), err)]
+  async fn export_pattern_impl(&self, project_id: &str, format: &str) -> Result<Vec<u8>, Error> {
     let project_id = project_id.parse::<EmbroiderlyProjectId>()?;
-    let file_name = file_handle.name();
-
-    tracing::Span::current().record("file_name", &file_name);
-
-    let format = PatternFormat::try_from(file_name.as_str())?;
-    let data = self.run(|editor| {
+    let format = format.parse::<PatternFormat>()?;
+    self.run(|editor| {
       if let Some(embproj) = editor.get_pattern(&project_id) {
         Ok(embroiderly_parsers::save_pattern(embproj, format)?)
       } else {
         Err(Error::new(ErrorKind::PatternNotFound))
       }
-    })?;
-
-    file_handle.write(&data).await?;
-
-    Ok(())
+    })
   }
 
   #[tracing::instrument(name = "EditorWrapper::close_pattern", level = "debug", skip(self), err)]
@@ -1205,7 +1187,7 @@ async fn auto_save_tick(persistence: Rc<PersistenceManager>, callback: js_sys::F
     };
 
     let file_name = file_handle.name();
-    let format = match PatternFormat::try_from(file_name.as_str()) {
+    let format = match file_name.as_str().parse() {
       Ok(f) => f,
       Err(e) => {
         tracing::warn!("Unknown format for {project_id}: {e}");

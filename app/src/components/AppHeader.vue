@@ -18,7 +18,7 @@ import {
   IconSettings,
   IconUndo,
 } from "~/assets/icons/";
-import { useEditor, useEditorModals, useI18n } from "~/composables/";
+import { useEditor, useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { useTour } from "~/composables/core/";
 import { Fabric, deserializeFabricColors } from "~/lib/pattern/";
 import { useSettingsStore } from "~/settings/";
@@ -33,6 +33,7 @@ const { fluent } = useI18n();
 
 const modals = useEditorModals();
 const { files } = useEditor();
+const filePicker = useFilePicker();
 
 const patternStore = usePatternStore();
 const patternFileStore = usePatternFileStore();
@@ -108,7 +109,14 @@ const appMenu = computed(() => {
             {
               label: "OXS",
               async onSelect() {
-                await patternFileStore.exportPatternAsOxs(patternStore.pattern.id);
+                const handle = await filePicker.save({
+                  suggestedName: `${patternStore.pattern.info.title}.oxs`,
+                  types: filePicker.filters.oxs,
+                  id: filePicker.ids.pattern,
+                });
+                if (!handle) return;
+
+                await patternFileStore.exportPattern(patternStore.pattern.id, "oxs", handle);
               },
             },
             {
