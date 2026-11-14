@@ -585,7 +585,7 @@ pdf-export-view-mode-split-view = Розділений вигляд
 pdf-export-view-mode-preview = Превʼю
 
 pdf-export-format-heading = Заголовок
-pdf-export-format-heading-n = Заголовок { $n }
+pdf-export-format-heading-n = Заголовок { $level }
 
 pdf-export-format-bold = Жирний
 pdf-export-format-italic = Курсив

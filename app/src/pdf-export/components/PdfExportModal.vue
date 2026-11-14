@@ -332,6 +332,7 @@ onUnmounted(() => service.destroy());
 
       <div :class="$style.toolbar">
         <TypstToolbar
+          @toggle-heading="typstEditor?.toggleHeading"
           @toggle-bold-text="typstEditor?.toggleBoldText"
           @toggle-italic-text="typstEditor?.toggleItalicText"
           @toggle-underlined-text="typstEditor?.toggleUnderlinedText"

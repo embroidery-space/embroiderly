@@ -20,6 +20,8 @@ import {
 } from "~/assets/icons/";
 
 const emit = defineEmits<{
+  "toggle-heading": [level: number];
+
   "toggle-bold-text": [];
   "toggle-italic-text": [];
   "toggle-underlined-text": [];
@@ -30,16 +32,20 @@ const emit = defineEmits<{
   <div :class="$style.root">
     <DropdownMenu
       :items="
-        [IconFormatH1, IconFormatH2, IconFormatH3, IconFormatH4, IconFormatH5, IconFormatH6].map((icon, index) => ({
-          icon,
-          label: $t('pdf-export-format-heading-n', { n: index + 1 }),
-        }))
+        [IconFormatH1, IconFormatH2, IconFormatH3, IconFormatH4, IconFormatH5, IconFormatH6].map((icon, index) => {
+          const level = index + 1;
+          return {
+            icon,
+            label: $t('pdf-export-format-heading-n', { level }),
+            onSelect: () => emit('toggle-heading', level),
+          };
+        })
       "
     >
       <Button
         variant="ghost"
         color="neutral"
-        :icon-trailing="IconChevronDown"
+        :trailing-icon="IconChevronDown"
         :label="$t('pdf-export-format-heading')"
       />
     </DropdownMenu>

@@ -581,7 +581,7 @@ pdf-export-view-mode-split-view = Split view
 pdf-export-view-mode-preview = Preview
 
 pdf-export-format-heading = Heading
-pdf-export-format-heading-n = Heading { $n }
+pdf-export-format-heading-n = Heading { $level }
 
 pdf-export-format-bold = Bold
 pdf-export-format-italic = Italic

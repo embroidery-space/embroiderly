@@ -5,7 +5,7 @@ import { Compartment, Prec } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { shallowRef, useTemplateRef, onMounted, onBeforeUnmount, watch } from "vue";
 
-import { editorSetup, typst, typstTheme, toggleFormatting } from "../lib/codemirror/";
+import { editorSetup, typst, typstTheme, toggleHeading, toggleFormatting } from "../lib/codemirror/";
 import type { TypstEditorSettings } from "../lib/codemirror/";
 
 export interface TypstEditorProps {
@@ -64,6 +64,11 @@ defineExpose({
   setDiagnostics(diagnostics: readonly Diagnostic[]) {
     if (!editor.value) return;
     editor.value.dispatch(setDiagnostics(editor.value.state, diagnostics));
+  },
+
+  toggleHeading(level: number) {
+    if (!editor.value) return;
+    toggleHeading(editor.value, level);
   },
 
   toggleBoldText() {
