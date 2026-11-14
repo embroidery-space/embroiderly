@@ -336,6 +336,8 @@ onUnmounted(() => service.destroy());
           @toggle-bold-text="typstEditor?.toggleBoldText"
           @toggle-italic-text="typstEditor?.toggleItalicText"
           @toggle-underlined-text="typstEditor?.toggleUnderlinedText"
+          @toggle-bulleted-list="typstEditor?.toggleBulletedList"
+          @toggle-numbered-list="typstEditor?.toggleNumberedList"
         />
 
         <Button

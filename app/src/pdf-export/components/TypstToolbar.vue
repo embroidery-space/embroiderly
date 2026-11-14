@@ -25,6 +25,9 @@ const emit = defineEmits<{
   "toggle-bold-text": [];
   "toggle-italic-text": [];
   "toggle-underlined-text": [];
+
+  "toggle-bulleted-list": [];
+  "toggle-numbered-list": [];
 }>();
 </script>
 
@@ -81,12 +84,14 @@ const emit = defineEmits<{
       color="neutral"
       :icon="IconFormatListBulleted"
       :tooltip="$t('pdf-export-format-bulleted-list')"
+      @click="emit('toggle-bulleted-list')"
     />
     <ButtonIcon
       variant="ghost"
       color="neutral"
       :icon="IconFormatListNumbered"
       :tooltip="$t('pdf-export-format-numbered-list')"
+      @click="emit('toggle-numbered-list')"
     />
 
     <Separator orientation="vertical" />

@@ -5,7 +5,7 @@ import { Compartment, Prec } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { shallowRef, useTemplateRef, onMounted, onBeforeUnmount, watch } from "vue";
 
-import { editorSetup, typst, typstTheme, toggleHeading, toggleFormatting } from "../lib/codemirror/";
+import { editorSetup, typst, typstTheme, toggleHeading, toggleFormatting, toggleList } from "../lib/codemirror/";
 import type { TypstEditorSettings } from "../lib/codemirror/";
 
 export interface TypstEditorProps {
@@ -82,6 +82,15 @@ defineExpose({
   toggleUnderlinedText() {
     if (!editor.value) return;
     toggleFormatting(editor.value, "#underline[", "]");
+  },
+
+  toggleBulletedList() {
+    if (!editor.value) return;
+    toggleList(editor.value, "-");
+  },
+  toggleNumberedList() {
+    if (!editor.value) return;
+    toggleList(editor.value, "1.");
   },
 });
 </script>
