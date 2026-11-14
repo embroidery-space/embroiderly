@@ -44,6 +44,7 @@ import {
 import TypstAssets from "./TypstAssets.vue";
 import TypstEditor from "./TypstEditor.vue";
 import TypstSettings from "./TypstSettings.vue";
+import TypstToolbar from "./TypstToolbar.vue";
 
 const open = defineModel<boolean>("open", { default: false });
 
@@ -330,6 +331,8 @@ onUnmounted(() => service.destroy());
       />
 
       <div :class="$style.toolbar">
+        <TypstToolbar />
+
         <Button
           :loading="saveInProgress"
           variant="outline"

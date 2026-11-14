@@ -582,7 +582,21 @@ pdf-export = Експорт PDF
 
 pdf-export-view-mode-code = Код
 pdf-export-view-mode-split-view = Розділений вигляд
-pdf-export-view-mode-preview = Преʼю
+pdf-export-view-mode-preview = Превʼю
+
+pdf-export-format-heading = Заголовок
+pdf-export-format-heading-n = Заголовок { $n }
+
+pdf-export-format-bold = Жирний
+pdf-export-format-italic = Курсив
+pdf-export-format-underlined = Підкреслений
+
+pdf-export-format-bulleted-list = Вставити маркований список
+pdf-export-format-numbered-list = Вставити нумерований список
+
+pdf-export-format-link = Вставити посилання
+pdf-export-format-image = Вставити зображення
+pdf-export-format-table = Вставити таблицю
 
 pdf-export-save-template = Зберегти шаблон
 pdf-export-save-template-failed =

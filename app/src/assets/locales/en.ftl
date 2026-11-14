@@ -580,6 +580,19 @@ pdf-export-view-mode-code = Code
 pdf-export-view-mode-split-view = Split view
 pdf-export-view-mode-preview = Preview
 
+pdf-export-format-heading = Heading
+pdf-export-format-heading-n = Heading { $n }
+
+pdf-export-format-bold = Bold
+pdf-export-format-italic = Italic
+pdf-export-format-underlined = Underlined
+
+pdf-export-format-bulleted-list = Insert bulleted list
+pdf-export-format-numbered-list = Insert numbered list
+
+pdf-export-format-link = Insert link
+pdf-export-format-image = Insert image
+pdf-export-format-table = Insert table
 
 pdf-export-save-template = Save Template
 pdf-export-save-template-failed =
