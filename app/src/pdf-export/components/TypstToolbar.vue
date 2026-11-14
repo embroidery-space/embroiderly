@@ -18,6 +18,12 @@ import {
   IconFormatImage,
   IconFormatTable,
 } from "~/assets/icons/";
+
+const emit = defineEmits<{
+  "toggle-bold-text": [];
+  "toggle-italic-text": [];
+  "toggle-underlined-text": [];
+}>();
 </script>
 
 <template>
@@ -40,13 +46,26 @@ import {
 
     <Separator orientation="vertical" />
 
-    <ButtonIcon variant="ghost" color="neutral" :icon="IconFormatBold" :tooltip="$t('pdf-export-format-bold')" />
-    <ButtonIcon variant="ghost" color="neutral" :icon="IconFormatItalic" :tooltip="$t('pdf-export-format-italic')" />
+    <ButtonIcon
+      variant="ghost"
+      color="neutral"
+      :icon="IconFormatBold"
+      :tooltip="$t('pdf-export-format-bold')"
+      @click="emit('toggle-bold-text')"
+    />
+    <ButtonIcon
+      variant="ghost"
+      color="neutral"
+      :icon="IconFormatItalic"
+      :tooltip="$t('pdf-export-format-italic')"
+      @click="emit('toggle-italic-text')"
+    />
     <ButtonIcon
       variant="ghost"
       color="neutral"
       :icon="IconFormatUnderlined"
       :tooltip="$t('pdf-export-format-underlined')"
+      @click="emit('toggle-underlined-text')"
     />
 
     <Separator orientation="vertical" />
