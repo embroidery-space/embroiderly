@@ -1,12 +1,16 @@
 use anyhow::Result;
-use embroiderly_pattern::{EmbroiderlyProject, PatternPdf};
-use typst::foundations::{Bytes, Dict, Value};
+use embroiderly_pattern::{EmbroiderlyProject, PdfAsset};
+use indexmap::IndexMap;
+use typst::foundations::{Bytes, Dict};
+use typst::syntax::FileId;
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
+use typst::{Library, LibraryExt as _};
 use typst_layout::PagedDocument;
 use wasm_bindgen::prelude::*;
 
 mod conversion;
+mod path;
 mod world;
 
 #[cfg(test)]
@@ -15,32 +19,52 @@ mod tests;
 
 #[wasm_bindgen]
 pub struct PdfExporter {
-  /// The target pattern for export.
-  embproj: Value,
+  files: IndexMap<FileId, Bytes>,
+  fonts: IndexMap<FileId, Font>,
 
-  /// An array of fonts (both text and symbol) used in the document.
-  fonts: Vec<Font>,
-  /// Pre-built font book metadata.
   font_book: LazyHash<FontBook>,
+  library: LazyHash<Library>,
 
-  /// The working document used for previewing.
   doc: Option<PagedDocument>,
 }
 
 #[wasm_bindgen]
 impl PdfExporter {
   #[wasm_bindgen(constructor)]
-  pub fn new(embproj: &[u8], font_data: Vec<js_sys::Uint8Array>) -> Result<Self, JsError> {
+  pub fn new(embproj: &[u8], files: &[u8], fonts: &[u8]) -> Result<Self, JsError> {
     let embproj = borsh::from_slice(embproj).map_err(|e| JsError::new(&e.to_string()))?;
-    let font_data = font_data.into_iter().map(|js_array| js_array.to_vec());
-    Ok(Self::init(embproj, font_data))
+    let files: Vec<PdfAsset> = borsh::from_slice(files).map_err(|e| JsError::new(&e.to_string()))?;
+    let fonts: Vec<PdfAsset> = borsh::from_slice(fonts).map_err(|e| JsError::new(&e.to_string()))?;
+    Ok(Self::init(embproj, files, fonts))
+  }
+
+  #[wasm_bindgen(js_name = "addFiles")]
+  pub fn add_files(&mut self, files: &[u8]) -> Result<(), JsError> {
+    let files: Vec<PdfAsset> = borsh::from_slice(files).map_err(|e| JsError::new(&e.to_string()))?;
+    self.add_files_impl(files);
+    Ok(())
+  }
+
+  #[wasm_bindgen(js_name = "removeFile")]
+  pub fn remove_file(&mut self, file_name: String) {
+    self.remove_file_impl(file_name);
+  }
+
+  #[wasm_bindgen(js_name = "addFonts")]
+  pub fn add_fonts(&mut self, fonts: &[u8]) -> Result<(), JsError> {
+    let fonts: Vec<PdfAsset> = borsh::from_slice(fonts).map_err(|e| JsError::new(&e.to_string()))?;
+    self.add_fonts_impl(fonts);
+    Ok(())
+  }
+
+  #[wasm_bindgen(js_name = "removeFont")]
+  pub fn remove_font(&mut self, file_name: String) {
+    self.remove_font_impl(file_name);
   }
 
   #[wasm_bindgen(js_name = "compileDocument")]
-  pub fn compile_document(&mut self, pattern_pdf: &[u8]) -> Result<JsValue, JsError> {
-    let pattern_pdf = borsh::from_slice(pattern_pdf).map_err(|e| JsError::new(&e.to_string()))?;
-
-    let CompilationOutput { output, diagnostics } = self.compile_document_impl(pattern_pdf);
+  pub fn compile_document(&mut self, template: String) -> Result<JsValue, JsError> {
+    let CompilationOutput { output, diagnostics } = self.compile_document_impl(template);
     let total_pages = if let Some(doc) = output {
       let total_pages = doc.pages().len();
 
@@ -70,38 +94,72 @@ impl PdfExporter {
 
 impl PdfExporter {
   #[must_use]
-  pub fn init(embproj: EmbroiderlyProject, font_data: impl IntoIterator<Item = Vec<u8>>) -> Self {
-    let mut fonts = Vec::new();
-    let mut font_book = FontBook::new();
+  fn init(
+    embproj: EmbroiderlyProject,
+    files: impl IntoIterator<Item = PdfAsset>,
+    fonts: impl IntoIterator<Item = PdfAsset>,
+  ) -> Self {
+    let files: IndexMap<FileId, Bytes> = files
+      .into_iter()
+      .map(|PdfAsset { file_name, content }| (path::project_path(file_name), Bytes::new(content)))
+      .collect();
+    let fonts: IndexMap<FileId, Font> = fonts
+      .into_iter()
+      .flat_map(|PdfAsset { file_name, content }| {
+        Font::iter(Bytes::new(content)).map(move |font| (path::project_path(&file_name), font))
+      })
+      .collect();
 
-    for fd in font_data {
-      for font in Font::iter(Bytes::new(fd)) {
-        font_book.push(font.info().clone());
-        fonts.push(font);
-      }
-    }
+    let font_book = FontBook::from_fonts(fonts.values());
+    let library = Library::builder()
+      .with_inputs({
+        let mut inputs = Dict::new();
+
+        inputs.insert("pattern".into(), conversion::convert_embproj_into_typst_value(embproj));
+
+        inputs
+      })
+      .build();
 
     Self {
-      embproj: conversion::convert_embproj_into_typst_value(embproj),
-
+      files,
       fonts,
+
       font_book: LazyHash::new(font_book),
+      library: LazyHash::new(library),
 
       doc: None,
     }
   }
 
-  fn compile_document_impl(&self, pattern_pdf: PatternPdf) -> CompilationOutput<PagedDocument> {
-    let PatternPdf { template } = pattern_pdf;
-    let inputs = {
-      let mut inputs = Dict::new();
+  fn add_files_impl(&mut self, files: impl IntoIterator<Item = PdfAsset>) {
+    self.files.extend(
+      files
+        .into_iter()
+        .map(|PdfAsset { file_name, content }| (path::project_path(file_name), Bytes::new(content))),
+    );
+  }
 
-      inputs.insert("pattern".into(), self.embproj.clone());
+  fn remove_file_impl(&mut self, file_name: String) {
+    self.files.shift_remove(&path::project_path(file_name));
+  }
 
-      inputs
-    };
+  fn add_fonts_impl(&mut self, fonts: impl IntoIterator<Item = PdfAsset>) {
+    self
+      .fonts
+      .extend(fonts.into_iter().flat_map(|PdfAsset { file_name, content }| {
+        Font::iter(Bytes::new(content)).map(move |font| (path::project_path(&file_name), font))
+      }));
+    self.font_book = LazyHash::new(FontBook::from_fonts(self.fonts.values()));
+  }
 
-    let world = world::PdfExportWorld::new(template, inputs, &self.fonts, &self.font_book);
+  fn remove_font_impl(&mut self, file_name: String) {
+    self.fonts.shift_remove(&path::project_path(file_name));
+    self.font_book = LazyHash::new(FontBook::from_fonts(self.fonts.values()));
+  }
+
+  fn compile_document_impl(&self, template: String) -> CompilationOutput<PagedDocument> {
+    let world = world::PdfExportWorld::new(template, &self.files, &self.fonts, &self.font_book, &self.library);
     let typst::diag::Warned {
       output: result,
       warnings,

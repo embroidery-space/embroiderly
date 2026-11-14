@@ -1,41 +1,52 @@
 use std::sync::LazyLock;
 
+use indexmap::IndexMap;
+use typst::Library;
 use typst::diag::{FileError, FileResult};
-use typst::foundations::{Bytes, Datetime, Dict};
-use typst::syntax::{FileId, RootedPath, Source, VirtualPath, VirtualRoot};
+use typst::foundations::{Bytes, Datetime, Duration};
+use typst::syntax::{FileId, Source};
 use typst::text::{Font, FontBook};
 use typst::utils::LazyHash;
-use typst::{Library, LibraryExt as _};
 
-static MAIN_ID: LazyLock<FileId> =
-  LazyLock::new(|| RootedPath::new(VirtualRoot::Project, VirtualPath::new("main.typ").unwrap()).intern());
+static MAIN_ID: LazyLock<FileId> = LazyLock::new(|| crate::path::project_path("main.typ"));
 
-static DRAW_ID: LazyLock<FileId> =
-  LazyLock::new(|| RootedPath::new(VirtualRoot::Project, VirtualPath::new("draw.typ").unwrap()).intern());
+static DRAW_ID: LazyLock<FileId> = LazyLock::new(|| crate::path::project_path("draw.typ"));
 static DRAW_SOURCE: LazyLock<Source> =
   LazyLock::new(|| Source::new(*DRAW_ID, include_str!("./typst/draw.typ").to_string()));
 
 pub struct PdfExportWorld<'a> {
   main_source: Source,
-  library: LazyHash<Library>,
-  fonts: &'a [Font],
+
+  files: &'a IndexMap<FileId, Bytes>,
+  fonts: &'a IndexMap<FileId, Font>,
+
   font_book: &'a LazyHash<FontBook>,
+  library: &'a LazyHash<Library>,
 }
 
 impl<'a> PdfExportWorld<'a> {
-  pub fn new(template: String, inputs: Dict, fonts: &'a [Font], font_book: &'a LazyHash<FontBook>) -> Self {
+  pub fn new(
+    template: String,
+    files: &'a IndexMap<FileId, Bytes>,
+    fonts: &'a IndexMap<FileId, Font>,
+    font_book: &'a LazyHash<FontBook>,
+    library: &'a LazyHash<Library>,
+  ) -> Self {
     Self {
       main_source: Source::new(*MAIN_ID, template),
-      library: LazyHash::new(Library::builder().with_inputs(inputs).build()),
+
+      files,
       fonts,
+
       font_book,
+      library,
     }
   }
 }
 
 impl typst::World for PdfExportWorld<'_> {
   fn library(&self) -> &LazyHash<Library> {
-    &self.library
+    self.library
   }
 
   fn book(&self) -> &LazyHash<FontBook> {
@@ -57,14 +68,25 @@ impl typst::World for PdfExportWorld<'_> {
   }
 
   fn file(&self, id: FileId) -> FileResult<Bytes> {
-    Err(FileError::NotFound(id.vpath().get_without_slash().into()))
+    match self.files.get(&id) {
+      Some(content) => Ok(content.clone()),
+      None => Err(FileError::NotFound(id.vpath().get_without_slash().into())),
+    }
   }
 
   fn font(&self, index: usize) -> Option<Font> {
-    self.fonts.get(index).cloned()
+    let (_file_id, font) = self.fonts.get_index(index)?;
+    Some(font.to_owned())
   }
 
-  fn today(&self, _offset: Option<typst::foundations::Duration>) -> Option<Datetime> {
-    None
+  fn today(&self, offset: Option<Duration>) -> Option<Datetime> {
+    let now = match offset {
+      Some(offset) => {
+        let utc = time::OffsetDateTime::now_utc();
+        utc.checked_add(offset.into())?
+      }
+      None => time::OffsetDateTime::now_local().ok()?,
+    };
+    Some(Datetime::Datetime(time::PrimitiveDateTime::new(now.date(), now.time())))
   }
 }

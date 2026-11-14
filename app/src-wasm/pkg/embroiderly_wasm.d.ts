@@ -47,10 +47,10 @@ export class EditorWrapper {
      */
     endTransaction(project_id: string): Promise<void>;
     /**
-     * Encodes the pattern and writes it to the given handle without updating the stored handle.
+     * Encodes the pattern and returns the resulting buffer without updating the stored handle.
      * Use this for one-off exports (e.g. OXS). Does not checkpoint.
      */
-    exportPattern(project_id: string, file_handle: FileSystemFileHandle): Promise<void>;
+    exportPattern(project_id: string, format: string): Promise<Uint8Array>;
     /**
      * Checks if the pattern with the given ID has unsaved changes.
      */
@@ -266,6 +266,29 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
+    readonly __wbg_filemanager_free: (a: number, b: number) => void;
+    readonly __wbg_get_groupedfileslist_custom: (a: number) => [number, number];
+    readonly __wbg_get_groupedfileslist_system: (a: number) => [number, number];
+    readonly __wbg_get_importfilesresult_failedFiles: (a: number) => [number, number];
+    readonly __wbg_groupedfileslist_free: (a: number, b: number) => void;
+    readonly __wbg_importfilesresult_free: (a: number, b: number) => void;
+    readonly __wbg_set_groupedfileslist_custom: (a: number, b: number, c: number) => void;
+    readonly __wbg_set_groupedfileslist_system: (a: number, b: number, c: number) => void;
+    readonly __wbg_set_importfilesresult_failedFiles: (a: number, b: number, c: number) => void;
+    readonly filemanager_create: () => any;
+    readonly filemanager_deletePatternTemplate: (a: number, b: number, c: number) => any;
+    readonly filemanager_getFontsList: (a: number) => any;
+    readonly filemanager_getPalettesList: (a: number) => any;
+    readonly filemanager_importFonts: (a: number, b: number, c: number) => any;
+    readonly filemanager_importPalettes: (a: number, b: number, c: number) => any;
+    readonly filemanager_loadFabricColors: (a: number) => any;
+    readonly filemanager_loadFontCodePoints: (a: number, b: number, c: number) => any;
+    readonly filemanager_loadFontContent: (a: number, b: number, c: number) => any;
+    readonly filemanager_loadPalette: (a: number, b: number, c: number, d: number, e: number) => any;
+    readonly filemanager_loadPatternTemplate: (a: number, b: number, c: number) => any;
+    readonly filemanager_saveFabricColors: (a: number, b: number, c: number) => any;
+    readonly filemanager_savePatternTemplate: (a: number, b: number, c: number, d: number, e: number) => any;
+    readonly init: () => void;
     readonly __wbg_editorwrapper_free: (a: number, b: number) => void;
     readonly __wbg_get_openpatternresult_id: (a: number) => [number, number];
     readonly __wbg_get_openpatternresult_snapshot: (a: number) => [number, number];
@@ -282,7 +305,7 @@ export interface InitOutput {
     readonly editorwrapper_create: (a: any) => any;
     readonly editorwrapper_createPattern: (a: number, b: number, c: number) => any;
     readonly editorwrapper_endTransaction: (a: number, b: number, c: number) => any;
-    readonly editorwrapper_exportPattern: (a: number, b: number, c: number, d: any) => any;
+    readonly editorwrapper_exportPattern: (a: number, b: number, c: number, d: number, e: number) => any;
     readonly editorwrapper_hasUnsavedChanges: (a: number, b: number, c: number) => [number, number, number];
     readonly editorwrapper_loadPattern: (a: number, b: number, c: number) => any;
     readonly editorwrapper_moveLayer: (a: number, b: number, c: number, d: number, e: number) => any;
@@ -311,29 +334,6 @@ export interface InitOutput {
     readonly editorwrapper_updatePatternInfo: (a: number, b: number, c: number, d: number, e: number) => any;
     readonly editorwrapper_updatePatternPdf: (a: number, b: number, c: number, d: number, e: number) => any;
     readonly editorwrapper_updateReferenceImageSettings: (a: number, b: number, c: number, d: number, e: number) => any;
-    readonly __wbg_filemanager_free: (a: number, b: number) => void;
-    readonly __wbg_get_groupedfileslist_custom: (a: number) => [number, number];
-    readonly __wbg_get_groupedfileslist_system: (a: number) => [number, number];
-    readonly __wbg_get_importfilesresult_failedFiles: (a: number) => [number, number];
-    readonly __wbg_groupedfileslist_free: (a: number, b: number) => void;
-    readonly __wbg_importfilesresult_free: (a: number, b: number) => void;
-    readonly __wbg_set_groupedfileslist_custom: (a: number, b: number, c: number) => void;
-    readonly __wbg_set_groupedfileslist_system: (a: number, b: number, c: number) => void;
-    readonly __wbg_set_importfilesresult_failedFiles: (a: number, b: number, c: number) => void;
-    readonly filemanager_create: () => any;
-    readonly filemanager_deletePatternTemplate: (a: number, b: number, c: number) => any;
-    readonly filemanager_getFontsList: (a: number) => any;
-    readonly filemanager_getPalettesList: (a: number) => any;
-    readonly filemanager_importFonts: (a: number, b: number, c: number) => any;
-    readonly filemanager_importPalettes: (a: number, b: number, c: number) => any;
-    readonly filemanager_loadFabricColors: (a: number) => any;
-    readonly filemanager_loadFontCodePoints: (a: number, b: number, c: number) => any;
-    readonly filemanager_loadFontContent: (a: number, b: number, c: number) => any;
-    readonly filemanager_loadPalette: (a: number, b: number, c: number, d: number, e: number) => any;
-    readonly filemanager_loadPatternTemplate: (a: number, b: number, c: number) => any;
-    readonly filemanager_saveFabricColors: (a: number, b: number, c: number) => any;
-    readonly filemanager_savePatternTemplate: (a: number, b: number, c: number, d: number, e: number) => any;
-    readonly init: () => void;
     readonly wasm_bindgen_79dd4db9834a31a4___convert__closures_____invoke___wasm_bindgen_79dd4db9834a31a4___JsValue__core_608f92abc48d28da___result__Result_____wasm_bindgen_79dd4db9834a31a4___JsError___true_: (a: number, b: number, c: any) => [number, number];
     readonly wasm_bindgen_79dd4db9834a31a4___convert__closures_____invoke___web_sys_b122567ad5b21cdb___features__gen_Event__Event__core_608f92abc48d28da___result__Result_____web_sys_b122567ad5b21cdb___features__gen_Event__Event___true_: (a: number, b: number, c: any) => [number, number];
     readonly wasm_bindgen_79dd4db9834a31a4___convert__closures_____invoke___js_sys_b6d8ea9dbf822c4b___IteratorNext__core_608f92abc48d28da___result__Result_____wasm_bindgen_79dd4db9834a31a4___JsError___true_: (a: number, b: number, c: any) => [number, number];

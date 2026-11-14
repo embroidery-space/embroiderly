@@ -99,6 +99,23 @@ export const Nested: Story = {
   }),
 };
 
+export const EmptyNested: Story = {
+  args: {
+    items: [
+      { label: "Item 1", nested: false },
+      { label: "Item 2", nested: true },
+    ],
+  },
+  tags: ["!autodocs", "!snapshot"],
+  async play({ canvas }) {
+    const item1 = canvas.getByRole("treeitem", { name: "Item 1" });
+    await expect(item1.querySelector("button")).toBeNull();
+
+    const item2 = canvas.getByRole("treeitem", { name: "Item 2" });
+    await expect(item2.querySelector("button")).not.toBeNull();
+  },
+};
+
 export const Sizes: Story = {
   render: () => ({
     components: { TreeSizes },

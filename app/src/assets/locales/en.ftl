@@ -580,14 +580,34 @@ pdf-export-view-mode-code = Code
 pdf-export-view-mode-split-view = Split view
 pdf-export-view-mode-preview = Preview
 
-pdf-export-line-wrapping = Line wrapping
-
-pdf-export-color = Color export
 
 pdf-export-save-template = Save Template
+pdf-export-save-template-failed =
+  .title = Error
+  .description = Failed to save the Typst template.
+
 pdf-export-export-document = Export Document
-pdf-export-export-document-monochrome = Export black and white document
-pdf-export-export-document-color = Export color document
+pdf-export-export-document-failed =
+  .title = Error
+  .description = Failed to export the PDF document.
+
+pdf-export-assets = Assets
+pdf-export-assets-fonts = Fonts
+pdf-export-assets-files = Images and other files
+
+pdf-export-assets-add-files = Add files
+pdf-export-assets-remove-file = Remove file
+
+pdf-export-assets-file-removal =
+  .title = Confirm removal
+  .description = Do you really want to remove the { $fileName } file?
+
+pdf-export-settings = Settings
+pdf-export-settings-font-size = Font size
+pdf-export-settings-font-ligatures =
+  .label = Code character combinations (ligatures)
+  .description = Convert character combinations like -> or != into single visual symbols (→ and ≠ correspondingly).
+pdf-export-settings-line-wrapping = Line wrapping
 
 pdf-export-unsaved-changes =
   .title = Unsaved Changes

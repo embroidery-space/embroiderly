@@ -17,6 +17,7 @@ export const useFilePicker = createSharedComposable(() => ({
     font: "fonts",
     image: "images",
     pdf: "patterns", // PDFs should colocated with their source patterns.
+    other: "other",
   },
 
   filters: {

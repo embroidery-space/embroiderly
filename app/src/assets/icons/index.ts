@@ -14,6 +14,7 @@ export { default as IconExternalLink } from "~icons/material-symbols/open-in-new
 export { default as IconFile } from "~icons/material-symbols/draft-rounded";
 export { default as IconFileCreate } from "~icons/material-symbols/edit-document-rounded";
 export { default as IconFileOpen } from "~icons/material-symbols/file-open-rounded";
+export { default as IconFileStorage } from "~icons/material-symbols/home-storage-rounded";
 export { default as IconImage } from "~icons/material-symbols/image-rounded";
 export { default as IconImageOff } from "~icons/material-symbols/hide-image-rounded";
 export { default as IconLayers } from "~icons/material-symbols/stacks-rounded";
@@ -51,7 +52,7 @@ export { default as IconRulers } from "~icons/mdi/ruler-square";
 export { default as IconDot } from "~icons/mdi/circle-medium";
 export { default as IconEraser } from "~icons/mdi/eraser";
 export { default as IconSplitView } from "~icons/material-symbols/vertical-split-rounded";
-export { default as IconLineWrapping } from "~icons/material-symbols/wrap-text-rounded";
+export { default as IconSave } from "~icons/material-symbols/save-rounded";
 
 // Stitches (custom collection)
 export { default as IconStitchFull } from "~icons/stitches/full";

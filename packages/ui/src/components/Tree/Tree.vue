@@ -19,6 +19,8 @@ export interface TreeItem {
 
   /** Whether the item is disabled. */
   disabled?: boolean;
+  /** If true, show the dropdown icon even if `children` is empty. */
+  nested?: boolean;
 
   /** Nested items. */
   children?: TreeItem[];
@@ -202,7 +204,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
             <Icon v-if="item.icon" :name="item.icon" data-slot="item-leading-icon" :class="$style.itemLeadingIcon" />
           </slot>
 
-          <span data-slot="item-label" :class="$style.itemLabel">
+          <span data-slot="item-label" :title="item.label" :class="$style.itemLabel">
             <slot
               name="item-label"
               :item="item"
@@ -219,7 +221,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
           </span>
 
           <Button
-            v-if="item.children?.length"
+            v-if="item.children?.length || item.nested"
             square
             color="neutral"
             variant="ghost"

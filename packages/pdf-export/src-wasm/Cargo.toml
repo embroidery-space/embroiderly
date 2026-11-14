@@ -27,9 +27,15 @@ typst-render = { workspace = true }
 # Error handling
 anyhow = { workspace = true }
 
+# Time utilities.
+time = { workspace = true, features = ["local-offset", "wasm-bindgen"] }
+
 # Wasm
 wasm-bindgen = { workspace = true }
 js-sys = { workspace = true }
+
+# Other
+indexmap = { workspace = true }
 
 [dev-dependencies]
 # Embroiderly Core

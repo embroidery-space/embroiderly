@@ -584,14 +584,33 @@ pdf-export-view-mode-code = Код
 pdf-export-view-mode-split-view = Розділений вигляд
 pdf-export-view-mode-preview = Преʼю
 
-pdf-export-line-wrapping = Перенесення рядків
-
-pdf-export-color = Кольоровий експорт
-
 pdf-export-save-template = Зберегти шаблон
+pdf-export-save-template-failed =
+  .title = Помилка
+  .description = Не вдалося зберегти шаблон Typst.
+
 pdf-export-export-document = Експортувати документ
-pdf-export-export-document-monochrome = Експортувати чорно-білий документ
-pdf-export-export-document-color = Експортувати кольоровий документ
+pdf-export-export-document-failed =
+  .title = Помилка
+  .description = Не вдалося експортувати документ PDF.
+
+pdf-export-assets = Ресурси
+pdf-export-assets-fonts = Шрифти
+pdf-export-assets-files = Зображення та інші файли
+
+pdf-export-assets-add-files = Додати файли
+pdf-export-assets-remove-file = Видалити файл
+
+pdf-export-assets-file-removal =
+  .title = Підтвердіть видалення
+  .description = Ви дійсно хочете видалити файл { $fileName }?
+
+pdf-export-settings = Налаштування
+pdf-export-settings-font-size = Розмір шрифту
+pdf-export-settings-font-ligatures =
+  .label = Злиття знаків коду (лігатури)
+  .description = Перетворювати комбінації знаків на кшталт -> або != у суцільні символи (→ та ≠ відповідно).
+pdf-export-settings-line-wrapping = Перенесення рядків
 
 pdf-export-unsaved-changes =
   .title = Незбережені зміни

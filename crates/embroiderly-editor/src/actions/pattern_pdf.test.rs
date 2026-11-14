@@ -8,6 +8,7 @@ fn test_update_pattern_pdf() {
   let mut embproj = EmbroiderlyProject::default();
   let template = PatternPdf {
     template: String::from("lorem ipsum"),
+    ..Default::default()
   };
   let mut action = EditorAction::PatternPdf(PatternPdfAction::UpdatePatternPdf {
     template: template.clone(),

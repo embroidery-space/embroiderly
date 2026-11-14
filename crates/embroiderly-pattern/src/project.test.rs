@@ -15,6 +15,7 @@ fn creates_new_embproj_with_defaults() {
 fn builder_sets_pattern_pdf() {
   let pattern_pdf = PatternPdf {
     template: String::from("qwerty"),
+    ..Default::default()
   };
 
   let embproj = EmbroiderlyProject::builder(Pattern::default())
