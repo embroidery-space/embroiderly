@@ -71,6 +71,8 @@ const isDirty = computed(() => !isEqual(patternStore.pattern.pdf, pdf.value));
 const totalPages = ref<number>();
 const currentPage = ref(1);
 
+const currentSelection = ref("");
+
 const isDark = computed(() => {
   return settingsStore.ui.theme === "system"
     ? window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -332,12 +334,14 @@ onUnmounted(() => service.destroy());
 
       <div :class="$style.toolbar">
         <TypstToolbar
+          :current-selection="currentSelection"
           @toggle-heading="typstEditor?.toggleHeading"
           @toggle-bold-text="typstEditor?.toggleBoldText"
           @toggle-italic-text="typstEditor?.toggleItalicText"
           @toggle-underlined-text="typstEditor?.toggleUnderlinedText"
           @toggle-bulleted-list="typstEditor?.toggleBulletedList"
           @toggle-numbered-list="typstEditor?.toggleNumberedList"
+          @insert-link="typstEditor?.insertLink"
         />
 
         <Button
@@ -364,6 +368,7 @@ onUnmounted(() => service.destroy());
             v-model="pdf.template"
             :dark="isDark"
             :settings="typstEditorStateStore.settings"
+            @selection-change="currentSelection = $event"
           />
         </SplitterPanel>
 

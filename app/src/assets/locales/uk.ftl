@@ -595,8 +595,14 @@ pdf-export-format-bulleted-list = Вставити маркований спис
 pdf-export-format-numbered-list = Вставити нумерований список
 
 pdf-export-format-link = Вставити посилання
+pdf-export-format-link-url = URL
+pdf-export-format-link-url-invalid = Некоректний URL
+pdf-export-format-link-display-text = Текст заміщення
+
 pdf-export-format-image = Вставити зображення
 pdf-export-format-table = Вставити таблицю
+
+pdf-export-format-insert = Вставити
 
 pdf-export-save-template = Зберегти шаблон
 pdf-export-save-template-failed =

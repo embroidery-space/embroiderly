@@ -7,11 +7,8 @@ const TYPST_LIST_RE = /^(\s*)(\d+\.|[+-])(\s+)/u;
 export function toggleHeading(view: EditorView, level: number) {
   const heading = "=".repeat(level) + " ";
 
-  const state = view.state;
-  const doc = state.doc;
-
-  const transaction = state.changeByRange((range) => {
-    const line = doc.lineAt(range.from);
+  const transaction = view.state.changeByRange((range) => {
+    const line = view.state.doc.lineAt(range.from);
 
     const headingMatch = line.text.match(TYPST_HEADING_RE);
     if (headingMatch) {
@@ -40,22 +37,22 @@ export function toggleHeading(view: EditorView, level: number) {
   });
 
   view.dispatch(transaction);
+  view.focus();
 }
 
 export function toggleFormatting(view: EditorView, left: string, right: string) {
-  const state = view.state;
-  const doc = state.doc;
-
-  const transaction = state.changeByRange((range) => {
+  const transaction = view.state.changeByRange((range) => {
     let { from, to, empty: isCursor } = range;
     if (isCursor) {
-      const word = state.wordAt(range.head);
+      const word = view.state.wordAt(range.head);
       if (word) {
         from = word.from;
         to = word.to;
         isCursor = false;
       }
     }
+
+    const doc = view.state.doc;
 
     const hasLeft = from >= left.length && doc.sliceString(from - left.length, from) === left;
     const hasRight = to <= doc.length - right.length && doc.sliceString(to, to + right.length) === right;
@@ -88,14 +85,12 @@ export function toggleFormatting(view: EditorView, left: string, right: string) 
   });
 
   view.dispatch(transaction);
+  view.focus();
 }
 
 export function toggleList(view: EditorView, marker: string) {
-  const state = view.state;
-  const doc = state.doc;
-
-  const transaction = state.changeByRange((range) => {
-    const line = doc.lineAt(range.from);
+  const transaction = view.state.changeByRange((range) => {
+    const line = view.state.doc.lineAt(range.from);
 
     const listMatch = line.text.match(TYPST_LIST_RE);
     if (listMatch) {
@@ -134,4 +129,18 @@ export function toggleList(view: EditorView, marker: string) {
   });
 
   view.dispatch(transaction);
+}
+
+export function insertLink(view: EditorView, url: string, displayText?: string) {
+  const transaction = view.state.changeByRange((range) => {
+    const { from, to } = range;
+    const insert = displayText ? `#link("${url}")[${displayText}]` : url;
+    return {
+      changes: [{ from, to, insert }],
+      range: EditorSelection.cursor(from + insert.length),
+    };
+  });
+
+  view.dispatch(transaction);
+  view.focus();
 }

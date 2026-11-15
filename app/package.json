@@ -59,7 +59,8 @@
     "stacktracey": "catalog:",
     "ua-parser-js": "catalog:",
     "uuid": "catalog:",
-    "vue": "catalog:"
+    "vue": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@iconify-json/material-symbols": "catalog:",

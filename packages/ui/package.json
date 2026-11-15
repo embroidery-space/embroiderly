@@ -18,10 +18,13 @@
     "test:unit": "vitest run --project unit"
   },
   "dependencies": {
+    "@standard-schema/spec": "catalog:",
+    "@standard-schema/utils": "catalog:",
     "@tanstack/vue-hotkeys": "catalog:",
     "color-convert": "catalog:",
     "defu": "catalog:",
-    "vue-component-type-helpers": "catalog:"
+    "vue-component-type-helpers": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@iconify-json/lucide": "catalog:",

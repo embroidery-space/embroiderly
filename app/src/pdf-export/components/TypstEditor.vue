@@ -5,7 +5,15 @@ import { Compartment, Prec } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { shallowRef, useTemplateRef, onMounted, onBeforeUnmount, watch } from "vue";
 
-import { editorSetup, typst, typstTheme, toggleHeading, toggleFormatting, toggleList } from "../lib/codemirror/";
+import {
+  editorSetup,
+  typst,
+  typstTheme,
+  toggleHeading,
+  toggleFormatting,
+  toggleList,
+  insertLink,
+} from "../lib/codemirror/";
 import type { TypstEditorSettings } from "../lib/codemirror/";
 
 export interface TypstEditorProps {
@@ -15,6 +23,9 @@ export interface TypstEditorProps {
 
 const doc = defineModel<string>({ required: true });
 const { dark = false, settings = undefined } = defineProps<TypstEditorProps>();
+const emit = defineEmits<{
+  "selection-change": [text: string];
+}>();
 
 const container = useTemplateRef("container");
 
@@ -45,10 +56,15 @@ onMounted(() => {
       Prec.highest(theme.of(typstTheme(dark, settings))),
 
       EditorView.updateListener.of((update) => {
-        if (!update.docChanged) return;
+        if (update.docChanged) {
+          const content = update.state.doc.toString();
+          if (content !== doc.value) doc.value = content;
+        }
 
-        const content = update.state.doc.toString();
-        if (content !== doc.value) doc.value = content;
+        if (update.selectionSet || update.docChanged) {
+          const range = update.state.selection.main;
+          emit("selection-change", update.state.doc.sliceString(range.from, range.to));
+        }
       }),
     ],
     parent: container.value!,
@@ -91,6 +107,11 @@ defineExpose({
   toggleNumberedList() {
     if (!editor.value) return;
     toggleList(editor.value, "1.");
+  },
+
+  insertLink(url: string, displayText?: string) {
+    if (!editor.value) return;
+    insertLink(editor.value, url, displayText);
   },
 });
 </script>

@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, DropdownMenu, Separator } from "@embroiderly/ui";
+import { Button, ButtonIcon, DropdownMenu, Form, FormField, Input, Popover, Separator } from "@embroiderly/ui";
+
+import z from "zod";
 
 import {
   IconChevronDown,
+  IconClose,
   IconFormatH1,
   IconFormatH2,
   IconFormatH3,
@@ -19,6 +22,9 @@ import {
   IconFormatTable,
 } from "~/assets/icons/";
 
+defineProps<{
+  currentSelection?: string;
+}>();
 const emit = defineEmits<{
   "toggle-heading": [level: number];
 
@@ -28,6 +34,8 @@ const emit = defineEmits<{
 
   "toggle-bulleted-list": [];
   "toggle-numbered-list": [];
+
+  "insert-link": [url: string, displayText?: string];
 }>();
 </script>
 
@@ -96,7 +104,45 @@ const emit = defineEmits<{
 
     <Separator orientation="vertical" />
 
-    <ButtonIcon variant="ghost" color="neutral" :icon="IconFormatLink" :tooltip="$t('pdf-export-format-link')" />
+    <Popover pinned>
+      <template #default="{ open }">
+        <ButtonIcon
+          color="neutral"
+          :variant="open ? 'soft' : 'ghost'"
+          :icon="open ? IconClose : IconFormatLink"
+          :tooltip="$t('pdf-export-format-link')"
+        />
+      </template>
+
+      <template #content="{ close }">
+        <Form
+          :schema="
+            z.object({
+              url: z.url($t('pdf-export-format-link-url-invalid')),
+              displayText: z.string().optional(),
+            })
+          "
+          :class="$style.linkForm"
+          @submit="
+            ({ url, displayText }) => {
+              emit('insert-link', url, displayText);
+              close();
+            }
+          "
+        >
+          <FormField name="url" :label="$t('pdf-export-format-link-url')">
+            <Input />
+          </FormField>
+
+          <FormField name="displayText" :label="$t('pdf-export-format-link-display-text')">
+            <Input :default-value="currentSelection" />
+          </FormField>
+
+          <Button type="submit" :label="$t('pdf-export-format-insert')" />
+        </Form>
+      </template>
+    </Popover>
+
     <ButtonIcon variant="ghost" color="neutral" :icon="IconFormatImage" :tooltip="$t('pdf-export-format-image')" />
     <ButtonIcon variant="ghost" color="neutral" :icon="IconFormatTable" :tooltip="$t('pdf-export-format-table')" />
   </div>
@@ -109,5 +155,18 @@ const emit = defineEmits<{
 
   height: 100%;
   min-height: 0;
+}
+
+.link-form {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+  align-items: start;
+
+  padding: calc(var(--spacing) * 2);
+
+  & input {
+    width: var(--container-xs);
+  }
 }
 </style>

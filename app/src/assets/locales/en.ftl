@@ -591,8 +591,14 @@ pdf-export-format-bulleted-list = Insert bulleted list
 pdf-export-format-numbered-list = Insert numbered list
 
 pdf-export-format-link = Insert link
+pdf-export-format-link-url = URL
+pdf-export-format-link-url-invalid = Invalid URL
+pdf-export-format-link-display-text = Display text
+
 pdf-export-format-image = Insert image
 pdf-export-format-table = Insert table
+
+pdf-export-format-insert = Insert
 
 pdf-export-save-template = Save Template
 pdf-export-save-template-failed =

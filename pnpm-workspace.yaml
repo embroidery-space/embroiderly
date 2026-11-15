@@ -30,6 +30,11 @@ catalog:
   "pinia-plugin-persistedstate": 4.7.1
   "reka-ui": 2.11.0
 
+  # Form validation
+  "@standard-schema/spec": 1.1.0
+  "@standard-schema/utils": 0.3.0
+  "zod": 4.6.7
+
   # CodeMirror
   "@codemirror/autocomplete": 6.20.4
   "@codemirror/commands": 6.11.1

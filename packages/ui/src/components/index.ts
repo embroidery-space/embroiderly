@@ -19,6 +19,7 @@ export { default as Separator, type SeparatorProps } from "./Separator/Separator
 export { default as Editable, type EditableProps, type EditableEmits } from "./Editable/Editable.vue";
 export { default as Checkbox, type CheckboxProps } from "./Checkbox/Checkbox.vue";
 export { default as ColorPicker, type ColorPickerProps } from "./ColorPicker/ColorPicker.vue";
+export { default as Form, type FormProps, type FormEmits, type FormSlots } from "./Form/Form.vue";
 export { default as FormField, type FormFieldProps } from "./FormField/FormField.vue";
 export { default as FormFieldGroup } from "./FormFieldGroup/FormFieldGroup.vue";
 export { default as FormFieldSet, type FormFieldSetProps } from "./FormFieldSet/FormFieldSet.vue";
