@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Button, ButtonIcon, DropdownMenu, Form, FormField, Input, Popover, Separator } from "@embroiderly/ui";
 
+import { computed } from "vue";
 import z from "zod";
 
 import {
@@ -22,7 +23,7 @@ import {
   IconFormatTable,
 } from "~/assets/icons/";
 
-defineProps<{
+const props = defineProps<{
   currentSelection?: string;
 }>();
 const emit = defineEmits<{
@@ -37,6 +38,8 @@ const emit = defineEmits<{
 
   "insert-link": [url: string, displayText?: string];
 }>();
+
+const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelection));
 </script>
 
 <template>
@@ -131,11 +134,11 @@ const emit = defineEmits<{
           "
         >
           <FormField name="url" :label="$t('pdf-export-format-link-url')">
-            <Input />
+            <Input :default-value="currentSelectionIsURL ? currentSelection : undefined" />
           </FormField>
 
           <FormField name="displayText" :label="$t('pdf-export-format-link-display-text')">
-            <Input :default-value="currentSelection" />
+            <Input :default-value="currentSelectionIsURL ? undefined : currentSelection" />
           </FormField>
 
           <Button type="submit" :label="$t('pdf-export-format-insert')" />
@@ -163,10 +166,8 @@ const emit = defineEmits<{
   gap: calc(var(--spacing) * 2);
   align-items: start;
 
-  padding: calc(var(--spacing) * 2);
+  width: var(--container-xs);
 
-  & input {
-    width: var(--container-xs);
-  }
+  padding: calc(var(--spacing) * 2);
 }
 </style>
