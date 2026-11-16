@@ -612,7 +612,8 @@ pdf-export-export-document-failed =
 
 pdf-export-assets = Assets
 pdf-export-assets-fonts = Fonts
-pdf-export-assets-files = Images and other files
+pdf-export-assets-images = Images
+pdf-export-assets-files = Other files
 
 pdf-export-assets-add-files = Add files
 pdf-export-assets-remove-file = Remove file

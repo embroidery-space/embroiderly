@@ -616,7 +616,8 @@ pdf-export-export-document-failed =
 
 pdf-export-assets = Ресурси
 pdf-export-assets-fonts = Шрифти
-pdf-export-assets-files = Зображення та інші файли
+pdf-export-assets-images = Зображення
+pdf-export-assets-files = Інші файли
 
 pdf-export-assets-add-files = Додати файли
 pdf-export-assets-remove-file = Видалити файл

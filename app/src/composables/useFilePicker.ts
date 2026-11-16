@@ -2,11 +2,11 @@ import { createSharedComposable } from "@vueuse/core";
 import { showOpenFilePicker, showSaveFilePicker } from "show-open-file-picker";
 import type {
   FilePickerAcceptType,
-  ShowOpenFilePickerOptions,
-  ShowSaveFilePickerOptions,
+  ShowOpenFilePickerOptions as FilePickerOpenOptions,
+  ShowSaveFilePickerOptions as FilePickerSaveOptions,
 } from "show-open-file-picker/types";
 
-type OpenReturn<T extends ShowOpenFilePickerOptions> =
+type FilePickerOpenReturn<T extends FilePickerOpenOptions> =
   | (T["multiple"] extends true ? FileSystemFileHandle[] : FileSystemFileHandle)
   | null;
 
@@ -82,10 +82,10 @@ export const useFilePicker = createSharedComposable(() => ({
    * Opens a file picker dialog.
    * Returns the selected handle(s), or `null` if the user cancelled.
    */
-  async open<T extends ShowOpenFilePickerOptions>(options?: T): Promise<OpenReturn<T>> {
+  async open<T extends FilePickerOpenOptions>(options?: T): Promise<FilePickerOpenReturn<T>> {
     try {
       const handles = await showOpenFilePicker(options);
-      return (options?.multiple ? handles : (handles[0] ?? null)) as OpenReturn<T>;
+      return (options?.multiple ? handles : (handles[0] ?? null)) as FilePickerOpenReturn<T>;
     } catch (e) {
       if (e instanceof DOMException) return null;
       throw e;
@@ -96,7 +96,7 @@ export const useFilePicker = createSharedComposable(() => ({
    * Opens a save file picker dialog.
    * Returns the selected handle, or `null` if the user cancelled.
    */
-  async save<T extends ShowSaveFilePickerOptions>(options?: T) {
+  async save<T extends FilePickerSaveOptions>(options?: T) {
     try {
       return await showSaveFilePicker(options);
     } catch (e) {
@@ -105,3 +105,5 @@ export const useFilePicker = createSharedComposable(() => ({
     }
   },
 }));
+
+export type { FilePickerOpenOptions, FilePickerSaveOptions };

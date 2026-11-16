@@ -42,6 +42,7 @@ import {
 } from "../stores/useTypstEditorStateStore.ts";
 
 import TypstAssets from "./TypstAssets.vue";
+import type { TypstAssetType } from "./TypstAssets.vue";
 import TypstEditor from "./TypstEditor.vue";
 import TypstSettings from "./TypstSettings.vue";
 import TypstToolbar from "./TypstToolbar.vue";
@@ -218,28 +219,51 @@ async function loadFonts(fonts: string[]) {
   return succeededFonts;
 }
 
-async function addFiles(files: PdfAsset[]) {
-  await service.addFiles(PdfAsset.serialize(files));
+async function addAssets(type: TypstAssetType, assets: PdfAsset[]) {
+  const data = PdfAsset.serialize(assets);
+  switch (type) {
+    case "file": {
+      await service.addFiles(data);
+      pdf.value.files.push(...assets);
+      break;
+    }
+
+    case "font": {
+      await service.addFonts(data);
+      pdf.value.fonts.push(...assets);
+      break;
+    }
+
+    case "image": {
+      await service.addFiles(data);
+      pdf.value.images.push(...assets);
+      break;
+    }
+  }
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.files.push(...files);
 }
 
-async function removeFile(index: number, fileName: string) {
-  await service.removeFile(fileName);
-  await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.files.splice(index, 1);
-}
+async function removeAsset(type: TypstAssetType, index: number, fileName: string) {
+  switch (type) {
+    case "file": {
+      await service.removeFile(fileName);
+      pdf.value.files.splice(index, 1);
+      break;
+    }
 
-async function addFonts(fonts: PdfAsset[]) {
-  await service.addFonts(PdfAsset.serialize(fonts));
-  await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.fonts.push(...fonts);
-}
+    case "font": {
+      await service.removeFont(fileName);
+      pdf.value.fonts.splice(index, 1);
+      break;
+    }
 
-async function removeFont(index: number, fileName: string) {
-  await service.removeFont(fileName);
+    case "image": {
+      await service.removeFile(fileName);
+      pdf.value.images.splice(index, 1);
+      break;
+    }
+  }
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.fonts.splice(index, 1);
 }
 
 onMounted(async () => {
@@ -317,13 +341,10 @@ onUnmounted(() => service.destroy());
 
       <TypstAssets
         v-if="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Assets"
-        :files="pdf.files"
-        :fonts="pdf.fonts"
+        v-bind="pdf"
         :class="$style.asideBlock"
-        @add-files="addFiles"
-        @remove-file="removeFile"
-        @add-fonts="addFonts"
-        @remove-font="removeFont"
+        @add-assets="addAssets"
+        @remove-asset="removeAsset"
       />
 
       <TypstSettings
