@@ -604,6 +604,14 @@ pdf-export-format-image-file-invalid = Select the image
 
 pdf-export-format-table = Insert table
 
+pdf-export-format-attach-pattern-oxs = Attach pattern in the OXS format
+pdf-export-format-attach-pattern-oxs-confirmation =
+  .title = Comfirm attachment
+  .description =
+    Do you really want to attach the pattern?
+    Anyone who open the document will be able to extract the pattern file.
+    You may not want to distribute paid PDFs with an attached pattern.
+
 pdf-export-format-insert = Insert
 
 pdf-export-save-template = Save Template

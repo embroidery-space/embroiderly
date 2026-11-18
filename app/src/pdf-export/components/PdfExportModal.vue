@@ -366,6 +366,7 @@ onUnmounted(() => service.destroy());
           @toggle-numbered-list="typstEditor?.toggleNumberedList"
           @insert-link="typstEditor?.insertLink"
           @insert-image="typstEditor?.insertImage"
+          @attach-pattern-oxs="typstEditor?.attachPatternOxs"
         />
 
         <Button

@@ -14,6 +14,7 @@ import {
   toggleList,
   insertLink,
   insertImage,
+  attachPatternOxs,
 } from "../lib/codemirror/";
 import type { TypstEditorSettings } from "../lib/codemirror/";
 
@@ -117,6 +118,11 @@ defineExpose({
   insertImage(fileName: string, alt?: string) {
     if (!editor.value) return;
     insertImage(editor.value, fileName, alt);
+  },
+
+  attachPatternOxs() {
+    if (!editor.value) return;
+    attachPatternOxs(editor.value);
   },
 });
 </script>

@@ -608,6 +608,14 @@ pdf-export-format-image-file-invalid = Виберіть зображення
 
 pdf-export-format-table = Вставити таблицю
 
+pdf-export-format-attach-pattern-oxs = Прикріпити схему у форматі OXS
+pdf-export-format-attach-pattern-oxs-confirmation =
+  .title = Підтвердити вкладення
+  .description =
+   Ви дійсно хочете прикріпити схему?
+   Будь-хто, хто відкриє цей документ, зможе витягнути файл схеми.
+   Можливо, не варто поширювати платні PDF-документи з прикріпленою схемою.
+
 pdf-export-format-insert = Вставити
 
 pdf-export-save-template = Зберегти шаблон

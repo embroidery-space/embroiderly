@@ -158,3 +158,17 @@ export function insertImage(view: EditorView, fileName: string, alt?: string) {
   view.dispatch(transaction);
   view.focus();
 }
+
+export function attachPatternOxs(view: EditorView) {
+  const transaction = view.state.changeByRange((range) => {
+    const { from, to } = range;
+    const insert = `#pdf.attach("pattern.oxs")`;
+    return {
+      changes: [{ from, to, insert }],
+      range: EditorSelection.cursor(from + insert.length),
+    };
+  });
+
+  view.dispatch(transaction);
+  view.focus();
+}

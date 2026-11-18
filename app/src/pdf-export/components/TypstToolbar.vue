@@ -1,5 +1,16 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, DropdownMenu, Form, FormField, Input, Popover, Select, Separator } from "@embroiderly/ui";
+import {
+  Button,
+  ButtonIcon,
+  DropdownMenu,
+  Form,
+  FormField,
+  Input,
+  Popover,
+  Select,
+  Separator,
+  useConfirm,
+} from "@embroiderly/ui";
 
 import { computed } from "vue";
 import z from "zod";
@@ -21,6 +32,7 @@ import {
   IconFormatLink,
   IconFormatImage,
   IconFormatTable,
+  IconFormatAttachPatternOxs,
 } from "~/assets/icons/";
 
 const props = defineProps<{
@@ -39,7 +51,11 @@ const emit = defineEmits<{
 
   "insert-link": [url: string, displayText?: string];
   "insert-image": [fileName: string, alt?: string];
+
+  "attach-pattern-oxs": [];
 }>();
+
+const confirm = useConfirm();
 
 const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelection));
 </script>
@@ -188,6 +204,21 @@ const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelec
     </Popover>
 
     <ButtonIcon variant="ghost" color="neutral" :icon="IconFormatTable" :tooltip="$t('pdf-export-format-table')" />
+
+    <Separator orientation="vertical" />
+
+    <ButtonIcon
+      variant="ghost"
+      color="neutral"
+      :icon="IconFormatAttachPatternOxs"
+      :tooltip="$t('pdf-export-format-attach-pattern-oxs')"
+      @click="
+        async () => {
+          const accepted = await confirm.open($ta('pdf-export-format-attach-pattern-oxs-confirmation')).result;
+          if (accepted) emit('attach-pattern-oxs');
+        }
+      "
+    />
   </div>
 </template>
 

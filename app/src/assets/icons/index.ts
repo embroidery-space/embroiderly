@@ -69,6 +69,7 @@ export { default as IconFormatListNumbered } from "~icons/material-symbols/forma
 export { default as IconFormatLink } from "~icons/material-symbols/link-2-rounded";
 export { default as IconFormatImage } from "~icons/material-symbols/imagesmode-rounded";
 export { default as IconFormatTable } from "~icons/material-symbols/table";
+export { default as IconFormatAttachPatternOxs } from "~icons/material-symbols/heap-snapshot-large-rounded";
 
 // Stitches (custom collection)
 export { default as IconStitchFull } from "~icons/stitches/full";
